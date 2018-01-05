@@ -15,6 +15,7 @@
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/public/cpp/wallpaper_utils.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -718,6 +719,12 @@ void WallpaperController::SetCustomizedDefaultWallpaperPaths(
                           show_wallpaper);
 }
 
+bool WallpaperController::CanOpenWallpaperPicker() {
+  return allow_wallpaper_picker_for_testing_ ||
+         (wallpaper_utils::ShouldShowWallpaperSetting() &&
+          !IsActiveUserPolicyControlledImpl());
+}
+
 void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
                                             const WallpaperInfo& info) {
   current_user_wallpaper_info_ = info;
@@ -889,13 +896,6 @@ void WallpaperController::ReadAndDecodeWallpaper(
       base::Bind(&base::ReadFileToString, file_path, data),
       base::Bind(&OnWallpaperDataRead, std::move(callback),
                  base::Passed(base::WrapUnique(data))));
-}
-
-void WallpaperController::OpenSetWallpaperPage() {
-  if (wallpaper_controller_client_ &&
-      Shell::Get()->wallpaper_delegate()->CanOpenSetWallpaperPage()) {
-    wallpaper_controller_client_->OpenWallpaperPicker();
-  }
 }
 
 bool WallpaperController::ShouldApplyDimming() const {
@@ -1317,6 +1317,12 @@ void WallpaperController::RemovePolicyWallpaper(
   SetDefaultWallpaper(std::move(user_info), wallpaper_files_id, show_wallpaper);
 }
 
+void WallpaperController::OpenWallpaperPickerIfAllowed() {
+  if (wallpaper_controller_client_ && CanOpenWallpaperPicker()) {
+    wallpaper_controller_client_->OpenWallpaperPicker();
+  }
+}
+
 void WallpaperController::SetWallpaper(const SkBitmap& wallpaper,
                                        const WallpaperInfo& info) {
   if (wallpaper.isNull())
@@ -1335,6 +1341,11 @@ void WallpaperController::AddObserver(
 void WallpaperController::GetWallpaperColors(
     GetWallpaperColorsCallback callback) {
   std::move(callback).Run(prominent_colors_);
+}
+
+void WallpaperController::IsActiveUserPolicyControlled(
+    IsActiveUserPolicyControlledCallback callback) {
+  std::move(callback).Run(IsActiveUserPolicyControlledImpl());
 }
 
 void WallpaperController::OnWallpaperResized() {
@@ -1818,6 +1829,16 @@ void WallpaperController::OnDevicePolicyWallpaperDecoded(
                        wallpaper::DEVICE, base::Time::Now().LocalMidnight());
     SetWallpaperImage(image, info);
   }
+}
+
+bool WallpaperController::IsActiveUserPolicyControlledImpl() {
+  // The currently active user has index 0.
+  const mojom::UserSession* const active_user_session =
+      Shell::Get()->session_controller()->GetUserSession(0 /*user index=*/);
+  if (!active_user_session)
+    return false;
+  return IsPolicyControlled(active_user_session->user_info->account_id,
+                            !active_user_session->user_info->is_ephemeral);
 }
 
 void WallpaperController::GetInternalDisplayCompositorLock() {

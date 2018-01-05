@@ -7,8 +7,12 @@
 
 #include "ash/public/interfaces/wallpaper.mojom.h"
 #include "base/macros.h"
+#include "base/scoped_observer.h"
 #include "chrome/browser/ui/ash/wallpaper_policy_handler.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "ui/aura/window_observer.h"
+#include "ui/wm/public/activation_change_observer.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace wallpaper {
 class WallpaperFilesId;
@@ -19,7 +23,9 @@ enum WallpaperType;
 // Handles method calls sent from ash to chrome. Also sends messages from chrome
 // to ash.
 class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient,
-                                  public WallpaperPolicyHandler::Delegate {
+                                  public WallpaperPolicyHandler::Delegate,
+                                  public wm::ActivationChangeObserver,
+                                  public aura::WindowObserver {
  public:
   WallpaperControllerClient();
   ~WallpaperControllerClient() override;
@@ -59,13 +65,22 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient,
   void ShowSigninWallpaper();
   void RemoveUserWallpaper(const AccountId& account_id);
   void RemovePolicyWallpaper(const AccountId& account_id);
-
-  // ash::mojom::WallpaperControllerClient:
-  void OpenWallpaperPicker() override;
+  void OpenWallpaperPickerIfAllowed();
+  void IsActiveUserPolicyControlled(
+      ash::mojom::WallpaperController::IsActiveUserPolicyControlledCallback
+          callback);
 
   // chromeos::WallpaperPolicyHandler::Delegate:
   void OnDeviceWallpaperChanged() override;
   void OnDeviceWallpaperPolicyCleared() override;
+
+  // wm::ActivationChangeObserver:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override;
+
+  // aura::WindowObserver:
+  void OnWindowDestroying(aura::Window* window) override;
 
   // Flushes the mojo pipe to ash.
   void FlushForTesting();
@@ -74,6 +89,9 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient,
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
 
+  // ash::mojom::WallpaperControllerClient:
+  void OpenWallpaperPicker() override;
+
   // WallpaperController interface in ash.
   ash::mojom::WallpaperControllerPtr wallpaper_controller_;
 
@@ -81,6 +99,11 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient,
 
   // Binds to the client interface.
   mojo::Binding<ash::mojom::WallpaperControllerClient> binding_;
+
+  ScopedObserver<wm::ActivationClient, wm::ActivationChangeObserver>
+      activation_client_observer_;
+
+  ScopedObserver<aura::Window, aura::WindowObserver> window_observer_;
 
   base::WeakPtrFactory<WallpaperControllerClient> weak_factory_;
 

@@ -82,31 +82,6 @@ class WallpaperDelegate : public ash::WallpaperDelegate {
     chromeos::WallpaperManager::Get()->InitializeWallpaper();
   }
 
-  bool CanOpenSetWallpaperPage() override {
-    const LoginState* login_state = LoginState::Get();
-    const LoginState::LoggedInUserType user_type =
-        login_state->GetLoggedInUserType();
-    if (!login_state->IsUserLoggedIn())
-      return false;
-
-    // Whitelist user types that are allowed to change their wallpaper.  (Guest
-    // users are not, see crosbug 26900.)
-    if (user_type != LoginState::LOGGED_IN_USER_REGULAR &&
-        user_type != LoginState::LOGGED_IN_USER_OWNER &&
-        user_type != LoginState::LOGGED_IN_USER_PUBLIC_ACCOUNT &&
-        user_type != LoginState::LOGGED_IN_USER_SUPERVISED) {
-      return false;
-    }
-    const user_manager::User* user =
-        user_manager::UserManager::Get()->GetActiveUser();
-    if (!user)
-      return false;
-    if (chromeos::WallpaperManager::Get()->IsPolicyControlled(
-            user->GetAccountId()))
-      return false;
-    return true;
-  }
-
   void OnWallpaperAnimationFinished() override {
     content::NotificationService::current()->Notify(
         chrome::NOTIFICATION_WALLPAPER_ANIMATION_FINISHED,

@@ -224,6 +224,9 @@ class ASH_EXPORT WallpaperController
 
   wallpaper::WallpaperType GetWallpaperType() const;
 
+  // Returns true if the active user is allowed to open the wallpaper picker.
+  bool CanOpenWallpaperPicker();
+
   // Sets the wallpaper and alerts observers of changes.
   void SetWallpaperImage(const gfx::ImageSkia& image,
                          const wallpaper::WallpaperInfo& info);
@@ -294,9 +297,6 @@ class ASH_EXPORT WallpaperController
   void set_wallpaper_reload_delay_for_test(int value) {
     wallpaper_reload_delay_ = value;
   }
-
-  // Opens the set wallpaper page in the browser.
-  void OpenSetWallpaperPage();
 
   // Wallpaper should be dimmed for login, lock, OOBE and add user screens.
   bool ShouldApplyDimming() const;
@@ -401,16 +401,23 @@ class ASH_EXPORT WallpaperController
                            const std::string& wallpaper_files_id) override;
   void RemovePolicyWallpaper(mojom::WallpaperUserInfoPtr user_info,
                              const std::string& wallpaper_files_id) override;
+  void OpenWallpaperPickerIfAllowed() override;
   void SetWallpaper(const SkBitmap& wallpaper,
                     const wallpaper::WallpaperInfo& wallpaper_info) override;
   void AddObserver(mojom::WallpaperObserverAssociatedPtrInfo observer) override;
   void GetWallpaperColors(GetWallpaperColorsCallback callback) override;
+  void IsActiveUserPolicyControlled(
+      IsActiveUserPolicyControlledCallback callback) override;
 
   // WallpaperResizerObserver:
   void OnWallpaperResized() override;
 
   // WallpaperColorCalculatorObserver:
   void OnColorCalculationComplete() override;
+
+  void set_allow_wallpaper_picker_for_testing(bool allow) {
+    allow_wallpaper_picker_for_testing_ = allow;
+  }
 
   // Sets dummy values for wallpaper directories.
   void InitializePathsForTesting();
@@ -550,6 +557,9 @@ class ASH_EXPORT WallpaperController
   // Called when the device policy controlled wallpaper has been decoded.
   void OnDevicePolicyWallpaperDecoded(const gfx::ImageSkia& image);
 
+  // Implementation of |IsActiveUserPolicyControlled|.
+  bool IsActiveUserPolicyControlledImpl();
+
   // When wallpaper resizes, we can check which displays will be affected. For
   // simplicity, we only lock the compositor for the internal display.
   void GetInternalDisplayCompositorLock();
@@ -617,6 +627,9 @@ class ASH_EXPORT WallpaperController
   ScopedSessionObserver scoped_session_observer_;
 
   std::unique_ptr<ui::CompositorLock> compositor_lock_;
+
+  // If true, always allows opening the wallpaper picker.
+  bool allow_wallpaper_picker_for_testing_ = true;
 
   // If true, use a solid color wallpaper as if it is the decoded image.
   bool bypass_decode_for_testing_ = false;

@@ -50,6 +50,8 @@ component("cpp") {
     "shell_window_ids.h",
     "stylus_utils.cc",
     "stylus_utils.h",
+    "wallpaper_utils.cc",
+    "wallpaper_utils.h",
     "window_pin_type.cc",
     "window_pin_type.h",
     "window_properties.cc",
@@ -63,6 +65,7 @@ component("cpp") {
   defines = [ "ASH_PUBLIC_IMPLEMENTATION" ]
 
   deps = [
+    "//chromeos",
     "//components/prefs",
     "//mojo/common:common_custom_types",
     "//skia/public/interfaces",
