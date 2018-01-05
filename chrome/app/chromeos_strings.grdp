@@ -3948,6 +3948,9 @@
   <message name="IDS_ABOUT_POWER_CPU_IDLE_SECTION_TITLE" desc="Title for the CPU idle state data section on the about:power page">
     Idle State Data
   </message>
+  <message name="IDS_ABOUT_POWER_CPU_TEMPERATURE_SECTION_TITLE" desc="Title for the CPU temperature data section on the about:power page">
+    Temperature
+  </message>
   <message name="IDS_ABOUT_POWER_CPU_IDLE_STATE_OCCUPANCY_PERCENTAGE" desc="Header for idle state plots on the about:power page">
     Idle State Occupancy Percentage
   </message>
