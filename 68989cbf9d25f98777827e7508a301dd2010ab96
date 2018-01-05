@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "73458edf_8c6524c9",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:37:11Z",
+      "side": 1,
+      "message": "Radio buttons allow to switch between \"Automatic detection\" and \"Select time zone from the list\". (Basically Automatic detection ON/OFF).\n\nWhen automatic detection is on, a separate drop-down list appears, which allows user to select either \"ip-only detection (default)\" or \"Precise detection\" (which will allow sending WiFi/Cellular APs to Google servers to better detect location).",
+      "parentUuid": "36adffbb_992f0c08",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19bc5bfd_4fb17cc7",
         "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
         "patchSetId": 3
