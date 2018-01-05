@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ffc4efa_eb4a6d17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-05T19:06:43Z",
+      "side": 1,
+      "message": "nit:remove newline",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d4f4de_3af47f33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-05T19:06:43Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8b7991_ccc5b8e9",
+        "filename": "components/password_manager/core/common/password_manager_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-05T19:06:43Z",
+      "side": 1,
+      "message": "Should this be disabled by default until it\u0027s ready? For local testing you can enable through command line.",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
