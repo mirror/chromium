@@ -22,6 +22,30 @@
       "revId": "53fbac5ec729a764c9f67eb2ffb629f50d5f5af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0193b20f_73e69afc",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-01-05T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8a27550_d44a66a0",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "53fbac5ec729a764c9f67eb2ffb629f50d5f5af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
