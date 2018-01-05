@@ -22,6 +22,30 @@
       "revId": "4d00de16c5ddc3bf3a55d16c6f6443f3e7f0212b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704e6721_3f76ac17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T16:11:41Z",
+      "side": 1,
+      "message": "I meant kittens.  Obviously.  :)",
+      "parentUuid": "c41c4847_1fa08f31",
+      "range": {
+        "startLine": 9,
+        "startChar": 43,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "4d00de16c5ddc3bf3a55d16c6f6443f3e7f0212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
