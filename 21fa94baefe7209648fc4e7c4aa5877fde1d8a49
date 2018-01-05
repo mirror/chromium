@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f38c3bc_332a47ab",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T22:47:43Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a738adb6_98090deb",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T22:47:43Z",
+      "side": 1,
+      "message": "Can you add a Closure compiler target for coords_transformer, as well as a @typedef to further describe this object? See for example [1]. You should be able to run the compilation locally as follows:\n\n./third_party/closure_compiler/run_compiler coords_transformer\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/pdf/compiled_resources2.gyp",
+      "range": {
+        "startLine": 15,
+        "startChar": 23,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e0c70c_f0453e37",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T22:47:43Z",
+      "side": 1,
+      "message": "!Array\u003c!Object\u003e",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3f62e1_711e5217",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T22:47:43Z",
+      "side": 1,
+      "message": "Nit: JSDoc comment can fit in one line.\n\n/** @private {function(Object):void} */",
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce352e24_f00ab67a",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T22:47:43Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s use const/let in new files. Note I am in the process of converting most of WebUI and adding ESlint checks to prevent usage of var, tracked by https://bugs.chromium.org/p/chromium/issues/detail?id\u003d792774.",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 7
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53679eec_151e3d27",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T22:47:43Z",
+      "side": 1,
+      "message": "Are there any race conditions possible? What happens if multiple sequential calls to request() are made? Should requests to the plugin have an ID that is sent back from the plugin, so that we know which request was resolved?",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 60
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
