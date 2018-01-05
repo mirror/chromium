@@ -96,6 +96,9 @@ class RendererResourceDelegate : public content::ResourceDispatcherDelegate {
           base::TimeDelta::FromMilliseconds(kCacheStatsDelayMS));
     }
 
+    // If prefetching is complete, check if all subresource prefetches are
+    // complete.
+
     if (error_code == net::ERR_ABORTED) {
       return current_peer;
     }
