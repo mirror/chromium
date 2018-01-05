@@ -134,6 +134,24 @@
       "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd52027_b2a30cb3",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-05T01:42:34Z",
+      "side": 1,
+      "message": "Happy to wait for Justin. Thanks.",
+      "parentUuid": "40ed1f40_d572886d",
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0233ddd_38e36be1",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-05T01:42:34Z",
+      "side": 1,
+      "message": "I was thinking the same thing while I was in there. I think there\u0027s a very good chance we will want to re-attach HTTPS here soon.\n\nI was going to investigate separately though, since it\u0027s a semi-different motivation than this CL.",
+      "parentUuid": "e014c7ae_f3608127",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
