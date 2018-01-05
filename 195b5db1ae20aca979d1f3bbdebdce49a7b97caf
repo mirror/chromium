@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b63a883b_8e0be1d6",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T14:47:02Z",
+      "side": 1,
+      "message": "This is safe because of ConstructTrait usage.",
+      "range": {
+        "startLine": 561,
+        "startChar": 20,
+        "endLine": 561,
+        "endChar": 38
+      },
+      "revId": "195b5db1ae20aca979d1f3bbdebdce49a7b97caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
