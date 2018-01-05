@@ -228,9 +228,9 @@ void MimeSniffingResourceHandler::OnReadCompleted(
   const std::string& type_hint = response_->head.mime_type;
 
   std::string new_type;
-  bool made_final_decision =
-      net::SniffMimeType(read_buffer_->data(), bytes_read_, request()->url(),
-                         type_hint, &new_type);
+  bool made_final_decision = net::SniffMimeType(
+      read_buffer_->data(), bytes_read_, request()->url(), type_hint,
+      false /* allow_sniffing_files_urls_as_html */, &new_type);
 
   // SniffMimeType() returns false if there is not enough data to determine
   // the mime type. However, even if it returns false, it returns a new type
