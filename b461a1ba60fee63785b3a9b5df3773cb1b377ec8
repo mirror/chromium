@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9eb51a34_aa102f3b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/performanceobservers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-05T20:55:00Z",
+      "side": 1,
+      "message": "Sorry this part is buggy, but the intention is that if startTime is listed in expectedEntries, then we have to compare startTime (will be updated in the next patch). Note that startTime is not in detail so it has nothing to do with JSON.",
+      "parentUuid": "2181f176_85a5c718",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b210937_c534cf44",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/po-customusertiming.html",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "95a5e55f_08b03808",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/po-customusertiming.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-05T20:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b210937_c534cf44",
+      "range": {
+        "startLine": 19,
+        "startChar": 37,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b72b942_27a19c51",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/po-customusertiming.html",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-05T16:39:40Z",
       "side": 1,
       "message": "These should have startTimes too, shouldn\u0027t they? Computed via the default path of using performance.now()?",
+      "range": {
+        "startLine": 21,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 65
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468441d3_51f187ef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/po-customusertiming.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-05T20:55:00Z",
+      "side": 1,
+      "message": "These cases intend to test performance.mark(\"mark1\") without passing the time, but yes adding performance.now() as a test case is good.",
+      "parentUuid": "7b72b942_27a19c51",
       "range": {
         "startLine": 21,
         "startChar": 49,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a1b88bcb_5314a810",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-05T20:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f93e5582_7cf01b26",
+      "range": {
+        "startLine": 62,
+        "startChar": 141,
+        "endLine": 62,
+        "endChar": 146
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a519778_d37b8d74",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 4
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c11670a2_c612d408",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-05T20:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a519778_d37b8d74",
+      "range": {
+        "startLine": 458,
+        "startChar": 2,
+        "endLine": 458,
+        "endChar": 36
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa27b9a_d7941b35",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-05T16:39:40Z",
       "side": 1,
       "message": "If hasDetail() is false, what\u0027s the return value here?\nI\u0027m wondering if we can just pass performanceMarkOptions.detail() directly into user_timing_-\u003eMark, but I\u0027m not sure.",
+      "range": {
+        "startLine": 465,
+        "startChar": 15,
+        "endLine": 465,
+        "endChar": 46
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76e34c0_77b43a22",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-05T20:55:00Z",
+      "side": 1,
+      "message": "Good point. It will return an empty ScriptValue.\n\nYes we can skip performanceMarkOptions.hasDetail(), but we still need to check start_time_or_mark_options.IsPerformanceMarkOptions() anyway.",
+      "parentUuid": "dfa27b9a_d7941b35",
       "range": {
         "startLine": 465,
         "startChar": 15,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4b05f880_ef0abd74",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-05T20:55:00Z",
+      "side": 1,
+      "message": "It\u0027s based on this line:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/events/CustomEvent.cpp?rcl\u003d18f58357bbc763f9b75b02b435794ecae1016ca0\u0026l\u003d40\n\nWhat\u0027s your concern about this line?",
+      "parentUuid": "fd56796e_43ae9c6c",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b7ef217_91ddef4c",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceMeasureOptions.idl",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e12d4da_106f478e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMeasureOptions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-05T20:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b7ef217_91ddef4c",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 38
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
