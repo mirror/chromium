@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "514e74eb_57a16f50",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T04:43:26Z",
+      "side": 1,
+      "message": "This seems close yet not quite right.  I think if we tab into keyword mode (have no user_text_),  then we should set cursor_position_ to the end of the string, regardless of what it was before.\n\nWhat do you think?",
+      "revId": "8a19edea338069d5b09df5cf03c90de50fb30a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
