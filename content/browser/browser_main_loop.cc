@@ -49,6 +49,7 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "components/discardable_memory/service/discardable_shared_memory_manager.h"
+#include "components/metrics/call_stack_profile_metrics_provider.h"
 #include "components/tracing/common/trace_config_file.h"
 #include "components/tracing/common/trace_to_console.h"
 #include "components/tracing/common/tracing_switches.h"
@@ -942,6 +943,10 @@ void BrowserMainLoop::CreateStartupTasks() {
       base::Bind(&BrowserMainLoop::CreateThreads, base::Unretained(this));
   startup_task_runner_->AddTask(create_threads);
 
+  StartupTask profile_thread_started = base::Bind(
+      &BrowserMainLoop::StartProfilingIOThread, base::Unretained(this));
+  startup_task_runner_->AddTask(profile_thread_started);
+
   StartupTask browser_thread_started = base::Bind(
       &BrowserMainLoop::BrowserThreadsStarted, base::Unretained(this));
   startup_task_runner_->AddTask(browser_thread_started);
@@ -1164,6 +1169,16 @@ int BrowserMainLoop::CreateThreads() {
   return result_code_;
 }
 
+int BrowserMainLoop::StartProfilingIOThread() {
+#if defined(OS_WIN)
+  MessageBoxA(NULL, std::to_string(io_thread_->GetThreadId()).c_str(), "Title",
+              MB_OK);
+#endif
+  if (parts_)
+    parts_->StartProfilingThread(io_thread_->GetThreadId());
+  return result_code_;
+}
+
 int BrowserMainLoop::PreMainMessageLoopRun() {
 #if defined(OS_ANDROID)
   // Let screen instance be overridable by parts.
@@ -1294,6 +1309,9 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
 
   if (save_file_manager_)
     save_file_manager_->Shutdown();
+
+  if (parts_)
+    parts_->EndProfilingThread();
 
   {
     base::ThreadRestrictions::ScopedAllowWait allow_wait_for_join;
