@@ -34,6 +34,24 @@
       "revId": "d77f478da064f433f4035efb54e5895e2d60e328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0d9ed8_c542da40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-05T01:41:32Z",
+      "side": 1,
+      "message": "Changed as is discussed offline.",
+      "parentUuid": "b8800194_214a3e09",
+      "revId": "d77f478da064f433f4035efb54e5895e2d60e328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
