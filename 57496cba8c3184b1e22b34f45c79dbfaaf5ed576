@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8bfcc44c_15efeb63",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 14
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-05T23:59:46Z",
+      "side": 1,
+      "message": "https://crbug.com/799650",
+      "parentUuid": "ba4de4d1_699d5bd3",
+      "revId": "57496cba8c3184b1e22b34f45c79dbfaaf5ed576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fcbf925_d04aef2e",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "57496cba8c3184b1e22b34f45c79dbfaaf5ed576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea092c14_e52c2b0e",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-05T23:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fcbf925_d04aef2e",
+      "revId": "57496cba8c3184b1e22b34f45c79dbfaaf5ed576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
