@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0d038ffc_3ee14f3b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-05T19:47:38Z",
+      "side": 1,
+      "message": "I agree that\u0027s a good idea, but I\u0027d prefer not to mix functional changes with refactoring.",
+      "parentUuid": "b4ee3aa7_2e3ec159",
+      "revId": "75e74b3844a6ff15cb8d39d339d2df64600efc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "937ec67d_42d7167b",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Do you know why that is? I tried to research it and got back to this patch:\n\nhttps://chromium.googlesource.com/chromium/src/+/885d16e4f4939c22f0876c3ac9f6c8365832569c\n\nwhich is uninformative.\n\nI looked at the callsites and it seems legit at first glance at least most of them.",
       "parentUuid": "5b28576f_c6e6867c",
+      "revId": "75e74b3844a6ff15cb8d39d339d2df64600efc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0965c03f_d55e8089",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-05T19:47:38Z",
+      "side": 1,
+      "message": "This is an unusual use case; other callers aren\u0027t interested in excluding overlay scrollbars.  I don\u0027t think there\u0027s any deeper reason than that.",
+      "parentUuid": "0c48e11d_fd1e056a",
       "revId": "75e74b3844a6ff15cb8d39d339d2df64600efc09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
