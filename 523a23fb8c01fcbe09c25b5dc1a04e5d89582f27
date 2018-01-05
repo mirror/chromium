@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d125a0b_63516dee",
+        "filename": "tools/gn/command_desc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T19:05:27Z",
+      "side": 1,
+      "message": "I\u0027m not clear why this needs to change. Do the other comment and see if the default handler does the right thing here. Be sure to test \"gn desc --blame\" for configs with inputs on them to make sure they get annotated properly.",
+      "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cac068b_5682bb67",
+        "filename": "tools/gn/command_desc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T19:05:27Z",
+      "side": 1,
+      "message": "We\u0027ll need to add inputs to this list.",
+      "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452bd875_fa813ea8",
+        "filename": "tools/gn/target.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T19:05:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this line.\n\nThe libs and lib_dirs are inherited implicitly across deps which is why this step is present. Inputs (like cflags and defines) apply from the target and the configs that apply on that target.\n\nThe way I would expect it to work is to not have any code here, and to not have an inputs_ member on the Target object. When you need to know what the inputs are use code like we have on the flags to iterate over the applying ConfigValues in the correct order.",
+      "revId": "523a23fb8c01fcbe09c25b5dc1a04e5d89582f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
