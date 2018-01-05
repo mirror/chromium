@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78b6a37b_2ed72aeb",
+        "filename": "device/geolocation/wifi_polling_policy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T00:50:43Z",
+      "side": 1,
+      "message": "DCHECK(!g_wifi_polling_policy);",
+      "revId": "283e212ca457661b0b6857948189fdefd7e04e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
