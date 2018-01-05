@@ -105,6 +105,24 @@
       "revId": "567c35890858853aecdc82fdd28285d443207920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8695f6db_308c3862",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T16:23:32Z",
+      "side": 1,
+      "message": "\u003e Yes, that works fine and I wanted to do that already back in https://codereview.chromium.org/2973723003/ but piman@ argued \"Relying on destruction order is fragile [...].\".\n\nI dunno, without making the intention clear here, this is just as fragile. You can make it more explicit that this needs to be destroyed before process_ by actually doing that here, then add comment and DCHECK that the destruction happened in that order\n\nalso probably should check for null in_process_gpu_thread_ for good measure. Init is allowed to fail, and maybe one day it won\u0027t create the gpu thread if it fails..",
+      "parentUuid": "80adae67_32e470d7",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
