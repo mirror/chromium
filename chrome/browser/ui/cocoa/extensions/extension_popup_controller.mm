@@ -340,16 +340,21 @@ class ExtensionPopupNotificationBridge :
   [extensionView_ setFrameOrigin:NSMakePoint(inset, inset)];
 
   NSRect frame = [extensionView_ frame];
-  frame.size.height += info_bubble::kBubbleArrowHeight +
-                       info_bubble::kBubbleCornerRadius;
+  frame.size.height += info_bubble::kBubbleCornerRadius;
   frame.size.width += info_bubble::kBubbleCornerRadius;
-  frame = [extensionView_ convertRect:frame toView:nil];
+
   // Adjust the origin according to the height and width so that the arrow is
   // positioned correctly at the middle and slightly down from the button.
   NSPoint windowOrigin = self.anchorPoint;
-  NSSize offsets = NSMakeSize(info_bubble::kBubbleArrowXOffset +
-                                  info_bubble::kBubbleArrowWidth / 2.0,
-                              info_bubble::kBubbleArrowHeight / 2.0);
+  NSSize offsets = {0, 0};
+  if ([[self bubble] arrowLocation] != info_bubble::kNoArrow) {
+    frame.size.height += info_bubble::kBubbleArrowHeight;
+    offsets = NSMakeSize(
+        info_bubble::kBubbleArrowXOffset + info_bubble::kBubbleArrowWidth / 2.0,
+        info_bubble::kBubbleArrowHeight / 2.0);
+  }
+
+  frame = [extensionView_ convertRect:frame toView:nil];
   offsets = [extensionView_ convertSize:offsets toView:nil];
   if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout()) {
     windowOrigin.x -= offsets.width;
