@@ -14,6 +14,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/pref_service.h"
@@ -50,6 +51,7 @@ content::WebUIDataSource* CreateSlowUIHTMLSource() {
   source->AddLocalizedString("slowWarning", IDS_SLOW_WARNING);
 
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("slow.js", IDR_SLOW_JS);
   source->SetDefaultResource(IDR_SLOW_HTML);
   return source;

@@ -17,6 +17,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "components/prefs/pref_service.h"
 #include "components/ui_devtools/devtools_server.h"
 #include "content/public/browser/devtools_agent_host.h"
@@ -505,6 +506,7 @@ void InspectUI::StopListeningNotifications() {
 content::WebUIDataSource* InspectUI::CreateInspectUIHTMLSource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIInspectHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("inspect.css", IDR_INSPECT_CSS);
   source->AddResourcePath("inspect.js", IDR_INSPECT_JS);
   source->SetDefaultResource(IDR_INSPECT_HTML);

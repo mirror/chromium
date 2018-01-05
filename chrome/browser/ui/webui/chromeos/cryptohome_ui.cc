@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/webui/chromeos/cryptohome_web_ui_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 
@@ -20,6 +21,7 @@ namespace {
 content::WebUIDataSource* CreateCryptohomeUIHTMLSource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUICryptohomeHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("cryptohome.js", IDR_CRYPTOHOME_JS);
   source->SetDefaultResource(IDR_CRYPTOHOME_HTML);
   return source;

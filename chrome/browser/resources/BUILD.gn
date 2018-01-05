@@ -12,6 +12,8 @@ grit("invalidations_resources") {
   defines = chrome_grit_defines
   outputs = [
     "grit/invalidations_resources.h",
+    "grit/invalidations_resources_map.cc",
+    "grit/invalidations_resources_map.h",
     "invalidations_resources.pak",
   ]
   output_dir = "$root_gen_dir/chrome"
@@ -22,6 +24,8 @@ grit("net_internals_resources") {
   defines = chrome_grit_defines
   outputs = [
     "grit/net_internals_resources.h",
+    "grit/net_internals_resources_map.cc",
+    "grit/net_internals_resources_map.h",
     "net_internals_resources.pak",
   ]
   output_dir = "$root_gen_dir/chrome"
@@ -32,6 +36,8 @@ grit("quota_internals_resources") {
   defines = chrome_grit_defines
   outputs = [
     "grit/quota_internals_resources.h",
+    "grit/quota_internals_resources_map.cc",
+    "grit/quota_internals_resources_map.h",
     "quota_internals_resources.pak",
   ]
   output_dir = "$root_gen_dir/chrome"
@@ -42,6 +48,8 @@ grit("task_scheduler_internals_resources") {
   defines = chrome_grit_defines
   outputs = [
     "grit/task_scheduler_internals_resources.h",
+    "grit/task_scheduler_internals_resources_map.cc",
+    "grit/task_scheduler_internals_resources_map.h",
     "task_scheduler_internals_resources.pak",
   ]
   output_dir = "$root_gen_dir/chrome"
@@ -52,6 +60,8 @@ grit("translate_internals_resources") {
   defines = chrome_grit_defines
   outputs = [
     "grit/translate_internals_resources.h",
+    "grit/translate_internals_resources_map.cc",
+    "grit/translate_internals_resources_map.h",
     "translate_internals_resources.pak",
   ]
   output_dir = "$root_gen_dir/chrome"
@@ -62,6 +72,8 @@ grit("webapks_ui_resources") {
   defines = chrome_grit_defines
   outputs = [
     "grit/webapks_ui_resources.h",
+    "grit/webapks_ui_resources_map.cc",
+    "grit/webapks_ui_resources_map.h",
     "webapks_ui_resources.pak",
   ]
   output_dir = "$root_gen_dir/chrome"
@@ -147,6 +159,8 @@ if (enable_extensions) {
     defines = chrome_grit_defines
     outputs = [
       "grit/sync_file_system_internals_resources.h",
+      "grit/sync_file_system_internals_resources_map.cc",
+      "grit/sync_file_system_internals_resources_map.h",
       "sync_file_system_internals_resources.pak",
     ]
     output_dir = "$root_gen_dir/chrome"

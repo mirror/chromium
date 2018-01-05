@@ -13,6 +13,7 @@
 #include "chrome/browser/ui/webui/chromeos/first_run/first_run_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
@@ -82,6 +83,7 @@ content::WebUIDataSource* CreateDataSource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIFirstRunHost);
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->SetDefaultResource(IDR_FIRST_RUN_HTML);
   source->AddResourcePath(kFirstRunJSPath, IDR_FIRST_RUN_JS);
   base::DictionaryValue localized_strings;

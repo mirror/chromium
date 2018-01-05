@@ -27,6 +27,7 @@
 #include "chrome/common/channel_info.h"
 #include "chrome/common/url_constants.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/net_log/chrome_net_log.h"
 #include "components/net_log/net_export_file_writer.h"
 #include "components/net_log/net_export_ui_constants.h"
@@ -61,9 +62,9 @@ content::WebUIDataSource* CreateNetExportHTMLSource() {
       content::WebUIDataSource::Create(chrome::kChromeUINetExportHost);
 
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->AddResourcePath(net_log::kNetExportUIJS, IDR_NET_LOG_NET_EXPORT_JS);
   source->SetDefaultResource(IDR_NET_LOG_NET_EXPORT_HTML);
-  source->UseGzip();
   return source;
 }
 

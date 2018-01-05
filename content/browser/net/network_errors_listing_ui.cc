@@ -12,7 +12,9 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/values.h"
 #include "content/grit/content_resources.h"
+#include "content/grit/content_resources_map.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_ui_data_source.h"
 #include "content/public/common/url_constants.h"
 #include "net/base/net_errors.h"
 #include "net/log/net_log_util.h"
@@ -79,6 +81,8 @@ NetworkErrorsListingUI::NetworkErrorsListingUI(WebUI* web_ui)
   // Set up the chrome://network-errors source.
   WebUIDataSource* html_source =
       WebUIDataSource::Create(kChromeUINetworkErrorsListingHost);
+  html_source->AddGzipMap(kContentResources, kContentResourcesSize);
+  html_source->ExcludePathsFromGzip({kNetworkErrorDataFile});
 
   // Add required resources.
   html_source->SetJsonPath("strings.js");

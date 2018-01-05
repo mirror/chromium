@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/webui/webapks_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/webapks_ui_resources.h"
+#include "chrome/grit/webapks_ui_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 
@@ -21,11 +22,10 @@ WebUIDataSource* CreateWebApksUIDataSource() {
   WebUIDataSource* html_source =
       WebUIDataSource::Create(chrome::kChromeUIWebApksHost);
   html_source->SetJsonPath("strings.js");
+  html_source->AddGzipMap(kWebapksUiResources, kWebapksUiResourcesSize);
   html_source->AddResourcePath("webapks.js", IDR_WEBAPKS_UI_JS);
   html_source->AddResourcePath("about_webapks.css", IDR_WEBAPKS_UI_CSS);
   html_source->SetDefaultResource(IDR_WEBAPKS_UI_HTML);
-  html_source->UseGzip();
-
   return html_source;
 }
 

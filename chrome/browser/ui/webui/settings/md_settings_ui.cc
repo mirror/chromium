@@ -121,10 +121,6 @@ void MdSettingsUI::RegisterProfilePrefs(
 MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
     : content::WebUIController(web_ui),
       WebContentsObserver(web_ui->GetWebContents()) {
-#if BUILDFLAG(OPTIMIZE_WEBUI)
-  std::vector<std::string> exclude_from_gzip;
-#endif
-
   Profile* profile = Profile::FromWebUI(web_ui);
   AddSettingsPageUIHandler(base::MakeUnique<AppearanceHandler>(web_ui));
 
@@ -199,33 +195,32 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
 
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(chrome::kChromeUISettingsHost);
+  html_source->AddGzipMap(kSettingsResources, kSettingsResourcesSize);
 
 #if defined(OS_WIN)
-  bool chromeCleanupEnabled = false;
-  bool userInitiatedCleanupsEnabled = false;
+  bool chrome_cleanup_enabled = false;
+  bool user_initiated_cleanups_enabled = false;
 
   AddSettingsPageUIHandler(base::MakeUnique<ChromeCleanupHandler>(profile));
 
   safe_browsing::ChromeCleanerController* cleaner_controller =
       safe_browsing::ChromeCleanerController::GetInstance();
-  chromeCleanupEnabled = cleaner_controller->ShouldShowCleanupInSettingsUI();
-  userInitiatedCleanupsEnabled = safe_browsing::UserInitiatedCleanupsEnabled();
+  chrome_cleanup_enabled = cleaner_controller->ShouldShowCleanupInSettingsUI();
+  user_initiated_cleanups_enabled =
+      safe_browsing::UserInitiatedCleanupsEnabled();
 
 #if defined(GOOGLE_CHROME_BUILD)
   if (cleaner_controller->IsPoweredByPartner())
     html_source->AddBoolean("cleanupPoweredByPartner", true);
 
   html_source->AddResourcePath("partner-logo.svg", IDR_CHROME_CLEANUP_PARTNER);
-#if BUILDFLAG(OPTIMIZE_WEBUI)
-  exclude_from_gzip.push_back("partner-logo.svg");
-#endif
 #endif  // defined(GOOGLE_CHROME_BUILD)
 
-  html_source->AddBoolean("chromeCleanupEnabled", chromeCleanupEnabled);
+  html_source->AddBoolean("chromeCleanupEnabled", chrome_cleanup_enabled);
   // Don't need to save this variable in UpdateCleanupDataSource() because it
   // should never change while Chrome is open.
   html_source->AddBoolean("userInitiatedCleanupsEnabled",
-                          userInitiatedCleanupsEnabled);
+                          user_initiated_cleanups_enabled);
 
 #endif  // defined(OS_WIN)
 
@@ -306,7 +301,6 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
   html_source->AddResourcePath("lazy_load.html",
                                IDR_MD_SETTINGS_LAZY_LOAD_VULCANIZED_HTML);
   html_source->SetDefaultResource(IDR_MD_SETTINGS_VULCANIZED_HTML);
-  html_source->UseGzip(exclude_from_gzip);
 #else
   // Add all settings resources.
   for (size_t i = 0; i < kSettingsResourcesSize; ++i) {

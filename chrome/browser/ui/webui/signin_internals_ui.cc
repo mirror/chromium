@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/webui/signin/signin_dice_internals_handler.h"
 #include "chrome/common/url_constants.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/signin/core/browser/about_signin_internals.h"
 #include "components/signin/core/browser/gaia_cookie_manager_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
@@ -28,9 +29,9 @@ content::WebUIDataSource* CreateSignInInternalsHTMLSource() {
       content::WebUIDataSource::Create(chrome::kChromeUISignInInternalsHost);
 
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->AddResourcePath("signin_internals.js", IDR_SIGNIN_INTERNALS_INDEX_JS);
   source->SetDefaultResource(IDR_SIGNIN_INTERNALS_INDEX_HTML);
-  source->UseGzip();
   return source;
 }
 

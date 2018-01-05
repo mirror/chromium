@@ -21,6 +21,7 @@
 #include "components/gcm_driver/gcm_internals_helper.h"
 #include "components/gcm_driver/gcm_profile_service.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -164,12 +165,12 @@ GCMInternalsUI::GCMInternalsUI(content::WebUI* web_ui)
   html_source->SetJsonPath("strings.js");
 
   // Add required resources.
+  html_source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   html_source->AddResourcePath(gcm_driver::kGcmInternalsCSS,
                                IDR_GCM_DRIVER_GCM_INTERNALS_CSS);
   html_source->AddResourcePath(gcm_driver::kGcmInternalsJS,
                                IDR_GCM_DRIVER_GCM_INTERNALS_JS);
   html_source->SetDefaultResource(IDR_GCM_DRIVER_GCM_INTERNALS_HTML);
-  html_source->UseGzip();
 
   Profile* profile = Profile::FromWebUI(web_ui);
   content::WebUIDataSource::Add(profile, html_source);

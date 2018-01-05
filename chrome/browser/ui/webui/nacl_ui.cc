@@ -35,6 +35,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/version_info/version_info.h"
@@ -63,6 +64,7 @@ content::WebUIDataSource* CreateNaClUIHTMLSource() {
       content::WebUIDataSource::Create(chrome::kChromeUINaClHost);
 
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("about_nacl.css", IDR_ABOUT_NACL_CSS);
   source->AddResourcePath("about_nacl.js", IDR_ABOUT_NACL_JS);
   source->SetDefaultResource(IDR_ABOUT_NACL_HTML);

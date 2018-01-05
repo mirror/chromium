@@ -18,6 +18,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
@@ -316,6 +317,7 @@ IdentityInternalsUI::IdentityInternalsUI(content::WebUI* web_ui)
   html_source->SetJsonPath("strings.js");
 
   // Required resources
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html_source->AddResourcePath("identity_internals.css",
       IDR_IDENTITY_INTERNALS_CSS);
   html_source->AddResourcePath("identity_internals.js",

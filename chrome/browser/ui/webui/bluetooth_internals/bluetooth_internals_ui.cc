@@ -8,6 +8,7 @@
 #include "chrome/browser/ui/webui/bluetooth_internals/bluetooth_internals_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui_data_source.h"
 
 BluetoothInternalsUI::BluetoothInternalsUI(content::WebUI* web_ui)
@@ -15,6 +16,8 @@ BluetoothInternalsUI::BluetoothInternalsUI(content::WebUI* web_ui)
   // Set up the chrome://bluetooth-internals source.
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(chrome::kChromeUIBluetoothInternalsHost);
+
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
 
   // Add required resources.
   html_source->AddResourcePath("adapter.mojom.js",
@@ -59,7 +62,6 @@ BluetoothInternalsUI::BluetoothInternalsUI(content::WebUI* web_ui)
                                IDR_BLUETOOTH_INTERNALS_VALUE_CONTROL_JS);
 
   html_source->SetDefaultResource(IDR_BLUETOOTH_INTERNALS_HTML);
-  html_source->UseGzip();
 
   Profile* profile = Profile::FromWebUI(web_ui);
   content::WebUIDataSource::Add(profile, html_source);

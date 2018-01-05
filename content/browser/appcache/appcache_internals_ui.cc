@@ -19,6 +19,7 @@
 #include "content/browser/appcache/appcache_response.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/grit/content_resources.h"
+#include "content/grit/content_resources_map.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_ui.h"
@@ -351,10 +352,10 @@ AppCacheInternalsUI::AppCacheInternalsUI(WebUI* web_ui)
       WebUIDataSource::Create(kChromeUIAppCacheInternalsHost);
 
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kContentResources, kContentResourcesSize);
   source->AddResourcePath("appcache_internals.js", IDR_APPCACHE_INTERNALS_JS);
   source->AddResourcePath("appcache_internals.css", IDR_APPCACHE_INTERNALS_CSS);
   source->SetDefaultResource(IDR_APPCACHE_INTERNALS_HTML);
-  source->UseGzip();
 
   WebUIDataSource::Add(browser_context(), source);
 

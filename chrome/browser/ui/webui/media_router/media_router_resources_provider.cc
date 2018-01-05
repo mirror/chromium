@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/webui/media_router/media_router_resources_provider.h"
 
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui_data_source.h"
 
 namespace {
@@ -88,6 +89,7 @@ void AddPolymerElements(content::WebUIDataSource* html_source) {
 namespace media_router {
 
 void AddMediaRouterUIResources(content::WebUIDataSource* html_source) {
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   AddMainWebResources(html_source);
   AddPolymerElements(html_source);
   html_source->SetDefaultResource(IDR_MEDIA_ROUTER_HTML);

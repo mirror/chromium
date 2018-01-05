@@ -9,6 +9,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -25,7 +26,7 @@ CastUI::CastUI(content::WebUI* web_ui)
   // Set up the chrome://cast data source and add required resources.
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(chrome::kChromeUICastHost);
-
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html_source->AddResourcePath("cast.css", IDR_CAST_CSS);
   html_source->AddResourcePath("cast.js", IDR_CAST_JS);
   html_source->AddResourcePath("cast_favicon.ico", IDR_CAST_FAVICON);

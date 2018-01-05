@@ -10,6 +10,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 
@@ -19,6 +20,7 @@ SysInternalsUI::SysInternalsUI(content::WebUI* web_ui)
 
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(chrome::kChromeUISysInternalsHost);
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html_source->SetDefaultResource(IDR_SYS_INTERNALS_HTML);
   html_source->AddResourcePath("index.css", IDR_SYS_INTERNALS_CSS);
   html_source->AddResourcePath("index.js", IDR_SYS_INTERNALS_JS);

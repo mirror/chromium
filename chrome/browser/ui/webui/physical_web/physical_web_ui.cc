@@ -10,6 +10,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/physical_web/data_source/physical_web_data_source.h"
 #include "components/physical_web/webui/physical_web_base_message_handler.h"
 #include "components/physical_web/webui/physical_web_ui_constants.h"
@@ -28,6 +29,7 @@ content::WebUIDataSource* CreatePhysicalWebHTMLSource() {
   source->AddLocalizedString(physical_web_ui::kEmptyMessage,
                              IDS_PHYSICAL_WEB_UI_EMPTY_MESSAGE);
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->AddResourcePath(physical_web_ui::kPhysicalWebJS,
                           IDR_PHYSICAL_WEB_UI_JS);
   source->AddResourcePath(physical_web_ui::kPhysicalWebCSS,
@@ -35,7 +37,6 @@ content::WebUIDataSource* CreatePhysicalWebHTMLSource() {
   source->SetDefaultResource(IDR_PHYSICAL_WEB_UI_HTML);
   source->AddResourcePath(physical_web_ui::kPhysicalWebLinkIcon,
                           IDR_PHYSICAL_WEB_UI_LINK_ICON);
-  source->UseGzip();
   return source;
 }
 

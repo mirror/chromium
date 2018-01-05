@@ -17,6 +17,7 @@
 #include "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/network/device_state.h"
 #include "chromeos/network/network_configuration_handler.h"
@@ -276,6 +277,7 @@ NetworkUI::NetworkUI(content::WebUI* web_ui)
 
   content::WebUIDataSource* html =
       content::WebUIDataSource::Create(chrome::kChromeUINetworkHost);
+  html->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html->AddLocalizedStrings(localized_strings);
 
   network_element::AddLocalizedStrings(html);

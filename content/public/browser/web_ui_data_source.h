@@ -15,6 +15,8 @@
 #include "base/strings/string16.h"
 #include "content/common/content_export.h"
 
+struct GzippedGritResourceMap;
+
 namespace base {
 class DictionaryValue;
 class RefCountedMemory;
@@ -69,6 +71,11 @@ class WebUIDataSource {
   // Sets the path which will return the JSON strings.
   virtual void SetJsonPath(const std::string& path) = 0;
 
+  // Add metadata about which IDRs are gzipped. Each resource_id used in
+  // AddResourcePath()/SetDefaultResource() must be known before adding.
+  virtual void AddGzipMap(const GzippedGritResourceMap* map,
+                          size_t map_size) = 0;
+
   // Adds a mapping between a path name and a resource to return.
   virtual void AddResourcePath(const std::string& path, int resource_id) = 0;
 
@@ -107,9 +114,12 @@ class WebUIDataSource {
       const std::string& data) = 0;
   virtual void DisableDenyXFrameOptions() = 0;
 
-  // Tells the loading code that resources are gzipped on disk. |excluded_paths|
-  // are uncompressed paths, and therefore should not be decompressed.
-  virtual void UseGzip(const std::vector<std::string>& excluded_paths = {}) = 0;
+  // Returns false for whether any of |excluded_paths| can be gzipped. You
+  // should call this if your data source uses SetRequestFilter() to dynamically
+  // respond to URLs like a server (i.e. a page fetches some structured data in
+  // JSON).
+  virtual void ExcludePathsFromGzip(
+      const std::vector<std::string>& excluded_paths) = 0;
 };
 
 }  // namespace content

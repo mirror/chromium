@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "content/browser/webrtc/webrtc_internals_message_handler.h"
 #include "content/grit/content_resources.h"
+#include "content/grit/content_resources_map.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -18,11 +19,10 @@ namespace {
 WebUIDataSource* CreateWebRTCInternalsHTMLSource() {
   WebUIDataSource* source =
       WebUIDataSource::Create(kChromeUIWebRTCInternalsHost);
-
+  source->AddGzipMap(kContentResources, kContentResourcesSize);
   source->SetJsonPath("strings.js");
   source->AddResourcePath("webrtc_internals.js", IDR_WEBRTC_INTERNALS_JS);
   source->SetDefaultResource(IDR_WEBRTC_INTERNALS_HTML);
-  source->UseGzip();
   return source;
 }
 

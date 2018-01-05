@@ -13,8 +13,6 @@
 #include "base/macros.h"
 #include "extensions/browser/component_extension_resource_manager.h"
 
-struct GritResourceMap;
-
 namespace extensions {
 
 class ChromeComponentExtensionResourceManager
@@ -29,7 +27,8 @@ class ChromeComponentExtensionResourceManager
                                     int* resource_id) const override;
 
  private:
-  void AddComponentResourceEntries(const GritResourceMap* entries, size_t size);
+  template <typename T>
+  void AddComponentResourceEntries(const T* entries, size_t size);
 
   // A map from a resource path to the resource ID.  Used by
   // IsComponentExtensionResource.

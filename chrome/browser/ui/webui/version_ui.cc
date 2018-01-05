@@ -17,6 +17,7 @@
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/version_info/version_info.h"
 #include "components/version_ui/version_ui_constants.h"
@@ -171,11 +172,11 @@ WebUIDataSource* CreateVersionUIDataSource() {
 #endif  // defined(OS_WIN)
 
   html_source->SetJsonPath("strings.js");
+  html_source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   html_source->AddResourcePath(version_ui::kVersionJS, IDR_VERSION_UI_JS);
   html_source->AddResourcePath(version_ui::kAboutVersionCSS,
                                IDR_VERSION_UI_CSS);
   html_source->SetDefaultResource(IDR_VERSION_UI_HTML);
-  html_source->UseGzip();
   return html_source;
 }
 

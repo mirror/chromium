@@ -16,6 +16,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_ui.h"
@@ -35,6 +36,7 @@ void AddLocalizedString(content::WebUIDataSource* source,
 content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIBookmarksHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
 
   // Localized strings (alphabetical order).
   AddLocalizedString(source, "addBookmarkTitle",
@@ -126,10 +128,10 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
                           IDR_MD_BOOKMARKS_IMAGES_FOLDER_OPEN_SVG);
   source->AddResourcePath("images/folder.svg",
                           IDR_MD_BOOKMARKS_IMAGES_FOLDER_SVG);
+
 #if BUILDFLAG(OPTIMIZE_WEBUI)
   source->AddResourcePath("crisper.js", IDR_MD_BOOKMARKS_CRISPER_JS);
   source->SetDefaultResource(IDR_MD_BOOKMARKS_VULCANIZED_HTML);
-  source->UseGzip({"images/folder_open.svg", "images/folder.svg"});
 #else
   source->AddResourcePath("actions.html", IDR_MD_BOOKMARKS_ACTIONS_HTML);
   source->AddResourcePath("actions.js", IDR_MD_BOOKMARKS_ACTIONS_JS);

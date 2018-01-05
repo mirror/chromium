@@ -24,6 +24,7 @@
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/grit/content_resources.h"
+#include "content/grit/content_resources_map.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
@@ -325,13 +326,13 @@ ServiceWorkerInternalsUI::ServiceWorkerInternalsUI(WebUI* web_ui)
   WebUIDataSource* source =
       WebUIDataSource::Create(kChromeUIServiceWorkerInternalsHost);
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kContentResources, kContentResourcesSize);
   source->AddResourcePath("serviceworker_internals.js",
                           IDR_SERVICE_WORKER_INTERNALS_JS);
   source->AddResourcePath("serviceworker_internals.css",
                           IDR_SERVICE_WORKER_INTERNALS_CSS);
   source->SetDefaultResource(IDR_SERVICE_WORKER_INTERNALS_HTML);
   source->DisableDenyXFrameOptions();
-  source->UseGzip();
 
   BrowserContext* browser_context =
       web_ui->GetWebContents()->GetBrowserContext();

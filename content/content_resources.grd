@@ -6,6 +6,8 @@
       <emit emit_type='prepend'></emit>
     </output>
     <output filename="content_resources.pak" type="data_package" />
+    <output filename="grit/content_resources_map.cc" type="gzipped_resource_file_map_source" />
+    <output filename="grit/content_resources_map.h" type="gzipped_resource_map_header" />
   </outputs>
   <translations />
   <release seq="1">

@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/webui/supervised_user_internals_message_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 
@@ -17,13 +18,12 @@ namespace {
 content::WebUIDataSource* CreateSupervisedUserInternalsHTMLSource() {
   content::WebUIDataSource* source = content::WebUIDataSource::Create(
       chrome::kChromeUISupervisedUserInternalsHost);
-
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("supervised_user_internals.js",
                           IDR_SUPERVISED_USER_INTERNALS_JS);
   source->AddResourcePath("supervised_user_internals.css",
                           IDR_SUPERVISED_USER_INTERNALS_CSS);
   source->SetDefaultResource(IDR_SUPERVISED_USER_INTERNALS_HTML);
-  source->UseGzip();
   return source;
 }
 
