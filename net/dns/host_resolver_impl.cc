@@ -982,6 +982,9 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
     // only needs to run one transaction.
     virtual void OnFirstDnsTransactionComplete() = 0;
 
+    virtual URLRequestContextGetter* url_request_context_getter() = 0;
+    virtual RequestPriority priority() const = 0;
+
    protected:
     Delegate() = default;
     virtual ~Delegate() = default;
@@ -1041,13 +1044,17 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
 
   std::unique_ptr<DnsTransaction> CreateTransaction(AddressFamily family) {
     DCHECK_NE(ADDRESS_FAMILY_UNSPECIFIED, family);
-    return client_->GetTransactionFactory()->CreateTransaction(
-        key_.hostname,
-        family == ADDRESS_FAMILY_IPV6 ? dns_protocol::kTypeAAAA :
-                                        dns_protocol::kTypeA,
-        base::Bind(&DnsTask::OnTransactionComplete, base::Unretained(this),
-                   base::TimeTicks::Now()),
-        net_log_);
+    std::unique_ptr<DnsTransaction> trans =
+        client_->GetTransactionFactory()->CreateTransaction(
+            key_.hostname,
+            family == ADDRESS_FAMILY_IPV6 ? dns_protocol::kTypeAAAA
+                                          : dns_protocol::kTypeA,
+            base::Bind(&DnsTask::OnTransactionComplete, base::Unretained(this),
+                       base::TimeTicks::Now()),
+            net_log_);
+    trans->SetRequestContext(delegate_->url_request_context_getter());
+    trans->SetRequestPriority(delegate_->priority());
+    return trans;
   }
 
   void OnTransactionComplete(const base::TimeTicks& start_time,
@@ -1639,6 +1646,10 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
       dns_task_->StartSecondTransaction();
   }
 
+  URLRequestContextGetter* url_request_context_getter() override {
+    return resolver_->url_request_context_.get();
+  }
+
   void RecordJobHistograms(int error) {
     // Used in UMA_HISTOGRAM_ENUMERATION. Do not renumber entries or reuse
     // deprecated values.
@@ -1802,7 +1813,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
                      base::TimeDelta());
   }
 
-  RequestPriority priority() const {
+  RequestPriority priority() const override {
     return priority_tracker_.highest_priority();
   }
 
@@ -2174,6 +2185,19 @@ bool HostResolverImpl::GetNoIPv6OnWifi() {
   return assume_ipv6_failure_on_wifi_;
 }
 
+void HostResolverImpl::SetRequestContext(URLRequestContextGetter* context) {
+  url_request_context_ = context;
+}
+
+void HostResolverImpl::AddDnsOverHttpsServer(std::string spec, bool use_post) {
+  GURL url(spec);
+  if (!url.SchemeIs("https"))
+    return;
+  dns_over_https_servers_.push_back(
+      DnsConfig::DnsOverHttpsServerConfig(url, use_post));
+  UpdateDNSConfig(true);
+}
+
 bool HostResolverImpl::ResolveAsIP(const Key& key,
                                    const RequestInfo& info,
                                    const IPAddress* ip_address,
@@ -2528,9 +2552,11 @@ void HostResolverImpl::UpdateDNSConfig(bool config_changed) {
     // wasn't already a DnsConfig or it's the same one.
     DCHECK(config_changed || !dns_client_->GetConfig() ||
            dns_client_->GetConfig()->Equals(dns_config));
+    dns_config.dns_over_https_servers_ = dns_over_https_servers_;
     dns_client_->SetConfig(dns_config);
-    if (dns_client_->GetConfig())
+    if (dns_client_->GetConfig()) {
       UMA_HISTOGRAM_BOOLEAN("AsyncDNS.DnsClientEnabled", true);
+    }
   }
 
   if (config_changed) {
@@ -2593,6 +2619,7 @@ void HostResolverImpl::SetDnsClient(std::unique_ptr<DnsClient> dns_client) {
       num_dns_failures_ < kMaximumDnsFailures) {
     DnsConfig dns_config;
     NetworkChangeNotifier::GetDnsConfig(&dns_config);
+    dns_config.dns_over_https_servers_ = dns_over_https_servers_;
     dns_client_->SetConfig(dns_config);
     num_dns_failures_ = 0;
     if (dns_client_->GetConfig())
