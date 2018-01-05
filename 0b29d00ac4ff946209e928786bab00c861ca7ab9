@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cb83c880_0059fe7e",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T18:36:22Z",
+      "side": 1,
+      "message": "\u003e But we will have to put the function definition in a #if !defined(OS_NACL) block anyway, otherwise the compiler will complain about an unused function. So I don\u0027t think this will change anything here. Can you clarify if I\u0027m wrong?\n\nYou\u0027re right that it doesn\u0027t change functionality.  I would prefer to see a NonNaCLHelperFunction.\n\nNonNaCLHelperFunction() would look something like:\n---\n#if !defined(OS_NACL)\nvoid NonNaCLHelperFunction() {\n  // Set |readonly_allocator_handle_| so we can pass it to be inherited and\n  // via the command line.\n  global_-\u003ereadonly_allocator_handle_ \u003d\n      global_-\u003efield_trial_allocator_-\u003eshared_memory()-\u003eGetReadOnlyHandle();\n\n#if defined(OS_ANDROID)\n  ...\n#endif  // OS_ANDROID\n}\n#endif  // not OS_NACL\n---\n\nI think this form of scoping (ifdefs around functions and not nested within a function is easier to read and at lower risk of having errors seep in.",
+      "parentUuid": "a9827562_816e498b",
+      "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59773de6_e01770dd",
         "filename": "base/metrics/field_trial_unittest.cc",
         "patchSetId": 24
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I moved the relevant functionality to another source file (base/test/test_shared_memory_util.h), and added some comments in the implementation describing what you said.",
       "parentUuid": "59773de6_e01770dd",
+      "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75ef5e8_d3120d55",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T18:36:22Z",
+      "side": 1,
+      "message": "\u003e I moved the relevant functionality to another source file (base/test/test_shared_memory_util.h), and added some comments in the implementation describing what you said.\n\nThe comments looks good.  Please make sure a proper OWNER reviews the additions to base/test/...",
+      "parentUuid": "9ee08b32_7426b704",
       "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

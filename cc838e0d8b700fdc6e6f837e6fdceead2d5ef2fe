@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf7081f0_74e70679",
+        "filename": "base/test/test_shared_memory_util.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T18:36:22Z",
+      "side": 1,
+      "message": "Please comment on what the int |fd| represents.",
+      "revId": "cc838e0d8b700fdc6e6f837e6fdceead2d5ef2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005cc2d7_c5e89344",
+        "filename": "base/test/test_shared_memory_util.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T18:36:22Z",
+      "side": 1,
+      "message": "Please use a similar message to the above implementation, i.e., \"zx_vmar_map() expected ... but returned ...\"",
+      "revId": "cc838e0d8b700fdc6e6f837e6fdceead2d5ef2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69716580_ef268cff",
+        "filename": "base/test/test_shared_memory_util.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T18:36:22Z",
+      "side": 1,
+      "message": "Verify is unclear; it implies an assertion failure.  This comment should explain what the return value means?  True \u003d verified?  True \u003d failure?",
+      "revId": "cc838e0d8b700fdc6e6f837e6fdceead2d5ef2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
