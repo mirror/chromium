@@ -43,6 +43,8 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/system/timezone_util.h"
+#include "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h"
+#include "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/arc/arc_prefs.h"
 #include "ui/chromeos/events/pref_names.h"
@@ -336,8 +338,12 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
       settings_api::PrefType::PREF_TYPE_STRING;
   (*s_whitelist)[prefs::kUserTimezone] =
       settings_api::PrefType::PREF_TYPE_STRING;
+  (*s_whitelist)[settings_private::kResolveTimezoneByGeolocationOnOff] =
+      settings_api::PrefType::PREF_TYPE_BOOLEAN;
   (*s_whitelist)[chromeos::kPerUserTimezoneEnabled] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
+  (*s_whitelist)[settings_private::kResolveTimezoneByGeolocationMethodShort] =
+      settings_api::PrefType::PREF_TYPE_NUMBER;
   (*s_whitelist)[chromeos::kFineGrainedTimeZoneResolveEnabled] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
   (*s_whitelist)[prefs::kSystemTimezoneAutomaticDetectionPolicy] =
