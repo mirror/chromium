@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dc5a547_264e18bc",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T06:28:38Z",
+      "side": 1,
+      "message": "I\u0027d suggest just passing the request in the constructor as well.",
+      "revId": "a7c4744b4655be0371211d94a9b648059a851155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d39456b_4a0300ef",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T06:28:38Z",
+      "side": 1,
+      "message": "Use flat_set with base::UniquePtrComparator, and this will Just Work.",
+      "revId": "a7c4744b4655be0371211d94a9b648059a851155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c44e1f_cd3de0ec",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T06:28:38Z",
+      "side": 1,
+      "message": "Will anything be checking that content_rect overlaps with some part of the video frame?",
+      "revId": "a7c4744b4655be0371211d94a9b648059a851155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb7edd4_75dff80e",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T06:28:38Z",
+      "side": 1,
+      "message": "Can you remind me where the different parts all live? Perhaps we could document this in the mojom comments. I\u0027m guessing that this code lives in the gpu process, but I\u0027m not sure where the consumer lives.",
+      "revId": "a7c4744b4655be0371211d94a9b648059a851155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

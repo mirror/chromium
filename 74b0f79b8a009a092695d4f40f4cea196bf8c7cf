@@ -69,6 +69,24 @@
       "revId": "74b0f79b8a009a092695d4f40f4cea196bf8c7cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3b9003_7834a2ba",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_video_capture.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T06:28:38Z",
+      "side": 1,
+      "message": "One alternative would be to create a new mojo struct and typemap, that doesn\u0027t map the shared memory. It\u0027s hard to say if that\u0027d be worthwhile; the main motivation is to avoid manual serialization/deserialization logic that lives outside struct traits. So I\u0027ll wait to see what the followup CLs look like.",
+      "parentUuid": "0dbb3cab_05ca29ae",
+      "revId": "74b0f79b8a009a092695d4f40f4cea196bf8c7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
