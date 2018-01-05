@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5b5a955_b249ffd8",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "No. But we need some a11y label here. Could you suggest something reasonable?",
+      "parentUuid": "64cead4a_f9ed6acb",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19bc5bfd_4fb17cc7",
         "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3863c4a8_25e28e2a",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19bc5bfd_4fb17cc7",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a2c6503_c20995b5",
         "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2018-01-04T19:35:45Z",
       "side": 1,
       "message": "does this mean the setting to enable automatic time zone resolution, or the method of time zone resolution, or both? (If both, \"time zone resolution settings\" or something like that)",
+      "range": {
+        "startLine": 78,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 59
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124d9d4b_f3d57d45",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Actually both.\nDone.",
+      "parentUuid": "3a2c6503_c20995b5",
       "range": {
         "startLine": 78,
         "startChar": 21,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "da58997d_4575d87d",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0baa823f_74987043",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0b94cb1_5381b610",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6a3106_fe95d7a2",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b94cb1_5381b610",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +229,48 @@
     },
     {
       "key": {
+        "uuid": "0e2075cd_d2e58f1e",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dedc0af1_ed992ea6",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78fe4314_a2774e86",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d283c66_9db73dbf",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb9165a_e56f4caf",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
         "patchSetId": 3
@@ -147,6 +285,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d2e5b1_cb25c6c4",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb9165a_e56f4caf",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "b7a24a81_39e45d3b",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "649eb3e4_3ef3b8ec",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a605aed4_1f45818b",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
         "patchSetId": 3
@@ -181,6 +355,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9c386d_ee6864ea",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a605aed4_1f45818b",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "7a856d41_4d6da38d",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bef376e_3d050259",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a781eeb8_d10fd89c",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
         "patchSetId": 3
@@ -215,6 +425,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c312ed_253d3d3f",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a781eeb8_d10fd89c",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "0888cfa6_68f470ca",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "911a922c_dbbbf22b",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8baa5e4_3e8f8684",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
         "patchSetId": 3
@@ -249,6 +495,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9202245_b2a61c2e",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8baa5e4_3e8f8684",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +533,24 @@
     },
     {
       "key": {
+        "uuid": "94a8ccee_98850483",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3db7760_e16860f6",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ae326ea_f4422720",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_time_zone_manager_observer.h",
         "patchSetId": 3
@@ -283,6 +565,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944b530d_d332bc24",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_time_zone_manager_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ae326ea_f4422720",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +603,24 @@
     },
     {
       "key": {
+        "uuid": "aca973b8_7939f12e",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17eff1cf_887f600f",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc5c23fe_f8ba441b",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 3
@@ -317,6 +635,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2353297e_f2059ae4",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc5c23fe_f8ba441b",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -343,6 +679,30 @@
     },
     {
       "key": {
+        "uuid": "ae054429_23c95275",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3abc9b7a_c8b00ccf",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed5ba495_78d64f51",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 3
@@ -366,6 +726,30 @@
     },
     {
       "key": {
+        "uuid": "d5e38163_dead8349",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5ba495_78d64f51",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1412992a_396a693a",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 3
@@ -380,6 +764,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838969ab_55d36be6",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1412992a_396a693a",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -406,6 +808,30 @@
     },
     {
       "key": {
+        "uuid": "54f2efe8_22d0ba6c",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23870173_c46eaa9a",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968cc1a9_8ff82baa",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 3
@@ -417,6 +843,24 @@
       "writtenOn": "2018-01-04T18:25:59Z",
       "side": 1,
       "message": "ObserverList",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e192740_49bbe9f1",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "In this case, observers are owned here. PrefChangeObserver is actually  base::Callback.",
+      "parentUuid": "968cc1a9_8ff82baa",
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -437,6 +881,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcb2338_a7a80177",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa47341_e590dc55",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -475,6 +937,24 @@
     },
     {
       "key": {
+        "uuid": "e1815f2d_8ba2ffbb",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64ffe553_d0dfcaf9",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6d24e30_ea7ded6e",
         "filename": "chrome/browser/extensions/api/settings_private/prefs_util.h",
         "patchSetId": 3
@@ -486,6 +966,24 @@
       "writtenOn": "2018-01-04T19:35:45Z",
       "side": 1,
       "message": "Currently PrefsUtil is a \"utility\"/helper class that\u0027s used for lookup and pref manipulation helpers. It doesn\u0027t own anything itself, and the Profile pointer seems to just be a convenience -- the whole class could really be static.\n\nSo, there are implications to giving PrefsUtil full-fledged ownership over another class that changes its role. Would it be simpler to keep it as a utility class, and make this a weak pointer? Since SettingsPrivateEventRouter owns the PrefsUtil, it could own the GeneratedPrefs as well.\n\nI think that\u0027s easier to reason about because SettingsPrivateEventRouter adds itself as an observer to the GeneratedPrefs; I\u0027m not sure we gain anything by having SettingsPrivateEventRouter go through PrefsUtil to do that.",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ea1a67_31cd8798",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "as it turned out, copies of PrefsUtil are also owned by UsersPrivateDelegate and SettingsPrivateDelegate. So I made GeneratedPrefs a BrowserContextKeyedService.",
+      "parentUuid": "b6d24e30_ea7ded6e",
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -506,6 +1004,24 @@
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db59822_2c89e9b1",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util_enums.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T22:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed104cee_874dd928",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
