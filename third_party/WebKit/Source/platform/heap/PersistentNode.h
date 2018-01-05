@@ -47,7 +47,14 @@ class PersistentNode final {
   void TracePersistentNode(Visitor* visitor) {
     DCHECK(!IsUnused());
     DCHECK(trace_);
-    trace_(visitor, self_);
+    trace_(visitor, this);
+  }
+
+  template <typename T>
+  void TracePersistent(Visitor* visitor) {
+    if (IsUnused() || !trace_)
+      return;
+    static_cast<T*>(self_)->TracePersistent(visitor);
   }
 
   void Initialize(void* self, TraceCallback trace) {
@@ -94,6 +101,7 @@ struct PersistentNodeSlots final {
   PersistentNode slot_[kSlotCount];
   friend class PersistentRegion;
   friend class CrossThreadPersistentRegion;
+  friend class WeakPersistentRegion;
 };
 
 // PersistentRegion provides a region of PersistentNodes. PersistentRegion
@@ -133,8 +141,7 @@ class PLATFORM_EXPORT PersistentRegion final {
 #if DCHECK_IS_ON()
     DCHECK_GT(persistent_count_, 0);
 #endif
-    persistent_node->SetFreeListNext(free_list_head_);
-    free_list_head_ = persistent_node;
+    persistent_node->SetFreeListNext(nullptr);
 #if DCHECK_IS_ON()
     --persistent_count_;
 #endif
@@ -150,6 +157,7 @@ class PLATFORM_EXPORT PersistentRegion final {
   void TracePersistentNodes(
       Visitor*,
       ShouldTraceCallback = PersistentRegion::ShouldTracePersistentNode);
+  void RebuildFreeList();
   int NumberOfPersistents();
 
  private:
@@ -234,6 +242,11 @@ class CrossThreadPersistentRegion final {
         visitor, CrossThreadPersistentRegion::ShouldTracePersistentNode);
   }
 
+  void RebuildFreeList() {
+    MutexLocker lock(mutex_);
+    persistent_region_->RebuildFreeList();
+  }
+
   void PrepareForThreadStateTermination(ThreadState*);
 
   NO_SANITIZE_ADDRESS
@@ -262,6 +275,61 @@ class CrossThreadPersistentRegion final {
   // CrossThreadPersistentRegion operations need a lock on the region before
   // mutating.
   RecursiveMutex mutex_;
+};
+
+class PLATFORM_EXPORT WeakPersistentRegion final {
+  USING_FAST_MALLOC(WeakPersistentRegion);
+
+ public:
+  WeakPersistentRegion()
+      : free_list_head_(nullptr),
+        slots_(nullptr)
+#if DCHECK_IS_ON()
+        ,
+        persistent_count_(0)
+#endif
+  {
+  }
+  ~WeakPersistentRegion();
+
+  PersistentNode* AllocatePersistentNode(void* self, TraceCallback trace) {
+#if DCHECK_IS_ON()
+    ++persistent_count_;
+#endif
+    if (UNLIKELY(!free_list_head_))
+      EnsurePersistentNodeSlots(self, trace);
+    DCHECK(free_list_head_);
+    PersistentNode* node = free_list_head_;
+    free_list_head_ = free_list_head_->FreeListNext();
+    node->Initialize(self, trace);
+    DCHECK(!node->IsUnused());
+    return node;
+  }
+
+  void FreePersistentNode(PersistentNode* persistent_node) {
+#if DCHECK_IS_ON()
+    DCHECK_GT(persistent_count_, 0);
+#endif
+    // We don't want to reuse persistent nodes.
+    persistent_node->SetFreeListNext(nullptr);
+#if DCHECK_IS_ON()
+    --persistent_count_;
+#endif
+  }
+
+  void TracePersistentNodes(Visitor*);
+  int NumberOfPersistents();
+
+ private:
+  friend CrossThreadPersistentRegion;
+
+  void EnsurePersistentNodeSlots(void*, TraceCallback);
+
+  PersistentNode* free_list_head_;
+  PersistentNodeSlots* slots_;
+#if DCHECK_IS_ON()
+  int persistent_count_;
+#endif
 };
 
 }  // namespace blink

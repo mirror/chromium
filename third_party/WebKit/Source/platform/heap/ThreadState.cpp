@@ -1386,6 +1386,8 @@ void ThreadState::MarkPhaseEpilogue() {
   Heap().PostMarkingProcessing(current_gc_data_.visitor.get());
   Heap().WeakProcessing(current_gc_data_.visitor.get());
   Heap().DecommitCallbackStacks();
+  GetPersistentRegion()->RebuildFreeList();
+  ProcessHeap::GetCrossThreadPersistentRegion().RebuildFreeList();
 
   Heap().HeapStats().SetEstimatedMarkingTimePerByte(
       current_gc_data_.marked_object_size
