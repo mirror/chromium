@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96c008fa_34fcc7a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:20:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this is true.  TransportConnectJob::DoTransportConnect() only calls Connect() on a freshly created socket, no?",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "e9ab4ef8b05520b7c9770b62b4502b21a21efea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73990f3a_aefb6abc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:20:35Z",
+      "side": 1,
+      "message": "This one seems like a bug.  SSLClientSocket is given a connected socket, so MockSSLClientSocket probably should not actually be calling Connect().",
+      "range": {
+        "startLine": 11,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "e9ab4ef8b05520b7c9770b62b4502b21a21efea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbece12_3c257d3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:20:35Z",
+      "side": 1,
+      "message": "Hrm...The docs do say it.  But why are we doing this?",
+      "range": {
+        "startLine": 14,
+        "startChar": 27,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "e9ab4ef8b05520b7c9770b62b4502b21a21efea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
