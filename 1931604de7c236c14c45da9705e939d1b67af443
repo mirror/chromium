@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10547b9c_db570c1c",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T20:22:36Z",
+      "side": 1,
+      "message": "Nit (optional): std::array is allowed by the C++ styleguide (see https://chromium-cpp.appspot.com/), and it would eliminate the need to pass the size separately. This probably requires changes to the auto-generating code, so feel free to ignore.",
+      "range": {
+        "startLine": 173,
+        "startChar": 37,
+        "endLine": 173,
+        "endChar": 52
+      },
+      "revId": "1931604de7c236c14c45da9705e939d1b67af443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
