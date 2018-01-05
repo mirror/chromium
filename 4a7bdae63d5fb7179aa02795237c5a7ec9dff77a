@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc32f851_1ab49658",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1160827
+      },
+      "writtenOn": "2018-01-05T20:53:28Z",
+      "side": 1,
+      "message": "Using startswith(\u0027application/json\u0027) would also classify application/jsonp as JSON, and hence block JSONP endpoints that return application/jsonp instead of application/javascript.\n\napplication/jsonp is not a valid content type, but there\u0027s some mention of it around the web, so it\u0027s conceivable there are sites that use it.",
+      "range": {
+        "startLine": 102,
+        "startChar": 34,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "4a7bdae63d5fb7179aa02795237c5a7ec9dff77a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
