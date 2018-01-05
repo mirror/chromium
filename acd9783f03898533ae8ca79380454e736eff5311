@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "712fe864_2baaa76e",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3039,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-05T17:46:01Z",
+      "side": 1,
+      "message": "Thanks for separating out! Without the cross-origin in the mix, this test is easier to understand.",
+      "revId": "acd9783f03898533ae8ca79380454e736eff5311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

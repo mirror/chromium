@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "aa8d3e8a_518a196e",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3046,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-05T17:46:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b6accf60_8eaca1f5",
+      "revId": "8b36c31dba55d34eec03a8d7b8829e86176b66b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85cf25a4_2c1cd980",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "There are seven existing occurrences of enable_ip_based_pooling in this file, all with the syntax I use here (I copied one of those when writing this test).  There is also nine /*fin\u003d*/, four /*content_length\u003d*/, and one /* owns_buffer \u003d */ in this very file.  I do not find any examples of the syntax you propose in this file.  Maybe it\u0027s better to be consistent with this file?\n\nBTW a quick count shows about 800 instances of |/* arg \u003d */ value| (with or without the equation sign and whitespace) and about 1100 instances of |value /* arg */| (with or without whitespace) in //net, so the one you propose is more commonly used but not by a huge margin.  I used\nfind net \\( -name \"*.cc\" -o -name \"*.h\" \\) -exec grep -h /[*].*[*]/ {} + | sed \"s/[(),]/\\\\\\n/g;s/^ *//\" | sort | grep /[*].*[*]/\nto find these.",
       "parentUuid": "85cf25a4_2c1cd980",
+      "revId": "8b36c31dba55d34eec03a8d7b8829e86176b66b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "174c8c51_dbff0664",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-05T17:46:01Z",
+      "side": 1,
+      "message": "Not to bikeshed. I have been repeatedly told by my reviewers (mmenke@ and yzshen@ who are far more knowledgeable about the codebase than me) that the latter style is preferred, so i trusted them that it was the way for consistency. I am fine either way here.",
+      "parentUuid": "ce6efc32_bce3359a",
       "revId": "8b36c31dba55d34eec03a8d7b8829e86176b66b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
