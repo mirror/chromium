@@ -6,6 +6,7 @@
 
 [
     ActiveScriptWrappable,
+    Exposed=ServiceWorker,
     NoInterfaceObject
 ] interface Body {
     readonly attribute boolean bodyUsed;
