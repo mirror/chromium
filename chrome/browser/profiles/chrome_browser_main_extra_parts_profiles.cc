@@ -83,6 +83,7 @@
 #include "components/feature_engagement/features.h"
 #include "components/policy/content/policy_blacklist_navigation_throttle.h"
 #include "components/spellcheck/spellcheck_build_features.h"
+#include "components/webrtc_event_log/webrtc_remote_event_log_manager_factory.h"
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
@@ -367,6 +368,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   UsbChooserContextFactory::GetInstance();
 #endif
   WebDataServiceFactory::GetInstance();
+  content::WebRtcRemoteEventLogManagerFactory::GetInstance();
 }
 
 void ChromeBrowserMainExtraPartsProfiles::PreProfileInit() {

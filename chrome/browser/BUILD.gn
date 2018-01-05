@@ -1573,6 +1573,7 @@ split_static_library("browser") {
     "//components/nacl/common:features",
     "//components/payments/core",
     "//components/sync",
+    "//components/webrtc_event_log",
     "//content/public/browser",
     "//ipc",
     "//sql",
