@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d628631e_24a161d1",
+        "filename": "ios/chrome/browser/ui/dialogs/java_script_dialog_blocking_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T16:51:10Z",
+      "side": 1,
+      "message": "Can we add a test to JavaScriptDialogBlockingStateTest ?",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "027bee6a5ef303e835aa3caca47a16332f4affd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
