@@ -294,7 +294,26 @@ void PaintLayerClipper::CalculateRectsWithGeometryMapper(
       offset.MoveBy(enclosing_pagination_layer->VisualOffsetFromAncestor(
           context.root_layer));
     } else {
-      layer_.ConvertToLayerCoords(context.root_layer, offset);
+      const auto* current_transform =
+          fragment_data.PreEffectProperties().Transform();
+      const auto& root_fragment =
+          context.root_layer->GetLayoutObject().FirstFragment();
+      const auto* root_transform =
+          root_fragment.LocalBorderBoxProperties()->Transform();
+      if (&layer_ == context.root_layer ||
+          current_transform == root_transform) {
+        offset.MoveBy(fragment_data.PaintOffset());
+        offset.MoveBy(-root_fragment.PaintOffset());
+      } else {
+        offset.MoveBy(fragment_data.PaintOffset());
+
+        const TransformationMatrix& transform =
+            GeometryMapper::SourceToDestinationProjection(current_transform,
+                                                          root_transform);
+        DCHECK(transform.IsIntegerTranslation());
+        offset.Move((int)transform.E(), (int)transform.F());
+        offset.MoveBy(-root_fragment.PaintOffset());
+      }
     }
   }
   layer_bounds = LayoutRect(offset, LayoutSize(layer_.PixelSnappedSize()));
