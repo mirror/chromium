@@ -10,7 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "gpu/gpu_export.h"
+#include "gpu/gpu_gles2_export.h"
 #include "ui/gl/gl_context.h"
 
 namespace gl {
@@ -25,7 +25,7 @@ class GLES2Decoder;
 }
 
 // Encapsulates a virtual OpenGL context.
-class GPU_EXPORT GLContextVirtual : public gl::GLContext {
+class GPU_GLES2_EXPORT GLContextVirtual : public gl::GLContext {
  public:
   GLContextVirtual(gl::GLShareGroup* share_group,
                    gl::GLContext* shared_context,

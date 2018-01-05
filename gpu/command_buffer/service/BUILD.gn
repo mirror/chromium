@@ -20,7 +20,7 @@ group("service") {
 group("gles2") {
   if (is_component_build) {
     public_deps = [
-      "//gpu",
+      "//gpu:gles2",
     ]
   } else {
     public_deps = [
@@ -213,7 +213,7 @@ target(link_target_type, "gles2_sources") {
 
   configs += [
     "//build/config:precompiled_headers",
-    "//gpu:gpu_implementation",
+    "//gpu:gpu_gles2_implementation",
     "//third_party/khronos:khronos_headers",
   ]
 
