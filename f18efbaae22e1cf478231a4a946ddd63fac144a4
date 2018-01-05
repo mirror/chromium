@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bdef193_baa00b6c",
+        "filename": "components/history/core/browser/web_history_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-05T13:20:56Z",
+      "side": 1,
+      "message": "Should there be a DCHECK(!is_pending_) here?",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 24
+      },
+      "revId": "f18efbaae22e1cf478231a4a946ddd63fac144a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ff0c7e_bb147063",
+        "filename": "components/history/core/browser/web_history_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-05T13:20:56Z",
+      "side": 1,
+      "message": "kill empty line",
+      "revId": "f18efbaae22e1cf478231a4a946ddd63fac144a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1bbb78_a91b7b43",
+        "filename": "components/history/core/browser/web_history_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-05T13:20:56Z",
+      "side": 1,
+      "message": "Nit: Should there be a method |RemoveAccessTokenFromCache| that take in an account info instead of the account id to avoid asking all the clients to use identity_manager_-\u003eGetPrimaryAccountInfo().account_id.\n\nOr maybe add a method like RemovePrimaryAccountAccessTokenFromCache to avoid calling twice the identity manager.",
+      "range": {
+        "startLine": 159,
+        "startChar": 10,
+        "endLine": 159,
+        "endChar": 63
+      },
+      "revId": "f18efbaae22e1cf478231a4a946ddd63fac144a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
