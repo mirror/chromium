@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12293b6b_4da88b2a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-05T01:03:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b173605_9d18084f",
+      "revId": "7c9c058dfcff6070bf1e8a79672472d95da73986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7030b3_ed3cb0d9",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "7c9c058dfcff6070bf1e8a79672472d95da73986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc8baf6_af38c6f4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-05T01:03:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7030b3_ed3cb0d9",
+      "revId": "7c9c058dfcff6070bf1e8a79672472d95da73986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
