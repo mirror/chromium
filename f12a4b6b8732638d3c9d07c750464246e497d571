@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f8ef81f_ebd79104",
+        "filename": "components/keyed_service/content/browser_context_keyed_service_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-05T10:33:00Z",
+      "side": 0,
+      "message": "Alternatively, we could:\ns/are depended on/are dependent",
+      "range": {
+        "startLine": 28,
+        "startChar": 57,
+        "endLine": 28,
+        "endChar": 65
+      },
+      "revId": "f12a4b6b8732638d3c9d07c750464246e497d571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
