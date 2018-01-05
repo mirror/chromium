@@ -11005,6 +11005,12 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
 
       <!-- VR browser -->
       <!-- TODO(https://crbug.com/731802): Only build these when the VR browser is supported. -->
+      <message name="IDS_VR_INSTALL_KEYBOARD_PROMPT" desc="Text to be shown when the keyboard is not installed on the user's device">
+        Please install Daydream Keyboard
+      </message>
+      <message name="IDS_VR_INSTALL_KEYBOARD_BOTTON_TEXT" desc="Text on the install button of the prompt that shows then the keyboard is not insalled on the user's device">
+        Install
+      </message>
       <message name="IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION" desc="Text on the exit prompt that shows up when the user tries to use a feature that is not supported in VR">
         This feature is not supported in VR
       </message>
