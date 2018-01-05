@@ -494,7 +494,7 @@ class WallpaperControllerTest : public AshTestBase {
 
 TEST_F(WallpaperControllerTest, BasicReparenting) {
   WallpaperController* controller = Shell::Get()->wallpaper_controller();
-  controller->CreateEmptyWallpaper();
+  controller->CreateEmptyWallpaperForTesting();
 
   // Wallpaper view/window exists in the wallpaper container and nothing is in
   // the lock screen wallpaper container.
@@ -526,7 +526,7 @@ TEST_F(WallpaperControllerTest, ControllerOwnership) {
 
   // Create the wallpaper and its view.
   WallpaperController* controller = Shell::Get()->wallpaper_controller();
-  controller->CreateEmptyWallpaper();
+  controller->CreateEmptyWallpaperForTesting();
 
   // The new wallpaper is ready to animate.
   RootWindowController* root_window_controller =
@@ -551,7 +551,7 @@ TEST_F(WallpaperControllerTest, WallpaperMovementDuringUnlock) {
 
   // Reset wallpaper state, see ControllerOwnership above.
   WallpaperController* controller = Shell::Get()->wallpaper_controller();
-  controller->CreateEmptyWallpaper();
+  controller->CreateEmptyWallpaperForTesting();
 
   // Run wallpaper show animation to completion.
   RunDesktopControllerAnimation();
@@ -561,7 +561,7 @@ TEST_F(WallpaperControllerTest, WallpaperMovementDuringUnlock) {
 
   // Suspend/resume cycle causes wallpaper to refresh, loading a new wallpaper
   // that will animate in on top of the old one.
-  controller->CreateEmptyWallpaper();
+  controller->CreateEmptyWallpaperForTesting();
 
   // In this state we have two wallpaper views stored in different properties.
   // Both are in the lock screen wallpaper container.
@@ -598,13 +598,13 @@ TEST_F(WallpaperControllerTest, ChangeWallpaperQuick) {
 
   // Reset wallpaper state, see ControllerOwnership above.
   WallpaperController* controller = Shell::Get()->wallpaper_controller();
-  controller->CreateEmptyWallpaper();
+  controller->CreateEmptyWallpaperForTesting();
 
   // Run wallpaper show animation to completion.
   RunDesktopControllerAnimation();
 
   // Change to a new wallpaper.
-  controller->CreateEmptyWallpaper();
+  controller->CreateEmptyWallpaperForTesting();
 
   RootWindowController* root_window_controller =
       Shell::Get()->GetPrimaryRootWindowController();
@@ -615,7 +615,7 @@ TEST_F(WallpaperControllerTest, ChangeWallpaperQuick) {
   EXPECT_TRUE(root_window_controller->wallpaper_widget_controller());
 
   // Change to another wallpaper before animation finished.
-  controller->CreateEmptyWallpaper();
+  controller->CreateEmptyWallpaperForTesting();
 
   // The animating controller should immediately move to wallpaper controller.
   EXPECT_EQ(animating_controller,
@@ -772,7 +772,7 @@ TEST_F(WallpaperControllerTest, ShouldCalculateColorsBasedOnImage) {
   EnableShelfColoring();
   EXPECT_TRUE(ShouldCalculateColors());
 
-  controller_->CreateEmptyWallpaper();
+  controller_->CreateEmptyWallpaperForTesting();
   EXPECT_FALSE(ShouldCalculateColors());
 }
 

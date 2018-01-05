@@ -78,10 +78,6 @@ class WallpaperDelegate : public ash::WallpaperDelegate {
     return true;
   }
 
-  void InitializeWallpaper() override {
-    chromeos::WallpaperManager::Get()->InitializeWallpaper();
-  }
-
   void OnWallpaperAnimationFinished() override {
     content::NotificationService::current()->Notify(
         chrome::NOTIFICATION_WALLPAPER_ANIMATION_FINISHED,

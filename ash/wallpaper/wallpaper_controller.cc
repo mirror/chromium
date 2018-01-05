@@ -672,10 +672,10 @@ void WallpaperController::SetDefaultWallpaperImpl(
         use_small ? chromeos::switches::kChildWallpaperSmall
                   : chromeos::switches::kChildWallpaperLarge;
     file_path = command_line->GetSwitchValuePath(switch_string);
-  } else if (!customized_default_wallpaper_small_.empty()) {
-    DCHECK(!customized_default_wallpaper_large_.empty());
-    file_path = use_small ? customized_default_wallpaper_small_
-                          : customized_default_wallpaper_large_;
+  } else if (!customized_default_small_path_.empty()) {
+    DCHECK(!customized_default_large_path_.empty());
+    file_path = use_small ? customized_default_small_path_
+                          : customized_default_large_path_;
   } else {
     const std::string switch_string =
         use_small ? chromeos::switches::kDefaultWallpaperSmall
@@ -697,27 +697,6 @@ void WallpaperController::SetDefaultWallpaperImpl(
                    show_wallpaper),
         sequenced_task_runner_, file_path);
   }
-}
-
-void WallpaperController::SetCustomizedDefaultWallpaperPaths(
-    const base::FilePath& customized_default_wallpaper_file_small,
-    const base::FilePath& customized_default_wallpaper_file_large) {
-  customized_default_wallpaper_small_ = customized_default_wallpaper_file_small;
-  customized_default_wallpaper_large_ = customized_default_wallpaper_file_large;
-
-  // If the current wallpaper is the default one, then the new customized
-  // default wallpaper should be shown immediately to update the screen. It
-  // shouldn't replace wallpapers of other types.
-  bool show_wallpaper = true;
-  if (current_wallpaper_ && GetWallpaperType() != wallpaper::DEFAULT)
-    show_wallpaper = false;
-
-  // Customized default wallpapers are subject to the same restrictions as other
-  // default wallpapers, e.g. they should not be set during guest sessions.
-  // TODO(crbug.com/776464): Find a way to directly set wallpaper from here, or
-  // combine this method with |SetDefaultWallpaperImpl|.
-  SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
-                          show_wallpaper);
 }
 
 bool WallpaperController::CanOpenWallpaperPicker() {
@@ -762,14 +741,6 @@ void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
   wallpaper_mode_ = WALLPAPER_IMAGE;
   InstallDesktopControllerForAllWindows();
   wallpaper_count_for_testing_++;
-}
-
-void WallpaperController::CreateEmptyWallpaper() {
-  SetProminentColors(
-      std::vector<SkColor>(color_profiles_.size(), kInvalidColor));
-  current_wallpaper_.reset();
-  wallpaper_mode_ = WALLPAPER_IMAGE;
-  InstallDesktopControllerForAllWindows();
 }
 
 bool WallpaperController::IsPolicyControlled(const AccountId& account_id,
@@ -860,7 +831,12 @@ void WallpaperController::OnRootWindowAdded(aura::Window* root_window) {
 
 void WallpaperController::OnLocalStatePrefServiceInitialized(
     PrefService* pref_service) {
-  Shell::Get()->wallpaper_delegate()->InitializeWallpaper();
+  if (wallpaper_controller_client_) {
+    wallpaper_controller_client_->OnReadyToSetWallpaper();
+  } else {
+    // Ensure unit tests have a wallpaper as placeholder.
+    CreateEmptyWallpaperForTesting();
+  }
 }
 
 void WallpaperController::OnSessionStateChanged(
@@ -1082,13 +1058,17 @@ void WallpaperController::Init(
     const base::FilePath& user_data_path,
     const base::FilePath& chromeos_wallpapers_path,
     const base::FilePath& chromeos_custom_wallpapers_path,
+    const base::FilePath& customized_default_small_path,
+    const base::FilePath& customized_default_large_path,
     bool is_device_wallpaper_policy_enforced) {
   DCHECK(!wallpaper_controller_client_.get());
   wallpaper_controller_client_ = std::move(client);
   dir_user_data_path_ = user_data_path;
   dir_chrome_os_wallpapers_path_ = chromeos_wallpapers_path;
   dir_chrome_os_custom_wallpapers_path_ = chromeos_custom_wallpapers_path;
-  SetDeviceWallpaperPolicyEnforced(is_device_wallpaper_policy_enforced);
+  customized_default_small_path_ = customized_default_small_path;
+  customized_default_large_path_ = customized_default_large_path;
+  is_device_wallpaper_policy_enforced_ = is_device_wallpaper_policy_enforced;
 }
 
 void WallpaperController::SetCustomWallpaper(
@@ -1154,11 +1134,25 @@ void WallpaperController::SetDefaultWallpaper(
   }
 }
 
-void WallpaperController::SetCustomizedDefaultWallpaper(
-    const GURL& wallpaper_url,
-    const base::FilePath& file_path,
-    const base::FilePath& resized_directory) {
-  NOTIMPLEMENTED();
+void WallpaperController::SetCustomizedDefaultWallpaperPaths(
+    const base::FilePath& customized_default_small_path,
+    const base::FilePath& customized_default_large_path) {
+  customized_default_small_path_ = customized_default_small_path;
+  customized_default_large_path_ = customized_default_large_path;
+
+  // If the current wallpaper is the default one, then the new customized
+  // default wallpaper should be shown immediately to update the screen. It
+  // shouldn't replace wallpapers of other types.
+  bool show_wallpaper = true;
+  if (current_wallpaper_ && GetWallpaperType() != wallpaper::DEFAULT)
+    show_wallpaper = false;
+
+  // Customized default wallpapers are subject to the same restrictions as other
+  // default wallpapers, e.g. they should not be set during guest sessions.
+  // TODO(crbug.com/776464): Find a way to directly set wallpaper from here, or
+  // combine this method with |SetDefaultWallpaperImpl|.
+  SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
+                          show_wallpaper);
 }
 
 void WallpaperController::SetPolicyWallpaper(
@@ -1403,18 +1397,21 @@ void WallpaperController::InitializePathsForTesting() {
 }
 
 void WallpaperController::ShowDefaultWallpaperForTesting() {
-  cached_default_wallpaper_.image = CreateSolidColorWallpaper();
-  cached_default_wallpaper_.file_path.clear();
-  SetWallpaperImage(cached_default_wallpaper_.image,
-                    wallpaper::WallpaperInfo(
-                        "", wallpaper::WALLPAPER_LAYOUT_STRETCH,
-                        wallpaper::DEFAULT, base::Time::Now().LocalMidnight()));
+  SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
+                          true /*show_wallpaper=*/);
+}
+
+void WallpaperController::CreateEmptyWallpaperForTesting() {
+  SetProminentColors(
+      std::vector<SkColor>(color_profiles_.size(), kInvalidColor));
+  current_wallpaper_.reset();
+  wallpaper_mode_ = WALLPAPER_IMAGE;
+  InstallDesktopControllerForAllWindows();
 }
 
 void WallpaperController::SetClientForTesting(
     mojom::WallpaperControllerClientPtr client) {
-  Init(std::move(client), base::FilePath(), base::FilePath(), base::FilePath(),
-       false /*is_device_wallpaper_policy_enforced=*/);
+  wallpaper_controller_client_ = std::move(client);
 }
 
 void WallpaperController::FlushForTesting() {
