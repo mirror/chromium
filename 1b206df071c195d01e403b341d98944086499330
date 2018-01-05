@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3782d8a2_09b1b27b",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-05T01:42:39Z",
+      "side": 1,
+      "message": "Done.  Removed lock here \u0026 added a comment.",
+      "parentUuid": "ad504a2f_31de5e34",
+      "revId": "1b206df071c195d01e403b341d98944086499330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0358f689_4fafd300",
         "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "1b206df071c195d01e403b341d98944086499330",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4744d997_090e1e37",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-05T01:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0358f689_4fafd300",
+      "revId": "1b206df071c195d01e403b341d98944086499330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

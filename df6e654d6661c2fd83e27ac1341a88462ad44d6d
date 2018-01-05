@@ -22,6 +22,30 @@
       "revId": "df6e654d6661c2fd83e27ac1341a88462ad44d6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0038c3_7cd68e2a",
+        "filename": "ui/gfx/mojo/buffer_types.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-05T01:42:39Z",
+      "side": 1,
+      "message": "Done.  It\u0027s adds some more boilerplate in IPC traits but I guess it\u0027s OK.",
+      "parentUuid": "aef00e99_67483e19",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "df6e654d6661c2fd83e27ac1341a88462ad44d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
