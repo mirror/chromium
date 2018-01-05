@@ -29,3 +29,11 @@ void H() {
   value.AppendStrings({"foo", "bar"});
   value.AppendIfNotPresent(std::unique_ptr<base::Value>(new base::Value()));
 }
+
+void I() {
+  base::DictionaryValue value;
+  value.SetPath({"foo", "bar", "baz"}, base::Value(false));
+  value.SetKey("foo", base::Value(123));
+  value.SetPath({"foo", "bar"}, base::Value(3.14));
+  value.SetKey("qux", base::Value("baz"));
+}
