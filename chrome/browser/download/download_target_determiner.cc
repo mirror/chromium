@@ -179,6 +179,7 @@ void DownloadTargetDeterminer::DoLoop() {
 
 DownloadTargetDeterminer::Result
     DownloadTargetDeterminer::DoGenerateTargetPath() {
+  LOG(ERROR) << "joy: DoGenerateTargetPath";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(local_path_.empty());
   DCHECK_EQ(confirmation_reason_, DownloadConfirmationReason::NONE);
@@ -266,6 +267,8 @@ DownloadTargetDeterminer::Result
     // supplied to a programmatic download is invalid, then the caller needs to
     // intervene.
   }
+  LOG(ERROR) << "joy: virtual_path_: " << virtual_path_
+             << " IsAbsolute: " << virtual_path_.IsAbsolute();
   DCHECK(virtual_path_.IsAbsolute());
   DVLOG(20) << "Generated virtual path: " << virtual_path_.AsUTF8Unsafe();
 
@@ -398,6 +401,8 @@ void DownloadTargetDeterminer::ReserveVirtualPathDone(
 
 DownloadTargetDeterminer::Result
 DownloadTargetDeterminer::DoRequestConfirmation() {
+  LOG(ERROR) << "joy: DoRequestConfirmation confirmation_reason: "
+             << static_cast<int>(confirmation_reason_);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!virtual_path_.empty());
   DCHECK(!download_->IsTransient() ||
@@ -857,6 +862,7 @@ Profile* DownloadTargetDeterminer::GetProfile() const {
 
 DownloadConfirmationReason DownloadTargetDeterminer::NeedsConfirmation(
     const base::FilePath& filename) const {
+  LOG(ERROR) << "joy: NeedsConfirmation";
   // Transient download never has user interaction.
   if (download_->IsTransient())
     return DownloadConfirmationReason::NONE;
@@ -914,6 +920,7 @@ DownloadConfirmationReason DownloadTargetDeterminer::NeedsConfirmation(
   // The user may still be prompted even if this pref is disabled due to, for
   // example, there being an unresolvable filename conflict or the target path
   // is not writeable.
+  LOG(ERROR) << "joy: PromptForDownload";
   return download_prefs_->PromptForDownload()
              ? DownloadConfirmationReason::PREFERENCE
              : DownloadConfirmationReason::NONE;
