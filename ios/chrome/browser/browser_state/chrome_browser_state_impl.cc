@@ -19,6 +19,8 @@
 #include "components/proxy_config/ios/proxy_service_factory.h"
 #include "components/proxy_config/pref_proxy_config_tracker.h"
 #include "components/sync_preferences/pref_service_syncable.h"
+#include "components/unzip_service/public/interfaces/constants.mojom.h"
+#include "components/unzip_service/unzip_service.h"
 #include "components/user_prefs/user_prefs.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
@@ -180,6 +182,11 @@ void ChromeBrowserStateImpl::RegisterServices(StaticServiceMap* services) {
   // Profile needing to know explicitly about every service that it is
   // embedding.
   RegisterIdentityServiceForBrowserState(this, services);
+
+  service_manager::EmbeddedServiceInfo unzip_info;
+  unzip_info.factory = base::BindRepeating(&unzip::UnzipService::CreateService);
+  unzip_info.task_runner = base::ThreadTaskRunnerHandle::Get();
+  services->insert(std::make_pair(unzip::mojom::kServiceName, unzip_info));
 }
 
 void ChromeBrowserStateImpl::SetOffTheRecordChromeBrowserState(

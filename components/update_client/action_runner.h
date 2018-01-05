@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -23,6 +24,10 @@ class Process;
 class SingleThreadTaskRunner;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 namespace update_client {
 
 class Component;
@@ -35,10 +40,11 @@ class ActionRunner {
   explicit ActionRunner(const Component& component);
   ~ActionRunner();
 
-  void Run(Callback run_complete);
+  void Run(Callback run_complete,
+           std::unique_ptr<service_manager::Connector> connector);
 
  private:
-  void Unpack();
+  void Unpack(std::unique_ptr<service_manager::Connector> connector);
   void UnpackComplete(const ComponentUnpacker::Result& result);
 
   void RunCommand(const base::CommandLine& cmdline);

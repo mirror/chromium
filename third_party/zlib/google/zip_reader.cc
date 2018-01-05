@@ -30,54 +30,6 @@ namespace zip {
 
 namespace {
 
-// FilePathWriterDelegate ------------------------------------------------------
-
-// A writer delegate that writes a file at a given path.
-class FilePathWriterDelegate : public WriterDelegate {
- public:
-  explicit FilePathWriterDelegate(const base::FilePath& output_file_path);
-  ~FilePathWriterDelegate() override;
-
-  // WriterDelegate methods:
-
-  // Creates the output file and any necessary intermediate directories.
-  bool PrepareOutput() override;
-
-  // Writes |num_bytes| bytes of |data| to the file, returning false if not all
-  // bytes could be written.
-  bool WriteBytes(const char* data, int num_bytes) override;
-
- private:
-  base::FilePath output_file_path_;
-  base::File file_;
-
-  DISALLOW_COPY_AND_ASSIGN(FilePathWriterDelegate);
-};
-
-FilePathWriterDelegate::FilePathWriterDelegate(
-    const base::FilePath& output_file_path)
-    : output_file_path_(output_file_path) {
-}
-
-FilePathWriterDelegate::~FilePathWriterDelegate() {
-}
-
-bool FilePathWriterDelegate::PrepareOutput() {
-  // We can't rely on parent directory entries being specified in the
-  // zip, so we make sure they are created.
-  if (!base::CreateDirectory(output_file_path_.DirName()))
-    return false;
-
-  file_.Initialize(output_file_path_,
-                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
-  return file_.IsValid();
-}
-
-bool FilePathWriterDelegate::WriteBytes(const char* data, int num_bytes) {
-  return num_bytes == file_.WriteAtCurrentPos(data, num_bytes);
-}
-
-
 // StringWriterDelegate --------------------------------------------------------
 
 // A writer delegate that writes no more than |max_read_bytes| to a given
@@ -95,6 +47,8 @@ class StringWriterDelegate : public WriterDelegate {
   // Appends |num_bytes| bytes from |data| to the output string. Returns false
   // if |num_bytes| will cause the string to exceed |max_read_bytes|.
   bool WriteBytes(const char* data, int num_bytes) override;
+
+  void SetTimeModified(const base::Time& time) override;
 
  private:
   size_t max_read_bytes_;
@@ -121,6 +75,10 @@ bool StringWriterDelegate::WriteBytes(const char* data, int num_bytes) {
     return false;
   output_->append(data, num_bytes);
   return true;
+}
+
+void StringWriterDelegate::SetTimeModified(const base::Time& time) {
+  // Do nothing.
 }
 
 }  // namespace
@@ -292,7 +250,6 @@ bool ZipReader::LocateAndOpenEntry(const base::FilePath& path_in_zip) {
 bool ZipReader::ExtractCurrentEntry(WriterDelegate* delegate,
                                     uint64_t num_bytes_to_extract) const {
   DCHECK(zip_file_);
-
   const int open_result = unzOpenCurrentFile(zip_file_);
   if (open_result != UNZ_OK)
     return false;
@@ -331,6 +288,11 @@ bool ZipReader::ExtractCurrentEntry(WriterDelegate* delegate,
 
   unzCloseCurrentFile(zip_file_);
 
+  if (entire_file_extracted &&
+      current_entry_info()->last_modified() != base::Time::UnixEpoch()) {
+    delegate->SetTimeModified(current_entry_info()->last_modified());
+  }
+
   return entire_file_extracted;
 }
 
@@ -342,21 +304,8 @@ bool ZipReader::ExtractCurrentEntryToFilePath(
   if (current_entry_info()->is_directory())
     return base::CreateDirectory(output_file_path);
 
-  bool success = false;
-  {
-    FilePathWriterDelegate writer(output_file_path);
-    success =
-        ExtractCurrentEntry(&writer, std::numeric_limits<uint64_t>::max());
-  }
-
-  if (success &&
-      current_entry_info()->last_modified() != base::Time::UnixEpoch()) {
-    base::TouchFile(output_file_path,
-                    base::Time::Now(),
-                    current_entry_info()->last_modified());
-  }
-
-  return success;
+  FilePathWriterDelegate writer(output_file_path);
+  return ExtractCurrentEntry(&writer, std::numeric_limits<uint64_t>::max());
 }
 
 void ZipReader::ExtractCurrentEntryToFilePathAsync(
@@ -534,9 +483,10 @@ void ZipReader::ExtractChunk(base::File output_file,
 // FileWriterDelegate ----------------------------------------------------------
 
 FileWriterDelegate::FileWriterDelegate(base::File* file)
-    : file_(file),
-      file_length_(0) {
-}
+    : file_(file), owned_file_(nullptr), file_length_(0) {}
+
+FileWriterDelegate::FileWriterDelegate(std::unique_ptr<base::File> file)
+    : file_(file.get()), owned_file_(std::move(file)), file_length_(0) {}
 
 FileWriterDelegate::~FileWriterDelegate() {
   if (!file_->SetLength(file_length_)) {
@@ -553,6 +503,38 @@ bool FileWriterDelegate::WriteBytes(const char* data, int num_bytes) {
   if (bytes_written > 0)
     file_length_ += bytes_written;
   return bytes_written == num_bytes;
+}
+
+void FileWriterDelegate::SetTimeModified(const base::Time& time) {
+  file_->SetTimes(base::Time::Now(), time);
+}
+
+// FilePathWriterDelegate ------------------------------------------------------
+
+FilePathWriterDelegate::FilePathWriterDelegate(
+    const base::FilePath& output_file_path)
+    : output_file_path_(output_file_path) {}
+
+FilePathWriterDelegate::~FilePathWriterDelegate() {}
+
+bool FilePathWriterDelegate::PrepareOutput() {
+  // We can't rely on parent directory entries being specified in the
+  // zip, so we make sure they are created.
+  if (!base::CreateDirectory(output_file_path_.DirName()))
+    return false;
+
+  file_.Initialize(output_file_path_,
+                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  return file_.IsValid();
+}
+
+bool FilePathWriterDelegate::WriteBytes(const char* data, int num_bytes) {
+  return num_bytes == file_.WriteAtCurrentPos(data, num_bytes);
+}
+
+void FilePathWriterDelegate::SetTimeModified(const base::Time& time) {
+  file_.Close();
+  base::TouchFile(output_file_path_, base::Time::Now(), time);
 }
 
 }  // namespace zip
