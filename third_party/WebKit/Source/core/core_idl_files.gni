@@ -627,6 +627,8 @@ core_dictionary_idl_files =
                     "mojo/test/MojoInterfaceRequestEventInit.idl",
                     "offscreencanvas/ImageEncodeOptions.idl",
                     "page/scrolling/ScrollStateInit.idl",
+                    "timing/PerformanceMarkOptions.idl",
+                    "timing/PerformanceMeasureOptions.idl",
                     "timing/PerformanceObserverInit.idl",
                     "workers/WorkerOptions.idl",
                     "workers/WorkletOptions.idl",

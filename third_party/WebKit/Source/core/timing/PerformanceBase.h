@@ -49,6 +49,7 @@
 
 namespace blink {
 
+class DoubleOrPerformanceMarkOptions;
 class ExceptionState;
 class PerformanceObserver;
 class PerformanceTiming;
@@ -125,6 +126,11 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   void AddFirstContentfulPaintTiming(double start_time);
 
   void mark(const String& mark_name, ExceptionState&);
+
+  void mark(const String& mark_name,
+            DoubleOrPerformanceMarkOptions& startOrPerformanceMeasureOptions,
+            ExceptionState&);
+
   void clearMarks(const String& mark_name);
 
   void measure(const String& measure_name,
