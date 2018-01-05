@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d614584_243a6e94",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-05T19:02:01Z",
+      "side": 1,
+      "message": "I wonder if the promise should be stored in |cdm_promise_adapter_| so that it\u0027s rejected properly should the CDM crash. Then this would become simply become the promise_id (and CdmPromiseAdapter will catch if it\u0027s never called/called more than once).",
+      "range": {
+        "startLine": 241,
+        "startChar": 43,
+        "endLine": 241,
+        "endChar": 56
+      },
+      "revId": "e2d14766f3706fb8de23dbb018a8f93e9c9a4c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b64196c_f21658ee",
+        "filename": "media/cdm/cdm_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-05T19:02:01Z",
+      "side": 1,
+      "message": "nit: s/cebug/crbug/",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "e2d14766f3706fb8de23dbb018a8f93e9c9a4c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
