@@ -7,8 +7,19 @@
 #import <Cocoa/Cocoa.h>
 
 #include "base/logging.h"
+#import "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #import "ui/views/cocoa/cocoa_mouse_capture_delegate.h"
+
+// A ref-counted object to enclose a weak pointer to the event tap. See comments
+// for EventMonitorMac for why this is necessary.
+@interface ActiveEventTapHandle : NSObject {
+ @public
+  views::CocoaMouseCapture* weak_owner;
+}
+@end
+@implementation ActiveEventTapHandle
+@end
 
 namespace views {
 
@@ -35,6 +46,7 @@ class CocoaMouseCapture::ActiveEventTap {
   static ActiveEventTap* g_active_event_tap;
 
   CocoaMouseCapture* owner_;  // Weak. Owns this.
+  base::scoped_nsobject<ActiveEventTapHandle> handle_;
   id local_monitor_;
   id global_monitor_;
 
@@ -50,10 +62,20 @@ CocoaMouseCapture::ActiveEventTap::ActiveEventTap(CocoaMouseCapture* owner)
     g_active_event_tap->owner_->OnOtherClientGotCapture();
   DCHECK(!g_active_event_tap);
   g_active_event_tap = this;
+
+  handle_.reset([[ActiveEventTapHandle alloc] init]);
+  handle_.get()->weak_owner = owner_;
 }
 
 CocoaMouseCapture::ActiveEventTap::~ActiveEventTap() {
   DCHECK_EQ(g_active_event_tap, this);
+
+  // Clear the weak pointer seen by the blocks. This may seem redundant with
+  // |g_active_event_tap|, but it's possible for a different monitor for the
+  // same event to remove this monitor and immediately install a new monitor,
+  // before this monitor sees the event.
+  handle_.get()->weak_owner = nullptr;
+
   [NSEvent removeMonitor:global_monitor_];
   [NSEvent removeMonitor:local_monitor_];
   g_active_event_tap = nullptr;
@@ -73,15 +95,24 @@ void CocoaMouseCapture::ActiveEventTap::Init() {
       NSScrollWheelMask | NSOtherMouseDownMask | NSOtherMouseUpMask |
       NSOtherMouseDraggedMask;
 
-  local_monitor_ = [NSEvent addLocalMonitorForEventsMatchingMask:event_mask
-      handler:^NSEvent*(NSEvent* event) {
-        owner_->delegate_->PostCapturedEvent(event);
-        return nil;  // Swallow all local events.
-      }];
-  global_monitor_ = [NSEvent addGlobalMonitorForEventsMatchingMask:event_mask
-      handler:^void(NSEvent* event) {
-        owner_->delegate_->PostCapturedEvent(event);
-      }];
+  // Ensure the blocks capture the NSObject (not the scoped_nsobject).
+  ActiveEventTapHandle* handle = handle_;
+
+  local_monitor_ = [NSEvent
+      addLocalMonitorForEventsMatchingMask:event_mask
+                                   handler:^NSEvent*(NSEvent* event) {
+                                     if (handle->weak_owner)
+                                       handle->weak_owner->delegate_
+                                           ->PostCapturedEvent(event);
+                                     return nil;  // Swallow all local events.
+                                   }];
+  global_monitor_ =
+      [NSEvent addGlobalMonitorForEventsMatchingMask:event_mask
+                                             handler:^void(NSEvent* event) {
+                                               if (handle->weak_owner)
+                                                 handle->weak_owner->delegate_
+                                                     ->PostCapturedEvent(event);
+                                             }];
 }
 
 NSWindow* CocoaMouseCapture::ActiveEventTap::GetCaptureWindow() const {
@@ -93,8 +124,7 @@ CocoaMouseCapture::CocoaMouseCapture(CocoaMouseCaptureDelegate* delegate)
   active_handle_->Init();
 }
 
-CocoaMouseCapture::~CocoaMouseCapture() {
-}
+CocoaMouseCapture::~CocoaMouseCapture() {}
 
 // static
 NSWindow* CocoaMouseCapture::GetGlobalCaptureWindow() {
