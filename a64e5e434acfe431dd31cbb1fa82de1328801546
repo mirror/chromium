@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7557066b_c24d31fa",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-05T13:35:26Z",
+      "side": 1,
+      "message": "nit: explicit zero init here and below is not necessary, as this is the default.",
+      "range": {
+        "startLine": 683,
+        "startChar": 60,
+        "endLine": 683,
+        "endChar": 63
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

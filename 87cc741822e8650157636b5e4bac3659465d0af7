@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "36e32240_9a8380c8",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-05T13:35:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e8b0c470_754bac0a",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "87cc741822e8650157636b5e4bac3659465d0af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e1947b_ce81b795",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 4
