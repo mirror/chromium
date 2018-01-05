@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56262b35_9f730029",
+        "filename": "ios/chrome/browser/history/history_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-05T02:45:03Z",
+      "side": 1,
+      "message": "I know there\u0027s a comment on the last_load_completion_ definition, but could you please add a similar comment here for clarity.",
+      "revId": "54d4cd9ae949a93438927f13bb55a6e47d39f282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
