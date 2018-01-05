@@ -16,6 +16,40 @@
       "revId": "2103d1aa6aea882bb53e082920758dae0285f5ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2231a0d_2b32d9f3",
+        "filename": "ash/display/display_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-05T21:19:07Z",
+      "side": 1,
+      "message": "can you try to adjust similarity to make this move operation?",
+      "revId": "2103d1aa6aea882bb53e082920758dae0285f5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cb6ddb_60824d2e",
+        "filename": "chrome/browser/chromeos/display/display_prefs_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-05T21:19:07Z",
+      "side": 1,
+      "message": "why moving this out? TEST_F creates its own class so this can be inside the anonymous namespace.",
+      "revId": "2103d1aa6aea882bb53e082920758dae0285f5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
