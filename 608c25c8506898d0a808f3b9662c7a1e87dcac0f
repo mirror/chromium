@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "259926b1_5ffdcf47",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-06T01:30:56Z",
+      "side": 1,
+      "message": "This becomes out of order.\nI\u0027d recommend placing this after\n\"optional bytes udif_code_signature \u003d 40;\"\n\nAlso, I\u0027d suggest making the corresponding change in the internal proto before you make the change here so that you can reserve the field number.",
+      "range": {
+        "startLine": 543,
+        "startChar": 2,
+        "endLine": 543,
+        "endChar": 60
+      },
+      "revId": "608c25c8506898d0a808f3b9662c7a1e87dcac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
