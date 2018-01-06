@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
 #include "media/mojo/features.h"
+#include "media/mojo/interfaces/content_decryption_module.mojom.h"
 #include "media/mojo/interfaces/interface_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
@@ -51,6 +52,8 @@ class MediaInterfaceProxy : public media::mojom::InterfaceFactory {
   void CreateCdmProxy(media::mojom::CdmProxyRequest request) final;
 
  private:
+  using CdmFactory = media::mojom::CdmFactory;
+  using CdmFactoryPtr = media::mojom::CdmFactoryPtr;
   using InterfaceFactoryPtr = media::mojom::InterfaceFactoryPtr;
 
   // Gets services provided by the browser (at RenderFrameHost level) to the
@@ -69,22 +72,21 @@ class MediaInterfaceProxy : public media::mojom::InterfaceFactory {
   void OnMediaServiceConnectionError();
 
 #if BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
-  // Gets a CDM InterfaceFactory pointer for |key_system|. Returns null if
-  // unexpected error happened.
-  InterfaceFactory* GetCdmInterfaceFactory(const std::string& key_system);
+  // Gets a CdmFactory pointer for |key_system|. Returns null if unexpected
+  // error happened.
+  CdmFactory* GetCdmFactory(const std::string& key_system);
 
   // Connects to the CDM service associated with |cdm_guid|, adds the new
-  // InterfaceFactoryPtr to the |cdm_interface_factory_map_|, and returns the
-  // newly created InterfaceFactory pointer. Returns nullptr if unexpected error
-  // happened. |cdm_path| will be used to preload the CDM, if necessary.
-  // |cdm_file_system_id| is used when creating the matching storage
-  // interface.
-  InterfaceFactory* ConnectToCdmService(const std::string& cdm_guid,
-                                        const base::FilePath& cdm_path,
-                                        const std::string& cdm_file_system_id);
+  // CdmFactoryPtr to the |cdm_factory_map_|, and returns the newly created
+  // CdmFactory pointer. Returns nullptr if unexpected error happened.
+  // |cdm_path| will be used to preload the CDM, if necessary.
+  // |cdm_file_system_id| is used when creating the matching storage interface.
+  CdmFactory* ConnectToCdmService(const std::string& cdm_guid,
+                                  const base::FilePath& cdm_path,
+                                  const std::string& cdm_file_system_id);
 
-  // Callback for connection error from the InterfaceFactoryPtr in the
-  // |cdm_interface_factory_map_| associated with |cdm_guid|.
+  // Callback for connection error from the CdmFactoryPtr in the
+  // |cdm_factory_map_| associated with |cdm_guid|.
   void OnCdmServiceConnectionError(const std::string& cdm_guid);
 #endif  // BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
 
@@ -114,7 +116,7 @@ class MediaInterfaceProxy : public media::mojom::InterfaceFactory {
 #if BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
   // CDM GUID to CDM InterfaceFactoryPtr mapping, where the InterfaceFactory
   // instances live in the standalone kCdmServiceName service instances.
-  std::map<std::string, InterfaceFactoryPtr> cdm_interface_factory_map_;
+  std::map<std::string, CdmFactoryPtr> cdm_factory_map_;
 #endif  // BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
 
   base::ThreadChecker thread_checker_;
