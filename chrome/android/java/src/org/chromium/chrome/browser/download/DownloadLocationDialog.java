@@ -1,0 +1,59 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+package org.chromium.chrome.browser.download;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import org.chromium.chrome.R;
+
+/**
+ * Dialog that is displayed to ask user where they want to download the file.
+ */
+public class DownloadLocationDialog extends AlertDialog implements DialogInterface.OnClickListener {
+    private DownloadLocationDialogListener mListener;
+    private String mLocationPath;
+
+    /**
+     * Interface for a listener to the events related to the DownloadLocationDialog.
+     */
+    public interface DownloadLocationDialogListener { void onComplete(String returnedPath); }
+
+    /**
+     * Create a DownloadLocationDialog that is displayed before a download begins.
+     * @param context of the dialog.
+     * @param listener to the updates from the dialog.
+     * @param suggestedPath of the download location.
+     */
+    public DownloadLocationDialog(
+            Context context, DownloadLocationDialogListener listener, String suggestedPath) {
+        super(context, 0);
+
+        mListener = listener;
+        mLocationPath = suggestedPath;
+
+        setButton(BUTTON_POSITIVE, context.getText(android.R.string.ok), this);
+        setButton(BUTTON_NEGATIVE, context.getText(android.R.string.cancel), this);
+        setIcon(0);
+        setTitle(R.string.download_location_dialog_title);
+
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.download_location_dialog, null);
+        TextView pathText = (TextView) view.findViewById(R.id.path_text);
+        pathText.setText(suggestedPath);
+        setView(view);
+    }
+
+    @Override
+    public void onClick(DialogInterface dialogInterface, int which) {
+        mListener.onComplete(mLocationPath);
+        dismiss();
+    }
+}

@@ -1240,6 +1240,19 @@ static void JNI_PrefServiceBridge_SetDownloadDefaultDirectory(
                                 base::FilePath(FILE_PATH_LITERAL(path)));
 }
 
+static void JNI_PrefServiceBridge_SetPromptForDownloadAndroid(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    jboolean enabled) {
+  GetPrefService()->SetBoolean(prefs::kPromptForDownloadAndroid, enabled);
+}
+
+static jboolean JNI_PrefServiceBridge_GetPromptForDownloadAndroid(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  return GetPrefService()->GetBoolean(prefs::kPromptForDownloadAndroid);
+}
+
 const char* PrefServiceBridge::GetPrefNameExposedToJava(int pref_index) {
   DCHECK_GE(pref_index, 0);
   DCHECK_LT(pref_index, Pref::PREF_NUM_PREFS);
