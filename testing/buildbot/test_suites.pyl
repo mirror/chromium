@@ -1208,6 +1208,7 @@
     },
     'ozone_unittests': {},
     'ozone_x11_unittests': {},
+    'select_to_speak_browsertests': {},
     'views_mus_unittests': {},
     'views_mus_interactive_ui_tests': {},
     'wayland_client_perftests': {},
