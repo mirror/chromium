@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9136152e_9b99ea23",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-06T01:32:07Z",
+      "side": 1,
+      "message": "Is this still possible now that we don\u0027t dynamically create the DOM?",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "a0990eb7c3f77792b049bf713334cf66292b5799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f3f957_3bd86ead",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-06T01:32:07Z",
+      "side": 1,
+      "message": "@param {boolean} missing here and elsewhere. Then you would be able to change the type of updateCheckbox() |value| param to boolean and avoid casting at line 26.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "a0990eb7c3f77792b049bf713334cf66292b5799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4461f591_74e1f5b2",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-06T01:32:07Z",
+      "side": 1,
+      "message": "What is the relation of \"isModifiable\" with the notion of a \"selection\"? Not familiar with it, but looking at https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/document_info.js?l\u003d152, they seem unrelated at first glance.",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "a0990eb7c3f77792b049bf713334cf66292b5799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
