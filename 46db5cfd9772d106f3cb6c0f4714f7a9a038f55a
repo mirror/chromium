@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ac10c3_4f2e4fb4",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T01:51:12Z",
+      "side": 1,
+      "message": "Do you know why this condition doesn\u0027t lead to ::Close() below?",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f357d5e_2fba40ab",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T01:51:12Z",
+      "side": 1,
+      "message": "will this be deprecated?",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530daf65_c397bbec",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T01:51:12Z",
+      "side": 1,
+      "message": "looks like this is a type of SetDisplayPropertyCallback?",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6876d19a_1c344160",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T01:51:12Z",
+      "side": 1,
+      "message": "// NOTE: This is only available to Chrome OS Kiosk apps and Web UI.",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26491aac_ab24a383",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T01:51:12Z",
+      "side": 1,
+      "message": "s/Chrome OS/by the platform/",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4300d31_b7ac2a49",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T01:51:12Z",
+      "side": 1,
+      "message": "can you describe what will happen if setDisplayProperties is called while it\u0027s mirrored?",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fbb0ee_951465ff",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T01:51:12Z",
+      "side": 1,
+      "message": "looking at the body, it looks to me that it\u0027s cleaner to have separate SetMixedMirrorMode(), then you can avoid optional parameter.",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6b4950_887df7c3",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T01:51:12Z",
+      "side": 1,
+      "message": "base::Optional",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
