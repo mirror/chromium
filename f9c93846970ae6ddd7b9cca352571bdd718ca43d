@@ -46,6 +46,30 @@
       "revId": "f9c93846970ae6ddd7b9cca352571bdd718ca43d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db40c91a_e34d4e8c",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-06T21:08:56Z",
+      "side": 1,
+      "message": "What is the use-case for the precise RunUntilIdle() equivalence, though?\n\nWith delayed tasks included this API is inherently racey (since there is no mock time for MessageLoop) so it feels like something of a footgun, especially if we\u0027re using OS level thread priorities as well.\n\nWith regard to the tests using this call, the specific one that is failing is only failing because of the change to the semantics of IsIdleForTesting() - previously the test passed reliably because it was checking whether anyone had posted new work to the MessageLoop, ignoring any pre-existing work in that message loop.\n\nIt sounds like we should revert this until the affected tests can be cleaned up. We can provide a separate call with the new semantics just for ScopedTaskEnvironment to use, alongside the existing version, with suitable comments and follow-up to clean up.",
+      "parentUuid": "16533b19_e6bd6e74",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 32
+      },
+      "revId": "f9c93846970ae6ddd7b9cca352571bdd718ca43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
