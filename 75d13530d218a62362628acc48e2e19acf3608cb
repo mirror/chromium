@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22ebf57b_bef85ed9",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86823585_dea035d1",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fce75299_eaacf672",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cea317d_31ac3933",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fce75299_eaacf672",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "197cf015_377bba6d",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0996eea5_6f179cf4",
+      "range": {
+        "startLine": 28,
+        "startChar": 50,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77f5775e_aa96c837",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d72f11_0dd7da1d",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done\n\n(Actually, it was 2017 when I wrote the code, but we can go by when we code review it instead, if you like)",
+      "parentUuid": "77f5775e_aa96c837",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0ccc47c3_81c48906",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c3c3d4f_38bf3d1c",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1802d4b_9d17b765",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
         "patchSetId": 3
@@ -131,6 +251,24 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835993bd_27a08b53",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1802d4b_9d17b765",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "16fe6069_fde15801",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a53f00_e76bc0b5",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f8afba_327b1857",
         "filename": "components/offline_pages/core/system_download_manager_stub.cc",
         "patchSetId": 3
@@ -165,6 +321,24 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c09e15e_edfde075",
+        "filename": "components/offline_pages/core/system_download_manager_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4f8afba_327b1857",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "1e1187ba_b7c2fb81",
+        "filename": "components/offline_pages/core/system_download_manager_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "I\u0027m not planning on adding more test cases, so let\u0027s add a setter only if we end up adding a test case that needs it.",
+      "parentUuid": "a90c858e_9a8df01e",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c13a559_60b50d2a",
         "filename": "components/offline_pages/core/system_download_manager_stub.h",
         "patchSetId": 3
@@ -211,6 +409,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5df1128_3f0567f7",
+        "filename": "components/offline_pages/core/system_download_manager_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-06T00:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c13a559_60b50d2a",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
