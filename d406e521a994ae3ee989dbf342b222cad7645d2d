@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c70800_9ef4829c",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-06T03:12:57Z",
+      "side": 1,
+      "message": "Note that this test is in chrome/ because RenderViewHostImpl::OnClose() needs to go through chrome::CloseWebContents() and other things in chrome/ which eventually call RPHI::FastShutdownIfPossible() (see bug for the stack).",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 724,
+        "endChar": 64
+      },
+      "revId": "d406e521a994ae3ee989dbf342b222cad7645d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
