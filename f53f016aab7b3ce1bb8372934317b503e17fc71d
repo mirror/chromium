@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f5c1afb_eb98897c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-06T00:22:55Z",
+      "side": 1,
+      "message": "on ACTION_UP should we set mSuppressedTouchDownEvent to null?  If we don\u0027t trigger a long press, then we\u0027re holding onto an invalid touch event.\n\nIf we do that, maybe we should set mSuppressingTouchMoveEventsUntilNextTouchDown to false there too?",
+      "range": {
+        "startLine": 408,
+        "startChar": 9,
+        "endLine": 408,
+        "endChar": 0
+      },
+      "revId": "f53f016aab7b3ce1bb8372934317b503e17fc71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe317c51_e7e8b438",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-06T00:22:55Z",
+      "side": 1,
+      "message": "I think getActionMasked() is the right thing to use here.",
+      "range": {
+        "startLine": 411,
+        "startChar": 22,
+        "endLine": 411,
+        "endChar": 31
+      },
+      "revId": "f53f016aab7b3ce1bb8372934317b503e17fc71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5704f11_3f252a33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-06T00:22:55Z",
+      "side": 1,
+      "message": "In javaland, you can do\n\nif (!shouldPerformLongClick()) return false;\n\nif the statement and condition all fit on a single line.",
+      "range": {
+        "startLine": 446,
+        "startChar": 13,
+        "endLine": 446,
+        "endChar": 35
+      },
+      "revId": "f53f016aab7b3ce1bb8372934317b503e17fc71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
