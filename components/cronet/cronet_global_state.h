@@ -19,6 +19,10 @@ class ProxyService;
 namespace cronet {
 namespace global_state {
 
+void EnsureInitialized();
+
+void InitializeOnInitThread();
+
 // Returns true when running on initialization thread.
 // Only callable after initialization thread is started.
 bool IsOnInitThread();
