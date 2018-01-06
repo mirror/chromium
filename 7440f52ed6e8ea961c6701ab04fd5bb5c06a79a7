@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8230b6b1_f0d05256",
+        "filename": "chrome/browser/ui/ash/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-06T00:19:45Z",
+      "side": 1,
+      "message": "I wouldn\u0027t do this. I doubt he wants to take on the whole directory. If you want to keep him I would do it per-file. I\u0027m also OK with dropping him, since we\u0027re not adding much more code here.",
+      "revId": "7440f52ed6e8ea961c6701ab04fd5bb5c06a79a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8a1260_0d8972a1",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1626,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-06T00:19:45Z",
+      "side": 1,
+      "message": "Does the tab scrubber test file need to move too?",
+      "revId": "7440f52ed6e8ea961c6701ab04fd5bb5c06a79a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
