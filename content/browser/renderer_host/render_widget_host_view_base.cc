@@ -8,7 +8,10 @@
 #include "base/logging.h"
 #include "base/unguessable_token.h"
 #include "build/build_config.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/surfaces/surface_hittest.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
+#include "content/browser/compositor/surface_utils.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/renderer_host/input/synthetic_gesture_target_base.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
@@ -24,6 +27,7 @@
 #include "ui/base/ui_base_types.h"
 #include "ui/display/screen.h"
 #include "ui/events/event.h"
+#include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/size_f.h"
@@ -39,7 +43,7 @@ RenderWidgetHostViewBase::RenderWidgetHostViewBase()
     : is_fullscreen_(false),
       popup_type_(blink::kWebPopupTypeNone),
       mouse_locked_(false),
-      current_device_scale_factor_(0),
+      current_device_scale_factor_(1),
       current_display_rotation_(display::Display::ROTATE_0),
       text_input_manager_(nullptr),
       wheel_scroll_latching_enabled_(base::FeatureList::IsEnabled(
@@ -439,8 +443,30 @@ viz::FrameSinkId RenderWidgetHostViewBase::FrameSinkIdAtPoint(
     const gfx::PointF& point,
     gfx::PointF* transformed_point,
     bool* out_query_renderer) {
-  NOTREACHED();
-  return viz::FrameSinkId();
+  DCHECK(current_device_scale_factor_ != 0.0f);
+
+  // The surface hittest happens in device pixels, so we need to convert the
+  // |point| from DIPs to pixels before hittesting.
+  gfx::PointF point_in_pixels =
+      gfx::ConvertPointToPixel(current_device_scale_factor_, point);
+  viz::SurfaceId surface_id = SurfaceIdForTesting();
+  if (!surface_id.is_valid()) {
+    return viz::FrameSinkId();
+  }
+  viz::SurfaceHittest hittest(delegate,
+                              GetFrameSinkManager()->surface_manager());
+  gfx::Transform target_transform;
+  viz::SurfaceId target_local_surface_id = hittest.GetTargetSurfaceAtPoint(
+      surface_id, gfx::ToFlooredPoint(point_in_pixels), &target_transform,
+      out_query_renderer);
+  *transformed_point = point_in_pixels;
+  if (target_local_surface_id.is_valid()) {
+    target_transform.TransformPoint(transformed_point);
+    *transformed_point = gfx::ConvertPointToDIP(current_device_scale_factor_,
+                                                *transformed_point);
+  }
+  auto frame_sink_id = target_local_surface_id.frame_sink_id();
+  return frame_sink_id.is_valid() ? frame_sink_id : GetFrameSinkId();
 }
 
 void RenderWidgetHostViewBase::ProcessMouseEvent(
