@@ -9,13 +9,18 @@
 
 OverlaySurfaceEmbedder::OverlaySurfaceEmbedder(OverlayWindow* window)
     : window_(window) {
-  surface_layer_ = base::MakeUnique<ui::Layer>(ui::LAYER_TEXTURED);
+  DCHECK(window_);
+
+  surface_layer_ = std::make_unique<ui::Layer>(ui::LAYER_TEXTURED);
   surface_layer_->SetMasksToBounds(true);
 
   // The frame provided by the parent window's layer needs to show through
   // the surface layer.
   surface_layer_->SetFillsBoundsOpaquely(false);
+  surface_layer_->SetBounds(gfx::Rect(
+      gfx::Point(0, 0), window_->GetClientAreaBoundsInScreen().size()));
   window_->GetLayer()->Add(surface_layer_.get());
+  window_->GetLayer()->StackAtTop(surface_layer_.get());
   ref_factory_ = new viz::StubSurfaceReferenceFactory();
 }
 
@@ -24,6 +29,6 @@ OverlaySurfaceEmbedder::~OverlaySurfaceEmbedder() = default;
 void OverlaySurfaceEmbedder::SetPrimarySurfaceId(
     const viz::SurfaceId& surface_id) {
   // SurfaceInfo has information about the embedded surface.
-  surface_layer_->SetShowPrimarySurface(surface_id, window_->GetBounds().size(),
-                                        ref_factory_);
+  surface_layer_->SetShowPrimarySurface(
+      surface_id, window_->GetClientAreaBoundsInScreen().size(), ref_factory_);
 }
