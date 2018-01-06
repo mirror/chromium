@@ -174,8 +174,8 @@ const NSSize kPermissionIconSize = {18, 18};
 }
 
 - (void)showWindow:(id)sender {
-  LocationBarViewMac* bridge =
-      [[self.parentWindow windowController] locationBarBridge];
+  LocationBarViewMac* bridge = [[[self.parentWindow windowController]
+      browserWindowController] locationBarBridge];
   if ([self hasVisibleLocationBar] && bridge) {
     decoration_ = bridge->page_info_decoration();
     decoration_->SetActive(true);
