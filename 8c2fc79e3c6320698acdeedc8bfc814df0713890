@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e955ff97_f00f0a6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-06T16:50:13Z",
+      "side": 1,
+      "message": "Could you also say that it\u0027s because you/we\u0027re investigating\nsome strange failure in some bot? CL descriptions should \nhave a why and a how.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "8c2fc79e3c6320698acdeedc8bfc814df0713890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66e536c_7c3e3d70",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-06T16:50:13Z",
+      "side": 1,
+      "message": "This is going to introduce a lot of unnecessary logging,\nthat\u0027ll slow down file retrieval etc. Instead, reduce the \nchange to OS_WIN and leave the other platforms as DLOG; \nalso add a TODO saying that it\u0027s a debug provision linked \nto the current bug and that it can be removed afterwards.",
+      "range": {
+        "startLine": 304,
+        "startChar": 4,
+        "endLine": 305,
+        "endChar": 64
+      },
+      "revId": "8c2fc79e3c6320698acdeedc8bfc814df0713890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0434c1d4_afb4eacb",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-06T16:50:13Z",
+      "side": 1,
+      "message": "Unrelated, but could you plz remove? Thanks :-)",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 5
+      },
+      "revId": "8c2fc79e3c6320698acdeedc8bfc814df0713890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
