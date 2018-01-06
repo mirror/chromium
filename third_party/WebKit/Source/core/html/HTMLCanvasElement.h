@@ -200,6 +200,10 @@ class CORE_EXPORT HTMLCanvasElement final
   void OnWebLayerUpdated() override;
   void RegisterContentsLayer(WebLayer*) override;
   void UnregisterContentsLayer(WebLayer*) override;
+  void OnSurfaceIdUpdated(uint32_t frame_client_id,
+                          uint32_t frame_sink_id,
+                          uint32_t parent_id,
+                          base::UnguessableToken nonce) override;
 
   // CanvasResourceHost implementation
   void NotifySurfaceInvalid() override;
