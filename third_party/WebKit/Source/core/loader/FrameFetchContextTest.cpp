@@ -561,7 +561,7 @@ TEST_F(FrameFetchContextHintsTest, MonitorDeviceMemoryHintsInsecureContext) {
   preferences.SetShouldSendForTesting(mojom::WebClientHintsType::kDeviceMemory);
   document->GetClientHintsPreferences().UpdateFrom(preferences);
   ApproximatedDeviceMemory::SetPhysicalMemoryMBForTesting(4096);
-  ExpectHeader("http://www.example.com/1.gif", "Device-Memory", false, "");
+  ExpectHeader("http://www.example.com/1.gif", "Device-Memory", true, "4");
   ExpectHeader("http://www.example.com/1.gif", "DPR", false, "");
   ExpectHeader("http://www.example.com/1.gif", "Width", false, "");
   ExpectHeader("http://www.example.com/1.gif", "Viewport-Width", false, "");
