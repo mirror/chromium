@@ -12,6 +12,7 @@
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_restrictions.h"
+#include "base/timer/timer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace net {
@@ -142,12 +143,24 @@ class SerialWorkerTest : public testing::Test {
   std::string breakpoint_;
 };
 
+static void DoNothing() {
+  LOG(ERROR) << "WELL OK, DO SOMETHING, I GUESS";
+}
+
+TEST_F(SerialWorkerTest, DumbTimer) {
+  base::OneShotTimer timer;
+  timer.Start(FROM_HERE, base::TimeDelta::FromSeconds(2),
+              base::BindRepeating(&DoNothing));
+}
+
 TEST_F(SerialWorkerTest, ExecuteAndSerializeReads) {
   for (int i = 0; i < 3; ++i) {
     ++input_value_;
     worker_->WorkNow();
     WaitForWork();
     RunUntilBreak("OnWorkFinished");
+
+    base::PlatformThread::Sleep(base::TimeDelta::FromSeconds(1));
 
     EXPECT_TRUE(message_loop_->IsIdleForTesting());
   }
