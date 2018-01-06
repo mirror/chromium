@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf9538ce_09679bed",
+        "filename": "chrome/browser/ui/webui/extensions/extension_settings_browsertest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7699542_35d42634",
+      "range": {
+        "startLine": 53,
+        "startChar": 26,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "72326468db3d3e14c9b7cfb20e0741b416e728a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08956ee4_4ef341a6",
         "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-06T01:23:23Z",
       "side": 1,
       "message": "Where does this ID come from? IIRC from previous CLs (explained to me by Devlin), the ID is not guaranteed to be the same across different bots.\n\nAdding Devlin to take a look too.",
+      "range": {
+        "startLine": 200,
+        "startChar": 40,
+        "endLine": 200,
+        "endChar": 72
+      },
+      "revId": "72326468db3d3e14c9b7cfb20e0741b416e728a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935e4841_9b38e201",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:45:51Z",
+      "side": 1,
+      "message": "My understanding is that if an extension has a key its ID won\u0027t change.\n\nExtension documentation on keeping ID the same:\nhttps://developer.chrome.com/extensions/manifest/key\n\nManifest for error extension:\nhttps://cs.chromium.org/chromium/src/chrome/test/data/extensions/error_console/runtime_and_manifest_errors/manifest.json",
+      "parentUuid": "08956ee4_4ef341a6",
       "range": {
         "startLine": 200,
         "startChar": 40,
