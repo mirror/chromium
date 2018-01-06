@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aacc5a6d_944d7b1e",
+        "filename": "cc/resources/display_resource_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-06T01:19:08Z",
+      "side": 1,
+      "message": "Currently there still exists the possibility to use the child resource id in the display resource provider, especially in some unit tests. So suggest keep it.",
+      "parentUuid": "0f3c0778_6c329a2e",
+      "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81584098_999d3f89",
         "filename": "cc/resources/layer_tree_resource_provider.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cdaee5_690f8ee7",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-06T01:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81584098_999d3f89",
+      "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f21bbfe6_eda27333",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-06T01:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc75c320_347277ac",
+      "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d8ea2b5_2ac0e624",
         "filename": "cc/resources/resource_provider_unittest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea873a07_87f938a6",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-06T01:19:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d8ea2b5_2ac0e624",
+      "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "47fa4f56_7c3150d6",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2388,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-06T01:19:08Z",
+      "side": 1,
+      "message": "Duplicated code, removed.",
+      "parentUuid": "7ab28a2f_7d2b18b8",
+      "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e1f29df_cdf10b8d",
         "filename": "cc/resources/resource_provider_unittest.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac35a21_744ec35f",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2392,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-06T01:19:08Z",
+      "side": 1,
+      "message": "SendResourceAndGetChildToParentMap/PrepareSendToParent will create mailbox for gpu resource.\nSo the above lines were duplicated, removed.",
+      "parentUuid": "0e1f29df_cdf10b8d",
+      "revId": "c56ab0599871eff77fd212ea58da27d1b1b44071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
