@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d6e7f7d_90983195",
+        "filename": "chrome/browser/resources/md_history/history.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-06T00:25:11Z",
+      "side": 1,
+      "message": "@calamity: It seems that this state is leaking between tests, since replaceApp() itself is not touching it, see https://cs.chromium.org/chromium/src/chrome/test/data/webui/md_history/md_history_focus_test.js.\n\nNot sure if there is a better way, but currently this is necessary to stop using \"var\" here.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "88bd2ea62f9b98659623c7b4bf1ac44b8a1dd891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
