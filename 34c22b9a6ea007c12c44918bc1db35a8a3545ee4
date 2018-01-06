@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f43099b2_24c5b6c7",
+        "filename": "services/service_manager/sandbox/mac/gpu_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2018-01-06T00:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddb4156a_bbe19325",
+      "revId": "34c22b9a6ea007c12c44918bc1db35a8a3545ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1794e4f2_48f6cca1",
         "filename": "services/service_manager/sandbox/mac/gpu_v2.sb",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T23:52:34Z",
       "side": 1,
       "message": "This one is new from gpu.sb -- how\u0027d it come up?",
+      "revId": "34c22b9a6ea007c12c44918bc1db35a8a3545ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7ab708_1e7c4a73",
+        "filename": "services/service_manager/sandbox/mac/gpu_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2018-01-06T00:00:44Z",
+      "side": 1,
+      "message": "Just looking at the sandbox denials on the GPU between the old and new sandbox. It also tries to access mach service com.apple.cvmsServ, but seems to work fine without including that.",
+      "parentUuid": "1794e4f2_48f6cca1",
       "revId": "34c22b9a6ea007c12c44918bc1db35a8a3545ee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "34c22b9a6ea007c12c44918bc1db35a8a3545ee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ce7753_4e206fec",
+        "filename": "services/service_manager/sandbox/mac/gpu_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2018-01-06T00:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a516581_7393b7d3",
+      "revId": "34c22b9a6ea007c12c44918bc1db35a8a3545ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
