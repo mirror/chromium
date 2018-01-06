@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddad64fd_ce589785",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-06T00:42:30Z",
+      "side": 1,
+      "message": "Are you sure we want to include \"delayed\" tasks here? It means that the result of IsIdleForTesting() is timing-dependent, e.g. if I post a 30ms delayed task and the system is busy by the time I call IsIdleForTesting() the answer may be |false|, rather than |true|.  \n\nWhere tests rely on IsIdleForTesting(), they really need to either (a) not post any delayed tasks or (b) post them only to MessageLoops with mocked time, for it to be deterministic(*).\n\nWDYT?\n\n(*) Assuming that the test must otherwise be arranging for inter-thread task posting to be synchronized in some way, otherwise it would already be racey :)",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 32
+      },
+      "revId": "f9c93846970ae6ddd7b9cca352571bdd718ca43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
