@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ef2e76b_30653c4d",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-06T01:36:09Z",
+      "side": 1,
+      "message": "Done. As discussed offline, we may want to just use a callback directly instead of using a promise.",
+      "parentUuid": "3d614584_243a6e94",
+      "range": {
+        "startLine": 241,
+        "startChar": 43,
+        "endLine": 241,
+        "endChar": 56
+      },
+      "revId": "e2d14766f3706fb8de23dbb018a8f93e9c9a4c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b64196c_f21658ee",
         "filename": "media/cdm/cdm_wrapper.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e2d14766f3706fb8de23dbb018a8f93e9c9a4c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b477dfac_31ae4a5c",
+        "filename": "media/cdm/cdm_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-06T01:36:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b64196c_f21658ee",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "e2d14766f3706fb8de23dbb018a8f93e9c9a4c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
