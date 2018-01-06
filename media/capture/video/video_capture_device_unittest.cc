@@ -301,8 +301,8 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
       DLOG(WARNING) << "No camera found";
       return nullptr;
     }
-    DLOG(INFO) << "Using camera "
-               << device_descriptors_->front().GetNameAndModel();
+    LOG(INFO) << "Using camera "
+              << device_descriptors_->front().GetNameAndModel();
     ;
     return base::MakeUnique<VideoCaptureDeviceDescriptor>(
         device_descriptors_->front());
