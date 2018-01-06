@@ -301,6 +301,10 @@
   [self cancelOmniboxEdit];
 }
 
+- (void)navigateToMemexTabSwitcher {
+  [self.toolbarController navigateToMemexTabSwitcher];
+}
+
 #pragma mark - Fullscreen helpers
 
 // Creates a FullscreenUIUpdater for the toolbar controller and adds it as a
