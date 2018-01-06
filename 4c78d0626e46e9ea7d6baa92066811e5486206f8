@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "32efc1bf_a6c3041f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-06T22:11:40Z",
+      "side": 1,
+      "message": "Done, that makes a lot more sense than my previous thought.",
+      "parentUuid": "dd119208_4ac702fe",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cfd1460_2fd2ddda",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 9
@@ -143,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "18807b27_2d22f3a9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-06T22:11:40Z",
+      "side": 1,
+      "message": "Done, I discarded these regexes and added additional test cases.",
+      "parentUuid": "3cfd1460_2fd2ddda",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc882a4c_2bc807fc",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 9
@@ -157,6 +193,24 @@
       "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2340747_b316c5fa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-06T22:11:40Z",
+      "side": 1,
+      "message": "Done since I discarded these regexes.",
+      "parentUuid": "cc882a4c_2bc807fc",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +275,24 @@
       "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c628d0c6_f7747b0e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-06T22:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65d2b96a_966f0384",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
