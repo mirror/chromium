@@ -255,4 +255,8 @@ public class IncognitoTabModel implements TabModel {
     public boolean isPendingTabAdd() {
         return mDelegateModel.isPendingTabAdd();
     }
+
+    public int getPreviousTabId() {
+        return ((TabModelImpl) mDelegateModel).getPreviousTabId();
+    }
 }
