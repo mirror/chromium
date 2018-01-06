@@ -164,12 +164,6 @@ class CONTENT_EXPORT DelegatedFrameHost
   void EndFrameSubscription();
   bool HasFrameSubscriber() const { return !!frame_subscriber_; }
   viz::FrameSinkId GetFrameSinkId();
-  // Returns a null SurfaceId if this DelegatedFrameHost has not yet created
-  // a compositor Surface.
-  viz::SurfaceId SurfaceIdAtPoint(viz::SurfaceHittestDelegate* delegate,
-                                  const gfx::PointF& point,
-                                  gfx::PointF* transformed_point,
-                                  bool* out_query_renderer);
 
   // Given the SurfaceID of a Surface that is contained within this class'
   // Surface, find the relative transform between the Surfaces and apply it

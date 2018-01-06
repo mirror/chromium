@@ -56,22 +56,23 @@ class MockRootRenderWidgetHostView : public MockRenderWidgetHostView {
   MockRootRenderWidgetHostView(
       RenderWidgetHost* rwh,
       std::map<MockRenderWidgetHostView*, viz::FrameSinkId>& frame_sink_id_map)
-      : MockRenderWidgetHostView(rwh), frame_sink_id_map_(frame_sink_id_map) {}
+      : MockRenderWidgetHostView(rwh) {}
   ~MockRootRenderWidgetHostView() override {}
 
+#if 0
   viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate*,
                                       const gfx::PointF&,
                                       gfx::PointF*,
                                       bool*) override {
     return frame_sink_id_map_[current_hittest_result_];
   }
-
+#endif
   void SetHittestResult(MockRenderWidgetHostView* view) {
     current_hittest_result_ = view;
   }
 
  private:
-  std::map<MockRenderWidgetHostView*, viz::FrameSinkId>& frame_sink_id_map_;
+  //  std::map<MockRenderWidgetHostView*, viz::FrameSinkId>& frame_sink_id_map_;
   MockRenderWidgetHostView* current_hittest_result_;
 };
 
