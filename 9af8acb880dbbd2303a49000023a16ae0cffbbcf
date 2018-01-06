@@ -123,6 +123,24 @@
       "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee47681_bd94b17b",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-06T00:07:52Z",
+      "side": 1,
+      "message": "For AppendOutput(), do you mean that it will write the encoded characters like \"\u003d6A\"? If so, the delegate implementation will know how to encode a single ASCII character to a bunch of encoded characters. In addition, QuotedPrintableEncodeDelegate will have a problem to figure out the length of accumulated characters so far.",
+      "parentUuid": "72d2d0b4_12ec4960",
+      "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
