@@ -7,26 +7,72 @@ Polymer({
 
   behaviors: [SettingsBehavior],
 
-  properties: {
-    /** @private {boolean} */
-    duplexValue_: Boolean,
-  },
-
   observers: [
-    'onInitialized_(settings.duplex.value)',
-    'onDuplexChange_(duplexValue_)',
+    'onHeaderFooterSettingChange_(settings.headerFooter.value)',
+    'onDuplexSettingChange_(settings.duplex.value)',
+    'onCssBackgroundSettingChange_(settings.cssBackground.value)',
+    'onRasterizeSettingChange_(settings.rasterize.value)',
+    'onSelectionOnlySettingChange_(settings.selectionOnly.value)',
   ],
 
-  isInitialized_: false,
-
-  onInitialized_: function() {
-    if (this.isInitialized_)
+  /**
+   * @param {?Element} checkbox The checkbox to update
+   * @param {*} value The value to update to.
+   * @private
+   */
+  updateCheckbox_: function(checkbox, value) {
+    if (!checkbox)
       return;
-    this.set('duplexValue_', this.getSetting('duplex').value);
-    this.isInitialized_ = true;
+    checkbox.checked = /** @type {boolean} */ (value);
   },
 
+  /** @private */
+  onHeaderFooterSettingChange_: function(value) {
+    this.updateCheckbox_(this.$$('#header-footer'), value);
+  },
+
+  /** @private */
+  onDuplexSettingChange_: function(value) {
+    this.updateCheckbox_(this.$$('#duplex'), value);
+  },
+
+  /** @private */
+  onCssBackgroundSettingChange_: function(value) {
+    this.updateCheckbox_(this.$$('#css-background'), value);
+  },
+
+  /** @private */
+  onRasterizeSettingChange_: function(value) {
+    this.updateCheckbox_(this.$$('#rasterize'), value);
+  },
+
+  /** @private */
+  onSelectionOnlySettingChange_: function(value) {
+    this.updateCheckbox_(this.$$('#selection-only'), value);
+  },
+
+  /** @private */
+  onHeaderFooterChange_: function() {
+    this.setSetting('headerFooter', this.$$('#header-footer').checked);
+  },
+
+  /** @private */
   onDuplexChange_: function() {
-    this.setSetting('duplex', this.duplexValue_);
+    this.setSetting('duplex', this.$$('#duplex').checked);
+  },
+
+  /** @private */
+  onCssBackgroundChange_: function() {
+    this.setSetting('cssBackground', this.$$('#css-background').checked);
+  },
+
+  /** @private */
+  onRasterizeChange_: function() {
+    this.setSetting('rasterize', this.$$('#rasterize').checked);
+  },
+
+  /** @private */
+  onSelectionOnlyChange_: function() {
+    this.setSetting('selectionOnly', this.$$('#selection-only').checked);
   },
 });
