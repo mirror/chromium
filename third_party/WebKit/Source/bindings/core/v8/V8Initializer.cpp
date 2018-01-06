@@ -70,6 +70,9 @@
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
+#if defined(OS_LINUX)
+#include "sandbox/linux/services/resource_limits.h"  // nogncheck
+#endif
 #include "v8/include/v8-debug.h"
 #include "v8/include/v8-profiler.h"
 
@@ -544,21 +547,53 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kZeroInitialize);
+    void* data = AllocateUninitialized(size);
+    if (data)
+      memset(data, '\0', size);
+
+    return data;
   }
 
   void* AllocateUninitialized(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kDontInitialize);
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
+
+    void* data = PartitionAllocGenericFlags(
+        per_isolate_data->GetArrayBufferPartition(),
+        base::PartitionAllocReturnNull, size,
+        WTF_HEAP_PROFILER_TYPE_NAME(WTF::ArrayBufferContents));
+
+    return data;
   }
 
   void Free(void* data, size_t size) override {
-    WTF::ArrayBufferContents::FreeMemory(data);
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
+    per_isolate_data->GetArrayBufferPartition()->Free(data);
   }
 
   void* Reserve(size_t length) override {
-    return WTF::ArrayBufferContents::ReserveMemory(length);
+    void* const hint = nullptr;
+    const size_t align = 64 << 10;  // Wasm page size
+
+#if defined(OS_LINUX)
+    // Linux by default has a small address space limit, which we chew up pretty
+    // quickly with large memory reservations. To mitigate this, we bump up the
+    // limit for array buffer reservations. See https://crbug.com/750378
+    //
+    // In general, returning nullptr is dangerous, as unsuspecting code may do
+    // an offset-from-null and end up with an accessible but incorrect address.
+    // This function (ReserveMemory) is only used in contexts that expect
+    // allocation may fail and explicitly handle the nullptr return case. This
+    // code is also only used on 64-bit to create guard regions, which provides
+    // further protection.
+    if (!sandbox::ResourceLimits::AdjustCurrent(RLIMIT_AS, size)) {
+      return nullptr;
+    }
+#endif
+
+    constexpr bool commit = true;
+    return base::AllocPages(hint, size, align, base::PageInaccessible, !commit);
   }
 
   void Free(void* data, size_t length, AllocationMode mode) override {
@@ -566,27 +601,27 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
       case AllocationMode::kNormal:
         Free(data, length);
         return;
-      case AllocationMode::kReservation:
-        WTF::ArrayBufferContents::ReleaseReservedMemory(data, length);
+      case AllocationMode::kReservation: {
+#if defined(OS_LINUX)
+        // Readjust LINUX address space limit.
+        CHECK(sandbox::ResourceLimits::AdjustCurrent(RLIMIT_AS, -size));
+#endif
+        base::FreePages(data, size);
+      }
         return;
       default:
         NOTREACHED();
     }
+    break;
   }
 
   void SetProtection(void* data,
                      size_t length,
                      Protection protection) override {
-    switch (protection) {
-      case Protection::kNoAccess:
-        CHECK(WTF::SetSystemPagesAccess(data, length, WTF::PageInaccessible));
-        return;
-      case Protection::kReadWrite:
-        CHECK(WTF::SetSystemPagesAccess(data, length, WTF::PageReadWrite));
-        return;
-      default:
-        NOTREACHED();
-    }
+    auto permission = protection == Protection::kReadWrite
+                          ? base::PageReadWrite
+                          : base::PageInaccessible;
+    CHECK(base::SetSystemPagesAccess(data, length, permission));
   }
 };
 
