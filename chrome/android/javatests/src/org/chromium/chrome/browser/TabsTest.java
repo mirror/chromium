@@ -436,9 +436,28 @@ public class TabsTest {
 
         // Switch to tab-switcher mode, switch back, and scroll page.
         showOverviewAndWaitForAnimation();
+        Thread.sleep(ChromeTabbedActivity.TAB_TOGGLE_TIME_MS);
         hideOverviewAndWaitForAnimation();
         scrollDown();
         assertWaitForSelectedText("");
+    }
+
+    /**
+     * Verify that the tab toggling feature works. crbug.com/768170
+     */
+    @Test
+    @MediumTest
+    @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
+    public void testTabSwitcherTogglesTabs() throws Exception {
+        Tab tabOne = mActivityTestRule.getActivity().getActivityTab();
+        mActivityTestRule.startMainActivityOnBlankPage();
+        Assert.assertTrue("Should be on tab two",
+                !mActivityTestRule.getActivity().getActivityTab().equals(tabOne));
+
+        showOverviewAndWaitForAnimation();
+        hideOverviewAndWaitForAnimation();
+        Assert.assertTrue("Should be on tab one",
+                mActivityTestRule.getActivity().getActivityTab().equals(tabOne));
     }
 
     /**
