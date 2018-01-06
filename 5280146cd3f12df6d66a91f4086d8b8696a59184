@@ -16,6 +16,24 @@
       "revId": "5280146cd3f12df6d66a91f4086d8b8696a59184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d324765_98b3fe28",
+        "filename": "chrome/browser/chromeos/background/ash_wallpaper_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-06T01:53:09Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "87f71178_ec501f95",
+      "revId": "5280146cd3f12df6d66a91f4086d8b8696a59184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
