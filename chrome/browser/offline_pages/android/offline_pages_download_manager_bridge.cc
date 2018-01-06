@@ -1,4 +1,4 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -17,7 +17,7 @@ namespace offline_pages {
 namespace android {
 
 // Returns true if ADM is available on this phone.
-bool OfflinePagesDownloadManagerBridge::IsAndroidDownloadManagerInstalled() {
+bool OfflinePagesDownloadManagerBridge::IsDownloadManagerInstalled() {
   JNIEnv* env = base::android::AttachCurrentThread();
   jboolean is_installed =
       Java_OfflinePagesDownloadManagerBridge_isAndroidDownloadManagerInstalled(

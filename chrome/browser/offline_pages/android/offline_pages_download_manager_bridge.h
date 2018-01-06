@@ -1,4 +1,4 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -7,29 +7,30 @@
 
 #include <vector>
 
+#include "components/offline_pages/core/system_download_manager.h"
+
 namespace offline_pages {
 namespace android {
 
-// Bridge between C++ and Java for communicating with the AndroidDownloadManager
+// Bridge between C++ and Java for implementing background scheduler
 // on Android.
-class OfflinePagesDownloadManagerBridge {
+class OfflinePagesDownloadManagerBridge : public SystemDownloadManager {
  public:
   // Returns true if ADM is available on this phone.
-  static bool IsAndroidDownloadManagerInstalled();
+  bool IsDownloadManagerInstalled() override;
 
   // Adds the download to the list managed by the AndroidDownloadManager.
   // Returns the ADM ID of the download, which we will place in the offline
   // pages database as part of the offline page item.
-  static long addCompletedDownload(const std::string& title,
-                                   const std::string& description,
-                                   const std::string& path,
-                                   int64_t length,
-                                   const std::string& uri,
-                                   const std::string& referer);
+  long addCompletedDownload(const std::string& title,
+                            const std::string& description,
+                            const std::string& path,
+                            int64_t length,
+                            const std::string& uri,
+                            const std::string& referer) override;
 
-  // Removes the pages with the given download IDs, and returns the number of
-  // pages removed.
-  static int remove(const std::vector<int64_t>& android_download_manager_ids);
+  // Returns the number of pages removed.
+  int remove(const std::vector<int64_t>& android_download_manager_ids) override;
 };
 
 }  // namespace android
