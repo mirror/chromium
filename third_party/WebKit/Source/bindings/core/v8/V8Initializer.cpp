@@ -544,17 +544,26 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
     return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kZeroInitialize);
+        per_isolate_data->GetArrayBufferPartition(), size,
+        WTF::ArrayBufferContents::kZeroInitialize);
   }
 
   void* AllocateUninitialized(size_t size) override {
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
     return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kDontInitialize);
+        per_isolate_data->GetArrayBufferPartition(), size,
+        WTF::ArrayBufferContents::kDontInitialize);
   }
 
   void Free(void* data, size_t size) override {
-    WTF::ArrayBufferContents::FreeMemory(data);
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
+    WTF::ArrayBufferContents::FreeMemory(
+        per_isolate_data->GetArrayBufferPartition(), data);
   }
 
   void* Reserve(size_t length) override {
