@@ -1,3 +1,4 @@
+
 # This file is used to manage the dependencies of the Chromium src repo. It is
 # used by gclient to determine what version of each dependency to check out, and
 # where.
@@ -259,6 +260,11 @@ deps = {
 
   'src/third_party/android_protobuf/src': {
       'url': Var('chromium_git') + '/external/android_protobuf.git' + '@' + '7fca48d8ce97f7ba3ab8eea5c472f1ad3711762f',
+      'condition': 'checkout_android',
+  },
+
+  'src/third_party/android_ndk/public': {
+      'url': Var('chromium_git') + '/android_ndk.git' + '@' + 'e951c37287c7d8cd915bf8d4149fd4a06d808b55',
       'condition': 'checkout_android',
   },
 
@@ -1339,8 +1345,6 @@ hooks = [
 recursedeps = [
   # buildtools provides clang_format, libc++, and libc++abi
   'src/buildtools',
-  # android_tools manages the NDK.
-  'src/third_party/android_tools',
   # ANGLE manages DEPS that it also owns the build files for, such as dEQP.
   ("src/third_party/angle", "DEPS.chromium"),
   # src-internal has its own DEPS file to pull additional internal repos
