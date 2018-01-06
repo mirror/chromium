@@ -666,6 +666,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Android.BookmarkPage.RemoveSingleItem">
+  <owner>huayinz@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>
+    Records the count of items user removed in a certain time frame on the
+    native Android bookmark page by clicking &quot;delete&quot; from the
+    &quot;more&quot; menu.
+  </summary>
+</histogram>
+
 <histogram name="Android.ChildProcessLauncher.OnServiceConnectedTime"
     units="ms">
   <obsolete>
@@ -1032,6 +1042,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Android.DownloadManager.RemoveSingleItem">
+  <owner>huayinz@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>
+    The count of download items user removed in a certain time frame by clicking
+    &quot;delete&quot; from the &quot;more&quot; menu. Actions on the
+    &quot;undo&quot; snackbar does not affect the count recorded.
+  </summary>
+</histogram>
+
 <histogram name="Android.DownloadManager.ServiceStopped.DownloadForeground"
     enum="DownloadNotificationServiceStopped">
   <owner>jming@chromium.org</owner>
@@ -1109,6 +1129,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of selected items the user removed from the native Android
     history page.
+  </summary>
+</histogram>
+
+<histogram name="Android.HistoryPage.RemoveSingleItem">
+  <owner>huayinz@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>
+    The count of items user removed in a certain time frame on the native
+    Android history page by clicking the trash button.
   </summary>
 </histogram>
 

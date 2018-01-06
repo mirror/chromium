@@ -29,6 +29,7 @@ import org.chromium.chrome.browser.widget.ListMenuButton.Item;
 import org.chromium.chrome.browser.widget.MaterialProgressBar;
 import org.chromium.chrome.browser.widget.ThumbnailProvider;
 import org.chromium.chrome.browser.widget.TintedImageButton;
+import org.chromium.chrome.browser.widget.selection.SelectableItemMetrics;
 import org.chromium.chrome.browser.widget.selection.SelectableItemView;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
 import org.chromium.ui.UiUtils;
@@ -128,6 +129,8 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         } else if (item.getTextId() == R.string.delete) {
             recordViewActionHistogram(VIEW_ACTION_MENU_DELETE);
             mItem.startRemove();
+            SelectableItemMetrics.getInstance().recordSingleAction(
+                    "Android.DownloadManager.RemoveSingleItem");
         }
     }
 

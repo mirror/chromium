@@ -7,10 +7,12 @@ package org.chromium.chrome.browser.bookmarks;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.widget.ListMenuButton;
 import org.chromium.chrome.browser.widget.ListMenuButton.Item;
+import org.chromium.chrome.browser.widget.selection.SelectableItemMetrics;
 import org.chromium.chrome.browser.widget.selection.SelectableItemView;
 import org.chromium.components.bookmarks.BookmarkId;
 
@@ -92,6 +94,7 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId>
     public void onItemSelected(Item item) {
         if (item.getTextId() == R.string.bookmark_item_select) {
             setChecked(mDelegate.getSelectionDelegate().toggleSelectionForItem(mBookmarkId));
+            RecordUserAction.record("Android.BookmarkPage.SelectFromMenu");
         } else if (item.getTextId() == R.string.bookmark_item_edit) {
             BookmarkItem bookmarkItem = mDelegate.getModel().getBookmarkById(mBookmarkId);
             if (bookmarkItem.isFolder()) {
@@ -106,6 +109,8 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId>
             if (mDelegate != null && mDelegate.getModel() != null) {
                 mDelegate.getModel().deleteBookmarks(mBookmarkId);
             }
+            SelectableItemMetrics.getInstance().recordSingleAction(
+                    "Android.BookmarkPage.RemoveSingleItem");
         }
     }
 

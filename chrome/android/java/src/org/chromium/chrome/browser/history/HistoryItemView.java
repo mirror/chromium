@@ -23,6 +23,7 @@ import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.RoundedIconGenerator;
 import org.chromium.chrome.browser.widget.TintedImageButton;
+import org.chromium.chrome.browser.widget.selection.SelectableItemMetrics;
 import org.chromium.chrome.browser.widget.selection.SelectableItemView;
 
 /**
@@ -73,6 +74,8 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
             @Override
             public void onClick(View v) {
                 remove();
+                SelectableItemMetrics.getInstance().recordSingleAction(
+                        "Android.HistoryPage.RemoveSingleItem");
             }
         });
 
