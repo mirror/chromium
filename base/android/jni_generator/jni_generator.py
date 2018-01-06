@@ -1043,6 +1043,9 @@ $CLOSE_NAMESPACE
     profiling_entered_native = ''
     if self.options.enable_profiling:
       profiling_entered_native = 'JNI_LINK_SAVED_FRAME_POINTER;'
+    else:
+      profiling_entered_native = (
+          'TRACE_NATIVE_EXECUTION("' + native.name + '");')
     values = {
         'RETURN': return_type,
         'RETURN_DECLARATION': return_declaration,
