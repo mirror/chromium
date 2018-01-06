@@ -22,6 +22,30 @@
       "revId": "a668b5363cd374a29ca0f46124c226e2e2aa21d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390f1909_09c31fbc",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-06T21:05:46Z",
+      "side": 0,
+      "message": "Yes, if you look at the NetTestSuite you\u0027ll see that it uses the same ScopedTaskEnvironment for whole batches of tests, so if e.g. a preceding test uses a base::OneShotTimer (see the repro CL I sent) then that task will still be present in the queue and so cause timing-dependent flake.\n\nYou could argue that net tests should use a fresh ScopedTaskEnvironment for every test, but I believe that substantially increases the time taken to run the tests.\n\nRegarding the specific test, it is verifying that the SerialWorker doesn\u0027t post _more_ work to the TaskScheduler until the preceding work has completed - the class seems to be intended to implement a ping-pong rate-limiting of work.\n\nUnfortunately I don\u0027t think you can have the 1:1 correspondence you\u0027re looking for, because of the timing dependency - it will always be the case, with an implementation that includes delayed tasks, that scheduling delays (e.g. due to thread priorities and load) can cause a task to be ready that wouldn\u0027t normally be. If it is important for ScopedTaskEnvironment then I\u0027d suggest adding an explicit HasReadyDelayedTasksForTesting() that you can use in conjunction with IsIdleForTesting(), until the affected tests can be updated.\n\nOT: Style nit: the conditional is hard to read with it stack like this - it would be helpful to break the sub-terms out into const bools to improve that, e.g. will_run_deferred_tasks, has_ready_delayed_tasks, etc. Also, should the delayed-tasks case also check IsNestedOnCurrentThread?",
+      "parentUuid": "27880343_d57daaf0",
+      "range": {
+        "startLine": 264,
+        "startChar": 33,
+        "endLine": 264,
+        "endChar": 59
+      },
+      "revId": "a668b5363cd374a29ca0f46124c226e2e2aa21d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
