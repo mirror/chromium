@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4602a8fe_e638eb6d",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-06T00:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54c6060f_5f094b9a",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "ee41d130ee5c6aab8283b9fff2bee040c2baf9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e10ab9eb_1d884308",
         "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-05T19:43:40Z",
       "side": 1,
       "message": "Do we need to cache the \"checked\" and \"isHidden\" bits on a new data structure (meaning |item|)? Can we not just request that information on demand?\n\nBasically I am wondering if using a dom-repeat to create those settings is beneficial, or just makes things more complicated (more intermediate data structures between model and the UI).",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "ee41d130ee5c6aab8283b9fff2bee040c2baf9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72b8573_d2873668",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-06T00:39:57Z",
+      "side": 1,
+      "message": "I used the dom-repeat in an attempt to duplicate the existing UI, which uses arrays etc in JS to avoid duplicated code. However after converting it away from dom-repeat, it does seem simpler/shorter to just have individual functions \u0026 to set the checked/hidden directly from settings.",
+      "parentUuid": "e10ab9eb_1d884308",
       "range": {
         "startLine": 20,
         "startChar": 18,
