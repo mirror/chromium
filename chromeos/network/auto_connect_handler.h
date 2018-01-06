@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "chromeos/chromeos_export.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/client_cert_resolver.h"
@@ -25,6 +26,11 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
                                            public NetworkStateHandlerObserver,
                                            public ClientCertResolver::Observer {
  public:
+  class Observer {
+   public:
+    virtual void OnAutoConnectedToNetwork() = 0;
+  };
+
   ~AutoConnectHandler() override;
 
   // LoginState::Observer
@@ -43,9 +49,16 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
   // ClientCertResolver::Observer
   void ResolveRequestCompleted(bool network_properties_changed) override;
 
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
+
+ protected:
+  void NotifyAutoConnectedToNetwork();
+
  private:
   friend class NetworkHandler;
   friend class AutoConnectHandlerTest;
+  friend class AutoConnectNotifierTest;
 
   AutoConnectHandler();
 
@@ -71,7 +84,7 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
 
   // Requests and if possible connects to the 'best' available network, see
   // CheckBestConnection().
-  void RequestBestConnection();
+  void RequestBestConnection(bool invoked_due_to_login);
 
   // If a request to connect to the best network is pending and all requirements
   // are fulfilled (like policy loaded, certificate patterns being resolved),
@@ -79,7 +92,7 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
   void CheckBestConnection();
 
   // Calls Shill.Manager.ConnectToBestServices().
-  void CallShillConnectToBestServices() const;
+  void CallShillConnectToBestServices();
 
   // Local references to the associated handler instances.
   ClientCertResolver* client_cert_resolver_;
@@ -111,6 +124,14 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
 
   // When true, trigger ConnectToBestServices after the next scan completion.
   bool connect_to_best_services_after_scan_;
+
+  // Whether a call to RequestBestConnection() was triggered only by login.
+  // RequestBestConnection() can be called under many circumstances, and this
+  // field is only set to true if RequestBestConnection() was only triggered by
+  // login.
+  bool request_best_connection_triggered_by_only_login_;
+
+  base::ObserverList<Observer> observer_list_;
 
   base::WeakPtrFactory<AutoConnectHandler> weak_ptr_factory_;
 
