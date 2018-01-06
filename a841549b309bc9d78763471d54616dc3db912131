@@ -22,6 +22,30 @@
       "revId": "a841549b309bc9d78763471d54616dc3db912131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab95aca_42bf4fad",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T02:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ec32a2_6e749079",
+      "range": {
+        "startLine": 166,
+        "startChar": 40,
+        "endLine": 166,
+        "endChar": 42
+      },
+      "revId": "a841549b309bc9d78763471d54616dc3db912131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
