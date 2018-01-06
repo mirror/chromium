@@ -268,6 +268,10 @@ class CONTENT_EXPORT DeviceSensorEventPump
       }
     }
 
+    bool SensorReadingTimeStampIsZero() const {
+      return reading.timestamp() == 0.0;
+    }
+
     DeviceSensorEventPump* event_pump;
     device::mojom::SensorPtr sensor;
     SensorState sensor_state;

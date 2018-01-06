@@ -506,6 +506,52 @@ TEST_F(DeviceOrientationEventPumpTest, FireAllNullEvent) {
       DeviceOrientationEventPump::SensorState::NOT_INITIALIZED);
 }
 
+TEST_F(DeviceOrientationEventPumpTest,
+       NotFireEventWhenSensorReadingTimeStampIsZero) {
+  orientation_pump()->Start(listener());
+  base::RunLoop().RunUntilIdle();
+
+  ExpectRelativeOrientationSensorStateToBe(
+      DeviceOrientationEventPump::SensorState::ACTIVE);
+
+  sensor_provider_.relative_orientation_sensor()->SetReadingTimeStampToBeZero();
+
+  FireEvent();
+
+  EXPECT_FALSE(listener()->did_change_device_orientation());
+
+  orientation_pump()->Stop();
+
+  ExpectRelativeOrientationSensorStateToBe(
+      DeviceOrientationEventPump::SensorState::SUSPENDED);
+}
+
+TEST_F(DeviceOrientationEventPumpTest,
+       NotFireEventWhenSensorReadingTimeStampIsZeroWithSensorFallback) {
+  sensor_provider_.set_relative_orientation_sensor_is_available(false);
+
+  orientation_pump()->Start(listener());
+  base::RunLoop().RunUntilIdle();
+
+  ExpectRelativeOrientationSensorStateToBe(
+      DeviceOrientationEventPump::SensorState::NOT_INITIALIZED);
+  ExpectAbsoluteOrientationSensorStateToBe(
+      DeviceOrientationEventPump::SensorState::ACTIVE);
+
+  sensor_provider_.absolute_orientation_sensor()->SetReadingTimeStampToBeZero();
+
+  FireEvent();
+
+  EXPECT_FALSE(listener()->did_change_device_orientation());
+
+  orientation_pump()->Stop();
+
+  ExpectRelativeOrientationSensorStateToBe(
+      DeviceOrientationEventPump::SensorState::NOT_INITIALIZED);
+  ExpectAbsoluteOrientationSensorStateToBe(
+      DeviceOrientationEventPump::SensorState::SUSPENDED);
+}
+
 TEST_F(DeviceOrientationEventPumpTest, UpdateRespectsOrientationThreshold) {
   orientation_pump()->Start(listener());
   base::RunLoop().RunUntilIdle();
@@ -876,6 +922,26 @@ TEST_F(DeviceAbsoluteOrientationEventPumpTest, FireAllNullEvent) {
 
   ExpectAbsoluteOrientationSensorStateToBe(
       DeviceOrientationEventPump::SensorState::NOT_INITIALIZED);
+}
+
+TEST_F(DeviceAbsoluteOrientationEventPumpTest,
+       NotFireEventWhenSensorReadingTimeStampIsZero) {
+  absolute_orientation_pump()->Start(listener());
+  base::RunLoop().RunUntilIdle();
+
+  ExpectAbsoluteOrientationSensorStateToBe(
+      DeviceOrientationEventPump::SensorState::ACTIVE);
+
+  sensor_provider_.absolute_orientation_sensor()->SetReadingTimeStampToBeZero();
+
+  FireEvent();
+
+  EXPECT_FALSE(listener()->did_change_device_orientation());
+
+  absolute_orientation_pump()->Stop();
+
+  ExpectAbsoluteOrientationSensorStateToBe(
+      DeviceOrientationEventPump::SensorState::SUSPENDED);
 }
 
 TEST_F(DeviceAbsoluteOrientationEventPumpTest,
