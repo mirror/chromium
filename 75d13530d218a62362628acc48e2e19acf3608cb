@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "0aa7a888_fa487833",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "nit: could also remove the duplicated comments from this methods too.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d16c82e_081d68f6",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "nit: if this is an ID it should be named differently. Could also directly return here.",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 12
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948e4a93_d2000de6",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment change. It seems the old version was correct.",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cc2d65_0ce2a43a",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Here and for the following overrides: No need to copy interface comments into implementation.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86823585_dea035d1",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
         "patchSetId": 3
@@ -143,6 +235,75 @@
     },
     {
       "key": {
+        "uuid": "8984335b_c914fb7e",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Must call TaskComplete before returning. Could directly call OnAddIdDone(false).\nA test should also be able to detect this as a failure.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 10
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea80252a_ab0d0d76",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Confirming: Can this be called from the UI thread? Also, can this operation ever fail?",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 60
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200efb59_686b5af7",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "nit: \"SQL errors are ignored because\"",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77f5775e_aa96c837",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
         "patchSetId": 3
@@ -187,6 +348,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0febbdfa_0a53c5da",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "This also applies to other file(s) in this CL beyond the ones with this comment.",
+      "parentUuid": "77f5775e_aa96c837",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -237,6 +422,52 @@
     },
     {
       "key": {
+        "uuid": "8135f222_4b3e1bcb",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "It would look better here and elsewhere if these parameters should be grouped into a struct defined in the interface file.",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 57
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f69595_756b8fab",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Should be in the private section.",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1802d4b_9d17b765",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
         "patchSetId": 3
@@ -272,6 +503,29 @@
     },
     {
       "key": {
+        "uuid": "dc67a3f0_812ac396",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Missing |const|",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68a53f00_e76bc0b5",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
         "patchSetId": 3
@@ -304,6 +558,150 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c537b0b0_8a74e29a",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "I do: this should be a unique_ptr. :)",
+      "parentUuid": "68a53f00_e76bc0b5",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4691363f_034e7ea2",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "nit: if this constants are only going to be used in this single test, they could be moved into it, keeping them closer to where they are used.",
+      "range": {
+        "startLine": 77,
+        "startChar": 52,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5283b378_4ac5a1ab",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Check here that the task finished running.",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7458d5_efd199f0",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "ASSERT_TRUE: if the result is false the test would crash instead of failing gracefully.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5764c97c_55ae59e2",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Add test checking the task runs correction when there\u0027s no system ADM.",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904b33b8_5fa3de22",
+        "filename": "components/offline_pages/core/system_download_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Question: Are there other platforms beyond Android with download managers or is it being added exclusively to allow test stubbing? If the latter is true I\u0027d suggest making it clear this is still Android specific to not give the wrong impression.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537ec96d_d8c5f457",
+        "filename": "components/offline_pages/core/system_download_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t return an int64_t, the same type as |OfflinePageItem::system_download_id|?\n\nHere in the next function: shouldn\u0027t non-getter functions always start with upper case?",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -386,6 +784,29 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcfc65e0_8ecbcc31",
+        "filename": "components/offline_pages/core/system_download_manager_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-06T00:42:13Z",
+      "side": 1,
+      "message": "Here and for the following overrides: No need to copy interface comments into implementation.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
