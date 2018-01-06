@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a7cdc73_136ac81b",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-06T17:31:35Z",
+      "side": 1,
+      "message": "I didn\u0027t know this is enabled by default on any platform. Good to know. The code and the test part looks much cleaner now. Thanks.",
+      "revId": "7860fd062671ab331a5b480c8ebe55b6f4a13fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
