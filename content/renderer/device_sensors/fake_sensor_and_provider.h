@@ -51,6 +51,8 @@ class FakeSensor : public device::mojom::Sensor {
 
   void SetReading(device::SensorReading reading);
 
+  void SetReadingTimeStampToBeZero() { reading_.raw.timestamp = 0.0; }
+
  private:
   void SensorReadingChanged();
 
@@ -113,6 +115,22 @@ class FakeSensorProvider : public device::mojom::SensorProvider {
   void SetAbsoluteOrientationSensorData(double alpha,
                                         double beta,
                                         double gamma);
+
+  FakeSensor* accelerometer() { return accelerometer_; }
+
+  FakeSensor* linear_acceleration_sensor() {
+    return linear_acceleration_sensor_;
+  }
+
+  FakeSensor* gyroscope() { return gyroscope_; }
+
+  FakeSensor* relative_orientation_sensor() {
+    return relative_orientation_sensor_;
+  }
+
+  FakeSensor* absolute_orientation_sensor() {
+    return absolute_orientation_sensor_;
+  }
 
  private:
   FakeSensor* accelerometer_ = nullptr;
