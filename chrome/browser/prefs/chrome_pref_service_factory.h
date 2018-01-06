@@ -19,6 +19,7 @@ class Time;
 }
 
 namespace policy {
+class BrowserPolicyConnector;
 class PolicyService;
 }
 
@@ -70,6 +71,7 @@ std::unique_ptr<PrefService> CreateLocalState(
     policy::PolicyService* policy_service,
     const scoped_refptr<PrefRegistry>& pref_registry,
     bool async,
+    policy::BrowserPolicyConnector* browser_policy_connector,
     std::unique_ptr<PrefValueStore::Delegate> delegate);
 
 std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(
