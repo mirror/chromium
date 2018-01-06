@@ -88,8 +88,8 @@ TEST(CBORReaderTest, TestUintEncodedWithNonMinimumByteLength) {
     SCOPED_TRACE(testing::Message()
                  << "testing element at index : " << test_case_index++);
 
-    base::Optional<CBORValue> cbor =
-        CBORReader::Read(non_minimal_uint, &error_code);
+    base::Optional<CBORValue> cbor = CBORReader::Read(
+        non_minimal_uint, CBORReader::DecoderOption::STRICT_MODE, &error_code);
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::NON_MINIMAL_CBOR_ENCODING);
   }
@@ -214,7 +214,8 @@ TEST(CBORReaderTest, TestReadStringWithInvalidByteSequenceAfterNUL) {
       0x63, 0x00, 0x00, 0xA6};
   CBORReader::DecoderError error_code;
   base::Optional<CBORValue> cbor =
-      CBORReader::Read(string_with_invalid_continuation_byte, &error_code);
+      CBORReader::Read(string_with_invalid_continuation_byte,
+                       CBORReader::DecoderOption::STRICT_MODE, &error_code);
   EXPECT_FALSE(cbor.has_value());
   EXPECT_EQ(error_code, CBORReader::DecoderError::INVALID_UTF8);
 }
@@ -457,12 +458,14 @@ TEST(CBORReaderTest, TestIntegerOutOfRangeError) {
 
   CBORReader::DecoderError error_code;
   base::Optional<CBORValue> positive_int_out_of_range_cbor =
-      CBORReader::Read(kOutOfRangePositiveInt, &error_code);
+      CBORReader::Read(kOutOfRangePositiveInt,
+                       CBORReader::DecoderOption::STRICT_MODE, &error_code);
   EXPECT_FALSE(positive_int_out_of_range_cbor.has_value());
   EXPECT_EQ(error_code, CBORReader::DecoderError::OUT_OF_RANGE_INTEGER_VALUE);
 
   base::Optional<CBORValue> negative_int_out_of_range_cbor =
-      CBORReader::Read(kOutOfRangeNegativeInt, &error_code);
+      CBORReader::Read(kOutOfRangeNegativeInt,
+                       CBORReader::DecoderOption::STRICT_MODE, &error_code);
   EXPECT_FALSE(negative_int_out_of_range_cbor.has_value());
   EXPECT_EQ(error_code, CBORReader::DecoderError::OUT_OF_RANGE_INTEGER_VALUE);
 }
@@ -505,7 +508,8 @@ TEST(CBORReaderTest, TestReadUnsupportedFloatingPointNumbers) {
                  << testing::PrintToString(unsupported_floating_point));
     CBORReader::DecoderError error_code;
     base::Optional<CBORValue> cbor =
-        CBORReader::Read(unsupported_floating_point, &error_code);
+        CBORReader::Read(unsupported_floating_point,
+                         CBORReader::DecoderOption::STRICT_MODE, &error_code);
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code,
               CBORReader::DecoderError::UNSUPPORTED_FLOATING_POINT_VALUE);
@@ -535,8 +539,8 @@ TEST(CBORReaderTest, TestIncompleteCBORDataError) {
                                     << test_element_index++);
 
     CBORReader::DecoderError error_code;
-    base::Optional<CBORValue> cbor =
-        CBORReader::Read(incomplete_data, &error_code);
+    base::Optional<CBORValue> cbor = CBORReader::Read(
+        incomplete_data, CBORReader::DecoderOption::STRICT_MODE, &error_code);
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::INCOMPLETE_CBOR_DATA);
   }
@@ -558,8 +562,8 @@ TEST(CBORReaderTest, TestUnsupportedMapKeyFormatError) {
   };
 
   CBORReader::DecoderError error_code;
-  base::Optional<CBORValue> cbor =
-      CBORReader::Read(kMapWithUintKey, &error_code);
+  base::Optional<CBORValue> cbor = CBORReader::Read(
+      kMapWithUintKey, CBORReader::DecoderOption::STRICT_MODE, &error_code);
   EXPECT_FALSE(cbor.has_value());
   EXPECT_EQ(error_code, CBORReader::DecoderError::INCORRECT_MAP_KEY_TYPE);
 }
@@ -591,8 +595,8 @@ TEST(CBORReaderTest, TestUnknownAdditionalInfoError) {
                  << "testing data at index : " << test_element_index++);
 
     CBORReader::DecoderError error_code;
-    base::Optional<CBORValue> cbor =
-        CBORReader::Read(incorrect_cbor, &error_code);
+    base::Optional<CBORValue> cbor = CBORReader::Read(
+        incorrect_cbor, CBORReader::DecoderOption::STRICT_MODE, &error_code);
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::UNKNOWN_ADDITIONAL_INFO);
   }
@@ -617,8 +621,9 @@ TEST(CBORReaderTest, TestTooMuchNestingError) {
     SCOPED_TRACE(testing::Message()
                  << "testing zero nested data : " << test_element_index++);
     CBORReader::DecoderError error_code;
-    base::Optional<CBORValue> cbor =
-        CBORReader::Read(zero_depth_data, &error_code, 0);
+    base::Optional<CBORValue> cbor = CBORReader::Read(
+        zero_depth_data, CBORReader::DecoderOption::STRICT_MODE, &error_code,
+        0);
     EXPECT_TRUE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::CBOR_NO_ERROR);
   }
@@ -640,13 +645,13 @@ TEST(CBORReaderTest, TestTooMuchNestingError) {
   };
 
   CBORReader::DecoderError error_code;
-  base::Optional<CBORValue> cbor_single_layer_max =
-      CBORReader::Read(kNestedCBORData, &error_code, 1);
+  base::Optional<CBORValue> cbor_single_layer_max = CBORReader::Read(
+      kNestedCBORData, CBORReader::DecoderOption::STRICT_MODE, &error_code, 1);
   EXPECT_FALSE(cbor_single_layer_max.has_value());
   EXPECT_EQ(error_code, CBORReader::DecoderError::TOO_MUCH_NESTING);
 
-  base::Optional<CBORValue> cbor_double_layer_max =
-      CBORReader::Read(kNestedCBORData, &error_code, 2);
+  base::Optional<CBORValue> cbor_double_layer_max = CBORReader::Read(
+      kNestedCBORData, CBORReader::DecoderOption::STRICT_MODE, &error_code, 2);
   EXPECT_TRUE(cbor_double_layer_max.has_value());
   EXPECT_EQ(error_code, CBORReader::DecoderError::CBOR_NO_ERROR);
 }
@@ -686,7 +691,8 @@ TEST(CBORReaderTest, TestOutOfOrderKeyError) {
     SCOPED_TRACE(scope_message);
 
     base::Optional<CBORValue> cbor =
-        CBORReader::Read(unsorted_map, &error_code);
+        CBORReader::Read(unsorted_map,
+          CBORReader::DecoderOption::STRICT_MODE, &error_code);
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::OUT_OF_ORDER_KEY);
   }
@@ -719,7 +725,8 @@ TEST(CBORReaderTest, TestDuplicateKeyError) {
   CBORReader::DecoderError error_code;
 
   base::Optional<CBORValue> cbor =
-      CBORReader::Read(kMapWithDuplicateKey, &error_code);
+      CBORReader::Read(kMapWithDuplicateKey,
+                       CBORReader::DecoderOption::STRICT_MODE, &error_code);
   EXPECT_FALSE(cbor.has_value());
   EXPECT_EQ(error_code, CBORReader::DecoderError::DUPLICATE_KEY);
 }
@@ -742,16 +749,16 @@ TEST(CBORReaderTest, TestIncorrectStringEncodingError) {
     SCOPED_TRACE(testing::Message() << "testing cbor data utf8 encoding : "
                                     << test_element_index++);
 
-    base::Optional<CBORValue> correctly_encoded_cbor =
-        CBORReader::Read(cbor_byte, &error_code);
+    base::Optional<CBORValue> correctly_encoded_cbor = CBORReader::Read(
+        cbor_byte, CBORReader::DecoderOption::STRICT_MODE, &error_code);
     EXPECT_TRUE(correctly_encoded_cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::CBOR_NO_ERROR);
   }
 
   // Incorrect UTF8 encoding referenced by section 3.5.3 of the stress test.
   std::vector<uint8_t> impossible_utf_byte{0x64, 0xfe, 0xfe, 0xff, 0xff};
-  base::Optional<CBORValue> incorrectly_encoded_cbor =
-      CBORReader::Read(impossible_utf_byte, &error_code);
+  base::Optional<CBORValue> incorrectly_encoded_cbor = CBORReader::Read(
+      impossible_utf_byte, CBORReader::DecoderOption::STRICT_MODE, &error_code);
   EXPECT_FALSE(incorrectly_encoded_cbor.has_value());
   EXPECT_EQ(error_code, CBORReader::DecoderError::INVALID_UTF8);
 }
@@ -777,7 +784,8 @@ TEST(CBORReaderTest, TestExtraneousCBORDataError) {
 
     CBORReader::DecoderError error_code;
     base::Optional<CBORValue> cbor =
-        CBORReader::Read(extraneous_cbor_data, &error_code);
+        CBORReader::Read(extraneous_cbor_data,
+                         CBORReader::DecoderOption::STRICT_MODE, &error_code);
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::EXTRANEOUS_DATA);
   }
@@ -812,9 +820,51 @@ TEST(CBORReaderTest, TestUnsupportedSimplevalue) {
 
     CBORReader::DecoderError error_code;
     base::Optional<CBORValue> cbor =
-        CBORReader::Read(unsupported_simple_val, &error_code);
+        CBORReader::Read(unsupported_simple_val,
+                         CBORReader::DecoderOption::STRICT_MODE, &error_code);
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::UNSUPPORTED_SIMPLE_VALUE);
+  }
+}
+
+TEST(CBORReaderTest, TestAllowOutOfOrderMapKeysOption) {
+  static const std::vector<uint8_t> kMapsWithUnsortedKeys[] = {
+      // clang-format off
+      {0xa2,  // map with 2 keys with same major type and length
+         0x61, 0x62,  // key "b"
+         0x61, 0x42,  // value :"B"
+
+         0x61, 0x61,  // key "a" (out of order byte-wise lexically)
+         0x61, 0x45   // value "E"
+      },
+      {0xa2,  // map with 2 keys with different major type
+         0x61, 0x62,        // key "b"
+         0x02,              // value 2
+
+         // key 1000 (out of order since lower major type sorts first)
+         0x19, 0x03, 0xe8,
+         0x61, 0x61,        // value a
+      },
+      {0xa2,  // map with 2 keys with same major type
+         0x19, 0x03, 0xe8,  // key 1000  (out of order due to longer length)
+         0x61, 0x61,        //value "a"
+
+         0x0a,              // key 10
+         0x61, 0x62},       // value "b"
+      //clang-format on
+  };
+
+  int test_element_index = 0;
+  CBORReader::DecoderError error_code;
+  for (const auto& unsorted_map : kMapsWithUnsortedKeys) {
+    testing::Message scope_message;
+    scope_message << "testing unsorted map : " << test_element_index++;
+    SCOPED_TRACE(scope_message);
+
+    base::Optional<CBORValue> cbor =
+        CBORReader::Read(unsorted_map,
+          CBORReader::DecoderOption::ALLOW_OUT_OF_ORDER_MAP_KEYS, &error_code);
+    EXPECT_TRUE(cbor.has_value());
   }
 }
 
