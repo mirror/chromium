@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9b66296_04bbb599",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-06T17:24:36Z",
+      "side": 1,
+      "message": "Suggest:\n\n    // Dump the camera model to help debugging. \n    // TODO(aloui.rda@gmail.com): remove after http://crbug.com/730068 is fixed.",
+      "range": {
+        "startLine": 305,
+        "startChar": 4,
+        "endLine": 306,
+        "endChar": 13
+      },
+      "revId": "d6652deb346946a2350e8c7942fe821e6e8c7dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
