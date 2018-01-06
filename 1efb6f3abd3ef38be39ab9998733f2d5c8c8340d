@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b93facb_f348a041",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-06T00:14:15Z",
+      "side": 1,
+      "message": "Looks like there is also ERASER, so only set MOUSE if pointer_type \u003d\u003d MOUSE?",
+      "range": {
+        "startLine": 978,
+        "startChar": 58,
+        "endLine": 978,
+        "endChar": 63
+      },
+      "revId": "1efb6f3abd3ef38be39ab9998733f2d5c8c8340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb72a81_a95bc2d9",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-06T00:14:15Z",
+      "side": 1,
+      "message": "Similar comment here.",
+      "range": {
+        "startLine": 1077,
+        "startChar": 58,
+        "endLine": 1077,
+        "endChar": 63
+      },
+      "revId": "1efb6f3abd3ef38be39ab9998733f2d5c8c8340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
