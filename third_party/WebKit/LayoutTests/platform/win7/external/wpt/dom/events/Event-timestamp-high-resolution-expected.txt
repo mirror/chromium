@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Constructed MouseEvent timestamp should be high resolution and have the same time origin as performance.now()
+FAIL Constructed KeyboardEvent timestamp should be high resolution and have the same time origin as performance.now() assert_greater_than_equal: Event timestamp should be greater than performance.now() timestamp taken before its creation expected a number greater than or equal to 22.100000001955777 but got 22.0999999983178
+PASS Constructed WheelEvent timestamp should be high resolution and have the same time origin as performance.now()
+PASS Constructed GamepadEvent timestamp should be high resolution and have the same time origin as performance.now()
+PASS Constructed FocusEvent timestamp should be high resolution and have the same time origin as performance.now()
+Harness: the test ran to completion.
+
