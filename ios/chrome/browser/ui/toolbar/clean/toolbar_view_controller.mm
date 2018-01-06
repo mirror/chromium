@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h"
 
+#include "base/ios/ios_util.h"
 #import "base/mac/foundation_util.h"
 #include "base/metrics/user_metrics.h"
 #import "ios/chrome/browser/ui/bubble/bubble_util.h"
@@ -22,6 +23,7 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_view.h"
+#import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -642,9 +644,22 @@
   [buttonConstraints
       addObject:[self.tabSwitchStripButton.widthAnchor
                     constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.tabSwitchStripButton addTarget:self.dispatcher
-                                action:@selector(displayTabSwitcher)
-                      forControlEvents:UIControlEventTouchUpInside];
+
+  // TODO(crbug.com/799601): Delete this once its not needed.
+  if (base::FeatureList::IsEnabled(kMemexTabSwitcher)) {
+    [self.tabSwitchStripButton addTarget:self.dispatcher
+                                  action:@selector(navigateToMemexTabSwitcher)
+                        forControlEvents:UIControlEventTouchUpInside];
+    UILongPressGestureRecognizer* tabSwitcherLongPress =
+        [[UILongPressGestureRecognizer alloc]
+            initWithTarget:self
+                    action:@selector(handleLongPress:)];
+    [self.tabSwitchStripButton addGestureRecognizer:tabSwitcherLongPress];
+  } else {
+    [self.tabSwitchStripButton addTarget:self.dispatcher
+                                  action:@selector(displayTabSwitcher)
+                        forControlEvents:UIControlEventTouchUpInside];
+  }
   [self addStandardActionsForButton:self.tabSwitchStripButton];
 
   // Tools menu button.
@@ -801,6 +816,9 @@
     [self.dispatcher showTabHistoryPopupForBackwardHistory];
   } else if (gesture.view == self.forwardButton) {
     [self.dispatcher showTabHistoryPopupForForwardHistory];
+  } else if (gesture.view == self.tabSwitchStripButton) {
+    // TODO(crbug.com/799601): Delete this once its not needed.
+    [self.dispatcher displayTabSwitcher];
   }
 }
 
