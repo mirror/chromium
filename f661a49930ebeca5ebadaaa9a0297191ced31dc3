@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "407f2f27_3d080f0a",
+        "filename": "chrome/browser/extensions/external_provider_impl_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-06T03:05:31Z",
+      "side": 0,
+      "message": "That is flaky in case of multiple extensions. I replaced to alternative solution.",
+      "range": {
+        "startLine": 131,
+        "startChar": 1,
+        "endLine": 134,
+        "endChar": 56
+      },
+      "revId": "f661a49930ebeca5ebadaaa9a0297191ced31dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
