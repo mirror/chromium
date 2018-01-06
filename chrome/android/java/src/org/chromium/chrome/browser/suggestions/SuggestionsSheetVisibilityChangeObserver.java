@@ -10,11 +10,13 @@ import android.support.annotation.CallSuper;
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
 import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
+import org.chromium.content.browser.BrowserStartupController;
 
 /**
  * Notifies of events dedicated to changes in visibility of a
@@ -26,6 +28,7 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
     private int mCurrentContentState;
     private boolean mCurrentVisibility;
     private boolean mWasShownSinceLastOpen;
+    private boolean mNativeInitialized;
 
     private final ChromeActivity mActivity;
     private final BottomSheet.BottomSheetContent mContentObserved;
@@ -51,6 +54,17 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
         // This event is swallowed when the observer is registered after the sheet is opened.
         // (e.g. Chrome starts on the NTP). This allows taking it into account.
         if (mBottomSheet.isSheetOpen()) onSheetOpened(StateChangeReason.NONE);
+
+        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
+                    @Override
+                    public void onSuccess(boolean alreadyStarted) {
+                        onNativeLibraryReady();
+                    }
+
+                    @Override
+                    public void onFailure() {}
+                });
     }
 
     public void onDestroy() {
@@ -74,6 +88,13 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
      *                     or {@link BottomSheet#SHEET_STATE_PEEK}
      */
     public abstract void onContentStateChanged(@BottomSheet.SheetState int contentState);
+
+    /** Called when the native library is loaded. */
+    @CallSuper
+    public void onNativeLibraryReady() {
+        mNativeInitialized = true;
+        onStateChange();
+    }
 
     @Override
     @CallSuper
@@ -148,7 +169,7 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
         boolean hasMeaningfulStateChange = BottomSheet.isStateStable(newContentState)
                 && (mCurrentContentState != newContentState || mCurrentVisibility != newVisibility);
 
-        if (newVisibility != mCurrentVisibility) {
+        if (newVisibility != mCurrentVisibility && mNativeInitialized) {
             if (newVisibility) {
                 onContentShown(!mWasShownSinceLastOpen);
                 mWasShownSinceLastOpen = true;
