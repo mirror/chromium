@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2224b36_92b45997",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c96655_d323cc38",
+      "range": {
+        "startLine": 28,
+        "startChar": 40,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "6dd7d3f409bd09146549a196a089bc47be229455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1663d401_3eba4b2f",
         "filename": "chrome/browser/resources/md_extensions/error_page.html",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-06T01:40:43Z",
       "side": 1,
       "message": "Is the \"$\" necessary?",
+      "range": {
+        "startLine": 201,
+        "startChar": 27,
+        "endLine": 201,
+        "endChar": 28
+      },
+      "revId": "6dd7d3f409bd09146549a196a089bc47be229455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d445c6d_72283c9c",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:53:54Z",
+      "side": 1,
+      "message": "Yes b/c ID needs to be reflected to the DOM",
+      "parentUuid": "1663d401_3eba4b2f",
       "range": {
         "startLine": 201,
         "startChar": 27,
@@ -68,6 +116,30 @@
       "revId": "6dd7d3f409bd09146549a196a089bc47be229455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b77a27_e4e9363f",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9858ea85_de092281",
+      "range": {
+        "startLine": 158,
+        "startChar": 30,
+        "endLine": 158,
+        "endChar": 40
+      },
+      "revId": "6dd7d3f409bd09146549a196a089bc47be229455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
