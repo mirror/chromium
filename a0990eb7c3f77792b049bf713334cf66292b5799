@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43bb8cfe_2f1b486d",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-06T02:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9136152e_9b99ea23",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "a0990eb7c3f77792b049bf713334cf66292b5799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85f3f957_3bd86ead",
         "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "97d01e10_a2d99cf8",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-06T02:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f3f957_3bd86ead",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "a0990eb7c3f77792b049bf713334cf66292b5799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4461f591_74e1f5b2",
         "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-06T01:32:07Z",
       "side": 1,
       "message": "What is the relation of \"isModifiable\" with the notion of a \"selection\"? Not familiar with it, but looking at https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/document_info.js?l\u003d152, they seem unrelated at first glance.",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "a0990eb7c3f77792b049bf713334cf66292b5799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71482cfc_ab4a4900",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-06T02:41:09Z",
+      "side": 1,
+      "message": "They are not directly related - isModifiable is an indicator of whether the document is a PDF, selection is if the user has selected something. Both pieces of information are sent back from the C++ backend with the initial settings, and they are tracked in the DocumentInfo structure. Since they are always known at initialization they are both required parameters for DocumentInfo init().",
+      "parentUuid": "4461f591_74e1f5b2",
       "range": {
         "startLine": 60,
         "startChar": 35,
