@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c2cfd44_fe977fbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-06T00:31:26Z",
+      "side": 1,
+      "message": "Can something bad happen if we’re holding onto an invalid touch event?\n\nI suppose it’s cleaner to clear it (since otherwise we’re just preventing it from being GC’ed for no reason).",
+      "parentUuid": "2f5c1afb_eb98897c",
+      "range": {
+        "startLine": 408,
+        "startChar": 9,
+        "endLine": 408,
+        "endChar": 0
+      },
+      "revId": "f53f016aab7b3ce1bb8372934317b503e17fc71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe317c51_e7e8b438",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
         "patchSetId": 5
