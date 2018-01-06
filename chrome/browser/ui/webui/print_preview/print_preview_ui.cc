@@ -405,8 +405,18 @@ content::WebUIDataSource* CreateNewPrintPreviewUISource(Profile* profile) {
     source->AddResourcePath(kPrintPreviewResources[i].name,
                             kPrintPreviewResources[i].value);
   }
+  source->AddResourcePath("pdf_preview.html",
+                          IDR_PRINT_PREVIEW_PDF_PREVIEW_HTML);
   AddPrintPreviewImages(source);
   source->SetDefaultResource(IDR_PRINT_PREVIEW_NEW_HTML);
+  source->SetRequestFilter(base::BindRepeating(&HandleRequestCallback));
+  source->OverrideContentSecurityPolicyScriptSrc(
+      base::StringPrintf("script-src chrome://resources 'self' 'unsafe-eval' "
+                         "chrome-extension://%s;",
+                         extension_misc::kPdfExtensionId));
+  source->OverrideContentSecurityPolicyChildSrc("child-src 'self';");
+  source->DisableDenyXFrameOptions();
+  source->OverrideContentSecurityPolicyObjectSrc("object-src 'self';");
   AddPrintPreviewFlags(source, profile);
   return source;
 }
