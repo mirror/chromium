@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d7dfa32e_9ab865ee",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-01-06T03:23:51Z",
+      "side": 1,
+      "message": "Yup, confirmed it needs to be case insensitive. To be more correct, we also need to permit spaces and tabs before the \"\u003d\" (but not newlines). I don\u0027t know if this is every edge case, but it\u0027s probably much better.",
+      "parentUuid": "b1daa4b4_7215c88b",
+      "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5e7bb2b_c945e189",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
         "patchSetId": 1
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6f86de57_f22a7217",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-01-06T03:23:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc4b29b_995a59a7",
+      "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd6c1144_10f62a96",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
         "patchSetId": 1
@@ -123,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "961bca28_76100e89",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-01-06T03:23:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd6c1144_10f62a96",
+      "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d6784f_18dcaa5a",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/CookieManagerTest.java",
         "patchSetId": 1
@@ -137,6 +191,24 @@
       "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf1276d_8564a1e4",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/CookieManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-01-06T03:23:51Z",
+      "side": 1,
+      "message": "That\u0027s just what WebAddress#toString spits out. To avoid that, we would need to fix up URLs before passing them to fixupUrl(). If we fix before passing to fixupUrl(), we have 2 cases to handle; fixupUrl() consolidates these into 1 case.\n\nAnd fixing before forces us to implement in the glue layer, which means we can\u0027t test.",
+      "parentUuid": "b9d6784f_18dcaa5a",
+      "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +247,30 @@
       "side": 1,
       "message": "It\u0027s not valid, but it appears to occur commonly enough with bad webservers that browsers accept it anyway. I\u0027d leave the test here - it\u0027s a chromium test so if someone decides to change the chromium behaviour to be more strict they\u0027ll see the test break and can change it or talk to us about it.",
       "parentUuid": "11c3b53b_bc82e328",
+      "range": {
+        "startLine": 200,
+        "startChar": 8,
+        "endLine": 200,
+        "endChar": 52
+      },
+      "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fbcd7fe_914756cd",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/CookieManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-01-06T03:23:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b886467_d35a1e1f",
       "range": {
         "startLine": 200,
         "startChar": 8,
