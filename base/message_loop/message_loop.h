@@ -269,7 +269,9 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // Returns true if the message loop is idle (same condition which triggers
   // RunLoop::RunUntilIdle() to return: i.e. out of tasks which can be processed
   // at the current run-level -- there might be deferred non-nestable tasks
-  // remaining if currently in a nested run level). Provided for testing.
+  // remaining if currently in a nested run level). Note that delayed tasks that
+  // are ready to run are not considered, to avoid timing-dependent test flakes.
+  // Provided for testing.
   bool IsIdleForTesting();
 
   // Runs the specified PendingTask.

@@ -258,12 +258,11 @@ void MessageLoop::RemoveTaskObserver(TaskObserver* task_observer) {
 }
 
 bool MessageLoop::IsIdleForTesting() {
+  // Note that delayed tasks that are ready-to-run are ignored, to avoid timing
+  // dependent flakiness in tests which call this.
   return !incoming_task_queue_->triage_tasks().HasTasks() &&
          (!incoming_task_queue_->deferred_tasks().HasTasks() ||
-          RunLoop::IsNestedOnCurrentThread()) &&
-         (!incoming_task_queue_->delayed_tasks().HasTasks() ||
-          incoming_task_queue_->delayed_tasks().Peek().delayed_run_time >
-              TimeTicks::Now());
+          RunLoop::IsNestedOnCurrentThread());
 }
 
 //------------------------------------------------------------------------------
