@@ -28,7 +28,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/gles2_cmd_validation.h"
 #include "gpu/command_buffer/service/logger.h"
-#include "gpu/gpu_export.h"
+#include "gpu/gpu_gles2_export.h"
 
 namespace gpu {
 
@@ -38,8 +38,8 @@ namespace raster {
 
 // This class implements the AsyncAPIInterface interface, decoding
 // RasterInterface commands and calling GL.
-class GPU_EXPORT RasterDecoder : public gles2::GLES2Decoder,
-                                 public gles2::ErrorStateClient {
+class GPU_GLES2_EXPORT RasterDecoder : public gles2::GLES2Decoder,
+                                       public gles2::ErrorStateClient {
  public:
   RasterDecoder(gles2::GLES2DecoderClient* client,
                 CommandBufferServiceBase* command_buffer_service,
