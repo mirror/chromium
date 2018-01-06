@@ -751,6 +751,13 @@ function showStateOccupancyData(
   }
 }
 
+function showCpuTemperatureData(temperatureStateData, systemResumedArray) {
+  showStateOccupancyData(
+      temperatureStateData, systemResumedArray,
+      'temperatureStateOccupancyPercentageHeader', null,
+      'cpu-temperature-plots-div');
+}
+
 function showCpuIdleData(idleStateData, systemResumedArray) {
   showStateOccupancyData(
       idleStateData, systemResumedArray, 'idleStateOccupancyPercentageHeader',
@@ -765,6 +772,10 @@ function showCpuFreqData(freqStateData, systemResumedArray) {
 
 function requestBatteryChargeData() {
   chrome.send('requestBatteryChargeData');
+}
+
+function requestCpuTemperatureData() {
+  chrome.send('requestCpuIdleData');
 }
 
 function requestCpuIdleData() {
@@ -801,6 +812,7 @@ function showHideCallback(sectionId, buttonId, requestFunction) {
 
 var powerUI = {
   showBatteryChargeData: showBatteryChargeData,
+  showCpuTemperatureData: showCpuTemperatureData,
   showCpuIdleData: showCpuIdleData,
   showCpuFreqData: showCpuFreqData
 };
@@ -817,6 +829,12 @@ document.addEventListener('DOMContentLoaded', function() {
   $('cpu-idle-show-button').onclick = showHideCallback(
       'cpu-idle-section', 'cpu-idle-show-button', requestCpuIdleData);
   $('cpu-idle-reload-button').onclick = requestCpuIdleData;
+
+  $('cpu-temperature-section').hidden = true;
+  $('cpu-temperature-show-button').onclick = showHideCallback(
+      'cpu-temperature-section', 'cpu-temperature-show-button',
+      requestCpuTemperatureData);
+  $('cpu-temperature-reload-button').onclick = requestCpuTemperatureData;
 
   $('cpu-freq-section').hidden = true;
   $('cpu-freq-show-button').onclick = showHideCallback(
