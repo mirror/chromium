@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d03fe75f_284f03ce",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-06T13:40:41Z",
+      "side": 1,
+      "message": "I thinks \"scale\" would be inappropriate as |x| is the interpolation parameter. The use of ScaleVector2d is an implementation detail. \"t\" is often used for this parameter but that\u0027s probably because the value comes from some time delta. In this case, it\u0027s just one of the factors from above. Maybe \"f\" or \"factor\" is better?",
+      "parentUuid": "db9bbf71_ab551431",
+      "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c62e780_a6b08a5b",
         "filename": "ash/cursor/cursor_view.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5d3e00c7_80733c88",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-06T13:40:41Z",
+      "side": 1,
+      "message": "Yes, and that causes us to submit a minimal size quad that is not an overlay candidate. The result is that minimal gpu resources are needed to display the cursor and all HW overlays can be used for application contents.",
+      "parentUuid": "2c62e780_a6b08a5b",
+      "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de917c7e_afab56a1",
         "filename": "ui/ozone/platform/drm/host/drm_cursor.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-06T02:23:32Z",
       "side": 1,
       "message": "Do you need this now? (it looks to me that it should work without)\n\nor preparation to replace hw cursor?",
+      "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147502b1_94ff1684",
+        "filename": "ui/ozone/platform/drm/host/drm_cursor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-06T13:40:41Z",
+      "side": 1,
+      "message": "We need this to minimize jank. Fast ink cursor works without it, but it requires that input events bounce off the UI thread. UI thread can get relatively busy and will sometimes run tasks that take long enough that they will cause a missed frame.\n\nA major benefit with this fast ink cursor approach is that we shortcut cursor updates to a small amount of processing on just the Evdev+Cursor_PaintThread. That\u0027s even better than the current HW cursor, which require Evdev+GPUIO+DRM thread processing.\n\nIn case it\u0027s not clear; This DrmCursor code executes on the Evdev thread, and the CursorController::SetCursorLocation call allows location changes of the cursor (normally just forwarded to the GPU process for the HW cursor) to be forwarded directly to the Cursor_PaintThread.\n\nIdeally we\u0027d replace the HW cursor with this mechanism in the future but I\u0027m not sure that\u0027s possible on devices without HW overlay support. The mechanism should be faster (or at least as fast) as the current sw cursor on devices without HW overlays. However, it\u0027s on devices with HW overlay support that this really shines and can outperform the HW cursor. Not just in terms of more flexible cursor rendering, but also in terms of smoothness and latency.",
+      "parentUuid": "de917c7e_afab56a1",
       "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
