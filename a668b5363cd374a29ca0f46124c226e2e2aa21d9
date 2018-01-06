@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27880343_d57daaf0",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-06T19:58:16Z",
+      "side": 0,
+      "message": "Hmmm, this call gets rid of cancelled tasks, do we really have tasks from a previous test that run in the next test? That sounds horrible...\n\nOther than that, I\u0027m already not a fan of tests that use IsIdleForTesting() but if they do so and also post delayed tasks themselves that sounds pretty bad... tests that do this would be better off checking the actual condition they\u0027re expecting to have run rather than checking that \"everything ran\".\n\nFWIW, I peeked at https://chromium-review.googlesource.com/c/chromium/src/+/853355 and it doesn\u0027t make sense to check for IsIdleForTesting() at the end of that test. It already runs until the right condition is met. Why does it care that the MessageLoop is then idle?\n\nIsIdleForTesting() needs to map to \"RunUntilIdle() won\u0027t run a task\" for ScopedTaskEnvironment\u0027s impl (CL pending).\n\n\nTangential FYI : I\u0027m working towards a mock time mode for all ScopedTaskEnvironment::MainThreadTypes and hoping to one day make all unit tests use mock time by default :). Think that\u0027d help prevent some of the flakes you\u0027ve been chasing? Looking to document use cases.",
+      "range": {
+        "startLine": 264,
+        "startChar": 33,
+        "endLine": 264,
+        "endChar": 59
+      },
+      "revId": "a668b5363cd374a29ca0f46124c226e2e2aa21d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
