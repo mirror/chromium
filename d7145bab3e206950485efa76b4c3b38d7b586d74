@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1eb86a1_f724c705",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-06T02:39:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41739884_c64c0f54",
+      "revId": "d7145bab3e206950485efa76b4c3b38d7b586d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abada433_6dae8e0f",
         "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "d7145bab3e206950485efa76b4c3b38d7b586d74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6b6c6d_5203c878",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-06T02:39:18Z",
+      "side": 1,
+      "message": "We could, but that\u0027d mean excluding this file from Mac build and adding more #ifs to WiredDisplayMRP. I didn\u0027t do that since Mac will eventually need this file as well.",
+      "parentUuid": "abada433_6dae8e0f",
+      "revId": "d7145bab3e206950485efa76b4c3b38d7b586d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "d7145bab3e206950485efa76b4c3b38d7b586d74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5e59a7_54ed284a",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-06T02:39:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08e42bde_402ec27a",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "d7145bab3e206950485efa76b4c3b38d7b586d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
