@@ -22,6 +22,30 @@
       "revId": "df6ee93370208740ce6deb9041024d082e96ef92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84c426b_e07a47ec",
+        "filename": "chromeos/components/tether/hotspot_usage_duration_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-06T00:15:23Z",
+      "side": 1,
+      "message": "Thanks for the explanation! I\u0027ve changed the number of buckets to only 100.",
+      "parentUuid": "25488d92_872998e2",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 54
+      },
+      "revId": "df6ee93370208740ce6deb9041024d082e96ef92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
