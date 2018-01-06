@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f248b12c_bc2c6aea",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-06T02:44:14Z",
+      "side": 1,
+      "message": "I thought the ShelfWidget should be shown for some reason (the background black bar or something, maybe it insets the working area?) but if hiding the widget here seems to fix the defect without any negative side effects, then that part of the fix sgtm. Can you just call Hide() here instead of adding new functions?",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f6f3ba_ac4b88de",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-06T02:44:14Z",
+      "side": 1,
+      "message": "Maybe just make the top if statement do:\n  if (!IsUsingViewsShelf() || state \u003d\u003d session_manager::SessionState::UNKNOWN) {\nThen the else block can just have one call to Show() outside the switch statement",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928f0b48_ea420457",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-06T02:44:14Z",
+      "side": 1,
+      "message": "Why do we need to make the views invisible if we\u0027re hiding the widget? Shouldn\u0027t Hide() be sufficient?",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0e64d3_dc3c9ca5",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-06T02:44:14Z",
+      "side": 1,
+      "message": "Check this unconditionally: EXPECT_EQ(shelf_visibility \u003d\u003d kNone, !shelf_view_-\u003evisible());",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
