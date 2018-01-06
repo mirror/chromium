@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Navigation Preload Resource Timing. assert_greater_than_equal: requestStart >= connectEnd of https://web-platform.test:8444/service-workers/service-worker/navigation-preload/resources/resource-timing-scope.py?type=normal expected a number greater than or equal to 22.60000000023865 but got 22.599999999783904
+Harness: the test ran to completion.
+
