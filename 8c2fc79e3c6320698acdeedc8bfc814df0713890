@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5782755e_df12bd55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-06T17:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e955ff97_f00f0a6a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "8c2fc79e3c6320698acdeedc8bfc814df0713890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e66e536c_7c3e3d70",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a0f9d016_604658e2",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-06T17:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e66e536c_7c3e3d70",
+      "range": {
+        "startLine": 304,
+        "startChar": 4,
+        "endLine": 305,
+        "endChar": 64
+      },
+      "revId": "8c2fc79e3c6320698acdeedc8bfc814df0713890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0434c1d4_afb4eacb",
         "filename": "media/capture/video/video_capture_device_unittest.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "8c2fc79e3c6320698acdeedc8bfc814df0713890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16d4099_65b899f0",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-06T17:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0434c1d4_afb4eacb",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 5
+      },
+      "revId": "8c2fc79e3c6320698acdeedc8bfc814df0713890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
