@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41739884_c64c0f54",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-06T00:40:13Z",
+      "side": 1,
+      "message": "Can this be just #if defined(OS_MAC)?",
+      "revId": "d7145bab3e206950485efa76b4c3b38d7b586d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abada433_6dae8e0f",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-06T00:40:13Z",
+      "side": 1,
+      "message": "Can we remove the #if #else if this method won\u0027t be called on Mac?",
+      "revId": "d7145bab3e206950485efa76b4c3b38d7b586d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e42bde_402ec27a",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_presentation_receiver_factory.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-06T00:40:13Z",
+      "side": 1,
+      "message": "I was thinking more like having WiredDisplayMRP take a WiredDisplayPresentationReceiverFactory* and calling Create() on it, and in the tests, pass in a test implementation of the Factory (which would override Create() to create a mock Receiver) when creating WiredDisplayMRP. Can address in a follow up patch.",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "d7145bab3e206950485efa76b4c3b38d7b586d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

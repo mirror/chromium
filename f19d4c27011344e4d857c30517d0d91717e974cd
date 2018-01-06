@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "03b289d6_0e45ef9f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-06T00:40:13Z",
+      "side": 1,
+      "message": "make_optional takes a forwarding reference, which means the type of argument can be lvalue or rvalue. So removing std::move shouldn\u0027t cause it to fail. Not a big deal either way.",
+      "parentUuid": "69b3d4b5_8cb3756a",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed83d5c8_4f492ece",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 9
