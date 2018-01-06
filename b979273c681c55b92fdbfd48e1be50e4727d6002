@@ -16,6 +16,24 @@
       "revId": "b979273c681c55b92fdbfd48e1be50e4727d6002",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f792c23d_1a72ce12",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-06T04:39:42Z",
+      "side": 1,
+      "message": "Never mind. I figured it out. It is not policy init racing. The case where I found it missing is when restarting chrome from about:flags page, where the user flags are re-written.",
+      "parentUuid": "590bf3a5_4bf09d9a",
+      "revId": "b979273c681c55b92fdbfd48e1be50e4727d6002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
