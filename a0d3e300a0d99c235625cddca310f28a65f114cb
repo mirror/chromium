@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "780d6568_12161e5e",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14851,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-06T00:02:30Z",
+      "side": 1,
+      "message": "Maybe original_base_level and original_max_level for clarity?",
+      "range": {
+        "startLine": 14851,
+        "startChar": 8,
+        "endLine": 14851,
+        "endChar": 18
+      },
+      "revId": "a0d3e300a0d99c235625cddca310f28a65f114cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
