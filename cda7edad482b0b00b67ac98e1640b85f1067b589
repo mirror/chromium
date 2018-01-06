@@ -104,6 +104,30 @@
       "revId": "cda7edad482b0b00b67ac98e1640b85f1067b589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a032ba_44537393",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerNavigator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2018-01-06T01:36:54Z",
+      "side": 1,
+      "message": "Yes, that was my intention forgot to remove that code (I already had it removed from Navigator). Sorry about that.",
+      "parentUuid": "297267c4_925e6f88",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 7
+      },
+      "revId": "cda7edad482b0b00b67ac98e1640b85f1067b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
