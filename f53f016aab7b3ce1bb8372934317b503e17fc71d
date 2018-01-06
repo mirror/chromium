@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f7ac8f96_e3d5e2c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-06T00:37:58Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s my thinking is that we\u0027re holding onto a useless object.",
+      "parentUuid": "8c2cfd44_fe977fbc",
+      "range": {
+        "startLine": 408,
+        "startChar": 9,
+        "endLine": 408,
+        "endChar": 0
+      },
+      "revId": "f53f016aab7b3ce1bb8372934317b503e17fc71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe317c51_e7e8b438",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
         "patchSetId": 5
