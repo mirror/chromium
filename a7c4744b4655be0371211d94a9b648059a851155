@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "151f75fa_8eeb828a",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-06T02:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dc5a547_264e18bc",
+      "revId": "a7c4744b4655be0371211d94a9b648059a851155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d39456b_4a0300ef",
         "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a7c4744b4655be0371211d94a9b648059a851155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b468ddb_4d79386e",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-06T02:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d39456b_4a0300ef",
+      "revId": "a7c4744b4655be0371211d94a9b648059a851155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27501e23_24ef171a",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-06T02:21:54Z",
+      "side": 1,
+      "message": "Yes:\n\n1. The header comments for media::ComputeLetterboxRegionForI420() state that the result will always be contained by the Rect (1st arg). This is backed up by unit testing (media/base/video_util_unittest.cc).\n\n2. Note that later, in FrameSinkVideoCapturerImpl::DidCopyFrame(), the result from the copy request is also scrutinized to make sure it either matches or is smaller than this content_rect. (If smaller, media::LetterboxYUV() will be asked to black-out more of the frame.)",
+      "parentUuid": "95c44e1f_cd3de0ec",
+      "revId": "a7c4744b4655be0371211d94a9b648059a851155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eb7edd4_75dff80e",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-05T06:28:38Z",
       "side": 1,
       "message": "Can you remind me where the different parts all live? Perhaps we could document this in the mojom comments. I\u0027m guessing that this code lives in the gpu process, but I\u0027m not sure where the consumer lives.",
+      "revId": "a7c4744b4655be0371211d94a9b648059a851155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46158df9_7e7a2c4d",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-06T02:21:54Z",
+      "side": 1,
+      "message": "Yes, this code here is all in the GPU process.\n\nIn the short-term, the consumer will live in the browser process:\n content::WebContentsVideoCaptureDevice will be gutted-out almost completely and have just two simple functions: 1) As the FrameSinkVideoConsumer, it will inject video frames into the video stack, which dispatches them to one or more render processes; 2) It handles mouse cursor rendering on-top of the captured video frames (but we\u0027d eventually like to move this to the GPU process).\n\nIn the future, with work xjz@ is doing on service\u0027ifying tab mirroring (in a separate utility process), it\u0027s possible a FrameSinkVideoConsumer could live in that utility process instead of the browser process.\n\nEventually, I\u0027ll be updating my design doc and refactoring it as gitiles docs added to the Chromium repository so that there is clear documentation.\n\nAs for adding mojom comments for where the parts live, I\u0027m reluctant to do that because they would easily lose accuracy over time (short-term vs. long-term plans), and this is a question that\u0027s always easy to answer via cs.chromium.org.",
+      "parentUuid": "2eb7edd4_75dff80e",
       "revId": "a7c4744b4655be0371211d94a9b648059a851155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

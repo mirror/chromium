@@ -87,6 +87,24 @@
       "revId": "74b0f79b8a009a092695d4f40f4cea196bf8c7cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a812c217_a393ab62",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_video_capture.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-06T02:21:54Z",
+      "side": 1,
+      "message": "Agree, it probably seems like a \"gray area\" between \"is it struct traits?\" or not at this point. Future CLs will make it clear that some of these fields are used directly in the consumer, and a subset of them are directly pass-through to media::VideoFrameReceiver (injection into the video stack).\n\nFWIW, I have it all on my desktop running. I just need to get this CL in before I can land the rest in the tree.",
+      "parentUuid": "df3b9003_7834a2ba",
+      "revId": "74b0f79b8a009a092695d4f40f4cea196bf8c7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
