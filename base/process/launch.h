@@ -166,6 +166,11 @@ struct BASE_EXPORT LaunchOptions {
   FileHandleMappingVector fds_to_remap;
 
 #if defined(OS_LINUX)
+  // Each element is an RLIMIT_* constant that should be raised to its
+  // rlim_max.  This pointer is owned by the caller and must live through
+  // the call to LaunchProcess().
+  const std::vector<int>* maximize_rlimits = nullptr;
+
   // If non-zero, start the process using clone(), using flags as provided.
   // Unlike in clone, clone_flags may not contain a custom termination signal
   // that is sent to the parent when the child dies. The termination signal will
@@ -200,7 +205,7 @@ struct BASE_EXPORT LaunchOptions {
       LP_CLONE_FDIO_NAMESPACE | LP_CLONE_DEFAULT_JOB | LP_CLONE_FDIO_STDIO;
 #endif  // defined(OS_FUCHSIA)
 
-#if defined(OS_POSIX)
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
   // If not empty, launch the specified executable instead of
   // cmdline.GetProgram(). This is useful when it is necessary to pass a custom
   // argv[0].
