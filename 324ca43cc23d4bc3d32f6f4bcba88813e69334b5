@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f06950fc_f3a0b95e",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-06T00:01:15Z",
+      "side": 1,
+      "message": "Presumably this is expected to call NotifyObservers? That should be in the comment.",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be78d6df_2359d489",
         "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
         "patchSetId": 7
@@ -98,6 +115,23 @@
       "writtenOn": "2018-01-05T23:47:24Z",
       "side": 1,
       "message": "Same here. if (generated_prefs \u0026\u0026 generated_prefs-\u003eHasPref(..)) ...",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e2fc9d_57636b87",
+        "filename": "chrome/browser/extensions/api/settings_private/settings_private_event_router.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-06T00:01:15Z",
+      "side": 1,
+      "message": "1. We do need to remove the \"observer\" in the else.\n\n2. The copying of callbacks pattern is unusual and I find it confusing. I think the code will ultimately be simpler of GeneratedPrefs has an Observer class and keeps track of a single observer list, passing |pref_name| in the OnGeneratedPrefChanged event. Then this class could inherit from the Observer and call OnPreferenceChanged. Each GeneratedPref would need a pointer back to the GeneratedPrefs object and inform it of a pref change, but that seems better than having a separate callback list in each pref.\n\nDoes that make sense?",
       "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
