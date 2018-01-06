@@ -13,6 +13,7 @@
 #include "chrome/browser/extensions/crx_installer.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/theme_installed_infobar_delegate.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/plugins/reload_plugin_infobar_delegate.h"
 #include "chrome/browser/previews/previews_infobar_delegate.h"
@@ -191,6 +192,7 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
   using IBD = infobars::InfoBarDelegate;
   const base::flat_map<std::string, IBD::InfoBarIdentifier> kIdentifiers = {
       {"app_banner", IBD::APP_BANNER_INFOBAR_DELEGATE},
+      {"theme_installed", IBD::THEME_INSTALLED_INFOBAR_DELEGATE},
       {"reload_plugin", IBD::RELOAD_PLUGIN_INFOBAR_DELEGATE},
       {"file_access_disabled", IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE},
       {"collected_cookies", IBD::COLLECTED_COOKIES_INFOBAR_DELEGATE},
@@ -210,6 +212,12 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
     case IBD::APP_BANNER_INFOBAR_DELEGATE:
       banners::AppBannerInfoBarDelegateDesktop::Create(
           GetWebContents(), nullptr, nullptr, content::Manifest());
+      break;
+    case IBD::THEME_INSTALLED_INFOBAR_DELEGATE:
+      ThemeInstalledInfoBarDelegate::Create(
+          GetInfoBarService(), nullptr,
+          ThemeServiceFactory::GetForProfile(browser()->profile()), "New Theme",
+          "id", ThemeService::kDefaultThemeID, true);
       break;
     case IBD::RELOAD_PLUGIN_INFOBAR_DELEGATE:
       ReloadPluginInfoBarDelegate::Create(
@@ -305,6 +313,10 @@ void InfoBarUiTest::UpdateInfoBars() {
 }
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_app_banner) {
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_theme_installed) {
   ShowAndVerifyUi();
 }
 
