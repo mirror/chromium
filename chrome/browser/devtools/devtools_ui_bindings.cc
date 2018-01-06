@@ -1264,18 +1264,6 @@ void DevToolsUIBindings::SearchCompleted(
                      &file_system_path_value, &file_paths_value);
 }
 
-void DevToolsUIBindings::ShowDevToolsConfirmInfoBar(
-    const base::string16& message,
-    const InfoBarCallback& callback) {
-  if (!delegate_->GetInfoBarService()) {
-    callback.Run(false);
-    return;
-  }
-  std::unique_ptr<DevToolsConfirmInfoBarDelegate> delegate(
-      new DevToolsConfirmInfoBarDelegate(callback, message));
-  GlobalConfirmInfoBar::Show(std::move(delegate));
-}
-
 void DevToolsUIBindings::AddDevToolsExtensionsToClient() {
   const extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(profile_->GetOriginalProfile());
@@ -1343,6 +1331,18 @@ void DevToolsUIBindings::Detach() {
 
 bool DevToolsUIBindings::IsAttachedTo(content::DevToolsAgentHost* agent_host) {
   return agent_host_.get() == agent_host;
+}
+
+void DevToolsUIBindings::ShowDevToolsConfirmInfoBar(
+    const base::string16& message,
+    const InfoBarCallback& callback) {
+  if (!delegate_->GetInfoBarService()) {
+    callback.Run(false);
+    return;
+  }
+  std::unique_ptr<DevToolsConfirmInfoBarDelegate> delegate(
+      new DevToolsConfirmInfoBarDelegate(callback, message));
+  GlobalConfirmInfoBar::Show(std::move(delegate));
 }
 
 void DevToolsUIBindings::CallClientFunction(const std::string& function_name,
