@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "296f9dd3_042d1b5c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-format-style-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-06T00:05:02Z",
+      "side": 1,
+      "message": "Let\u0027s add test cases for console.log/error/warn to test different style outputs.",
+      "revId": "be2c554f10923537fc5d60d634a8a943b9b28697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
