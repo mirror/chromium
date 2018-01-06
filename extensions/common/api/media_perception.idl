@@ -1,0 +1,450 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Private API for receiving real-time media perception information.
+[platforms=("chromeos")]
+namespace mediaPerception {
+
+  // ------------------- Start of component definitions. ---------------------
+  enum ComponentType {
+    // The smaller component with limited functionality (smaller size and
+    // limited models).
+    LIGHT,
+    // The fully-featured component with more functionality (larger size and
+    // more models).
+    FULL
+  };
+
+  // The status of the media analytics process component on the device.
+  enum ComponentStatus {
+    UNKNOWN,
+    // The component is successfully installed and the image is mounted.
+    INSTALLED,
+    // The component failed to download, install or load.
+    FAILED_TO_INSTALL
+  };
+
+  dictionary Component {
+    ComponentType type;
+  };
+
+  // The state of the media analytics downloadable component.
+  dictionary ComponentState {
+    ComponentStatus status;
+
+    // The version string for the current component.
+    DOMString? version;
+  };
+  // ------------------- End of component definitions. -----------------------
+
+  // ------------------- Start of process management definitions. ------------
+  enum ProcessStatus {
+    // The component process is waiting to be launched or the state of the
+    // process is not known.
+    UNKNOWN,
+
+    // Starts the process via Upstart. Can only be run if the process is
+    // currently in state <code>STOPPED</code>.
+    STARTED,
+
+    // Stops the process via Upstart. Can only be run if the process is
+    // currently in state <code>STARTED</code>.
+    // Note: the process is automatically stopped when the Chrome process
+    // is closed.
+    STOPPED
+  };
+
+  dictionary ProcessState {
+    ProcessStatus? status;
+  };
+  // ------------------- End of process management definitions. --------------
+
+  // ------------------- Start of device management definitions. -------------
+  dictionary VideoStreamParams {
+    long? widthInPixels;
+
+    long? heightInPixels;
+
+    double? frameRateInFramesPerSecond;
+  };
+
+  dictionary VideoDevice {
+    // Obfuscated unique id for this video device.
+    DOMString? id;
+
+    // Human readable name of the video device.
+    DOMString? displayName;
+
+    VideoStreamParams[]? supportedConfigurations;
+
+    // Specifies a desired configuration for a particular device.
+    VideoStreamParams? desiredConfiguration;
+  };
+
+  dictionary AudioStreamParams {
+    double? frequencyInHz;
+  };
+
+  dictionary AudioDevice {
+    // Obfuscated unique id for this audio device.
+    DOMString? id;
+
+    // Human readable name of the audio device.
+    DOMString? displayName;
+
+    AudioStreamParams[]? supportedConfigurations;
+
+    // Specifies a desired configuration for a particular device.
+    AudioStreamParams? desiredConfiguration;
+  };
+
+  dictionary Devices {
+    VideoDevice[]? videoDevices;
+
+    AudioDevice[]? audioDevices;
+  };
+  // ------------------- End of device management definitions. ---------------
+
+  // ------------------- Start of configuration definitions. -----------------
+  enum Module {
+    // TODO
+    UNSPECIFIED,
+    FACE_DETECTION,
+    PERSON_DETECTION,
+    AUDIO_LOCALIZATION,
+    SPEECH_DETECTION
+  };
+
+  // Example:
+  dictionary FaceDetectionParams {
+    VideoStreamParams? videoStreamParams;
+  };
+
+  dictionary Modules {
+    Modules[] enabledModules;
+
+    // Example:
+    FaceDetectionParams? faceDetectionParams;
+  };
+  // ------------------- End of configuration definitions. -------------------
+
+  // ------------------- Start of pipeline state definitions. ----------------
+  enum PipelineStatus {
+    UNKNOWN,
+
+    // The analytics process is running and the media processing pipeline is
+    // started, but it is not yet receiving frames. This is a
+    // transitional state between <code>SUSPENDED</code> and
+    // <code>RUNNING</code> for the time it takes to warm up the media
+    // processing pipeline, which can take anywhere from a few seconds to a
+    // minute.
+    // Note: <code>STARTED</code> is the initial reply to SetState
+    // <code>RUNNING</code>.
+    STARTED,
+
+    // The process is running and the media processing pipeling is
+    // injesting frames. At this point, onPerceptionState events should be
+    // firing.
+    RUNNING,
+
+    // Analytics process is running and the media processing pipeline is ready
+    // to be set to state <code>RUNNING</code>. The D-Bus communications are
+    // enabled but the media processing pipeline is suspended.
+    SUSPENDED,
+
+    // Something has gone wrong during the execution of the pipeline.
+    ERROR
+  };
+
+  enum ErrorType {
+    UNSPECIFIED,
+    // Code isn't executing as expected.
+    RUNTIME,
+    // Problem with input sources (such as black frames).
+    AUDIO_VISUAL
+  };
+
+  dictionary PipelineError {
+    ErrorType errorType;
+    // If the pipeline is in an error state, this string contains information
+    // about what went wrong.
+    DOMString? errorString;
+  };
+
+  dictionary PipelineState {
+    PipelineStatus status;
+
+    // If the pipeline is in an error state, then error should be filled in.
+    PipelineError? error;
+  };
+  // ------------------- End of pipeline state definitions. ------------------
+
+  // ------------------- Start of PerceptionState definition. ----------------
+  dictionary Position {
+    // The horizontal distance from the top left corner of the image.
+    double? x;
+
+    // The vertical distance from the top left corner of the image.
+    double? y;
+  };
+
+  dictionary BoundingBox {
+    // Specifies whether the positions are normalized to the size of the image.
+    // If not specified, assume that the positions are normalized.
+    boolean? normalized;
+
+    // The two points that define the corners of a bounding box.
+    Position? topLeft;
+    Position? bottomRight;
+  };
+
+  enum DistanceUnits {
+    UNSPECIFIED,
+    METERS,
+    PIXELS
+  };
+
+  // Generic dictionary to encapsulate a distance magnitude and units.
+  dictionary Distance {
+    // This field provides flexibility to report depths or distances of
+    // different entity types with different units.
+    DistanceUnits units;
+
+    double? magnitude;
+  };
+
+  dictionary Location {
+    // Confidence (probability) that this location is detected correctly, range
+    // [0,1].
+    double? confidence;
+
+    // Estimated distance to the input source.
+    Distance? distance;
+  };
+
+  enum IdentityType {
+    UNKNOWN,
+    // Represents a temporary ID for a single run of the system.
+    LOCAL_SESSION,
+    // An obfuscated GAIA ID for someone registered in the Gallery.
+    OBFUSCATED_GAIA_ID
+  };
+
+  // A unique identifier for a person.
+  dictionary HumanIdentity {
+    IdentityType identityType;
+
+    DOMString? id;
+
+    // Confidence (probability) that this identity is detected correctly, range
+    // [0, 1].
+    double? confidence;
+  };
+
+  // Details about the location of a person.
+  dictionary HumanLocation {
+    // If true, the person is present, i.e. in the vicinity or the same room
+    // where the user may see or interact with the device.
+    // Otherwise, either the location is unknown or the user is far from the
+    // device.
+    boolean? isPresent;
+
+    // If true, it means that the person's body is visible from the camera.
+    boolean? isVisible;
+
+    // The location of person's body. This field may be empty if the
+    // corresponding individual’s body is absent or not detected.
+    Location? bodyLocation;
+
+    // The location of person's face. This field may be empty
+    // if the corresponding individual’s face is absent or not detected.
+    Location? faceLocation;
+  };
+
+  enum HumanStateType {
+    // TODO
+    // Active speaker?
+    // Gaze?
+    UNKNOWN
+  };
+
+  // Represents the state of a detected person.
+  dictionary HumanState {
+    // The estimated timestamp corresponds to the real world time when the
+    // event happened.
+    long? timestampMicroSeconds;
+
+    // Confidence (probability) that this state is detected correctly, range
+    // [0, 1].
+    double? confidence;
+
+    // The type of this state.
+    // State types are not exclusive and a person can have multiple states
+    // simultaneously.
+    HumanStateType? type;
+  };
+
+  // Represents a single person and all detected state associated with them.
+  dictionary Human {
+    HumanIdentity? id;
+
+    // If absent or empty, the presence of the person is detected, but the
+    // location is unknown.
+    HumanLocation? location;
+
+    // All states for this person.
+    // Each state has its estimated time. The estimated time corresponds to the
+    // real world time when the event happened.
+    HumanState[]? states;
+  };
+
+  dictionary PerceptionState {
+    // The timestamp associated with the input data for which these inferences
+    // were made.
+    long? timestampMicroSeconds;
+
+    // All detected people.
+    // Note that the information related to a single real-world person may be
+    // spread across (or repeated in) multiple human dictionaries. For example,
+    // different sensors may detect the same person differently without a way
+    // to link the information.
+    Human[]? people;
+  };
+  // ------------------- End of PerceptionState definition. -----------------
+
+  // ------------------- Start of gallery registration definitions. ----------
+  enum ImageFormat {
+    UNSPECIFIED,
+    RGB,
+    PNG,
+    JPEG
+  };
+
+  dictionary ImageFrame {
+    long? widthInPixels;
+    long? heightInPixels;
+
+    ImageFormat? format;
+
+    long? dataLength;
+
+    // The bytes of the image frame.
+    ArrayBuffer? frame;
+  };
+
+  // In memory gallery registration record for template matching.
+  dictionary GalleryRecord {
+    HumanIdentity? identity;
+
+    // Representative image frames for this human identity.
+    ImageFrame[]? imageFrames;
+  };
+  // ------------------- End of gallery registration definitions. ------------
+
+  // ------------------- Start of diagnostics definitions. -------------------
+  dictionary PerceptionSample {
+    // The analytics PerceptionState for the associated image frame
+    // data.
+    PerceptionState? perceptionState;
+
+    // The image frame data for the associated PerceptionState object.
+    ImageFrame? imageFrame;
+  };
+
+  dictionary Diagnostics {
+    // A buffer of image frames and the associated video analytics information
+    // that can be used to diagnose a malfunction.
+    PerceptionSample[]? perceptionSamples;
+  };
+  // ------------------- End of diagnostics definitions. ----------------------
+
+  callback StateCallback = void(State state);
+
+  callback DiagnosticsCallback = void(Diagnostics diagnostics);
+
+  callback ComponentStateCallback = void(ComponentState componentState);
+
+  callback ProcessStateCallback = void(ProcessState processState);
+
+  callback DevicesCallback = void(Devices devices);
+
+  callback ConfigurationCallback = void(Modules modules);
+
+  callback PipelineStateCallback = void(PipelineState state);
+
+  callback GalleryCallback = void(GalleryRecord[] records);
+
+  callback DiagnosticsCallback = void(Diagnostics diagnostics);
+
+  interface Functions {
+    // Attempts to download and load the media analytics component. This
+    // function should be called every time a client starts using this API. If
+    // the component is already loaded, the callback will simply return that
+    // information. The process must be <code>STOPPED</code> for this function
+    // to succeed.
+    // Note: If a different component type is desired, this function can
+    // be called with the new desired type and the new component will be
+    // downloaded and installed.
+    // |component| : The desired component to install and load.
+    // |callback| : Returns the state of the component.
+    static void setAnalyticsComponent(
+        Component component, ComponentStateCallback callback);
+
+    // Used to manage the lifetime of the component process. This function can
+    // only be used if the component is installed.
+    // |processState| : The desired state for the component process.
+    // |callback| : Confirms the new state of the process.
+    static void setComponentProcessState(
+        ProcessState processState, ProcessStateCallback callback);
+
+    // Get the list of available video and audio devices.
+    static void getDevices(DevicesCallback callback);
+
+    // Set the list of desired video and audio devices for running the media
+    // perception pipeline. Callback confirms the list of devices ready for use.
+    static void setDevices(DevicesCallback callback);
+
+    // Set the configuration of the underlying media perception pipeline
+    // to some other than the defauly configuration for the component.
+    // |modules| : The desired set of enabled modules and settings.
+    // |callback| : Confirms the configuration changes that were committed.
+    static void setConfiguration(
+        Modules modules, ConfigurationCallback callback);
+
+    // Gets the status of the media perception pipeline.
+    // |callback| : The current state of the media processing pipeline.
+    static void getPipelineState(PipelineStateCallback callback);
+
+    // Set the desired state of the media processing pipeline.
+    // |state| : A dictionary with the desired new state. The only settable
+    // states are <code>RUNNING</code> and <code>SUSPENDED</code>.
+    // |callback| : Invoked with the State of the system after setting it. Can
+    // be used to verify the state was set as desired.
+    static void setPipelineState(
+        PipelineState state, PipelineStateCallback callback);
+
+    // Adds gallery records to the gallery register. Caller can specify one or
+    // more records to add to the gallery.
+    // |callback| : Confirms the records that were successfully registered.
+    static void addGalleryRecords(
+        GalleryRecord[] records, GalleryCallback callback);
+
+    // Get a diagnostics buffer out of the analytics process.
+    // |callback| : Returns a Diagnostics dictionary object.
+    static void getDiagnostics(DiagnosticsCallback callback);
+  };
+
+  interface Events {
+    // Fired when media perception information is received from the media
+    // analytics process.
+    static void onPerceptionState(PerceptionState perceptionState);
+
+    // An error with the media processing pipeline has occured. An event fired
+    // to let the frontend deal with the error. In some cases the pipeline
+    // state will be <code>ERROR</code> in this case, in which case
+    // onPerceptionState will not be firing anymore. But in other cases, errors
+    // will be reported even if the graph is still <code>RUNNING</code>.
+    static void onPipelineError(PipelineState state);
+  };
+};
