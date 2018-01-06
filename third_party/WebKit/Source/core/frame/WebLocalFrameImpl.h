@@ -50,6 +50,7 @@
 namespace blink {
 
 class ChromePrintContext;
+class DevToolsAgentForWorker;
 class IntSize;
 class KURL;
 class LocalFrameClient;
@@ -244,8 +245,6 @@ class CORE_EXPORT WebLocalFrameImpl final
                                       blink::InterfaceRegistry*) override;
   void SetAutofillClient(WebAutofillClient*) override;
   WebAutofillClient* AutofillClient() override;
-  void SetDevToolsAgentClient(WebDevToolsAgentClient*) override;
-  WebDevToolsAgent* DevToolsAgent() override;
   WebLocalFrameImpl* LocalRoot() override;
   WebFrame* FindFrameByName(const WebString& name) override;
   void SendPings(const WebURL& destination_url) override;
@@ -370,6 +369,8 @@ class CORE_EXPORT WebLocalFrameImpl final
   WebDevToolsAgentImpl* DevToolsAgentImpl() const {
     return dev_tools_agent_.Get();
   }
+
+  DevToolsAgentForWorker* DevToolsAgentForWorker() const;
 
   // When a Find operation ends, we want to set the selection to what was active
   // and set focus to the first focusable node we find (starting with the first
