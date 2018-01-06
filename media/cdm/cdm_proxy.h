@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/callback.h"
@@ -23,10 +24,10 @@ namespace media {
 class MEDIA_EXPORT CdmProxy {
  public:
   // Client of the proxy.
-  class Client {
+  class MEDIA_EXPORT Client {
    public:
-    Client() {}
-    virtual ~Client() {}
+    Client();
+    virtual ~Client();
     // Called when there is a hardware reset and all the hardware context is
     // lost.
     virtual void NotifyHardwareReset() = 0;
@@ -54,8 +55,8 @@ class MEDIA_EXPORT CdmProxy {
     kMax = kIntelNegotiateCryptoSessionKeyExchange,
   };
 
-  CdmProxy() {}
-  virtual ~CdmProxy() {}
+  CdmProxy();
+  virtual ~CdmProxy();
 
   // Callback for Initialize(). If the proxy created a crypto session, then the
   // ID for the crypto session is |crypto_session_id|.
@@ -114,6 +115,9 @@ class MEDIA_EXPORT CdmProxy {
  private:
   DISALLOW_COPY_AND_ASSIGN(CdmProxy);
 };
+
+using CdmProxyFactoryCB = base::RepeatingCallback<std::unique_ptr<CdmProxy>(
+    const std::string& cdm_guid)>;
 
 }  // namespace media
 
