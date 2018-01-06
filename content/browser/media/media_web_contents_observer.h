@@ -29,6 +29,10 @@ namespace gfx {
 class Size;
 }  // namespace size
 
+namespace viz {
+class FrameSinkId;
+}  // namespace viz
+
 namespace content {
 
 // This class manages all RenderFrame based media related managers at the
@@ -100,6 +104,11 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   void OnMediaMutedStatusChanged(RenderFrameHost* render_frame_host,
                                  int delegate_id,
                                  bool muted);
+  void OnUpdatePictureInPictureSurfaceId(RenderFrameHost* render_frame_host,
+                                         int delegate_id,
+                                         viz::FrameSinkId frame_sink_id,
+                                         uint32_t parent_id,
+                                         base::UnguessableToken nonce);
 
   // Clear |render_frame_host|'s tracking entry for its WakeLocks.
   void ClearWakeLocks(RenderFrameHost* render_frame_host);
