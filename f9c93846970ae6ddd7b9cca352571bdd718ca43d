@@ -22,6 +22,30 @@
       "revId": "f9c93846970ae6ddd7b9cca352571bdd718ca43d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16533b19_e6bd6e74",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-06T20:05:26Z",
+      "side": 1,
+      "message": "Agreed that these conditions make a test racy. I\u0027m already not a fan of this check though and think tests using it have better alternative, especially if they\u0027re playing with delayed tasks.\n\nThis test has been wrong for years IMO so this change merely highlights poorly written tests that were testing this when not necessary/inappropriate.\n\nAs I mentioned @ https://chromium-review.googlesource.com/c/chromium/src/+/853143, we do want to include delayed tasks so that this maps to \"RunUntilIdle() will not do work\".",
+      "parentUuid": "ddad64fd_ce589785",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 32
+      },
+      "revId": "f9c93846970ae6ddd7b9cca352571bdd718ca43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
