@@ -15,10 +15,6 @@ namespace content {
 class WebContents;
 }
 
-namespace service_manager {
-class Connector;
-}
-
 namespace autofill {
 
 // Loads risk data for the client, getting the device's risk fingerprint before
@@ -31,8 +27,7 @@ namespace autofill {
 void LoadRiskData(
     uint64_t obfuscated_gaia_id,
     content::WebContents* web_contents,
-    const base::RepeatingCallback<void(const std::string&)>& callback,
-    service_manager::Connector* connector = nullptr);
+    const base::RepeatingCallback<void(const std::string&)>& callback);
 
 }  // namespace autofill
 
