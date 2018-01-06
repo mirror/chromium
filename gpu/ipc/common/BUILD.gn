@@ -59,7 +59,7 @@ source_set("command_buffer_traits_sources") {
   ]
 
   public_deps = [
-    "//gpu/command_buffer/common:common_sources",
+    "//gpu/command_buffer/common",
     "//ipc",
   ]
 
@@ -103,8 +103,8 @@ source_set("ipc_common_sources") {
 
   deps = [
     "//base",
-    "//gpu/command_buffer/common:common_sources",
-    "//gpu/config:config_sources",
+    "//gpu/command_buffer/common",
+    "//gpu/config",
     "//ui/base",
     "//ui/gfx/ipc",
     "//ui/gfx/ipc/geometry",
