@@ -151,6 +151,17 @@ TEST(WebVectorTest, EmplaceBackElementPlacement) {
     EXPECT_EQ(i, vector[i]);
 }
 
+TEST(WebVectorTest, Resize) {
+  WebVector<int> vector;
+  vector.reserve(10);
+  for (int i = 0; i < 10; ++i)
+    vector.emplace_back(i);
+  vector.resize(5);
+  ASSERT_EQ(5U, vector.size());
+  for (int i = 0; i < 5; ++i)
+    EXPECT_EQ(i, vector[i]);
+}
+
 namespace {
 
 // Used to ensure that WebVector supports types without a default constructor.
