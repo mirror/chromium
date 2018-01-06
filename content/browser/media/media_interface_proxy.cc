@@ -123,8 +123,8 @@ MediaInterfaceProxy::MediaInterfaceProxy(
 
   binding_.set_connection_error_handler(error_handler);
 
-  // |interface_factory_ptr_| and |cdm_interface_factory_map_| will be lazily
-  // connected in GetMediaInterfaceFactory() and GetCdmInterfaceFactory().
+  // |interface_factory_ptr_| and |cdm_factory_map_| will be lazily
+  // connected in GetMediaInterfaceFactory() and GetCdmFactory().
 }
 
 MediaInterfaceProxy::~MediaInterfaceProxy() {
@@ -161,16 +161,15 @@ void MediaInterfaceProxy::CreateCdm(
     const std::string& key_system,
     media::mojom::ContentDecryptionModuleRequest request) {
   DCHECK(thread_checker_.CalledOnValidThread());
-
-  InterfaceFactory* factory =
 #if !BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
-      GetMediaInterfaceFactory();
-#else
-      GetCdmInterfaceFactory(key_system);
-#endif
-
+  InterfaceFactory* factory = GetMediaInterfaceFactory();
   if (factory)
     factory->CreateCdm(key_system, std::move(request));
+#else
+  CdmFactory* factory = GetCdmFactory(key_system);
+  if (factory)
+    factory->CreateCdm(key_system, std::move(request));
+#endif
 }
 
 void MediaInterfaceProxy::CreateCdmProxy(
@@ -274,7 +273,7 @@ static std::unique_ptr<CdmInfo> GetCdmInfoForKeySystem(
 }
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
-media::mojom::InterfaceFactory* MediaInterfaceProxy::GetCdmInterfaceFactory(
+media::mojom::CdmFactory* MediaInterfaceProxy::GetCdmFactory(
     const std::string& key_system) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -305,20 +304,20 @@ media::mojom::InterfaceFactory* MediaInterfaceProxy::GetCdmInterfaceFactory(
   cdm_file_system_id = cdm_info->file_system_id;
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
-  auto found = cdm_interface_factory_map_.find(cdm_guid);
-  if (found != cdm_interface_factory_map_.end())
+  auto found = cdm_factory_map_.find(cdm_guid);
+  if (found != cdm_factory_map_.end())
     return found->second.get();
 
   return ConnectToCdmService(cdm_guid, cdm_path, cdm_file_system_id);
 }
 
-media::mojom::InterfaceFactory* MediaInterfaceProxy::ConnectToCdmService(
+media::mojom::CdmFactory* MediaInterfaceProxy::ConnectToCdmService(
     const std::string& cdm_guid,
     const base::FilePath& cdm_path,
     const std::string& cdm_file_system_id) {
   DVLOG(1) << __func__ << ": cdm_guid = " << cdm_guid;
 
-  DCHECK(!cdm_interface_factory_map_.count(cdm_guid));
+  DCHECK(!cdm_factory_map_.count(cdm_guid));
   service_manager::Identity identity(media::mojom::kCdmServiceName,
                                      service_manager::mojom::kInheritUserID,
                                      cdm_guid);
@@ -344,17 +343,16 @@ media::mojom::InterfaceFactory* MediaInterfaceProxy::ConnectToCdmService(
 #endif  // defined(OS_MACOSX)
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
-  InterfaceFactoryPtr interface_factory_ptr;
-  cdm_service->CreateInterfaceFactory(MakeRequest(&interface_factory_ptr),
-                                      GetFrameServices(cdm_file_system_id));
-  interface_factory_ptr.set_connection_error_handler(
+  CdmFactoryPtr cdm_factory_ptr;
+  cdm_service->CreateCdmFactory(MakeRequest(&cdm_factory_ptr),
+                                GetFrameServices(cdm_file_system_id));
+  cdm_factory_ptr.set_connection_error_handler(
       base::BindOnce(&MediaInterfaceProxy::OnCdmServiceConnectionError,
                      base::Unretained(this), cdm_guid));
 
-  InterfaceFactory* cdm_interface_factory = interface_factory_ptr.get();
-  cdm_interface_factory_map_.emplace(cdm_guid,
-                                     std::move(interface_factory_ptr));
-  return cdm_interface_factory;
+  CdmFactory* cdm_factory = cdm_factory_ptr.get();
+  cdm_factory_map_.emplace(cdm_guid, std::move(cdm_factory_ptr));
+  return cdm_factory;
 }
 
 void MediaInterfaceProxy::OnCdmServiceConnectionError(
@@ -362,8 +360,8 @@ void MediaInterfaceProxy::OnCdmServiceConnectionError(
   DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  DCHECK(cdm_interface_factory_map_.count(cdm_guid));
-  cdm_interface_factory_map_.erase(cdm_guid);
+  DCHECK(cdm_factory_map_.count(cdm_guid));
+  cdm_factory_map_.erase(cdm_guid);
 }
 #endif  // BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
 
