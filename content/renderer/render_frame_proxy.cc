@@ -536,8 +536,10 @@ void RenderFrameProxy::WasResized() {
       sent_resize_params_->sequence_number !=
           pending_resize_params_.sequence_number;
 
-  if (synchronized_params_changed)
+  if (synchronized_params_changed) {
     local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    LOG(ERROR) << "X: " << local_surface_id_.ToString();
+  }
 
   viz::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
   if (enable_surface_synchronization_)

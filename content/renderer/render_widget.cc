@@ -1313,8 +1313,10 @@ void RenderWidget::Resize(const ResizeParams& params) {
   if (!GetWebWidget())
     return;
 
-  if (params.local_surface_id)
+  if (params.local_surface_id) {
     local_surface_id_ = *params.local_surface_id;
+    LOG(ERROR) << "Setting local surface id: " << local_surface_id_.ToString();
+  }
 
   if (compositor_) {
     // If surface synchronization is enabled, then this will use the provided

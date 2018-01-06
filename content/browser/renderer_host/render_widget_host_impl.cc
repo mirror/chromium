@@ -764,8 +764,10 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
     // TODO(ccameron): GetLocalSurfaceId is not synchronized with the device
     // scale factor of the surface. Fix this.
     viz::LocalSurfaceId local_surface_id = view_->GetLocalSurfaceId();
-    if (local_surface_id.is_valid())
+    if (local_surface_id.is_valid()) {
       resize_params->local_surface_id = local_surface_id;
+      LOG(ERROR) <<  local_surface_id.ToString();
+    }
   }
 
   const bool size_changed =

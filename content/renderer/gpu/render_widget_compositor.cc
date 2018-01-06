@@ -14,6 +14,7 @@
 #include "base/base_switches.h"
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -761,6 +762,9 @@ bool RenderWidgetCompositor::SendMessageToMicroBenchmark(
 void RenderWidgetCompositor::SetViewportSize(
     const gfx::Size& device_viewport_size,
     const viz::LocalSurfaceId& local_surface_id) {
+  LOG(ERROR) << "Setting local surface id: " << this << " " <<
+      local_surface_id.ToString();
+//      << " " << base::debug::StackTrace().ToString();
   layer_tree_host_->SetViewportSize(device_viewport_size, local_surface_id);
 }
 

@@ -422,6 +422,7 @@ class RendererLocalSurfaceIdProvider : public viz::LocalSurfaceIdProvider {
         new_surface_properties != surface_properties_) {
       local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
       surface_properties_ = new_surface_properties;
+      LOG(ERROR) << "X: " << local_surface_id_.ToString();
     }
     return local_surface_id_;
   }
