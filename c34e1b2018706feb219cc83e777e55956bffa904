@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a77b4f38_d48e9fa5",
+        "filename": "chrome/browser/chrome_browser_main.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-06T00:45:48Z",
+      "side": 1,
+      "message": "Please mention that this profiles the UI thread to distinguish it from the below profiler, and update the member variable name.",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 78
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7280b4b0_f0c257ae",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-06T00:45:48Z",
+      "side": 1,
+      "message": "I think it makes sense to enable the periodic sampling for the IO thread as well. To minimize risk I\u0027d recommend doing it in a follow-on CL though.",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 57
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dee7fd8_aa956890",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-06T00:45:48Z",
+      "side": 1,
+      "message": "Can we pass the BrowserThread::ID here and eliminate the extra function?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c31c8a5_4ba53a94",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-06T00:45:48Z",
+      "side": 1,
+      "message": "The content layer doesn\u0027t know anything about the profiling (only the Chrome embedder does), so I think it\u0027s better to make this interface more general, and defer the decision about which threads are profiled to the embedder.\n\nSomething like this maybe:\nvirtual void PostThreadCreate(BrowserThread::ID browser_thread_id, base::PlatformThreadId thread_id);\nvirtual void PreThreadDestroy(BrowserThread::ID browser_thread_id, base::PlatformThreadId thread_id);",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 80
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
