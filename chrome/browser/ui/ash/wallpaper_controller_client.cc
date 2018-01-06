@@ -7,16 +7,21 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "ash/shell.h"
+#include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wallpaper/wallpaper_window_state_manager.h"
 #include "base/path_service.h"
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
+#include "chrome/browser/chromeos/customization/customization_wallpaper_util.h"
 #include "chrome/browser/chromeos/extensions/wallpaper_manager_util.h"
-#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
+#include "chrome/browser/chromeos/login/startup_utils.h"
+#include "chrome/browser/chromeos/login/wizard_controller.h"
+#include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/common/chrome_paths.h"
+#include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user_manager.h"
@@ -104,6 +109,26 @@ void AddCanGetFilesIdCallback(const base::Closure& callback) {
     chromeos::SystemSaltGetter::Get()->AddOnSystemSaltReady(callback);
 }
 
+// Returns true if |users| contains users other than device local accounts.
+bool HasNonDeviceLocalAccounts(const user_manager::UserList& users) {
+  for (const auto* user : users) {
+    if (!policy::IsDeviceLocalAccountUser(user->GetAccountId().GetUserEmail(),
+                                          nullptr))
+      return true;
+  }
+  return false;
+}
+
+// Returns index of the first public session user found in |users| or -1 if
+// there's none.
+int FindPublicSession(const user_manager::UserList& users) {
+  for (size_t i = 0; i < users.size(); ++i) {
+    if (users[i]->GetType() == user_manager::USER_TYPE_PUBLIC_ACCOUNT)
+      return i;
+  }
+  return -1;
+}
+
 }  // namespace
 
 WallpaperControllerClient::WallpaperControllerClient()
@@ -117,6 +142,7 @@ WallpaperControllerClient::WallpaperControllerClient()
 }
 
 WallpaperControllerClient::~WallpaperControllerClient() {
+  show_user_name_on_signin_subscription_.reset();
   weak_factory_.InvalidateWeakPtrs();
   DCHECK_EQ(this, g_instance);
   g_instance = nullptr;
@@ -127,6 +153,12 @@ void WallpaperControllerClient::Init() {
       ->GetConnector()
       ->BindInterface(ash::mojom::kServiceName, &wallpaper_controller_);
   BindAndSetClient();
+
+  show_user_name_on_signin_subscription_ =
+      chromeos::CrosSettings::Get()->AddSettingsObserver(
+          chromeos::kAccountsPrefShowUserNamesOnSignIn,
+          base::Bind(&WallpaperControllerClient::ShowRegisteredDeviceWallpaper,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void WallpaperControllerClient::InitForTesting(
@@ -208,12 +240,11 @@ void WallpaperControllerClient::SetDefaultWallpaper(const AccountId& account_id,
       std::move(user_info), GetFilesId(account_id).id(), show_wallpaper);
 }
 
-void WallpaperControllerClient::SetCustomizedDefaultWallpaper(
-    const GURL& wallpaper_url,
-    const base::FilePath& file_path,
-    const base::FilePath& resized_directory) {
-  wallpaper_controller_->SetCustomizedDefaultWallpaper(wallpaper_url, file_path,
-                                                       resized_directory);
+void WallpaperControllerClient::SetCustomizedDefaultWallpaperPaths(
+    const base::FilePath& customized_default_small_path,
+    const base::FilePath& customized_default_large_path) {
+  wallpaper_controller_->SetCustomizedDefaultWallpaperPaths(
+      customized_default_small_path, customized_default_large_path);
 }
 
 void WallpaperControllerClient::SetPolicyWallpaper(
@@ -380,10 +411,54 @@ void WallpaperControllerClient::BindAndSetClient() {
   ash::WallpaperController::dir_chrome_os_custom_wallpapers_path_ =
       chromeos_custom_wallpapers_path;
 
+  // Apply device customization.
+  base::FilePath customized_default_small_path;
+  base::FilePath customized_default_large_path;
+  if (chromeos::customization_wallpaper_util::
+          ShouldUseCustomizedDefaultWallpaper()) {
+    customized_default_small_path = chromeos::customization_wallpaper_util::
+        GetCustomizedDefaultWallpaperPath(
+            ash::WallpaperController::kSmallWallpaperSuffix);
+    customized_default_large_path = chromeos::customization_wallpaper_util::
+        GetCustomizedDefaultWallpaperPath(
+            ash::WallpaperController::kLargeWallpaperSuffix);
+  }
+
   wallpaper_controller_->Init(
       std::move(client), user_data_path, chromeos_wallpapers_path,
-      chromeos_custom_wallpapers_path,
+      chromeos_custom_wallpapers_path, customized_default_small_path,
+      customized_default_large_path,
       policy_handler_.IsDeviceWallpaperPolicyEnforced());
+}
+
+void WallpaperControllerClient::ShowRegisteredDeviceWallpaper() {
+  if (user_manager::UserManager::Get()->IsUserLoggedIn())
+    return;
+
+  bool show_users = true;
+  DCHECK(chromeos::CrosSettings::Get()->GetBoolean(
+      chromeos::kAccountsPrefShowUserNamesOnSignIn, &show_users))
+      << "Unable to fetch setting "
+      << chromeos::kAccountsPrefShowUserNamesOnSignIn;
+
+  const user_manager::UserList& users =
+      user_manager::UserManager::Get()->GetUsers();
+  int public_session_user_index = FindPublicSession(users);
+
+  // Show the default signin wallpaper if there's no user to display.
+  if ((!show_users && public_session_user_index == -1) ||
+      !HasNonDeviceLocalAccounts(users)) {
+    ShowSigninWallpaper();
+    return;
+  }
+
+  // If normal boot animation is disabled, the login screen is responsible to
+  // set the wallpaper once user pods are loaded.
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kDisableBootAnimation)) {
+    int index = public_session_user_index != -1 ? public_session_user_index : 0;
+    ShowUserWallpaper(users[index]->GetAccountId());
+  }
 }
 
 void WallpaperControllerClient::OpenWallpaperPicker() {
@@ -398,4 +473,37 @@ void WallpaperControllerClient::OpenWallpaperPicker() {
   }
 
   wallpaper_manager_util::OpenWallpaperManager();
+}
+
+void WallpaperControllerClient::OnReadyToSetWallpaper() {
+  // TODO(crbug.com/776464): Consider deprecating this method after views-based
+  // login is enabled. It should be fast enough to request the first wallpaper
+  // so that there's no visible delay. In other scenarios such as restart after
+  // crash, user manager should request the wallpaper.
+
+  // Guest wallpaper should be initialized when guest logs in.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kGuestSession)) {
+    return;
+  }
+
+  // Do not set wallpaper in tests.
+  if (chromeos::WizardController::IsZeroDelayEnabled())
+    return;
+
+  // Show the wallpaper of the active user during an user session.
+  if (user_manager::UserManager::Get()->IsUserLoggedIn()) {
+    ShowUserWallpaper(
+        user_manager::UserManager::Get()->GetActiveUser()->GetAccountId());
+    return;
+  }
+
+  // If the device is not registered yet (e.g. during OOBE), show the default
+  // signin wallpaper.
+  if (!chromeos::StartupUtils::IsDeviceRegistered()) {
+    ShowSigninWallpaper();
+    return;
+  }
+
+  ShowRegisteredDeviceWallpaper();
 }
