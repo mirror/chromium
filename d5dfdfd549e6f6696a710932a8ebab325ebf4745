@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f0aaaa2_ed879a2d",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-06T22:43:44Z",
+      "side": 1,
+      "message": "This change was unintentional (actually, it was done the other way around). I fixed it while rebasing.",
+      "parentUuid": "a2810152_d692e252",
+      "range": {
+        "startLine": 38,
+        "startChar": 36,
+        "endLine": 38,
+        "endChar": 56
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fca744e_71ffa433",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 32
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "851ead81_1f29653c",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-06T22:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fca744e_71ffa433",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "742cebb2_90745c2b",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 32
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-28T05:29:19Z",
       "side": 1,
       "message": "Previously both values were passed to |equivalence_map.Build()|.\n\nNow |kLarge...| is passed to TargetsAffinity::AssignLabels() instead, but as variable |min_affinity|.  So maybe naming should be consistent?  Also, this is unsettling because:\n- If the semantics for |kLarge...| drastically changes from \"similarity\" to \"affinity\", is it a coincidence that 64.0 is used? Or maybe it should be tuned first? Or add TODO?\n- If the code paths turn out to compute the same thing (which  would be nice), why do we distinguish \"similarity\" from \"affinity\"?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 52
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5c9e82_c7171eb5",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-06T22:43:44Z",
+      "side": 1,
+      "message": "I prefer naming this kMinLabelAffinity. Here are some clarifications;\n- kLargeEquivalenceSimilarity was used to filter out small equivalences before creating labels. As a result, labels are assigned only to targets that are part of equivalence with large similarity.\n- kMinLabelAffinity is used to filter out targets affinity before creating labels. The result is similar since targets with large affinity are part of equivalences with large similarity.\n- There is currently a small difference: when searching equivalences, kMinEquivalenceSimilarity is used so this will affect the equivalences we find, though large equivalence are unlikely to be affected.\nTargets affinity is tightly coupled with surrounding equivalence similarity, though they are conceptually different. For instance, an old target part of 2 separate equivalences should not have affinities with associated new targets as strong as the similarity of these equivalences, since they are dependent of one another (note that this is currently handled with a gross simplification).\nIn an ideal world, I picture affinity and similarity to describes 2 distinct types of states all part of a markov random field:\n- s_i: existence of equivalence i is described by similarity\n- a_{j,k}: association between targets j and k\nNot only does similarity and affinity affect each other, but different target associations might be in competition.\nTaking all these dependencies into consideration might be hard (I believe it could be solved with belief propagation), but as a first step, I\u0027m trying make similarity and affinity distinct concepts.",
+      "parentUuid": "742cebb2_90745c2b",
       "range": {
         "startLine": 30,
         "startChar": 0,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "89bff794_7b75086e",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-06T22:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83ba7956_4cdc6b55",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 36
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccde4456_7f0b8f3d",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 32
@@ -137,6 +233,30 @@
       "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f50375_701f0256",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-06T22:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccde4456_7f0b8f3d",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 18
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "846c248b_5bbe484c",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-06T22:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e7f5536_839b35fc",
+      "range": {
+        "startLine": 22,
+        "startChar": 67,
+        "endLine": 22,
+        "endChar": 70
+      },
+      "revId": "a383abf486576eaee6376d8141c195ab13ff73a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e5de039_69f97984",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 29
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8aa75911_8e15ad05",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-06T22:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5de039_69f97984",
+      "range": {
+        "startLine": 24,
+        "startChar": 63,
+        "endLine": 24,
+        "endChar": 65
+      },
+      "revId": "a383abf486576eaee6376d8141c195ab13ff73a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c703d9fc_7bc4b3a2",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 29
@@ -68,6 +116,30 @@
       "revId": "a383abf486576eaee6376d8141c195ab13ff73a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab7b5ac_012a9590",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-06T22:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c703d9fc_7bc4b3a2",
+      "range": {
+        "startLine": 29,
+        "startChar": 68,
+        "endLine": 29,
+        "endChar": 72
+      },
+      "revId": "a383abf486576eaee6376d8141c195ab13ff73a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
