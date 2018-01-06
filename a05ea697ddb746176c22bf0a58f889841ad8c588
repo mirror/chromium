@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a8ab74e_683abf0e",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d800de57_fd40921a",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d52a3e45_ae7cbb70",
         "filename": "chrome/browser/resources/md_extensions/error_page.html",
         "patchSetId": 5
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "b51892b9_83401a76",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:28:02Z",
+      "side": 1,
+      "message": "ID just needs to be unique. I\u0027ve updated it to use |item.id| which in this case is just a number.",
+      "parentUuid": "7f72f1fe_9ec840dd",
+      "range": {
+        "startLine": 201,
+        "startChar": 27,
+        "endLine": 201,
+        "endChar": 28
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a0d66b4_8c142a95",
         "filename": "chrome/browser/resources/md_extensions/error_page.html",
         "patchSetId": 5
@@ -163,6 +211,30 @@
     },
     {
       "key": {
+        "uuid": "01bf3c1f_9ed1784a",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce36731f_3f7ff171",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 25
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b510aaa_9a781ad9",
         "filename": "chrome/browser/resources/md_extensions/error_page.js",
         "patchSetId": 5
@@ -174,6 +246,30 @@
       "writtenOn": "2018-01-05T23:53:04Z",
       "side": 1,
       "message": "Does this differentiation add much value, given that we already indicate what type of error this is with computeErrorTypeLabel_? Could we simply reuse the same \"Clear\" string for all 3 cases?",
+      "range": {
+        "startLine": 183,
+        "startChar": 17,
+        "endLine": 185,
+        "endChar": 46
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21da457_297d9d5a",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-06T01:28:02Z",
+      "side": 1,
+      "message": "Sounds good, updated so we only use \"Clear entry\". \"Clear\" by itself could be ambiguous since it doesn\u0027t specify how much it will clear.",
+      "parentUuid": "1b510aaa_9a781ad9",
       "range": {
         "startLine": 183,
         "startChar": 17,
