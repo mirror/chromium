@@ -78,6 +78,9 @@
 #include "testing/platform_test.h"
 #include "url/gurl.h"
 
+using ::testing::ElementsAre;
+using ::testing::Key;
+
 namespace net {
 namespace test {
 
@@ -727,12 +730,10 @@ class QuicNetworkTransactionTest
     // The first request should be fetched via the HTTPS proxy.
     SendRequestAndExpectHttpResponseFromProxy("hello from http", true, 443);
 
-    // Even through the alternative proxy server job failed, the proxy should
-    // not be marked as bad since the main job succeeded.
-    EXPECT_TRUE(session_->proxy_service()->proxy_retry_info().empty());
-
-    // The alternative proxy server should no longer be in use.
-    EXPECT_FALSE(test_proxy_delegate.alternative_proxy_server().is_valid());
+    // Since the main job succeeded only the alternative proxy server should be
+    // marked as bad.
+    EXPECT_THAT(session_->proxy_service()->proxy_retry_info(),
+                ElementsAre(Key("quic://myproxy.org:443")));
 
     // Verify that the second request completes successfully, and the
     // alternative proxy server job is not started.
@@ -4687,8 +4688,8 @@ TEST_P(QuicNetworkTransactionTest, ConnectionCloseDuringConnectProxy) {
 
   CreateSession();
   SendRequestAndExpectHttpResponseFromProxy("hello world", true, 443);
-  EXPECT_FALSE(test_proxy_delegate.alternative_proxy_server().is_valid());
-  EXPECT_TRUE(session_->proxy_service()->proxy_retry_info().empty());
+  EXPECT_THAT(session_->proxy_service()->proxy_retry_info(),
+              ElementsAre(Key("quic://myproxy.org:443")));
 }
 
 TEST_P(QuicNetworkTransactionTest, SecureResourceOverSecureQuic) {

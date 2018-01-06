@@ -18,7 +18,11 @@ void TestProxyDelegate::OnResolveProxy(
     const std::string& method,
     const ProxyRetryInfoMap& proxy_retry_info,
     ProxyInfo* result) {
-  result->SetAlternativeProxy(alternative_proxy_server_);
+  ProxyInfo alternative_proxy_info;
+  alternative_proxy_info.UseProxyServer(alternative_proxy_server_);
+  alternative_proxy_info.DeprioritizeBadProxies(proxy_retry_info);
+  if (!alternative_proxy_info.is_empty())
+    result->SetAlternativeProxy(alternative_proxy_info.proxy_server());
 }
 
 void TestProxyDelegate::OnFallback(const ProxyServer& bad_proxy,
@@ -26,13 +30,6 @@ void TestProxyDelegate::OnFallback(const ProxyServer& bad_proxy,
 
 bool TestProxyDelegate::IsTrustedSpdyProxy(const ProxyServer& proxy_server) {
   return proxy_server.is_valid() && trusted_spdy_proxy_ == proxy_server;
-}
-
-void TestProxyDelegate::OnAlternativeProxyBroken(
-    const ProxyServer& alternative_proxy_server) {
-  EXPECT_TRUE(alternative_proxy_server.is_valid());
-  EXPECT_EQ(alternative_proxy_server_, alternative_proxy_server);
-  alternative_proxy_server_ = ProxyServer();
 }
 
 }  // namespace net
