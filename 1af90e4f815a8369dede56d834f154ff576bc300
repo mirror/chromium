@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15399ecb_73831cd7",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab1554fb_29681145",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 26
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2991e2a4_04a47699",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8685ba4b_4d4c3a60",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2991e2a4_04a47699",
+      "range": {
+        "startLine": 196,
+        "startChar": 21,
+        "endLine": 196,
+        "endChar": 30
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "28823027_3085f18d",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72abfcd1_9cf4922a",
+      "range": {
+        "startLine": 28,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 56
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efe08ed0_d7208dc5",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
         "patchSetId": 13
@@ -85,6 +157,24 @@
       "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81028af7_27541928",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Can\u0027t do that on a test class. The TEST_F macro ends up subclassing the test and then there\u0027s no default constructor in the parent.",
+      "parentUuid": "efe08ed0_d7208dc5",
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "60a37c26_af8b904f",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b72d775_c13b9cb9",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc2b7687_49319619",
         "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
         "patchSetId": 13
@@ -125,6 +239,24 @@
       "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6161881_b19e9de1",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc2b7687_49319619",
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "b6cc60db_17686afa",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81e5ede7_827e1d0e",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f51ea43b_262cef28",
         "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
         "patchSetId": 13
@@ -171,6 +327,30 @@
       "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2885d077_6210711f",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f51ea43b_262cef28",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "d7f577b2_4da7e942",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "I\u0027ve tried rewording this.",
+      "parentUuid": "56ee639f_2abf2a5a",
+      "range": {
+        "startLine": 43,
+        "startChar": 49,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "038b8f6a_2f5f8ff2",
         "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
         "patchSetId": 13
@@ -217,6 +421,30 @@
       "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1866d850_d4bcc171",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-06T01:27:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "038b8f6a_2f5f8ff2",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
