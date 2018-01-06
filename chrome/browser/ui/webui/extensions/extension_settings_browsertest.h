@@ -50,6 +50,8 @@ class ExtensionSettingsUIBrowserTest : public WebUIBrowserTest {
   // Enables the error console so errors are displayed in the extensions page.
   void EnableErrorConsole();
 
+  void EnableDevMode(bool enabled);
+
   // Shrinks the web contents view in order to ensure vertical overflow.
   void ShrinkWebContentsView();
 
