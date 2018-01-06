@@ -219,11 +219,6 @@ struct BASE_EXPORT LaunchOptions {
   // (see man 7 signal for a list of allowed functions).
   PreExecDelegate* pre_exec_delegate = nullptr;
 
-  // Each element is an RLIMIT_* constant that should be raised to its
-  // rlim_max.  This pointer is owned by the caller and must live through
-  // the call to LaunchProcess().
-  const std::vector<int>* maximize_rlimits = nullptr;
-
   // If true, start the process in a new process group, instead of
   // inheriting the parent's process group.  The pgid of the child process
   // will be the same as its pid.
