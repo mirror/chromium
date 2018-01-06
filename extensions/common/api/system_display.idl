@@ -244,6 +244,7 @@ namespace system.display {
   callback SetDisplayUnitInfoCallback = void();
   callback SetDisplayLayoutCallback = void();
   callback NativeTouchCalibrationCallback = void(boolean success);
+  callback SetMirrorModeCallback = void();
 
   interface Functions {
     // Requests the information for all attached display devices.
@@ -351,6 +352,33 @@ namespace system.display {
     // display.
     // |id|: The display's unique identifier.
     static void clearTouchCalibration(DOMString id);
+
+    // Turns on/off the mirror mode. If |enabled| is false, the following three
+    // parameters will be ignored and all displays will be set in default mode
+    // (extended or unified desktop mode). Otherwise, mirror mode will be turned
+    // on. If |mixed| is false, |mirroringSourceId| and
+    // |mirroringDestinationIds| will be ignored, the source display will be
+    // selected by the platform and mirrored to all other displays. Otherwise,
+    // the source display specified by |mirroringSourceId| will be selected and
+    // mirrored to all displays specified by |mirroringDestinationIds|. All
+    // other displays will be set in extended mode. Note that
+    // setDisplayProperties() can only be called for the mirroring source
+    // display and the displays in extended mode.
+    // NOTE: This is only available to Chrome OS Kiosk apps and Web UI.
+    // |enabled|: True if the mirror mode should be turned on.
+    // |mixed|: True if mirroring source and destination displays should be
+    //     specified by the following two parameters.
+    // |mirroringSourceId|: The id of the mirroring source display.
+    // |mirroringDestinationIds|: The ids of the mirroring destination displays.
+    // |callback|: Empty function called when the function finishes. To find out
+    //     whether the function succeeded, $(ref:runtime.lastError) should be
+    //     queried.
+    static void setMirrorMode(
+        boolean enabled,
+        boolean mixed,
+        DOMString mirroringSourceId,
+        DOMString[] mirroringDestinationIds,
+        optional SetMirrorModeCallback callback);
   };
 
   interface Events {

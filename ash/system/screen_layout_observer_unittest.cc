@@ -201,7 +201,7 @@ TEST_F(ScreenLayoutObserverTest, DisplayNotifications) {
 
   // Turn on mirror mode.
   CloseNotification();
-  display_manager()->SetMirrorMode(true);
+  display_manager()->SetMirrorMode(true, base::nullopt);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
                                        GetMirroringDisplayNames()),
             GetDisplayNotificationText());
@@ -226,7 +226,7 @@ TEST_F(ScreenLayoutObserverTest, DisplayNotifications) {
 
   // Turn off mirror mode.
   CloseNotification();
-  display_manager()->SetMirrorMode(false);
+  display_manager()->SetMirrorMode(false, base::nullopt);
   display_manager()->OnNativeDisplaysChanged(display_info_list);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_EXTENDED,
                                        GetSecondDisplayName()),
@@ -334,7 +334,7 @@ TEST_F(ScreenLayoutObserverTest, ExitMirrorModeBecauseOfDockedModeMessage) {
 
   // Mirroring.
   UpdateDisplay("400x400,200x200");
-  display_manager()->SetMirrorMode(true);
+  display_manager()->SetMirrorMode(true, base::nullopt);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
                                        GetMirroringDisplayNames()),
             GetDisplayNotificationText());
@@ -360,7 +360,7 @@ TEST_F(ScreenLayoutObserverTest, ExitMirrorModeBecauseOfThirdDisplayMessage) {
 
   // Mirroring.
   UpdateDisplay("400x400,200x200");
-  display_manager()->SetMirrorMode(true);
+  display_manager()->SetMirrorMode(true, base::nullopt);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
                                        GetMirroringDisplayNames()),
             GetDisplayNotificationText());
@@ -384,7 +384,7 @@ TEST_F(ScreenLayoutObserverTest,
 
   // Mirroring.
   UpdateDisplay("400x400,200x200");
-  display_manager()->SetMirrorMode(true);
+  display_manager()->SetMirrorMode(true, base::nullopt);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
                                        GetMirroringDisplayNames()),
             GetDisplayNotificationText());
@@ -587,7 +587,7 @@ TEST_F(ScreenLayoutObserverMultiMirroringTest,
   display_manager()->OnNativeDisplaysChanged(display_info_list);
 
   // Mirroring across 3 displays.
-  display_manager()->SetMirrorMode(true);
+  display_manager()->SetMirrorMode(true, base::nullopt);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
                                        GetMirroringDisplayNames()),
             GetDisplayNotificationText());
@@ -601,13 +601,13 @@ TEST_F(ScreenLayoutObserverMultiMirroringTest,
 
   // Turn off mirror mode.
   CloseNotification();
-  display_manager()->SetMirrorMode(false);
+  display_manager()->SetMirrorMode(false, base::nullopt);
   EXPECT_EQ(l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRROR_EXIT),
             GetDisplayNotificationText());
 
   // Turn on mirror mode.
   CloseNotification();
-  display_manager()->SetMirrorMode(true);
+  display_manager()->SetMirrorMode(true, base::nullopt);
   EXPECT_EQ(l10n_util::GetStringFUTF16(IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
                                        GetMirroringDisplayNames()),
             GetDisplayNotificationText());
