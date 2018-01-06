@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfeb418d_658bc547",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-06T00:29:04Z",
+      "side": 1,
+      "message": "We could try to intervene for ServerLoFi if server doesn\u0027t honor it - but really seems better to have server hold that logic/decision/policy. Definitely can\u0027t honor it for LitePage here since server already gave us the preview. So I feel like safer to just do for client previews. I don\u0027t clear ClientLoFi here intentionally because it is a package deal with ServerLoFi - that is, we don\u0027t want some images LoFi-ed and some not simply wrt scheme. Let\u0027s discuss further if that doesn\u0027t sound right.",
+      "parentUuid": "de489e1a_bed7ad34",
+      "revId": "0a076a5ecc15624cb7d1a0bafaab3f9409620aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2e8406d_8cd1ed56",
         "filename": "components/previews/content/previews_content_util.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a735330d_edf82dea",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-06T00:29:04Z",
+      "side": 1,
+      "message": "Thanks, that had been on my mind but slipped - 799653",
+      "parentUuid": "f2e8406d_8cd1ed56",
+      "revId": "0a076a5ecc15624cb7d1a0bafaab3f9409620aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "903aa0c5_92943418",
         "filename": "components/previews/core/previews_user_data.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "0a076a5ecc15624cb7d1a0bafaab3f9409620aac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7125b83_3cc01a7a",
+        "filename": "components/previews/core/previews_user_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-06T00:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "903aa0c5_92943418",
+      "revId": "0a076a5ecc15624cb7d1a0bafaab3f9409620aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
