@@ -34,23 +34,62 @@ public class RemotingMediaRouteProvider extends BaseMediaRouteProvider {
         return RemotingMediaSource.from(sourceId);
     }
 
-    // TODO(avayvod): implement the methods below. See https://crbug.com/517102.
     @Override
     public void createRoute(String sourceId, String sinkId, String presentationId, String origin,
-            int tabId, boolean isIncognito, int nativeRequestId) {}
+            int tabId, boolean isIncognito, int nativeRequestId) {
+        if (mAndroidMediaRouter == null) {
+            mManager.onRouteRequestError("Not supported", nativeRequestId);
+            return;
+        }
+
+        MediaSink sink = MediaSink.fromSinkId(sinkId, mAndroidMediaRouter);
+        if (sink == null) {
+            mManager.onRouteRequestError("No sink", nativeRequestId);
+            return;
+        }
+
+        MediaSource source = getSourceFromId(sourceId);
+        if (source == null) {
+            mManager.onRouteRequestError("Unsupported presentation URL", nativeRequestId);
+            return;
+        }
+
+        CreateRouteRequest createRouteRequest = new CreateRouteRequest(source, sink, presentationId,
+                origin, tabId, isIncognito, nativeRequestId, this,
+                CreateRouteRequest.RequestedCastSessionType.REMOTE, null);
+
+        ChromeCastSessionManager.get().requestSessionLaunch(createRouteRequest);
+    }
 
     @Override
-    public void joinRoute(String sourceId, String presentationId, String origin, int tabId,
-            int nativeRequestId) {}
+    public void joinRoute(
+            String sourceId, String presentationId, String origin, int tabId, int nativeRequestId) {
+        // Remote playback does not support rejoining routes.
+    }
 
     @Override
-    public void closeRoute(String routeId) {}
+    public void closeRoute(String routeId) {
+        MediaRoute route = mRoutes.get(routeId);
+        if (route == null) return;
+
+        if (mSession == null) {
+            mRoutes.remove(routeId);
+            mManager.onRouteClosed(routeId);
+            return;
+        }
+
+        ChromeCastSessionManager.get().stopApplication();
+    }
 
     @Override
-    public void detachRoute(String routeId) {}
+    public void detachRoute(String routeId) {
+        mRoutes.remove(routeId);
+    }
 
     @Override
-    public void sendStringMessage(String routeId, String message, int nativeCallbackId) {}
+    public void sendStringMessage(String routeId, String message, int nativeCallbackId) {
+        // Remote playback does not support sending string messages.
+    }
 
     @VisibleForTesting
     RemotingMediaRouteProvider(MediaRouter androidMediaRouter, MediaRouteManager manager) {
