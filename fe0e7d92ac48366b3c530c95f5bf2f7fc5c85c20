@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c4d10d2d_b2f270e1",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-06T01:28:26Z",
+      "side": 1,
+      "message": "While you\u0027re at it, can you move this to the end of this file? All the classes and TEST_Fs can be in the anon namespace.",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0180a07e_7c41444a",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -13,6 +30,97 @@
       "writtenOn": "2018-01-06T01:13:37Z",
       "side": 1,
       "message": "There\u0027s an awful lot of code duplication between this class and ArcSessionManagerTestBase. Is there a reason this class doesn\u0027t derive from it?",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d09e2ae_030760f1",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-06T01:28:26Z",
+      "side": 1,
+      "message": "Can we embed the code to ctor and remove the function?",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dcbd067_8ebf399e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-06T01:28:26Z",
+      "side": 1,
+      "message": "same",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0785a5_a4426abd",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-06T01:28:26Z",
+      "side": 1,
+      "message": "Instead, how about adding arc_session_runner_for_testing() to ASM? A setter is already there. One less raw pointer then.",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3728afa4_8211ec59",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-06T01:28:26Z",
+      "side": 1,
+      "message": "Can we remove them? Unlike ArcSessionManagerTestBase, your code does not use/initialize them in SetUp().",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 53
+      },
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b4284f_2fb42dbd",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-06T01:28:26Z",
+      "side": 1,
+      "message": "What prevented you from using the test base class as-is?",
       "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
