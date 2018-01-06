@@ -40,12 +40,7 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
                            public net::URLFetcherDelegate,
                            public DevToolsFileHelper::Delegate {
  public:
-  static DevToolsUIBindings* ForWebContents(
-      content::WebContents* web_contents);
-
-  static GURL SanitizeFrontendURL(const GURL& url);
-  static bool IsValidFrontendURL(const GURL& url);
-  static bool IsValidRemoteFrontendURL(const GURL& url);
+  typedef base::Callback<void(bool)> InfoBarCallback;
 
   class Delegate {
    public:
@@ -71,6 +66,12 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
     virtual void ShowCertificateViewer(const std::string& cert_chain) = 0;
   };
 
+  static DevToolsUIBindings* ForWebContents(content::WebContents* web_contents);
+
+  static GURL SanitizeFrontendURL(const GURL& url);
+  static bool IsValidFrontendURL(const GURL& url);
+  static bool IsValidRemoteFrontendURL(const GURL& url);
+
   explicit DevToolsUIBindings(content::WebContents* web_contents);
   ~DevToolsUIBindings() override;
 
@@ -88,6 +89,10 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
   void Reload();
   void Detach();
   bool IsAttachedTo(content::DevToolsAgentHost* agent_host);
+
+  // Public for testing only.
+  void ShowDevToolsConfirmInfoBar(const base::string16& message,
+                                  const InfoBarCallback& callback);
 
  private:
   void HandleMessageFromDevToolsFrontend(const std::string& message);
@@ -215,9 +220,6 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
   void SearchCompleted(int request_id,
                        const std::string& file_system_path,
                        const std::vector<std::string>& file_paths);
-  typedef base::Callback<void(bool)> InfoBarCallback;
-  void ShowDevToolsConfirmInfoBar(const base::string16& message,
-                                  const InfoBarCallback& callback);
 
   // Extensions support.
   void AddDevToolsExtensionsToClient();
