@@ -94,6 +94,30 @@
       "revId": "ac4ed7b449943b4dad150889288a5bf5fbcc5c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a447b75_1b594bc6",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 6001,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-06T01:34:57Z",
+      "side": 1,
+      "message": "FWIW, I am attempting to consolidate multiple \"Learn more\" strings to IDS_LEARN_MORE at https://chromium-review.googlesource.com/c/chromium/src/+/852899.",
+      "parentUuid": "92c11def_c86ed3d9",
+      "range": {
+        "startLine": 6001,
+        "startChar": 10,
+        "endLine": 6001,
+        "endChar": 20
+      },
+      "revId": "ac4ed7b449943b4dad150889288a5bf5fbcc5c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
