@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db9bbf71_ab551431",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T02:23:32Z",
+      "side": 1,
+      "message": "nit: scale instead of x?",
+      "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c62e780_a6b08a5b",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T02:23:32Z",
+      "side": 1,
+      "message": "This is just to stop auto refresh, right?",
+      "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de917c7e_afab56a1",
+        "filename": "ui/ozone/platform/drm/host/drm_cursor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-06T02:23:32Z",
+      "side": 1,
+      "message": "Do you need this now? (it looks to me that it should work without)\n\nor preparation to replace hw cursor?",
+      "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
