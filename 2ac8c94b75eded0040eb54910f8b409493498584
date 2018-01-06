@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "022835b2_dd04b4b2",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-06T04:34:26Z",
+      "side": 1,
+      "message": ".keys() is not needed.",
+      "revId": "2ac8c94b75eded0040eb54910f8b409493498584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e1e8f3_1a198083",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-06T04:34:26Z",
+      "side": 1,
+      "message": "This should be in __init__ no ?",
+      "revId": "2ac8c94b75eded0040eb54910f8b409493498584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a59f06_7f5cfb6b",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-06T04:34:26Z",
+      "side": 1,
+      "message": "Lines 215-217 and Lines 188-198 are duplicate code, please create a helper and use in both places.",
+      "revId": "2ac8c94b75eded0040eb54910f8b409493498584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d002c454_6796c3f7",
+        "filename": "tools/code_coverage/html_templates/table.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-06T04:34:26Z",
+      "side": 1,
+      "message": "No need of all caps, probably just first letter.",
+      "revId": "2ac8c94b75eded0040eb54910f8b409493498584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07150ab2_03dd46fd",
+        "filename": "tools/code_coverage/html_templates/table.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-06T04:34:26Z",
+      "side": 1,
+      "message": "nit:either use single-quote or double-quote for all strings in templates.",
+      "revId": "2ac8c94b75eded0040eb54910f8b409493498584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
