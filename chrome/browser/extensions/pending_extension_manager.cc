@@ -284,7 +284,6 @@ bool PendingExtensionManager::AddExtensionImpl(
     bool mark_acknowledged,
     bool remote_install) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
-
   PendingExtensionInfo info(id,
                             install_parameter,
                             update_url,
