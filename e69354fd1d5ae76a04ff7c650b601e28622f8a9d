@@ -313,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "e6c99b79_376a051b",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-06T00:20:55Z",
+      "side": 1,
+      "message": "Generally SkBitmaps are passed by value. Is there a reason the code needs to take ownership of the bitmap? That said, you can create a copy if need be.",
+      "parentUuid": "19982011_3b92800a",
+      "range": {
+        "startLine": 505,
+        "startChar": 6,
+        "endLine": 505,
+        "endChar": 45
+      },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b99ce8db_d6a5b913",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 4
@@ -348,6 +372,30 @@
       "side": 1,
       "message": "We mostly use the testapp in debug mode. Since this is not shipped it shouldn\u0027t really matter.",
       "parentUuid": "b99ce8db_d6a5b913",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 8
+      },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fa9158_2bceebc0",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-06T00:20:55Z",
+      "side": 1,
+      "message": "It\u0027s easy to miss that at a later date. Please fix now.",
+      "parentUuid": "4b403329_559b9456",
       "range": {
         "startLine": 508,
         "startChar": 2,
