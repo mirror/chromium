@@ -22,6 +22,23 @@
       "revId": "a0d3e300a0d99c235625cddca310f28a65f114cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dad9af3_19a18a8c",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14858,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-06T00:09:23Z",
+      "side": 1,
+      "message": "minor nit: we could move those glTexParameteriFn directly around l.14848 where we set reset_source_texture_base_level_max_level, and directly use texture-\u003ebase_level()/texture-\u003emax_level() on l.15004/5 where we reset (I don\u0027t think anything in the code in between would change those values).\nThis would simplify a tiny bit.",
+      "revId": "a0d3e300a0d99c235625cddca310f28a65f114cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
