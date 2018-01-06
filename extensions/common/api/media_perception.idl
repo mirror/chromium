@@ -1,0 +1,144 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Private API for receiving real-time media perception information.
+[platforms=("chromeos")]
+namespace mediaPerception {
+
+  // ------------------- Start of PerceptionState definition. -----------------
+
+  dictionary Position {
+    // The horizontal distance from the top left corner of the image.
+    double? x;
+
+    // The vertical distance from the top left corner of the image.
+    double? y;
+  };
+
+  dictionary BoundingBox {
+    // Specifies whether the positions are normalized to the size of the image.
+    // If not specified, assume that the positions are normalized.
+    boolean? normalized;
+
+    // The two points that define the corners of a bounding box.
+    Position? topLeft;
+    Position? bottomRight;
+  };
+
+  enum DistanceUnits {
+    UNSPECIFIED,
+    METERS,
+    PIXELS
+  };
+
+  // Generic dictionary to encapsulate a distance magnitude and units.
+  dictionary Distance {
+    // This field provides flexibility to report depths or distances of
+    // different entity types with different units.
+    DistanceUnits units;
+
+    double? magnitude;
+  };
+
+  dictionary Location {
+    // Confidence (probability) that this location is detected correctly, range
+    // [0,1].
+    double? confidence;
+
+    // Estimated distance to the input source.
+    Distance? distance;
+  };
+
+  enum IdentityType {
+    UNKNOWN,
+    // Represents a temporary ID for a single run of the system.
+    LOCAL_SESSION,
+    // An obfuscated GAIA ID for someone registered in the Gallery.
+    OBFUSCATED_GAIA_ID
+  };
+
+  // A unique identifier for a person.
+  dictionary HumanIdentity {
+    IdentityType identityType;
+
+    DOMString? id;
+
+    // Confidence (probability) that this identity is detected correctly, range
+    // [0, 1].
+    double? confidence;
+  };
+
+  // Details about the location of a person.
+  dictionary HumanLocation {
+    // If true, the person is present, i.e. in the vicinity or the same room
+    // where the user may see or interact with the device.
+    // Otherwise, either the location is unknown or the user is far from the
+    // device.
+    boolean? isPresent;
+
+    // If true, it means that the person's body is visible from the camera.
+    boolean? isVisible;
+
+    // The location of person's body. This field may be empty if the
+    // corresponding individual’s body is absent or not detected.
+    Location? bodyLocation;
+
+    // The location of person's face. This field may be empty
+    // if the corresponding individual’s face is absent or not detected.
+    Location? faceLocation;
+  };
+
+  enum HumanStateType {
+    // TODO
+    // Active speaker?
+    // Gaze?
+    UNKNOWN
+  };
+
+  // Represents the state of a detected person.
+  dictionary HumanState {
+    // The estimated timestamp corresponds to the real world time when the
+    // event happened.
+    long? timestampMicroSeconds;
+
+    // Confidence (probability) that this state is detected correctly, range
+    // [0, 1].
+    double? confidence;
+
+    // The type of this state.
+    // State types are not exclusive and a person can have multiple states
+    // simultaneously.
+    HumanStateType? type;
+  };
+
+  // Represents a single person and all detected state associated with them.
+  dictionary Human {
+    HumanIdentity? id;
+
+    // If absent or empty, the presence of the person is detected, but the
+    // location is unknown.
+    HumanLocation? location;
+
+    // All states for this person.
+    // Each state has its estimated time. The estimated time corresponds to the
+    // real world time when the event happened.
+    HumanState[]? states;
+  };
+
+  dictionary PerceptionState {
+    // The timestamp associated with the input data for which these inferences
+    // were made.
+    long? timestampMicroSeconds;
+
+    // All detected people.
+    // Note that the information related to a single real-world person may be
+    // spread across (or repeated in) multiple human dictionaries. For example,
+    // different sensors may detect the same person differently without a way
+    // to link the information.
+    Human[]? people;
+  };
+
+  // ------------------- End of PerceptionState definition. -----------------
+
+};
