@@ -22,6 +22,30 @@
       "revId": "0324e12f3ebbaac7dc84ee1d3e156cc766e63a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff9239c_05151f8d",
+        "filename": "ash/laser/laser_pointer_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-06T03:52:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78ed3bff_dfeab6d0",
+      "range": {
+        "startLine": 172,
+        "startChar": 34,
+        "endLine": 172,
+        "endChar": 46
+      },
+      "revId": "0324e12f3ebbaac7dc84ee1d3e156cc766e63a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
