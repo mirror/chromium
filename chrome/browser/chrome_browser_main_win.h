@@ -34,7 +34,9 @@ class ChromeBrowserMainPartsWin : public ChromeBrowserMainParts {
   // BrowserParts overrides.
   void ToolkitInitialized() override;
   void PreMainMessageLoopStart() override;
+  void PostMainMessageLoopStart() override;
   int PreCreateThreads() override;
+  void PreShutdown() override;
 
   // ChromeBrowserMainParts overrides.
   void ShowMissingLocaleMessageBox() override;

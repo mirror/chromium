@@ -11,8 +11,10 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/sequenced_task_runner.h"
+#include "base/threading/thread.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 
+class ActivatorRegisterer;
 class NotificationPlatformBridgeWinImpl;
 class NotificationTemplateBuilder;
 
@@ -22,6 +24,9 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
  public:
   NotificationPlatformBridgeWin();
   ~NotificationPlatformBridgeWin() override;
+
+  void StartActivationListener();
+  void StopActivationListener();
 
   // NotificationPlatformBridge implementation.
   void Display(NotificationHandler::Type notification_type,
@@ -41,6 +46,10 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   friend class NotificationPlatformBridgeWinImpl;
   friend class NotificationPlatformBridgeWinTest;
   FRIEND_TEST_ALL_PREFIXES(NotificationPlatformBridgeWinTest, EncodeDecode);
+
+  // Initializes WinRT and registers our module.
+  static void PrepareForNativeNotification(
+      ActivatorRegisterer* activator_registerer);
 
   // Takes an |encoded| string as input and decodes it, returning the values in
   // the out parameters. Returns true if successful, but false otherwise.
@@ -68,9 +77,13 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
 
   void PostTaskToTaskRunnerThread(base::OnceClosure closure) const;
 
+  base::Thread notification_thread_;
+
   scoped_refptr<NotificationPlatformBridgeWinImpl> impl_;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  std::unique_ptr<ActivatorRegisterer> activator_registerer_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeWin);
 };
