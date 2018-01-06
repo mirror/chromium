@@ -109,9 +109,6 @@ class ShellSurfaceBase : public SurfaceTreeHost,
   // Sets the system modality.
   void SetSystemModal(bool system_modal);
 
-  // Start an interactive move of surface.
-  void Move();
-
   // Sets the application ID for the window. The application ID identifies the
   // general class of applications to which the window belongs.
   static void SetApplicationId(aura::Window* window, const std::string& id);
@@ -266,7 +263,7 @@ class ShellSurfaceBase : public SurfaceTreeHost,
 
   // Attempt to start a drag operation. The type of drag operation to start is
   // determined by |component|.
-  void AttemptToStartDrag(int component);
+  virtual void AttemptToStartDrag(int component);
 
   // Set the parent window of this surface.
   void SetParentWindow(aura::Window* parent);

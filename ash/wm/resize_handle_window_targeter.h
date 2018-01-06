@@ -5,6 +5,7 @@
 #ifndef ASH_WM_RESIZE_HANDLE_WINDOW_TARGETER_H_
 #define ASH_WM_RESIZE_HANDLE_WINDOW_TARGETER_H_
 
+#include "ash/ash_export.h"
 #include "ash/wm/window_state_observer.h"
 #include "base/macros.h"
 #include "ui/aura/window_observer.h"
@@ -20,9 +21,9 @@ class ImmersiveFullscreenController;
 // windows, this targeter makes sure that touch-events towards the top of the
 // screen are targeted to the window itself (instead of a child window that may
 // otherwise have been targeted) when the top-of-window views are not revealed.
-class ResizeHandleWindowTargeter : public wm::WindowStateObserver,
-                                   public aura::WindowObserver,
-                                   public aura::WindowTargeter {
+class ASH_EXPORT ResizeHandleWindowTargeter : public wm::WindowStateObserver,
+                                              public aura::WindowObserver,
+                                              public aura::WindowTargeter {
  public:
   ResizeHandleWindowTargeter(aura::Window* window,
                              ImmersiveFullscreenController* immersive);

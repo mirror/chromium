@@ -38,7 +38,7 @@
     reset.
   </description>
 
-  <interface name="zcr_remote_shell_v1" version="9">
+  <interface name="zcr_remote_shell_v1" version="10">
     <description summary="remote_shell">
       The global interface that allows clients to turn a wl_surface into a
       "real window" which is remotely managed but can be stacked, activated
@@ -181,7 +181,7 @@
     </event>
   </interface>
 
-  <interface name="zcr_remote_surface_v1" version="9">
+  <interface name="zcr_remote_surface_v1" version="10">
     <description summary="A desktop window">
       An interface that may be implemented by a wl_surface, for
       implementations that provide a desktop-style user interface
@@ -620,6 +620,103 @@
       <arg name="width" type="int"/>
       <arg name="height" type="int"/>
     </event>
+
+    <!-- Version 10 additions -->
+    <enum name="bounds_change_reason">
+      <description summary="bounds_change_reason">
+        The mode of bounds change event.
+      </description>
+      <entry name="move" value="1" summary="window is being dragged"/>
+      <entry name="resize" value="2" summary="window is being resized"/>
+      <entry name="window_manager" value="3"
+	     summary="window is resized by window manager"/>
+      <entry name="left_snapped" value="4"
+	     summary="window is resized to left snapped state"/>
+      <entry name="right_snapped" value="5"
+	     summary="window is resized to right snapped state"/>
+    </enum>
+
+    <event name="bounds_changed" since="10">
+      <arg name="x" type="int"/>
+      <arg name="y" type="int"/>
+      <arg name="width" type="int"/>
+      <arg name="height" type="int"/>
+      <arg name="bounds_change_reason" type="uint"/>
+    </event>
+
+    <request name="start_move" since="10">
+      <description summary="start an interactive move">
+	Start an interactive, user-driven move of the surface.
+
+	The compositor responds to this request with a configure event that
+	transitions to the "moving" state. The client must only initiate motion
+	after acknowledging the state change. The compositor can assume that
+	subsequent set_window_geometry requests are position updates until the
+	next state transition is acknowledged.
+
+	The compositor may ignore move requests depending on the state of the
+	surface, e.g. fullscreen or maximized.
+      </description>
+      <arg name="x" type="int"/>
+      <arg name="y" type="int"/>
+    </request>
+
+    <enum name="resize_direction">
+      <description summary="resize direction"> </description>
+      <entry name="none" value="0"/>
+      <entry name="left" value="1"/>
+      <entry name="topleft" value="2"/>
+      <entry name="top" value="3"/>
+      <entry name="topright" value="4"/>
+      <entry name="right" value="5"/>
+      <entry name="bottomright" value="6"/>
+      <entry name="bottom" value="7"/>
+      <entry name="bottomleft" value="8"/>
+    </enum>
+
+    <event name="start_resize" since="10">
+      <arg name="direction" type="uint"/>
+    </event>
+    
+    <event name="end_resize" since="10">
+    </event>
+
+    <request name="set_can_resize" since="10">
+      <arg name="can_resize" type="uint"/>
+    </request>
+
+    <request name="set_can_maximzie" since="10">
+      <arg name="can_maximize" type="uint"/>
+    </request>
+
+    <request name="set_min_size" since="10">
+      <arg name="width" type="int"/>
+      <arg name="height" type="int"/>
+    </request>
+
+    <request name="set_frame_height" since="10">
+      <description summary="frame_height">0 means disabled</description>
+      <arg name="height" type="int"/>
+    </request>
+
+    <request name="set_frame_color" since="10">
+      <arg name="color" type="uint"/>
+    </request>
+
+    <enum name="frame_buttons">
+      <entry name="back" value="1" summary="window_can_resize"/>
+      <entry name="minimize" value="2" summary="window_can_resize"/>
+      <entry name="maximize" value="4" summary="window_can_resize"/>
+      <entry name="restore" value="8" summary="window_can_resize"/>
+      <entry name="menu" value="16" summary="window"/>
+      <entry name="close" value="32" summary="window"/>
+      <entry name="zoom" value="64" summary="window"/>
+    </enum>
+
+    <request name="set_frame_buttons" since="10">
+      <arg name="enabled" type="uint"/>
+      <arg name="disabled" type="uint"/>
+    </request>
 
   </interface>
 

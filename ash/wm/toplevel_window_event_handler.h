@@ -33,6 +33,12 @@ class ASH_EXPORT ToplevelWindowEventHandler : public ui::EventHandler,
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
 
+  bool AttemptToStartDrag(
+      aura::Window* window,
+      const gfx::Point& point_in_parent,
+      int window_component,
+      const wm::WmToplevelWindowEventHandler::EndClosure& end_closure);
+
   // Overridden form wm::WindowMoveClient:
   ::wm::WindowMoveResult RunMoveLoop(
       aura::Window* source,
