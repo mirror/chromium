@@ -128,7 +128,7 @@ bool ShellContentRendererClient::HasErrorPage(int http_status_code) {
   return http_status_code >= 400 && http_status_code < 600;
 }
 
-void ShellContentRendererClient::GetNavigationErrorStrings(
+void ShellContentRendererClient::PrepareErrorPage(
     RenderFrame* render_frame,
     const blink::WebURLRequest& failed_request,
     const blink::WebURLError& error,
@@ -145,7 +145,7 @@ void ShellContentRendererClient::GetNavigationErrorStrings(
   }
 }
 
-void ShellContentRendererClient::GetNavigationErrorStringsForHttpStatusError(
+void ShellContentRendererClient::PrepareErrorPageForHttpStatusError(
     content::RenderFrame* render_frame,
     const blink::WebURLRequest& failed_request,
     const GURL& unreachable_url,
