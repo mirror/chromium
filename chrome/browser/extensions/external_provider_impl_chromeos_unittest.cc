@@ -21,6 +21,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/supervised_user/supervised_user_constants.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -47,6 +48,7 @@ namespace {
 
 const char kExternalAppId[] = "kekdneafjmhmndejhmbcadfiiofngffo";
 const char kStandaloneAppId[] = "ldnnhddmnhbkjipkidpdiheffobcpfmf";
+const char kStandaloneChildAppId[] = "gdijeikdkaembjbdobgfkoidjkpbmlkd";
 
 class ExternalProviderImplChromeOSTest : public ExtensionServiceTestBase {
  public:
@@ -57,7 +59,17 @@ class ExternalProviderImplChromeOSTest : public ExtensionServiceTestBase {
   ~ExternalProviderImplChromeOSTest() override {}
 
   void InitServiceWithExternalProviders(bool standalone) {
+    InitServiceWithExternalProvidersAndUserType(standalone,
+                                                false /* is_child */);
+  }
+
+  void InitServiceWithExternalProvidersAndUserType(bool standalone,
+                                                   bool is_child) {
     InitializeEmptyExtensionService();
+
+    if (is_child)
+      profile_.get()->SetSupervisedUserId(supervised_users::kChildAccountSUID);
+
     service_->Init();
 
     if (standalone) {
@@ -134,6 +146,24 @@ TEST_F(ExternalProviderImplChromeOSTest, Standalone) {
       content::NotificationService::AllSources()).Wait();
 
   EXPECT_TRUE(service_->GetInstalledExtension(kStandaloneAppId));
+  // Also include apps available for child.
+  EXPECT_TRUE(service_->GetInstalledExtension(kStandaloneChildAppId));
+}
+
+// Should include only subset of default apps
+TEST_F(ExternalProviderImplChromeOSTest, StandaloneChild) {
+  InitServiceWithExternalProvidersAndUserType(true /* standalone */,
+                                              true /* is_child */);
+
+  service_->CheckForExternalUpdates();
+  content::WindowedNotificationObserver(
+      extensions::NOTIFICATION_CRX_INSTALLER_DONE,
+      content::NotificationService::AllSources())
+      .Wait();
+
+  // kStandaloneAppId is not available for child.
+  EXPECT_FALSE(service_->GetInstalledExtension(kStandaloneAppId));
+  EXPECT_TRUE(service_->GetInstalledExtension(kStandaloneChildAppId));
 }
 
 // Normal mode, standalone app should be installed, because sync is disabled.
