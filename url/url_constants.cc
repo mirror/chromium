@@ -19,6 +19,7 @@ const char kDataScheme[] = "data";
 const char kFileScheme[] = "file";
 const char kFileSystemScheme[] = "filesystem";
 const char kFtpScheme[] = "ftp";
+const char kGeoScheme[] = "geo";
 const char kGopherScheme[] = "gopher";
 const char kHttpScheme[] = "http";
 const char kHttpsScheme[] = "https";

@@ -25,6 +25,7 @@ URL_EXPORT extern const char kDataScheme[];
 URL_EXPORT extern const char kFileScheme[];
 URL_EXPORT extern const char kFileSystemScheme[];
 URL_EXPORT extern const char kFtpScheme[];
+URL_EXPORT extern const char kGeoScheme[];
 URL_EXPORT extern const char kGopherScheme[];
 URL_EXPORT extern const char kHttpScheme[];
 URL_EXPORT extern const char kHttpsScheme[];
