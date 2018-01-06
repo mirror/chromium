@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a459435f_432363aa",
+        "filename": "ash/shell/app_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-06T16:59:22Z",
+      "side": 1,
+      "message": "This breaks the demo shell app list.",
+      "revId": "cb74128df49c8d3c01ab781763c456e36584e9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee40322c_fc4f90d6",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-06T16:59:22Z",
+      "side": 1,
+      "message": "Folder click should be handled inside ui code. So think this should be a CHECK or DCHECK.",
+      "range": {
+        "startLine": 92,
+        "startChar": 15,
+        "endLine": 92,
+        "endChar": 32
+      },
+      "revId": "cb74128df49c8d3c01ab781763c456e36584e9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcb5720_be870390",
+        "filename": "ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-06T16:59:22Z",
+      "side": 1,
+      "message": "nit: Can we just forward declare ui::MenuModel ?",
+      "revId": "cb74128df49c8d3c01ab781763c456e36584e9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
