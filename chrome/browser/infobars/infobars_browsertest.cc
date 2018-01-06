@@ -45,6 +45,7 @@
 #endif
 
 #if defined(OS_MACOSX)
+#include "chrome/browser/ui/cocoa/keystone_infobar_delegate.h"
 #include "chrome/browser/ui/startup/session_crashed_infobar_delegate.h"
 #endif
 
@@ -193,6 +194,7 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       {"app_banner", IBD::APP_BANNER_INFOBAR_DELEGATE},
       {"reload_plugin", IBD::RELOAD_PLUGIN_INFOBAR_DELEGATE},
       {"file_access_disabled", IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE},
+      {"keystone_promotion", IBD::KEYSTONE_PROMOTION_INFOBAR_DELEGATE_MAC},
       {"collected_cookies", IBD::COLLECTED_COOKIES_INFOBAR_DELEGATE},
       {"alternate_nav", IBD::ALTERNATE_NAV_INFOBAR_DELEGATE},
       {"default_browser", IBD::DEFAULT_BROWSER_INFOBAR_DELEGATE},
@@ -219,6 +221,13 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       break;
     case IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE:
       ChromeSelectFilePolicy(GetWebContents()).SelectFileDenied();
+      break;
+    case IBD::KEYSTONE_PROMOTION_INFOBAR_DELEGATE_MAC:
+#if defined(OS_MACOSX)
+      KeystonePromotionInfoBarDelegate::Create(GetWebContents());
+#else
+      ADD_FAILURE() << "This infobar is not supported on this OS.";
+#endif
       break;
     case IBD::COLLECTED_COOKIES_INFOBAR_DELEGATE:
       CollectedCookiesInfoBarDelegate::Create(GetInfoBarService());
@@ -315,6 +324,12 @@ IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_reload_plugin) {
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_file_access_disabled) {
   ShowAndVerifyUi();
 }
+
+#if defined(OS_MACOSX)
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_keystone_promotion) {
+  ShowAndVerifyUi();
+}
+#endif
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_collected_cookies) {
   ShowAndVerifyUi();
