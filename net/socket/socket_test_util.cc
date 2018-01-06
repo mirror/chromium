@@ -1259,6 +1259,10 @@ bool MockSSLClientSocket::GetSSLInfo(SSLInfo* requested_ssl_info) {
   return true;
 }
 
+void MockSSLClientSocket::ApplySocketTag(const SocketTag& tag) {
+  return transport_->socket()->ApplySocketTag(tag);
+}
+
 void MockSSLClientSocket::GetSSLCertRequestInfo(
     SSLCertRequestInfo* cert_request_info) {
   DCHECK(cert_request_info);
@@ -1678,6 +1682,7 @@ int MockTransportClientSocketPool::RequestSocket(
     const std::string& group_name,
     const void* socket_params,
     RequestPriority priority,
+    const SocketTag& socket_tag,
     RespectLimits respect_limits,
     ClientSocketHandle* handle,
     const CompletionCallback& callback,
@@ -1733,13 +1738,14 @@ MockSOCKSClientSocketPool::~MockSOCKSClientSocketPool() = default;
 int MockSOCKSClientSocketPool::RequestSocket(const std::string& group_name,
                                              const void* socket_params,
                                              RequestPriority priority,
+                                             const SocketTag& socket_tag,
                                              RespectLimits respect_limits,
                                              ClientSocketHandle* handle,
                                              const CompletionCallback& callback,
                                              const NetLogWithSource& net_log) {
   return transport_pool_->RequestSocket(group_name, socket_params, priority,
-                                        respect_limits, handle, callback,
-                                        net_log);
+                                        socket_tag, respect_limits, handle,
+                                        callback, net_log);
 }
 
 void MockSOCKSClientSocketPool::SetPriority(const std::string& group_name,
@@ -1951,5 +1957,18 @@ uint64_t GetTaggedBytes(int32_t expected_tag) {
   return bytes;
 }
 #endif
+
+std::unique_ptr<StreamSocket>
+MockTaggingClientSocketFactory::CreateTransportClientSocket(
+    const AddressList& addresses,
+    std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
+    NetLog* net_log,
+    const NetLogSource& source) {
+  std::unique_ptr<MockTaggingStreamSocket> socket(new MockTaggingStreamSocket(
+      MockClientSocketFactory::CreateTransportClientSocket(
+          addresses, std::move(socket_performance_watcher), net_log, source)));
+  socket_ = socket.get();
+  return std::move(socket);
+}
 
 }  // namespace net

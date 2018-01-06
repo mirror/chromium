@@ -17,6 +17,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
+#include "build/build_config.h"
 #include "net/base/net_errors.h"
 #include "net/base/proxy_delegate.h"
 #include "net/base/test_completion_callback.h"
@@ -28,6 +29,7 @@
 #include "net/nqe/network_quality_estimator_test_util.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
 #include "net/spdy/core/spdy_protocol.h"
@@ -139,41 +141,37 @@ class HttpProxyClientSocketPoolTest
                                      "/");
   }
 
-  scoped_refptr<TransportSocketParams> CreateHttpProxyParams() const {
+  scoped_refptr<TransportSocketParams> CreateHttpProxyParams(
+      const SocketTag& socket_tag) const {
     if (GetParam() != HTTP)
       return NULL;
     return new TransportSocketParams(
-        HostPortPair(kHttpProxyHost, 80),
-        false,
-        OnHostResolutionCallback(),
-        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT);
+        HostPortPair(kHttpProxyHost, 80), false, OnHostResolutionCallback(),
+        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, socket_tag);
   }
 
-  scoped_refptr<SSLSocketParams> CreateHttpsProxyParams() const {
+  scoped_refptr<SSLSocketParams> CreateHttpsProxyParams(
+      const SocketTag& socket_tag) const {
     if (GetParam() == HTTP)
       return NULL;
     return new SSLSocketParams(
         new TransportSocketParams(
-            HostPortPair(kHttpsProxyHost, 443),
-            false,
+            HostPortPair(kHttpsProxyHost, 443), false,
             OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT),
-        NULL,
-        NULL,
-        HostPortPair(kHttpsProxyHost, 443),
-        SSLConfig(),
-        PRIVACY_MODE_DISABLED,
-        0,
-        false);
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            socket_tag),
+        NULL, NULL, HostPortPair(kHttpsProxyHost, 443), SSLConfig(),
+        PRIVACY_MODE_DISABLED, 0, false);
   }
 
   // Returns the a correctly constructed HttpProxyParms
   // for the HTTP or HTTPS proxy.
   scoped_refptr<HttpProxySocketParams> CreateParams(
       bool tunnel,
-      ProxyDelegate* proxy_delegate) {
+      ProxyDelegate* proxy_delegate,
+      const SocketTag& socket_tag) {
     return scoped_refptr<HttpProxySocketParams>(new HttpProxySocketParams(
-        CreateHttpProxyParams(), CreateHttpsProxyParams(),
+        CreateHttpProxyParams(socket_tag), CreateHttpsProxyParams(socket_tag),
         QUIC_VERSION_UNSUPPORTED, std::string(),
         HostPortPair("www.google.com", tunnel ? 443 : 80),
         session_->http_auth_cache(), session_->http_auth_handler_factory(),
@@ -183,15 +181,16 @@ class HttpProxyClientSocketPoolTest
 
   scoped_refptr<HttpProxySocketParams> CreateTunnelParams(
       ProxyDelegate* proxy_delegate) {
-    return CreateParams(true, proxy_delegate);
+    return CreateParams(true, proxy_delegate, SocketTag());
   }
 
   scoped_refptr<HttpProxySocketParams> CreateNoTunnelParams(
-      ProxyDelegate* proxy_delegate) {
-    return CreateParams(false, proxy_delegate);
+      ProxyDelegate* proxy_delegate,
+      const SocketTag& socket_tag) {
+    return CreateParams(false, proxy_delegate, socket_tag);
   }
 
-  MockClientSocketFactory* socket_factory() {
+  MockTaggingClientSocketFactory* socket_factory() {
     return session_deps_.socket_factory.get();
   }
 
@@ -269,9 +268,10 @@ TEST_P(HttpProxyClientSocketPoolTest, NoTunnel) {
   Initialize(NULL, 0, NULL, 0, NULL, 0, NULL, 0);
 
   std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
-  int rv = handle_.Init("a", CreateNoTunnelParams(proxy_delegate.get()), LOW,
-                        ClientSocketPool::RespectLimits::ENABLED,
-                        CompletionCallback(), pool_.get(), NetLogWithSource());
+  int rv =
+      handle_.Init("a", CreateNoTunnelParams(proxy_delegate.get(), SocketTag()),
+                   LOW, ClientSocketPool::RespectLimits::ENABLED,
+                   CompletionCallback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsOk());
   EXPECT_TRUE(handle_.is_initialized());
   ASSERT_TRUE(handle_.socket());
@@ -292,7 +292,7 @@ TEST_P(HttpProxyClientSocketPoolTest, NoTunnel) {
 TEST_P(HttpProxyClientSocketPoolTest, SetSocketRequestPriorityOnInit) {
   Initialize(NULL, 0, NULL, 0, NULL, 0, NULL, 0);
   EXPECT_EQ(
-      OK, handle_.Init("a", CreateNoTunnelParams(NULL), HIGHEST,
+      OK, handle_.Init("a", CreateNoTunnelParams(NULL, SocketTag()), HIGHEST,
                        ClientSocketPool::RespectLimits::ENABLED,
                        CompletionCallback(), pool_.get(), NetLogWithSource()));
   EXPECT_EQ(HIGHEST, GetLastTransportRequestPriority());
@@ -882,5 +882,40 @@ TEST_P(HttpProxyClientSocketPoolTest,
 }
 
 // It would be nice to also test the timeouts in HttpProxyClientSocketPool.
+
+// Test that SocketTag passed into HttpProxyClientSocketPool is applied to
+// returned underlying TCP sockets.
+#if defined(OS_ANDROID)
+TEST_P(HttpProxyClientSocketPoolTest, Tag) {
+  Initialize(NULL, 0, NULL, 0, NULL, 0, NULL, 0);
+  SocketTag tag1(SocketTag::UNSET_UID, 0x12345678);
+  SocketTag tag2(getuid(), 0x87654321);
+  std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
+
+  // Verify requested socket is tagged properly.
+  int rv = handle_.Init("a", CreateNoTunnelParams(proxy_delegate.get(), tag1),
+                        LOW, ClientSocketPool::RespectLimits::ENABLED,
+                        CompletionCallback(), pool_.get(), NetLogWithSource());
+  EXPECT_THAT(rv, IsOk());
+  EXPECT_TRUE(handle_.is_initialized());
+  ASSERT_TRUE(handle_.socket());
+  EXPECT_TRUE(handle_.socket()->IsConnected());
+  EXPECT_TRUE(socket_factory()->GetLastProducedSocket()->tag() == tag1);
+
+  // Verify reused socket is retagged properly.
+  StreamSocket* socket = handle_.socket();
+  handle_.Reset();
+  rv = handle_.Init("a", CreateNoTunnelParams(proxy_delegate.get(), tag2), LOW,
+                    ClientSocketPool::RespectLimits::ENABLED,
+                    CompletionCallback(), pool_.get(), NetLogWithSource());
+  EXPECT_THAT(rv, IsOk());
+  EXPECT_TRUE(handle_.socket());
+  EXPECT_TRUE(handle_.socket()->IsConnected());
+  EXPECT_TRUE(handle_.socket() == socket);
+  EXPECT_TRUE(socket_factory()->GetLastProducedSocket()->tag() == tag2);
+  handle_.socket()->Disconnect();
+  handle_.Reset();
+}
+#endif
 
 }  // namespace net

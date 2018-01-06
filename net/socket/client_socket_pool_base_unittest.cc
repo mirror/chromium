@@ -41,6 +41,7 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/datagram_client_socket.h"
 #include "net/socket/socket_performance_watcher.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/stream_socket.h"
@@ -528,7 +529,8 @@ class TestClientSocketPool : public ClientSocketPool {
     const scoped_refptr<TestSocketParams>* casted_socket_params =
         static_cast<const scoped_refptr<TestSocketParams>*>(params);
     return base_.RequestSocket(group_name, *casted_socket_params, priority,
-                               respect_limits, handle, callback, net_log);
+                               respect_limits, handle, callback, net_log,
+                               SocketTag());
   }
 
   void RequestSockets(const std::string& group_name,
@@ -776,8 +778,8 @@ TEST_F(ClientSocketPoolBaseTest, ConnectJob_NoTimeoutOnSynchronousCompletion) {
   TestClientSocketPoolBase::Request request(
       &ignored, CompletionCallback(), DEFAULT_PRIORITY,
       ClientSocketPool::RespectLimits::ENABLED,
-      internal::ClientSocketPoolBaseHelper::NORMAL, params_,
-      NetLogWithSource());
+      internal::ClientSocketPoolBaseHelper::NORMAL, params_, NetLogWithSource(),
+      SocketTag());
   std::unique_ptr<TestConnectJob> job(
       new TestConnectJob(TestConnectJob::kMockJob, "a", request,
                          base::TimeDelta::FromMicroseconds(1), &delegate,
@@ -793,8 +795,8 @@ TEST_F(ClientSocketPoolBaseTest, ConnectJob_TimedOut) {
   TestClientSocketPoolBase::Request request(
       &ignored, CompletionCallback(), DEFAULT_PRIORITY,
       ClientSocketPool::RespectLimits::ENABLED,
-      internal::ClientSocketPoolBaseHelper::NORMAL, params_,
-      NetLogWithSource());
+      internal::ClientSocketPoolBaseHelper::NORMAL, params_, NetLogWithSource(),
+      SocketTag());
   // Deleted by TestConnectJobDelegate.
   TestConnectJob* job =
       new TestConnectJob(TestConnectJob::kMockPendingJob,
