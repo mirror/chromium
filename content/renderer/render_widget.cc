@@ -58,6 +58,7 @@
 #include "content/renderer/input/main_thread_event_queue.h"
 #include "content/renderer/input/widget_input_handler_manager.h"
 #include "content/renderer/mash_util.h"
+#include "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.h"
 #include "content/renderer/pepper/pepper_plugin_instance_impl.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_frame_proxy.h"
@@ -1297,6 +1298,20 @@ void RenderWidget::Resize(const ResizeParams& params) {
   bool screen_info_changed = screen_info_ != params.screen_info;
 
   screen_info_ = params.screen_info;
+
+  RenderThreadImpl* render_thread = RenderThreadImpl::current();
+  if (render_thread) {
+    media::GpuVideoAcceleratorFactories* gpu_video_accelerator_factories =
+        render_thread->GetFirstGpuFactories();
+    if (gpu_video_accelerator_factories) {
+      render_thread->GetMainTaskRunner()->PostTask(
+          FROM_HERE,
+          base::BindOnce(
+              &media::GpuVideoAcceleratorFactories::SetHDRRenderingStatus,
+              base::Unretained(gpu_video_accelerator_factories),
+              screen_info_.color_space.IsHDR()));
+    }
+  }
 
   if (device_scale_factor_ != screen_info_.device_scale_factor) {
     device_scale_factor_ = screen_info_.device_scale_factor;

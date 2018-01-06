@@ -1421,6 +1421,13 @@ void RenderThreadImpl::PostponeIdleNotification() {
   idle_notifications_to_skip_ = 2;
 }
 
+media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetFirstGpuFactories() {
+  DCHECK(IsMainThread());
+  if (gpu_factories_.empty())
+    return nullptr;
+  return gpu_factories_.back().get();
+}
+
 media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   DCHECK(IsMainThread());
 
@@ -1430,18 +1437,17 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
     if (shared_context_provider) {
       viz::ContextProvider::ScopedContextLock lock(
           shared_context_provider.get());
-      if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
+      if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
         return gpu_factories_.back().get();
-      } else {
-        scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
-            GetMediaThreadTaskRunner();
-        media_task_runner->PostTask(
-            FROM_HERE,
-            base::BindOnce(
-                base::IgnoreResult(
-                    &GpuVideoAcceleratorFactoriesImpl::CheckContextLost),
-                base::Unretained(gpu_factories_.back().get())));
-      }
+
+      scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
+          GetMediaThreadTaskRunner();
+      media_task_runner->PostTask(
+          FROM_HERE,
+          base::BindOnce(
+              base::IgnoreResult(
+                  &GpuVideoAcceleratorFactoriesImpl::CheckContextLost),
+              base::Unretained(gpu_factories_.back().get())));
     }
   }
 

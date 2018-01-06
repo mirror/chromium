@@ -433,6 +433,9 @@ class CONTENT_EXPORT RenderThreadImpl
   // not sent for at least one notification delay.
   void PostponeIdleNotification();
 
+  // TODO(mcasas): Rename to GetGpuFactories() and GetOrCreateGpuFactories(),
+  // respectively https://crbug.com/798485.
+  media::GpuVideoAcceleratorFactories* GetFirstGpuFactories();
   media::GpuVideoAcceleratorFactories* GetGpuFactories();
 
   scoped_refptr<ui::ContextProviderCommandBuffer>
