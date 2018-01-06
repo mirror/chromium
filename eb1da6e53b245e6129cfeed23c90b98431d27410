@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade95e3c_20564d12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-06T00:12:18Z",
+      "side": 1,
+      "message": "Can we actually remove the param and have it just recalculate the above incognitoEnabled check?  It is again rather light weight, so should be OK to redo and makes it a bit nicer to be called from multiple places.\n\nActually, looking above it looks like ChromeHome might do something different with this switcher?\n\nShould the line:\nmModernLayout.setVisibility(incognitoEnabled ? View.VISIBLE : View.GONE);\nalso be in updateStackButtonWrapper but guarded by the isChromeHomeEnabled check?",
+      "range": {
+        "startLine": 212,
+        "startChar": 12,
+        "endLine": 212,
+        "endChar": 36
+      },
+      "revId": "eb1da6e53b245e6129cfeed23c90b98431d27410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
