@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/banners/app_banner_infobar_delegate_desktop.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/extensions/api/messaging/incognito_connectability_infobar_delegate.h"
 #include "chrome/browser/extensions/crx_installer.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -191,6 +192,8 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
   using IBD = infobars::InfoBarDelegate;
   const base::flat_map<std::string, IBD::InfoBarIdentifier> kIdentifiers = {
       {"app_banner", IBD::APP_BANNER_INFOBAR_DELEGATE},
+      {"incognito_connectability",
+       IBD::INCOGNITO_CONNECTABILITY_INFOBAR_DELEGATE},
       {"reload_plugin", IBD::RELOAD_PLUGIN_INFOBAR_DELEGATE},
       {"file_access_disabled", IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE},
       {"collected_cookies", IBD::COLLECTED_COOKIES_INFOBAR_DELEGATE},
@@ -211,6 +214,17 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       banners::AppBannerInfoBarDelegateDesktop::Create(
           GetWebContents(), nullptr, nullptr, content::Manifest());
       break;
+    case IBD::INCOGNITO_CONNECTABILITY_INFOBAR_DELEGATE: {
+      using Tracker = extensions::IncognitoConnectability::ScopedAlertTracker;
+      extensions::IncognitoConnectabilityInfoBarDelegate::Create(
+          GetInfoBarService(),
+          l10n_util::GetStringFUTF16(
+              IDS_EXTENSION_PROMPT_EXTENSION_CONNECT_FROM_INCOGNITO,
+              base::ASCIIToUTF16("http://example.com"),
+              base::ASCIIToUTF16("Test Extension")),
+          base::Bind([](Tracker::Mode m) {}));
+      break;
+    }
     case IBD::RELOAD_PLUGIN_INFOBAR_DELEGATE:
       ReloadPluginInfoBarDelegate::Create(
           GetInfoBarService(), nullptr,
@@ -305,6 +319,10 @@ void InfoBarUiTest::UpdateInfoBars() {
 }
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_app_banner) {
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_incognito_connectability) {
   ShowAndVerifyUi();
 }
 
