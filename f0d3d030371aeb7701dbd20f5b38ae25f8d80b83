@@ -22,6 +22,30 @@
       "revId": "f0d3d030371aeb7701dbd20f5b38ae25f8d80b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f89404_bb0f4235",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/components/throttler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-06T00:29:17Z",
+      "side": 1,
+      "message": "oops",
+      "parentUuid": "1cdf8e6d_cfe38074",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 22
+      },
+      "revId": "f0d3d030371aeb7701dbd20f5b38ae25f8d80b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
