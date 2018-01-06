@@ -16,6 +16,24 @@
       "revId": "518da0a1c16a350b3ed6e0bfe87c5d444741730c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5635ab6_a371a8ef",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-06T03:35:06Z",
+      "side": 1,
+      "message": "\u003e A few things:\n\u003e 1- some tests have a null RenderThreadImpl (they have a mock instead). A null check would suffice I think.\nDone\n\n\u003e 2- GetGpuFactories() will force instantiating the factories, even for renderers that don\u0027t use media. It seems like unnecessary overhead in the general case (both memory and startup time). Maybe we could separate a \"GetGpuFactories\" (gets if exists) from a \"CreateOrGetGpuFactories\" (creates if it doesn\u0027t exist), but we\u0027d still have to be careful to set the HDRRenderingStatus when calling the later (from other places).\n\nI agree, s/GetGpuFactories/CreateOrGetGpuFactories/ is a bit \nwidespread for this CL though, so I\u0027m adding a new method \nGetFirstGpuFactory() and will rename in a subsequent CL.\n\n\u003e 3- so, we could have different RenderWidgets in the same process (same RTI so same GpuVideoAcceleratorFactoriesImpl) that go on different screens (e.g. 2 windows with same origin open). Is this a problem?\n\nNo, as soon as there\u0027s an HDR capable monitor all ScreenInfo\nwill be marked as such: IsHDRSupported() scans them all:\nhttps://cs.chromium.org/chromium/src/gpu/ipc/service/direct_composition_surface_win.cc?type\u003dcs\u0026q\u003dishdrsupported\u0026l\u003d1162",
+      "parentUuid": "c05eebbf_cebbf8c5",
+      "revId": "518da0a1c16a350b3ed6e0bfe87c5d444741730c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
