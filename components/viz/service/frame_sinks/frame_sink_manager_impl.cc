@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
