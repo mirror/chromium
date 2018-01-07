@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "288fee62_4731898b",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-07T00:18:17Z",
+      "side": 1,
+      "message": "CloseIfNotNecessary() is called before we reach here. But that might not call Close(). So we ensure that the reflector is destructed here when there\u0027s no mirroring host.",
+      "parentUuid": "d3ac10c3_4f2e4fb4",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f357d5e_2fba40ab",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-06T01:51:12Z",
       "side": 1,
       "message": "will this be deprecated?",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd318f32_c1b54d3d",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-07T00:18:17Z",
+      "side": 1,
+      "message": "Yes, I would do it in a separate CL, along with making display settings use the new API.",
+      "parentUuid": "0f357d5e_2fba40ab",
       "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "943015cd_b9685a7d",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-07T00:18:17Z",
+      "side": 1,
+      "message": "Yes, it is a callback without parameter. Should I rename it or use the same callback as SetDisplayProperties() API.",
+      "parentUuid": "530daf65_c397bbec",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6876d19a_1c344160",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cca819_3bbbfb1b",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-07T00:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6876d19a_1c344160",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "02f142c3_f483e1c9",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-07T00:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26491aac_ab24a383",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4300d31_b7ac2a49",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-06T01:51:12Z",
       "side": 1,
       "message": "can you describe what will happen if setDisplayProperties is called while it\u0027s mirrored?",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ac0871_e293f85c",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-07T00:18:17Z",
+      "side": 1,
+      "message": "Sure, setDisplayProperties can be called for mirroring source display and those displays in extended mode. But it cannot be called for mirroring destination displays.",
+      "parentUuid": "f4300d31_b7ac2a49",
       "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "14499b2f_a507e2d2",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-07T00:18:17Z",
+      "side": 1,
+      "message": "But if we have two function:\n1. SetMirrorMode(bool enabled)\n2. SetMixedMirrorMode(bool enabled, const MixedMirrorModeParams\u0026 params).\nIf would be confusing if caller turns on mirror mode through the first function, and then turns off mirror mode through the second function. I think it is more concise to have only one function here.",
+      "parentUuid": "07fbb0ee_951465ff",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e6b4950_887df7c3",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a56776_1c58bdb1",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-07T00:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e6b4950_887df7c3",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
