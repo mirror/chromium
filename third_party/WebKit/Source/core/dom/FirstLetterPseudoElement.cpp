@@ -32,6 +32,7 @@
 #include "core/layout/LayoutText.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/api/LayoutTextFragmentItem.h"
+#include "platform/text/TextBreakIterator.h"
 #include "platform/wtf/text/WTFString.h"
 #include "platform/wtf/text/icu/UnicodeIcu.h"
 
@@ -44,7 +45,7 @@ using namespace Unicode;
 // (i.e, characters defined in Unicode [UNICODE] in the "open" (Ps), "close"
 // (Pe), "initial" (Pi). "final" (Pf) and "other" (Po) punctuation classes),
 // that precedes or follows the first letter should be included"
-static inline bool IsPunctuationForFirstLetter(UChar c) {
+static inline bool IsPunctuationForFirstLetter(UChar32 c) {
   CharCategory char_category = Category(c);
   return char_category == kPunctuation_Open ||
          char_category == kPunctuation_Close ||
@@ -55,14 +56,6 @@ static inline bool IsPunctuationForFirstLetter(UChar c) {
 
 static inline bool IsSpaceForFirstLetter(UChar c) {
   return IsSpaceOrNewline(c) || c == kNoBreakSpaceCharacter;
-}
-
-static inline bool IsBetweenSurrogatePair(const String& text, unsigned offset) {
-  if (offset == 0u || offset >= text.length())
-    return false;
-  if (text.Is8Bit())
-    return false;
-  return U16_IS_LEAD(text[offset - 1]) && U16_IS_TRAIL(text[offset]);
 }
 
 unsigned FirstLetterPseudoElement::FirstLetterLength(const String& text) {
@@ -76,8 +69,9 @@ unsigned FirstLetterPseudoElement::FirstLetterLength(const String& text) {
   while (length < text_length && IsSpaceForFirstLetter(text[length]))
     length++;
   // Now account for leading punctuation.
-  while (length < text_length && IsPunctuationForFirstLetter(text[length]))
-    length++;
+  while (length < text_length &&
+         IsPunctuationForFirstLetter(text.CharacterStartingAt(length)))
+    length += NumCharactersInGraphemeClusters(text.Substring(length), 1);
 
   // Bail if we didn't find a letter before the end of the text or before a
   // space.
@@ -85,14 +79,17 @@ unsigned FirstLetterPseudoElement::FirstLetterLength(const String& text) {
     return 0;
 
   // Account the next character for first letter.
-  length++;
+  length += NumCharactersInGraphemeClusters(text.Substring(length), 1);
 
   // Keep looking for allowed punctuation for the :first-letter.
   for (; length < text_length; ++length) {
-    UChar c = text[length];
-    if (!IsPunctuationForFirstLetter(c) &&
-        !IsBetweenSurrogatePair(text, length))
+    UChar32 c = text.CharacterStartingAt(length);
+    if (!IsPunctuationForFirstLetter(c))
       break;
+    unsigned num_characters =
+        NumCharactersInGraphemeClusters(text.Substring(length), 1);
+    if (num_characters > 1)
+      length += num_characters - 1;
   }
   return length;
 }

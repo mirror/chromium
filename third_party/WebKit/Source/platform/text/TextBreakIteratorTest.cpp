@@ -16,6 +16,10 @@ class TextBreakIteratorTest : public ::testing::Test {
     test_string_ = String::FromUTF8(test_string);
   }
 
+  void SetTestString16(Vector<UChar> input) {
+    test_string_ = String(input.data(), static_cast<unsigned>(input.size()));
+  }
+
   // The expected break positions must be specified UTF-16 character boundaries.
   void MatchLineBreaks(LineBreakType line_break_type,
                        const Vector<int> expected_break_positions,
@@ -60,6 +64,10 @@ class TextBreakIteratorTest : public ::testing::Test {
                 ::testing::ElementsAreArray(expected_break_positions))
         << test_string_ << " " << break_iterator.BreakType() << " "
         << break_iterator.BreakSpace();
+  }
+
+  unsigned TestNumCharactersInGraphemeClusters(const unsigned num_clusters) {
+    return NumCharactersInGraphemeClusters(test_string_, num_clusters);
   }
 
  private:
@@ -224,6 +232,102 @@ TEST_F(TextBreakIteratorTest, NextBreakOpportunityAtEnd) {
     break_iterator.SetBreakType(break_type);
     EXPECT_EQ(1u, break_iterator.NextBreakOpportunity(1));
   }
+}
+
+TEST_F(TextBreakIteratorTest, NumCharactersInGraphemeClusters) {
+  SetTestString("");
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(1));
+
+  SetTestString16({});
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(1));
+
+  SetTestString("a");
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  SetTestString("\n");
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  SetTestString("\r");
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  SetTestString16({'a'});
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  SetTestString16({'\n'});
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  SetTestString16({'\r'});
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+
+  SetTestString("abc");
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(2));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(3));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(4));
+
+  SetTestString16({'a', 'b', 'c'});
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(2));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(3));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(4));
+
+  SetTestString("\r\n");
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(2));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(3));
+
+  SetTestString16({'\r', '\n'});
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(2));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(3));
+
+  SetTestString("\n\r");
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(2));
+
+  SetTestString16({'\n', '\r'});
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(2));
+
+  SetTestString("\r\n\r");
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(2));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(3));
+
+  SetTestString16({'\r', '\n', '\r'});
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(2));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(3));
+
+  SetTestString16({'g', 0x308});
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(1));
+  SetTestString16({0x1100, 0x1161, 0x11A8});
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(1));
+  SetTestString16({0x0BA8, 0x0BBF});
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(1));
+
+  SetTestString16({0x308, 'g'});
+  EXPECT_EQ(1u, TestNumCharactersInGraphemeClusters(1));
+
+  SetTestString("\r\nbc");
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(2));
+  EXPECT_EQ(4u, TestNumCharactersInGraphemeClusters(3));
+  EXPECT_EQ(4u, TestNumCharactersInGraphemeClusters(4));
+  EXPECT_EQ(4u, TestNumCharactersInGraphemeClusters(5));
+
+  SetTestString16({'g', 0x308, 'b', 'c'});
+  EXPECT_EQ(0u, TestNumCharactersInGraphemeClusters(0));
+  EXPECT_EQ(2u, TestNumCharactersInGraphemeClusters(1));
+  EXPECT_EQ(3u, TestNumCharactersInGraphemeClusters(2));
+  EXPECT_EQ(4u, TestNumCharactersInGraphemeClusters(3));
+  EXPECT_EQ(4u, TestNumCharactersInGraphemeClusters(4));
+  EXPECT_EQ(4u, TestNumCharactersInGraphemeClusters(5));
 }
 
 }  // namespace blink
