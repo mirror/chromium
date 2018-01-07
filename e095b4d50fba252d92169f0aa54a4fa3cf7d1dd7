@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a8fe7db_16ba338f",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:27:47Z",
+      "side": 1,
+      "message": "All of these DVLOGs seem pretty trivial to me and hence not really helpful in debugging. I\u0027d lean towards removing them but I won\u0027t block on it.",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 9
+      },
+      "revId": "e095b4d50fba252d92169f0aa54a4fa3cf7d1dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a540cf_e248481c",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:27:47Z",
+      "side": 1,
+      "message": "This isn\u0027t particularly clear. Perhaps:\n\nBookmark apps for installable websites capture links within a scope, represented by the presence of a URL handler.",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "e095b4d50fba252d92169f0aa54a4fa3cf7d1dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3263200_0b9c6f96",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:27:47Z",
+      "side": 1,
+      "message": "Nit: IsForInstalledPwa as per style guide.",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "e095b4d50fba252d92169f0aa54a4fa3cf7d1dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3c14fb_e957f25d",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:27:47Z",
+      "side": 1,
+      "message": "This could just be\n\nhistograms.ExpectUniqueSample(extensions::kPwaWindowEngagementTypeHistogram, \n    SiteEngagementService::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH, 1);",
+      "range": {
+        "startLine": 488,
+        "startChar": 1,
+        "endLine": 491,
+        "endChar": 67
+      },
+      "revId": "e095b4d50fba252d92169f0aa54a4fa3cf7d1dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3ad8f7_e8c80a45",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:27:47Z",
+      "side": 1,
+      "message": "Nit: use ExpectUniqueSample",
+      "range": {
+        "startLine": 572,
+        "startChar": 2,
+        "endLine": 575,
+        "endChar": 67
+      },
+      "revId": "e095b4d50fba252d92169f0aa54a4fa3cf7d1dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
