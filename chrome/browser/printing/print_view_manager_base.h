@@ -105,8 +105,10 @@ class PrintViewManagerBase : public content::NotificationObserver,
   // IPC Message handlers.
   void OnDidGetPrintedPagesCount(int cookie, int number_pages) override;
   void OnPrintingFailed(int cookie) override;
-  void OnShowInvalidPrinterSettingsError();
-  void OnDidPrintDocument(const PrintHostMsg_DidPrintDocument_Params& params);
+  void OnShowInvalidPrinterSettingsError(
+      content::RenderFrameHost* render_frame_host);
+  void OnDidPrintDocument(content::RenderFrameHost* render_frame_host,
+                          const PrintHostMsg_DidPrintDocument_Params& params);
 
   // IPC message handlers for service.
   void OnComposePdfDone(const PrintHostMsg_DidPrintDocument_Params& params,
