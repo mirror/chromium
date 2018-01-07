@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3550126_3fc68bb3",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "style: !details_.empty()",
+      "range": {
+        "startLine": 145,
+        "startChar": 13,
+        "endLine": 145,
+        "endChar": 28
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d3bf8d_e34ed0c4",
+        "filename": "tools/traffic_annotation/auditor/instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "style: Explicit types when it\u0027s not clear from the surrounding code.",
+      "range": {
+        "startLine": 481,
+        "startChar": 2,
+        "endLine": 481,
+        "endChar": 6
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b40686_14c7dde6",
+        "filename": "tools/traffic_annotation/auditor/instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "Could you clarify this part? Do you mean that tests all expect this value to exist?\n\nAlso, I assume you mean tests run by auditor, not unit tests?",
+      "range": {
+        "startLine": 507,
+        "startChar": 43,
+        "endLine": 507,
+        "endChar": 61
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c6a7ed_0fdfd218",
+        "filename": "tools/traffic_annotation/auditor/instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "typo: existence",
+      "range": {
+        "startLine": 508,
+        "startChar": 11,
+        "endLine": 508,
+        "endChar": 20
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbb6eaa_2296a790",
+        "filename": "tools/traffic_annotation/auditor/instance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "typo: should not be capitalized",
+      "range": {
+        "startLine": 96,
+        "startChar": 15,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0d7296_8185b95d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "typo: also no comma needed here, and below",
+      "range": {
+        "startLine": 541,
+        "startChar": 40,
+        "endLine": 541,
+        "endChar": 41
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61746f43_3fb2aa89",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "This is very much a nitpick, but this comma changes the meaning of the sentence :)\n\nIt sounds as if we added all annotations, and then also asserted that all those annotations have the following properties. Whereas we wanted to say that we\u0027re adding all annotations that have the given properties.",
+      "range": {
+        "startLine": 169,
+        "startChar": 57,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c829e568_3b108df5",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 338,
+        "startChar": 23,
+        "endLine": 338,
+        "endChar": 35
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c731fc_5f064941",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "Please move the ForTesting methods to the end of the public section.",
+      "range": {
+        "startLine": 56,
+        "startChar": 14,
+        "endLine": 56,
+        "endChar": 41
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85dc363_ee668c97",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_id_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-07T22:44:10Z",
+      "side": 1,
+      "message": "More explanation here please :)",
+      "range": {
+        "startLine": 88,
+        "startChar": 35,
+        "endLine": 88,
+        "endChar": 36
+      },
+      "revId": "399f11901a95a9663861cd67abe5efe0e0da2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
