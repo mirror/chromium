@@ -6,6 +6,7 @@
 #define PRINTING_COMMON_PDF_METAFILE_UTILS_H_
 
 #include <string>
+#include <vector>
 
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkDocument.h"
