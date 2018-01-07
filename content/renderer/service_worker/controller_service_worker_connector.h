@@ -30,8 +30,27 @@ class CONTENT_EXPORT ControllerServiceWorkerConnector
     virtual void OnConnectionClosed() = 0;
   };
 
-  explicit ControllerServiceWorkerConnector(
-      mojom::ServiceWorkerContainerHost* container_host);
+  enum class State {
+    // The controller connection is dropped. Calling
+    // GetControllerServiceWorker() in this state will result in tryng to
+    // get the new controller pointer from the browser.
+    kDisconnected,
+
+    // The controller connection is established.
+    kConnected,
+
+    // It is notified that the client lost the controller. Calling
+    // GetControllerServiceWorker() in this state will always return nullptr.
+    kNoController,
+
+    // The container host is shutting down. Calling
+    // GetControllerServiceWorker() in this state will always return nullptr.
+    kNoContainerHost,
+  };
+
+  ControllerServiceWorkerConnector(
+      mojom::ServiceWorkerContainerHost* container_host,
+      mojom::ControllerServiceWorkerPtr controller_ptr);
 
   // This may return nullptr if the connection to the ContainerHost (in the
   // browser process) is already terminated.
@@ -41,12 +60,19 @@ class CONTENT_EXPORT ControllerServiceWorkerConnector
   void RemoveObserver(Observer* observer);
 
   void OnContainerHostConnectionClosed();
+  void OnControllerConnectionClosed();
+
+  // The new controller is notified.
+  void ResetControllerConnection(
+      mojom::ControllerServiceWorkerPtr controller_ptr);
+
+  State state() const { return state_; }
 
  private:
+  State state_ = State::kDisconnected;
+
   friend class base::RefCounted<ControllerServiceWorkerConnector>;
   ~ControllerServiceWorkerConnector();
-
-  void OnControllerConnectionClosed();
 
   // Connection to the ServiceWorkerProviderHost that lives in the
   // browser process. This is used to (re-)obtain Mojo connection to
