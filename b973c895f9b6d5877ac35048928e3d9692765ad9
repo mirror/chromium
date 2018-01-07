@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f20899d9_aac86946",
+        "filename": "chrome/browser/resources/chromeos/login/login_shared.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-07T08:00:29Z",
+      "side": 1,
+      "message": "are we still using login.js?",
+      "revId": "b973c895f9b6d5877ac35048928e3d9692765ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397f6da5_156cfb3f",
+        "filename": "chrome/browser/resources/chromeos/login/login_shared.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-07T08:00:29Z",
+      "side": 1,
+      "message": "this is calling: https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/login/oobe_dialog.js?type\u003dcs\u0026q\u003doobe_dialog\u0026sq\u003dpackage:chromium\u0026l\u003d56",
+      "revId": "b973c895f9b6d5877ac35048928e3d9692765ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
