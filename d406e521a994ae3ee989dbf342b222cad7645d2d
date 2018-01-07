@@ -22,6 +22,64 @@
       "revId": "d406e521a994ae3ee989dbf342b222cad7645d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe468a28_ea265bac",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-07T18:19:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "72c70800_9ef4829c",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 724,
+        "endChar": 64
+      },
+      "revId": "d406e521a994ae3ee989dbf342b222cad7645d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b9c0b5f_2cd12f8b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2824,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-07T18:19:34Z",
+      "side": 1,
+      "message": "In a followup CL, let\u0027s update the comment about page_count in the public render_process_host.h.\n\nThere\u0027s also some places that talk about page_count in terms of tabs (e.g., CloseWebContentses).  That\u0027s probably ok for now, but there may be some bugs with that.  Normally, a process won\u0027t have more than one view for a tab even when OOPIFs are present, but I think process sharing could affect that.  Suppose a tab has two SiteInstances (one for an OOPIF), but those end up sharing a process, for example.  Then again, I can\u0027t think of how that would happen today, given that we create OOPIFs when a given process isn\u0027t accessible.\n\nAnyway, let\u0027s proceed but discuss to see if there\u0027s anything else to do here.",
+      "revId": "d406e521a994ae3ee989dbf342b222cad7645d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5531762_8e2f0eee",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2828,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-07T18:19:34Z",
+      "side": 1,
+      "message": "MockRenderProcessHost may also need this fix, but that\u0027s just for tests and is not urgent.  Followup CL is fine.\n\nRFHI::AllowBindings may also have a bug where multiple pending views (one for WebUI and one for a web page) could lead to a problem.  But I think we have other checks that may prevent us from getting into that situation in the first place.  Anyway, let\u0027s revisit separately.",
+      "revId": "d406e521a994ae3ee989dbf342b222cad7645d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
