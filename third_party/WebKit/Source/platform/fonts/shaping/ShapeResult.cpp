@@ -100,15 +100,17 @@ float ShapeResult::RunInfo::XPositionForOffset(
                                   : num_characters_) < offset) {
       return position;
     }
-    // For RTL, we need to return the right side boundary of the character.
-    // Add advance of glyphs which are part of the character.
-    while (glyph_index < num_glyphs - 1 &&
-           glyph_data_[glyph_index].character_index ==
-               glyph_data_[glyph_index + 1].character_index) {
+    if (glyph_index < num_glyphs) {
+      // For RTL, we need to return the right side boundary of the character.
+      // Add advance of glyphs which are part of the character.
+      while (glyph_index < num_glyphs - 1 &&
+             glyph_data_[glyph_index].character_index ==
+                 glyph_data_[glyph_index + 1].character_index) {
+        position += glyph_data_[glyph_index].advance;
+        ++glyph_index;
+      }
       position += glyph_data_[glyph_index].advance;
-      ++glyph_index;
     }
-    position += glyph_data_[glyph_index].advance;
   } else {
     while (glyph_index < num_glyphs &&
            glyph_data_[glyph_index].character_index < offset) {
