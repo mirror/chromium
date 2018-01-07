@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322ef0fb_8a9294cc",
+        "filename": "chrome/browser/prerender/prerender_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "Nit: |channel|",
+      "range": {
+        "startLine": 385,
+        "startChar": 7,
+        "endLine": 385,
+        "endChar": 14
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a66ac0_c448144d",
+        "filename": "chrome/browser/prerender/prerender_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "Nit: |channel|",
+      "range": {
+        "startLine": 507,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 14
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79988282_8bce4082",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "|channel|",
+      "range": {
+        "startLine": 378,
+        "startChar": 9,
+        "endLine": 378,
+        "endChar": 16
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ca1b2f_fb7c17a1",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "|channel|",
+      "range": {
+        "startLine": 482,
+        "startChar": 5,
+        "endLine": 482,
+        "endChar": 12
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b6215a_dc267b8a",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "|channel|",
+      "range": {
+        "startLine": 502,
+        "startChar": 5,
+        "endLine": 502,
+        "endChar": 12
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efcb48e5_0caa0d2e",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "|channel|",
+      "range": {
+        "startLine": 522,
+        "startChar": 5,
+        "endLine": 522,
+        "endChar": 12
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7b8b65_d8c7d425",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "|channel|",
+      "range": {
+        "startLine": 540,
+        "startChar": 7,
+        "endLine": 540,
+        "endChar": 14
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d156843_70a78ac1",
+        "filename": "chrome/renderer/prerender/prerender_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "I think this can be removed.",
+      "range": {
+        "startLine": 11,
+        "startChar": 24,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9c78d7_4eed27aa",
+        "filename": "chrome/renderer/prerender/prerender_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "This isn\u0027t true: PrerenderDispatcher is held in a std::unique_ptr on ChromeContentRendererClient and it isn\u0027t a LazyInstance.\n\nBased on that, is Unretained still safe?",
+      "range": {
+        "startLine": 38,
+        "startChar": 11,
+        "endLine": 38,
+        "endChar": 77
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58cf6ae0_97667001",
+        "filename": "chrome/renderer/prerender/prerender_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T23:20:27Z",
+      "side": 1,
+      "message": "This comment is a bit strange because you define UnregisterMojoInterfaces right below...",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "c3b028d2ca18387d0f4ea2aed1277a9d80e073b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
