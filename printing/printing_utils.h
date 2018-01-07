@@ -7,6 +7,8 @@
 
 #include <stddef.h>
 
+#include <vector>
+
 #include "base/strings/string16.h"
 #include "printing/printing_export.h"
 
@@ -28,6 +30,12 @@ PRINTING_EXPORT base::string16 FormatDocumentTitleWithOwnerAndLength(
     const base::string16& owner,
     const base::string16& title,
     size_t length);
+
+PRINTING_EXPORT uint64_t GenFrameGuid(int process_id, int frame_id);
+
+PRINTING_EXPORT std::vector<uint64_t> ConvertToGlobalUniqueIds(
+    int process_id,
+    const std::vector<uint32_t>& ids);
 
 }  // namespace printing
 

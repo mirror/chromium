@@ -4012,6 +4012,16 @@ void WebContentsImpl::SubresourceResponseStarted(const GURL& url,
   SetNotWaitingForResponse();
 }
 
+void WebContentsImpl::PrintSubframe(const gfx::Rect& rect,
+                                    uint64_t content_id,
+                                    RenderFrameHost* target_rfh) {
+  // No need to proceed if there is no delegate.
+  if (!delegate_)
+    return;
+
+  delegate_->PrintSubframe(this, rect, content_id, target_rfh);
+}
+
 #if defined(OS_ANDROID)
 base::android::ScopedJavaLocalRef<jobject>
 WebContentsImpl::GetJavaRenderFrameHostDelegate() {

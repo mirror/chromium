@@ -5,20 +5,36 @@
 #ifndef COMPONENTS_PRINTING_BROWSER_PRINT_COMPOSITE_CLIENT_H_
 #define COMPONENTS_PRINTING_BROWSER_PRINT_COMPOSITE_CLIENT_H_
 
+#include "base/containers/flat_set.h"
 #include "base/memory/weak_ptr.h"
 #include "components/printing/service/public/cpp/pdf_compositor_client.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
+struct PrintHostMsg_DidPrintContent_Params;
+
 namespace printing {
 
 class PrintCompositeClient
     : public PdfCompositorClient,
-      public content::WebContentsUserData<PrintCompositeClient> {
+      public content::WebContentsUserData<PrintCompositeClient>,
+      public content::WebContentsObserver {
  public:
   explicit PrintCompositeClient(content::WebContents* web_contents);
   ~PrintCompositeClient() override;
 
+  // content::WebContentsObserver
+  bool OnMessageReceived(const IPC::Message& message,
+                         content::RenderFrameHost* render_frame_host) override;
+
+  // IPC message handler.
+  void OnDidPrintFrameContent(
+      content::RenderFrameHost* render_frame_host,
+      const PrintHostMsg_DidPrintContent_Params& params);
+
+  void PrintSubframe(const gfx::Rect& rect,
+                     uint64_t content_id,
+                     content::RenderFrameHost* dst_host);
   void DoCompositeToPdf(uint64_t frame_guid,
                         uint32_t page_num,
                         base::SharedMemoryHandle handle,
@@ -50,6 +66,14 @@ class PrintCompositeClient
   service_manager::mojom::ConnectorRequest connector_request_;
   std::unique_ptr<service_manager::Connector> connector_;
   bool for_preview_;
+
+  // All the subframes that have been requested for printing.
+  // Each frame is identified by its render process id and
+  // render frame routing id.
+  // These are just best-effort attempts for printing. In case
+  // any subframe can not respond, the pdf compositor service
+  // will handle it with timeout.
+  base::flat_set<std::pair<int, int>> requested_subframes_;
 
   base::WeakPtrFactory<PrintCompositeClient> weak_factory_;
 

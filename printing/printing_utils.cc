@@ -63,4 +63,19 @@ base::string16 FormatDocumentTitleWithOwner(const base::string16& owner,
                                                kMaxDocumentTitleLength);
 }
 
+uint64_t GenFrameGuid(int process_id, int frame_id) {
+  return static_cast<uint64_t>(process_id) << 32 | frame_id;
+}
+
+std::vector<uint64_t> ConvertToGlobalUniqueIds(
+    int process_id,
+    const std::vector<uint32_t>& ids) {
+  uint64_t proc_id = process_id;
+  proc_id <<= 32;
+  std::vector<uint64_t> uids(ids.size());
+  for (size_t i = 0; i < ids.size(); ++i)
+    uids[i] = proc_id | ids[i];
+  return uids;
+}
+
 }  // namespace printing
