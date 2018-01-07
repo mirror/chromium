@@ -71,6 +71,7 @@
 #include "chrome/browser/experiments/memory_ablation_experiment.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/gpu/three_d_api_observer.h"
+#include "chrome/browser/local_state_loader.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/expired_histograms_array.h"
@@ -133,7 +134,6 @@
 #include "components/language_usage_metrics/language_usage_metrics.h"
 #include "components/metrics/call_stack_profile_metrics_provider.h"
 #include "components/metrics/expired_histograms_checker.h"
-#include "components/metrics/metrics_reporting_default_state.h"
 #include "components/metrics/metrics_service.h"
 #include "components/metrics_services_manager/metrics_services_manager.h"
 #include "components/nacl/browser/nacl_browser.h"
@@ -325,89 +325,6 @@ void AddFirstRunNewTabs(StartupBrowserCreator* browser_creator,
   }
 }
 #endif  // !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
-
-// Returns the new local state object, guaranteed non-NULL.
-// |local_state_task_runner| must be a shutdown-blocking task runner.
-PrefService* InitializeLocalState(
-    base::SequencedTaskRunner* local_state_task_runner,
-    const base::CommandLine& parsed_command_line) {
-  TRACE_EVENT0("startup", "ChromeBrowserMainParts::InitializeLocalState")
-
-  // Load local state.  This includes the application locale so we know which
-  // locale dll to load.  This also causes local state prefs to be registered.
-  PrefService* local_state = g_browser_process->local_state();
-  DCHECK(local_state);
-
-#if defined(OS_WIN)
-  if (first_run::IsChromeFirstRun()) {
-    // During first run we read the google_update registry key to find what
-    // language the user selected when downloading the installer. This
-    // becomes our default language in the prefs.
-    // Other platforms obey the system locale.
-    base::string16 install_lang;
-    if (GoogleUpdateSettings::GetLanguage(&install_lang)) {
-      local_state->SetString(prefs::kApplicationLocale,
-                             base::UTF16ToASCII(install_lang));
-    }
-    bool stats_default;
-    if (GoogleUpdateSettings::GetCollectStatsConsentDefault(&stats_default)) {
-      // |stats_default| == true means that the default state of consent for the
-      // product at the time of install was to report usage statistics, meaning
-      // "opt-out".
-      metrics::RecordMetricsReportingDefaultState(
-          local_state, stats_default ? metrics::EnableMetricsDefault::OPT_OUT
-                                     : metrics::EnableMetricsDefault::OPT_IN);
-    }
-  }
-#endif  // defined(OS_WIN)
-
-  // If the local state file for the current profile doesn't exist and the
-  // parent profile command line flag is present, then we should inherit some
-  // local state from the parent profile.
-  // Checking that the local state file for the current profile doesn't exist
-  // is the most robust way to determine whether we need to inherit or not
-  // since the parent profile command line flag can be present even when the
-  // current profile is not a new one, and in that case we do not want to
-  // inherit and reset the user's setting.
-  //
-  // TODO(mnissler): We should probably just instantiate a
-  // JSONPrefStore here instead of an entire PrefService. Once this is
-  // addressed, the call to browser_prefs::RegisterLocalState can move
-  // to chrome_prefs::CreateLocalState.
-  if (parsed_command_line.HasSwitch(switches::kParentProfile)) {
-    base::FilePath local_state_path;
-    PathService::Get(chrome::FILE_LOCAL_STATE, &local_state_path);
-    bool local_state_file_exists = base::PathExists(local_state_path);
-    if (!local_state_file_exists) {
-      base::FilePath parent_profile =
-          parsed_command_line.GetSwitchValuePath(switches::kParentProfile);
-      scoped_refptr<PrefRegistrySimple> registry = new PrefRegistrySimple();
-      std::unique_ptr<PrefService> parent_local_state(
-          chrome_prefs::CreateLocalState(
-              parent_profile, local_state_task_runner,
-              g_browser_process->policy_service(), registry, false, nullptr));
-      registry->RegisterStringPref(prefs::kApplicationLocale, std::string());
-      // Right now, we only inherit the locale setting from the parent profile.
-      local_state->SetString(
-          prefs::kApplicationLocale,
-          parent_local_state->GetString(prefs::kApplicationLocale));
-    }
-  }
-
-#if defined(OS_CHROMEOS)
-  if (parsed_command_line.HasSwitch(chromeos::switches::kLoginManager)) {
-    std::string owner_locale = local_state->GetString(prefs::kOwnerLocale);
-    // Ensure that we start with owner's locale.
-    if (!owner_locale.empty() &&
-        local_state->GetString(prefs::kApplicationLocale) != owner_locale &&
-        !local_state->IsManagedPreference(prefs::kApplicationLocale)) {
-      local_state->SetString(prefs::kApplicationLocale, owner_locale);
-    }
-  }
-#endif  // defined(OS_CHROMEOS)
-
-  return local_state;
-}
 
 // Initializes the primary profile, possibly doing some user prompting to pick
 // a fallback profile. Returns the newly created profile, or NULL if startup
@@ -947,28 +864,15 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   first_run::IsChromeFirstRun();
 #endif  // !defined(OS_ANDROID)
 
-  // The initial read is done synchronously, the TaskPriority is thus only used
-  // for flushes to disks and BACKGROUND is therefore appropriate. Priority of
-  // remaining BACKGROUND+BLOCK_SHUTDOWN tasks is bumped by the TaskScheduler on
-  // shutdown. However, some shutdown use cases happen without
-  // TaskScheduler::Shutdown() (e.g. ChromeRestartRequest::Start() and
-  // BrowserProcessImpl::EndSession()) and we must thus unfortunately make this
-  // USER_VISIBLE until we solve https://crbug.com/747495 to allow bumping
-  // priority of a sequence on demand.
-  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
-
+  std::unique_ptr<local_state_loader::LocalState> local_state2 =
+      local_state_loader::CreateAndLoadLocalState();
+  local_state_ = local_state2->local_state.get();
   {
     TRACE_EVENT0("startup",
       "ChromeBrowserMainParts::PreCreateThreadsImpl:InitBrowswerProcessImpl");
     browser_process_ =
-        std::make_unique<BrowserProcessImpl>(local_state_task_runner.get());
+        std::make_unique<BrowserProcessImpl>(std::move(local_state2));
   }
-
-  local_state_ = InitializeLocalState(
-      local_state_task_runner.get(), parsed_command_line());
 
 #if !defined(OS_ANDROID)
   // These members must be initialized before returning from this function.
@@ -979,22 +883,6 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   chrome::UMABrowsingActivityObserver::Init();
 #endif  // !defined(OS_ANDROID)
 
-#if !defined(OS_CHROMEOS)
-  // Convert active labs into switches. This needs to be done before
-  // ui::ResourceBundle::InitSharedInstanceWithLocale as some loaded resources
-  // are affected by experiment flags (--touch-optimized-ui in particular). On
-  // ChromeOS system level flags are applied from the device settings from the
-  // session manager.
-  {
-    TRACE_EVENT0("startup",
-        "ChromeBrowserMainParts::PreCreateThreadsImpl:ConvertFlags");
-    flags_ui::PrefServiceFlagsStorage flags_storage(
-        g_browser_process->local_state());
-    about_flags::ConvertFlagsToSwitches(&flags_storage,
-                                        base::CommandLine::ForCurrentProcess(),
-                                        flags_ui::kAddSentinels);
-  }
-#endif  // !defined(OS_CHROMEOS)
   // The MaterialDesignController needs to look at command line flags, which
   // are not available until this point. Now that they are, proceed with
   // initializing the MaterialDesignController.
@@ -1008,6 +896,7 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   // affects tracing the browser startup. Also, this is only relevant for the
   // browser process, as other processes will get all the flags on their command
   // line regardless of the origin (command line or about:flags).
+  // XXX understand this comment!
   if (parsed_command_line().HasSwitch(switches::kTraceExportEventsToETW))
     base::trace_event::TraceEventETWExport::EnableETWExport();
 #endif  // OS_WIN
@@ -1038,7 +927,7 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
       "ChromeBrowserMainParts::PreCreateThreadsImpl:InitResourceBundle");
   const std::string loaded_locale =
       ui::ResourceBundle::InitSharedInstanceWithLocale(
-          locale, NULL, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
+          locale, nullptr, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
   TRACE_EVENT_END0("startup",
       "ChromeBrowserMainParts::PreCreateThreadsImpl:InitResourceBundle");
 
