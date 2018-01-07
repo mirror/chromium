@@ -16,6 +16,70 @@
       "revId": "61c210920199165e81bdbbbfd57dc7cb7750bd42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72061f9e_477f0686",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-07T00:33:52Z",
+      "side": 0,
+      "message": "I concur",
+      "parentUuid": "67badc1c_1ae3b093",
+      "revId": "61c210920199165e81bdbbbfd57dc7cb7750bd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ba6d04_00dc4928",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-07T00:33:52Z",
+      "side": 0,
+      "message": "can we remove these images?",
+      "range": {
+        "startLine": 332,
+        "startChar": 29,
+        "endLine": 332,
+        "endChar": 63
+      },
+      "revId": "61c210920199165e81bdbbbfd57dc7cb7750bd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5d64e9_ae9a5c5b",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-07T00:33:52Z",
+      "side": 0,
+      "message": "this must be something we can remove now as well -- I think we should remove as much as possible in one CL to make it easier to see we\u0027re not missing anything.",
+      "range": {
+        "startLine": 407,
+        "startChar": 10,
+        "endLine": 407,
+        "endChar": 45
+      },
+      "revId": "61c210920199165e81bdbbbfd57dc7cb7750bd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
