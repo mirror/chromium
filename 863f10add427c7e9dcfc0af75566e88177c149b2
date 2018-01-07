@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f79af098_970a8ecb",
+        "filename": "content/public/renderer/key_system_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:25:30Z",
+      "side": 1,
+      "message": "nit: now longer -\u003e no longer (or now no longer?)",
+      "revId": "863f10add427c7e9dcfc0af75566e88177c149b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5b8a98_d6c393cc",
+        "filename": "content/public/renderer/key_system_support.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:25:30Z",
+      "side": 1,
+      "message": "nit: Determines",
+      "revId": "863f10add427c7e9dcfc0af75566e88177c149b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
