@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "b380be70_30ae5778",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-07T05:13:39Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "34a59f06_7f5cfb6b",
+      "revId": "2ac8c94b75eded0040eb54910f8b409493498584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d002c454_6796c3f7",
         "filename": "tools/code_coverage/html_templates/table.html",
         "patchSetId": 3
@@ -64,6 +82,24 @@
       "writtenOn": "2018-01-06T04:34:26Z",
       "side": 1,
       "message": "No need of all caps, probably just first letter.",
+      "revId": "2ac8c94b75eded0040eb54910f8b409493498584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921ea650_bce79785",
+        "filename": "tools/code_coverage/html_templates/table.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-07T05:13:39Z",
+      "side": 1,
+      "message": "I think llvm-cov also shows all caps, though I\u0027d rather prefer to use bold font for that row. Yuke, can you please wrap \"Totals\" and percentage value in \u003cb\u003e\u003c/b\u003e? I\u0027ll add another CSS style (something like \"bold-row\") and do the same upstream when will be fixing https://bugs.chromium.org/p/chromium/issues/detail?id\u003d784620\n\nI tried locally:\n\n1) current version: https://screenshot.googleplex.com/pJ7M4aUdmev.png\n\n2) bold: https://screenshot.googleplex.com/besQA3wtUbG.png",
+      "parentUuid": "d002c454_6796c3f7",
       "revId": "2ac8c94b75eded0040eb54910f8b409493498584",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
