@@ -89,6 +89,7 @@ class Local;
 namespace blink {
 
 class InterfaceProvider;
+class PlatformAXTree;
 class WebAudioBus;
 class WebAudioLatencyHint;
 class WebBlobRegistry;
@@ -747,6 +748,12 @@ class BLINK_PLATFORM_EXPORT Platform {
   // tools/v8_context_snapshot/v8_context_snapshot_generator is running (which
   // runs during Chromium's build step).
   virtual bool IsTakingV8ContextSnapshot() { return false; }
+
+  // Accessibility Object Model
+
+  // This method is used to expose the AX Tree stored in content/renderer to the
+  // DOM as part of AOM Phase 4.
+  virtual PlatformAXTree* PlatformAXTree() { return nullptr; }
 
  protected:
   Platform();

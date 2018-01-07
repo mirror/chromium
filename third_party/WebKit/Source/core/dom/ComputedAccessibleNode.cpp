@@ -3,9 +3,12 @@
 // found in the LICENSE file.
 
 #include "core/dom/ComputedAccessibleNode.h"
+
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/Element.h"
 #include "platform/bindings/ScriptState.h"
+#include "public/platform/Platform.h"
+#include "third_party/WebKit/public/platform/PlatformAXTree.h"
 
 namespace blink {
 
@@ -26,7 +29,14 @@ ScriptPromise ComputedAccessibleNode::ComputePromiseProperty(
     computed_property_ =
         new ComputedPromiseProperty(ExecutionContext::From(script_state), this,
                                     ComputedPromiseProperty::kReady);
-    computed_property_->Resolve(this);
+
+    PlatformAXTree* tree_provider = Platform::Current()->PlatformAXTree();
+    if (!tree_provider->RequestTreeSnapshot()) {
+      computed_property_->Reject(this);
+    } else {
+      PopulateComputedAccessibleProperties(tree_provider);
+      computed_property_->Resolve(this);
+    }
   }
 
   return computed_property_->Promise(script_state->World());
@@ -45,5 +55,8 @@ void ComputedAccessibleNode::Trace(blink::Visitor* visitor) {
   visitor->Trace(computed_property_);
   visitor->Trace(element_);
 }
+
+void ComputedAccessibleNode::PopulateComputedAccessibleProperties(
+    PlatformAXTree* provider) {}
 
 }  // namespace blink
