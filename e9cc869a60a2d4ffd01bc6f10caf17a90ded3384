@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "63515d63_3e7e5957",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-07T19:18:14Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34c36107_a2e2af02",
         "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
         "patchSetId": 1
