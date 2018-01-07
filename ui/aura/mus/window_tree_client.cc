@@ -1478,11 +1478,11 @@ void WindowTreeClient::OnWindowInputEvent(
     uint32_t event_id,
     Id window_id,
     int64_t display_id,
+    Id display_root_window_id,
     const gfx::PointF& event_location_in_screen_pixel_layout,
     std::unique_ptr<ui::Event> event,
     bool matches_pointer_watcher) {
   DCHECK(event);
-
   WindowMus* window = GetWindowByServerId(window_id);  // May be null.
 
   if (matches_pointer_watcher && has_pointer_watcher_) {
@@ -1546,7 +1546,19 @@ void WindowTreeClient::OnWindowInputEvent(
     event_to_dispatch = mapped_event_with_native.get();
   }
 #endif
-  DispatchEventToTarget(event_to_dispatch, window);
+
+  WindowMus* display_root_window = GetWindowByServerId(display_root_window_id);
+  if (display_root_window && window && event->IsLocatedEvent() &&
+      display::Screen::GetScreen()->GetPrimaryDisplay().id() ==
+          display::kUnifiedDisplayId) {
+    // Dispatch to the root window of the display supplying the event. This
+    // allows Ash to determine the event position in the unified desktop mode,
+    // where each physical display mirrors part of a single virtual display.
+    DispatchEventToTarget(event_to_dispatch, display_root_window);
+  } else {
+    DispatchEventToTarget(event_to_dispatch, window);
+  }
+
   ack_handler.set_handled(event_to_dispatch->handled());
 }
 
