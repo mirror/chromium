@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "7be3f1f7_13d23d6f",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-07T03:31:20Z",
+      "side": 1,
+      "message": "Formatting came out weird. Here\u0027s another try.\nI prefer naming this kMinLabelAffinity. Here are some clarifications:\n - kLargeEquivalenceSimilarity was used to filter out small equivalences before creating labels. As a result, labels are assigned only to targets that are part of equivalence with large similarity.\n - kMinLabelAffinity is used to filter out targets affinity before creating labels. The result is similar since targets with large affinity are part of equivalences with large similarity.\n - There is currently a small difference: when searching equivalences, kMinEquivalenceSimilarity is used so this will affect the equivalences we find, though large equivalence are unlikely to be affected.\n\nTargets affinity is tightly coupled with surrounding equivalence similarity, though they are conceptually different. For instance, an old target part of 2 separate equivalences should not have affinities with associated new targets as strong as the similarity of these equivalences, since they are dependent of one another (note that this is currently handled with a gross simplification).\nIn an ideal world, I picture affinity and similarity to describes 2 distinct types of states all part of a markov random field:\n - s_i: existence of equivalence i is described by similarity\n - a_{j,k}: association between targets j and k\nNot only does similarity and affinity affect each other, but different target associations might be in competition.\nTaking all these dependencies into consideration might be hard (I believe it could be solved with belief propagation), but as a first step, I\u0027m trying make similarity and affinity distinct concepts.",
+      "parentUuid": "5a5c9e82_c7171eb5",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 52
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b01defb_bcc634ca",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 32
