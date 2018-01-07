@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "a9507277_6be41144",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-overflow-div.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-07T19:12:33Z",
+      "side": 1,
+      "message": "Up to you :) It might be good to keep this test anyway even tough the bug only happens for iframes...\n\nIf we go implement something like https://bit.ly/snav2, we will probably need to update the resultMap, but that\u0027s fine.",
+      "parentUuid": "aceaf11d_5e26d4ec",
+      "revId": "e378617ba8df39cbd8c1d6778e8a4a46137e2b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d23fc794_cd434d32",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 18
@@ -53,6 +71,23 @@
       "writtenOn": "2018-01-05T12:08:10Z",
       "side": 1,
       "message": "I do understand that we need the skiplist but I don\u0027t like the complexity it adds. I will approve this CL because I understand this use case is important for you and I\u0027m thinking long term, once we\u0027ve implemented snav2* , we will get rid of the extra complexity of skip lists.\n\n* http://bit.ly/snav2 tackles this bug, I hope, by focusing iframes before going in/out from them.\n\nWhy do we need skiplists? (I\u0027m gonna answer this question myself to make sure I understood this).\nInstead of adding a skiplist, say we make IsNavigableContainer return false also when iframes can\u0027t scroll. That won\u0027t work because snav would then ignore non-scrollable iframes\u0027 focusables \u003d\u003e We must run FindFocusCandidateInContainer on the iframe and if it finds nothing, then we need to go back and look for another focus candidate but *skip* the iframes that we know had nothing...",
+      "revId": "e378617ba8df39cbd8c1d6778e8a4a46137e2b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb15b60_edc2929a",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-07T19:12:33Z",
+      "side": 1,
+      "message": "FindFocusCandidateInContainer already ignores non-navigable \u003cdiv\u003es so I think we only need to add \u003ciframe\u003es to the skip list.\n\nIn that case, it should be enough to do the insert(frame_element) before st.push(frame_element).",
       "revId": "e378617ba8df39cbd8c1d6778e8a4a46137e2b01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
