@@ -16,6 +16,24 @@
       "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8b447f_370532e7",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-07T22:01:19Z",
+      "side": 1,
+      "message": "Each browser indeed has 1 active tab (as indicated by the active index), but in order for a tab\u0027s is_active\u003dtrue, this tab also needs to be in a browser that is (1). not minimized (i.e. visible) and (2). the last active one (in the impl, I looped through all browsers from the last active). \n\nThe reason I put \"forefront\" here is because there could be 2 browsers A and B, and A is in front of B and completely (or partially) covers B. From my discussion with Micheal I understand both A and B are visible. However, the active tab in A is more important. In the general case, I think the browsers at the forefront are likely to be the last active ones.\n\nBy the way, in the case of above example with A and B browsers, it is possible that neither of them is focused, e.g. there is an app that\u0027s in focus. \n\nIf it make things clearer, I could add another browser property e.g. is_browser_at_front, which is true if browser is the last active one that is visible, and this should be the browser at the forefront. We can then make is_active to be a tab property, meaning whether the tab is selected in its browser. What do you think?",
+      "parentUuid": "305adacd_3f3b12ab",
+      "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
