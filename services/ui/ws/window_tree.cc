@@ -1512,10 +1512,20 @@ void WindowTree::DispatchInputEventImpl(ServerWindow* target,
   // Should only get events from windows attached to a host.
   DCHECK(event_source_wms_);
   bool matched_pointer_watcher = EventMatchesPointerWatcher(event);
+
+  // Pass the root window of the display containing the event. This is necessary
+  // for Ash to determine the event position in the unified desktop mode, where
+  // each physical display mirrors a portion of a single virtual display.
+  Display* display = window_server_->display_manager()->GetDisplayById(event_location.display_id);
+  WindowManagerDisplayRoot* event_wm_display_root = nullptr;
+  if (display && window_manager_state_)
+    event_wm_display_root = display->GetWindowManagerDisplayRootForUser(window_manager_state_->user_id());
+  ServerWindow* display_root_window = event_wm_display_root ? event_wm_display_root->GetClientVisibleRoot() : nullptr;
   client()->OnWindowInputEvent(
       event_ack_id_, TransportIdForWindow(target), event_location.display_id,
-      event_location.raw_location, ui::Event::Clone(event),
-      matched_pointer_watcher);
+      display_root_window ? TransportIdForWindow(display_root_window) : Id(),
+      event_location.raw_location,
+      ui::Event::Clone(event), matched_pointer_watcher);
 }
 
 bool WindowTree::EventMatchesPointerWatcher(const ui::Event& event) const {

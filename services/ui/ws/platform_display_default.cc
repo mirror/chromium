@@ -87,7 +87,7 @@ void PlatformDisplayDefault::Init(PlatformDisplayDelegate* delegate) {
 #endif
 
   // Show the platform window, unless it's the virtual unified display window.
-  if (delegate_->GetDisplay().id() != display::kUnifiedDisplayId)
+  // if (delegate_->GetDisplay().id() != display::kUnifiedDisplayId)
     platform_window_->Show();
   if (image_cursors_) {
     image_cursors_->SetDisplay(delegate_->GetDisplay(),

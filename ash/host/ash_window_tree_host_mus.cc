@@ -15,7 +15,7 @@
 #include "ui/aura/window.h"
 #include "ui/events/event_sink.h"
 #include "ui/events/null_event_targeter.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ash {
 
 AshWindowTreeHostMus::AshWindowTreeHostMus(
@@ -102,5 +102,11 @@ void AshWindowTreeHostMus::OnCursorVisibilityChangedNative(bool show) {
   // Temporarily pause tap-to-click when the cursor is hidden.
   input_device_controller_client->SetTapToClickPaused(!show);
 }
+
+// gfx::Transform AshWindowTreeHostMus::GetRootTransformForLocalEventCoordinates() const {
+//   LOG(ERROR) << "MSW AshWindowTreeHostMus::GetRootTransformForLocalEventCoordinates " << transformer_helper_->GetTransform().IsIdentity(); 
+//   // base::debug::StackTrace().Print(); 
+//   return transformer_helper_->GetTransform();
+// }
 
 }  // namespace ash

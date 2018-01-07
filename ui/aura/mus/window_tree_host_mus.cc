@@ -231,6 +231,7 @@ void WindowTreeHostMus::MoveCursorToScreenLocationInPixels(
                                                          display_id_);
 }
 
+// TODO(msw): Have AshWindowTreeHostMus override this to offset... 
 gfx::Transform WindowTreeHostMus::GetRootTransformForLocalEventCoordinates()
     const {
   if (WindowMus::Get(window())->window_mus_type() !=

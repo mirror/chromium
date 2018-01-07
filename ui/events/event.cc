@@ -480,6 +480,7 @@ LocatedEvent::LocatedEvent(const LocatedEvent& copy) = default;
 void LocatedEvent::UpdateForRootTransform(
     const gfx::Transform& reversed_root_transform,
     const gfx::Transform& reversed_local_transform) {
+  LOG(ERROR) << "MSW LocatedEvent::UpdateForRootTransform " << reversed_root_transform.IsIdentity() << " " << reversed_local_transform.IsIdentity(); 
   if (target()) {
     gfx::Point3F transformed_location(location_);
     reversed_local_transform.TransformPoint(&transformed_location);

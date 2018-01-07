@@ -35,6 +35,7 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
 
       if (event->IsLocatedEvent()) {
         ui::LocatedEvent* located_event = static_cast<ui::LocatedEvent*>(event);
+      LOG(ERROR) << "MSW UnifiedEventTargeter::FindTargetForEvent!!!! target:" << event->target() << " root:" << root << " location:" << located_event->location().ToString(); 
         located_event->ConvertLocationToTarget(
             static_cast<aura::Window*>(nullptr), dst_root_);
       }

@@ -32,6 +32,7 @@
 #include "services/ui/public/interfaces/window_tree_host_factory.mojom.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/drag_drop_client.h"
+#include "ui/aura/client/screen_position_client.h" 
 #include "ui/aura/client/transient_window_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/env_input_state_controller.h"
@@ -65,6 +66,8 @@
 #include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/size.h"
+
+#include "ui/events/event_utils.h" 
 
 namespace aura {
 namespace {
@@ -168,6 +171,9 @@ std::unique_ptr<ui::Event> MapEvent(const ui::Event& event) {
 
 // Set the |target| to be the target window of this |event| and send it to
 // the EventSink.
+
+// TODO(msw): Dispatch to the physical display's root, not the unified display's root... 
+// That should fix up the root location, we might need to fixup the local location separately... 
 void DispatchEventToTarget(ui::Event* event, WindowMus* target) {
   ui::Event::DispatcherApi dispatch_helper(event);
   // Ignore the target for key events. They need to go to the focused window,
@@ -1478,12 +1484,57 @@ void WindowTreeClient::OnWindowInputEvent(
     uint32_t event_id,
     Id window_id,
     int64_t display_id,
+    Id display_root_window_id,
     const gfx::PointF& event_location_in_screen_pixel_layout,
     std::unique_ptr<ui::Event> event,
     bool matches_pointer_watcher) {
   DCHECK(event);
-
   WindowMus* window = GetWindowByServerId(window_id);  // May be null.
+
+  // TODO(msw): When a captured event is targetted at a window, it only has the
+  // window-relative location and the mirror-display 'root' location, not the screen location.
+  // WindowTreeClient can't look up the mirror display from screen, Ash, etc. 
+  // WindowTreeClient needs the mirror's ScreenPositionClient, (pass display root window from Mus?)
+  // Or Mus needs to know about Ash's mirroring (display locations). 
+  // Or some processing layer below WindowTreeClient needs to handle the mapping. 
+  // Or Mus needs to map the screen position from the window heirarchy, not the raw display location... 
+  WindowMus* display_root_window = GetWindowByServerId(display_root_window_id);  // May be null.
+  if (event->IsLocatedEvent()) {
+    LOG(ERROR) << "MSW WTC::OnWindowInputEvent A display: " << display_id
+               << " window: (" << (window ? window->GetWindow()->bounds().ToString() : "Unknown") << ")"
+               << " display_root_window: (" << (display_root_window ? display_root_window->GetWindow()->bounds().ToString() : "Unknown") << ")"
+               << " event_location_in...: " << gfx::ToFlooredPoint(event_location_in_screen_pixel_layout).ToString(); 
+  }
+
+  // Fix the event location for Ash's unified mode. Events are sent directly to
+  // the target window in capture, but the event's root location is relative to
+  // the phyical display's mirror window, not the unified desktop root window.
+  if (event->IsLocatedEvent() && window && window->GetWindow() &&
+      display::Screen::GetScreen()->GetPrimaryDisplay().id() == display::kUnifiedDisplayId) {
+    ui::LocatedEvent* located_event = event->AsLocatedEvent();
+    aura::Window* root_window = display_root_window ? display_root_window->GetWindow()->GetRootWindow() : nullptr;
+    aura::client::ScreenPositionClient* screen_position_client =
+        aura::client::GetScreenPositionClient(root_window);
+    if (screen_position_client) {
+      gfx::Point root_location(located_event->root_location());
+      // In order to get the correct point in screen coordinates
+      // during passive grab, we first need to find on which host window
+      // the mouse is on, and find out the screen coordinates on that
+      // host window, then convert it back to this host window's coordinate.
+      screen_position_client->ConvertPointToScreen(root_window, &root_location);
+      gfx::Point location(root_location);
+      if (window && window->GetWindow())
+        screen_position_client->ConvertPointFromScreen(window->GetWindow(), &location);
+      // TODO(msw): Handle scaling... wth->ConvertDIPToPixels(&location); 
+
+      LOG(ERROR) << "MSW WTC::OnWindowInputEvent B"
+        << " loc (" << located_event->location().ToString() << " -> " << location.ToString() << ")"
+        << " root (" << located_event->root_location().ToString() << " -> " << root_location.ToString() << ")"; 
+      // located_event->set_root_location(root_location); 
+      // located_event->set_location(location); 
+      // TODO(msw): Update event_location_in_screen_pixel_layout? 
+    }
+  }
 
   if (matches_pointer_watcher && has_pointer_watcher_) {
     DCHECK(event->IsPointerEvent());
@@ -1546,7 +1597,35 @@ void WindowTreeClient::OnWindowInputEvent(
     event_to_dispatch = mapped_event_with_native.get();
   }
 #endif
-  DispatchEventToTarget(event_to_dispatch, window);
+
+  if (event_to_dispatch->IsLocatedEvent() && event_to_dispatch->native_event()) { 
+    ui::LocatedEvent* e = event_to_dispatch->AsLocatedEvent(); 
+    gfx::Point native_loc = gfx::ToRoundedPoint(ui::EventLocationFromNative(e->native_event()));
+    gfx::Point native_root = ui::EventSystemLocationFromNative(e->native_event());
+    if (native_loc == e->location() && native_root == e->root_location()) {
+      LOG(ERROR) << "MSW WTC::OnWindowInputEvent Z" 
+                << " loc: " << e->location().ToString()
+                << " root: " << e->root_location().ToString();
+    } else {
+      LOG(ERROR) << "MSW WTC::OnWindowInputEvent Z" 
+                << " loc: " << e->location().ToString()
+                << " root: " << e->root_location().ToString() 
+                << " native: " << native_loc.ToString() 
+                << " native_root: " << native_root.ToString(); 
+    }
+  }
+
+  // Dispatch to the root window of the display from which the even originated.
+  // It may differ from the root containing |window| in Ash's unified desktop.
+  // (ie. the event occurred on a display mirroring part of the unified desktop)
+  if (display_root_window && window && event->IsLocatedEvent() &&
+    display::Screen::GetScreen()->GetPrimaryDisplay().id() == display::kUnifiedDisplayId) {
+    ui::Event::DispatcherApi(event_to_dispatch).set_target(window->GetWindow());
+    DispatchEventToTarget(event_to_dispatch, display_root_window); 
+  } else {
+    DispatchEventToTarget(event_to_dispatch, window);
+  }
+
   ack_handler.set_handled(event_to_dispatch->handled());
 }
 

@@ -354,6 +354,7 @@ void WindowManagerState::Deactivate() {
 }
 
 void WindowManagerState::ProcessEvent(ui::Event* event, int64_t display_id) {
+  LOG(ERROR) << "MSW WindowManagerState::ProcessEvent " << display_id; 
   EventLocation event_location(display_id);
   if (event->IsLocatedEvent()) {
     event_location.raw_location = event->AsLocatedEvent()->location_f();
@@ -728,6 +729,8 @@ ServerWindow* WindowManagerState::GetFocusedWindowForEventDispatcher(
 }
 
 void WindowManagerState::SetNativeCapture(ServerWindow* window) {
+  // TODO(msw): Actually set native capture to the physical display's window... not the unified display's window... 
+  LOG(ERROR) << "MSW WindowManagerState::SetNativeCapture"; 
   DCHECK(window);
   DCHECK(IsActive());
   WindowManagerDisplayRoot* display_root =

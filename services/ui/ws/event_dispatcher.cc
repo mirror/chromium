@@ -143,8 +143,14 @@ bool EventDispatcher::SetCaptureWindow(ServerWindow* window,
     ObserveWindow(window);
     // TODO(sky): this conditional is problematic for the case of capture moving
     // to a different display.
-    if (!had_capture_window)
-      delegate_->SetNativeCapture(window);
+    LOG(ERROR) << "MSW EventDispatcher::SetCaptureWindow"
+     << " window: " << window << " (" << window->bounds().ToString() << ")"
+     << " mouse_cursor_source_window_: " << mouse_cursor_source_window_ << " (" << mouse_cursor_source_window_->bounds().ToString() << ")"; 
+    // if (!had_capture_window)
+    //   delegate_->SetNativeCapture(window);
+    // TODO(msw): This doesn't seem to have any tangible effect... 
+    if (!had_capture_window && mouse_cursor_source_window_)
+      delegate_->SetNativeCapture(mouse_cursor_source_window_);  //window);
   } else {
     delegate_->ReleaseNativeCapture();
     if (!mouse_button_down_)

@@ -20,26 +20,64 @@
 namespace ash {
 
 // TODO(msw): Fix targeting of events on the second display during capture.
-class UnifiedEventTargeter : public aura::WindowTargeter {
+class MusUnifiedEventTargeter : public aura::WindowTargeter {
  public:
-  UnifiedEventTargeter(aura::Window* src_root,
-                       aura::Window* dst_root,
-                       AshWindowTreeHostMirroringDelegate* delegate)
+  MusUnifiedEventTargeter(aura::Window* src_root,
+                          aura::Window* dst_root,
+                          AshWindowTreeHostMirroringDelegate* delegate)
       : src_root_(src_root), dst_root_(dst_root), delegate_(delegate) {
     DCHECK(delegate);
   }
 
   ui::EventTarget* FindTargetForEvent(ui::EventTarget* root,
                                       ui::Event* event) override {
+    LOG(ERROR) << "MSW MusUnifiedEventTargeter::FindTargetForEvent!!!! "
+               << " target:" << event->target() << " root:" << root;
+
     // Unlike the classic config, mus may provide a target for the event.
-    if (root == src_root_) {
+    // if (event->type() == ui::ET_MOUSE_DRAGGED) {
+    //   LOG(ERROR) << "MSW MusUnifiedEventTargeter::FindTargetForEvent EARLY RETURN"; 
+    //   return nullptr;
+    // }
+    // if (event->type() == ui::ET_MOUSE_DRAGGED && event->target() != root) {
+    //   LOG(ERROR) << "MSW MusUnifiedEventTargeter::FindTargetForEvent EARLY RETURN target:" << event->target() << " root:" << root; 
+    //   return nullptr; //event->target();
+    // }
+
+    if (root == src_root_ /*&& event->target() == root*/) {
       delegate_->SetCurrentEventTargeterSourceHost(src_root_->GetHost());
 
       if (event->IsLocatedEvent()) {
         ui::LocatedEvent* located_event = static_cast<ui::LocatedEvent*>(event);
-        located_event->ConvertLocationToTarget(
-            static_cast<aura::Window*>(event->target()), dst_root_);
-        located_event->set_root_location_f(located_event->location_f());
+        LOG(ERROR) << "MSW MusUnifiedEventTargeter::FindTargetForEvent!!!! A"
+         // << " target:" << event->target() << " root:" << root
+         << " loc:" << located_event->location().ToString()
+         << " root:" << located_event->root_location().ToString(); 
+         
+        located_event->set_location_f(located_event->root_location_f());
+         
+        // LOG(ERROR) << "MSW MusUnifiedEventTargeter::FindTargetForEvent!!!! B"
+        //  // << " target:" << event->target() << " root:" << root
+        //  << " loc:" << located_event->location().ToString()
+        //  << " root:" << located_event->root_location().ToString(); 
+
+        // located_event->ConvertLocationToTarget(
+        //     static_cast<aura::Window*>(event->target()), dst_root_);
+        // LOG(ERROR) << "MSW MusUnifiedEventTargeter::FindTargetForEvent!!!! C"
+        //  // << " target:" << event->target() << " root:" << root
+        //  << " loc:" << located_event->location().ToString()
+        //  << " root:" << located_event->root_location().ToString();         
+        // located_event->set_root_location_f(located_event->location_f());
+        LOG(ERROR) << "MSW MusUnifiedEventTargeter::FindTargetForEvent!!!! D"
+         // << " target:" << event->target() << " root:" << root
+         << " loc:" << located_event->location().ToString()
+         << " root:" << located_event->root_location().ToString();         
+        
+        // gfx::PointF location = located_event->root_location_f();
+        // if (event->target()) {          
+        //   located_event->set_location_f()
+        
+
       }
       if (event->target())
         ui::Event::DispatcherApi(event).set_target(nullptr);
@@ -61,7 +99,7 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
   aura::Window* dst_root_;
   AshWindowTreeHostMirroringDelegate* delegate_;  // Not owned.
 
-  DISALLOW_COPY_AND_ASSIGN(UnifiedEventTargeter);
+  DISALLOW_COPY_AND_ASSIGN(MusUnifiedEventTargeter);
 };
 
 AshWindowTreeHostMusUnified::AshWindowTreeHostMusUnified(
@@ -87,7 +125,7 @@ void AshWindowTreeHostMusUnified::RegisterMirroringHost(
     AshWindowTreeHost* mirroring_ash_host) {
   aura::Window* src_root = mirroring_ash_host->AsWindowTreeHost()->window();
   src_root->SetEventTargeter(
-      std::make_unique<UnifiedEventTargeter>(src_root, window(), delegate_));
+      std::make_unique<MusUnifiedEventTargeter>(src_root, window(), delegate_));
   DCHECK(std::find(mirroring_hosts_.begin(), mirroring_hosts_.end(),
                    mirroring_ash_host) == mirroring_hosts_.end());
   mirroring_hosts_.push_back(mirroring_ash_host);

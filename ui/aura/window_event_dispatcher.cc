@@ -33,6 +33,7 @@
 #include "ui/events/gestures/gesture_recognizer.h"
 #include "ui/events/gestures/gesture_types.h"
 
+#include "base/debug/stack_trace.h" 
 typedef ui::EventDispatchDetails DispatchDetails;
 
 namespace aura {
@@ -520,7 +521,16 @@ void WindowEventDispatcher::OnEventProcessingStarted(ui::Event* event) {
   // coordinate system to |window()|'s coordinate system.
   if (event->IsLocatedEvent() && !is_dispatched_held_event(*event))
     TransformEventForDeviceScaleFactor(static_cast<ui::LocatedEvent*>(event));
-
+  
+  if (event->IsLocatedEvent()) {
+      // && display::Screen::GetScreen()->GetPrimaryDisplay().id() == display::kUnifiedDisplayId) {
+    ui::LocatedEvent* located_event = event->AsLocatedEvent();
+      LOG(ERROR) << "MSW WindowEventDispatcher::OnEventProcessingStarted "
+        << " loc (" << located_event->location().ToString() << ")"
+        << " root (" << located_event->root_location().ToString() << ")"; 
+    // if (event->type() == ui::ET_MOUSE_DRAGGED || event->type() == ui::ET_POINTER_MOVED)
+    //   base::debug::StackTrace().Print(); 
+  }
   if (mus_mouse_location_updater_)
     mus_mouse_location_updater_->OnEventProcessingStarted(*event);
 }
@@ -844,6 +854,8 @@ ui::EventDispatchDetails WindowEventDispatcher::SynthesizeMouseMoveEvent() {
   // synthesizing any events at all.
   if (Env::GetInstance()->mouse_button_flags())
     return details;
+
+  LOG(ERROR) << "MSW WindowEventDispatcher::SynthesizeMouseMoveEvent!!!"; 
 
   gfx::Point root_mouse_location = GetLastMouseLocationInRoot();
   if (!window()->bounds().Contains(root_mouse_location))

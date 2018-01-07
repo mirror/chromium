@@ -8,7 +8,7 @@
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/transform.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ash {
 
 AshWindowTreeHostMusMirroringUnified::AshWindowTreeHostMusMirroringUnified(
@@ -37,6 +37,8 @@ AshWindowTreeHostMusMirroringUnified::GetRootTransformForLocalEventCoordinates()
     // should be applied on local points to this host.
     trans.Translate(SkIntToMScalar(display->bounds().x()),
                     SkIntToMScalar(display->bounds().y()));
+    LOG(ERROR) << "MSW AshWindowTreeHostMusMirroringUnified::GetRootTransformForLocalEventCoordinates " << display->bounds().ToString(); 
+    // base::debug::StackTrace().Print(); 
   }
 
   return trans;

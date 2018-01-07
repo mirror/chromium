@@ -38,6 +38,7 @@ class AshWindowTreeHostMus : public AshWindowTreeHost,
   void UpdateRootWindowSizeInPixels(
       const gfx::Size& host_size_in_pixels) override;
   void OnCursorVisibilityChangedNative(bool show) override;
+  // gfx::Transform GetRootTransformForLocalEventCoordinates() const override;
 
  private:
   std::unique_ptr<TransformerHelper> transformer_helper_;
