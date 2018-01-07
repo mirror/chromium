@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d4e38bfa_9f23b24b",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T22:50:28Z",
+      "side": 1,
+      "message": "Yeah, for the scheme to no longer be necessary, we\u0027d need to change quite a bit of the backend (i.e. remove the GURL conversion and pass a string to the thumbnail database rather than a GURL). It\u0027s possible, but not certain, that would be a better route, but due to the changes required I\u0027m hesitant to make a call and add a TODO without more thinking. :)",
+      "parentUuid": "646d9a2c_2ee5bcde",
+      "revId": "c9c94f950845e86f3008a1c0b0ef52b58fc4848d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d3a2321_3880a3aa",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 4
@@ -105,6 +123,24 @@
       "revId": "c9c94f950845e86f3008a1c0b0ef52b58fc4848d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c22e475_5a3042a4",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-07T22:50:28Z",
+      "side": 1,
+      "message": "One of these two would help the robustness here. I\u0027m thinking more about icons in settings generally as a part of the All Sites work so I\u0027ll follow up. Passing an icon URL up seems better to me, but we\u0027d still have the problem of finding an icon URL in the cases where we don\u0027t have an exact match. :)",
+      "parentUuid": "0450a3f7_76f65a52",
+      "revId": "c9c94f950845e86f3008a1c0b0ef52b58fc4848d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
