@@ -48,13 +48,13 @@ void DisplayConfigurationObserver::OnTabletModeStarted() {
   display::DisplayManager* display_manager =
       ash::Shell::Get()->display_manager();
   was_in_mirror_mode_ = display_manager->IsInMirrorMode();
-  display_manager->SetMirrorMode(true);
+  display_manager->SetMirrorMode(true, base::nullopt);
   display_manager->layout_store()->set_forced_mirror_mode(true);
 }
 
 void DisplayConfigurationObserver::OnTabletModeEnded() {
   if (!was_in_mirror_mode_)
-    ash::Shell::Get()->display_manager()->SetMirrorMode(false);
+    ash::Shell::Get()->display_manager()->SetMirrorMode(false, base::nullopt);
   display::DisplayManager* display_manager =
       ash::Shell::Get()->display_manager();
   display_manager->layout_store()->set_forced_mirror_mode(false);
