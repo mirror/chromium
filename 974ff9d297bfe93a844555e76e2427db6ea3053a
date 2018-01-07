@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "6ce16d9f_3ed106bd",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-07T22:49:16Z",
+      "side": 1,
+      "message": "I just noticed this: Because TimeDelta has enough constexpr support now, this can be:\n\n  static constexpr base::TimeDelta kPollInterval \u003d base::TimeDelta::FromSeconds(1);",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 247,
+        "endChar": 39
+      },
+      "revId": "974ff9d297bfe93a844555e76e2427db6ea3053a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea084efc_44d63329",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 17
@@ -47,6 +70,24 @@
       "writtenOn": "2018-01-07T05:38:41Z",
       "side": 1,
       "message": "nit: in |kPollIntervalInSeconds| seconds.",
+      "revId": "974ff9d297bfe93a844555e76e2427db6ea3053a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a8fc5c_a4297d13",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-07T22:49:16Z",
+      "side": 1,
+      "message": "Actually, see my comment above (regarding constant time expressions). This comment could then be:\n\n  // Schedule the timer to check again at regular intervals.\n\n(Or, maybe the comment isn\u0027t really necessary? Up to you...)",
+      "parentUuid": "ea084efc_44d63329",
       "revId": "974ff9d297bfe93a844555e76e2427db6ea3053a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
