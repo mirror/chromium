@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "daa92eda_4219cd4f",
+        "filename": "chrome/app/vector_icons/content_paste_16.icon",
+        "patchSetId": 21
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-07T23:59:17Z",
+      "side": 1,
+      "message": "Good catch, I agree it\u0027s confusing to leave it named content_paste_16 - renamed to page_info_content_paste (the permission prompts use the normal content_paste icon).",
+      "parentUuid": "93a2792a_b6d93314",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c2c03b_a168bdc3",
         "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f31702e_17ea4d32",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-07T23:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37c2c03b_a168bdc3",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 437,
+        "endChar": 35
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "816bc3b8_eb90c4c0",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-07T23:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc8a4e7_28013a5e",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 49
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "099e1d24_cae2c275",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 21
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-13T18:43:14Z",
       "side": 1,
       "message": "I believe you need to respect the native theme and I can\u0027t see how this can be doing that. For example, what does it look like when Chrome is using the GTK theme and you have a dark system theme?",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 72
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869fecf4_65f34566",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-07T23:59:17Z",
+      "side": 1,
+      "message": "Currently it looks like this: https://drive.google.com/file/d/1s4aORi4H3DdpYdcuT_DylquVHtEq7JBJ/view?usp\u003dsharing\n\nBut I think that\u0027s an OK state to leave things in until a follow-up patch - the problem with trying to do it (i.e. passing the PageInfoBubbleView in instead of a unparented views::Label) now is that the site settings icon will be a different colour to all the other icons (this occurs on Linux when using the GTK theme), because it gets created before the Widget::Init() method gets called for PageInfoBubbleView (and thus has no information about the NativeTheme). I think the way to fix that will be to override OnNativeThemeChanged() for PageInfoBubbleView, ChosenObjectView, and HoverButton, store an IconDescription in those classes, and update the icon colour when the native theme changes. I\u0027ve got a local WIP, but I think it should go in a separate patch. WDYT?",
+      "parentUuid": "099e1d24_cae2c275",
       "range": {
         "startLine": 95,
         "startChar": 0,
