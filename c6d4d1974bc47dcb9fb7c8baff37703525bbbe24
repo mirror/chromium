@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac11b48_2201176a",
+        "filename": "media/cast/net/udp_packet_pipe.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-07T21:38:04Z",
+      "side": 1,
+      "message": "nit (suggestion, so it all fits on one line):\n\n  auto packet \u003d std::make_unique\u003cPacket\u003e(...);",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "c6d4d1974bc47dcb9fb7c8baff37703525bbbe24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b861eac4_1c6a391e",
+        "filename": "media/cast/net/udp_packet_pipe.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-07T21:38:04Z",
+      "side": 1,
+      "message": "Please use std::make_unique instead of base::MakeUnique in new code.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "c6d4d1974bc47dcb9fb7c8baff37703525bbbe24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1eb00c_75b79d7a",
+        "filename": "media/cast/net/udp_packet_pipe.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-07T21:38:04Z",
+      "side": 1,
+      "message": "std::move() or base::Passed()? I\u0027m not actually sure which is better, or if there\u0027s a difference. I\u0027ve been using std::move() in my own code. In any case, please be consistent and just use one or the other everywhere.",
+      "range": {
+        "startLine": 74,
+        "startChar": 45,
+        "endLine": 75,
+        "endChar": 43
+      },
+      "revId": "c6d4d1974bc47dcb9fb7c8baff37703525bbbe24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
