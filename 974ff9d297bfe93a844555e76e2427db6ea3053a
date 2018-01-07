@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c6dc50_e8697632",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:38:41Z",
+      "side": 1,
+      "message": "nit: explicit not needed",
+      "revId": "974ff9d297bfe93a844555e76e2427db6ea3053a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d49ac5_8d3614ba",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:38:41Z",
+      "side": 1,
+      "message": "Does this not need to take |web_contents|?  I guess no, and if so this line can probably be dropped.",
+      "revId": "974ff9d297bfe93a844555e76e2427db6ea3053a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea084efc_44d63329",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:38:41Z",
+      "side": 1,
+      "message": "nit: in |kPollIntervalInSeconds| seconds.",
+      "revId": "974ff9d297bfe93a844555e76e2427db6ea3053a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
