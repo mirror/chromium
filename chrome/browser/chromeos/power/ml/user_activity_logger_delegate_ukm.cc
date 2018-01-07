@@ -81,6 +81,9 @@ void UserActivityLoggerDelegateUkm::LogActivity(
   user_activity.SetBatteryPercent(
       BucketEveryFivePercents(std::floor(event.features().battery_percent())));
 
+  if (event.features().has_device_management()) {
+    user_activity.SetDeviceManagement(event.features().device_management());
+  }
   user_activity.Record(ukm_recorder_);
 
   for (const ukm::SourceId& id : source_ids_) {
