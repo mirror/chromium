@@ -172,6 +172,17 @@ void SiteEngagementService::Helper::MediaTracker::TrackingStarted() {
   Pause();
 }
 
+void SiteEngagementService::Helper::MediaTracker::DidFinishNavigation(
+    content::NavigationHandle* handle) {
+  // Ignore uncommitted, non main-frame, same page, or error page navigations.
+  if (!handle->HasCommitted() || !handle->IsInMainFrame() ||
+      handle->IsSameDocument() || handle->IsErrorPage()) {
+    return;
+  }
+
+  active_media_players_.clear();
+}
+
 void SiteEngagementService::Helper::MediaTracker::MediaStartedPlaying(
     const MediaPlayerInfo& media_info,
     const MediaPlayerId& id) {
