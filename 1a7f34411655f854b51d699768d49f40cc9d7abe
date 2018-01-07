@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb3b02e_988d7d12",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-07T22:23:19Z",
+      "side": 1,
+      "message": "I commented on your question in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d634507#c39.\n\nThat said, I don\u0027t want this to block your change; so feel free to commit for now and fix later.\n\nAlso, for reference, here\u0027s an example of how I modified some code that does the same thing as you\u0027re doing here: https://chromium.googlesource.com/chromium/src/+blame/73904e341bdcae5499cde50bdcdebf2f6c8b0b00/ui/android/window_android.cc#220 However, as I mentioned in the crbug, it\u0027d be even better if we just had an android-specific utility method for converting to/from raw platform values. So, this example can be improved upon. :)",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "1a7f34411655f854b51d699768d49f40cc9d7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
