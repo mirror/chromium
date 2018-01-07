@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "c4c00f06_87e1b20c",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-07T00:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fbf6c36_7e55372b",
+      "range": {
+        "startLine": 99,
+        "startChar": 21,
+        "endLine": 99,
+        "endChar": 24
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618cc39a_e5629120",
         "filename": "net/dns/dns_config_service.h",
         "patchSetId": 12
@@ -1007,6 +1031,30 @@
       "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c9b101_0b446aa6",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-07T00:13:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b77e7c6_d17b3ee4",
+      "range": {
+        "startLine": 502,
+        "startChar": 20,
+        "endLine": 502,
+        "endChar": 46
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
