@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "398b3aed_072c6be1",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:50:30Z",
+      "side": 1,
+      "message": "(self-review) has been just killed",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

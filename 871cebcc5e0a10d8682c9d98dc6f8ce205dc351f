@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "852e9131_aaae6ae4",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:50:30Z",
+      "side": 1,
+      "message": "Done for TODO comment.\n\nI\u0027m not sure if \u0027used_features\u0027 should be included in ControllerServiceWorkerInfo, for now I left it as is.",
+      "parentUuid": "908eeb15_d67617c6",
+      "revId": "871cebcc5e0a10d8682c9d98dc6f8ce205dc351f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ab38609_be30aa1d",
         "filename": "content/renderer/service_worker/service_worker_provider_context.h",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "871cebcc5e0a10d8682c9d98dc6f8ce205dc351f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfca48f6_62af3901",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ab38609_be30aa1d",
+      "revId": "871cebcc5e0a10d8682c9d98dc6f8ce205dc351f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

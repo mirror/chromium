@@ -361,6 +361,24 @@
       "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e163c1a5_9d211789",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-07T05:50:30Z",
+      "side": 1,
+      "message": "Slightly modified the logic, and the new code doesn\u0027t use the flag.",
+      "parentUuid": "9bd2d954_919c71ca",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
