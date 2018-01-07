@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//mojo/public/tools/bindings/mojom.gni")
 import("//tools/grit/grit_rule.gni")
 
 # generate_about_tracing puts its files in this directory
@@ -51,5 +52,13 @@ grit("resources") {
 
   deps = [
     ":generate_tracing_grd",
+  ]
+}
+
+mojom("mojo") {
+  sources = [
+    "perfetto/producer.mojom",
+    "perfetto/producer_service.mojom",
+    "perfetto/remote_producer.mojom",
   ]
 }

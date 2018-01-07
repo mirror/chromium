@@ -1,0 +1,7 @@
+module perfetto.mojom;
+
+interface Producer {
+    OnConnect();
+    OnDisconnect();
+};
+

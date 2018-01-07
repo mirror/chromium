@@ -1,0 +1,13 @@
+module perfetto.mojom;
+
+import "producer.mojom";
+
+struct DataSourceDescriptor {
+    string name;
+};
+
+interface ProducerService {
+  ConnectProducer(Producer producer);
+  RegisterDataSource(DataSourceDescriptor descriptor);
+};
+
