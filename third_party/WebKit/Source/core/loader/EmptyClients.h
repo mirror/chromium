@@ -81,13 +81,10 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
   static EmptyChromeClient* Create() { return new EmptyChromeClient; }
 
   ~EmptyChromeClient() override {}
-  void ChromeDestroyed() override {}
 
   WebViewImpl* GetWebView() const override { return nullptr; }
   void SetWindowRect(const IntRect&, LocalFrame&) override {}
   IntRect RootWindowRect() override { return IntRect(); }
-
-  IntRect PageRect() override { return IntRect(); }
 
   void Focus() override {}
 
@@ -111,8 +108,6 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
                      const WebOverscrollBehavior&) override {}
 
   void BeginLifecycleUpdates() override {}
-
-  bool HadFormInteraction() const override { return false; }
 
   void StartDragging(LocalFrame*,
                      const WebDragData&,

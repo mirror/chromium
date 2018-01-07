@@ -56,16 +56,13 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   WebViewImpl* GetWebView() const override;
 
   // ChromeClient methods:
-  void ChromeDestroyed() override;
   void SetWindowRect(const IntRect&, LocalFrame&) override;
   IntRect RootWindowRect() override;
-  IntRect PageRect() override;
   void Focus() override;
   bool CanTakeFocus(WebFocusType) override;
   void TakeFocus(WebFocusType) override;
   void FocusedNodeChanged(Node* from_node, Node* to_node) override;
   void BeginLifecycleUpdates() override;
-  bool HadFormInteraction() const override;
   void StartDragging(LocalFrame*,
                      const WebDragData&,
                      WebDragOperationsMask,

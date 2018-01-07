@@ -94,14 +94,10 @@ struct WebWindowFeatures;
 
 class CORE_EXPORT ChromeClient : public PlatformChromeClient {
  public:
-  virtual void ChromeDestroyed() = 0;
-
   // The specified rectangle is adjusted for the minimum window size and the
   // screen, then setWindowRect with the adjusted rectangle is called.
   void SetWindowRectWithAdjustment(const IntRect&, LocalFrame&);
   virtual IntRect RootWindowRect() = 0;
-
-  virtual IntRect PageRect() = 0;
 
   virtual void Focus() = 0;
 
@@ -109,8 +105,6 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void TakeFocus(WebFocusType) = 0;
 
   virtual void FocusedNodeChanged(Node*, Node*) = 0;
-
-  virtual bool HadFormInteraction() const = 0;
 
   virtual void BeginLifecycleUpdates() = 0;
 
@@ -172,10 +166,8 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
 
   virtual WebViewImpl* GetWebView() const = 0;
 
-  // Methods used by PlatformChromeClient.
   virtual WebScreenInfo GetScreenInfo() const = 0;
   virtual void SetCursor(const Cursor&, LocalFrame* local_root) = 0;
-  // End methods used by PlatformChromeClient.
 
   virtual void SetCursorOverridden(bool) = 0;
 

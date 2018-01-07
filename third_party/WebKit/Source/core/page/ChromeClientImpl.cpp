@@ -168,10 +168,6 @@ WebViewImpl* ChromeClientImpl::GetWebView() const {
   return web_view_;
 }
 
-void ChromeClientImpl::ChromeDestroyed() {
-  // Our lifetime is bound to the WebViewImpl.
-}
-
 void ChromeClientImpl::SetWindowRect(const IntRect& r, LocalFrame& frame) {
   DCHECK_EQ(&frame, web_view_->MainFrameImpl()->GetFrame());
   WebWidgetClient* client =
@@ -191,13 +187,6 @@ IntRect ChromeClientImpl::RootWindowRect() {
     rect.height = web_view_->Size().height;
   }
   return IntRect(rect);
-}
-
-IntRect ChromeClientImpl::PageRect() {
-  // We hide the details of the window's border thickness from the web page by
-  // simple re-using the window position here.  So, from the point-of-view of
-  // the web page, the window has no border.
-  return RootWindowRect();
 }
 
 void ChromeClientImpl::Focus() {
@@ -231,11 +220,6 @@ void ChromeClientImpl::FocusedNodeChanged(Node* from_node, Node* to_node) {
       to_node->ShouldHaveFocusAppearance())
     focus_url = ToElement(to_node)->HrefURL();
   web_view_->Client()->SetKeyboardFocusURL(focus_url);
-}
-
-bool ChromeClientImpl::HadFormInteraction() const {
-  return web_view_->PageImportanceSignals() &&
-         web_view_->PageImportanceSignals()->HadFormInteraction();
 }
 
 void ChromeClientImpl::StartDragging(LocalFrame* frame,

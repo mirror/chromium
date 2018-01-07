@@ -315,22 +315,19 @@ static Frame* CreateNewWindow(LocalFrame& opener_frame,
   frame.View()->SetCanHaveScrollbars(features.scrollbars_visible);
 
   // 'x' and 'y' specify the location of the window, while 'width' and 'height'
-  // specify the size of the viewport. We can only resize the window, so adjust
-  // for the difference between the window size and the viewport size.
-
+  // specify the size of the viewport.
+  // We hide the details of the window's border thickness from the web page -
+  // from the point-of-view of the web page the window has no border.
+  // This means we use provided viewport size as a window size.
   IntRect window_rect = page->GetChromeClient().RootWindowRect();
-  IntSize viewport_size = page->GetChromeClient().PageRect().Size();
-
   if (features.x_set)
     window_rect.SetX(features.x);
   if (features.y_set)
     window_rect.SetY(features.y);
   if (features.width_set)
-    window_rect.SetWidth(features.width +
-                         (window_rect.Width() - viewport_size.Width()));
+    window_rect.SetWidth(features.width);
   if (features.height_set)
-    window_rect.SetHeight(features.height +
-                          (window_rect.Height() - viewport_size.Height()));
+    window_rect.SetHeight(features.height);
 
   page->GetChromeClient().SetWindowRectWithAdjustment(window_rect, frame);
   page->GetChromeClient().Show(policy);

@@ -721,7 +721,6 @@ void Page::WillBeDestroyed() {
   if (scrolling_coordinator_)
     scrolling_coordinator_->WillBeDestroyed();
 
-  GetChromeClient().ChromeDestroyed();
   if (validation_message_client_)
     validation_message_client_->WillBeDestroyed();
   main_frame_ = nullptr;
