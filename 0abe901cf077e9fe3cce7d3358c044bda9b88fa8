@@ -1,0 +1,285 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb192d1_f14d36e1",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "Build and run debug version of zucchini and patch small file (perhaps non-executables) to ensure this (and other) DCHECKs are sound?",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3546ef54_eb7d8b88",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "Can this (and if so, should this) be combined into\n  pool_infos_[pool.values()] \u003d {std::move(labels), bound};\n?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 42
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7be7d0e_e40fd668",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "// |labels| translates IndirectReference target_key to label.",
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42860f72_204e4d62",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "This looks like the only place where EncodedView\u0027s is used in a way other than .image_index(). If we extract SuffixLowerBound into an object X (that contians old_view.begin(), new_view.begin(), and new_view.end()) instantiated by the caller, then X can be injected into CreateCandidates() and we can remove EquivalenceMap\u0027s dependence on EncodedView!  Questions:\n\n- Is this worthwhile (I say yes but you might figure differently)?\n- If worthwhile, is this worth doing now (I say no; follow-up makes more sense).\n- If worthwhile, who will do it (if you want you can claim it; but this looks like a nice intern starter project :)?\n\nA potential follow-up of this would be to wrap const refs of {|old_view|, |new_view|, |targets_affinities|} into one class.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 72
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104c4c19_1a41886f",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "// Returns similarity score between a token (raw byte or first byte of a reference) in |old_image_index| at |src| and a token in |new_image_index| at |dst|.\n\n(Then remove last sentence).\n\nReason for this suggestion is that \"token\" is important enough to be part of the function name, but its use is not widespread, and is defined elsewhere, so adding a bit of redundancy helps reading. Also shortens overall comment.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877517e0_58f57631",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "NIT: old_pool_tag_and_targets (just like in zucchini_gen.cc). Then maybe use\n  PoolTag pool_tag \u003d old_pool_tag_and_targets.first;",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b610a841_8ef00d95",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "NIT: {4, 3}, {6, 1}, {8, 1} to be consistent with \"a11b2...\" ?",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e7874b_7b939e7d",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "NIT: From \"ab112...\" -\u003e \"a11b2...\", the equivalence (for \"b\" movement) should be {1, 3, 1}?\n\n(I suppose {2, 1, 2} and {4, 4, 8} are unused, so no point putting them in).",
+      "range": {
+        "startLine": 65,
+        "startChar": 42,
+        "endLine": 65,
+        "endChar": 50
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b30cb3_05c27b1f",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "NIT: These are",
+      "range": {
+        "startLine": 107,
+        "startChar": 19,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d34772cc_1bd36e07",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "// Now examine larger equivalences.",
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9539c48_39945602",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "NIT: old_pool_tag_and_targets , etc., as above.",
+      "range": {
+        "startLine": 254,
+        "startChar": 21,
+        "endLine": 254,
+        "endChar": 36
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544c6285_d4ee0e50",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "// |target_affinities| is outside the loop to reduce allocation.",
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910bc8e7_2d88a81b",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "NIT: Fix wrapping.",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 12
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

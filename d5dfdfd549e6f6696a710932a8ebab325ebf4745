@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1320b832_33bb0fcc",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-07T23:44:44Z",
+      "side": 1,
+      "message": "Okay. The fact that 64.0 gets reused is still a bit odd though. Or was it an artifact of old hackiness that got fixed by this CL?\n\nAlso, in the old code there was the notion that reference types is used to bootstrap EquivalenceMap.  Is this implicitly done now?",
+      "parentUuid": "7be3f1f7_13d23d6f",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 52
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b01defb_bcc634ca",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 32
