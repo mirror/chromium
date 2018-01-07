@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93ef02ea_22faae7d",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-07T21:25:39Z",
+      "side": 0,
+      "message": "Both are supported, but only because media::VideoFrame would return the pointers to U and V planes swapped for YV12. So, it\u0027s fine with me if we\u0027re dropping support for YVU layout in memory.",
+      "parentUuid": "3af9b063_6f4211c6",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 40
+      },
+      "revId": "fa6e6e925340122ada05e8c8c3f6141fc6f2443f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c691ec1_a41f3a3c",
         "filename": "content/renderer/image_capture/image_capture_frame_grabber.cc",
         "patchSetId": 5
