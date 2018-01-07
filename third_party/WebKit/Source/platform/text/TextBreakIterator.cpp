@@ -53,6 +53,34 @@ unsigned NumGraphemeClusters(const String& string) {
   return num;
 }
 
+unsigned NumCharactersInGraphemeClusters(const String& string,
+                                         unsigned num_grapheme_clusters) {
+  unsigned string_length = string.length();
+
+  if (string_length <= num_grapheme_clusters)
+    return string_length;
+
+  // The only Latin-1 Extended Grapheme Cluster is CRLF.
+  if (string.Is8Bit()) {
+    auto* characters = string.Characters8();
+    unsigned i, j;
+    for (i = 0, j = 0; i < num_grapheme_clusters && j + 1 < string_length;
+         ++i, ++j)
+      j += characters[j] == '\r' && characters[j + 1] == '\n';
+    return j + (i < num_grapheme_clusters);
+  }
+
+  NonSharedCharacterBreakIterator it(string);
+  if (!it)
+    return string_length;
+
+  for (unsigned i = 0; i < num_grapheme_clusters; ++i) {
+    if (it.Next() == kTextBreakDone)
+      return string_length;
+  }
+  return it.Current();
+}
+
 static const UChar kAsciiLineBreakTableFirstChar = '!';
 static const UChar kAsciiLineBreakTableLastChar = 127;
 

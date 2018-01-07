@@ -358,6 +358,11 @@ class PLATFORM_EXPORT NonSharedCharacterBreakIterator final {
 // counted as 1 grapheme cluster.
 PLATFORM_EXPORT unsigned NumGraphemeClusters(const String&);
 
+// Returns the number of characters which will be less than or equal to
+// the length occupied by the specified number of grapheme clusters.
+PLATFORM_EXPORT unsigned NumCharactersInGraphemeClusters(const String&,
+                                                         unsigned);
+
 }  // namespace blink
 
 #endif
