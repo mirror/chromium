@@ -85,6 +85,11 @@ void ChromeAppListModelUpdater::UpdateSearchBox(const base::string16& text,
   search_model_->search_box()->Update(text, initiated_by_user);
 }
 
+void ChromeAppListModelUpdater::PublishSearchResults(
+    const std::vector<std::unique_ptr<app_list::SearchResult>>& results) {
+  search_model_->PublishResults(results);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Methods only used by ChromeAppListItem that talk to ash directly.
 

@@ -107,3 +107,10 @@ FakeAppListModelUpdater::GetIdToAppListIndexMap() {
 bool FakeAppListModelUpdater::SearchEngineIsGoogle() {
   return search_engine_is_google_;
 }
+
+void FakeAppListModelUpdater::PublishSearchResults(
+    const std::vector<std::unique_ptr<app_list::SearchResult>>& results) {
+  search_results_.clear();
+  for (auto&& result : results)
+    search_results_.push_back(result->Duplicate());
+}

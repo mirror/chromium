@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
@@ -40,6 +41,9 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
       app_list::SpeechRecognitionState state) override;
   void UpdateSearchBox(const base::string16& text,
                        bool initiated_by_user) override;
+  void PublishSearchResults(
+      const std::vector<std::unique_ptr<app_list::SearchResult>>& results)
+      override;
 
   // Methods for item querying.
   ChromeAppListItem* FindItem(const std::string& id) override;
