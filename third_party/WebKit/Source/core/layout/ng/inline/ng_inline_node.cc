@@ -605,18 +605,73 @@ void NGInlineNode::ShapeText(const String& text_content,
   // Shape each item with the full context of the entire node.
   HarfBuzzShaper shaper(text_content.Characters16(), text_content.length());
   ShapeResultSpacing<String> spacing(text_content);
-  for (auto& item : *items) {
-    if (item.Type() != NGInlineItem::kText)
+#if 0
+  LOG(INFO) << "ShapeText " << text_content;
+#endif
+  for (unsigned index = 0; index < items->size();) {
+    NGInlineItem& start_item = (*items)[index];
+    if (start_item.Type() != NGInlineItem::kText) {
+      index++;
       continue;
+    }
 
-    const Font& font = item.Style()->GetFont();
-    scoped_refptr<ShapeResult> shape_result = shaper.Shape(
-        &font, item.Direction(), item.StartOffset(), item.EndOffset());
+    const Font& font = start_item.Style()->GetFont();
+    TextDirection direction = start_item.Direction();
+    unsigned end_index = index + 1;
+    unsigned end_offset = start_item.EndOffset();
+    for (; end_index < items->size(); end_index++) {
+      const NGInlineItem& item = (*items)[end_index];
+      if (item.Type() == NGInlineItem::kText) {
+        if (font != item.Style()->GetFont() || direction != item.Direction())
+          break;
+        end_offset = item.EndOffset();
+      } else if (item.Type() == NGInlineItem::kOpenTag ||
+                 item.Type() == NGInlineItem::kCloseTag ||
+                 item.Type() == NGInlineItem::kOutOfFlowPositioned) {
+        DCHECK_EQ(0u, item.Length())
+            << item.Type() << " "
+            << text_content.Substring(item.StartOffset(),
+                                      item.EndOffset() - item.StartOffset());
+      } else {
+        break;
+      }
+    }
 
+#if 0
+    LOG(INFO) << "Shape " << index << "-" << end_index << ": "
+              << start_item.StartOffset() << "-" << end_offset;
+#endif
+    scoped_refptr<ShapeResult> shape_result =
+        shaper.Shape(&font, direction, start_item.StartOffset(), end_offset);
     if (UNLIKELY(spacing.SetSpacing(font.GetFontDescription())))
       shape_result->ApplySpacing(spacing);
 
-    item.shape_result_ = std::move(shape_result);
+    if (end_offset == start_item.EndOffset()) {
+      start_item.shape_result_ = std::move(shape_result);
+      index++;
+      continue;
+    }
+
+    for (; index < end_index; index++) {
+      NGInlineItem& item = (*items)[index];
+      if (item.Type() == NGInlineItem::kText) {
+        // We don't use SafeToBreak API here because kerning is not considered
+        // as safe-to-break, and it is not safe for the line breaking purpose,
+        // but should be applied across items.
+        // TODO(kojii): Implement pplitting ligatures to each item.
+        item.shape_result_ =
+            shape_result->SubRange(item.StartOffset(), item.EndOffset());
+#if 0
+        LOG(INFO) << "SubRange " << item.StartOffset() << "-"
+                  << item.EndOffset() << ", safe="
+                  << shape_result->NextSafeToBreakOffset(item.StartOffset())
+                  << "-"
+                  << shape_result->NextSafeToBreakOffset(item.EndOffset())
+                  << " => " << item.shape_result_->StartIndexForResult() << "-"
+                  << item.shape_result_->EndIndexForResult();
+#endif
+      }
+    }
   }
 }
 
