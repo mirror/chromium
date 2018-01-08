@@ -159,7 +159,6 @@ class ChromeContentRendererClient
       ui::PageTransition transition_type,
       const blink::WebURL& url,
       content::ResourceType resource_type,
-      std::vector<std::unique_ptr<content::URLLoaderThrottle>>* throttles,
       GURL* new_url) override;
   bool IsPrefetchOnly(content::RenderFrame* render_frame,
                       const blink::WebURLRequest& request) override;
@@ -222,6 +221,9 @@ class ChromeContentRendererClient
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage) override;
+  std::unique_ptr<content::URLLoaderThrottleProvider>
+  CreateURLLoaderThrottleProvider(
+      content::URLLoaderThrottleProviderType provider_type) override;
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   // Sets a new |spellcheck|. Used for testing only.
