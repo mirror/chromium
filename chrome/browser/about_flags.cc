@@ -2643,6 +2643,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordImportDescription, kOsAll,
      FEATURE_VALUE_TYPE(password_manager::features::kPasswordImport)},
 #if defined(OS_CHROMEOS)
+    {"enable-touchable-app-context-menus",
+     flag_descriptions::kEnableTouchableAppContextMenuName,
+     flag_descriptions::kEnableTouchableAppContextMenuDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(app_list::switches::kEnableTouchableAppContextMenu)},
     {"enable-experimental-accessibility-features",
      flag_descriptions::kExperimentalAccessibilityFeaturesName,
      flag_descriptions::kExperimentalAccessibilityFeaturesDescription, kOsCrOS,

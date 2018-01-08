@@ -13,6 +13,7 @@
 #include "base/strings/stringprintf.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/base/models/simple_menu_model.h"
 #include "ui/gfx/image/image_skia.h"
 
 namespace app_list {
@@ -52,6 +53,11 @@ const char* AppListTestModel::AppListTestItem::GetItemType() const {
 void AppListTestModel::AppListTestItem::SetPosition(
     const syncer::StringOrdinal& new_position) {
   set_position(new_position);
+}
+
+ui::MenuModel* AppListTestModel::AppListTestItem::GetContextMenuModel() {
+  test_menu_model_.reset(new ui::SimpleMenuModel(nullptr));
+  return test_menu_model_.get();
 }
 
 // AppListTestModel

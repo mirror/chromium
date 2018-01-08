@@ -2170,6 +2170,22 @@ bool AppsGridView::HandleScrollFromAppListView(int offset, ui::EventType type) {
   return true;
 }
 
+void AppsGridView::OnShowContextMenu(AppListItemView* source) {
+  // If another context menu exists, hide it.
+  // TODO(newcomer): Handle mixed case (old/new context menus coexisting).
+
+  // This should automatically happen
+
+  if (item_with_active_touchable_context_menu_)
+    item_with_active_touchable_context_menu_->HideTouchableContextMenu();
+  // source->RequestFocus();
+  item_with_active_touchable_context_menu_ = source;
+}
+
+void AppsGridView::OnHideContextMenu() {
+  // item_with_active_touchable_context_menu_ = nullptr;
+}
+
 void AppsGridView::StartDragAndDropHostDrag(const gfx::Point& grid_location) {
   // When a drag and drop host is given, the item can be dragged out of the app
   // list window. In that case a proxy widget needs to be used.

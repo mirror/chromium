@@ -17,12 +17,21 @@
 #include "ui/app_list/views/image_shadow_animator.h"
 #include "ui/views/context_menu_controller.h"
 #include "ui/views/controls/button/button.h"
+#include "ui/views/widget/widget_observer.h"
 
 namespace views {
 class ImageView;
 class Label;
 class MenuRunner;
 class ProgressBar;
+class TouchableMenuRootView;
+}  // namespace views
+
+namespace {
+class aWidgetObserver : public views::WidgetObserver {
+  void OnWidgetClosing(views::Widget* widget) override {}
+  void OnWidgetDestroying(views::Widget* widget) override {}
+};
 }
 
 namespace app_list {
@@ -83,8 +92,13 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
   // having something dropped onto it, enables subpixel AA for the title.
   void SetTitleSubpixelAA();
 
+  bool IsTouchableContextMenuShowingForTest();
+
+  void HideTouchableContextMenu();
+
   // views::Button overrides:
   void OnGestureEvent(ui::GestureEvent* event) override;
+  void OnMouseEvent(ui::MouseEvent* event) override;
 
   // views::View overrides:
   bool GetTooltipText(const gfx::Point& p,
@@ -163,6 +177,7 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
   views::Label* title_;               // Strongly typed child view.
   views::ProgressBar* progress_bar_;  // Strongly typed child view.
 
+  views::TouchableMenuRootView* touchable_context_menu_;
   std::unique_ptr<views::MenuRunner> context_menu_runner_;
 
   UIState ui_state_ = UI_STATE_NORMAL;
@@ -186,6 +201,8 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
   base::OneShotTimer mouse_drag_timer_;
   // A timer to defer showing drag UI when the app item is touch pressed.
   base::OneShotTimer touch_drag_timer_;
+
+  aWidgetObserver test_widget_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListItemView);
 };

@@ -98,6 +98,11 @@ class AppListViewTest : public views::ViewsTestBase {
     views::ViewsTestBase::TearDown();
   }
 
+  void EnableTouchableContextMenus() {
+    scoped_feature_list_.InitAndEnableFeature(
+        app_list::features::kEnableTouchableAppContextMenu);
+  }
+
  protected:
   void Show() { view_->ShowWhenReady(); }
 
@@ -164,6 +169,7 @@ class AppListViewTest : public views::ViewsTestBase {
 
   AppListView* view_ = nullptr;  // Owned by native widget.
   std::unique_ptr<AppListTestViewDelegate> delegate_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListViewTest);
 };
@@ -1827,6 +1833,47 @@ TEST_F(AppListViewTest, MultiplePagesReinitializeOnInputPage) {
   Show();
 
   ASSERT_EQ(1, view_->GetAppsPaginationModel()->selected_page());
+}
+
+TEST_F(AppListViewTest, RightClickingNonSuggestedAppShowsTouchableContextMenu) {
+  EnableTouchableContextMenus();
+  Initialize(0, false, false);
+}
+
+TEST_F(AppListViewTest, RightClickingSuggestedAppShowsTouchableContextMenu) {
+  EnableTouchableContextMenus();
+  Initialize(0, false, false);
+}
+
+TEST_F(AppListViewTest, LongPressOnNonSuggestedAppShowsTouchableContextMenu) {
+  EnableTouchableContextMenus();
+  Initialize(0, false, false);
+}
+
+TEST_F(AppListViewTest, LongPressOnSuggestedAppShowsTouchableContextMenu) {
+  EnableTouchableContextMenus();
+  Initialize(0, false, false);
+}
+
+TEST_F(AppListViewTest, ClickingAppListBodyWhenTouchableContextMenuIsShown) {
+  EnableTouchableContextMenus();
+  Initialize(0, false, false);
+}
+
+TEST_F(AppListViewTest, TouchableContextMenuDismissesOnAppDrag) {
+  EnableTouchableContextMenus();
+  Initialize(0, false, false);
+}
+
+// Tests that creating a second TouchableContextMenu hides the first.
+TEST_F(AppListViewTest, TryToCreateTwoTouchableContextMenus) {
+  EnableTouchableContextMenus();
+  Initialize(0, false, false);
+  delegate_->GetTestModel()->PopulateApps(kInitialItems);
+  Show();
+  view_->SetState(AppListViewState::FULLSCREEN_ALL_APPS);
+
+  // Get first and second apps.
 }
 
 }  // namespace test

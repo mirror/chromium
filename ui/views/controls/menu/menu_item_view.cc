@@ -181,6 +181,8 @@ void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
     case NORMAL:
     case SEPARATOR:
     case EMPTY:
+    case BUTTON:
+    case CHECKBUTTON:
       // No additional accessibility states currently for these menu states.
       break;
   }
@@ -290,6 +292,14 @@ MenuItemView* MenuItemView::AppendMenuItem(int item_id,
                                            Type type) {
   return AppendMenuItemImpl(item_id, label, base::string16(), base::string16(),
       gfx::ImageSkia(), type, ui::NORMAL_SEPARATOR);
+}
+
+MenuItemView* MenuItemView::AppendMenuItem(int item_id,
+                                           const base::string16& label,
+                                           gfx::ImageSkia& icon,
+                                           Type type) {
+  return AppendMenuItemImpl(item_id, label, base::string16(), base::string16(),
+                            icon, type, ui::NORMAL_SEPARATOR);
 }
 
 MenuItemView* MenuItemView::AppendSubMenu(int item_id,

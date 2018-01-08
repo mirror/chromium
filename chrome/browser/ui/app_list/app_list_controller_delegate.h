@@ -15,6 +15,8 @@
 #include "ui/base/window_open_disposition.h"
 #include "ui/gfx/native_widget_types.h"
 
+#include "ui/base/models/simple_menu_model.h"
+
 class Profile;
 
 namespace extensions {

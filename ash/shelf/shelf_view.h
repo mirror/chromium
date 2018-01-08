@@ -35,6 +35,7 @@ class MenuModel;
 namespace views {
 class BoundsAnimator;
 class MenuRunner;
+class TouchableMenuRootView;
 }
 
 namespace ash {
@@ -436,6 +437,7 @@ class ASH_EXPORT ShelfView : public views::View,
   std::unique_ptr<views::MenuRunner> launcher_menu_runner_;
   std::unique_ptr<ScopedRootWindowForNewWindows>
       scoped_root_window_for_new_windows_;
+  views::TouchableMenuRootView* touchable_menu_root_view_ = nullptr;
 
   // True when an item being inserted or removed in the model cancels a drag.
   bool cancelling_drag_model_changed_ = false;

@@ -28,8 +28,13 @@ class AppListTestModel : public AppListModel {
 
     void SetPosition(const syncer::StringOrdinal& new_position);
 
+    // Overidden from AppListItem:
+    // Creates a test ui::MenuModel.
+    ui::MenuModel* GetContextMenuModel() override;
+
    private:
     AppListTestModel* model_;
+    std::unique_ptr<ui::MenuModel> test_menu_model_;
 
     DISALLOW_COPY_AND_ASSIGN(AppListTestItem);
   };

@@ -12,6 +12,7 @@
 #include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/app_list_item.h"
 #include "ash/app_list/model/app_list_model.h"
+#include "ash/app_list/model/app_list_view_state.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -148,6 +149,18 @@ class AppsGridViewTest : public views::ViewsTestBase,
 
     test_api_.reset(new AppsGridViewTestApi(apps_grid_view_));
   }
+
+  void EnableTouchableContextMenus() {
+    scoped_feature_list_.InitAndEnableFeature(
+        app_list::features::kEnableTouchableAppContextMenu);
+  }
+
+  void OpenContextMenu(int index) {
+    AppListItemView* item_view = GetItemViewAt(index);
+    item_view->ShowContextMenu(gfx::Point(),
+                               ui::MenuSourceType::MENU_SOURCE_MOUSE);
+  }
+
   void TearDown() override {
     app_list_view_->GetWidget()->Close();
     views::ViewsTestBase::TearDown();
@@ -1114,6 +1127,60 @@ TEST_F(AppsGridViewTest,
   ASSERT_FALSE(app_list_view_->is_in_drag());
   ASSERT_NE(0, GetPaginationModel()->transition().progress);
 }
+
+// Tests that the context menu opens.
+TEST_F(AppsGridViewTest, OpenTouchableContextMenu) {
+  EnableTouchableContextMenus();
+  const size_t kTotalItems = 4;
+  model_->PopulateApps(kTotalItems);
+  EXPECT_EQ(model_->top_level_item_list()->item_count(), kTotalItems);
+  AppListItemView* item_view = GetItemViewAt(0);
+  EXPECT_FALSE(item_view->IsTouchableContextMenuShowingForTest());
+
+  OpenContextMenu(0);
+
+  EXPECT_TRUE(item_view->IsTouchableContextMenuShowingForTest());
+  EXPECT_EQ(app_list::AppListViewState::FULLSCREEN_ALL_APPS,
+            app_list_view_->app_list_state());
+}
+
+// Tests that closing a touchable context menu doesn't destroy the app list.
+TEST_F(AppsGridViewTest, ClosingTouchableContextMenuDoesntCloseAppList) {
+  EnableTouchableContextMenus();
+  const size_t kTotalItems = 4;
+  model_->PopulateApps(kTotalItems);
+  EXPECT_EQ(model_->top_level_item_list()->item_count(), kTotalItems);
+  OpenContextMenu(0);
+
+  AppListItemView* item_view = GetItemViewAt(0);
+  item_view->HideTouchableContextMenu();
+
+  EXPECT_FALSE(item_view->IsTouchableContextMenuShowingForTest());
+  EXPECT_EQ(app_list::AppListViewState::FULLSCREEN_ALL_APPS,
+            app_list_view_->app_list_state());
+}
+
+// Tests that the first context menu closes when a second one opens.
+TEST_F(AppsGridViewTest, CreateTwoTouchableContextMenusOnDifferentApp) {
+  EnableTouchableContextMenus();
+  const size_t kTotalItems = 4;
+  model_->PopulateApps(kTotalItems);
+  EXPECT_EQ(model_->top_level_item_list()->item_count(), kTotalItems);
+  AppListItemView* item_view_1 = GetItemViewAt(0);
+  EXPECT_FALSE(item_view_1->IsTouchableContextMenuShowingForTest());
+  OpenContextMenu(0);
+
+  AppListItemView* item_view_2 = GetItemViewAt(1);
+  OpenContextMenu(1);
+
+  EXPECT_FALSE(item_view_1->IsTouchableContextMenuShowingForTest());
+  EXPECT_TRUE(item_view_2->IsTouchableContextMenuShowingForTest());
+  EXPECT_EQ(app_list::AppListViewState::FULLSCREEN_ALL_APPS,
+            app_list_view_->app_list_state());
+}
+
+// Tests that the second right click on an app is a no-op.
+TEST_F(AppsGridViewTest, CreateTwoTouchableContextMenusOnSameApp) {}
 
 }  // namespace test
 }  // namespace app_list

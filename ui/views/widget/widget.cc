@@ -1084,6 +1084,7 @@ void Widget::OnNativeWidgetDestroying() {
     observer.OnWidgetDestroying(this);
   if (non_client_view_)
     non_client_view_->WindowClosing();
+  LOG(ERROR) << widget_delegate_;
   widget_delegate_->WindowClosing();
 }
 

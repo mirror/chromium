@@ -5,6 +5,7 @@
 #include "ui/app_list/views/app_list_item_view.h"
 
 #include <algorithm>
+#include <iostream>
 
 #include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/app_list_item.h"
@@ -34,6 +35,17 @@
 #include "ui/views/controls/progress_bar.h"
 #include "ui/views/drag_controller.h"
 
+#include "ui/app_list/app_list_features.h"
+#include "ui/base/l10n/l10n_util.h"
+#include "ui/base/resource/resource_bundle.h"
+#include "ui/strings/grit/ui_strings.h"
+#include "ui/views/bubble/bubble_dialog_delegate.h"
+#include "ui/views/controls/button/button.h"
+#include "ui/views/controls/menu/touchable_menu_root_view.h"
+#include "ui/views/layout/fill_layout.h"
+#include "ui/views/layout/grid_layout.h"
+#include "ui/views/widget/widget.h"
+
 namespace app_list {
 
 namespace {
@@ -50,6 +62,18 @@ constexpr int kMouseDragUIDelayInMs = 200;
 // 650ms.
 constexpr int kTouchLongpressDelayInMs = 300;
 
+class ContextMenuButton : public views::Button {
+ public:
+  ContextMenuButton(views::ButtonListener* listener,
+                    views::Label label,
+                    gfx::Image& icon)
+      : views::Button(listener) {}
+
+ private:
+  // views::Label label_;
+  // gfx::Image& icon_;
+  // int action; // executed by MenuModel.
+};
 }  // namespace
 
 // static
@@ -197,6 +221,13 @@ void AppListItemView::OnTouchDragTimer(
 }
 
 void AppListItemView::CancelContextMenu() {
+  if (features::IsTouchableAppContextMenuEnabled()) {
+    if (!touchable_context_menu_)
+      return;
+
+    touchable_context_menu_->GetWidget()->CloseNow();
+    return;
+  }
   if (context_menu_runner_)
     context_menu_runner_->Cancel();
 }
@@ -270,11 +301,23 @@ void AppListItemView::ShowContextMenuForView(views::View* source,
 
   ui::MenuModel* menu_model =
       item_weak_ ? item_weak_->GetContextMenuModel() : NULL;
+
   if (!menu_model)
     return;
 
   if (!apps_grid_view_->IsSelectedView(this))
     apps_grid_view_->ClearAnySelectedView();
+
+  if (features::IsTouchableAppContextMenuEnabled()) {
+    apps_grid_view_->OnShowContextMenu(this);
+    // Create the view and put it in the Menu Window.
+    touchable_context_menu_ = new views::TouchableMenuRootView(
+        GetWidget()->GetNativeWindow(), menu_model, source);
+    views::BubbleDialogDelegateView::CreateBubble(touchable_context_menu_)
+        ->Show();
+    return;
+  }
+
   int run_types = views::MenuRunner::HAS_MNEMONICS |
                   views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
   context_menu_runner_.reset(new views::MenuRunner(menu_model, run_types));
@@ -495,6 +538,10 @@ void AppListItemView::OnGestureEvent(ui::GestureEvent* event) {
     Button::OnGestureEvent(event);
 }
 
+void AppListItemView::OnMouseEvent(ui::MouseEvent* event) {
+  Button::OnMouseEvent(event);
+}
+
 bool AppListItemView::GetTooltipText(const gfx::Point& p,
                                      base::string16* tooltip) const {
   // Use the label to generate a tooltip, so that it will consider its text
@@ -554,6 +601,17 @@ void AppListItemView::SetTitleSubpixelAA() {
     title_->SetBackground(nullptr);
   }
   title_->SchedulePaint();
+}
+
+bool AppListItemView::IsTouchableContextMenuShowingForTest() {
+  return touchable_context_menu_ &&
+         touchable_context_menu_->GetWidget()->IsActive();
+}
+
+void AppListItemView::HideTouchableContextMenu() {
+  if (!touchable_context_menu_)
+    return;
+  touchable_context_menu_->GetWidget()->CloseNow();
 }
 
 void AppListItemView::ItemIconChanged() {
