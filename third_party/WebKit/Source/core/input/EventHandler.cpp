@@ -1698,17 +1698,10 @@ GestureEventWithHitTestResults EventHandler::HitTestResultForGestureEvent(
   LayoutSize padding;
 
   if (ShouldApplyTouchAdjustment(gesture_event)) {
-    // If gesture_event unique id matches the stored touch event result, do
-    // point-base hit test. Otherwise add padding to do rect-based hit test.
-    if (GestureCorrespondToAdjustedTouch(gesture_event)) {
-      adjusted_event.ApplyTouchAdjustment(
-          touch_adjustment_result_.adjusted_point);
-    } else {
-      padding = LayoutSize(adjusted_event.TapAreaInRootFrame());
-      if (!padding.IsEmpty()) {
-        padding.Scale(1.f / 2);
-        hit_type |= HitTestRequest::kListBased;
-      }
+    padding = LayoutSize(adjusted_event.TapAreaInRootFrame());
+    if (!padding.IsEmpty()) {
+      padding.Scale(1.f / 2);
+      hit_type |= HitTestRequest::kListBased;
     }
   }
   LayoutPoint hit_test_point(frame_->View()->RootFrameToContents(
@@ -1740,6 +1733,7 @@ GestureEventWithHitTestResults EventHandler::HitTestResultForGestureEvent(
   // by now to ensure consumers don't accidentally use one of the other
   // candidates.
   DCHECK(!hit_test_result.IsRectBasedTest());
+
   if (ShouldApplyTouchAdjustment(gesture_event) &&
       (gesture_event.GetType() == WebInputEvent::kGestureTap ||
        gesture_event.GetType() == WebInputEvent::kGestureLongPress)) {
@@ -1749,6 +1743,21 @@ GestureEventWithHitTestResults EventHandler::HitTestResultForGestureEvent(
     UMA_HISTOGRAM_COUNTS_100("Event.Touch.TouchAdjustment.AdjustDistance",
                              static_cast<int>(adjusted_distance));
   }
+  if (GestureCorrespondToAdjustedTouch(gesture_event)) {
+    LayoutPoint stored_adjusted_point(frame_->View()->RootFrameToContents(
+        touch_adjustment_result_.adjusted_point));
+    HitTestResult point_base_result = HitTestResultAtPoint(
+        stored_adjusted_point, hit_type | HitTestRequest::kReadOnly);
+    if (gesture_event.GetType() == WebInputEvent::kGestureTap) {
+      UMA_HISTOGRAM_BOOLEAN(
+          "Event.Touch.TouchAdjustment.AdjustToSameNode",
+          point_base_result.InnerNode() == hit_test_result.InnerNode());
+    }
+    adjusted_event.ApplyTouchAdjustment(
+        touch_adjustment_result_.adjusted_point);
+    return GestureEventWithHitTestResults(adjusted_event, point_base_result);
+  }
+
   return GestureEventWithHitTestResults(adjusted_event, hit_test_result);
 }
 
