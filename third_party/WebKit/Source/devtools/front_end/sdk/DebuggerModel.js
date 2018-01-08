@@ -505,6 +505,15 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    */
   async _pausedScript(
       callFrames, reason, auxData, breakpointIds, asyncStackTrace, asyncStackTraceId, asyncCallStackTraceId) {
+    // var scriptId = callFrames[0].location.scriptId;
+    // var script = this._scripts.get(scriptId);
+    // if (script.executionContextId == paintWorkletId) {
+    await Promise.all(SDK.targetManager.models(SDK.CSSModel).map(model => {
+      return model.suspendModel();
+    }));
+    // May want to suspend other models, e.g. DOMModel?
+    // }
+
     if (asyncCallStackTraceId) {
       SDK.DebuggerModel._scheduledPauseOnAsyncCall = asyncCallStackTraceId;
       var promises = [];
@@ -532,6 +541,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
   }
 
   _resumedScript() {
+    // TODO resume the CSSModel (and DOMModel?).
     this._setDebuggerPausedDetails(null);
     this.dispatchEventToListeners(SDK.DebuggerModel.Events.DebuggerResumed, this);
   }
