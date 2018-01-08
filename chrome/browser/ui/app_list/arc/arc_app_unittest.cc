@@ -228,6 +228,7 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
     ResetBuilder();  // Destroy any existing builder in the correct order.
 
     model_updater_ = std::make_unique<FakeAppListModelUpdater>();
+    ChromeAppListItem::SetModelUpdater(model_updater_.get());
     controller_ = std::make_unique<test::TestAppListControllerDelegate>();
     builder_ = std::make_unique<ArcAppModelBuilder>(controller_.get());
     builder_->Initialize(nullptr, profile_.get(), model_updater_.get());
@@ -236,6 +237,7 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
   void ResetBuilder() {
     builder_.reset();
     controller_.reset();
+    ChromeAppListItem::SetModelUpdater(nullptr);
     model_updater_.reset();
   }
 

@@ -79,7 +79,6 @@ AppListItem* AppListModel::AddItemToFolder(std::unique_ptr<AppListItem> item,
   if (folder_id.empty())
     return AddItem(std::move(item));
   DVLOG(2) << "AddItemToFolder: " << item->id() << ": " << folder_id;
-  CHECK_NE(folder_id, item->folder_id());
   DCHECK_NE(AppListFolderItem::kItemType, item->GetItemType());
   AppListFolderItem* dest_folder = FindOrCreateFolderItem(folder_id);
   if (!dest_folder)
@@ -325,7 +324,6 @@ AppListItem* AppListModel::AddItemToItemListAndNotifyUpdate(
 AppListItem* AppListModel::AddItemToFolderItemAndNotify(
     AppListFolderItem* folder,
     std::unique_ptr<AppListItem> item_ptr) {
-  CHECK_NE(folder->id(), item_ptr->folder_id());
   AppListItem* item = folder->item_list()->AddItem(std::move(item_ptr));
   item->set_folder_id(folder->id());
   for (auto& observer : observers_)

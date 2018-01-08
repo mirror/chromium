@@ -19,6 +19,7 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_test.h"
 #include "chrome/browser/ui/app_list/chrome_app_list_item.h"
 #include "chrome/browser/ui/app_list/extension_app_context_menu.h"
+#include "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/test/test_app_list_controller_delegate.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/arc/test/fake_app_instance.h"
@@ -105,8 +106,10 @@ class AppContextMenuTest : public AppListTestBase {
         profile(), MenuManagerFactory);
     controller_ = std::make_unique<FakeAppListControllerDelegate>();
     menu_delegate_ = std::make_unique<FakeAppContextMenuDelegate>();
+    model_updater_ = std::make_unique<FakeAppListModelUpdater>();
     ChromeAppListItem::OverrideAppListControllerDelegateForTesting(
         controller());
+    ChromeAppListItem::SetModelUpdater(model_updater_.get());
   }
 
   void TearDown() override {
@@ -273,6 +276,7 @@ class AppContextMenuTest : public AppListTestBase {
   std::unique_ptr<KeyedService> menu_manager_;
   std::unique_ptr<FakeAppListControllerDelegate> controller_;
   std::unique_ptr<FakeAppContextMenuDelegate> menu_delegate_;
+  std::unique_ptr<FakeAppListModelUpdater> model_updater_;
 
   DISALLOW_COPY_AND_ASSIGN(AppContextMenuTest);
 };

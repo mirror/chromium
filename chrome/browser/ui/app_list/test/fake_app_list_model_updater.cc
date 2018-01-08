@@ -83,9 +83,10 @@ bool FakeAppListModelUpdater::FindItemIndexForTest(const std::string& id,
   return false;
 }
 
-app_list::AppListFolderItem* FakeAppListModelUpdater::FindFolderItem(
+ChromeAppListItem* FakeAppListModelUpdater::FindFolderItem(
     const std::string& folder_id) {
-  return nullptr;
+  ChromeAppListItem* item = FindItem(folder_id);
+  return (item && item->is_folder()) ? item : nullptr;
 }
 
 bool FakeAppListModelUpdater::TabletMode() {

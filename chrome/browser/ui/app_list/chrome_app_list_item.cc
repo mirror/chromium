@@ -24,6 +24,13 @@ void ChromeAppListItem::OverrideAppListControllerDelegateForTesting(
 }
 
 // static
+AppListModelUpdater* ChromeAppListItem::model_updater_ = nullptr;
+
+// static
+void ChromeAppListItem::SetModelUpdater(AppListModelUpdater* model_updater) {
+  model_updater_ = model_updater;
+}
+
 gfx::ImageSkia ChromeAppListItem::CreateDisabledIcon(
     const gfx::ImageSkia& icon) {
   const color_utils::HSL shift = {-1, 0, 0.6};
@@ -32,9 +39,12 @@ gfx::ImageSkia ChromeAppListItem::CreateDisabledIcon(
 
 ChromeAppListItem::ChromeAppListItem(Profile* profile,
                                      const std::string& app_id)
-    : app_list::AppListItem(app_id),
-      profile_(profile)  {
-}
+    : metadata_(ash::mojom::AppListItemMetadata::New(app_id,
+                                                     "",
+                                                     "",
+                                                     syncer::StringOrdinal(),
+                                                     false)),
+      profile_(profile) {}
 
 ChromeAppListItem::~ChromeAppListItem() {
 }
@@ -86,8 +96,7 @@ void ChromeAppListItem::SetDefaultPositionIfApplicable() {
                                      launch_ordinal.ToInternalValue()));
 }
 
-bool ChromeAppListItem::CompareForTest(
-    const app_list::AppListItem* other) const {
+bool ChromeAppListItem::CompareForTest(const ChromeAppListItem* other) const {
   return id() == other->id() && folder_id() == other->folder_id() &&
          name() == other->name() && GetItemType() == other->GetItemType() &&
          position().Equals(other->position());

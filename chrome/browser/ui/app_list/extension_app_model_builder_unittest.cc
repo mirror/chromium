@@ -95,6 +95,7 @@ class ExtensionAppModelBuilderTest : public AppListTestBase {
     ResetBuilder();  // Destroy any existing builder in the correct order.
 
     model_updater_ = std::make_unique<FakeAppListModelUpdater>();
+    ChromeAppListItem::SetModelUpdater(model_updater_.get());
     controller_ = std::make_unique<test::TestAppListControllerDelegate>();
     builder_ = std::make_unique<ExtensionAppModelBuilder>(controller_.get());
     builder_->Initialize(nullptr, profile_.get(), model_updater_.get());
@@ -103,6 +104,7 @@ class ExtensionAppModelBuilderTest : public AppListTestBase {
   void ResetBuilder() {
     builder_.reset();
     controller_.reset();
+    ChromeAppListItem::SetModelUpdater(model_updater_.get());
     model_updater_.reset();
   }
 
@@ -142,6 +144,7 @@ TEST_F(ExtensionAppModelBuilderTest, HideWebStore) {
 
   // Web stores should be present in the model.
   FakeAppListModelUpdater model_updater1;
+  ChromeAppListItem::SetModelUpdater(&model_updater1);
   ExtensionAppModelBuilder builder1(controller_.get());
   builder1.Initialize(nullptr, profile_.get(), &model_updater1);
   EXPECT_TRUE(model_updater1.FindItem(store->id()));
@@ -156,6 +159,7 @@ TEST_F(ExtensionAppModelBuilderTest, HideWebStore) {
 
   // Build a new model; web stores should NOT be present.
   FakeAppListModelUpdater model_updater2;
+  ChromeAppListItem::SetModelUpdater(&model_updater2);
   ExtensionAppModelBuilder builder2(controller_.get());
   builder2.Initialize(nullptr, profile_.get(), &model_updater2);
   EXPECT_FALSE(model_updater2.FindItem(store->id()));

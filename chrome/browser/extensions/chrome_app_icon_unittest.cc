@@ -267,6 +267,7 @@ class ChromeAppIconWithModelTest : public ChromeAppIconTest {
  protected:
   void CreateBuilder() {
     model_updater_ = std::make_unique<FakeAppListModelUpdater>();
+    ChromeAppListItem::SetModelUpdater(model_updater_.get());
     controller_ = std::make_unique<test::TestAppListControllerDelegate>();
     builder_ = std::make_unique<ExtensionAppModelBuilder>(controller_.get());
     builder_->Initialize(nullptr, profile(), model_updater_.get());
@@ -275,6 +276,7 @@ class ChromeAppIconWithModelTest : public ChromeAppIconTest {
   void ResetBuilder() {
     builder_.reset();
     controller_.reset();
+    ChromeAppListItem::SetModelUpdater(nullptr);
     model_updater_.reset();
   }
 
