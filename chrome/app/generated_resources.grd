@@ -5328,6 +5328,12 @@ the Bookmarks menu.">
           <ph name="URL">$1<ex>maps.google.com</ex></ph> wants to see text and images you copy to the clipboard.
         </message>
       </if>
+      <message name="IDS_CLIPBOARD_READ_ALLOWED_TOOLTIP" desc="Location bar icon tooltip text when a page has been granted clipboard read access.">
+        This page can see data that you copy to the clipboard.
+      </message>
+      <message name="IDS_CLIPBOARD_READ_BLOCKED_TOOLTIP" desc="Location bar icon tooltip text when a page had been denied clipboard read access.">
+        This page has been blocked from seeing data that you copy to the clipboard.
+      </message>
 
       <!-- Feature Engagement Tracker strings -->
       <message name="IDS_BOOKMARK_PROMO_0" desc="Text shown on promotional UI appearing next to the Bookmarks button, which encourages users to use it.">
