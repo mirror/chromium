@@ -79,6 +79,10 @@ class Pointer : public SurfaceTreeHost,
   // Overridden from ash::WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
 
+  void SetCursorType(gfx::NativeCursor cursor);
+
+  void SetVisible(bool visible);
+
  private:
   // Returns the effective target for |event|.
   Surface* GetEffectiveTargetForEvent(ui::Event* event) const;
@@ -144,6 +148,8 @@ class Pointer : public SurfaceTreeHost,
   base::WeakPtrFactory<Pointer> cursor_capture_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Pointer);
+
+  bool cursor_visible_ = true;
 };
 
 }  // namespace exo

@@ -483,4 +483,45 @@ void Pointer::UpdateCursor() {
     cursor_client->SetCursor(cursor_);
 }
 
+void Pointer::SetCursorType(gfx::NativeCursor cursor) {
+  if (!focus_surface_) {
+    return;
+  }
+  aura::Window* root_window = focus_surface_->window()->GetRootWindow();
+  if (!root_window)
+    return;
+
+  aura::client::CursorClient* cursor_client =
+      aura::client::GetCursorClient(root_window);
+  if (cursor_ == cursor) {
+    return;
+  }
+  if (cursor_client) {
+    cursor_client->SetCursor(cursor_);
+    cursor_ = cursor;
+  }
+}
+
+void Pointer::SetVisible(bool visible) {
+  if (visible == cursor_visible_)
+    return;
+  if (!focus_surface_) {
+    return;
+  }
+  aura::Window* root_window = focus_surface_->window()->GetRootWindow();
+  if (!root_window)
+    return;
+
+  aura::client::CursorClient* cursor_client =
+      aura::client::GetCursorClient(root_window);
+  if (!cursor_client)
+    return;
+  if (visible) {
+    cursor_client -> ShowCursor();
+  } else {
+    cursor_client -> HideCursor();
+  }
+  cursor_visible_ = visible;
+}
+
 }  // namespace exo

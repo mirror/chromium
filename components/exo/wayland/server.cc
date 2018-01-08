@@ -13,6 +13,7 @@
 #include <keyboard-extension-unstable-v1-server-protocol.h>
 #include <linux/input.h>
 #include <pointer-gestures-unstable-v1-server-protocol.h>
+#include <pointer-unstable-v1-server-protocol.h>
 #include <presentation-time-server-protocol.h>
 #include <remote-shell-unstable-v1-server-protocol.h>
 #include <secure-output-unstable-v1-server-protocol.h>
@@ -4515,6 +4516,146 @@ void bind_keyboard_extension(wl_client* client,
                                  data, nullptr);
 }
 
+////////////////////////////////////////////////////////////////////
+// Pointer blending
+class PointerBlending {
+ public:
+  PointerBlending(Pointer* pointer) : pointer_(pointer) {
+  }
+
+  ui::CursorType TranslateCursorType(int32_t type) {
+    ui::CursorType newType = ui::CursorType::kNull;
+    switch(type) {
+      case 1000/* TYPE_ARROW */:
+        newType = ui::CursorType::kPointer;
+        break;
+      case 1001/* TYPE_CONTEXT_MENU */:
+        newType = ui::CursorType::kContextMenu;
+        break;
+      case 1002/* TYPE_HAND */:
+        newType = ui::CursorType::kHand;
+        break;
+      case 1003/* TYPE_HELP */:
+        newType = ui::CursorType::kHelp;
+        break;
+      case 1004/* TYPE_WAIT */:
+        newType = ui::CursorType::kWait;
+        break;
+      case 1006/* TYPE_CELL */:
+        newType = ui::CursorType::kCell;
+        break;
+      case 1007/* TYPE_CROSSHAIR */:
+        newType = ui::CursorType::kCross;
+        break;
+      case 1008/* TYPE_TEXT */:
+        newType = ui::CursorType::kIBeam;
+        break;
+      case 1009/* TYPE_VERTICAL_TEXT */:
+        newType = ui::CursorType::kVerticalText;
+        break;
+      case 1010/* TYPE_ALIAS */:
+        newType = ui::CursorType::kAlias;
+        break;
+      case 1011/* TYPE_COPY */:
+        newType = ui::CursorType::kCopy;
+        break;
+      case 1012/* TYPE_NO_DROP */:
+        newType = ui::CursorType::kNoDrop;
+        break;
+      case 1013/* TYPE_ALL_SCROLL */:
+        newType = ui::CursorType::kMove;
+        break;
+      case 1014/* TYPE_HORIZONTAL_DOUBLE_ARROW */:
+        newType = ui::CursorType::kEastWestResize;
+        break;
+      case 1015/* TYPE_VERTICAL_DOUBLE_ARROW */:
+        newType = ui::CursorType::kNorthSouthResize;
+        break;
+      case 1016/* TYPE_TOP_RIGHT_DIAGONAL_DOUBLE_ARROW */:
+        newType = ui::CursorType::kNorthWestResize;
+        break;
+      case 1017/* TYPE_TOP_LEFT_DIAGONAL_DOUBLE_ARROW */:
+        newType = ui::CursorType::kNorthEastResize;
+        break;
+      case 1018/* TYPE_ZOOM_IN */:
+        newType = ui::CursorType::kZoomIn;
+        break;
+      case 1019/* TYPE_ZOOM_OUT */:
+        newType = ui::CursorType::kZoomOut;
+        break;
+      case 1020/* TYPE_GRAB */:
+        newType = ui::CursorType::kGrab;
+        break;
+      case 1021/* TYPE_GRABBING */:
+        newType = ui::CursorType::kGrabbing;
+        break;
+    }
+    return newType;
+  }
+
+  void SendCursorDetails(float alpha, int32_t type) {
+    if (pointer_) {
+      pointer_ -> SetCursorType(TranslateCursorType(type));
+      // When type equals -1, it is using the custom cursor. Therefore we should
+      // hide the chrome side's cursor.
+      pointer_ -> SetVisible(alpha == 1 && type != -1);
+    }
+  }
+
+ private:
+  Pointer* pointer_;
+
+  DISALLOW_COPY_AND_ASSIGN(PointerBlending);
+};
+
+void pointer_blending_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+void blending_send_cursor_details(wl_client* client,
+                        wl_resource* resource,
+                        wl_fixed_t alpha,
+                        int32_t type) {
+  GetUserDataAs<PointerBlending>(resource)->SendCursorDetails(wl_fixed_to_double(alpha), type);
+}
+
+const struct zwp_pointer_blending_v1_interface
+    pointer_blending_implementation = {pointer_blending_destroy, blending_send_cursor_details};
+
+////////////////////////////////////////////////////////////////////////////////
+// shaped_cursors_interface:
+
+void pointer_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+void pointer_get_blending(wl_client* client,
+                          wl_resource* resource,
+                          uint32_t id,
+                          wl_resource* pointer_resource) {
+  Pointer* pointer = GetUserDataAs<Pointer>(pointer_resource);
+
+  wl_resource* blending_resource =
+      wl_resource_create(client, &zwp_pointer_blending_v1_interface, 1, id);
+
+  SetImplementation(blending_resource, &pointer_blending_implementation,
+                    std::make_unique<PointerBlending>(pointer));
+
+}
+
+const struct zwp_shaped_cursors_v1_interface
+    zwp_pointer_implementation = {pointer_destroy, pointer_get_blending};
+
+void bind_zwp_pointer(wl_client* client,
+                  void* data,
+                  uint32_t version,
+                  uint32_t id) {
+  wl_resource* resource =
+      wl_resource_create(client, &zwp_shaped_cursors_v1_interface, 1, id);
+
+  wl_resource_set_implementation(resource, &zwp_pointer_implementation,
+                                 data, nullptr);
+}
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4569,6 +4710,8 @@ Server::Server(Display* display)
                    display_, bind_stylus_tools);
   wl_global_create(wl_display_.get(), &zcr_keyboard_extension_v1_interface, 1,
                    display_, bind_keyboard_extension);
+  wl_global_create(wl_display_.get(), &zwp_shaped_cursors_v1_interface, 1,
+                   display_, bind_zwp_pointer);
 }
 
 Server::~Server() {}
