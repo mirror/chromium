@@ -18,6 +18,7 @@
 #include "ui/aura/window_observer.h"
 #include "ui/base/hit_test.h"
 #include "ui/events/event.h"
+#include "ui/events/gestures/gesture_recognizer.h"
 
 namespace {
 const double kMinHorizVelocityForWindowSwipe = 1100;
@@ -77,6 +78,7 @@ void HideResizeShadow(aura::Window* window) {
     // TODO: http://crbug.com/640773.
     return;
   }
+
   if (!wm::GetWindowState(window)->can_be_dragged())
     return;
 
@@ -183,6 +185,8 @@ void WmToplevelWindowEventHandler::OnKeyEvent(ui::KeyEvent* event) {
 
 void WmToplevelWindowEventHandler::OnMouseEvent(ui::MouseEvent* event,
                                                 aura::Window* target) {
+  ResetLastGestureTarget();
+
   if (event->handled())
     return;
   if ((event->flags() &
@@ -222,8 +226,14 @@ void WmToplevelWindowEventHandler::OnMouseEvent(ui::MouseEvent* event,
 
 void WmToplevelWindowEventHandler::OnGestureEvent(ui::GestureEvent* event,
                                                   aura::Window* target) {
+  if (last_gesture_target_ && last_gesture_target_ != target)
+    ResetLastGestureTarget();
+  last_gesture_target_ = target;
+  last_gesture_target_->AddObserver(this);
+
   if (event->handled())
     return;
+
   if (!target->delegate())
     return;
 
@@ -398,6 +408,7 @@ bool WmToplevelWindowEventHandler::AttemptToStartDrag(
     return false;
   std::unique_ptr<WindowResizer> resizer(
       CreateWindowResizer(window, point_in_parent, window_component, source));
+
   if (!resizer)
     return false;
 
@@ -406,6 +417,7 @@ bool WmToplevelWindowEventHandler::AttemptToStartDrag(
 
   pre_drag_window_bounds_ = window->bounds();
   in_gesture_drag_ = (source == ::wm::WINDOW_MOVE_SOURCE_TOUCH);
+
   return true;
 }
 
@@ -414,6 +426,8 @@ void WmToplevelWindowEventHandler::RevertDrag() {
 }
 
 bool WmToplevelWindowEventHandler::CompleteDrag(DragResult result) {
+  last_gesture_target_ = nullptr;
+
   if (!window_resizer_)
     return false;
 
@@ -580,6 +594,17 @@ void WmToplevelWindowEventHandler::ResizerWindowDestroyed() {
 
 void WmToplevelWindowEventHandler::OnDisplayConfigurationChanging() {
   CompleteDrag(DragResult::REVERT);
+}
+
+void WmToplevelWindowEventHandler::OnWindowDestroying(aura::Window* window) {
+  ResetLastGestureTarget();
+}
+
+void WmToplevelWindowEventHandler::ResetLastGestureTarget() {
+  if (last_gesture_target_) {
+    last_gesture_target_->RemoveObserver(this);
+    last_gesture_target_ = nullptr;
+  }
 }
 
 }  // namespace wm

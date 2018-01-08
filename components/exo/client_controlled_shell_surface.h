@@ -71,6 +71,29 @@ class ClientControlledShellSurface
     state_changed_callback_ = state_changed_callback;
   }
 
+  // Set the callback to run when the surface bounds changed.
+  using BoundsChangedCallback = base::RepeatingCallback<void(
+      ash::mojom::WindowStateType current_state_type,
+      const gfx::Rect& bounds,
+      bool drag,
+      bool resize)>;
+  void set_bounds_changed_callback(
+      const BoundsChangedCallback& bounds_changed_callback) {
+    bounds_changed_callback_ = bounds_changed_callback;
+  }
+
+  // TODO: comment
+  using DragStartedCallback = base::RepeatingCallback<void(int direction)>;
+  void set_drag_started_callback(const DragStartedCallback& callback) {
+    drag_started_callback_ = callback;
+  }
+
+  // TODO: comment
+  using DragFinishedCallback = base::RepeatingCallback<void(bool)>;
+  void set_drag_finished_callback(const DragFinishedCallback& callback) {
+    drag_finished_callback_ = callback;
+  }
+
   // Pin/unpin the surface. Pinned surface cannot be switched to
   // other windows unless its explicitly unpinned.
   void SetPinned(ash::mojom::WindowPinType type);
@@ -99,12 +122,29 @@ class ClientControlledShellSurface
   void OnWindowStateChangeEvent(ash::mojom::WindowStateType old_state,
                                 ash::mojom::WindowStateType next_state);
 
+  void OnBoundsChangeEvent(ash::mojom::WindowStateType current_state,
+                           const gfx::Rect& bounds,
+                           bool drag,
+                           bool resize);
+  void OnDragStarted(int component);
+  void OnDragFinished(bool cancel);
+
+  void StartResize();
+  void StartMove(int x, int y);
+
+  void SetCanResize(bool can_resize);
+  void SetCanMaximize(bool can_maximize);
+  void SetMinimumSize(const gfx::Size& minimum_size);
+  void SetFrameHeight(int height);
+  void SetFrameColor(int color);
+
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
   bool IsTouchEnabled(Surface* surface) const override;
 
   // Overridden from views::WidgetDelegate:
   bool CanResize() const override;
+  bool CanMaximize() const override;
   views::NonClientFrameView* CreateNonClientFrameView(
       views::Widget* widget) override;
 
@@ -154,6 +194,8 @@ class ClientControlledShellSurface
 
   void UpdateBackdrop();
 
+  void AttemptToStartDrag(int component) override;
+
   // Lock the compositor if it's not already locked, or extends the
   // lock timeout if it's already locked.
   // TODO(reveman): Remove this when using configure callbacks for orientation.
@@ -161,6 +203,14 @@ class ClientControlledShellSurface
   void EnsureCompositorIsLockedForOrientationChange();
 
   ash::wm::WindowState* GetWindowState();
+
+  void UpdateFrame();
+
+  gfx::Point GetTouchLocation() const;
+
+  bool is_server_side_resize() const {
+    return !drag_started_callback_.is_null();
+  }
 
   GeometryChangedCallback geometry_changed_callback_;
   int64_t primary_display_id_;
@@ -172,6 +222,9 @@ class ClientControlledShellSurface
   double pending_scale_ = 1.0;
 
   StateChangedCallback state_changed_callback_;
+  BoundsChangedCallback bounds_changed_callback_;
+  DragStartedCallback drag_started_callback_;
+  DragFinishedCallback drag_finished_callback_;
 
   // TODO(reveman): Use configure callbacks for orientation. crbug.com/765954
   Orientation pending_orientation_ = Orientation::LANDSCAPE;
@@ -181,6 +234,14 @@ class ClientControlledShellSurface
   ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
 
   ui::WindowShowState pending_show_state_ = ui::SHOW_STATE_NORMAL;
+
+  bool can_resize_ = false;
+  bool can_maximize_ = true;
+  gfx::Size minimum_size_;
+
+  gfx::Point last_gesture_location_in_root_;
+
+  std::unique_ptr<ash::DragDetails> drag_details_;
 
   std::unique_ptr<ui::CompositorLock> orientation_compositor_lock_;
 
