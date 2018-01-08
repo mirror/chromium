@@ -22,7 +22,7 @@
 #include "net/url_request/url_request.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
+#include "third_party/WebKit/public/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"

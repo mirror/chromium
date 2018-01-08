@@ -22,7 +22,7 @@
 #include "storage/browser/quota/quota_task.h"
 #include "storage/browser/quota/special_storage_policy.h"
 #include "storage/browser/storage_browser_export.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom.h"
+#include "third_party/WebKit/public/common/quota/quota_types.mojom.h"
 
 namespace base {
 class SequencedTaskRunner;
