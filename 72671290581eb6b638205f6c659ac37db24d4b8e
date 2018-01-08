@@ -22,6 +22,30 @@
       "revId": "72671290581eb6b638205f6c659ac37db24d4b8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e95f9dc_ccd5d0fd",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-08T13:35:43Z",
+      "side": 1,
+      "message": "I guess that we recreated the password view. Thus, if you edited it and clicked the button we had to save it somewhere. I don\u0027t think we need it now.",
+      "parentUuid": "00a05ece_10907645",
+      "range": {
+        "startLine": 609,
+        "startChar": 2,
+        "endLine": 609,
+        "endChar": 37
+      },
+      "revId": "72671290581eb6b638205f6c659ac37db24d4b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
