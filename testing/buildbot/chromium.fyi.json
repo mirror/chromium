@@ -4429,7 +4429,7 @@
         "args": [
           "--mus"
         ],
-        "name": "ash_unittests-mus",
+        "name": "mus_ash_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4452,6 +4452,7 @@
       {
         "args": [
           "--mus",
+          "--ozone-platform=headless",
           "--override-use-software-gl-for-tests"
         ],
         "name": "mus_browser_tests",
@@ -4496,6 +4497,16 @@
           "shards": 2
         },
         "test": "content_browsertests"
+      },
+      {
+        "args": [
+          "--mus"
+        ],
+        "name": "mus_content_unittests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "content_unittests"
       },
       {
         "args": [
