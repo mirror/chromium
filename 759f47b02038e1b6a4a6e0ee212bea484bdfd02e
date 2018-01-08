@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "899086dc_87f7f5ee",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 9245,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-08T14:04:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5f83b75b_50e53c8a",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "591aec4f_db01b086",
         "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
         "patchSetId": 2
@@ -64,6 +82,75 @@
       "writtenOn": "2018-01-08T06:37:53Z",
       "side": 1,
       "message": "does this still do something sensible? With no text, the width is probably 0... which might not be the right thing to have for the title? The line below adds height but not width.",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa033163_af05821d",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_view_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-08T14:04:09Z",
+      "side": 1,
+      "message": "Should be updated.",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 15
+      },
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ceca23_793f731a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-08T14:04:09Z",
+      "side": 1,
+      "message": "But the title is not empty actually, right?",
+      "range": {
+        "startLine": 240,
+        "startChar": 33,
+        "endLine": 240,
+        "endChar": 48
+      },
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81c3ba5_e660769c",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-08T14:04:09Z",
+      "side": 1,
+      "message": "Will it return the width of the unwrapped title? Do we always want the title to be one line of text?",
+      "range": {
+        "startLine": 288,
+        "startChar": 11,
+        "endLine": 288,
+        "endChar": 75
+      },
       "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
