@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6467977f_b76dabe3",
+        "filename": "ppapi/tests/test_struct_sizes.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-08T14:11:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this got past the style checker. Could you break it into two lines with \u0027\\\u0027?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 120
+      },
+      "revId": "2f125f5b622a3124f2f9e520739be398932af90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
