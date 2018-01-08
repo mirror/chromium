@@ -339,6 +339,7 @@ TouchpadTapSuppressionController*
 
 void GestureEventQueue::FlingHasBeenHalted() {
   fling_in_progress_ = false;
+  fling_controller_.StopFling();
 }
 
 void GestureEventQueue::ForwardGestureEvent(
