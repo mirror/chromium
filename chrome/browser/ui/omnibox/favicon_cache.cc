@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/omnibox/favicon_cache.h"
 
+#include <utility>
+
 #include "base/containers/mru_cache.h"
 #include "components/favicon/core/favicon_service.h"
 #include "components/omnibox/browser/autocomplete_result.h"
@@ -37,26 +39,40 @@ gfx::Image FaviconCache::GetFaviconForPageUrl(
   if (!favicon_service_)
     return gfx::Image();
 
+  // We have an outstanding request for this page. Add one more waiting callback
+  // and return an empty gfx::Image.
+  auto it = pending_requests_.find(page_url);
+  if (it != pending_requests_.end()) {
+    pending_requests_.insert(
+        it, std::make_pair(page_url, std::move(on_favicon_fetched)));
+    return gfx::Image();
+  }
+
   // TODO(tommycli): Investigate using the version of this method that specifies
   // the desired size.
   favicon_service_->GetFaviconImageForPageURL(
       page_url,
       base::BindRepeating(&FaviconCache::OnFaviconFetched,
-                          weak_factory_.GetWeakPtr(), page_url,
-                          base::Passed(std::move(on_favicon_fetched))),
+                          weak_factory_.GetWeakPtr(), page_url),
       &task_tracker_);
+  pending_requests_.insert(
+      std::make_pair(page_url, std::move(on_favicon_fetched)));
 
   return gfx::Image();
 }
 
 void FaviconCache::OnFaviconFetched(
     const GURL& page_url,
-    FaviconFetchedCallback on_favicon_fetched,
     const favicon_base::FaviconImageResult& result) {
+  // TODO(tommycli): Also cache null image results with a reasonable expiry.
   if (result.image.IsEmpty())
     return;
 
   mru_cache_.Put(page_url, result.image);
 
-  std::move(on_favicon_fetched).Run(result.image);
+  auto requests = pending_requests_.equal_range(page_url);
+  for (auto it = requests.first; it != requests.second; ++it) {
+    std::move(it->second).Run(result.image);
+  }
+  pending_requests_.erase(requests.first, requests.second);
 }
