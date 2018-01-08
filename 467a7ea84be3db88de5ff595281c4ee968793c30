@@ -2,6 +2,246 @@
   "comments": [
     {
       "key": {
+        "uuid": "1c7b8ddf_3adadb5b",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "`DCHECK_EQ(players_.end(), players_.find(player));` ?\n\nAlso, I think that this will be run in release (but not checked). Maybe worth putting into `#if defined(DEBUG)`?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1c0f3c_b4817ccc",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "Use DCHECK_EQ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe0eb7c_412a8550",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "In order to not run the check twice, would it make sense to do:\n```\nsize_t erased_count \u003d players_.erase(player);\nDCHECK_EQ(1, erased_count);\n```",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294a8fcc_6300807e",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "DCHECK_EQ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6175a5e_a318c4ea",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "Could this be written as `int total \u003d std::min(players_.size(), kMaxPlayers - 1);`",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a34bdf_7f643bf8",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this UMA and the one above. Shouldn\u0027t we:\n1. record them after the loop\n2. use `right` and `wrong` instead of `total`?",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a761b7d2_46ea612a",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653540cc_4e381f77",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "Could we use `!\u003d` for readability?",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 44
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9202b456_74bb1676",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08562c1_3d4b44eb",
+        "filename": "media/blink/resource_scheduler_metrics.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "In the spirit of reducing things in //media/blink, how hard would it be to move this into Blink (core/html/media/ or platform/media/)?",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ace10c6_e92f33ee",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "EXPECT",
+      "range": {
+        "startLine": 302,
+        "startChar": 2,
+        "endLine": 302,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f32bd10_b4262017",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "ditto (ASSERT is when failing should abort the execution of the test so when basically continuing would lead to crashes or noise)",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 314,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c67840e_5873f2ea",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 13
@@ -19,6 +259,92 @@
         "endLine": 567,
         "endChar": 32
       },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56f8142_60da1f91",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "Will we be able to find out the CPU cost of this? Do we have perf tests that should catch noticeable regressions?",
+      "range": {
+        "startLine": 568,
+        "startChar": 26,
+        "endLine": 568,
+        "endChar": 47
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e175d6fc_1220479d",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "const blink::WebURL\u0026",
+      "range": {
+        "startLine": 324,
+        "startChar": 22,
+        "endLine": 324,
+        "endChar": 41
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4036437_d7a89f42",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 4233,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "Did you mean \"lower\" here or am I misunderstanding the intent?",
+      "range": {
+        "startLine": 4233,
+        "startChar": 23,
+        "endLine": 4233,
+        "endChar": 29
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d6dcc7_6150bb37",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 35070,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:19:57Z",
+      "side": 1,
+      "message": "Here and below, can you add `media-dev@chromium.org` as owner?",
       "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
