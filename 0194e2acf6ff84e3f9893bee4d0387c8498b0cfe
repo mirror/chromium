@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55d889dc_1a929411",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-08T19:26:32Z",
+      "side": 1,
+      "message": "I was thinking it is more efficient if ChromeContentRendererClient owns a single ThrottleProvider for all the requests from the render thread.\n\nBesides, there is a certain level of symmetry: in both cases, it is the WillSendRequest() notification which creates throttles using the ThrottleProvider. In the render thread case, this WillSendRequest() notification is on ChromeContentRendererClient; in the worker thread case, this WillSendRequest() is on WorkerFetchContextImpl.\n\nAn alternative is to let ContentRendererClient exposes a GetThrottleProvider() getter and let RenderFrameImpl create the throttles using the throttle provider returned.\n\nPlease let me know which way you prefer. Thanks!",
+      "parentUuid": "f63cfd77_8e4ef72a",
+      "revId": "0194e2acf6ff84e3f9893bee4d0387c8498b0cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cb95a3f_bec0627b",
         "filename": "content/public/renderer/url_loader_throttle_provider.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "eb91385f_ccc27f79",
+        "filename": "content/public/renderer/url_loader_throttle_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-08T19:26:32Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "9cb95a3f_bec0627b",
+      "revId": "0194e2acf6ff84e3f9893bee4d0387c8498b0cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "137e2409_7fa96f5b",
         "filename": "content/public/renderer/url_loader_throttle_provider.h",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "0194e2acf6ff84e3f9893bee4d0387c8498b0cfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ac54d0_eecb0fc6",
+        "filename": "content/public/renderer/url_loader_throttle_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-08T19:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "137e2409_7fa96f5b",
+      "revId": "0194e2acf6ff84e3f9893bee4d0387c8498b0cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
