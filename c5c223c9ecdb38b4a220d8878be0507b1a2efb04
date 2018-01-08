@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef8d6c2a_92b8d7c7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/PopularUrlsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-01-08T19:10:54Z",
+      "side": 1,
+      "message": "Optional: Inline, while you\u0027re at it?",
+      "revId": "c5c223c9ecdb38b4a220d8878be0507b1a2efb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
