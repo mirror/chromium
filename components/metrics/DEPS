@@ -9,6 +9,7 @@ include_rules = [
   "+components/prefs",
   "+components/variations",
   "+components/version_info",
+  "+content/public/browser",
   "+content/public/test",
   "+extensions/features",
   "+mojo/public/cpp",
