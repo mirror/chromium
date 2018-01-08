@@ -1942,15 +1942,6 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       if (style.BoxDecorationBreak() == EBoxDecorationBreak::kSlice)
         return CSSIdentifierValue::Create(CSSValueSlice);
       return CSSIdentifierValue::Create(CSSValueClone);
-    case CSSPropertyWebkitBoxFlex:
-      return CSSPrimitiveValue::Create(style.BoxFlex(),
-                                       CSSPrimitiveValue::UnitType::kNumber);
-    case CSSPropertyWebkitBoxFlexGroup:
-      return CSSPrimitiveValue::Create(style.BoxFlexGroup(),
-                                       CSSPrimitiveValue::UnitType::kNumber);
-    case CSSPropertyWebkitBoxOrdinalGroup:
-      return CSSPrimitiveValue::Create(style.BoxOrdinalGroup(),
-                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyBoxShadow:
       return ValueForShadowList(style.BoxShadow(), style, true);
     case CSSPropertyColumnCount:
@@ -1972,11 +1963,6 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       if (style.HasAutoColumnWidth())
         return CSSIdentifierValue::Create(CSSValueAuto);
       return ZoomAdjustedPixelValue(style.ColumnWidth(), style);
-    case CSSPropertyTabSize:
-      return CSSPrimitiveValue::Create(
-          style.GetTabSize().GetPixelSize(1.0),
-          style.GetTabSize().IsSpaces() ? CSSPrimitiveValue::UnitType::kNumber
-                                        : CSSPrimitiveValue::UnitType::kPixels);
     case CSSPropertyTextSizeAdjust:
       if (style.GetTextSizeAdjust().IsAuto())
         return CSSIdentifierValue::Create(CSSValueAuto);
@@ -2038,12 +2024,6 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ValuesForShorthandProperty(flexFlowShorthand(), style,
                                         layout_object, styled_node,
                                         allow_visited_style);
-    case CSSPropertyFlexGrow:
-      return CSSPrimitiveValue::Create(style.FlexGrow(),
-                                       CSSPrimitiveValue::UnitType::kNumber);
-    case CSSPropertyFlexShrink:
-      return CSSPrimitiveValue::Create(style.FlexShrink(),
-                                       CSSPrimitiveValue::UnitType::kNumber);
     case CSSPropertyJustifyContent:
       return ValueForContentPositionAndDistributionWithOverflowAlignment(
           style.JustifyContent());

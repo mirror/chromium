@@ -1346,7 +1346,7 @@
     },
     {
       name: "flex-grow",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "*",
       field_template: "primitive",
@@ -1355,7 +1355,7 @@
     },
     {
       name: "flex-shrink",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "*",
       field_template: "primitive",
@@ -2528,7 +2528,7 @@
     },
     {
       name: "tab-size",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       inherited: true,
       field_group: "*",
       field_template: "external",
@@ -2922,7 +2922,7 @@
     },
     {
       name: "-webkit-box-flex",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       field_group: "*",
       field_template: "primitive",
       default_value: "0.0f",
@@ -2930,7 +2930,7 @@
     },
     {
       name: "-webkit-box-flex-group",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       field_group: "*",
       field_template: "primitive",
       default_value: "1",
@@ -2946,7 +2946,7 @@
     },
     {
       name: "-webkit-box-ordinal-group",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       field_group: "*",
       field_template: "primitive",
       default_value: "1",
