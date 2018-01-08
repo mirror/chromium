@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b48cacd1_96a20031",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-08T07:17:03Z",
+      "side": 1,
+      "message": "I see. I suggest we add a new ToWebServiceWorkerClientInfo() definition:\n\u0027\nblink::WebServiceWorkerClientInfo ToWebServiceWorkerClientInfo(mojom::ServiceWorkerClientInfoPtr client_info)\n\u0027\nand use it.\n\nOnce all related IPCs got mojofication (i.e. mojom::ServiceWorkerClientInfoPtr rather than mojom::ServiceWorkerClientInfo be passed), finally we can remove the old ToWebServiceWorkerClientInfo() definition.",
+      "parentUuid": "bca8d121_5aec330b",
+      "range": {
+        "startLine": 1480,
+        "startChar": 37,
+        "endLine": 1480,
+        "endChar": 58
+      },
+      "revId": "a6eeac39109911563aa2fc731ea1998dc3103bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b3ace9_c8844406",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 1
