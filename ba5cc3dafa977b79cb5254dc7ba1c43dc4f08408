@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55903cc0_d1ee7469",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T18:30:31Z",
+      "side": 1,
+      "message": "Use !\u003d\u003d (or even better, state it positively... \u003d\u003d\u003d and then switch the results)",
+      "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
