@@ -16,6 +16,24 @@
       "revId": "78eaa5f08d7ff21a55de92bd5b84328ba5cfacd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07686569_498decdd",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-08T16:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe64ec90_78f307a8",
+      "revId": "78eaa5f08d7ff21a55de92bd5b84328ba5cfacd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
