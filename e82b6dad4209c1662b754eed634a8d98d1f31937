@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb1ea1c_629540f2",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-08T16:31:07Z",
+      "side": 1,
+      "message": "Is it right to do this, or to set mAlpha to 0 or 1 depending on the visibility, and then update the native object with that value? It seems like there are two sources of truth here, and I\u0027m not sure which should win.",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 21
+      },
+      "revId": "e82b6dad4209c1662b754eed634a8d98d1f31937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
