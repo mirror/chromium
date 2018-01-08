@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e820139_31535d07",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-08T14:55:26Z",
+      "side": 1,
+      "message": "Can we move this line out of the if-statement?",
+      "range": {
+        "startLine": 102,
+        "startChar": 69,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "8b2ed0d40f5ee3bf1956e5a68cba2e422a6c9dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
