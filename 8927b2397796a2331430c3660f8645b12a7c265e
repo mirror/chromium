@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2237d27_d3ba4765",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-08T22:30:57Z",
+      "side": 1,
+      "message": "nit, I\u0027d call this something more like initializeWithNative or something to say this is where native init should go",
+      "range": {
+        "startLine": 174,
+        "startChar": 17,
+        "endLine": 174,
+        "endChar": 38
+      },
+      "revId": "8927b2397796a2331430c3660f8645b12a7c265e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9424e1f_26b8a2cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-08T22:30:57Z",
+      "side": 1,
+      "message": "do we need this check?  I think ideally we have this crash here since we don\u0027t want callers to call this and unexpectedly get the wrong answer if called before native is initialized.\n\nTemplateUrlService.getInstance() below also init\u0027s native, so this would crash there as well.",
+      "range": {
+        "startLine": 235,
+        "startChar": 37,
+        "endLine": 235,
+        "endChar": 50
+      },
+      "revId": "8927b2397796a2331430c3660f8645b12a7c265e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
