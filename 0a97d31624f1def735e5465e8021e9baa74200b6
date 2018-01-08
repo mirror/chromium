@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c2245b0d_f7208eae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-08T18:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4d0d740_0d98c17e",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 88
+      },
+      "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fcf5b3e_8960a8e0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I kept the original method signature as a safety net in case I missed any calls. You\u0027re right, I can remove this method, use the one with PendingState and have PendingState.NOT_PENDING if the original \"Downloading pending...\" text should be used. I will have to go back and modify all calls to the original signature. I may need more context for certain situations, such as the following which calls notifyDownloadInterrupted for a DownloadInfo created from an OfflineItem: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/download/items/OfflineContentAggregatorNotificationBridgeUi.java?rcl\u003d44e01ce042493dbc6289e0d148b6bcc6f258e537\u0026l\u003d166",
       "parentUuid": "6fcf5b3e_8960a8e0",
+      "range": {
+        "startLine": 229,
+        "startChar": 32,
+        "endLine": 229,
+        "endChar": 56
+      },
+      "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9977a142_6be1a192",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-08T18:17:42Z",
+      "side": 1,
+      "message": "I did not delete original SystemDownloadNotifier2.notifyDownloadInterrupted signature in Patch 8 because it inherits from DownloadNotifier, which is used for both SystemDownloadNotifier2 and SystemDownloadNotifier. I am unsure if SystemDownloadNotifier is still in use/if it is necessary to make all the corresponding changes to SystemDownloadNotifier, DownloadNotificationService, etc.",
+      "parentUuid": "8df4d3d7_1a1dd876",
       "range": {
         "startLine": 229,
         "startChar": 32,
