@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8d9847c_9b96bdd6",
+        "filename": "chrome/browser/extensions/api/commands/command_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-08T20:54:27Z",
+      "side": 1,
+      "message": "This was achieved via \u0027git cl format\u0027. Lmk if you\u0027d prefer the previous style.",
+      "revId": "6c382962006778d5dd424f22a72f7af8342d9d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e81817_60485ae5",
+        "filename": "chrome/browser/extensions/api/extension_action/action_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-08T20:54:27Z",
+      "side": 1,
+      "message": "This is a big file. Wanted to highlight that this test is disabled.",
+      "revId": "6c382962006778d5dd424f22a72f7af8342d9d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e511f626_186165fe",
+        "filename": "chrome/browser/extensions/chrome_extension_test_notification_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-08T20:54:27Z",
+      "side": 1,
+      "message": "This is hitting a presbumit warning: \"Please consider using base::Bind{Once,Repeating} instead of base::Bind. (crbug.com/714018)\"\n\nI\u0027ll try to revisit this in the next patch after your review.",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "6c382962006778d5dd424f22a72f7af8342d9d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cad8ca_3c267e99",
+        "filename": "chrome/browser/extensions/extension_action.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-08T20:54:27Z",
+      "side": 1,
+      "message": "Added brackets b/c the if statement is multi-line.",
+      "range": {
+        "startLine": 178,
+        "startChar": 53,
+        "endLine": 178,
+        "endChar": 54
+      },
+      "revId": "6c382962006778d5dd424f22a72f7af8342d9d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d5492f_fe4e468c",
+        "filename": "chrome/test/data/extensions/api_test/action/default_enabled/add_popup/a_popup.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-08T20:54:27Z",
+      "side": 1,
+      "message": "Some of the html test files from page_action/ and browser_action/ don\u0027t have this doctype. Should this always be included?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 15
+      },
+      "revId": "6c382962006778d5dd424f22a72f7af8342d9d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6c7983c_881fe1be",
+        "filename": "chrome/browser/extensions/api/extension_action/action_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-08T20:54:27Z",
+      "side": 1,
+      "message": "This is a big file. Wanted to highlight that this test is disabled. There is a bug with WaitForActionVisibilityChangeTo. Note that this test case passes in production, but fails in the test.",
+      "range": {
+        "startLine": 674,
+        "startChar": 3,
+        "endLine": 674,
+        "endChar": 38
+      },
+      "revId": "8af58a267317deb8d96bd1244c89878e46f22110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
