@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e341dea_187e482a",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T20:57:51Z",
+      "side": 1,
+      "message": "Link bug",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0f6c22_6a1e3ff7",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T20:57:51Z",
+      "side": 1,
+      "message": "optional: could use \u003d\u003e syntax here:\nchrome.webRequest.onBeforeRequest.addListener(\n    (details) \u003d\u003e { ++window.pacRequestCount; },\n    {urls: [\u0027*://*/self.pac\u0027]});",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc98bc9_f3310462",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T20:57:51Z",
+      "side": 1,
+      "message": "nit: space between \u0027:\u0027 and \u0027[\u0027",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea56c86_269bb75c",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T20:57:51Z",
+      "side": 1,
+      "message": "can we move the pac_request check to HideRequest()?  That\u0027s where most of the logic for determining if we should hide the request goes, and is called from a couple other places.  Bonus: it\u0027s unittested (so we can add one for this :))",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
