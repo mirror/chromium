@@ -30,6 +30,7 @@ class MockBlockingObserver : public internal::BlockingObserver {
 class ScopedBlockingCallTest : public testing::Test {
  protected:
   ScopedBlockingCallTest() {
+    internal::InitializeScopedBlockingCall();
     internal::SetBlockingObserverForCurrentThread(&observer_);
   }
 

@@ -72,6 +72,13 @@ class BASE_EXPORT BlockingObserver {
   virtual void BlockingEnded() = 0;
 };
 
+// Initializes global state required for BlockingObserver notifications. Must be
+// called before the first call to SetBlockingObserverForCurrentThread() in a
+// process. This is not thread-safe; external synchronization is required
+// between a call to this and any other function or method in this file. It is
+// invalid to call this on a thread where there is an active ScopedBlockingCall.
+BASE_EXPORT void InitializeScopedBlockingCall();
+
 // Registers |blocking_observer| on the current thread. It is invalid to call
 // this on a thread where there is an active ScopedBlockingCall.
 BASE_EXPORT void SetBlockingObserverForCurrentThread(

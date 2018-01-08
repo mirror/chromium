@@ -20,6 +20,7 @@
 #include "base/task_scheduler/test_utils.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "base/threading/simple_thread.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
@@ -92,7 +93,9 @@ class TaskSchedulerWorkerPoolTest
     : public testing::TestWithParam<PoolExecutionType> {
  protected:
   TaskSchedulerWorkerPoolTest()
-      : service_thread_("TaskSchedulerServiceThread") {}
+      : service_thread_("TaskSchedulerServiceThread") {
+    InitializeScopedBlockingCall();
+  }
 
   void SetUp() override {
     service_thread_.Start();

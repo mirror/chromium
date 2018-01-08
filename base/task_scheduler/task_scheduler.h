@@ -167,8 +167,8 @@ class BASE_EXPORT TaskScheduler {
 // registered. The last registered TaskScheduler is leaked on shutdown. The
 // methods below must not be called when TaskRunners created by a previous
 // TaskScheduler are still alive. The methods are not thread-safe; proper
-// synchronization is required to use the post_task.h API after registering a
-// new TaskScheduler.
+// synchronization is required to use the post_task.h API or the
+// ScopedBlockingCall API after registering a new TaskScheduler.
 
 #if !defined(OS_NACL)
   // Creates and starts a task scheduler using default params. |name| is used to

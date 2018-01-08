@@ -11,22 +11,32 @@ namespace base {
 
 namespace {
 
-LazyInstance<ThreadLocalPointer<internal::BlockingObserver>>::Leaky
-    tls_blocking_observer = LAZY_INSTANCE_INITIALIZER;
+ThreadLocalPointer<internal::BlockingObserver>* tls_blocking_observer = nullptr;
 
 // Last ScopedBlockingCall instantiated on this thread.
-LazyInstance<ThreadLocalPointer<ScopedBlockingCall>>::Leaky
-    tls_last_scoped_blocking_call = LAZY_INSTANCE_INITIALIZER;
+ThreadLocalPointer<ScopedBlockingCall>* tls_last_scoped_blocking_call = nullptr;
+
+bool ScopedBlockingCallIsInitialized() {
+  DCHECK_EQ(!!tls_blocking_observer, !!tls_last_scoped_blocking_call);
+  return tls_blocking_observer;
+}
 
 }  // namespace
 
 ScopedBlockingCall::ScopedBlockingCall(BlockingType blocking_type)
-    : blocking_observer_(tls_blocking_observer.Get().Get()),
-      previous_scoped_blocking_call_(tls_last_scoped_blocking_call.Get().Get()),
+    : blocking_observer_(ScopedBlockingCallIsInitialized()
+                             ? tls_blocking_observer->Get()
+                             : nullptr),
+      previous_scoped_blocking_call_(ScopedBlockingCallIsInitialized()
+                                         ? tls_last_scoped_blocking_call->Get()
+                                         : nullptr),
       is_will_block_(blocking_type == BlockingType::WILL_BLOCK ||
                      (previous_scoped_blocking_call_ &&
                       previous_scoped_blocking_call_->is_will_block_)) {
-  tls_last_scoped_blocking_call.Get().Set(this);
+  if (!ScopedBlockingCallIsInitialized())
+    return;
+
+  tls_last_scoped_blocking_call->Set(this);
 
   if (blocking_observer_) {
     if (!previous_scoped_blocking_call_) {
@@ -39,32 +49,44 @@ ScopedBlockingCall::ScopedBlockingCall(BlockingType blocking_type)
 }
 
 ScopedBlockingCall::~ScopedBlockingCall() {
-  DCHECK_EQ(this, tls_last_scoped_blocking_call.Get().Get());
-  tls_last_scoped_blocking_call.Get().Set(previous_scoped_blocking_call_);
+  if (!ScopedBlockingCallIsInitialized())
+    return;
+
+  DCHECK_EQ(this, tls_last_scoped_blocking_call->Get());
+  tls_last_scoped_blocking_call->Set(previous_scoped_blocking_call_);
   if (blocking_observer_ && !previous_scoped_blocking_call_)
     blocking_observer_->BlockingEnded();
 }
 
 namespace internal {
 
+void InitializeScopedBlockingCall() {
+  if (ScopedBlockingCallIsInitialized())
+    return;
+  tls_blocking_observer = new ThreadLocalPointer<internal::BlockingObserver>();
+  tls_last_scoped_blocking_call = new ThreadLocalPointer<ScopedBlockingCall>();
+}
+
 void SetBlockingObserverForCurrentThread(BlockingObserver* blocking_observer) {
-  DCHECK(!tls_blocking_observer.Get().Get());
-  tls_blocking_observer.Get().Set(blocking_observer);
+  DCHECK(ScopedBlockingCallIsInitialized());
+  tls_blocking_observer->Set(blocking_observer);
 }
 
 void ClearBlockingObserverForTesting() {
-  tls_blocking_observer.Get().Set(nullptr);
+  DCHECK(ScopedBlockingCallIsInitialized());
+  tls_blocking_observer->Set(nullptr);
 }
 
 ScopedClearBlockingObserverForTesting::ScopedClearBlockingObserverForTesting()
-    : blocking_observer_(tls_blocking_observer.Get().Get()) {
-  tls_blocking_observer.Get().Set(nullptr);
+    : blocking_observer_(tls_blocking_observer->Get()) {
+  ClearBlockingObserverForTesting();
 }
 
 ScopedClearBlockingObserverForTesting::
     ~ScopedClearBlockingObserverForTesting() {
-  DCHECK(!tls_blocking_observer.Get().Get());
-  tls_blocking_observer.Get().Set(blocking_observer_);
+  DCHECK(ScopedBlockingCallIsInitialized());
+  DCHECK(!tls_blocking_observer->Get());
+  SetBlockingObserverForCurrentThread(blocking_observer_);
 }
 
 }  // namespace internal

@@ -67,7 +67,9 @@ constexpr TimeDelta kExtraTimeToWaitForCleanup = TimeDelta::FromSeconds(1);
 class TaskSchedulerWorkerPoolImplTestBase {
  protected:
   TaskSchedulerWorkerPoolImplTestBase()
-      : service_thread_("TaskSchedulerServiceThread"){};
+      : service_thread_("TaskSchedulerServiceThread") {
+    InitializeScopedBlockingCall();
+  };
 
   void CommonSetUp() {
     CreateAndStartWorkerPool(TimeDelta::Max(), kNumWorkersInWorkerPool);
@@ -779,6 +781,7 @@ TEST_F(TaskSchedulerWorkerPoolHistogramTest, NumTasksBeforeCleanup) {
 }
 
 TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, InitOne) {
+  InitializeScopedBlockingCall();
   TaskTracker task_tracker;
   DelayedTaskManager delayed_task_manager;
   scoped_refptr<TaskRunner> service_thread_task_runner =
@@ -800,6 +803,7 @@ TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, InitOne) {
 TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, VerifyStandbyThread) {
   constexpr size_t worker_capacity = 3;
 
+  InitializeScopedBlockingCall();
   TaskTracker task_tracker;
   DelayedTaskManager delayed_task_manager;
   scoped_refptr<TaskRunner> service_thread_task_runner =

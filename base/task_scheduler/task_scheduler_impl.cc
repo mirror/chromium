@@ -14,6 +14,7 @@
 #include "base/task_scheduler/sequence_sort_key.h"
 #include "base/task_scheduler/task.h"
 #include "base/task_scheduler/task_tracker.h"
+#include "base/threading/scoped_blocking_call.h"
 
 namespace base {
 namespace internal {
@@ -31,6 +32,9 @@ TaskSchedulerImpl::TaskSchedulerImpl(
   static_assert(
       arraysize(kEnvironmentParams) == ENVIRONMENT_COUNT,
       "The size of |kEnvironmentParams| must match ENVIRONMENT_COUNT.");
+
+  // Must be invoked before workers start registering BlockingObservers.
+  InitializeScopedBlockingCall();
 
   for (int environment_type = 0; environment_type < ENVIRONMENT_COUNT;
        ++environment_type) {
