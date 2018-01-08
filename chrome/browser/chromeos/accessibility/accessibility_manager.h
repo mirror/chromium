@@ -27,6 +27,7 @@
 #include "extensions/browser/extension_system.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 
+class Dictation;
 class Profile;
 
 namespace ash {
@@ -309,6 +310,9 @@ class AccessibilityManager
   // Set the keys to be captured by Switch Access.
   void SetSwitchAccessKeys(const std::set<int>& key_codes);
 
+  // Starts or stops dictation (type what you speak).
+  void ToggleDictation();
+
  protected:
   AccessibilityManager();
   ~AccessibilityManager() override;
@@ -448,6 +452,8 @@ class AccessibilityManager
   std::unique_ptr<ash::ScopedBacklightsForcedOff> scoped_backlights_forced_off_;
 
   std::unique_ptr<ScopedKeyboardStateSetter> keyboard_state_setter_;
+
+  std::unique_ptr<Dictation> dictation_;
 
   base::WeakPtrFactory<AccessibilityManager> weak_ptr_factory_;
 
