@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4771c42f_d83752f2",
+        "filename": "ui/base/cocoa/weak_ptr_object.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T23:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9aeb8e_79bfb5a7",
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5801af6_f61a0089",
         "filename": "ui/base/cocoa/weak_ptr_object.h",
         "patchSetId": 13
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "d90c2a36_845631ba",
+        "filename": "ui/base/cocoa/weak_ptr_object.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T23:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5801af6_f61a0089",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "439c3155_3e96c2b6",
+        "filename": "ui/base/cocoa/weak_ptr_object.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T23:38:23Z",
+      "side": 1,
+      "message": "\u003e Does this need to be a base class, or can the void* static methods just be declared in the private: section out-of-line?\n\nUnfortunately, that would make them templates and require exposing ObjectiveC code in the header - I\u0027ve added a comment on internal::WeakPtrNSObjectFactoryBase.",
+      "parentUuid": "a3a89edb_293eea4e",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 71
+      },
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d4a7217_675cc715",
         "filename": "ui/base/cocoa/weak_ptr_object.mm",
         "patchSetId": 13
@@ -79,6 +145,24 @@
       "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79fc727_a58b5319",
+        "filename": "ui/base/cocoa/weak_ptr_object.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T23:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d4a7217_675cc715",
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0776bc_e4b3de4f",
+        "filename": "ui/base/cocoa/weak_ptr_object.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T23:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e7f149c_48cea88a",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
