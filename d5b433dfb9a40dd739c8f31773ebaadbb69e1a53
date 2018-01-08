@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "832dbe23_8c96e88d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-08T10:19:20Z",
+      "side": 1,
+      "message": "nit: subtree",
+      "range": {
+        "startLine": 1452,
+        "startChar": 57,
+        "endLine": 1452,
+        "endChar": 65
+      },
+      "revId": "d5b433dfb9a40dd739c8f31773ebaadbb69e1a53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
