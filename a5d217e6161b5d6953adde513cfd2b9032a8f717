@@ -51,6 +51,24 @@
       "revId": "a5d217e6161b5d6953adde513cfd2b9032a8f717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e836750b_071109ee",
+        "filename": "content/public/browser/android/synchronous_compositor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-08T10:45:41Z",
+      "side": 1,
+      "message": "\u003e \u003e this seem to be opposite of what the code does. I think the code is right?\n\u003e \n\u003e What do you mean by \"the code\"? Those callers of DidChangeRootLayerScrollOffset() in android_webview/browser/browser_view_renderer.cc?\n\nYes\n\n\u003e \n\u003e Do you think callers of DidChangeRootLayerScrollOffset() must give |root_offset| in DIP scale even if --use-zoom-for-dsf is enabled? In my understanding, it will be used in scrollX() in blink and it will be divided by the page zoom factor (which is equal to DSF in Android). Thus, I think callers of DidChangeRootLayerScrollOffset() must give |root_offset| in physical pixel scale if --use-zoom-for-dsf is enabled.\n\nOh, I think I misread the comment before, read \"disabled\" as \"enabled\". Reword this so it\u0027s \"... if --use-zoom-for-dsf is enabled. Otherwise ...\"",
+      "parentUuid": "fb206f20_49d4dc25",
+      "revId": "a5d217e6161b5d6953adde513cfd2b9032a8f717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
