@@ -14,6 +14,13 @@ import org.chromium.components.offline_items_collection.OfflineItem.Progress;
  * TODO(jming): Consolidate with other downloads-related objects (http://crbug.com/746692).
  */
 public final class DownloadUpdate {
+    public enum PendingState {
+        NOT_PENDING,
+        PENDING_NETWORK,
+        PENDING_ANOTHER_DOWNLOAD,
+        PENDING_NO_DESCRIPTION,
+    }
+
     private final ContentId mContentId;
     private final String mFileName;
     private final String mFilePath;
@@ -31,6 +38,7 @@ public final class DownloadUpdate {
     private final long mStartTime;
     private final long mSystemDownloadId;
     private final long mTimeRemainingInMillis;
+    private final PendingState mPendingState;
 
     private DownloadUpdate(Builder builder) {
         this.mContentId = builder.mContentId;
@@ -50,6 +58,7 @@ public final class DownloadUpdate {
         this.mStartTime = builder.mStartTime;
         this.mSystemDownloadId = builder.mSystemDownloadId;
         this.mTimeRemainingInMillis = builder.mTimeRemainingInMillis;
+        this.mPendingState = builder.mPendingState;
     }
 
     public ContentId getContentId() {
@@ -120,6 +129,10 @@ public final class DownloadUpdate {
         return mTimeRemainingInMillis;
     }
 
+    public PendingState getPendingState() {
+        return mPendingState;
+    }
+
     /**
      * Helper class for building the DownloadUpdate object.
      */
@@ -141,6 +154,7 @@ public final class DownloadUpdate {
         private long mStartTime;
         private long mSystemDownloadId = -1;
         private long mTimeRemainingInMillis;
+        private PendingState mPendingState;
 
         public Builder setContentId(ContentId contentId) {
             this.mContentId = contentId;
@@ -224,6 +238,11 @@ public final class DownloadUpdate {
 
         public Builder setTimeRemainingInMillis(long timeRemainingInMillis) {
             this.mTimeRemainingInMillis = timeRemainingInMillis;
+            return this;
+        }
+
+        public Builder setPendingState(PendingState pendingState) {
+            this.mPendingState = pendingState;
             return this;
         }
 
