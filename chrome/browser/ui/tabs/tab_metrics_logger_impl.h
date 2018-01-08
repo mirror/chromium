@@ -32,6 +32,11 @@ class TabMetricsLoggerImpl : public TabMetricsLogger {
   static metrics::TabMetricsEvent::ProtocolHandlerScheme
   GetSchemeValueFromString(const std::string& scheme);
 
+  // Returns the NavigationSource corresponding to the PageTransition. Only
+  // considers main-frame transitions.
+  static metrics::TabMetricsEvent::NavigationSource
+  GetNavigationSourceFromPageTransition(ui::PageTransition page_transition);
+
   // A counter to be incremented and logged with each UKM entry, used to
   // indicate the order that events within the same report were logged.
   int sequence_id_ = 0;
