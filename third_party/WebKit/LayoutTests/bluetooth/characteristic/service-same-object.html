@@ -6,15 +6,12 @@
 <script src="../../resources/bluetooth/bluetooth-helpers.js"></script>
 <script>
 'use strict';
-bluetooth_test(() => {
-  return setBluetoothFakeAdapter('HeartRateAdapter')
-    .then(() => requestDeviceWithTrustedClick({
-      filters: [{services: ['heart_rate']}]}))
-    .then(device => device.gatt.connect())
-    .then(gattServer => gattServer.getPrimaryService('heart_rate'))
-    .then(service => service.getCharacteristic('body_sensor_location'))
-    .then(characteristic => {
-      assert_equals(characteristic.service, characteristic.service);
-    });
-}, "[SameObject] test for BluetoothRemoteGATTCharacteristic's service.");
+const test_desc = '[SameObject] test for BluetoothRemoteGATTCharacteristic\'s ' +
+  'service.';
+let characteristic;
+
+bluetooth_test(() => getMeasurementIntervalCharacteristic()
+    .then(_ => ({characteristic} = _))
+    .then(() => assert_equals(characteristic.service, characteristic.service)),
+    test_desc);
 </script>
