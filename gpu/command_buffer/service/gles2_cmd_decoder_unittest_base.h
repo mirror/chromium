@@ -48,7 +48,7 @@ namespace gles2 {
 class MemoryTracker;
 
 class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
-                             public GLES2DecoderClient {
+                             public DecoderClient {
  public:
   GLES2DecoderTestBase();
   ~GLES2DecoderTestBase() override;
@@ -822,7 +822,7 @@ MATCHER_P2(PointsToArray, array, size, "") {
 }
 
 class GLES2DecoderPassthroughTestBase : public testing::Test,
-                                        public GLES2DecoderClient {
+                                        public DecoderClient {
  public:
   GLES2DecoderPassthroughTestBase(ContextType context_type);
   ~GLES2DecoderPassthroughTestBase() override;
