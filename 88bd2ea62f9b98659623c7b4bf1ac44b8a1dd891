@@ -22,6 +22,30 @@
       "revId": "88bd2ea62f9b98659623c7b4bf1ac44b8a1dd891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a8b32b_11fbc10c",
+        "filename": "chrome/browser/resources/md_history/history.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-08T03:50:50Z",
+      "side": 1,
+      "message": "This looks fine. Thanks for changing it. I\u0027ll look into moving this somewhere else.",
+      "parentUuid": "5d6e7f7d_90983195",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "88bd2ea62f9b98659623c7b4bf1ac44b8a1dd891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
