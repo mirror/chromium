@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd466fd_737ac36f",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-08T18:04:06Z",
+      "side": 1,
+      "message": "Optional nit: I find the #ifs and #elses on either side of this case made it very difficult to parse. I\u0027d prefer having empty lines between cases (I think these are allowed?), or braces (definitely allowed by the style guide) around each block, since the macros make the indentations unhelpful for reading this code.",
+      "revId": "844e07dd7928f41aa14142fd3f57fba6aed768ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
