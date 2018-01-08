@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "241621a8_53ca6e9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-08T22:28:16Z",
+      "side": 1,
+      "message": "I guess we expect this never to be null by this point right?  (same below).  We don\u0027t have a way to lazily add ourselves as a client so it would be bad to get this call before the controller is init\u0027d.  It\u0027s probably best to leave this as it is now and see if it\u0027s an issue and then likely rework this somehow.",
+      "revId": "81153984f28960eb36f33f5355e76a6f60a35f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5777ad55_35472afa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-08T22:28:16Z",
+      "side": 1,
+      "message": "same bit...this could be null now, but the timing didn\u0027t change so it shouldn\u0027t be",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 60
+      },
+      "revId": "81153984f28960eb36f33f5355e76a6f60a35f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39277430_2913f74a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-08T22:28:16Z",
+      "side": 1,
+      "message": "same...could be null.  It shouldn\u0027t be because a tab shouldn\u0027t ever be dealing with a CVC that hasn\u0027t been init\u0027d, but just trying to focus on the consistent null checking of this.",
+      "range": {
+        "startLine": 524,
+        "startChar": 16,
+        "endLine": 524,
+        "endChar": 26
+      },
+      "revId": "81153984f28960eb36f33f5355e76a6f60a35f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
