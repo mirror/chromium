@@ -81,6 +81,7 @@ using content::WebContents;
 
 namespace android_webview {
 namespace {
+static bool g_should_create_task_scheduler = true;
 
 // TODO(sgurun) move this to its own file.
 // This class filters out incoming aw_contents related IPC messages for the
@@ -647,6 +648,15 @@ bool AwContentBrowserClient::ShouldOverrideUrlLoading(
   base::string16 url = base::UTF8ToUTF16(gurl.possibly_invalid_spec());
   return client_bridge->ShouldOverrideUrlLoading(url, has_user_gesture,
                                                  is_redirect, is_main_frame);
+}
+
+bool AwContentBrowserClient::ShouldCreateTaskScheduler() {
+  return g_should_create_task_scheduler;
+}
+
+// static
+void AwContentBrowserClient::DisableCreatingTaskScheduler() {
+  g_should_create_task_scheduler = false;
 }
 
 }  // namespace android_webview

@@ -897,6 +897,10 @@ class CONTENT_EXPORT ContentBrowserClient {
                                         bool is_main_frame,
                                         ui::PageTransition transition);
 #endif
+
+  // If it returns false, does not create task schduler at browser main loop,
+  // it should be created at entry point.
+  virtual bool ShouldCreateTaskScheduler();
 };
 
 }  // namespace content
