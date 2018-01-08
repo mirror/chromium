@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6397efb4_0e345ffe",
+        "filename": "gpu/command_buffer/service/decoder_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2018-01-08T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04813638_4aec357d",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce4c613c_72d8f0c4",
         "filename": "gpu/command_buffer/service/decoder_context.h",
         "patchSetId": 12
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7cf6e873_ec9a2caf",
+        "filename": "gpu/command_buffer/service/decoder_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2018-01-08T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce4c613c_72d8f0c4",
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "583ed6b2_58cc0e61",
         "filename": "gpu/ipc/service/command_buffer_stub.h",
         "patchSetId": 12
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-08T19:10:18Z",
       "side": 1,
       "message": "here and elsewhere, why is this called a \"decoder\" rather than a \"decoder context\"?",
+      "range": {
+        "startLine": 111,
+        "startChar": 18,
+        "endLine": 111,
+        "endChar": 25
+      },
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22b013c_92547b00",
+        "filename": "gpu/ipc/service/command_buffer_stub.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2018-01-08T20:48:13Z",
+      "side": 1,
+      "message": "Laziness. It will be a RasterDecoder or GLES2Decoder. But that\u0027s not evident here.\n\nFixed.",
+      "parentUuid": "583ed6b2_58cc0e61",
       "range": {
         "startLine": 111,
         "startChar": 18,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "be719727_74d85903",
+        "filename": "gpu/ipc/service/command_buffer_stub.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2018-01-08T20:48:13Z",
+      "side": 1,
+      "message": "You are correct. This is effectively implied because std::unique_ptr has a move ctor, but no copy ctor. I\u0027ve removed it for consistency with the rest of the code base.\n\nFYI, I suspect that it\u0027s equivalent because relying on copy elision to pass in works with both std::unique_ptr\u003c\u003e and std::unique_ptr\u003c\u003e\u0026\u0026 on the method signature.",
+      "parentUuid": "c66cb23c_7b15a707",
+      "range": {
+        "startLine": 143,
+        "startChar": 50,
+        "endLine": 143,
+        "endChar": 52
+      },
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b8f76a6_2cdc9346",
         "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
         "patchSetId": 12
@@ -108,6 +198,30 @@
       "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3250caef_9c7d238a",
+        "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2018-01-08T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b8f76a6_2cdc9346",
+      "range": {
+        "startLine": 402,
+        "startChar": 23,
+        "endLine": 402,
+        "endChar": 38
+      },
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
