@@ -139,6 +139,24 @@
       "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ee306d_af061559",
+        "filename": "ui/gfx/text_utils_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-08T17:45:58Z",
+      "side": 1,
+      "message": "No, it\u0027s okay for ios to just ignore the typesetter arg.",
+      "parentUuid": "5e4da833_31a2a27e",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
