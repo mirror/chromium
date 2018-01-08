@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f16f3515_b37d5188",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "SG. IIRC I just wanted to avoid defining a constructor to the ProgramInfo struct. But this looks nicer and the constructor is trivial.",
+      "parentUuid": "66ae2caa_a20ce48e",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 37
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be2d5d72_3b054470",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c279d82_b4eb2453",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "I don\u0027t really like it inlined :\\",
+      "parentUuid": "be2d5d72_3b054470",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 30
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "85d085a7_e3c45e10",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2439ef1_35eb5b97",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 32
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe4161a2_78944353",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 3
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "3697e775_846a739b",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "I decided agaisnt. Let me know if you have a strong preference.",
+      "parentUuid": "fe4161a2_78944353",
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5948cf0c_af6997e8",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2fe087_0428437d",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5948cf0c_af6997e8",
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "223a1fbd_18dfcd3a",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "I\u0027m inclined to leave it as is since the out param is a vector for conveniance.",
+      "parentUuid": "43c2ddc0_80a54966",
+      "range": {
+        "startLine": 285,
+        "startChar": 34,
+        "endLine": 285,
+        "endChar": 35
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddfbf01f_ad039264",
         "filename": "chrome/browser/conflicts/installed_programs_win.h",
         "patchSetId": 3
@@ -148,6 +280,30 @@
       "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1b5a4e_c747aa47",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddfbf01f_ad039264",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "bd65d1fc_e722df2b",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fee6042_599ea3bd",
+      "range": {
+        "startLine": 93,
+        "startChar": 42,
+        "endLine": 93,
+        "endChar": 46
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69af54d1_5e32dc9b",
         "filename": "chrome/browser/conflicts/installed_programs_win.h",
         "patchSetId": 3
@@ -188,6 +368,24 @@
       "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311c91c1_96dca4bc",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T19:43:42Z",
+      "side": 1,
+      "message": "Done. I\u0027ve left it as-is and clarified the behavior for the out param.",
+      "parentUuid": "69af54d1_5e32dc9b",
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
