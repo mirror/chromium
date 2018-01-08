@@ -70,6 +70,30 @@
       "revId": "c70425d7d0d578877e8581ea18d1d83f1dc88a31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caab1a03_46587dbf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-08T11:57:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1b96da4_733b13ad",
+      "range": {
+        "startLine": 567,
+        "startChar": 8,
+        "endLine": 567,
+        "endChar": 10
+      },
+      "revId": "c70425d7d0d578877e8581ea18d1d83f1dc88a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
