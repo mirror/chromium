@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ae2c938_1aff81e4",
+        "filename": "mojo/public/cpp/bindings/interface_invalidator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-08T04:57:58Z",
+      "side": 1,
+      "message": "Probably can\u0027t hurt",
+      "parentUuid": "fc6d1be1_381da728",
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ddcbcdd_46061578",
         "filename": "mojo/public/cpp/bindings/interface_invalidator.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a9b065_140952d5",
+        "filename": "mojo/public/cpp/bindings/interface_invalidator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-08T04:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ddcbcdd_46061578",
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +149,54 @@
       "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888bb404_e175dcea",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-08T04:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d76312_c822392c",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 41
+      },
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e32ab596_f2131292",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-08T04:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "068bd02f_2c4d92b3",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 10
+      },
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
