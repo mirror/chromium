@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9110f590_41d7fa0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-01-08T10:15:33Z",
+      "side": 0,
+      "message": "IIRC this is needed so that layout_foo properties in the XML don\u0027t get thrown away. The view here has:\n\nandroid:layout_width\u003d\"match_parent\"\nandroid:layout_height\u003d\"wrap_content\"",
+      "range": {
+        "startLine": 64,
+        "startChar": 78,
+        "endLine": 64,
+        "endChar": 82
+      },
+      "revId": "069e8a1e038396aeb69f441dc39fbf7191903ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a7a29c_0f4aa697",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-01-08T10:15:33Z",
+      "side": 1,
+      "message": "I think it\u0027s better to pass a dummy FrameLayout here. It\u0027s used at initialisation but the view is still not attached. We do that for all the view holders, changing the pattern now would mean doing it everywhere. Even if there is no visible difference in the current case, it might show up somewhere else and require resetting programatically some view properties that got discarded.",
+      "range": {
+        "startLine": 56,
+        "startChar": 47,
+        "endLine": 56,
+        "endChar": 78
+      },
+      "revId": "32483b761b5d396806d8c19581ec7e14b25443df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d1bc41_0dd947f2",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RENDER_TESTS.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-01-08T10:15:33Z",
+      "side": 1,
+      "message": "nit: align table like it is being done for the other columns?",
+      "range": {
+        "startLine": 107,
+        "startChar": 9,
+        "endLine": 107,
+        "endChar": 10
+      },
+      "revId": "32483b761b5d396806d8c19581ec7e14b25443df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10997e84_9f5dd289",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-01-08T10:15:33Z",
+      "side": 1,
+      "message": "nit: We have a method to run on a UI thread and return an object:\n\npublic static \u003cT\u003e T runOnUiThreadBlockingNoException\n\nbetter than having an array just to grab the reference?",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 285,
+        "endChar": 41
+      },
+      "revId": "32483b761b5d396806d8c19581ec7e14b25443df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
