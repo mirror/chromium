@@ -34,6 +34,24 @@
       "revId": "18f3728cf9bec5d917290e2c876dc36b2f3bc619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29eaa66a_90ecfac1",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:41:49Z",
+      "side": 1,
+      "message": "\u003e Will Mac Views UI surfaces (eg. c/b/ui/views dialogs) do the correct thing if they\u0027re using the default argument? It seems like passing \u0027DEFAULT\u0027, which equals \u0027PLATFORM\u0027, would yield RenderTextMac (unless the commandline explicitly specifies kEnableHarfBuzzRenderText, which I doubt is the case).\n\nThe goal would be to flip DEFAULT from PLATFORM to HARFBUZZ ASAP. Here, it really doesn\u0027t matter, since the download shelf is staying Cocoa in m65 (i.e. download_item_view.cc isn\u0027t linked in yet on Mac releases). It just means http://crbug.com/697407 won\u0027t be fixed until that flip happens, but that\u0027s only an issue for mac_views_browser. Still.. I want to try to get it flipped to HARFBUZZ for m65 - it just can\u0027t start that way without regressing the Cocoa browser UI.\n\n(That is, DEFAULT just needs to be PLATFORM while there are still callers of these being used for Cocoa code - which is hopefully not much!).",
+      "parentUuid": "5f776a9b_4feb3ef0",
+      "revId": "18f3728cf9bec5d917290e2c876dc36b2f3bc619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

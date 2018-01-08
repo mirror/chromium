@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d9f48cd_b8d70afb",
+        "filename": "ui/gfx/canvas_skia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:41:49Z",
+      "side": 1,
+      "message": "yeah - it just needs to match what ElideRectangleText is doing a few lines above. Currently that\u0027s PLATFORM. The idea of the DCHECK here is to ensure that the line *below* gets updated when ElideRectangleText is updated to support a typesetter argument.\n\nThe scenario to protect against is that ElideRectangleText is updated to accept a |typesetter|, and Typesetter::DEFAULT switches from PLATFORM to HARFBUZZ. Callers relying on the default argument for SizeStringFloat will now pass HARFBUZZ and fail this DCHECK. But the DCHECK can be removed when the line below is updated - added a comment.",
+      "parentUuid": "2173ba1d_44b89245",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bfd03a3_d87f69cc",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T17:58:03Z",
       "side": 1,
       "message": "Are MacViews surfaces and the Mac-Views-Browser doing the right thing for DEFAULT/PLATFORM? Shouldn\u0027t those be using HarfBuzz, or am I mistaken about that?",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b4c496_70710f9a",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:41:49Z",
+      "side": 1,
+      "message": "\u003e Are MacViews surfaces and the Mac-Views-Browser doing the right thing for DEFAULT/PLATFORM? Shouldn\u0027t those be using HarfBuzz, or am I mistaken about that?\n\nYou are spot-on actually :). I\u0027d filed https://crbug.com/798944 about this -- \"MacViewsBrowser: switches::kEnableHarfBuzzRenderText should always be set\" -- and set it as a blocker on the mac_views_browser tracker bug.\n\nThe annoying thing is that BUILDFLAG(MAC_VIEWS_BROWSER) isn\u0027t available here -- ui/gfx can\u0027t depend on ui/base. So I need to move the switch, or make it obsolete. For now, when one runs MacViewsBrowser they should also use --enable-harfbuzz-rendertext.",
+      "parentUuid": "3bfd03a3_d87f69cc",
       "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "272b25af_1b8578e4",
+        "filename": "ui/gfx/text_elider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:41:49Z",
+      "side": 1,
+      "message": "\u003e q: Why not provide a default here?\n\nDone! I was on the fence - my comment in download_item_view.cc [1] was about this. A reason not to is just that \"default arguments can be annoying, or can make refactoring hard\" (i.e. all the reasons they were forbidden by the style guide in the past). (i.e. there\u0027s some satisfaction in knowing all the callers of ElideFilename have been updated, but DEFAULT here makes the code in download_item_view.cc nicer IMO).",
+      "parentUuid": "b41bd4c2_97025e8d",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1a1594e_d4d259a6",
         "filename": "ui/gfx/text_utils_ios.mm",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-05T17:58:03Z",
       "side": 1,
       "message": "Maybe DCHECK the typesetter value?",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4da833_31a2a27e",
+        "filename": "ui/gfx/text_utils_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:41:49Z",
+      "side": 1,
+      "message": "\u003e Maybe DCHECK the typesetter value?\n\nI don\u0027t think it makes sense to here - either of DEFAULT or PLATFORM is correct for iOS. But that makes it trickier when I want to update DEFAULT to be HARFBUZZ. That is, DEFAULT on iOS should still be PLATFORM in that case. That could be done with #ifdef, but in reality iOS doesn\u0027t care, since there is no Harfbuzz on iOS.\n\nLong term, I actually just want to remove all the |typesetter| arguments, so my feeling is that a DCHECK here is just extra churn that might cause confusion.\n\nBut if you think otherwise, I\u0027m fine with DHCHECK(PLATFORM) here, and #ifdefs later when DEFAULT changes on desktop to HARFBUZZ.",
+      "parentUuid": "b1a1594e_d4d259a6",
       "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
