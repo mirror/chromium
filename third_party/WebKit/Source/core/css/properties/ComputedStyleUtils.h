@@ -26,6 +26,14 @@ class ComputedStyleUtils {
                                             bool visited_link);
   static CSSValue* ZoomAdjustedPixelValueForLength(const Length&,
                                                    const ComputedStyle&);
+
+  static CSSValue* ValueForPosition(const LengthPoint& position,
+                                    const ComputedStyle&);
+
+  static CSSValue* ValueForOffset(const ComputedStyle&,
+                                  const LayoutObject*,
+                                  Node*,
+                                  bool allow_visited_style);
 };
 
 }  // namespace blink
