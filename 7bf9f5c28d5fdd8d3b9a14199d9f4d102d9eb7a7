@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5474cde9_da0a809e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-08T15:29:45Z",
+      "side": 0,
+      "message": "Out of curiosity, why is this dcheck no longer necessary---is it firing now?\n\nPrefetch had some subtle logic around ensuring that the request is synchronous that I don\u0027t full understand and I\u0027d like to get a handle on.",
+      "revId": "7bf9f5c28d5fdd8d3b9a14199d9f4d102d9eb7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

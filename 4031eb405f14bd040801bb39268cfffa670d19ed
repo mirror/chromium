@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ac11723_4269fcc1",
+        "filename": "chrome/common/prerender_url_loader_throttle.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-08T15:29:45Z",
+      "side": 1,
+      "message": "methos -\u003e method",
+      "range": {
+        "startLine": 78,
+        "startChar": 10,
+        "endLine": 78,
+        "endChar": 16
+      },
+      "revId": "4031eb405f14bd040801bb39268cfffa670d19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c494f9_17b95ed8",
+        "filename": "chrome/common/prerender_url_loader_throttle.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-08T15:29:45Z",
+      "side": 1,
+      "message": "WillRedirectRequestOnUI -\u003e just WillRedirectRequest.",
+      "range": {
+        "startLine": 107,
+        "startChar": 7,
+        "endLine": 107,
+        "endChar": 30
+      },
+      "revId": "4031eb405f14bd040801bb39268cfffa670d19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad82f98_71ed0b8c",
+        "filename": "chrome/common/prerender_url_loader_throttle.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-08T15:29:45Z",
+      "side": 1,
+      "message": "You dropped the FAVICON delay for android?",
+      "range": {
+        "startLine": 115,
+        "startChar": 3,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "4031eb405f14bd040801bb39268cfffa670d19ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
