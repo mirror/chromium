@@ -3060,7 +3060,7 @@ void LocalFrameView::UpdateAllLifecyclePhasesExceptPaint() {
 void LocalFrameView::UpdateLifecyclePhasesForPrinting() {
   auto* local_frame_view_root = GetFrame().LocalFrameRoot().View();
   local_frame_view_root->UpdateLifecyclePhasesInternal(
-      DocumentLifecycle::kPrePaintClean, this);
+      DocumentLifecycle::kPrePaintClean);
 
   auto* detached_frame_view = this;
   while (detached_frame_view->is_attached_ &&
@@ -3076,7 +3076,7 @@ void LocalFrameView::UpdateLifecyclePhasesForPrinting() {
   // UpdateLifecyclePhasesInternalnormal()|. We need the subtree to be ready for
   // painting.
   detached_frame_view->UpdateLifecyclePhasesInternal(
-      DocumentLifecycle::kPrePaintClean, this);
+      DocumentLifecycle::kPrePaintClean);
 }
 
 void LocalFrameView::UpdateLifecycleToLayoutClean() {
