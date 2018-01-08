@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d09ed9_eb20841c",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-08T22:05:34Z",
+      "side": 0,
+      "message": "I think this could have some side-effects. For example filling over something the user entered?",
+      "range": {
+        "startLine": 806,
+        "startChar": 8,
+        "endLine": 806,
+        "endChar": 38
+      },
+      "revId": "e50425bed92b9a78403abfceeefe269f44cb92c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
