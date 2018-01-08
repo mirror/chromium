@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6d0ce87_e5e13900",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-08T23:46:18Z",
+      "side": 1,
+      "message": "Expose AllocateLocalSurfaceId in RenderWidgetHostViewBase? Or maybe WasResized?",
+      "revId": "64d2da3ec316796ea357737da11444b45fe85b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bbf423_4f3883b0",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2762,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-08T23:46:18Z",
+      "side": 1,
+      "message": "This is hard to read:\n\n} else {\n  if (enable_surface_synchronization_) {\n    ...\n  }\n\n}",
+      "revId": "64d2da3ec316796ea357737da11444b45fe85b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114668b1_fdc892a8",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2938,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-08T23:46:18Z",
+      "side": 1,
+      "message": "This can all be on one line.",
+      "revId": "64d2da3ec316796ea357737da11444b45fe85b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21bf5b5_44ce2a1e",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2943,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-08T23:46:18Z",
+      "side": 1,
+      "message": "This really needs comments.",
+      "revId": "64d2da3ec316796ea357737da11444b45fe85b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
