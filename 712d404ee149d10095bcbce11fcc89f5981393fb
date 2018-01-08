@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d7afe97_d72a4f78",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T14:57:51Z",
+      "side": 1,
+      "message": "do you need to report all of these unrelated events in this test?",
+      "revId": "712d404ee149d10095bcbce11fcc89f5981393fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc69b76_cafb1c19",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T14:57:51Z",
+      "side": 1,
+      "message": "how about deleting the expectations for device_mode, battery_percent, and on_battery? they\u0027re already tested above, right?",
+      "revId": "712d404ee149d10095bcbce11fcc89f5981393fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca06fcd3_0e0fd3bb",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T14:57:51Z",
+      "side": 1,
+      "message": "nit: EXPECT_DOUBLE_EQ",
+      "revId": "712d404ee149d10095bcbce11fcc89f5981393fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398b4644_6e38370e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T14:57:51Z",
+      "side": 1,
+      "message": "nit: EXPECT_FALSE? i\u0027m assuming that on_battery isn\u0027t a double",
+      "revId": "712d404ee149d10095bcbce11fcc89f5981393fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
