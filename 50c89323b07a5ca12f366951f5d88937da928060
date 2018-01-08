@@ -16,6 +16,24 @@
       "revId": "50c89323b07a5ca12f366951f5d88937da928060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411d6791_c4af6de8",
+        "filename": "chrome/browser/extensions/api/settings_private/settings_private_delegate_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 0,
+      "message": "Sorry, this is the wrong file. It should have been removed from generated_prefs_factory. Fixed.",
+      "parentUuid": "2c3a3230_0181390b",
+      "revId": "50c89323b07a5ca12f366951f5d88937da928060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

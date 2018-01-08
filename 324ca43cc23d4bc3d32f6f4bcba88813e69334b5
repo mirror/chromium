@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec0215af_4bdec5d5",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 1,
+      "message": "Why would it notify observers?\nThese are generated preferences. If \"Set\" implementation does not modify visible preference value, I assume no observers should be notified.\n\nObservers should be notified only when preference is \"changed\" (in whatever way a particular \"preference\" implementation defines \"changed\"). I don\u0027t think it should be tied to [this] Set method.\n\nFor example, in Time Zone preferences implementation, observers will be fired by watching for underlying preferences/policies changes.",
+      "parentUuid": "f06950fc_f3a0b95e",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be78d6df_2359d489",
         "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055f7f5a_7b78ad8c",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be78d6df_2359d489",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7a09d2fd_c2c989ea",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76dbaa98_f4efb2fb",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ebc3cb_59ce38f8",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8d8107_6413df69",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ebc3cb_59ce38f8",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9f21f063_d5895041",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81873837_f440dc80",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9913d767_22dfd804",
         "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1252ed_3e9b8b57",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 1,
+      "message": "Done (for moving check to line 511).\n\nI don\u0027t know when it can be null, but for all GetForBrowserContext calls in this file we always check for null. Probably unit_tests require this.",
+      "parentUuid": "9913d767_22dfd804",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "91752801_70fea1ff",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52b9fb71_1b6b6583",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e2fc9d_57636b87",
         "filename": "chrome/browser/extensions/api/settings_private/settings_private_event_router.cc",
         "patchSetId": 7
@@ -132,6 +258,24 @@
       "writtenOn": "2018-01-06T00:01:15Z",
       "side": 1,
       "message": "1. We do need to remove the \"observer\" in the else.\n\n2. The copying of callbacks pattern is unusual and I find it confusing. I think the code will ultimately be simpler of GeneratedPrefs has an Observer class and keeps track of a single observer list, passing |pref_name| in the OnGeneratedPrefChanged event. Then this class could inherit from the Observer and call OnPreferenceChanged. Each GeneratedPref would need a pointer back to the GeneratedPrefs object and inform it of a pref change, but that seems better than having a separate callback list in each pref.\n\nDoes that make sense?",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80877080_9688cc4e",
+        "filename": "chrome/browser/extensions/api/settings_private/settings_private_event_router.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T20:25:01Z",
+      "side": 1,
+      "message": "I replaced Callbacks with Observers. I still think it is reasonable to keep separate observer lists in preferences themselves for cleaner code.",
+      "parentUuid": "f4e2fc9d_57636b87",
       "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
