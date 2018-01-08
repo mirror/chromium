@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9009139_91e90669",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/dom/lists/DOMTokenList-coverage-for-attributes-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-08T14:53:13Z",
+      "side": 1,
+      "message": "If you\u0027re looking for a follow up Intent, adding support for HTMLAreaElement as well is probably not overly complex :)",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 4
+      },
+      "revId": "887bb02eadc8bdc074d6be1ae95c60a25c17f912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7611744_17124c6f",
+        "filename": "third_party/WebKit/Source/core/html/RelList.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-08T14:53:13Z",
+      "side": 1,
+      "message": "Styling seems off. Is that what `git cl format` output?",
+      "revId": "887bb02eadc8bdc074d6be1ae95c60a25c17f912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51cebbf_d16f9433",
+        "filename": "third_party/WebKit/Source/core/html/RelList.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-08T14:53:13Z",
+      "side": 1,
+      "message": "Nit: Could you unite the \"Contains()\" and the modulepreload conditions into a single if statement?",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "887bb02eadc8bdc074d6be1ae95c60a25c17f912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a3b374_a8cfef3e",
+        "filename": "third_party/WebKit/Source/core/html/RelList.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-08T14:53:13Z",
+      "side": 1,
+      "message": "else if",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 4
+      },
+      "revId": "887bb02eadc8bdc074d6be1ae95c60a25c17f912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
