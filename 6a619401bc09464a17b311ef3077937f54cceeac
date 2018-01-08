@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6193f62_a94bc9be",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-08T19:43:15Z",
+      "side": 1,
+      "message": "Why is this handling the case where ScopedBlockingCallIsInitialized() has not been initialized?\n\nAlso, if we do need to handle that consider unconditionally initializing blocking_observer_ and previous_scoped_blocking_call_ and is_will_block_ to nullptr and then properly initializing them after this line, rather than repeatedly checking ScopedBlockingCallIsInitialized(). That would improve readability.",
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ecccd6_ae51619d",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-08T19:43:15Z",
+      "side": 1,
+      "message": "Assert that we\u0027re on the main thread?",
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
