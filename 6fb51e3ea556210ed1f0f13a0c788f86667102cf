@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb0b229_c10325ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-08T16:06:07Z",
+      "side": 1,
+      "message": "qq: For my own reference: does the panel always start opening for a tap until it is decided that it should be suppressed? Or is this for the case where the panel is already open and the user taps some other word?",
+      "range": {
+        "startLine": 1358,
+        "startChar": 47,
+        "endLine": 1358,
+        "endChar": 59
+      },
+      "revId": "6fb51e3ea556210ed1f0f13a0c788f86667102cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
