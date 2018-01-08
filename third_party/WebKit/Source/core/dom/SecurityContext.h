@@ -29,7 +29,7 @@
 
 #include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
-#include "common/net/ip_address_space.mojom-blink.h"
+#include "public/common/net/ip_address_space.mojom-blink.h"
 #include "core/CoreExport.h"
 #include "core/dom/SandboxFlags.h"
 #include "platform/heap/Handle.h"
@@ -39,7 +39,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebURLRequest.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/public/common/feature_policy/feature_policy.h"
 
 #include <memory>
 

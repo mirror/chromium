@@ -37,7 +37,7 @@
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom-blink.h"
+#include "third_party/WebKit/public/common/quota/quota_types.mojom-blink.h"
 
 namespace blink {
 

@@ -30,7 +30,7 @@
 
 #include <memory>
 #include "base/memory/scoped_refptr.h"
-#include "common/net/ip_address_space.mojom-blink.h"
+#include "public/common/net/ip_address_space.mojom-blink.h"
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/ThreadableLoader.h"

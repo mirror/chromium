@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/WebKit/public/common/message_port/message_port_channel.h"
 
 #include "base/bind.h"
 #include "base/containers/span.h"
 #include "base/logging.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "mojo/public/cpp/system/message_pipe.h"
-#include "third_party/WebKit/common/message_port/message_port.mojom.h"
 #include "third_party/WebKit/common/message_port/transferable_message_struct_traits.h"
+#include "third_party/WebKit/public/common/message_port/message_port.mojom.h"
 
 namespace blink {
 
