@@ -46,12 +46,12 @@ void AudioDebugRecordingManager::EnableDebugRecording(
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!base_file_name.empty());
 
+  debug_recording_base_file_name_ = base_file_name;
   for (const auto& it : debug_recording_helpers_) {
     it.second.first->EnableDebugRecording(
-        GetDebugRecordingFileNameWithExtensions(base_file_name,
+        GetDebugRecordingFileNameWithExtensions(debug_recording_base_file_name_,
                                                 it.second.second, it.first));
   }
-  debug_recording_base_file_name_ = base_file_name;
 }
 
 void AudioDebugRecordingManager::DisableDebugRecording() {
@@ -90,6 +90,43 @@ AudioDebugRecordingManager::RegisterDebugRecordingSource(
   return base::WrapUnique<AudioDebugRecorder>(recording_helper.release());
 }
 
+void AudioDebugRecordingManager::CreateFile(
+    const base::FilePath& file_name,
+    OnFileCreatedCallback reply_callback) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  file_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&AudioDebugRecordingManager::DoCreateFile,
+                                weak_factory_.GetWeakPtr(), file_name,
+                                std::move(reply_callback)));
+}
+
+void AudioDebugRecordingManager::DoCreateFile(
+    const base::FilePath& file_name,
+    OnFileCreatedCallback reply_callback) {
+  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  base::File debug_file(base::File(
+      file_name, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE));
+  if (!debug_file.IsValid()) {
+    PLOG(ERROR) << "Could not open debug recording file, error="
+                << debug_file.error_details();
+    return;
+  }
+
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&AudioDebugRecordingManager::OnFileCreated,
+                     weak_factory_.GetWeakPtr(), std::move(debug_file),
+                     std::move(reply_callback)));
+}
+
+void AudioDebugRecordingManager::OnFileCreated(
+    base::File debug_file,
+    OnFileCreatedCallback reply_callback) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  DCHECK(debug_file.IsValid());
+  std::move(reply_callback).Run(std::move(debug_file));
+}
+
 void AudioDebugRecordingManager::UnregisterDebugRecordingSource(int id) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   auto it = debug_recording_helpers_.find(id);
@@ -102,8 +139,13 @@ AudioDebugRecordingManager::CreateAudioDebugRecordingHelper(
     const AudioParameters& params,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     base::OnceClosure on_destruction_closure) {
+  // Passing unretained is safe because manager owns helper, therefore helper
+  // will be destroyed before manager.
   return base::MakeUnique<AudioDebugRecordingHelper>(
-      params, task_runner, std::move(on_destruction_closure));
+      params, task_runner,
+      base::BindRepeating(&AudioDebugRecordingManager::CreateFile,
+                          base::Unretained(this)),
+      std::move(on_destruction_closure));
 }
 
 bool AudioDebugRecordingManager::IsDebugRecordingEnabled() {
