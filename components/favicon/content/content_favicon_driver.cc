@@ -186,10 +186,13 @@ void ContentFaviconDriver::DidUpdateFaviconURL(
   // occur when loading an initially blank page.
   content::NavigationEntry* entry =
       web_contents()->GetController().GetLastCommittedEntry();
-  if (!entry || !document_on_load_completed_)
+  if (!entry)
     return;
 
   favicon_urls_ = candidates;
+
+  if (!document_on_load_completed_)
+    return;
 
   OnUpdateCandidates(entry->GetURL(),
                      FaviconURLsFromContentFaviconURLs(candidates),
