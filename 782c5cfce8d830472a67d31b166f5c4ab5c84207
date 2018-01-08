@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4592c153_77f12785",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T22:54:46Z",
+      "side": 1,
+      "message": "nit: the CL description should mention ~for `Extension Global Error bubbles` somewhere in it",
+      "revId": "782c5cfce8d830472a67d31b166f5c4ab5c84207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3f8b8a8_6edda67a",
         "filename": "chrome/browser/ui/views/global_error_bubble_view.cc",
         "patchSetId": 2
