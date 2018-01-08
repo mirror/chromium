@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd7bf31c_51dbc031",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-08T11:30:33Z",
+      "side": 1,
+      "message": "\"on its own dedicated interface (XXX)\"",
+      "range": {
+        "startLine": 100,
+        "startChar": 59,
+        "endLine": 101,
+        "endChar": 14
+      },
+      "revId": "3dfe9dd529f6d0132c1cd045c72a6fe321f2c4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9127370_485e8c91",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-08T11:30:33Z",
+      "side": 1,
+      "message": "to be honest, given that now this is only for the heap profiler and there is only one place with one thread where this is done, keeping a TLS around might be overkill.\nUnless is too much of a big change, IMHO we should kill the code in memory_instrumentation and directly do this in profiling_service.cc (an in the unittest)",
+      "range": {
+        "startLine": 98,
+        "startChar": 23,
+        "endLine": 98,
+        "endChar": 62
+      },
+      "revId": "3dfe9dd529f6d0132c1cd045c72a6fe321f2c4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e3e869_636f22d3",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-08T11:30:33Z",
+      "side": 1,
+      "message": "HeapProfiling is IMHO a bit of a misleading name, as suggests that this is a HeapProfiler service, but it\u0027s not true, is just used by the heap profiler service.\n\nI\u0027d probably just call this:\n\n// Used by the Chrome heap profiler\ninterface HeapProfilerHelper",
+      "range": {
+        "startLine": 242,
+        "startChar": 10,
+        "endLine": 242,
+        "endChar": 23
+      },
+      "revId": "3dfe9dd529f6d0132c1cd045c72a6fe321f2c4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
