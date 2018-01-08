@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <algorithm>
 #include <string>
 
 #include "base/strings/string_piece.h"
@@ -37,6 +38,15 @@ std::string GetNextArgument(base::StringPiece* input) {
 // own line, and content is everything after them. Since neither URLs nor
 // content-encoding headers can have line breaks, this doesn't reduce coverage.
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+  // net::SniffMimeType DCHECKs if passed an input buffer that's too large,
+  // since it's meant to be used only on the first chunk of a file that's bing
+  // fed into a stream. Set a max size of the input to avoid running into that
+  // DCHECK.  Use 64k because that's twice the size of a typical read attempt.
+  constexpr size_t kMaxInputSize = 64 * 1024;
+  static_assert(kMaxInputSize >= net::kMaxBytesToSniff,
+                "kMaxInputSize is too small.");
+  size = std::min(kMaxInputSize, size);
+
   base::StringPiece input(reinterpret_cast<const char*>(data), size);
   GURL url(GetNextArgument(&input));
 
