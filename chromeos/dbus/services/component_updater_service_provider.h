@@ -54,6 +54,7 @@ class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
 
     virtual void LoadComponent(
         const std::string& name,
+        bool mount,
         base::OnceCallback<void(const base::FilePath&)> load_callback) = 0;
 
     virtual bool UnloadComponent(const std::string& name) = 0;

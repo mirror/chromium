@@ -58,17 +58,17 @@ void ComponentUpdaterServiceProvider::LoadComponent(
     dbus::ExportedObject::ResponseSender response_sender) {
   dbus::MessageReader reader(method_call);
   std::string component_name;
-  if (reader.PopString(&component_name)) {
+  bool mount;
+  if (reader.PopString(&component_name) && reader.PopBool(&mount)) {
     delegate_->LoadComponent(
-        component_name,
+        component_name, mount,
         base::Bind(&ComponentUpdaterServiceProvider::OnLoadComponent,
                    weak_ptr_factory_.GetWeakPtr(), method_call,
                    response_sender));
   } else {
     std::unique_ptr<dbus::ErrorResponse> error_response =
-        dbus::ErrorResponse::FromMethodCall(
-            method_call, kErrorInvalidArgs,
-            "Missing component name string argument.");
+        dbus::ErrorResponse::FromMethodCall(method_call, kErrorInvalidArgs,
+                                            "Missing parameters.");
     response_sender.Run(std::move(error_response));
   }
 }
@@ -77,18 +77,11 @@ void ComponentUpdaterServiceProvider::OnLoadComponent(
     dbus::MethodCall* method_call,
     dbus::ExportedObject::ResponseSender response_sender,
     const base::FilePath& result) {
-  if (!result.empty()) {
-    std::unique_ptr<dbus::Response> response =
-        dbus::Response::FromMethodCall(method_call);
-    dbus::MessageWriter writer(response.get());
-    writer.AppendString(result.value());
-    response_sender.Run(std::move(response));
-  } else {
-    std::unique_ptr<dbus::ErrorResponse> error_response =
-        dbus::ErrorResponse::FromMethodCall(method_call, kErrorInternalError,
-                                            "Failed to load component");
-    response_sender.Run(std::move(error_response));
-  }
+  std::unique_ptr<dbus::Response> response =
+      dbus::Response::FromMethodCall(method_call);
+  dbus::MessageWriter writer(response.get());
+  writer.AppendString(result.value());
+  response_sender.Run(std::move(response));
 }
 
 void ComponentUpdaterServiceProvider::UnloadComponent(

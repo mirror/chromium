@@ -16,9 +16,10 @@ ChromeComponentUpdaterServiceProviderDelegate::
 
 void ChromeComponentUpdaterServiceProviderDelegate::LoadComponent(
     const std::string& name,
+    bool mount,
     base::OnceCallback<void(const base::FilePath&)> load_callback) {
   g_browser_process->platform_part()->cros_component_manager()->Load(
-      name, std::move(load_callback));
+      name, mount, std::move(load_callback));
 }
 
 bool ChromeComponentUpdaterServiceProviderDelegate::UnloadComponent(

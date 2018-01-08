@@ -74,6 +74,7 @@ class CrOSComponentManager {
   // Installs a component and keeps it up-to-date. |load_callback| returns the
   // mount point path.
   void Load(const std::string& name,
+            bool mount,
             base::OnceCallback<void(const base::FilePath&)> load_callback);
 
   // Stops updating and removes a component.
@@ -110,6 +111,7 @@ class CrOSComponentManager {
   // Installs a component with a dedicated ComponentUpdateService instance.
   void Install(ComponentUpdateService* cus,
                const std::string& name,
+               bool mount,
                base::OnceCallback<void(const base::FilePath&)> load_callback);
 
   // Calls OnDemandUpdate to install the component right after being registered.
@@ -121,6 +123,7 @@ class CrOSComponentManager {
   // Calls LoadInternal to load the installed component.
   void FinishInstall(
       const std::string& name,
+      bool mount,
       base::OnceCallback<void(const base::FilePath&)> load_callback,
       update_client::Error error);
 
