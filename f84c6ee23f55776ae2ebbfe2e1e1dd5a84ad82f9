@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7533d3c_2a4e28e3",
+        "filename": "chrome/browser/ui/extensions/installation_error_infobar_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-08T21:50:24Z",
+      "side": 1,
+      "message": "nit: These parens are unnecessary.",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "f84c6ee23f55776ae2ebbfe2e1e1dd5a84ad82f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a280e0f3_b8fd95a5",
+        "filename": "chrome/browser/ui/extensions/installation_error_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-08T21:50:24Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "f84c6ee23f55776ae2ebbfe2e1e1dd5a84ad82f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
