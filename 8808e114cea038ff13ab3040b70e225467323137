@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de85b87b_acc4301c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-01-08T22:09:37Z",
+      "side": 1,
+      "message": "mWindowAndroid.getContext() is a weak reference - you mustn\u0027t just use the result of get() without checking it for null.\n\nProbably you want to use mContext here instead? It seems like mContext should have been initialised at the point this is called, and is a regular reference. Not super familiar with this code though.",
+      "revId": "8808e114cea038ff13ab3040b70e225467323137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
