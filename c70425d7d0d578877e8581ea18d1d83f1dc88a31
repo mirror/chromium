@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f5fcb8b_b21acbc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-08T10:41:34Z",
+      "side": 1,
+      "message": "I would be tempted to move this check to the call sites, so we end up doing it only in callbacks from other code (e.g. line 554).",
+      "range": {
+        "startLine": 567,
+        "startChar": 8,
+        "endLine": 567,
+        "endChar": 10
+      },
+      "revId": "c70425d7d0d578877e8581ea18d1d83f1dc88a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
