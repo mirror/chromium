@@ -22,6 +22,30 @@
       "revId": "1a7f34411655f854b51d699768d49f40cc9d7abe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bee73bf_1fc7ae64",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-08T16:07:56Z",
+      "side": 1,
+      "message": "Oh, I did not know we also have System.nanoTime() as another alias to clock_gettime(CLOCK_MONOTONIC), tracing it in source was not as easy as SystemClock.uptimeMillis(). Responded on the bug about the cleanup.",
+      "parentUuid": "dfb3b02e_988d7d12",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "1a7f34411655f854b51d699768d49f40cc9d7abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
