@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4ae1bae6_936d63a7",
+        "filename": "content/common/input/synthetic_web_input_event_builders.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-08T20:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08c5fae_5beb4b09",
+      "revId": "6375117e8035db22445aeb4880289a471d83cd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4bf50de_a9009419",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 20
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "This is what I was thinking we would do temporarily to gather data.",
       "parentUuid": "da20d71e_9a0cbfbe",
+      "revId": "6375117e8035db22445aeb4880289a471d83cd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5880fba_5633eca8",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-08T20:37:53Z",
+      "side": 1,
+      "message": "We chat offline about this. I\u0027ll add the extra hit test and metric in a separate CL, because that will be easier to revert it after finch trial.",
+      "parentUuid": "73dfa88d_a1ce56ad",
       "revId": "6375117e8035db22445aeb4880289a471d83cd78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -235,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "f4bd0248_d0bf30bf",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-08T20:37:53Z",
+      "side": 1,
+      "message": "Actually, on second thought, the touchAdjustmentResult.adjusted seems not very useful, so I remove the second condition.",
+      "parentUuid": "f039ea0d_ae4e7106",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "753f07ef_4f3272cb",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.h",
         "patchSetId": 19
