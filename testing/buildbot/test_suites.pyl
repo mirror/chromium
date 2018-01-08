@@ -923,6 +923,7 @@
   'linux_and_chromeos_non_clang_specific_chromium_gtests': {
     # TOOD(kbr): rename back to linux_and_chromeos_specific_chromium_gtests.
     'media_service_unittests': {},
+    'webui_closure_compile': {},
   },
 
   'linux_and_mac_non_clang_specific_chromium_gtests': {

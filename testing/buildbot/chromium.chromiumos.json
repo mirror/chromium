@@ -384,6 +384,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "webui_closure_compile"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "wm_unittests"
       },
       {
@@ -777,6 +783,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "webkit_unit_tests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "webui_closure_compile"
       },
       {
         "swarming": {
@@ -1329,6 +1341,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "wayland_client_perftests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "webui_closure_compile"
       },
       {
         "swarming": {
