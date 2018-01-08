@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "dd29584f_03879842",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-08T23:21:00Z",
+      "side": 1,
+      "message": "Done. Sounds good. I revised it to a map\u003clist\u003cCallback\u003e\u003e. The code is indeed shorter and simpler.",
+      "parentUuid": "5c9f5be5_316c1e80",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "19ba072328ede105f39d0fa5ffe545c89eb66bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce9b01c5_1b29406a",
         "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
         "patchSetId": 4
