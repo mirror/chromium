@@ -215,10 +215,11 @@ cr.define('bookmarks', function() {
           return itemIds.size > 0;
         case Command.ADD_BOOKMARK:
         case Command.ADD_FOLDER:
+          return true;
         case Command.SORT:
         case Command.EXPORT:
         case Command.IMPORT:
-          return true;
+          return this.menuSource_ == MenuSource.TOOLBAR;
         default:
           return false;
       }
@@ -657,6 +658,8 @@ cr.define('bookmarks', function() {
             Command.OPEN_NEW_WINDOW,
             Command.OPEN_INCOGNITO,
           ];
+          break;
+        case MenuSource.LIST:
         case MenuSource.TOOLBAR:
           return [
             Command.SORT,
@@ -667,10 +670,10 @@ cr.define('bookmarks', function() {
             Command.IMPORT,
             Command.EXPORT,
           ];
+          break;
         case MenuSource.NONE:
-          return [];
+          break;
       }
-      assert(false);
     },
 
     /** @private */
