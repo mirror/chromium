@@ -22,6 +22,30 @@
       "revId": "8b2ed0d40f5ee3bf1956e5a68cba2e422a6c9dce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9f1a8a_02214bcd",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1237329
+      },
+      "writtenOn": "2018-01-08T23:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e820139_31535d07",
+      "range": {
+        "startLine": 102,
+        "startChar": 69,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "8b2ed0d40f5ee3bf1956e5a68cba2e422a6c9dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
