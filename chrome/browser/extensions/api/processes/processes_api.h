@@ -14,6 +14,8 @@
 #include "extensions/browser/extension_event_histogram_value.h"
 #include "extensions/browser/extension_function.h"
 
+#include "components/upload_list/upload_list.h"
+
 class ProcessesApiTest;
 
 namespace extensions {
@@ -189,6 +191,26 @@ class ProcessesGetProcessInfoFunction :
 
   std::vector<int> process_host_ids_;
   bool include_memory_ = false;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// This extension function returns the Process object for the renderer process
+// currently in use by the specified Tab.
+class ProcessesGetCrashesFunction : public UIThreadExtensionFunction {
+ public:
+  ProcessesGetCrashesFunction();
+
+  // UIThreadExtensionFunction:
+  ExtensionFunction::ResponseAction Run() override;
+
+  DECLARE_EXTENSION_FUNCTION("processes.getCrashes", PROCESSES_GETCRASHES);
+
+ private:
+  ~ProcessesGetCrashesFunction() override;
+
+  void OnUploadListAvailable();
+
+  scoped_refptr<UploadList> upload_list_;
 };
 
 }  // namespace extensions
