@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/optional.h"
 #include "device/u2f/u2f_discovery.h"
 #include "services/service_manager/public/cpp/connector.h"
 
@@ -16,7 +17,7 @@ U2fSign::U2fSign(const std::vector<std::vector<uint8_t>>& registered_keys,
                  const std::vector<uint8_t>& app_param,
                  std::string relying_party_id,
                  std::vector<U2fDiscovery*> discoveries,
-                 const ResponseCallback& completion_callback)
+                 SignResponseCallback completion_callback)
     : U2fRequest(std::move(relying_party_id), std::move(discoveries)),
       completion_callback_(std::move(completion_callback)),
       registered_keys_(registered_keys),
@@ -33,10 +34,10 @@ std::unique_ptr<U2fRequest> U2fSign::TrySign(
     const std::vector<uint8_t>& app_param,
     std::string relying_party_id,
     std::vector<U2fDiscovery*> discoveries,
-    const ResponseCallback& completion_callback) {
+    SignResponseCallback completion_callback) {
   std::unique_ptr<U2fRequest> request = std::make_unique<U2fSign>(
       registered_keys, challenge_hash, app_param, std::move(relying_party_id),
-      std::move(discoveries), completion_callback);
+      std::move(discoveries), std::move(completion_callback));
   request->Start();
 
   return request;
@@ -68,10 +69,20 @@ void U2fSign::OnTryDevice(std::vector<std::vector<uint8_t>>::const_iterator it,
       state_ = State::COMPLETE;
       if (it == registered_keys_.cend()) {
         // This was a response to a fake enrollment. Return an empty key handle.
-        completion_callback_.Run(return_code, response_data,
-                                 std::vector<uint8_t>());
+        std::move(completion_callback_)
+            .Run(U2fReturnCode::CONDITIONS_NOT_SATISFIED, base::nullopt);
       } else {
-        completion_callback_.Run(return_code, response_data, *it);
+        base::Optional<SignResponseData> sign_response =
+            SignResponseData::CreateFromU2fSignResponse(
+                relying_party_id_, std::move(response_data), *it);
+        if (sign_response) {
+          std::move(completion_callback_)
+              .Run(U2fReturnCode::SUCCESS, std::move(sign_response));
+        } else {
+          // Something went wrong during parsing.
+          std::move(completion_callback_)
+              .Run(U2fReturnCode::FAILURE, base::nullopt);
+        }
       }
       break;
     case U2fReturnCode::CONDITIONS_NOT_SATISFIED: {

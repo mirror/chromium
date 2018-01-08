@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "base/optional.h"
+#include "device/u2f/sign_response_data.h"
 #include "device/u2f/u2f_request.h"
 
 namespace device {
@@ -17,12 +19,18 @@ class U2fDiscovery;
 
 class U2fSign : public U2fRequest {
  public:
+  // Response is optional, depending on the status and
+  // the type of request being served.
+  using SignResponseCallback =
+      base::OnceCallback<void(U2fReturnCode status_code,
+                              base::Optional<SignResponseData> response_data)>;
+
   U2fSign(const std::vector<std::vector<uint8_t>>& registered_keys,
           const std::vector<uint8_t>& challenge_hash,
           const std::vector<uint8_t>& app_param,
           std::string relying_party_id,
           std::vector<U2fDiscovery*> discoveries,
-          const ResponseCallback& completion_callback);
+          SignResponseCallback completion_callback);
   ~U2fSign() override;
 
   static std::unique_ptr<U2fRequest> TrySign(
@@ -31,7 +39,7 @@ class U2fSign : public U2fRequest {
       const std::vector<uint8_t>& app_param,
       std::string relying_party_id,
       std::vector<U2fDiscovery*> discoveries,
-      const ResponseCallback& completion_callback);
+      SignResponseCallback completion_callback);
 
  private:
   void TryDevice() override;
@@ -39,7 +47,7 @@ class U2fSign : public U2fRequest {
                    U2fReturnCode return_code,
                    const std::vector<uint8_t>& response_data);
 
-  ResponseCallback completion_callback_;
+  SignResponseCallback completion_callback_;
   const std::vector<std::vector<uint8_t>> registered_keys_;
   std::vector<uint8_t> challenge_hash_;
   std::vector<uint8_t> app_param_;

@@ -36,8 +36,11 @@ using webauth::mojom::PublicKeyCredentialRpEntityPtr;
 using webauth::mojom::PublicKeyCredentialUserEntity;
 using webauth::mojom::PublicKeyCredentialUserEntityPtr;
 using webauth::mojom::MakeCredentialResponsePtr;
+using webauth::mojom::GetAssertionResponsePtr;
 using webauth::mojom::PublicKeyCredentialParameters;
 using webauth::mojom::PublicKeyCredentialParametersPtr;
+using webauth::mojom::PublicKeyCredentialRequestOptions;
+using webauth::mojom::PublicKeyCredentialRequestOptionsPtr;
 
 namespace {
 
@@ -54,17 +57,22 @@ constexpr uint8_t kTestChallengeBytes[] = {
     0x50, 0x5F, 0x8E, 0xD2, 0xB1, 0x6A, 0xE2, 0x2F, 0x16, 0xBB, 0x05,
     0xB8, 0x8C, 0x25, 0xDB, 0x9E, 0x60, 0x26, 0x45, 0xF1, 0x41};
 
-constexpr char kTestClientDataJsonString[] =
+constexpr char kTestRegisterClientDataJsonString[] =
     "{\"challenge\":\"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE\","
     "\"hashAlgorithm\""
     ":\"SHA-256\",\"origin\":\"google.com\",\"tokenBinding\":\"unused\","
     "\"type\":\"webauthn.create\"}";
 
+constexpr char kTestSignClientDataJsonString[] =
+    "{\"challenge\":\"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE\","
+    "\"hashAlgorithm\""
+    ":\"SHA-256\",\"origin\":\"google.com\",\"tokenBinding\":\"unused\","
+    "\"type\":\"webauthn.get\"}";
+
 std::vector<uint8_t> GetTestChallengeBytes() {
   return std::vector<uint8_t>(std::begin(kTestChallengeBytes),
                               std::end(kTestChallengeBytes));
 }
-
 
 PublicKeyCredentialRpEntityPtr GetTestPublicKeyCredentialRPEntity() {
   auto entity = PublicKeyCredentialRpEntity::New();
@@ -100,6 +108,16 @@ MakePublicKeyCredentialOptionsPtr GetTestMakePublicKeyCredentialOptions() {
   options->user = GetTestPublicKeyCredentialUserEntity();
   options->public_key_parameters =
       GetTestPublicKeyCredentialParameters(kCoseEs256);
+  options->challenge = std::move(buffer);
+  options->adjusted_timeout = base::TimeDelta::FromMinutes(1);
+  return options;
+}
+
+PublicKeyCredentialRequestOptionsPtr
+GetTestPublicKeyCredentialRequestOptions() {
+  auto options = PublicKeyCredentialRequestOptions::New();
+  std::vector<uint8_t> buffer(32, 0x0A);
+  options->relying_party_id = std::string("localhost");
   options->challenge = std::move(buffer);
   options->adjusted_timeout = base::TimeDelta::FromMinutes(1);
   return options;
@@ -154,7 +172,7 @@ class TestMakeCredentialCallback {
   void ReceivedCallback(AuthenticatorStatus status,
                         MakeCredentialResponsePtr credential) {
     response_ = std::make_pair(status, std::move(credential));
-    closure_.Run();
+    std::move(closure_).Run();
   }
 
   // TODO(crbug.com/799044) - simplify the runloop usage.
@@ -175,6 +193,37 @@ class TestMakeCredentialCallback {
   base::RunLoop run_loop_;
 };
 
+class TestGetAssertionCallback {
+ public:
+  TestGetAssertionCallback()
+      : callback_(base::BindOnce(&TestGetAssertionCallback::ReceivedCallback,
+                                 base::Unretained(this))) {}
+  ~TestGetAssertionCallback() {}
+
+  void ReceivedCallback(AuthenticatorStatus status,
+                        GetAssertionResponsePtr credential) {
+    response_ = std::make_pair(status, std::move(credential));
+    std::move(closure_).Run();
+  }
+
+  // TODO(crbug.com/799044) - simplify the runloop usage.
+  std::pair<AuthenticatorStatus, GetAssertionResponsePtr>& WaitForCallback() {
+    closure_ = run_loop_.QuitClosure();
+    run_loop_.Run();
+    return response_;
+  }
+
+  AuthenticatorImpl::GetAssertionCallback callback() {
+    return std::move(callback_);
+  }
+
+ private:
+  std::pair<AuthenticatorStatus, GetAssertionResponsePtr> response_;
+  base::OnceClosure closure_;
+  AuthenticatorImpl::GetAssertionCallback callback_;
+  base::RunLoop run_loop_;
+};
+
 }  // namespace
 
 // Test that service returns NOT_ALLOWED_ERROR on a call to MakeCredential with
@@ -190,7 +239,7 @@ TEST_F(AuthenticatorImplTest, MakeCredentialOpaqueOrigin) {
   std::pair<webauth::mojom::AuthenticatorStatus,
             webauth::mojom::MakeCredentialResponsePtr>& response =
       cb.WaitForCallback();
-  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
+  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::SECURITY_ERROR,
             response.first);
 }
 
@@ -214,12 +263,17 @@ TEST_F(AuthenticatorImplTest, MakeCredentialNoSupportedAlgorithm) {
 }
 
 // Test that client data serializes to JSON properly.
-TEST_F(AuthenticatorImplTest, TestSerializedClientData) {
-  EXPECT_EQ(kTestClientDataJsonString,
+TEST_F(AuthenticatorImplTest, TestSerializedRegisterClientData) {
+  EXPECT_EQ(kTestRegisterClientDataJsonString,
             GetTestClientData(client_data::kCreateType).SerializeToJson());
 }
 
-TEST_F(AuthenticatorImplTest, TestTimeout) {
+TEST_F(AuthenticatorImplTest, TestSerializedSignClientData) {
+  EXPECT_EQ(kTestSignClientDataJsonString,
+            GetTestClientData(client_data::kGetType).SerializeToJson());
+}
+
+TEST_F(AuthenticatorImplTest, TestMakeCredentialTimeout) {
   SimulateNavigation(GURL(kTestOrigin1));
   MakePublicKeyCredentialOptionsPtr options =
       GetTestMakePublicKeyCredentialOptions();
@@ -252,6 +306,61 @@ TEST_F(AuthenticatorImplTest, TestTimeout) {
   task_runner->FastForwardBy(base::TimeDelta::FromMinutes(1));
   std::pair<webauth::mojom::AuthenticatorStatus,
             webauth::mojom::MakeCredentialResponsePtr>& response =
+      cb.WaitForCallback();
+  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
+            response.first);
+}
+
+// Test that service returns NOT_ALLOWED_ERROR on a call to GetAssertion with
+// an opaque origin.
+TEST_F(AuthenticatorImplTest, GetAssertionOpaqueOrigin) {
+  NavigateAndCommit(GURL("data:text/html,opaque"));
+  AuthenticatorPtr authenticator = ConnectToAuthenticator();
+  PublicKeyCredentialRequestOptionsPtr options =
+      GetTestPublicKeyCredentialRequestOptions();
+
+  TestGetAssertionCallback cb;
+  authenticator->GetAssertion(std::move(options), cb.callback());
+  std::pair<webauth::mojom::AuthenticatorStatus,
+            webauth::mojom::GetAssertionResponsePtr>& response =
+      cb.WaitForCallback();
+  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::SECURITY_ERROR,
+            response.first);
+}
+
+TEST_F(AuthenticatorImplTest, TestGetAssertionTimeout) {
+  SimulateNavigation(GURL(kTestOrigin1));
+  PublicKeyCredentialRequestOptionsPtr options =
+      GetTestPublicKeyCredentialRequestOptions();
+  TestGetAssertionCallback cb;
+
+  // Set up service_manager::Connector for tests.
+  auto fake_hid_manager = std::make_unique<device::FakeHidManager>();
+  service_manager::mojom::ConnectorRequest request;
+  std::unique_ptr<service_manager::Connector> connector =
+      service_manager::Connector::Create(&request);
+  service_manager::Connector::TestApi test_api(connector.get());
+  test_api.OverrideBinderForTesting(
+      device::mojom::kServiceName, device::mojom::HidManager::Name_,
+      base::Bind(&device::FakeHidManager::AddBinding,
+                 base::Unretained(fake_hid_manager.get())));
+
+  // Set up a timer for testing.
+  auto task_runner = base::MakeRefCounted<base::TestMockTimeTaskRunner>(
+      base::Time::Now(), base::TimeTicks::Now());
+  std::unique_ptr<base::TickClock> tick_clock = task_runner->GetMockTickClock();
+  auto timer = std::make_unique<base::OneShotTimer>(tick_clock.get());
+  timer->SetTaskRunner(task_runner);
+  AuthenticatorPtr authenticator =
+      ConnectToAuthenticator(connector.get(), std::move(timer));
+
+  authenticator->GetAssertion(std::move(options), cb.callback());
+
+  // Trigger timer.
+  base::RunLoop().RunUntilIdle();
+  task_runner->FastForwardBy(base::TimeDelta::FromMinutes(1));
+  std::pair<webauth::mojom::AuthenticatorStatus,
+            webauth::mojom::GetAssertionResponsePtr>& response =
       cb.WaitForCallback();
   EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
             response.first);
