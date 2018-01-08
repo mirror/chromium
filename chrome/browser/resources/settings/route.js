@@ -86,6 +86,7 @@
  *   SITE_SETTINGS_UNSANDBOXED_PLUGINS: (undefined|!settings.Route),
  *   SITE_SETTINGS_USB_DEVICES: (undefined|!settings.Route),
  *   SITE_SETTINGS_ZOOM_LEVELS: (undefined|!settings.Route),
+ *   SMB: (undefined|!settings.Route),
  *   STORAGE: (undefined|!settings.Route),
  *   STYLUS: (undefined|!settings.Route),
  *   SYNC: (undefined|!settings.Route),
@@ -366,6 +367,8 @@ cr.define('settings', function() {
       r.CUPS_PRINTERS = r.PRINTING.createChild('/cupsPrinters');
 
       r.MULTIDEVICE = r.ADVANCED.createSection('/multidevice', 'multidevice');
+
+      r.SMB = r.ADVANCED.createSection('/smb', 'smb');
       // </if>
 
       r.ACCESSIBILITY = r.ADVANCED.createSection('/accessibility', 'a11y');

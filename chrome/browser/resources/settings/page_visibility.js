@@ -16,6 +16,7 @@
  *   people: (boolean|undefined),
  *   privacy: (boolean|undefined|PrivacyPageVisibility),
  *   reset:(boolean|undefined),
+ *   smb:(boolean|undefined),
  * }}
  */
 var GuestModePageVisibility;
@@ -96,6 +97,7 @@ cr.define('settings', function() {
         googleDrive: false,
       },
       multidevice: false,
+      smb: false,
     };
     // </if>
   } else {
