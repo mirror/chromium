@@ -104,6 +104,24 @@
       "revId": "8e9844cfe0de0ccb301dce6797fe3681f833200c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6cd7483_abc2b792",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-08T21:21:17Z",
+      "side": 1,
+      "message": "Ack. I don\u0027t know blink style, but are all of these methods in the base class? Chromium style would make it a little more readable maybe, but no worries.",
+      "parentUuid": "9b04b6b9_4285f3c8",
+      "revId": "8e9844cfe0de0ccb301dce6797fe3681f833200c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
