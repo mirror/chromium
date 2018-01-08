@@ -54,7 +54,12 @@ using testing::_;
 
 class AllocatorShimTest : public testing::Test {
  public:
+// Loongson has 16384 sized system pages.
+#if defined(_MIPS_ARCH_LOONGSON)
+  static const size_t kMaxSizeTracked = 32768;
+#else
   static const size_t kMaxSizeTracked = 8192;
+#endif
   AllocatorShimTest() : testing::Test() {}
 
   static size_t Hash(const void* ptr) {
