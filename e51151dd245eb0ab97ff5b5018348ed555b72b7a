@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab51e89_57df28f3",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "It\u0027s 2018 by now ;) Also applies to the other newly created files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae220468_7f8c52d1",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "Move operations and inheritance with virtual methods is a bit tricky, since you can accidentally slice your objects. How exactly do you plan on using the base class? In case you intend to have a method like\n\nstd::unique_ptr\u003cCTAPReponse\u003e ParseData(....);\n\nremoving the move operations here should be fine, as you will always be moving a std::unique_ptr anyway.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f59fea_cf989b97",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "nit:  maybe return references from these to match the behavior of the setters in the other class?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a760cb34_25fd48c6",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "nit: move down, so that the required members are listed first",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5f9873_9bfb679b",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "same question regarding move-operations and virtual inheritance.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8199f6d_8b4d0fd8",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "same here, maybe return references?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8525cac2_32245f96",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "re-arrange to have non-optional values first. afterwards also update the order of accessors to match the new order",
+      "range": {
+        "startLine": 49,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff50373_e4430c6d",
+        "filename": "device/ctap/authenticator_options.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "nit: its better to provide compile time default values in the header file already, i.e.\n\n private:\n  bool platform_device_ \u003d false;\n  bool rk_ \u003d false;\n  bool uv_ \u003d false;\n  bool up_ \u003d true;",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfca12d_977ce0b8",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "could you use longer names or add a reference here? two letter acronyms are a bit hard to understand otherwise.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d78a76_934f7d40",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "static vectors are against the style guide, use a C-array or std::array instead.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 13
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72865a1_4906edc5",
+        "filename": "device/ctap/ctap_get_assertion_request_param.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "add to header file.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbfc9cbc_8cb3e6ca",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T10:25:25Z",
+      "side": 1,
+      "message": "header file",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
