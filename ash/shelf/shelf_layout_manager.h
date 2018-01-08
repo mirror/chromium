@@ -200,6 +200,8 @@ class ASH_EXPORT ShelfLayoutManager
   // available work area from the top of the screen.
   void SetChromeVoxPanelHeight(int height);
 
+  void SetDockedMagnifierHeight(int height);
+
  private:
   class UpdateShelfObserver;
   friend class PanelLayoutManagerTest;
@@ -389,6 +391,8 @@ class ASH_EXPORT ShelfLayoutManager
   // The height of the ChromeVox panel at the top of the screen, which
   // needs to be removed from the available work area.
   int chromevox_panel_height_ = 0;
+
+  int docked_magnifier_height_ = 0;
 
   // Whether background blur is enabled.
   const bool is_background_blur_enabled_;
