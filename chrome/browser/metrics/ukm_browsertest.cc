@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 #include "base/run_loop.h"
+#include "base/threading/platform_thread.h"
+#include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
@@ -88,7 +90,25 @@ class UkmBrowserTest : public SyncTest {
   }
   uint64_t client_id() const {
     auto* service = ukm_service();
-    return service ? service->client_id_ : 0;
+    if (!service)
+      return 0;
+    uint64_t id = service->client_id_;
+    if (id != 0)
+      return id;
+    if (!service->reporting_service_.reporting_active())
+      return 0;
+
+    // The initial client-id is created through a (delayed) posted task.
+    base::Time start_time = base::Time::Now();
+    do {
+      base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
+      base::RunLoop run_loop;
+      run_loop.RunUntilIdle();
+    } while (service->client_id_ == 0 &&
+             base::Time::Now() - start_time < base::TimeDelta::FromSeconds(10));
+    DCHECK_NE(0U, service->client_id_);
+
+    return service->client_id_;
   }
   bool has_source_data() const {
     auto* service = ukm_service();
@@ -319,7 +339,7 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, ConsentAddedButNoSyncCheck) {
 }
 
 // Make sure that UKM is disabled when an open sync window disables it.
-IN_PROC_BROWSER_TEST_F(UkmBrowserTest, DisableSyncCheck) {
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, SingleDisableSyncCheck) {
   // Enable metrics recording and update MetricsServicesManager.
   bool metrics_enabled = true;
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
@@ -344,6 +364,47 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, DisableSyncCheck) {
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+}
+
+// Make sure that UKM is disabled when any open sync window disables it.
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MultiDisableSyncCheck) {
+  // Enable metrics recording and update MetricsServicesManager.
+  bool metrics_enabled = true;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      &metrics_enabled);
+  g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
+
+  Profile* profile1 = ProfileManager::GetActiveUserProfile();
+  std::unique_ptr<ProfileSyncServiceHarness> harness1 =
+      EnableSyncForProfile(profile1);
+
+  Browser* browser1 = CreateBrowser(profile1);
+  EXPECT_TRUE(ukm_enabled());
+  uint64_t original_client_id = client_id();
+
+  Profile* profile2 = CreateNonSyncProfile();
+  std::unique_ptr<ProfileSyncServiceHarness> harness2 =
+      EnableSyncForProfile(profile2);
+  Browser* browser2 = CreateBrowser(profile2);
+  EXPECT_TRUE(ukm_enabled());
+  EXPECT_EQ(original_client_id, client_id());
+
+  harness2->DisableSyncForDatatype(syncer::TYPED_URLS);
+  EXPECT_FALSE(ukm_enabled());
+  EXPECT_NE(original_client_id, client_id());
+  original_client_id = client_id();
+
+  harness2->EnableSyncForDatatype(syncer::TYPED_URLS);
+  EXPECT_TRUE(ukm_enabled());
+  EXPECT_EQ(original_client_id, client_id());
+
+  harness2->service()->RequestStop(
+      browser_sync::ProfileSyncService::CLEAR_DATA);
+  harness1->service()->RequestStop(
+      browser_sync::ProfileSyncService::CLEAR_DATA);
+  CloseBrowserSynchronously(browser2);
+  CloseBrowserSynchronously(browser1);
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
 }
 
