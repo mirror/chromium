@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/callback.h"
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/x/x11.h"
@@ -61,6 +62,22 @@ class X11_WINDOW_EXPORT X11WindowBase : public PlatformWindow {
   void ProcessXWindowEvent(XEvent* xev);
 
  private:
+  // Sends a message to the x11 window manager, enabling or disabling the
+  // states |state1| and |state2|.
+  // TODO(msisov, tonikitoo): share this with DesktopWindowTreeHostX11.
+  void SetWMSpecState(bool enabled, ::Atom state1, ::Atom state2 = x11::None);
+
+  // Called when WM_STATE property is changed.
+  void OnWMStateUpdated();
+
+  // Checks if the window manager has set a specific state.
+  // TODO(msisov, tonikitoo): share this with DesktopWindowTreeHostX11.
+  bool HasWMSpecProperty(const char* property) const;
+
+  bool IsMinimized() const;
+  bool IsMaximized() const;
+  bool IsFullscreen() const;
+
   PlatformWindowDelegate* delegate_;
 
   XDisplay* xdisplay_;
@@ -72,6 +89,9 @@ class X11_WINDOW_EXPORT X11WindowBase : public PlatformWindow {
 
   // The bounds of |xwindow_|.
   gfx::Rect bounds_;
+
+  // The window manager state bits.
+  base::flat_set<::Atom> window_properties_;
 
   bool window_mapped_ = false;
 
