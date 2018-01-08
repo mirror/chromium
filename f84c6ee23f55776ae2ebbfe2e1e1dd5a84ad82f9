@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b006951_dcf47b10",
+        "filename": "chrome/browser/ui/extensions/installation_error_infobar_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-08T22:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7533d3c_2a4e28e3",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "f84c6ee23f55776ae2ebbfe2e1e1dd5a84ad82f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a280e0f3_b8fd95a5",
         "filename": "chrome/browser/ui/extensions/installation_error_infobar_delegate.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "f84c6ee23f55776ae2ebbfe2e1e1dd5a84ad82f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16becb62_41048e3e",
+        "filename": "chrome/browser/ui/extensions/installation_error_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-08T22:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a280e0f3_b8fd95a5",
+      "revId": "f84c6ee23f55776ae2ebbfe2e1e1dd5a84ad82f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
