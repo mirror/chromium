@@ -77,21 +77,20 @@ class SelectToSpeakEventRewriter : public ui::EventRewriter {
     // is released, too.
     WAIT_FOR_MOUSE_RELEASE,
 
-    // The user held down Search and clicked the speak selection key. We're
-    // waiting for the event where the speak selection key is released or the
-    // search key is released.
-    CAPTURING_SPEAK_SELECTION_KEY,
+    // The user held down Search and clicked the S button. We're waiting for
+    // the event where the S key is released or the search key is released.
+    CAPTURING_S,
 
-    // The user held down Search and clicked and released the speak selection
-    // key. We will wait for the Search key to be released too. This is
-    // different than SEARCH_DOWN because we know the user used the speak
-    // selection key, so when Search is released we will capture that event to
-    // not trigger opening the Search UI.
-    SPEAK_SELECTION_KEY_RELEASED,
+    // The user held down Search and clicked and released the S button. We
+    // will wait for the Search key to be released too. This is different
+    // than SEARCH_DOWN because we know the user used the S key, so when
+    // Search is released we will capture that event to not trigger opening
+    // the Search UI.
+    S_RELEASED,
 
-    // The Search key was released while the selection key was still down. Stay
-    // in this mode until the speak selection key is released too.
-    WAIT_FOR_SPEAK_SELECTION_KEY_RELEASE
+    // The Search key was released while the S key was still down. Stay in this
+    // mode until the S key is released too.
+    WAIT_FOR_S_RELEASE
   };
 
   State state_ = INACTIVE;
