@@ -156,6 +156,8 @@ component("base") {
     "cocoa/user_interface_item_command_handler.h",
     "cocoa/view_description.h",
     "cocoa/view_description.mm",
+    "cocoa/weak_ptr_object.h",
+    "cocoa/weak_ptr_object.mm",
     "cocoa/window_size_constants.h",
     "cocoa/window_size_constants.mm",
     "cursor/cursor.cc",
