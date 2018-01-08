@@ -117,6 +117,7 @@ cast_source_set("init_shlib") {
 
   deps = [
     "//base",
+    "//chromecast:chromecast_features",
   ]
 }
 
