@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4c6eab31_55d96efc",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-08T21:48:40Z",
+      "side": 1,
+      "message": "I agree that it would be better to encapsulate this in CTH, so I\u0027m just going to use the sample count directly here.",
+      "parentUuid": "ba696922_fb2be283",
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8869e342_db37b639",
         "filename": "cc/scheduler/scheduler.cc",
         "patchSetId": 3
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "fad16ce6_ef010e56",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-08T21:48:40Z",
+      "side": 1,
+      "message": "I went with this because the original change was clearing other state in SchedulerStateMachine as well. I\u0027d prefer something like ClearHistory as well to make it obvious what the function does. ClearTimingHistory or ClearHistory both seem fine that way.",
+      "parentUuid": "48ad3abf_a1f7f8c3",
+      "range": {
+        "startLine": 940,
+        "startChar": 16,
+        "endLine": 940,
+        "endChar": 40
+      },
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "740f3b19_2d751d69",
         "filename": "cc/scheduler/scheduler_state_machine.cc",
         "patchSetId": 3
@@ -98,6 +140,24 @@
       "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9047372b_b3634ff0",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-08T21:48:40Z",
+      "side": 1,
+      "message": "last_frame_events_ are used in decisions for prioritizing impl invalidations, which I think should also avoid using state from the previous navigation. But I\u0027m avoiding making any changes here that are not necessary for the regression this addresses.",
+      "parentUuid": "740f3b19_2d751d69",
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +208,30 @@
     },
     {
       "key": {
+        "uuid": "4e4dc7b1_1005c64b",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-08T21:48:40Z",
+      "side": 1,
+      "message": "Removed all state machine changes in favour of relying on all state from CTH.",
+      "parentUuid": "cb3be014_463fa204",
+      "range": {
+        "startLine": 351,
+        "startChar": 6,
+        "endLine": 351,
+        "endChar": 19
+      },
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "016c464e_910f2412",
         "filename": "cc/trees/single_thread_proxy.cc",
         "patchSetId": 3
@@ -162,6 +246,24 @@
       "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffaa7965_dc623cad",
+        "filename": "cc/trees/single_thread_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-08T21:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "016c464e_910f2412",
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
