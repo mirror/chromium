@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "762c9a6b_132b43f9",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-08T16:04:03Z",
+      "side": 1,
+      "message": "Late drive-by: I am confused by this. My understanding of InputTargetClient is that it returns a FrameSinkId corresponding to the routing ID of a RenderFrame or RenderFrameProxy in its local process. The owner_map_ in RWHIER contains FrameSinkIds corresponding to routing IDs of RenderWidgets. Those shouldn\u0027t line up. I assume I must be missing something since this passes tests?",
+      "revId": "2894c17c9f356b50b4d5e2c7e8b5a455c7fb1d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
