@@ -3839,4 +3839,20 @@
       Includes information about harmful software, system settings, and processes on your computer.
     </message>
   </if>
+
+    <!--- Smb Server Page -->
+  <if expr="chromeos">
+    <message name="IDS_SETTINGS_SMB" desc="Title of the SMB settings page.">
+      Smb
+    </message>
+    <message name="IDS_SETTINGS_SMB_MOUNT" desc="Title of the SMB setting to add a mount">
+      Mount
+    </message>
+    <message name="IDS_SETTINGS_SMB_MOUNT_SUMMARY" desc="Summary explaining what the SMB feature does.">
+      Mount an smb filesystem in the Files App
+    </message>
+    <message name="IDS_SETTINGS_SMB_MOUNT_URL" desc="Title of the SMB Url field.">
+      Smb Mount Url
+    </message>
+  </if>
 </grit-part>
