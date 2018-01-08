@@ -109,6 +109,7 @@ AXObjectCacheImpl::AXObjectCacheImpl(Document& document)
                                &AXObjectCacheImpl::NotificationPostTimerFired),
       accessibility_event_permission_(mojom::PermissionStatus::ASK),
       permission_observer_binding_(this) {
+  LOG(ERROR) << "Building a new cache for " << document.Url().GetString();
   if (document_->LoadEventFinished())
     AddPermissionStatusListener();
 }

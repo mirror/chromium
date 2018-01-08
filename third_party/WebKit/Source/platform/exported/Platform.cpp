@@ -66,6 +66,7 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/Source/platform/exported/WebClipboardImpl.h"
 #include "third_party/WebKit/common/origin_trials/trial_policy.h"
+#include "third_party/WebKit/public/platform/PlatformAXTree.h"
 
 namespace blink {
 
