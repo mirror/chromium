@@ -20,8 +20,9 @@ namespace app_list {
 
 namespace {
 
-constexpr int kVerticalPadding = 11;
-constexpr int kHorizontalPadding = 16;
+// Padding is set on the server.
+constexpr int kVerticalPadding = 0;
+constexpr int kHorizontalPadding = 0;
 
 }  // namespace
 
