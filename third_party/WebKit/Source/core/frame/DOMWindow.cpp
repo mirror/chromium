@@ -409,7 +409,7 @@ void DOMWindow::close(LocalDOMWindow* incumbent_window) {
   window_is_closing_ = true;
 }
 
-void DOMWindow::focus(LocalDOMWindow* incumbent_window) {
+void DOMWindow::focus(LocalDOMWindow* calling_window) {
   if (!GetFrame())
     return;
 
@@ -417,23 +417,23 @@ void DOMWindow::focus(LocalDOMWindow* incumbent_window) {
   if (!page)
     return;
 
-  DCHECK(incumbent_window);
-  ExecutionContext* incumbent_execution_context =
-      incumbent_window->GetExecutionContext();
+  DCHECK(calling_window);
+  ExecutionContext* calling_execution_context =
+      calling_window->GetExecutionContext();
 
-  bool allow_focus = incumbent_execution_context->IsWindowInteractionAllowed();
+  bool allow_focus = calling_execution_context->IsWindowInteractionAllowed();
   if (allow_focus) {
-    incumbent_execution_context->ConsumeWindowInteraction();
+    calling_execution_context->ConsumeWindowInteraction();
   } else {
     DCHECK(IsMainThread());
     allow_focus =
         opener() && (opener() != this) &&
-        (ToDocument(incumbent_execution_context)->domWindow() == opener());
+        (ToDocument(calling_execution_context)->domWindow() == opener());
   }
 
   // If we're a top level window, bring the window to the front.
   if (GetFrame()->IsMainFrame() && allow_focus)
-    page->GetChromeClient().Focus();
+    page->GetChromeClient().Focus(calling_window->GetFrame());
 
   page->GetFocusController().FocusDocumentView(GetFrame(),
                                                true /* notifyEmbedder */);
