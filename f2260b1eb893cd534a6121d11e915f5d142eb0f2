@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b389f05b_9b7e1a0c",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_rewriter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T17:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "569732c6_fe2300bf",
+      "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db0ebb7b_486b2d8a",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_rewriter.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9f81d3_a6d42b30",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_rewriter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T17:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db0ebb7b_486b2d8a",
+      "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7db7a890_042327df",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T17:38:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "835c7764_b55ae972",
+      "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eda78973_b706b420",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd31f80_9935e77b",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T17:38:26Z",
+      "side": 1,
+      "message": "The closure compiler was complaining until I put this in. I can\u0027t figure a good way to get the compiler not to complain without doing imbedded if statements -- closure can\u0027t seem to tell when you are checking 2 conditions at once.\n\nPutting the if statement like this does *not* work either:\nif (i \u003d\u003d 0 \u0026\u0026 !(opt_startIndex \u003d\u003d\u003d undefined)) {\nif (i \u003d\u003d 0 \u0026\u0026 opt_startIndex !\u003d undefined) {\nif (i \u003d\u003d 0 \u0026\u0026 !(opt_startIndex \u003d\u003d undefined)) {\n\nI re-wrote it to make it hopefully a little better but still with 2 if statements.",
+      "parentUuid": "eda78973_b706b420",
+      "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
