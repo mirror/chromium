@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "771f1f32_98e4c602",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-08T21:43:09Z",
+      "side": 1,
+      "message": "If we keep this then I think we should keep a rolling count so that in the aforementioned scenario we only record one count on the histogram. We could keep track of the runnable cancel/restart it if we get another remove request before the timeout.",
+      "parentUuid": "bae32d36_3a9d0d25",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "42a5c481a9d35fa8e8be0ac710a3bc5aa8e50db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63c7b0b6_bcf003f5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
