@@ -598,4 +598,24 @@ V8ScriptValueDeserializer::GetWasmModuleFromId(v8::Isolate* isolate,
   return v8::MaybeLocal<v8::WasmCompiledModule>();
 }
 
+v8::MaybeLocal<v8::SharedArrayBuffer>
+V8ScriptValueDeserializer::GetSharedArrayBufferFromId(v8::Isolate* isolate,
+                                                      uint32_t id) {
+  const auto& shared_array_buffers = unpacked_value_->SharedArrayBuffers();
+  if (id < shared_array_buffers.size()) {
+    DOMSharedArrayBuffer* shared_array_buffer = shared_array_buffers.at(id);
+    v8::Local<v8::Object> creation_context =
+        script_state_->GetContext()->Global();
+    v8::Local<v8::Value> wrapper =
+        ToV8(shared_array_buffer, creation_context, isolate);
+    DCHECK(wrapper->IsSharedArrayBuffer());
+    return v8::Local<v8::SharedArrayBuffer>::Cast(wrapper);
+  }
+  ExceptionState exception_state(isolate, ExceptionState::kUnknownContext,
+                                 nullptr, nullptr);
+  exception_state.ThrowDOMException(kDataCloneError,
+                                    "Unable to deserialize SharedArrayBuffer.");
+  CHECK(shared_array_buffers.IsEmpty());
+  return v8::MaybeLocal<v8::SharedArrayBuffer>();
+}
 }  // namespace blink
