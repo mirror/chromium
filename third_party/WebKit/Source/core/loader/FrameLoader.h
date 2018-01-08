@@ -58,6 +58,7 @@ namespace blink {
 
 class Document;
 class DocumentLoader;
+class Event;
 class HTMLFormElement;
 class LocalFrame;
 class Frame;
@@ -96,6 +97,17 @@ class CORE_EXPORT FrameLoader final {
             FrameLoadType = kFrameLoadTypeStandard,
             HistoryItem* = nullptr,
             HistoryLoadType = kHistoryDifferentDocumentLoad);
+
+  // Called when the browser process has asked this renderer process to commit a
+  // same document navigation in that frame. Returns false if the navigation
+  // cannot commit, true otherwise.
+  bool CommitSameDocumentNavigation(
+      const KURL&,
+      FrameLoadType,
+      HistoryItem*,
+      ClientRedirectPolicy,
+      Document* origin_document = nullptr,
+      Event* triggering_event = nullptr);
 
   // Warning: stopAllLoaders can and will detach the LocalFrame out from under
   // you. All callers need to either protect the LocalFrame or guarantee they

@@ -3041,6 +3041,8 @@ void RenderFrameImpl::CommitNavigation(
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     const base::UnguessableToken& devtools_navigation_token) {
+  DCHECK(
+      !FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type));
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
   if (!browser_side_navigation_pending_ &&
@@ -3128,13 +3130,10 @@ void RenderFrameImpl::CommitNavigation(
       blink::kWebHistoryDifferentDocumentLoad;
   bool should_load_request = false;
   WebHistoryItem item_for_history_navigation;
-  bool is_same_document =
-      FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
 
   // Sanity check that the browser always sends us new loader factories on
   // cross-document navigations with the Network Service enabled.
-  DCHECK(is_same_document ||
-         common_params.url.SchemeIs(url::kJavaScriptScheme) ||
+  DCHECK(common_params.url.SchemeIs(url::kJavaScriptScheme) ||
          !base::FeatureList::IsEnabled(features::kNetworkService) ||
          subresource_loader_factories.has_value());
 
@@ -3171,22 +3170,8 @@ void RenderFrameImpl::CommitNavigation(
       // store the relevant frame's WebHistoryItem in the root of the
       // PageState.
       item_for_history_navigation = entry->root();
-      switch (common_params.navigation_type) {
-        case FrameMsg_Navigate_Type::RELOAD:
-        case FrameMsg_Navigate_Type::RELOAD_BYPASSING_CACHE:
-        case FrameMsg_Navigate_Type::RELOAD_ORIGINAL_REQUEST_URL:
-        case FrameMsg_Navigate_Type::RESTORE:
-        case FrameMsg_Navigate_Type::RESTORE_WITH_POST:
-        case FrameMsg_Navigate_Type::HISTORY_DIFFERENT_DOCUMENT:
-          history_load_type = blink::kWebHistoryDifferentDocumentLoad;
-          break;
-        case FrameMsg_Navigate_Type::HISTORY_SAME_DOCUMENT:
-          history_load_type = blink::kWebHistorySameDocumentLoad;
-          break;
-        default:
-          NOTREACHED();
-          history_load_type = blink::kWebHistoryDifferentDocumentLoad;
-      }
+      DCHECK_EQ(FrameMsg_Navigate_Type::HISTORY_DIFFERENT_DOCUMENT,
+                common_params.navigation_type);
       load_type = request_params.is_history_navigation_in_new_child
                       ? blink::WebFrameLoadType::kInitialHistoryLoad
                       : blink::WebFrameLoadType::kBackForward;
@@ -3195,25 +3180,6 @@ void RenderFrameImpl::CommitNavigation(
       // Keep track of which subframes the browser process has history items
       // for during a history navigation.
       history_subframe_unique_names_ = request_params.subframe_unique_names;
-
-      if (history_load_type == blink::kWebHistorySameDocumentLoad) {
-        // If this is marked as a same document load but we haven't committed
-        // anything, treat it as a new load.  The browser shouldn't let this
-        // happen.
-        if (current_history_item_.IsNull()) {
-          history_load_type = blink::kWebHistoryDifferentDocumentLoad;
-          NOTREACHED();
-        } else {
-          // Additionally, if the |current_history_item_|'s document
-          // sequence number doesn't match the one sent from the browser, it
-          // is possible that this renderer has committed a different
-          // document. In such case, don't use WebHistorySameDocumentLoad.
-          if (current_history_item_.DocumentSequenceNumber() !=
-              item_for_history_navigation.DocumentSequenceNumber()) {
-            history_load_type = blink::kWebHistoryDifferentDocumentLoad;
-          }
-        }
-      }
 
       // If this navigation is to a history item for a new child frame, we may
       // want to ignore it in some cases.  If a Javascript navigation (i.e.,
@@ -3252,7 +3218,7 @@ void RenderFrameImpl::CommitNavigation(
     } else {
       WebURLRequest request = CreateURLRequestForCommit(
           common_params, request_params, std::move(url_loader_client_endpoints),
-          head, body_url, is_same_document);
+          head, body_url);
 
       // Load the request.
       frame_->Load(request, load_type, item_for_history_navigation,
@@ -3294,6 +3260,8 @@ void RenderFrameImpl::CommitFailedNavigation(
     int error_code,
     const base::Optional<std::string>& error_page_content,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
+  DCHECK(
+      !FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type));
   bool is_reload =
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
   RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url,
@@ -3406,6 +3374,121 @@ void RenderFrameImpl::CommitFailedNavigation(
 
   browser_side_navigation_pending_ = false;
   browser_side_navigation_pending_url_ = GURL();
+}
+
+void RenderFrameImpl::CommitSameDocumentNavigation(
+    const CommonNavigationParams& common_params,
+    const RequestNavigationParams& request_params) {
+  DCHECK(!IsRendererDebugURL(common_params.url));
+  DCHECK(!FrameMsg_Navigate_Type::IsReload(common_params.navigation_type));
+  DCHECK(!request_params.is_view_source);
+  DCHECK(FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type));
+
+  // If the request was initiated in the context of a user gesture then make
+  // sure that the navigation also executes in the context of a user gesture.
+  std::unique_ptr<blink::WebScopedUserGesture> gesture(
+      common_params.has_user_gesture ? new blink::WebScopedUserGesture(frame_)
+                                     : nullptr);
+
+  browser_side_navigation_pending_ = false;
+  browser_side_navigation_pending_url_ = GURL();
+
+  GetContentClient()->SetActiveURL(
+      common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
+
+  // Create parameters for a standard navigation, indicating whether it should
+  // replace the current NavigationEntry.
+  bool is_history_navigation = request_params.page_state.IsValid();
+  blink::WebFrameLoadType load_type =
+      common_params.should_replace_current_entry
+          ? blink::WebFrameLoadType::kReplaceCurrentItem
+          : blink::WebFrameLoadType::kStandard;
+  bool should_load_request = true;
+  WebHistoryItem item_for_history_navigation;
+  RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url,
+                                                  request_params);
+
+  GetContentClient()->SetActiveURL(
+      common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
+
+  pending_navigation_params_.reset(
+      new NavigationParams(common_params, request_params));
+
+  // Used to determine whether this frame is actually loading a request as part
+  // of a history navigation.
+  bool has_history_navigation_in_frame = false;
+
+  if (is_history_navigation) {
+    // We must know the nav entry ID of the page we are navigating back to,
+    // which should be the case because history navigations are routed via the
+    // browser.
+    DCHECK_NE(0, request_params.nav_entry_id);
+    DCHECK_EQ(FrameMsg_Navigate_Type::HISTORY_SAME_DOCUMENT,
+              common_params.navigation_type);
+    DCHECK(!request_params.is_history_navigation_in_new_child);
+    std::unique_ptr<HistoryEntry> entry =
+        PageStateToHistoryEntry(request_params.page_state);
+    if (entry) {
+      // Since this is a same-document history load, there should be a history
+      // item present.
+      DCHECK(!current_history_item_.IsNull());
+      // The browser process sends a single WebHistoryItem for this frame.
+      // TODO(creis): Change PageState to FrameState.  In the meantime, we
+      // store the relevant frame's WebHistoryItem in the root of the
+      // PageState.
+      item_for_history_navigation = entry->root();
+      load_type = blink::WebFrameLoadType::kBackForward;
+
+      // Keep track of which subframes the browser process has history items
+      // for during a history navigation.
+      history_subframe_unique_names_ = request_params.subframe_unique_names;
+
+      // If the |current_history_item_|'s document
+      // sequence number doesn't match the one sent from the browser, it
+      // is possible that this renderer has committed a different
+      // document. In such case, the navigation cannot be loaded as a
+      // same-document navigation.
+      if (current_history_item_.DocumentSequenceNumber() !=
+          item_for_history_navigation.DocumentSequenceNumber()) {
+        should_load_request = false;
+      }
+    }
+  }
+
+  if (should_load_request) {
+    base::WeakPtr<RenderFrameImpl> weak_this = weak_factory_.GetWeakPtr();
+    bool navigation_started = false;
+    bool is_client_redirect =
+        !!(common_params.transition & ui::PAGE_TRANSITION_CLIENT_REDIRECT);
+    // Load the request.
+    navigation_started = frame_->CommitSameDocumentNavigation(
+        common_params.url, load_type, item_for_history_navigation,
+        is_client_redirect);
+
+    // The load of the URL can result in this frame being removed. Use a
+    // WeakPtr as an easy way to detect whether this has occured. If so, this
+    // method should return immediately and not touch any part of the object,
+    // otherwise it will result in a use-after-free bug.
+    if (!weak_this)
+      return;
+
+    if (!navigation_started && frame_ && !frame_->IsLoading() &&
+        !has_history_navigation_in_frame) {
+      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+    }
+  } else {
+    // The browser expects the frame to be loading this navigation. Inform it
+    // that the load stopped if needed.
+    // Note: in the case of history navigations, |should_load_request| will be
+    // false, and the frame may not have been set in a loading state. Do not
+    // send a stop message if a history navigation is loading in this frame
+    // nonetheless. This behavior will go away with subframe navigation
+    // entries.
+    if (frame_ && !frame_->IsLoading() && !has_history_navigation_in_frame)
+      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+  }
+
+  pending_navigation_params_.reset();
 }
 
 // mojom::HostZoom implementation ----------------------------------------------
@@ -6370,8 +6453,7 @@ WebURLRequest RenderFrameImpl::CreateURLRequestForCommit(
     const RequestNavigationParams& request_params,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     const ResourceResponseHead& head,
-    const GURL& body_url,
-    bool is_same_document_navigation) {
+    const GURL& body_url) {
   // This will override the url requested by the WebURLLoader, as well as
   // provide it with the response to the request.
   std::unique_ptr<StreamOverrideParameters> stream_override(
@@ -6398,7 +6480,7 @@ WebURLRequest RenderFrameImpl::CreateURLRequestForCommit(
 
   WebURLRequest request = CreateURLRequestForNavigation(
       common_params, request_params, std::move(stream_override),
-      frame_->IsViewSourceModeEnabled(), is_same_document_navigation);
+      frame_->IsViewSourceModeEnabled(), false /* is_same_document */);
   request.SetFrameType(IsTopLevelNavigation(frame_)
                            ? network::mojom::RequestContextFrameType::kTopLevel
                            : network::mojom::RequestContextFrameType::kNested);
