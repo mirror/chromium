@@ -412,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "06e79101_92bbb8f2",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T22:26:37Z",
+      "side": 1,
+      "message": "Steven, did you mean extensions::api::settings_private here, or should we really have a new namespace?",
+      "parentUuid": "fc9c386d_ee6864ea",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bef376e_3d050259",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
         "patchSetId": 3

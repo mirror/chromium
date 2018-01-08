@@ -42,6 +42,69 @@
     },
     {
       "key": {
+        "uuid": "4dad89cf_3362b177",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T22:26:37Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df61ac30_f7f04b37",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T22:26:37Z",
+      "side": 1,
+      "message": "Is this intentionally in the extensions namespace instead of extensions::api?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8c53b6_d4774c4b",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T22:26:37Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 18,
+        "startChar": 34,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "709060f6_c2b98d74",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 9
@@ -59,6 +122,86 @@
         "endLine": 13,
         "endChar": 34
       },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6fde53_ce82f426",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T22:26:37Z",
+      "side": 1,
+      "message": "Unused.",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c74147_aa9056f4",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T22:26:37Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369135bd_bbdd2367",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T22:26:37Z",
+      "side": 1,
+      "message": "I wouldn\u0027t bother with this since you only use it twice (and already have it spelled out in full one of those times)",
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f154dd81_9220c414",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T22:26:37Z",
+      "side": 1,
+      "message": "\"content\" (but clearly, this forward declaration isn\u0027t needed, since it\u0027s already in the base class)",
       "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
