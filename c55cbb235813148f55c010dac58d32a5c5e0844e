@@ -22,6 +22,30 @@
       "revId": "c55cbb235813148f55c010dac58d32a5c5e0844e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d092fd9_f2f660cc",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-08T19:44:15Z",
+      "side": 1,
+      "message": "So that would be spec-incompliant, but we do already do a similar bundling for object-form notation (see lines 529-552 of the RHS of this patch). That said, we do it there because it makes the code saner. Here I don\u0027t think that argument applies and I\u0027m not sure the cost of looping the array twice is particularly high.\n\nLmk if you feel strongly otherwise.",
+      "parentUuid": "3290b7c5_7ae4b5c6",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 293,
+        "endChar": 37
+      },
+      "revId": "c55cbb235813148f55c010dac58d32a5c5e0844e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
