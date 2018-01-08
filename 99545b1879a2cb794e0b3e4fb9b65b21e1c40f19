@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32fbc3ef_164df2ed",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2429,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2018-01-08T23:28:43Z",
+      "side": 1,
+      "message": "Same as in .h file",
+      "parentUuid": "7018bc5a_aecd773d",
+      "range": {
+        "startLine": 2425,
+        "startChar": 0,
+        "endLine": 2429,
+        "endChar": 0
+      },
+      "revId": "99545b1879a2cb794e0b3e4fb9b65b21e1c40f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddb061ab_370d3788",
         "filename": "chrome/browser/flag_descriptions.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-08T23:22:57Z",
       "side": 1,
       "message": "Sort alphabetically.",
+      "range": {
+        "startLine": 1501,
+        "startChar": 0,
+        "endLine": 1503,
+        "endChar": 43
+      },
+      "revId": "99545b1879a2cb794e0b3e4fb9b65b21e1c40f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c74d25_e1531886",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2018-01-08T23:28:43Z",
+      "side": 1,
+      "message": "Looks the others all put kXXXName on top of kXXXDescription\n\nMaybe we should just follow them here? It looks weird if this is the only pair in alphabet order.",
+      "parentUuid": "ddb061ab_370d3788",
       "range": {
         "startLine": 1501,
         "startChar": 0,
