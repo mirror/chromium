@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b8a9265_b2342819",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-08T06:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60df0e10_c70ac41f",
+      "range": {
+        "startLine": 393,
+        "startChar": 4,
+        "endLine": 393,
+        "endChar": 49
+      },
+      "revId": "a6eeac39109911563aa2fc731ea1998dc3103bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67e4571e_c622e363",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a6eeac39109911563aa2fc731ea1998dc3103bf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298ba3a0_b8fb4c6e",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-08T06:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67e4571e_c622e363",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 456,
+        "endChar": 1
+      },
+      "revId": "a6eeac39109911563aa2fc731ea1998dc3103bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba90c076_664ecb68",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-08T06:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "084a35a4_aa355a8a",
+      "range": {
+        "startLine": 50,
+        "startChar": 70,
+        "endLine": 50,
+        "endChar": 75
+      },
+      "revId": "a6eeac39109911563aa2fc731ea1998dc3103bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c38ea6_d9b32c34",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bca8d121_5aec330b",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-08T06:59:03Z",
+      "side": 1,
+      "message": "Do you think it\u0027s better keep it or do that in the CL 851844 in which we will pass the pointer.",
+      "parentUuid": "86c38ea6_d9b32c34",
+      "range": {
+        "startLine": 1480,
+        "startChar": 37,
+        "endLine": 1480,
+        "endChar": 58
+      },
+      "revId": "a6eeac39109911563aa2fc731ea1998dc3103bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b3ace9_c8844406",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-04T06:16:20Z",
       "side": 1,
       "message": "Nice!",
+      "range": {
+        "startLine": 1494,
+        "startChar": 42,
+        "endLine": 1494,
+        "endChar": 79
+      },
+      "revId": "a6eeac39109911563aa2fc731ea1998dc3103bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b685056b_1f482008",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1494,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-08T06:59:03Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "e1b3ace9_c8844406",
       "range": {
         "startLine": 1494,
         "startChar": 42,
