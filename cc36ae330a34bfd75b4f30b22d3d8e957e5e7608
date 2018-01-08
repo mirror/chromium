@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d377c7fc_729ee2ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2018-01-08T21:15:41Z",
+      "side": 1,
+      "message": "Is this the same as CastMRP implementation? Should it be moved to BaseMRP?",
+      "revId": "cc36ae330a34bfd75b4f30b22d3d8e957e5e7608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "976bbffc_42c71c02",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
         "patchSetId": 3
