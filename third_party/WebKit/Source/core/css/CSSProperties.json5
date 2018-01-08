@@ -1837,7 +1837,7 @@
     },
     {
       name: "offset-anchor",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       runtime_flag: "CSSOffsetPositionAnchor",
       field_group: "*",
@@ -1870,7 +1870,7 @@
     },
     {
       name: "offset-position",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       runtime_flag: "CSSOffsetPositionAnchor",
       field_group: "*",
@@ -4002,7 +4002,7 @@
         "offset-position", "offset-path", "offset-distance", "offset-rotate",
         "offset-anchor"
       ],
-      property_methods: ["ParseShorthand"],
+      property_methods: ["ParseShorthand", "CSSValueFromComputedStyleInternal"],
     },
     {
       name: "outline",
