@@ -803,7 +803,6 @@ void ForEachMatchingFormFieldCommon(
         // skipped.
         (IsAutofillableInputElement(input_element) ||
          IsTextAreaElement(*element)) &&
-        !element->Value().IsEmpty() &&
         !SanitizedFieldIsEmpty(element->Value().Utf16()) &&
         (!element->HasAttribute(kValue) ||
          element->GetAttribute(kValue) != element->Value()) &&
@@ -820,7 +819,6 @@ void ForEachMatchingFormFieldCommon(
         ((filters & FILTER_NON_FOCUSABLE_ELEMENTS) && !element->IsFocusable() &&
          !IsSelectElement(*element)))
       continue;
-
     callback(data.fields[i], is_initiating_element, element);
   }
 }
