@@ -11,6 +11,13 @@ struct Serializer<{{data_view}}, MaybeConstUserType> {
   static void Serialize(MaybeConstUserType& input,
                         Buffer* buffer,
                         {{data_type}}::BufferWriter* writer,
+                        SerializationContext* context) {
+    Serialize(input, buffer, writer, false, context);
+  }
+
+  static void Serialize(MaybeConstUserType& input,
+                        Buffer* buffer,
+                        {{data_type}}::BufferWriter* writer,
                         bool inlined,
                         SerializationContext* context) {
     if (CallIsNullIfExists<Traits>(input)) {

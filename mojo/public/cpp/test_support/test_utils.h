@@ -9,8 +9,20 @@
 
 #include "mojo/public/cpp/system/core.h"
 
+#include "mojo/public/cpp/bindings/message.h"
+
 namespace mojo {
 namespace test {
+
+template <typename MojomType, typename UserType>
+bool SerializeAndDeserialize(UserType* input, UserType* output) {
+  mojo::Message message = MojomType::SerializeAsMessage(input);
+
+  // Ensure all attached handles are fully serialized into the message.
+  message.payload_buffer()->Seal();
+
+  return MojomType::DeserializeFromMessage(std::move(message), output);
+}
 
 // Writes a message to |handle| with message data |text|. Returns true on
 // success.
