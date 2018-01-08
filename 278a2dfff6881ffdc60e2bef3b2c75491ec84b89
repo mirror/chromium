@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "885fbd6d_b9a40dfd",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-08T21:58:44Z",
+      "side": 1,
+      "message": "Why can\u0027t we use the actual resource type yet?",
+      "revId": "278a2dfff6881ffdc60e2bef3b2c75491ec84b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa4f12a_a9deb183",
+        "filename": "chrome/renderer/url_loader_throttle_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-08T21:58:44Z",
+      "side": 1,
+      "message": "I wonder if this check should be done here or by the callsite, the logic that creates throttles for main frames in the browser side is not chrome-specific.",
+      "revId": "278a2dfff6881ffdc60e2bef3b2c75491ec84b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daea3583_a779edbe",
+        "filename": "content/public/renderer/url_loader_throttle_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-08T21:58:44Z",
+      "side": 1,
+      "message": "nit/optional: using kName naming for new enums? (Maybe also use enum class, then the names would be kFrame, kWorker)",
+      "revId": "278a2dfff6881ffdc60e2bef3b2c75491ec84b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
