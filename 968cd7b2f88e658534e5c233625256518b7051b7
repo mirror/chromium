@@ -46,6 +46,30 @@
       "revId": "968cd7b2f88e658534e5c233625256518b7051b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15e24a6_0e82e483",
+        "filename": "chrome/profiling/profiling_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-08T13:34:42Z",
+      "side": 1,
+      "message": "Changed in latest patch.",
+      "parentUuid": "7df4e06b_23a189a9",
+      "range": {
+        "startLine": 81,
+        "startChar": 1,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "968cd7b2f88e658534e5c233625256518b7051b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
