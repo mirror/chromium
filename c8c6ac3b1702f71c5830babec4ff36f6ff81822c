@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6863620_055ca799",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-08T15:11:19Z",
+      "side": 1,
+      "message": "Why not private?",
+      "range": {
+        "startLine": 162,
+        "startChar": 15,
+        "endLine": 162,
+        "endChar": 39
+      },
+      "revId": "c8c6ac3b1702f71c5830babec4ff36f6ff81822c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
