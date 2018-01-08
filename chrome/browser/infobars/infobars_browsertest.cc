@@ -11,6 +11,7 @@
 #include "chrome/browser/banners/app_banner_infobar_delegate_desktop.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/api/debugger/extension_dev_tools_infobar.h"
+#include "chrome/browser/extensions/api/messaging/incognito_connectability_infobar_delegate.h"
 #include "chrome/browser/extensions/crx_installer.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -210,6 +211,8 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
   const base::flat_map<std::string, IBD::InfoBarIdentifier> kIdentifiers = {
       {"app_banner", IBD::APP_BANNER_INFOBAR_DELEGATE},
       {"extension_dev_tools", IBD::EXTENSION_DEV_TOOLS_INFOBAR_DELEGATE},
+      {"incognito_connectability",
+       IBD::INCOGNITO_CONNECTABILITY_INFOBAR_DELEGATE},
       {"nacl", IBD::NACL_INFOBAR_DELEGATE},
       {"reload_plugin", IBD::RELOAD_PLUGIN_INFOBAR_DELEGATE},
       {"plugin_observer", IBD::PLUGIN_OBSERVER_INFOBAR_DELEGATE},
@@ -238,6 +241,17 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       extensions::ExtensionDevToolsInfoBar::Create("id", "name", nullptr,
                                                    base::Closure());
       break;
+    case IBD::INCOGNITO_CONNECTABILITY_INFOBAR_DELEGATE: {
+      using Tracker = extensions::IncognitoConnectability::ScopedAlertTracker;
+      extensions::IncognitoConnectabilityInfoBarDelegate::Create(
+          GetInfoBarService(),
+          l10n_util::GetStringFUTF16(
+              IDS_EXTENSION_PROMPT_EXTENSION_CONNECT_FROM_INCOGNITO,
+              base::ASCIIToUTF16("http://example.com"),
+              base::ASCIIToUTF16("Test Extension")),
+          base::Bind([](Tracker::Mode m) {}));
+      break;
+    }
     case IBD::NACL_INFOBAR_DELEGATE:
 #if BUILDFLAG(ENABLE_NACL)
       NaClInfoBarDelegate::Create(GetInfoBarService());
@@ -357,6 +371,10 @@ IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_app_banner) {
 }
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_extension_dev_tools) {
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_incognito_connectability) {
   ShowAndVerifyUi();
 }
 
