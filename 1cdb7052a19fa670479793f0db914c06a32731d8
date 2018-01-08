@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "2f952284_73131696",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-08T16:35:07Z",
+      "side": 1,
+      "message": "I agreed with you that we have some miscommunication.\nIIUC...\n\nAs written in crrev.com/2205153002, AudioStreamContainer needs to keep a pointer to AudioManager on creation, which is done in SoundsManagerImpl::Initialize, which is called before current MockAudioManager creation timing.\n\nSo, your solution is, making AudioStreamContainer creation delayed until SoundsManager::Play(), which is after MockAudioManager creation. For that purpose, you injected KioskVirtualKeyboardTestSoundsManagerTestImpl. (Am I true?)\n\nMy recommendation is, creating MockAudioManager before SoundsManagerImpl::Initialize. Then, the mock instance is used for all the stuff instead of using both mock and real instances depending on the timing. Because AudioManager is Singleton-like class, using a mock instance consistently across the test scenario looks better, if possible, I think.\n\nWDYT? If you agreed, could you add some TODO to moving that way in a following CL (I think it would need a bit more test code change, which sounds like out of your CL\u0027s focus).\nOr, I may overlook some more stuff...",
+      "parentUuid": "3fe6aa4f_e3134dd9",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f343c98_dc31581e",
         "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
         "patchSetId": 13
