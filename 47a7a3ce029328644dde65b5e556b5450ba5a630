@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9945d02_4c50fac8",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-08T15:32:27Z",
+      "side": 1,
+      "message": "This is formatted a bit oddly (and not how clang-format will do it, if I let it) but it minimises the diff. WDYT?",
+      "range": {
+        "startLine": 349,
+        "startChar": 4,
+        "endLine": 349,
+        "endChar": 6
+      },
+      "revId": "47a7a3ce029328644dde65b5e556b5450ba5a630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
