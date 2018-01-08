@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01bf8e04_7aed846a",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T16:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ecae54e_5f80f75a",
+      "revId": "2103d1aa6aea882bb53e082920758dae0285f5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2231a0d_2b32d9f3",
         "filename": "ash/display/display_prefs.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7eee6879_97972ccc",
+        "filename": "ash/display/display_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T16:48:36Z",
+      "side": 1,
+      "message": "I tried as low as 25 but the indentation I think interferes. Also, the headsers are really not that similar.",
+      "parentUuid": "e2231a0d_2b32d9f3",
+      "revId": "2103d1aa6aea882bb53e082920758dae0285f5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42cb6ddb_60824d2e",
         "filename": "chrome/browser/chromeos/display/display_prefs_unittest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-05T21:19:07Z",
       "side": 1,
       "message": "why moving this out? TEST_F creates its own class so this can be inside the anonymous namespace.",
+      "revId": "2103d1aa6aea882bb53e082920758dae0285f5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d99888f_ed930fdf",
+        "filename": "chrome/browser/chromeos/display/display_prefs_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T16:48:36Z",
+      "side": 1,
+      "message": "I wanted to make this a friend class of DisplayPrefs so that I can protect DIsplayPrefs::LoadDisplayPreferences.",
+      "parentUuid": "42cb6ddb_60824d2e",
       "revId": "2103d1aa6aea882bb53e082920758dae0285f5ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
