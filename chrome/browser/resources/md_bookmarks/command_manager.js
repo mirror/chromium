@@ -657,7 +657,6 @@ cr.define('bookmarks', function() {
             Command.OPEN_NEW_WINDOW,
             Command.OPEN_INCOGNITO,
           ];
-          break;
         case MenuSource.TOOLBAR:
           return [
             Command.SORT,
