@@ -22,6 +22,30 @@
       "revId": "2fb0ce8631def73993baea0706f3c29ac3ba96f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982cad5d_bc810780",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-08T23:02:03Z",
+      "side": 1,
+      "message": "Oh, my bad. Missed the return. Good catch! Fixed.",
+      "parentUuid": "478595ac_8dd198bc",
+      "range": {
+        "startLine": 520,
+        "startChar": 4,
+        "endLine": 525,
+        "endChar": 39
+      },
+      "revId": "2fb0ce8631def73993baea0706f3c29ac3ba96f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
