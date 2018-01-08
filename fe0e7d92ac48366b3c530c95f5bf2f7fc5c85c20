@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "adaf7a94_2ef4c68a",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T17:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d10d2d_b2f270e1",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0180a07e_7c41444a",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a90b404_05dd83e2",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T17:35:09Z",
+      "side": 1,
+      "message": "Yes, the fact that we can\u0027t call (or stop calling) SetArcAcailableCommandLineForTesting in the individual tests.",
+      "parentUuid": "0180a07e_7c41444a",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3523049_a4a7623b",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998aaf5d_8cd26b5d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T17:35:09Z",
+      "side": 1,
+      "message": "No, changed to DEFAULT.",
+      "parentUuid": "d3523049_a4a7623b",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "fd1af33f_a2d1813e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T17:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10d02a7c_02772132",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dcbd067_8ebf399e",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "e185ffb3_2d8cdba4",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T17:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dcbd067_8ebf399e",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e0785a5_a4426abd",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 1
@@ -119,6 +209,24 @@
       "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac2d3bd_e9297a3b",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T17:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e0785a5_a4426abd",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +250,30 @@
       "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6dce0d4_700c62bc",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T17:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3728afa4_8211ec59",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 53
+      },
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
