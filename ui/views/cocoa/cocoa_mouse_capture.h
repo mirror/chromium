@@ -23,6 +23,8 @@ class CocoaMouseCaptureDelegate;
 // consistent with how native NSMenus behave.
 class VIEWS_EXPORT CocoaMouseCapture {
  public:
+  class ActiveEventTap;
+
   explicit CocoaMouseCapture(CocoaMouseCaptureDelegate* delegate);
   ~CocoaMouseCapture();
 
@@ -34,8 +36,6 @@ class VIEWS_EXPORT CocoaMouseCapture {
   bool IsActive() const { return !!active_handle_; }
 
  private:
-  class ActiveEventTap;
-
   // Deactivates the event tap if still active.
   void OnOtherClientGotCapture();
 
