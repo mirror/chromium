@@ -1475,9 +1475,9 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
       CreateAbortCallback(&context_->message_event_callbacks));
   context_->message_event_callbacks.emplace(request_id, std::move(callback));
 
-  if (!event->source.client_info.client_uuid.empty()) {
+  if (event->client_info) {
     blink::WebServiceWorkerClientInfo web_client =
-        ToWebServiceWorkerClientInfo(event->source.client_info);
+        ToWebServiceWorkerClientInfo(*(event->client_info));
     proxy_->DispatchExtendableMessageEvent(
         request_id, blink::WebString::FromUTF16(event->message),
         event->source_origin,
@@ -1486,13 +1486,13 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
     return;
   }
 
-  DCHECK(event->source.service_worker_info.handle_id !=
+  DCHECK(event->service_worker_info->handle_id !=
              blink::mojom::kInvalidServiceWorkerHandleId &&
-         event->source.service_worker_info.version_id !=
+         event->service_worker_info->version_id !=
              blink::mojom::kInvalidServiceWorkerVersionId);
   std::unique_ptr<ServiceWorkerHandleReference> handle =
-      ServiceWorkerHandleReference::Adopt(
-          event->source.service_worker_info.Clone(), sender_);
+      ServiceWorkerHandleReference::Adopt(std::move(event->service_worker_info),
+                                          sender_);
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
           sender_.get(), main_thread_task_runner_.get());
