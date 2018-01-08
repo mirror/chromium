@@ -86,6 +86,11 @@ BPF_TEST_C(ParameterRestrictions,
   CheckClock(CLOCK_REALTIME);
   CheckClock(CLOCK_REALTIME_COARSE);
   CheckClock(CLOCK_THREAD_CPUTIME_ID);
+#if defined(OS_ANDROID)
+  const clockid_t kInitCPUClockID =
+      MAKE_PROCESS_CPUCLOCK(kInitPID, CPUCLOCK_SCHED);
+  CheckClock(kInitCPUClockID, false, 0));
+#endif
 }
 
 BPF_DEATH_TEST_C(ParameterRestrictions,
