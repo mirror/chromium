@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08fc93a5_9f3e3760",
+        "filename": "net/base/test_proxy_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T17:00:58Z",
+      "side": 1,
+      "message": "What\u0027s going on here?",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "10ff4363eb1c1b97cc9289cad5114dd9f71ba1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e95ad6_037904fe",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T17:00:58Z",
+      "side": 1,
+      "message": "I don\u0027t understand this change.  Someone more familiar with QUIC proxies should review it.",
+      "range": {
+        "startLine": 736,
+        "startChar": 16,
+        "endLine": 736,
+        "endChar": 27
+      },
+      "revId": "10ff4363eb1c1b97cc9289cad5114dd9f71ba1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
