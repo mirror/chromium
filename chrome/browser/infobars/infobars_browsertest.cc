@@ -15,6 +15,7 @@
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/plugins/hung_plugin_infobar_delegate.h"
 #include "chrome/browser/plugins/plugin_observer.h"
 #include "chrome/browser/plugins/reload_plugin_infobar_delegate.h"
 #include "chrome/browser/previews/previews_infobar_delegate.h"
@@ -198,6 +199,7 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
   using IBD = infobars::InfoBarDelegate;
   const base::flat_map<std::string, IBD::InfoBarIdentifier> kIdentifiers = {
       {"app_banner", IBD::APP_BANNER_INFOBAR_DELEGATE},
+      {"hung_plugin", IBD::HUNG_PLUGIN_INFOBAR_DELEGATE},
       {"extension_dev_tools", IBD::EXTENSION_DEV_TOOLS_INFOBAR_DELEGATE},
       {"nacl", IBD::NACL_INFOBAR_DELEGATE},
       {"reload_plugin", IBD::RELOAD_PLUGIN_INFOBAR_DELEGATE},
@@ -220,6 +222,10 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
     case IBD::APP_BANNER_INFOBAR_DELEGATE:
       banners::AppBannerInfoBarDelegateDesktop::Create(
           GetWebContents(), nullptr, nullptr, content::Manifest());
+      break;
+    case IBD::HUNG_PLUGIN_INFOBAR_DELEGATE:
+      HungPluginInfoBarDelegate::Create(GetInfoBarService(), nullptr, 0,
+                                        base::ASCIIToUTF16("Test Plugin"));
       break;
     case IBD::EXTENSION_DEV_TOOLS_INFOBAR_DELEGATE:
       extensions::ExtensionDevToolsInfoBar::Create("id", "name", nullptr,
@@ -330,6 +336,10 @@ void InfoBarUiTest::UpdateInfoBars() {
 }
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_app_banner) {
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_hung_plugin) {
   ShowAndVerifyUi();
 }
 
