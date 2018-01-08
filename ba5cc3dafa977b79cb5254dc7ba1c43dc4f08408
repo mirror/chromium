@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf2e60af_0774bb98",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/canonicalizeFilter/empty-services-member.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:08:20Z",
+      "side": 0,
+      "message": "same comment as before, I\u0027d like not to migrate anything that still uses the test parameter.",
+      "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6fdc09_12786da3",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/canonicalizeFilter/wrong-service-in-services-member.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:08:20Z",
+      "side": 0,
+      "message": "same here",
+      "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
