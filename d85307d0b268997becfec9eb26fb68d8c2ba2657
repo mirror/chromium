@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04813638_4aec357d",
+        "filename": "gpu/command_buffer/service/decoder_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-08T19:10:18Z",
+      "side": 1,
+      "message": "2018 (happy new year!)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4c613c_72d8f0c4",
+        "filename": "gpu/command_buffer/service/decoder_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-08T19:10:18Z",
+      "side": 1,
+      "message": "could use a class description.",
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583ed6b2_58cc0e61",
+        "filename": "gpu/ipc/service/command_buffer_stub.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-08T19:10:18Z",
+      "side": 1,
+      "message": "here and elsewhere, why is this called a \"decoder\" rather than a \"decoder context\"?",
+      "range": {
+        "startLine": 111,
+        "startChar": 18,
+        "endLine": 111,
+        "endChar": 25
+      },
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66cb23c_7b15a707",
+        "filename": "gpu/ipc/service/command_buffer_stub.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-08T19:10:18Z",
+      "side": 1,
+      "message": "i don\u0027t think one needs these.  though, move semantics and forwarding always confuse me.",
+      "range": {
+        "startLine": 143,
+        "startChar": 50,
+        "endLine": 143,
+        "endChar": 52
+      },
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8f76a6_2cdc9346",
+        "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-08T19:10:18Z",
+      "side": 1,
+      "message": "decoder_context ?",
+      "range": {
+        "startLine": 402,
+        "startChar": 23,
+        "endLine": 402,
+        "endChar": 38
+      },
+      "revId": "d85307d0b268997becfec9eb26fb68d8c2ba2657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
