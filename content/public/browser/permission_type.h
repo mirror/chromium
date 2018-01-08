@@ -24,10 +24,14 @@ enum class PermissionType {
   VIDEO_CAPTURE = 9,
   BACKGROUND_SYNC = 10,
   FLASH = 11,
-  SENSORS = 12,
+  SENSORS = 12,  // Do not use.
   ACCESSIBILITY_EVENTS = 13,
   CLIPBOARD_READ = 14,
   CLIPBOARD_WRITE = 15,
+  AMBIENT_LIGHT_SENSOR = 16,
+  ACCELEROMETER = 17,
+  GYROSCOPE = 18,
+  MAGNETOMETER = 19,
 
   // Always keep this at the end.
   NUM,
