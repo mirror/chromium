@@ -4,11 +4,38 @@
 
 #include "components/metrics/stability_metrics_provider.h"
 
+#include "base/android/build_info.h"
 #include "base/metrics/histogram_macros.h"
+#include "build/build_config.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "third_party/metrics_proto/system_profile.pb.h"
+
+namespace {
+// static
+bool CheckConsistencyAndUpdate(PrefService* local_state) {
+  std::string previous_version =
+      local_state->GetString(metrics::prefs::kStabilityGmsCoreVersion);
+  std::string current_version =
+      base::android::BuildInfo::GetInstance()->gms_version_code();
+
+  // If the last version is empty, treat it as consistent.
+  if (previous_version.empty()) {
+    local_state->SetString(metrics::prefs::kStabilityGmsCoreVersion,
+                           current_version);
+    return true;
+  }
+
+  if (previous_version == current_version)
+    return true;
+
+  local_state->SetString(metrics::prefs::kStabilityGmsCoreVersion,
+                         current_version);
+  return false;
+}
+
+}  // namespace
 
 namespace metrics {
 
@@ -31,6 +58,9 @@ void StabilityMetricsProvider::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(prefs::kStabilityDeferredCount, 0);
   registry->RegisterIntegerPref(prefs::kStabilityDiscardCount, 0);
   registry->RegisterIntegerPref(prefs::kStabilityVersionMismatchCount, 0);
+#if defined(OS_ANDROID)
+  registry->RegisterStringPref(prefs::kStabilityGmsCoreVersion, "");
+#endif
 }
 
 void StabilityMetricsProvider::ClearSavedStabilityMetrics() {
@@ -53,75 +83,57 @@ void StabilityMetricsProvider::ProvideStabilityMetrics(
   SystemProfileProto::Stability* stability =
       system_profile->mutable_stability();
 
-  int launch_count = local_state_->GetInteger(prefs::kStabilityLaunchCount);
-  if (launch_count) {
-    local_state_->SetInteger(prefs::kStabilityLaunchCount, 0);
-    stability->set_launch_count(launch_count);
-  }
-  int crash_count = local_state_->GetInteger(prefs::kStabilityCrashCount);
-  if (crash_count) {
-    local_state_->SetInteger(prefs::kStabilityCrashCount, 0);
-    stability->set_crash_count(crash_count);
+  int pref_value = 0;
+
+  if (GetPrefValue(prefs::kStabilityLaunchCount, &pref_value)) {
+    stability->set_launch_count(pref_value);
   }
 
-  int incomplete_shutdown_count =
-      local_state_->GetInteger(prefs::kStabilityIncompleteSessionEndCount);
-  if (incomplete_shutdown_count) {
-    local_state_->SetInteger(prefs::kStabilityIncompleteSessionEndCount, 0);
-    stability->set_incomplete_shutdown_count(incomplete_shutdown_count);
+  if (GetPrefValue(prefs::kStabilityCrashCount, &pref_value)) {
+    stability->set_launch_count(pref_value);
   }
 
-  int breakpad_registration_success_count =
-      local_state_->GetInteger(prefs::kStabilityBreakpadRegistrationSuccess);
-  if (breakpad_registration_success_count) {
-    local_state_->SetInteger(prefs::kStabilityBreakpadRegistrationSuccess, 0);
-    stability->set_breakpad_registration_success_count(
-        breakpad_registration_success_count);
+  if (GetPrefValue(prefs::kStabilityCrashCountWithoutGmsCoreUpdate,
+                   &pref_value)) {
+    stability->set_launch_count(pref_value);
   }
 
-  int breakpad_registration_failure_count =
-      local_state_->GetInteger(prefs::kStabilityBreakpadRegistrationFail);
-  if (breakpad_registration_failure_count) {
-    local_state_->SetInteger(prefs::kStabilityBreakpadRegistrationFail, 0);
-    stability->set_breakpad_registration_failure_count(
-        breakpad_registration_failure_count);
+  if (GetPrefValue(prefs::kStabilityIncompleteSessionEndCount, &pref_value)) {
+    stability->set_launch_count(pref_value);
   }
 
-  int debugger_present_count =
-      local_state_->GetInteger(prefs::kStabilityDebuggerPresent);
-  if (debugger_present_count) {
-    local_state_->SetInteger(prefs::kStabilityDebuggerPresent, 0);
-    stability->set_debugger_present_count(debugger_present_count);
+  if (GetPrefValue(prefs::kStabilityBreakpadRegistrationSuccess, &pref_value)) {
+    stability->set_launch_count(pref_value);
   }
 
-  int debugger_not_present_count =
-      local_state_->GetInteger(prefs::kStabilityDebuggerNotPresent);
-  if (debugger_not_present_count) {
-    local_state_->SetInteger(prefs::kStabilityDebuggerNotPresent, 0);
-    stability->set_debugger_not_present_count(debugger_not_present_count);
+  if (GetPrefValue(prefs::kStabilityBreakpadRegistrationFail, &pref_value)) {
+    stability->set_launch_count(pref_value);
+  }
+
+  if (GetPrefValue(prefs::kStabilityDebuggerPresent, &pref_value)) {
+    stability->set_launch_count(pref_value);
+  }
+
+  if (GetPrefValue(prefs::kStabilityDebuggerNotPresent, &pref_value)) {
+    stability->set_launch_count(pref_value);
   }
 
   // Note: only logging the following histograms for non-zero values.
-  int deferred_count = local_state_->GetInteger(prefs::kStabilityDeferredCount);
-  if (deferred_count) {
-    local_state_->SetInteger(prefs::kStabilityDeferredCount, 0);
+  if (GetPrefValue(prefs::kStabilityDeferredCount, &pref_value)) {
     UMA_STABILITY_HISTOGRAM_COUNTS_100(
-        "Stability.Internals.InitialStabilityLogDeferredCount", deferred_count);
+        "Stability.Internals.InitialStabilityLogDeferredCount", pref_value);
   }
 
-  int discard_count = local_state_->GetInteger(prefs::kStabilityDiscardCount);
-  if (discard_count) {
-    local_state_->SetInteger(prefs::kStabilityDiscardCount, 0);
+  // Note: only logging the following histograms for non-zero values.
+  if (GetPrefValue(prefs::kStabilityDiscardCount, &pref_value)) {
     UMA_STABILITY_HISTOGRAM_COUNTS_100("Stability.Internals.DataDiscardCount",
-                                       discard_count);
+                                       pref_value);
   }
 
-  int version_mismatch_count =
-      local_state_->GetInteger(prefs::kStabilityVersionMismatchCount);
-  if (version_mismatch_count) {
-    local_state_->SetInteger(prefs::kStabilityVersionMismatchCount, 0);
+  // Note: only logging the following histograms for non-zero values.
+  if (GetPrefValue(prefs::kStabilityVersionMismatchCount, &pref_value)) {
     UMA_STABILITY_HISTOGRAM_COUNTS_100(
-        "Stability.Internals.VersionMismatchCount", version_mismatch_count);
+        "Stability.Internals.VersionMismatchCount", pref_value);
   }
 }
 
@@ -153,6 +165,15 @@ void StabilityMetricsProvider::MarkSessionEndCompleted(bool end_completed) {
 
 void StabilityMetricsProvider::LogCrash() {
   IncrementPrefValue(prefs::kStabilityCrashCount);
+
+#if defined(OS_ANDROID)
+  // On android, if there is an update for GMS core when Chrome is running,
+  // Chrome will be killed and restart. This is expected and we should only
+  // report crash if the GMS core version has not been changed.
+  if (CheckConsistencyAndUpdate(local_state_)) {
+    IncrementPrefValue(prefs::kStabilityCrashCountWithoutGmsCoreUpdate);
+  }
+#endif
 }
 
 void StabilityMetricsProvider::LogStabilityLogDeferred() {
@@ -174,6 +195,14 @@ void StabilityMetricsProvider::LogStabilityVersionMismatch() {
 void StabilityMetricsProvider::IncrementPrefValue(const char* path) {
   int value = local_state_->GetInteger(path);
   local_state_->SetInteger(path, value + 1);
+}
+
+int StabilityMetricsProvider::GetPrefValue(const char* path, int* value) {
+  *value = local_state_->GetInteger(path);
+  if (value) {
+    local_state_->SetInteger(path, 0);
+  }
+  return *value;
 }
 
 }  // namespace metrics
