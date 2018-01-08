@@ -111,12 +111,13 @@ void ArrayBufferContents::CopyTo(ArrayBufferContents& other) {
   other.holder_->CopyMemoryFrom(*holder_);
 }
 
-void* ArrayBufferContents::AllocateMemoryWithFlags(size_t size,
-                                                   InitializationPolicy policy,
-                                                   int flags) {
+void* ArrayBufferContents::AllocateMemoryWithFlags(
+    base::PartitionRootGeneric* partition,
+    size_t size,
+    InitializationPolicy policy,
+    int flags) {
   void* data = PartitionAllocGenericFlags(
-      Partitions::ArrayBufferPartition(), flags, size,
-      WTF_HEAP_PROFILER_TYPE_NAME(ArrayBufferContents));
+      partition, flags, size, WTF_HEAP_PROFILER_TYPE_NAME(ArrayBufferContents));
   if (policy == kZeroInitialize && data)
     memset(data, '\0', size);
   return data;
@@ -124,7 +125,15 @@ void* ArrayBufferContents::AllocateMemoryWithFlags(size_t size,
 
 void* ArrayBufferContents::AllocateMemoryOrNull(size_t size,
                                                 InitializationPolicy policy) {
-  return AllocateMemoryWithFlags(size, policy, base::PartitionAllocReturnNull);
+  return AllocateMemoryOrNull(Partitions::ArrayBufferPartition(), size, policy);
+}
+
+void* ArrayBufferContents::AllocateMemoryOrNull(
+    base::PartitionRootGeneric* partition,
+    size_t size,
+    InitializationPolicy policy) {
+  return AllocateMemoryWithFlags(Partitions::ArrayBufferPartition(), size,
+                                 policy, base::PartitionAllocReturnNull);
 }
 
 // This method is used by V8's WebAssembly implementation to reserve a large
@@ -155,7 +164,19 @@ void* ArrayBufferContents::ReserveMemory(size_t size) {
 }
 
 void ArrayBufferContents::FreeMemory(void* data) {
-  Partitions::ArrayBufferPartition()->Free(data);
+  FreeMemory(Partitions::ArrayBufferPartition(), data);
+}
+
+void ArrayBufferContents::FreeMemory(base::PartitionRootGeneric* partition,
+                                     void* data) {
+  if (!partition) {
+    void* base = PartitionCookieFreePointerAdjust(data);
+    partition = static_cast<base::PartitionRootGeneric*>(
+        base::PartitionRootBase::FromPage(
+            base::PartitionPage::FromPointer(base)));
+    CHECK(partition);
+  }
+  partition->Free(data);
 }
 
 void ArrayBufferContents::ReleaseReservedMemory(void* data, size_t size) {
