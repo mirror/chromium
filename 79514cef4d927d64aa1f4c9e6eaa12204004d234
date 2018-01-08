@@ -46,6 +46,30 @@
       "revId": "79514cef4d927d64aa1f4c9e6eaa12204004d234",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b7e715_96349d7d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-08T12:31:00Z",
+      "side": 1,
+      "message": "It looks like there are two tests that rely on sending the SSLInfo for a subframes:\nSSLUITest.TestUnsafeContentsWithUserException\nSSLUITest.SimpleURLLoaderCertError\n\nSo I will commit this patch without this suggestion for the moment.",
+      "parentUuid": "2fe59692_6b622bb3",
+      "range": {
+        "startLine": 189,
+        "startChar": 30,
+        "endLine": 189,
+        "endChar": 67
+      },
+      "revId": "79514cef4d927d64aa1f4c9e6eaa12204004d234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
