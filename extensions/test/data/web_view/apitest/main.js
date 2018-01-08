@@ -172,9 +172,6 @@ function testAutosizeAfterNavigation() {
   var sizeChangeHandler = function(e) {
     switch (step) {
       case 1:
-        // This would be triggered after we set autosize attribute.
-        embedder.test.assertEq(50, e.oldWidth);
-        embedder.test.assertEq(100, e.oldHeight);
         embedder.test.assertTrue(e.newWidth >= 60 && e.newWidth <= 70);
         embedder.test.assertTrue(e.newHeight >= 110 && e.newHeight <= 120);
 
