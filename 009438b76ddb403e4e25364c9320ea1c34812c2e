@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e8904bf_c3db97b6",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-08T00:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cf9e72f_b9acd9cf",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c14c19b_0accc8a2",
         "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e98eb5_52bfdc03",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-08T00:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c14c19b_0accc8a2",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1272ed7e_0a9697ed",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-08T00:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93853f55_ded6b666",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e1a0ba9_5aa4b52c",
         "filename": "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h",
         "patchSetId": 3
@@ -85,6 +139,24 @@
       "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a823701d_2ec6d00a",
+        "filename": "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-08T00:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e1a0ba9_5aa4b52c",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "0020dc39_a98ca6f3",
+        "filename": "chrome/browser/chromeos/login/users/mock_user_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-08T00:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17a374e_bac36977",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "202055db_b3d3d48f",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
         "patchSetId": 3
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "b43ae1e6_489548a9",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-08T00:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "202055db_b3d3d48f",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74e670e4_513b9cc2",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.cc",
         "patchSetId": 3
@@ -136,6 +244,24 @@
       "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2739f95_f43bcc3e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-08T00:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74e670e4_513b9cc2",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
