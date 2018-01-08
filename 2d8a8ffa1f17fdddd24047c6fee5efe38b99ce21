@@ -22,6 +22,30 @@
       "revId": "2d8a8ffa1f17fdddd24047c6fee5efe38b99ce21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2199bca1_d855c287",
+        "filename": "ios/chrome/app/main_application_delegate.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-01-08T03:28:50Z",
+      "side": 0,
+      "message": "I don\u0027t think this is really needed, since this delegate method is @optional. However, to preserve the current semantics, I\u0027m adding this back with eh minimum call to the completionHandler. I can remove this as a separate CL.",
+      "parentUuid": "730508bd_eadb67cd",
+      "range": {
+        "startLine": 180,
+        "startChar": 4,
+        "endLine": 180,
+        "endChar": 39
+      },
+      "revId": "2d8a8ffa1f17fdddd24047c6fee5efe38b99ce21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
