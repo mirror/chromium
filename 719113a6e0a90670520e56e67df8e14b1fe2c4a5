@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "eec81338_885c2f9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:21:04Z",
+      "side": 1,
+      "message": "See my other coment, this is actually sending a notification when we request a secure connection. Shill may or may not decide to connect to a \"better\" connection (and the connection attempt may or may not succeed).",
+      "revId": "719113a6e0a90670520e56e67df8e14b1fe2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5f8c68f_1ea533fe",
         "filename": "chromeos/network/auto_connect_handler.cc",
         "patchSetId": 6
