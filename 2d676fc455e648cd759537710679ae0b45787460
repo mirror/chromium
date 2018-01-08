@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ebe0788_1060b373",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T04:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a96b83f_165eb5b6",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "2d676fc455e648cd759537710679ae0b45787460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a73f42c_3790cd89",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "2d676fc455e648cd759537710679ae0b45787460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e88ba71_f3b73435",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T04:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a73f42c_3790cd89",
+      "revId": "2d676fc455e648cd759537710679ae0b45787460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f511647d_619b732d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T04:38:15Z",
+      "side": 1,
+      "message": "I don\u0027t think we need it.  Do we have a general histogram for invalid finch configurations?",
+      "parentUuid": "72fb6ced_ee895f05",
+      "range": {
+        "startLine": 383,
+        "startChar": 49,
+        "endLine": 384,
+        "endChar": 28
+      },
+      "revId": "2d676fc455e648cd759537710679ae0b45787460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6917e841_8a935531",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2018-01-05T18:40:35Z",
       "side": 1,
       "message": "Nit: If you want to make the chrome variations overlords happy, you might want to add a config to //testing/variations/fieldtrial_testing_config.json with the planned config. In your case, it\u0027s kind of moot, since you\u0027re planning on being able to delete the config. But maybe just add a config there with |true|?",
+      "range": {
+        "startLine": 387,
+        "startChar": 37,
+        "endLine": 388,
+        "endChar": 97
+      },
+      "revId": "2d676fc455e648cd759537710679ae0b45787460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a998501_0d44589c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T04:38:15Z",
+      "side": 1,
+      "message": "Ah thanks I forgot.  Good call!",
+      "parentUuid": "6917e841_8a935531",
       "range": {
         "startLine": 387,
         "startChar": 37,
