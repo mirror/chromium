@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0af80824_ee8f670b",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-08T16:48:38Z",
+      "side": 1,
+      "message": "It represents the GlobalRequestId that will be sent to NavigationURLLoaderDelegate.\n\nThis is not really needed. If you don\u0027t like it, in OnReceiveResponse, I can do:\nbool global_request_id_to_send;\nif (NetworkService) {\n  global_request_id_to_send \u003d GlobalRequestId(-1, g_next_request_id)\n} else {\n  global_request_id_to_send \u003d global_request_id_;\n}\n\nBut I prefer to use global_request_id_ in both cases, to give it a value in\n* StartWithoutNetworkService() (non NS case) \n* Start() (NS case)\n\nand to directly send it to delegate-\u003eOnResponseStarted([...])\n\nLet me know if you don\u0027t like it.",
+      "parentUuid": "40063b67_37f8380c",
+      "revId": "a766b85037a0577a5603975678fe54932bc6a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12c74f33_f8f46173",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 26
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-08T15:48:36Z",
       "side": 1,
       "message": "there\u0027s still some subtle duplication here: you\u0027re constructing the GlobalRequestID in here with a -1, while ResourceRequestInfoImpl\u0027s constructor is also doing that through CreateForBrowserSideNavigation which internally uses -1.\n\nIf you leave the construction of ResourceRequestInfoImpl the same below, and once it\u0027s constructed do a \n*global_request_id \u003d extra_info-\u003eGetGlobalRequestID() that would avoid the duplication",
+      "revId": "a766b85037a0577a5603975678fe54932bc6a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b920459d_379c109f",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-08T16:48:38Z",
+      "side": 1,
+      "message": "I did it to avoid trouble when BeginNavigationRequest return early without creating |extra_info|.\n\nSince we move from |int request_id| to |GlobalRequestId global_request_id|. There is no longer the problem of letting |request_id| undefined if the function returns early. The GlobalRequestId has a default constructor.\n\nI will apply your suggestion.",
+      "parentUuid": "12c74f33_f8f46173",
       "revId": "a766b85037a0577a5603975678fe54932bc6a138",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
