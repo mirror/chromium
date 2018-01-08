@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c9109c_36ed6103",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-08T20:30:16Z",
+      "side": 1,
+      "message": "At first I wondered if the delay should also move into ash. But is this ever called outside of test code? Maybe it could just be deleted? (This could be a follow-up CL.)\n\nhttps://cs.chromium.org/search/?q\u003dsetautoclickdelay\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ea7a09_f2eef7e7",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-08T20:30:16Z",
+      "side": 1,
+      "message": "(I suspect the pref is still used in settings code, though, since you can adjust the delay in webui settings.)",
+      "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "829e9191_fa409f15",
+        "filename": "ash/accessibility/accessibility_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-08T20:30:16Z",
+      "side": 0,
+      "message": "Hooray for fewer delegate methods!",
+      "revId": "4dbb2d3859023f2cd562ef8a259f5ad4a3cab4f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
