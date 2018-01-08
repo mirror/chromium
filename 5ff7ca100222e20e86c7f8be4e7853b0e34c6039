@@ -16,6 +16,24 @@
       "revId": "5ff7ca100222e20e86c7f8be4e7853b0e34c6039",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211889c6_783642a8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-display/display-contents-pass-ref.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-08T13:04:04Z",
+      "side": 1,
+      "message": "\u003e I think we could just skip all span tags here if kerning is off.\n\nDone, and confirmed it passes with my WIP.",
+      "parentUuid": "d7b8869c_61f180a9",
+      "revId": "5ff7ca100222e20e86c7f8be4e7853b0e34c6039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
