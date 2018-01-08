@@ -48,6 +48,75 @@
     },
     {
       "key": {
+        "uuid": "8115401f_348fc84b",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-08T10:34:37Z",
+      "side": 1,
+      "message": "Should we use SHOUTING_CASE for these?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 13
+      },
+      "revId": "32483b761b5d396806d8c19581ec7e14b25443df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2796da_71913927",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-08T10:34:37Z",
+      "side": 1,
+      "message": "Use DisplayMetrics.DENSITY_MEDIUM for this.",
+      "range": {
+        "startLine": 129,
+        "startChar": 36,
+        "endLine": 129,
+        "endChar": 40
+      },
+      "revId": "32483b761b5d396806d8c19581ec7e14b25443df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab268fff_8c839799",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-08T10:34:37Z",
+      "side": 1,
+      "message": "Wait, that doesn\u0027t seem right. Different densities can result in e.g. different resources being used, and of course upscaling images will make them appear blurry, so e.g. a Pixel view being rendered on a Pixel is going to look different from one being rendered on a Galaxy J1. Using DisplayMetrics.setTo() doesn\u0027t work?",
+      "range": {
+        "startLine": 250,
+        "startChar": 87,
+        "endLine": 251,
+        "endChar": 72
+      },
+      "revId": "32483b761b5d396806d8c19581ec7e14b25443df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10997e84_9f5dd289",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
         "patchSetId": 2
