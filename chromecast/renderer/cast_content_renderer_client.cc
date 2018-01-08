@@ -42,6 +42,18 @@
 #include "chromecast/crash/cast_crash_keys.h"
 #endif  // !defined(OS_FUCHSIA)
 
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "chromecast/common/shell_extensions_client.h"
+#include "chromecast/renderer/shell_extensions_renderer_client.h"
+#include "content/public/common/content_constants.h"
+#include "extensions/common/common_manifest_handlers.h"
+#include "extensions/common/extension_urls.h"
+#include "extensions/renderer/dispatcher.h"
+#include "extensions/renderer/extension_frame_helper.h"
+#include "extensions/renderer/guest_view/extensions_guest_view_container.h"
+#include "extensions/renderer/guest_view/extensions_guest_view_container_dispatcher.h"
+#endif
+
 namespace chromecast {
 namespace shell {
 
@@ -111,6 +123,21 @@ void CastContentRendererClient::RenderThreadStarted() {
   if (!previous_app.empty())
     base::debug::SetCrashKeyValue(crash_keys::kPreviousApp, previous_app);
 #endif  // !defined(OS_FUCHSIA)
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  extensions_client_.reset(new extensions::ShellExtensionsClient());
+  extensions::ExtensionsClient::Set(extensions_client_.get());
+
+  extensions_renderer_client_.reset(
+      new extensions::ShellExtensionsRendererClient());
+  extensions::ExtensionsRendererClient::Set(extensions_renderer_client_.get());
+
+  thread->AddObserver(extensions_renderer_client_->GetDispatcher());
+
+  guest_view_container_dispatcher_.reset(
+      new extensions::ExtensionsGuestViewContainerDispatcher());
+  thread->AddObserver(guest_view_container_dispatcher_.get());
+#endif
 }
 
 void CastContentRendererClient::RenderViewCreated(
@@ -124,6 +151,47 @@ void CastContentRendererClient::RenderViewCreated(
     // application running.
     webview->GetSettings()->SetOfflineWebApplicationCacheEnabled(false);
   }
+}
+
+void CastContentRendererClient::RenderFrameCreated(
+    content::RenderFrame* render_frame) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  extensions::Dispatcher* dispatcher =
+      extensions_renderer_client_->GetDispatcher();
+  // ExtensionFrameHelper destroys itself when the RenderFrame is destroyed.
+  new extensions::ExtensionFrameHelper(render_frame, dispatcher);
+
+  dispatcher->OnRenderFrameCreated(render_frame);
+#endif
+}
+
+content::BrowserPluginDelegate*
+CastContentRendererClient::CreateBrowserPluginDelegate(
+    content::RenderFrame* render_frame,
+    const std::string& mime_type,
+    const GURL& original_url) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (mime_type == content::kBrowserPluginMimeType) {
+    return new extensions::ExtensionsGuestViewContainer(render_frame);
+  }
+#endif
+  return nullptr;
+}
+
+void CastContentRendererClient::RunScriptsAtDocumentStart(
+    content::RenderFrame* render_frame) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  extensions_renderer_client_->GetDispatcher()->RunScriptsAtDocumentStart(
+      render_frame);
+#endif
+}
+
+void CastContentRendererClient::RunScriptsAtDocumentEnd(
+    content::RenderFrame* render_frame) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  extensions_renderer_client_->GetDispatcher()->RunScriptsAtDocumentEnd(
+      render_frame);
+#endif
 }
 
 void CastContentRendererClient::AddSupportedKeySystems(
