@@ -22,6 +22,30 @@
       "revId": "2809445b39cdab6b99d80fe6b383b83cbd4dae77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fcfa73_fc8d69f1",
+        "filename": "services/identity/public/cpp/identity_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-08T16:15:59Z",
+      "side": 1,
+      "message": "Done (let\u0027s go with order of functionality/importance).",
+      "parentUuid": "222ade56_93ec38b5",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "2809445b39cdab6b99d80fe6b383b83cbd4dae77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
