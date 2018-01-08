@@ -272,9 +272,7 @@ void SiteEngagementScore::AddPoints(double points) {
 }
 
 double SiteEngagementScore::GetTotalScore() const {
-  return std::min(
-      DecayedScore() + BonusIfShortcutLaunched() + BonusIfHasNotifications(),
-      kMaxPoints);
+  return std::min(DecayedScore() + BonusIfShortcutLaunched(), kMaxPoints);
 }
 
 mojom::SiteEngagementDetails SiteEngagementScore::GetDetails() const {
@@ -282,7 +280,6 @@ mojom::SiteEngagementDetails SiteEngagementScore::GetDetails() const {
   engagement.origin = origin_;
   engagement.base_score = DecayedScore();
   engagement.installed_bonus = BonusIfShortcutLaunched();
-  engagement.notifications_bonus = BonusIfHasNotifications();
   engagement.total_score = GetTotalScore();
   return engagement;
 }
@@ -418,18 +415,5 @@ double SiteEngagementScore::BonusIfShortcutLaunched() const {
       (clock_->Now() - last_shortcut_launch_time_).InDays();
   if (days_since_shortcut_launch <= kMaxDaysSinceShortcutLaunch)
     return GetWebAppInstalledPoints();
-  return 0;
-}
-
-double SiteEngagementScore::BonusIfHasNotifications() const {
-  // TODO(dominickn, raymes): call PermissionManager::GetPermissionStatus when
-  // the PermissionManager is thread-safe.
-  if (settings_map_ &&
-      settings_map_->GetContentSetting(
-          origin_, GURL(), CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
-          content_settings::ResourceIdentifier()) == CONTENT_SETTING_ALLOW) {
-    return GetNotificationPermissionPoints();
-  }
-
   return 0;
 }
