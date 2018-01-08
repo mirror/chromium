@@ -144,6 +144,11 @@
     display: inline-block;
     background: #FFF;
     overflow: hidden;
+    overflow-x: auto;
     white-space: nowrap;
     cursor: auto;
+}
+
+.filter-input-field::-webkit-scrollbar {
+    display: none;
 }
