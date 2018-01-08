@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4bce232_26afd6f0",
+        "filename": "media/base/android/java/src/test/org/chromium/media/BitrateAdjusterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-08T18:16:08Z",
+      "side": 1,
+      "message": "i think that this should also have a @SmallTest annotation, here and elsewhere.",
+      "revId": "a4ced6111c3248112f24d1596b530a858f41e467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
