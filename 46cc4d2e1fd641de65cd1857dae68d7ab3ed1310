@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c89db8f1_42676fcd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-08T18:56:12Z",
+      "side": 1,
+      "message": "Oh that\u0027s right. We can simply just register the visibility change observer afterwards.",
+      "parentUuid": "8ddfbb01_6d6df076",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 28
+      },
+      "revId": "46cc4d2e1fd641de65cd1857dae68d7ab3ed1310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7952ace5_551ddac0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "46cc4d2e1fd641de65cd1857dae68d7ab3ed1310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d239f4b_ecbe716a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-08T18:56:12Z",
+      "side": 1,
+      "message": "Yes. Nice catch.",
+      "parentUuid": "7952ace5_551ddac0",
+      "range": {
+        "startLine": 745,
+        "startChar": 21,
+        "endLine": 745,
+        "endChar": 39
+      },
+      "revId": "46cc4d2e1fd641de65cd1857dae68d7ab3ed1310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
