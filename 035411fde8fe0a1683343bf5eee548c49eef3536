@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc094e5e_24d8176e",
+        "filename": "media/renderers/paint_canvas_video_renderer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-08T20:12:32Z",
+      "side": 1,
+      "message": "Should the lower bits be 0?",
+      "revId": "035411fde8fe0a1683343bf5eee548c49eef3536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
