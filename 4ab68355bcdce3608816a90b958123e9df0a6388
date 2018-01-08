@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bed0d4f_2bc2fbb2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-08T10:40:13Z",
+      "side": 1,
+      "message": "nit: extracting this as a function might help reading the code.",
+      "revId": "4ab68355bcdce3608816a90b958123e9df0a6388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
