@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38836450_bbb36c11",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-08T21:09:40Z",
+      "side": 0,
+      "message": "The CL description doesn\u0027t clarify why this DCHECK is being removed. Can you explain, since it\u0027s not obvious how it\u0027s related to closing when the pipe closes.",
+      "revId": "cbe867ee27755fefa3aafcf7e4b02809a0766d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
