@@ -911,6 +911,39 @@ TEST_F(UDPSocketTest, SetDSCPFake) {
 }
 #endif
 
+TEST_F(UDPSocketTest, ReadWithSocketOptimization) {
+  const uint16_t kPort = 10000;
+  std::string simple_message("hello world!");
+
+  // Setup the server to listen.
+  IPEndPoint server_address(IPAddress::IPv4Localhost(), kPort);
+  UDPServerSocket server(NULL, NetLogSource());
+  server.AllowAddressReuse();
+  int rv = server.Listen(server_address);
+  ASSERT_THAT(rv, IsOk());
+
+  // Setup the client, enable experimental optimization and connected to the
+  // server.
+  UDPClientSocket client(DatagramSocket::DEFAULT_BIND, RandIntCallback(), NULL,
+                         NetLogSource());
+  client.EnableOptimization();
+  rv = client.Connect(server_address);
+  EXPECT_THAT(rv, IsOk());
+
+  // Get the client's address.
+  IPEndPoint client_address;
+  rv = client.GetLocalAddress(&client_address);
+  EXPECT_THAT(rv, IsOk());
+
+  // Server sends the message to the client.
+  rv = SendToSocket(&server, simple_message, client_address);
+  EXPECT_EQ(simple_message.length(), static_cast<size_t>(rv));
+
+  // Client receives the message.
+  std::string str = ReadSocket(&client);
+  EXPECT_EQ(simple_message, str);
+}
+
 // On Android, where socket tagging is supported, verify that UDPSocket::Tag
 // works as expected.
 #if defined(OS_ANDROID)

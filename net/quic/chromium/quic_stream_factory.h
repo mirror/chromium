@@ -242,7 +242,8 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
       bool estimate_initial_rtt,
       const QuicTagVector& connection_options,
       const QuicTagVector& client_connection_options,
-      bool enable_token_binding);
+      bool enable_token_binding,
+      bool enable_socket_optimization);
   ~QuicStreamFactory() override;
 
   // Returns true if there is an existing session for |server_id| or if the
@@ -571,6 +572,10 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   base::SequencedTaskRunner* task_runner_;
 
   const scoped_refptr<SSLConfigService> ssl_config_service_;
+
+  // If set to true, the stream factory will create UDP Sockets with
+  // experimental optimization enabled.
+  bool enable_socket_optimization_;
 
   base::WeakPtrFactory<QuicStreamFactory> weak_factory_;
 
