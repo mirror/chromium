@@ -13,6 +13,7 @@
 #include "base/profiler/stack_sampling_profiler.h"
 #include "components/metrics/call_stack_profile_params.h"
 #include "components/metrics/metrics_provider.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace metrics {
 
@@ -54,10 +55,12 @@ class CallStackProfileMetricsProvider : public MetricsProvider {
   ~CallStackProfileMetricsProvider() override;
 
   // Returns a callback for use with StackSamplingProfiler that sets up
-  // parameters for browser process startup sampling. The callback should be
-  // immediately passed to the StackSamplingProfiler, and should not be reused.
+  // parameters for browser process, thread of ID |browser_thread_id| startup
+  // sampling. The callback should be immediately passed to the
+  // StackSamplingProfiler, and should not be reused.
   static base::StackSamplingProfiler::CompletedCallback
-  GetProfilerCallbackForBrowserProcessStartup();
+  GetProfilerCallbackForBrowserProcessStartup(
+      content::BrowserThread::ID browser_thread_id);
 
   // Provides completed stack profiles to the metrics provider. Intended for use
   // when receiving profiles over IPC. In-process StackSamplingProfiler users
