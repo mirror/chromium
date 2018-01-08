@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2a0dee43_d5a70f09",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T15:48:36Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t know.\n\u003e I tried to put a NOTREACHED() in ResourceRequestInfoImpl constructor and it was not reached. ResourceRequestInfoImpl not used with the Network Service?\n\nYes when network service is enabled, ResourceDispatcherHost and ResourceRequestInfoImpl aren\u0027t used.\n\nHowever I was referring to the new feature you\u0027re working on, when NS is disabled. In that case, I just meant that the MakeRequestID() call should move back closer to line 1929.",
+      "parentUuid": "726031ac_3d17dc18",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "259fcb1e_9f8928d3",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
         "patchSetId": 21

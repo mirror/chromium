@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40063b67_37f8380c",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T15:48:36Z",
+      "side": 1,
+      "message": "this shouldn\u0027t be needed right as global_request_id_ is only used in the non-NS path, and this is the NS path?",
+      "revId": "a766b85037a0577a5603975678fe54932bc6a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c74f33_f8f46173",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T15:48:36Z",
+      "side": 1,
+      "message": "there\u0027s still some subtle duplication here: you\u0027re constructing the GlobalRequestID in here with a -1, while ResourceRequestInfoImpl\u0027s constructor is also doing that through CreateForBrowserSideNavigation which internally uses -1.\n\nIf you leave the construction of ResourceRequestInfoImpl the same below, and once it\u0027s constructed do a \n*global_request_id \u003d extra_info-\u003eGetGlobalRequestID() that would avoid the duplication",
+      "revId": "a766b85037a0577a5603975678fe54932bc6a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
