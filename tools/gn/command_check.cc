@@ -95,10 +95,8 @@ What gets checked
     - Only includes using "quotes" are checked. <brackets> are assumed to be
       system includes.
 
-    - Include paths are assumed to be relative to either the source root or the
-      "root_gen_dir" and must include all the path components. (It might be
-      nice in the future to incorporate GN's knowledge of the include path to
-      handle other include styles.)
+    - Include paths are assumed to be relative to either any of the
+      "include_dirs" for the target or the "root_gen_dir".
 
     - GN does not run the preprocessor so will not understand conditional
       includes.
