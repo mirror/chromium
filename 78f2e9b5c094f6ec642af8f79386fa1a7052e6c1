@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e2664d0_d9cd49fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-08T09:03:55Z",
+      "side": 1,
+      "message": "Can you please expand this?",
+      "revId": "78f2e9b5c094f6ec642af8f79386fa1a7052e6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa56d3dc_be54b4fa",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3327,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-08T09:03:55Z",
+      "side": 1,
+      "message": "a prefilled",
+      "range": {
+        "startLine": 3327,
+        "startChar": 2,
+        "endLine": 3327,
+        "endChar": 3
+      },
+      "revId": "78f2e9b5c094f6ec642af8f79386fa1a7052e6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffa418e_6e19894d",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-08T09:03:55Z",
+      "side": 1,
+      "message": "Can you please document the reason?",
+      "revId": "78f2e9b5c094f6ec642af8f79386fa1a7052e6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
