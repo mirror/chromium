@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "97971b81_52b53b4e",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-08T23:13:31Z",
+      "side": 1,
+      "message": "Yea, I had this updating in dispatching, but thought that this caused a site-per-process browser test failure so tried moving this up (because on TOT, we are sending a GSE even when we cannot find a target to dispatch events to, which is not the case when we put it in dispatch). However, that didn\u0027t solve the browser test failure so I reverted this and have another patch up for review now.",
+      "parentUuid": "f4551089_e014032e",
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f7bee04_b7150667",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
         "patchSetId": 4
@@ -106,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "b19f5f76_ce02f19f",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-08T23:13:31Z",
+      "side": 1,
+      "message": "We do an early return here tho, so it won\u0027t reach dispatching. And there seems to be no easy way to do that in RouteMouseWheelEvent because we also early return if events are put in the queue. WDYT?",
+      "parentUuid": "87ec0b8c_69693d99",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 6
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfed2cb6_9c4d9514",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 4
@@ -117,6 +159,30 @@
       "writtenOn": "2018-01-08T22:34:36Z",
       "side": 1,
       "message": "Instead of propagating this delta all the way back, why not send the point back in root_view coords, and do a single call to root_view-\u003eTransformPointToCoordSpaceForView() inside RWHIER? This has the advantage of being a more general transform than a simple offset.",
+      "range": {
+        "startLine": 190,
+        "startChar": 24,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00c7ab4_c07bf382",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-08T23:13:31Z",
+      "side": 1,
+      "message": "The point can be transformed by other function as well (e.g. FindViewAtLocation in RWHIER) other than TransformPointToCoordSpaceForView(), so I think we still need to pass back the result |target_location| in DispatchEventToTarget if we want to do the conversion in RWHIER. Did I misunderstand your proposal?",
+      "parentUuid": "bfed2cb6_9c4d9514",
       "range": {
         "startLine": 190,
         "startChar": 24,
