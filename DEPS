@@ -1216,6 +1216,15 @@ hooks = [
     ],
   },
   {
+    'name': 'Android Third Party Libraries CIPD Ensure',
+    'pattern': '.',
+    'condition': 'checkout_android',
+    'action': ['src/build/cipd/cipd_wrapper.py',
+               '--chromium-root', 'src/third_party/android_deps',
+               '--ensure-file', 'src/third_party/android_deps/android_deps.ensure',
+    ],
+  },
+  {
     # This downloads SDK extras and puts them in the
     # third_party/android_tools/sdk/extras directory.
     'name': 'sdkextras',
