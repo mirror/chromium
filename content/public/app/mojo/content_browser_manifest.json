@@ -13,7 +13,8 @@
           "content::mojom::FieldTrialRecorder"
         ],
         "font_cache": [
-          "content::mojom::FontCacheWin"
+          "content::mojom::FontCacheWin",
+          "content::mojom::DWriteFontProxy"
         ],
         "gpu": [
           "media::mojom::AndroidOverlayProvider"
