@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9897b136_185786a3",
+        "filename": "base/files/file_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2018-01-08T18:13:07Z",
+      "side": 1,
+      "message": "This is a weird thing to do, and it contradicts the comment at File::GetLastFileError()’s declaration describing how it should be used.",
+      "revId": "5e14cd0d2106290a6d4cf1a9ea322491c8c33e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
