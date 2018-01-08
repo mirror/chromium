@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b8bbd7a6_194427e8",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-08T14:53:53Z",
+      "side": 1,
+      "message": "I updated the comment, but I don\u0027t know if it\u0027s what you\u0027re looking for. \"doesn\u0027t make sense\" and \"needs improvement\" didn\u0027t really help me figure out what you want. Rather than go through more trial and error, getting more guidance on what\u0027s missing or wrong might be more efficient.\n\nHere\u0027s the original comment, if it helps, but I suspect that it\u0027s not what you had in mind either.\n\nhttps://codereview.chromium.org/2435103002/diff/100001/components/omnibox/browser/omnibox_edit_model.cc",
+      "parentUuid": "2fbc7d5d_7719dcb4",
+      "range": {
+        "startLine": 399,
+        "startChar": 7,
+        "endLine": 399,
+        "endChar": 57
+      },
+      "revId": "7c3823b7535e631259266da5f840008720af3133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5beba18_659a0d27",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 7
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-05T19:14:19Z",
       "side": 1,
       "message": "... for the purposes of autocomplete.\n\n(because we don\u0027t actually move the real cursor)\n\nThe real cursor gets put in a sane place too, in some other code, right?  It would be nice to say / point to who does that.",
+      "range": {
+        "startLine": 404,
+        "startChar": 51,
+        "endLine": 404,
+        "endChar": 63
+      },
+      "revId": "7c3823b7535e631259266da5f840008720af3133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede6a8d1_d19aaf0b",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-08T14:53:53Z",
+      "side": 1,
+      "message": "I clarified the cursor discussion.\n\nRegarding the real cursor, and other place, I\u0027m not sure if you\u0027re referring to the TextField or ? It\u0027s also unclear to me why we\u0027d want to put that discussion here, where the subject is StartAutocomplete() ?",
+      "parentUuid": "c5beba18_659a0d27",
       "range": {
         "startLine": 404,
         "startChar": 51,
