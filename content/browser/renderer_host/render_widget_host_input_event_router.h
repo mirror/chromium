@@ -171,25 +171,37 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   RenderWidgetTargetResult FindMouseEventTarget(
       RenderWidgetHostViewBase* root_view,
       const blink::WebMouseEvent& event) const;
-  RenderWidgetHostViewBase* FindMouseWheelEventTarget(
+  RenderWidgetTargetResult FindMouseWheelEventTarget(
       RenderWidgetHostViewBase* root_view,
-      const blink::WebMouseWheelEvent& event,
-      gfx::PointF* transformed_point) const;
+      const blink::WebMouseWheelEvent& event) const;
+
+  void UpdateScrollBubblingIfNeeded(
+      RenderWidgetHostViewBase* root_view,
+      const blink::WebMouseWheelEvent& mouse_wheel_event);
 
   // |mouse_event| is in the coord-space of |target|.
   void DispatchMouseEvent(RenderWidgetHostViewBase* root_view,
                           RenderWidgetHostViewBase* target,
                           const blink::WebMouseEvent& mouse_event,
                           const ui::LatencyInfo& latency);
+  // |mouse_wheel_event| is in the coord-space of |target|.
+  void DispatchMouseWheelEvent(
+      RenderWidgetHostViewBase* root_view,
+      RenderWidgetHostViewBase* target,
+      const blink::WebMouseWheelEvent& mouse_wheel_event,
+      const ui::LatencyInfo& latency,
+      const gfx::Vector2dF& delta);
 
   // RenderWidgetTargeter::Delegate:
   RenderWidgetTargetResult FindTargetSynchronously(
       RenderWidgetHostViewBase* root_view,
       const blink::WebInputEvent& event) override;
-  void DispatchEventToTarget(RenderWidgetHostViewBase* root_view,
-                             RenderWidgetHostViewBase* target,
-                             const blink::WebInputEvent& event,
-                             const ui::LatencyInfo& latency) override;
+  void DispatchEventToTarget(
+      RenderWidgetHostViewBase* root_view,
+      RenderWidgetHostViewBase* target,
+      const blink::WebInputEvent& event,
+      const ui::LatencyInfo& latency,
+      base::Optional<gfx::Vector2dF> delta = base::nullopt) override;
   RenderWidgetHostViewBase* FindViewFromFrameSinkId(
       const viz::FrameSinkId& frame_sink_id) const override;
 
