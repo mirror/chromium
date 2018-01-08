@@ -563,6 +563,12 @@ public class AccountSigninView extends FrameLayout {
     private void showConfirmSigninPagePreviousAccountCheck(long seedingStartTime) {
         RecordHistogram.recordTimesHistogram("Signin.AndroidAccountSigninViewSeedingTime",
                 SystemClock.elapsedRealtime() - seedingStartTime, TimeUnit.MILLISECONDS);
+
+        if (!ViewCompat.isAttachedToWindow(AccountSigninView.this)) {
+            // Activity has been destroyed, can't show any dialogs now.
+            return;
+        }
+
         mConfirmSyncDataStateMachine = new ConfirmSyncDataStateMachine(getContext(),
                 mDelegate.getFragmentManager(), ImportSyncType.PREVIOUS_DATA_FOUND,
                 PrefServiceBridge.getInstance().getSyncLastAccountName(), mSelectedAccountName,
