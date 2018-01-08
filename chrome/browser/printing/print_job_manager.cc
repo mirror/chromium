@@ -23,6 +23,8 @@ PrintQueriesQueue::~PrintQueriesQueue() {
 }
 
 void PrintQueriesQueue::QueuePrinterQuery(PrinterQuery* job) {
+  if (!lock_)  // This object is being destroyed, so return early.
+    return;
   base::AutoLock lock(lock_);
   DCHECK(job);
   queued_queries_.push_back(base::WrapRefCounted(job));
