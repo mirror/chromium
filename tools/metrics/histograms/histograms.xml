@@ -34003,6 +34003,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.EME.KeySystemSupported" enum="BooleanSupported">
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Whether a registered key system is supported or not. As Widevine is
+    currently the only key system registered in Chrome, it should indicate if
+    Widevine is available or not. In normal cases, this is reported per render
+    process if the EME API is used.
+  </summary>
+</histogram>
+
 <histogram name="Media.EME.MojoCdm.ConnectionError"
     enum="BooleanConnectionError">
   <owner>media-dev@chromium.org</owner>
