@@ -46,6 +46,30 @@
       "revId": "d2261afea42324a2153a75fd66fc7c1566ad6290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e24c83_6267b1f5",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-08T16:13:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719856c4_e5fed61c",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "d2261afea42324a2153a75fd66fc7c1566ad6290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

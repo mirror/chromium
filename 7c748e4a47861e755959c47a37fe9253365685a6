@@ -16,6 +16,24 @@
       "revId": "7c748e4a47861e755959c47a37fe9253365685a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3ae99c_8a5630df",
+        "filename": "content/common/cross_site_document_classifier_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-08T16:13:27Z",
+      "side": 1,
+      "message": "\u003e Let\u0027s include tests that jsonfoobar, foobarjson, xmlfoobar, and foobarxml are all OTHERS.\n\nDone\n\n\u003e Also, might as well test xml+json and json+xml.   I think the prefix wins, right?  That will affect how we attempt to sniff it when nosniff isn\u0027t present.\n\nI\u0027d rather avoid making a decision here:\n\n1. xml+json and/or json+xml mime types seem unlikely to happen in the wild\n\n2. any decision we make will be fine if nosniff is present (which is our recommendation)\n\n3. I\u0027d rather avoid arbitrarily deciding whether prefix or suffix should win,\n   without first seeing benefits or drawbacks of either decision.  And actually,\n   right now JSON will win (regardless whether it is a prefix or a suffix),\n   because CrossSiteDocumentClassifier::GetCanonicalMimeType checks JSON\n   prefixes and suffix *before* checking XML prefixes and suffix.\n\nSounds good?",
+      "parentUuid": "af820a0b_f8397eef",
+      "revId": "7c748e4a47861e755959c47a37fe9253365685a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
