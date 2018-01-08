@@ -5,11 +5,9 @@
 import("//build/config/sanitizers/sanitizers.gni")
 
 declare_args() {
-  # Use libc++ (buildtools/third_party/libc++ and
-  # buildtools/third_party/libc++abi) instead of stdlibc++ as standard
-  # library.
-  # Don't check in changes that set this to false for more platforms; doing so
-  # is not supported.
+  # Use libc++ (third_party/libc++ and third_party/libc++abi) instead of
+  # stdlibc++ as standard library.  Don't check in changes that set this to
+  # false for more platforms; doing so is not supported.
   use_custom_libcxx =
       is_msan || is_fuchsia ||
       (is_linux &&
@@ -37,6 +35,6 @@ declare_args() {
 use_custom_libcxx =
     use_custom_libcxx || (use_custom_libcxx_for_host && current_cpu == host_cpu)
 
-libcxx_prefix = "//buildtools/third_party/libc++/trunk"
-libcxxabi_prefix = "//buildtools/third_party/libc++abi/trunk"
-libunwind_prefix = "//buildtools/third_party/libunwind/trunk"
+libcxx_prefix = "//third_party/libc++/trunk"
+libcxxabi_prefix = "//third_party/libc++abi/trunk"
+libunwind_prefix = "//third_party/libunwind/trunk"

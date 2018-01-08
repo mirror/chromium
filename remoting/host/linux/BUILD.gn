@@ -66,7 +66,7 @@ if (enable_me2me_host) {
       ]
       deps += [
         "//base:base",
-        "//buildtools/third_party/libc++:libc++",
+        "//third_party/libc++:libc++",
       ]
     }
   }

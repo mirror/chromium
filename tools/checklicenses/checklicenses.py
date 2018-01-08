@@ -120,18 +120,18 @@ PATH_SPECIFIC_WHITELISTED_LICENSES = {
         'UNKNOWN',
     ],
 
-    'buildtools/third_party/libc++/trunk/test': [
+    'third_party/libc++/trunk/test': [
         # http://llvm.org/bugs/show_bug.cgi?id=25980
         'UNKNOWN',
     ],
     # http://llvm.org/bugs/show_bug.cgi?id=25976
-    'buildtools/third_party/libc++/trunk/src/include/atomic_support.h': [
+    'third_party/libc++/trunk/src/include/atomic_support.h': [
       'UNKNOWN'
     ],
-    'buildtools/third_party/libc++/trunk/utils/gen_link_script': [ 'UNKNOWN' ],
-    'buildtools/third_party/libc++/trunk/utils/not': [ 'UNKNOWN' ],
-    'buildtools/third_party/libc++/trunk/utils/sym_check': [ 'UNKNOWN' ],
-    'buildtools/third_party/libc++abi/trunk/test': [ 'UNKNOWN' ],
+    'third_party/libc++/trunk/utils/gen_link_script': [ 'UNKNOWN' ],
+    'third_party/libc++/trunk/utils/not': [ 'UNKNOWN' ],
+    'third_party/libc++/trunk/utils/sym_check': [ 'UNKNOWN' ],
+    'third_party/libc++abi/trunk/test': [ 'UNKNOWN' ],
 
     'chrome/common/extensions/docs/examples': [  # http://crbug.com/98092
         'UNKNOWN',

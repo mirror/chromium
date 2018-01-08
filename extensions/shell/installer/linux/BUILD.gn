@@ -144,7 +144,7 @@ group("installer_deps") {
   }
 
   if (!libcpp_is_static && use_custom_libcxx) {
-    public_deps += [ "//buildtools/third_party/libc++:libc++" ]
+    public_deps += [ "//third_party/libc++:libc++" ]
   }
 }
 
