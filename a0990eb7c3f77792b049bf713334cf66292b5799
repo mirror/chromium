@@ -140,6 +140,30 @@
       "revId": "a0990eb7c3f77792b049bf713334cf66292b5799",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f9ff2e_d5afad21",
+        "filename": "chrome/test/data/webui/print_preview/settings_section_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-08T17:49:58Z",
+      "side": 1,
+      "message": "I see. Init() is the only way to modify the internals of a DocumentInfo(), so we have to set both isModifiable and hasSelection every time we call the constructor.\n\nI guess is a little bit confusing that we have separate methods, meaning setPdfDocument() and addSelection() which both invoke the DocumentInfo() construtor with different params. Perhaps we could use a single method as follows?\n\ninitDocumentInfo(isPdf, hasSelection) {\n  const info \u003d new print_preview.DocumentInfo();\n  info.init(!isPdf, \u0027title\u0027, hasSelection);\n  if (isPdf)\n    info.fitToPageScaling_ \u003d \u002798\u0027;\n  page.set(\u0027documentInfo_\u0027, info);\n  Polymer.dom.flush();\n}",
+      "parentUuid": "71482cfc_ab4a4900",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "a0990eb7c3f77792b049bf713334cf66292b5799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
