@@ -1,6 +1,24 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
+/**
+ * @typedef {{
+ *   callback: function(Object, Object):void,
+ *   params: Object
+ * }}
+ */
+let TransformPagePointRequest;
+
+/**
+ * @typedef {{
+ *   type: string,
+ *   page: number,
+ *   x: number,
+ *   y: number
+ * }}
+ */
+let TransformPagePointMessage;
 
 (function() {
 
@@ -11,14 +29,10 @@
  */
 window.PDFCoordsTransformer = class {
   constructor(postMessageCallback) {
-    /**
-     * @private {Array<Object>}
-     */
+    /** @private {!Array<!TransformPagePointRequest>} */
     this.outstandingTransformPagePointRequests_ = [];
 
-    /**
-     * @private {function(Object):void}
-     */
+    /** @private {function(TransformPagePointMessage):void} */
     this.postMessageCallback_ = postMessageCallback;
   }
 
@@ -43,7 +57,7 @@ window.PDFCoordsTransformer = class {
    * @param {Object} message The message received from the plugin.
    */
   onReplyReceived(message) {
-    var outstandingRequest =
+    const outstandingRequest =
         this.outstandingTransformPagePointRequests_.shift();
     outstandingRequest.callback(message.data, outstandingRequest.params);
   }
