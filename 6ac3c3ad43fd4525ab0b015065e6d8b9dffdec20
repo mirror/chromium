@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9555b0a_2776c08c",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-08T20:01:15Z",
+      "side": 1,
+      "message": "We could still make sure that is the case. But yeah it seems current state is better than that..",
+      "parentUuid": "59ce759f_d38fd9b4",
+      "range": {
+        "startLine": 590,
+        "startChar": 17,
+        "endLine": 590,
+        "endChar": 39
+      },
+      "revId": "6ac3c3ad43fd4525ab0b015065e6d8b9dffdec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92883e1b_2be3e53f",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "907a42df_73258050",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-08T20:01:15Z",
+      "side": 1,
+      "message": "I am just thinking in future if we move to worker pool and maybe create and destroy task runners. In whatever case we shouldn\u0027t disable a provider based on some bug in MDM right?",
+      "parentUuid": "92883e1b_2be3e53f",
+      "range": {
+        "startLine": 635,
+        "startChar": 42,
+        "endLine": 635,
+        "endChar": 43
+      },
+      "revId": "6ac3c3ad43fd4525ab0b015065e6d8b9dffdec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60b01acb_7e3b5608",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-08T11:59:53Z",
       "side": 1,
       "message": "IMHO this is slightly more readable if you say:\n\nif (req_args.level_of_detail \u003d\u003d MemoryDumpLevelOfDetail::BACKGROUND)\n  return mdpinfo.whitelisted_for_background_mode;",
+      "range": {
+        "startLine": 655,
+        "startChar": 2,
+        "endLine": 655,
+        "endChar": 69
+      },
+      "revId": "6ac3c3ad43fd4525ab0b015065e6d8b9dffdec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdc7ce2_05d0ef55",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-08T20:01:15Z",
+      "side": 1,
+      "message": "Um we cannot return true without checking if summary mode whitelisted.\nI think this check might cause lesser bugs.",
+      "parentUuid": "60b01acb_7e3b5608",
       "range": {
         "startLine": 655,
         "startChar": 2,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "f73a68fa_59bd8d0a",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-08T20:01:15Z",
+      "side": 1,
+      "message": "This function will always be called by ContinueDump()\ntechnically it is not required. But we might miss it in future refactoring. I will add it for safety.",
+      "parentUuid": "8ed44dda_639241ed",
+      "range": {
+        "startLine": 675,
+        "startChar": 67,
+        "endLine": 675,
+        "endChar": 68
+      },
+      "revId": "6ac3c3ad43fd4525ab0b015065e6d8b9dffdec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32224936_0dfc256c",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 3
@@ -137,6 +233,30 @@
       "revId": "6ac3c3ad43fd4525ab0b015065e6d8b9dffdec20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d52660_ea6876a6",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-08T20:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32224936_0dfc256c",
+      "range": {
+        "startLine": 688,
+        "startChar": 7,
+        "endLine": 688,
+        "endChar": 18
+      },
+      "revId": "6ac3c3ad43fd4525ab0b015065e6d8b9dffdec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
