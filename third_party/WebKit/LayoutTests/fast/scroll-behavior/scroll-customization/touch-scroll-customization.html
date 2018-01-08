@@ -107,6 +107,24 @@ function reset() {
   }
 }
 
+function pointerAction(source) {
+  return new Promise((resovle) => {
+       chrome.gpuBenchmarking.pointerActionSequence(
+            [ {
+              'source' : source,
+              actions : [
+                {name : 'pointerDown', x : 10, y : 10},
+                {name : 'pointerMove', x : 0, y : -100},
+                {name : 'pointerUp'},
+              ]
+            } ],
+            resolve);
+  }
+}
+
+promise_test(async() => {
+  await pointerAction
+})
 function applyDelta(d) {
   eventSender.gestureScrollBegin(10, 10);
   eventSender.gestureScrollUpdate(0, -d);
