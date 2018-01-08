@@ -56,7 +56,7 @@ namespace {
 // TODO(crbug.com/616929): Move common matchers that are useful across tests
 // into a shared location.
 
-// Matcher for bookmarks tool tip star.
+// Matcher for bookmarks tool tip star. (used in iPad)
 id<GREYMatcher> StarButton() {
   return ButtonWithAccessibilityLabelId(IDS_TOOLTIP_STAR);
 }
@@ -215,7 +215,10 @@ id<GREYMatcher> ActionSheet(Action action) {
   [chrome_test_util::BrowserCommandDispatcherForMainBVC() closeCurrentTab];
 }
 
-// Tests that tapping a bookmark on the NTP navigates to the proper URL.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testOpenSingleBookmarkInNormalAndIncognitoTab.) Tests that tapping a bookmark
+// on the NTP navigates to the proper URL.
 - (void)testTapBookmark {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -262,7 +265,10 @@ id<GREYMatcher> ActionSheet(Action action) {
   [BookmarksTestCase assertBookmarksWithTitle:@"my bookmark" expectedCount:1];
 }
 
-// Try navigating to the bookmark screen, and selecting a bookmark.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testOpenSingleBookmarkInNormalAndIncognitoTab.) Try navigating to the
+// bookmark screen, and selecting a bookmark.
 - (void)testSelectBookmark {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -284,7 +290,11 @@ id<GREYMatcher> ActionSheet(Action action) {
       assertWithMatcher:chrome_test_util::OmniboxText(secondURL.GetContent())];
 }
 
-// Try deleting a bookmark, then undoing that delete.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in testDeleteSingleURLNode,
+// testDeleteSingleFolderNode, testDeleteMultipleNodes,
+// testUndoDeleteBookmarkFromSwipe) Try deleting a bookmark, then undoing that
+// delete.
 - (void)testUndoDeleteBookmark {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -312,7 +322,9 @@ id<GREYMatcher> ActionSheet(Action action) {
       assertWithMatcher:grey_notNil()];
 }
 
-// Try deleting a bookmark from the edit screen, then undoing that delete.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Try deleting a bookmark from
+// the edit screen, then undoing that delete.
 - (void)testUndoDeleteBookmarkFromEditScreen {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -352,7 +364,13 @@ id<GREYMatcher> ActionSheet(Action action) {
       assertWithMatcher:grey_notNil()];
 }
 
-// Try moving bookmarks, then undoing that move.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testMoveFunctionalityOnSingleFolder, testMoveFunctionalityOnMultipleFolder,
+// testMoveFunctionalityOnMultipleUrlSelection,
+// testMoveFunctionalityOnMixedSelection,
+// testMoveCancelledWhenAllSelectionDeleted) Try moving bookmarks, then undoing
+// that move.
 - (void)testUndoMoveBookmark {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -496,7 +514,10 @@ id<GREYMatcher> ActionSheet(Action action) {
   [BookmarksTestCase assertFolderExists:@"New Folder"];
 }
 
-// Tests that changing a folder's title in edit mode works as expected.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testEditFunctionalityOnSingleFolder.) Tests that changing a folder's title in
+// edit mode works as expected.
 - (void)testChangeFolderTitle {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -654,8 +675,10 @@ id<GREYMatcher> ActionSheet(Action action) {
   // Check that the new folder still contains the bookmark.
   [BookmarksTestCase assertChildCount:1 ofFolderWithName:@"New Folder"];
 }
-
-// Test thats editing a single bookmark correctly persists data.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testEditFunctionalityOnSingleURL) Test thats editing a single bookmark
+// correctly persists data.
 - (void)testSingleBookmarkEdit {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -691,8 +714,10 @@ id<GREYMatcher> ActionSheet(Action action) {
                                                  name:@"n5"];
 }
 
-// Tests that cancelling editing a single bookmark correctly doesn't persist
-// data.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testEditFunctionalityOnSingleURL) Tests that cancelling editing a single
+// bookmark correctly doesn't persist data.
 - (void)testSingleBookmarkCancelEdit {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -727,6 +752,8 @@ id<GREYMatcher> ActionSheet(Action action) {
   [BookmarksTestCase assertAbsenceOfBookmarkWithURL:@"http://www.a.fr"];
 }
 
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in testLongPressOnSingleURL)
 // Tests that long pressing a bookmark selects it and gives access to editing,
 // as does the Info menu.
 - (void)testLongPressBookmark {
@@ -761,7 +788,9 @@ id<GREYMatcher> ActionSheet(Action action) {
       performAction:grey_tap()];
 }
 
-// Tests the editing of a folder.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testEditFunctionalityOnSingleFolder) Tests the editing of a folder.
 - (void)testEditFolder {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -800,7 +829,9 @@ id<GREYMatcher> ActionSheet(Action action) {
   [BookmarksTestCase assertFolderExistsWithTitle:@"Renamed Folder"];
 }
 
-// Tests the deletion of a folder.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testEditFunctionalityOnSingleFolder) Tests the deletion of a folder.
 - (void)testDeleteFolder {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -815,8 +846,9 @@ id<GREYMatcher> ActionSheet(Action action) {
   [BookmarksTestCase assertFolderDoesntExistWithTitle:@"Folder 1"];
 }
 
-// Navigates to a deeply nested folder, deletes it and makes sure the UI is
-// consistent.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (This
+// test is no longer relevant in the new bookmarks.) Navigates to a deeply
+// nested folder, deletes it and makes sure the UI is consistent.
 - (void)testDeleteCurrentSubfolder {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -840,8 +872,11 @@ id<GREYMatcher> ActionSheet(Action action) {
   [BookmarksTestCase waitForDeletionOfBookmarkWithTitle:@"Folder 3"];
 }
 
-// Navigates to a deeply nested folder, delete its parent programatically.
-// Verifies that the UI is as expected.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, this test is already covered in
+// testWhenCurrentFolderDeletedInBackground) Navigates to a deeply nested
+// folder, delete its parent programatically. Verifies that the UI is as
+// expected.
 - (void)testDeleteParentFolder {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -886,8 +921,9 @@ id<GREYMatcher> ActionSheet(Action action) {
       assertWithMatcher:grey_sufficientlyVisible()];
 }
 
-// Tests that the menu button changes to a back button as expected when browsing
-// nested folders.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (This
+// test is no longer relevant in the new bookmarks.) Tests that the menu button
+// changes to a back button as expected when browsing nested folders.
 - (void)testBrowseNestedFolders {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1011,8 +1047,12 @@ id<GREYMatcher> ActionSheet(Action action) {
                      ofFolderWithName:@"Title For New Folder"];
 }
 
-// Navigates to a deeply nested folder, deletes its root ancestor and checks
-// that the UI is on the top level folder.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (In the
+// new bookmarks, sidebar doesn't exist.  Deletion of ancestor folder is covered
+// in testWhenCurrentFolderDeletedInBackground and
+// testCachePositionIsResetWhenNodeIsDeleted.) Navigates to a deeply nested
+// folder, deletes its root ancestor and checks that the UI is on the top level
+// folder.
 - (void)testDeleteRootFolder {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1104,7 +1144,9 @@ id<GREYMatcher> ActionSheet(Action action) {
                  @"No keyboard commands are registered.");
 }
 
-// Tests that tapping No thanks on the promo make it disappear.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests that tapping No thanks
+// on the promo make it disappear.
 - (void)testPromoNoThanksMakeItDisappear {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1134,9 +1176,10 @@ id<GREYMatcher> ActionSheet(Action action) {
   [BookmarksTestCase verifyPromoAlreadySeen:YES];
 }
 
-// Tests the tapping on the primary button of sign-in promo view in a cold
-// state makes the sign-in sheet appear, and the promo still appears after
-// dismissing the sheet.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests the tapping on the
+// primary button of sign-in promo view in a cold state makes the sign-in sheet
+// appear, and the promo still appears after dismissing the sheet.
 - (void)testSignInPromoWithColdStateUsingPrimaryButton {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1162,9 +1205,10 @@ id<GREYMatcher> ActionSheet(Action action) {
       checkSigninPromoVisibleWithMode:SigninPromoViewModeColdState];
 }
 
-// Tests the tapping on the primary button of sign-in promo view in a warm
-// state makes the confirmaiton sheet appear, and the promo still appears after
-// dismissing the sheet.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests the tapping on the
+// primary button of sign-in promo view in a warm state makes the confirmaiton
+// sheet appear, and the promo still appears after dismissing the sheet.
 - (void)testSignInPromoWithWarmStateUsingPrimaryButton {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1198,9 +1242,10 @@ id<GREYMatcher> ActionSheet(Action action) {
       checkSigninPromoVisibleWithMode:SigninPromoViewModeWarmState];
 }
 
-// Tests the tapping on the secondary button of sign-in promo view in a warm
-// state makes the sign-in sheet appear, and the promo still appears after
-// dismissing the sheet.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests the tapping on the
+// secondary button of sign-in promo view in a warm state makes the sign-in
+// sheet appear, and the promo still appears after dismissing the sheet.
 - (void)testSignInPromoWithWarmStateUsingSecondaryButton {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1235,7 +1280,9 @@ id<GREYMatcher> ActionSheet(Action action) {
       checkSigninPromoVisibleWithMode:SigninPromoViewModeWarmState];
 }
 
-// Tests that the sign-in promo should not be shown after been shown 19 times.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests that the sign-in promo
+// should not be shown after been shown 19 times.
 - (void)testAutomaticSigninPromoDismiss {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1267,7 +1314,9 @@ id<GREYMatcher> ActionSheet(Action action) {
   [SigninEarlGreyUtils checkSigninPromoNotVisible];
 }
 
-// Tests that all elements on the bookmarks landing page are accessible.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests that all elements on
+// the bookmarks landing page are accessible.
 - (void)testAccessibilityOnBookmarksLandingPage {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1282,7 +1331,9 @@ id<GREYMatcher> ActionSheet(Action action) {
   }
 }
 
-// Tests that all elements on the bookmarks Edit page are accessible.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests that all elements on
+// the bookmarks Edit page are accessible.
 - (void)testAccessibilityOnBookmarksEditPage {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1306,7 +1357,9 @@ id<GREYMatcher> ActionSheet(Action action) {
   }
 }
 
-// Tests that all elements on the bookmarks Move page are accessible.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests that all elements on
+// the bookmarks Move page are accessible.
 - (void)testAccessibilityOnBookmarksMovePage {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1330,8 +1383,9 @@ id<GREYMatcher> ActionSheet(Action action) {
   }
 }
 
-// Tests that all elements on the bookmarks Move to New Folder page are
-// accessible.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests that all elements on
+// the bookmarks Move to New Folder page are accessible.
 - (void)testAccessibilityOnBookmarksMoveToNewFolderPage {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1359,7 +1413,9 @@ id<GREYMatcher> ActionSheet(Action action) {
   }
 }
 
-// Tests that all elements on bookmarks Delete and Undo are accessible.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests that all elements on
+// bookmarks Delete and Undo are accessible.
 - (void)testAccessibilityOnBookmarksDeleteUndo {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
@@ -1381,7 +1437,9 @@ id<GREYMatcher> ActionSheet(Action action) {
   }
 }
 
-// Tests that all elements on the bookmarks Select page are accessible.
+// TODO(crbug.com/753599): Remove this test when clean up old bookmarks. (Same
+// test already exists in BookmarksNewGenTestCase.) Tests that all elements on
+// the bookmarks Select page are accessible.
 - (void)testAccessibilityOnBookmarksSelect {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
