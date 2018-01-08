@@ -95,7 +95,6 @@ void PlatformNotificationContextImpl::InitializeOnIO(
   // TODO(peter): Synchronizing the actual notifications will be done when the
   // persistent notification ids are stable. For M44 we need to support the
   // case where there may be no notifications after a Chrome restart.
-
   if (supports_synchronization && displayed_notifications->empty()) {
     prune_database_on_open_ = true;
   }
