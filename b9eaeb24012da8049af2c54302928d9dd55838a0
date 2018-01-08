@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78dc0cd0_008fc584",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T23:16:55Z",
+      "side": 1,
+      "message": "You\u0027re totally right. I changed the code so that RenderThreadImpl is \nthe one pinged by RenderWidget about the HDR support, and holds on \nto its value, so it can be used here.\n\nAlso, here we should ping each GpuVideoAcceleratorFactories\u0027\nSetHDRRenderingStatus() -- this is thanks to an offline comment\nfrom dcastagna@ :-)",
+      "parentUuid": "dbfdfca8_bb3759a8",
+      "revId": "b9eaeb24012da8049af2c54302928d9dd55838a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0551f3ab_0839bccf",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "b9eaeb24012da8049af2c54302928d9dd55838a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afa01f3_d388ba19",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T23:16:55Z",
+      "side": 1,
+      "message": "It should be safe bc RenderThreadImpl outlives all RenderWidgets,\nbut it doesnt\u0027 apply after the latest changes.",
+      "parentUuid": "0551f3ab_0839bccf",
+      "revId": "b9eaeb24012da8049af2c54302928d9dd55838a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
