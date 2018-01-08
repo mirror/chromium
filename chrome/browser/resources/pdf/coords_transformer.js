@@ -1,6 +1,25 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
+/**
+ * @typedef {{
+ *   callback: function(Object, Object):void,
+ *   params: Object
+ * }}
+ */
+let TransformPagePointRequest;
+
+/**
+ * @typedef {{
+ *   type: string,
+ *   id: number,
+ *   page: number,
+ *   x: number,
+ *   y: number
+ * }}
+ */
+let TransformPagePointMessage;
 
 (function() {
 
@@ -11,15 +30,14 @@
  */
 window.PDFCoordsTransformer = class {
   constructor(postMessageCallback) {
-    /**
-     * @private {Array<Object>}
-     */
+    /** @private {!Array<!TransformPagePointRequest>} */
     this.outstandingTransformPagePointRequests_ = [];
 
-    /**
-     * @private {function(Object):void}
-     */
+    /** @private {function(TransformPagePointMessage):void} */
     this.postMessageCallback_ = postMessageCallback;
+
+    /** @private {number} */
+    this.nextId_ = 0;
   }
 
   /**
@@ -33,9 +51,10 @@ window.PDFCoordsTransformer = class {
    */
   request(callback, params, page, x, y) {
     this.outstandingTransformPagePointRequests_.push(
-        {callback: callback, params: params});
+        {callback: callback, params: params, id: this.nextId_});
     this.postMessageCallback_(
-        {type: 'transformPagePoint', page: page, x: x, y: y});
+        {type: 'transformPagePoint', id: this.nextId_, page: page, x: x, y: y});
+    this.nextId_++;
   }
 
   /**
@@ -43,8 +62,13 @@ window.PDFCoordsTransformer = class {
    * @param {Object} message The message received from the plugin.
    */
   onReplyReceived(message) {
-    var outstandingRequest =
-        this.outstandingTransformPagePointRequests_.shift();
+    const requestIndex =
+        this.outstandingTransformPagePointRequests_.findIndex(function(
+            request) {
+          return request.id == message.data.id;
+        });
+    const outstandingRequest =
+        this.outstandingTransformPagePointRequests_.splice(requestIndex, 1)[0];
     outstandingRequest.callback(message.data, outstandingRequest.params);
   }
 };
