@@ -16,6 +16,24 @@
       "revId": "844e07dd7928f41aa14142fd3f57fba6aed768ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172403e8_34c1fd1f",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-08T21:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdd466fd_737ac36f",
+      "revId": "844e07dd7928f41aa14142fd3f57fba6aed768ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
