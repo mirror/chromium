@@ -657,6 +657,7 @@ cr.define('bookmarks', function() {
             Command.OPEN_NEW_WINDOW,
             Command.OPEN_INCOGNITO,
           ];
+          break;
         case MenuSource.TOOLBAR:
           return [
             Command.SORT,
@@ -666,6 +667,11 @@ cr.define('bookmarks', function() {
             // <hr>
             Command.IMPORT,
             Command.EXPORT,
+          ];
+        case MenuSource.LIST:
+          return [
+            Command.ADD_BOOKMARK,
+            Command.ADD_FOLDER,
           ];
         case MenuSource.NONE:
           return [];
