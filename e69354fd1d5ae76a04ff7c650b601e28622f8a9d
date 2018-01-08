@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "89dd47df_79cb9b26",
+        "filename": ".gitignore",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-08T17:28:45Z",
+      "side": 1,
+      "message": "Well, it\u0027s annoying to have to keep augmenting gitignore, and, if we ever remove an individual file, the removal could get missed here.  I figured that if these assets are testapp-only, a directory dedicated to them makes sense, but it\u0027s just a thought.",
+      "parentUuid": "663838fe_51084ecf",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38cf7d85_c567d1c5",
         "filename": "DEPS",
         "patchSetId": 4
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "11de5423_fbd11843",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1270,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-08T17:28:45Z",
+      "side": 1,
+      "message": "Dirk, the trybots don\u0027t actually run the testapp though, they just compile it, IIRC.  When the dust settles around VR in the CQ, I hope to circle back on whether we can have bots run the testapp and see if it lives for a few seconds (vs. crashing).",
+      "parentUuid": "e8a2a972_f0c8b0a6",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7168f5bb_2016d6e2",
         "filename": "DEPS",
         "patchSetId": 4
@@ -137,6 +173,24 @@
       "side": 1,
       "message": "That seems to be the standard for the hooks. E.g., see above for gvr_static_shim_android_arm64.",
       "parentUuid": "7168f5bb_2016d6e2",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "928e4f9f_063fe31e",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-08T17:28:45Z",
+      "side": 1,
+      "message": "Oh sorry, you\u0027re right, I\u0027m blind.",
+      "parentUuid": "dd3b46cd_70da3e0d",
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
