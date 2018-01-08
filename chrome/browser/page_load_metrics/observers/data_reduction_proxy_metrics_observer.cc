@@ -26,7 +26,12 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "url/gurl.h"
 
 namespace data_reduction_proxy {
@@ -102,7 +107,10 @@ DataReductionProxyMetricsObserver::DataReductionProxyMetricsObserver()
       num_network_resources_(0),
       original_network_bytes_(0),
       network_bytes_proxied_(0),
-      network_bytes_(0) {}
+      network_bytes_(0),
+      process_id_(base::kNullProcessId),
+      renderer_memory_usage_kb_(0),
+      weak_ptr_factory_(this) {}
 
 DataReductionProxyMetricsObserver::~DataReductionProxyMetricsObserver() {}
 
@@ -135,6 +143,11 @@ DataReductionProxyMetricsObserver::OnCommit(
   if (!data || !data->used_data_reduction_proxy())
     return STOP_OBSERVING;
   data_ = data->DeepCopy();
+  process_id_ = base::GetProcId(navigation_handle->GetWebContents()
+                                    ->GetMainFrame()
+                                    ->GetProcess()
+                                    ->GetHandle());
+
   // DataReductionProxy page loads should only occur on HTTP navigations.
   DCHECK(!navigation_handle->GetURL().SchemeIsCryptographic());
   DCHECK_EQ(data_->request_url(), navigation_handle->GetURL());
@@ -312,7 +325,8 @@ void DataReductionProxyMetricsObserver::SendPingback(
       first_image_paint, first_contentful_paint,
       experimental_first_meaningful_paint,
       parse_blocked_on_script_load_duration, parse_stop, network_bytes_,
-      original_network_bytes_, app_background_occurred, opted_out_);
+      original_network_bytes_, app_background_occurred, opted_out_,
+      renderer_memory_usage_kb_);
   GetPingbackClient()->SendPingback(*data_, data_reduction_proxy_timing);
 }
 
@@ -332,6 +346,12 @@ void DataReductionProxyMetricsObserver::OnLoadEventStart(
   RECORD_FOREGROUND_HISTOGRAMS_FOR_SUFFIX(
       info, data_, timing.document_timing->load_event_start,
       ::internal::kHistogramLoadEventFiredSuffix);
+  if (process_id_ != base::kNullProcessId) {
+    auto callback = base::BindRepeating(
+        &DataReductionProxyMetricsObserver::ProcessMemoryDump,
+        weak_ptr_factory_.GetWeakPtr());
+    RequestProcessDump(process_id_, callback);
+  }
 }
 
 void DataReductionProxyMetricsObserver::OnFirstLayout(
@@ -451,6 +471,30 @@ void DataReductionProxyMetricsObserver::OnEventOccurred(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (event_key == PreviewsInfoBarDelegate::OptOutEventKey())
     opted_out_ = true;
+}
+
+void DataReductionProxyMetricsObserver::ProcessMemoryDump(
+    bool success,
+    memory_instrumentation::mojom::GlobalMemoryDumpPtr memory_dump) {
+  if (!success || !memory_dump)
+    return;
+  // There should only be one process in the dump.
+  DCHECK_EQ(1u, memory_dump->process_dumps.size());
+  DCHECK_EQ(process_id_, memory_dump->process_dumps[0]->pid);
+  renderer_memory_usage_kb_ = static_cast<int64_t>(
+      memory_dump->process_dumps[0]->chrome_dump->malloc_total_kb);
+}
+
+void DataReductionProxyMetricsObserver::RequestProcessDump(
+    base::ProcessId pid,
+    memory_instrumentation::MemoryInstrumentation::RequestGlobalDumpCallback
+        callback) {
+  service_manager::Connector* connector =
+      content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  connector->BindInterface(resource_coordinator::mojom::kServiceName,
+                           mojo::MakeRequest(&coordinator_));
+
+  coordinator_->RequestGlobalMemoryDumpForPid(pid, callback);
 }
 
 }  // namespace data_reduction_proxy
