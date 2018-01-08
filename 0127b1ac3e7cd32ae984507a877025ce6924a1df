@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "794e9e3e_f86c1b54",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-08T22:09:59Z",
+      "side": 1,
+      "message": "Open a crbug to track this TODO? (not sure what the best practices are here, I\u0027ve been asked to open crbugs for all my TODOs in the thrashing monitor, are we applying the same \"rules\" here?).",
+      "range": {
+        "startLine": 117,
+        "startChar": 30,
+        "endLine": 117,
+        "endChar": 31
+      },
+      "revId": "0127b1ac3e7cd32ae984507a877025ce6924a1df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
