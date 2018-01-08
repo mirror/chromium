@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72cc27c4_35fa1d59",
+        "filename": "chrome/renderer/prerender/prerender_dispatcher.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T16:24:50Z",
+      "side": 1,
+      "message": "Is there a reason you use base::Time::Now() rather than TimeTicks::Now()?\n\nThe former is subject to system clock changes (e.g. network time updates, etc), whereas the latter isn\u0027t. I think TimeTicks::Now() is generally preferred for time measurements unless you have a good reason for Time::Now().\n\n(If you make this change, also change it in the function below so that you\u0027re subtracting consistent values.)",
+      "range": {
+        "startLine": 29,
+        "startChar": 46,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "678088cb6178265fbf2d34c6998c72f2a358c121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8037d7_3b37a43e",
+        "filename": "chrome/renderer/prerender/prerender_dispatcher.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T16:24:50Z",
+      "side": 1,
+      "message": "Nit: You\u0027re missing the \"Prerender.\" prefix.",
+      "revId": "678088cb6178265fbf2d34c6998c72f2a358c121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a301a42c_6f68e9f6",
+        "filename": "chrome/renderer/prerender/prerender_dispatcher.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T16:24:50Z",
+      "side": 1,
+      "message": "Nit: You\u0027re missing the \"Prerender.\" prefix.",
+      "revId": "678088cb6178265fbf2d34c6998c72f2a358c121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
