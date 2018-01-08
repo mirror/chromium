@@ -22,6 +22,30 @@
       "revId": "62be6e658aaac3017e3a81def24fd3e966c575ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea053fe1_aed663b2",
+        "filename": "device/u2f/sign_response_data_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-08T16:54:10Z",
+      "side": 1,
+      "message": "The two are processed independently (key_handle is simply stored away), so it should be fine.",
+      "parentUuid": "841c7079_60722bb1",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "62be6e658aaac3017e3a81def24fd3e966c575ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
