@@ -11,7 +11,10 @@ def _RunMakeCTLogListTests(input_api, output_api):
   files = ('net/tools/ct_log_list/make_ct_known_logs_list.py',
            'net/tools/ct_log_list/make_ct_known_logs_list_unittest.py',
            'net/data/ssl/certificate_transparency/log_list.json')
-  if not any(f in input_api.LocalPaths() for f in files):
+  local_paths = []
+  for path in input_api.LocalPaths():
+    local_paths.append(path.replace('\\', '/'))
+  if not any(f in local_paths for f in files):
     return []
   test_path = input_api.os_path.join(input_api.PresubmitLocalPath(),
                                      'make_ct_known_logs_list_unittest.py')
@@ -31,4 +34,3 @@ def CheckChangeOnUpload(input_api, output_api):
 
 def CheckChangeOnCommit(input_api, output_api):
   return _RunMakeCTLogListTests(input_api, output_api)
-
