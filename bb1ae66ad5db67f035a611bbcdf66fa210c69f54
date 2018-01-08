@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddaae8a9_58b0456e",
+        "filename": "ash/system/power/power_button_controller_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T22:39:32Z",
+      "side": 1,
+      "message": "as one more nit, maybe rename this file and the namespace to power_button_util? sorry for not suggesting this earlier.",
+      "revId": "bb1ae66ad5db67f035a611bbcdf66fa210c69f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc3d85e_210c4025",
+        "filename": "ash/system/power/power_button_controller_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T22:39:32Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t look like you\u0027re using this",
+      "revId": "bb1ae66ad5db67f035a611bbcdf66fa210c69f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9253d21e_a1ea323f",
+        "filename": "ash/system/power/power_button_controller_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T22:39:32Z",
+      "side": 1,
+      "message": "nit: sort these",
+      "revId": "bb1ae66ad5db67f035a611bbcdf66fa210c69f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
