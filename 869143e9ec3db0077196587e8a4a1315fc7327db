@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5b508c7_48da0217",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-08T19:46:54Z",
+      "side": 1,
+      "message": "Thanks. That will be helpful for future temporary workarounds that I need to do.",
+      "parentUuid": "cf312a90_2d81ae9d",
+      "range": {
+        "startLine": 677,
+        "startChar": 23,
+        "endLine": 678,
+        "endChar": 72
+      },
+      "revId": "869143e9ec3db0077196587e8a4a1315fc7327db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6aed20f_d3615e35",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/connect/connection-succeeds.https.html",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "869143e9ec3db0077196587e8a4a1315fc7327db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fb87f0_e610df8b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/connect/connection-succeeds.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-08T19:46:54Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll try that argument. For the future, Conley told me that I can also use `git mv` to get git to recognize the move.",
+      "parentUuid": "a6aed20f_d3615e35",
+      "revId": "869143e9ec3db0077196587e8a4a1315fc7327db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
