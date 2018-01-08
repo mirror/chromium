@@ -17,6 +17,7 @@ Commands:
 
 import argparse
 import cgi
+import json
 import os
 import shutil
 import re
@@ -25,7 +26,7 @@ import sys
 import tempfile
 
 # TODO(agrieve): Move build_utils.WriteDepFile into a non-android directory.
-_REPOSITORY_ROOT = os.path.dirname(os.path.dirname(__file__))
+_REPOSITORY_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.join(_REPOSITORY_ROOT, 'build/android/gyp/util'))
 import build_utils
 
@@ -100,6 +101,11 @@ VCS_METADATA_DIRS = ('.svn', '.git')
 PRUNE_DIRS = (VCS_METADATA_DIRS +
               ('out', 'Debug', 'Release',  # build files
                'layout_tests'))            # lots of subdirs
+
+# A third_party directory can define this file, containing a list of
+# subdirectories to process instead of itself. Intended for directories that
+# contain multiple others as transitive dependencies.
+ADDITIONAL_PATHS_FILENAME = 'additional_readme_paths.json'
 
 ADDITIONAL_PATHS = (
     os.path.join('chrome', 'common', 'extensions', 'docs', 'examples'),
@@ -354,7 +360,7 @@ def ParseDir(path, root, require_license_file=True, optional_keys=None):
         readme_path = os.path.join(root, path, 'README.chromium')
         if not os.path.exists(readme_path):
             raise LicenseError("missing README.chromium or licenses.py "
-                               "SPECIAL_CASES entry in %s" % path)
+                               "SPECIAL_CASES entry in %s\n" % path)
 
         for line in open(readme_path):
             line = line.strip()
@@ -391,7 +397,7 @@ def ParseDir(path, root, require_license_file=True, optional_keys=None):
         metadata["License File"] = license_path
 
     if errors:
-        raise LicenseError(";\n".join(errors))
+        raise LicenseError("%s errors:\n %s\n" % (path, ";\n ".join(errors)))
     return metadata
 
 
@@ -434,7 +440,14 @@ def FindThirdPartyDirs(prune_paths, root):
             # Add all subdirectories that are not marked for skipping.
             for dir in dirs:
                 dirpath = os.path.join(path, dir)
-                if dirpath not in prune_paths:
+                additional_paths_file = os.path.join(
+                        dirpath, ADDITIONAL_PATHS_FILENAME)
+                if os.path.exists(additional_paths_file):
+                    with open(additional_paths_file) as paths_file:
+                        extra_paths = json.load(paths_file)
+                        third_party_dirs.update([
+                                os.path.join(dirpath, p) for p in extra_paths])
+                elif dirpath not in prune_paths:
                     third_party_dirs.add(dirpath)
 
             # Don't recurse into any subdirs from here.
@@ -591,7 +604,8 @@ def GenerateCredits(
     for path in third_party_dirs:
         try:
             metadata = ParseDir(path, _REPOSITORY_ROOT)
-        except LicenseError:
+        except LicenseError as e:
+            sys.stderr.write(e.message)
             # TODO(phajdan.jr): Convert to fatal error (http://crbug.com/39240).
             continue
         if metadata['License File'] == NOT_SHIPPED:
