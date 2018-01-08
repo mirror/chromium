@@ -18,10 +18,12 @@
 #include "ash/shell.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
+#include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
@@ -35,12 +37,15 @@
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/browser/web_applications/web_app.h"
+#include "chrome/grit/generated_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_contents.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/base/hit_test.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/image/image_skia.h"
@@ -106,7 +111,11 @@ void BrowserNonClientFrameViewAsh::Init() {
   if (browser->is_app() && IsV1AppBackButtonEnabled()) {
     back_button_ = new ash::FrameBackButton();
     AddChildView(back_button_);
-    // TODO(oshima): Update the back button state.
+    // back_button_->SetEnabled(false);
+    back_button_->SetTooltipText(l10n_util::GetStringUTF16(IDS_TOOLTIP_BACK));
+    back_button_->SetAccessibleName(
+        l10n_util::GetStringUTF16(IDS_ACCNAME_BACK));
+    browser->command_controller()->AddCommandObserver(IDC_BACK, this);
   }
 
   frame_header_ = CreateFrameHeader();
@@ -416,6 +425,13 @@ bool BrowserNonClientFrameViewAsh::ShouldTabIconViewAnimate() const {
 gfx::ImageSkia BrowserNonClientFrameViewAsh::GetFaviconForTabIconView() {
   views::WidgetDelegate* delegate = frame()->widget_delegate();
   return delegate ? delegate->GetWindowIcon() : gfx::ImageSkia();
+}
+
+void BrowserNonClientFrameViewAsh::EnabledStateChangedForCommand(int id,
+                                                                 bool enabled) {
+  if (id == IDC_BACK && back_button_) {
+    back_button_->SetEnabled(enabled);
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
