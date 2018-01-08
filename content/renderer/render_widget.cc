@@ -1298,6 +1298,14 @@ void RenderWidget::Resize(const ResizeParams& params) {
 
   screen_info_ = params.screen_info;
 
+  RenderThreadImpl* render_thread = RenderThreadImpl::current();
+  if (render_thread) {
+    render_thread->GetMainTaskRunner()->PostTask(
+        FROM_HERE, base::BindOnce(&RenderThreadImpl::SetHDRRenderingStatus,
+                                  base::Unretained(render_thread),
+                                  screen_info_.color_space.IsHDR()));
+  }
+
   if (device_scale_factor_ != screen_info_.device_scale_factor) {
     device_scale_factor_ = screen_info_.device_scale_factor;
     OnDeviceScaleFactorChanged();
