@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe64ec90_78f307a8",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-08T16:19:21Z",
+      "side": 1,
+      "message": "As a reader I find it slightly confusing that the output parameter |sink_media_type| appears in the middle between two parameters that serve as read-only inputs. I recommend putting the output parameter last.",
+      "revId": "78eaa5f08d7ff21a55de92bd5b84328ba5cfacd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
