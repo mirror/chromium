@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "55bd73e0_1dee774c",
+        "filename": "net/disk_cache/blockfile/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T16:14:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "006a62d3_ca716f69",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 66
+      },
+      "revId": "a375975586b8da23827ef734daec6b40cfc6e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca240a4_a406db80",
         "filename": "net/disk_cache/blockfile/file_posix.cc",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "8e76545b_87c4967a",
+        "filename": "net/disk_cache/blockfile/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T16:14:47Z",
+      "side": 1,
+      "message": "Done.\n\nWould it be feasible to change this in the future? It is not clear to me why writing data to a (slow) disk should be on the critical path of loading a web page.",
+      "parentUuid": "de936a09_1b32e281",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 48
+      },
+      "revId": "a375975586b8da23827ef734daec6b40cfc6e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "912ce3f6_bb3396c3",
         "filename": "net/disk_cache/blockfile/file_posix.cc",
         "patchSetId": 1
@@ -110,6 +158,24 @@
       "revId": "a375975586b8da23827ef734daec6b40cfc6e331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03ca22d_ea867690",
+        "filename": "net/disk_cache/blockfile/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T16:14:47Z",
+      "side": 1,
+      "message": "Added TODO.",
+      "parentUuid": "912ce3f6_bb3396c3",
+      "revId": "a375975586b8da23827ef734daec6b40cfc6e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
