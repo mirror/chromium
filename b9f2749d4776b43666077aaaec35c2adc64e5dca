@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882b0821_f28d5c0b",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_app_external_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:44:12Z",
+      "side": 1,
+      "message": "nit: new enums should prefer kStyleNaming",
+      "revId": "b9f2749d4776b43666077aaaec35c2adc64e5dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

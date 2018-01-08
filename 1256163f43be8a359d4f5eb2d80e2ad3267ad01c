@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56de0884_07e0fcff",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:44:12Z",
+      "side": 0,
+      "message": "What changed to make this no longer necessary?",
+      "revId": "1256163f43be8a359d4f5eb2d80e2ad3267ad01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
