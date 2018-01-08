@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/feature_list.h"
 #include "base/location.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -213,6 +214,8 @@ using content::WebUIController;
 using ui::WebDialogUI;
 
 namespace {
+const base::Feature kBundledConnectionHelpFeature{
+    "BundledConnectionHelp", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // A function for creating a new WebUI. The caller owns the return value, which
 // may be NULL (for example, if the URL refers to an non-existent extension).
@@ -279,6 +282,10 @@ WebUIController* NewWebUI<WelcomeWin10UI>(WebUI* web_ui, const GURL& url) {
 #endif  // defined(OS_WIN)
 
 bool IsAboutUI(const GURL& url) {
+  if (base::FeatureList::IsEnabled(kBundledConnectionHelpFeature) &&
+      url.host_piece() == chrome::kChromeUIConnectionHelpHost) {
+    return true;
+  }
   return (url.host_piece() == chrome::kChromeUIChromeURLsHost ||
           url.host_piece() == chrome::kChromeUICreditsHost ||
           url.host_piece() == chrome::kChromeUIDNSHost
