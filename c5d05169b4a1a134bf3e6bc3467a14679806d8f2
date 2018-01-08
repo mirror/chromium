@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6e46fe6_ccc94630",
+        "filename": "third_party/protobuf/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1149279
+      },
+      "writtenOn": "2018-01-08T20:57:19Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of perfetto in Chromium? Are you planning to link it with main Chromium app?",
+      "range": {
+        "startLine": 231,
+        "startChar": 27,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "c5d05169b4a1a134bf3e6bc3467a14679806d8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
