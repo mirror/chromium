@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce63956e_0ee00b33",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T18:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df3fb599_cb3bedaf",
+      "range": {
+        "startLine": 104,
+        "startChar": 30,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deb39b7e_b47992f3",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "176c5c58_929b9a30",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T18:18:19Z",
+      "side": 1,
+      "message": "Good to know!",
+      "parentUuid": "deb39b7e_b47992f3",
+      "range": {
+        "startLine": 185,
+        "startChar": 5,
+        "endLine": 185,
+        "endChar": 84
+      },
+      "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b03b8c37_4e2bebbe",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0073b8b2_57154f9e",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T18:18:19Z",
+      "side": 1,
+      "message": "MSVC doesn\u0027t like constexpr here with the error: \nerror C2131: expression did not evaluate to a constant\nnote: failure was caused by unevaluable pointer value\n\nSeems like some bug so I went with static const instead.",
+      "parentUuid": "b03b8c37_4e2bebbe",
+      "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b5f366_fb835fd2",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-08T18:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b920c3d8_19ceb6da",
+      "range": {
+        "startLine": 187,
+        "startChar": 26,
+        "endLine": 187,
+        "endChar": 41
+      },
+      "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
