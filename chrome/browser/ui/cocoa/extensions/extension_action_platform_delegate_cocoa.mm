@@ -32,6 +32,9 @@ namespace {
 // Returns the notification to listen to for activation for a particular
 // |extension_action|.
 int GetNotificationTypeForAction(const ExtensionAction& extension_action) {
+  if (extension_action.action_type() == extensions::ActionInfo::TYPE_ACTION)
+    return extensions::NOTIFICATION_EXTENSION_COMMAND_ACTION_MAC;
+
   if (extension_action.action_type() == extensions::ActionInfo::TYPE_BROWSER)
     return extensions::NOTIFICATION_EXTENSION_COMMAND_BROWSER_ACTION_MAC;
 
@@ -118,6 +121,7 @@ void ExtensionActionPlatformDelegateCocoa::Observe(
     const content::NotificationSource& source,
     const content::NotificationDetails& details) {
   switch (type) {
+    case extensions::NOTIFICATION_EXTENSION_COMMAND_ACTION_MAC:
     case extensions::NOTIFICATION_EXTENSION_COMMAND_BROWSER_ACTION_MAC:
     case extensions::NOTIFICATION_EXTENSION_COMMAND_PAGE_ACTION_MAC: {
       DCHECK_EQ(type,

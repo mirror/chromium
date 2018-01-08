@@ -1,0 +1,15 @@
+{
+  "name": "An action to test chrome.action.setPopup()",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "tabs", "http://*/*"
+  ],
+  "action": {
+    "default_title": "Test setPopup()",
+    "default_icon": "icon.png"
+  }
+}

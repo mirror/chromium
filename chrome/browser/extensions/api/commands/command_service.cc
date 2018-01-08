@@ -173,6 +173,13 @@ bool CommandService::RemovesBookmarkOpenPagesShortcut(
        FeatureSwitch::enable_override_bookmarks_ui()->IsEnabled());
 }
 
+bool CommandService::GetActionCommand(const std::string& extension_id,
+                                      QueryType type,
+                                      Command* command,
+                                      bool* active) const {
+  return GetExtensionActionCommand(extension_id, type, command, active, ACTION);
+}
+
 bool CommandService::GetBrowserActionCommand(const std::string& extension_id,
                                              QueryType type,
                                              Command* command,
@@ -246,7 +253,8 @@ bool CommandService::AddKeybindingPref(
   // Media Keys are allowed to be used by named command only.
   DCHECK(!Command::IsMediaKey(accelerator) ||
          (command_name != manifest_values::kPageActionCommandEvent &&
-          command_name != manifest_values::kBrowserActionCommandEvent));
+          command_name != manifest_values::kBrowserActionCommandEvent &&
+          command_name != manifest_values::kActionCommandEvent));
 
   DictionaryPrefUpdate updater(profile_->GetPrefs(),
                                prefs::kExtensionCommands);
@@ -594,7 +602,8 @@ bool CommandService::CanAutoAssign(const Command &command,
   if (command.global()) {
     using namespace extensions;
     if (command.command_name() == manifest_values::kBrowserActionCommandEvent ||
-        command.command_name() == manifest_values::kPageActionCommandEvent)
+        command.command_name() == manifest_values::kPageActionCommandEvent ||
+        command.command_name() == manifest_values::kActionCommandEvent)
       return false;  // Browser and page actions are not global in nature.
 
     if (extension->permissions_data()->HasAPIPermission(
@@ -710,6 +719,10 @@ void CommandService::RemoveDefunctExtensionSuggestedCommandPrefs(
                 ui::VKEY_UNKNOWN) {
           suggested_key_prefs->Remove(it.key(), NULL);
         }
+      } else if (it.key() == manifest_values::kActionCommandEvent) {
+        // TODO (catmullings): Finish implementation here.
+        /*if (!CommandsInfo::GetActionCommand(extension))
+          suggested_key_prefs->Remove(it.key(), NULL);*/
       } else if (it.key() == manifest_values::kPageActionCommandEvent) {
         if (!CommandsInfo::GetPageActionCommand(extension))
           suggested_key_prefs->Remove(it.key(), NULL);
@@ -874,6 +887,9 @@ bool CommandService::GetExtensionActionCommand(
       break;
     case PAGE_ACTION:
       requested_command = CommandsInfo::GetPageActionCommand(extension);
+      break;
+    case ACTION:
+      requested_command = CommandsInfo::GetActionCommand(extension);
       break;
     case NAMED:
       NOTREACHED();

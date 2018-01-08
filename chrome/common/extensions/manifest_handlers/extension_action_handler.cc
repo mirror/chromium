@@ -128,6 +128,7 @@ bool ExtensionActionHandler::AlwaysParseForType(Manifest::Type type) const {
 
 const std::vector<std::string> ExtensionActionHandler::Keys() const {
   std::vector<std::string> keys;
+  keys.push_back(manifest_keys::kAction);
   keys.push_back(manifest_keys::kPageAction);
   keys.push_back(manifest_keys::kBrowserAction);
   keys.push_back(manifest_keys::kSynthesizeExtensionAction);

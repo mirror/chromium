@@ -54,6 +54,7 @@ function verifyImageData(imageData) {
  *   callback may be called reentrantly.
  */
 function setIcon(details, callback) {
+  console.log("setIcon in jS BABBBBBBBBBBEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
   // Note that iconIndex is actually deprecated, and only available to the
   // pageAction API.
   // TODO(kalman): Investigate whether this is for the pageActions API, and if

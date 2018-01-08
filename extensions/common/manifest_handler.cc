@@ -159,10 +159,11 @@ bool ManifestHandlerRegistry::ValidateExtension(
   for (ManifestHandlerMap::iterator iter = handlers_.begin();
        iter != handlers_.end(); ++iter) {
     ManifestHandler* handler = iter->second.get();
-    if (extension->manifest()->HasPath(iter->first) ||
-        handler->AlwaysValidateForType(extension->GetType())) {
-      handlers.insert(handler);
-    }
+    if (extension->manifest()->HasPath(iter->first))
+      if (extension->manifest()->HasPath(iter->first) ||
+          handler->AlwaysValidateForType(extension->GetType())) {
+        handlers.insert(handler);
+      }
   }
   for (std::set<ManifestHandler*>::iterator iter = handlers.begin();
        iter != handlers.end(); ++iter) {

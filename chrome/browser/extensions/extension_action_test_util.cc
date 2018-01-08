@@ -49,7 +49,33 @@ size_t GetPageActionCount(content::WebContents* web_contents,
         ++count;
     }
   }
+  return count;
+}
 
+// TODO(catmullings): Refactor GetActionCount() with GetPageActionCount().
+size_t GetActionCount(content::WebContents* web_contents,
+                      bool only_count_visible) {
+  DCHECK(web_contents);
+  size_t count = 0u;
+  int tab_id = SessionTabHelper::IdForTab(web_contents);
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents->GetBrowserContext());
+  ToolbarActionsModel* toolbar_model = ToolbarActionsModel::Get(profile);
+  const std::vector<ToolbarActionsModel::ToolbarItem>& toolbar_items =
+      toolbar_model->toolbar_items();
+  ExtensionActionManager* action_manager =
+      ExtensionActionManager::Get(web_contents->GetBrowserContext());
+  const ExtensionSet& enabled_extensions =
+      ExtensionRegistry::Get(profile)->enabled_extensions();
+  for (const ToolbarActionsModel::ToolbarItem& item : toolbar_items) {
+    if (item.type == ToolbarActionsModel::EXTENSION_ACTION) {
+      const Extension* extension = enabled_extensions.GetByID(item.id);
+      ExtensionAction* extension_action = action_manager->GetAction(*extension);
+      if (extension_action && extension_action->IsDefaultDisabled() &&
+          (!only_count_visible || extension_action->GetIsVisible(tab_id)))
+        ++count;
+    }
+  }
   return count;
 }
 
@@ -94,6 +120,10 @@ ToolbarActionsModel* CreateToolbarModelImpl(Profile* profile,
 
 size_t GetVisiblePageActionCount(content::WebContents* web_contents) {
   return GetPageActionCount(web_contents, true);
+}
+
+size_t GetVisibleActionCount(content::WebContents* web_contents) {
+  return GetActionCount(web_contents, true);
 }
 
 size_t GetTotalPageActionCount(content::WebContents* web_contents) {
