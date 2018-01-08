@@ -10,6 +10,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "components/strings/grit/components_strings.h"
 
 namespace {
@@ -46,13 +47,13 @@ content::WebUIDataSource* CreatePolicyToolUIHtmlSource() {
   source->AddLocalizedString("title", IDS_POLICY_TOOL_TITLE);
 
   // Add required resources.
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("policy_common.css", IDR_POLICY_COMMON_CSS);
   source->AddResourcePath("policy_tool.css", IDR_POLICY_TOOL_CSS);
   source->AddResourcePath("policy_base.js", IDR_POLICY_BASE_JS);
   source->AddResourcePath("policy_tool.js", IDR_POLICY_TOOL_JS);
 
   source->SetDefaultResource(IDR_POLICY_TOOL_HTML);
-  source->UseGzip();
   return source;
 }
 

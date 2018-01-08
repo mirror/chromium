@@ -20,6 +20,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
@@ -349,6 +350,7 @@ content::WebUIDataSource* CreateKeyboardOverlayUIHTMLSource(Profile* profile) {
   source->AddBoolean("keyboardOverlayIsDisplayUIScalingEnabled",
                      display_manager->IsDisplayUIScalingEnabled());
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("keyboard_overlay.js", IDR_KEYBOARD_OVERLAY_JS);
   source->SetDefaultResource(IDR_KEYBOARD_OVERLAY_HTML);
   return source;

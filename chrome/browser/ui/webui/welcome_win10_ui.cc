@@ -14,7 +14,9 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chrome_unscaled_resources.h"
+#include "chrome/grit/chrome_unscaled_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
@@ -86,6 +88,7 @@ WelcomeWin10UI::WelcomeWin10UI(content::WebUI* web_ui, const GURL& url)
 
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(url.host());
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
 
   AddLocalizedStrings(html_source, is_first_run);
 
@@ -94,6 +97,8 @@ WelcomeWin10UI::WelcomeWin10UI(content::WebUI* web_ui, const GURL& url)
   html_source->AddResourcePath("default.webp", IDR_WELCOME_WIN10_DEFAULT_WEBP);
   html_source->AddResourcePath("pin.webp", IDR_WELCOME_WIN10_PIN_WEBP);
 
+  html_source->AddGzipMap(kChromeUnscaledResources,
+                          kChromeUnscaledResourcesSize);
   html_source->AddResourcePath("logo-small.png", IDR_PRODUCT_LOGO_64);
   html_source->AddResourcePath("logo-large.png", IDR_PRODUCT_LOGO_128);
 

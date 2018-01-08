@@ -23,6 +23,12 @@ kGrdTemplate = '''<?xml version="1.0" encoding="UTF-8"?>
       <emit emit_type='prepend'></emit>
     </output>
     <output filename="tracing_resources.pak" type="data_package" />
+    <if expr="not is_android">
+      <output filename="grit/tracing_resources_map.cc"
+          type="gzipped_resource_file_map_source" />
+      <output filename="grit/tracing_resources_map.h"
+          type="gzipped_resource_map_header" />
+    </if>
   </outputs>
   <release seq="1">
     <includes>
@@ -51,7 +57,7 @@ def make_name_from_filename(filename):
 
 
 def add_file_to_grd(grd_doc, filename):
-  includes_node = grd_doc.getElementsByTagName('if')[0]
+  includes_node = grd_doc.getElementsByTagName('if')[1]
   includes_node.appendChild(grd_doc.createTextNode('\n        '))
 
   new_include_node = grd_doc.createElement('include')
