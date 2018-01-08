@@ -87,7 +87,7 @@
 #include "platform/wtf/text/CString.h"
 #include "public/platform/WebCORS.h"
 #include "public/platform/WebURLRequest.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
+#include "third_party/WebKit/public/common/feature_policy/feature_policy_feature.h"
 
 namespace blink {
 

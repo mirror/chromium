@@ -34,7 +34,7 @@
 #include "core/page/Page.h"
 #include "platform/Language.h"
 #include "platform/MemoryCoordinator.h"
-#include "third_party/WebKit/common/device_memory/approximated_device_memory.h"
+#include "third_party/WebKit/public/common/device_memory/approximated_device_memory.h"
 
 namespace blink {
 

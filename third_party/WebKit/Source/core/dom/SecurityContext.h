@@ -39,7 +39,7 @@
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebURLRequest.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/public/common/feature_policy/feature_policy.h"
 
 #include <memory>
 
