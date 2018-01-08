@@ -5327,18 +5327,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     service_manager::mojom::InterfaceProviderRequest
         remote_interface_provider_request) {
   DCHECK_EQ(frame_, frame);
-  WebDocumentLoader* document_loader = frame->GetDocumentLoader();
   DCHECK(document_loader);
-
-  const WebURLRequest& request = document_loader->GetRequest();
-  const WebURLResponse& response = document_loader->GetResponse();
-
-  DocumentState* document_state =
-      DocumentState::FromDocumentLoader(document_loader);
-  NavigationStateImpl* navigation_state =
-      static_cast<NavigationStateImpl*>(document_state->navigation_state());
-  InternalDocumentStateData* internal_data =
-      InternalDocumentStateData::FromDocumentState(document_state);
 
   // Set the correct engagement level on the frame, and wipe the cached origin
   // so this will not be reused accidentally.
@@ -5354,6 +5343,74 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     frame_->SetHasHighMediaEngagement(true);
     high_media_engagement_origin_ = url::Origin();
   }
+
+  if (!frame->Parent()) {
+    // Top-level navigation.
+
+    // Reset the zoom limits in case a plugin had changed them previously. This
+    // will also call us back which will cause us to send a message to
+    // update WebContentsImpl.
+    render_view_->webview()->ZoomLimitsChanged(
+        ZoomFactorToZoomLevel(kMinimumZoomFactor),
+        ZoomFactorToZoomLevel(kMaximumZoomFactor));
+
+    // Set zoom level, but don't do it for full-page plugin since they don't use
+    // the same zoom settings.
+    HostZoomLevels::iterator host_zoom =
+        host_zoom_levels_.find(GURL(request.Url()));
+    if (render_view_->webview()->MainFrame()->IsWebLocalFrame() &&
+        render_view_->webview()
+            ->MainFrame()
+            ->ToWebLocalFrame()
+            ->GetDocument()
+            .IsPluginDocument()) {
+      // Reset the zoom levels for plugins.
+      render_view_->SetZoomLevel(0);
+    } else {
+      // If the zoom level is not found, then do nothing. In-page navigation
+      // relies on not changing the zoom level in this case.
+      if (host_zoom != host_zoom_levels_.end())
+        render_view_->SetZoomLevel(host_zoom->second);
+    }
+
+    if (host_zoom != host_zoom_levels_.end()) {
+      // This zoom level was merely recorded transiently for this load.  We can
+      // erase it now.  If at some point we reload this page, the browser will
+      // send us a new, up-to-date zoom level.
+      host_zoom_levels_.erase(host_zoom);
+    }
+
+    // Subframes should match the zoom level of the main frame.
+    render_view_->SetZoomLevel(render_view_->page_zoom_level());
+  }
+
+  auto params = MakeDidCommitProvisionalLoadParams(commit_type);
+
+  // This invocation must precede any calls to allowScripts(), allowImages(), or
+  // allowPlugins() for the new page. This ensures that when these functions
+  // send ViewHostMsg_ContentBlocked messages, those arrive after the browser
+  // process has already been informed of the provisional load committing.
+  GetFrameHost()->DidCommitProvisionalLoad(
+      std::move(params), std::move(remote_interface_provider_request));
+
+  // If we end up reusing this WebRequest (for example, due to a #ref click),
+  // we don't want the transition type to persist.  Just clear it.
+  navigation_state->set_transition_type(ui::PAGE_TRANSITION_LINK);
+}
+
+std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+RenderFrameImpl::MakeDidCommitProvisionalLoadParams(
+    blink::WebHistoryCommitType commit_type) {
+  WebDocumentLoader* document_loader = frame_->GetDocumentLoader();
+  const WebURLRequest& request = document_loader->GetRequest();
+  const WebURLResponse& response = document_loader->GetResponse();
+
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  InternalDocumentStateData* internal_data =
+      InternalDocumentStateData::FromDocumentState(document_state);
 
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params =
       std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>();
@@ -5385,17 +5442,17 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // stale state around.
   params->did_create_new_entry =
       (commit_type == blink::kWebStandardCommit) ||
-      (commit_type == blink::kWebHistoryInertCommit && !frame->Parent() &&
+      (commit_type == blink::kWebHistoryInertCommit && !frame_->Parent() &&
        params->should_replace_current_entry &&
-       !params->was_within_same_document);
+       !navigation_state->WasWithinSameDocument());
 
-  WebDocument frame_document = frame->GetDocument();
+  WebDocument frame_document = frame_->GetDocument();
   // Set the origin of the frame.  This will be replicated to the corresponding
   // RenderFrameProxies in other processes.
   WebSecurityOrigin frame_origin = frame_document.GetSecurityOrigin();
   params->origin = frame_origin;
 
-  params->insecure_request_policy = frame->GetInsecureRequestPolicy();
+  params->insecure_request_policy = frame_->GetInsecureRequestPolicy();
 
   params->has_potentially_trustworthy_unique_origin =
       frame_origin.IsUnique() && frame_origin.IsPotentiallyTrustworthy();
@@ -5439,7 +5496,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
                  document_loader->GetRequest().GetReferrerPolicy());
   } else {
     params->referrer = RenderViewImpl::GetReferrerFromRequest(
-        frame, document_loader->GetRequest());
+        frame_, document_loader->GetRequest());
   }
 
   UpdateZoomLevel();
@@ -5474,11 +5531,13 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
         navigation_state->request_params().should_clear_history_list;
 
     params->report_type = static_cast<FrameMsg_UILoadMetricsReportType::Value>(
-        frame->GetDocumentLoader()->GetRequest().InputPerfMetricReportPolicy());
+        frame_->GetDocumentLoader()
+            ->GetRequest()
+            .InputPerfMetricReportPolicy());
     params->ui_timestamp =
         base::TimeTicks() +
         base::TimeDelta::FromSecondsD(
-            frame->GetDocumentLoader()->GetRequest().UiStartTime());
+            frame_->GetDocumentLoader()->GetRequest().UiStartTime());
   } else {
     // Subframe navigation: the type depends on whether this navigation
     // generated a new session history entry. When they do generate a session
@@ -5509,16 +5568,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     }
   }
 
-  // This invocation must precede any calls to allowScripts(), allowImages(), or
-  // allowPlugins() for the new page. This ensures that when these functions
-  // send ViewHostMsg_ContentBlocked messages, those arrive after the browser
-  // process has already been informed of the provisional load committing.
-  GetFrameHost()->DidCommitProvisionalLoad(
-      std::move(params), std::move(remote_interface_provider_request));
-
-  // If we end up reusing this WebRequest (for example, due to a #ref click),
-  // we don't want the transition type to persist.  Just clear it.
-  navigation_state->set_transition_type(ui::PAGE_TRANSITION_LINK);
+  return params;
 }
 
 void RenderFrameImpl::UpdateZoomLevel() {
