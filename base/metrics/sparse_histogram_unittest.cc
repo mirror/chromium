@@ -176,8 +176,8 @@ TEST_P(SparseHistogramTest, MacroBasicTest) {
   UmaHistogramSparse("Sparse", 200);
   UmaHistogramSparse("Sparse", 100);
 
-  StatisticsRecorder::Histograms histograms;
-  StatisticsRecorder::GetHistograms(&histograms);
+  StatisticsRecorder::Histograms histograms =
+      StatisticsRecorder::GetHistograms();
 
   ASSERT_EQ(1U, histograms.size());
   HistogramBase* sparse_histogram = histograms[0];
@@ -205,8 +205,8 @@ TEST_P(SparseHistogramTest, MacroInLoopTest) {
     UmaHistogramSparse(name, 100);
   }
 
-  StatisticsRecorder::Histograms histograms;
-  StatisticsRecorder::GetHistograms(&histograms);
+  StatisticsRecorder::Histograms histograms =
+      StatisticsRecorder::GetHistograms();
   ASSERT_EQ(2U, histograms.size());
 
   std::string name1 = histograms[0]->histogram_name();
