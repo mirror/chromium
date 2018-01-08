@@ -101,4 +101,9 @@ void DelegatedFrameHostClientAura::CompositorResizeLockEnded() {
   render_widget_host_view_->host_->WasResized();
 }
 
+void DelegatedFrameHostClientAura::OnFirstSurfaceActivation(
+    const viz::SurfaceInfo& surface_info) {
+  render_widget_host_view_->host_->OnFirstSurfaceActivation(surface_info);
+}
+
 }  // namespace content

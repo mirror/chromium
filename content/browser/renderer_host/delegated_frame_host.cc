@@ -545,6 +545,8 @@ void DelegatedFrameHost::OnBeginFramePausedChanged(bool paused) {
 
 void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
+  client_->OnFirstSurfaceActivation(surface_info);
+
   gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
       surface_info.device_scale_factor(), surface_info.size_in_pixels());
 

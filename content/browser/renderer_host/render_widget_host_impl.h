@@ -631,6 +631,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   void ProgressFling(base::TimeTicks current_time);
 
+  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info);
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to
@@ -1049,6 +1051,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   mojom::WidgetInputHandlerPtr widget_input_handler_;
   std::unique_ptr<mojom::WidgetInputHandler> legacy_widget_input_handler_;
   viz::mojom::InputTargetClientPtr input_target_client_;
+
+  uint32_t first_parent_id_after_navigation_ = 0;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 
