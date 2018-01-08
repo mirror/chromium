@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aac12d86_adf34b6e",
+        "filename": "content/browser/browsing_data/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-08T16:11:41Z",
+      "side": 1,
+      "message": "Layering violation :)\n\n//content should be the base, because //chrome and //components/browsing_data already both depend on it (technically only //components/browsing_data/content, not the entire //components/browsing_data, but meh)",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "f63348ebcd0b69aceeee376a330fd8ec683844c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
