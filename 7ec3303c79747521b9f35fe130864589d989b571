@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "42907da9_73d54dc0",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-08T20:53:40Z",
+      "side": 1,
+      "message": "Fetch spec basically specifies how resource loading works, and it touches certain amount of things that are not super clear if they should be outside the network service or not. The destination type is referenced in the spec text for mime sniffing behavior and for CSP handling, and fyi the latter is also being discussed if they can be moved out of the renderer process.",
+      "parentUuid": "550dcb20_57589ad0",
+      "revId": "7ec3303c79747521b9f35fe130864589d989b571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbd0acb0_bcc189d7",
         "filename": "content/public/common/resource_request.h",
         "patchSetId": 7
