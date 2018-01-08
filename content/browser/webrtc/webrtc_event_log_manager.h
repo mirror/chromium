@@ -16,7 +16,9 @@
 #include "base/time/clock.h"
 #include "content/browser/webrtc/webrtc_event_log_manager_common.h"
 #include "content/browser/webrtc/webrtc_local_event_log_manager.h"
+#include "content/browser/webrtc/webrtc_remote_event_log_manager.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/browser_context.h"
 
 namespace content {
 
@@ -25,18 +27,11 @@ namespace content {
 // those files to remote servers, as well as of writing the logs to files which
 // were manually indicated by the user from the WebRTCIntenals. (A log may
 // simulatenously be written to both, either, or none.)
-// TODO(eladalon): This currently only supports the old use-case - locally
-// stored log files. An upcoming CL will add remote-support.
 // https://crbug.com/775415
 class CONTENT_EXPORT WebRtcEventLogManager
     : protected WebRtcLocalEventLogsObserver {
  public:
   static WebRtcEventLogManager* GetInstance();
-
-  // Currently, we only support manual logs initiated by the user
-  // through WebRTCInternals, which are stored locally.
-  // TODO(eladalon): Allow starting/stopping an RTC event log
-  // that will be uploaded to the server. https://crbug.com/775415
 
   // Call this to let the manager know when a PeerConnection was created.
   // If a reply callback is given, it will be posted back to BrowserThread::UI,
@@ -86,6 +81,13 @@ class CONTENT_EXPORT WebRtcEventLogManager
   void DisableLocalLogging(
       base::OnceCallback<void(bool)> reply = base::OnceCallback<void(bool)>());
 
+  // TODO: !!!
+  void StartRemoteLogging(
+      int render_process_id,
+      int lid,  // Renderer-local PeerConnection ID.
+      size_t max_file_size_bytes,
+      base::OnceCallback<void(bool)> reply = base::OnceCallback<void(bool)>());
+
   // Called when a new log fragment is sent from the renderer. This will
   // potentially be written to a local WebRTC event log, a log destined for
   // upload, or both.
@@ -125,8 +127,8 @@ class CONTENT_EXPORT WebRtcEventLogManager
   // we have turned WebRTC event logging on for a given peer connection, so that
   // we may turn it off only when the last client no longer needs it.
   enum LoggingTarget : unsigned int {
-    kLocalLogging = 0x01
-    // TODO(eladalon): Add kRemoteLogging as 0x02. https://crbug.com/775415
+    kLocalLogging = 1 << 0,
+    kRemoteLogging = 1 << 1  // TODO: !!!!
   };
   using LoggingTargetBitmap = std::underlying_type<LoggingTarget>::type;
 
@@ -137,9 +139,11 @@ class CONTENT_EXPORT WebRtcEventLogManager
 
   void PeerConnectionAddedInternal(int render_process_id,
                                    int lid,
+                                   WebRtcRemoteEventLogManager* remote_manager,
                                    base::OnceCallback<void(bool)> reply);
   void PeerConnectionRemovedInternal(int render_process_id,
                                      int lid,
+                                     WebRtcRemoteEventLogManager* remote_manager,
                                      base::OnceCallback<void(bool)> reply);
 
   void EnableLocalLoggingInternal(base::FilePath base_path,
@@ -147,9 +151,16 @@ class CONTENT_EXPORT WebRtcEventLogManager
                                   base::OnceCallback<void(bool)> reply);
   void DisableLocalLoggingInternal(base::OnceCallback<void(bool)> reply);
 
+  void StartRemoteLoggingInternal(int render_process_id,
+                                  int lid,  // Renderer-local PeerConnection ID.
+                                  WebRtcRemoteEventLogManager* remote_manager,
+                                  size_t max_file_size_bytes,
+                                  base::OnceCallback<void(bool)> reply);
+
   void OnWebRtcEventLogWriteInternal(
       int render_process_id,
       int lid,  // Renderer-local PeerConnection ID.
+      WebRtcRemoteEventLogManager* remote_manager,
       const std::string& output,
       base::OnceCallback<void(bool)> reply);
 
@@ -161,6 +172,24 @@ class CONTENT_EXPORT WebRtcEventLogManager
   void UpdateWebRtcEventLoggingState(PeerConnectionKey peer_connection,
                                      bool enabled);
 
+  // Searches for a pre-recorded association render process ID with its
+  // BrowserContext. If none is found, attempts to discover (and record)
+  // that association. The reason to record this information is, that we would
+  // like to be able to stop and remove remote-managers after their browser
+  // context has been unloaded.
+  const BrowserContext* GetBrowserContext(int render_process_id);
+
+  // Given a BrowserContext (which corresponds to a user profile), create or
+  // return a previously created WebRtcRemoteEventLogManager which is associated
+  // with that BrowserContext (user profile).
+  WebRtcRemoteEventLogManager* GetRemoteEventLogManager(
+      const BrowserContext* browser_context);
+
+  // Convenience method which combines the other GetRemoteEventLogManager()
+  // with GetBrowserContext().
+  WebRtcRemoteEventLogManager* GetRemoteEventLogManager(
+      int render_process_id);
+
   void InjectClockForTesting(base::Clock* clock);
 
   // Observer which will be informed whenever a local log file is started or
@@ -171,6 +200,15 @@ class CONTENT_EXPORT WebRtcEventLogManager
   // Manages local-bound logs - logs stored on the local filesystem when
   // logging has been explicitly enabled by the user.
   WebRtcLocalEventLogManager local_logs_manager_;
+
+  // Manages remote-bound logs - logs which will be sent to a remote server.
+  // Each BrowserContext corresponds to a user profile, and each user profile
+  // has its own logs managed and uploaded separately.
+  std::map<const BrowserContext*, WebRtcRemoteEventLogManager> remote_logs_managers_;
+
+  // TODO: !!!
+  std::map<int, const BrowserContext*>
+      render_process_id_to_browser_context_mapping_;
 
   // This keeps track of which peer connections have event logging turned on
   // in WebRTC, and for which client(s).
