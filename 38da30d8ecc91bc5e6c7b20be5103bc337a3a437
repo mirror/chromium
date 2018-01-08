@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "826a6b25_1edd320c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3db38882_da213863",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "38da30d8ecc91bc5e6c7b20be5103bc337a3a437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ecb292_7b846f6c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadActivityTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-08T18:07:19Z",
       "side": 1,
       "message": "nit: Should this be above line 299?",
+      "range": {
+        "startLine": 288,
+        "startChar": 9,
+        "endLine": 288,
+        "endChar": 88
+      },
+      "revId": "38da30d8ecc91bc5e6c7b20be5103bc337a3a437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b4808c_baec6bbf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:31:23Z",
+      "side": 1,
+      "message": "Ah oops forgot to update thanks!",
+      "parentUuid": "b5ecb292_7b846f6c",
       "range": {
         "startLine": 288,
         "startChar": 9,
