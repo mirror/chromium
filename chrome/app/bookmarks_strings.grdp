@@ -427,6 +427,9 @@
   <message name="IDS_MD_BOOKMARK_MANAGER_MENU_EXPORT" desc="Title of the bookmark toolbar dropdown menu item that exports bookmarks.">
     Export Bookmarks
   </message>
+  <message name="IDS_MD_BOOKMARK_MANAGER_MENU_HELP_CENTER" desc="Title of the bookmark toolbar dropdown menu item that opens the help center.">
+    Help Center
+  </message>
   <message name="IDS_MD_BOOKMARK_MANAGER_MENU_IMPORT" desc="Title of the bookmark toolbar dropdown menu item that imports bookmarks.">
     Import Bookmarks
   </message>
