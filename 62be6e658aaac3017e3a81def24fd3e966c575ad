@@ -70,6 +70,30 @@
       "revId": "62be6e658aaac3017e3a81def24fd3e966c575ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1700ee04_89285245",
+        "filename": "device/u2f/sign_response_data_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-08T18:02:51Z",
+      "side": 1,
+      "message": "Okay, I added a seed corpus and unified the data for the key handle and response data, since they\u0027re completely independent anyways.",
+      "parentUuid": "fc205cd9_8dbae3f8",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "62be6e658aaac3017e3a81def24fd3e966c575ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
