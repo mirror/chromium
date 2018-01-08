@@ -21,13 +21,12 @@ class DiceTurnSyncOnHelper {
                        Browser* browser,
                        signin_metrics::AccessPoint signin_access_point,
                        signin_metrics::Reason signin_reason,
-                       const std::string& account_id);
+                       const std::string& account_id,
+                       bool revoke_token_on_abort);
 
   virtual ~DiceTurnSyncOnHelper();
 
  private:
-  void Initialize();
-
   // Handles can offer sign-in errors.  It returns true if there is an error,
   // and false otherwise.
   bool HandleCanOfferSigninError();
@@ -39,16 +38,21 @@ class DiceTurnSyncOnHelper {
   bool HandleCrossAccountError();
 
   // Callback used with ConfirmEmailDialogDelegate.
-  void ConfirmEmailAction(content::WebContents* web_contents,
-                          SigninEmailConfirmationDialog::Action action);
+  void ConfirmEmailAction(SigninEmailConfirmationDialog::Action action);
 
   // Creates the sync starter.
   void CreateSyncStarter(OneClickSigninSyncStarter::ProfileMode profile_mode);
+
+  // Aborts the flow.
+  void Abort();
 
   Profile* profile_;
   Browser* browser_;
   signin_metrics::AccessPoint signin_access_point_;
   signin_metrics::Reason signin_reason_;
+
+  // Whether the refresh token should be deleted if the Sync flow is aborted.
+  bool revoke_token_on_abort_;
 
   // Account information.
   const std::string gaia_id_;

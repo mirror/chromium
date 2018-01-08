@@ -692,7 +692,7 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
     new DiceTurnSyncOnHelper(
         browser_->profile(), browser_, access_point_,
         signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
-        signin_with_gaia_account_id_);
+        signin_with_gaia_account_id_, false /* revoke_token_on_abort */);
 
   } else {
     // Either one of the "other profiles", or one of the profile accounts

@@ -6,17 +6,26 @@
 
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
+#include "base/files/file_util.h"
+#include "base/macros.h"
+#include "base/run_loop.h"
+#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
+#include "chrome/browser/signin/fake_profile_oauth2_token_service_builder.h"
 #include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
+#include "chrome/test/base/scoped_testing_local_state.h"
+#include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
+#include "chrome/test/base/testing_profile_manager.h"
 #include "components/browser_sync/browser_sync_switches.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/scoped_account_consistency.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -24,21 +33,52 @@
 
 namespace {
 
-const char* kTestingGaiaId = "gaia_id";
-const char* kTestingUsername = "fake_username";
+const char kTestingGaiaId[] = "gaia_id";
+const char kTestingRefreshToken[] = "refresh_token";
+const char kTestingUsername[] = "fake_username";
+
+// Test signin manager creating testing profiles.
+class UnittestProfileManager : public ProfileManagerWithoutInit {
+ public:
+  explicit UnittestProfileManager(const base::FilePath& user_data_dir)
+      : ProfileManagerWithoutInit(user_data_dir) {}
+
+ protected:
+  Profile* CreateProfileHelper(const base::FilePath& file_path) override {
+    if (!base::PathExists(file_path)) {
+      if (!base::CreateDirectory(file_path))
+        return nullptr;
+    }
+    return new TestingProfile(file_path, nullptr);
+  }
+
+  Profile* CreateProfileAsyncHelper(const base::FilePath& path,
+                                    Delegate* delegate) override {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(base::IgnoreResult(&base::CreateDirectory), path));
+
+    return new TestingProfile(path, this);
+  }
+};
 
 }  // namespace
 
 class OneClickSigninSyncStarterTest : public ChromeRenderViewHostTestHarness {
  public:
   OneClickSigninSyncStarterTest()
-      : sync_starter_(NULL),
+      : sync_starter_(nullptr),
         failed_count_(0),
-        succeeded_count_(0) {}
+        succeeded_count_(0),
+        local_state_(TestingBrowserProcess::GetGlobal()) {}
 
   // ChromeRenderViewHostTestHarness:
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
+
+    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
+    TestingBrowserProcess::GetGlobal()->SetProfileManager(
+        new UnittestProfileManager(temp_dir_.GetPath()));
 
     // Disable sync to simplify the creation of a OneClickSigninSyncStarter.
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
@@ -47,9 +87,15 @@ class OneClickSigninSyncStarterTest : public ChromeRenderViewHostTestHarness {
     SigninManagerBase* signin_manager = static_cast<FakeSigninManager*>(
         SigninManagerFactory::GetForProfile(profile()));
 
-    signin_manager->Initialize(NULL);
+    signin_manager->Initialize(nullptr);
     signin_manager->SetAuthenticatedAccountInfo(kTestingGaiaId,
                                                 kTestingUsername);
+  }
+
+  void TearDown() override {
+    base::RunLoop().RunUntilIdle();
+    TestingBrowserProcess::GetGlobal()->SetProfileManager(nullptr);
+    ChromeRenderViewHostTestHarness::TearDown();
   }
 
   void Callback(OneClickSigninSyncStarter::SyncSetupResult result) {
@@ -63,6 +109,8 @@ class OneClickSigninSyncStarterTest : public ChromeRenderViewHostTestHarness {
   content::BrowserContext* CreateBrowserContext() override {
     // Create the sign in manager required by OneClickSigninSyncStarter.
     TestingProfile::Builder builder;
+    builder.AddTestingFactory(ProfileOAuth2TokenServiceFactory::GetInstance(),
+                              BuildFakeProfileOAuth2TokenService);
     builder.AddTestingFactory(
         SigninManagerFactory::GetInstance(),
         &OneClickSigninSyncStarterTest::BuildSigninManager);
@@ -73,7 +121,7 @@ class OneClickSigninSyncStarterTest : public ChromeRenderViewHostTestHarness {
   void CreateSyncStarter(OneClickSigninSyncStarter::Callback callback) {
     sync_starter_ = new OneClickSigninSyncStarter(
         profile(), nullptr, kTestingGaiaId, kTestingUsername, std::string(),
-        "refresh_token", signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,
+        kTestingRefreshToken, signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,
         signin_metrics::Reason::REASON_UNKNOWN_REASON,
         OneClickSigninSyncStarter::CURRENT_PROFILE,
         OneClickSigninSyncStarter::SYNC_WITH_DEFAULT_SETTINGS,
@@ -100,6 +148,9 @@ class OneClickSigninSyncStarterTest : public ChromeRenderViewHostTestHarness {
         GaiaCookieManagerServiceFactory::GetForProfile(profile));
   }
 
+  base::ScopedTempDir temp_dir_;
+  ScopedTestingLocalState local_state_;
+
   DISALLOW_COPY_AND_ASSIGN(OneClickSigninSyncStarterTest);
 };
 
@@ -120,4 +171,65 @@ TEST_F(OneClickSigninSyncStarterTest, CallbackNull) {
       GoogleServiceAuthError::REQUEST_CANCELED));
   EXPECT_EQ(0, failed_count_);
   EXPECT_EQ(0, succeeded_count_);
+}
+
+// Checks that the token is revoked when signin is canceled after completing.
+TEST_F(OneClickSigninSyncStarterTest, RevokeTokenOnCancel) {
+  signin::ScopedAccountConsistencyDicePrepareMigration prepare_migration;
+  CreateSyncStarter(OneClickSigninSyncStarter::Callback());
+
+  // Cancel the signin.
+  ASSERT_FALSE(
+      SigninManagerFactory::GetForProfile(profile())->AuthInProgress());
+  sync_starter_->CancelSigninAndDelete();
+
+  // Check that the token is deleted.
+  std::string account_id =
+      AccountTrackerServiceFactory::GetForProfile(profile())
+          ->PickAccountIdForAccount(kTestingGaiaId, kTestingUsername);
+  ProfileOAuth2TokenService* token_service =
+      ProfileOAuth2TokenServiceFactory::GetForProfile(profile());
+  EXPECT_FALSE(token_service->RefreshTokenIsAvailable(account_id));
+
+  // Cleanup.
+  delete sync_starter_;
+  sync_starter_ = nullptr;
+}
+
+// Checks that the token is revoked when signin is canceled while authentication
+// is in progress.
+TEST_F(OneClickSigninSyncStarterTest, RevokeTokenOnCancelAuthInProgress) {
+  signin::ScopedAccountConsistencyDicePrepareMigration prepare_migration;
+  SigninManager* signin_manager =
+      SigninManagerFactory::GetForProfile(profile());
+  // Start from signed-out state.
+  signin_manager->SignOut(signin_metrics::SIGNOUT_TEST,
+                          signin_metrics::SignoutDelete::IGNORE_METRIC);
+  std::string account_id =
+      AccountTrackerServiceFactory::GetForProfile(profile())
+          ->PickAccountIdForAccount(kTestingGaiaId, kTestingUsername);
+  ProfileOAuth2TokenService* token_service =
+      ProfileOAuth2TokenServiceFactory::GetForProfile(profile());
+  token_service->UpdateCredentials(account_id, kTestingRefreshToken);
+  ASSERT_TRUE(token_service->RefreshTokenIsAvailable(account_id));
+
+  // Use NEW_PROFILE to pause the OneClickSynStarter in the middle of the
+  // signin, while it is waiting for a new Profile to be created.
+  sync_starter_ = new OneClickSigninSyncStarter(
+      profile(), nullptr, kTestingGaiaId, kTestingUsername, std::string(),
+      kTestingRefreshToken, signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,
+      signin_metrics::Reason::REASON_UNKNOWN_REASON,
+      OneClickSigninSyncStarter::NEW_PROFILE,
+      OneClickSigninSyncStarter::SYNC_WITH_DEFAULT_SETTINGS,
+      OneClickSigninSyncStarter::CONFIRM_UNTRUSTED_SIGNIN,
+      OneClickSigninSyncStarter::Callback());
+
+  // Check that the token is deleted.
+  ASSERT_TRUE(signin_manager->AuthInProgress());
+  sync_starter_->CancelSigninAndDelete();
+  EXPECT_FALSE(token_service->RefreshTokenIsAvailable(account_id));
+
+  // Cleanup.
+  delete sync_starter_;
+  sync_starter_ = nullptr;
 }
