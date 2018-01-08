@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae116b9_bdf1933a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T21:43:53Z",
+      "side": 1,
+      "message": "It\u0027s better to add more details in the CL description. At least it should mention that the class is being moved to a separate file.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "09d3e681fd8039d66ca252f1823c9a511fc99d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
