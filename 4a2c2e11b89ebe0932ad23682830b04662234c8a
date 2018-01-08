@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34dded8e_38b2db54",
+        "filename": "services/network/public/cpp/network_types.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-08T23:47:21Z",
+      "side": 1,
+      "message": "typo: s/trails/traits/ :)",
+      "revId": "4a2c2e11b89ebe0932ad23682830b04662234c8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
