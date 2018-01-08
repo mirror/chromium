@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67924cdc_e2951043",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-08T15:51:34Z",
+      "side": 1,
+      "message": "\u003e Why? The tests call ProvisionallySave when needed.\n\nTrue. I\u0027ve moved it to |NormalNavigationsClosedBubble| where |SavePassword| triggers UpdateUsername which needs |submitted_form_|. \n\nFYI, I\u0027ve significantly changed PasswordFormManager::UpdateUsername. The previous implementation was simple but it didn\u0027t cover a number of cases.",
+      "parentUuid": "3f65a7c5_c8de6b45",
+      "range": {
+        "startLine": 266,
+        "startChar": 21,
+        "endLine": 266,
+        "endChar": 38
+      },
+      "revId": "cadff934511559b1dd4214c17c9ff1bc1cdb5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31d50d7b_ca95b32f",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 26
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-08T15:17:34Z",
       "side": 1,
       "message": "Why do we care about spaces?",
+      "range": {
+        "startLine": 628,
+        "startChar": 3,
+        "endLine": 628,
+        "endChar": 75
+      },
+      "revId": "cadff934511559b1dd4214c17c9ff1bc1cdb5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234d5928_c8450d7b",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-08T15:51:34Z",
+      "side": 1,
+      "message": "\u003e Why do we care about spaces?\n\nThis is for more precise votes uploading. When the username is changed, we compare the new value with the values from the form. It would be good to remove whitespaces just in case a user copies a username from somewhere to the form or to the prompt.",
+      "parentUuid": "31d50d7b_ca95b32f",
       "range": {
         "startLine": 628,
         "startChar": 3,
