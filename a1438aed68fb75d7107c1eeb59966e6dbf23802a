@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bce5e780_bc1ec1fd",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-08T23:16:17Z",
+      "side": 1,
+      "message": "nit: I\u0027m a bit confused by the comment above (not just the modified bit). \nSpecifically I think the code makes the assumption that it needs to call SetPermissionInfo whenever some permissions values change to make sure that the UI gets updated. But then it just bails out immediately which is the part which doesn\u0027t make much sense :) \n\nPerhaps replace this comment/TODO explaining that, e.g.\n// TODO(...): Currently this function is called once when Page Info is constructed/displayed and then subsequently whenever permission values change in order to update the layout of Page Info. However we never need to update the layout of Page Info while it\u0027s already open. While there is a chance that permission values could change while it\u0027s open and that could mean we need to add or remove permission rows, it would be extremely rare and it\u0027s not important that we keep the rows that up-to-date. Sp we bail out here if Page Info is already constructed. But this means that we should only call this function once on construction of Page Info and remove all other call sites.\n\nYou know the code better than me though. Does the above comment sound accurate?",
+      "revId": "a1438aed68fb75d7107c1eeb59966e6dbf23802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a7e221_fb283dd6",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-08T23:16:17Z",
+      "side": 1,
+      "message": "I guess the alternative would be to destroy any existing PageInfoBubbleView before we create it in OpenPageInfoBubble()? I don\u0027t know how hard/easy that would be though because I\u0027m not a views expert :)  Perhaps it\u0027s as simple as calling page_info_bubble_view-\u003eGetWidget()-\u003eClose() ? \n\nThe only advantage I see to that is that it exposes less of the internals of PageInfoBubbleView to the test so it\u0027s a bit less fragile. But if that doesn\u0027t work, this looks fine to me.",
+      "revId": "a1438aed68fb75d7107c1eeb59966e6dbf23802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
