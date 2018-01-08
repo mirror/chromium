@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fbac0d6_bb41632c",
+        "filename": "chrome/browser/chromeos/extensions/active_tab_permission_granter_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:35:31Z",
+      "side": 1,
+      "message": "I don\u0027t think global non-POD statics like this are allowed.  Instead, we can have a pointer to the callback.",
+      "revId": "f3f5285fad117401658ac58b7ed6a505ce22fd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba95532_4afc7361",
+        "filename": "chrome/browser/chromeos/extensions/active_tab_permission_granter_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:35:31Z",
+      "side": 1,
+      "message": "permission_helper::RequestResolvedCallback() is also a null callback, so this wouldn\u0027t change anything, right?  So I don\u0027t think we need the if-statement or this assignment at all. (Though this may change with the above comment)",
+      "revId": "f3f5285fad117401658ac58b7ed6a505ce22fd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7bae45_ac2b242f",
+        "filename": "chrome/browser/extensions/active_tab_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:35:31Z",
+      "side": 1,
+      "message": "assignment unnecessary",
+      "range": {
+        "startLine": 449,
+        "startChar": 54,
+        "endLine": 450,
+        "endChar": 51
+      },
+      "revId": "f3f5285fad117401658ac58b7ed6a505ce22fd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c300d90_968c2411",
+        "filename": "chrome/browser/extensions/active_tab_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:35:31Z",
+      "side": 1,
+      "message": "Why do we call this with nullptr?  Is it just to reset the value in the delegate?  If so, let\u0027s just do that directly.",
+      "revId": "f3f5285fad117401658ac58b7ed6a505ce22fd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
