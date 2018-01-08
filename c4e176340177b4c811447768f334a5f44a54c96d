@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ce86d06_42549fca",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-08T23:33:17Z",
+      "side": 1,
+      "message": "BTW, we are already on the main thread here, is there a need for the PostTask?",
+      "revId": "c4e176340177b4c811447768f334a5f44a54c96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
