@@ -16,6 +16,24 @@
       "revId": "cbe867ee27755fefa3aafcf7e4b02809a0766d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711f3ca1_9539686d",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-08T23:40:38Z",
+      "side": 0,
+      "message": "Thanks for making me look at this again, removing the DCHECK did (of course) fix the failing DCHECKs I was having, but hid the actual problem: When closing a port I\u0027m entangling the port with a new (dangling) mojo message pipe (to ensure the closed port is still transferable, but no longer connected to the other side of the channel). But that means that the new dangling port will right away trigger its connection error handler, causing it to close again and re-entangle with yet another dangling message pipe, etc, etc, eventually hitting this DCHECK when the execution context goes away. So the proper fix instead is to early-bail in close() if closed_ is already true, avoiding unnecessary infinite looping closing/creating message pipes...\n\n(or I suppose I could clear/not set the connection error handler for these dangling pipes... not sure what approach is cleaner).",
+      "parentUuid": "38836450_bbb36c11",
+      "revId": "cbe867ee27755fefa3aafcf7e4b02809a0766d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
