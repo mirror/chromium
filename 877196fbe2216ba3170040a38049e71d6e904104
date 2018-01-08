@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7295a196_de391e17",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/rellist-feature-detection.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-08T14:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18334739_ce143504",
+      "revId": "877196fbe2216ba3170040a38049e71d6e904104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3da71c2_4577a2c7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/rellist-feature-detection.html",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "43c2234e_dd3c340e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/rellist-feature-detection.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-08T14:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3da71c2_4577a2c7",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "877196fbe2216ba3170040a38049e71d6e904104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acb50096_4c179ac7",
         "filename": "third_party/WebKit/Source/core/html/RelList.cpp",
         "patchSetId": 7
@@ -62,6 +104,30 @@
       "revId": "877196fbe2216ba3170040a38049e71d6e904104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611d71e0_05517b89",
+        "filename": "third_party/WebKit/Source/core/html/RelList.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-08T14:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb50096_4c179ac7",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "877196fbe2216ba3170040a38049e71d6e904104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
