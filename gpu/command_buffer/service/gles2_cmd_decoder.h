@@ -23,7 +23,7 @@
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/command_buffer/common/context_result.h"
 #include "gpu/command_buffer/service/common_decoder.h"
-#include "gpu/gpu_export.h"
+#include "gpu/gpu_gles2_export.h"
 
 namespace gl {
 class GLContext;
@@ -82,7 +82,7 @@ struct DisallowedFeatures {
   bool oes_texture_half_float_linear = false;
 };
 
-class GPU_EXPORT GLES2DecoderClient {
+class GPU_GLES2_EXPORT GLES2DecoderClient {
  public:
   virtual ~GLES2DecoderClient() = default;
 
@@ -118,7 +118,8 @@ class GPU_EXPORT GLES2DecoderClient {
 
 // This class implements the AsyncAPIInterface interface, decoding GLES2
 // commands and calling GL.
-class GPU_EXPORT GLES2Decoder : public CommonDecoder, public AsyncAPIInterface {
+class GPU_GLES2_EXPORT GLES2Decoder : public CommonDecoder,
+                                      public AsyncAPIInterface {
  public:
   typedef error::Error Error;
 

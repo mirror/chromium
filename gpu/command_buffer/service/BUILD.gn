@@ -20,7 +20,7 @@ group("service") {
 group("gles2") {
   if (is_component_build) {
     public_deps = [
-      "//gpu",
+      "//gpu:gles2",
     ]
   } else {
     public_deps = [
@@ -213,7 +213,7 @@ target(link_target_type, "gles2_sources") {
 
   configs += [
     "//build/config:precompiled_headers",
-    "//gpu:gpu_implementation",
+    "//gpu:gpu_gles2_implementation",
     "//third_party/khronos:khronos_headers",
   ]
 
@@ -221,7 +221,7 @@ target(link_target_type, "gles2_sources") {
   include_dirs = [ "//third_party/mesa/src/include" ]
 
   public_deps = [
-    "//gpu/command_buffer/common:common_sources",
+    "//gpu/command_buffer/common",
     "//gpu/command_buffer/common:gles2_sources",
   ]
   deps = [
@@ -230,9 +230,9 @@ target(link_target_type, "gles2_sources") {
     "//base",
     "//base/third_party/dynamic_annotations",
     "//cc/paint",
-    "//gpu/command_buffer/client:client_sources",
+    "//gpu/command_buffer/client",
     "//gpu/command_buffer/common:gles2_utils",
-    "//gpu/config:config_sources",
+    "//gpu/config",
     "//gpu/ipc/common:surface_handle_type",
     "//third_party/angle:angle_image_util",
     "//third_party/angle:commit_id",
