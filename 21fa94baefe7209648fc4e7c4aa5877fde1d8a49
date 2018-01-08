@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95ab0d72_c3f50beb",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-08T17:20:35Z",
+      "side": 1,
+      "message": "Done. I even double checked, guess I\u0027ll be doing this until April or so.",
+      "parentUuid": "8f38c3bc_332a47ab",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a738adb6_98090deb",
         "filename": "chrome/browser/resources/pdf/coords_transformer.js",
         "patchSetId": 12
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "7df1be46_2c00fc9a",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-08T17:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59e0c70c_f0453e37",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a284bde_59e27852",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-08T17:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a738adb6_98090deb",
+      "range": {
+        "startLine": 15,
+        "startChar": 23,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc3f62e1_711e5217",
         "filename": "chrome/browser/resources/pdf/coords_transformer.js",
         "patchSetId": 12
@@ -85,6 +157,24 @@
       "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74def2a4_507d6631",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-08T17:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc3f62e1_711e5217",
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "870c95fb_d64c6ef8",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-08T17:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce352e24_f00ab67a",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 7
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53679eec_151e3d27",
         "filename": "chrome/browser/resources/pdf/coords_transformer.js",
         "patchSetId": 12
@@ -131,6 +245,30 @@
       "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e693aaa_19ed21ca",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-08T17:20:35Z",
+      "side": 1,
+      "message": "Empirically, I tried piling 100 of these messages and they complete in the right order, so I don\u0027t think so. However I couldn\u0027t find in the (sparse) PPAPI docs any guarantee, so I\u0027m adding the id to the request and searching the outstanding requests array (which should have only 1 element in normal conditions, anyway).",
+      "parentUuid": "53679eec_151e3d27",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 60
+      },
+      "revId": "21fa94baefe7209648fc4e7c4aa5877fde1d8a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
