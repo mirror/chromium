@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55099ab6_250f56c8",
+        "filename": "extensions/common/permissions/socket_permission_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:26:10Z",
+      "side": 1,
+      "message": "maybe just make this \":\" now?",
+      "range": {
+        "startLine": 127,
+        "startChar": 36,
+        "endLine": 127,
+        "endChar": 55
+      },
+      "revId": "0448f2b96f9eade86c39d519b55691b2a72a7af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
