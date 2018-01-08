@@ -182,6 +182,7 @@ class DEVICE_BLUETOOTH_EXPORT FakeBluetoothDeviceClient
   // if the fake device exists.
   void UpdateServiceAndManufacturerData(
       const dbus::ObjectPath& object_path,
+      const std::vector<std::string>& service_uuids,
       const std::unordered_map<std::string, std::vector<uint8_t>>& service_data,
       const std::unordered_map<uint16_t, std::vector<uint8_t>>&
           manufacturer_data);
