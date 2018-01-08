@@ -22,6 +22,64 @@
       "revId": "47a7a3ce029328644dde65b5e556b5450ba5a630",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81a61fd_a1f8f8fc",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-08T19:07:21Z",
+      "side": 1,
+      "message": "We don\u0027t use clang-format in the BPF policies because its output is significantly less readable than human formatting. This looks good to me.",
+      "parentUuid": "d9945d02_4c50fac8",
+      "range": {
+        "startLine": 349,
+        "startChar": 4,
+        "endLine": 349,
+        "endChar": 6
+      },
+      "revId": "47a7a3ce029328644dde65b5e556b5450ba5a630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71dd88e0_8c659c1a",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-08T19:07:21Z",
+      "side": 1,
+      "message": "These could go in https://cs.chromium.org/chromium/src/sandbox/linux/system_headers/linux_time.h?type\u003dcs\u0026sq\u003dpackage:chromium and should be wrapped in !defined(X).",
+      "revId": "47a7a3ce029328644dde65b5e556b5450ba5a630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ffa99b7_74705669",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-08T19:07:21Z",
+      "side": 1,
+      "message": "Could you use pthread_getcpuclockid() instead ?",
+      "revId": "47a7a3ce029328644dde65b5e556b5450ba5a630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
