@@ -22,6 +22,30 @@
       "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2320cbac_0bf249d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-08T21:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93607f14_de297513",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
