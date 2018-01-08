@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e87af560_e1b4b371",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-08T20:57:33Z",
+      "side": 1,
+      "message": "nit: Consider using the SCOPED_UMA_HISTOGRAM_TIMER macro for recording timings.",
+      "range": {
+        "startLine": 267,
+        "startChar": 2,
+        "endLine": 267,
+        "endChar": 39
+      },
+      "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0c7e7c_12859631",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-08T20:57:33Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest \"Duration\" rather than \"Time\" for the suffix here.",
+      "range": {
+        "startLine": 286,
+        "startChar": 43,
+        "endLine": 286,
+        "endChar": 47
+      },
+      "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e7e1ae_d125f0ff",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-08T20:57:33Z",
+      "side": 1,
+      "message": "nit: It would be nice if this histogram name were alphabetically close to the other one.  I\u0027d suggest something along the lines of \"History.ExpireVisits.TotalDuration\" and \"History.ExpireVisits.GetRedirectsDuration(Percentage)\".",
+      "range": {
+        "startLine": 288,
+        "startChar": 38,
+        "endLine": 288,
+        "endChar": 64
+      },
+      "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2935f2c8_ce642994",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-08T20:57:33Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_PERCENTAGE would be more appropriate, though it\u0027s not clear to me: What\u0027s the advantage of recording this as a percentage, rather than as a raw timing value?",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 28
+      },
+      "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
