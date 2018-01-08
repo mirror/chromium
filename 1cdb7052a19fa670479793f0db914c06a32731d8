@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "1c43c921_75006a75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-01-08T17:35:10Z",
+      "side": 1,
+      "message": "No. It\u0027s not gonna work. as the test framework will intialize the real AudioManager and overrides the MockAudioManager at all usages except AudioStreamHandler.\n\nSo AudioStreamHandler will use the *initial-time* AudioManager as it keeps a pointer to AudioManager while all others will use *run-time* AudioManager by AudioManager::Get().\n\nPlease see the original comment by oka@ that explains why he initialize the MockAudioManager within the test instead of in SetUp();",
+      "parentUuid": "2f952284_73131696",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f343c98_dc31581e",
         "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
         "patchSetId": 13
