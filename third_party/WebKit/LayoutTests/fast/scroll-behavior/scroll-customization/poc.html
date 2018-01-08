@@ -1,0 +1,106 @@
+<!doctype html>
+<title> Scroll Customization Property </title>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.a {
+  height: 400px;
+  width: 400px;
+  overflow: scroll;
+}
+
+.b {
+  margin: 1000px 1000px;
+}
+
+</style>
+
+<div class="a">
+  <p class="b"> Scrollable Div </p>
+</div>
+
+<script>
+  internals.settings.setScrollAnimatorEnabled(false);
+
+  var element = document.querySelector('div');
+  // Used to track invocation of scroll customization handlers.
+  element.didCallApplyScrollHandler = false;
+  element.didCallScrollCustomizationHandlers = false;
+
+  // Simple handlers for apply/distributeControl. We only care whether or not
+  // the handlers get called.
+  element.setApplyScroll(
+      function(unused_ss) { element.didCallApplyScrollHandler = true; },
+      'perform-before-native-scroll');
+
+  element.setDistributeScroll(
+      function(unused_ss) { element.didCallDistributeScrollHandler = true; },
+      'perform-before-native-scroll');
+
+  // Called before each test.
+  function resetState() {
+    // Make sure the <div> can scroll in all directions.
+    document.querySelector('.b').scrollIntoView({inline: 'center'});
+    element.didCallApplyScrollHandler = false;
+    element.didCallDistributeScrollHandler = false;
+  }
+
+  function didCallScrollCustomizationHandlers() {
+    assert_equals(element.didCallApplyScrollHandler, element.didCallDistributeScrollHandler,
+                  "It is invalid to call only one of the applyScroll" +
+                      " and distributeScroll handler methods.");
+    return element.didCallApplyScrollHandler;
+  }
+
+  // Returns a Promise.
+  function applyGesture(x, y, deltaX, deltaY, source) {
+    return new Promise(function(resolve, reject) {
+      chrome.gpuBenchmarking.pointerActionSequence(
+            [ {
+              'source' : source,
+              actions : [
+                {name : 'pointerDown', 'x' : x, 'y' : y},
+                {name : 'pointerMove', 'x' : (x + deltaX), 'y' : (y + deltaY)},
+                {name : 'pointerUp'},
+              ]
+            } ],
+            resolve);
+    });
+  }
+
+  function applyGestureDeprecated(x, y, deltaX, deltaY) {
+    eventSender.gestureScrollBegin(x, y);
+    eventSender.gestureScrollUpdate(deltaX, deltaY);
+    eventSender.gestureScrollEnd(x + deltaX, y + deltaY);
+  }
+
+
+  test(()=> {
+    resetState();
+    applyGestureDeprecated(10, 10, 0, -100);
+    assert_true(didCallScrollCustomizationHandlers(), 'Handlers should get called.');
+  }, `Testing using eventSender.`);
+
+  promise_test(async() => {
+    resetState();
+    await applyGesture(10, 10, 0, -100, 'mouse');
+    assert_false(didCallScrollCustomizationHandlers(), 'Handlers should get called.');
+  }, `Testing 'mouse' using chrome.gpuBenchmarking.`);
+
+  promise_test(async() => {
+    resetState();
+    await applyGesture(10, 10, 0, -100, 'touch');
+    assert_true(didCallScrollCustomizationHandlers(), 'Handlers should get called.');
+  }, `Testing 'touch' using chrome.gpuBenchmarking.`);
+  </script>
