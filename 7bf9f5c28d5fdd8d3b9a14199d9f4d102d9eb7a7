@@ -52,6 +52,24 @@
       "revId": "7bf9f5c28d5fdd8d3b9a14199d9f4d102d9eb7a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4136ba6_0a275278",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T20:57:11Z",
+      "side": 0,
+      "message": "Tests that exercise the \"delegate_-\u003eCancelWithError\" calls in PrerenderURLLoaderThrottle::WillStartRequest. i.e.\n\nPrerenderBrowserTest.PrerenderXhrPut\nPrerenderBrowserTest.PrerenderXhrDelete\nPrerenderBrowserTest.PrerenderCancelSubresourceUnsupportedScheme",
+      "parentUuid": "768ee0ca_ad5e8cc6",
+      "revId": "7bf9f5c28d5fdd8d3b9a14199d9f4d102d9eb7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
