@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b8869c_61f180a9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-display/display-contents-pass-ref.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-08T11:41:04Z",
+      "side": 1,
+      "message": "I think we could just skip all span tags here if kerning is off.",
+      "revId": "5ff7ca100222e20e86c7f8be4e7853b0e34c6039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
