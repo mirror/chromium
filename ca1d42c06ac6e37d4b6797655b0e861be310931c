@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16002287_31a5f13c",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T21:46:04Z",
+      "side": 1,
+      "message": "if we can avoid forward declaring this in the header file, then wrap it in an anonymous namespace here",
+      "revId": "ca1d42c06ac6e37d4b6797655b0e861be310931c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ac1802_d5bd5015",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T21:46:04Z",
+      "side": 1,
+      "message": "this can be content::WebContentsObserver, then we don\u0027t need to forward declare TestWebContentsObserver above.\n\nI\u0027m just worried that declaring a TestWebContentsObserver in a header file is likely to conflict with some other test or helper in the future.",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 53
+      },
+      "revId": "ca1d42c06ac6e37d4b6797655b0e861be310931c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1cdc53_c9b4ee1d",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-08T21:46:04Z",
+      "side": 1,
+      "message": "nit: i\u0027d make it plural, \"entries\"",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 25
+      },
+      "revId": "ca1d42c06ac6e37d4b6797655b0e861be310931c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
