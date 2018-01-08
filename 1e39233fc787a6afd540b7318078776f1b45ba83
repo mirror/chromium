@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "288063a0_3ac627af",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-08T19:37:28Z",
+      "side": 1,
+      "message": "This can\u0027t be just a * since the LayerTreeHostImpl can go away before us, taking the CompositorMutatorImpl away before we grab a WeakPtr from it to register ourselves.",
+      "revId": "1e39233fc787a6afd540b7318078776f1b45ba83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
