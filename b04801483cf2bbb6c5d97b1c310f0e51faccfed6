@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0db0d280_7601f766",
+        "filename": "chrome/browser/extensions/extension_csp_bypass_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:45:02Z",
+      "side": 1,
+      "message": "nit: no (c).  Also 2018 now.",
+      "revId": "b04801483cf2bbb6c5d97b1c310f0e51faccfed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8c7ec6_a3e5c270",
+        "filename": "chrome/browser/extensions/extension_csp_bypass_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:45:02Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "b04801483cf2bbb6c5d97b1c310f0e51faccfed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e98213_4ffe85b8",
+        "filename": "chrome/browser/extensions/extension_csp_bypass_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:45:02Z",
+      "side": 1,
+      "message": "nit: initialize to nullptr",
+      "revId": "b04801483cf2bbb6c5d97b1c310f0e51faccfed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54eeda44_9d3079d1",
+        "filename": "chrome/browser/extensions/extension_csp_bypass_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:45:02Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "b04801483cf2bbb6c5d97b1c310f0e51faccfed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7c1d0f_2cf69fe0",
+        "filename": "chrome/browser/extensions/extension_csp_bypass_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T21:45:02Z",
+      "side": 1,
+      "message": "Prefer kChromeUIVersionURL.",
+      "revId": "b04801483cf2bbb6c5d97b1c310f0e51faccfed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
