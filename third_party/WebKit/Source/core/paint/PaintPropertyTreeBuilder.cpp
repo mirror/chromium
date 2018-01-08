@@ -1632,6 +1632,7 @@ void ObjectPaintPropertyTreeBuilder::InitFragmentPaintProperties(
     fragment.ClearPaintProperties();
   }
   fragment.SetPaginationOffset(LayoutPoint());
+  fragment.SetLogicalTopInFlowThread(LayoutUnit());
 }
 
 void ObjectPaintPropertyTreeBuilder::InitSingleFragmentFromParent(
@@ -1680,13 +1681,15 @@ void ObjectPaintPropertyTreeBuilder::UpdateCompositedLayerPaginationOffset() {
     if (!iterator.AtEnd()) {
       first_fragment.SetPaginationOffset(
           ToLayoutPoint(iterator.PaginationOffset()));
+      first_fragment.SetLogicalTopInFlowThread(
+          iterator.FragmentainerLogicalTopInFlowThread());
     }
   } else if (parent_composited_layer) {
     // All objects under the composited layer use the same pagination offset.
-    first_fragment.SetPaginationOffset(
-        parent_composited_layer->GetLayoutObject()
-            .FirstFragment()
-            .PaginationOffset());
+    const auto& fragment =
+        parent_composited_layer->GetLayoutObject().FirstFragment();
+    first_fragment.SetPaginationOffset(fragment.PaginationOffset());
+    first_fragment.SetLogicalTopInFlowThread(fragment.LogicalTopInFlowThread());
   }
 }
 
@@ -1740,8 +1743,9 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
       // 1. Compute clip in flow thread space of the containing flow thread.
       LayoutRect fragment_clip(iterator.ClipRectInFlowThread());
       // 2. Convert #1 to visual coordinates in the space of the flow thread.
-      fragment_clip.Move(iterator.PaginationOffset());
-      // 3. Adust #2 to visual coordinates in the containing "paint offset"
+      auto pagination_offset = ToLayoutPoint(iterator.PaginationOffset());
+      fragment_clip.MoveBy(pagination_offset);
+      // 3. Adjust #2 to visual coordinates in the containing "paint offset"
       // space.
       {
         DCHECK(context_.fragments[0].current.paint_offset_root);
@@ -1761,11 +1765,13 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
       // 4. Match to parent fragments from the same containing flow thread.
       new_fragment_contexts.push_back(
           ContextForFragment(fragment_clip, context_.fragments));
-      // 5. Save off PaginationOffset (which allows us to adjust
-      // logical paint offsets into the space of the current fragment later.
 
-      current_fragment_data->SetPaginationOffset(
-          ToLayoutPoint(iterator.PaginationOffset()));
+      // 5. Save PaginationOffset (which allows us to adjust logical paint
+      // offsets into the space of the current fragment later) and
+      // LogicalTopInFlowThread.
+      current_fragment_data->SetPaginationOffset(pagination_offset);
+      current_fragment_data->SetLogicalTopInFlowThread(
+          iterator.FragmentainerLogicalTopInFlowThread());
     }
     if (current_fragment_data) {
       current_fragment_data->ClearNextFragment();
