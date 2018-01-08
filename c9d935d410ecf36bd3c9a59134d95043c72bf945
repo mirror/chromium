@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2831a77_2827cd91",
+        "filename": "third_party/WebKit/Source/core/css/properties/ComputedStyleUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2018-01-08T08:49:26Z",
+      "side": 1,
+      "message": "If CSSValueFromComputedStyleInternal isn\u0027t implemented for the longhands I think this will crash. Lump those in this CL too?",
+      "revId": "c9d935d410ecf36bd3c9a59134d95043c72bf945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
