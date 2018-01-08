@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f67babc2_07a600c2",
+        "filename": "chrome/browser/ui/cocoa/extensions/extension_action_platform_delegate_cocoa.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T00:14:21Z",
+      "side": 0,
+      "message": "turns out this is the only caller, and it passes a constant, so I just removed the argument \\o/",
+      "revId": "4bb50c2b13eafdc4dcf70f14d0f606a436db72ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
