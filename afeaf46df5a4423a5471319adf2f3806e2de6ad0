@@ -16,6 +16,24 @@
       "revId": "afeaf46df5a4423a5471319adf2f3806e2de6ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fe7272_2c645833",
+        "filename": "chrome/browser/devtools/devtools_ui_bindings.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-08T22:37:03Z",
+      "side": 1,
+      "message": "After thinking about this, I decided to refactor to work more like other infobars: pull the infobar out to its own file, then invoke Create() directly from the test, leaving this class largely unchanged.\n\nSee what you think of the new version.",
+      "parentUuid": "0cb3ddfa_861dac9e",
+      "revId": "afeaf46df5a4423a5471319adf2f3806e2de6ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
