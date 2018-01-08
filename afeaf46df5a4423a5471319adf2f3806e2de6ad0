@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cb3ddfa_861dac9e",
+        "filename": "chrome/browser/devtools/devtools_ui_bindings.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-08T20:05:12Z",
+      "side": 1,
+      "message": "Could you introduce a method with the ForTest suffix instead of making this one generally available? It is easy to copy one call site to another without looking at the comment.",
+      "revId": "afeaf46df5a4423a5471319adf2f3806e2de6ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
