@@ -5,10 +5,10 @@
 #include "chrome/installer/zucchini/address_translator.h"
 
 #include <algorithm>
-#include <sstream>
 #include <string>
 #include <utility>
 
+#include "base/strings/stringprintf.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace zucchini {
@@ -93,11 +93,11 @@ class TwoUnitOverlapTester {
     for (size_t i = 0; i < test_cases.size(); ++i) {
       const auto& test_case = test_cases[i];
       const std::string& unit_str2 = test_case.unit_str;
-      std::ostringstream oss;
-      oss << "Case #" << i << ": " << unit_str2;
-      SimpleTest({unit_str1, unit_str2}, test_case.expected, oss.str());
+      const auto str =
+          base::StringPrintf("Case #%lu: %s", i, unit_str2.c_str());
+      SimpleTest({unit_str1, unit_str2}, test_case.expected, str);
       // Switch order. Expect same results.
-      SimpleTest({unit_str2, unit_str1}, test_case.expected, oss.str());
+      SimpleTest({unit_str2, unit_str1}, test_case.expected, str);
     }
   }
 };
@@ -377,9 +377,8 @@ TEST(AddressTranslatorTest, OverlapFromComment) {
         std::string(test_case.offset_str) + "|" + test_case.rva_str;
     std::string unit_str1 = to_period(to_period(base_str, 'S'), 's');
     std::string unit_str2 = to_period(to_period(base_str, 'F'), 'f');
-    std::ostringstream oss;
-    oss << "Case #" << idx;
-    SimpleTest({unit_str1, unit_str2}, test_case.expected, oss.str());
+    SimpleTest({unit_str1, unit_str2}, test_case.expected,
+               base::StringPrintf("Case #%lu", idx));
     ++idx;
   }
 }
