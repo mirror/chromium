@@ -544,17 +544,28 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    DCHECK(isolate);
+    V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
     return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kZeroInitialize);
+        per_isolate_data->GetArrayBufferPartition(), size,
+        WTF::ArrayBufferContents::kZeroInitialize);
   }
 
   void* AllocateUninitialized(size_t size) override {
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    DCHECK(isolate);
+    V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
     return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kDontInitialize);
+        per_isolate_data->GetArrayBufferPartition(), size,
+        WTF::ArrayBufferContents::kDontInitialize);
   }
 
   void Free(void* data, size_t size) override {
-    WTF::ArrayBufferContents::FreeMemory(data);
+    // We can't count on Isolate::GetCurrent here, since we may be called
+    // on a background thread during a GC. Let ArrayBufferContents::FreeMemory
+    // derive the partition.
+    WTF::ArrayBufferContents::FreeMemory(nullptr, data);
   }
 
   void* Reserve(size_t length) override {
