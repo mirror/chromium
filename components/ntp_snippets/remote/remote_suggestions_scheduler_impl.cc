@@ -72,18 +72,6 @@ const double kDefaultFetchingIntervalHoursActiveNtpUser[] = {96.0, 48.0, 24.0,
 const double kDefaultFetchingIntervalHoursActiveSuggestionsConsumer[] = {
     48.0, 24.0, 12.0, 12.0, 1.0, 1.0};
 
-// For a simple comparison: fetching intervals that emulate the state really
-// rolled out to 100% M58 Stable. Used for evaluation of later changes. DBL_MAX
-// values simulate this interval being disabled.
-// TODO(jkrcal): Remove when not needed any more, incl. the feature. Probably
-// after M62 when CH is launched.
-const double kM58FetchingIntervalHoursRareNtpUser[] = {48.0,    24.0, DBL_MAX,
-                                                       DBL_MAX, 4.0,  4.0};
-const double kM58FetchingIntervalHoursActiveNtpUser[] = {24.0,    8.0,  DBL_MAX,
-                                                         DBL_MAX, 10.0, 10.0};
-const double kM58FetchingIntervalHoursActiveSuggestionsConsumer[] = {
-    24.0, 6.0, DBL_MAX, DBL_MAX, 1.0, 1.0};
-
 // Variation parameters than can be used to override the default fetching
 // intervals. For backwards compatibility, we do not rename
 //  - the "fetching_" params (should be "persistent_fetching_");
@@ -118,12 +106,6 @@ static_assert(
         static_cast<unsigned int>(FetchingInterval::COUNT) ==
             arraysize(kDefaultFetchingIntervalHoursActiveSuggestionsConsumer) &&
         static_cast<unsigned int>(FetchingInterval::COUNT) ==
-            arraysize(kM58FetchingIntervalHoursRareNtpUser) &&
-        static_cast<unsigned int>(FetchingInterval::COUNT) ==
-            arraysize(kM58FetchingIntervalHoursActiveNtpUser) &&
-        static_cast<unsigned int>(FetchingInterval::COUNT) ==
-            arraysize(kM58FetchingIntervalHoursActiveSuggestionsConsumer) &&
-        static_cast<unsigned int>(FetchingInterval::COUNT) ==
             arraysize(kFetchingIntervalParamNameRareNtpUser) &&
         static_cast<unsigned int>(FetchingInterval::COUNT) ==
             arraysize(kFetchingIntervalParamNameActiveNtpUser) &&
@@ -155,29 +137,20 @@ base::TimeDelta GetDesiredFetchingInterval(
   const unsigned int index = static_cast<unsigned int>(interval);
   DCHECK(index < arraysize(kDefaultFetchingIntervalHoursRareNtpUser));
 
-  bool emulateM58 = base::FeatureList::IsEnabled(
-      kRemoteSuggestionsEmulateM58FetchingSchedule);
-
   double default_value_hours = 0.0;
   const char* param_name = nullptr;
   switch (user_class) {
     case UserClassifier::UserClass::RARE_NTP_USER:
-      default_value_hours =
-          emulateM58 ? kM58FetchingIntervalHoursRareNtpUser[index]
-                     : kDefaultFetchingIntervalHoursRareNtpUser[index];
+      default_value_hours = kDefaultFetchingIntervalHoursRareNtpUser[index];
       param_name = kFetchingIntervalParamNameRareNtpUser[index];
       break;
     case UserClassifier::UserClass::ACTIVE_NTP_USER:
-      default_value_hours =
-          emulateM58 ? kM58FetchingIntervalHoursActiveNtpUser[index]
-                     : kDefaultFetchingIntervalHoursActiveNtpUser[index];
+      default_value_hours = kDefaultFetchingIntervalHoursActiveNtpUser[index];
       param_name = kFetchingIntervalParamNameActiveNtpUser[index];
       break;
     case UserClassifier::UserClass::ACTIVE_SUGGESTIONS_CONSUMER:
       default_value_hours =
-          emulateM58
-              ? kM58FetchingIntervalHoursActiveSuggestionsConsumer[index]
-              : kDefaultFetchingIntervalHoursActiveSuggestionsConsumer[index];
+          kDefaultFetchingIntervalHoursActiveSuggestionsConsumer[index];
       param_name = kFetchingIntervalParamNameActiveSuggestionsConsumer[index];
       break;
   }

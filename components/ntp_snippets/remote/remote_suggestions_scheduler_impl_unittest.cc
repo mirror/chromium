@@ -1095,29 +1095,6 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   scheduler()->OnPersistentSchedulerWakeUp();
 }
 
-TEST_F(RemoteSuggestionsSchedulerImplTest,
-       ShouldIgnoreSubsequentStartupSignalsForM58) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      kRemoteSuggestionsEmulateM58FetchingSchedule);
-  RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
-
-  // First enable the scheduler -- this will trigger the persistent scheduling.
-  EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
-  ActivateProviderAndEula();
-
-  // The startup triggers are ignored.
-  EXPECT_CALL(*provider(), RefetchInTheBackground(_)).Times(0);
-  scheduler()->OnBrowserForegrounded();
-  scheduler()->OnBrowserColdStart();
-
-  // Foreground the browser again after a very long delay. Again, no fetch is
-  // executed for neither Foregrounded, nor ColdStart.
-  test_clock()->Advance(base::TimeDelta::FromHours(100000));
-  scheduler()->OnBrowserForegrounded();
-  scheduler()->OnBrowserColdStart();
-}
-
 TEST_F(RemoteSuggestionsSchedulerImplTest, ShouldIgnoreSignalsWhenOffline) {
   // Simulate being offline. NetworkChangeNotifier is a singleton, thus, this
   // instance is actually globally accessible (from the static function
