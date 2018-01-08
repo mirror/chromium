@@ -22,6 +22,30 @@
       "revId": "a668b5363cd374a29ca0f46124c226e2e2aa21d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa80e0a_e696e09c",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-08T21:49:41Z",
+      "side": 0,
+      "message": "The padding is causing the end icon\u0027s height to be smaller than the item row height because end icon\u0027s height is set to match_parent. There is no user visible effect because all the contents of a row should be center_vertical.",
+      "parentUuid": "63fbf29e_87ad0392",
+      "range": {
+        "startLine": 665,
+        "startChar": 7,
+        "endLine": 666,
+        "endChar": 85
+      },
+      "revId": "a668b5363cd374a29ca0f46124c226e2e2aa21d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
