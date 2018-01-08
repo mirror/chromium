@@ -6,6 +6,7 @@
 
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/platform_util.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -17,6 +18,7 @@
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/focus/focus_manager.h"
 #include "ui/views/layout/grid_layout.h"
+#include "ui/views/widget/widget.h"
 
 namespace {
 
@@ -227,6 +229,12 @@ views::Button::KeyClickAction HoverButton::GetKeyClickActionForEvent(
 void HoverButton::StateChanged(ButtonState old_state) {
   LabelButton::StateChanged(old_state);
 
+  // If the hover button is not in the currently active window, don't request
+  // the focus.
+  gfx::NativeWindow window =
+      platform_util::GetTopLevel(this->GetWidget()->GetNativeView());
+  if (!platform_util::IsWindowActive(window))
+    return;
   // |HoverButtons| are designed for use in a list, so ensure only one button
   // can have a hover background at any time by requesting focus on hover.
   if (state() == STATE_HOVERED || state() == STATE_PRESSED) {
