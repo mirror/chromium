@@ -10,6 +10,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/signin/signin_promo.h"
 #include "chrome/browser/signin/signin_util.h"
@@ -21,6 +22,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_info.h"
 #include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 
@@ -49,12 +51,6 @@ DiceTurnSyncOnHelper::DiceTurnSyncOnHelper(
   DCHECK(browser_);
   DCHECK(!gaia_id_.empty());
   DCHECK(!email_.empty());
-  Initialize();
-}
-
-DiceTurnSyncOnHelper::~DiceTurnSyncOnHelper() {}
-
-void DiceTurnSyncOnHelper::Initialize() {
   // Should not start synching if the profile is already authenticated
   DCHECK(!SigninManagerFactory::GetForProfile(profile_)->IsAuthenticated());
 
@@ -67,6 +63,8 @@ void DiceTurnSyncOnHelper::Initialize() {
   }
 }
 
+DiceTurnSyncOnHelper::~DiceTurnSyncOnHelper() {}
+
 bool DiceTurnSyncOnHelper::HandleCanOfferSigninError() {
   std::string error_msg;
   bool can_offer = CanOfferSignin(profile_, CAN_OFFER_SIGNIN_FOR_ALL_ACCOUNTS,
@@ -77,6 +75,7 @@ bool DiceTurnSyncOnHelper::HandleCanOfferSigninError() {
   // Display the error message
   LoginUIServiceFactory::GetForProfile(profile_)->DisplayLoginResult(
       browser_, base::UTF8ToUTF16(error_msg), base::UTF8ToUTF16(email_));
+  Abort();
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
   return true;
 }
@@ -116,6 +115,7 @@ void DiceTurnSyncOnHelper::ConfirmEmailAction(
     case SigninEmailConfirmationDialog::CLOSE:
       base::RecordAction(
           base::UserMetricsAction("Signin_ImportDataPrompt_Cancel"));
+      Abort();
       break;
     default:
       NOTREACHED() << "Invalid action";
@@ -132,4 +132,12 @@ void DiceTurnSyncOnHelper::CreateSyncStarter(
       OneClickSigninSyncStarter::CONFIRM_SYNC_SETTINGS_FIRST,
       OneClickSigninSyncStarter::CONFIRM_AFTER_SIGNIN,
       OneClickSigninSyncStarter::Callback());
+}
+
+void DiceTurnSyncOnHelper::Abort() {
+  // TODO: Do not delete the token if it existed prior this login flow. See
+  // http://crbug.com/797342.
+  ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)->RevokeCredentials(
+      AccountTrackerServiceFactory::GetForProfile(profile_)
+          ->PickAccountIdForAccount(gaia_id_, email_));
 }
