@@ -207,20 +207,17 @@ class VisibleNetworks {
          * proto.
          */
         PartnerLocationDescriptor.VisibleNetwork toProto(boolean connected) {
-            PartnerLocationDescriptor.VisibleNetwork visibleNetwork =
-                    new PartnerLocationDescriptor.VisibleNetwork();
-
             PartnerLocationDescriptor.VisibleNetwork.WiFi wifi =
-                    new PartnerLocationDescriptor.VisibleNetwork.WiFi();
+                    PartnerLocationDescriptor.VisibleNetwork.WiFi.newBuilder()
+                            .setBssid(bssid())
+                            .setLevelDbm(level())
+                            .build();
 
-            wifi.bssid = bssid();
-            wifi.levelDbm = level();
-
-            visibleNetwork.wifi = wifi;
-            visibleNetwork.timestampMs = timestampMs();
-            visibleNetwork.connected = connected;
-
-            return visibleNetwork;
+            return PartnerLocationDescriptor.VisibleNetwork.newBuilder()
+                    .setWifi(wifi)
+                    .setTimestampMs(timestampMs())
+                    .setConnected(connected)
+                    .build();
         }
     }
 
@@ -394,44 +391,41 @@ class VisibleNetworks {
          * proto.
          */
         PartnerLocationDescriptor.VisibleNetwork toProto(boolean connected) {
-            PartnerLocationDescriptor.VisibleNetwork visibleNetwork =
-                    new PartnerLocationDescriptor.VisibleNetwork();
-
-            PartnerLocationDescriptor.VisibleNetwork.Cell cell =
-                    new PartnerLocationDescriptor.VisibleNetwork.Cell();
+            PartnerLocationDescriptor.VisibleNetwork.Cell.Builder cellBuilder =
+                    PartnerLocationDescriptor.VisibleNetwork.Cell.newBuilder()
+                            .setCellId(cellId())
+                            .setLocationAreaCode(locationAreaCode())
+                            .setMobileCountryCode(mobileCountryCode())
+                            .setMobileNetworkCode(mobileNetworkCode())
+                            .setPrimaryScramblingCode(primaryScramblingCode())
+                            .setPhysicalCellId(physicalCellId())
+                            .setTrackingAreaCode(trackingAreaCode());
 
             switch (radioType()) {
                 case VisibleCell.CDMA_RADIO_TYPE:
-                    cell.type = PartnerLocationDescriptor.VisibleNetwork.Cell.CDMA;
+                    cellBuilder.setType(PartnerLocationDescriptor.VisibleNetwork.Cell.Type.CDMA);
                     break;
                 case VisibleCell.GSM_RADIO_TYPE:
-                    cell.type = PartnerLocationDescriptor.VisibleNetwork.Cell.GSM;
+                    cellBuilder.setType(PartnerLocationDescriptor.VisibleNetwork.Cell.Type.GSM);
                     break;
                 case VisibleCell.LTE_RADIO_TYPE:
-                    cell.type = PartnerLocationDescriptor.VisibleNetwork.Cell.LTE;
+                    cellBuilder.setType(PartnerLocationDescriptor.VisibleNetwork.Cell.Type.LTE);
                     break;
                 case VisibleCell.WCDMA_RADIO_TYPE:
-                    cell.type = PartnerLocationDescriptor.VisibleNetwork.Cell.WCDMA;
+                    cellBuilder.setType(PartnerLocationDescriptor.VisibleNetwork.Cell.Type.WCDMA);
                     break;
                 case VisibleCell.UNKNOWN_RADIO_TYPE:
                 case VisibleCell.UNKNOWN_MISSING_LOCATION_PERMISSION_RADIO_TYPE:
                 default:
-                    cell.type = PartnerLocationDescriptor.VisibleNetwork.Cell.UNKNOWN;
+                    cellBuilder.setType(PartnerLocationDescriptor.VisibleNetwork.Cell.Type.UNKNOWN);
                     break;
             }
-            cell.cellId = cellId();
-            cell.locationAreaCode = locationAreaCode();
-            cell.mobileCountryCode = mobileCountryCode();
-            cell.mobileNetworkCode = mobileNetworkCode();
-            cell.primaryScramblingCode = primaryScramblingCode();
-            cell.physicalCellId = physicalCellId();
-            cell.trackingAreaCode = trackingAreaCode();
 
-            visibleNetwork.cell = cell;
-            visibleNetwork.timestampMs = timestampMs();
-            visibleNetwork.connected = connected;
-
-            return visibleNetwork;
+            return PartnerLocationDescriptor.VisibleNetwork.newBuilder()
+                    .setCell(cellBuilder.build())
+                    .setTimestampMs(timestampMs())
+                    .setConnected(connected)
+                    .build();
         }
 
         /**
