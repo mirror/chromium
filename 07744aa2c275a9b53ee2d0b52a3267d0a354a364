@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6eac3c_47265045",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-08T22:17:17Z",
+      "side": 1,
+      "message": "nit: not needed anymore",
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bc2568_f4590dba",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-08T22:17:17Z",
+      "side": 1,
+      "message": "nit: not needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709060f6_c2b98d74",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-08T22:17:17Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
