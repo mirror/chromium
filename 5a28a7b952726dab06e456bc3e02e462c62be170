@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eedb7d83_bdf294e6",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-08T17:49:13Z",
+      "side": 1,
+      "message": "nit: Add\n// Next Id: some_number\nas a comment to avoid merge conflicts.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 7
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64677ebf_a386afc9",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-08T17:49:13Z",
+      "side": 1,
+      "message": "IIUC, this only counts the memory allocated by malloc. Does it include the v8 memory which seems to be in v8_total_kb?",
+      "range": {
+        "startLine": 118,
+        "startChar": 18,
+        "endLine": 118,
+        "endChar": 24
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc736f7f_d811af67",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-08T17:49:13Z",
+      "side": 1,
+      "message": "why not 20?",
+      "range": {
+        "startLine": 121,
+        "startChar": 44,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
