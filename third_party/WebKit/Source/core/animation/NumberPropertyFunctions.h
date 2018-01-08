@@ -6,6 +6,7 @@
 #define NumberPropertyFunctions_h
 
 #include "core/CSSPropertyNames.h"
+#include "core/css/properties/CSSProperty.h"
 
 namespace blink {
 
@@ -13,10 +14,12 @@ class ComputedStyle;
 
 class NumberPropertyFunctions {
  public:
-  static bool GetInitialNumber(CSSPropertyID, double& result);
-  static bool GetNumber(CSSPropertyID, const ComputedStyle&, double& result);
-  static double ClampNumber(CSSPropertyID, double);
-  static bool SetNumber(CSSPropertyID, ComputedStyle&, double);
+  static bool GetInitialNumber(const CSSProperty&, double& result);
+  static bool GetNumber(const CSSProperty&,
+                        const ComputedStyle&,
+                        double& result);
+  static double ClampNumber(const CSSProperty&, double);
+  static bool SetNumber(const CSSProperty&, ComputedStyle&, double);
 };
 
 }  // namespace blink

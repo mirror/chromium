@@ -6,6 +6,7 @@
 #define LengthListPropertyFunctions_h
 
 #include "core/CSSPropertyNames.h"
+#include "core/css/properties/CSSProperty.h"
 #include "platform/Length.h"
 #include "platform/wtf/Vector.h"
 
@@ -17,12 +18,12 @@ class LengthListPropertyFunctions {
   STATIC_ONLY(LengthListPropertyFunctions);
 
  public:
-  static ValueRange GetValueRange(CSSPropertyID);
-  static bool GetInitialLengthList(CSSPropertyID, Vector<Length>& result);
-  static bool GetLengthList(CSSPropertyID,
+  static ValueRange GetValueRange(const CSSProperty&);
+  static bool GetInitialLengthList(const CSSProperty&, Vector<Length>& result);
+  static bool GetLengthList(const CSSProperty&,
                             const ComputedStyle&,
                             Vector<Length>& result);
-  static void SetLengthList(CSSPropertyID,
+  static void SetLengthList(const CSSProperty&,
                             ComputedStyle&,
                             Vector<Length>&& length_list);
 };
