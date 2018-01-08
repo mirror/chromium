@@ -152,7 +152,7 @@ bool FaviconSource::HandleMissingResource(const IconRequest& request) {
       sync_service ? sync_service->GetOpenTabsUIDelegate() : nullptr;
 
   scoped_refptr<base::RefCountedMemory> response;
-  if (open_tabs &&
+  if (open_tabs && request.request_path.is_valid() &&
       open_tabs->GetSyncedFaviconForPageURL(request.request_path.spec(),
                                             &response)) {
     request.callback.Run(response.get());
