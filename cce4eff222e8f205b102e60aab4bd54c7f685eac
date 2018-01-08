@@ -46,6 +46,30 @@
       "revId": "cce4eff222e8f205b102e60aab4bd54c7f685eac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6a80d5_2114ffec",
+        "filename": "content/browser/indexed_db/indexed_db_callbacks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-08T19:08:23Z",
+      "side": 1,
+      "message": "Agreed. I\u0027m happy with any approach for this CL:\n\n* Make this change, add a TODO+crbug to make these classes\n* Undo this part of the CL, add a TODO+crbug to make classes/rename\n* Convert them to classes in this CL.\n\nIf a follow-up crbug you can assign to me. Thanks!",
+      "parentUuid": "dbd14455_8caca502",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "cce4eff222e8f205b102e60aab4bd54c7f685eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
