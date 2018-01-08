@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c991aa5_0f86ad30",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-08T18:58:32Z",
+      "side": 1,
+      "message": "Compare logical top offsets instead of fragment clips?",
+      "revId": "8be2de9d91bc8e7ea612cbbbc959855ec6a0e75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
