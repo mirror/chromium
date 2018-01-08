@@ -120,6 +120,16 @@ void U2fBleDiscovery::DeviceRemoved(BluetoothAdapter* adapter,
   }
 }
 
+void U2fBleDiscovery::DeviceChanged(BluetoothAdapter* adapter,
+                                    BluetoothDevice* device) {
+  if (base::ContainsKey(device->GetUUIDs(), U2fServiceUUID()) &&
+      !GetDevice(U2fBleDevice::GetId(device->GetAddress()))) {
+    VLOG(2) << "Discovered U2F service on existing BLE device: "
+            << device->GetAddress();
+    AddDevice(std::make_unique<U2fBleDevice>(device->GetAddress()));
+  }
+}
+
 void U2fBleDiscovery::OnStopped(bool success) {
   discovery_session_.reset();
   NotifyDiscoveryStopped(success);
