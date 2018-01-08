@@ -6,7 +6,9 @@
 #define COMPONENTS_CRONET_IOS_CRONET_ENVIRONMENT_H_
 
 #include <list>
+#include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/files/file_path.h"
@@ -15,8 +17,8 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
-#include "components/cronet/ios/version.h"
 #include "components/cronet/url_request_context_config.h"
+#include "components/cronet/version.h"
 #include "net/cert/cert_verifier.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -39,10 +41,6 @@ class CronetPrefsManager;
 class CronetEnvironment {
  public:
   using PkpVector = std::vector<std::unique_ptr<URLRequestContextConfig::Pkp>>;
-
-  // Initialize Cronet environment globals. Must be called only once on the
-  // main thread.
-  static void Initialize();
 
   // |user_agent| will be used to generate the user-agent if
   // |user_agent_partial| is true, or will be used as the complete user-agent
