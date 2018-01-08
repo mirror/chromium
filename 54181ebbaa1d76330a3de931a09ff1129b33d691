@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1fa91069_024e00ab",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/le-not-supported.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-08T22:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99705237_a7bd061d",
+      "revId": "54181ebbaa1d76330a3de931a09ff1129b33d691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f001755_1dd21ba0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/not-processing-user-gesture.https.html",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2aa5343a_4b5ec302",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/not-processing-user-gesture.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-08T22:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f001755_1dd21ba0",
+      "revId": "54181ebbaa1d76330a3de931a09ff1129b33d691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb120497_bdcc8fc1",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/requestDevice-in-iframe.html",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-08T18:50:00Z",
       "side": 1,
       "message": "Let\u0027s just add the needed functionality to health-thermometer-iframe",
+      "revId": "54181ebbaa1d76330a3de931a09ff1129b33d691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f41b2d_98e9214a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/requestDevice-in-iframe.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-08T22:09:36Z",
+      "side": 1,
+      "message": "I\u0027ll go ahead and wait until the change with the health-thermometer-iframe migration is merged before I submit this change.",
+      "parentUuid": "cb120497_bdcc8fc1",
       "revId": "54181ebbaa1d76330a3de931a09ff1129b33d691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
