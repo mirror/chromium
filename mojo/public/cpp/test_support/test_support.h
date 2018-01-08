@@ -13,6 +13,12 @@
 namespace mojo {
 namespace test {
 
+template <typename MojomType, typename UserType>
+bool SerializeAndDeserialize(UserType* input, UserType* output) {
+  return MojomType::DeserializeFromMessage(MojomType::SerializeAsMessage(input),
+                                           output);
+}
+
 inline void LogPerfResult(const char* test_name,
                           const char* sub_test_name,
                           double value,

@@ -33,12 +33,17 @@ mojo::Message StructSerializeAsMessageImpl(UserType* input) {
   typename MojomTypeTraits<MojomType>::Data::BufferWriter writer;
   Serialize<MojomType>(*input, message.payload_buffer(), &writer, &context);
   message.AttachHandlesFromSerializationContext(&context);
-  return message;
+
+  // Ensure the message is fully serialized before returning. TakeMojoMessage()
+  // coerces the message contents into a primitive Mojo message object which
+  // must hold all handles in serialized form.
+  return mojo::Message(message.TakeMojoMessage());
 }
 
 template <typename MojomType, typename DataArrayType, typename UserType>
 DataArrayType StructSerializeImpl(UserType* input) {
-  static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value,
+  static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value ||
+                    BelongsTo<MojomType, MojomTypeCategory::UNION>::value,
                 "Unexpected type.");
   Message message = StructSerializeAsMessageImpl<MojomType>(input);
   uint32_t size = message.payload_num_bytes();
@@ -55,7 +60,8 @@ bool StructDeserializeImpl(const void* data,
                            UserType* output,
                            bool (*validate_func)(const void*,
                                                  ValidationContext*)) {
-  static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value,
+  static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value ||
+                    BelongsTo<MojomType, MojomTypeCategory::UNION>::value,
                 "Unexpected type.");
   using DataType = typename MojomTypeTraits<MojomType>::Data;
 
