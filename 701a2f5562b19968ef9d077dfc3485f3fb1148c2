@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cc8c654_367b69e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-08T21:26:47Z",
+      "side": 1,
+      "message": "Is this still needed? And the isDownloadPending in DownloadUpdate?",
+      "range": {
+        "startLine": 210,
+        "startChar": 45,
+        "endLine": 210,
+        "endChar": 70
+      },
+      "revId": "701a2f5562b19968ef9d077dfc3485f3fb1148c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e21850a_b4cae14d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-08T21:26:47Z",
+      "side": 1,
+      "message": "What is the reasoning behind having \"notifyDownloadPending\" when the pendingState is NOT_PENDING?",
+      "range": {
+        "startLine": 529,
+        "startChar": 12,
+        "endLine": 531,
+        "endChar": 46
+      },
+      "revId": "701a2f5562b19968ef9d077dfc3485f3fb1148c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
