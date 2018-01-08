@@ -286,6 +286,7 @@ File::Error File::OSErrorToFileError(DWORD last_error) {
   switch (last_error) {
     case ERROR_SHARING_VIOLATION:
       return FILE_ERROR_IN_USE;
+    case ERROR_ALREADY_EXISTS:
     case ERROR_FILE_EXISTS:
       return FILE_ERROR_EXISTS;
     case ERROR_FILE_NOT_FOUND:
@@ -404,6 +405,12 @@ void File::DoInitialize(const FilePath& path, uint32_t flags) {
       created_ = (ERROR_ALREADY_EXISTS != GetLastError());
     else if (flags & (FLAG_CREATE_ALWAYS | FLAG_CREATE))
       created_ = true;
+    if (GetLastError() == ERROR_ALREADY_EXISTS) {
+      // To be compatible with POSIX ignore ERROR_ALREADY_EXISTS as it is not an
+      // error if the file was opened. This is just on the off chance that
+      // File::GetLastFileError() is called after a successful open.
+      SetLastError(ERROR_SUCCESS);
+    }
   } else {
     error_details_ = GetLastFileError();
   }
