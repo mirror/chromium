@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb24776d_57d8c29e",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-08T21:38:40Z",
+      "side": 1,
+      "message": "This finds the first occurrence when all you\u0027re curious in is, \"Are there any?\" Would a map\u003cGURL,list\u003ccallback\u003e\u003e be better?",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "19ba072328ede105f39d0fa5ffe545c89eb66bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9b01c5_1b29406a",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-08T21:38:40Z",
+      "side": 1,
+      "message": "nice, thank you",
+      "range": {
+        "startLine": 60,
+        "startChar": 47,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "19ba072328ede105f39d0fa5ffe545c89eb66bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
