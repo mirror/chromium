@@ -16,6 +16,24 @@
       "revId": "5e14cd0d2106290a6d4cf1a9ea322491c8c33e8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21ae795_12019f9a",
+        "filename": "base/files/file_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-08T19:04:16Z",
+      "side": 1,
+      "message": "Yes it is a bit odd, and this statement \"base::File never resets the global error to zero.\" is absolutely incorrect now. This was only an \"off chance\" change, so I\u0027ll remove it and leave only the OSErrorToFileError change.",
+      "parentUuid": "9897b136_185786a3",
+      "revId": "5e14cd0d2106290a6d4cf1a9ea322491c8c33e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
