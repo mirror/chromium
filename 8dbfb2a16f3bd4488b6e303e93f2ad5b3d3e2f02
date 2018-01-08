@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "4ae6b575_2675f623",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T17:02:30Z",
+      "side": 1,
+      "message": "This is the wrong place to fix it, though.\n\nLet\u0027s figure out why the cursor index isn\u0027t getting updated when\nyou add letters in the middle of a word.\n\nsetAccessibilityEventTextChangedAttrs is just a function to\nset properties of an AccessibilityEvent. It\u0027s called by us when\nwe fire an AccessibilityEvent. If we\u0027re not updating\nmSelectionEndIndex correctly, we should fix that in whatever\nmethod was firing the AccessibilityEvent, not inside of one of\nthe helper methods that\u0027s just used to populate the event.",
+      "parentUuid": "28b2e405_3d3174c9",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "140d4558_f9e3a2fe",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
         "patchSetId": 11
