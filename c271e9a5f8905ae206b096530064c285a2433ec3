@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87da2c_77840788",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "I would prefer that you remove these DCHECKs.\nEven though you don\u0027t expect 0 here, it wouldn\u0027t be incorrect to support it.",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 13
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7efb96b_837f944e",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "No need to initialize to 0 since you have a constructor that initializes the value.",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 14
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900b1245_c9f214ab",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "Don\u0027t you have to unsubscribe the new-style subscriptions here?",
+      "range": {
+        "startLine": 180,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 27
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f1a944_954d6e80",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "Use explicit std::unique_ptr type instead of auto here.",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 6
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc074993_ebf96a99",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "The |subscription_id| you are using here is unique for this MDDH, but it is not unique for MediaDevicesManager.\nThere is only one MDM in the browser, but one MDDH per frame.\nThis means, subscriptions from one frame might replace subscriptions from other frames.\n\nHere you probably want to mimic the old Unsubscribe method and pass a pointer to MDM::Subscribe() if |subscriptions_| was initially empty instead of using the DeviceChangeSubscription class.\nAlternatively, you can just passing |listener| to MDDH and let MDM handle |listener| subscriptions directly.\nA final alternative, which is the one I like least, is to send the |render_process_id_| and |render_frame_id_| together with |subscription_id| to uniquely identify the subscription.",
+      "range": {
+        "startLine": 307,
+        "startChar": 30,
+        "endLine": 307,
+        "endChar": 34
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f988f1e4_2ea43493",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "Is this DCHECK guaranteed to hold in all situations, even shutdown scenarios?\nIf not, use an if. Otherwise, this would introduce problems.\nThe original subscription code here does uses if to make the checks, probably because CHECKing or DCHECKing can cause problems in some situations.\n\nAlso, should you unsubscribe from MediaDevicesManager here?",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 8
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7036c550_b8c23395",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "Add a TODO saying this field should be removed once the migration is complete.",
+      "range": {
+        "startLine": 183,
+        "startChar": 40,
+        "endLine": 183,
+        "endChar": 63
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b130f656_ef4fe174",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "Rename to |current_subscription_id_| (you can also call it |next_suubscription_id_| and support zero, but up to you).\nNote also that having this field and the DeviceChangeSubscription class is probably not the way to go. See comments below.",
+      "range": {
+        "startLine": 197,
+        "startChar": 11,
+        "endLine": 197,
+        "endChar": 27
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c177584_96e44999",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "It\u0027s probably better to change this to an if, like the old Unsubscribe method.\nThe DCHECK might not hold in some frame-shutdown scenarios.",
+      "range": {
+        "startLine": 222,
+        "startChar": 11,
+        "endLine": 222,
+        "endChar": 12
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82da1fdb_8702bcb7",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "As mentioned before, this key is incorrect because it is not unique across MDDH instances.\nI recommend that you maintain the pointer to MDCS approach, or manage ListenerPtrs directly here.",
+      "range": {
+        "startLine": 193,
+        "startChar": 11,
+        "endLine": 193,
+        "endChar": 19
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c24d9b1_9b8cad69",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "It looks like you can replace |observing_| with |binding_.is_bound()|",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a72aca5_5903f75d",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "Add TODO to remove the old Subscribe/Unsubscribe method.",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 4
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde8e3c7_a48abad4",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-08T15:49:04Z",
+      "side": 1,
+      "message": "Rename to AddMediaDevicesListener. Set suggests that there is only one listener, but this supports multiple listeners.",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
