@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol name="pointer_unstable_v1">
+
+  <copyright>
+    Copyright 2018 The Chromium Authors.
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice (including the next
+    paragraph) shall be included in all copies or substantial portions of the
+    Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+  </copyright>
+
+  <description summary="Protocol for updating cursor of ChromeOS">
+    This protocol specifies a set of interfaces used to change the state and
+    shape of cursor in ChromeOS.
+
+    Warning! The protocol described in this file is experimental and backward
+    incompatible changes may be made. Backward compatible changes may be added
+    together with the corresponding interface version bump. Backward
+    incompatible changes are done by bumping the version number in the protocol
+    and interface names and resetting the interface version. Once the protocol
+    is to be declared stable, the 'z' prefix and the version number in the
+    protocol and interface names are removed and the interface version number is
+    reset.
+  </description>
+
+  <interface name="zwp_shaped_cursors_v1" version="1">
+    <description summary="">
+      Deliver new cursor's change of client and make sure that the cursor
+      of server shows correctly.
+    </description>
+    
+    <request name="destroy" type="destructor">
+      <description summary="unbind from the blending interface">
+  Informs the server that the client will not be using this
+  protocol object anymore. This does not affect any other objects,
+  blending objects included.
+      </description>
+    </request>
+
+    <request name="get_blending">
+      <description summary="extend pointer interface for blending">
+  Instantiate an interface extension for the given wl_pointer to
+  provide pointer blending. If the given wl_pointer already has
+  a blending object associated, the blending_exists protocol error
+  is raised.
+      </description>
+
+      <arg name="id" type="new_id" interface="zwp_pointer_blending_v1"
+     summary="the new blending interface id"/>
+      <arg name="pointer" type="object" interface="wl_pointer"
+     summary="the pointer"/>
+    </request>
+  </interface>
+
+  <interface name="zwp_pointer_blending_v1" version="1">
+    <description summary="blending interface to a wl_pointer">
+      An additional interface to a wl_pointer object, which allows the
+      client to specify the blending equation used for updating cursor.
+
+      If the wl_pointer associated with the bledning object is destroyed,
+      the blending object becomes inert.
+
+      If the blending object is destroyed, the blending state is removed
+      from the wl_pointer.
+    </description>
+
+    <request name="destroy" type="destructor">
+      <description summary="remove blending from the pointer">
+  The associated wl_pointer's blending state is removed.
+      </description>
+    </request>
+
+    <request name="send_cursor_details">
+      <description summary="send details of cursor">
+        Informs the server that the cursor has changed and offers new details
+        to server.
+      </description>
+      <arg name="alpha" type="fixed" />
+      <arg name="type_id" type="int"/>
+    </request>
+  </interface>
+
+</protocol>
