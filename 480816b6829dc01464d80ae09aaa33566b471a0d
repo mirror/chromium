@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7ba2f3c_093f0947",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-08T09:09:41Z",
+      "side": 1,
+      "message": "are not accessibe",
+      "range": {
+        "startLine": 2298,
+        "startChar": 34,
+        "endLine": 2298,
+        "endChar": 48
+      },
+      "revId": "480816b6829dc01464d80ae09aaa33566b471a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
