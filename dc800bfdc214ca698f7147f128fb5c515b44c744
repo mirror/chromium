@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f21e624f_1a84f054",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "Should this still be there if you added UNUSED_3 below?",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9d0a36_c6c554cb",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "See below comment about COUNT.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2368836_891da93f",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "Should we get rid of this and rely on NOTREACHED below?  Is count valid?",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbb3182_62bdc05f",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "Don\u0027t need break?",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e702fa_416d94d2",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "cache",
+      "range": {
+        "startLine": 1378,
+        "startChar": 43,
+        "endLine": 1378,
+        "endChar": 48
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d6dcfc_f79e69b9",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "m",
+      "range": {
+        "startLine": 1379,
+        "startChar": 21,
+        "endLine": 1379,
+        "endChar": 22
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b127c01_9ead8b61",
+        "filename": "content/browser/download/download_item_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "This class does half of these in the header and half in the constructor :(.  I\u0027m fine with this here but we should pick one and update all to match in a future patch!",
+      "range": {
+        "startLine": 755,
+        "startChar": 36,
+        "endLine": 755,
+        "endChar": 59
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66d0ac8_c161f329",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "Does the following work?\n\nreturn std::make_unique\u003cDownloadResourceHandler\u003e(request, download_source);",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab60d44_e47f8837",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "Would it be useful to have another helper called CreateSourceHistogramSuffix(const std::string\u0026 histogram, DownloadSource download_source)?  Then you could just do:\n\nbase::UmaHistogramEnumeration(CreateSourceHistogramSuffix(\"Download.Counts.\", download_source), type, ...);",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 63
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a9f086_e7a3f759",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "Is there a reason we use this or the macro?  Just curious!",
+      "range": {
+        "startLine": 311,
+        "startChar": 2,
+        "endLine": 311,
+        "endChar": 31
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557f7990_6b05631b",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 353,
+        "startChar": 31,
+        "endLine": 354,
+        "endChar": 10
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87cb9a5_3637d4fd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17196,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 1,
+      "message": "xingliu@chromium.org now?  Same with others?",
+      "range": {
+        "startLine": 17196,
+        "startChar": 9,
+        "endLine": 17196,
+        "endChar": 28
+      },
+      "revId": "dc800bfdc214ca698f7147f128fb5c515b44c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

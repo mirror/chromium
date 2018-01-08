@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a7809ed_901b99a5",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2307,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:01:20Z",
+      "side": 0,
+      "message": "When was this added?  Are we ok losing the stat?",
+      "range": {
+        "startLine": 2307,
+        "startChar": 2,
+        "endLine": 2307,
+        "endChar": 22
+      },
+      "revId": "63b4eb1add4a939788be71bacd314013b123f6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
