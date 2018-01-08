@@ -1,10 +1,11 @@
-/* Copyright (c) 2010, Google Inc.
+/* -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
+ * Copyright (c) 2014, gperftools Contributors
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -14,7 +15,7 @@
  *     * Neither the name of Google Inc. nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -26,25 +27,37 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * ---
- * Author: Chris Ruemmler
  */
 
-#ifndef BASE_AUXILIARY_SYNCHRONIZATION_PROFILING_H_
-#define BASE_AUXILIARY_SYNCHRONIZATION_PROFILING_H_
+#ifndef GETENV_SAFE_H
+#define GETENV_SAFE_H
 
-#include "base/basictypes.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-namespace base {
+/* 
+ * This getenv function is safe to call before the C runtime is initialized.
+ * On Windows, it utilizes GetEnvironmentVariable() and on unix it uses
+ * /proc/self/environ instead calling getenv().  It's intended to be used in
+ * routines that run before main(), when the state required for getenv() may
+ * not be set up yet.  In particular, errno isn't set up until relatively late
+ * (after the pthreads library has a chance to make it threadsafe), and
+ * getenv() doesn't work until then.
+ * On some platforms, this call will utilize the same, static buffer for
+ * repeated GetenvBeforeMain() calls. Callers should not expect pointers from
+ * this routine to be long lived.
+ * Note that on unix, /proc only has the environment at the time the
+ * application was started, so this routine ignores setenv() calls/etc.  Also
+ * note it only reads the first 16K of the environment.
+ * 
+ * NOTE: this is version of GetenvBeforeMain that's usable from
+ * C. Implementation is in sysinfo.cc
+ */
+const char* TCMallocGetenvSafe(const char* name);
 
-// We can do contention-profiling of SpinLocks, but the code is in
-// mutex.cc, which is not always linked in with spinlock.  Hence we
-// provide a weak definition, which are used if mutex.cc isn't linked in.
-
-// Submit the number of cycles the spinlock spent contending.
-ATTRIBUTE_WEAK extern void SubmitSpinLockProfileData(const void *, int64);
-extern void SubmitSpinLockProfileData(const void *contendedlock,
-                                      int64 wait_cycles) {}
+#ifdef __cplusplus
 }
-#endif  // BASE_AUXILIARY_SYNCHRONIZATION_PROFILING_H_
+#endif
+
+#endif

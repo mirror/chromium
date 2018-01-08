@@ -96,7 +96,6 @@ if (use_allocator == "tcmalloc") {
       "$tcmalloc_dir/src/base/atomicops-internals-x86.h",
       "$tcmalloc_dir/src/base/atomicops.h",
       "$tcmalloc_dir/src/base/commandlineflags.h",
-      "$tcmalloc_dir/src/base/cycleclock.h",
 
       # We don't list dynamic_annotations.c since its copy is already
       # present in the dynamic_annotations target.

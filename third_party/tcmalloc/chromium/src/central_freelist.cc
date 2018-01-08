@@ -256,50 +256,63 @@ int CentralFreeList::RemoveRange(void **start, void **end, int N) {
   }
 
   int result = 0;
-  void* head = NULL;
-  void* tail = NULL;
+  *start = NULL;
+  *end = NULL;
   // TODO: Prefetch multiple TCEntries?
-  tail = FetchFromSpansSafe();
-  if (tail != NULL) {
-    FL_Push(&head, tail);
-    result = 1;
+  result = FetchFromOneSpansSafe(N, start, end);
+  if (result != 0) {
     while (result < N) {
-      void *t = FetchFromSpans();
-      if (!t) break;
-      FL_Push(&head, t);
-      result++;
+      int n;
+      void* head = NULL;
+      void* tail = NULL;
+      n = FetchFromOneSpans(N - result, &head, &tail);
+      if (!n) break;
+      result += n;
+      FL_PushRange(start, head, tail);
     }
   }
   lock_.Unlock();
-  *start = head;
-  *end = tail;
   return result;
 }
 
 
-void* CentralFreeList::FetchFromSpansSafe() {
-  void *t = FetchFromSpans();
-  if (!t) {
+int CentralFreeList::FetchFromOneSpansSafe(int N, void **start, void **end) {
+  int result = FetchFromOneSpans(N, start, end);
+  if (!result) {
     Populate();
-    t = FetchFromSpans();
+    result = FetchFromOneSpans(N, start, end);
   }
-  return t;
+  return result;
 }
 
-void* CentralFreeList::FetchFromSpans() {
-  if (tcmalloc::DLL_IsEmpty(&nonempty_)) return NULL;
+int CentralFreeList::FetchFromOneSpans(int N, void **start, void **end) {
+  if (tcmalloc::DLL_IsEmpty(&nonempty_)) return 0;
   Span* span = nonempty_.next;
 
   ASSERT(span->objects != NULL);
-  span->refcount++;
-  void *result = FL_Pop(&(span->objects));
-  if (span->objects == NULL) {
+
+  int result = 0;
+  void *prev, *curr;
+  curr = span->objects;
+  do {
+    prev = curr;
+    curr = FL_Next(curr);
+  } while (++result < N && curr != NULL);
+
+  if (curr == NULL) {
     // Move to empty list
     tcmalloc::DLL_Remove(span);
     tcmalloc::DLL_Prepend(&empty_, span);
     Event(span, 'E', 0);
   }
-  counter_--;
+
+  *start = span->objects;
+  *end = prev;
+  span->objects = curr;
+  FL_SetNext(*end, NULL);
+  FL_SetPrevious(*start, NULL);
+  span->refcount += result;
+  counter_ -= result;
   return result;
 }
 
@@ -326,7 +339,7 @@ void CentralFreeList::Populate() {
   // (Instead of being eager, we could just replace any stale info
   // about this span, but that seems to be no better in practice.)
   for (int i = 0; i < npages; i++) {
-    Static::pageheap()->CacheSizeClass(span->start + i, size_class_);
+    Static::pageheap()->SetCachedSizeClass(span->start + i, size_class_);
   }
 
   // Split the block into pieces and add to the free-list

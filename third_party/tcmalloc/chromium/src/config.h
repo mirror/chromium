@@ -2,7 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONFIG_H_
+#ifndef GPERFTOOLS_CONFIG_H_
+#define GPERFTOOLS_CONFIG_H_
 
 #include "build/build_config.h"
 
@@ -16,4 +17,4 @@
 #include "third_party/tcmalloc/chromium/src/config_freebsd.h"
 #endif
 
-#endif // CONFIG_H_
+#endif // GPERFTOOLS_CONFIG_H_
