@@ -26,8 +26,6 @@ class DiceTurnSyncOnHelper {
   virtual ~DiceTurnSyncOnHelper();
 
  private:
-  void Initialize();
-
   // Handles can offer sign-in errors.  It returns true if there is an error,
   // and false otherwise.
   bool HandleCanOfferSigninError();
@@ -44,6 +42,9 @@ class DiceTurnSyncOnHelper {
 
   // Creates the sync starter.
   void CreateSyncStarter(OneClickSigninSyncStarter::ProfileMode profile_mode);
+
+  // Aborts the flow.
+  void Abort();
 
   Profile* profile_;
   Browser* browser_;
