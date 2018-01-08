@@ -22,6 +22,7 @@
 #include "net/cert/cert_verify_result.h"
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/parsed_certificate.h"
+#include "net/cert/known_roots.h"
 #include "net/cert/x509_certificate.h"
 #include "net/cert/x509_util.h"
 #include "url/gurl.h"
@@ -301,9 +302,9 @@ bool VerifyFromAndroidTrustManager(
   }
 
   // Extract the public key hashes.
-  for (size_t i = 0; i < verified_chain.size(); i++) {
+  for (const auto& verified_cert : verified_chain) {
     base::StringPiece spki_bytes;
-    if (!asn1::ExtractSPKIFromDERCert(verified_chain[i], &spki_bytes)) {
+    if (!asn1::ExtractSPKIFromDERCert(verified_cert, &spki_bytes)) {
       verify_result->cert_status |= CERT_STATUS_INVALID;
       continue;
     }
@@ -311,6 +312,11 @@ bool VerifyFromAndroidTrustManager(
     HashValue sha256(HASH_VALUE_SHA256);
     crypto::SHA256HashString(spki_bytes, sha256.data(), crypto::kSHA256Length);
     verify_result->public_key_hashes.push_back(sha256);
+
+    if (!verify_result->is_issued_by_known_root) {
+      verify_result->is_issued_by_known_root =
+          GetNetTrustAnchorHistogramIdForSPKI(sha256) != 0;
+    }
   }
 
   return true;
