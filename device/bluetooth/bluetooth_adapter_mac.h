@@ -9,9 +9,11 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/containers/hash_tables.h"
+#include "base/containers/queue.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -131,6 +133,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
       device::BluetoothDevice::PairingDelegate* pairing_delegate) override;
 
  private:
+  using CallbackQueue =
+      base::queue<std::tuple<bool, base::Closure, ErrorCallback>>;
+
   // Resets |low_energy_central_manager_| to |central_manager| and sets
   // |low_energy_central_manager_delegate_| as the manager's delegate. Should
   // be called only when |IsLowEnergyAvailable()|.
@@ -173,6 +178,11 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   void InitForTest(scoped_refptr<base::SequencedTaskRunner> ui_task_runner);
   void PollAdapter();
 
+  static void ProcessPendingCallbacks(
+      CallbackQueue* queue,
+      bool result,
+      base::WeakPtr<BluetoothAdapterMac> weak_ptr);
+
   // Registers that a new |device| has replied to an Inquiry, is paired, or has
   // connected to the local host.
   void ClassicDeviceAdded(IOBluetoothDevice* device);
@@ -206,6 +216,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   std::string address_;
   bool classic_powered_;
   int num_discovery_sessions_;
+
+  CallbackQueue pending_powered_callbacks_;
+  CallbackQueue pending_discoverable_callbacks_;
 
   // Cached name. Updated in GetName if should_update_name_ is true.
   //

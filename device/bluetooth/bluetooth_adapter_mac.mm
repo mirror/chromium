@@ -31,6 +31,17 @@
 #include "device/bluetooth/bluetooth_low_energy_central_manager_delegate.h"
 #include "device/bluetooth/bluetooth_socket_mac.h"
 
+// Undocumented IOBluetooth preferences APIs:
+extern "C" {
+int IOBluetoothPreferencesAvailable();
+
+int IOBluetoothPreferenceGetControllerPowerState();
+void IOBluetoothPreferenceSetControllerPowerState(int state);
+
+int IOBluetoothPreferenceGetDiscoverableState();
+void IOBluetoothPreferenceSetDiscoverableState(int state);
+};
+
 namespace {
 
 // The frequency with which to poll the adapter for updates.
@@ -186,20 +197,31 @@ bool BluetoothAdapterMac::IsPowered() const {
 void BluetoothAdapterMac::SetPowered(bool powered,
                                      const base::Closure& callback,
                                      const ErrorCallback& error_callback) {
-  NOTIMPLEMENTED();
+  if (powered == IsPowered()) {
+    callback.Run();
+    return;
+  }
+
+  IOBluetoothPreferenceSetControllerPowerState(powered);
+  pending_powered_callbacks_.emplace(powered, callback, error_callback);
 }
 
-// TODO(krstnmnlsn): If this information is retrievable form IOBluetooth we
-// should return the discoverable status.
 bool BluetoothAdapterMac::IsDiscoverable() const {
-  return false;
+  return IOBluetoothPreferenceGetDiscoverableState();
 }
 
 void BluetoothAdapterMac::SetDiscoverable(
     bool discoverable,
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
-  NOTIMPLEMENTED();
+  if (discoverable == IsDiscoverable()) {
+    callback.Run();
+    return;
+  }
+
+  IOBluetoothPreferenceSetDiscoverableState(discoverable);
+  pending_discoverable_callbacks_.emplace(discoverable, callback,
+                                          error_callback);
 }
 
 bool BluetoothAdapterMac::IsDiscovering() const {
@@ -452,6 +474,17 @@ void BluetoothAdapterMac::PollAdapter() {
         base::SysNSStringToUTF8([controller addressAsString]));
     classic_powered = ([controller powerState] == kBluetoothHCIPowerStateON);
 
+    // Running the callbacks could destroy |this|, so we need to take extra
+    // care.
+    auto weak_ptr = weak_ptr_factory_.GetWeakPtr();
+    ProcessPendingCallbacks(&pending_powered_callbacks_, classic_powered,
+                            weak_ptr);
+    ProcessPendingCallbacks(&pending_discoverable_callbacks_, IsDiscoverable(),
+                            weak_ptr);
+
+    if (!weak_ptr)
+      return;
+
     if (address != address_)
       should_update_name_ = true;
   }
@@ -478,6 +511,26 @@ void BluetoothAdapterMac::PollAdapter() {
       base::Bind(&BluetoothAdapterMac::PollAdapter,
                  weak_ptr_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kPollIntervalMs));
+}
+
+// static
+void BluetoothAdapterMac::ProcessPendingCallbacks(
+    CallbackQueue* queue,
+    bool result,
+    base::WeakPtr<BluetoothAdapterMac> weak_ptr) {
+  while (weak_ptr && !queue->empty()) {
+    bool expected;
+    base::Closure callback;
+    ErrorCallback error_callback;
+    std::tie(expected, callback, error_callback) = queue->front();
+    if (expected == result) {
+      callback.Run();
+    } else {
+      error_callback.Run();
+    }
+
+    queue->pop();
+  }
 }
 
 void BluetoothAdapterMac::ClassicDeviceAdded(IOBluetoothDevice* device) {
