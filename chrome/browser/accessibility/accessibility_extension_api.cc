@@ -33,6 +33,7 @@
 #include "ash/accessibility/accessibility_focus_ring_controller.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h"
+#include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 
 using ash::AccessibilityFocusRingController;
 #endif
@@ -167,7 +168,7 @@ AccessibilityPrivateDarkenScreenFunction::Run() {
 #if defined(OS_CHROMEOS)
   bool darken = false;
   EXTENSION_FUNCTION_VALIDATE(args_->GetBoolean(0, &darken));
-  chromeos::AccessibilityManager::Get()->SetDarkenScreen(darken);
+  AccessibilityControllerClient::Get()->SetDarkenScreen(darken);
   return RespondNow(NoArguments());
 #else
   return RespondNow(Error(kErrorNotSupported));

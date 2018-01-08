@@ -26,6 +26,8 @@ class Connector;
 
 namespace ash {
 
+class ScopedBacklightsForcedOff;
+
 // The controller for accessibility features in ash. Features can be enabled
 // in chrome's webui settings or the system tray menu (see TrayAccessibility).
 // Uses preferences to communicate with chrome to support mash.
@@ -69,6 +71,7 @@ class ASH_EXPORT AccessibilityController
 
   // mojom::AccessibilityController:
   void SetClient(mojom::AccessibilityControllerClientPtr client) override;
+  void SetDarkenScreen(bool darken) override;
 
   // SessionObserver:
   void OnSigninScreenPrefServiceInitialized(PrefService* prefs) override;
@@ -99,6 +102,9 @@ class ASH_EXPORT AccessibilityController
   bool large_cursor_enabled_ = false;
   int large_cursor_size_in_dip_ = kDefaultLargeCursorSize;
   bool mono_audio_enabled_ = false;
+
+  // Used to force the backlights off to darken the screen.
+  std::unique_ptr<ScopedBacklightsForcedOff> scoped_backlights_forced_off_;
 
   DISALLOW_COPY_AND_ASSIGN(AccessibilityController);
 };
