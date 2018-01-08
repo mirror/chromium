@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2169be44_44ba46ab",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/getPrimaryServices/services-not-found.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:14:09Z",
+      "side": 0,
+      "message": "curlies not needed",
+      "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d394df_342fafef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/health-thermometer-two-iframes.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:14:09Z",
+      "side": 0,
+      "message": "we should be able to merge this functionality with health-thermometer-iframe",
+      "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
