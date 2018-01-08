@@ -87,17 +87,13 @@ if (use_v8_context_snapshot) {
     ]
 
     deps = [
+      "//build/config:exe_and_shlib_deps",
       "//gin:gin",
       "//mojo/edk/system:system",
       "//services/service_manager/public/cpp",
       "//third_party/WebKit/public:blink",
       "//v8",
     ]
-
-    if (is_linux && (is_component_build || using_sanitizer) &&
-        use_custom_libcxx) {
-      deps += [ "//buildtools/third_party/libc++:libc++" ]
-    }
 
     configs += [
       "//v8:external_startup_data",

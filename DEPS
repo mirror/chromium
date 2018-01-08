@@ -439,6 +439,12 @@ deps = {
     'condition': 'checkout_libaom',
   },
 
+  'src/third_party/libc++/trunk':
+      Var('chromium_git') + '/chromium/llvm-project/libcxx.git' + '@' + 'f56f1bba1ade4a408d403ff050d50e837bae47df', # r317124
+
+  'src/third_party/libc++abi/trunk':
+      Var('chromium_git') + '/chromium/llvm-project/libcxxabi.git' + '@' + '05ba3281482304ae8de31123a594972a495da06d', # r313308
+
   # Userspace interface to kernel DRM services.
   'src/third_party/libdrm/src': {
       'url': Var('chromium_git') + '/chromiumos/third_party/libdrm.git' + '@' + '16ffb1e6fce0fbd57f7a1e76021c575a40f6dc7a',
@@ -473,6 +479,9 @@ deps = {
       'url': Var('chromium_git') + '/aosp/platform/system/core/libsync.git' + '@' + 'aa6cda6f638bd57d3a024f0d201f723a5c3bb875',
       'condition': 'checkout_linux',
   },
+
+  'src/third_party/libunwind/trunk':
+      Var('chromium_git') + '/external/llvm.org/libunwind.git' + '@' + 'fc0a910c25d5415dd72ba9451b7cba380e3cc1e7', # r317125
 
   'src/third_party/libvpx/source/libvpx':
     Var('chromium_git') + '/webm/libvpx.git' + '@' +  '8a4336ed2edea09b67f49828df1f8c526a85a7a6',
