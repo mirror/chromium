@@ -70,6 +70,24 @@
       "revId": "7bf9f5c28d5fdd8d3b9a14199d9f4d102d9eb7a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02adb55_549feece",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-08T21:14:06Z",
+      "side": 0,
+      "message": "That seems like decent coverage for this case. LGTM, though be aware that there is a (small) chance that there\u0027s a caller of ResourceFetcher::RequestResource() that isn\u0027t prepared for an (1) async request (2) that fails synchronously during start (3) but doesn\u0027t return a nullptr Resource.",
+      "parentUuid": "b4136ba6_0a275278",
+      "revId": "7bf9f5c28d5fdd8d3b9a14199d9f4d102d9eb7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
