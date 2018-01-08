@@ -2,17 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef DEVICE_CTAP_CTAP_RESPONSE_CODE_H_
-#define DEVICE_CTAP_CTAP_RESPONSE_CODE_H_
+#ifndef DEVICE_CTAP_CTAP_CONSTANTS_H_
+#define DEVICE_CTAP_CTAP_CONSTANTS_H_
 
 #include <stdint.h>
 #include <vector>
 
 namespace device {
 
+namespace constants {
+
 // CTAP protocol device response code, as specified in
 // https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#authenticator-api
-enum class CTAPResponseCode : uint8_t {
+enum class CTAPDeviceResponseCode : uint8_t {
   kSuccess = 0x00,
   kCtap1ErrInvalidCommand = 0x01,
   kCtap1ErrInvalidParameter = 0x02,
@@ -66,6 +68,36 @@ enum class CTAPResponseCode : uint8_t {
   kCtap2ErrVendorLast = 0xFF
 };
 
+// Commands supported by CTAPHID device as specified in
+// https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#ctaphid-commands
+enum class CTAPHIDDeviceCommand : uint8_t {
+  kCtapHidMsg = 0x03,
+  kCtapHidCBOR = 0x10,
+  kCtapHidInit = 0x06,
+  kCtapHidPing = 0x01,
+  kCtapHidCancel = 0x11,
+  kCtapHidError = 0x3F,
+  kCtapHidKeepAlive = 0x3B,
+  kCtapHidWink = 0x08,
+  kCtapHidLock = 0x04,
+};
+
+// Authenticator API commands supported by CTAP devices, as specified in
+// https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#authenticator-api
+enum class CTAPRequestCommand : uint8_t {
+  kAuthenticatorMakeCredential = 0x01,
+  kAuthenticatorGetAssertion = 0x02,
+  kAuthenticatorGetNextAssertion = 0x08,
+  kAuthenticatorCancel = 0x03,
+  kAuthenticatorGetInfo = 0x04,
+  kAuthenticatorClientPin = 0x06,
+  kAuthenticatorReset = 0x07,
+};
+
+extern const std::vector<CTAPDeviceResponseCode> kResponseCodeList;
+
+}  // namespace constants
+
 }  // namespace device
 
-#endif  // DEVICE_CTAP_CTAP_RESPONSE_CODE_H_
+#endif  // DEVICE_CTAP_CTAP_CONSTANTS_H_
