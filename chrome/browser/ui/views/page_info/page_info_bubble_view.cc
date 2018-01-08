@@ -752,12 +752,14 @@ void PageInfoBubbleView::SetPermissionInfo(
     const PermissionInfoList& permission_info_list,
     ChosenObjectInfoList chosen_object_info_list) {
   // When a permission is changed, PageInfo::OnSitePermissionChanged()
-  // calls this method with updated permissions. However, PermissionSelectorRow
-  // will have already updated its state, so it's already reflected in the UI.
-  // In addition, if a permission is set to the default setting, PageInfo
-  // removes it from |permission_info_list|, but the button should remain.
-  if (permissions_view_->has_children())
-    return;
+  // calls this method with updated (and potentially additional) permissions.
+  // Discard the current layout to avoid displaying duplicate permissions.
+  if (permissions_view_->has_children()) {
+    // Prevent focus being set on a soon-to-be-deleted View.
+    GetFocusManager()->SetFocusedView(nullptr);
+    selector_rows_.clear();
+    permissions_view_->RemoveAllChildViews(true);
+  }
 
   GridLayout* layout = permissions_view_->SetLayoutManager(
       std::make_unique<views::GridLayout>(permissions_view_));
