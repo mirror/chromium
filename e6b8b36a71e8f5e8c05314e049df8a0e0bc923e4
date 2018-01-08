@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6446adbd_3ee27e43",
+        "filename": "content/browser/service_worker/service_worker_client_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-08T07:50:49Z",
+      "side": 1,
+      "message": "I think we can pass (i.e. std::move) \u0027blink::mojom::ServiceWorkerClientQueryOptionsPtr\u0027 along the way rather than a const ref.",
+      "range": {
+        "startLine": 541,
+        "startChar": 16,
+        "endLine": 541,
+        "endChar": 77
+      },
+      "revId": "e6b8b36a71e8f5e8c05314e049df8a0e0bc923e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
