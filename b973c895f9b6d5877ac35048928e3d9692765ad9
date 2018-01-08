@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "7d90d03b_7ca2a33b",
+        "filename": "chrome/browser/resources/chromeos/login/login_shared.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T19:50:44Z",
+      "side": 1,
+      "message": "login.js is still used. But login.js is used for login/lock but not for oobe. Modifying [md_]login_shared.js looks correct to me.",
+      "parentUuid": "f20899d9_aac86946",
+      "revId": "b973c895f9b6d5877ac35048928e3d9692765ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de35977d_ffc5a6e2",
+        "filename": "chrome/browser/resources/chromeos/login/login_shared.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T19:50:44Z",
+      "side": 1,
+      "message": "We should check that current screen is Eula and we should check for the non-MD version in this file that runs for non-MD oobe/login.\n\ne.g.\n\n  if (Oobe.getInstance().currentScreen \u0026\u0026\n      Oobe.getInstance().currentScreen.id \u003d\u003d \u0027eula\u0027 \u0026\u0026\n      $(\u0027oobe-eula\u0027) \u0026\u0026 !$(\u0027oobe-eula\u0027).hidden) {\n    $(\u0027oobe-eula\u0027).focus();\n  }\n\nAnd if we want to make this more generic, we can add a focusReturned to eula screen and code here becomes just a dispatcher.\n\ne.g.\nadd a \u0027onFocusReturned\u0027 method to oobe_screen_eula.js\n   onFocusReturned: function() {\n      // Do what you do here for both MD and non-MD eula webview.\n   }\n\nin here, just dispatch it to the current screen if it handles it\n   if (Oobe.getInstance().currentScreen \u0026\u0026\n       Oobe.getInstance().currentScreen.onFocusReturned) {\n     Oobe.getInstance().currentScreen.onFocusReturned();\n   }",
+      "revId": "b973c895f9b6d5877ac35048928e3d9692765ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "397f6da5_156cfb3f",
         "filename": "chrome/browser/resources/chromeos/login/login_shared.js",
         "patchSetId": 3
@@ -30,6 +65,23 @@
       "writtenOn": "2018-01-07T08:00:29Z",
       "side": 1,
       "message": "this is calling: https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/login/oobe_dialog.js?type\u003dcs\u0026q\u003doobe_dialog\u0026sq\u003dpackage:chromium\u0026l\u003d56",
+      "revId": "b973c895f9b6d5877ac35048928e3d9692765ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f382d9_03628845",
+        "filename": "chrome/browser/resources/chromeos/login/md_login_shared.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T19:50:44Z",
+      "side": 1,
+      "message": "Check current screen is eula and !oobeEula.hidden.\ne.g.\n  if (Oobe.getInstance().currentScreen \u0026\u0026\n      Oobe.getInstance().currentScreen.id \u003d\u003d \u0027eula\u0027 \u0026\u0026\n      oobeEula \u0026\u0026 !oobeEula.hidden) {\n    oobeEula.focus();\n  }",
       "revId": "b973c895f9b6d5877ac35048928e3d9692765ad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
