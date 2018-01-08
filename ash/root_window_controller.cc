@@ -36,7 +36,7 @@
 #include "ash/touch/touch_hud_projection.h"
 #include "ash/touch/touch_observer_hud.h"
 #include "ash/virtual_keyboard_container_layout_manager.h"
-#include "ash/wallpaper/wallpaper_delegate.h"
+#include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "ash/wm/always_on_top_controller.h"
 #include "ash/wm/container_finder.h"
@@ -464,7 +464,7 @@ void RootWindowController::SetAnimatingWallpaperWidgetController(
 void RootWindowController::OnWallpaperAnimationFinished(views::Widget* widget) {
   // Make sure the wallpaper is visible.
   system_wallpaper_->SetColor(SK_ColorBLACK);
-  Shell::Get()->wallpaper_delegate()->OnWallpaperAnimationFinished();
+  Shell::Get()->wallpaper_controller()->OnWallpaperAnimationFinished();
   // Only removes old component when wallpaper animation finished. If we
   // remove the old one before the new wallpaper is done fading in there will
   // be a white flash during the animation.

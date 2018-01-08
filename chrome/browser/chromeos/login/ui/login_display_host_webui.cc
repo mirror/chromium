@@ -869,13 +869,6 @@ void LoginDisplayHostWebUI::Observe(
   } else if (chrome::NOTIFICATION_WALLPAPER_ANIMATION_FINISHED == type) {
     VLOG(1) << "Login WebUI >> wp animation done";
     is_wallpaper_loaded_ = true;
-    if (!ash_util::IsRunningInMash()) {
-      ash::Shell::Get()
-          ->wallpaper_delegate()
-          ->OnWallpaperBootAnimationFinished();
-    } else {
-      NOTIMPLEMENTED();
-    }
     if (waiting_for_wallpaper_load_) {
       // StartWizard / StartSignInScreen could be called multiple times through
       // the lifetime of host.

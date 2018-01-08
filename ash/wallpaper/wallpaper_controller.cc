@@ -637,6 +637,36 @@ wallpaper::WallpaperType WallpaperController::GetWallpaperType() const {
   return wallpaper::WALLPAPER_TYPE_COUNT;
 }
 
+bool WallpaperController::ShouldShowInitialAnimation() {
+  // The slower initial animation is only applicable if:
+  // 1) It's the first run after system boot, not after user sign-out.
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kFirstExecAfterBoot)) {
+    return false;
+  }
+  // 2) It's at the login screen.
+  if (Shell::Get()->session_controller()->IsActiveUserSessionStarted() ||
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kLoginManager)) {
+    return false;
+  }
+  // 3) It's the first wallpaper being shown, not for the switching between
+  //    multiple user pods.
+  if (!is_first_wallpaper_)
+    return false;
+
+  return true;
+}
+
+void WallpaperController::OnWallpaperAnimationFinished() {
+  // TODO(crbug.com/784495, 776464): Deprecate this method after views-based
+  // login is enabled. This is used by a legacy code path in
+  // |chromeos::LoginDisplayHostWebUI|.
+  if (wallpaper_controller_client_ && is_first_wallpaper_) {
+    wallpaper_controller_client_->OnFirstWallpaperAnimationFinished();
+  }
+}
+
 void WallpaperController::SetDefaultWallpaperImpl(
     const AccountId& account_id,
     const user_manager::UserType& user_type,
@@ -715,6 +745,7 @@ void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
   // 1x1 wallpaper should be stretched.
   if (image.width() == 1 && image.height() == 1)
     current_user_wallpaper_info_.layout = wallpaper::WALLPAPER_LAYOUT_STRETCH;
+
   VLOG(1) << "SetWallpaper: image_id="
           << wallpaper::WallpaperResizer::GetImageId(image)
           << " layout=" << current_user_wallpaper_info_.layout;
@@ -730,6 +761,8 @@ void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
     color_calculator_->RemoveObserver(this);
     color_calculator_.reset();
   }
+
+  is_first_wallpaper_ = current_wallpaper_ ? false : true;
   current_wallpaper_.reset(new wallpaper::WallpaperResizer(
       image, GetMaxDisplaySizeInNative(), current_user_wallpaper_info_,
       sequenced_task_runner_));
@@ -738,6 +771,7 @@ void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
 
   for (auto& observer : observers_)
     observer.OnWallpaperDataChanged();
+
   wallpaper_mode_ = WALLPAPER_IMAGE;
   InstallDesktopControllerForAllWindows();
   wallpaper_count_for_testing_++;

@@ -12,6 +12,7 @@
 #include "base/path_service.h"
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
+#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/customization/customization_wallpaper_util.h"
 #include "chrome/browser/chromeos/extensions/wallpaper_manager_util.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
@@ -26,6 +27,7 @@
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user_manager.h"
 #include "components/wallpaper/wallpaper_files_id.h"
+#include "content/public/browser/notification_service.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 
@@ -506,4 +508,11 @@ void WallpaperControllerClient::OnReadyToSetWallpaper() {
   }
 
   ShowRegisteredDeviceWallpaper();
+}
+
+void WallpaperControllerClient::OnFirstWallpaperAnimationFinished() {
+  content::NotificationService::current()->Notify(
+      chrome::NOTIFICATION_WALLPAPER_ANIMATION_FINISHED,
+      content::NotificationService::AllSources(),
+      content::NotificationService::NoDetails());
 }
