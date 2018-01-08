@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07b83e9_1e11b93d",
+        "filename": "ash/system/power/power_button_controller_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T21:01:13Z",
+      "side": 1,
+      "message": "passing SessionController* and LockStateController* into this method instead of grabbing the singletons here may make it easier to write tests in the future",
+      "revId": "caf591cb11ed612d8c0ddab5d313e9fa0e8a7370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5486dab7_5c7151f9",
+        "filename": "ash/system/power/power_button_controller_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T21:01:13Z",
+      "side": 1,
+      "message": "if you don\u0027t plan to add any non-static members, can you put this into a namespace instead of using a class?",
+      "revId": "caf591cb11ed612d8c0ddab5d313e9fa0e8a7370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
