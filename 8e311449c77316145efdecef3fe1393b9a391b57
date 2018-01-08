@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9779aea_281a97bf",
+        "filename": "chrome/browser/extensions/global_shortcut_listener.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:37:47Z",
+      "side": 1,
+      "message": "This is a bit of an odd pattern.  I think this would be clearer and less open to potential misuse if instead we just created a AcceleratorData struct within the GlobalShortcutListener for the scope and observer, and keyed the map on accelerator only.  Something like:\n\nclass GlobalShortcutListener {\n  ...\n private:\n  struct AcceleratorData {\n    Observer* observer;\n    AcceleratorScope scope;\n  }\n  using AcceleratorMap \u003d std::map\u003cui::Accelerator, AcceleratorData\u003e;\n}",
+      "revId": "8e311449c77316145efdecef3fe1393b9a391b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
