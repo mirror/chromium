@@ -539,6 +539,9 @@ class CONTENT_EXPORT RenderThreadImpl
 
   bool NeedsToRecordFirstActivePaint(int metric_type) const;
 
+  // Sets the current status of HDR rendering in the pipeline: active or not.
+  void SetHDRRenderingStatus(bool status);
+
  protected:
   RenderThreadImpl(
       const InProcessChildThreadParams& params,
@@ -777,6 +780,9 @@ class CONTENT_EXPORT RenderThreadImpl
   bool is_elastic_overscroll_enabled_;
   bool is_threaded_animation_enabled_;
   bool is_scroll_animator_enabled_;
+
+  // True if the screen(s) supports HDR rendering.
+  bool is_hdr_rendering_enabled_;
 
   class PendingFrameCreate : public base::RefCounted<PendingFrameCreate> {
    public:

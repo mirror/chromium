@@ -691,6 +691,7 @@ void RenderThreadImpl::Init(
                       switches::IsMusHostingViz() ? ui::mojom::kServiceName
                                                   : mojom::kBrowserServiceName,
                       GetIOTaskRunner());
+  is_hdr_rendering_enabled_ = false;
 
   viz::mojom::SharedBitmapAllocationNotifierPtr
       shared_bitmap_allocation_notifier_ptr;
@@ -1430,18 +1431,17 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
     if (shared_context_provider) {
       viz::ContextProvider::ScopedContextLock lock(
           shared_context_provider.get());
-      if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
+      if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
         return gpu_factories_.back().get();
-      } else {
-        scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
-            GetMediaThreadTaskRunner();
-        media_task_runner->PostTask(
-            FROM_HERE,
-            base::BindOnce(
-                base::IgnoreResult(
-                    &GpuVideoAcceleratorFactoriesImpl::CheckContextLost),
-                base::Unretained(gpu_factories_.back().get())));
-      }
+
+      scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
+          GetMediaThreadTaskRunner();
+      media_task_runner->PostTask(
+          FROM_HERE,
+          base::BindOnce(
+              base::IgnoreResult(
+                  &GpuVideoAcceleratorFactoriesImpl::CheckContextLost),
+              base::Unretained(gpu_factories_.back().get())));
     }
   }
 
@@ -1495,6 +1495,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
       media_task_runner, std::move(media_context_provider),
       enable_gpu_memory_buffer_video_frames, enable_video_accelerator,
       vea_provider.PassInterface()));
+  gpu_factories_.back()->SetHDRRenderingStatus(is_hdr_rendering_enabled_);
   return gpu_factories_.back().get();
 }
 
@@ -2536,6 +2537,16 @@ bool RenderThreadImpl::NeedsToRecordFirstActivePaint(
     return false;
   base::TimeDelta passed = base::TimeTicks::Now() - was_backgrounded_time_;
   return passed.InMinutes() >= 5;
+}
+
+void RenderThreadImpl::SetHDRRenderingStatus(bool status) {
+  DCHECK(IsMainThread());
+  is_hdr_rendering_enabled_ = status;
+
+  for (const auto& factories : gpu_factories_) {
+    if (factories)
+      factories->SetHDRRenderingStatus(status);
+  }
 }
 
 }  // namespace content
