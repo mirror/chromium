@@ -40,6 +40,8 @@ import org.chromium.ui.base.MenuSourceType;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.touch_selection.SelectionEventType;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Unit tests for {@link SelectionPopupController}.
  */
@@ -129,6 +131,7 @@ public class SelectionPopupControllerTest {
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
         when(mWebContents.getRenderCoordinates()).thenReturn(mRenderCoordinates);
         when(mRenderCoordinates.getDeviceScaleFactor()).thenReturn(1.f);
+        when(mWindowAndroid.getContext()).thenReturn(new WeakReference<Context>(null));
 
         mController = SelectionPopupController.createForTesting(
                 mContext, mWindowAndroid, mWebContents, mView);

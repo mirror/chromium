@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -290,6 +291,12 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mUnselectAllOnDismiss = true;
 
         if (hasSelection()) {
+            // Device is not provisioned, don't trigger Smart Selection at all.
+            if (!ApiCompatibilityUtils.isDeviceProvisioned(mWindowAndroid.getContext().get())) {
+                showActionModeOrClearOnFailure();
+                return;
+            }
+
             if (mSelectionMetricsLogger != null) {
                 switch (sourceType) {
                     case MenuSourceType.MENU_SOURCE_ADJUST_SELECTION:
