@@ -22,6 +22,30 @@
       "revId": "423fc782bb11e8d9d0607d642ecc2d2d8560fcb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8e80c6_e1402017",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-08T21:41:58Z",
+      "side": 1,
+      "message": "So, it is nuanced. If an interstitial is shown, |mActivityTestRule.loadUrl(url)| will fail to stop blocking, since the URL will never reach the load event.\n\nHowever, you\u0027re right, if we replaced the loadUrl with a loadUrlNonBlocking, I\u0027m not sure of a way to wait until an interstitial is confidently never going to show. WDYT?",
+      "parentUuid": "2264c6e4_a1980f60",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 35
+      },
+      "revId": "423fc782bb11e8d9d0607d642ecc2d2d8560fcb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
