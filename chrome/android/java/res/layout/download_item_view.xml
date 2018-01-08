@@ -24,7 +24,8 @@
                 android:id="@+id/completed_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" >
 
             <TextView
                     android:id="@+id/filename_completed_view"
