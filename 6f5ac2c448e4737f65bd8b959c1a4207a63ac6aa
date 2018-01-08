@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e03ed702_fd2edffc",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-08T22:02:27Z",
+      "side": 1,
+      "message": "Can you leave the dump_guid argument name in there?",
+      "revId": "6f5ac2c448e4737f65bd8b959c1a4207a63ac6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
