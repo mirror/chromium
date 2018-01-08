@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f83b75b_50e53c8a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 9245,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:37:53Z",
+      "side": 1,
+      "message": "nit: these should probably all end in \"_TITLE\" (I\u0027d say IDS_MANAGE_PASSWORDS_TITLE_DIFFERENT_DOMAIN in the old code was an outlier). However, \"EMPTY_TITLE\" does seem to suggest something different.. \"NO_PASSWORDS\" seems reasonable though. I.e.\n\nIDS_MANAGE_PASSWORDS_NO_PASSWORDS_TITLE\nIDS_MANAGE_PASSWORDS_DIFFERENT_DOMAIN_TITLE\nIDS_MANAGE_PASSWORDS_DIFFERENT_DOMAIN_NO_PASSWORDS_TITLE\n\n(I\u0027m not set on these though, if you or vasilii think of something else)",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591aec4f_db01b086",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:37:53Z",
+      "side": 1,
+      "message": "I think this whole class can be removed? It\u0027s just an NSTextField subclass - with no string value, it is just empty space.",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b0b265_a8084279",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:37:53Z",
+      "side": 1,
+      "message": "this should move into the else{}, along with the contentView declaration",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1114103_fc407e30",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:37:53Z",
+      "side": 1,
+      "message": "does this still do something sensible? With no text, the width is probably 0... which might not be the right thing to have for the title? The line below adds height but not width.",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
