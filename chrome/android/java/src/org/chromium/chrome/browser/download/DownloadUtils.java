@@ -685,7 +685,14 @@ public class DownloadUtils {
                 entry != null && state == DownloadState.INTERRUPTED && entry.isAutoResumable;
 
         if (isDownloadPending) {
-            return context.getString(R.string.download_notification_pending);
+            // All pending, non-offline page downloads are by default waiting for network.
+            // The other pending reason (i.e. waiting for another download to complete) applies
+            // only to offline page requests because offline pages download one at a time.
+            if (OfflinePageBridge.isOfflinePagesDescriptivePendingStatusEnabled()) {
+                return context.getString(R.string.download_notification_pending_network);
+            } else {
+                return context.getString(R.string.download_notification_pending);
+            }
         } else if (isDownloadPaused(item)) {
             return context.getString(R.string.download_notification_paused);
         }
