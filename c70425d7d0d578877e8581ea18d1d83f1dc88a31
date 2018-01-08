@@ -46,6 +46,30 @@
       "revId": "c70425d7d0d578877e8581ea18d1d83f1dc88a31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b96da4_733b13ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-08T11:25:04Z",
+      "side": 1,
+      "message": "Yeah… I guess I would be fine with adding a new method (we could eg. extract the histogram recording to a shared method); after all, we do two different things here now: (always) record how long we waited for seeding to be done, and (sometimes) create the state machine.",
+      "parentUuid": "ec07de9b_8d29a8b3",
+      "range": {
+        "startLine": 567,
+        "startChar": 8,
+        "endLine": 567,
+        "endChar": 10
+      },
+      "revId": "c70425d7d0d578877e8581ea18d1d83f1dc88a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
