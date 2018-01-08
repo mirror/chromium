@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35ba291d_42655f96",
+        "filename": "chrome/android/java/res/layout/download_location_dialog.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Add copyright",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03a0d52_d28f1225",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "wahoo!",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94ef9cd_a723ea94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Javadoc that explains the caveates of onComplete and the return value.  Should this be a Path instead of a String?",
+      "range": {
+        "startLine": 26,
+        "startChar": 54,
+        "endLine": 26,
+        "endChar": 90
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71bc80e8_260fd5c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Should we dismiss the dialog here?",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5393f2c4_e37ad7fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Check if this is null (e.g. if the weak ref doesn\u0027t have it)?",
+      "range": {
+        "startLine": 36,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a2d352_f97b6fe3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/DownloadPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Do we need \"Android\" or are we going to use the general Chrome pref for this?",
+      "range": {
+        "startLine": 61,
+        "startChar": 52,
+        "endLine": 61,
+        "endChar": 79
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124d5775_092d87ed",
+        "filename": "chrome/browser/android/download/download_location_dialog_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Do we want to handle multiple calls to this at the same time?  If not, should we do something special to deal with it (e.g. throw an error/cancel back through the dialog complete callback)?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 77
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a205de_f8a361c7",
+        "filename": "chrome/browser/android/download/download_location_dialog_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Should we drop the callback after calling?",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161f09d6_403cdba4",
+        "filename": "chrome/browser/android/download/download_location_dialog_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Some people do \"}  // namespace content\" here but it\u0027s such a small namespace I think it\u0027s optional.  Just FYI.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cab1e40_27eb2abe",
+        "filename": "chrome/browser/android/download/download_location_dialog_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "const\u0026?",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bf046e_65b511e1",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Does this already exist for normal Chrome?  Can we use the same pref?",
+      "range": {
+        "startLine": 1247,
+        "startChar": 31,
+        "endLine": 1247,
+        "endChar": 63
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b285d41b_bfa13f2f",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "Build this in the constructor initialization list IMO.",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 68
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760b9462_81f66606",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T22:22:02Z",
+      "side": 1,
+      "message": "We still need to hit the callback if there is no WebContents I think.",
+      "range": {
+        "startLine": 775,
+        "startChar": 6,
+        "endLine": 778,
+        "endChar": 7
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
