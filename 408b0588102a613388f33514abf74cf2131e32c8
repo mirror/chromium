@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97f407d_51b11e74",
+        "filename": "chrome/test/data/webui/md_bookmarks/command_manager_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-08T16:36:37Z",
+      "side": 1,
+      "message": "Nit: more bonus whitespace",
+      "revId": "408b0588102a613388f33514abf74cf2131e32c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8b7109_fca33db2",
+        "filename": "chrome/test/data/webui/md_bookmarks/command_manager_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-08T16:36:37Z",
+      "side": 1,
+      "message": "Nit: Should probably assert here that Sort is disabled as well.",
+      "revId": "408b0588102a613388f33514abf74cf2131e32c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
