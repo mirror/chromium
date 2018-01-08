@@ -16,6 +16,24 @@
       "revId": "1256163f43be8a359d4f5eb2d80e2ad3267ad01c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303b479c_23ba6ce6",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-08T23:22:29Z",
+      "side": 0,
+      "message": "This wasn\u0027t really needed in the first place, given that at most one profile exists in a kiosk session (and thus at most one ExternalProviderImpl).\n\nThe cl changes this to a CHECK in KioskAppManager (which verifies that at most one kiosk app external loader is created per session).",
+      "parentUuid": "56de0884_07e0fcff",
+      "revId": "1256163f43be8a359d4f5eb2d80e2ad3267ad01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
