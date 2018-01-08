@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c4227b8_872cc1ab",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-08T10:39:06Z",
+      "side": 1,
+      "message": "You need to check property block here too:\n\n  if (weakSelf.propertiesBlock)\n    weakSelf.propertiesBlock(task, error);\n\nI would recommend however to use a local variable to avoid any risk of race-condition between threads (weakSelf may become nil between the check and the call):\n\n  PropertiesBlock propertiesBlock \u003d weakSelf.propertiesBlock;\n  if (propertiesBlock)\n    propertiesBlock(task, error);\n\nNote, that the compiler claims that \"dereferencing a __weak pointer is not allowed due to possible null value caused by race condition, assign it to strong variable first\" when using code like \"weakSelf-\u003e_propertiesBlock\".\n\nSo if there is race condition when dereferencing the pointer, there is race condition between checking the value returned by the property and using it.",
+      "range": {
+        "startLine": 108,
+        "startChar": 24,
+        "endLine": 108,
+        "endChar": 62
+      },
+      "revId": "d76bce3e97f8b1d05429905d249c6488fec29baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
