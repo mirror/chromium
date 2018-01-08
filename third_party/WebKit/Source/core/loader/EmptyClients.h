@@ -80,7 +80,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
  public:
   static EmptyChromeClient* Create() { return new EmptyChromeClient; }
 
-  ~EmptyChromeClient() override {}
+  ~EmptyChromeClient() override = default;
   void ChromeDestroyed() override {}
 
   WebViewImpl* GetWebView() const override { return nullptr; }
@@ -393,7 +393,7 @@ class EmptySpellCheckPanelHostClient : public WebSpellCheckPanelHostClient {
   USING_FAST_MALLOC(EmptySpellCheckPanelHostClient);
 
  public:
-  EmptySpellCheckPanelHostClient() {}
+  EmptySpellCheckPanelHostClient() = default;
 
   void ShowSpellingUI(bool) override {}
   bool IsShowingSpellingUI() override { return false; }
@@ -407,7 +407,7 @@ class EmptyEditorClient final : public EditorClient {
 
  public:
   EmptyEditorClient() : EditorClient() {}
-  ~EmptyEditorClient() override {}
+  ~EmptyEditorClient() override = default;
 
   void RespondToChangedContents() override {}
   void RespondToChangedSelection(LocalFrame*, SelectionType) override {}

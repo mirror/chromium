@@ -37,7 +37,7 @@ namespace blink {
 
 EditorClient::EditorClient(WebViewImpl& webview) : web_view_(&webview) {}
 
-EditorClient::~EditorClient() {}
+EditorClient::~EditorClient() = default;
 
 void EditorClient::RespondToChangedSelection(LocalFrame* frame,
                                              SelectionType selection_type) {

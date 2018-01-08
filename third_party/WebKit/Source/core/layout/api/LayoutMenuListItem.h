@@ -23,7 +23,7 @@ class LayoutMenuListItem : public LayoutBlockItem {
 
   explicit LayoutMenuListItem(std::nullptr_t) : LayoutBlockItem(nullptr) {}
 
-  LayoutMenuListItem() {}
+  LayoutMenuListItem() = default;
 
   String GetText() const { return ToMenuList()->GetText(); }
 

@@ -23,7 +23,7 @@ class LayoutBoxModel : public LayoutItem {
 
   explicit LayoutBoxModel(std::nullptr_t) : LayoutItem(nullptr) {}
 
-  LayoutBoxModel() {}
+  LayoutBoxModel() = default;
 
   PaintLayer* Layer() const { return ToBoxModel()->Layer(); }
 
