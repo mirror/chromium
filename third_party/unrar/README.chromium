@@ -1,0 +1,12 @@
+Name: UnRAR source for decompressing .RAR and other files.
+Short Name: unrar
+URL: http://www.rarlab.com/rar_add.htm
+Version: 5.5.8
+License: Non-standard
+License file: license.txt
+SHA-256: 9b66e4353a9944bc140eb2a919ff99482dd548f858f5e296d809e8f7cdb2fcf4
+URL: http://www.rarlab.com/rar/unrarsrc-5.5.8.tar.gz (HTTPS unavailable)
+
+Description:
+This library is used to deompress and analyze .RAR and other related files that
+have been downloaded by the user to check their Safe Browsing reputation.
