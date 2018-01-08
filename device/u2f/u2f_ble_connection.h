@@ -75,6 +75,8 @@ class U2fBleConnection : public BluetoothAdapter::Observer {
   virtual void WriteServiceRevision(ServiceRevision service_revision,
                                     WriteCallback callback);
 
+  const BluetoothDevice* GetDevice() const;
+
  protected:
   explicit U2fBleConnection(std::string device_address);
 

@@ -39,6 +39,8 @@ class U2fBleDevice : public U2fDevice {
   void TryWink(WinkCallback callback) override;
   std::string GetId() const override;
 
+  const BluetoothDevice* GetDevice() const;
+
   U2fBleConnection::ConnectionStatusCallback
   GetConnectionStatusCallbackForTesting();
   U2fBleConnection::ReadCallback GetReadCallbackForTesting();

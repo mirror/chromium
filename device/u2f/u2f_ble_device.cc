@@ -55,6 +55,10 @@ std::string U2fBleDevice::GetId() const {
   return GetId(connection_->address());
 }
 
+const BluetoothDevice* U2fBleDevice::GetDevice() const {
+  return connection_ ? connection_->GetDevice() : nullptr;
+}
+
 U2fBleConnection::ConnectionStatusCallback
 U2fBleDevice::GetConnectionStatusCallbackForTesting() {
   return base::BindRepeating(&U2fBleDevice::OnConnectionStatus,

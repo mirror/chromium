@@ -255,6 +255,10 @@ void U2fBleConnection::WriteServiceRevision(ServiceRevision service_revision,
       base::Bind(OnWriteError, copyable_callback));
 }
 
+const BluetoothDevice* U2fBleConnection::GetDevice() const {
+  return adapter_ ? adapter_->GetDevice(address_) : nullptr;
+}
+
 void U2fBleConnection::OnGetAdapter(scoped_refptr<BluetoothAdapter> adapter) {
   if (!adapter) {
     DLOG(ERROR) << "Failed to get Adapter.";
