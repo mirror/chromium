@@ -70,6 +70,24 @@
       "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38edd637_84625377",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T14:51:22Z",
+      "side": 1,
+      "message": "thanks for the explanation! could you add an additional field like is_topmost_browser, in that case?\n\ni\u0027d like to avoid combining multiple concepts into individual fields if at all possible, since doing so both limits flexibility in the future and also often results in imprecise names that don\u0027t fully describe all of what\u0027s being represented.",
+      "parentUuid": "dff1adf7_8783e266",
+      "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
