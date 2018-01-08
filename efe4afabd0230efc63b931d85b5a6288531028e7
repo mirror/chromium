@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cfe670e_a754915b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/upgrade-insecure-requests/basic-link-no-upgrade.https.php",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-08T14:23:08Z",
+      "side": 1,
+      "message": "Can you add these tests to `third_party/WebKit/LayoutTests/external/wpt/upgrade-insecure-requests` instead? That way they\u0027ll be shared with other browser vendors in the central \"web platform tests\" repository.",
+      "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f405e6d_d22f0de0",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-08T14:23:08Z",
+      "side": 1,
+      "message": "This code (and the code on line 198 above) would be simpler if we used `execution_context_-\u003eGetSecurityContext().AddInsecureNavigationUpgrade(hash)` in both cases (e.g. just drop the `if`). The behavior should be the same, right?",
+      "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38035c73_a03fb34b",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-08T14:23:08Z",
+      "side": 1,
+      "message": "Nit: 5? 1?",
+      "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
