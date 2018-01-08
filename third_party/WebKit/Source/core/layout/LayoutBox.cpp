@@ -1387,7 +1387,10 @@ bool LayoutBox::ApplyBoxClips(
     rect.Intersect(clip_rect);
     does_intersect = !rect.IsEmpty();
   }
-  transform_state.SetQuad(FloatQuad(FloatRect(rect)));
+  if (does_intersect)
+    transform_state.SetQuad(FloatQuad(FloatRect(rect)));
+  else
+    transform_state.SetQuad(FloatQuad(FloatRect(clip_rect)));
 
   return does_intersect;
 }

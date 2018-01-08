@@ -1325,6 +1325,7 @@ bool LayoutObject::MapToVisualRectInAncestorSpaceInternal(
   if (ancestor == this)
     return true;
 
+  bool retval = true;
   if (LayoutObject* parent = Parent()) {
     if (parent->IsBox()) {
       LayoutBox* parent_box = ToLayoutBox(parent);
@@ -1343,15 +1344,16 @@ bool LayoutObject::MapToVisualRectInAncestorSpaceInternal(
           preserve3d ? TransformState::kAccumulateTransform
                      : TransformState::kFlattenTransform;
 
-      if (parent != ancestor &&
-          !parent_box->MapScrollingContentsRectToBoxSpace(
-              transform_state, accumulation, visual_rect_flags))
-        return false;
+      if (parent != ancestor) {
+        retval = parent_box->MapScrollingContentsRectToBoxSpace(
+            transform_state, accumulation, visual_rect_flags);
+      }
     }
     return parent->MapToVisualRectInAncestorSpaceInternal(
-        ancestor, transform_state, visual_rect_flags);
+               ancestor, transform_state, visual_rect_flags) &&
+           retval;
   }
-  return true;
+  return retval;
 }
 
 void LayoutObject::DirtyLinesFromChangedChild(LayoutObject*, MarkingBehavior) {}
