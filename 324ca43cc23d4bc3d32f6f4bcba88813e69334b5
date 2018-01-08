@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fb8cfcde_446f3819",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T22:06:16Z",
+      "side": 1,
+      "message": "I see. I think I would prefer to restore NotifyObservers() with a comment, e.g. \"Call this when the pref value changes.\"",
+      "parentUuid": "ec0215af_4bdec5d5",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be78d6df_2359d489",
         "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
         "patchSetId": 7
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "a0ebc3cb_59ce38f8",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0dbef0d_33bbc596",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T22:06:16Z",
+      "side": 1,
+      "message": "Not done?",
+      "parentUuid": "9d8d8107_6413df69",
       "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
