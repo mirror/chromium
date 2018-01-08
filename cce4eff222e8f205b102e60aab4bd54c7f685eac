@@ -22,6 +22,30 @@
       "revId": "cce4eff222e8f205b102e60aab4bd54c7f685eac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd14455_8caca502",
+        "filename": "content/browser/indexed_db/indexed_db_callbacks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-08T18:14:40Z",
+      "side": 1,
+      "message": "And these objects are much more than passive... https://google.github.io/styleguide/cppguide.html#Structs_vs._Classes\n\nThey should be classes.",
+      "parentUuid": "143efca9_f0ad73b0",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "cce4eff222e8f205b102e60aab4bd54c7f685eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
