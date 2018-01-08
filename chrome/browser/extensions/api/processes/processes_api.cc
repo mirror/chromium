@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <memory>
 #include <set>
+#include <string>
 #include <utility>
 
 #include "base/lazy_instance.h"
@@ -16,6 +17,7 @@
 #include "base/process/process.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/crash_upload_list/crash_upload_list.h"
 #include "chrome/browser/extensions/api/tabs/tabs_constants.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -691,5 +693,43 @@ void ProcessesGetProcessInfoFunction::GatherDataAndRespond(
   task_manager::TaskManagerInterface::GetTaskManager()->RemoveObserver(this);
   Release();
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// ProcessesGetCrashesFunction:
+////////////////////////////////////////////////////////////////////////////////
+
+ProcessesGetCrashesFunction::ProcessesGetCrashesFunction() {}
+
+ExtensionFunction::ResponseAction ProcessesGetCrashesFunction::Run() {
+  AddRef();
+
+  upload_list_ = CreateCrashUploadList();
+
+  upload_list_->Load(
+      base::BindOnce(&ProcessesGetCrashesFunction::OnUploadListAvailable,
+                     base::Unretained(this)));
+
+  return RespondLater();
+}
+
+void ProcessesGetCrashesFunction::OnUploadListAvailable() {
+  std::vector<UploadList::UploadInfo> list;
+  upload_list_->GetUploads(100, &list);
+  std::vector<api::processes::Crash> crashes(list.size());
+  for (size_t i = 0; i < list.size(); ++i) {
+    crashes[i].uuid = list[i].local_id;
+    crashes[i].creation_time = list[i].capture_time.ToJsTime();
+    crashes[i].filename = list[i].file_path.AsUTF8Unsafe();
+    crashes[i].uploaded =
+        list[i].state == UploadList::UploadInfo::State::Uploaded;
+    if (crashes[i].uploaded)
+      crashes[i].server_id.reset(new std::string(list[i].upload_id));
+  }
+
+  return Respond(
+      ArgumentList(api::processes::GetCrashes::Results::Create(crashes)));
+}
+
+ProcessesGetCrashesFunction::~ProcessesGetCrashesFunction() {}
 
 }  // namespace extensions
