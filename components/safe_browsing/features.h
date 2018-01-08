@@ -50,5 +50,5 @@ extern const base::Feature kAppendRecentNavigationEvents;
 
 base::ListValue GetFeatureStatusList();
 
-#endif  // COMPONENTS_SAFE_BROWSING_FEATURES_H_
 }  // namespace safe_browsing
+#endif  // COMPONENTS_SAFE_BROWSING_FEATURES_H_
