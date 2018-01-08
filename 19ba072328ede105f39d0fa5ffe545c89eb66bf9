@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e8af1b7d_a91cbc6c",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-08T22:03:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \"canonical\" means in this situation. :)\n\nIf you have 1000 entries in this map to the same URL, then it will take 10-ish steps to find the first one (vs one step with a map\u003c\u003e).\n\nre: the hint, won\u0027t it still have to traverse to a leaf in the tree? Another 10 steps (vs push_back with the list\u003c\u003e version).\n\nFinally, removing the URL is map.erase(URL);\n\nAs a side benefit (may not be relevant) but your callbacks will then be guaranteed in order.\n\nI would admit that you\u0027re unlikely to see these kinds of numbers, but I am wondering why not do it the faster, simpler way.",
+      "parentUuid": "8cff1fa1_395ecc0c",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "19ba072328ede105f39d0fa5ffe545c89eb66bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce9b01c5_1b29406a",
         "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
         "patchSetId": 4
