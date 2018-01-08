@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "364100c5_60e2c283",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-08T22:55:28Z",
+      "side": 1,
+      "message": "I didn\u0027t have a specific suggestion, was just commenting on this function in general given that my eyes were on it!\n\nMy concern was that this blacklist is maintained independently, and there is no compile-time or process that ensures it remains up to date. As there isn\u0027t much awareness of this dependency by authors adding new URLRequests/URLFetcher dependencies, it would be easy for a new sort of request to get introduced at another layer, that violates the expectation here.\n\nFor instance, we have other magic requests like for certificate revocation lists, certificate status checks, certificate intermediate fetches, network error reporting/logging etc, which may or may not interact poorly with this. Certainly when working on CertNetFetcher for certificate fetches I hadn\u0027t considered webrequest interception (goal was for them to go through the main URLRequest).\n\nPossible other approaches could be to try and invert from blacklist to whitelist, and/or explicitly label requests. Maybe there is room to use network traffic annotation which is already a mandatory parameter, and code the webrequest policy in terms of that. Or maybe add a more general property to \"is_pac_request\" that is say \"unsafe_to_intercept\", and rely on authors to tag new requests rather than update this list.\n\nJust thinking out loud here, I haven\u0027t thought this through in detail. But I have thought a bit about the possible failure modes of the current approach at least.",
+      "parentUuid": "a086eee9_9662be3a",
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b69722db_20f6fdd0",
         "filename": "net/test/embedded_test_server/default_handlers.cc",
         "patchSetId": 2
@@ -266,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "05d22cb8_ac1d3d49",
+        "filename": "net/test/embedded_test_server/default_handlers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-08T22:55:28Z",
+      "side": 1,
+      "message": "Ah ok.",
+      "parentUuid": "1ad02e0f_ebe07930",
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "970cd3f8_f7b0b85b",
         "filename": "net/url_request/url_request.h",
         "patchSetId": 2
@@ -295,6 +331,24 @@
       "side": 1,
       "message": "I considered that, but decided against it.  SetUserData() is a way for external consumers to associate data with a URLRequest.  In this case, the consumer is ProxyScriptFetcher, which is an internal consumer, and this makes it part of the official API.  I also prefer consumers depending a url_request.h rather than net/proxy/proxy_script_fetcher_impl.h (Or net/proxy/proxy_script_fetcher.h).  I also want to get away from SetUserData().  With the advent of the network service, I don\u0027t think we\u0027ll need to support than any more (Though, admittedly, at that point, we can probably get rid of this value, anyways - and having it here also means that my TODO is less likely to be overlooked.  By me, at least)",
       "parentUuid": "970cd3f8_f7b0b85b",
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c828e4_2f7dfdfd",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-08T22:55:28Z",
+      "side": 1,
+      "message": "This still feels like a very narrowly scoped property, exclusively used for the extension case.\n\nI would be interested in a more general solution like \"is_interceptable_request\" (not a good name, but demonstrates the concept) which could be used for all requests, or even piggy-backing off of network traffic annotations whose goal is also to describe intent.\n\nI am fine with this to fix the immediate problem, but this seems like an undesirable long-term solution.",
+      "parentUuid": "e5b531a0_caf6c16b",
       "revId": "00c30b061584e0316b54553f4169dac011f597a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

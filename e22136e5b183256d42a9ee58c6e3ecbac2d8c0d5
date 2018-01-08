@@ -59,6 +59,52 @@
     },
     {
       "key": {
+        "uuid": "579a7d23_1af53091",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-08T22:55:28Z",
+      "side": 1,
+      "message": "h",
+      "range": {
+        "startLine": 2,
+        "startChar": 52,
+        "endLine": 2,
+        "endChar": 53
+      },
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e725c9_13ec029b",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-08T22:55:28Z",
+      "side": 1,
+      "message": "h",
+      "range": {
+        "startLine": 3,
+        "startChar": 59,
+        "endLine": 3,
+        "endChar": 60
+      },
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aea56c86_269bb75c",
         "filename": "extensions/browser/api/web_request/web_request_api.cc",
         "patchSetId": 5
@@ -70,6 +116,24 @@
       "writtenOn": "2018-01-08T20:57:51Z",
       "side": 1,
       "message": "can we move the pac_request check to HideRequest()?  That\u0027s where most of the logic for determining if we should hide the request goes, and is called from a couple other places.  Bonus: it\u0027s unittested (so we can add one for this :))",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3a8d62_e2268b46",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-08T22:55:28Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "aea56c86_269bb75c",
       "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
