@@ -18,7 +18,7 @@ class PLATFORM_EXPORT PaintGeneratedImage : public GeneratedImage {
                                                    const IntSize& size) {
     return base::AdoptRef(new PaintGeneratedImage(std::move(record), size));
   }
-  ~PaintGeneratedImage() override {}
+  ~PaintGeneratedImage() override = default;
 
  protected:
   void Draw(PaintCanvas*,
