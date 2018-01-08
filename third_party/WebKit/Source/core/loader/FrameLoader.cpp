@@ -42,6 +42,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/ViewportDescription.h"
+#include "core/dom/events/Event.h"
 #include "core/events/GestureEvent.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
@@ -925,6 +926,7 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
   FrameLoadType new_load_type = (frame_load_type == kFrameLoadTypeStandard)
                                     ? DetermineFrameLoadType(request)
                                     : frame_load_type;
+
   bool same_document_history_navigation =
       IsBackForwardLoadType(new_load_type) &&
       history_load_type == kHistorySameDocumentLoad;
@@ -936,20 +938,10 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
 
   // Perform same document navigation.
   if (same_document_history_navigation || same_document_navigation) {
-    DCHECK(history_item || !same_document_history_navigation);
-    scoped_refptr<SerializedScriptValue> state_object =
-        same_document_history_navigation ? history_item->StateObject()
-                                         : nullptr;
-
-    if (!same_document_history_navigation) {
-      document_loader_->SetNavigationType(DetermineNavigationType(
-          new_load_type, false, request.TriggeringEvent()));
-      if (ShouldTreatURLAsSameAsCurrent(url))
-        new_load_type = kFrameLoadTypeReplaceCurrentItem;
-    }
-
-    LoadInSameDocument(url, state_object, new_load_type, history_item,
-                       request.ClientRedirect(), request.OriginDocument());
+    CommitSameDocumentNavigation(
+        request.GetResourceRequest().Url(), new_load_type, history_item,
+        request.ClientRedirect(), request.OriginDocument(),
+        request.TriggeringEvent());
     return;
   }
 
@@ -962,6 +954,52 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
     return;
 
   StartLoad(request, new_load_type, policy, history_item);
+}
+
+bool FrameLoader::CommitSameDocumentNavigation(
+    const KURL& url,
+    FrameLoadType frame_load_type,
+    HistoryItem* history_item,
+    ClientRedirectPolicy client_redirect_policy,
+    Document* origin_document,
+    Event* triggering_event) {
+  DCHECK(!IsReloadLoadType(frame_load_type));
+  DCHECK(frame_->GetDocument());
+
+  if (in_stop_all_loaders_)
+    return false;
+
+  bool same_document_history_navigation =
+      IsBackForwardLoadType(frame_load_type);
+
+  if (!frame_->IsNavigationAllowed() && same_document_history_navigation)
+    return false;
+
+  if (!same_document_history_navigation) {
+    // In the case of non-history navigations, check that this is a
+    // same-document navigation.
+    if (!url.HasFragmentIdentifier() ||
+        !EqualIgnoringFragmentIdentifier(frame_->GetDocument()->Url(), url) ||
+        frame_->GetDocument()->IsFrameSet()) {
+      return false;
+    }
+  }
+
+  DCHECK(history_item || !same_document_history_navigation);
+  scoped_refptr<SerializedScriptValue> state_object =
+      same_document_history_navigation ? history_item->StateObject() : nullptr;
+
+  if (!same_document_history_navigation) {
+    document_loader_->SetNavigationType(
+        DetermineNavigationType(frame_load_type, false, triggering_event));
+    if (ShouldTreatURLAsSameAsCurrent(url))
+      frame_load_type = kFrameLoadTypeReplaceCurrentItem;
+  }
+
+  // Perform the same-document navigation.
+  LoadInSameDocument(url, state_object, frame_load_type, history_item,
+                     client_redirect_policy, origin_document);
+  return true;
 }
 
 SubstituteData FrameLoader::DefaultSubstituteDataForURL(const KURL& url) {

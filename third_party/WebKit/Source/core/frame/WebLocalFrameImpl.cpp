@@ -2061,6 +2061,24 @@ void WebLocalFrameImpl::Load(
       history_item, static_cast<HistoryLoadType>(web_history_load_type));
 }
 
+bool WebLocalFrameImpl::CommitSameDocumentNavigation(
+    const WebURL& url,
+    WebFrameLoadType web_frame_load_type,
+    const WebHistoryItem& item,
+    bool is_client_redirect) {
+  DCHECK(GetFrame());
+  DCHECK(!url.ProtocolIs("javascript"));
+
+  if (text_finder_)
+    text_finder_->ClearActiveFindMatch();
+
+  HistoryItem* history_item = item;
+  return GetFrame()->Loader().CommitSameDocumentNavigation(
+      url, static_cast<FrameLoadType>(web_frame_load_type), history_item,
+      is_client_redirect ? ClientRedirectPolicy::kClientRedirect
+                         : ClientRedirectPolicy::kNotClientRedirect);
+}
+
 void WebLocalFrameImpl::LoadData(const WebData& data,
                                  const WebString& mime_type,
                                  const WebString& text_encoding,
