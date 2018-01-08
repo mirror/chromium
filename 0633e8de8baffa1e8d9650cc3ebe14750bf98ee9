@@ -16,6 +16,24 @@
       "revId": "0633e8de8baffa1e8d9650cc3ebe14750bf98ee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0f41e5_cc5951b3",
+        "filename": "third_party/WebKit/Source/core/paint/ListMarkerPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-08T15:21:01Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters. This is the text marker path and based on the old code everything is integer anyway. Tests of this did not change.",
+      "parentUuid": "6529437d_4ca7c790",
+      "revId": "0633e8de8baffa1e8d9650cc3ebe14750bf98ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

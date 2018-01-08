@@ -16,6 +16,24 @@
       "revId": "ae8b3cc8acdcbd2bdfd940d984cfc00875426c01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3f0b11_79f76593",
+        "filename": "third_party/WebKit/Source/platform/geometry/LayoutSize.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-08T15:21:01Z",
+      "side": 0,
+      "message": "It should have been reverted. I\u0027m a bit confused because when I was preparing the patch I thought I had addressed this based on diffs.",
+      "parentUuid": "b56d8223_c0d79d48",
+      "revId": "ae8b3cc8acdcbd2bdfd940d984cfc00875426c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
