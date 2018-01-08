@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be752aaa_c3efdbf2",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T16:57:09Z",
+      "side": 1,
+      "message": "Would it work to just check if accessibility_object_.IsSelected() is not\nkWebAXSelectedStateUndefined?\n\nIt seems to me that if it\u0027s selectable, then IsSelected should be\ntrue or false, and if it\u0027s not selectable, then IsSelected should be\nundefined. Right?\n\nThen SupportsARIASelected doesn\u0027t need to be public.",
+      "revId": "2609cd5d5b9b471c156cc47ca1ccca2c0ffbea13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc5faf0_1d5ad2c6",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T16:57:09Z",
+      "side": 1,
+      "message": "Maybe this doesn\u0027t need to be public anymore?\nSee if you can move it down to the protected section.",
+      "revId": "2609cd5d5b9b471c156cc47ca1ccca2c0ffbea13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6762cd_de330212",
+        "filename": "third_party/WebKit/public/web/WebAXObject.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T16:57:09Z",
+      "side": 1,
+      "message": "Maybe we don\u0027t need this anymore? (See other comment.)",
+      "revId": "2609cd5d5b9b471c156cc47ca1ccca2c0ffbea13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
