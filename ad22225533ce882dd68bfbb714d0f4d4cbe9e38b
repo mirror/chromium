@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2d0cdae9_d7a798f7",
+        "filename": "content/public/browser/web_ui_data_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T23:02:46Z",
+      "side": 1,
+      "message": "Regarding the extra bits off disk: this change is already writing extra maps to the grd file i.e. in the components_resources_map.h files?\n\nThis patch, as is, makes adding gzipped resources harder IMO from a normal developer pov.",
+      "parentUuid": "9dcf3f4e_958e6b48",
+      "revId": "ad22225533ce882dd68bfbb714d0f4d4cbe9e38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43ea551f_f72108e1",
         "filename": "content/public/browser/web_ui_data_source.h",
         "patchSetId": 11
