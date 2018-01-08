@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.annotation.UiThreadTest;
 import android.support.test.filters.MediumTest;
 import android.view.View;
 
@@ -130,6 +131,27 @@ public class WebappModeTest {
                                 WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true));
                     }
                 });
+    }
+
+    /**
+     * Tests that WebappActivities are started properly by WebappLauncherActivity.
+     */
+    @Test
+    @UiThreadTest
+    @MediumTest
+    @Feature({"Webapps"})
+    public void testWebappLaunchesByLauncherActivity() {
+        WebappInfo webappInfo = WebappInfo.create(
+                createIntent(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true));
+        Intent launchIntent = WebappLauncherActivity.createWebappLaunchIntent(webappInfo, false);
+        WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
+
+        WebappActivity webappActivity =
+                (WebappActivity) mActivityTestRule.startAndWaitForActivityType(
+                        launchIntent, WebappActivity.class);
+
+        Assert.assertEquals(webappInfo.id(), webappActivity.getWebappInfo().id());
+        Assert.assertEquals(webappInfo.uri(), webappActivity.getWebappInfo().uri());
     }
 
     /**
