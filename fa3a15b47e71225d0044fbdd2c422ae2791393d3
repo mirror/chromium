@@ -68,6 +68,24 @@
       "revId": "fa3a15b47e71225d0044fbdd2c422ae2791393d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bff7787c_287f79e3",
+        "filename": "ui/views/accessibility/ax_window_obj_wrapper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T20:30:42Z",
+      "side": 1,
+      "message": "I see. Yes, this does seem to work for view/widgets/windows, if not obvious.\n\nI\u0027m still not sure what this change gives automation -- the aura tree had unique ids already. It doesn\u0027t give unique ids across desktop -- web contents, ARC++, aura.",
+      "parentUuid": "0d7825dd_5653f02d",
+      "revId": "fa3a15b47e71225d0044fbdd2c422ae2791393d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
