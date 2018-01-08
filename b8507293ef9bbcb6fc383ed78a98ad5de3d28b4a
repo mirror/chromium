@@ -16,6 +16,24 @@
       "revId": "b8507293ef9bbcb6fc383ed78a98ad5de3d28b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b876871_bfb4950e",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2018-01-08T23:16:21Z",
+      "side": 1,
+      "message": "Not sure. I\u0027ve only seen it on MR1 since all our phones are on MR1. Better to be conservative with device recovery, I think.",
+      "parentUuid": "bdf038d7_629f578e",
+      "revId": "b8507293ef9bbcb6fc383ed78a98ad5de3d28b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
