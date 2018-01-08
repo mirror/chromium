@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db2cdbde_9063782d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/readValue/add-multiple-event-listeners.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:11:10Z",
+      "side": 0,
+      "message": "this doesn\u0027t need to be in curlies.",
+      "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

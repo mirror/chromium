@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cde85f0_234434df",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/readValue/event-is-fired.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:11:10Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfa9375_bac7da33",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/readValue/read-succeeds.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:11:10Z",
+      "side": 1,
+      "message": "move the const out, and then the rest doesn\u0027t need to be in curlies",
+      "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce41213_a8a84e22",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/readValue/read-updates-value.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:11:10Z",
+      "side": 1,
+      "message": "If you could do a search for \"bluetooth_test(() \u003d {\", that might be good, because it\u0027d be nice if they were consistently formatted to be of the form bluetooth_test(() \u003d\u003e someFunc()",
+      "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bc089e_838e7fa8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/writeValue/write-succeeds.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-08T21:11:10Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
