@@ -1352,6 +1352,7 @@ test("browser_tests") {
         "../browser/ui/views/first_run_bubble_browsertest.cc",
         "../browser/ui/views/frame/browser_non_client_frame_view_browsertest_win.cc",
         "../browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "../browser/ui/views/hung_renderer_view_browsertest.cc",
         "../browser/ui/views/importer/import_lock_dialog_view_browsertest.cc",
         "../browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
         "../browser/ui/views/location_bar/zoom_bubble_view_browsertest.cc",
