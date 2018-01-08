@@ -260,6 +260,10 @@ class CORE_EXPORT WebLocalFrameImpl final
             WebHistoryLoadType,
             bool is_client_redirect,
             const base::UnguessableToken& devtools_navigation_token) override;
+  bool CommitSameDocumentNavigation(const WebURL&,
+                                    WebFrameLoadType,
+                                    const WebHistoryItem&,
+                                    bool is_client_redirect) override;
   void LoadData(const WebData&,
                 const WebString& mime_type,
                 const WebString& text_encoding,
