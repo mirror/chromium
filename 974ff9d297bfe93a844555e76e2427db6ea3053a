@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "478534af_f3672662",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-08T19:21:01Z",
+      "side": 1,
+      "message": "The compile step when I tried to submit this didn\u0027t like it so I went back to a straight const int instead of a constexpr.\n\nIt worked on my local desktop fine though...",
+      "parentUuid": "2964b72c_b4f5b021",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 247,
+        "endChar": 39
+      },
+      "revId": "974ff9d297bfe93a844555e76e2427db6ea3053a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea084efc_44d63329",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 17
