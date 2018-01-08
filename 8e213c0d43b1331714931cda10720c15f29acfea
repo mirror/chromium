@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5286f776_1b71e225",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:31:55Z",
+      "side": 1,
+      "message": "We should only notify the user on successful conneciton completion. See other comments.",
+      "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890c11da_23e22745",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:31:55Z",
+      "side": 1,
+      "message": "Move this to ChromeBrowserMainExtraPartsAsh, see other comment.",
+      "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfecc4d_979094e7",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:31:55Z",
+      "side": 1,
+      "message": "This loginc is not sufficient. The logic should be:\n\n1. Set a flag when an auto connect attempt is requested and set a timeout (I would suggest 3 seconds).\n2. Observe NetworkStateHandler::NetworkConnectionStateChanged.\n\nThen the logic should be \"If auto connect was requested and a connection started or completed before the timeout and successfully connected, show the notification\".",
+      "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ef5487_978d4ecf",
+        "filename": "chrome/browser/chromeos/net/auto_connect_notifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:31:55Z",
+      "side": 1,
+      "message": "We are trying to move UI classes to c/b/ui/ash, this should be moved there. (Note: AutoConnectHandler should remain in c/b/chromeos).",
+      "revId": "8e213c0d43b1331714931cda10720c15f29acfea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
