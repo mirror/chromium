@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729d6ae4_13e30a9c",
+        "filename": "content/shell/test_runner/mock_screen_orientation_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:38:37Z",
+      "side": 1,
+      "message": "Do we still need the mock client? Could we create a mock service in the tests and use JS to manipulate the service? If that\u0027s possible, we could purge a lot of code.",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a17995d_806e79c6",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:38:37Z",
+      "side": 1,
+      "message": "I don\u0027t think we still need to initialise this here. We had to because of the `client` but now that we don\u0027t have one, we can lazy-init the controller instead.",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94fcfed_c31a4652",
+        "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-08T13:38:37Z",
+      "side": 1,
+      "message": "With the `client_` going away, do we actually need the controller? Shouldn\u0027t it be merged with the `delegate_`?",
+      "revId": "eefcbd8ce3c13e2ad57f55dd29e6ff980e129748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
