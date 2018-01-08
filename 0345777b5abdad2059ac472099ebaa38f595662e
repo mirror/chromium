@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "875c5d29_5444b639",
+        "filename": "third_party/WebKit/Source/core/css/properties/ComputedStyleUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2018-01-08T11:41:01Z",
+      "side": 1,
+      "message": "This seems to be used in only one place. Perhaps we should inline it?",
+      "revId": "0345777b5abdad2059ac472099ebaa38f595662e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
