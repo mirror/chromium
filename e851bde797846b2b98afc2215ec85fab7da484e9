@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03231573_f44740cc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/components/color-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T18:30:41Z",
+      "side": 1,
+      "message": "Since this doesn\u0027t have an alpha value, it\u0027s parsed as RGB and not RGBA and thus requesting the format of RGB returns the original string.",
+      "parentUuid": "5eecd2f7_ef3b1777",
+      "range": {
+        "startLine": 139,
+        "startChar": 3,
+        "endLine": 139,
+        "endChar": 7
+      },
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9871cca5_d6b19fce",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7e843278_286f3155",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T18:30:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9871cca5_d6b19fce",
+      "range": {
+        "startLine": 116,
+        "startChar": 28,
+        "endLine": 116,
+        "endChar": 53
+      },
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b96c759b_edc2479a",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 13
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-08T17:47:51Z",
       "side": 1,
       "message": "Might be easier to initially split by /\\s+|\\// instead and drop any empty parts.",
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43c3553_6bfe76c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T18:30:41Z",
+      "side": 1,
+      "message": "That was my first idea, but I wasn\u0027t sure how to prevent e.g. \"1/1 1 1\" from then being interpreted as valid.",
+      "parentUuid": "b96c759b_edc2479a",
       "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -79,6 +145,24 @@
       "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817e0fba_c439e6f8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T18:30:41Z",
+      "side": 1,
+      "message": "Done, I incorporated both since `Number.isInteger(1.0) \u003d\u003d\u003d true` but that is invalid currently.",
+      "parentUuid": "eed6a51e_124d3524",
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +212,54 @@
     },
     {
       "key": {
+        "uuid": "bd6e065e_9605e21e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T18:30:41Z",
+      "side": 1,
+      "message": "My idea was to catch things like \"1 deg\" which would otherwise parse normally even though they\u0027re invalid due to the space (since \"1 deg\" -\u003e \"1 \" which would parse as a float).",
+      "parentUuid": "3b68ec22_a2cb9fbb",
+      "range": {
+        "startLine": 198,
+        "startChar": 57,
+        "endLine": 198,
+        "endChar": 68
+      },
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e291372_4070e2b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T18:30:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd025493_379b972b",
+      "range": {
+        "startLine": 198,
+        "startChar": 14,
+        "endLine": 198,
+        "endChar": 52
+      },
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1680e1d6_63fd760c",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 13
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "401fa215_f36086c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T18:30:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1680e1d6_63fd760c",
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff58f59f_0565d31c",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 13
@@ -159,6 +309,24 @@
       "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1974fa9_6e647e05",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T18:30:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff58f59f_0565d31c",
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
