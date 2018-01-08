@@ -23,7 +23,7 @@ class LayoutTextItem : public LayoutItem {
 
   explicit LayoutTextItem(std::nullptr_t) : LayoutItem(nullptr) {}
 
-  LayoutTextItem() {}
+  LayoutTextItem() = default;
 
   void SetStyle(scoped_refptr<ComputedStyle> style) {
     ToText()->SetStyle(std::move(style));

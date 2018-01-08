@@ -40,7 +40,7 @@ InspectorEmulationAgent::InspectorEmulationAgent(
     : web_local_frame_(web_local_frame_impl),
       virtual_time_observer_registered_(false) {}
 
-InspectorEmulationAgent::~InspectorEmulationAgent() {}
+InspectorEmulationAgent::~InspectorEmulationAgent() = default;
 
 WebViewImpl* InspectorEmulationAgent::GetWebViewImpl() {
   return web_local_frame_->ViewImpl();

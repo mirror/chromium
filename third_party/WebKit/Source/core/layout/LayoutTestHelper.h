@@ -41,7 +41,7 @@ class SingleChildLocalFrameClient final : public EmptyLocalFrameClient {
   void DidDetachChild() { child_ = nullptr; }
 
  private:
-  explicit SingleChildLocalFrameClient() {}
+  explicit SingleChildLocalFrameClient() = default;
 
   Member<LocalFrame> child_;
 };

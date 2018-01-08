@@ -15,7 +15,7 @@ namespace blink {
 // NGBfcRect is the position and size of a rect (typically a fragment)
 // relative to a block formatting context.
 struct CORE_EXPORT NGBfcRect {
-  NGBfcRect() {}
+  NGBfcRect() = default;
   NGBfcRect(const NGBfcOffset& offset, const NGLogicalSize& size)
       : offset(offset), size(size) {}
 

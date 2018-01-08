@@ -35,7 +35,7 @@ class CORE_EXPORT WorkerShadowPage : public WebFrameClient {
  public:
   class CORE_EXPORT Client : public WebDevToolsAgentClient {
    public:
-    virtual ~Client() {}
+    virtual ~Client() = default;
 
     // Called when the shadow page is requested to create an application cache
     // host.

@@ -21,7 +21,7 @@ class LayoutImageItem : public LayoutBoxItem {
 
   explicit LayoutImageItem(std::nullptr_t) : LayoutBoxItem(nullptr) {}
 
-  LayoutImageItem() {}
+  LayoutImageItem() = default;
 
   void SetImageDevicePixelRatio(float factor) {
     ToImage()->SetImageDevicePixelRatio(factor);

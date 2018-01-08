@@ -25,7 +25,7 @@ class LayoutBoxItem : public LayoutBoxModel {
 
   explicit LayoutBoxItem(std::nullptr_t) : LayoutBoxModel(nullptr) {}
 
-  LayoutBoxItem() {}
+  LayoutBoxItem() = default;
 
   LayoutBoxItem EnclosingBox() const {
     return LayoutBoxItem(ToBox()->EnclosingBox());

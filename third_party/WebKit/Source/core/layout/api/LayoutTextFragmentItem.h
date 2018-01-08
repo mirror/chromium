@@ -24,7 +24,7 @@ class LayoutTextFragmentItem : public LayoutTextItem {
 
   explicit LayoutTextFragmentItem(std::nullptr_t) : LayoutTextItem(nullptr) {}
 
-  LayoutTextFragmentItem() {}
+  LayoutTextFragmentItem() = default;
 
   void SetTextFragment(scoped_refptr<StringImpl> text,
                        unsigned start,
