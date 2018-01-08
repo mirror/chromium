@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "276bf8ce_9eabc730",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14851,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-08T20:59:27Z",
+      "side": 1,
+      "message": "After addressing piman\u0027s comment, these two variables are gone.",
+      "parentUuid": "780d6568_12161e5e",
+      "range": {
+        "startLine": 14851,
+        "startChar": 8,
+        "endLine": 14851,
+        "endChar": 18
+      },
+      "revId": "a0d3e300a0d99c235625cddca310f28a65f114cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dad9af3_19a18a8c",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "a0d3e300a0d99c235625cddca310f28a65f114cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d980c5_12f73bd2",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14858,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-08T20:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dad9af3_19a18a8c",
+      "revId": "a0d3e300a0d99c235625cddca310f28a65f114cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
