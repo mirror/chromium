@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f4c8008_467d8e40",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-css-cue-pseudo-class.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2018-01-08T07:11:01Z",
+      "side": 1,
+      "message": "Changed from rules to cssRules which is the standard API.",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "a4d6e975b5f6b572ee9d57d59ef137fa65e41b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
