@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e532b86d_2fded185",
+        "filename": "content/public/browser/web_ui_data_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-08T20:51:23Z",
+      "side": 1,
+      "message": "if I\u0027m reading the code correctly, translating an IDR to bytes (i.e. ResourceBundle::GetRawDataResourceForScale()) works because it uses metadata about resources encoded into .pak files (i.e. ResourceBundle::data_packs_ and DataPack::resource_table_).\n\nhttps://cs.chromium.org/chromium/src/ui/base/resource/resource_bundle.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d561\nhttps://cs.chromium.org/chromium/src/ui/base/resource/data_pack.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d365\nhttps://cs.chromium.org/chromium/src/ui/base/resource/data_pack.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d282\n\nso it\u0027s likely whether a resource is gzipped would require similar info (i.e. add some bits to the .pak file format and reserve some space for this metadata).  this might be a good way to go, but it\u0027d probably result in more bits being read off disk and loaded into memory (and probably the need to skip over these bits if they\u0027re earlier in the byte order than the resource content).  is that a useful trade off?  i don\u0027t have a good understanding of whether it\u0027d affect global resource loading performance.",
+      "parentUuid": "e9af859b_0743e722",
+      "revId": "ad22225533ce882dd68bfbb714d0f4d4cbe9e38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43ea551f_f72108e1",
         "filename": "content/public/browser/web_ui_data_source.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "ad22225533ce882dd68bfbb714d0f4d4cbe9e38b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96c3169_fdee0143",
+        "filename": "content/public/browser/web_ui_data_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-08T20:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43ea551f_f72108e1",
+      "revId": "ad22225533ce882dd68bfbb714d0f4d4cbe9e38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
