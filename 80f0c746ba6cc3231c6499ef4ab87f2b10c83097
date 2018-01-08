@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ff7d402_2923cca7",
+        "filename": "chrome/browser/ui/webui/extensions/extension_settings_browsertest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T20:44:37Z",
+      "side": 1,
+      "message": "nit: add class comments\nnit: Having a method called \"EnableDevMode\" that takes a boolean is misleading (since it could, in fact, be disabling dev mode).  Instead, let\u0027s call this \"SetDevModeEnabled\"",
+      "revId": "80f0c746ba6cc3231c6499ef4ab87f2b10c83097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

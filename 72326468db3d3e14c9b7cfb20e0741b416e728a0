@@ -93,6 +93,30 @@
       "revId": "72326468db3d3e14c9b7cfb20e0741b416e728a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae558be_2f904997",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T20:44:37Z",
+      "side": 1,
+      "message": "This is correct - unpacked extensions\u0027 ids will be based on the \"key\" in the manifest first, and, if there isn\u0027t a \"key\" entry, will be based on the path.  The former is stable, the latter can change based on bot setup.",
+      "parentUuid": "935e4841_9b38e201",
+      "range": {
+        "startLine": 200,
+        "startChar": 40,
+        "endLine": 200,
+        "endChar": 72
+      },
+      "revId": "72326468db3d3e14c9b7cfb20e0741b416e728a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
