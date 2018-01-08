@@ -81,7 +81,7 @@ int MDnsConnection::SocketHandler::DoLoop(int rv) {
       connection_->OnDatagramReceived(&response_, recv_addr_, rv);
 
     rv = socket_->RecvFrom(
-        response_.io_buffer(), response_.io_buffer()->size(), &recv_addr_,
+        response_.io_buffer(), response_.io_buffer_size(), &recv_addr_,
         base::Bind(&MDnsConnection::SocketHandler::OnDatagramReceived,
                    base::Unretained(this)));
   } while (rv > 0);
