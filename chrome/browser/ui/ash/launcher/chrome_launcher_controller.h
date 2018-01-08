@@ -356,6 +356,8 @@ class ChromeLauncherController
   void OnShelfItemDelegateChanged(
       const ash::ShelfID& id,
       ash::mojom::ShelfItemDelegatePtr delegate) override;
+  void NotificationAdded(const std::string& app_id, const std::string& notification_id) override;
+  void NotificationRemoved(const std::string& notification_id) override;
 
   // ash::ShelfModelObserver:
   void ShelfItemAdded(int index) override;

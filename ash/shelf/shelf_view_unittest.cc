@@ -2133,6 +2133,18 @@ TEST_F(ShelfViewTest, MouseWheelScrollOnAppIconTransitionsAppList) {
   ASSERT_EQ(1u, test_app_list_presenter.process_mouse_wheel_offset_count());
 }
 
+// Tests that a notification indicator is added to the ShelfItem when a notification is posted that matches the items app id.
+TEST_F(ShelfViewTest, NotificationAddsAppIconIndicator){
+  // Add an app button
+  //ShelfID id = AddApp();
+  // call ShelfModel::NotificationAdded after building a mock notification.
+
+}
+// Tests that dismissing a notification removes the ShelfItems notification indicator.
+TEST_F(ShelfViewTest, DismissedNotificationAddsAppIconIndicator){
+
+}
+
 class ShelfViewVisibleBoundsTest : public ShelfViewTest,
                                    public testing::WithParamInterface<bool> {
  public:

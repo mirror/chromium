@@ -192,6 +192,7 @@
 #include "ui/wm/core/shadow_controller.h"
 #include "ui/wm/core/visibility_controller.h"
 #include "ui/wm/core/window_modality_controller.h"
+#include "ui/message_center/message_center.h"
 
 namespace ash {
 
@@ -984,6 +985,7 @@ void Shell::Init(ui::ContextFactory* context_factory,
   accelerator_controller_ = shell_port_->CreateAcceleratorController();
   tablet_mode_controller_ = std::make_unique<TabletModeController>();
   shelf_controller_ = std::make_unique<ShelfController>();
+  message_center::MessageCenter::Get()->AddObserver(shelf_controller_.get());
 
   magnifier_key_scroll_handler_ = MagnifierKeyScroller::CreateHandler();
   AddPreTargetHandler(magnifier_key_scroll_handler_.get());

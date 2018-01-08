@@ -36,7 +36,7 @@ class ASH_PUBLIC_EXPORT ShelfModelObserver {
                                         ShelfItemDelegate* old_delegate,
                                         ShelfItemDelegate* delegate) {}
 
- protected:
+  protected:
   virtual ~ShelfModelObserver() {}
 };
 

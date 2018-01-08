@@ -29,6 +29,7 @@
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/message_center/message_center.h"
 
 namespace ash {
 
@@ -314,6 +315,15 @@ void ShelfController::ShelfItemDelegateChanged(const ShelfID& id,
   });
 }
 
+void ShelfController::NotificationAdded(const std::string& app_id, const std::string& notification_id) {
+  if (applying_remote_shelf_model_changes_ || !should_synchronize_shelf_models_)
+    return;
+
+  observers_.ForAllPtrs([app_id, notification_id](mojom::ShelfObserver* observer) {
+    observer->NotificationAdded(app_id, notification_id);
+  });
+}
+
 void ShelfController::FlushForTesting() {
   bindings_.FlushForTesting();
 }
@@ -374,6 +384,26 @@ void ShelfController::OnWindowTreeHostsSwappedDisplays(
   // The display ids for existing shelf instances may have changed, so update
   // the alignment and auto-hide state from prefs. See http://crbug.com/748291
   SetShelfBehaviorsFromPrefs();
+}
+
+void ShelfController::OnNotificationAdded(const std::string& notification_id) {
+LOG(ERROR) << "Add a notification!";
+  message_center::Notification* notification =
+      message_center::MessageCenter::Get()->FindVisibleNotificationById(
+          notification_id);
+  // TODO(newcomer): Support ARC apps.
+  // If the notification is for a web app or an extension.
+  if (notification->notifier_id().type > 1)
+    return;
+
+  model_.GiveItemNotifierId(notification->notifier_id().id, notification_id);
+  NotificationAdded(notification->notifier_id().id, notification_id);
+}
+
+void ShelfController::OnNotificationRemoved(const std::string& notification_id,
+                                       bool by_user) {
+LOG(ERROR) << "Remove a notification!";
+  model_.RemoveItemNotifierId(notification_id);
 }
 
 }  // namespace ash

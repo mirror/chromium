@@ -55,6 +55,11 @@
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
+#include "base/debug/stack_trace.h"
+#include "ui/gfx/image/image_skia_operations.h"
+
+#include "skia/ext/image_operations.h"
+
 using gfx::Animation;
 using views::View;
 
@@ -194,6 +199,8 @@ void ReflectItemStatus(const ShelfItem& item, ShelfButton* button) {
       button->AddState(ShelfButton::STATE_ATTENTION);
       break;
   }
+  // find a better way.
+  button->has_notification_ = item.has_active_notification;
 }
 
 // Returns the id of the display on which |view| is shown.
@@ -1010,6 +1017,8 @@ views::View* ShelfView::CreateViewForItem(const ShelfItem& item) {
       ShelfButton* button = new ShelfButton(this, this);
       button->SetImage(item.image);
       ReflectItemStatus(item, button);
+      LOG(ERROR) << "Has active notification? " << item.has_active_notification;
+      button->SetNotificationIStateTemp(item.has_active_notification);
       view = button;
       break;
     }
@@ -1636,6 +1645,7 @@ void ShelfView::ShelfItemAdded(int model_index) {
                                           true);
     model_index = CancelDrag(model_index);
   }
+  LOG(ERROR)<< "ShelfItemAdded: " << model_->items()[model_index].has_active_notification;
   views::View* view = CreateViewForItem(model_->items()[model_index]);
   AddChildView(view);
   // Hide the view, it'll be made visible when the animation is done. Using
@@ -1749,7 +1759,8 @@ void ShelfView::ShelfItemChanged(int model_index, const ShelfItem& old_item) {
       CHECK_EQ(ShelfButton::kViewClassName, view->GetClassName());
       ShelfButton* button = static_cast<ShelfButton*>(view);
       ReflectItemStatus(item, button);
-      button->SetImage(item.image);
+      button->SetNotificationIStateTemp(item.has_active_notification);
+      button->SetImage(/*item.has_active_notification ? img : */ item.image);
       button->SchedulePaint();
       break;
     }

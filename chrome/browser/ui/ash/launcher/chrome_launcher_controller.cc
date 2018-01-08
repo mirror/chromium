@@ -1329,6 +1329,32 @@ void ChromeLauncherController::OnShelfItemDelegateChanged(
   }
 }
 
+void ChromeLauncherController::NotificationAdded(const std::string& app_id, const std::string& notification_id) {
+   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
+
+   // Create a function that only adds to the maps.
+   /*
+    *
+    *
+    * I think the error lies in the conditionality of adding to these maps.
+    * We should always store notification data in the model and keep it fresh for both sides.
+    * Make the maps private again, and create public methods to modify them safely.
+    * Also, probably a good time to create unit tests. There are corner cases with:
+    * "unpin, then pin again and the notification is gone"
+    * A good first post-vacation thing to do should be to work on the design doc.
+    */
+   model_->app_id_to_notification_id_.insert(std::pair<std::string, std::string>(app_id, notification_id));
+   model_->notification_id_to_app_id_.insert(std::pair<std::string, std::string>(notification_id, app_id));
+
+   // maybe alert everyone? Which observer notification really does what I want?
+   //model_->GiveItemNotifierId(app_id, notification_id);
+
+}
+
+void ChromeLauncherController::NotificationRemoved(const std::string& notification_id) {
+  model_->RemoveItemNotifierId(notification_id);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // ash::ShelfModelObserver:
 

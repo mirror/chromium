@@ -8,6 +8,8 @@
 
 #include "ash/public/cpp/shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_model_observer.h"
+#include "ui/gfx/image/image_skia_operations.h"
+#include "ui/gfx/skbitmap_operations.h"
 
 namespace ash {
 
@@ -67,6 +69,7 @@ ShelfModel::ShelfModel() {
 ShelfModel::~ShelfModel() = default;
 
 void ShelfModel::PinAppWithID(const std::string& app_id) {
+LOG(ERROR) << "Pinning an App!";
   const ShelfID shelf_id(app_id);
 
   // If the app is already pinned, do nothing and return.
@@ -85,6 +88,15 @@ void ShelfModel::PinAppWithID(const std::string& app_id) {
     ShelfItem item;
     item.type = TYPE_PINNED_APP;
     item.id = shelf_id;
+    std::map<std::string, std::string>::iterator it = app_id_to_notification_id_.find(app_id);
+    item.has_active_notification = it != app_id_to_notification_id_.end();
+    if (item.has_active_notification) {
+    LOG(ERROR) << "Notification found!!!";
+      item.notification_id = it->second;
+      notification_id_to_app_id_.erase(item.notification_id);
+      app_id_to_notification_id_.erase(it);
+    }
+    LOG(ERROR) << "Taking crazy pills again... " << item.has_active_notification;
     Add(item);
   }
 }
@@ -129,6 +141,7 @@ int ShelfModel::AddAt(int index, const ShelfItem& item) {
   DCHECK_EQ(ItemIndexByID(item.id), -1) << " The id is not unique: " << item.id;
   index = ValidateInsertionIndex(item.type, index);
   items_.insert(items_.begin() + index, item);
+  LOG(ERROR) << "WHAAAAAA: " << items_[index].has_active_notification;
   for (auto& observer : observers_)
     observer.ShelfItemAdded(index);
   return index;
@@ -185,6 +198,53 @@ void ShelfModel::Set(int index, const ShelfItem& item) {
   }
 }
 
+void ShelfModel::GiveItemNotifierId(const std::string& app_id, const std::string& notification_id) {
+  int index = ItemIndexByAppID(app_id);
+  /*
+   *
+   * When we are here the second time, index is not -1, and the item is not added to the map.
+   *
+   */
+  if (index == -1) {
+    LOG(ERROR) << "Add to map!! " << app_id;
+    std::pair<std::map<std::string, std::string>::iterator, bool> result;
+    // Item does not exist right now. Save the app id and notification id so we can match the app up if gets added later.
+   result = app_id_to_notification_id_.insert(std::pair<std::string, std::string>(app_id, notification_id));
+    notification_id_to_app_id_.insert(std::pair<std::string, std::string>(notification_id, app_id));
+
+    LOG(ERROR) << "result: " << result.second;
+    return;
+  }
+
+  ShelfItem& item = items_[index];
+  item.notification_id = notification_id;
+  item.has_active_notification = true;
+
+for (auto& observer : observers_)
+  observer.ShelfItemChanged(index, item);
+
+}
+
+void ShelfModel::RemoveItemNotifierId(const std::string& notification_id) {
+  int index = ItemIndexByNotificationID(notification_id);
+
+  if (index == -1) {
+LOG(ERROR) << "Remove from map!!";    
+// Item no longer exists, or never existed as a ShelfItem. Ensure the record of it is erased from here.
+    std::string app_id = notification_id_to_app_id_.find(notification_id)->second;
+    app_id_to_notification_id_.erase(app_id);
+    notification_id_to_app_id_.erase(notification_id);
+    return;
+  }
+
+  ShelfItem& item = items_[index];
+  item.notification_id = std::string();
+  item.has_active_notification = false;
+
+  for (auto& observer : observers_)
+    observer.ShelfItemChanged(index, item);
+}
+
 int ShelfModel::ItemIndexByID(const ShelfID& shelf_id) const {
   ShelfItems::const_iterator i = ItemByID(shelf_id);
   return i == items_.end() ? -1 : static_cast<int>(i - items_.begin());
@@ -204,6 +264,22 @@ ShelfItems::const_iterator ShelfModel::ItemByID(const ShelfID& shelf_id) const {
       return i;
   }
   return items_.end();
+}
+
+int ShelfModel::ItemIndexByAppID(const std::string& app_id) {
+  for (size_t i = 0; i < items_.size(); ++i) {
+    if (!app_id.compare(items_[i].id.app_id))
+      return i;
+  }
+  return -1;
+}
+
+int ShelfModel::ItemIndexByNotificationID(const std::string& notification_id) {
+  for (size_t i = 0; i < items_.size(); ++i) {
+    if(!notification_id.compare(items_[i].notification_id))
+      return i;
+  }
+  return -1;
 }
 
 int ShelfModel::FirstRunningAppIndex() const {
