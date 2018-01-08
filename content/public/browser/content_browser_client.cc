@@ -545,4 +545,8 @@ bool ContentBrowserClient::ShouldOverrideUrlLoading(
 }
 #endif
 
+bool ContentBrowserClient::ShouldCreateTaskScheduler() {
+  return true;
+}
+
 }  // namespace content
