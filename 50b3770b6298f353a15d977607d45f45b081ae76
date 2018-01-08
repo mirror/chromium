@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee377906_a9adcda5",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-08T20:09:30Z",
+      "side": 1,
+      "message": "This is something you should do during dispatch, right? Not before targeting is done?",
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
