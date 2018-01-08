@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "889d4d88_9b687f0a",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-08T18:08:26Z",
+      "side": 1,
+      "message": "Or would OS memory be more appropriated for detecting total memory usage?",
+      "parentUuid": "16dd4075_bf5e20ee",
+      "range": {
+        "startLine": 485,
+        "startChar": 50,
+        "endLine": 485,
+        "endChar": 65
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eedb7d83_bdf294e6",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 2
