@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "772ddf80_0f6af6d7",
+        "filename": "media/base/android/java/src/org/chromium/media/BitrateAdjuster.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-08T17:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66d86de6_870b1ff0",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e460edc72ce84416af03fea76ad4e46273cc2b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59254049_b3e8cc44",
         "filename": "media/base/android/java/src/org/chromium/media/BitrateAdjuster.java",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "e460edc72ce84416af03fea76ad4e46273cc2b0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57dbb61_8c739bd2",
+        "filename": "media/base/android/java/src/org/chromium/media/BitrateAdjuster.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-08T17:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59254049_b3e8cc44",
+      "revId": "e460edc72ce84416af03fea76ad4e46273cc2b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
