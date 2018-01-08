@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f65a7c5_c8de6b45",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-08T15:17:34Z",
+      "side": 1,
+      "message": "Why? The tests call ProvisionallySave when needed.",
+      "range": {
+        "startLine": 266,
+        "startChar": 21,
+        "endLine": 266,
+        "endChar": 38
+      },
+      "revId": "cadff934511559b1dd4214c17c9ff1bc1cdb5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d50d7b_ca95b32f",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-08T15:17:34Z",
+      "side": 1,
+      "message": "Why do we care about spaces?",
+      "range": {
+        "startLine": 628,
+        "startChar": 3,
+        "endLine": 628,
+        "endChar": 75
+      },
+      "revId": "cadff934511559b1dd4214c17c9ff1bc1cdb5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
