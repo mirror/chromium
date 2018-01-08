@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "569732c6_fe2300bf",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_rewriter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T16:32:44Z",
+      "side": 1,
+      "message": "Make VKEY_S a constant here?",
+      "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0ebb7b_486b2d8a",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_rewriter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T16:32:44Z",
+      "side": 1,
+      "message": "How about making the state not specific to the letter S? It\u0027d be ideal\nif changing the shortcut key from S to some other letter just required\nchanging a constant in the source file and not updating so much code\nin the state machine.\n\nSo how about CAPTURING_SPEAK_SELECTION_KEY or something like that?",
+      "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835c7764_b55ae972",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T16:32:44Z",
+      "side": 1,
+      "message": "I think we should avoid hiding/showing the selection because our\nconversion is lossy - when converting to an AX selection and back we\ncan\u0027t guarantee we\u0027ll get the exact same selection state.\nI don\u0027t think there\u0027s any way around that in general, or it\u0027d be a lot of\nwork to try to make it not lossy, so I think it\u0027d be better to just have\nSelect-to-Speak never modify the selection.",
+      "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda78973_b706b420",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T16:32:44Z",
+      "side": 1,
+      "message": "That seems weird to have to check it twice.",
+      "revId": "f2260b1eb893cd534a6121d11e915f5d142eb0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
