@@ -6,14 +6,20 @@ package org.chromium.components.signin;
 
 import android.accounts.Account;
 import android.accounts.AuthenticatorDescription;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.UserManager;
 import android.support.annotation.AnyThread;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 
 import org.chromium.base.Callback;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
 import org.chromium.base.ThreadUtils;
@@ -51,6 +57,9 @@ public class AccountManagerFacade {
     @VisibleForTesting
     public static final String FEATURE_IS_CHILD_ACCOUNT_KEY = "service_uca";
 
+    @VisibleForTesting
+    public static final String ACCOUNT_RESTRICTION_PATTERN_KEY = "RestrictAccountsToPattern";
+
     private static AccountManagerFacade sInstance;
     private static AccountManagerFacade sTestingInstance;
 
@@ -68,6 +77,7 @@ public class AccountManagerFacade {
 
     private int mUpdateTasksCounter = 0;
     private final ArrayList<Runnable> mCallbacksWaitingForPendingUpdates = new ArrayList<>();
+    private Pattern mAccountRestrictionPattern;
 
     /**
      * A simple callback for getAuthToken.
@@ -98,7 +108,7 @@ public class AccountManagerFacade {
         mDelegate.registerObservers();
         mDelegate.addObserver(this::updateAccounts);
 
-        updateAccounts();
+        updateRestrictionsAndAccounts();
     }
 
     /**
@@ -559,6 +569,12 @@ public class AccountManagerFacade {
         return mUpdateTasksCounter > 0;
     }
 
+    private void updateRestrictionsAndAccounts() {
+        ThreadUtils.assertOnUiThread();
+        ++mUpdateTasksCounter;
+        new UpdateRestrictionsAndAccountsTask().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+    }
+
     private void updateAccounts() {
         ThreadUtils.assertOnUiThread();
         ++mUpdateTasksCounter;
@@ -571,32 +587,84 @@ public class AccountManagerFacade {
         }
     }
 
-    private class UpdateAccountsTask extends AsyncTask<Void, Void, Void> {
+    private void decrementUpdateCounter() {
+        if (--mUpdateTasksCounter > 0) return;
+
+        for (Runnable callback : mCallbacksWaitingForPendingUpdates) {
+            callback.run();
+        }
+        mCallbacksWaitingForPendingUpdates.clear();
+    }
+
+    private AccountManagerResult<Account[]> maybeGetAccounts() {
+        try {
+            Account[] accounts = mDelegate.getAccountsSync();
+            if (mAccountRestrictionPattern == null) return new AccountManagerResult<>(accounts);
+
+            ArrayList<Account> filteredAccounts = new ArrayList<>();
+            for (Account account : accounts) {
+                if (mAccountRestrictionPattern.matcher(account.name).matches()) {
+                    filteredAccounts.add(account);
+                }
+            }
+
+            return new AccountManagerResult<>(filteredAccounts.toArray(new Account[0]));
+        } catch (AccountManagerDelegateException ex) {
+            return new AccountManagerResult<>(ex);
+        }
+    }
+
+    private class UpdateRestrictionsAndAccountsTask extends AsyncTask<Void, Void, Void> {
         @Override
-        public Void doInBackground(Void... params) {
-            mMaybeAccounts.set(getAccountManagerResult());
+        protected Void doInBackground(Void... voids) {
+            String accountRestrictionPattern = getAccountRestrictionPattern();
+            if (accountRestrictionPattern != null) {
+                mAccountRestrictionPattern = Pattern.compile(accountRestrictionPattern);
+            }
+            mMaybeAccounts.set(maybeGetAccounts());
             mPopulateAccountCacheLatch.countDown();
             return null;
         }
 
-        private AccountManagerResult<Account[]> getAccountManagerResult() {
-            try {
-                return new AccountManagerResult<>(mDelegate.getAccountsSync());
-            } catch (AccountManagerDelegateException ex) {
-                return new AccountManagerResult<>(ex);
-            }
+        private String getAccountRestrictionPattern() {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) return null;
+            return getAccountRestrictionPatternPostJellyBeanMr2();
+        }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+        private String getAccountRestrictionPatternPostJellyBeanMr2() {
+            // This method uses AppRestrictions directly, rather than using the Policy interface,
+            // because it must be callable in contexts in which the native library hasn't been
+            // loaded.
+            Context context = ContextUtils.getApplicationContext();
+            UserManager userManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
+            Bundle appRestrictions =
+                    userManager.getApplicationRestrictions(context.getPackageName());
+            // TODO(https://crbug.com/779568): Remove this after migrating to Robolectric 3.7+.
+            // Android guarantees that getApplicationRestrictions result won't be null, but
+            // Robolectric versions 3.6 and older don't respect this.
+            if (appRestrictions == null) appRestrictions = new Bundle();
+            return appRestrictions.getString(ACCOUNT_RESTRICTION_PATTERN_KEY, null);
         }
 
         @Override
         public void onPostExecute(Void v) {
             fireOnAccountsChangedNotification();
+            decrementUpdateCounter();
+        }
+    }
 
-            if (--mUpdateTasksCounter > 0) return;
+    private class UpdateAccountsTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        public Void doInBackground(Void... params) {
+            mMaybeAccounts.set(maybeGetAccounts());
+            return null;
+        }
 
-            for (Runnable callback : mCallbacksWaitingForPendingUpdates) {
-                callback.run();
-            }
-            mCallbacksWaitingForPendingUpdates.clear();
+        @Override
+        public void onPostExecute(Void v) {
+            fireOnAccountsChangedNotification();
+            decrementUpdateCounter();
         }
     }
 
