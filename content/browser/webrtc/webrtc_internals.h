@@ -11,7 +11,6 @@
 #include "base/containers/hash_tables.h"
 #include "base/containers/queue.h"
 #include "base/gtest_prod_util.h"
-#include "base/lazy_instance.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/process/process.h"
@@ -109,7 +108,7 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
 
   int num_open_connections() const { return num_open_connections_; }
 
- protected:
+  // TODO: !!! This comment.
   // Constructor/Destructor are protected to allow tests to derive from the
   // class and do per-instance testing without having to use the global
   // instance.
@@ -118,6 +117,7 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
   WebRTCInternals(int aggregate_updates_ms, bool should_block_power_saving);
   ~WebRTCInternals() override;
 
+ protected:
   // This allows unit-tests to override to using either a mock, or a locally
   // scoped, version of WebRtcEventLogManager.
   virtual WebRtcEventLogManager* GetWebRtcEventLogManager();
@@ -125,7 +125,6 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
   device::mojom::WakeLockPtr wake_lock_;
 
  private:
-  friend struct base::LazyInstanceTraitsBase<WebRTCInternals>;
   FRIEND_TEST_ALL_PREFIXES(WebRtcAudioDebugRecordingsBrowserTest,
                            CallWithAudioDebugRecordings);
   FRIEND_TEST_ALL_PREFIXES(WebRtcAudioDebugRecordingsBrowserTest,

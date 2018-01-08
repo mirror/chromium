@@ -40,8 +40,7 @@ namespace content {
 
 namespace {
 
-base::LazyInstance<WebRTCInternals>::Leaky g_webrtc_internals =
-    LAZY_INSTANCE_INITIALIZER;
+WebRTCInternals* g_webrtc_internals = nullptr;
 
 // Makes sure that |dict| has a ListValue under path "log".
 base::ListValue* EnsureLogList(base::DictionaryValue* dict) {
@@ -94,6 +93,8 @@ WebRTCInternals::WebRTCInternals(int aggregate_updates_ms,
       should_block_power_saving_(should_block_power_saving),
       aggregate_updates_ms_(aggregate_updates_ms),
       weak_factory_(this) {
+  DCHECK(!g_webrtc_internals);
+
 // TODO(grunell): Shouldn't all the webrtc_internals* files be excluded from the
 // build if WebRTC is disabled?
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -115,13 +116,18 @@ WebRTCInternals::WebRTCInternals(int aggregate_updates_ms,
         event_log_recordings_file_path_.Append(FILE_PATH_LITERAL("event_log"));
   }
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
+
+  g_webrtc_internals = this;
 }
 
 WebRTCInternals::~WebRTCInternals() {
+  DCHECK(g_webrtc_internals);
+  g_webrtc_internals = nullptr;
 }
 
 WebRTCInternals* WebRTCInternals::GetInstance() {
-  return g_webrtc_internals.Pointer();
+  DCHECK(g_webrtc_internals);
+  return g_webrtc_internals;
 }
 
 WebRtcEventLogManager* WebRTCInternals::GetWebRtcEventLogManager() {
