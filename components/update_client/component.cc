@@ -762,7 +762,8 @@ void Component::StateRun::DoHandle() {
   const auto& component = State::component();
   action_runner_ = base::MakeUnique<ActionRunner>(component);
   action_runner_->Run(
-      base::BindOnce(&StateRun::ActionRunComplete, base::Unretained(this)));
+      base::BindOnce(&StateRun::ActionRunComplete, base::Unretained(this)),
+      component.update_context_.config->CreateServiceManagerConnector());
 }
 
 void Component::StateRun::ActionRunComplete(bool succeeded,

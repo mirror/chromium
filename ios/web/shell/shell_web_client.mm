@@ -8,6 +8,8 @@
 
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
+#include "components/unzip_service/public/interfaces/constants.mojom.h"
+#include "components/unzip_service/unzip_service.h"
 #include "ios/web/public/service_names.mojom.h"
 #include "ios/web/public/user_agent.h"
 #include "ios/web/public/web_state/web_state.h"
@@ -93,6 +95,11 @@ void ShellWebClient::RegisterServices(StaticServiceMap* services) {
   echo_info.factory = base::Bind(&echo::CreateEchoService);
   echo_info.task_runner = base::ThreadTaskRunnerHandle::Get();
   services->insert(std::make_pair("echo", echo_info));
+
+  service_manager::EmbeddedServiceInfo unzip_info;
+  unzip_info.factory = base::BindRepeating(&unzip::UnzipService::CreateService);
+  unzip_info.task_runner = base::ThreadTaskRunnerHandle::Get();
+  services->insert(std::make_pair(unzip::mojom::kServiceName, unzip_info));
 }
 
 std::unique_ptr<base::Value> ShellWebClient::GetServiceManifestOverlay(
