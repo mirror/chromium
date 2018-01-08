@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeda65b9_89abcb06",
+        "filename": "extensions/renderer/bindings/exception_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:24:22Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "229497b53ca9b4e8cc90d24a2141140a3e6038ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2112e11f_399f2ec0",
+        "filename": "extensions/renderer/bindings/get_per_context_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:24:22Z",
+      "side": 1,
+      "message": "nit: Since this is now farther away from callsites, let\u0027s use an enum instead of a bool - e.g. kCreateIfMissing and kDontCreateIfMissing or similar.",
+      "revId": "229497b53ca9b4e8cc90d24a2141140a3e6038ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
