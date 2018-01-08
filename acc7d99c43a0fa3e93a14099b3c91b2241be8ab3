@@ -51,6 +51,24 @@
       "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fe5aef_bae15f65",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-08T23:36:08Z",
+      "side": 1,
+      "message": "Ultimately, I think we need to know where to insert the content for the OOPIF. It sounds like the proposal is to avoid creating a placeholder SkPicture, and to just store some structured data in SkMetadata (i.e. a map of IDs to bounds). Do I understand this correctly?\n\nIf I understood it correctly, I actually like it a lot. I\u0027ve been thinking about how to do the cross-process re-assembly. Using SkPicture directly has the problem where picture IDs aren\u0027t unique between processes, and we have to jump through a lot of hoops to try to make this safe. If we don\u0027t use SkPicture at all, then we can use something like base::UnguessableToken and do much better. WDYT?",
+      "parentUuid": "1f77da55_b704e3ee",
+      "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
