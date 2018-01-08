@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2264c6e4_a1980f60",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-08T17:01:31Z",
+      "side": 1,
+      "message": "It is not clear whether this actually waits for an interstitial to not load.\n\nIn other words, is it possible that this test reports that an interstitial was not shown when in fact there was just some delay in showing the interstitial? I am not sure if that\u0027s possible but may be worth considering, especially in Clank because there\u0027s a JNI hop involved.",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 35
+      },
+      "revId": "423fc782bb11e8d9d0607d642ecc2d2d8560fcb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
