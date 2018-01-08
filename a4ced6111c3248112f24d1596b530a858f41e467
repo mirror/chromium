@@ -16,6 +16,24 @@
       "revId": "a4ced6111c3248112f24d1596b530a858f41e467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5843087_0424d5b2",
+        "filename": "media/base/android/java/src/test/org/chromium/media/BitrateAdjusterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-08T18:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4bce232_26afd6f0",
+      "revId": "a4ced6111c3248112f24d1596b530a858f41e467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
