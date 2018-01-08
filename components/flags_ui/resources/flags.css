@@ -411,8 +411,7 @@ h2 {
 
 @media (max-width: 360px) {
   #experiment-reset-all {
-    font-size: 0.8em;
-    padding: 2px 8px;
+    padding: 7px 8px;
   }
 
   #flagsTemplate > .flex-container {
@@ -454,6 +453,10 @@ h2 {
     padding-top: 12px;
     text-align: left;
     width: 100%;
+  }
+
+  #experiment-reset-all span {
+    display: none;
   }
 
   #flagsTemplate {
