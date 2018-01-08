@@ -592,16 +592,6 @@ public class PostMessageTest {
             + "   </script>"
             + "</body></html>";
 
-    // Call on non-UI thread.
-    private void waitUntilPortReady(final AppWebMessagePort port) throws Throwable {
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return port.isReady();
-            }
-        });
-    }
-
     private static final String HELLO = "HELLO";
 
     // Message channels are created on UI thread in a pending state. They are
@@ -618,8 +608,6 @@ public class PostMessageTest {
         final AppWebMessagePort[] channel =
                 ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.createMessageChannel());
 
-        waitUntilPortReady(channel[0]);
-        waitUntilPortReady(channel[1]);
         InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
             channel[0].setMessageCallback(
                     (message, sentPorts) -> channelContainer.setMessage(message), null);
