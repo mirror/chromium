@@ -187,6 +187,30 @@
       "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60458a26_0c28ef16",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-08T23:31:23Z",
+      "side": 1,
+      "message": "separate patch sgtm.\n\nIt might be simpler to just override OnNativeThemeChanged in PageInfoBubbleView and init views in OnNativeThemeChanged (clobbering as necessary), but whatever\u0027s easiest.",
+      "parentUuid": "869fecf4_65f34566",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 72
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
