@@ -7,35 +7,15 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/events/blink/blink_event_util.h"
 
 namespace content {
 
 namespace {
 
-blink::WebMouseEvent Convert(RenderWidgetHostViewBase* root_view,
-                             RenderWidgetHostViewBase* target,
-                             const blink::WebMouseEvent& event) {
-  if (root_view != target) {
-    auto mouse_event = event;
-    gfx::PointF transformed_point;
-    if (!root_view->TransformPointToCoordSpaceForView(
-            mouse_event.PositionInWidget(), target, &transformed_point)) {
-      return blink::WebMouseEvent();
-    }
-    mouse_event.SetPositionInWidget(transformed_point.x(),
-                                    transformed_point.y());
-    return mouse_event;
-  }
-  return event;
-}
-
-// TODO(crbug.com/796656): Currently merges only mouse-move events. This needs
-// to handle more events (e.g. wheel, touch-move etc.).
 bool MergeEventIfPossible(const blink::WebInputEvent& event,
                           ui::WebScopedInputEvent* blink_event) {
-  if (event.GetType() == blink::WebInputEvent::kMouseMove &&
-      (*blink_event)->GetType() == event.GetType() &&
-      (*blink_event)->GetModifiers() == event.GetModifiers()) {
+  if (ui::CanCoalesce(event, **blink_event)) {
     *blink_event = ui::WebInputEventTraits::Clone(event);
     return true;
   }
@@ -96,8 +76,14 @@ void RenderWidgetTargeter::FindTargetAndDispatch(
 
   RenderWidgetTargetResult result =
       delegate_->FindTargetSynchronously(root_view, event);
-  if (!result.view)
+  if (!result.view) {
+    if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
+      root_view->WheelEventAck(
+          static_cast<const blink::WebMouseWheelEvent&>(event),
+          INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS);
+    }
     return;
+  }
 
   RenderWidgetHostViewBase* target = result.view;
   auto* event_ptr = &event;
@@ -115,25 +101,29 @@ void RenderWidgetTargeter::QueryClient(
     const ui::LatencyInfo& latency,
     const base::Optional<gfx::PointF>& target_location) {
   DCHECK(!request_in_flight_);
-  DCHECK(blink::WebInputEvent::IsMouseEventType(event.GetType()));
-  auto mouse_event = static_cast<const blink::WebMouseEvent&>(event);
-  if (target_location.has_value()) {
-    mouse_event.SetPositionInWidget(target_location->x(), target_location->y());
-  } else {
-    mouse_event = Convert(root_view, target, mouse_event);
-  }
-  if (mouse_event.GetType() == blink::WebInputEvent::kUndefined)
-    return;
+  DCHECK(blink::WebInputEvent::IsMouseEventType(event.GetType()) ||
+         event.GetType() == blink::WebInputEvent::kMouseWheel);
+  DCHECK(target_location.has_value());
   request_in_flight_ = true;
   auto* target_client =
       target->GetRenderWidgetHostImpl()->input_target_client();
-  target_client->FrameSinkIdAt(
-      gfx::ToCeiledPoint(mouse_event.PositionInWidget()),
-      base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
-                     weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
-                     target->GetWeakPtr(),
-                     static_cast<const blink::WebMouseEvent&>(event), latency,
-                     target_location));
+  if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+    target_client->FrameSinkIdAt(
+        gfx::ToCeiledPoint(target_location.value()),
+        base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
+                       weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
+                       target->GetWeakPtr(),
+                       static_cast<const blink::WebMouseEvent&>(event), latency,
+                       target_location));
+  } else if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
+    target_client->FrameSinkIdAt(
+        gfx::ToCeiledPoint(target_location.value()),
+        base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
+                       weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
+                       target->GetWeakPtr(),
+                       static_cast<const blink::WebMouseWheelEvent&>(event),
+                       latency, target_location));
+  }
 }
 
 void RenderWidgetTargeter::FlushEventQueue() {
@@ -186,21 +176,28 @@ void RenderWidgetTargeter::FoundTarget(
     const base::Optional<gfx::PointF>& target_location) {
   if (!root_view)
     return;
-  if (!blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+  DCHECK(target_location.has_value());
+  if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+    blink::WebMouseEvent mouse_event =
+        static_cast<const blink::WebMouseEvent&>(event);
+    mouse_event.SetPositionInWidget(target_location->x(), target_location->y());
+    if (mouse_event.GetType() != blink::WebInputEvent::kUndefined)
+      delegate_->DispatchEventToTarget(root_view, target, mouse_event, latency);
+  } else if (event.GetType() == blink::WebInputEvent::kMouseWheel) {
+    blink::WebMouseWheelEvent mouse_wheel_event =
+        static_cast<const blink::WebMouseWheelEvent&>(event);
+    gfx::Vector2dF delta =
+        target_location.value() - mouse_wheel_event.PositionInWidget();
+    mouse_wheel_event.SetPositionInWidget(target_location->x(),
+                                          target_location->y());
+    if (mouse_wheel_event.GetType() != blink::WebInputEvent::kUndefined)
+      delegate_->DispatchEventToTarget(root_view, target, mouse_wheel_event,
+                                       latency, delta);
+  } else {
     // TODO(crbug.com/796656): Handle other types of events.
     NOTREACHED();
     return;
   }
-
-  blink::WebMouseEvent mouse_event =
-      static_cast<const blink::WebMouseEvent&>(event);
-  if (target_location.has_value()) {
-    mouse_event.SetPositionInWidget(target_location->x(), target_location->y());
-  } else {
-    mouse_event = Convert(root_view, target, mouse_event);
-  }
-  if (mouse_event.GetType() != blink::WebInputEvent::kUndefined)
-    delegate_->DispatchEventToTarget(root_view, target, mouse_event, latency);
   FlushEventQueue();
 }
 
