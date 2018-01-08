@@ -42,7 +42,6 @@ std::string GetMtpDeviceId(const std::string& unique_id) {
 // and location. On success, fills in |id|, |label|, |location|, |vendor_name|,
 // and |product_name|.
 void GetStorageInfo(const std::string& storage_name,
-                    device::MediaTransferProtocolManager* mtp_manager,
                     std::string* id,
                     base::string16* label,
                     std::string* location,
