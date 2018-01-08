@@ -114,4 +114,9 @@ message PageloadMetrics {
   // The name of the finch group for the data reduction proxy holdback
   // experiment. This can be an empty string if not included in a finch group.
   optional string holdback_group = 19;
+
+  // Kilobytes of memory used by the main renderer process related to this page
+  // load. Recorded after load event starts. 0 if the page closed before or
+  // shortly after load event or the memory dump failed.
+  optional int64 renderer_memory_usage_kb = 21;
 }
