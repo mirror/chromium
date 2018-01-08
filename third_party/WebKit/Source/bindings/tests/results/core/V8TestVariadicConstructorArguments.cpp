@@ -31,8 +31,6 @@ namespace blink {
 const WrapperTypeInfo V8TestVariadicConstructorArguments::wrapperTypeInfo = {
     gin::kEmbedderBlink,
     V8TestVariadicConstructorArguments::domTemplate,
-    V8TestVariadicConstructorArguments::Trace,
-    V8TestVariadicConstructorArguments::TraceWrappers,
     nullptr,
     "TestVariadicConstructorArguments",
     nullptr,
@@ -70,7 +68,7 @@ static void constructor(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kConstructionContext, "TestVariadicConstructorArguments");
 
   Vector<double> args;
-  args = ToImplArguments<Vector<double>>(info, 0, exceptionState);
+  args = ToImplArguments<IDLDouble>(info, 0, exceptionState);
   if (exceptionState.HadException())
     return;
 

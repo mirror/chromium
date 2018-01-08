@@ -2,7 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/memory/ptr_util.h"
+#include <memory>
+
 #include "chrome/browser/renderer_context_menu/spelling_bubble_model.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -17,7 +18,7 @@ class AskGoogleForSuggestionsDialogTest : public DialogBrowserTest {
   // DialogBrowserTest:
   void ShowUi(const std::string& name) override {
     std::unique_ptr<SpellingBubbleModel> model =
-        base::MakeUnique<SpellingBubbleModel>(
+        std::make_unique<SpellingBubbleModel>(
             browser()->profile(),
             browser()->tab_strip_model()->GetActiveWebContents());
 
@@ -31,15 +32,7 @@ class AskGoogleForSuggestionsDialogTest : public DialogBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(AskGoogleForSuggestionsDialogTest);
 };
 
-#if !defined(OS_MACOSX)
-// Initially disabled except on Mac due to http://crbug.com/683808.
-#define MAYBE_InvokeUi_default DISABLED_InvokeUi_default
-#else
-#define MAYBE_InvokeUi_default InvokeUi_default
-#endif
-
 // Test that calls ShowUi("default").
-IN_PROC_BROWSER_TEST_F(AskGoogleForSuggestionsDialogTest,
-                       MAYBE_InvokeUi_default) {
+IN_PROC_BROWSER_TEST_F(AskGoogleForSuggestionsDialogTest, InvokeUi_default) {
   ShowAndVerifyUi();
 }

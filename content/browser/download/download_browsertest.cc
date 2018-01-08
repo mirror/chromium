@@ -28,7 +28,6 @@
 #include "base/test/mock_entropy_provider.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/platform_thread.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -631,6 +630,28 @@ net::EmbeddedTestServer::HandleRequestCallback CreateBasicResponseHandler(
                     headers, content_type, body);
 }
 
+std::unique_ptr<net::test_server::HttpResponse> HandleRequestAndEchoCookies(
+    const std::string& relative_url,
+    const net::test_server::HttpRequest& request) {
+  std::unique_ptr<net::test_server::BasicHttpResponse> response;
+  if (request.relative_url == relative_url) {
+    response.reset(new net::test_server::BasicHttpResponse);
+    response->AddCustomHeader("Content-Disposition", "attachment");
+    response->AddCustomHeader("Vary", "");
+    response->AddCustomHeader("Cache-Control", "no-cache");
+    response->set_content_type("text/plain");
+    response->set_content(request.headers.at("cookie"));
+  }
+  return std::move(response);
+}
+
+// Creates a request handler for an EmbeddedTestServer that echos the value
+// of the cookie header back as a body, and sends a Content-Disposition header.
+net::EmbeddedTestServer::HandleRequestCallback CreateEchoCookieHandler(
+    const std::string& relative_url) {
+  return base::BindRepeating(&HandleRequestAndEchoCookies, relative_url);
+}
+
 // Helper class to "flatten" handling of
 // TestDownloadHttpResponse::OnPauseHandler.
 class TestRequestPauseHandler {
@@ -755,11 +776,6 @@ class DownloadContentTest : public ContentBrowserTest {
 
   bool EnsureNoPendingDownloads() {
     return CountingDownloadFile::GetNumberActiveFilesFromFileThread() == 0;
-  }
-
-  void WaitForServerToFinishAllResponses(size_t request_num) {
-    while (test_response_handler_.completed_requests().size() != request_num)
-      base::RunLoop().RunUntilIdle();
   }
 
   void SetupErrorInjectionDownloads() {
@@ -1977,7 +1993,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, RemoveResumedDownload) {
   EXPECT_FALSE(PathExists(intermediate_path));
   EXPECT_FALSE(PathExists(target_path));
   EXPECT_TRUE(EnsureNoPendingDownloads());
-  WaitForServerToFinishAllResponses(2);
+  test_response_handler()->WaitUntilCompletion(2u);
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelResumedDownload) {
@@ -2012,7 +2028,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelResumedDownload) {
   EXPECT_FALSE(PathExists(intermediate_path));
   EXPECT_FALSE(PathExists(target_path));
   EXPECT_TRUE(EnsureNoPendingDownloads());
-  WaitForServerToFinishAllResponses(2);
+  test_response_handler()->WaitUntilCompletion(2u);
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_NoFile) {
@@ -2665,8 +2681,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeDataUrl) {
   ASSERT_TRUE(server.ShutdownAndWaitUntilComplete());
 }
 
-// A request for a non-existent resource should still result in a DownloadItem
-// that's created in an interrupted state.
+// A request for a non-existent resource should result in an aborted navigation,
+// and the old site staying current.
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeServerError) {
   GURL download_url =
       embedded_test_server()->GetURL("/download/does-not-exist");
@@ -2674,15 +2690,15 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeServerError) {
       std::string("/download/download-attribute.html?target=") +
       download_url.spec());
 
-  DownloadItem* download = StartDownloadAndReturnItem(shell(), document_url);
-  WaitForInterrupt(download);
-
-  EXPECT_EQ(DOWNLOAD_INTERRUPT_REASON_SERVER_BAD_CONTENT,
-            download->GetLastReason());
+  auto observer = std::make_unique<content::TestNavigationObserver>(
+      shell()->web_contents(), 2);
+  NavigateToURL(shell(), document_url);
+  observer->Wait();
+  EXPECT_FALSE(observer->last_navigation_succeeded());
 }
 
 // A request that fails before it gets a response from the server should also
-// result in a DownloadItem that's created in an interrupted state.
+// result in the old page staying current.
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeNetworkError) {
   SetupErrorInjectionDownloads();
   GURL url = TestDownloadHttpResponse::GetNextURLForDownload();
@@ -2697,24 +2713,24 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeNetworkError) {
   GURL document_url = embedded_test_server()->GetURL(
       std::string("/download/download-attribute.html?target=") +
       server_url.spec());
-  DownloadItem* download = StartDownloadAndReturnItem(shell(), document_url);
-  WaitForInterrupt(download);
-
-  EXPECT_EQ(DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED,
-            download->GetLastReason());
+  auto observer = std::make_unique<content::TestNavigationObserver>(
+      shell()->web_contents(), 2);
+  NavigateToURL(shell(), document_url);
+  observer->Wait();
+  EXPECT_FALSE(observer->last_navigation_succeeded());
 }
 
 // A request that fails due to it being rejected by policy should result in a
-// DownloadItem that's marked as interrupted.
+// corresponding navigation.
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeInvalidURL) {
-  GURL document_url = embedded_test_server()->GetURL(
+  GURL url = embedded_test_server()->GetURL(
       "/download/download-attribute.html?target=about:version");
-  DownloadItem* download = StartDownloadAndReturnItem(shell(), document_url);
-  WaitForInterrupt(download);
-
-  EXPECT_EQ(DOWNLOAD_INTERRUPT_REASON_NETWORK_INVALID_REQUEST,
-            download->GetLastReason());
-  EXPECT_FALSE(download->CanResume());
+  auto observer = std::make_unique<content::TestNavigationObserver>(
+      GURL(url::kAboutBlankURL));
+  observer->WatchExistingWebContents();
+  observer->StartWatchingNewWebContents();
+  NavigateToURL(shell(), url);
+  observer->WaitForNavigationFinished();
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeBlobURL) {
@@ -2729,9 +2745,18 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeBlobURL) {
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeSameSiteCookie) {
   base::ThreadRestrictions::ScopedAllowIO allow_io_during_test;
+  net::EmbeddedTestServer test_server;
+  ASSERT_TRUE(test_server.InitializeAndListen());
 
-  GURL echo_cookie_url =
-      embedded_test_server()->GetURL(kOriginOne, "/echoheader?cookie");
+  test_server.ServeFilesFromDirectory(GetTestFilePath("download", ""));
+  test_server.RegisterRequestHandler(
+      CreateEchoCookieHandler("/downloadcookies"));
+
+  GURL echo_cookie_url = test_server.GetURL(kOriginOne, "/downloadcookies");
+  test_server.RegisterRequestHandler(
+      CreateRedirectHandler("/server-redirect", echo_cookie_url));
+
+  test_server.StartAcceptingConnections();
 
   // download-attribute-same-site-cookie sets two cookies. One "A=B" is set with
   // SameSite=Strict. The other one "B=C" doesn't have this flag. In general
@@ -2741,10 +2766,9 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeSameSiteCookie) {
   // /echoheader handler on the same origin.
   DownloadItem* download = StartDownloadAndReturnItem(
       shell(),
-      embedded_test_server()->GetURL(
+      test_server.GetURL(
           kOriginOne,
-          std::string(
-              "/download/download-attribute-same-site-cookie.html?target=") +
+          std::string("/download-attribute-same-site-cookie.html?target=") +
               echo_cookie_url.spec()));
   WaitForCompletion(download);
 
@@ -2765,10 +2789,9 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeSameSiteCookie) {
   //  Resource origin: kOriginOne
   //  First-party origin: kOriginOne
   download = StartDownloadAndReturnItem(
-      shell(),
-      embedded_test_server()->GetURL(
-          kOriginTwo, std::string("/download/download-attribute.html?target=") +
-                          echo_cookie_url.spec()));
+      shell(), test_server.GetURL(
+                   kOriginTwo, std::string("/download-attribute.html?target=") +
+                                   echo_cookie_url.spec()));
   WaitForCompletion(download);
 
   ASSERT_TRUE(
@@ -2783,13 +2806,11 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeSameSiteCookie) {
   //  Initiator origin: kOriginOne
   //  Resource origin: kOriginOne
   //  First-party origin: kOriginOne
-  GURL redirect_url = embedded_test_server()->GetURL(
-      kOriginTwo, std::string("/server-redirect?") + echo_cookie_url.spec());
+  GURL redirect_url = test_server.GetURL(kOriginTwo, "/server-redirect");
   download = StartDownloadAndReturnItem(
-      shell(),
-      embedded_test_server()->GetURL(
-          kOriginOne, std::string("/download/download-attribute.html?target=") +
-                          redirect_url.spec()));
+      shell(), test_server.GetURL(
+                   kOriginOne, std::string("/download-attribute.html?target=") +
+                                   redirect_url.spec()));
   WaitForCompletion(download);
 
   ASSERT_TRUE(
@@ -2873,14 +2894,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
                download->GetTargetFilePath().BaseName().value().c_str());
 }
 
-#if defined(OS_ANDROID)
-// Flaky on android: https://crbug.com/786626
-#define MAYBE_ParallelDownloadComplete DISABLED_ParallelDownloadComplete
-#else
-#define MAYBE_ParallelDownloadComplete ParallelDownloadComplete
-#endif
 // Verify parallel download in normal case.
-IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadComplete) {
+IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, ParallelDownloadComplete) {
   EXPECT_TRUE(base::FeatureList::IsEnabled(features::kParallelDownloading));
 
   GURL url = TestDownloadHttpResponse::GetNextURLForDownload();
@@ -2902,9 +2917,8 @@ IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadComplete) {
   DownloadItem* download = StartDownloadAndReturnItem(shell(), server_url);
   // Send some data for the first request and pause it so download won't
   // complete before other parallel requests are created.
-  request_pause_handler.WaitForCallback();
-  while (test_response_handler()->completed_requests().size() == 0)
-    base::RunLoop().RunUntilIdle();
+  test_response_handler()->WaitUntilCompletion(1u);
+
   // Now resume the first request.
   request_pause_handler.Resume();
   WaitForCompletion(download);

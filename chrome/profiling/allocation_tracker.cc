@@ -5,6 +5,7 @@
 #include "chrome/profiling/allocation_tracker.h"
 
 #include "base/callback.h"
+#include "base/json/string_escape.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/profiling/backtrace_storage.h"
 
@@ -31,9 +32,15 @@ void AllocationTracker::OnAlloc(const AllocPacket& alloc_packet,
   // Compute the context ID for this allocation, 0 means no context.
   int context_id = 0;
   if (!context.empty()) {
-    auto inserted_record = context_.emplace(
-        std::piecewise_construct, std::forward_as_tuple(std::move(context)),
-        std::forward_as_tuple(next_context_id_));
+    // Escape the strings before saving them, to simplify exporting a heap dump.
+    std::string escaped_context;
+    base::EscapeJSONString(context, false /* put_in_quotes */,
+                           &escaped_context);
+
+    auto inserted_record =
+        context_.emplace(std::piecewise_construct,
+                         std::forward_as_tuple(std::move(escaped_context)),
+                         std::forward_as_tuple(next_context_id_));
     context_id = inserted_record.first->second;
     if (inserted_record.second)
       next_context_id_++;
@@ -71,12 +78,23 @@ void AllocationTracker::OnBarrier(const BarrierPacket& barrier_packet) {
   pair.first->PostTask(
       FROM_HERE,
       base::BindOnce(
-          [](SnapshotCallback cb, AllocationCountMap counts,
-             ContextMap context) {
-            std::move(cb).Run(true, std::move(counts), std::move(context));
+          [](SnapshotCallback cb, AllocationCountMap counts, ContextMap context,
+             AddressToStringMap mapped_strings) {
+            std::move(cb).Run(true, std::move(counts), std::move(context),
+                              mapped_strings);
           },
           std::move(pair.second), AllocationEventSetToCountMap(live_allocs_),
-          context_));
+          context_, mapped_strings_));
+}
+
+void AllocationTracker::OnStringMapping(
+    const StringMappingPacket& string_mapping_packet,
+    const std::string& str) {
+  std::string dest;
+
+  // Escape the strings before saving them, to simplify exporting a heap dump.
+  base::EscapeJSONString(str, false /* put_in_quotes */, &dest);
+  mapped_strings_[string_mapping_packet.address] = std::move(dest);
 }
 
 void AllocationTracker::OnComplete() {

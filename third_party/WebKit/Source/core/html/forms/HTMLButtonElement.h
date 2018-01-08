@@ -49,6 +49,9 @@ class HTMLButtonElement final : public HTMLFormControlElement {
 
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
+  // HTMLFormControlElement always creates one, but buttons don't need it.
+  bool AlwaysCreateUserAgentShadowRoot() const override { return false; }
+
   Node::InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void ParseAttribute(const AttributeModificationParams&) override;
   bool IsPresentationAttribute(const QualifiedName&) const override;
@@ -59,6 +62,7 @@ class HTMLButtonElement final : public HTMLFormControlElement {
 
   bool IsEnumeratable() const override { return true; }
   bool SupportLabels() const override { return true; }
+  bool ShouldForceLegacyLayout() const final { return true; }
   bool IsInteractiveContent() const override;
   bool SupportsAutofocus() const override;
   bool MatchesDefaultPseudoClass() const override;

@@ -4,10 +4,10 @@
 
 #include "components/security_state/content/content_utils.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -47,6 +47,9 @@ blink::WebSecurityStyle SecurityLevelToSecurityStyle(
       return blink::kWebSecurityStyleSecure;
     case security_state::DANGEROUS:
       return blink::kWebSecurityStyleInsecure;
+    case security_state::SECURITY_LEVEL_COUNT:
+      NOTREACHED();
+      return blink::kWebSecurityStyleNeutral;
   }
 
   NOTREACHED();
@@ -184,6 +187,18 @@ void ExplainCertificateSecurity(
             l10n_util::GetStringUTF8(IDS_PRIVATE_KEY_PINNING_BYPASSED),
             l10n_util::GetStringUTF8(
                 IDS_PRIVATE_KEY_PINNING_BYPASSED_DESCRIPTION)));
+  }
+
+  if (security_info.certificate &&
+      !security_info.certificate->valid_expiry().is_null() &&
+      (security_info.certificate->valid_expiry() - base::Time::Now())
+              .InHours() < 48 &&
+      (security_info.certificate->valid_expiry() > base::Time::Now())) {
+    security_style_explanations->info_explanations.push_back(
+        content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_CERTIFICATE_EXPIRING_SOON),
+            l10n_util::GetStringUTF8(
+                IDS_CERTIFICATE_EXPIRING_SOON_DESCRIPTION)));
   }
 }
 
@@ -379,7 +394,7 @@ void ExplainContentSecurity(
 
 std::unique_ptr<security_state::VisibleSecurityState> GetVisibleSecurityState(
     content::WebContents* web_contents) {
-  auto state = base::MakeUnique<security_state::VisibleSecurityState>();
+  auto state = std::make_unique<security_state::VisibleSecurityState>();
 
   content::NavigationEntry* entry =
       web_contents->GetController().GetVisibleEntry();

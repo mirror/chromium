@@ -13,6 +13,7 @@ namespace blink {
 
 ModuleScript* ModuleScript::Create(const String& source_text,
                                    Modulator* modulator,
+                                   const KURL& source_url,
                                    const KURL& base_url,
                                    const ScriptFetchOptions& options,
                                    AccessControlStatus access_control_status,
@@ -41,7 +42,7 @@ ModuleScript* ModuleScript::Create(const String& source_text,
 
   // Delegate to Modulator::CompileModule to process Steps 3-5.
   ScriptModule result = modulator->CompileModule(
-      source_text, base_url.GetString(), options, access_control_status,
+      source_text, source_url, base_url, options, access_control_status,
       start_position, exception_state);
 
   // CreateInternal processes Steps 4 and 8-10.
@@ -134,9 +135,6 @@ ModuleScript::ModuleScript(Modulator* settings_object,
                            const TextPosition& start_position)
     : Script(fetch_options, base_url),
       settings_object_(settings_object),
-      record_(this),
-      parse_error_(this),
-      error_to_rethrow_(this),
       source_text_(source_text),
       start_position_(start_position) {
   if (record.IsNull()) {

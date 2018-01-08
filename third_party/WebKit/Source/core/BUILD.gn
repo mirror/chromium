@@ -108,7 +108,6 @@ source_set("generated") {
 
 source_set("prerequisites") {
   public_deps = [
-    "//gpu/command_buffer/client:gles2_c_lib",
     "//services/network/public/cpp:cpp",
     "//services/service_manager/public/cpp",
     "//skia",
@@ -188,6 +187,7 @@ component("core") {
     "//third_party/WebKit/Source/core/editing",
     "//third_party/WebKit/Source/core/events",
     "//third_party/WebKit/Source/core/exported",
+    "//third_party/WebKit/Source/core/fetch",
     "//third_party/WebKit/Source/core/fileapi",
     "//third_party/WebKit/Source/core/frame",
     "//third_party/WebKit/Source/core/fullscreen",
@@ -260,6 +260,10 @@ jumbo_source_set("testing") {
   ]
 
   sources = [
+    "fetch/testing/InternalsFetch.cpp",
+    "fetch/testing/InternalsFetch.h",
+    "fetch/testing/WorkerInternalsFetch.cpp",
+    "fetch/testing/WorkerInternalsFetch.h",
     "testing/CallbackFunctionTest.cpp",
     "testing/CallbackFunctionTest.h",
     "testing/DeathAwareScriptWrappable.cpp",
@@ -539,10 +543,12 @@ css_properties("make_core_generated_css_property_baseclass") {
 
 # FIXME: Need a better way to specify generated output files
 css_properties("make_core_generated_css_longhand_property_classes") {
-  script = "../build/scripts/core/css/properties/make_css_property_headers.py"
+  script =
+      "../build/scripts/core/css/properties/make_css_property_subclasses.py"
   in_files = [ "css/properties/CSSPropertyMethods.json5" ]
   other_inputs = [
     "../build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+    "../build/scripts/core/css/properties/templates/CSSPropertySubclass.cpp.tmpl",
   ]
   outputs = [
     "$blink_core_output_dir/css/properties/longhands/AlignContent.h",
@@ -561,16 +567,26 @@ css_properties("make_core_generated_css_longhand_property_classes") {
     "$blink_core_output_dir/css/properties/longhands/BackdropFilter.h",
     "$blink_core_output_dir/css/properties/longhands/BackfaceVisibility.h",
     "$blink_core_output_dir/css/properties/longhands/BackgroundAttachment.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundAttachment.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundBlendMode.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundBlendMode.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundClip.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundClip.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundColor.h",
     "$blink_core_output_dir/css/properties/longhands/BackgroundImage.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundImage.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundOrigin.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundOrigin.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundPositionX.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundPositionX.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundPositionY.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundPositionY.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundRepeatX.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundRepeatX.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundRepeatY.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundRepeatY.cpp",
     "$blink_core_output_dir/css/properties/longhands/BackgroundSize.h",
+    "$blink_core_output_dir/css/properties/longhands/BackgroundSize.cpp",
     "$blink_core_output_dir/css/properties/longhands/BaselineShift.h",
     "$blink_core_output_dir/css/properties/longhands/BlockSize.h",
     "$blink_core_output_dir/css/properties/longhands/BorderBottomColor.h",
@@ -705,6 +721,7 @@ css_properties("make_core_generated_css_longhand_property_classes") {
     "$blink_core_output_dir/css/properties/longhands/MarkerStart.h",
     "$blink_core_output_dir/css/properties/longhands/Mask.h",
     "$blink_core_output_dir/css/properties/longhands/MaskSourceType.h",
+    "$blink_core_output_dir/css/properties/longhands/MaskSourceType.cpp",
     "$blink_core_output_dir/css/properties/longhands/MaskType.h",
     "$blink_core_output_dir/css/properties/longhands/MaxBlockSize.h",
     "$blink_core_output_dir/css/properties/longhands/MaxHeight.h",
@@ -757,6 +774,15 @@ css_properties("make_core_generated_css_longhand_property_classes") {
     "$blink_core_output_dir/css/properties/longhands/Ry.h",
     "$blink_core_output_dir/css/properties/longhands/Scale.h",
     "$blink_core_output_dir/css/properties/longhands/ScrollBehavior.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollCustomization.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollMarginBlockEnd.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollMarginBlockStart.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollMarginBottom.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollMarginInlineEnd.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollMarginInlineStart.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollMarginLeft.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollMarginRight.h",
+    "$blink_core_output_dir/css/properties/longhands/ScrollMarginTop.h",
     "$blink_core_output_dir/css/properties/longhands/ScrollPaddingBlockEnd.h",
     "$blink_core_output_dir/css/properties/longhands/ScrollPaddingBlockStart.h",
     "$blink_core_output_dir/css/properties/longhands/ScrollPaddingBottom.h",
@@ -766,14 +792,6 @@ css_properties("make_core_generated_css_longhand_property_classes") {
     "$blink_core_output_dir/css/properties/longhands/ScrollPaddingRight.h",
     "$blink_core_output_dir/css/properties/longhands/ScrollPaddingTop.h",
     "$blink_core_output_dir/css/properties/longhands/ScrollSnapAlign.h",
-    "$blink_core_output_dir/css/properties/longhands/ScrollSnapMarginBlockEnd.h",
-    "$blink_core_output_dir/css/properties/longhands/ScrollSnapMarginBlockStart.h",
-    "$blink_core_output_dir/css/properties/longhands/ScrollSnapMarginBottom.h",
-    "$blink_core_output_dir/css/properties/longhands/ScrollSnapMarginInlineEnd.h",
-    "$blink_core_output_dir/css/properties/longhands/ScrollSnapMarginInlineStart.h",
-    "$blink_core_output_dir/css/properties/longhands/ScrollSnapMarginLeft.h",
-    "$blink_core_output_dir/css/properties/longhands/ScrollSnapMarginRight.h",
-    "$blink_core_output_dir/css/properties/longhands/ScrollSnapMarginTop.h",
     "$blink_core_output_dir/css/properties/longhands/ScrollSnapStop.h",
     "$blink_core_output_dir/css/properties/longhands/ScrollSnapType.h",
     "$blink_core_output_dir/css/properties/longhands/ShapeImageThreshold.h",
@@ -916,14 +934,23 @@ css_properties("make_core_generated_css_longhand_property_classes") {
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskBoxImageSource.h",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskBoxImageWidth.h",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskClip.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskClip.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskComposite.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskComposite.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskImage.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskImage.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskOrigin.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskOrigin.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskPositionX.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskPositionX.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskPositionY.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskPositionY.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskRepeatX.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskRepeatX.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskRepeatY.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskRepeatY.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaskSize.h",
+    "$blink_core_output_dir/css/properties/longhands/WebkitMaskSize.cpp",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaxLogicalHeight.h",
     "$blink_core_output_dir/css/properties/longhands/WebkitMaxLogicalWidth.h",
     "$blink_core_output_dir/css/properties/longhands/WebkitMinLogicalHeight.h",
@@ -987,7 +1014,8 @@ css_properties("make_core_generated_css_longhand_property_classes") {
 
 # FIXME: Need a better way to specify generated output files
 css_properties("make_core_generated_css_shorthand_property_classes") {
-  script = "../build/scripts/core/css/properties/make_css_property_headers.py"
+  script =
+      "../build/scripts/core/css/properties/make_css_property_subclasses.py"
   in_files = [ "css/properties/CSSPropertyMethods.json5" ]
   other_inputs = [
     "../build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
@@ -1035,12 +1063,12 @@ css_properties("make_core_generated_css_shorthand_property_classes") {
     "$blink_core_output_dir/css/properties/shorthands/PlaceContent.h",
     "$blink_core_output_dir/css/properties/shorthands/PlaceItems.h",
     "$blink_core_output_dir/css/properties/shorthands/PlaceSelf.h",
+    "$blink_core_output_dir/css/properties/shorthands/ScrollMargin.h",
+    "$blink_core_output_dir/css/properties/shorthands/ScrollMarginBlock.h",
+    "$blink_core_output_dir/css/properties/shorthands/ScrollMarginInline.h",
     "$blink_core_output_dir/css/properties/shorthands/ScrollPadding.h",
     "$blink_core_output_dir/css/properties/shorthands/ScrollPaddingBlock.h",
     "$blink_core_output_dir/css/properties/shorthands/ScrollPaddingInline.h",
-    "$blink_core_output_dir/css/properties/shorthands/ScrollSnapMargin.h",
-    "$blink_core_output_dir/css/properties/shorthands/ScrollSnapMarginBlock.h",
-    "$blink_core_output_dir/css/properties/shorthands/ScrollSnapMarginInline.h",
     "$blink_core_output_dir/css/properties/shorthands/TextDecoration.h",
     "$blink_core_output_dir/css/properties/shorthands/Transition.h",
     "$blink_core_output_dir/css/properties/shorthands/WebkitAnimation.h",
@@ -1234,8 +1262,8 @@ code_generator("make_core_generated_media_feature_names") {
   script = "../build/scripts/core/css/make_media_feature_names.py"
   json_inputs = [ "css/media_feature_names.json5" ]
   templates = [
-    "../build/scripts/templates/MakeNames.cpp.tmpl",
-    "../build/scripts/templates/MakeNames.h.tmpl",
+    "../build/scripts/templates/make_names.cc.tmpl",
+    "../build/scripts/templates/make_names.h.tmpl",
   ]
   other_inputs = make_names_files
   outputs = [
@@ -1469,10 +1497,10 @@ action("make_core_generated_origin_trials") {
 action_foreach("make_core_generated_bison") {
   script = "../build/scripts/rule_bison.py"
   sources = [
-    "xml/XPathGrammar.y",
+    "xml/xpath_grammar.y",
   ]
   outputs = [
-    "$blink_core_output_dir/{{source_name_part}}.cpp",
+    "$blink_core_output_dir/{{source_name_part}}.cc",
     "$blink_core_output_dir/{{source_name_part}}.h",
   ]
   args = [
@@ -1580,9 +1608,6 @@ target("jumbo_" + core_link_small_target_type, "core_generated") {
   configs += [
     ":core_include_dirs",
     "//tools/v8_context_snapshot:use_v8_context_snapshot",
-
-    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-    "//build/config/compiler:no_size_t_to_int_warning",
   ]
   include_dirs = [ "$root_gen_dir/blink" ]
 
@@ -1755,10 +1780,25 @@ jumbo_source_set("unit_tests") {
     "exported/WebScopedWindowFocusAllowedIndicatorTest.cpp",
     "exported/WebSearchableFormDataTest.cpp",
     "exported/WebSelectorTest.cpp",
+    "exported/WebSurroundingTextTest.cpp",
     "exported/WebUserGestureTokenTest.cpp",
     "exported/WebViewTest.cpp",
-    "fileapi/FileListTest.cpp",
-    "fileapi/FileTest.cpp",
+    "fetch/BlobBytesConsumerTest.cpp",
+    "fetch/BodyStreamBufferTest.cpp",
+    "fetch/BytesConsumerForDataConsumerHandleTest.cpp",
+    "fetch/BytesConsumerTest.cpp",
+    "fetch/BytesConsumerTestUtil.cpp",
+    "fetch/BytesConsumerTestUtil.h",
+    "fetch/DataConsumerHandleTestUtil.cpp",
+    "fetch/DataConsumerHandleTestUtil.h",
+    "fetch/FetchDataLoaderTest.cpp",
+    "fetch/FetchHeaderListTest.cpp",
+    "fetch/FetchResponseDataTest.cpp",
+    "fetch/FormDataBytesConsumerTest.cpp",
+    "fetch/MultipartParserTest.cpp",
+    "fetch/ReadableStreamBytesConsumerTest.cpp",
+    "fetch/RequestTest.cpp",
+    "fetch/ResponseTest.cpp",
     "frame/BrowserControlsTest.cpp",
     "frame/DOMTimerTest.cpp",
     "frame/DeferredLoadingTest.cpp",
@@ -1768,6 +1808,7 @@ jumbo_source_set("unit_tests") {
     "frame/FrameTestHelpers.cpp",
     "frame/FrameTestHelpers.h",
     "frame/HistoryTest.cpp",
+    "frame/LocalFrameTest.cpp",
     "frame/LocalFrameViewTest.cpp",
     "frame/MHTMLTest.cpp",
     "frame/OriginsUsingFeaturesTest.cpp",
@@ -1790,7 +1831,6 @@ jumbo_source_set("unit_tests") {
     "html/HTMLLinkElementTest.cpp",
     "html/HTMLSlotElementTest.cpp",
     "html/HTMLTableRowElementTest.cpp",
-    "html/ImageDataTest.cpp",
     "html/ImageDocumentTest.cpp",
     "html/LinkElementLoadingTest.cpp",
     "html/LinkRelAttributeTest.cpp",
@@ -1798,6 +1838,7 @@ jumbo_source_set("unit_tests") {
     "html/TimeRangesTest.cpp",
     "html/canvas/CanvasAsyncBlobCreatorTest.cpp",
     "html/canvas/CanvasFontCacheTest.cpp",
+    "html/canvas/ImageDataTest.cpp",
     "html/custom/CustomElementDefinitionTest.cpp",
     "html/custom/CustomElementDescriptorTest.cpp",
     "html/custom/CustomElementReactionQueueTest.cpp",
@@ -1888,20 +1929,25 @@ jumbo_source_set("unit_tests") {
     "layout/TextAutosizerTest.cpp",
     "layout/VisualRectMappingTest.cpp",
     "layout/api/SelectionStateTest.cpp",
+    "layout/custom/LayoutWorkletTest.cpp",
     "layout/line/InlineTextBoxTest.cpp",
     "layout/ng/NGInlineLayoutTest.cpp",
+    "layout/ng/exclusions/ng_exclusion_space_test.cc",
     "layout/ng/geometry/ng_box_strut_test.cc",
     "layout/ng/geometry/ng_logical_offset_test.cc",
     "layout/ng/geometry/ng_logical_rect_test.cc",
     "layout/ng/geometry/ng_physical_offset_rect_test.cc",
     "layout/ng/geometry/ng_physical_offset_test.cc",
     "layout/ng/geometry/ng_physical_rect_test.cc",
+    "layout/ng/inline/ng_caret_rect_test.cc",
     "layout/ng/inline/ng_inline_fragment_traversal_test.cc",
     "layout/ng/inline/ng_inline_items_builder_test.cc",
     "layout/ng/inline/ng_inline_layout_algorithm_test.cc",
     "layout/ng/inline/ng_inline_node_test.cc",
     "layout/ng/inline/ng_line_breaker_test.cc",
     "layout/ng/inline/ng_offset_mapping_test.cc",
+    "layout/ng/inline/ng_physical_line_box_fragment_test.cc",
+    "layout/ng/inline/ng_physical_text_fragment_test.cc",
     "layout/ng/ng_absolute_utils_test.cc",
     "layout/ng/ng_base_layout_algorithm_test.cc",
     "layout/ng/ng_base_layout_algorithm_test.h",
@@ -1910,7 +1956,6 @@ jumbo_source_set("unit_tests") {
     "layout/ng/ng_block_node_test.cc",
     "layout/ng/ng_column_layout_algorithm_test.cc",
     "layout/ng/ng_constraint_space_builder_test.cc",
-    "layout/ng/ng_constraint_space_test.cc",
     "layout/ng/ng_layout_test.h",
     "layout/ng/ng_length_utils_test.cc",
     "layout/ng/ng_out_of_flow_layout_part_test.cc",
@@ -1959,13 +2004,14 @@ jumbo_source_set("unit_tests") {
     "page/ViewportTest.cpp",
     "page/WindowFeaturesTest.cpp",
     "page/scrolling/RootScrollerTest.cpp",
+    "page/scrolling/ScrollIntoViewTest.cpp",
     "page/scrolling/ScrollMetricsTest.cpp",
     "page/scrolling/ScrollStateTest.cpp",
     "page/scrolling/ScrollingCoordinatorTest.cpp",
-    "page/scrolling/SmoothScrollTest.cpp",
     "page/scrolling/SnapCoordinatorTest.cpp",
     "paint/BlockPainterTest.cpp",
     "paint/BoxPaintInvalidatorTest.cpp",
+    "paint/CSSMaskPainterTest.cpp",
     "paint/FirstMeaningfulPaintDetectorTest.cpp",
     "paint/FragmentDataTest.cpp",
     "paint/HTMLCanvasPainterTest.cpp",
@@ -1995,6 +2041,7 @@ jumbo_source_set("unit_tests") {
     "paint/compositing/CompositingInputsUpdaterTest.cpp",
     "paint/compositing/CompositingReasonFinderTest.cpp",
     "paint/compositing/PaintLayerCompositorTest.cpp",
+    "paint/ng/ng_paint_fragment_test.cc",
     "paint/ng/ng_text_fragment_painter_test.cc",
     "policy/PolicyTest.cpp",
     "resize_observer/ResizeObserverTest.cpp",
@@ -2064,9 +2111,11 @@ jumbo_source_set("unit_tests") {
 
   deps = [
     ":core",
+    "//mojo/common:common_base",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/Source/core/editing:unit_tests",
+    "//third_party/WebKit/Source/core/fileapi:unit_tests",
   ]
 
   # FIXME: Enable mojo unittests on Android after fixing data dependency.

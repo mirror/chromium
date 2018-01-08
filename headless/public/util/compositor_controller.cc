@@ -20,16 +20,20 @@ namespace headless {
 // Sends BeginFrames to advance animations while virtual time advances in
 // intervals.
 class CompositorController::AnimationBeginFrameTask
-    : public VirtualTimeController::RepeatingTask {
+    : public VirtualTimeController::RepeatingTask,
+      public VirtualTimeController::Observer,
+      public VirtualTimeController::StartDeferrer {
  public:
   explicit AnimationBeginFrameTask(CompositorController* compositor_controller)
-      : compositor_controller_(compositor_controller),
+      : RepeatingTask(StartPolicy::START_IMMEDIATELY, -1),
+        compositor_controller_(compositor_controller),
         weak_ptr_factory_(this) {}
 
   // VirtualTimeController::RepeatingTask implementation:
-  void IntervalElapsed(base::TimeDelta virtual_time_offset,
-                       const base::Closure& continue_callback) override {
-    continue_callback_ = continue_callback;
+  void IntervalElapsed(
+      base::TimeDelta virtual_time_offset,
+      base::OnceCallback<void(ContinuePolicy)> continue_callback) override {
+    interval_continue_callback_ = std::move(continue_callback);
 
     // Post a cancellable task that will issue a BeginFrame. This way, we can
     // cancel sending an animation-only BeginFrame if another virtual time task
@@ -43,20 +47,22 @@ class CompositorController::AnimationBeginFrameTask
         FROM_HERE, begin_frame_task_.callback());
   }
 
-  void BudgetRequested(base::TimeDelta virtual_time_offset,
-                       base::TimeDelta requested_budget,
-                       const base::Closure& continue_callback) override {
+  // VirtualTimeController::StartDeferrer implementation:
+  void DeferStart(base::OnceClosure continue_callback) override {
     // Run a BeginFrame if we cancelled it because the budged expired previously
     // and no other BeginFrame was sent while virtual time was paused.
     if (needs_begin_frame_on_virtual_time_resume_) {
-      continue_callback_ = continue_callback;
+      start_continue_callback_ = std::move(continue_callback);
       IssueAnimationBeginFrame();
       return;
     }
-    continue_callback.Run();
+    std::move(continue_callback).Run();
   }
 
-  void BudgetExpired(base::TimeDelta virtual_time_offset) override {
+  // VirtualTimeController::Observer implementation:
+  void VirtualTimeStarted(base::TimeDelta virtual_time_offset) override {}
+
+  void VirtualTimeStopped(base::TimeDelta virtual_time_offset) override {
     // Wait until a new budget was requested before sending another animation
     // BeginFrame, as it's likely that we will send a screenshotting BeginFrame.
     if (!begin_frame_task_.IsCancelled()) {
@@ -88,23 +94,28 @@ class CompositorController::AnimationBeginFrameTask
     // posted above.
     compositor_controller_->BeginFrame(
         base::Bind(&AnimationBeginFrameTask::BeginFrameComplete,
-                   weak_ptr_factory_.GetWeakPtr()));
+                   weak_ptr_factory_.GetWeakPtr()),
+        !compositor_controller_->update_display_for_animations_);
   }
 
   void BeginFrameComplete(std::unique_ptr<BeginFrameResult>) {
     TRACE_EVENT0(
         "headless",
         "CompositorController::AnimationBeginFrameTask::BeginFrameComplete");
-    DCHECK(continue_callback_);
-    auto callback = continue_callback_;
-    continue_callback_.Reset();
-    callback.Run();
+    DCHECK(interval_continue_callback_ || start_continue_callback_);
+    if (interval_continue_callback_)
+      std::move(interval_continue_callback_).Run(ContinuePolicy::NOT_REQUIRED);
+
+    if (start_continue_callback_)
+      std::move(start_continue_callback_).Run();
   }
 
   CompositorController* compositor_controller_;  // NOT OWNED
   bool needs_begin_frame_on_virtual_time_resume_ = false;
   base::CancelableClosure begin_frame_task_;
-  base::Closure continue_callback_;
+
+  base::OnceCallback<void(ContinuePolicy)> interval_continue_callback_;
+  base::OnceClosure start_continue_callback_;
   base::WeakPtrFactory<AnimationBeginFrameTask> weak_ptr_factory_;
 };
 
@@ -113,7 +124,8 @@ CompositorController::CompositorController(
     HeadlessDevToolsClient* devtools_client,
     VirtualTimeController* virtual_time_controller,
     base::TimeDelta animation_begin_frame_interval,
-    base::TimeDelta wait_for_compositor_ready_begin_frame_delay)
+    base::TimeDelta wait_for_compositor_ready_begin_frame_delay,
+    bool update_display_for_animations)
     : task_runner_(std::move(task_runner)),
       devtools_client_(devtools_client),
       virtual_time_controller_(virtual_time_controller),
@@ -121,6 +133,7 @@ CompositorController::CompositorController(
       animation_begin_frame_interval_(animation_begin_frame_interval),
       wait_for_compositor_ready_begin_frame_delay_(
           wait_for_compositor_ready_begin_frame_delay),
+      update_display_for_animations_(update_display_for_animations),
       weak_ptr_factory_(this) {
   devtools_client_->GetHeadlessExperimental()->GetExperimental()->AddObserver(
       this);
@@ -131,10 +144,14 @@ CompositorController::CompositorController(
       headless_experimental::EnableParams::Builder().Build());
   virtual_time_controller_->ScheduleRepeatingTask(
       animation_task_.get(), animation_begin_frame_interval_);
+  virtual_time_controller_->AddObserver(animation_task_.get());
+  virtual_time_controller_->SetStartDeferrer(animation_task_.get());
 }
 
 CompositorController::~CompositorController() {
+  virtual_time_controller_->RemoveObserver(animation_task_.get());
   virtual_time_controller_->CancelRepeatingTask(animation_task_.get());
+  virtual_time_controller_->SetStartDeferrer(nullptr);
   devtools_client_->GetHeadlessExperimental()
       ->GetExperimental()
       ->RemoveObserver(this);
@@ -143,6 +160,7 @@ CompositorController::~CompositorController() {
 void CompositorController::PostBeginFrame(
     const base::Callback<void(std::unique_ptr<BeginFrameResult>)>&
         begin_frame_complete_callback,
+    bool no_display_updates,
     std::unique_ptr<ScreenshotParams> screenshot) {
   // In certain nesting situations, we should not issue a BeginFrame immediately
   // - for example, issuing a new BeginFrame within a BeginFrameCompleted or
@@ -152,12 +170,13 @@ void CompositorController::PostBeginFrame(
       FROM_HERE,
       base::Bind(&CompositorController::BeginFrame,
                  weak_ptr_factory_.GetWeakPtr(), begin_frame_complete_callback,
-                 base::Passed(&screenshot)));
+                 no_display_updates, base::Passed(&screenshot)));
 }
 
 void CompositorController::BeginFrame(
     const base::Callback<void(std::unique_ptr<BeginFrameResult>)>&
         begin_frame_complete_callback,
+    bool no_display_updates,
     std::unique_ptr<ScreenshotParams> screenshot) {
   DCHECK(!begin_frame_complete_callback_);
   begin_frame_complete_callback_ = begin_frame_complete_callback;
@@ -180,6 +199,8 @@ void CompositorController::BeginFrame(
 
     params_builder.SetInterval(
         animation_begin_frame_interval_.InMillisecondsF());
+
+    params_builder.SetNoDisplayUpdates(no_display_updates);
 
     // TODO(eseckler): Set time fields. This requires obtaining the absolute
     // virtual time stamp.
@@ -229,6 +250,8 @@ void CompositorController::OnNeedsBeginFramesChanged(
 
 void CompositorController::OnMainFrameReadyForScreenshots(
     const MainFrameReadyForScreenshotsParams& params) {
+  TRACE_EVENT0("headless",
+               "CompositorController::OnMainFrameReadyForScreenshots");
   main_frame_ready_ = true;
 
   // If a WaitForCompositorReadyBeginFrame is still scheduled, skip it.
@@ -393,9 +416,11 @@ void CompositorController::CaptureScreenshot(
   // animation BeginFrame for the current virtual time pause.
   animation_task_->CompositorControllerIssuingScreenshotBeginFrame();
 
+  const bool no_display_updates = false;
   PostBeginFrame(
       base::Bind(&CompositorController::CaptureScreenshotBeginFrameComplete,
                  weak_ptr_factory_.GetWeakPtr()),
+      no_display_updates,
       ScreenshotParams::Builder()
           .SetFormat(format)
           .SetQuality(quality)

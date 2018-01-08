@@ -15,7 +15,6 @@
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/md5.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/component_updater/cros_component_installer.h"
@@ -46,15 +45,6 @@ GetComponentizedFilters() {
 namespace chromeos {
 
 namespace {
-
-// Get the URI that we want for talking to cups.
-std::string URIForCups(const Printer& printer) {
-  if (!printer.effective_uri().empty()) {
-    return printer.effective_uri();
-  } else {
-    return printer.uri();
-  }
-}
 
 // Configures printers by downloading PPDs then adding them to CUPS through
 // debugd.  This class must be used on the UI thread.
@@ -105,7 +95,7 @@ class PrinterConfigurerImpl : public PrinterConfigurer {
 
     auto* client = DBusThreadManager::Get()->GetDebugDaemonClient();
     client->CupsAddAutoConfiguredPrinter(
-        printer.id(), URIForCups(printer),
+        printer.id(), printer.UriForCups(),
         base::BindOnce(&PrinterConfigurerImpl::OnAddedPrinter,
                        weak_factory_.GetWeakPtr(), printer,
                        std::move(callback)));
@@ -177,7 +167,7 @@ class PrinterConfigurerImpl : public PrinterConfigurer {
     auto* client = DBusThreadManager::Get()->GetDebugDaemonClient();
 
     client->CupsAddManuallyConfiguredPrinter(
-        printer.id(), URIForCups(printer), ppd_contents,
+        printer.id(), printer.UriForCups(), ppd_contents,
         base::BindOnce(&PrinterConfigurerImpl::OnAddedPrinter,
                        weak_factory_.GetWeakPtr(), printer, std::move(cb)));
   }
@@ -187,7 +177,7 @@ class PrinterConfigurerImpl : public PrinterConfigurer {
   void OnComponentLoad(const Printer& printer,
                        const std::string& ppd_contents,
                        PrinterSetupCallback cb,
-                       const std::string& result) {
+                       const base::FilePath& result) {
     // Result is the component mount point, or empty
     // if the component couldn't be loaded
     if (result.empty()) {
@@ -214,8 +204,9 @@ class PrinterConfigurerImpl : public PrinterConfigurer {
       if (components_requested.size() == 1) {
         // Only allow one filter request in ppd file.
         auto& component_name = *components_requested.begin();
-        component_updater::CrOSComponent::LoadComponent(
+        g_browser_process->platform_part()->cros_component_manager()->Load(
             component_name,
+            component_updater::CrOSComponentManager::MountPolicy::kMount,
             base::BindOnce(&PrinterConfigurerImpl::OnComponentLoad,
                            weak_factory_.GetWeakPtr(), printer, ppd_contents,
                            std::move(cb)));
@@ -267,7 +258,7 @@ std::string PrinterConfigurer::SetupFingerprint(const Printer& printer) {
   base::MD5Context ctx;
   base::MD5Init(&ctx);
   base::MD5Update(&ctx, printer.id());
-  base::MD5Update(&ctx, URIForCups(printer));
+  base::MD5Update(&ctx, printer.UriForCups());
   base::MD5Update(&ctx, printer.ppd_reference().user_supplied_ppd_url);
   base::MD5Update(&ctx, printer.ppd_reference().effective_make_and_model);
   char autoconf = printer.ppd_reference().autoconf ? 1 : 0;
@@ -279,7 +270,7 @@ std::string PrinterConfigurer::SetupFingerprint(const Printer& printer) {
 
 // static
 std::unique_ptr<PrinterConfigurer> PrinterConfigurer::Create(Profile* profile) {
-  return base::MakeUnique<PrinterConfigurerImpl>(profile);
+  return std::make_unique<PrinterConfigurerImpl>(profile);
 }
 
 }  // namespace chromeos

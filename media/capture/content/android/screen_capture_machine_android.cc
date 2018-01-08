@@ -51,8 +51,7 @@ void ScreenCaptureMachineAndroid::OnRGBAFrameAvailable(
     return;
   }
 
-  DCHECK(frame->format() == PIXEL_FORMAT_I420 ||
-         frame->format() == PIXEL_FORMAT_YV12);
+  DCHECK(frame->format() == PIXEL_FORMAT_I420);
 
   scoped_refptr<VideoFrame> temp_frame = frame;
   if (frame->visible_rect().width() != width ||
@@ -127,8 +126,7 @@ void ScreenCaptureMachineAndroid::OnI420FrameAvailable(
     return;
   }
 
-  DCHECK(frame->format() == PIXEL_FORMAT_I420 ||
-         frame->format() == PIXEL_FORMAT_YV12);
+  DCHECK(frame->format() == PIXEL_FORMAT_I420);
 
   scoped_refptr<VideoFrame> temp_frame = frame;
   if (frame->visible_rect().width() != width ||
@@ -280,8 +278,7 @@ void ScreenCaptureMachineAndroid::MaybeCaptureForRefresh() {
   if (lastFrame_.get() == nullptr)
     return;
 
-  const VideoCaptureOracle::Event event =
-      VideoCaptureOracle::kActiveRefreshRequest;
+  const VideoCaptureOracle::Event event = VideoCaptureOracle::kRefreshRequest;
   const base::TimeTicks start_time = base::TimeTicks::Now();
   scoped_refptr<VideoFrame> frame;
   ThreadSafeCaptureOracle::CaptureFrameCallback capture_frame_cb;
@@ -291,8 +288,7 @@ void ScreenCaptureMachineAndroid::MaybeCaptureForRefresh() {
     return;
   }
 
-  DCHECK(frame->format() == PIXEL_FORMAT_I420 ||
-         frame->format() == PIXEL_FORMAT_YV12);
+  DCHECK(frame->format() == PIXEL_FORMAT_I420);
 
   libyuv::I420Scale(
       lastFrame_->visible_data(VideoFrame::kYPlane),

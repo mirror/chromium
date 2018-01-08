@@ -27,6 +27,7 @@
 #include "content/public/common/previews_state.h"
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/renderer/content_renderer_client.h"
+#include "content/public/renderer/render_view_visitor.h"
 #include "content/public/test/frame_load_waiter.h"
 #include "content/renderer/history_serialization.h"
 #include "content/renderer/render_thread_impl.h"
@@ -73,8 +74,28 @@ using blink::WebScriptSource;
 using blink::WebString;
 using blink::WebURLRequest;
 
+namespace content {
+
 namespace {
 
+class CloseMessageSendingRenderViewVisitor : public RenderViewVisitor {
+ public:
+  CloseMessageSendingRenderViewVisitor() = default;
+  ~CloseMessageSendingRenderViewVisitor() override = default;
+
+ protected:
+  bool Visit(RenderView* render_view) override {
+    // Simulate the Widget receiving a close message. This should result on
+    // releasing the internal reference counts and destroying the internal
+    // state.
+    ViewMsg_Close msg(render_view->GetRoutingID());
+    static_cast<RenderViewImpl*>(render_view)->OnMessageReceived(msg);
+    return true;
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(CloseMessageSendingRenderViewVisitor);
+};
 
 // Converts |ascii_character| into |key_code| and returns true on success.
 // Handles only the characters needed by tests.
@@ -103,8 +124,6 @@ bool GetWindowsKeyCode(char ascii_character, int* key_code) {
 }
 
 }  // namespace
-
-namespace content {
 
 class RendererBlinkPlatformImplTestOverrideImpl
     : public RendererBlinkPlatformImpl {
@@ -321,10 +340,10 @@ void RenderViewTest::TearDown() {
   // Run the loop so the release task from the renderwidget executes.
   base::RunLoop().RunUntilIdle();
 
-  // Simulate the Widget receiving a close message. This should result on
-  // releasing the internal reference counts and destroying the internal state.
-  ViewMsg_Close msg(view_->GetRoutingID());
-  static_cast<RenderViewImpl*>(view_)->OnMessageReceived(msg);
+  // Close the main |view_| as well as any other windows that might have been
+  // opened by the test.
+  CloseMessageSendingRenderViewVisitor closing_visitor;
+  RenderView::ForEach(&closing_visitor);
 
   std::unique_ptr<blink::WebLeakDetector> leak_detector =
       base::WrapUnique(blink::WebLeakDetector::Create(this));
@@ -342,6 +361,10 @@ void RenderViewTest::TearDown() {
   // some new tasks which need to be processed before shutting down WebKit
   // (http://crbug.com/21508).
   base::RunLoop().RunUntilIdle();
+
+#if defined(OS_WIN)
+  ClearDWriteFontProxySenderForTesting();
+#endif
 
 #if defined(OS_MACOSX)
   autorelease_pool_.reset();
@@ -527,12 +550,12 @@ void RenderViewTest::Reload(const GURL& url) {
       PREVIEWS_UNSPECIFIED, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
-      false /* started_from_context_menu */, false /* has_user_gesture */);
+      false /* started_from_context_menu */, false /* has_user_gesture */,
+      base::nullopt /* suggested_filename */);
   RenderViewImpl* impl = static_cast<RenderViewImpl*>(view_);
   TestRenderFrame* frame =
       static_cast<TestRenderFrame*>(impl->GetMainRenderFrame());
-  frame->Navigate(common_params, StartNavigationParams(),
-                  RequestNavigationParams());
+  frame->Navigate(common_params, RequestNavigationParams());
   FrameLoadWaiter(frame).Wait();
   view_->GetWebView()->UpdateAllLifecyclePhases();
 }
@@ -547,6 +570,8 @@ void RenderViewTest::Resize(gfx::Size new_size,
   params.browser_controls_shrink_blink_size = false;
   params.is_fullscreen_granted = is_fullscreen_granted;
   params.display_mode = blink::kWebDisplayModeBrowser;
+  params.content_source_id =
+      static_cast<RenderViewImpl*>(view_)->GetContentSourceId();
   std::unique_ptr<IPC::Message> resize_message(new ViewMsg_Resize(0, params));
   OnMessageReceived(*resize_message);
 }
@@ -668,7 +693,8 @@ void RenderViewTest::GoToOffset(int offset,
       GURL(), PREVIEWS_UNSPECIFIED, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
-      false /* started_from_context_menu */, false /* has_user_gesture */);
+      false /* started_from_context_menu */, false /* has_user_gesture */,
+      base::nullopt /* suggested_filename */);
   RequestNavigationParams request_params;
   request_params.page_state = state;
   request_params.nav_entry_id = pending_offset + 1;
@@ -678,7 +704,7 @@ void RenderViewTest::GoToOffset(int offset,
 
   TestRenderFrame* frame =
       static_cast<TestRenderFrame*>(impl->GetMainRenderFrame());
-  frame->Navigate(common_params, StartNavigationParams(), request_params);
+  frame->Navigate(common_params, request_params);
 
   // The load actually happens asynchronously, so we pump messages to process
   // the pending continuation.

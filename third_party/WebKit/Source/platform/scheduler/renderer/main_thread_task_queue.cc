@@ -15,39 +15,39 @@ const char* MainThreadTaskQueue::NameForQueueType(
     MainThreadTaskQueue::QueueType queue_type) {
   switch (queue_type) {
     case MainThreadTaskQueue::QueueType::kControl:
-      return "ControlTQ";
+      return "control_tq";
     case MainThreadTaskQueue::QueueType::kDefault:
-      return "DefaultTQ";
-    case MainThreadTaskQueue::QueueType::kDefaultLoading:
-      return "DefaultLoadingTQ";
+      return "default_tq";
     case MainThreadTaskQueue::QueueType::kDefaultTimer:
-      return "DefaultTimerTQ";
+      return "default_timer_tq";
     case MainThreadTaskQueue::QueueType::kUnthrottled:
-      return "UnthrottledTQ";
+      return "unthrottled_tq";
     case MainThreadTaskQueue::QueueType::kFrameLoading:
-      return "FrameLoadingTQ";
+      return "frame_loading_tq";
     case MainThreadTaskQueue::QueueType::kFrameThrottleable:
-      return "FrameThrottleableTQ";
+      return "frame_throttleable_tq";
     case MainThreadTaskQueue::QueueType::kFrameDeferrable:
-      return "FrameDeferrableTQ";
+      return "frame_deferrable_tq";
     case MainThreadTaskQueue::QueueType::kFramePausable:
-      return "FramePausableTQ";
+      return "frame_pausable_tq";
     case MainThreadTaskQueue::QueueType::kFrameUnpausable:
-      return "FrameUnpausableTQ";
+      return "frame_unpausable_tq";
     case MainThreadTaskQueue::QueueType::kCompositor:
-      return "CompositorTQ";
+      return "compositor_tq";
     case MainThreadTaskQueue::QueueType::kIdle:
-      return "IdleTQ";
+      return "idle_tq";
     case MainThreadTaskQueue::QueueType::kTest:
-      return "TestTQ";
-    case MainThreadTaskQueue::QueueType::kFrameLoading_kControl:
-      return "FrameLoadingControlTQ";
+      return "test_tq";
+    case MainThreadTaskQueue::QueueType::kFrameLoadingControl:
+      return "frame_loading_control_tq";
     case MainThreadTaskQueue::QueueType::kV8:
-      return "V8TQ";
+      return "v8_tq";
     case MainThreadTaskQueue::QueueType::kIPC:
-      return "IPCTQ";
+      return "ipc_tq";
+    case MainThreadTaskQueue::QueueType::kInput:
+      return "input_tq";
     case MainThreadTaskQueue::QueueType::kOther:
-      return "OtherTQ";
+      return "other_tq";
     case MainThreadTaskQueue::QueueType::kCount:
       NOTREACHED();
       return nullptr;
@@ -66,9 +66,8 @@ MainThreadTaskQueue::QueueClass MainThreadTaskQueue::QueueClassForQueueType(
     case QueueType::kV8:
     case QueueType::kIPC:
       return QueueClass::kNone;
-    case QueueType::kDefaultLoading:
     case QueueType::kFrameLoading:
-    case QueueType::kFrameLoading_kControl:
+    case QueueType::kFrameLoadingControl:
       return QueueClass::kLoading;
     case QueueType::kDefaultTimer:
     case QueueType::kUnthrottled:
@@ -78,6 +77,7 @@ MainThreadTaskQueue::QueueClass MainThreadTaskQueue::QueueClassForQueueType(
     case QueueType::kFrameUnpausable:
       return QueueClass::kTimer;
     case QueueType::kCompositor:
+    case QueueType::kInput:
       return QueueClass::kCompositor;
     case QueueType::kOther:
     case QueueType::kCount:
@@ -112,7 +112,7 @@ MainThreadTaskQueue::MainThreadTaskQueue(
   }
 }
 
-MainThreadTaskQueue::~MainThreadTaskQueue() {}
+MainThreadTaskQueue::~MainThreadTaskQueue() = default;
 
 void MainThreadTaskQueue::OnTaskStarted(const TaskQueue::Task& task,
                                         base::TimeTicks start) {
@@ -120,11 +120,13 @@ void MainThreadTaskQueue::OnTaskStarted(const TaskQueue::Task& task,
     renderer_scheduler_->OnTaskStarted(this, task, start);
 }
 
-void MainThreadTaskQueue::OnTaskCompleted(const TaskQueue::Task& task,
-                                          base::TimeTicks start,
-                                          base::TimeTicks end) {
+void MainThreadTaskQueue::OnTaskCompleted(
+    const TaskQueue::Task& task,
+    base::TimeTicks start,
+    base::TimeTicks end,
+    base::Optional<base::TimeDelta> thread_time) {
   if (renderer_scheduler_)
-    renderer_scheduler_->OnTaskCompleted(this, task, start, end);
+    renderer_scheduler_->OnTaskCompleted(this, task, start, end, thread_time);
 }
 
 void MainThreadTaskQueue::DetachFromRendererScheduler() {

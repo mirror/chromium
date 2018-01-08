@@ -228,7 +228,7 @@ void AuraWindowCaptureMachine::Capture(base::TimeTicks event_time) {
   const base::TimeTicks start_time = base::TimeTicks::Now();
   media::VideoCaptureOracle::Event event;
   if (event_time.is_null()) {
-    event = media::VideoCaptureOracle::kActiveRefreshRequest;
+    event = media::VideoCaptureOracle::kRefreshRequest;
     event_time = start_time;
   } else {
     event = media::VideoCaptureOracle::kCompositorUpdate;
@@ -348,11 +348,12 @@ bool AuraWindowCaptureMachine::ProcessCopyOutputResponse(
     if (scaler)
       yuv_readback_pipeline_->SetScaler(nullptr);
   } else if (!scaler || !scaler->IsSameScaleRatio(scale_from, scale_to)) {
-    std::unique_ptr<viz::GLHelper::ScalerInterface> scaler =
+    std::unique_ptr<viz::GLHelper::ScalerInterface> fast_scaler =
         gl_helper->CreateScaler(viz::GLHelper::SCALER_QUALITY_FAST, scale_from,
                                 scale_to, false, false, false);
-    DCHECK(scaler);  // Arguments to CreateScaler() should never be invalid.
-    yuv_readback_pipeline_->SetScaler(std::move(scaler));
+    DCHECK(
+        fast_scaler);  // Arguments to CreateScaler() should never be invalid.
+    yuv_readback_pipeline_->SetScaler(std::move(fast_scaler));
   }
 
   yuv_readback_pipeline_->ReadbackYUV(

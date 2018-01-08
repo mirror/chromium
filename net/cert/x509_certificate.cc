@@ -198,6 +198,14 @@ scoped_refptr<X509Certificate> X509Certificate::CreateFromBufferUnsafeOptions(
 // static
 scoped_refptr<X509Certificate> X509Certificate::CreateFromDERCertChain(
     const std::vector<base::StringPiece>& der_certs) {
+  return CreateFromDERCertChainUnsafeOptions(der_certs, {});
+}
+
+// static
+scoped_refptr<X509Certificate>
+X509Certificate::CreateFromDERCertChainUnsafeOptions(
+    const std::vector<base::StringPiece>& der_certs,
+    UnsafeCreateOptions options) {
   TRACE_EVENT0("io", "X509Certificate::CreateFromDERCertChain");
   if (der_certs.empty())
     return nullptr;
@@ -221,7 +229,8 @@ scoped_refptr<X509Certificate> X509Certificate::CreateFromDERCertChain(
   if (!handle)
     return nullptr;
 
-  return CreateFromBuffer(std::move(handle), std::move(intermediate_ca_certs));
+  return CreateFromBufferUnsafeOptions(
+      std::move(handle), std::move(intermediate_ca_certs), options);
 }
 
 // static
@@ -249,6 +258,13 @@ scoped_refptr<X509Certificate> X509Certificate::CreateFromBytesUnsafeOptions(
 // static
 scoped_refptr<X509Certificate> X509Certificate::CreateFromPickle(
     base::PickleIterator* pickle_iter) {
+  return CreateFromPickleUnsafeOptions(pickle_iter, {});
+}
+
+// static
+scoped_refptr<X509Certificate> X509Certificate::CreateFromPickleUnsafeOptions(
+    base::PickleIterator* pickle_iter,
+    UnsafeCreateOptions options) {
   int chain_length = 0;
   if (!pickle_iter->ReadLength(&chain_length))
     return nullptr;
@@ -261,7 +277,7 @@ scoped_refptr<X509Certificate> X509Certificate::CreateFromPickle(
       return nullptr;
     cert_chain.push_back(base::StringPiece(data, data_length));
   }
-  return CreateFromDERCertChain(cert_chain);
+  return CreateFromDERCertChainUnsafeOptions(cert_chain, options);
 }
 
 // static
@@ -355,12 +371,6 @@ void X509Certificate::Persist(base::Pickle* pickle) {
     pickle->WriteString(
         x509_util::CryptoBufferAsStringPiece(intermediate.get()));
   }
-}
-
-void X509Certificate::GetDNSNames(std::vector<std::string>* dns_names) const {
-  GetSubjectAltName(dns_names, NULL);
-  if (dns_names->empty())
-    dns_names->push_back(subject_.common_name);
 }
 
 bool X509Certificate::GetSubjectAltName(
@@ -462,11 +472,16 @@ bool X509Certificate::IsIssuedByEncoded(
 // static
 bool X509Certificate::VerifyHostname(
     const std::string& hostname,
-    const std::string& cert_common_name,
     const std::vector<std::string>& cert_san_dns_names,
-    const std::vector<std::string>& cert_san_ip_addrs,
-    bool allow_common_name_fallback) {
+    const std::vector<std::string>& cert_san_ip_addrs) {
   DCHECK(!hostname.empty());
+
+  if (cert_san_dns_names.empty() && cert_san_ip_addrs.empty()) {
+    // Either a dNSName or iPAddress subjectAltName MUST be present in order
+    // to match, so fail quickly if not.
+    return false;
+  }
+
   // Perform name verification following http://tools.ietf.org/html/rfc6125.
   // The terminology used in this method is as per that RFC:-
   // Reference identifier == the host the local user/agent is intending to
@@ -486,21 +501,8 @@ bool X509Certificate::VerifyHostname(
   if (reference_name.empty())
     return false;
 
-  if (!allow_common_name_fallback && cert_san_dns_names.empty() &&
-      cert_san_ip_addrs.empty()) {
-    // Common Name matching is not allowed, so fail fast.
-    return false;
-  }
-
   // Fully handle all cases where |hostname| contains an IP address.
   if (host_info.IsIPAddress()) {
-    if (allow_common_name_fallback && cert_san_dns_names.empty() &&
-        cert_san_ip_addrs.empty() &&
-        host_info.family == url::CanonHostInfo::IPV4) {
-      // Fallback to Common name matching. As this is deprecated and only
-      // supported for compatibility refuse it for IPv6 addresses.
-      return reference_name == cert_common_name;
-    }
     base::StringPiece ip_addr_string(
         reinterpret_cast<const char*>(host_info.address),
         host_info.AddressLength());
@@ -550,19 +552,9 @@ bool X509Certificate::VerifyHostname(
   }
 
   // Now step through the DNS names doing wild card comparison (if necessary)
-  // on each against the reference name. If subjectAltName is empty, then
-  // fallback to use the common name instead.
+  // on each against the reference name.
   std::vector<std::string> common_name_as_vector;
   const std::vector<std::string>* presented_names = &cert_san_dns_names;
-  if (allow_common_name_fallback && cert_san_dns_names.empty() &&
-      cert_san_ip_addrs.empty()) {
-    // Note: there's a small possibility cert_common_name is an international
-    // domain name in non-standard encoding (e.g. UTF8String or BMPString
-    // instead of A-label). As common name fallback is deprecated we're not
-    // doing anything specific to deal with this.
-    common_name_as_vector.push_back(cert_common_name);
-    presented_names = &common_name_as_vector;
-  }
   for (std::vector<std::string>::const_iterator it =
            presented_names->begin();
        it != presented_names->end(); ++it) {
@@ -602,12 +594,10 @@ bool X509Certificate::VerifyHostname(
   return false;
 }
 
-bool X509Certificate::VerifyNameMatch(const std::string& hostname,
-                                      bool allow_common_name_fallback) const {
+bool X509Certificate::VerifyNameMatch(const std::string& hostname) const {
   std::vector<std::string> dns_names, ip_addrs;
   GetSubjectAltName(&dns_names, &ip_addrs);
-  return VerifyHostname(hostname, subject_.common_name, dns_names, ip_addrs,
-                        allow_common_name_fallback);
+  return VerifyHostname(hostname, dns_names, ip_addrs);
 }
 
 // static

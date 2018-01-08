@@ -7,6 +7,7 @@
 
 #include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -25,6 +26,7 @@
 #include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/policy/device_local_account_policy_service.h"
 #include "chrome/browser/chromeos/policy/minimum_version_policy_handler.h"
+#include "chrome/browser/chromeos/printing/external_printers.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -145,10 +147,11 @@ class ChromeUserManagerImpl
   void OnUserRemoved(const AccountId& account_id) override;
 
   // ChromeUserManager implementation:
-  bool ShouldReportUser(const std::string& user_id) const override;
+  bool IsEnterpriseManaged() const override;
   void SetUserAffiliation(
       const std::string& user_email,
       const AffiliationIDSet& user_affiliation_ids) override;
+  bool ShouldReportUser(const std::string& user_id) const override;
 
  protected:
   const std::string& GetApplicationLocale() const override;
@@ -156,7 +159,6 @@ class ChromeUserManagerImpl
   void HandleUserOAuthTokenStatusChange(
       const AccountId& account_id,
       user_manager::User::OAuthTokenStatus status) const override;
-  bool IsEnterpriseManaged() const override;
   void LoadDeviceLocalAccounts(std::set<AccountId>* users_set) override;
   void NotifyOnLogin() override;
   void NotifyUserAddedToSession(const user_manager::User* added_user,
@@ -242,9 +244,6 @@ class ChromeUserManagerImpl
   // Removes user from the list of the users who should be reported.
   void RemoveReportingUser(const AccountId& account_id);
 
-  // Checks if constraint defined by minimum version policy is satisfied.
-  bool MinVersionConstraintsSatisfied() const;
-
   // Creates a user for the given device local account.
   std::unique_ptr<user_manager::User> CreateUserFromDeviceLocalAccount(
       const AccountId& account_id,
@@ -294,6 +293,10 @@ class ChromeUserManagerImpl
   // Observer for the policy that can be used to manage wallpapers.
   std::unique_ptr<policy::CloudExternalDataPolicyObserver>
       wallpaper_policy_observer_;
+
+  // Observer for the policy that provides policy printers.
+  std::unique_ptr<policy::CloudExternalDataPolicyObserver>
+      printers_policy_observer_;
 
   base::WeakPtrFactory<ChromeUserManagerImpl> weak_factory_;
 

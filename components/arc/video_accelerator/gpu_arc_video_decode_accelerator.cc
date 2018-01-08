@@ -88,6 +88,45 @@ arc::mojom::VideoDecodeAccelerator::Result ConvertErrorCode(
       return ::arc::mojom::VideoDecodeAccelerator::Result::PLATFORM_FAILURE;
   }
 }
+
+// Return true iff |planes| is valid for a video frame located on |dmabuf_fd|
+// and of |pixel_format|.
+static bool VerifyDmabuf(media::VideoPixelFormat pixel_format,
+                         const gfx::Size& coded_size,
+                         int dmabuf_fd,
+                         const std::vector<arc::VideoFramePlane>& planes) {
+  const size_t num_planes = media::VideoFrame::NumPlanes(pixel_format);
+  if (planes.size() != num_planes || num_planes == 0) {
+    VLOGF(1) << "Invalid number of dmabuf planes passed: " << planes.size()
+             << ", expected: " << num_planes;
+    return false;
+  }
+
+  off_t size = lseek(dmabuf_fd, 0, SEEK_END);
+  lseek(dmabuf_fd, 0, SEEK_SET);
+  if (size < 0) {
+    VPLOGF(1) << "Fail to find the size of dmabuf.";
+    return false;
+  }
+
+  for (size_t i = 0; i < planes.size(); ++i) {
+    const auto& plane = planes[i];
+
+    DVLOGF(4) << "Plane " << i << ", offset: " << plane.offset
+              << ", stride: " << plane.stride;
+
+    size_t rows = media::VideoFrame::Rows(i, pixel_format, coded_size.height());
+    base::CheckedNumeric<off_t> current_size(plane.offset);
+    current_size += base::CheckMul(plane.stride, rows);
+
+    if (!current_size.IsValid() || current_size.ValueOrDie() > size) {
+      VLOGF(1) << "Invalid strides/offsets.";
+      return false;
+    }
+  }
+
+  return true;
+}
 }  // namespace
 
 namespace arc {
@@ -148,48 +187,11 @@ void GpuArcVideoDecodeAccelerator::ProvidePictureBuffers(
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(client_);
 
-  if ((output_pixel_format_ != media::PIXEL_FORMAT_UNKNOWN) &&
-      (output_pixel_format_ != format)) {
-    VLOGF(1) << "Unexpected output format."
-             << " output_pixel_format: "
-             << media::VideoPixelFormatToString(output_pixel_format_)
-             << " format: " << media::VideoPixelFormatToString(format);
-    client_->NotifyError(
-        mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
-    return;
-  }
-
-  mojom::HalPixelFormat pixel_format;
-  switch (format) {
-    case media::PIXEL_FORMAT_I420:
-    case media::PIXEL_FORMAT_YV12:
-    case media::PIXEL_FORMAT_NV12:
-    case media::PIXEL_FORMAT_NV21:
-      // HAL_PIXEL_FORMAT_YCbCr_420_888 is the flexible pixel format in Android
-      // which handles all 420 formats, with both orderings of chroma (CbCr and
-      // CrCb) as well as planar and semi-planar layouts.
-      pixel_format = mojom::HalPixelFormat::HAL_PIXEL_FORMAT_YCbCr_420_888;
-      break;
-    case media::PIXEL_FORMAT_ARGB:
-      pixel_format = mojom::HalPixelFormat::HAL_PIXEL_FORMAT_BGRA_8888;
-      break;
-    default:
-      VLOGF(1) << "Format not supported: "
-               << media::VideoPixelFormatToString(format);
-      client_->NotifyError(
-          mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
-      return;
-  }
-
-  output_pixel_format_ = format;
   pending_coded_size_ = dimensions;
 
-  mojom::PictureBufferFormatPtr pbf = mojom::PictureBufferFormat::New();
-  pbf->pixel_format = pixel_format;
-  pbf->buffer_size = media::VideoFrame::AllocationSize(format, dimensions);
+  auto pbf = mojom::PictureBufferFormat::New();
   pbf->min_num_buffers = requested_num_of_buffers;
-  pbf->coded_width = dimensions.width();
-  pbf->coded_height = dimensions.height();
+  pbf->coded_size = dimensions;
   client_->ProvidePictureBuffers(std::move(pbf));
 }
 
@@ -538,6 +540,7 @@ void GpuArcVideoDecodeAccelerator::AssignPictureBuffers(uint32_t count) {
 
 void GpuArcVideoDecodeAccelerator::ImportBufferForPicture(
     int32_t picture_buffer_id,
+    mojom::HalPixelFormat format,
     mojo::ScopedHandle handle,
     std::vector<VideoFramePlane> planes) {
   DVLOGF(3);
@@ -561,6 +564,21 @@ void GpuArcVideoDecodeAccelerator::ImportBufferForPicture(
     return;
   }
 
+  media::VideoPixelFormat pixel_format;
+  switch (format) {
+    case mojom::HalPixelFormat::HAL_PIXEL_FORMAT_YV12:
+      pixel_format = media::PIXEL_FORMAT_YV12;
+      break;
+    case mojom::HalPixelFormat::HAL_PIXEL_FORMAT_NV12:
+      pixel_format = media::PIXEL_FORMAT_NV12;
+      break;
+    default:
+      VLOGF(1) << "Unsupported format: " << format;
+      client_->NotifyError(
+          mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
+      return;
+  }
+
   gfx::GpuMemoryBufferHandle gmb_handle;
   gmb_handle.type = gfx::NATIVE_PIXMAP;
   if (secure_mode_) {
@@ -570,7 +588,7 @@ void GpuArcVideoDecodeAccelerator::ImportBufferForPicture(
     auto protected_pixmap =
         protected_buffer_manager_->AllocateProtectedNativePixmap(
             std::move(handle_fd),
-            media::VideoPixelFormatToGfxBufferFormat(output_pixel_format_),
+            media::VideoPixelFormatToGfxBufferFormat(pixel_format),
             coded_size_);
     if (!protected_pixmap) {
       VLOGF(1) << "Failed allocating protected pixmap.";
@@ -582,7 +600,7 @@ void GpuArcVideoDecodeAccelerator::ImportBufferForPicture(
         gfx::CloneHandleForIPC(protected_pixmap->native_pixmap_handle());
     protected_output_handles_[picture_buffer_id] = std::move(protected_pixmap);
   } else {
-    if (!VerifyDmabuf(handle_fd.get(), planes)) {
+    if (!VerifyDmabuf(pixel_format, coded_size_, handle_fd.get(), planes)) {
       VLOGF(1) << "Failed verifying dmabuf";
       client_->NotifyError(
           mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
@@ -596,7 +614,7 @@ void GpuArcVideoDecodeAccelerator::ImportBufferForPicture(
     }
   }
 
-  vda_->ImportBufferForPicture(picture_buffer_id, gmb_handle);
+  vda_->ImportBufferForPicture(picture_buffer_id, pixel_format, gmb_handle);
 }
 
 void GpuArcVideoDecodeAccelerator::ReusePictureBuffer(
@@ -635,44 +653,6 @@ void GpuArcVideoDecodeAccelerator::Reset(ResetCallback callback) {
   ExecuteRequest({base::BindOnce(&GpuArcVideoDecodeAccelerator::ResetRequest,
                                  base::Unretained(this)),
                   std::move(callback)});
-}
-
-bool GpuArcVideoDecodeAccelerator::VerifyDmabuf(
-    const int dmabuf_fd,
-    const std::vector<VideoFramePlane>& planes) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  size_t num_planes = media::VideoFrame::NumPlanes(output_pixel_format_);
-  if (planes.size() != num_planes) {
-    VLOGF(1) << "Invalid number of dmabuf planes passed: " << planes.size()
-             << ", expected: " << num_planes;
-    return false;
-  }
-
-  off_t size = lseek(dmabuf_fd, 0, SEEK_END);
-  lseek(dmabuf_fd, 0, SEEK_SET);
-  if (size < 0) {
-    VPLOGF(1) << "Fail to find the size of dmabuf.";
-    return false;
-  }
-
-  for (size_t i = 0; i < planes.size(); ++i) {
-    const auto& plane = planes[i];
-
-    DVLOGF(4) << "Plane " << i << ", offset: " << plane.offset
-              << ", stride: " << plane.stride;
-
-    size_t rows =
-        media::VideoFrame::Rows(i, output_pixel_format_, coded_size_.height());
-    base::CheckedNumeric<off_t> current_size(plane.offset);
-    current_size += base::CheckMul(plane.stride, rows);
-
-    if (!current_size.IsValid() || current_size.ValueOrDie() > size) {
-      VLOGF(1) << "Invalid strides/offsets.";
-      return false;
-    }
-  }
-
-  return true;
 }
 
 }  // namespace arc

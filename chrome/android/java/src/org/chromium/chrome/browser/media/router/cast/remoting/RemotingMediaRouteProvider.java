@@ -5,12 +5,16 @@ package org.chromium.chrome.browser.media.router.cast.remoting;
 
 import android.support.v7.media.MediaRouter;
 
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.chrome.browser.media.router.BaseMediaRouteProvider;
 import org.chromium.chrome.browser.media.router.ChromeMediaRouter;
+import org.chromium.chrome.browser.media.router.MediaRoute;
 import org.chromium.chrome.browser.media.router.MediaRouteManager;
 import org.chromium.chrome.browser.media.router.MediaRouteProvider;
+import org.chromium.chrome.browser.media.router.cast.BaseMediaRouteProvider;
 import org.chromium.chrome.browser.media.router.cast.ChromeCastSessionManager;
+import org.chromium.chrome.browser.media.router.cast.CreateRouteRequest;
+import org.chromium.chrome.browser.media.router.cast.MediaSink;
 import org.chromium.chrome.browser.media.router.cast.MediaSource;
 
 /**
@@ -31,33 +35,74 @@ public class RemotingMediaRouteProvider extends BaseMediaRouteProvider {
         return RemotingMediaSource.from(sourceId);
     }
 
-    // TODO(avayvod): implement the methods below. See https://crbug.com/517102.
     @Override
-    public void createRoute(String sourceId, String sinkId, String presentationId, String origin,
-            int tabId, boolean isIncognito, int nativeRequestId) {}
+    protected ChromeCastSessionManager.CastSessionLaunchRequest createSessionLaunchRequest(
+            MediaSource source, MediaSink sink, String presentationId, String origin, int tabId,
+            boolean isIncognito, int nativeRequestId) {
+        return new CreateRouteRequest(source, sink, presentationId, origin, tabId, isIncognito,
+                nativeRequestId, this, CreateRouteRequest.RequestedCastSessionType.REMOTE, null);
+    }
 
     @Override
-    public void joinRoute(String sourceId, String presentationId, String origin, int tabId,
-            int nativeRequestId) {}
+    public void joinRoute(
+            String sourceId, String presentationId, String origin, int tabId, int nativeRequestId) {
+        mManager.onRouteRequestError(
+                "Remote playback doesn't support joining routes", nativeRequestId);
+    }
 
     @Override
-    public void closeRoute(String routeId) {}
+    public void closeRoute(String routeId) {
+        MediaRoute route = mRoutes.get(routeId);
+        if (route == null) return;
+
+        if (mSession == null) {
+            mRoutes.remove(routeId);
+            mManager.onRouteClosed(routeId);
+            return;
+        }
+
+        ChromeCastSessionManager.get().stopApplication();
+    }
 
     @Override
-    public void detachRoute(String routeId) {}
+    public void detachRoute(String routeId) {
+        mRoutes.remove(routeId);
+    }
 
     @Override
-    public void sendStringMessage(String routeId, String message, int nativeCallbackId) {}
+    public void sendStringMessage(String routeId, String message, int nativeCallbackId) {
+        Log.e(TAG, "Remote playback does not support sending messages");
+        mManager.onMessageSentResult(false, nativeCallbackId);
+    }
 
     @VisibleForTesting
     RemotingMediaRouteProvider(MediaRouter androidMediaRouter, MediaRouteManager manager) {
         super(androidMediaRouter, manager);
     }
 
-    // TODO(tguilbert): Implement the functions below. See https://crbug.com/790766.
     @Override
-    public void onSessionEnded() {}
+    public void onSessionEnded() {
+        if (mSession == null) return;
+
+        for (String routeId : mRoutes.keySet()) mManager.onRouteClosed(routeId);
+        mRoutes.clear();
+
+        mSession = null;
+
+        if (mAndroidMediaRouter != null) {
+            mAndroidMediaRouter.selectRoute(mAndroidMediaRouter.getDefaultRoute());
+        }
+    }
 
     @Override
-    public void onSessionStarting(ChromeCastSessionManager.CastSessionLaunchRequest request) {}
+    public void onSessionStarting(ChromeCastSessionManager.CastSessionLaunchRequest launchRequest) {
+        CreateRouteRequest request = (CreateRouteRequest) launchRequest;
+        MediaSink sink = request.getSink();
+        MediaSource source = request.getSource();
+
+        MediaRoute route =
+                new MediaRoute(sink.getId(), source.getSourceId(), request.getPresentationId());
+        mRoutes.put(route.id, route);
+        mManager.onRouteCreated(route.id, route.sinkId, request.getNativeRequestId(), this, true);
+    }
 }

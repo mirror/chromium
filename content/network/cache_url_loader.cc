@@ -8,7 +8,6 @@
 #include "base/macros.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/public/common/url_constants.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "net/url_request/view_cache_helper.h"
 
@@ -20,25 +19,22 @@ class CacheURLLoader {
  public:
   CacheURLLoader(const GURL& url,
                  net::URLRequestContext* request_context,
-                 mojom::URLLoaderClientPtr client)
+                 network::mojom::URLLoaderClientPtr client)
       : client_(std::move(client)) {
     scoped_refptr<net::HttpResponseHeaders> headers(
         new net::HttpResponseHeaders("HTTP/1.1 200 OK"));
-    ResourceResponseHead resource_response;
+    network::ResourceResponseHead resource_response;
     resource_response.headers = headers;
     resource_response.mime_type = "text/html";
     client_->OnReceiveResponse(resource_response, base::nullopt, nullptr);
 
-    DCHECK(base::StartsWith(url.spec(), kChromeUINetworkViewCacheURL,
-                            base::CompareCase::INSENSITIVE_ASCII));
-
-    std::string cache_key =
-        url.spec().substr(strlen(kChromeUINetworkViewCacheURL));
+    auto url_prefix = url.GetWithEmptyPath().spec();
+    std::string cache_key = url.spec().substr(url_prefix.size());
 
     int rv;
     if (cache_key.empty()) {
       rv = cache_helper_.GetContentsHTML(
-          request_context, kChromeUINetworkViewCacheURL, &data_,
+          request_context, url_prefix, &data_,
           base::Bind(&CacheURLLoader::DataAvailable, base::Unretained(this)));
     } else {
       rv = cache_helper_.GetEntryInfoHTML(
@@ -71,7 +67,7 @@ class CacheURLLoader {
   }
 
   std::string data_;
-  mojom::URLLoaderClientPtr client_;
+  network::mojom::URLLoaderClientPtr client_;
   net::ViewCacheHelper cache_helper_;
 
   DISALLOW_COPY_AND_ASSIGN(CacheURLLoader);
@@ -80,7 +76,7 @@ class CacheURLLoader {
 
 void StartCacheURLLoader(const GURL& url,
                          net::URLRequestContext* request_context,
-                         mojom::URLLoaderClientPtr client) {
+                         network::mojom::URLLoaderClientPtr client) {
   new CacheURLLoader(url, request_context, std::move(client));
 }
 

@@ -88,6 +88,10 @@ const char kDisableAcceleratedMjpegDecode[] =
 const char kDisableAcceleratedVideoDecode[] =
     "disable-accelerated-video-decode";
 
+// Disables hardware acceleration of video encode, where available.
+const char kDisableAcceleratedVideoEncode[] =
+    "disable-accelerated-video-encode";
+
 // Disable limits on the number of backing stores. Can prevent blinking for
 // users with many windows/tabs and lots of memory.
 const char kDisableBackingStoreLimit[]      = "disable-backing-store-limit";
@@ -419,10 +423,10 @@ const char kEnableSandboxLogging[]          = "enable-sandbox-logging";
 const char kEnableSkiaBenchmarking[]        = "enable-skia-benchmarking";
 
 // Enables slimming paint phase 1.75:
-// http://www.chromium.org/blink/slimming-paint
+// https://www.chromium.org/blink/slimming-paint
 const char kEnableSlimmingPaintV175[] = "enable-slimming-paint-v175";
 
-// Enables slimming paint phase 2: http://www.chromium.org/blink/slimming-paint
+// Enables slimming paint phase 2: https://www.chromium.org/blink/slimming-paint
 const char kEnableSlimmingPaintV2[]         = "enable-slimming-paint-v2";
 
 // On platforms that support it, enables smooth scroll animation.
@@ -430,9 +434,6 @@ const char kEnableSmoothScrolling[]         = "enable-smooth-scrolling";
 
 // Enable spatial navigation
 const char kEnableSpatialNavigation[]       = "enable-spatial-navigation";
-
-// Enables StatsTable, logging statistics to a global named shared memory table.
-const char kEnableStatsTable[]              = "enable-stats-table";
 
 // Blocks all insecure requests from secure contexts, and prevents the user
 // from overriding that decision.
@@ -542,9 +543,6 @@ const char kGpuStartupDialog[]              = "gpu-startup-dialog";
 const char kHistoryEntryRequiresUserGesture[] =
     "history-entry-requires-user-gesture";
 
-// These mappings only apply to the host resolver.
-const char kHostResolverRules[]             = "host-resolver-rules";
-
 // A set of public key hashes for which to ignore certificate-related errors.
 //
 // If the certificate chain presented by the server does not validate, and one
@@ -592,11 +590,6 @@ const char kLoggingLevel[]                  = "log-level";
 // affect which events are logged).
 const char kLogFile[] = "log-file";
 
-// Enables saving net log events to a file. If a value is given, it used as the
-// path the the file, otherwise the file is named netlog.json and placed in the
-// user data directory.
-const char kLogNetLog[]                     = "log-net-log";
-
 // Resizes of the main frame are caused by changing between landscape and
 // portrait mode (i.e. Android) so the page should be rescaled to fit.
 const char kMainFrameResizesAreOrientationChanges[] =
@@ -618,13 +611,6 @@ const char kMHTMLSkipNostoreAll[]           = "skip-nostore-all";
 
 // Use a Mojo-based LocalStorage implementation.
 const char kMojoLocalStorage[]              = "mojo-local-storage";
-
-// Mutes audio sent to the audio device so it is not audible during
-// automated testing.
-const char kMuteAudio[]                     = "mute-audio";
-
-// Don't send HTTP-Referer headers.
-const char kNoReferrers[]                   = "no-referrers";
 
 // Disables the sandbox for all process types that are normally sandboxed.
 const char kNoSandbox[]                     = "no-sandbox";
@@ -696,7 +682,7 @@ const char kPpapiStartupDialog[]            = "ppapi-startup-dialog";
 // consolidates same-site pages so that they share a single process.
 //
 // More details here:
-// - http://www.chromium.org/developers/design-documents/process-models
+// - https://www.chromium.org/developers/design-documents/process-models
 // - The class comment in site_instance.h, listing the supported process models.
 //
 // IMPORTANT: This isn't to be confused with --site-per-process (which is about
@@ -765,6 +751,9 @@ const char kReducedReferrerGranularity[] =
 // Handles frame scrolls via the root RenderLayer instead of the FrameView.
 const char kRootLayerScrolls[]              = "root-layer-scrolls";
 
+// Enables native memory sampling profiler with a given rate (default 128 KiB).
+const char kSamplingHeapProfiler[]          = "sampling-heap-profiler";
+
 // Causes the process to run as a sandbox IPC subprocess.
 const char kSandboxIPCProcess[]             = "sandbox-ipc";
 
@@ -791,20 +780,13 @@ const char kSingleProcess[]                 = "single-process";
 //  * <iframe>s are rendered out-of-process whenever the src= is cross-site.
 //
 // More details here:
-// - http://www.chromium.org/developers/design-documents/site-isolation
-// - http://www.chromium.org/developers/design-documents/process-models
+// - https://www.chromium.org/developers/design-documents/site-isolation
+// - https://www.chromium.org/developers/design-documents/process-models
 // - The class comment in site_instance.h, listing the supported process models.
 //
 // IMPORTANT: this isn't to be confused with --process-per-site (which is about
 // process consolidation, not isolation). You probably want this one.
 const char kSitePerProcess[]                = "site-per-process";
-
-// Skip gpu info collection, blacklist loading, and blacklist auto-update
-// scheduling at browser startup time.
-// Therefore, all GPU features are available, and about:gpu page shows empty
-// content. The switch is intended only for layout tests.
-// TODO(gab): Get rid of this switch entirely.
-const char kSkipGpuDataLoading[]            = "skip-gpu-data-loading";
 
 // Skips reencoding bitmaps as PNGs when the encoded data is unavailable
 // during SKP capture.  This allows for obtaining an accurate sample of
@@ -847,14 +829,15 @@ const char kTouchTextSelectionStrategy[]    = "touch-selection-strategy";
 // streams (e.g. WebRTC). Works with --use-fake-device-for-media-stream.
 const char kUseFakeUIForMediaStream[]     = "use-fake-ui-for-media-stream";
 
-// Texture target for CHROMIUM_image backed content textures.
-const char kContentImageTextureTarget[] = "content-image-texture-target";
-
 // Texture target for CHROMIUM_image backed video frame textures.
 const char kVideoImageTextureTarget[] = "video-image-texture-target";
 
 // Set when Chromium should use a mobile user agent.
 const char kUseMobileUserAgent[] = "use-mobile-user-agent";
+
+// Use the MockCertVerifier. This only works in test code.
+const char kUseMockCertVerifierForTesting[] =
+    "use-mock-cert-verifier-for-testing";
 
 // The contents of this flag are prepended to the utility process command line.
 // Useful values might be "valgrind" or "xterm -e gdb --args".
@@ -917,14 +900,20 @@ const char kEnforceWebRtcIPPermissionCheck[] =
 // handling policy is specified in Preferences.
 const char kForceWebRtcIPHandlingPolicy[] = "force-webrtc-ip-handling-policy";
 
+// Override the maximum framerate as can be specified in calls to getUserMedia.
+// This flag expects a value.  Example: --max-gum-fps=17.5
+const char kWebRtcMaxCaptureFramerate[] = "max-gum-fps";
+
+// Configure the maximum CPU time percentage of a single core that can be
+// consumed for desktop capturing. Default is 50. Set 100 to disable the
+// throttling of the capture.
+const char kWebRtcMaxCpuConsumptionPercentage[] =
+    "webrtc-max-cpu-consumption-percentage";
+
 // Renderer process parameter for WebRTC Stun probe trial to determine the
 // interval. Please see SetupStunProbeTrial in
 // chrome_browser_field_trials_desktop.cc for more detail.
 const char kWebRtcStunProbeTrialParameter[] = "webrtc-stun-probe-trial";
-
-// Override the maximum framerate as can be specified in calls to getUserMedia.
-// This flag expects a value.  Example: --max-gum-fps=17.5
-const char kWebRtcMaxCaptureFramerate[]     = "max-gum-fps";
 #endif
 
 #if defined(OS_ANDROID)
@@ -984,10 +973,6 @@ const char kDisableAudioSupportForDesktopShare[] =
 #if defined(OS_CHROMEOS)
 // Disables panel fitting (used for mirror mode).
 const char kDisablePanelFitting[]           = "disable-panel-fitting";
-
-// Disables VA-API accelerated video encode.
-const char kDisableVaapiAcceleratedVideoEncode[] =
-    "disable-vaapi-accelerated-video-encode";
 #endif
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)

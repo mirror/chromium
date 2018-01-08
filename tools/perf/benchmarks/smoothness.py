@@ -42,11 +42,20 @@ class SmoothnessTop25(_Smoothness):
 
   http://www.chromium.org/developers/design-documents/rendering-benchmarks
   """
-  page_set = page_sets.Top25SmoothPageSet
 
   @classmethod
   def Name(cls):
     return 'smoothness.top_25_smooth'
+
+  @classmethod
+  def AddBenchmarkCommandLineArgs(cls, parser):
+    parser.add_option('--scroll-forever', action='store_true',
+                      help='If set, continuously scroll up and down forever. '
+                           'This is useful for analysing scrolling behaviour '
+                           'with tools such as perf.')
+
+  def CreateStorySet(self, options):
+    return page_sets.Top25SmoothPageSet(scroll_forever=options.scroll_forever)
 
 
 @benchmark.Owner(emails=['senorblanco@chromium.org'])
@@ -152,15 +161,6 @@ class SmoothnessKeySilkCases(_Smoothness):
   @classmethod
   def Name(cls):
     return 'smoothness.key_silk_cases'
-
-  def CreateStorySet(self, options):
-    stories = super(SmoothnessKeySilkCases, self).CreateStorySet(options)
-    # Page26 (befamous) is too noisy to be useful; crbug.com/461127
-    to_remove = [story for story in stories
-                 if isinstance(story, page_sets.key_silk_cases.Page26)]
-    for story in to_remove:
-      stories.RemoveStory(story)
-    return stories
 
 
 @benchmark.Owner(emails=['vmiura@chromium.org'])

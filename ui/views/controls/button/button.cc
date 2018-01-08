@@ -97,7 +97,7 @@ void Button::SetTooltipText(const base::string16& tooltip_text) {
 
 void Button::SetAccessibleName(const base::string16& name) {
   accessible_name_ = name;
-  NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::kTextChanged, true);
 }
 
 void Button::SetState(ButtonState state) {
@@ -152,7 +152,7 @@ void Button::SetHotTracked(bool is_hot_tracked) {
     SetState(is_hot_tracked ? STATE_HOVERED : STATE_NORMAL);
 
   if (is_hot_tracked)
-    NotifyAccessibilityEvent(ui::AX_EVENT_HOVER, true);
+    NotifyAccessibilityEvent(ax::mojom::Event::kHover, true);
 }
 
 bool Button::IsHotTracked() const {
@@ -192,8 +192,7 @@ bool Button::OnMousePressed(const ui::MouseEvent& event) {
     SetState(STATE_PRESSED);
     AnimateInkDrop(views::InkDropState::ACTION_PENDING, &event);
   }
-  if (request_focus_on_press_)
-    RequestFocus();
+  RequestFocusFromEvent();
   if (IsTriggerableEvent(event) && notify_action_ == NOTIFY_ON_PRESS) {
     NotifyClick(event);
     // NOTE: We may be deleted at this point (by the listener's notification
@@ -323,8 +322,7 @@ void Button::OnGestureEvent(ui::GestureEvent* event) {
   } else if (event->type() == ui::ET_GESTURE_TAP_DOWN &&
              ShouldEnterPushedState(*event)) {
     SetState(STATE_PRESSED);
-    if (request_focus_on_press_)
-      RequestFocus();
+    RequestFocusFromEvent();
     event->StopPropagation();
   } else if (event->type() == ui::ET_GESTURE_TAP_CANCEL ||
              event->type() == ui::ET_GESTURE_END) {
@@ -387,34 +385,28 @@ void Button::OnPaint(gfx::Canvas* canvas) {
 }
 
 void Button::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_BUTTON;
+  node_data->role = ax::mojom::Role::kButton;
   node_data->SetName(accessible_name_);
-  if (!enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_DISABLED);
-  }
+  if (!enabled())
+    node_data->SetRestriction(ax::mojom::Restriction::kDisabled);
 
   switch (state_) {
     case STATE_HOVERED:
-      node_data->AddState(ui::AX_STATE_HOVERED);
+      node_data->AddState(ax::mojom::State::kHovered);
       break;
     case STATE_PRESSED:
-      node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
-                                 ui::AX_CHECKED_STATE_TRUE);
+      node_data->SetCheckedState(ax::mojom::CheckedState::kTrue);
       break;
     case STATE_DISABLED:
-      node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                                 ui::AX_RESTRICTION_DISABLED);
+      node_data->SetRestriction(ax::mojom::Restriction::kDisabled);
       break;
     case STATE_NORMAL:
     case STATE_COUNT:
       // No additional accessibility node_data set for this button node_data.
       break;
   }
-  if (enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                               ui::AX_DEFAULT_ACTION_VERB_PRESS);
-  }
+  if (enabled())
+    node_data->SetDefaultActionVerb(ax::mojom::DefaultActionVerb::kPress);
 }
 
 void Button::VisibilityChanged(View* starting_from, bool visible) {
@@ -425,8 +417,9 @@ void Button::VisibilityChanged(View* starting_from, bool visible) {
 }
 
 void Button::ViewHierarchyChanged(const ViewHierarchyChangedDetails& details) {
-  if (!details.is_add && state_ != STATE_DISABLED)
+  if (!details.is_add && state_ != STATE_DISABLED && details.child == this)
     SetState(STATE_NORMAL);
+  InkDropHostView::ViewHierarchyChanged(details);
 }
 
 void Button::OnFocus() {
@@ -485,6 +478,11 @@ Button::KeyClickAction Button::GetKeyClickActionForEvent(
       PlatformStyle::kReturnClicksFocusedControl)
     return CLICK_ON_KEY_PRESS;
   return CLICK_NONE;
+}
+
+void Button::RequestFocusFromEvent() {
+  if (request_focus_on_press_)
+    RequestFocus();
 }
 
 void Button::NotifyClick(const ui::Event& event) {

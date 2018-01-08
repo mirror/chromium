@@ -301,7 +301,6 @@ jumbo_source_set("browser_sources") {
     "websocket_handshake_request_info.h",
     "webvr_service_provider.cc",
     "webvr_service_provider.h",
-    "zygote_handle_linux.h",
     "zygote_host_linux.h",
   ]
   configs += [
@@ -315,6 +314,7 @@ jumbo_source_set("browser_sources") {
     "//ipc",
     "//mojo/public/cpp/bindings",
     "//mojo/public/cpp/system",
+    "//services/network/public/interfaces",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/service_manager/public/cpp",
 
@@ -331,6 +331,7 @@ jumbo_source_set("browser_sources") {
     "//device/geolocation",
     "//device/usb/public/interfaces",
     "//gpu",
+    "//gpu/command_buffer/service:gles2",
     "//media",
     "//net",
     "//ppapi/c",
@@ -380,6 +381,6 @@ jumbo_source_set("browser_sources") {
       "webrtc_log.cc",
       "webrtc_log.h",
     ]
-    deps += [ "//third_party/webrtc/modules/desktop_capture" ]
+    public_deps += [ "//third_party/webrtc/modules/desktop_capture" ]
   }
 }

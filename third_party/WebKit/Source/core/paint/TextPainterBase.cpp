@@ -6,7 +6,6 @@
 
 #include "core/dom/Document.h"
 #include "core/layout/TextDecorationOffsetBase.h"
-#include "core/layout/line/LineVerticalPositionType.h"
 #include "core/paint/AppliedDecorationPainter.h"
 #include "core/paint/BoxPainterBase.h"
 #include "core/paint/PaintInfo.h"
@@ -35,7 +34,7 @@ TextPainterBase::TextPainterBase(GraphicsContext& context,
       emphasis_mark_offset_(0),
       ellipsis_offset_(0) {}
 
-TextPainterBase::~TextPainterBase() {}
+TextPainterBase::~TextPainterBase() = default;
 
 void TextPainterBase::SetEmphasisMark(const AtomicString& emphasis_mark,
                                       TextEmphasisPosition position) {
@@ -225,9 +224,9 @@ void TextPainterBase::PaintDecorationsExceptLineThrough(
     }
 
     if (has_overline) {
-      LineVerticalPositionType position =
-          flip_underline_and_overline ? LineVerticalPositionType::TopOfEmHeight
-                                      : LineVerticalPositionType::TextTop;
+      FontVerticalPositionType position =
+          flip_underline_and_overline ? FontVerticalPositionType::TopOfEmHeight
+                                      : FontVerticalPositionType::TextTop;
       const int overline_offset =
           decoration_offset.ComputeUnderlineOffsetForUnder(
               decoration_info.thickness, position);

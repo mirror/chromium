@@ -5,17 +5,23 @@
 #include "chromecast/browser/cast_web_contents_manager.h"
 
 #include <algorithm>
+#include <memory>
 
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
 #include "base/stl_util.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
+#include "chromecast/browser/cast_web_view_default.h"
+#include "chromecast/chromecast_features.h"
 #include "content/public/browser/media_session.h"
 #include "content/public/browser/web_contents.h"
+
+#if BUILDFLAG(ENABLE_CHROMECAST_EXTENSIONS)
+#include "chromecast/browser/cast_web_view_extension.h"
+#endif
 
 namespace chromecast {
 
@@ -32,13 +38,22 @@ CastWebContentsManager::~CastWebContentsManager() = default;
 
 std::unique_ptr<CastWebView> CastWebContentsManager::CreateWebView(
     CastWebView::Delegate* delegate,
+    const extensions::Extension* extension,
+    const GURL& initial_url,
     scoped_refptr<content::SiteInstance> site_instance,
     bool transparent,
     bool allow_media_access,
     bool is_headless,
     bool enable_touch_input) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  return base::MakeUnique<CastWebView>(
+#if BUILDFLAG(ENABLE_CHROMECAST_EXTENSIONS)
+  if (extension) {
+    return std::make_unique<CastWebViewExtension>(
+        extension, initial_url, delegate, this, browser_context_, site_instance,
+        transparent, allow_media_access, is_headless, enable_touch_input);
+  }
+#endif
+  return std::make_unique<CastWebViewDefault>(
       delegate, this, browser_context_, site_instance, transparent,
       allow_media_access, is_headless, enable_touch_input);
 }

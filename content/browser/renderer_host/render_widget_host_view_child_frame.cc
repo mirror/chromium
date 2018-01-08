@@ -8,19 +8,17 @@
 #include <utility>
 #include <vector>
 
-#include "base/command_line.h"
 #include "base/debug/dump_without_crashing.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/frame_sinks/copy_output_result.h"
-#include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
@@ -70,11 +68,10 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       frame_sink_id_(
           base::checked_cast<uint32_t>(widget_host->GetProcess()->GetID()),
           base::checked_cast<uint32_t>(widget_host->GetRoutingID())),
-      next_surface_sequence_(1u),
       current_surface_scale_factor_(1.f),
       frame_connector_(nullptr),
-      enable_viz_(base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableViz)),
+      enable_viz_(
+          base::FeatureList::IsEnabled(features::kVizDisplayCompositor)),
       background_color_(SK_ColorWHITE),
       scroll_bubbling_state_(NO_ACTIVE_GESTURE_SCROLL),
       weak_factory_(this) {
@@ -189,6 +186,24 @@ void RenderWidgetHostViewChildFrame::SetFrameSinkId(
     frame_sink_id_ = frame_sink_id;
 }
 #endif  // defined(USE_AURA)
+
+bool RenderWidgetHostViewChildFrame::OnMessageReceived(
+    const IPC::Message& msg) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP(RenderWidgetHostViewChildFrame, msg)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_IntrinsicSizingInfoChanged,
+                        OnIntrinsicSizingInfoChanged)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+
+  return handled;
+}
+
+void RenderWidgetHostViewChildFrame::OnIntrinsicSizingInfoChanged(
+    blink::WebIntrinsicSizingInfo sizing_info) {
+  if (frame_connector_)
+    frame_connector_->SendIntrinsicSizingInfoToParent(sizing_info);
+}
 
 void RenderWidgetHostViewChildFrame::OnManagerWillDestroy(
     TouchSelectionControllerClientManager* manager) {
@@ -565,9 +580,8 @@ void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
   current_surface_size_ = frame.size_in_pixels();
   current_surface_scale_factor_ = frame.device_scale_factor();
 
-  bool result = support_->SubmitCompositorFrame(
-      local_surface_id, std::move(frame), std::move(hit_test_region_list));
-  DCHECK(result);
+  support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                  std::move(hit_test_region_list));
   has_frame_ = true;
 
   if (last_received_local_surface_id_ != local_surface_id ||
@@ -587,25 +601,16 @@ void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
 void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
   if (switches::IsMusHostingViz())
     return;
-  // TODO(kylechar): Remove sequence generation and only send surface info.
-  // See https://crbug.com/676384.
-  viz::SurfaceSequence sequence =
-      viz::SurfaceSequence(frame_sink_id_, next_surface_sequence_++);
-  viz::SurfaceManager* manager = GetFrameSinkManager()->surface_manager();
   viz::SurfaceId surface_id(frame_sink_id_, last_received_local_surface_id_);
-  // The renderer process will satisfy this dependency when it creates a
-  // SurfaceLayer.
-  if (!manager->using_surface_references())
-    manager->RequireSequence(surface_id, sequence);
   viz::SurfaceInfo surface_info(surface_id, current_surface_scale_factor_,
                                 current_surface_size_);
-  SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
+  SendSurfaceInfoToEmbedderImpl(surface_info);
 }
 
 void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedderImpl(
-    const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
-  frame_connector_->SetChildFrameSurface(surface_info, sequence);
+    const viz::SurfaceInfo& surface_info) {
+  if (frame_connector_)
+    frame_connector_->SetChildFrameSurface(surface_info);
 }
 
 void RenderWidgetHostViewChildFrame::SubmitCompositorFrame(
@@ -734,6 +739,10 @@ void RenderWidgetHostViewChildFrame::ProcessGestureEvent(
   RenderWidgetHostViewBase::ProcessGestureEvent(event, latency);
 }
 
+viz::SurfaceId RenderWidgetHostViewChildFrame::GetCurrentSurfaceId() const {
+  return viz::SurfaceId(frame_sink_id_, last_received_local_surface_id_);
+}
+
 gfx::PointF RenderWidgetHostViewChildFrame::TransformPointToRootCoordSpaceF(
     const gfx::PointF& point) {
   if (!frame_connector_ || !last_received_local_surface_id_.is_valid())
@@ -773,6 +782,24 @@ bool RenderWidgetHostViewChildFrame::TransformPointToCoordSpaceForView(
       point, target_view,
       viz::SurfaceId(frame_sink_id_, last_received_local_surface_id_),
       transformed_point);
+}
+
+gfx::PointF RenderWidgetHostViewChildFrame::TransformRootPointToViewCoordSpace(
+    const gfx::PointF& point) {
+  if (!frame_connector_)
+    return point;
+
+  RenderWidgetHostViewBase* root_rwhv =
+      frame_connector_->GetRootRenderWidgetHostView();
+  if (!root_rwhv)
+    return point;
+
+  gfx::PointF transformed_point;
+  if (!root_rwhv->TransformPointToCoordSpaceForView(point, this,
+                                                    &transformed_point)) {
+    return point;
+  }
+  return transformed_point;
 }
 
 bool RenderWidgetHostViewChildFrame::IsRenderWidgetHostViewChildFrame() {
@@ -884,8 +911,7 @@ void RenderWidgetHostViewChildFrame::OnBeginFramePausedChanged(bool paused) {
 
 void RenderWidgetHostViewChildFrame::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
-  viz::SurfaceSequence sequence(frame_sink_id_, next_surface_sequence_++);
-  SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
+  SendSurfaceInfoToEmbedderImpl(surface_info);
 }
 
 void RenderWidgetHostViewChildFrame::OnFrameTokenChanged(uint32_t frame_token) {
@@ -896,6 +922,21 @@ void RenderWidgetHostViewChildFrame::SetNeedsBeginFrames(
     bool needs_begin_frames) {
   if (support_)
     support_->SetNeedsBeginFrame(needs_begin_frames);
+}
+
+TouchSelectionControllerClientManager*
+RenderWidgetHostViewChildFrame::GetTouchSelectionControllerClientManager() {
+  auto* root_view = frame_connector_->GetRootRenderWidgetHostView();
+  if (!root_view)
+    return nullptr;
+
+  // There is only ever one manager, and it's owned by the root view.
+  return root_view->GetTouchSelectionControllerClientManager();
+}
+
+void RenderWidgetHostViewChildFrame::SetWantsAnimateOnlyBeginFrames() {
+  if (support_)
+    support_->SetWantsAnimateOnlyBeginFrames();
 }
 
 InputEventAckState RenderWidgetHostViewChildFrame::FilterInputEvent(
@@ -990,10 +1031,6 @@ void RenderWidgetHostViewChildFrame::ClearCompositorSurfaceIfNecessary() {
   has_frame_ = false;
 }
 
-viz::SurfaceId RenderWidgetHostViewChildFrame::SurfaceIdForTesting() const {
-  return viz::SurfaceId(frame_sink_id_, last_received_local_surface_id_);
-}
-
 void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
   if (switches::IsMusHostingViz() || enable_viz_)
     return;
@@ -1071,6 +1108,13 @@ bool RenderWidgetHostViewChildFrame::CanBecomeVisible() {
 
   return static_cast<RenderWidgetHostViewChildFrame*>(parent_view)
       ->CanBecomeVisible();
+}
+
+void RenderWidgetHostViewChildFrame::DidNavigate() {
+  if (host_->auto_resize_enabled()) {
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+  }
 }
 
 }  // namespace content

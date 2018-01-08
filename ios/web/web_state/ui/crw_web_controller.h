@@ -15,6 +15,8 @@
 
 namespace web {
 
+enum class NavigationInitiationType;
+
 // Page load phases.
 enum LoadPhase {
   // In the LOAD_REQUESTED phase, the system predicts a page change is going to
@@ -106,9 +108,6 @@ class WebStateImpl;
 // calling code must retain the ownership of |webState|.
 - (instancetype)initWithWebState:(web::WebStateImpl*)webState;
 
-// Return an image to use as replacement of a missing snapshot.
-+ (UIImage*)defaultSnapshotImage;
-
 // Replaces the currently displayed content with |contentView|.  The content
 // view will be dismissed for the next navigation.
 - (void)showTransientContentView:(CRWContentView*)contentView;
@@ -154,9 +153,6 @@ class WebStateImpl;
 // Methods for navigation and properties to interrogate state.
 - (void)reload;
 - (void)stopLoading;
-// YES if the CRWWebController's view is deemed appropriate for saving in order
-// to generate an overlay placeholder view.
-- (BOOL)canUseViewForGeneratingOverlayPlaceholderView;
 
 // Loads the URL indicated by current session state.
 - (void)loadCurrentURL;
@@ -184,10 +180,6 @@ class WebStateImpl;
 // only checks on creation, such that the whole object needs to be rebuilt.
 - (void)requirePageReconstruction;
 
-// Show overlay, don't reload web page. Used when the view will be
-// visible only briefly (e.g., tablet side swipe).
-- (void)setOverlayPreviewMode:(BOOL)overlayPreviewMode;
-
 // Records the state (scroll position, form values, whatever can be harvested)
 // from the current page into the current session entry.
 - (void)recordStateInHistory;
@@ -195,15 +187,6 @@ class WebStateImpl;
 // TODO(stuartmorgan): This is public only temporarily; once refactoring is
 // complete it will be handled internally.
 - (void)restoreStateFromHistory;
-
-// Updates the HTML5 history state of the page using the current NavigationItem.
-// For same-document navigations and navigations affected by
-// window.history.[push/replace]State(), the URL and serialized state object
-// will be updated to the current NavigationItem's values.  A popState event
-// will be triggered for all same-document navigations.  Additionally, a
-// hashchange event will be triggered for same-document navigations where the
-// only difference between the current and previous URL is the fragment.
-- (void)updateHTML5HistoryState;
 
 // Notifies the CRWWebController that it has been shown.
 - (void)wasShown;
@@ -235,6 +218,13 @@ class WebStateImpl;
 
 // Returns the native controller (if any) current mananging the content.
 - (id<CRWNativeContent>)nativeController;
+
+// Called when NavigationManager has completed go to index same-document
+// navigation. Updates HTML5 history state, current document URL and sends
+// approprivate navigation and loading WebStateObserver callbacks.
+- (void)didFinishGoToIndexSameDocumentNavigationWithType:
+    (web::NavigationInitiationType)type;
+
 @end
 
 #pragma mark Testing

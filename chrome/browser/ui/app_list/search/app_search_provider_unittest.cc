@@ -11,7 +11,6 @@
 #include <string>
 #include <utility>
 
-#include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/search/search_result.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -64,7 +63,7 @@ class AppSearchProviderTest : public AppListTestBase {
   void SetUp() override {
     AppListTestBase::SetUp();
 
-    model_updater_ = std::make_unique<app_list::FakeAppListModelUpdater>();
+    model_updater_ = std::make_unique<FakeAppListModelUpdater>();
     controller_.reset(new ::test::TestAppListControllerDelegate);
   }
 
@@ -76,7 +75,7 @@ class AppSearchProviderTest : public AppListTestBase {
   }
 
   std::string RunQuery(const std::string& query) {
-    app_search_->Start(false, base::UTF8ToUTF16(query));
+    app_search_->Start(base::UTF8ToUTF16(query));
 
     // Sort results by relevance.
     std::vector<SearchResult*> sorted_results;
@@ -142,7 +141,7 @@ class AppSearchProviderTest : public AppListTestBase {
 
  private:
   std::unique_ptr<app_list::AppListModel> model_;
-  std::unique_ptr<app_list::FakeAppListModelUpdater> model_updater_;
+  std::unique_ptr<FakeAppListModelUpdater> model_updater_;
   std::unique_ptr<AppSearchProvider> app_search_;
   std::unique_ptr<::test::TestAppListControllerDelegate> controller_;
   ArcAppTest arc_test_;

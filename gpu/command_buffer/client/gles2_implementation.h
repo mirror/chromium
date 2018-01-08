@@ -20,9 +20,11 @@
 #include "base/containers/queue.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "gpu/command_buffer/client/buffer_tracker.h"
 #include "gpu/command_buffer/client/client_context_state.h"
+#include "gpu/command_buffer/client/client_transfer_cache.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_impl_export.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -30,10 +32,11 @@
 #include "gpu/command_buffer/client/mapped_memory.h"
 #include "gpu/command_buffer/client/ref_counted.h"
 #include "gpu/command_buffer/client/share_group.h"
+#include "gpu/command_buffer/client/transfer_buffer.h"
 #include "gpu/command_buffer/common/capabilities.h"
+#include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "gpu/command_buffer/common/context_result.h"
 #include "gpu/command_buffer/common/debug_marker_manager.h"
-#include "gpu/command_buffer/common/gles2_cmd_utils.h"
 
 #if DCHECK_IS_ON() && !defined(__native_client__) && \
     !defined(GLES2_CONFORMANCE_TESTS)
@@ -105,9 +108,7 @@ namespace gpu {
 
 class GpuControl;
 class IdAllocator;
-class ScopedTransferBufferPtr;
 struct SharedMemoryLimits;
-class TransferBufferInterface;
 
 namespace gles2 {
 
@@ -217,15 +218,13 @@ class GLES2_IMPL_EXPORT GLES2Implementation
       uint32_t texture_id) override;
   bool ThreadsafeDiscardableTextureIsDeletedForTracing(
       uint32_t texture_id) override;
-  void CreateTransferCacheEntry(
-      const cc::ClientTransferCacheEntry& entry) override;
-  bool ThreadsafeLockTransferCacheEntry(cc::TransferCacheEntryType type,
-                                        uint32_t id) override;
+  void* MapTransferCacheEntry(size_t serialized_size) override;
+  void UnmapAndCreateTransferCacheEntry(uint32_t type, uint32_t id) override;
+  bool ThreadsafeLockTransferCacheEntry(uint32_t type, uint32_t id) override;
   void UnlockTransferCacheEntries(
-      const std::vector<std::pair<cc::TransferCacheEntryType, uint32_t>>&
-          entries) override;
-  void DeleteTransferCacheEntry(cc::TransferCacheEntryType type,
-                                uint32_t id) override;
+      const std::vector<std::pair<uint32_t, uint32_t>>& entries) override;
+  void DeleteTransferCacheEntry(uint32_t type, uint32_t id) override;
+  unsigned int GetTransferBufferFreeSize() const override;
 
   // TODO(danakj): Move to ContextSupport once ContextProvider doesn't need to
   // intercept it.
@@ -521,6 +520,7 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   void DeleteFramebuffersHelper(GLsizei n, const GLuint* framebuffers);
   void DeleteRenderbuffersHelper(GLsizei n, const GLuint* renderbuffers);
   void DeleteTexturesHelper(GLsizei n, const GLuint* textures);
+  void UnbindTexturesHelper(GLsizei n, const GLuint* textures);
   bool DeleteProgramHelper(GLuint program);
   bool DeleteShaderHelper(GLuint shader);
   void DeleteQueriesEXTHelper(GLsizei n, const GLuint* queries);
@@ -763,8 +763,13 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   GLuint bound_copy_write_buffer_;
   GLuint bound_pixel_pack_buffer_;
   GLuint bound_pixel_unpack_buffer_;
-  GLuint bound_transform_feedback_buffer_;
   GLuint bound_uniform_buffer_;
+  // We don't cache the currently bound transform feedback buffer, because
+  // it is part of the current transform feedback object. Caching the transform
+  // feedback object state correctly requires predicting if a call to
+  // glBeginTransformFeedback will succeed or fail, which in turn requires
+  // caching a whole bunch of other states such as the transform feedback
+  // varyings of the current program.
 
   // The currently bound pixel transfer buffers.
   GLuint bound_pixel_pack_transfer_buffer_id_;
@@ -828,6 +833,9 @@ class GLES2_IMPL_EXPORT GLES2Implementation
       id_allocators_[static_cast<int>(IdNamespaces::kNumIdNamespaces)];
 
   std::unique_ptr<BufferTracker> buffer_tracker_;
+  ClientTransferCache transfer_cache_;
+
+  base::Optional<ScopedTransferBufferPtr> raster_mapped_buffer_;
 
   base::Callback<void(const char*, int32_t)> error_message_callback_;
   base::Closure lost_context_callback_;

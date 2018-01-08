@@ -132,12 +132,13 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
     : content::RenderFrameObserver(render_frame),
       translate_helper_(nullptr),
       phishing_classifier_(nullptr) {
-  // Don't do anything else for subframes.
-  if (!render_frame->IsMainFrame())
-    return;
   render_frame->GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&ChromeRenderFrameObserver::OnRenderFrameObserverRequest,
                  base::Unretained(this)));
+  // Don't do anything else for subframes.
+  if (!render_frame->IsMainFrame())
+    return;
+
 #if defined(SAFE_BROWSING_CSD)
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -179,7 +180,8 @@ bool ChromeRenderFrameObserver::OnMessageReceived(const IPC::Message& message) {
 }
 
 void ChromeRenderFrameObserver::OnSetIsPrerendering(
-    prerender::PrerenderMode mode) {
+    prerender::PrerenderMode mode,
+    const std::string& histogram_prefix) {
   if (mode != prerender::NO_PRERENDER) {
     // If the PrerenderHelper for this frame already exists, don't create it. It
     // can already be created for subframes during handling of
@@ -190,7 +192,7 @@ void ChromeRenderFrameObserver::OnSetIsPrerendering(
 
     // The PrerenderHelper will destroy itself either after recording histograms
     // or on destruction of the RenderView.
-    new prerender::PrerenderHelper(render_frame(), mode);
+    new prerender::PrerenderHelper(render_frame(), mode, histogram_prefix);
   }
 }
 
@@ -213,7 +215,8 @@ void ChromeRenderFrameObserver::RequestThumbnailForContextNode(
   SkBitmap thumbnail;
   gfx::Size original_size;
   if (!context_node.IsNull() && context_node.IsElementNode()) {
-    blink::WebImage image = context_node.To<WebElement>().ImageContents();
+    blink::WebImage image =
+        context_node.To<WebElement>().ImageContents();
     original_size = image.Size();
     thumbnail = Downscale(image,
                           thumbnail_min_area_pixels,
@@ -247,7 +250,6 @@ void ChromeRenderFrameObserver::RequestThumbnailForContextNode(
         break;
       }
   }
-
   callback.Run(thumbnail_data, original_size);
 }
 
@@ -462,4 +464,17 @@ void ChromeRenderFrameObserver::SetWindowFeatures(
     blink::mojom::WindowFeaturesPtr window_features) {
   render_frame()->GetRenderView()->GetWebView()->SetWindowFeatures(
       content::ConvertMojoWindowFeaturesToWebWindowFeatures(*window_features));
+}
+
+void ChromeRenderFrameObserver::UpdateBrowserControlsState(
+    content::BrowserControlsState constraints,
+    content::BrowserControlsState current,
+    bool animate) {
+#if defined(OS_ANDROID)
+  render_frame()->GetRenderView()->UpdateBrowserControlsState(constraints,
+                                                              current, animate);
+#else
+  // TODO(https://crbug.com/676224): remove this reporting.
+  mojo::ReportBadMessage("UpdateBrowserControlsState is OS_ANDROID only.");
+#endif
 }

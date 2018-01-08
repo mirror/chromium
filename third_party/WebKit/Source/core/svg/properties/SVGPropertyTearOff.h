@@ -45,7 +45,7 @@ enum PropertyIsAnimValType { kPropertyIsNotAnimVal, kPropertyIsAnimVal };
 
 class SVGPropertyTearOffBase : public ScriptWrappable {
  public:
-  virtual ~SVGPropertyTearOffBase() {}
+  virtual ~SVGPropertyTearOffBase() = default;
 
   PropertyIsAnimValType PropertyIsAnimVal() const {
     return property_is_anim_val_;
@@ -68,12 +68,13 @@ class SVGPropertyTearOffBase : public ScriptWrappable {
     context_element_ = context_element;
     // Requires SVGPropertyTearOffBase to be the left-most class in the
     // inheritance hierarchy.
-    ScriptWrappableVisitor::WriteBarrier(context_element_.Get());
+    ScriptWrappableMarkingVisitor::WriteBarrier(context_element_.Get());
     attribute_name_ = attribute_name;
   }
 
   void TraceWrappers(const ScriptWrappableVisitor* visitor) const override {
     visitor->TraceWrappersWithManualWriteBarrier(context_element_.Get());
+    ScriptWrappable::TraceWrappers(visitor);
   }
 
   static void ThrowReadOnly(ExceptionState&);

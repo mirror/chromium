@@ -63,6 +63,7 @@
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/plugins/plugin_finder.h"
+#include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/prefs/browser_prefs.h"
 #include "chrome/browser/prefs/chrome_pref_service_factory.h"
 #include "chrome/browser/printing/background_printing_manager.h"
@@ -95,7 +96,6 @@
 #include "components/network_time/network_time_tracker.h"
 #include "components/optimization_guide/optimization_guide_service.h"
 #include "components/physical_web/data_source/physical_web_data_source.h"
-#include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/common/policy_service.h"
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -131,6 +131,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
+#include "services/network/public/cpp/network_switches.h"
 #include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "ui/base/idle/idle.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -212,20 +213,8 @@ rappor::RapporService* GetBrowserRapporService() {
 
 BrowserProcessImpl::BrowserProcessImpl(
     base::SequencedTaskRunner* local_state_task_runner)
-    : created_watchdog_thread_(false),
-      created_browser_policy_connector_(false),
-      created_profile_manager_(false),
-      created_icon_manager_(false),
-      created_notification_ui_manager_(false),
-      created_notification_bridge_(false),
-      created_safe_browsing_service_(false),
-      created_subresource_filter_ruleset_service_(false),
-      created_optimization_guide_service_(false),
-      shutting_down_(false),
-      tearing_down_(false),
-      download_status_updater_(base::MakeUnique<DownloadStatusUpdater>()),
+    : download_status_updater_(std::make_unique<DownloadStatusUpdater>()),
       local_state_task_runner_(local_state_task_runner),
-      cached_default_web_client_state_(shell_integration::UNKNOWN_DEFAULT),
       pref_service_factory_(
           base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
   g_browser_process = this;
@@ -374,6 +363,9 @@ void BrowserProcessImpl::StartTearDown() {
 
   if (local_state_)
     local_state_->CommitPendingWrite();
+
+  // This expects to be destroyed before the task scheduler is torn down.
+  system_network_context_manager_.reset();
 }
 
 void BrowserProcessImpl::PostDestroyThreads() {
@@ -384,9 +376,6 @@ void BrowserProcessImpl::PostDestroyThreads() {
   // Must outlive the file thread.
   webrtc_log_uploader_.reset();
 #endif
-
-  // This observes |local_state_|, so should be destroyed before it.
-  system_network_context_manager_.reset();
 
   // Reset associated state right after actual thread is stopped,
   // as io_thread_.global_ cleanup happens in CleanUp on the IO
@@ -540,9 +529,11 @@ BrowserProcessImpl::GetMetricsServicesManager() {
   if (!metrics_services_manager_) {
     auto client =
         base::MakeUnique<ChromeMetricsServicesManagerClient>(local_state());
+    ChromeMetricsServicesManagerClient* client_ptr = client.get();
     metrics_services_manager_ =
         base::MakeUnique<metrics_services_manager::MetricsServicesManager>(
             std::move(client));
+    client_ptr->OnMetricsServiceManagerCreated(metrics_services_manager_.get());
   }
   return metrics_services_manager_.get();
 }
@@ -655,12 +646,14 @@ message_center::MessageCenter* BrowserProcessImpl::message_center() {
   return message_center::MessageCenter::Get();
 }
 
-policy::BrowserPolicyConnector* BrowserProcessImpl::browser_policy_connector() {
+policy::ChromeBrowserPolicyConnector*
+BrowserProcessImpl::browser_policy_connector() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!created_browser_policy_connector_) {
     DCHECK(!browser_policy_connector_);
     browser_policy_connector_ = platform_part_->CreateBrowserPolicyConnector();
     created_browser_policy_connector_ = true;
+    browser_policy_connector_->InitPolicyProviders();
   }
   return browser_policy_connector_.get();
 }
@@ -977,7 +970,6 @@ BrowserProcessImpl::component_updater() {
   component_updater_ = component_updater::ComponentUpdateServiceFactory(
       component_updater::MakeChromeComponentUpdaterConfigurator(
           base::CommandLine::ForCurrentProcess(),
-          io_thread()->system_url_request_context_getter(),
           g_browser_process->local_state()));
 
   return component_updater_.get();
@@ -1089,9 +1081,9 @@ void BrowserProcessImpl::PreCreateThreads(
       extensions::kExtensionScheme, true);
 #endif
 
-  if (command_line.HasSwitch(switches::kLogNetLog)) {
+  if (command_line.HasSwitch(network::switches::kLogNetLog)) {
     base::FilePath log_file =
-        command_line.GetSwitchValuePath(switches::kLogNetLog);
+        command_line.GetSwitchValuePath(network::switches::kLogNetLog);
     if (log_file.empty()) {
       base::FilePath user_data_dir;
       bool success =
@@ -1248,7 +1240,14 @@ void BrowserProcessImpl::CreateSubresourceFilterRulesetService() {
     return;
   }
 
+  // Runner for tasks critical for user experience.
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner(
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
+
+  // Runner for tasks that do not influence user experience.
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner(
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
@@ -1263,7 +1262,7 @@ void BrowserProcessImpl::CreateSubresourceFilterRulesetService() {
           blocking_task_runner);
   subresource_filter_ruleset_service_->set_ruleset_service(
       base::MakeUnique<subresource_filter::RulesetService>(
-          local_state(), blocking_task_runner,
+          local_state(), blocking_task_runner, background_task_runner,
           subresource_filter_ruleset_service_.get(), indexed_ruleset_base_dir));
 }
 
@@ -1347,7 +1346,8 @@ void BrowserProcessImpl::ApplyMetricsReportingPolicy() {
       FROM_HERE,
       base::BindOnce(
           base::IgnoreResult(&GoogleUpdateSettings::SetCollectStatsConsent),
-          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()));
+          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+              local_state())));
 }
 #endif
 

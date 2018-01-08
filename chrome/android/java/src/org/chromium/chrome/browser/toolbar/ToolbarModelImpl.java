@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.toolbar;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -43,6 +42,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     private boolean mIsIncognito;
     private int mPrimaryColor;
     private boolean mIsUsingBrandColor;
+    private boolean mUseModernDesign;
 
     /**
      * Default constructor for this class.
@@ -60,6 +60,16 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
      */
     public void initializeWithNative() {
         initialize(this);
+    }
+
+    /**
+     * @param useModernDesign Whether the modern design should be used for the toolbar represented
+     *                        by this model.
+     */
+    public void setUseModernDesign(boolean useModernDesign) {
+        mUseModernDesign = useModernDesign;
+        setPrimaryColor(ColorUtils.getDefaultThemeColor(
+                ContextUtils.getApplicationContext().getResources(), useModernDesign, false));
     }
 
     @Override
@@ -191,17 +201,13 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         Context context = ContextUtils.getApplicationContext();
         mIsUsingBrandColor = !isIncognito()
                 && mPrimaryColor
-                        != ApiCompatibilityUtils.getColor(
-                                   context.getResources(), R.color.default_primary_color)
+                        != ColorUtils.getDefaultThemeColor(
+                                   context.getResources(), mUseModernDesign, isIncognito())
                 && hasTab() && !mTab.isNativePage();
     }
 
     @Override
     public int getPrimaryColor() {
-        if (mBottomSheet != null) {
-            Resources res = ContextUtils.getApplicationContext().getResources();
-            return ColorUtils.getDefaultThemeColor(res, true, isIncognito());
-        }
         return mPrimaryColor;
     }
 
@@ -304,6 +310,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         return mBottomSheet != null && mBottomSheet.isSheetOpen()
                 && mBottomSheet.getTargetSheetState() != BottomSheet.SHEET_STATE_PEEK
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                && ChromeFeatureList.isInitialized()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_CLEAR_URL_ON_OPEN);
     }
 }

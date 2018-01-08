@@ -5,13 +5,13 @@
 #ifndef CHROME_BROWSER_VR_UI_SCENE_CONSTANTS_H_
 #define CHROME_BROWSER_VR_UI_SCENE_CONSTANTS_H_
 
-#include "base/numerics/math_constants.h"
+#include "ui/gfx/geometry/angle_conversions.h"
 
 namespace vr {
 
 static constexpr int kWarningTimeoutSeconds = 30;
-static constexpr float kWarningDistance = 1.0;
-static constexpr float kWarningAngleRadians = 16.3f * base::kPiFloat / 180;
+static constexpr float kWarningDistance = 1.0f;
+static constexpr float kWarningAngleRadians = gfx::DegToRad(16.3f);
 static constexpr float kPermanentWarningHeightDMM = 0.049f;
 static constexpr float kPermanentWarningWidthDMM = 0.1568f;
 static constexpr float kTransientWarningHeightDMM = 0.160f;
@@ -24,7 +24,7 @@ static constexpr float kExitWarningXPaddingDMM = 0.033f;
 static constexpr float kExitWarningYPaddingDMM = 0.023f;
 static constexpr float kExitWarningCornerRadiusDMM = 0.008f;
 
-static constexpr float kContentDistance = 2.5;
+static constexpr float kContentDistance = 2.5f;
 static constexpr float kContentWidthDMM = 0.96f;
 static constexpr float kContentHeightDMM = 0.64f;
 static constexpr float kContentWidth = kContentWidthDMM * kContentDistance;
@@ -33,27 +33,46 @@ static constexpr float kContentVerticalOffsetDMM = -0.1f;
 static constexpr float kContentVerticalOffset =
     kContentVerticalOffsetDMM * kContentDistance;
 static constexpr float kContentCornerRadius = 0.005f * kContentWidth;
-static constexpr float kBackplaneSize = 1000.0;
+static constexpr float kContentShadowOffset = 0.09f;
+static constexpr float kContentShadowIntesity = 0.3f;
+static constexpr float kBackplaneSize = 1000.0f;
 static constexpr float kBackgroundDistanceMultiplier = 1.414f;
 
-static constexpr float kFullscreenDistance = 3;
+static constexpr float kFullscreenDistance = 3.0f;
 // Make sure that the aspect ratio for fullscreen is 16:9. Otherwise, we may
 // experience visual artefacts for fullscreened videos.
-static constexpr float kFullscreenHeight = 0.64f * kFullscreenDistance;
+static constexpr float kFullscreenHeightDMM = 0.64f;
+static constexpr float kFullscreenHeight =
+    kFullscreenHeightDMM * kFullscreenDistance;
 static constexpr float kFullscreenWidth = 1.138f * kFullscreenDistance;
-static constexpr float kFullscreenVerticalOffset = -0.1f * kFullscreenDistance;
+static constexpr float kFullscreenVerticalOffsetDMM = -0.1f;
+static constexpr float kFullscreenVerticalOffset =
+    kFullscreenVerticalOffsetDMM * kFullscreenDistance;
 
 static constexpr float kExitPromptWidth = 0.672f * kContentDistance;
 static constexpr float kExitPromptHeight = 0.2f * kContentDistance;
 
 static constexpr float kExitPromptVerticalOffset = -0.09f * kContentDistance;
-static constexpr float kPromptBackplaneSize = 1000.0;
+static constexpr float kPromptBackplaneSize = 1000.0f;
 
 static constexpr float kUrlBarDistance = 2.4f;
 static constexpr float kUrlBarWidthDMM = 0.672f;
 static constexpr float kUrlBarHeightDMM = 0.088f;
 static constexpr float kUrlBarVerticalOffsetDMM = -0.516f;
-static constexpr float kUrlBarRotationRad = -0.175f;
+static constexpr float kUrlBarRotationRad = gfx::DegToRad(-10.0f);
+static constexpr float kUrlBarFontHeightDMM = 0.027f;
+static constexpr float kUrlBarIconSizeDMM = 0.038f;
+static constexpr float kUrlBarBackButtonWidthDMM = 0.087f;
+static constexpr float kUrlBarBackButtonIconOffsetDMM = 0.0045f;
+static constexpr float kUrlBarSeparatorWidthDMM = 0.002f;
+static constexpr float kUrlBarOriginRegionWidthDMM = 0.583f;
+static constexpr float kUrlBarOriginContentWidthDMM = 0.543f;
+static constexpr float kUrlBarOriginContentOffsetDMM = 0.020f;
+static constexpr float kUrlBarFieldSpacingDMM = 0.014f;
+static constexpr float kUrlBarOfflineIconTextSpacingDMM = 0.004f;
+static constexpr float kUrlBarSecuritySeparatorHeightDMM = 0.026f;
+static constexpr float kUrlBarOriginFadeWidth = 0.044f;
+static constexpr float kUrlBarOriginMinimumPathWidth = 0.044f;
 
 static constexpr float kOverlayPlaneDistance = 2.3f;
 
@@ -62,54 +81,62 @@ static constexpr float kAudioPermissionPromptHeight = 0.218f * kUrlBarDistance;
 static constexpr float kAudionPermisionPromptDepth = 0.11f;
 
 static constexpr float kIndicatorHeight = 0.08f;
+static constexpr float kIndicatorXPadding = kIndicatorHeight * 0.1f;
+static constexpr float kIndicatorYPadding = kIndicatorHeight * 0.15f;
+static constexpr float kIndicatorIconSize = kIndicatorHeight * 0.7f;
+static constexpr float kIndicatorCornerRadius = kIndicatorHeight * 0.1f;
+static constexpr float kIndicatorMargin = kIndicatorHeight * 0.2f;
+static constexpr float kIndicatorFontHeightDmm = 0.032f;
 static constexpr float kIndicatorGap = 0.05f;
 static constexpr float kIndicatorVerticalOffset = 0.1f;
 static constexpr float kIndicatorDistanceOffset = 0.1f;
 
 static constexpr float kWebVrUrlToastWidthDMM = 0.472f;
 static constexpr float kWebVrUrlToastHeightDMM = 0.064f;
-static constexpr float kWebVrUrlToastDistance = 1.0;
+static constexpr float kWebVrUrlToastDistance = 1.0f;
 static constexpr float kWebVrUrlToastWidth =
     kWebVrUrlToastWidthDMM * kWebVrUrlToastDistance;
 static constexpr float kWebVrUrlToastHeight =
     kWebVrUrlToastHeightDMM * kWebVrUrlToastDistance;
 static constexpr int kWebVrUrlToastTimeoutSeconds = 6;
-static constexpr float kWebVrUrlToastRotationRad = 14 * base::kPiFloat / 180;
+static constexpr float kWebVrUrlToastOpacity = 0.8f;
+static constexpr float kWebVrUrlToastRotationRad = gfx::DegToRad(14.0f);
 
-static constexpr float kWebVrToastDistance = 1.0;
-static constexpr float kFullscreenToastDistance = kFullscreenDistance;
+static constexpr float kWebVrToastDistance = 1.0f;
 static constexpr float kToastWidthDMM = 0.512f;
 static constexpr float kToastHeightDMM = 0.064f;
 static constexpr float kToastOffsetDMM = 0.004f;
+static constexpr float kFullScreenToastOffsetDMM =
+    kFullscreenVerticalOffsetDMM + kFullscreenHeightDMM / 2 + kToastHeightDMM +
+    0.004f;
+static constexpr float kExclusiveScreenToastXPaddingDMM = 0.017f;
+static constexpr float kExclusiveScreenToastYPaddingDMM = 0.02f;
+static constexpr float kExclusiveScreenToastCornerRadiusDMM = 0.004f;
+static constexpr float kExclusiveScreenToastTextFontHeightDMM = 0.023f;
 // When changing the value here, make sure it doesn't collide with
 // kWarningAngleRadians.
-static constexpr float kWebVrAngleRadians = 9.88f * base::kPiFloat / 180;
+static constexpr float kWebVrAngleRadians = gfx::DegToRad(9.88f);
 static constexpr int kToastTimeoutSeconds = kWebVrUrlToastTimeoutSeconds;
 
 static constexpr float kSplashScreenTextDistance = 2.5f;
 static constexpr float kSplashScreenTextFontHeightDMM = 0.05f;
 static constexpr float kSplashScreenTextWidthDMM = 0.9f;
 static constexpr float kSplashScreenTextVerticalOffsetDMM = -0.072f;
-static constexpr float kSplashScreenMinDurationSeconds = 3;
+static constexpr float kSplashScreenMinDurationSeconds = 2.0f;
 
 static constexpr float kButtonDiameterDMM = 0.088f;
-static constexpr float kButtonZOffsetHoverDMM = 0.048;
+static constexpr float kButtonZOffsetHoverDMM = 0.048f;
 
 static constexpr float kCloseButtonDistance = 2.4f;
 static constexpr float kCloseButtonVerticalOffset =
     kFullscreenVerticalOffset - (kFullscreenHeight * 0.5f) - 0.35f;
-static constexpr float kCloseButtonHeightDMM = kButtonDiameterDMM;
-static constexpr float kCloseButtonHeight =
-    kCloseButtonHeightDMM * kCloseButtonDistance;
-static constexpr float kCloseButtonWidth =
-    kCloseButtonHeightDMM * kCloseButtonDistance;
+static constexpr float kCloseButtonDiameter =
+    kButtonDiameterDMM * kCloseButtonDistance;
 static constexpr float kCloseButtonFullscreenDistance = 2.9f;
 static constexpr float kCloseButtonFullscreenVerticalOffset =
     kFullscreenVerticalOffset - (kFullscreenHeight / 2) - 0.35f;
-static constexpr float kCloseButtonFullscreenHeight =
-    kCloseButtonHeightDMM * kCloseButtonFullscreenDistance;
-static constexpr float kCloseButtonFullscreenWidth =
-    kCloseButtonHeightDMM * kCloseButtonFullscreenDistance;
+static constexpr float kCloseButtonFullscreenDiameter =
+    kButtonDiameterDMM * kCloseButtonFullscreenDistance;
 
 static constexpr float kLoadingIndicatorWidthDMM = 0.24f;
 static constexpr float kLoadingIndicatorHeightDMM = 0.008f;
@@ -120,8 +147,8 @@ static constexpr float kLoadingIndicatorVerticalOffsetDMM =
 static constexpr float kLoadingIndicatorDepthOffset =
     (kUrlBarDistance - kContentDistance) / 2;
 
-static constexpr float kSceneSize = 25.0;
-static constexpr float kSceneHeight = 4.0;
+static constexpr float kSceneSize = 25.0f;
+static constexpr float kSceneHeight = 4.0f;
 static constexpr int kFloorGridlineCount = 40;
 
 static constexpr float kVoiceSearchUIGroupButtonDMM = 0.096f;
@@ -146,11 +173,10 @@ static constexpr float kUnderDevelopmentNoticeVerticalOffsetDMM =
     kVoiceSearchButtonYOffsetDMM + kVoiceSearchButtonDiameterDMM * 1.5f + 0.04f;
 static constexpr float kUnderDevelopmentNoticeRotationRad = -0.78f;
 
-static constexpr float kSpinnerWidth = kCloseButtonWidth;
-static constexpr float kSpinnerHeight = kCloseButtonHeight;
-static constexpr float kSpinnerDistance = kSplashScreenTextDistance;
-static constexpr float kSpinnerVerticalOffset =
-    kSplashScreenTextVerticalOffsetDMM * kSpinnerDistance;
+static constexpr float kTimeoutScreenDisatance = 2.5f;
+static constexpr float kTimeoutSpinnerSizeDMM = 0.088f;
+static constexpr float kTimeoutSpinnerVerticalOffsetDMM =
+    kSplashScreenTextVerticalOffsetDMM;
 
 static constexpr float kTimeoutMessageHorizontalPaddingDMM = 0.04f;
 static constexpr float kTimeoutMessageVerticalPaddingDMM = 0.024f;
@@ -197,6 +223,11 @@ static constexpr float kOmniboxShadowOffset = 0.015f;
 static constexpr float kOmniboxShadowIntensity = 0.4f;
 static constexpr int kOmniboxTransitionMs = 300;
 
+static constexpr float kOmniboxTextFieldIconSizeDMM = 0.05f;
+static constexpr float kOmniboxTextFieldIconButtonSizeDMM = 0.064f;
+static constexpr float kOmniboxTextFieldIconButtonRadiusDMM = 0.006f;
+static constexpr float kOmniboxTextFieldIconButtonHoverOffsetDMM = 0.0f;
+
 static constexpr float kSuggestionHeightDMM = 0.088f;
 static constexpr float kSuggestionGapDMM = 0.0018f;
 static constexpr float kSuggestionLineGapDMM = 0.01f;
@@ -221,6 +252,41 @@ static constexpr float kModalPromptFadeOpacity = 0.5f;
 static constexpr float kKeyboardDistance = 2.2f;
 static constexpr float kKeyboardVerticalOffsetDMM = -0.45f;
 static constexpr float kKeyboardRotationRadians = -0.14f;
+
+static constexpr float kSnackbarDistance = 1.5f;
+static constexpr float kSnackbarAngle = -gfx::DegToRad(34.0f);
+static constexpr float kSnackbarPaddingDMM = 0.032f;
+static constexpr float kSnackbarIconWidthDMM = 0.034f;
+static constexpr float kSnackbarFontHeightDMM = 0.024f;
+static constexpr float kSnackbarHeightDMM = 0.08f;
+static constexpr float kSnackbarMoveInAngle = -base::kPiFloat / 10;
+static constexpr int kSnackbarTransitionDurationMs = 300;
+
+static constexpr float kControllerLabelSpacerSize = 0.025f;
+static constexpr float kControllerLabelLayoutMargin = -0.005f;
+static constexpr float kControllerLabelCalloutWidth = 0.02f;
+static constexpr float kControllerLabelCalloutHeight = 0.001f;
+static constexpr float kControllerLabelFontHeight = 0.05f;
+static constexpr float kControllerLabelScale = 0.2f;
+
+// TODO(vollick): these should be encoded in the controller mesh.
+static constexpr float kControllerTrackpadOffset = -0.035f;
+static constexpr float kControllerExitButtonOffset = -0.008f;
+static constexpr float kControllerBackButtonOffset = -0.008f;
+
+static constexpr int kControllerLabelTransitionDurationMs = 700;
+
+static constexpr float kSkyDistance = 1000.0f;
+static constexpr float kGridOpacity = 0.5f;
+
+static constexpr float kRepositionButtonDiameter = 0.75f * kCloseButtonDiameter;
+// This allows the button to be hittable even when hidden.
+static constexpr float kRepositionButtonMinOpacity = 0.001f;
+static constexpr float kRepositionButtonMidOpacity = 0.3f;
+static constexpr float kRepositionButtonMaxOpacity = 1.0f;
+static constexpr float kRepositionButtonXOffset = kIndicatorGap;
+static constexpr float kRepositionButtonYOffset = 0.5f * kIndicatorGap;
+static constexpr int kRepositionButtonTransitionDurationMs = 750;
 
 }  // namespace vr
 

@@ -41,7 +41,6 @@
 #include "services/viz/public/cpp/compositing/shared_quad_state_struct_traits.h"
 #include "services/viz/public/cpp/compositing/surface_id_struct_traits.h"
 #include "services/viz/public/cpp/compositing/surface_info_struct_traits.h"
-#include "services/viz/public/cpp/compositing/surface_sequence_struct_traits.h"
 #include "services/viz/public/cpp/compositing/transferable_resource_struct_traits.h"
 #include "services/viz/public/interfaces/compositing/begin_frame_args.mojom.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame.mojom.h"
@@ -49,11 +48,9 @@
 #include "services/viz/public/interfaces/compositing/filter_operations.mojom.h"
 #include "services/viz/public/interfaces/compositing/returned_resource.mojom.h"
 #include "services/viz/public/interfaces/compositing/surface_info.mojom.h"
-#include "services/viz/public/interfaces/compositing/surface_sequence.mojom.h"
 #include "services/viz/public/interfaces/compositing/transferable_resource.mojom.h"
 #include "skia/public/interfaces/bitmap_skbitmap_struct_traits.h"
 #include "skia/public/interfaces/blur_image_filter_tile_mode_struct_traits.h"
-#include "skia/public/interfaces/image_filter_struct_traits.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkString.h"
 #include "ui/gfx/geometry/mojo/geometry_struct_traits.h"
@@ -97,6 +94,7 @@ TEST_F(StructTraitsTest, BeginFrameArgs) {
   const bool on_critical_path = true;
   const uint64_t source_id = 5;
   const uint64_t sequence_number = 10;
+  const bool animate_only = true;
   BeginFrameArgs input;
   input.source_id = source_id;
   input.sequence_number = sequence_number;
@@ -105,6 +103,7 @@ TEST_F(StructTraitsTest, BeginFrameArgs) {
   input.interval = interval;
   input.type = type;
   input.on_critical_path = on_critical_path;
+  input.animate_only = animate_only;
 
   BeginFrameArgs output;
   SerializeAndDeserialize<mojom::BeginFrameArgs>(input, &output);
@@ -116,6 +115,7 @@ TEST_F(StructTraitsTest, BeginFrameArgs) {
   EXPECT_EQ(interval, output.interval);
   EXPECT_EQ(type, output.type);
   EXPECT_EQ(on_critical_path, output.on_critical_path);
+  EXPECT_EQ(animate_only, output.animate_only);
 }
 
 TEST_F(StructTraitsTest, BeginFrameAck) {
@@ -132,8 +132,7 @@ TEST_F(StructTraitsTest, BeginFrameAck) {
 
   EXPECT_EQ(source_id, output.source_id);
   EXPECT_EQ(sequence_number, output.sequence_number);
-  // |has_damage| is not transmitted.
-  EXPECT_FALSE(output.has_damage);
+  EXPECT_TRUE(output.has_damage);
 }
 
 namespace {
@@ -385,23 +384,15 @@ TEST_F(StructTraitsTest, CopyOutputRequest_CallbackRunsOnce) {
 }
 
 TEST_F(StructTraitsTest, ResourceSettings) {
-  constexpr size_t kArbitrarySize = 32;
   constexpr bool kArbitraryBool = true;
   ResourceSettings input;
-  input.texture_id_allocation_chunk_size = kArbitrarySize;
   input.use_gpu_memory_buffer_resources = kArbitraryBool;
-  input.texture_target_exception_list.push_back(
-      std::make_pair(gfx::BufferUsage::SCANOUT, gfx::BufferFormat::BGRX_8888));
 
   ResourceSettings output;
   SerializeAndDeserialize<mojom::ResourceSettings>(input, &output);
 
-  EXPECT_EQ(input.texture_id_allocation_chunk_size,
-            output.texture_id_allocation_chunk_size);
   EXPECT_EQ(input.use_gpu_memory_buffer_resources,
             output.use_gpu_memory_buffer_resources);
-  EXPECT_EQ(input.texture_target_exception_list,
-            output.texture_target_exception_list);
 }
 
 TEST_F(StructTraitsTest, Selection) {
@@ -448,19 +439,6 @@ TEST_F(StructTraitsTest, SharedQuadState) {
   EXPECT_EQ(opacity, output_sqs.opacity);
   EXPECT_EQ(blend_mode, output_sqs.blend_mode);
   EXPECT_EQ(sorting_context_id, output_sqs.sorting_context_id);
-}
-
-TEST_F(StructTraitsTest, SurfaceSequence) {
-  const FrameSinkId frame_sink_id(2016, 1234);
-  const uint32_t sequence = 0xfbadbeef;
-
-  SurfaceSequence input(frame_sink_id, sequence);
-  SurfaceSequence output;
-  mojom::SurfaceSequence::Deserialize(mojom::SurfaceSequence::Serialize(&input),
-                                      &output);
-
-  EXPECT_EQ(frame_sink_id, output.frame_sink_id);
-  EXPECT_EQ(sequence, output.sequence);
 }
 
 // Note that this is a fairly trivial test of CompositorFrame serialization as
@@ -672,6 +650,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   activation_dependencies.push_back(id2);
   uint32_t frame_token = 0xdeadbeef;
   uint64_t begin_frame_ack_sequence_number = 0xdeadbeef;
+  FrameDeadline frame_deadline(4u, true);
 
   CompositorFrameMetadata input;
   input.device_scale_factor = device_scale_factor;
@@ -695,6 +674,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   input.latency_info = latency_infos;
   input.referenced_surfaces = referenced_surfaces;
   input.activation_dependencies = activation_dependencies;
+  input.deadline = frame_deadline;
   input.frame_token = frame_token;
   input.begin_frame_ack.sequence_number = begin_frame_ack_sequence_number;
 
@@ -731,6 +711,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
             output.activation_dependencies.size());
   for (uint32_t i = 0; i < activation_dependencies.size(); ++i)
     EXPECT_EQ(activation_dependencies[i], output.activation_dependencies[i]);
+  EXPECT_EQ(frame_deadline, output.deadline);
   EXPECT_EQ(frame_token, output.frame_token);
   EXPECT_EQ(begin_frame_ack_sequence_number,
             output.begin_frame_ack.sequence_number);

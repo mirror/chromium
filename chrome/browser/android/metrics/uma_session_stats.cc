@@ -10,7 +10,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
@@ -110,7 +109,9 @@ static void JNI_UmaSessionStats_ChangeMetricsReportingConsent(
     JNIEnv*,
     const JavaParamRef<jclass>&,
     jboolean consent) {
-  UpdateMetricsPrefsOnPermissionChange(consent);
+  UpdateMetricsPrefsOnPermissionChange(g_browser_process->local_state(),
+                                       g_browser_process->metrics_service(),
+                                       consent);
 
   // This function ensures a consent file in the data directory is either
   // created, or deleted, depending on consent. Starting up metrics services

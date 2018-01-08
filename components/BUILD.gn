@@ -6,6 +6,7 @@ import("//build/config/chrome_build.gni")
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//components/nacl/features.gni")
+import("//media/media_options.gni")
 import("//printing/features/features.gni")
 import("//rlz/features/features.gni")
 import("//testing/test.gni")
@@ -70,6 +71,7 @@ test("components_unittests") {
     "//components/browsing_data/core:unit_tests",
     "//components/bubble:unit_tests",
     "//components/captive_portal:unit_tests",
+    "//components/cbor:unit_tests",
     "//components/client_update_protocol:unit_tests",
     "//components/cloud_devices/common:unit_tests",
     "//components/component_updater:unit_tests",
@@ -315,11 +317,21 @@ test("components_unittests") {
   if (enable_basic_printing || enable_print_preview) {
     deps += [ "//components/printing/service:unit_tests" ]
   }
+  if (enable_print_preview) {
+    deps += [ "//components/pwg_encoder:unit_tests" ]
+  }
 
   if (safe_browsing_mode == 1) {
     deps += [ "//components/safe_browsing/db:unit_tests_desktop" ]
   } else if (safe_browsing_mode == 2) {
     deps += [ "//components/safe_browsing/android:unit_tests_mobile" ]
+  }
+
+  if (enable_webrtc && !is_ios) {
+    deps += [
+      "//components/webrtc_logging/browser:unit_tests",
+      "//components/webrtc_logging/common:unit_tests",
+    ]
   }
 
   # No components should depend on Chrome.
@@ -401,12 +413,12 @@ if (!is_ios) {
 
     sources = [
       "autofill/content/browser/risk/fingerprint_browsertest.cc",
+      "autofill/content/renderer/form_autofill_util_browsertest.cc",
       "autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
       "dom_distiller/content/browser/distillable_page_utils_browsertest.cc",
       "dom_distiller/content/browser/distiller_page_web_contents_browsertest.cc",
       "dom_distiller/content/browser/test/dom_distiller_js_browsertest.cc",
       "offline_pages/content/renovations/test/page_renovator_browsertest.cc",
-      "password_manager/content/renderer/credential_manager_client_browsertest.cc",
       "security_state/content/content_utils_browsertest.cc",
       "ukm/content/source_url_recorder_browsertest.cc",
     ]
@@ -434,7 +446,6 @@ if (!is_ios) {
       "//components/offline_pages/content/renovations",
       "//components/offline_pages/core/renovations",
       "//components/password_manager/content/browser",
-      "//components/password_manager/content/renderer",
       "//components/security_state/content",
       "//components/security_state/core",
       "//components/strings",
@@ -447,7 +458,6 @@ if (!is_ios) {
       "//content/test:test_support",
       "//device/bluetooth",
       "//device/geolocation/public/cpp:test_support",
-      "//device/geolocation/public/interfaces",
       "//ipc:test_support",
       "//net:test_support",
       "//printing/features",
@@ -468,6 +478,11 @@ if (!is_ios) {
     if (is_mac) {
       data_deps += [ "//content/shell:content_shell" ]
       data += [ "$root_out_dir/Content Shell.app/" ]
+    }
+
+    if (!is_android) {
+      sources += [ "pdf/renderer/pdf_accessibility_tree_browsertest.cc" ]
+      deps += [ "//components/pdf/renderer" ]
     }
 
     if (is_android) {

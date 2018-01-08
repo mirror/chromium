@@ -13,7 +13,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -144,7 +143,7 @@ void ComponentsDOMHandler::HandleCheckUpdate(const base::ListValue* args) {
 ///////////////////////////////////////////////////////////////////////////////
 
 ComponentsUI::ComponentsUI(content::WebUI* web_ui) : WebUIController(web_ui) {
-  web_ui->AddMessageHandler(base::MakeUnique<ComponentsDOMHandler>());
+  web_ui->AddMessageHandler(std::make_unique<ComponentsDOMHandler>());
 
   // Set up the chrome://components/ source.
   Profile* profile = Profile::FromWebUI(web_ui);
@@ -177,7 +176,7 @@ std::unique_ptr<base::ListValue> ComponentsUI::LoadComponents() {
   component_ids = cus->GetComponentIDs();
 
   // Construct DictionaryValues to return to UI.
-  auto component_list = base::MakeUnique<base::ListValue>();
+  auto component_list = std::make_unique<base::ListValue>();
   for (size_t j = 0; j < component_ids.size(); ++j) {
     update_client::CrxUpdateItem item;
     if (cus->GetComponentDetails(component_ids[j], &item)) {
@@ -215,6 +214,8 @@ base::string16 ComponentsUI::ComponentEventToString(Events event) {
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_UPDATED);
     case Events::COMPONENT_NOT_UPDATED:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_NOTUPDATED);
+    case Events::COMPONENT_UPDATE_ERROR:
+      return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_UPDATE_ERROR);
     case Events::COMPONENT_UPDATE_DOWNLOADING:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_DOWNLOADING);
   }
@@ -246,7 +247,7 @@ base::string16 ComponentsUI::ServiceStatusToString(
     case update_client::ComponentState::kUpToDate:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_SVC_STATUS_UPTODATE);
     case update_client::ComponentState::kUpdateError:
-      return l10n_util::GetStringUTF16(IDS_COMPONENTS_SVC_STATUS_NOUPDATE);
+      return l10n_util::GetStringUTF16(IDS_COMPONENTS_SVC_STATUS_UPDATE_ERROR);
     case update_client::ComponentState::kUninstalled:  // Fall through.
     case update_client::ComponentState::kRun:
     case update_client::ComponentState::kLastStatus:

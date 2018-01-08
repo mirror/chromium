@@ -11,45 +11,86 @@
 #include "base/bind.h"
 #include "base/memory/weak_ptr.h"
 #include "base/numerics/safe_conversions.h"
+#include "content/public/browser/browser_thread.h"
+#include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/browser/storage_partition.h"
+#include "content/public/common/content_client.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/url_util.h"
 #include "storage/browser/quota/quota_manager.h"
-#include "third_party/WebKit/common/quota/quota_status_code.h"
 #include "url/origin.h"
 
+using blink::mojom::StorageType;
 using storage::QuotaClient;
 using storage::QuotaManager;
-using storage::StorageType;
 
 namespace content {
 
-// static
-void QuotaDispatcherHost::Create(
-    int process_id,
-    QuotaManager* quota_manager,
-    scoped_refptr<QuotaPermissionContext> permission_context,
-    mojom::QuotaDispatcherHostRequest request) {
-  DCHECK(quota_manager);
-  // TODO(sashab): Work out the conditions for permission_context to be set and
-  // add a DCHECK for it here.
+namespace {
+
+void BindConnectorOnIOThread(int render_process_id,
+                             int render_frame_id,
+                             storage::QuotaManager* quota_manager,
+                             blink::mojom::QuotaDispatcherHostRequest request) {
   mojo::MakeStrongBinding(
-      std::make_unique<QuotaDispatcherHost>(process_id, quota_manager,
-                                            std::move(permission_context)),
+      base::MakeUnique<QuotaDispatcherHost>(
+          render_process_id, render_frame_id, quota_manager,
+          GetContentClient()->browser()->CreateQuotaPermissionContext()),
       std::move(request));
+}
+
+}  // namespace
+
+// static
+void QuotaDispatcherHost::CreateForWorker(
+    blink::mojom::QuotaDispatcherHostRequest request,
+    RenderProcessHost* host,
+    const url::Origin& origin) {
+  // TODO(crbug.com/779444): Save the |origin| here and use it rather than the
+  // one provided by QuotaDispatcher.
+
+  // Bind on the IO thread.
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          &BindConnectorOnIOThread, host->GetID(), MSG_ROUTING_NONE,
+          base::RetainedRef(host->GetStoragePartition()->GetQuotaManager()),
+          std::move(request)));
+}
+
+// static
+void QuotaDispatcherHost::CreateForFrame(
+    RenderProcessHost* host,
+    int render_frame_id,
+    blink::mojom::QuotaDispatcherHostRequest request) {
+  // Bind on the IO thread.
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          &BindConnectorOnIOThread, host->GetID(), render_frame_id,
+          base::RetainedRef(host->GetStoragePartition()->GetQuotaManager()),
+          std::move(request)));
 }
 
 QuotaDispatcherHost::QuotaDispatcherHost(
     int process_id,
+    int render_frame_id,
     QuotaManager* quota_manager,
     scoped_refptr<QuotaPermissionContext> permission_context)
     : process_id_(process_id),
+      render_frame_id_(render_frame_id),
       quota_manager_(quota_manager),
       permission_context_(std::move(permission_context)),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  DCHECK(quota_manager);
+  // TODO(sashab): Work out the conditions for permission_context to be set and
+  // add a DCHECK for it here.
+}
 
 void QuotaDispatcherHost::QueryStorageUsageAndQuota(
     const url::Origin& origin,
-    storage::StorageType storage_type,
+    StorageType storage_type,
     QueryStorageUsageAndQuotaCallback callback) {
   quota_manager_->GetUsageAndQuotaForWebApps(
       origin.GetURL(), storage_type,
@@ -59,27 +100,35 @@ void QuotaDispatcherHost::QueryStorageUsageAndQuota(
 }
 
 void QuotaDispatcherHost::RequestStorageQuota(
-    int64_t render_frame_id,
     const url::Origin& origin,
-    storage::StorageType storage_type,
+    StorageType storage_type,
     uint64_t requested_size,
-    mojom::QuotaDispatcherHost::RequestStorageQuotaCallback callback) {
-  if (storage_type != storage::kStorageTypeTemporary &&
-      storage_type != storage::kStorageTypePersistent) {
-    // Unsupported storage types.
-    std::move(callback).Run(blink::QuotaStatusCode::kErrorNotSupported, 0, 0);
+    blink::mojom::QuotaDispatcherHost::RequestStorageQuotaCallback callback) {
+  if (storage_type != StorageType::kTemporary &&
+      storage_type != StorageType::kPersistent) {
+    mojo::ReportBadMessage("Unsupported storage type specified.");
     return;
   }
 
-  DCHECK(storage_type == storage::kStorageTypeTemporary ||
-         storage_type == storage::kStorageTypePersistent);
-  if (storage_type == storage::kStorageTypePersistent) {
+  if (render_frame_id_ == MSG_ROUTING_NONE) {
+    mojo::ReportBadMessage(
+        "Requests may show permission UI and are not allowed from workers.");
+    return;
+  }
+
+  if (origin.unique()) {
+    mojo::ReportBadMessage("Unique origins may not request storage quota.");
+    return;
+  }
+
+  DCHECK(storage_type == StorageType::kTemporary ||
+         storage_type == StorageType::kPersistent);
+  if (storage_type == StorageType::kPersistent) {
     quota_manager_->GetUsageAndQuotaForWebApps(
         origin.GetURL(), storage_type,
         base::Bind(&QuotaDispatcherHost::DidGetPersistentUsageAndQuota,
-                   weak_factory_.GetWeakPtr(), render_frame_id, origin,
-                   storage_type, requested_size,
-                   base::Passed(std::move(callback))));
+                   weak_factory_.GetWeakPtr(), origin, storage_type,
+                   requested_size, base::Passed(std::move(callback))));
   } else {
     quota_manager_->GetUsageAndQuotaForWebApps(
         origin.GetURL(), storage_type,
@@ -91,22 +140,21 @@ void QuotaDispatcherHost::RequestStorageQuota(
 
 void QuotaDispatcherHost::DidQueryStorageUsageAndQuota(
     RequestStorageQuotaCallback callback,
-    blink::QuotaStatusCode status,
+    blink::mojom::QuotaStatusCode status,
     int64_t usage,
     int64_t quota) {
   std::move(callback).Run(status, usage, quota);
 }
 
 void QuotaDispatcherHost::DidGetPersistentUsageAndQuota(
-    int64_t render_frame_id,
     const url::Origin& origin,
-    storage::StorageType storage_type,
+    StorageType storage_type,
     uint64_t requested_quota,
     RequestStorageQuotaCallback callback,
-    blink::QuotaStatusCode status,
+    blink::mojom::QuotaStatusCode status,
     int64_t current_usage,
     int64_t current_quota) {
-  if (status != blink::QuotaStatusCode::kOk) {
+  if (status != blink::mojom::QuotaStatusCode::kOk) {
     std::move(callback).Run(status, 0, 0);
     return;
   }
@@ -119,7 +167,7 @@ void QuotaDispatcherHost::DidGetPersistentUsageAndQuota(
       base::saturated_cast<int64_t>(requested_quota);
   if (quota_manager_->IsStorageUnlimited(origin.GetURL(), storage_type) ||
       requested_quota_signed <= current_quota) {
-    std::move(callback).Run(blink::QuotaStatusCode::kOk, current_usage,
+    std::move(callback).Run(blink::mojom::QuotaStatusCode::kOk, current_usage,
                             requested_quota);
     return;
   }
@@ -128,7 +176,7 @@ void QuotaDispatcherHost::DidGetPersistentUsageAndQuota(
   // a prompt.
   DCHECK(permission_context_);
   StorageQuotaParams params;
-  params.render_frame_id = render_frame_id;
+  params.render_frame_id = render_frame_id_;
   params.origin_url = origin.GetURL();
   params.storage_type = storage_type;
   params.requested_size = requested_quota;
@@ -150,7 +198,7 @@ void QuotaDispatcherHost::DidGetPermissionResponse(
     QuotaPermissionContext::QuotaPermissionResponse response) {
   // If user didn't allow the new quota, just return the current quota.
   if (response != QuotaPermissionContext::QUOTA_PERMISSION_RESPONSE_ALLOW) {
-    std::move(callback).Run(blink::QuotaStatusCode::kOk, current_usage,
+    std::move(callback).Run(blink::mojom::QuotaStatusCode::kOk, current_usage,
                             current_quota);
     return;
   }
@@ -168,7 +216,7 @@ void QuotaDispatcherHost::DidGetPermissionResponse(
 
 void QuotaDispatcherHost::DidSetHostQuota(int64_t current_usage,
                                           RequestStorageQuotaCallback callback,
-                                          blink::QuotaStatusCode status,
+                                          blink::mojom::QuotaStatusCode status,
                                           int64_t new_quota) {
   std::move(callback).Run(status, current_usage, new_quota);
 }
@@ -176,7 +224,7 @@ void QuotaDispatcherHost::DidSetHostQuota(int64_t current_usage,
 void QuotaDispatcherHost::DidGetTemporaryUsageAndQuota(
     int64_t requested_quota,
     RequestStorageQuotaCallback callback,
-    blink::QuotaStatusCode status,
+    blink::mojom::QuotaStatusCode status,
     int64_t usage,
     int64_t quota) {
   std::move(callback).Run(status, usage, std::min(requested_quota, quota));

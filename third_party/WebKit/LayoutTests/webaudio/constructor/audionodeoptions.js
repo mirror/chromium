@@ -46,19 +46,14 @@ function testAudioNodeOptions(should, context, nodeName, expectedNodeOptions) {
     // values and make sure an error is thrown.
     let errorType = 'NotSupportedError';
 
-    should(() => {
-      node = new window[nodeName](
-          context,
-          Object.assign(
-              {}, expectedNodeOptions.additionalOptions, {channelCount: 0}));
-    }, 'new ' + nodeName + '(c, {channelCount: 0}}', ).throw(errorType);
-
-    should(() => {
-      node = new window[nodeName](
-          context,
-          Object.assign(
-              {}, expectedNodeOptions.additionalOptions, {channelCount: 99}));
-    }, 'new ' + nodeName + '(c, {channelCount: 99}}').throw(errorType);
+    [0, 99].forEach(testValue => {
+      should(() => {
+        node = new window[nodeName](
+            context, Object.assign({}, expectedNodeOptions.additionalOptions, {
+              channelCount: testValue
+            }));
+      }, `new ${nodeName}(c, {channelCount: ${testValue}})`).throw(errorType);
+    });
   }
 
   // Test channelCountMode
@@ -82,45 +77,38 @@ function testAudioNodeOptions(should, context, nodeName, expectedNodeOptions) {
   if (expectedNodeOptions.channelCountMode &&
       expectedNodeOptions.channelCountMode.isFixed) {
     // Channel count mode is fixed.  Test setting to something else throws.
-    let testChannelCountModeMap = {
-      'max': 'clamped-max',
-      'clamped-max': 'explicit',
-      'explicit': 'max'
-    };
-    testChannelCountMode =
-        testChannelCountModeMap[expectedNodeOptions.channelCountMode.value];
-    should(
-        () => {
-          node = new window[nodeName](
-              context,
-              Object.assign(
-                  {}, expectedNodeOptions.additionalOptions,
-                  {channelCountMode: testChannelCountMode}));
-        },
-        'new ' + nodeName + '(c, {channelCountMode: "' + testChannelCountMode +
-            '"}')
-        .throw(expectedNodeOptions.channelCountMode.errorType);
+    ['max', 'clamped-max', 'explicit'].forEach(testValue => {
+      if (testValue !== expectedNodeOptions.channelCountMode.value) {
+        should(
+            () => {
+              node = new window[nodeName](
+                  context,
+                  Object.assign(
+                      {}, expectedNodeOptions.additionalOptions,
+                      {channelCountMode: testValue}));
+            },
+            `new ${nodeName}(c, {channelCountMode: "${testValue}"})`)
+            .throw(expectedNodeOptions.channelCountMode.errorType);
+      }
+    });
   } else {
     // Mode is not fixed. Verify that we can set the mode to all valid
     // values, and that we throw for invalid values.
 
-    should(() => {
-      node = new window[nodeName](
-          context, Object.assign({}, expectedNodeOptions.additionalOptions, {
-            channelCountMode: 'clamped-max'
-          }));
-    }, 'new ' + nodeName + '(c, {channelCountMode: "clamped-max"}').notThrow();
-    should(node.channelCountMode, 'node.channelCountMode after invalid setter')
-        .beEqualTo('clamped-max');
+    let testValues = ['max', 'clamped-max', 'explicit'];
 
-    should(() => {
-      node = new window[nodeName](
-          context, Object.assign({}, expectedNodeOptions.additionalOptions, {
-            channelCountMode: 'explicit'
-          }));
-    }, 'new ' + nodeName + '(c, {channelCountMode: "explicit"}').notThrow();
-    should(node.channelCountMode, 'node.channelCountMode')
-        .beEqualTo('explicit');
+    testValues.forEach(testValue => {
+      should(() => {
+        node = new window[nodeName](
+            context, Object.assign({}, expectedNodeOptions.additionalOptions, {
+              channelCountMode: testValue
+            }));
+      }, `new ${nodeName}(c, {channelCountMode: "${testValue}"})`).notThrow();
+      should(
+          node.channelCountMode, 'node.channelCountMode after valid setter')
+          .beEqualTo(testValue);
+
+    });
 
     should(
         () => {
@@ -133,41 +121,72 @@ function testAudioNodeOptions(should, context, nodeName, expectedNodeOptions) {
         'new ' + nodeName + '(c, {channelCountMode: "foobar"}')
         .throw('TypeError');
     should(node.channelCountMode, 'node.channelCountMode after invalid setter')
-        .beEqualTo('explicit');
+        .beEqualTo(testValues[testValues.length - 1]);
   }
 
   // Test channelInterpretation
-  should(() => {
-    node = new window[nodeName](
-        context, Object.assign({}, expectedNodeOptions.additionalOptions, {
-          channelInterpretation: 'speakers'
-        }));
-  }, 'new ' + nodeName + '(c, {channelInterpretation: "speakers"})').notThrow();
-  should(node.channelInterpretation, 'node.channelInterpretation')
-      .beEqualTo('speakers');
+  if (expectedNodeOptions.channelInterpretation &&
+      expectedNodeOptions.channelInterpretation.isFixed) {
+    // The channel interpretation is fixed.  Verify that we throw an
+    // error if we try to change it.
+    ['speakers', 'discrete'].forEach(testValue => {
+      if (testValue !== expectedNodeOptions.channelInterpretation.value) {
+        should(
+            () => {
+              node = new window[nodeName](
+                  context,
+                  Object.assign(
+                      {}, expectedNodeOptions.additionOptions,
+                      {channelInterpretation: testValue}));
+            },
+            `new ${nodeName}(c, {channelInterpretation: "${testValue}"})`)
+            .throw(expectedNodeOptions.channelInterpretation.errorType);
+      }
+    });
+  } else {
+    // Channel interpretation is not fixed. Verify that we can set it
+    // to all possible values.
+    should(
+        () => {
+          node = new window[nodeName](
+              context,
+              Object.assign(
+                  {}, expectedNodeOptions.additionalOptions,
+                  {channelInterpretation: 'speakers'}));
+        },
+        'new ' + nodeName + '(c, {channelInterpretation: "speakers"})')
+        .notThrow();
+    should(node.channelInterpretation, 'node.channelInterpretation')
+        .beEqualTo('speakers');
 
-  should(() => {
-    node = new window[nodeName](
-        context, Object.assign({}, expectedNodeOptions.additionalOptions, {
-          channelInterpretation: 'discrete'
-        }));
-  }, 'new ' + nodeName + '(c, {channelInterpretation: "discrete"})').notThrow();
-  should(node.channelInterpretation, 'node.channelInterpretation')
-      .beEqualTo('discrete');
+    should(
+        () => {
+          node = new window[nodeName](
+              context,
+              Object.assign(
+                  {}, expectedNodeOptions.additionalOptions,
+                  {channelInterpretation: 'discrete'}));
+        },
+        'new ' + nodeName + '(c, {channelInterpretation: "discrete"})')
+        .notThrow();
+    should(node.channelInterpretation, 'node.channelInterpretation')
+        .beEqualTo('discrete');
 
-  should(
-      () => {
-        node = new window[nodeName](
-            context, Object.assign({}, expectedNodeOptions.additionalOptions, {
-              channelInterpretation: 'foobar'
-            }));
-      },
-      'new ' + nodeName + '(c, {channelInterpretation: "foobar"})')
-      .throw('TypeError');
-  should(
-      node.channelInterpretation,
-      'node.channelInterpretation after invalid setter')
-      .beEqualTo('discrete');
+    should(
+        () => {
+          node = new window[nodeName](
+              context,
+              Object.assign(
+                  {}, expectedNodeOptions.additionalOptions,
+                  {channelInterpretation: 'foobar'}));
+        },
+        'new ' + nodeName + '(c, {channelInterpretation: "foobar"})')
+        .throw('TypeError');
+    should(
+        node.channelInterpretation,
+        'node.channelInterpretation after invalid setter')
+        .beEqualTo('discrete');
+  }
 }
 
 function initializeContext(should) {

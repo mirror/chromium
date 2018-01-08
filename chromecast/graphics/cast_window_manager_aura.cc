@@ -6,8 +6,10 @@
 
 #include "base/memory/ptr_util.h"
 #include "chromecast/graphics/cast_focus_client_aura.h"
+#include "chromecast/graphics/cast_system_gesture_event_handler.h"
 #include "ui/aura/client/default_capture_client.h"
 #include "ui/aura/client/focus_change_observer.h"
+#include "ui/aura/client/screen_position_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/layout_manager.h"
 #include "ui/aura/window.h"
@@ -16,8 +18,35 @@
 #include "ui/base/ime/input_method_factory.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/wm/core/default_screen_position_client.h"
 
 namespace chromecast {
+namespace {
+
+gfx::Transform GetPrimaryDisplayRotationTransform() {
+  gfx::Transform rotation;
+  display::Display display(display::Screen::GetScreen()->GetPrimaryDisplay());
+  switch (display.rotation()) {
+    case display::Display::ROTATE_0:
+      break;
+    case display::Display::ROTATE_90:
+      rotation.Translate(display.bounds().height(), 0);
+      rotation.Rotate(90);
+      break;
+    case display::Display::ROTATE_180:
+      rotation.Translate(display.bounds().width(), display.bounds().height());
+      rotation.Rotate(180);
+      break;
+    case display::Display::ROTATE_270:
+      rotation.Translate(0, display.bounds().width());
+      rotation.Rotate(270);
+      break;
+  }
+
+  return rotation;
+}
+
+}  // namespace
 
 // An ui::EventTarget that ignores events.
 class CastEventIgnorer : public ui::EventTargeter {
@@ -184,6 +213,13 @@ void CastWindowManagerAura::Setup() {
 
   gfx::Size display_size =
       display::Screen::GetScreen()->GetPrimaryDisplay().GetSizeInPixel();
+  display::Display::Rotation rotation =
+      display::Screen::GetScreen()->GetPrimaryDisplay().rotation();
+  if (rotation == display::Display::ROTATE_90 ||
+      rotation == display::Display::ROTATE_270) {
+    display_size = gfx::Size(display_size.height(), display_size.width());
+  }
+
   LOG(INFO) << "Starting window manager, screen size: " << display_size.width()
             << "x" << display_size.height();
   CHECK(aura::Env::GetInstance());
@@ -191,6 +227,8 @@ void CastWindowManagerAura::Setup() {
       new CastWindowTreeHost(enable_input_, gfx::Rect(display_size)));
   window_tree_host_->InitHost();
   window_tree_host_->window()->SetLayoutManager(new CastLayoutManager());
+  window_tree_host_->window()->SetTransform(
+      GetPrimaryDisplayRotationTransform());
 
   // Allow seeing through to the hardware video plane:
   window_tree_host_->compositor()->SetBackgroundColor(SK_ColorTRANSPARENT);
@@ -203,7 +241,15 @@ void CastWindowManagerAura::Setup() {
   capture_client_.reset(
       new aura::client::DefaultCaptureClient(window_tree_host_->window()));
 
+  screen_position_client_.reset(new wm::DefaultScreenPositionClient());
+  aura::client::SetScreenPositionClient(
+      window_tree_host_->window()->GetRootWindow(),
+      screen_position_client_.get());
+
   window_tree_host_->Show();
+  system_gesture_event_handler_ =
+      std::make_unique<CastSystemGestureEventHandler>(
+          window_tree_host_->window()->GetRootWindow());
 }
 
 void CastWindowManagerAura::TearDown() {
@@ -215,6 +261,7 @@ void CastWindowManagerAura::TearDown() {
   wm::SetActivationClient(window_tree_host_->window(), nullptr);
   aura::client::SetFocusClient(window_tree_host_->window(), nullptr);
   focus_client_.reset();
+  system_gesture_event_handler_.reset();
   window_tree_host_.reset();
 }
 
@@ -249,6 +296,22 @@ void CastWindowManagerAura::AddWindow(gfx::NativeView child) {
   aura::Window* parent = window_tree_host_->window();
   if (!parent->Contains(child)) {
     parent->AddChild(child);
+  }
+}
+
+void CastWindowManagerAura::AddSideSwipeGestureHandler(
+    CastSideSwipeGestureHandlerInterface* handler) {
+  if (system_gesture_event_handler_) {
+    system_gesture_event_handler_->AddSideSwipeGestureHandler(handler);
+  }
+}
+
+// Remove the registration of a system side swipe event handler.
+void CastWindowManagerAura::CastWindowManagerAura::
+    RemoveSideSwipeGestureHandler(
+        CastSideSwipeGestureHandlerInterface* handler) {
+  if (system_gesture_event_handler_) {
+    system_gesture_event_handler_->RemoveSideSwipeGestureHandler(handler);
   }
 }
 

@@ -36,6 +36,7 @@
 #include "WebHTTPBody.h"
 #include "WebReferrerPolicy.h"
 #include "WebSecurityOrigin.h"
+#include "base/optional.h"
 #include "services/network/public/interfaces/cors.mojom-shared.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
@@ -105,14 +106,6 @@ class WebURLRequest {
     kRequestContextXSLT
   };
 
-  // Corresponds to Fetch request's "redirect mode":
-  // https://fetch.spec.whatwg.org/#concept-request-redirect-mode
-  enum FetchRedirectMode : uint8_t {
-    kFetchRedirectModeFollow,
-    kFetchRedirectModeError,
-    kFetchRedirectModeManual
-  };
-
   // Used to report performance metrics timed from the UI action that
   // triggered them (as opposed to navigation start time used in the
   // Navigation Timing API).
@@ -153,11 +146,6 @@ class WebURLRequest {
   enum class ServiceWorkerMode : uint8_t {
     kAll,
     kNone
-  };
-
-  enum class LoadingIPCType : uint8_t {
-    kChromeIPC,
-    kMojo,
   };
 
   class ExtraData {
@@ -293,8 +281,10 @@ class WebURLRequest {
       network::mojom::FetchCredentialsMode);
 
   // The redirect mode which is used in Fetch API.
-  BLINK_PLATFORM_EXPORT FetchRedirectMode GetFetchRedirectMode() const;
-  BLINK_PLATFORM_EXPORT void SetFetchRedirectMode(FetchRedirectMode);
+  BLINK_PLATFORM_EXPORT network::mojom::FetchRedirectMode GetFetchRedirectMode()
+      const;
+  BLINK_PLATFORM_EXPORT void SetFetchRedirectMode(
+      network::mojom::FetchRedirectMode);
 
   // The integrity which is used in Fetch API.
   BLINK_PLATFORM_EXPORT WebString GetFetchIntegrity() const;
@@ -341,8 +331,6 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT network::mojom::CORSPreflightPolicy
   GetCORSPreflightPolicy() const;
 
-  BLINK_PLATFORM_EXPORT LoadingIPCType GetLoadingIPCType() const;
-
   BLINK_PLATFORM_EXPORT void SetNavigationStartTime(double);
 
   // PlzNavigate: specify that the request was intended to be loaded as a same
@@ -350,6 +338,10 @@ class WebURLRequest {
   // should be dropped if a different document was loaded in the frame
   // in-between.
   BLINK_PLATFORM_EXPORT void SetIsSameDocumentNavigation(bool);
+
+  // If this request was created from an anchor with a download attribute, this
+  // is the value provided there.
+  BLINK_PLATFORM_EXPORT base::Optional<WebString> GetSuggestedFilename() const;
 
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT ResourceRequest& ToMutableResourceRequest();

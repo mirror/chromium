@@ -58,7 +58,6 @@
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashSet.h"
-#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/ShapeProperties.h"
 #include "public/platform/WebDisplayMode.h"
@@ -77,8 +76,6 @@ class IntRect;
 class JSONArray;
 class JSONObject;
 class LayoutEmbeddedContent;
-class LayoutItem;
-class LayoutViewItem;
 class LocalFrame;
 class KURL;
 class Node;
@@ -98,7 +95,8 @@ class TracedValue;
 class TransformState;
 class WebPluginContainerImpl;
 struct AnnotatedRegionValue;
-struct CompositedSelection;
+struct IntrinsicSizingInfo;
+struct WebScrollIntoViewParams;
 
 typedef unsigned long long DOMTimeStamp;
 
@@ -141,10 +139,7 @@ class CORE_EXPORT LocalFrameView final
 
   Page* GetPage() const;
 
-  // TODO(pilgrim) replace all instances of layoutView() with layoutViewItem()
-  // https://crbug.com/499321
   LayoutView* GetLayoutView() const;
-  LayoutViewItem GetLayoutViewItem() const;
 
   // If false, prevents scrollbars on the viewport even if web content would
   // make them appear. Also prevents user-input scrolls (but not programmatic
@@ -159,6 +154,7 @@ class CORE_EXPORT LocalFrameView final
 
   void UpdateLayout();
   bool DidFirstLayout() const;
+  bool LifecycleUpdatesActive() const;
   void ScheduleRelayout();
   void ScheduleRelayoutOfSubtree(LayoutObject*);
   bool LayoutPending() const;
@@ -209,6 +205,9 @@ class CORE_EXPORT LocalFrameView final
   void SetInitialViewportSize(const IntSize&);
   int InitialViewportWidth() const;
   int InitialViewportHeight() const;
+
+  bool GetIntrinsicSizingInfo(IntrinsicSizingInfo&) const override;
+  bool HasIntrinsicSizingInfo() const override;
 
   void UpdateAcceleratedCompositingSettings();
 
@@ -274,7 +273,7 @@ class CORE_EXPORT LocalFrameView final
     return background_attachment_fixed_objects_.size();
   }
   bool HasBackgroundAttachmentFixedDescendants(const LayoutObject&) const;
-  void InvalidateBackgroundAttachmentFixedObjects();
+  void InvalidateBackgroundAttachmentFixedDescendants(const LayoutObject&);
 
   void HandleLoadCompleted();
 
@@ -317,7 +316,12 @@ class CORE_EXPORT LocalFrameView final
   // detached frame and need special handling of the frame.
   void UpdateLifecyclePhasesForPrinting();
 
-  // Computes the style, layout and compositing lifecycle stages if needed.
+  // Computes the style, layout, compositing and pre-paint lifecycle stages
+  // if needed.
+  // After calling this method, all frames will be in a lifecycle
+  // state >= PrePaintClean
+  void UpdateLifecycleToPrePaintClean();
+
   // After calling this method, all frames will be in a lifecycle
   // state >= CompositingClean, and scrolling has been updated (unless
   // throttling is allowed).
@@ -352,22 +356,23 @@ class CORE_EXPORT LocalFrameView final
   enum UrlFragmentBehavior { kUrlFragmentScroll, kUrlFragmentDontScroll };
   // Updates the fragment anchor element based on URL's fragment identifier.
   // Updates corresponding ':target' CSS pseudo class on the anchor element.
-  // If |UrlFragmentScroll| is passed in sets the the anchor element so that it
-  // will be focused and scrolled into view during layout. The scroll offset is
+  // If |UrlFragmentScroll| is passed in then makes the anchor element
+  // focused and also visible by scrolling to it. The scroll offset is
   // maintained during the frame loading process.
   void ProcessUrlFragment(const KURL&,
                           UrlFragmentBehavior = kUrlFragmentScroll);
   void ClearFragmentAnchor();
 
   // Methods to convert points and rects between the coordinate space of the
-  // layoutItem, and this view.
-  IntRect ConvertFromLayoutItem(const LayoutItem&, const IntRect&) const;
-  IntRect ConvertToLayoutItem(const LayoutItem&, const IntRect&) const;
-  IntPoint ConvertFromLayoutItem(const LayoutItem&, const IntPoint&) const;
-  IntPoint ConvertToLayoutItem(const LayoutItem&, const IntPoint&) const;
-  LayoutPoint ConvertFromLayoutItem(const LayoutItem&,
+  // layoutObject, and this view.
+  IntRect ConvertFromLayoutObject(const LayoutObject&, const IntRect&) const;
+  IntRect ConvertToLayoutObject(const LayoutObject&, const IntRect&) const;
+  IntPoint ConvertFromLayoutObject(const LayoutObject&, const IntPoint&) const;
+  IntPoint ConvertToLayoutObject(const LayoutObject&, const IntPoint&) const;
+  LayoutPoint ConvertFromLayoutObject(const LayoutObject&,
+                                      const LayoutPoint&) const;
+  LayoutPoint ConvertToLayoutObject(const LayoutObject&,
                                     const LayoutPoint&) const;
-  LayoutPoint ConvertToLayoutItem(const LayoutItem&, const LayoutPoint&) const;
 
   bool IsFrameViewScrollCorner(LayoutScrollbarPart* scroll_corner) const {
     return scroll_corner_ == scroll_corner;
@@ -398,8 +403,6 @@ class CORE_EXPORT LocalFrameView final
 
   bool ShouldSuspendScrollAnimations() const override;
   void ScrollbarStyleChanged() override;
-
-  LayoutReplaced* EmbeddedReplacedContent() const;
 
   static void SetInitialTracksPaintInvalidationsForTesting(bool);
 
@@ -485,11 +488,7 @@ class CORE_EXPORT LocalFrameView final
   scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final;
 
   LayoutRect ScrollIntoView(const LayoutRect& rect_in_content,
-                            const ScrollAlignment& align_x,
-                            const ScrollAlignment& align_y,
-                            bool is_smooth,
-                            ScrollType = kProgrammaticScroll,
-                            bool is_for_scroll_sequence = false) override;
+                            const WebScrollIntoViewParams& params) override;
 
   // The window that hosts the LocalFrameView. The LocalFrameView will
   // communicate scrolls and repaints to the host window in the window's
@@ -581,6 +580,10 @@ class CORE_EXPORT LocalFrameView final
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
   IntSize VisibleContentSize(
       IncludeScrollbarsInRect = kExcludeScrollbars) const;
+
+  // The visible scroll snapport rect is contracted from the visible content
+  // rect, by the amount of the document's scroll-padding.
+  LayoutRect VisibleScrollSnapportRect() const override;
 
   // Clips the provided rect to the visible content area. For this purpose, we
   // also query the chrome client for any active overrides to the visible area
@@ -698,10 +701,13 @@ class CORE_EXPORT LocalFrameView final
   // coordinates". https://crbug.com/417782.
   IntRect AbsoluteToRootFrame(const IntRect&) const;
   IntPoint AbsoluteToRootFrame(const IntPoint&) const;
+  LayoutRect AbsoluteToRootFrame(const LayoutRect&) const;
   IntRect RootFrameToDocument(const IntRect&);
   FloatPoint RootFrameToDocument(const FloatPoint&);
   DoublePoint DocumentToAbsolute(const DoublePoint&) const;
   FloatPoint DocumentToAbsolute(const FloatPoint&) const;
+  LayoutPoint DocumentToAbsolute(const LayoutPoint&) const;
+  LayoutRect DocumentToAbsolute(const LayoutRect&) const;
 
   // Handles painting of the contents of the view as well as the scrollbars.
   void Paint(GraphicsContext&,
@@ -837,9 +843,6 @@ class CORE_EXPORT LocalFrameView final
   // e.g. when beginning or finishing printing.
   void SetSubtreeNeedsPaintPropertyUpdate();
 
-  // TODO(ojan): Merge this with IntersectionObserver once it lands.
-  IntRect ComputeVisibleArea();
-
   // Viewport size that should be used for viewport units (i.e. 'vh'/'vw').
   // May include the size of browser controls. See implementation for further
   // documentation.
@@ -927,12 +930,7 @@ class CORE_EXPORT LocalFrameView final
   // When the frame is a local root and not a main frame, any recursive
   // scrolling should continue in the parent process.
   void ScrollRectToVisibleInRemoteParent(const LayoutRect&,
-                                         const ScrollAlignment&,
-                                         const ScrollAlignment&,
-                                         ScrollType,
-                                         bool,
-                                         ScrollBehavior,
-                                         bool);
+                                         const WebScrollIntoViewParams&);
 
   PaintArtifactCompositor* GetPaintArtifactCompositorForTesting() {
     DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
@@ -969,6 +967,11 @@ class CORE_EXPORT LocalFrameView final
   // Should be called whenever this LocalFrameView adds or removes a
   // scrollable area, or gains/loses a composited layer.
   void ScrollableAreasDidChange();
+
+  // Records a UKM metric for the current URL. metric_name is a metric
+  // that must be defined in ukm.xml; metric_value is in usec.
+  void RecordUkmPerformanceMetric(const char* metric_name,
+                                  int64_t metric_value);
 
  protected:
   // Scroll the content via the compositor.
@@ -1030,6 +1033,7 @@ class CORE_EXPORT LocalFrameView final
                      const CullRect&) const;
 
   LocalFrameView* ParentFrameView() const;
+  LayoutReplaced* EmbeddedReplacedContent() const;
 
   void UpdateScrollOffset(const ScrollOffset&, ScrollType) override;
 
@@ -1064,9 +1068,8 @@ class CORE_EXPORT LocalFrameView final
 
   bool ContentsInCompositedLayer() const;
 
-  void ForceLayoutParentViewIfNeeded();
   void PerformPreLayoutTasks();
-  bool PerformLayout(bool in_subtree_layout);
+  void PerformLayout(bool in_subtree_layout);
   void ScheduleOrPerformPostLayoutTasks();
   void PerformPostLayoutTasks();
 
@@ -1103,12 +1106,11 @@ class CORE_EXPORT LocalFrameView final
 
   bool ProcessUrlFragmentHelper(const String&, UrlFragmentBehavior);
   void SetFragmentAnchor(Node*);
-  void ScrollAndFocusFragmentAnchor();
+  void ScrollToFragmentAnchor();
   void DidScrollTimerFired(TimerBase*);
 
   void UpdateLayersAndCompositingAfterScrollIfNeeded();
 
-  static bool ComputeCompositedSelection(LocalFrame&, CompositedSelection&);
   void UpdateCompositedSelectionIfNeeded();
   void SetNeedsCompositingUpdate(CompositingUpdateType);
 
@@ -1170,6 +1172,8 @@ class CORE_EXPORT LocalFrameView final
   bool CheckLayoutInvalidationIsAllowed() const;
 
   PaintController* GetPaintController() { return paint_controller_.get(); }
+
+  void LayoutFromRootObject(LayoutObject& root);
 
   LayoutSize size_;
 
@@ -1257,6 +1261,9 @@ class CORE_EXPORT LocalFrameView final
 
   ScrollOffset pending_scroll_delta_;
   ScrollOffset scroll_offset_;
+
+  // TODO(bokan): This is unneeded when root-layer-scrolls is turned on.
+  // crbug.com/417782.
   IntSize layout_overflow_size_;
 
   bool scrollbars_suppressed_;
@@ -1322,8 +1329,6 @@ class CORE_EXPORT LocalFrameView final
   bool needs_intersection_observation_;
   bool needs_forced_compositing_update_;
   bool scroll_gesture_region_is_dirty_;
-
-  bool needs_focus_on_fragment_;
 
   Member<ElementVisibilityObserver> visibility_observer_;
 

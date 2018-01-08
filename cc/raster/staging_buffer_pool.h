@@ -18,7 +18,7 @@
 #include "base/time/time.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/resources/resource_provider.h"
+#include "cc/resources/layer_tree_resource_provider.h"
 
 namespace gpu {
 namespace raster {
@@ -31,7 +31,6 @@ class RasterContextProvider;
 }  // namespace viz
 
 namespace cc {
-class Resource;
 
 struct StagingBuffer {
   StagingBuffer(const gfx::Size& size, viz::ResourceFormat format);
@@ -58,9 +57,9 @@ class CC_EXPORT StagingBufferPool
  public:
   ~StagingBufferPool() final;
 
-  StagingBufferPool(base::SequencedTaskRunner* task_runner,
+  StagingBufferPool(scoped_refptr<base::SequencedTaskRunner> task_runner,
                     viz::RasterContextProvider* worker_context_provider,
-                    ResourceProvider* resource_provider,
+                    LayerTreeResourceProvider* resource_provider,
                     bool use_partial_raster,
                     int max_staging_buffer_usage_in_bytes);
   void Shutdown();
@@ -70,7 +69,8 @@ class CC_EXPORT StagingBufferPool
                     base::trace_event::ProcessMemoryDump* pmd) override;
 
   std::unique_ptr<StagingBuffer> AcquireStagingBuffer(
-      const Resource* resource,
+      const gfx::Size& size,
+      viz::ResourceFormat format,
       uint64_t previous_content_id);
   void ReleaseStagingBuffer(std::unique_ptr<StagingBuffer> staging_buffer);
 
@@ -96,7 +96,7 @@ class CC_EXPORT StagingBufferPool
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
   viz::RasterContextProvider* const worker_context_provider_;
-  ResourceProvider* const resource_provider_;
+  LayerTreeResourceProvider* const resource_provider_;
   const bool use_partial_raster_;
 
   mutable base::Lock lock_;

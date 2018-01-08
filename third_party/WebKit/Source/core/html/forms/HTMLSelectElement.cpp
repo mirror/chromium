@@ -50,6 +50,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLHRElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/forms/FormController.h"
 #include "core/html/forms/FormData.h"
 #include "core/html/forms/HTMLFormElement.h"
@@ -103,7 +104,13 @@ HTMLSelectElement* HTMLSelectElement::Create(Document& document) {
   return select;
 }
 
-HTMLSelectElement::~HTMLSelectElement() {}
+HTMLSelectElement::~HTMLSelectElement() = default;
+
+// static
+bool HTMLSelectElement::CanAssignToSelectSlot(const Node& node) {
+  return node.HasTagName(optionTag) || node.HasTagName(optgroupTag) ||
+         node.HasTagName(hrTag);
+}
 
 const AtomicString& HTMLSelectElement::FormControlType() const {
   DEFINE_STATIC_LOCAL(const AtomicString, select_multiple, ("select-multiple"));
@@ -904,7 +911,7 @@ void HTMLSelectElement::ScrollToOptionTask() {
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
   if (!GetLayoutObject() || !GetLayoutObject()->IsListBox())
     return;
-  LayoutRect bounds = option->BoundingBox();
+  LayoutRect bounds = option->BoundingBoxForScrollIntoView();
   ToLayoutListBox(GetLayoutObject())->ScrollToRect(bounds);
 }
 
@@ -1820,9 +1827,8 @@ void HTMLSelectElement::Trace(blink::Visitor* visitor) {
 }
 
 void HTMLSelectElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
-  HTMLContentElement* content = HTMLContentElement::Create(GetDocument());
-  content->setAttribute(selectAttr, "option,optgroup,hr");
-  root.AppendChild(content);
+  root.AppendChild(
+      HTMLSlotElement::CreateUserAgentCustomAssignSlot(GetDocument()));
 }
 
 HTMLOptionElement* HTMLSelectElement::SpatialNavigationFocusedOption() {
@@ -1962,8 +1968,8 @@ void HTMLSelectElement::HidePopup() {
     popup_->Hide();
 }
 
-void HTMLSelectElement::DidRecalcStyle() {
-  HTMLFormControlElementWithState::DidRecalcStyle();
+void HTMLSelectElement::DidRecalcStyle(StyleRecalcChange change) {
+  HTMLFormControlElementWithState::DidRecalcStyle(change);
   if (PopupIsVisible())
     popup_->UpdateFromElement(PopupMenu::kByStyleChange);
 }

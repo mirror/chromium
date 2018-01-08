@@ -264,27 +264,6 @@ public class LocationBarLayout extends FrameLayout
     }
 
     /**
-     * Listener for receiving the messages related with interacting with the omnibox during startup.
-     */
-    public interface OmniboxLivenessListener {
-        /**
-         * Called after the first draw when the omnibox can receive touch events.
-         */
-        void onOmniboxInteractive();
-
-        /**
-         * Called when the native libraries are loaded and listeners with native components
-         * have been initialized.
-         */
-        void onOmniboxFullyFunctional();
-
-        /**
-         * Called when the omnibox is focused.
-         */
-        void onOmniboxFocused();
-    }
-
-    /**
      * Class to handle input from a hardware keyboard when the focus is on the URL bar. In
      * particular, handle navigating the suggestions list from the keyboard.
      */
@@ -867,7 +846,6 @@ public class LocationBarLayout extends FrameLayout
         }
         mDeferredNativeRunnables.clear();
 
-        mUrlBar.onNativeLibraryReady();
         updateVisualsForState();
     }
 
@@ -1297,11 +1275,10 @@ public class LocationBarLayout extends FrameLayout
     /**
      * @param provider The {@link ToolbarDataProvider}.
      * @param resources The Resources for the Context.
-     * @param isChromeHomeEnabled Whether Chrome Home is enabled.
      * @return The {@link ColorStateList} to use to tint the security state icon.
      */
     public static ColorStateList getColorStateList(
-            ToolbarDataProvider provider, Resources resources, boolean isChromeHomeEnabled) {
+            ToolbarDataProvider provider, Resources resources) {
         int securityLevel = provider.getSecurityLevel();
 
         ColorStateList list = null;
@@ -1344,8 +1321,7 @@ public class LocationBarLayout extends FrameLayout
         } else {
             // ImageView#setImageResource is no-op if given resource is the current one.
             mSecurityButton.setImageResource(id);
-            mSecurityButton.setTint(getColorStateList(mToolbarDataProvider, getResources(),
-                    mBottomSheet != null));
+            mSecurityButton.setTint(getColorStateList(mToolbarDataProvider, getResources()));
         }
 
         updateVerboseStatusVisibility();
@@ -1559,6 +1535,11 @@ public class LocationBarLayout extends FrameLayout
         return mSuggestionList;
     }
 
+    @Override
+    public boolean useModernDesign() {
+        return FeatureUtilities.isChromeModernDesignEnabled();
+    }
+
     /**
      * Initiates the mSuggestionListPopup.  Done on demand to not slow down
      * the initial inflation of the location bar.
@@ -1569,7 +1550,7 @@ public class LocationBarLayout extends FrameLayout
         assert mNativeInitialized || mShowCachedZeroSuggestResults
                 : "Trying to initialize native suggestions list before native init";
         if (mSuggestionList != null) return;
-        mSuggestionListAdapter.setUseModernDesign(mBottomSheet != null);
+        mSuggestionListAdapter.setUseModernDesign(useModernDesign());
 
         OnLayoutChangeListener suggestionListResizer = new OnLayoutChangeListener() {
             @Override
@@ -1694,7 +1675,7 @@ public class LocationBarLayout extends FrameLayout
     protected Drawable getSuggestionPopupBackground() {
         int omniboxResultsColorForNonIncognito = OMNIBOX_RESULTS_BG_COLOR;
         int omniboxResultsColorForIncognito = OMNIBOX_INCOGNITO_RESULTS_BG_COLOR;
-        if (mBottomSheet != null) {
+        if (FeatureUtilities.isChromeModernDesignEnabled()) {
             omniboxResultsColorForNonIncognito = OMNIBOX_RESULTS_CHROME_HOME_MODERN_BG_COLOR;
             omniboxResultsColorForIncognito = OMNIBOX_INCOGNITO_RESULTS_CHROME_HOME_MODERN_BG_COLOR;
         }

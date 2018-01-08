@@ -93,6 +93,7 @@ class CC_EXPORT ProxyMain : public Proxy {
                                   bool animate) override;
   void RequestBeginMainFrameNotExpected(bool new_state) override;
   void SetURLForUkm(const GURL& url) override;
+  void ClearHistoryOnNavigation() override;
 
   // Returns |true| if the request was actually sent, |false| if one was
   // already outstanding.
@@ -120,6 +121,9 @@ class CC_EXPORT ProxyMain : public Proxy {
   // will stop. Only valid while we are executing the pipeline (i.e.,
   // |current_pipeline_stage| is set to a pipeline stage).
   CommitPipelineStage final_pipeline_stage_;
+  // The final_pipeline_stage_ that was requested before the last commit was
+  // deferred.
+  CommitPipelineStage deferred_final_pipeline_stage_;
 
   bool commit_waits_for_activation_;
 

@@ -4,6 +4,8 @@
 
 #include "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.h"
 
+#include <memory>
+
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service_factory.h"
@@ -29,6 +31,7 @@ const char kUkmFirstContentfulPaintName[] =
     "PaintTiming.NavigationToFirstContentfulPaint";
 const char kUkmFirstMeaningfulPaintName[] =
     "Experimental.PaintTiming.NavigationToFirstMeaningfulPaint";
+const char kUkmInteractiveName[] = "Experimental.NavigationToInteractive";
 const char kUkmForegroundDurationName[] = "PageTiming.ForegroundDuration";
 const char kUkmFailedProvisionaLoadName[] =
     "PageTiming.NavigationToFailedProvisionalLoad";
@@ -63,7 +66,7 @@ UkmPageLoadMetricsObserver::CreateIfNeeded(content::WebContents* web_contents) {
   if (!ukm::UkmRecorder::Get()) {
     return nullptr;
   }
-  return base::MakeUnique<UkmPageLoadMetricsObserver>(
+  return std::make_unique<UkmPageLoadMetricsObserver>(
       GetNQEService(web_contents));
 }
 
@@ -190,6 +193,16 @@ void UkmPageLoadMetricsObserver::RecordTimingMetrics(
   if (timing.paint_timing->first_meaningful_paint) {
     builder.SetExperimental_PaintTiming_NavigationToFirstMeaningfulPaint(
         timing.paint_timing->first_meaningful_paint.value().InMilliseconds());
+  }
+  if (timing.interactive_timing->interactive) {
+    base::TimeDelta time_to_interactive =
+        timing.interactive_timing->interactive.value();
+    if (!timing.interactive_timing->first_invalidating_input ||
+        timing.interactive_timing->first_invalidating_input.value() >
+            time_to_interactive) {
+      builder.SetExperimental_NavigationToInteractive(
+          time_to_interactive.InMilliseconds());
+    }
   }
 
   // Use a bucket spacing factor of 1.3 for bytes.

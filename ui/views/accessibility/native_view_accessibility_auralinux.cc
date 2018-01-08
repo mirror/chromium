@@ -13,7 +13,7 @@
 #include "base/memory/singleton.h"
 #include "base/stl_util.h"
 #include "ui/accessibility/ax_action_data.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/platform/ax_platform_node_auralinux.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
@@ -59,6 +59,8 @@ class AuraLinuxApplication
   gfx::NativeViewAccessible GetNativeViewAccessible() {
     return platform_node_->GetNativeViewAccessible();
   }
+
+  const ui::AXUniqueId& GetUniqueId() const override { return unique_id_; }
 
   // WidgetObserver:
 
@@ -125,15 +127,25 @@ class AuraLinuxApplication
 
   bool ShouldIgnoreHoveredStateForTesting() override { return false; }
 
+  std::set<int32_t> GetReverseRelations(ax::mojom::IntAttribute attr,
+                                        int32_t dst_id) override {
+    return std::set<int32_t>();
+  }
+
+  std::set<int32_t> GetReverseRelations(ax::mojom::IntListAttribute attr,
+                                        int32_t dst_id) override {
+    return std::set<int32_t>();
+  }
+
  private:
   friend struct base::DefaultSingletonTraits<AuraLinuxApplication>;
 
   AuraLinuxApplication() {
-    data_.role = ui::AX_ROLE_APPLICATION;
+    data_.role = ax::mojom::Role::kApplication;
     platform_node_ = ui::AXPlatformNode::Create(this);
     if (ViewsDelegate::GetInstance()) {
       data_.AddStringAttribute(
-          ui::AX_ATTR_NAME,
+          ax::mojom::StringAttribute::kName,
           ViewsDelegate::GetInstance()->GetApplicationName());
     }
     ui::AXPlatformNodeAuraLinux::SetApplication(platform_node_);
@@ -149,6 +161,7 @@ class AuraLinuxApplication
 
   ui::AXPlatformNode* platform_node_;
   ui::AXNodeData data_;
+  ui::AXUniqueId unique_id_;
   std::vector<Widget*> widgets_;
 
   DISALLOW_COPY_AND_ASSIGN(AuraLinuxApplication);
@@ -157,8 +170,7 @@ class AuraLinuxApplication
 }  // namespace
 
 // static
-std::unique_ptr<NativeViewAccessibility> NativeViewAccessibility::Create(
-    View* view) {
+std::unique_ptr<ViewAccessibility> ViewAccessibility::Create(View* view) {
   AuraLinuxApplication::GetInstance()->RegisterWidget(view->GetWidget());
   return std::make_unique<NativeViewAccessibilityAuraLinux>(view);
 }

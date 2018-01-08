@@ -9,6 +9,8 @@
 // is no longer needed.
 #import <WebKit/WebKit.h>
 
+#include <algorithm>
+
 #include "base/logging.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
@@ -16,7 +18,7 @@
 #import "ios/chrome/browser/snapshots/snapshot_generator_delegate.h"
 #import "ios/chrome/browser/snapshots/snapshot_overlay.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
-#import "ios/chrome/browser/web/tab_id_tab_helper.h"
+#import "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -86,6 +88,10 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
 
 @interface SnapshotGenerator ()<CRWWebStateObserver>
 
+// Returns the bounds of the snapshot. Will return an empty rectangle if the
+// WebState is not ready to capture a snapshot.
+- (CGRect)snapshotFrameVisibleFrameOnly:(BOOL)visibleFrameOnly;
+
 // Takes a snapshot for the supplied view (which should correspond to the given
 // type of web view). Returns an autoreleased image cropped and scaled
 // appropriately. The image can also contain overlays (if |overlays| is not
@@ -94,21 +100,27 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
                            withRect:(CGRect)rect
                            overlays:(NSArray<SnapshotOverlay*>*)overlays;
 
+// Property providing access to the snapshot's cache. May be nil.
+@property(nonatomic, readonly) SnapshotCache* snapshotCache;
+
 @end
 
 @implementation SnapshotGenerator {
   CoalescingSnapshotContext* _coalescingSnapshotContext;
   std::unique_ptr<web::WebStateObserver> _webStateObserver;
-  __weak id<SnapshotGeneratorDelegate> _delegate;
+  NSString* _snapshotSessionId;
   web::WebState* _webState;
 }
 
+@synthesize delegate = _delegate;
+
 - (instancetype)initWithWebState:(web::WebState*)webState
-                        delegate:(id<SnapshotGeneratorDelegate>)delegate {
+               snapshotSessionId:(NSString*)snapshotSessionId {
   if ((self = [super init])) {
     DCHECK(webState);
+    DCHECK(snapshotSessionId);
     _webState = webState;
-    _delegate = delegate;
+    _snapshotSessionId = snapshotSessionId;
 
     _webStateObserver = std::make_unique<web::WebStateObserverBridge>(self);
     _webState->AddObserver(_webStateObserver.get());
@@ -124,6 +136,10 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
   }
 }
 
+- (CGSize)snapshotSize {
+  return [self snapshotFrameVisibleFrameOnly:YES].size;
+}
+
 - (void)setSnapshotCoalescingEnabled:(BOOL)snapshotCoalescingEnabled {
   if (snapshotCoalescingEnabled) {
     DCHECK(!_coalescingSnapshotContext);
@@ -136,31 +152,44 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
 
 - (void)retrieveSnapshot:(void (^)(UIImage*))callback {
   DCHECK(callback);
+
+  __weak SnapshotGenerator* weakSelf = self;
   void (^wrappedCallback)(UIImage*) = ^(UIImage* image) {
     if (!image) {
-      image = [self updateSnapshotWithOverlays:YES visibleFrameOnly:YES];
+      image = [weakSelf updateSnapshotWithOverlays:YES visibleFrameOnly:YES];
     }
     callback(image);
   };
 
-  NSString* sessionID = TabIdTabHelper::FromWebState(_webState)->tab_id();
-  [[self snapshotCache] retrieveImageForSessionID:sessionID
-                                         callback:wrappedCallback];
+  SnapshotCache* snapshotCache = self.snapshotCache;
+  if (snapshotCache) {
+    [snapshotCache retrieveImageForSessionID:_snapshotSessionId
+                                    callback:wrappedCallback];
+  } else {
+    wrappedCallback(nil);
+  }
 }
 
 - (void)retrieveGreySnapshot:(void (^)(UIImage*))callback {
   DCHECK(callback);
+
+  __weak SnapshotGenerator* weakSelf = self;
   void (^wrappedCallback)(UIImage*) = ^(UIImage* image) {
     if (!image) {
-      image = [self updateSnapshotWithOverlays:YES visibleFrameOnly:YES];
-      image = GreyImage(image);
+      image = [weakSelf updateSnapshotWithOverlays:YES visibleFrameOnly:YES];
+      if (image)
+        image = GreyImage(image);
     }
     callback(image);
   };
 
-  NSString* sessionID = TabIdTabHelper::FromWebState(_webState)->tab_id();
-  [[self snapshotCache] retrieveGreyImageForSessionID:sessionID
-                                             callback:wrappedCallback];
+  SnapshotCache* snapshotCache = self.snapshotCache;
+  if (snapshotCache) {
+    [snapshotCache retrieveGreyImageForSessionID:_snapshotSessionId
+                                        callback:wrappedCallback];
+  } else {
+    wrappedCallback(nil);
+  }
 }
 
 - (UIImage*)updateSnapshotWithOverlays:(BOOL)shouldAddOverlay
@@ -170,11 +199,11 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
 
   // Return default snapshot without caching it if the generation failed.
   if (!snapshot)
-    return [_delegate defaultSnapshotImage];
+    return [[self class] defaultSnapshotImage];
 
   UIImage* snapshotToCache = snapshot;
   if (!visibleFrameOnly) {
-    UIEdgeInsets insets = [_delegate snapshotEdgeInsets];
+    UIEdgeInsets insets = [_delegate snapshotEdgeInsetsForWebState:_webState];
     if (!UIEdgeInsetsEqualToEdgeInsets(insets, UIEdgeInsetsZero)) {
       CGRect cropRect =
           UIEdgeInsetsInsetRect(CGRect{CGPointZero, [snapshot size]}, insets);
@@ -182,28 +211,20 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
     }
   }
 
-  NSString* sessionID = TabIdTabHelper::FromWebState(_webState)->tab_id();
-  [[self snapshotCache] setImage:snapshotToCache withSessionID:sessionID];
+  [self.snapshotCache setImage:snapshotToCache
+                 withSessionID:_snapshotSessionId];
   return snapshot;
 }
 
 - (UIImage*)generateSnapshotWithOverlays:(BOOL)shouldAddOverlay
                         visibleFrameOnly:(BOOL)visibleFrameOnly {
-  if (!_webState->CanTakeSnapshot())
-    return nil;
-
-  UIView* view = _webState->GetView();
-  CGRect bounds = [view bounds];
-  if (visibleFrameOnly) {
-    UIEdgeInsets insets = [_delegate snapshotEdgeInsets];
-    bounds = UIEdgeInsetsInsetRect(bounds, insets);
-  }
-
-  if (CGRectIsEmpty(bounds))
+  CGRect frame = [self snapshotFrameVisibleFrameOnly:visibleFrameOnly];
+  if (CGRectIsEmpty(frame))
     return nil;
 
   NSArray<SnapshotOverlay*>* overlays =
-      shouldAddOverlay ? [_delegate snapshotOverlays] : nil;
+      shouldAddOverlay ? [_delegate snapshotOverlaysForWebState:_webState]
+                       : nil;
   UIImage* snapshot =
       [_coalescingSnapshotContext cachedSnapshotWithOverlays:overlays
                                             visibleFrameOnly:visibleFrameOnly];
@@ -212,8 +233,9 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
     return snapshot;
 
   [_delegate willUpdateSnapshotForWebState:_webState];
-  snapshot =
-      [self generateSnapshotForView:view withRect:bounds overlays:overlays];
+  snapshot = [self generateSnapshotForView:_webState->GetView()
+                                  withRect:frame
+                                  overlays:overlays];
   [_coalescingSnapshotContext setCachedSnapshot:snapshot
                                    withOverlays:overlays
                                visibleFrameOnly:visibleFrameOnly];
@@ -221,7 +243,49 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
   return snapshot;
 }
 
+- (void)removeSnapshot {
+  [self.snapshotCache removeImageWithSessionID:_snapshotSessionId];
+}
+
++ (UIImage*)defaultSnapshotImage {
+  static UIImage* defaultSnapshotImage = nil;
+  if (!defaultSnapshotImage) {
+    CGRect frame = CGRectMake(0, 0, 2, 2);
+    UIGraphicsBeginImageContext(frame.size);
+    [[UIColor whiteColor] setFill];
+    CGContextFillRect(UIGraphicsGetCurrentContext(), frame);
+
+    UIImage* result = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    defaultSnapshotImage =
+        [result stretchableImageWithLeftCapWidth:1 topCapHeight:1];
+  }
+  return defaultSnapshotImage;
+}
+
 #pragma mark - Private methods
+
+- (CGRect)snapshotFrameVisibleFrameOnly:(BOOL)visibleFrameOnly {
+  // Do not generate a snapshot if web usage is disabled (as the WebState's
+  // view is blank in that case).
+  if (!_webState->IsWebUsageEnabled())
+    return CGRectZero;
+
+  // Do not generate a snapshot if the delegate says the WebState view is
+  // not ready (this generally mean a placeholder is displayed).
+  if (_delegate && ![_delegate canTakeSnapshotForWebState:_webState])
+    return CGRectZero;
+
+  UIView* view = _webState->GetView();
+  CGRect frame = [view bounds];
+  if (visibleFrameOnly) {
+    UIEdgeInsets insets = [_delegate snapshotEdgeInsetsForWebState:_webState];
+    frame = UIEdgeInsetsInsetRect(frame, insets);
+  }
+
+  return frame;
+}
 
 - (UIImage*)generateSnapshotForView:(UIView*)view
                            withRect:(CGRect)rect
@@ -232,7 +296,8 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
       << ": size.width=" << size.width;
   DCHECK(std::isnormal(size.height) && (size.height > 0))
       << ": size.height=" << size.height;
-  const CGFloat kScale = [[self snapshotCache] snapshotScaleForDevice];
+  const CGFloat kScale =
+      std::max<CGFloat>(1.0, [self.snapshotCache snapshotScaleForDevice]);
   UIGraphicsBeginImageContextWithOptions(size, YES, kScale);
   CGContext* context = UIGraphicsGetCurrentContext();
   DCHECK(context);
@@ -278,8 +343,11 @@ BOOL ViewHierarchyContainsWKWebView(UIView* view) {
   return image;
 }
 
+#pragma mark - Properties.
+
 - (SnapshotCache*)snapshotCache {
   DCHECK(_webState);
+  DCHECK(_webState->GetBrowserState());
   return SnapshotCacheFactory::GetForBrowserState(
       ios::ChromeBrowserState::FromBrowserState(_webState->GetBrowserState()));
 }

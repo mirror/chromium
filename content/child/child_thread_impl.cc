@@ -79,10 +79,6 @@
 #include "base/allocator/allocator_interception_mac.h"
 #endif
 
-#if defined(OS_WIN)
-#include "content/child/dwrite_font_proxy/dwrite_font_proxy_init_impl_win.h"
-#endif
-
 namespace content {
 namespace {
 
@@ -586,10 +582,6 @@ void ChildThreadImpl::Init(const Options& options) {
     field_trial_syncer_->InitFieldTrialObserving(
         *base::CommandLine::ForCurrentProcess());
   }
-
-#if defined(OS_WIN)
-  UpdateDWriteFontProxySender(thread_safe_sender());
-#endif
 }
 
 void ChildThreadImpl::InitTracing() {

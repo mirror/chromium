@@ -544,6 +544,43 @@ TEST_F(NGColumnLayoutAlgorithmTest, TwoFloatsInTwoColumns) {
   EXPECT_EQ(expectation, dump);
 }
 
+TEST_F(NGColumnLayoutAlgorithmTest, FloatWithForcedBreak) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 100px;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="height:50px;"></div>
+        <div style="float:left; width:77px;">
+           <div style="width:66px; height:30px;"></div>
+           <div style="break-before:column; width:55px; height:30px;"></div>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x100
+    offset:0,0 size:320x100
+      offset:0,0 size:100x100
+        offset:0,0 size:100x50
+        offset:0,50 size:77x50
+          offset:0,0 size:66x30
+      offset:110,0 size:100x30
+        offset:0,0 size:77x30
+          offset:0,0 size:55x30
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
 TEST_F(NGColumnLayoutAlgorithmTest, BlockWithTopMarginInThreeColumns) {
   SetBodyInnerHTML(R"HTML(
     <style>
@@ -1388,6 +1425,398 @@ TEST_F(NGColumnLayoutAlgorithmTest, FloatBelowLastLineInColumn) {
   EXPECT_EQ(expectation, dump);
 }
 
+TEST_F(NGColumnLayoutAlgorithmTest, Orphans) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 90px;
+        line-height: 20px;
+        orphans: 3;
+        widows: 1;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="height:40px;"></div>
+        <div style="width:77px;">
+          <br>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x90
+    offset:0,0 size:320x90
+      offset:0,0 size:100x90
+        offset:0,0 size:100x40
+      offset:110,0 size:100x60
+        offset:0,0 size:77x60
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+          offset:0,20 size:0x20
+            offset:0,9 size:0x1
+          offset:0,40 size:0x20
+            offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, OrphansUnsatisfiable) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 90px;
+        line-height: 20px;
+        orphans: 100;
+        widows: 1;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x90
+    offset:0,0 size:320x90
+      offset:0,0 size:100x90
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+        offset:0,40 size:0x20
+          offset:0,9 size:0x1
+        offset:0,60 size:0x20
+          offset:0,9 size:0x1
+      offset:110,0 size:100x40
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, Widows) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 110px;
+        line-height: 20px;
+        orphans: 1;
+        widows: 3;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x110
+    offset:0,0 size:320x110
+      offset:0,0 size:100x110
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+        offset:0,40 size:0x20
+          offset:0,9 size:0x1
+        offset:0,60 size:0x20
+          offset:0,9 size:0x1
+      offset:110,0 size:100x60
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+        offset:0,40 size:0x20
+          offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, WidowsUnsatisfiable) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 90px;
+        line-height: 20px;
+        orphans: 1;
+        widows: 100;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x90
+    offset:0,0 size:320x90
+      offset:0,0 size:100x90
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+      offset:110,0 size:100x90
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+        offset:0,40 size:0x20
+          offset:0,9 size:0x1
+        offset:0,60 size:0x20
+          offset:0,9 size:0x1
+      offset:220,0 size:100x90
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+        offset:0,40 size:0x20
+          offset:0,9 size:0x1
+        offset:0,60 size:0x20
+          offset:0,9 size:0x1
+      offset:330,0 size:100x90
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+        offset:0,40 size:0x20
+          offset:0,9 size:0x1
+        offset:0,60 size:0x20
+          offset:0,9 size:0x1
+      offset:440,0 size:100x20
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, OrphansAndUnsatisfiableWidows) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 70px;
+        line-height: 20px;
+        orphans: 2;
+        widows: 3;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x70
+    offset:0,0 size:320x70
+      offset:0,0 size:100x70
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+      offset:110,0 size:100x40
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, UnsatisfiableOrphansAndWidows) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 70px;
+        line-height: 20px;
+        orphans: 4;
+        widows: 4;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x70
+    offset:0,0 size:320x70
+      offset:0,0 size:100x70
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+        offset:0,40 size:0x20
+          offset:0,9 size:0x1
+      offset:110,0 size:100x20
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, FloatInBlockMovedByOrphans) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 70px;
+        line-height: 20px;
+        orphans: 2;
+        widows: 1;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="width:11px; height:40px;"></div>
+        <div style="width:77px;">
+          <br>
+          <div style="float:left; width:10px; height:10px;"></div>
+          <br>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x70
+    offset:0,0 size:320x70
+      offset:0,0 size:100x70
+        offset:0,0 size:11x40
+      offset:110,0 size:100x40
+        offset:0,0 size:77x40
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+          offset:0,20 size:10x10
+          offset:10,20 size:0x20
+            offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, FloatMovedWithWidows) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-fill: auto;
+        column-gap: 10px;
+        width: 320px;
+        height: 90px;
+        line-height: 20px;
+        orphans: 1;
+        widows: 4;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <br>
+        <br>
+        <div style="float:left; width:10px; height:10px;"></div>
+        <br>
+        <br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x90
+    offset:0,0 size:320x90
+      offset:0,0 size:100x90
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+      offset:110,0 size:100x80
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+        offset:0,40 size:10x10
+        offset:10,40 size:0x20
+          offset:0,9 size:0x1
+        offset:0,60 size:0x20
+          offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
 TEST_F(NGColumnLayoutAlgorithmTest, BorderAndPadding) {
   SetBodyInnerHTML(R"HTML(
     <style>
@@ -1898,6 +2327,484 @@ TEST_F(NGColumnLayoutAlgorithmTest, ColumnBalancingEmptyBlock) {
     offset:0,0 size:320x0
       offset:0,0 size:100x0
         offset:0,0 size:20x0
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, ColumnBalancingLines) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        width: 320px;
+        line-height: 20px;
+        orphans: 1;
+        widows: 1;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br><br><br><br><br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x40
+    offset:0,0 size:320x40
+      offset:0,0 size:100x40
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+      offset:110,0 size:100x40
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+        offset:0,20 size:0x20
+          offset:0,9 size:0x1
+      offset:220,0 size:100x20
+        offset:0,0 size:0x20
+          offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, ColumnBalancingLinesOrphans) {
+  // We have 6 lines and 3 columns. If we make the columns tall enough to hold 2
+  // lines each, it should all fit. But then there's an orphans request that 3
+  // lines be placed together in the same column...
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        width: 320px;
+        line-height: 20px;
+        orphans: 1;
+        widows: 1;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <div style="orphans:3;">
+           <br><br><br>
+        </div>
+        <br><br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x60
+    offset:0,0 size:320x60
+      offset:0,0 size:100x60
+        offset:0,0 size:100x20
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+      offset:110,0 size:100x60
+        offset:0,0 size:100x60
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+          offset:0,20 size:0x20
+            offset:0,9 size:0x1
+          offset:0,40 size:0x20
+            offset:0,9 size:0x1
+      offset:220,0 size:100x40
+        offset:0,0 size:100x40
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+          offset:0,20 size:0x20
+            offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, ColumnBalancingLinesForcedBreak) {
+  // We have 6 lines and 3 columns. If we make the columns tall enough to hold 2
+  // lines each, it should all fit. But then there's a forced break after the
+  // first line, so that the remaining 5 lines have to be distributed into the 2
+  // remaining columns...
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        width: 320px;
+        line-height: 20px;
+        orphans: 1;
+        widows: 1;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <div style="break-before:column;">
+           <br><br><br><br><br>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x60
+    offset:0,0 size:320x60
+      offset:0,0 size:100x60
+        offset:0,0 size:100x20
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+      offset:110,0 size:100x60
+        offset:0,0 size:100x60
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+          offset:0,20 size:0x20
+            offset:0,9 size:0x1
+          offset:0,40 size:0x20
+            offset:0,9 size:0x1
+      offset:220,0 size:100x40
+        offset:0,0 size:100x40
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+          offset:0,20 size:0x20
+            offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, ColumnBalancingLinesAvoidBreakInside) {
+  // We have 6 lines and 3 columns. If we make the columns tall enough to hold 2
+  // lines each, it should all fit. But then there's a block with 3 lines and
+  // break-inside:avoid...
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        width: 320px;
+        line-height: 20px;
+        orphans: 1;
+        widows: 1;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <br>
+        <div style="break-inside:avoid;">
+           <br><br><br>
+        </div>
+        <br><br>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x60
+    offset:0,0 size:320x60
+      offset:0,0 size:100x60
+        offset:0,0 size:100x20
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+      offset:110,0 size:100x60
+        offset:0,0 size:100x60
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+          offset:0,20 size:0x20
+            offset:0,9 size:0x1
+          offset:0,40 size:0x20
+            offset:0,9 size:0x1
+      offset:220,0 size:100x40
+        offset:0,0 size:100x40
+          offset:0,0 size:0x20
+            offset:0,9 size:0x1
+          offset:0,20 size:0x20
+            offset:0,9 size:0x1
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, ClassCBreakPointBeforeBfc) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        column-fill: auto;
+        width: 320px;
+        height:100px;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="width:50px; height:50px;"></div>
+        <div style="float:left; width:100%; height:40px;"></div>
+        <div style="width:55px;">
+          <div style="display:flow-root; break-inside:avoid; width:44px; height:60px;"></div>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x100
+    offset:0,0 size:320x100
+      offset:0,0 size:100x100
+        offset:0,0 size:50x50
+        offset:0,50 size:100x40
+        offset:0,50 size:55x50
+      offset:110,0 size:100x60
+        offset:0,0 size:55x60
+          offset:0,0 size:44x60
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, NoClassCBreakPointBeforeBfc) {
+  // TODO(mstensho): Get rid of #workaround below. It's needed because clearance
+  // is applied after layout, with no second layout pass. A second pass is
+  // really needed by fragmentation, since the amount of remaining space may
+  // have decreased so much that we need to break inside (while we didn't have
+  // to in the first pass). Ideally, we'd specify clear:both on #container
+  // instead, but that doesn't work currently.
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        column-fill: auto;
+        width: 320px;
+        height:100px;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="width:50px; height:50px;"></div>
+        <div style="float:left; width:100%; height:40px;"></div>
+        <div id="workaround" style="clear:both; width:1px;"></div>
+        <div id="container" style="width:55px;">
+          <div style="display:flow-root; break-inside:avoid; width:44px; height:60px;"></div>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x100
+    offset:0,0 size:320x100
+      offset:0,0 size:100x100
+        offset:0,0 size:50x50
+        offset:0,50 size:100x40
+        offset:0,90 size:1x0
+      offset:110,0 size:100x60
+        offset:0,0 size:55x60
+          offset:0,0 size:44x60
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, ClassCBreakPointBeforeBfcWithClearance) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        column-fill: auto;
+        width: 320px;
+        height:100px;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="width:50px; height:50px;"></div>
+        <div style="float:left; width:1px; height:40px;"></div>
+        <div style="width:55px;">
+          <div style="clear:both; display:flow-root; break-inside:avoid; width:44px; height:60px;"></div>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x100
+    offset:0,0 size:320x100
+      offset:0,0 size:100x100
+        offset:0,0 size:50x50
+        offset:0,50 size:1x40
+        offset:0,50 size:55x50
+      offset:110,0 size:100x60
+        offset:0,0 size:55x60
+          offset:0,0 size:44x60
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, ClassCBreakPointBeforeBfcWithMargin) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        column-fill: auto;
+        width: 320px;
+        height:100px;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="width:50px; height:50px;"></div>
+        <div style="float:left; width:100%; height:40px;"></div>
+        <div style="width:55px;">
+          <div style="margin-top:39px; display:flow-root; break-inside:avoid; width:44px; height:60px;"></div>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x100
+    offset:0,0 size:320x100
+      offset:0,0 size:100x100
+        offset:0,0 size:50x50
+        offset:0,50 size:100x40
+        offset:0,50 size:55x50
+      offset:110,0 size:100x60
+        offset:0,0 size:55x60
+          offset:0,0 size:44x60
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest,
+       ClassCBreakPointBeforeBlockMarginCollapsing) {
+  // We get a class C break point here, because we get clearance, because the
+  // (collapsed) margin isn't large enough to take the block below the float on
+  // its own.
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        column-fill: auto;
+        width: 320px;
+        height:100px;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="width:50px; height:70px;"></div>
+        <div style="float:left; width:100%; height:20px;"></div>
+        <div style="border:1px solid; width:55px;">
+          <div style="clear:left; width:44px; margin-top:10px;">
+            <div style="margin-top:18px; break-inside:avoid; width:33px; height:20px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x100
+    offset:0,0 size:320x100
+      offset:0,0 size:100x100
+        offset:0,0 size:50x70
+        offset:0,70 size:100x20
+        offset:0,70 size:57x30
+      offset:110,0 size:100x21
+        offset:0,0 size:57x21
+          offset:1,0 size:44x20
+            offset:0,0 size:33x20
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest,
+       NoClassCBreakPointBeforeBlockMarginCollapsing) {
+  // No class C break point here, because there's no clearance, because the
+  // (collapsed) margin is large enough to take the block below the float on its
+  // own.
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        column-fill: auto;
+        width: 320px;
+        height:100px;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="width:50px; height:70px;"></div>
+        <div style="float:left; width:100%; height:20px;"></div>
+        <div style="border:1px solid; width:55px;">
+          <div style="clear:left; width:44px; margin-top:10px;">
+            <div style="margin-top:19px; break-inside:avoid; width:33px; height:20px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x100
+    offset:0,0 size:320x100
+      offset:0,0 size:100x100
+        offset:0,0 size:50x70
+        offset:0,70 size:100x20
+      offset:110,0 size:100x22
+        offset:0,0 size:57x22
+          offset:1,1 size:44x20
+            offset:0,0 size:33x20
+)DUMP";
+  EXPECT_EQ(expectation, dump);
+}
+
+TEST_F(NGColumnLayoutAlgorithmTest, ClassCBreakPointBeforeLine) {
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #parent {
+        columns: 3;
+        column-gap: 10px;
+        column-fill: auto;
+        width: 320px;
+        height:100px;
+        line-height: 20px;
+      }
+    </style>
+    <div id="container">
+      <div id="parent">
+        <div style="width:50px; height:70px;"></div>
+        <div style="float:left; width:100%; height:20px;"></div>
+        <div style="width:55px;">
+          <div style="display:inline-block; width:33px; height:11px; vertical-align:top;"></div>
+        </div>
+      </div>
+    </div>
+  )HTML");
+
+  String dump = DumpFragmentTree(GetElementById("container"));
+  String expectation = R"DUMP(.:: LayoutNG Physical Fragment Tree ::.
+  offset:unplaced size:1000x100
+    offset:0,0 size:320x100
+      offset:0,0 size:100x100
+        offset:0,0 size:50x70
+        offset:0,70 size:100x20
+        offset:0,70 size:55x30
+      offset:110,0 size:100x20
+        offset:0,0 size:55x20
+          offset:0,0 size:33x20
+            offset:0,0 size:33x11
+            offset:0,0 size:33x11
 )DUMP";
   EXPECT_EQ(expectation, dump);
 }

@@ -178,6 +178,11 @@ def build_gn_with_ninja_manually(tempdir, options):
   root_gen_dir = os.path.join(tempdir, 'gen')
   mkdir_p(root_gen_dir)
 
+  write_buildflag_header_manually(
+      root_gen_dir,
+      'base/synchronization/synchronization_flags.h',
+      {'ENABLE_MUTEX_PRIORITY_INHERITANCE': 'false'})
+
   write_buildflag_header_manually(root_gen_dir, 'base/allocator/features.h',
       {'USE_ALLOCATOR_SHIM': 'true' if is_linux else 'false'})
 
@@ -219,6 +224,10 @@ def build_gn_with_ninja_manually(tempdir, options):
 
     write_compiled_message(root_gen_dir,
         'base/trace_event/etw_manifest/chrome_events_win.man')
+
+  write_buildflag_header_manually(
+      root_gen_dir, 'base/android/library_loader.h',
+      {'USE_LLD': 'false', 'SUPPORTS_CODE_ORDERING': 'false'})
 
   write_gn_ninja(os.path.join(tempdir, 'build.ninja'),
                  root_gen_dir, options)
@@ -414,6 +423,8 @@ def write_gn_ninja(path, root_gen_dir, options):
       continue
     if name == 'run_all_unittests.cc':
       continue
+    if name == 'test_with_scheduler.cc':
+      continue
     if name == 'gn_main.cc':
       continue
     full_path = os.path.join(GN_ROOT, name)
@@ -458,13 +469,12 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/json/json_string_value_serializer.cc',
       'base/json/json_writer.cc',
       'base/json/string_escape.cc',
-      'base/lazy_instance.cc',
+      'base/lazy_instance_helpers.cc',
       'base/location.cc',
       'base/logging.cc',
       'base/md5.cc',
       'base/memory/ref_counted.cc',
       'base/memory/ref_counted_memory.cc',
-      'base/memory/singleton.cc',
       'base/memory/shared_memory_handle.cc',
       'base/memory/shared_memory_tracker.cc',
       'base/memory/weak_ptr.cc',
@@ -724,6 +734,7 @@ def write_gn_ninja(path, root_gen_dir, options):
         'base/strings/sys_string_conversions_mac.mm',
         'base/synchronization/waitable_event_mac.cc',
         'base/sys_info_mac.mm',
+        'base/time/time_exploded_posix.cc',
         'base/time/time_mac.cc',
         'base/threading/platform_thread_mac.mm',
     ])

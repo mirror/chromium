@@ -128,14 +128,14 @@ const char kCloudPrintSetupProxy[]          = "cloud-print-setup-proxy";
 // interstitial error pages (e.g. certificate errors).
 const char kCommittedInterstitials[] = "committed-interstitials";
 
-// Comma-separated list of BrowserThreads that cause browser process to crash
-// if the given browser thread is not responsive. UI,IO,DB,FILE,CACHE are the
-// list of BrowserThreads that are supported.
+// Comma-separated list of BrowserThreads that cause browser process to crash if
+// the given browser thread is not responsive. UI/IO are the BrowserThreads that
+// are supported.
 //
 // For example:
-//    --crash-on-hang-threads=UI:3:18,IO:3:18 --> Crash the browser if UI or IO
-//      is not responsive for 18 seconds and the number of browser threads that
-//      are responding is less than or equal to 3.
+//    --crash-on-hang-threads=UI:18,IO:18 --> Crash the browser if UI or IO is
+//    not responsive for 18 seconds while the other browser thread is
+//    responsive.
 const char kCrashOnHangThreads[]            = "crash-on-hang-threads";
 
 // Some platforms like ChromeOS default to empty desktop.
@@ -422,6 +422,9 @@ const char kForceFirstRunDialog[] = "force-first-run-dialog";
 // Forces Chrome to use localNTP instead of server (GWS) NTP.
 const char kForceLocalNtp[]                 = "force-local-ntp";
 
+// Forces Chrome to use a stacked tab strip layout.
+const char kForceStackedTabStripLayout[]    = "force-stacked-tab-strip-layout";
+
 // Specifies which page will be displayed in newly-opened tabs. We need this
 // for testing purposes so that the UI tests don't depend on what comes up for
 // http://google.com.
@@ -476,6 +479,11 @@ const char kMemlogModeGpu[] = "gpu";
 const char kMemlogModeManual[] = "manual";
 const char kMemlogModeMinimal[] = "minimal";
 const char kMemlogModeRendererSampling[] = "renderer-sampling";
+const char kMemlogStackMode[] = "memlog-stack-mode";
+const char kMemlogStackModeMixed[] = "mixed";
+const char kMemlogStackModeNative[] = "native";
+const char kMemlogStackModeNativeWithThreadNames[] = "native-with-thread-names";
+const char kMemlogStackModePseudo[] = "pseudo";
 
 // Allows setting a different destination ID for connection-monitoring GCM
 // messages. Useful when running against a non-prod management server.
@@ -602,7 +610,7 @@ const char kProxyAutoDetect[]               = "proxy-auto-detect";
 // Specifies a list of hosts for whom we bypass proxy settings and use direct
 // connections. Ignored if --proxy-auto-detect or --no-proxy-server are also
 // specified. This is a comma-separated list of bypass rules. See:
-// "net/proxy/proxy_bypass_rules.h" for the format of these rules.
+// "net/proxy_resolution/proxy_bypass_rules.h" for the format of these rules.
 const char kProxyBypassList[]               = "proxy-bypass-list";
 
 // Uses the pac script at the given URL
@@ -786,12 +794,6 @@ const char kMarketUrlForTesting[] = "market-url-for-testing";
 
 // Specifies Android phone page loading progress bar animation.
 const char kProgressBarAnimation[]          = "progress-bar-animation";
-
-// Specifies a particular tab management experiment to enable.
-const char kTabManagementExperimentTypeDisabled[] =
-    "tab-management-experiment-type-disabled";
-const char kTabManagementExperimentTypeElderberry[] =
-    "tab-management-experiment-type-elderberry";
 
 // Custom WebAPK server URL for the sake of testing.
 const char kWebApkServerUrl[] = "webapk-server-url";

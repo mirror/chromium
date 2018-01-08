@@ -47,9 +47,9 @@ inline bool EnumHasFlags(Enum v, Enum mask) {
 
 // Sides used when drawing borders and outlines. The values should run clockwise
 // from top.
-enum BoxSide { kBSTop, kBSRight, kBSBottom, kBSLeft };
+enum class BoxSide : unsigned { kTop, kRight, kBottom, kLeft };
 
-// See core/dom/stylerecalc.md for an explanation on what each state means
+// See core/style/stylerecalc.md for an explanation on what each state means
 enum StyleRecalcChange {
   kNoChange,
   kNoInherit,
@@ -143,14 +143,14 @@ enum class EFillSizeType : unsigned {
 enum class BackgroundEdgeOrigin : unsigned { kTop, kRight, kBottom, kLeft };
 
 // CSS Mask Source Types
-enum EMaskSourceType { kMaskAlpha, kMaskLuminance };
+enum class EMaskSourceType : unsigned { kAlpha, kLuminance };
 
 // CSS3 Image Values
-enum QuoteType { OPEN_QUOTE, CLOSE_QUOTE, NO_OPEN_QUOTE, NO_CLOSE_QUOTE };
+enum class QuoteType : unsigned { kOpen, kClose, kNoOpen, kNoClose };
 
-enum EAnimPlayState { kAnimPlayStatePlaying, kAnimPlayStatePaused };
+enum class EAnimPlayState : unsigned { kPlaying, kPaused };
 
-enum OffsetRotationType { kOffsetRotationAuto, kOffsetRotationFixed };
+enum class OffsetRotationType : unsigned { kAuto, kFixed };
 
 static const size_t kGridAutoFlowBits = 4;
 enum InternalGridAutoFlowAlgorithm {
@@ -238,19 +238,24 @@ enum class ContentDistributionType : unsigned {
 // platforms (such as Windows).
 static const float kMaximumAllowedFontSize = 10000.0f;
 
-enum CSSBoxType {
-  kBoxMissing = 0,
-  kMarginBox,
-  kBorderBox,
-  kPaddingBox,
-  kContentBox
+enum class CSSBoxType : unsigned {
+  kMissing,
+  kMargin,
+  kBorder,
+  kPadding,
+  kContent
 };
 
-enum TextEmphasisPosition {
+enum class TextEmphasisPosition : unsigned {
   kOverRight,
   kOverLeft,
   kUnderRight,
   kUnderLeft,
+};
+
+enum class LineLogicalSide {
+  kOver,
+  kUnder,
 };
 
 }  // namespace blink

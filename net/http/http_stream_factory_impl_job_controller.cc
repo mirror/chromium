@@ -15,14 +15,12 @@
 #include "base/trace_event/memory_usage_estimator.h"
 #include "base/values.h"
 #include "net/base/host_mapping_rules.h"
-#include "net/base/proxy_delegate.h"
 #include "net/http/bidirectional_stream_impl.h"
 #include "net/http/transport_security_state.h"
 #include "net/log/net_log_capture_mode.h"
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_server.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "url/url_constants.h"
 
@@ -65,6 +63,7 @@ HttpStreamFactoryImpl::JobController::JobController(
     JobFactory* job_factory,
     const HttpRequestInfo& request_info,
     bool is_preconnect,
+    bool is_websocket,
     bool enable_ip_based_pooling,
     bool enable_alternative_services,
     const SSLConfig& server_ssl_config,
@@ -75,6 +74,7 @@ HttpStreamFactoryImpl::JobController::JobController(
       request_(nullptr),
       delegate_(delegate),
       is_preconnect_(is_preconnect),
+      is_websocket_(is_websocket),
       enable_ip_based_pooling_(enable_ip_based_pooling),
       enable_alternative_services_(enable_alternative_services),
       alternative_job_net_error_(OK),
@@ -84,7 +84,7 @@ HttpStreamFactoryImpl::JobController::JobController(
       bound_job_(nullptr),
       can_start_alternative_proxy_job_(true),
       next_state_(STATE_RESOLVE_PROXY),
-      pac_request_(nullptr),
+      proxy_resolve_request_(nullptr),
       io_callback_(
           base::Bind(&JobController::OnIOComplete, base::Unretained(this))),
       request_info_(request_info),
@@ -106,15 +106,11 @@ HttpStreamFactoryImpl::JobController::~JobController() {
   main_job_.reset();
   alternative_job_.reset();
   bound_job_ = nullptr;
-  if (pac_request_) {
+  if (proxy_resolve_request_) {
     DCHECK_EQ(STATE_RESOLVE_PROXY_COMPLETE, next_state_);
-    session_->proxy_service()->CancelPacRequest(pac_request_);
+    session_->proxy_resolution_service()->CancelRequest(proxy_resolve_request_);
   }
   net_log_.EndEvent(NetLogEventType::HTTP_STREAM_JOB_CONTROLLER);
-}
-
-bool HttpStreamFactoryImpl::JobController::for_websockets() {
-  return factory_->for_websockets_;
 }
 
 std::unique_ptr<HttpStreamFactoryImpl::Request>
@@ -161,7 +157,8 @@ void HttpStreamFactoryImpl::JobController::Preconnect(int num_streams) {
 LoadState HttpStreamFactoryImpl::JobController::GetLoadState() const {
   DCHECK(request_);
   if (next_state_ == STATE_RESOLVE_PROXY_COMPLETE)
-    return session_->proxy_service()->GetLoadState(pac_request_);
+    return session_->proxy_resolution_service()
+                   ->GetLoadState(proxy_resolve_request_);
   if (bound_job_)
     return bound_job_->GetLoadState();
   if (main_job_)
@@ -211,7 +208,7 @@ void HttpStreamFactoryImpl::JobController::OnStreamReadyOnPooledConnection(
     const ProxyInfo& proxy_info,
     std::unique_ptr<HttpStream> stream) {
   DCHECK(request_->completed());
-  DCHECK(!factory_->for_websockets_);
+  DCHECK(!is_websocket_);
   DCHECK_EQ(HttpStreamRequest::HTTP_STREAM, request_->stream_type());
 
   main_job_.reset();
@@ -228,7 +225,7 @@ void HttpStreamFactoryImpl::JobController::
         const ProxyInfo& used_proxy_info,
         std::unique_ptr<BidirectionalStreamImpl> stream) {
   DCHECK(request_->completed());
-  DCHECK(!factory_->for_websockets_);
+  DCHECK(!is_websocket_);
   DCHECK_EQ(HttpStreamRequest::BIDIRECTIONAL_STREAM, request_->stream_type());
 
   main_job_.reset();
@@ -258,7 +255,7 @@ void HttpStreamFactoryImpl::JobController::OnStreamReady(
 
   if (!request_)
     return;
-  DCHECK(!factory_->for_websockets_);
+  DCHECK(!is_websocket_);
   DCHECK_EQ(HttpStreamRequest::HTTP_STREAM, request_->stream_type());
   OnJobSucceeded(job);
   DCHECK(request_->completed());
@@ -286,7 +283,7 @@ void HttpStreamFactoryImpl::JobController::OnBidirectionalStreamImplReady(
   std::unique_ptr<BidirectionalStreamImpl> stream =
       job->ReleaseBidirectionalStream();
   DCHECK(stream);
-  DCHECK(!factory_->for_websockets_);
+  DCHECK(!is_websocket_);
   DCHECK_EQ(HttpStreamRequest::BIDIRECTIONAL_STREAM, request_->stream_type());
 
   OnJobSucceeded(job);
@@ -306,7 +303,7 @@ void HttpStreamFactoryImpl::JobController::OnWebSocketHandshakeStreamReady(
 
   if (!request_)
     return;
-  DCHECK(factory_->for_websockets_);
+  DCHECK(is_websocket_);
   DCHECK_EQ(HttpStreamRequest::HTTP_STREAM, request_->stream_type());
   DCHECK(stream);
 
@@ -495,9 +492,9 @@ void HttpStreamFactoryImpl::JobController::OnNewSpdySessionReady(
 
     MarkRequestComplete(was_alpn_negotiated, negotiated_protocol, using_spdy);
 
-    if (for_websockets()) {
-      // TODO(ricea): Re-instate this code when WebSockets over SPDY is
-      // implemented.
+    if (is_websocket_) {
+      // TODO(bnc): Re-instate this code when WebSockets over HTTP/2 is
+      // implemented.  https://crbug.com/801564.
       NOTREACHED();
     } else if (job->stream_type() == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
       std::unique_ptr<BidirectionalStreamImpl> bidirectional_stream_impl =
@@ -681,13 +678,6 @@ bool HttpStreamFactoryImpl::JobController::HasPendingAltJob() const {
   return alternative_job_.get() != nullptr;
 }
 
-void HttpStreamFactoryImpl::JobController::LogHistograms() const {
-  if (main_job_)
-    main_job_->LogHistograms();
-  if (alternative_job_)
-    alternative_job_->LogHistograms();
-}
-
 size_t HttpStreamFactoryImpl::JobController::EstimateMemoryUsage() const {
   return base::trace_event::EstimateMemoryUsage(main_job_) +
          base::trace_event::EstimateMemoryUsage(alternative_job_);
@@ -746,7 +736,7 @@ int HttpStreamFactoryImpl::JobController::DoLoop(int rv) {
 }
 
 int HttpStreamFactoryImpl::JobController::DoResolveProxy() {
-  DCHECK(!pac_request_);
+  DCHECK(!proxy_resolve_request_);
   DCHECK(session_);
 
   next_state_ = STATE_RESOLVE_PROXY_COMPLETE;
@@ -759,15 +749,15 @@ int HttpStreamFactoryImpl::JobController::DoResolveProxy() {
   HostPortPair destination(HostPortPair::FromURL(request_info_.url));
   GURL origin_url = ApplyHostMappingRules(request_info_.url, &destination);
 
-  return session_->proxy_service()->ResolveProxy(
+  return session_->proxy_resolution_service()->ResolveProxy(
       origin_url, request_info_.method, &proxy_info_, io_callback_,
-      &pac_request_, session_->context().proxy_delegate, net_log_);
+      &proxy_resolve_request_, session_->context().proxy_delegate, net_log_);
 }
 
 int HttpStreamFactoryImpl::JobController::DoResolveProxyComplete(int rv) {
   DCHECK_NE(ERR_IO_PENDING, rv);
 
-  pac_request_ = nullptr;
+  proxy_resolve_request_ = nullptr;
   net_log_.AddEvent(
       NetLogEventType::HTTP_STREAM_JOB_CONTROLLER_PROXY_SERVER_RESOLVED,
       base::Bind(
@@ -825,12 +815,12 @@ int HttpStreamFactoryImpl::JobController::DoCreateJobs() {
           this, PRECONNECT, session_, request_info_, IDLE, proxy_info_,
           server_ssl_config_, proxy_ssl_config_, alternative_destination,
           origin_url, alternative_service_info_.protocol(), quic_version,
-          enable_ip_based_pooling_, session_->net_log());
+          is_websocket_, enable_ip_based_pooling_, session_->net_log());
     } else {
       main_job_ = job_factory_->CreateMainJob(
           this, PRECONNECT, session_, request_info_, IDLE, proxy_info_,
           server_ssl_config_, proxy_ssl_config_, destination, origin_url,
-          enable_ip_based_pooling_, session_->net_log());
+          is_websocket_, enable_ip_based_pooling_, session_->net_log());
     }
     main_job_->Preconnect(num_streams_);
     return OK;
@@ -838,7 +828,7 @@ int HttpStreamFactoryImpl::JobController::DoCreateJobs() {
   main_job_ = job_factory_->CreateMainJob(
       this, MAIN, session_, request_info_, priority_, proxy_info_,
       server_ssl_config_, proxy_ssl_config_, destination, origin_url,
-      enable_ip_based_pooling_, net_log_.net_log());
+      is_websocket_, enable_ip_based_pooling_, net_log_.net_log());
   // Alternative Service can only be set for HTTPS requests while Alternative
   // Proxy is set for HTTP requests.
   if (alternative_service_info_.protocol() != kProtoUnknown) {
@@ -856,23 +846,21 @@ int HttpStreamFactoryImpl::JobController::DoCreateJobs() {
         this, ALTERNATIVE, session_, request_info_, priority_, proxy_info_,
         server_ssl_config_, proxy_ssl_config_, alternative_destination,
         origin_url, alternative_service_info_.protocol(), quic_version,
-        enable_ip_based_pooling_, net_log_.net_log());
+        is_websocket_, enable_ip_based_pooling_, net_log_.net_log());
 
     main_job_is_blocked_ = true;
     alternative_job_->Start(request_->stream_type());
   } else {
-    ProxyServer alternative_proxy_server;
+    ProxyInfo alternative_proxy_info;
     if (ShouldCreateAlternativeProxyServerJob(proxy_info_, request_info_.url,
-                                              &alternative_proxy_server)) {
+                                              &alternative_proxy_info)) {
       DCHECK(!main_job_is_blocked_);
-      ProxyInfo alternative_proxy_info;
-      alternative_proxy_info.UseProxyServer(alternative_proxy_server);
 
       alternative_job_ = job_factory_->CreateAltProxyJob(
           this, ALTERNATIVE, session_, request_info_, priority_,
           alternative_proxy_info, server_ssl_config_, proxy_ssl_config_,
-          destination, origin_url, alternative_proxy_server,
-          enable_ip_based_pooling_, net_log_.net_log());
+          destination, origin_url, alternative_proxy_info.proxy_server(),
+          is_websocket_, enable_ip_based_pooling_, net_log_.net_log());
 
       can_start_alternative_proxy_job_ = false;
       main_job_is_blocked_ = true;
@@ -922,7 +910,7 @@ void HttpStreamFactoryImpl::JobController::OrphanUnboundJob() {
   RemoveRequestFromSpdySessionRequestMap();
 
   if (bound_job_->job_type() == MAIN && alternative_job_) {
-    DCHECK(!for_websockets());
+    DCHECK(!is_websocket_);
     // Allow |alternative_job_| to run to completion, rather than resetting it
     // to check if there is any broken alternative service to report.
     // OnOrphanedJobComplete() will clean up |this| when the job completes.
@@ -983,13 +971,18 @@ void HttpStreamFactoryImpl::JobController::OnAlternativeProxyJobFailed(
   DCHECK_EQ(alternative_job_->job_type(), ALTERNATIVE);
   DCHECK_NE(OK, net_error);
   DCHECK(alternative_job_->alternative_proxy_server().is_valid());
+  DCHECK(alternative_job_->alternative_proxy_server() ==
+         alternative_job_->proxy_info().proxy_server());
+
+  base::UmaHistogramSparse("Net.AlternativeProxyFailed", -net_error);
 
   // Need to mark alt proxy as broken regardless of whether the job is bound.
-  ProxyDelegate* proxy_delegate = session_->context().proxy_delegate;
-  if (proxy_delegate && net_error != ERR_NETWORK_CHANGED &&
+  // The proxy will be marked bad until the proxy retry information is cleared
+  // by an event such as a network change.
+  if (net_error != ERR_NETWORK_CHANGED &&
       net_error != ERR_INTERNET_DISCONNECTED) {
-    proxy_delegate->OnAlternativeProxyBroken(
-        alternative_job_->alternative_proxy_server());
+    session_->proxy_resolution_service()->MarkProxiesAsBadUntil(
+        alternative_job_->proxy_info(), base::TimeDelta::Max(), {}, net_log_);
   }
 }
 
@@ -1204,8 +1197,8 @@ bool HttpStreamFactoryImpl::JobController::
     ShouldCreateAlternativeProxyServerJob(
         const ProxyInfo& proxy_info,
         const GURL& url,
-        ProxyServer* alternative_proxy_server) const {
-  DCHECK(!alternative_proxy_server->is_valid());
+        ProxyInfo* alternative_proxy_info) const {
+  DCHECK(alternative_proxy_info->is_empty());
 
   if (!enable_alternative_services_)
     return false;
@@ -1229,19 +1222,19 @@ bool HttpStreamFactoryImpl::JobController::
     return false;
   }
 
-  *alternative_proxy_server = proxy_info.alternative_proxy();
-  if (!alternative_proxy_server->is_valid())
+  alternative_proxy_info->UseProxyServer(proxy_info.alternative_proxy());
+  if (alternative_proxy_info->is_empty())
     return false;
 
-  DCHECK(!(*alternative_proxy_server == proxy_info.proxy_server()));
+  DCHECK(alternative_proxy_info->proxy_server() != proxy_info.proxy_server());
 
-  if (!alternative_proxy_server->is_https() &&
-      !alternative_proxy_server->is_quic()) {
+  if (!alternative_proxy_info->is_https() &&
+      !alternative_proxy_info->is_quic()) {
     // Alternative proxy server should be a secure server.
     return false;
   }
 
-  if (alternative_proxy_server->is_quic()) {
+  if (alternative_proxy_info->is_quic()) {
     // Check that QUIC is enabled globally.
     if (!session_->IsQuicEnabled())
       return false;
@@ -1282,7 +1275,7 @@ int HttpStreamFactoryImpl::JobController::ReconsiderProxyAfterError(Job* job,
                                                                     int error) {
   // ReconsiderProxyAfterError() should only be called when the last job fails.
   DCHECK(!(alternative_job_ && main_job_));
-  DCHECK(!pac_request_);
+  DCHECK(!proxy_resolve_request_);
   DCHECK(session_);
 
   if (!job->should_reconsider_proxy())
@@ -1305,9 +1298,9 @@ int HttpStreamFactoryImpl::JobController::ReconsiderProxyAfterError(Job* job,
   HostPortPair destination(HostPortPair::FromURL(request_info_.url));
   GURL origin_url = ApplyHostMappingRules(request_info_.url, &destination);
 
-  int rv = session_->proxy_service()->ReconsiderProxyAfterError(
+  int rv = session_->proxy_resolution_service()->ReconsiderProxyAfterError(
       origin_url, request_info_.method, error, &proxy_info_, io_callback_,
-      &pac_request_, session_->context().proxy_delegate, net_log_);
+      &proxy_resolve_request_, session_->context().proxy_delegate, net_log_);
   if (rv == OK || rv == ERR_IO_PENDING) {
     if (!job->using_quic())
       RemoveRequestFromSpdySessionRequestMap();

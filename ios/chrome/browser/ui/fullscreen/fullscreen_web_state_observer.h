@@ -10,7 +10,9 @@
 #include "ios/web/public/web_state/web_state_observer.h"
 
 class FullscreenController;
+class FullscreenMediator;
 class FullscreenModel;
+@class FullscreenWebViewProxyObserver;
 class ScopedFullscreenDisabler;
 
 // A WebStateObserver that updates a FullscreenModel for navigation events.
@@ -18,7 +20,8 @@ class FullscreenWebStateObserver : public web::WebStateObserver {
  public:
   // Constructor for an observer that updates |controller| and |model|.
   FullscreenWebStateObserver(FullscreenController* controller,
-                             FullscreenModel* model);
+                             FullscreenModel* model,
+                             FullscreenMediator* mediator);
   ~FullscreenWebStateObserver() override;
 
   // Tells the observer to start observing |web_state|.
@@ -32,8 +35,8 @@ class FullscreenWebStateObserver : public web::WebStateObserver {
   void DidStopLoading(web::WebState* web_state) override;
   void DidChangeVisibleSecurityState(web::WebState* web_state) override;
   void WebStateDestroyed(web::WebState* web_state) override;
-  // Setter for whether the current page's SSL is broken.
-  void SetIsSSLBroken(bool broken);
+  // Setter for whether the current page's SSL should disable fullscreen.
+  void SetDisableFullscreenForSSL(bool disable);
   // Setter for whether the WebState is currently loading.
   void SetIsLoading(bool loading);
 
@@ -43,7 +46,9 @@ class FullscreenWebStateObserver : public web::WebStateObserver {
   FullscreenController* controller_;
   // The model passed on construction.
   FullscreenModel* model_;
-  // The disabler for broken SSL.
+  // Observer for |web_state_|'s scroll view proxy.
+  __strong FullscreenWebViewProxyObserver* web_view_proxy_observer_;
+  // The disabler for invalid SSL states.
   std::unique_ptr<ScopedFullscreenDisabler> ssl_disabler_;
   // The disabler for loading.
   std::unique_ptr<ScopedFullscreenDisabler> loading_disabler_;

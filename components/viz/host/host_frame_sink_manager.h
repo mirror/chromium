@@ -88,17 +88,10 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
   // Creates a connection for a display root to viz. Provides the same
   // interfaces as CreateCompositorFramesink() plus the priviledged
-  // DisplayPrivate interface. When no longer needed, call
-  // InvalidateFrameSinkId().
+  // DisplayPrivate and (if requested) ExternalBeginFrameController interfaces.
+  // When no longer needed, call InvalidateFrameSinkId().
   void CreateRootCompositorFrameSink(
-      const FrameSinkId& frame_sink_id,
-      gpu::SurfaceHandle surface_handle,
-      bool force_software_compositing,
-      const RendererSettings& renderer_settings,
-      mojom::CompositorFrameSinkAssociatedRequest request,
-      mojom::CompositorFrameSinkClientPtr client,
-      mojom::DisplayPrivateAssociatedRequest display_private_request,
-      mojom::DisplayClientPtr display_client);
+      mojom::RootCompositorFrameSinkParamsPtr params);
 
   // Creates a connection between client to viz, using |request| and |client|,
   // that allows the client to submit CompositorFrames. When no longer needed,
@@ -126,6 +119,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
   // Asks viz to send updates regarding video activity to |observer|.
   void AddVideoDetectorObserver(mojom::VideoDetectorObserverPtr observer);
+
+  // Creates a FrameSinkVideoCapturer instance.
+  void CreateVideoCapturer(mojom::FrameSinkVideoCapturerRequest request);
 
   // CompositorFrameSinkSupportManager:
   std::unique_ptr<CompositorFrameSinkSupport> CreateCompositorFrameSinkSupport(
@@ -160,6 +156,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
     // The client to be notified of changes to this FrameSink.
     HostFrameSinkClient* client = nullptr;
+
+    // The name of the HostFrameSinkClient used for debug purposes.
+    std::string debug_label;
 
     // If the frame sink is a root that corresponds to a Display.
     bool is_root = false;

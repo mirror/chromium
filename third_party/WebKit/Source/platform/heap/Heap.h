@@ -38,13 +38,13 @@
 #include "platform/PlatformExport.h"
 #include "platform/heap/GCInfo.h"
 #include "platform/heap/HeapPage.h"
+#include "platform/heap/ProcessHeap.h"
 #include "platform/heap/StackFrameDepth.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/heap/Visitor.h"
 #include "platform/wtf/AddressSanitizer.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
-#include "platform/wtf/Atomics.h"
 #include "platform/wtf/Forward.h"
 
 namespace blink {
@@ -83,7 +83,6 @@ class PLATFORM_EXPORT HeapAllocHooks {
   static FreeHook* free_hook_;
 };
 
-class CrossThreadPersistentRegion;
 class HeapCompact;
 template <typename T>
 class Member;
@@ -116,51 +115,6 @@ class ObjectAliveTrait<T, true> {
     static_assert(sizeof(T), "T must be fully defined");
     return object->GetHeapObjectHeader()->IsMarked();
   }
-};
-
-class PLATFORM_EXPORT ProcessHeap {
-  STATIC_ONLY(ProcessHeap);
-
- public:
-  static void Init();
-
-  static CrossThreadPersistentRegion& GetCrossThreadPersistentRegion();
-
-  static void IncreaseTotalAllocatedObjectSize(size_t delta) {
-    AtomicAdd(&total_allocated_object_size_, static_cast<long>(delta));
-  }
-  static void DecreaseTotalAllocatedObjectSize(size_t delta) {
-    AtomicSubtract(&total_allocated_object_size_, static_cast<long>(delta));
-  }
-  static size_t TotalAllocatedObjectSize() {
-    return AcquireLoad(&total_allocated_object_size_);
-  }
-  static void IncreaseTotalMarkedObjectSize(size_t delta) {
-    AtomicAdd(&total_marked_object_size_, static_cast<long>(delta));
-  }
-  static void DecreaseTotalMarkedObjectSize(size_t delta) {
-    AtomicSubtract(&total_marked_object_size_, static_cast<long>(delta));
-  }
-  static size_t TotalMarkedObjectSize() {
-    return AcquireLoad(&total_marked_object_size_);
-  }
-  static void IncreaseTotalAllocatedSpace(size_t delta) {
-    AtomicAdd(&total_allocated_space_, static_cast<long>(delta));
-  }
-  static void DecreaseTotalAllocatedSpace(size_t delta) {
-    AtomicSubtract(&total_allocated_space_, static_cast<long>(delta));
-  }
-  static size_t TotalAllocatedSpace() {
-    return AcquireLoad(&total_allocated_space_);
-  }
-  static void ResetHeapCounters();
-
- private:
-  static size_t total_allocated_space_;
-  static size_t total_allocated_object_size_;
-  static size_t total_marked_object_size_;
-
-  friend class ThreadState;
 };
 
 // Stats for the heap.
@@ -329,6 +283,11 @@ class PLATFORM_EXPORT ThreadHeap {
   // the callback with the visitor and the object pointer.  Returns
   // false when there is nothing more to do.
   bool PopAndInvokePostMarkingCallback(Visitor*);
+
+  // Invokes all ephemeronIterationDone callbacks on weak tables to do cleanup
+  // (specifically to clear the queued bits for weak hash tables). Needs to be
+  // called even when marking has been aborted.
+  void InvokeEphemeronIterationDoneCallbacks(Visitor*);
 
   // Remove an item from the weak callback work list and call the callback
   // with the visitor and the closure pointer.  Returns false when there is
@@ -554,6 +513,7 @@ class PLATFORM_EXPORT ThreadHeap {
   std::unique_ptr<CallbackStack> post_marking_callback_stack_;
   std::unique_ptr<CallbackStack> weak_callback_stack_;
   std::unique_ptr<CallbackStack> ephemeron_stack_;
+  std::unique_ptr<CallbackStack> ephemeron_iteration_done_stack_;
   StackFrameDepth stack_frame_depth_;
 
   std::unique_ptr<HeapCompact> compaction_;

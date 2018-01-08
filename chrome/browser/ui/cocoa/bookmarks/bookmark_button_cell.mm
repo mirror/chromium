@@ -88,6 +88,11 @@ const CGFloat kKernAmount = 0.2;
 @synthesize startingChildIndex = startingChildIndex_;
 @synthesize drawFolderArrow = drawFolderArrow_;
 
+// Overridden from GradientButtonCell.
++ (CGFloat)insetInView:(NSView*)view {
+  return 0;
+}
+
 + (id)buttonCellForNode:(const BookmarkNode*)node
                    text:(NSString*)text
                   image:(NSImage*)image
@@ -392,7 +397,7 @@ const CGFloat kKernAmount = 0.2;
 
 - (NSRect)imageRectForBounds:(NSRect)theRect {
   NSRect imageRect = [super imageRectForBounds:theRect];
-  const CGFloat inset = [self insetInView:[self controlView]];
+  const CGFloat inset = [[self class] insetInView:[self controlView]];
   imageRect.origin.y -= 1;
   imageRect.origin.x =
       cocoa_l10n_util::ShouldDoExperimentalRTLLayout()

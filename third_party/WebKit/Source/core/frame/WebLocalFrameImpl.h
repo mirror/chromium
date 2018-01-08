@@ -44,6 +44,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
+#include "public/web/devtools_agent.mojom-blink.h"
 
 #include <memory>
 
@@ -91,7 +92,7 @@ class CORE_EXPORT WebLocalFrameImpl final
       WebSharedWorkerRepositoryClient*) override;
   WebSize GetScrollOffset() const override;
   void SetScrollOffset(const WebSize&) override;
-  WebSize ContentsSize() const override;
+  WebSize DocumentSize() const override;
   bool HasVisibleContent() const override;
   WebRect VisibleContentRect() const override;
   WebView* View() const override;
@@ -121,6 +122,7 @@ class CORE_EXPORT WebLocalFrameImpl final
                                 int argc,
                                 v8::Local<v8::Value> argv[],
                                 WebScriptExecutionCallback*) override;
+  void PostPausableTask(PausableTaskCallback) override;
   void ExecuteScriptInIsolatedWorld(
       int world_id,
       const WebScriptSource* sources_in,
@@ -234,7 +236,6 @@ class CORE_EXPORT WebLocalFrameImpl final
       const WebDOMEvent&) override;
 
   WebRect GetSelectionBoundsRectForTesting() const override;
-  void DetachAllDevToolsSessionsForTesting() override;
 
   WebString GetLayerTreeAsTextForTesting(
       bool show_debug_info = false) const override;
@@ -245,8 +246,6 @@ class CORE_EXPORT WebLocalFrameImpl final
                                       blink::InterfaceRegistry*) override;
   void SetAutofillClient(WebAutofillClient*) override;
   WebAutofillClient* AutofillClient() override;
-  void SetDevToolsAgentClient(WebDevToolsAgentClient*) override;
-  WebDevToolsAgent* DevToolsAgent() override;
   WebLocalFrameImpl* LocalRoot() override;
   WebFrame* FindFrameByName(const WebString& name) override;
   void SendPings(const WebURL& destination_url) override;
@@ -368,6 +367,7 @@ class CORE_EXPORT WebLocalFrameImpl final
     return GetFrame() ? GetFrame()->View() : nullptr;
   }
 
+  void SetDevToolsAgentImpl(WebDevToolsAgentImpl*);
   WebDevToolsAgentImpl* DevToolsAgentImpl() const {
     return dev_tools_agent_.Get();
   }
@@ -457,6 +457,8 @@ class CORE_EXPORT WebLocalFrameImpl final
   void DispatchPrintEventRecursively(const AtomicString& event_type);
 
   Node* ContextMenuNodeInner() const;
+
+  void BindDevToolsAgentRequest(mojom::blink::DevToolsAgentAssociatedRequest);
 
   Member<LocalFrameClient> local_frame_client_;
 

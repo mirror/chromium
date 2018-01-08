@@ -19,8 +19,8 @@
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/text_constants.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notifier_id.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
+#include "ui/message_center/public/cpp/notifier_id.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_highlight.h"
@@ -169,6 +169,7 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   button_container_->AddChildView(CreateVerticalSeparator());
 
   collapse_button_ = new MessageCenterButton(this);
+  collapse_button_->SetVisible(false);
   collapse_button_->SetBackground(
       views::CreateSolidBackground(message_center_style::kBackgroundColor));
   collapse_button_->SetPaintToLayer();
@@ -220,6 +221,10 @@ views::Button* MessageCenterButtonBar::GetQuietModeButtonForTest() const {
 
 views::Button* MessageCenterButtonBar::GetSettingsButtonForTest() const {
   return settings_button_;
+}
+
+views::Button* MessageCenterButtonBar::GetCollapseButtonForTest() const {
+  return collapse_button_;
 }
 
 void MessageCenterButtonBar::SetBackArrowVisible(bool visible) {

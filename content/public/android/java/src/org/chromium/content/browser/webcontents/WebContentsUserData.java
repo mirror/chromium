@@ -6,6 +6,8 @@ package org.chromium.content.browser.webcontents;
 
 import org.chromium.content_public.browser.WebContents;
 
+import java.util.Map;
+
 /**
  * Holds an object to be stored in {@code userDataMap} in {@link WebContents} for those
  * classes that have the lifetime of {@link WebContents} without hanging directly onto it.
@@ -53,11 +55,12 @@ public final class WebContentsUserData {
     }
 
     /**
-     * Looks up the generic object of the given web contents. If not present, create one.
+     * Looks up the generic object of the given web contents.
      *
      * @param webContents The web contents for which to lookup the object.
      * @param key Class instance of the object used as the key.
-     * @param userDataFactory Factory that creates an object of the generic class.
+     * @param userDataFactory Factory that creates an object of the generic class. Create a new
+     * instance if the object is not available and the factory is non-null.
      * @return The object (possibly null) of the given web contents.
      */
     @SuppressWarnings("unchecked")
@@ -65,8 +68,13 @@ public final class WebContentsUserData {
             WebContents webContents, Class<T> key, UserDataFactory<T> userDataFactory) {
         // Casting to WebContentsImpl is safe since it's the actual implementation.
         WebContentsImpl webContentsImpl = (WebContentsImpl) webContents;
-        WebContentsUserData data = webContentsImpl.getUserData(key);
-        if (data == null) {
+        Map<Class, WebContentsUserData> userDataMap = webContentsImpl.getUserDataMap();
+
+        // Map can be null after WebView gets gc'ed on it wasy to destruction.
+        if (userDataMap == null) return null;
+
+        WebContentsUserData data = userDataMap.get(key);
+        if (data == null && userDataFactory != null) {
             T object = userDataFactory.create(webContents);
             assert object.getClass() == key;
             webContentsImpl.setUserData(key, new WebContentsUserData(object));
@@ -75,6 +83,6 @@ public final class WebContentsUserData {
             data = webContentsImpl.getUserData(key);
         }
         // Casting Object to T is safe since we make sure the object was of type T upon creation.
-        return (T) data.mObject;
+        return data != null ? (T) data.mObject : null;
     }
 }

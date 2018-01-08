@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "chrome_elf/nt_registry/nt_registry.h"
@@ -280,6 +281,10 @@ IMEStatus InitIMEs() {
 
   nt::CloseRegKey(key_handle);
   return IMEStatus::kSuccess;
+}
+
+void DeinitIMEsForTesting() {
+  GetImeVector()->clear();
 }
 
 }  // namespace whitelist

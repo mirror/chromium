@@ -18,7 +18,6 @@
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_checker.h"
 #include "components/leveldb_proto/leveldb_database.h"
 #include "components/leveldb_proto/proto_database.h"
@@ -308,8 +307,8 @@ template <typename T>
 void ProtoDatabaseImpl<T>::LoadKeys(
     typename ProtoDatabase<T>::LoadKeysCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  auto success = base::MakeUnique<bool>(false);
-  auto keys = base::MakeUnique<std::vector<std::string>>();
+  auto success = std::make_unique<bool>(false);
+  auto keys = std::make_unique<std::vector<std::string>>();
   auto load_task =
       base::Bind(LoadKeysFromTaskRunner, base::Unretained(db_.get()),
                  keys.get(), success.get());

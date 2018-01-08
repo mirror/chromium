@@ -15,6 +15,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/process/process.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
@@ -28,9 +29,9 @@
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/context_menu_params.h"
-#include "content/public/common/network_service.mojom.h"
 #include "content/public/common/page_type.h"
 #include "ipc/message_filter.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
 #include "storage/common/fileapi/file_system_types.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
@@ -190,6 +191,8 @@ void SimulateTapAt(WebContents* web_contents, const gfx::Point& point);
 #if defined(USE_AURA)
 // Generates a TouchStart at |point|.
 void SimulateTouchPressAt(WebContents* web_contents, const gfx::Point& point);
+
+void SimulateLongPressAt(WebContents* web_contents, const gfx::Point& point);
 #endif
 
 // Taps the screen with modifires at |point|.
@@ -1067,15 +1070,23 @@ class ContextMenuFilter : public content::BrowserMessageFilter {
 
 WebContents* GetEmbedderForGuest(content::WebContents* guest);
 
+// Returns true if the network service is enabled and it's running in the
+// browser process.
+bool IsNetworkServiceRunningInProcess();
+
 // Crash the Network Service process. Should only be called when out-of-process
 // Network Service is enabled.
 void SimulateNetworkServiceCrash();
 
 // Load the given |url| with |network_context| and return the |net::Error| code.
-int LoadBasicRequest(mojom::NetworkContext* network_context,
+int LoadBasicRequest(network::mojom::NetworkContext* network_context,
                      const GURL& url,
                      int process_id = 0,
                      int render_frame_id = 0);
+
+// Returns true if there is a valid process for |process_group_name|. Must be
+// called on the IO thread.
+bool HasValidProcessForProcessGroup(const std::string& process_group_name);
 
 }  // namespace content
 

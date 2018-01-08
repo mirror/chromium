@@ -21,10 +21,12 @@
 #include "platform/loader/fetch/ResourceLoader.h"
 #include "platform/loader/fetch/ScriptFetchOptions.h"
 #include "platform/scheduler/child/web_scheduler.h"
+#include "platform/scheduler/child/web_task_runner_impl.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/text/TextEncoding.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
+#include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "v8/include/v8.h"
 
@@ -35,10 +37,7 @@ namespace {
 class ScriptStreamingTest : public ::testing::Test {
  public:
   ScriptStreamingTest()
-      : loading_task_runner_(Platform::Current()
-                                 ->CurrentThread()
-                                 ->Scheduler()
-                                 ->LoadingTaskRunner()),
+      : loading_task_runner_(scheduler::CreateWebTaskRunnerForTesting()),
         dummy_page_holder_(DummyPageHolder::Create(IntSize(800, 600))) {
     dummy_page_holder_->GetPage().GetSettings().SetScriptEnabled(true);
     MockScriptElementBase* element = MockScriptElementBase::Create();
@@ -103,7 +102,7 @@ class ScriptStreamingTest : public ::testing::Test {
   }
 
   void Finish() {
-    GetResource()->Loader()->DidFinishLoading(0.0, 0, 0, 0);
+    GetResource()->Loader()->DidFinishLoading(0.0, 0, 0, 0, false);
     GetResource()->SetStatus(ResourceStatus::kCached);
   }
 
@@ -168,9 +167,14 @@ TEST_F(ScriptStreamingTest, CompilingStreamedScript) {
   EXPECT_TRUE(source_code.Streamer());
   v8::TryCatch try_catch(scope.GetIsolate());
   v8::Local<v8::Script> script;
+  v8::ScriptCompiler::CompileOptions compile_options;
+  V8ScriptRunner::ProduceCacheOptions produce_cache_options;
+  v8::ScriptCompiler::NoCacheReason no_cache_reason;
+  std::tie(compile_options, produce_cache_options, no_cache_reason) =
+      V8ScriptRunner::GetCompileOptions(kV8CacheOptionsDefault, source_code);
   EXPECT_TRUE(V8ScriptRunner::CompileScript(
                   scope.GetScriptState(), source_code, kSharableCrossOrigin,
-                  kV8CacheOptionsDefault, ReferrerScriptInfo())
+                  compile_options, no_cache_reason, ReferrerScriptInfo())
                   .ToLocal(&script));
   EXPECT_FALSE(try_catch.HasCaught());
 }
@@ -208,9 +212,14 @@ TEST_F(ScriptStreamingTest, CompilingStreamedScriptWithParseError) {
   EXPECT_TRUE(source_code.Streamer());
   v8::TryCatch try_catch(scope.GetIsolate());
   v8::Local<v8::Script> script;
+  v8::ScriptCompiler::CompileOptions compile_options;
+  V8ScriptRunner::ProduceCacheOptions produce_cache_options;
+  v8::ScriptCompiler::NoCacheReason no_cache_reason;
+  std::tie(compile_options, produce_cache_options, no_cache_reason) =
+      V8ScriptRunner::GetCompileOptions(kV8CacheOptionsDefault, source_code);
   EXPECT_FALSE(V8ScriptRunner::CompileScript(
                    scope.GetScriptState(), source_code, kSharableCrossOrigin,
-                   kV8CacheOptionsDefault, ReferrerScriptInfo())
+                   compile_options, no_cache_reason, ReferrerScriptInfo())
                    .ToLocal(&script));
   EXPECT_TRUE(try_catch.HasCaught());
 }
@@ -360,9 +369,14 @@ TEST_F(ScriptStreamingTest, ScriptsWithSmallFirstChunk) {
   EXPECT_TRUE(source_code.Streamer());
   v8::TryCatch try_catch(scope.GetIsolate());
   v8::Local<v8::Script> script;
+  v8::ScriptCompiler::CompileOptions compile_options;
+  V8ScriptRunner::ProduceCacheOptions produce_cache_options;
+  v8::ScriptCompiler::NoCacheReason no_cache_reason;
+  std::tie(compile_options, produce_cache_options, no_cache_reason) =
+      V8ScriptRunner::GetCompileOptions(kV8CacheOptionsDefault, source_code);
   EXPECT_TRUE(V8ScriptRunner::CompileScript(
                   scope.GetScriptState(), source_code, kSharableCrossOrigin,
-                  kV8CacheOptionsDefault, ReferrerScriptInfo())
+                  compile_options, no_cache_reason, ReferrerScriptInfo())
                   .ToLocal(&script));
   EXPECT_FALSE(try_catch.HasCaught());
 }
@@ -397,9 +411,14 @@ TEST_F(ScriptStreamingTest, EncodingChanges) {
   EXPECT_TRUE(source_code.Streamer());
   v8::TryCatch try_catch(scope.GetIsolate());
   v8::Local<v8::Script> script;
+  v8::ScriptCompiler::CompileOptions compile_options;
+  V8ScriptRunner::ProduceCacheOptions produce_cache_options;
+  v8::ScriptCompiler::NoCacheReason no_cache_reason;
+  std::tie(compile_options, produce_cache_options, no_cache_reason) =
+      V8ScriptRunner::GetCompileOptions(kV8CacheOptionsDefault, source_code);
   EXPECT_TRUE(V8ScriptRunner::CompileScript(
                   scope.GetScriptState(), source_code, kSharableCrossOrigin,
-                  kV8CacheOptionsDefault, ReferrerScriptInfo())
+                  compile_options, no_cache_reason, ReferrerScriptInfo())
                   .ToLocal(&script));
   EXPECT_FALSE(try_catch.HasCaught());
 }
@@ -435,9 +454,14 @@ TEST_F(ScriptStreamingTest, EncodingFromBOM) {
   EXPECT_TRUE(source_code.Streamer());
   v8::TryCatch try_catch(scope.GetIsolate());
   v8::Local<v8::Script> script;
+  v8::ScriptCompiler::CompileOptions compile_options;
+  V8ScriptRunner::ProduceCacheOptions produce_cache_options;
+  v8::ScriptCompiler::NoCacheReason no_cache_reason;
+  std::tie(compile_options, produce_cache_options, no_cache_reason) =
+      V8ScriptRunner::GetCompileOptions(kV8CacheOptionsDefault, source_code);
   EXPECT_TRUE(V8ScriptRunner::CompileScript(
                   scope.GetScriptState(), source_code, kSharableCrossOrigin,
-                  kV8CacheOptionsDefault, ReferrerScriptInfo())
+                  compile_options, no_cache_reason, ReferrerScriptInfo())
                   .ToLocal(&script));
   EXPECT_FALSE(try_catch.HasCaught());
 }

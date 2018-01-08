@@ -73,7 +73,7 @@ class FakeIDBDatabaseCallbacks final : public IDBDatabaseCallbacks {
   void OnComplete(int64_t transaction_id) override {}
 
  private:
-  FakeIDBDatabaseCallbacks() {}
+  FakeIDBDatabaseCallbacks() = default;
 };
 
 class IDBTransactionTest : public ::testing::Test {
@@ -130,7 +130,7 @@ TEST_F(IDBTransactionTest, ContextDestroyedEarlyDeath) {
   EXPECT_EQ(1u, live_transactions.size());
 
   Persistent<IDBRequest> request =
-      IDBRequest::Create(scope.GetScriptState(), IDBAny::Create(store_.Get()),
+      IDBRequest::Create(scope.GetScriptState(), store_.Get(),
                          transaction_.Get(), IDBRequest::AsyncTraceState());
 
   DeactivateNewTransactions(scope.GetIsolate());
@@ -163,7 +163,7 @@ TEST_F(IDBTransactionTest, ContextDestroyedAfterDone) {
   EXPECT_EQ(1U, live_transactions.size());
 
   Persistent<IDBRequest> request =
-      IDBRequest::Create(scope.GetScriptState(), IDBAny::Create(store_.Get()),
+      IDBRequest::Create(scope.GetScriptState(), store_.Get(),
                          transaction_.Get(), IDBRequest::AsyncTraceState());
   DeactivateNewTransactions(scope.GetIsolate());
 
@@ -193,7 +193,6 @@ TEST_F(IDBTransactionTest, ContextDestroyedAfterDone) {
 TEST_F(IDBTransactionTest, ContextDestroyedWithQueuedResult) {
   V8TestingScope scope;
   std::unique_ptr<MockWebIDBDatabase> backend = MockWebIDBDatabase::Create();
-  EXPECT_CALL(*backend, AckReceivedBlobs(::testing::_)).Times(1);
   EXPECT_CALL(*backend, Close()).Times(1);
   BuildTransaction(scope, std::move(backend));
 
@@ -204,7 +203,7 @@ TEST_F(IDBTransactionTest, ContextDestroyedWithQueuedResult) {
   EXPECT_EQ(1U, live_transactions.size());
 
   Persistent<IDBRequest> request =
-      IDBRequest::Create(scope.GetScriptState(), IDBAny::Create(store_.Get()),
+      IDBRequest::Create(scope.GetScriptState(), store_.Get(),
                          transaction_.Get(), IDBRequest::AsyncTraceState());
   DeactivateNewTransactions(scope.GetIsolate());
 
@@ -230,7 +229,6 @@ TEST_F(IDBTransactionTest, ContextDestroyedWithQueuedResult) {
 TEST_F(IDBTransactionTest, ContextDestroyedWithTwoQueuedResults) {
   V8TestingScope scope;
   std::unique_ptr<MockWebIDBDatabase> backend = MockWebIDBDatabase::Create();
-  EXPECT_CALL(*backend, AckReceivedBlobs(::testing::_)).Times(2);
   EXPECT_CALL(*backend, Close()).Times(1);
   BuildTransaction(scope, std::move(backend));
 
@@ -241,10 +239,10 @@ TEST_F(IDBTransactionTest, ContextDestroyedWithTwoQueuedResults) {
   EXPECT_EQ(1U, live_transactions.size());
 
   Persistent<IDBRequest> request1 =
-      IDBRequest::Create(scope.GetScriptState(), IDBAny::Create(store_.Get()),
+      IDBRequest::Create(scope.GetScriptState(), store_.Get(),
                          transaction_.Get(), IDBRequest::AsyncTraceState());
   Persistent<IDBRequest> request2 =
-      IDBRequest::Create(scope.GetScriptState(), IDBAny::Create(store_.Get()),
+      IDBRequest::Create(scope.GetScriptState(), store_.Get(),
                          transaction_.Get(), IDBRequest::AsyncTraceState());
   DeactivateNewTransactions(scope.GetIsolate());
 
@@ -274,7 +272,6 @@ TEST_F(IDBTransactionTest, DocumentShutdownWithQueuedAndBlockedResults) {
 
   V8TestingScope scope;
   std::unique_ptr<MockWebIDBDatabase> backend = MockWebIDBDatabase::Create();
-  EXPECT_CALL(*backend, AckReceivedBlobs(::testing::_)).Times(1);
   EXPECT_CALL(*backend, Close()).Times(1);
   BuildTransaction(scope, std::move(backend));
 
@@ -285,10 +282,10 @@ TEST_F(IDBTransactionTest, DocumentShutdownWithQueuedAndBlockedResults) {
   EXPECT_EQ(1U, live_transactions.size());
 
   Persistent<IDBRequest> request1 =
-      IDBRequest::Create(scope.GetScriptState(), IDBAny::Create(store_.Get()),
+      IDBRequest::Create(scope.GetScriptState(), store_.Get(),
                          transaction_.Get(), IDBRequest::AsyncTraceState());
   Persistent<IDBRequest> request2 =
-      IDBRequest::Create(scope.GetScriptState(), IDBAny::Create(store_.Get()),
+      IDBRequest::Create(scope.GetScriptState(), store_.Get(),
                          transaction_.Get(), IDBRequest::AsyncTraceState());
   DeactivateNewTransactions(scope.GetIsolate());
 

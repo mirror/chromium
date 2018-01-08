@@ -44,8 +44,9 @@
 #include "core/layout/LayoutListMarker.h"
 #include "core/layout/LayoutTableCell.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/inline/ng_inline_fragment_traversal.h"
+#include "core/layout/ng/inline/ng_text_fragment.h"
 #include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/svg/LayoutSVGImage.h"
 #include "core/layout/svg/LayoutSVGInline.h"
@@ -260,7 +261,7 @@ void LayoutTreeAsText::WriteLayoutObject(TextStream& ts,
   if (o.IsTableCell()) {
     const LayoutTableCell& c = ToLayoutTableCell(o);
     ts << " [r=" << c.RowIndex() << " c=" << c.AbsoluteColumnIndex()
-       << " rs=" << c.RowSpan() << " cs=" << c.ColSpan() << "]";
+       << " rs=" << c.ResolvedRowSpan() << " cs=" << c.ColSpan() << "]";
   }
 
   if (o.IsDetailsMarker()) {
@@ -444,6 +445,26 @@ static void WriteTextRun(TextStream& ts,
   ts << "\n";
 }
 
+static void WriteTextFragment(TextStream& ts,
+                              const NGPhysicalFragment& physical_fragment,
+                              NGPhysicalOffset offset_to_container_box) {
+  if (!physical_fragment.IsText())
+    return;
+  const NGPhysicalTextFragment& physical_text_fragment =
+      ToNGPhysicalTextFragment(physical_fragment);
+  NGTextFragment fragment(physical_fragment.Style().GetWritingMode(),
+                          physical_text_fragment);
+  // See WriteTextRun() for why we convert to int.
+  int x = offset_to_container_box.left.ToInt();
+  int y = offset_to_container_box.top.ToInt();
+  int logical_width =
+      (offset_to_container_box.left + fragment.InlineSize()).Ceil() - x;
+  ts << "text run at (" << x << "," << y << ") width " << logical_width;
+  ts << ": "
+     << QuoteAndEscapeNonPrintables(physical_text_fragment.Text().ToString());
+  ts << "\n";
+}
+
 void Write(TextStream& ts,
            const LayoutObject& o,
            int indent,
@@ -492,10 +513,19 @@ void Write(TextStream& ts,
 
   if (o.IsText() && !o.IsBR()) {
     const LayoutText& text = ToLayoutText(o);
-    for (InlineTextBox* box = text.FirstTextBox(); box;
-         box = box->NextTextBox()) {
-      WriteIndent(ts, indent + 1);
-      WriteTextRun(ts, text, *box);
+    if (const NGPhysicalBoxFragment* box_fragment =
+            text.EnclosingBlockFlowFragment()) {
+      for (const auto& child :
+           NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, &text)) {
+        WriteIndent(ts, indent + 1);
+        WriteTextFragment(ts, *child.fragment, child.offset_to_container_box);
+      }
+    } else {
+      for (InlineTextBox* box = text.FirstTextBox(); box;
+           box = box->NextTextBox()) {
+        WriteIndent(ts, indent + 1);
+        WriteTextRun(ts, text, *box);
+      }
     }
   }
 
@@ -507,12 +537,11 @@ void Write(TextStream& ts,
   }
 
   if (o.IsLayoutEmbeddedContent()) {
-    LocalFrameView* frame_view = ToLayoutEmbeddedContent(o).ChildFrameView();
-    if (frame_view) {
-      LayoutViewItem root_item = frame_view->GetLayoutViewItem();
-      if (!root_item.IsNull()) {
-        root_item.UpdateStyleAndLayout();
-        if (auto* layer = root_item.Layer()) {
+    FrameView* frame_view = ToLayoutEmbeddedContent(o).ChildFrameView();
+    if (frame_view && frame_view->IsLocalFrameView()) {
+      if (auto* layout_view = ToLocalFrameView(frame_view)->GetLayoutView()) {
+        layout_view->GetDocument().UpdateStyleAndLayout();
+        if (auto* layer = layout_view->Layer()) {
           LayoutTreeAsText::WriteLayers(
               ts, layer, layer, layer->RectIgnoringNeedsPositionUpdate(),
               indent + 1, behavior);
@@ -656,10 +685,10 @@ void LayoutTreeAsText::WriteLayers(TextStream& ts,
   // Calculate the clip rects we should use.
   LayoutRect layer_bounds;
   ClipRect damage_rect, clip_rect_to_apply;
-  layer->Clipper(PaintLayer::kDoNotUseGeometryMapper)
-      .CalculateRects(ClipRectsContext(root_layer, kUncachedClipRects), nullptr,
-                      paint_rect, layer_bounds, damage_rect,
-                      clip_rect_to_apply);
+  layer->Clipper(PaintLayer::kUseGeometryMapper)
+      .CalculateRects(ClipRectsContext(root_layer, kUncachedClipRects),
+                      &layer->GetLayoutObject().FirstFragment(), paint_rect,
+                      layer_bounds, damage_rect, clip_rect_to_apply);
 
   // Ensure our lists are up to date.
   layer->StackingNode()->UpdateLayerListsIfNeeded();
@@ -818,7 +847,7 @@ String ExternalRepresentation(LocalFrame* frame,
                               LayoutAsTextBehavior behavior,
                               const PaintLayer* marked_layer) {
   if (!(behavior & kLayoutAsTextDontUpdateLayout))
-    frame->GetDocument()->UpdateStyleAndLayout();
+    frame->View()->UpdateLifecycleToPrePaintClean();
 
   LayoutObject* layout_object = frame->ContentLayoutObject();
   if (!layout_object || !layout_object->IsBox())
@@ -830,6 +859,11 @@ String ExternalRepresentation(LocalFrame* frame,
   if (is_text_printing_mode) {
     print_context.BeginPrintMode(layout_box->ClientWidth(),
                                  layout_box->ClientHeight());
+
+    // The lifecycle needs to be run again after changing printing mode,
+    // to account for any style updates due to media query change.
+    if (!(behavior & kLayoutAsTextDontUpdateLayout))
+      frame->View()->UpdateLifecyclePhasesForPrinting();
   }
 
   String representation = ExternalRepresentation(ToLayoutBox(layout_object),

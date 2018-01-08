@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/vr/databinding/binding.h"
@@ -32,6 +31,10 @@ using ::testing::InSequence;
 using ::testing::StrictMock;
 
 namespace vr {
+
+namespace {
+constexpr float kFontHeightMeters = 0.050f;
+}
 
 class MockTextInputDelegate : public TextInputDelegate {
  public:
@@ -75,8 +78,8 @@ class TextInputSceneTest : public UiTest {
 
     // Make test text input.
     text_input_delegate_ =
-        base::MakeUnique<StrictMock<MockTextInputDelegate>>();
-    text_input_info_ = base::MakeUnique<TextInputInfo>();
+        std::make_unique<StrictMock<MockTextInputDelegate>>();
+    text_input_info_ = std::make_unique<TextInputInfo>();
     auto text_input = UiSceneCreator::CreateTextInput(
         1, model_, text_input_info_.get(), text_input_delegate_.get());
     text_input_ = text_input.get();
@@ -94,7 +97,7 @@ class TextInputSceneTest : public UiTest {
 TEST_F(TextInputSceneTest, InputFieldFocus) {
   // Set mock delegates.
   auto* kb = static_cast<Keyboard*>(scene_->GetUiElementByName(kKeyboard));
-  auto kb_delegate = base::MakeUnique<StrictMock<MockKeyboardDelegate>>();
+  auto kb_delegate = std::make_unique<StrictMock<MockKeyboardDelegate>>();
   EXPECT_CALL(*kb_delegate, HideKeyboard()).InSequence(in_sequence_);
   kb->SetKeyboardDelegate(kb_delegate.get());
 
@@ -144,8 +147,8 @@ TEST_F(TextInputSceneTest, ClickOnTextGrabsFocus) {
 }
 
 TEST(TextInputTest, ControllerInteractionsSentToDelegate) {
-  auto keyboard = base::MakeUnique<Keyboard>();
-  auto kb_delegate = base::MakeUnique<StrictMock<MockKeyboardDelegate>>();
+  auto keyboard = std::make_unique<Keyboard>();
+  auto kb_delegate = std::make_unique<StrictMock<MockKeyboardDelegate>>();
   testing::Sequence s;
   EXPECT_CALL(*kb_delegate, HideKeyboard()).InSequence(s);
   keyboard->SetKeyboardDelegate(kb_delegate.get());
@@ -166,32 +169,32 @@ TEST(TextInputTest, ControllerInteractionsSentToDelegate) {
 TEST(TextInputTest, HintText) {
   UiScene scene;
 
-  auto instance =
-      base::MakeUnique<TextInput>(10, TextInput::OnFocusChangedCallback(),
-                                  TextInput::OnInputEditedCallback());
+  auto instance = std::make_unique<TextInput>(
+      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
+      TextInput::OnInputEditedCallback());
   instance->SetName(kOmniboxTextField);
   instance->SetSize(1, 0);
   TextInput* element = instance.get();
   scene.root_element().AddChild(std::move(instance));
 
   // Text field is empty, so we should be showing hint text.
-  scene.OnBeginFrame(base::TimeTicks(), kForwardVector);
+  scene.OnBeginFrame(base::TimeTicks(), kStartHeadPose);
   EXPECT_GT(element->get_hint_element()->GetTargetOpacity(), 0);
 
   // When text enters the field, the hint should disappear.
   TextInputInfo info;
   info.text = base::UTF8ToUTF16("text");
   element->UpdateInput(info);
-  scene.OnBeginFrame(base::TimeTicks(), kForwardVector);
+  scene.OnBeginFrame(base::TimeTicks(), kStartHeadPose);
   EXPECT_EQ(element->get_hint_element()->GetTargetOpacity(), 0);
 }
 
-TEST(TextInputTest, Cursor) {
+TEST(TextInputTest, CursorBlinking) {
   UiScene scene;
 
-  auto instance =
-      base::MakeUnique<TextInput>(10, TextInput::OnFocusChangedCallback(),
-                                  TextInput::OnInputEditedCallback());
+  auto instance = std::make_unique<TextInput>(
+      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
+      TextInput::OnInputEditedCallback());
   instance->SetName(kOmniboxTextField);
   instance->SetSize(1, 0);
   TextInput* element = instance.get();
@@ -201,7 +204,7 @@ TEST(TextInputTest, Cursor) {
   float initial = element->get_cursor_element()->GetTargetOpacity();
   EXPECT_EQ(initial, 0.f);
   for (int ms = 0; ms <= 2000; ms += 100) {
-    scene.OnBeginFrame(MsToTicks(ms), kForwardVector);
+    scene.OnBeginFrame(MsToTicks(ms), kStartHeadPose);
     EXPECT_EQ(initial, element->get_cursor_element()->GetTargetOpacity());
   }
 
@@ -210,27 +213,61 @@ TEST(TextInputTest, Cursor) {
   initial = element->get_cursor_element()->GetTargetOpacity();
   bool toggled = false;
   for (int ms = 0; ms <= 2000; ms += 100) {
-    scene.OnBeginFrame(MsToTicks(ms), kForwardVector);
+    scene.OnBeginFrame(MsToTicks(ms), kStartHeadPose);
     if (initial != element->get_cursor_element()->GetTargetOpacity())
       toggled = true;
   }
   EXPECT_TRUE(toggled);
+}
 
-// TODO(cjgrant): Continue with the test cases below, when they're debugged.
-#if 0
-  TextInputInfo info;
-  info.text = base::UTF8ToUTF16("text");
+// TODO(cjgrant): Have this test, and others similar, check the actual position
+// of the cursor element.  To make this work, the OnBeginFrame logic needs to be
+// updated to perform more of the measurement and layout steps in a test
+// environment.  As of now, much of this is skipped due to lack of a GL context.
+TEST(TextInputTest, CursorPositionUpdatesOnKeyboardInput) {
+  auto element = std::make_unique<TextInput>(
+      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
+      TextInput::OnInputEditedCallback());
 
-  // When the cursor position moves, the cursor element should move.
+  TextInputInfo info(base::UTF8ToUTF16("text"));
+  info.selection_start = 0;
+  info.selection_end = 0;
   element->UpdateInput(info);
-  auto result = element->get_text_element()->LayOutTextForTest({512, 512});
-  auto position1 = element->get_text_element()->GetRawCursorBounds();
+  element->get_text_element()->LayOutTextForTest();
+  int x1 = element->get_text_element()->GetRawCursorBounds().x();
+
+  info.selection_start = 1;
   info.selection_end = 1;
   element->UpdateInput(info);
-  element->get_text_element()->LayOutTextForTest({512, 512});
-  auto position2 = element->get_text_element()->GetRawCursorBounds();
-  EXPECT_NE(position1, position2);
-#endif
+  element->get_text_element()->LayOutTextForTest();
+  int x2 = element->get_text_element()->GetRawCursorBounds().x();
+
+  EXPECT_LT(x1, x2);
+}
+
+TEST(TextInputTest, CursorPositionUpdatesOnClicks) {
+  auto element = std::make_unique<TextInput>(
+      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
+      TextInput::OnInputEditedCallback());
+
+  TextInputInfo info(base::UTF8ToUTF16("text"));
+  element->UpdateInput(info);
+  element->get_text_element()->LayOutTextForTest();
+
+  // Click on the left edge of the field.
+  element->OnButtonDown(gfx::PointF(0.0, 0.5));
+  element->OnButtonUp(gfx::PointF(0.0, 0.5));
+  element->get_text_element()->LayOutTextForTest();
+  auto x1 = element->get_text_element()->GetRawCursorBounds().x();
+
+  // Click on the right edge of the field.
+  element->OnButtonDown(gfx::PointF(1.0, 0.5));
+  element->OnButtonUp(gfx::PointF(1.0, 0.5));
+  element->get_text_element()->LayOutTextForTest();
+  auto x2 = element->get_text_element()->GetRawCursorBounds().x();
+
+  EXPECT_EQ(x1, 0);
+  EXPECT_GT(x2, 0);
 }
 
 }  // namespace vr

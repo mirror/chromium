@@ -113,10 +113,12 @@ bool CameraHalDispatcherImpl::StartThreads() {
   return true;
 }
 
-bool CameraHalDispatcherImpl::Start() {
+bool CameraHalDispatcherImpl::Start(
+    MojoJpegDecodeAcceleratorFactoryCB jda_factory) {
   if (!StartThreads()) {
     return false;
   }
+  jda_factory_ = jda_factory;
   base::WaitableEvent started(base::WaitableEvent::ResetPolicy::MANUAL,
                               base::WaitableEvent::InitialState::NOT_SIGNALED);
   blocking_io_task_runner_->PostTask(
@@ -184,12 +186,17 @@ void CameraHalDispatcherImpl::RegisterClient(
     arc::mojom::CameraHalClientPtr client) {
   DCHECK(proxy_task_runner_->BelongsToCurrentThread());
   auto client_observer =
-      base::MakeUnique<MojoCameraClientObserver>(std::move(client));
+      std::make_unique<MojoCameraClientObserver>(std::move(client));
   client_observer->client().set_connection_error_handler(base::Bind(
       &CameraHalDispatcherImpl::OnCameraHalClientConnectionError,
       base::Unretained(this), base::Unretained(client_observer.get())));
   AddClientObserver(std::move(client_observer));
   VLOG(1) << "Camera HAL client registered";
+}
+
+void CameraHalDispatcherImpl::GetJpegDecodeAccelerator(
+    media::mojom::JpegDecodeAcceleratorRequest jda_request) {
+  jda_factory_.Run(std::move(jda_request));
 }
 
 void CameraHalDispatcherImpl::CreateSocket(base::WaitableEvent* started) {

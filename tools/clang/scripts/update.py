@@ -27,7 +27,7 @@ import zipfile
 # Do NOT CHANGE this if you don't know what you're doing -- see
 # https://chromium.googlesource.com/chromium/src/+/master/docs/updating_clang.md
 # Reverting problematic clang rolls is safe, though.
-CLANG_REVISION = '318667'
+CLANG_REVISION = '321529'
 
 use_head_revision = bool(os.environ.get('LLVM_FORCE_HEAD_REVISION', '0')
                          in ('1', 'YES'))
@@ -35,7 +35,7 @@ if use_head_revision:
   CLANG_REVISION = 'HEAD'
 
 # This is incremented when pushing a new build of Clang at the same revision.
-CLANG_SUB_REVISION=1
+CLANG_SUB_REVISION=2
 
 PACKAGE_VERSION = "%s-%s" % (CLANG_REVISION, CLANG_SUB_REVISION)
 
@@ -70,7 +70,7 @@ STAMP_FILE = os.path.normpath(
     os.path.join(LLVM_DIR, '..', 'llvm-build', 'cr_build_revision'))
 VERSION = '6.0.0'
 ANDROID_NDK_DIR = os.path.join(
-    CHROMIUM_DIR, 'third_party', 'android_tools', 'ndk')
+    CHROMIUM_DIR, 'third_party', 'android_ndk')
 
 # URL for pre-built binaries.
 CDS_URL = os.environ.get('CDS_CLANG_BUCKET_OVERRIDE',
@@ -131,7 +131,6 @@ def DownloadUrl(url, output_file):
 
 def EnsureDirExists(path):
   if not os.path.exists(path):
-    print "Creating directory %s" % path
     os.makedirs(path)
 
 
@@ -263,6 +262,28 @@ def Checkout(name, url, dir):
 
   print "Retrying."
   RunCommand(command)
+
+
+def CheckoutRepos(args):
+  if args.skip_checkout:
+    return
+
+  Checkout('LLVM', LLVM_REPO_URL + '/llvm/trunk', LLVM_DIR)
+  Checkout('Clang', LLVM_REPO_URL + '/cfe/trunk', CLANG_DIR)
+  if True:
+    Checkout('LLD', LLVM_REPO_URL + '/lld/trunk', LLD_DIR)
+  elif os.path.exists(LLD_DIR):
+    # In case someone sends a tryjob that temporary adds lld to the checkout,
+    # make sure it's not around on future builds.
+    RmTree(LLD_DIR)
+  Checkout('compiler-rt', LLVM_REPO_URL + '/compiler-rt/trunk', COMPILER_RT_DIR)
+  if sys.platform == 'darwin':
+    # clang needs a libc++ checkout, else -stdlib=libc++ won't find includes
+    # (i.e. this is needed for bootstrap builds).
+    Checkout('libcxx', LLVM_REPO_URL + '/libcxx/trunk', LIBCXX_DIR)
+    # We used to check out libcxxabi on OS X; we no longer need that.
+    if os.path.exists(LIBCXXABI_DIR):
+      RmTree(LIBCXXABI_DIR)
 
 
 def DeleteChromeToolsShim():
@@ -439,20 +460,16 @@ def UpdateClang(args):
   if ReadStampFile() == expected_stamp and not args.force_local_build:
     return 0
 
-  print 'Updating Clang to %s...' % PACKAGE_VERSION
-
   # Reset the stamp file in case the build is unsuccessful.
   WriteStampFile('')
 
   if not args.force_local_build:
-    print 'Downloading prebuilt clang'
     if os.path.exists(LLVM_BUILD_DIR):
       RmTree(LLVM_BUILD_DIR)
 
     DownloadAndUnpackClangPackage(sys.platform)
     if 'win' in target_os:
       DownloadAndUnpackClangPackage('win32', runtimes_only=True)
-    print 'clang %s unpacked' % PACKAGE_VERSION
     if sys.platform == 'win32':
       CopyDiaDllTo(os.path.join(LLVM_BUILD_DIR, 'bin'))
     WriteStampFile(expected_stamp)
@@ -466,42 +483,18 @@ def UpdateClang(args):
     print 'for how to install the NDK, or pass --without-android.'
     return 1
 
+  print 'Locally building Clang %s...' % PACKAGE_VERSION
+
   DownloadHostGcc(args)
   AddCMakeToPath(args)
   AddGnuWinToPath()
 
   DeleteChromeToolsShim()
 
-  Checkout('LLVM', LLVM_REPO_URL + '/llvm/trunk', LLVM_DIR)
+  CheckoutRepos(args)
 
-  # Back out previous local patches. This needs to be kept around a bit
-  # until all bots have cycled. See https://crbug.com/755777.
-  files = [
-    'lib/Transforms/InstCombine/InstructionCombining.cpp',
-    'test/DebugInfo/X86/formal_parameter.ll',
-    'test/DebugInfo/X86/instcombine-instrinsics.ll',
-    'test/Transforms/InstCombine/debuginfo-skip.ll',
-    'test/Transforms/InstCombine/debuginfo.ll',
-    'test/Transforms/Util/simplify-dbg-declare-load.ll',
-  ]
-  for f in [os.path.join(LLVM_DIR, f) for f in files]:
-    RunCommand(['svn', 'revert', f])
-
-  Checkout('Clang', LLVM_REPO_URL + '/cfe/trunk', CLANG_DIR)
-  if True:
-    Checkout('LLD', LLVM_REPO_URL + '/lld/trunk', LLD_DIR)
-  elif os.path.exists(LLD_DIR):
-    # In case someone sends a tryjob that temporary adds lld to the checkout,
-    # make sure it's not around on future builds.
-    RmTree(LLD_DIR)
-  Checkout('compiler-rt', LLVM_REPO_URL + '/compiler-rt/trunk', COMPILER_RT_DIR)
-  if sys.platform == 'darwin':
-    # clang needs a libc++ checkout, else -stdlib=libc++ won't find includes
-    # (i.e. this is needed for bootstrap builds).
-    Checkout('libcxx', LLVM_REPO_URL + '/libcxx/trunk', LIBCXX_DIR)
-    # We used to check out libcxxabi on OS X; we no longer need that.
-    if os.path.exists(LIBCXXABI_DIR):
-      RmTree(LIBCXXABI_DIR)
+  if args.skip_build:
+    return
 
   cc, cxx = None, None
   libstdcpp = None
@@ -784,9 +777,10 @@ def UpdateClang(args):
       # Make standalone Android toolchain for target_arch.
       toolchain_dir = os.path.join(
           LLVM_BUILD_DIR, 'android-toolchain-' + target_arch)
+      api_level = '21' if target_arch == 'aarch64' else '19'
       RunCommand([
           make_toolchain,
-          '--api=' + ('21' if target_arch == 'aarch64' else '19'),
+          '--api=' + api_level,
           '--force',
           '--install-dir=%s' % toolchain_dir,
           '--stl=libc++',
@@ -806,7 +800,7 @@ def UpdateClang(args):
       if target_arch == 'arm':
         target_triple = 'armv7'
         abi_libs += ';unwind'
-      target_triple += '-linux-androideabi'
+      target_triple += '-linux-android' + api_level
       cflags = ['--target=%s' % target_triple,
                 '--sysroot=%s/sysroot' % toolchain_dir,
                 '-B%s' % toolchain_dir]
@@ -867,6 +861,10 @@ def main():
                       help='print current clang version (e.g. x.y.z) and exit.')
   parser.add_argument('--run-tests', action='store_true',
                       help='run tests after building; only for local builds')
+  parser.add_argument('--skip-build', action='store_true',
+                      help='do not build anything')
+  parser.add_argument('--skip-checkout', action='store_true',
+                      help='do not create or update any checkouts')
   parser.add_argument('--extra-tools', nargs='*', default=[],
                       help='select additional chrome tools to build')
   parser.add_argument('--use-system-cmake', action='store_true',
@@ -889,6 +887,11 @@ def main():
   if (use_head_revision or args.llvm_force_head_revision or
       args.force_local_build):
     AddSvnToPathOnWin()
+
+  if use_head_revision:
+    # TODO(hans): Trunk was updated; remove after the next roll.
+    global VERSION
+    VERSION = '7.0.0'
 
   global CLANG_REVISION, PACKAGE_VERSION
   if args.print_revision:

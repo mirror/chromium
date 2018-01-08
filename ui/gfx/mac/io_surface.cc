@@ -37,6 +37,7 @@ int32_t BytesPerElement(gfx::BufferFormat format, int plane) {
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::RGBA_8888:
+    case gfx::BufferFormat::BGRX_1010102:
       DCHECK_EQ(plane, 0);
       return 4;
     case gfx::BufferFormat::RGBA_F16:
@@ -59,7 +60,6 @@ int32_t BytesPerElement(gfx::BufferFormat format, int plane) {
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::RGBX_8888:
-    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
       NOTREACHED();
       return 0;
@@ -73,6 +73,8 @@ int32_t PixelFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::R_8:
       return 'L008';
+    case gfx::BufferFormat::BGRX_1010102:
+      return 'l10r';  // little-endian ARGB2101010 full-range ARGB
     case gfx::BufferFormat::BGRA_8888:
     case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::RGBA_8888:
@@ -93,7 +95,6 @@ int32_t PixelFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::RGBX_8888:
-    case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
       NOTREACHED();
       return 0;
@@ -195,24 +196,6 @@ IOSurfaceRef CreateIOSurface(const gfx::Size& size,
     r = IOSurfaceUnlock(surface, 0, nullptr);
     DCHECK_EQ(kIOReturnSuccess, r);
   }
-
-  bool force_color_space = false;
-
-  // Displaying an IOSurface that does not have a color space using an
-  // AVSampleBufferDisplayLayer can result in a black screen. Ensure that
-  // a color space always be specified.
-  // https://crbug.com/608879
-  if (format == gfx::BufferFormat::YUV_420_BIPLANAR)
-    force_color_space = true;
-
-  // On Sierra, all IOSurfaces are color corrected as though they are in sRGB
-  // color space by default. Prior to Sierra, IOSurfaces were not color
-  // corrected (they were treated as though they were in the display color
-  // space). Override this by defaulting IOSurfaces to be in the main display
-  // color space.
-  // https://crbug.com/654488
-  if (base::mac::IsAtLeastOS10_12())
-    force_color_space = true;
 
   // Ensure that all IOSurfaces start as sRGB.
   CGColorSpaceRef color_space = base::mac::GetSRGBColorSpace();

@@ -38,12 +38,13 @@
 #include "chrome/utility/importer/profile_import_impl.h"
 #include "chrome/utility/importer/profile_import_service.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
-#include "net/proxy/proxy_resolver_v8.h"
+#include "net/proxy_resolution/proxy_resolver_v8.h"
 #include "services/proxy_resolver/proxy_resolver_service.h"  // nogncheck
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"  // nogncheck
 #endif  // !defined(OS_ANDROID)
 
 #if defined(OS_WIN)
+#include "chrome/services/printing/pdf_to_emf_converter_factory.h"
 #include "chrome/services/util_win/public/interfaces/constants.mojom.h"
 #include "chrome/services/util_win/util_win_service.h"
 #endif
@@ -61,7 +62,7 @@
 #endif
 #endif
 
-#if BUILDFLAG(ENABLE_MUS)
+#if defined(OS_CHROMEOS)
 #include "chrome/utility/mash_service_factory.h"
 #endif
 
@@ -143,6 +144,10 @@ ChromeContentUtilityClient::ChromeContentUtilityClient()
     (BUILDFLAG(ENABLE_BASIC_PRINTING) && defined(OS_WIN))
   handlers_.push_back(base::MakeUnique<printing::PrintingHandler>());
 #endif
+
+#if defined(OS_CHROMEOS)
+  mash_service_factory_ = std::make_unique<MashServiceFactory>();
+#endif
 }
 
 ChromeContentUtilityClient::~ChromeContentUtilityClient() = default;
@@ -178,6 +183,13 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
     registry->AddInterface(base::Bind(CreateResourceUsageReporter),
                            base::ThreadTaskRunnerHandle::Get());
 #endif  // !defined(OS_ANDROID)
+#if defined(OS_WIN)
+    // TODO(crbug.com/798782): remove when the Cloud print chrome/service is
+    // removed.
+    registry->AddInterface(
+        base::Bind(printing::PdfToEmfConverterFactory::Create),
+        base::ThreadTaskRunnerHandle::Get());
+#endif
   }
 
   connection->AddConnectionFilter(
@@ -285,7 +297,8 @@ void ChromeContentUtilityClient::RegisterServices(
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 #if defined(OS_CHROMEOS)
-  RegisterOutOfProcessMashServices(services);
+  // TODO(jamescook): Figure out why we have to do this when not using --mash.
+  mash_service_factory_->RegisterOutOfProcessServices(services);
 #endif
 }
 

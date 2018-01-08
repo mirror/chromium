@@ -19,6 +19,7 @@ service_test("services_unittests") {
   # section below. If you are unsure, contact blundell@chromium.org.
   deps = [
     "//services/identity:tests",
+    "//services/network:tests",
     "//services/network/public/cpp:tests",
   ]
 
@@ -28,6 +29,7 @@ service_test("services_unittests") {
 
   if (!is_ios) {
     deps += [
+      "//services/audio:tests",
       "//services/data_decoder:tests",
       "//services/device:tests",
       "//services/preferences:tests",
@@ -93,6 +95,7 @@ catalog("services_unittests_catalog") {
 
   if (!is_ios) {
     catalog_deps += [
+      "//services/audio:tests_catalog",
       "//services/device:tests_catalog",
       "//services/preferences:tests_catalog",
       "//services/resource_coordinator:tests_catalog",

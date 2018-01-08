@@ -190,6 +190,10 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
 
   gpu::gles2::GLES2Interface* ContextGL();
   WebGraphicsContext3DProvider* ContextProvider();
+  base::WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWeakPtr();
+  Client* client() { return client_; }
+  WebGLVersion webgl_version() const { return webgl_version_; }
+  bool destroyed() const { return destruction_in_progress_; }
 
   // cc::TextureLayerClient implementation.
   bool PrepareTransferableResource(viz::TransferableResource* out_resource,
@@ -478,6 +482,14 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
 
   // The id of the renderbuffer storage for |m_multisampleFBO|.
   GLuint multisample_renderbuffer_ = 0;
+
+  // If premultipliedAlpha:false is set during context creation, and a
+  // GpuMemoryBuffer is used for the DrawingBuffer's storage, then a separate,
+  // regular, OpenGL texture is allocated to hold either the rendering results
+  // (if antialias:false) or resolve results (if antialias:true). Then
+  // CopyTextureCHROMIUM is used to multiply the alpha channel into the color
+  // channels when copying into the GMB.
+  GLuint premultiplied_alpha_false_texture_ = 0;
 
   // When wantExplicitResolve() returns false, the target of all draw and
   // read operations. When wantExplicitResolve() returns true, the target of

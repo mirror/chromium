@@ -32,6 +32,7 @@ class GmsCoreNotificationsStateTrackerImpl;
 class HostScanner;
 class HostScanScheduler;
 class HostScanDevicePrioritizerImpl;
+class HotspotUsageDurationTracker;
 class KeepAliveScheduler;
 class HostConnectionMetricsLogger;
 class MasterHostScanCache;
@@ -44,6 +45,7 @@ class TetherConnector;
 class TetherDisconnector;
 class TetherHostResponseRecorder;
 class TetherNetworkDisconnectionHandler;
+class TetherSessionCompletionLogger;
 class WifiHotspotConnector;
 
 // Concrete SynchronousShutdownObjectContainer implementation.
@@ -79,6 +81,15 @@ class SynchronousShutdownObjectContainerImpl
     static Factory* factory_instance_;
   };
 
+  ~SynchronousShutdownObjectContainerImpl() override;
+
+  // SynchronousShutdownObjectContainer:
+  ActiveHost* active_host() override;
+  HostScanCache* host_scan_cache() override;
+  HostScanScheduler* host_scan_scheduler() override;
+  TetherDisconnector* tether_disconnector() override;
+
+ protected:
   SynchronousShutdownObjectContainerImpl(
       AsynchronousShutdownObjectContainer* asychronous_container,
       NotificationPresenter* notification_presenter,
@@ -88,13 +99,6 @@ class SynchronousShutdownObjectContainerImpl
       NetworkStateHandler* network_state_handler,
       NetworkConnect* network_connect,
       NetworkConnectionHandler* network_connection_handler);
-  ~SynchronousShutdownObjectContainerImpl() override;
-
-  // SynchronousShutdownObjectContainer:
-  ActiveHost* active_host() override;
-  HostScanCache* host_scan_cache() override;
-  HostScanScheduler* host_scan_scheduler() override;
-  TetherDisconnector* tether_disconnector() override;
 
  private:
   NetworkStateHandler* network_state_handler_;
@@ -103,6 +107,8 @@ class SynchronousShutdownObjectContainerImpl
   std::unique_ptr<TetherHostResponseRecorder> tether_host_response_recorder_;
   std::unique_ptr<DeviceIdTetherNetworkGuidMap>
       device_id_tether_network_guid_map_;
+  std::unique_ptr<TetherSessionCompletionLogger>
+      tether_session_completion_logger_;
   std::unique_ptr<HostScanDevicePrioritizerImpl> host_scan_device_prioritizer_;
   std::unique_ptr<WifiHotspotConnector> wifi_hotspot_connector_;
   std::unique_ptr<ActiveHost> active_host_;
@@ -114,6 +120,7 @@ class SynchronousShutdownObjectContainerImpl
   std::unique_ptr<NotificationRemover> notification_remover_;
   std::unique_ptr<KeepAliveScheduler> keep_alive_scheduler_;
   std::unique_ptr<base::Clock> clock_;
+  std::unique_ptr<HotspotUsageDurationTracker> hotspot_usage_duration_tracker_;
   std::unique_ptr<HostScanner> host_scanner_;
   std::unique_ptr<HostScanScheduler> host_scan_scheduler_;
   std::unique_ptr<HostConnectionMetricsLogger> host_connection_metrics_logger_;

@@ -50,7 +50,7 @@ V0InsertionPoint::V0InsertionPoint(const QualifiedName& tag_name,
   SetHasCustomStyleCallbacks();
 }
 
-V0InsertionPoint::~V0InsertionPoint() {}
+V0InsertionPoint::~V0InsertionPoint() = default;
 
 void V0InsertionPoint::SetDistributedNodes(
     DistributedNodes& distributed_nodes) {
@@ -181,10 +181,6 @@ bool V0InsertionPoint::IsActive() const {
       return point == this;
   }
   return true;
-}
-
-bool V0InsertionPoint::IsShadowInsertionPoint() const {
-  return IsHTMLShadowElement(*this) && IsActive();
 }
 
 bool V0InsertionPoint::IsContentInsertionPoint() const {

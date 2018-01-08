@@ -52,8 +52,6 @@ int g_next_install_id = 0;
 
 WebstoreBindings::WebstoreBindings(ScriptContext* context)
     : ObjectBackedNativeHandler(context) {
-  RouteFunction("Install", "webstore",
-                base::Bind(&WebstoreBindings::Install, base::Unretained(this)));
   content::RenderFrame* render_frame = context->GetRenderFrame();
   if (render_frame)
     render_frame->GetRemoteAssociatedInterfaces()->GetInterface(
@@ -61,6 +59,12 @@ WebstoreBindings::WebstoreBindings(ScriptContext* context)
 }
 
 WebstoreBindings::~WebstoreBindings() {}
+
+void WebstoreBindings::AddRoutes() {
+  RouteHandlerFunction(
+      "Install", "webstore",
+      base::Bind(&WebstoreBindings::Install, base::Unretained(this)));
+}
 
 void WebstoreBindings::InlineInstallResponse(int install_id,
                                              bool success,
@@ -128,7 +132,8 @@ void WebstoreBindings::Install(
   std::string preferred_store_link_url;
   if (!args[2]->IsUndefined()) {
     CHECK(args[2]->IsString());
-    preferred_store_link_url = std::string(*v8::String::Utf8Value(args[2]));
+    preferred_store_link_url =
+        std::string(*v8::String::Utf8Value(args.GetIsolate(), args[2]));
   }
 
   std::string webstore_item_id;

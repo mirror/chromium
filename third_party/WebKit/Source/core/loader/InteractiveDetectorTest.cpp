@@ -5,7 +5,7 @@
 #include "core/loader/InteractiveDetector.h"
 
 #include "core/dom/Document.h"
-#include "core/testing/DummyPageHolder.h"
+#include "core/testing/PageTestBase.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/testing/TestingPlatformSupportWithMockScheduler.h"
@@ -65,28 +65,29 @@ class InteractiveDetectorTest : public ::testing::Test {
 
   void SimulateNavigationStart(double nav_start_time) {
     RunTillTimestamp(nav_start_time);
-    detector_->SetNavigationStartTime(nav_start_time);
+    detector_->SetNavigationStartTime(TimeTicksFromSeconds(nav_start_time));
   }
 
   void SimulateLongTask(double start, double end) {
     CHECK(end - start >= 0.05);
     RunTillTimestamp(end);
-    detector_->OnLongTaskDetected(start, end);
+    detector_->OnLongTaskDetected(TimeTicksFromSeconds(start),
+                                  TimeTicksFromSeconds(end));
   }
 
   void SimulateDOMContentLoadedEnd(double dcl_time) {
     RunTillTimestamp(dcl_time);
-    detector_->OnDomContentLoadedEnd(dcl_time);
+    detector_->OnDomContentLoadedEnd(TimeTicksFromSeconds(dcl_time));
   }
 
   void SimulateFMPDetected(double fmp_time, double detection_time) {
     RunTillTimestamp(detection_time);
-    detector_->OnFirstMeaningfulPaintDetected(fmp_time);
+    detector_->OnFirstMeaningfulPaintDetected(TimeTicksFromSeconds(fmp_time));
   }
 
   void SimulateInteractiveInvalidatingInput(double timestamp) {
     RunTillTimestamp(timestamp);
-    detector_->OnInvalidatingInputEvent(timestamp);
+    detector_->OnInvalidatingInputEvent(TimeTicksFromSeconds(timestamp));
   }
 
   void RunTillTimestamp(double target_time) {
@@ -104,7 +105,7 @@ class InteractiveDetectorTest : public ::testing::Test {
 
   void SimulateResourceLoadBegin(double load_begin_time) {
     RunTillTimestamp(load_begin_time);
-    detector_->OnResourceLoadBegin(load_begin_time);
+    detector_->OnResourceLoadBegin(TimeTicksFromSeconds(load_begin_time));
     // ActiveConnections is incremented after detector runs OnResourceLoadBegin;
     SetActiveConnections(GetActiveConnections() + 1);
   }
@@ -113,10 +114,12 @@ class InteractiveDetectorTest : public ::testing::Test {
     RunTillTimestamp(load_finish_time);
     int active_connections = GetActiveConnections();
     SetActiveConnections(active_connections - 1);
-    detector_->OnResourceLoadEnd(load_finish_time);
+    detector_->OnResourceLoadEnd(TimeTicksFromSeconds(load_finish_time));
   }
 
-  double GetInteractiveTime() { return detector_->GetInteractiveTime(); }
+  double GetInteractiveTime() {
+    return TimeTicksInSeconds(detector_->GetInteractiveTime());
+  }
 
  protected:
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
@@ -392,10 +395,11 @@ TEST_F(InteractiveDetectorTest, InvalidatingUserInput) {
   // invalidating user input. Page Load Metrics filters out this value in the
   // browser process for UMA reporting.
   EXPECT_EQ(GetInteractiveTime(), t0 + 7.1);
-  EXPECT_EQ(GetDetector()->GetFirstInvalidatingInputTime(), t0 + 5.0);
+  EXPECT_EQ(TimeTicksInSeconds(GetDetector()->GetFirstInvalidatingInputTime()),
+            t0 + 5.0);
 }
 
-class InteractiveDetectorTestWithDummyPage : public ::testing::Test {
+class InteractiveDetectorTestWithDummyPage : public PageTestBase {
  public:
   // Public because it's executed on a task queue.
   void DummyTaskWithDuration(double duration_seconds) {
@@ -406,34 +410,32 @@ class InteractiveDetectorTestWithDummyPage : public ::testing::Test {
  protected:
   void SetUp() override {
     platform_->AdvanceClockSeconds(1);
-    dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
+    PageTestBase::SetUp();
   }
 
   double GetDummyTaskEndTime() { return dummy_task_end_time_; }
 
-  Document& GetDocument() { return dummy_page_holder_->GetDocument(); }
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform_;
 
  private:
-  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
   double dummy_task_end_time_ = 0.0;
 };
 
 TEST_F(InteractiveDetectorTestWithDummyPage, TaskLongerThan5sBlocksTTI) {
   double t0 = CurrentTimeTicksInSeconds();
   InteractiveDetector* detector = InteractiveDetector::From(GetDocument());
-  detector->SetNavigationStartTime(t0);
+  detector->SetNavigationStartTime(TimeTicksFromSeconds(t0));
   platform_->RunForPeriodSeconds(4.0);
 
   // DummyPageHolder automatically fires DomContentLoadedEnd, but not First
   // Meaningful Paint. We therefore manually Invoking the listener on
   // InteractiveDetector.
-  detector->OnFirstMeaningfulPaintDetected(t0 + 3.0);
+  detector->OnFirstMeaningfulPaintDetected(TimeTicksFromSeconds(t0 + 3.0));
 
   // Post a task with 6 seconds duration.
-  platform_->CurrentThread()->GetWebTaskRunner()->PostTask(
-      FROM_HERE,
+  PostCrossThreadTask(
+      *platform_->CurrentThread()->GetWebTaskRunner(), FROM_HERE,
       CrossThreadBind(
           &InteractiveDetectorTestWithDummyPage::DummyTaskWithDuration,
           CrossThreadUnretained(this), 6.0));
@@ -441,23 +443,24 @@ TEST_F(InteractiveDetectorTestWithDummyPage, TaskLongerThan5sBlocksTTI) {
 
   // We should be able to detect TTI 5s after the end of long task.
   platform_->RunForPeriodSeconds(5.1);
-  EXPECT_EQ(detector->GetInteractiveTime(), GetDummyTaskEndTime());
+  EXPECT_EQ(TimeTicksInSeconds(detector->GetInteractiveTime()),
+            GetDummyTaskEndTime());
 }
 
 TEST_F(InteractiveDetectorTestWithDummyPage, LongTaskAfterTTIDoesNothing) {
   double t0 = CurrentTimeTicksInSeconds();
   InteractiveDetector* detector = InteractiveDetector::From(GetDocument());
-  detector->SetNavigationStartTime(t0);
+  detector->SetNavigationStartTime(TimeTicksFromSeconds(t0));
   platform_->RunForPeriodSeconds(4.0);
 
   // DummyPageHolder automatically fires DomContentLoadedEnd, but not First
   // Meaningful Paint. We therefore manually Invoking the listener on
   // InteractiveDetector.
-  detector->OnFirstMeaningfulPaintDetected(t0 + 3.0);
+  detector->OnFirstMeaningfulPaintDetected(TimeTicksFromSeconds(t0 + 3.0));
 
   // Long task 1.
-  platform_->CurrentThread()->GetWebTaskRunner()->PostTask(
-      FROM_HERE,
+  PostCrossThreadTask(
+      *platform_->CurrentThread()->GetWebTaskRunner(), FROM_HERE,
       CrossThreadBind(
           &InteractiveDetectorTestWithDummyPage::DummyTaskWithDuration,
           CrossThreadUnretained(this), 0.1));
@@ -466,11 +469,12 @@ TEST_F(InteractiveDetectorTestWithDummyPage, LongTaskAfterTTIDoesNothing) {
   double long_task_1_end_time = GetDummyTaskEndTime();
   // We should be able to detect TTI 5s after the end of long task.
   platform_->RunForPeriodSeconds(5.1);
-  EXPECT_EQ(detector->GetInteractiveTime(), long_task_1_end_time);
+  EXPECT_EQ(TimeTicksInSeconds(detector->GetInteractiveTime()),
+            long_task_1_end_time);
 
   // Long task 2.
-  platform_->CurrentThread()->GetWebTaskRunner()->PostTask(
-      FROM_HERE,
+  PostCrossThreadTask(
+      *platform_->CurrentThread()->GetWebTaskRunner(), FROM_HERE,
       CrossThreadBind(
           &InteractiveDetectorTestWithDummyPage::DummyTaskWithDuration,
           CrossThreadUnretained(this), 0.1));
@@ -479,7 +483,8 @@ TEST_F(InteractiveDetectorTestWithDummyPage, LongTaskAfterTTIDoesNothing) {
   // Wait 5 seconds to see if TTI time changes.
   platform_->RunForPeriodSeconds(5.1);
   // TTI time should not change.
-  EXPECT_EQ(detector->GetInteractiveTime(), long_task_1_end_time);
+  EXPECT_EQ(TimeTicksInSeconds(detector->GetInteractiveTime()),
+            long_task_1_end_time);
 }
 
 }  // namespace blink

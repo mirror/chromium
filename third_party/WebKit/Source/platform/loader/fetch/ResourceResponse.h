@@ -39,6 +39,7 @@
 #include "platform/network/HTTPHeaderMap.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/Time.h"
 #include "platform/wtf/Vector.h"
@@ -139,7 +140,7 @@ class PLATFORM_EXPORT ResourceResponse final {
 
   class ExtraData : public RefCounted<ExtraData> {
    public:
-    virtual ~ExtraData() {}
+    virtual ~ExtraData() = default;
   };
 
   explicit ResourceResponse(CrossThreadResourceResponseData*);
@@ -244,11 +245,6 @@ class PLATFORM_EXPORT ResourceResponse final {
   bool IsLegacySymantecCert() const { return is_legacy_symantec_cert_; }
   void SetIsLegacySymantecCert(bool is_legacy_symantec_cert) {
     is_legacy_symantec_cert_ = is_legacy_symantec_cert;
-  }
-
-  base::Time CertValidityStart() const { return cert_validity_start_; }
-  void SetCertValidityStart(base::Time cert_validity_start) {
-    cert_validity_start_ = cert_validity_start;
   }
 
   SecurityStyle GetSecurityStyle() const { return security_style_; }
@@ -568,7 +564,7 @@ struct CrossThreadResourceResponseData {
   USING_FAST_MALLOC(CrossThreadResourceResponseData);
 
  public:
-  CrossThreadResourceResponseData() {}
+  CrossThreadResourceResponseData() = default;
   KURL url_;
   String mime_type_;
   long long expected_content_length_;

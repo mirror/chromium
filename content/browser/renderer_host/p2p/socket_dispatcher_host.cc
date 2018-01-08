@@ -26,7 +26,9 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/datagram_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket_factory.h"
 
 using content::BrowserMessageFilter;
 using content::BrowserThread;
@@ -261,8 +263,14 @@ void P2PSocketDispatcherHost::OnCreateSocket(
     return;
   }
 
+  if (!proxy_resolving_socket_factory_) {
+    proxy_resolving_socket_factory_ =
+        std::make_unique<network::ProxyResolvingClientSocketFactory>(
+            nullptr, url_context_->GetURLRequestContext());
+  }
   std::unique_ptr<P2PSocketHost> socket(P2PSocketHost::Create(
-      this, socket_id, type, url_context_.get(), &throttler_));
+      this, socket_id, type, url_context_.get(),
+      proxy_resolving_socket_factory_.get(), &throttler_));
 
   if (!socket) {
     Send(new P2PMsg_OnError(socket_id));
@@ -322,7 +330,9 @@ void P2PSocketDispatcherHost::OnSend(int socket_id,
     return;
   }
 
-  socket->Send(socket_address, data, options, packet_id);
+  // TODO(crbug.com/656607): Get annotation from IPC message.
+  socket->Send(socket_address, data, options, packet_id,
+               NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void P2PSocketDispatcherHost::OnSetOption(int socket_id,

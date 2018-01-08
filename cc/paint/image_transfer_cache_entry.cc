@@ -8,6 +8,7 @@
 #include "base/numerics/checked_math.h"
 #include "cc/paint/paint_op_reader.h"
 #include "cc/paint/paint_op_writer.h"
+#include "third_party/skia/include/gpu/GrContext.h"
 
 namespace cc {
 
@@ -48,7 +49,7 @@ uint32_t ClientImageTransferCacheEntry::Id() const {
 bool ClientImageTransferCacheEntry::Serialize(base::span<uint8_t> data) const {
   DCHECK_GE(data.size(), SerializedSize());
 
-  PaintOpWriter writer(data.data(), data.size());
+  PaintOpWriter writer(data.data(), data.size(), nullptr, nullptr);
   writer.Write(pixmap_->colorType());
   writer.Write(pixmap_->width());
   writer.Write(pixmap_->height());
@@ -66,13 +67,18 @@ bool ClientImageTransferCacheEntry::Serialize(base::span<uint8_t> data) const {
 ServiceImageTransferCacheEntry::ServiceImageTransferCacheEntry() = default;
 ServiceImageTransferCacheEntry::~ServiceImageTransferCacheEntry() = default;
 
+ServiceImageTransferCacheEntry::ServiceImageTransferCacheEntry(
+    ServiceImageTransferCacheEntry&& other) = default;
+ServiceImageTransferCacheEntry& ServiceImageTransferCacheEntry::operator=(
+    ServiceImageTransferCacheEntry&& other) = default;
+
 size_t ServiceImageTransferCacheEntry::CachedSize() const {
   return size_;
 }
 
 bool ServiceImageTransferCacheEntry::Deserialize(GrContext* context,
                                                  base::span<uint8_t> data) {
-  PaintOpReader reader(data.data(), data.size());
+  PaintOpReader reader(data.data(), data.size(), nullptr);
   SkColorType color_type;
   reader.Read(&color_type);
   uint32_t width;
@@ -97,11 +103,19 @@ bool ServiceImageTransferCacheEntry::Deserialize(GrContext* context,
   // this as the worst case scenario is visual corruption.
   SkPixmap pixmap(image_info, const_cast<const void*>(pixel_data),
                   image_info.minRowBytes());
-  sk_sp<SkImage> image = SkImage::MakeFromRaster(pixmap, nullptr, nullptr);
-  if (!image)
-    return false;
 
-  image_ = image->makeTextureImage(context, nullptr);
+  // Depending on whether the pixmap will fit in a GPU texture, either create
+  // a software or GPU SkImage.
+  uint32_t max_size = context->caps()->maxTextureSize();
+  bool fits_on_gpu = width <= max_size && height <= max_size;
+  if (fits_on_gpu) {
+    sk_sp<SkImage> image = SkImage::MakeFromRaster(pixmap, nullptr, nullptr);
+    DCHECK(image);
+    image_ = image->makeTextureImage(context, nullptr);
+  } else {
+    image_ = SkImage::MakeRasterCopy(pixmap);
+  }
+
   return image_;
 }
 

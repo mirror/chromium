@@ -5,12 +5,13 @@
 #include "components/safe_browsing/password_protection/password_protection_service.h"
 
 #include <stddef.h>
+
+#include <memory>
 #include <string>
 
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
@@ -120,11 +121,11 @@ PasswordProtectionService::~PasswordProtectionService() {
 }
 
 bool PasswordProtectionService::CanGetReputationOfURL(const GURL& url) {
-  if (!url.is_valid() || !url.SchemeIsHTTPOrHTTPS())
+  if (!url.is_valid() || !url.SchemeIsHTTPOrHTTPS() || net::IsLocalhost(url))
     return false;
 
   const std::string hostname = url.HostNoBrackets();
-  return !net::IsLocalhost(hostname) && !net::IsHostnameNonUnique(hostname) &&
+  return !net::IsHostnameNonUnique(hostname) &&
          hostname.find('.') != std::string::npos;
 }
 
@@ -150,23 +151,23 @@ void PasswordProtectionService::RecordWarningAction(WarningUIType ui_type,
   }
 }
 
-// static
 bool PasswordProtectionService::ShouldShowModalWarning(
     LoginReputationClientRequest::TriggerType trigger_type,
     bool matches_sync_password,
-    LoginReputationClientRequest::PasswordReuseEvent::SyncAccountType
-        account_type,
     LoginReputationClientResponse::VerdictType verdict_type) {
-  return base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning) &&
-         trigger_type == LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
-         matches_sync_password &&
-         account_type ==
-             LoginReputationClientRequest::PasswordReuseEvent::GMAIL &&
-         (verdict_type == LoginReputationClientResponse::PHISHING ||
+  if (trigger_type != LoginReputationClientRequest::PASSWORD_REUSE_EVENT ||
+      !matches_sync_password ||
+      GetSyncAccountType() ==
+          LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN) {
+    return false;
+  }
+
+  return (verdict_type == LoginReputationClientResponse::PHISHING ||
           (verdict_type == LoginReputationClientResponse::LOW_REPUTATION &&
            base::GetFieldTrialParamByFeatureAsBool(
                kGoogleBrandedPhishingWarning, "warn_on_low_reputation",
-               false)));
+               false))) &&
+         IsWarningEnabled();
 }
 
 bool PasswordProtectionService::ShouldShowSofterWarning() {
@@ -282,7 +283,7 @@ void PasswordProtectionService::CacheVerdict(
           std::string(), nullptr));
 
   if (!cache_dictionary || !cache_dictionary.get())
-    cache_dictionary = base::MakeUnique<base::DictionaryValue>();
+    cache_dictionary = std::make_unique<base::DictionaryValue>();
 
   std::unique_ptr<base::DictionaryValue> verdict_entry(
       CreateDictionaryFromVerdict(verdict, receive_time));
@@ -438,9 +439,9 @@ void PasswordProtectionService::RequestFinished(
       CacheVerdict(request->main_frame_url(), request->trigger_type(),
                    response.get(), base::Time::Now());
     }
-    if (ShouldShowModalWarning(
-            request->trigger_type(), request->matches_sync_password(),
-            GetSyncAccountType(), response->verdict_type())) {
+    if (ShouldShowModalWarning(request->trigger_type(),
+                               request->matches_sync_password(),
+                               response->verdict_type())) {
       ShowModalWarning(request->web_contents(), response->verdict_token());
       request->set_is_modal_warning_showing(true);
     }
@@ -751,7 +752,7 @@ PasswordProtectionService::CreateDictionaryFromVerdict(
     const LoginReputationClientResponse* verdict,
     const base::Time& receive_time) {
   std::unique_ptr<base::DictionaryValue> result =
-      base::MakeUnique<base::DictionaryValue>();
+      std::make_unique<base::DictionaryValue>();
   result->SetInteger(kCacheCreationTime,
                      static_cast<int>(receive_time.ToDoubleT()));
   std::string serialized_proto(verdict->SerializeAsString());
@@ -804,14 +805,14 @@ PasswordProtectionService::MaybeCreateNavigationThrottle(
         request->trigger_type() ==
             safe_browsing::LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
         request->matches_sync_password()) {
-      return base::MakeUnique<PasswordProtectionNavigationThrottle>(
+      return std::make_unique<PasswordProtectionNavigationThrottle>(
           navigation_handle, request, /*is_warning_showing=*/false);
     }
   }
 
   for (scoped_refptr<PasswordProtectionRequest> request : warning_requests_) {
     if (request->web_contents() == web_contents) {
-      return base::MakeUnique<PasswordProtectionNavigationThrottle>(
+      return std::make_unique<PasswordProtectionNavigationThrottle>(
           navigation_handle, request, /*is_warning_showing=*/true);
     }
   }
@@ -835,6 +836,22 @@ bool PasswordProtectionService::IsModalWarningShowingInWebContents(
       return true;
   }
   return false;
+}
+
+bool PasswordProtectionService::IsWarningEnabled() {
+  return base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning) &&
+         GetSyncAccountType() !=
+             LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN &&
+         GetPasswordProtectionTriggerPref(
+             prefs::kPasswordProtectionWarningTrigger) == PHISHING_REUSE;
+}
+
+bool PasswordProtectionService::IsEventLoggingEnabled() {
+  return base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting) &&
+         GetSyncAccountType() !=
+             LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN &&
+         GetPasswordProtectionTriggerPref(
+             prefs::kPasswordProtectionRiskTrigger) == PHISHING_REUSE;
 }
 
 }  // namespace safe_browsing

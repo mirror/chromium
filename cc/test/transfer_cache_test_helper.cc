@@ -13,6 +13,47 @@ TransferCacheTestHelper::TransferCacheTestHelper(GrContext* context)
     : context_(context) {}
 TransferCacheTestHelper::~TransferCacheTestHelper() = default;
 
+bool TransferCacheTestHelper::LockEntryDirect(const EntryKey& key) {
+  return LockEntryInternal(key);
+}
+
+void TransferCacheTestHelper::CreateEntryDirect(const EntryKey& key,
+                                                base::span<uint8_t> data) {
+  // Deserialize into a service transfer cache entry.
+  std::unique_ptr<ServiceTransferCacheEntry> service_entry =
+      ServiceTransferCacheEntry::Create(key.first);
+  DCHECK(service_entry);
+  bool success = service_entry->Deserialize(context_, data);
+  DCHECK(success);
+
+  // Put things into the cache.
+  entries_.emplace(key, std::move(service_entry));
+  locked_entries_.insert(key);
+  EnforceLimits();
+}
+
+void TransferCacheTestHelper::UnlockEntriesDirect(
+    const std::vector<EntryKey>& keys) {
+  for (const auto& key : keys) {
+    locked_entries_.erase(key);
+  }
+  EnforceLimits();
+}
+
+void TransferCacheTestHelper::DeleteEntryDirect(const EntryKey& key) {
+  locked_entries_.erase(key);
+  entries_.erase(key);
+}
+
+void TransferCacheTestHelper::SetGrContext(GrContext* context) {
+  context_ = context;
+}
+
+void TransferCacheTestHelper::SetCachedItemsLimit(size_t limit) {
+  cached_items_limit_ = limit;
+  EnforceLimits();
+}
+
 ServiceTransferCacheEntry* TransferCacheTestHelper::GetEntryInternal(
     TransferCacheEntryType type,
     uint32_t id) {
@@ -23,12 +64,11 @@ ServiceTransferCacheEntry* TransferCacheTestHelper::GetEntryInternal(
   return entries_[key].get();
 }
 
-bool TransferCacheTestHelper::LockEntryInternal(TransferCacheEntryType type,
-                                                uint32_t id) {
-  auto key = std::make_pair(type, id);
+bool TransferCacheTestHelper::LockEntryInternal(const EntryKey& key) {
   if (entries_.find(key) == entries_.end())
     return false;
   locked_entries_.insert(key);
+  EnforceLimits();
   return true;
 }
 
@@ -40,26 +80,30 @@ void TransferCacheTestHelper::CreateEntryInternal(
   // Serialize data.
   size_t size = client_entry.SerializedSize();
   std::unique_ptr<uint8_t[]> data(new uint8_t[size]);
-  bool success = client_entry.Serialize(base::make_span(data.get(), size));
+  auto span = base::make_span(data.get(), size);
+  bool success = client_entry.Serialize(span);
   DCHECK(success);
-
-  // Deserialize into a service transfer cache entry.
-  std::unique_ptr<ServiceTransferCacheEntry> service_entry =
-      ServiceTransferCacheEntry::Create(client_entry.Type());
-  DCHECK(service_entry);
-  success =
-      service_entry->Deserialize(context_, base::make_span(data.get(), size));
-  DCHECK(success);
-
-  // Put things into the cache.
-  entries_[key] = std::move(service_entry);
-  locked_entries_.insert(key);
+  CreateEntryDirect(key, span);
 }
 
-void TransferCacheTestHelper::FlushEntriesInternal(
-    const std::vector<EntryKey>& entries) {
-  for (auto& entry : entries)
-    locked_entries_.erase(entry);
+void TransferCacheTestHelper::FlushEntriesInternal(std::set<EntryKey> keys) {
+  for (auto& key : keys)
+    locked_entries_.erase(key);
+  EnforceLimits();
+}
+
+void TransferCacheTestHelper::EnforceLimits() {
+  for (auto it = entries_.begin(); it != entries_.end();) {
+    if (entries_.size() <= cached_items_limit_)
+      break;
+
+    auto found = locked_entries_.find(it->first);
+    if (found == locked_entries_.end()) {
+      it = entries_.erase(it);
+    } else {
+      ++it;
+    }
+  }
 }
 
 }  // namespace cc

@@ -4,8 +4,10 @@
 
 #include "media/mojo/services/interface_factory_impl.h"
 
+#include <memory>
+#include "base/guid.h"
+
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/base/media_log.h"
@@ -40,44 +42,6 @@
 
 namespace media {
 
-namespace {
-
-constexpr base::TimeDelta kServiceContextRefReleaseDelay =
-    base::TimeDelta::FromSeconds(5);
-
-void DeleteServiceContextRef(service_manager::ServiceContextRef* ref) {
-  delete ref;
-}
-
-}  // namespace
-
-// Helper class to help delay the release of service_manager::ServiceContextRef
-// by |kServiceContextRefReleaseDelay|, which will ultimately delay MediaService
-// destruction by the same delay as well. This helps reduce service connection
-// time in cases like navigation.
-class DelayedReleaseServiceContextRef {
- public:
-  explicit DelayedReleaseServiceContextRef(
-      std::unique_ptr<service_manager::ServiceContextRef> ref)
-      : ref_(std::move(ref)),
-        task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
-
-  ~DelayedReleaseServiceContextRef() {
-    service_manager::ServiceContextRef* ref_ptr = ref_.release();
-    if (!task_runner_->PostNonNestableDelayedTask(
-            FROM_HERE, base::BindOnce(&DeleteServiceContextRef, ref_ptr),
-            kServiceContextRefReleaseDelay)) {
-      DeleteServiceContextRef(ref_ptr);
-    }
-  }
-
- private:
-  std::unique_ptr<service_manager::ServiceContextRef> ref_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-
-  DISALLOW_COPY_AND_ASSIGN(DelayedReleaseServiceContextRef);
-};
-
 InterfaceFactoryImpl::InterfaceFactoryImpl(
     service_manager::mojom::InterfaceProviderPtr interfaces,
     MediaLog* media_log,
@@ -90,8 +54,7 @@ InterfaceFactoryImpl::InterfaceFactoryImpl(
 #if BUILDFLAG(ENABLE_MOJO_CDM)
       interfaces_(std::move(interfaces)),
 #endif
-      connection_ref_(std::make_unique<DelayedReleaseServiceContextRef>(
-          std::move(connection_ref))),
+      connection_ref_(std::move(connection_ref)),
       mojo_media_client_(mojo_media_client) {
   DVLOG(1) << __func__;
   DCHECK(mojo_media_client_);
@@ -117,7 +80,7 @@ void InterfaceFactoryImpl::CreateAudioDecoder(
   }
 
   audio_decoder_bindings_.AddBinding(
-      base::MakeUnique<MojoAudioDecoderService>(&cdm_service_context_,
+      std::make_unique<MojoAudioDecoderService>(&cdm_service_context_,
                                                 std::move(audio_decoder)),
       std::move(request));
 #endif  // BUILDFLAG(ENABLE_MOJO_AUDIO_DECODER)
@@ -127,7 +90,7 @@ void InterfaceFactoryImpl::CreateVideoDecoder(
     mojom::VideoDecoderRequest request) {
 #if BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
   video_decoder_bindings_.AddBinding(
-      base::MakeUnique<MojoVideoDecoderService>(mojo_media_client_,
+      std::make_unique<MojoVideoDecoderService>(mojo_media_client_,
                                                 &cdm_service_context_),
       std::move(request));
 #endif  // BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
@@ -157,7 +120,7 @@ void InterfaceFactoryImpl::CreateRenderer(
   }
 
   std::unique_ptr<MojoRendererService> mojo_renderer_service =
-      base::MakeUnique<MojoRendererService>(
+      std::make_unique<MojoRendererService>(
           &cdm_service_context_, std::move(audio_sink), std::move(video_sink),
           std::move(renderer), MojoRendererService::InitiateSurfaceRequestCB());
 
@@ -184,14 +147,20 @@ void InterfaceFactoryImpl::CreateCdm(
     return;
 
   cdm_bindings_.AddBinding(
-      base::MakeUnique<MojoCdmService>(&cdm_service_context_, cdm_factory),
+      std::make_unique<MojoCdmService>(cdm_factory, &cdm_service_context_),
       std::move(request));
 #endif  // BUILDFLAG(ENABLE_MOJO_CDM)
 }
 
-void InterfaceFactoryImpl::CreateCdmProxy(mojom::CdmProxyRequest request) {
+void InterfaceFactoryImpl::CreateCdmProxy(const std::string& cdm_guid,
+                                          mojom::CdmProxyRequest request) {
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  auto cdm_proxy = mojo_media_client_->CreateCdmProxy();
+  if (!base::IsValidGUID(cdm_guid)) {
+    DLOG(ERROR) << "Invalid CDM GUID: " << cdm_guid;
+    return;
+  }
+
+  auto cdm_proxy = mojo_media_client_->CreateCdmProxy(cdm_guid);
   if (!cdm_proxy) {
     DLOG(ERROR) << "CdmProxy creation failed.";
     return;

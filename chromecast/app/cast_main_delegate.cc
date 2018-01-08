@@ -20,8 +20,10 @@
 #include "build/build_config.h"
 #include "chromecast/base/cast_paths.h"
 #include "chromecast/browser/cast_content_browser_client.h"
+#include "chromecast/chromecast_features.h"
 #include "chromecast/common/cast_resource_delegate.h"
 #include "chromecast/common/global_descriptors.h"
+#include "chromecast/gpu/cast_content_gpu_client.h"
 #include "chromecast/renderer/cast_content_renderer_client.h"
 #include "chromecast/utility/cast_content_utility_client.h"
 #include "components/crash/content/app/crash_reporter_client.h"
@@ -78,8 +80,12 @@ bool CastMainDelegate::BasicStartupComplete(int* exit_code) {
   }
 #endif  // defined(OS_ANDROID)
   logging::InitLogging(settings);
-  // Time, process, and thread ID are available through logcat.
+#if BUILDFLAG(IS_CAST_DESKTOP_BUILD)
+  logging::SetLogItems(true, true, true, false);
+#else
+  // Timestamp available through logcat -v time.
   logging::SetLogItems(true, true, false, false);
+#endif  // BUILDFLAG(IS_CAST_DESKTOP_BUILD)
 
 #if defined(OS_ANDROID)
   // Only delete the old crash dumps if the current process is the browser
@@ -227,6 +233,11 @@ void CastMainDelegate::InitializeResourceBundle() {
 content::ContentBrowserClient* CastMainDelegate::CreateContentBrowserClient() {
   browser_client_ = CastContentBrowserClient::Create();
   return browser_client_.get();
+}
+
+content::ContentGpuClient* CastMainDelegate::CreateContentGpuClient() {
+  gpu_client_ = CastContentGpuClient::Create();
+  return gpu_client_.get();
 }
 
 content::ContentRendererClient*

@@ -5,10 +5,13 @@
 #include "platform/loader/fetch/ResourceLoadScheduler.h"
 
 #include "base/metrics/field_trial_params.h"
+#include "base/metrics/histogram.h"
 #include "base/strings/string_number_conversions.h"
 #include "platform/Histogram.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scheduler/renderer/frame_status.h"
+#include "platform/scheduler/util/aggregated_metric_reporter.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
@@ -106,12 +109,18 @@ size_t GetOutstandingThrottledLimit(FetchContext* context) {
                                   main_frame_limit);
 }
 
+int TakeWholeKilobytes(int64_t& bytes) {
+  int kilobytes = bytes / 1024;
+  bytes %= 1024;
+  return kilobytes;
+}
+
 }  // namespace
 
 // A class to gather throttling and traffic information to report histograms.
 class ResourceLoadScheduler::TrafficMonitor {
  public:
-  explicit TrafficMonitor(bool is_main_frame);
+  explicit TrafficMonitor(FetchContext*);
   ~TrafficMonitor();
 
   // Notified when the ThrottlingState is changed.
@@ -126,6 +135,8 @@ class ResourceLoadScheduler::TrafficMonitor {
  private:
   const bool is_main_frame_;
 
+  const WeakPersistent<FetchContext> context_;  // NOT OWNED
+
   WebFrameScheduler::ThrottlingState current_state_ =
       WebFrameScheduler::ThrottlingState::kStopped;
 
@@ -137,10 +148,24 @@ class ResourceLoadScheduler::TrafficMonitor {
   size_t total_not_throttled_decoded_bytes_ = 0;
   size_t throttling_state_change_count_ = 0;
   bool report_all_is_called_ = false;
+
+  scheduler::AggregatedMetricReporter<scheduler::FrameStatus, int64_t>
+      traffic_kilobytes_per_frame_status_;
+  scheduler::AggregatedMetricReporter<scheduler::FrameStatus, int64_t>
+      decoded_kilobytes_per_frame_status_;
 };
 
-ResourceLoadScheduler::TrafficMonitor::TrafficMonitor(bool is_main_frame)
-    : is_main_frame_(is_main_frame) {}
+ResourceLoadScheduler::TrafficMonitor::TrafficMonitor(FetchContext* context)
+    : is_main_frame_(context->IsMainFrame()),
+      context_(context),
+      traffic_kilobytes_per_frame_status_(
+          "Blink.ResourceLoadScheduler.TrafficBytes.KBPerFrameStatus",
+          &TakeWholeKilobytes),
+      decoded_kilobytes_per_frame_status_(
+          "Blink.ResourceLoadScheduler.DecodedBytes.KBPerFrameStatus",
+          &TakeWholeKilobytes) {
+  DCHECK(context_);
+}
 
 ResourceLoadScheduler::TrafficMonitor::~TrafficMonitor() {
   ReportAll();
@@ -238,12 +263,34 @@ void ResourceLoadScheduler::TrafficMonitor::Report(
     case WebFrameScheduler::ThrottlingState::kStopped:
       break;
   }
+
+  // Report kilobytes instead of bytes to avoid overflows.
+  size_t encoded_kilobytes = hints.encoded_data_length() / 1024;
+  size_t decoded_kilobytes = hints.decoded_body_length() / 1024;
+
+  if (encoded_kilobytes) {
+    traffic_kilobytes_per_frame_status_.RecordTask(
+        scheduler::GetFrameStatus(context_->GetFrameScheduler()),
+        encoded_kilobytes);
+  }
+  if (decoded_kilobytes) {
+    decoded_kilobytes_per_frame_status_.RecordTask(
+        scheduler::GetFrameStatus(context_->GetFrameScheduler()),
+        decoded_kilobytes);
+  }
 }
 
 void ResourceLoadScheduler::TrafficMonitor::ReportAll() {
   // Currently we only care about stats from frames.
   if (!IsMainThread())
     return;
+
+  // Blink has several cases to create DocumentLoader not for an actual page
+  // load use. I.e., per a XMLHttpRequest in "document" type response.
+  // We just ignore such uninteresting cases in following metrics.
+  if (!total_throttled_request_count_ && !total_not_throttled_request_count_)
+    return;
+
   if (report_all_is_called_)
     return;
   report_all_is_called_ = true;
@@ -341,11 +388,15 @@ ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
     : outstanding_limit_for_throttled_frame_scheduler_(
           GetOutstandingThrottledLimit(context)),
       context_(context) {
-  traffic_monitor_ = std::make_unique<ResourceLoadScheduler::TrafficMonitor>(
-      context_->IsMainFrame());
+  traffic_monitor_ =
+      std::make_unique<ResourceLoadScheduler::TrafficMonitor>(context_);
 
   if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled() &&
       !Platform::Current()->IsRendererSideResourceSchedulerEnabled()) {
+    // Initialize TrafficMonitor's state to be |kNotThrottled| so that it
+    // reports metrics in a reasonable state group.
+    traffic_monitor_->OnThrottlingStateChanged(
+        WebFrameScheduler::ThrottlingState::kNotThrottled);
     return;
   }
 

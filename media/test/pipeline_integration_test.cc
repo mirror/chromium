@@ -11,7 +11,6 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/strings/string_split.h"
@@ -440,7 +439,7 @@ class PipelineIntegrationTest : public service_manager::test::ServiceTest,
     media_interface_factory_->CreateRenderer(std::string(),
                                              mojo::MakeRequest(&mojo_renderer));
 
-    return base::MakeUnique<MojoRenderer>(message_loop_.task_runner(),
+    return std::make_unique<MojoRenderer>(message_loop_.task_runner(),
                                           std::move(mojo_renderer));
   }
 
@@ -1802,7 +1801,7 @@ TEST_F(PipelineIntegrationTest, BasicPlaybackHi10P) {
 
 std::vector<std::unique_ptr<VideoDecoder>> CreateFailingVideoDecoder() {
   std::vector<std::unique_ptr<VideoDecoder>> failing_video_decoder;
-  failing_video_decoder.push_back(base::MakeUnique<FailingVideoDecoder>());
+  failing_video_decoder.push_back(std::make_unique<FailingVideoDecoder>());
   return failing_video_decoder;
 }
 
@@ -2525,7 +2524,7 @@ TEST_F(PipelineIntegrationTest, BasicPlayback_VP8A_WebM) {
   ASSERT_EQ(PIPELINE_OK, Start("bear-vp8a.webm"));
   Play();
   ASSERT_TRUE(WaitUntilOnEnded());
-  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_YV12A);
+  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_I420A);
 }
 
 // Verify that VP8A video with odd width/height can be played back.
@@ -2533,7 +2532,7 @@ TEST_F(PipelineIntegrationTest, BasicPlayback_VP8A_Odd_WebM) {
   ASSERT_EQ(PIPELINE_OK, Start("bear-vp8a-odd-dimensions.webm"));
   Play();
   ASSERT_TRUE(WaitUntilOnEnded());
-  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_YV12A);
+  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_I420A);
 }
 
 // Verify that VP9 video with odd width/height can be played back.
@@ -2548,7 +2547,7 @@ TEST_F(PipelineIntegrationTest, BasicPlayback_VP9A_WebM) {
   ASSERT_EQ(PIPELINE_OK, Start("bear-vp9a.webm"));
   Play();
   ASSERT_TRUE(WaitUntilOnEnded());
-  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_YV12A);
+  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_I420A);
 }
 
 // Verify that VP9A video with odd width/height can be played back.
@@ -2556,7 +2555,7 @@ TEST_F(PipelineIntegrationTest, BasicPlayback_VP9A_Odd_WebM) {
   ASSERT_EQ(PIPELINE_OK, Start("bear-vp9a-odd-dimensions.webm"));
   Play();
   ASSERT_TRUE(WaitUntilOnEnded());
-  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_YV12A);
+  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_I420A);
 }
 
 // Verify that VP8 video with inband text track can be played back.
@@ -2581,7 +2580,7 @@ TEST_F(PipelineIntegrationTest, BT709_VP9_WebM) {
   ASSERT_EQ(PIPELINE_OK, Start("bear-vp9-bt709.webm"));
   Play();
   ASSERT_TRUE(WaitUntilOnEnded());
-  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_YV12);
+  EXPECT_VIDEO_FORMAT_EQ(last_video_frame_format_, PIXEL_FORMAT_I420);
   EXPECT_COLOR_SPACE_EQ(last_video_frame_color_space_, COLOR_SPACE_HD_REC709);
 }
 

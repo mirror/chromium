@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
 #include <utility>
 
 #include "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.h"
@@ -16,7 +17,6 @@
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
 #include "chrome/browser/ui/views/content_setting_bubble_contents.h"
 #include "chrome/browser/ui/views/extensions/extension_installed_bubble_view.h"
-#include "chrome/browser/ui/views/first_run_bubble.h"
 #include "chrome/browser/ui/views/importer/import_lock_dialog_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/browser/ui/views/page_info/page_info_bubble_view.h"
@@ -92,7 +92,7 @@ void ShowBookmarkBubbleViewsAtPoint(const gfx::Point& anchor_point,
 
 std::unique_ptr<BubbleUi> BuildViewsExtensionInstalledBubbleUi(
     ExtensionInstalledBubble* bubble) {
-  return base::MakeUnique<ExtensionInstalledBubbleUi>(bubble);
+  return std::make_unique<ExtensionInstalledBubbleUi>(bubble);
 }
 
 void ShowZoomBubbleViewsAtPoint(content::WebContents* web_contents,
@@ -144,10 +144,6 @@ void ShowUpdateChromeDialogViews(gfx::NativeWindow parent) {
 void ShowImportLockDialogViews(gfx::NativeWindow parent,
                                const base::Callback<void(bool)>& callback) {
   return ImportLockDialogView::Show(parent, callback);
-}
-
-void ShowFirstRunBubbleViews(Browser* browser) {
-  return FirstRunBubble::Show(browser);
 }
 
 void ShowPasswordReuseWarningDialog(

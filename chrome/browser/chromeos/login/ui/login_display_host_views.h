@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_VIEWS_H_
 
 #include <memory>
+#include <string>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -41,21 +42,24 @@ class LoginDisplayHostViews : public LoginDisplayHost,
   void OnStartSignInScreen(const LoginScreenContext& context) override;
   void OnPreferencesChanged() override;
   void OnStartAppLaunch() override;
-  void StartArcKiosk(const AccountId& account_id) override;
+  void OnStartArcKiosk() override;
   void StartVoiceInteractionOobe() override;
   bool IsVoiceInteractionOobe() override;
 
   // LoginScreenClient::Delegate:
-  void HandleAuthenticateUser(const AccountId& account_id,
-                              const std::string& hashed_password,
-                              bool authenticated_by_pin,
-                              AuthenticateUserCallback callback) override;
+  void HandleAuthenticateUser(
+      const AccountId& account_id,
+      const std::string& hashed_password,
+      const password_manager::SyncPasswordData& sync_password_data,
+      bool authenticated_by_pin,
+      AuthenticateUserCallback callback) override;
   void HandleAttemptUnlock(const AccountId& account_id) override;
   void HandleHardlockPod(const AccountId& account_id) override;
   void HandleRecordClickOnLockIcon(const AccountId& account_id) override;
   void HandleOnFocusPod(const AccountId& account_id) override;
   void HandleOnNoPodFocused() override;
   bool HandleFocusLockScreenApps(bool reverse) override;
+  void HandleLoginAsGuest() override;
 
   // AuthStatusConsumer:
   void OnAuthFailure(const AuthFailure& error) override;
@@ -66,6 +70,10 @@ class LoginDisplayHostViews : public LoginDisplayHost,
   AuthenticateUserCallback on_authenticated_;
 
   std::unique_ptr<ExistingUserController> existing_user_controller_;
+
+  // Called after host deletion.
+  std::vector<base::OnceClosure> completion_callbacks_;
+
   base::WeakPtrFactory<LoginDisplayHostViews> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(LoginDisplayHostViews);

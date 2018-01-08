@@ -29,10 +29,10 @@ class PowerButtonScreenshotController;
 class TabletPowerButtonController;
 
 // Handles power button and lock button events. For convertible/tablet devices,
-// power button events are handled by TabletPowerButtonController to perform
-// tablet power button behavior, except forced clamshell set by command line.
-// For clamshell devices, power button acts locking or shutdown. On tablet mode,
-// power button may also be consumed to take a screenshot.
+// power button events are handled by TabletPowerButtonController to
+// perform tablet power button behavior, except forced clamshell set by
+// command line. For clamshell devices, power button acts locking or shutdown.
+// On tablet mode, power button may also be consumed to take a screenshot.
 class ASH_EXPORT PowerButtonController
     : public ui::EventHandler,
       public display::DisplayConfigurator::Observer,
@@ -126,6 +126,10 @@ class ASH_EXPORT PowerButtonController
   // True if the device should observe accelerometer events to enter tablet
   // mode.
   bool enable_tablet_mode_ = false;
+
+  // True if the device should show power button menu when the power button is
+  // long-pressed.
+  bool show_power_button_menu_ = false;
 
   // True if the device should use non-tablet-style power button behavior even
   // if it is a convertible device.

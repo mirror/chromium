@@ -13,6 +13,7 @@
 
 namespace blink {
 
+class CanvasResourceProvider;
 class Font;
 class TextMetrics;
 
@@ -25,8 +26,8 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
  public:
   class Factory : public CanvasRenderingContextFactory {
    public:
-    Factory() {}
-    ~Factory() override {}
+    Factory() = default;
+    ~Factory() override = default;
 
     CanvasRenderingContext* Create(
         CanvasRenderingContextHost* host,
@@ -60,8 +61,7 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
   void ClearRect(double x, double y, double width, double height) override {
     BaseRenderingContext2D::clearRect(x, y, width, height);
   }
-  scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint,
-                                            SnapshotReason) const final;
+  scoped_refptr<StaticBitmapImage> GetImage(AccelerationHint) const final;
   void Reset() override;
   void RestoreCanvasMatrixClipStack(PaintCanvas* c) const override {
     RestoreMatrixClipStack(c);
@@ -89,7 +89,7 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
 
   bool HasCanvas2DBuffer() const final;
   bool CanCreateCanvas2DBuffer() const final;
-  ImageBuffer* GetImageBuffer() const;
+  CanvasResourceProvider* GetCanvasResourceProvider() const;
 
   bool ParseColorOrCurrentColor(Color&, const String& color_string) const final;
 

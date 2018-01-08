@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "media/audio/audio_device_description.h"
-#include "media/base/scoped_callback_runner.h"
+#include "mojo/public/cpp/bindings/callback_helpers.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
 namespace content {
@@ -53,7 +53,7 @@ void MojoAudioOutputIPC::RequestDeviceAuthorization(
   // ReceivedDeviceAuthorization with an error.
   DoRequestDeviceAuthorization(
       session_id, device_id,
-      media::ScopedCallbackRunner(
+      mojo::WrapCallbackWithDefaultInvokeIfNotRun(
           base::BindOnce(&MojoAudioOutputIPC::ReceivedDeviceAuthorization,
                          weak_factory_.GetWeakPtr()),
           media::OutputDeviceStatus::OUTPUT_DEVICE_STATUS_ERROR_INTERNAL,
@@ -205,12 +205,13 @@ void MojoAudioOutputIPC::StreamCreated(
   DCHECK_EQ(result, MOJO_RESULT_OK);
 
   base::SharedMemoryHandle memory_handle;
-  bool read_only = false;
+  mojo::UnwrappedSharedMemoryHandleProtection protection;
   size_t memory_length = 0;
   result = mojo::UnwrapSharedMemoryHandle(
-      std::move(shared_memory), &memory_handle, &memory_length, &read_only);
+      std::move(shared_memory), &memory_handle, &memory_length, &protection);
   DCHECK_EQ(result, MOJO_RESULT_OK);
-  DCHECK(!read_only);
+  DCHECK_EQ(protection,
+            mojo::UnwrappedSharedMemoryHandleProtection::kReadWrite);
 
   delegate_->OnStreamCreated(memory_handle, socket_handle);
 }

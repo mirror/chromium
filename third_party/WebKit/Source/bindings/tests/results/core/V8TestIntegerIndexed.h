@@ -35,12 +35,6 @@ class V8TestIntegerIndexed {
   }
   CORE_EXPORT static TestIntegerIndexed* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestIntegerIndexed>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestIntegerIndexed>());
-  }
   static void indexedPropertyGetterCustom(uint32_t, const v8::PropertyCallbackInfo<v8::Value>&);
   static void indexedPropertySetterCustom(uint32_t, v8::Local<v8::Value>, const v8::PropertyCallbackInfo<v8::Value>&);
   static void indexedPropertyDeleterCustom(uint32_t, const v8::PropertyCallbackInfo<v8::Boolean>&);
@@ -81,6 +75,7 @@ class V8TestIntegerIndexed {
 template <>
 struct NativeValueTraits<TestIntegerIndexed> : public NativeValueTraitsBase<TestIntegerIndexed> {
   CORE_EXPORT static TestIntegerIndexed* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static TestIntegerIndexed* NullValue() { return nullptr; }
 };
 
 template <>

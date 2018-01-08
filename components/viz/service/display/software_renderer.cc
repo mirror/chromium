@@ -19,6 +19,7 @@
 #include "components/viz/common/quads/tile_draw_quad.h"
 #include "components/viz/service/display/output_surface.h"
 #include "components/viz/service/display/output_surface_frame.h"
+#include "components/viz/service/display/renderer_utils.h"
 #include "components/viz/service/display/software_output_device.h"
 #include "skia/ext/image_operations.h"
 #include "skia/ext/opacity_filter_canvas.h"
@@ -30,30 +31,13 @@
 #include "third_party/skia/include/core/SkPath.h"
 #include "third_party/skia/include/core/SkPoint.h"
 #include "third_party/skia/include/core/SkShader.h"
-#include "third_party/skia/include/effects/SkLayerRasterizer.h"
+#include "third_party/skia/include/effects/SkShaderMaskFilter.h"
 #include "ui/gfx/geometry/axis_transform2d.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/transform.h"
 
 namespace viz {
-namespace {
-
-static inline bool IsScalarNearlyInteger(SkScalar scalar) {
-  return SkScalarNearlyZero(scalar - SkScalarRoundToScalar(scalar));
-}
-
-bool IsScaleAndIntegerTranslate(const SkMatrix& matrix) {
-  return IsScalarNearlyInteger(matrix[SkMatrix::kMTransX]) &&
-         IsScalarNearlyInteger(matrix[SkMatrix::kMTransY]) &&
-         SkScalarNearlyZero(matrix[SkMatrix::kMSkewX]) &&
-         SkScalarNearlyZero(matrix[SkMatrix::kMSkewY]) &&
-         SkScalarNearlyZero(matrix[SkMatrix::kMPersp0]) &&
-         SkScalarNearlyZero(matrix[SkMatrix::kMPersp1]) &&
-         SkScalarNearlyZero(matrix[SkMatrix::kMPersp2] - 1.0f);
-}
-
-}  // anonymous namespace
 
 SoftwareRenderer::SoftwareRenderer(
     const RendererSettings* settings,
@@ -513,15 +497,9 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
     SkMatrix mask_mat;
     mask_mat.setRectToRect(mask_rect, dest_rect, SkMatrix::kFill_ScaleToFit);
 
-    SkPaint mask_paint;
-    mask_paint.setShader(
+    current_paint_.setMaskFilter(SkShaderMaskFilter::Make(
         SkShader::MakeBitmapShader(*mask, SkShader::kClamp_TileMode,
-                                   SkShader::kClamp_TileMode, &mask_mat));
-
-    SkLayerRasterizer::Builder builder;
-    builder.addLayer(mask_paint);
-
-    current_paint_.setRasterizer(builder.detach());
+                                   SkShader::kClamp_TileMode, &mask_mat)));
   }
 
   // If we have a background filter shader, render its results first.
@@ -530,7 +508,7 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
   if (background_filter_shader) {
     SkPaint paint;
     paint.setShader(std::move(background_filter_shader));
-    paint.setRasterizer(current_paint_.refRasterizer());
+    paint.setMaskFilter(current_paint_.refMaskFilter());
     current_canvas_->drawRect(dest_visible_rect, paint);
   }
   current_paint_.setShader(std::move(shader));
@@ -813,21 +791,22 @@ void SoftwareRenderer::UpdateRenderPassTextures(
 
 void SoftwareRenderer::AllocateRenderPassResourceIfNeeded(
     const RenderPassId& render_pass_id,
-    const gfx::Size& enlarged_size,
-    ResourceTextureHint texture_hint) {
+    const RenderPassRequirements& requirements) {
   auto it = render_pass_bitmaps_.find(render_pass_id);
   if (it != render_pass_bitmaps_.end())
     return;
 
-  // The |texture_hint| is only used for gpu-based rendering, so not used here.
+  // The |requirements.mipmap| is only used for gpu-based rendering, so not used
+  // here.
   //
   // ColorSpace correctness for software compositing is a performance nightmare,
   // so we don't do it. If we did, then the color space of the current frame's
   // |current_render_pass| should be stored somewhere, but we should not set it
   // on the bitmap itself. Instead, we'd use it with a SkColorSpaceXformCanvas
   // that wraps the SkCanvas drawing into the bitmap.
-  SkImageInfo info = SkImageInfo::MakeN32(
-      enlarged_size.width(), enlarged_size.height(), kPremul_SkAlphaType);
+  SkImageInfo info =
+      SkImageInfo::MakeN32(requirements.size.width(),
+                           requirements.size.height(), kPremul_SkAlphaType);
   SkBitmap bitmap;
   bitmap.allocPixels(info);
   render_pass_bitmaps_.emplace(render_pass_id, std::move(bitmap));

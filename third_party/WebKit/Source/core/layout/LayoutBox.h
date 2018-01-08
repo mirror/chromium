@@ -41,6 +41,7 @@ struct NGPhysicalBoxStrut;
 class ShapeOutsideInfo;
 
 struct PaintInfo;
+struct WebScrollIntoViewParams;
 
 enum SizeType { kMainOrPreferredSize, kMinSize, kMaxSize };
 enum AvailableLogicalHeightType {
@@ -599,12 +600,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // If makeVisibleInVisualViewport is set, the visual viewport will be scrolled
   // if required to make the rect visible.
   void ScrollRectToVisibleRecursive(const LayoutRect&,
-                                    const ScrollAlignment& align_x,
-                                    const ScrollAlignment& align_y,
-                                    ScrollType = kProgrammaticScroll,
-                                    bool make_visible_in_visual_viewport = true,
-                                    ScrollBehavior = kScrollBehaviorAuto,
-                                    bool is_for_scroll_sequence = false);
+                                    const WebScrollIntoViewParams&);
 
   LayoutRectOutsets MarginBoxOutsets() const { return margin_box_outsets_; }
   LayoutUnit MarginTop() const override { return margin_box_outsets_.Top(); }
@@ -708,7 +704,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // SYSTEMS in LayoutBoxModel) for use during layout.
   struct ComputedMarginValues {
     DISALLOW_NEW();
-    ComputedMarginValues() {}
+    ComputedMarginValues() = default;
 
     LayoutUnit before_;
     LayoutUnit after_;
@@ -720,7 +716,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // block-flow and inline-direction axis.
   struct LogicalExtentComputedValues {
     STACK_ALLOCATED();
-    LogicalExtentComputedValues() {}
+    LogicalExtentComputedValues() = default;
 
     // This is the dimension in the measured direction
     // (logical height or logical width).
@@ -838,19 +834,6 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   virtual EBreakBetween BreakAfter() const;
   virtual EBreakBetween BreakBefore() const;
   EBreakInside BreakInside() const;
-
-  // Join two adjacent break values specified on break-before and/or break-
-  // after. avoid* values win over auto values, and forced break values win over
-  // avoid* values. |firstValue| is specified on an element earlier in the flow
-  // than |secondValue|. This method is used at class A break points [1], to
-  // join the values of the previous break-after and the next break-before, to
-  // figure out whether we may, must, or should not, break at that point. It is
-  // also used when propagating break-before values from first children and
-  // break-after values on last children to their container.
-  //
-  // [1] https://drafts.csswg.org/css-break/#possible-breaks
-  static EBreakBetween JoinFragmentainerBreakValues(EBreakBetween first_value,
-                                                    EBreakBetween second_value);
 
   static bool IsForcedFragmentainerBreakValue(EBreakBetween);
 

@@ -14,6 +14,9 @@
 
 namespace cc {
 
+static constexpr uint32_t kInvalidImageTransferCacheEntryId =
+    static_cast<uint32_t>(-1);
+
 // Client/ServiceImageTransferCacheEntry implement a transfer cache entry
 // for transferring image data. On the client side, this is a CPU SkPixmap,
 // on the service side the image is uploaded and is a GPU SkImage.
@@ -44,10 +47,17 @@ class CC_PAINT_EXPORT ServiceImageTransferCacheEntry
   ServiceImageTransferCacheEntry();
   ~ServiceImageTransferCacheEntry() final;
 
+  ServiceImageTransferCacheEntry(ServiceImageTransferCacheEntry&& other);
+  ServiceImageTransferCacheEntry& operator=(
+      ServiceImageTransferCacheEntry&& other);
+
   // ServiceTransferCacheEntry implementation:
   size_t CachedSize() const final;
   bool Deserialize(GrContext* context, base::span<uint8_t> data) final;
 
+  void set_image_for_testing(sk_sp<SkImage> image) {
+    image_ = std::move(image);
+  }
   const sk_sp<SkImage>& image() { return image_; }
 
  private:

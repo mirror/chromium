@@ -4,18 +4,23 @@
 
 #include "chrome/browser/vr/testapp/vr_test_context.h"
 
+#include <memory>
+
 #include "base/i18n/icu_util.h"
-#include "base/memory/ptr_util.h"
 #include "base/numerics/ranges.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/version.h"
+#include "chrome/browser/vr/assets_load_status.h"
 #include "chrome/browser/vr/controller_mesh.h"
+#include "chrome/browser/vr/model/assets.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/test/constants.h"
+#include "chrome/browser/vr/testapp/assets_component_version.h"
 #include "chrome/browser/vr/testapp/test_keyboard_delegate.h"
 #include "chrome/browser/vr/text_input_delegate.h"
 #include "chrome/browser/vr/ui.h"
@@ -23,6 +28,7 @@
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
+#include "chrome/grit/vr_testapp_resources.h"
 #include "components/omnibox/browser/vector_icons.h"
 #include "components/security_state/core/security_state.h"
 #include "components/toolbar/vector_icons.h"
@@ -47,8 +53,9 @@ constexpr float kDefaultViewScaleFactor = 1.2f;
 constexpr float kMinViewScaleFactor = 0.5f;
 constexpr float kMaxViewScaleFactor = 5.0f;
 constexpr float kViewScaleAdjustmentFactor = 0.2f;
+constexpr float kPageLoadTimeMilliseconds = 500;
 
-constexpr gfx::Point3F kLaserOrigin = {0.5f, -0.5f, 0.f};
+constexpr gfx::Point3F kDefaultLaserOrigin = {0.5f, -0.5f, 0.f};
 constexpr gfx::Vector3dF kLaserLocalOffset = {0.f, -0.0075f, -0.05f};
 constexpr float kControllerScaleFactor = 1.5f;
 
@@ -57,24 +64,42 @@ void RotateToward(const gfx::Vector3dF& fwd, gfx::Transform* transform) {
   transform->PreconcatTransform(gfx::Transform(quat));
 }
 
+#if defined(GOOGLE_CHROME_BUILD)
+bool LoadPng(int resource_id, std::unique_ptr<SkBitmap>* out_image) {
+  base::StringPiece data =
+      ui::ResourceBundle::GetSharedInstance().GetRawDataResource(resource_id);
+  *out_image = std::make_unique<SkBitmap>();
+  return gfx::PNGCodec::Decode(
+      reinterpret_cast<const unsigned char*>(data.data()), data.size(),
+      out_image->get());
+}
+#endif
+
 }  // namespace
 
 VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   base::FilePath pak_path;
   PathService::Get(base::DIR_MODULE, &pak_path);
   ui::ResourceBundle::InitSharedInstanceWithPakPath(
-      pak_path.AppendASCII("vr_test.pak"));
+      pak_path.AppendASCII("vr_testapp.pak"));
 
   base::i18n::InitializeICU();
 
   // TODO(cjgrant): Remove this when the keyboard is enabled by default.
   base::FeatureList::InitializeInstance("VrBrowserKeyboard", "");
 
-  text_input_delegate_ = base::MakeUnique<TextInputDelegate>();
-  keyboard_delegate_ = base::MakeUnique<TestKeyboardDelegate>();
+  text_input_delegate_ = std::make_unique<TextInputDelegate>();
+  keyboard_delegate_ = std::make_unique<TestKeyboardDelegate>();
 
-  ui_ = base::MakeUnique<Ui>(this, nullptr, keyboard_delegate_.get(),
-                             text_input_delegate_.get(), UiInitialState());
+  UiInitialState ui_initial_state;
+#if defined(GOOGLE_CHROME_BUILD)
+  ui_initial_state.assets_available = true;
+#endif
+  ui_ = std::make_unique<Ui>(this, nullptr, keyboard_delegate_.get(),
+                             text_input_delegate_.get(), ui_initial_state);
+  if (ui_initial_state.assets_available) {
+    LoadAssets();
+  }
 
   text_input_delegate_->SetRequestFocusCallback(
       base::BindRepeating(&vr::Ui::RequestFocus, base::Unretained(ui_.get())));
@@ -87,18 +112,14 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
 
   model_ = ui_->model_for_test();
 
-  ToolbarState state(GURL("https://dangerous.com/dir/file.html"),
-                     security_state::SecurityLevel::HTTP_SHOW_WARNING,
-                     &toolbar::kHttpIcon, base::string16(), true, false);
-  ui_->SetToolbarState(state);
+  CycleOrigin();
   ui_->SetHistoryButtonsEnabled(true, true);
   ui_->SetLoading(true);
   ui_->SetLoadProgress(0.4);
   ui_->SetVideoCaptureEnabled(true);
   ui_->SetScreenCaptureEnabled(true);
-  ui_->SetAudioCaptureEnabled(true);
   ui_->SetBluetoothConnected(true);
-  ui_->SetLocationAccess(true);
+  ui_->SetLocationAccessEnabled(true);
   ui_->input_manager()->set_hit_test_strategy(
       UiInputManager::PROJECT_TO_LASER_ORIGIN_FOR_TEST);
 }
@@ -108,25 +129,24 @@ VrTestContext::~VrTestContext() = default;
 void VrTestContext::DrawFrame() {
   base::TimeTicks current_time = base::TimeTicks::Now();
 
-  RenderInfo render_info;
-  render_info.head_pose = head_pose_;
-  render_info.surface_texture_size = window_size_;
-  render_info.left_eye_model.viewport = gfx::Rect(window_size_);
-  render_info.left_eye_model.view_matrix = head_pose_;
-  render_info.left_eye_model.proj_matrix = ProjectionMatrix();
-  render_info.left_eye_model.view_proj_matrix = ViewProjectionMatrix();
+  RenderInfo render_info = GetRenderInfo();
 
-  UpdateController();
+  UpdateController(render_info);
 
   // Update the render position of all UI elements (including desktop).
-  ui_->scene()->OnBeginFrame(current_time, kForwardVector);
+  ui_->scene()->OnBeginFrame(current_time, head_pose_);
   ui_->OnProjMatrixChanged(render_info.left_eye_model.proj_matrix);
   ui_->ui_renderer()->Draw(render_info);
 
   // This is required in order to show the WebVR toasts.
-  if (model_->web_vr_has_produced_frames()) {
+  if (model_->web_vr.has_produced_frames()) {
     ui_->ui_renderer()->DrawWebVrOverlayForeground(render_info);
   }
+
+  auto load_progress = (current_time - page_load_start_).InMilliseconds() /
+                       kPageLoadTimeMilliseconds;
+  ui_->SetLoading(load_progress < 1.0f);
+  ui_->SetLoadProgress(std::min(load_progress, 1.0f));
 }
 
 void VrTestContext::HandleInput(ui::Event* event) {
@@ -148,13 +168,20 @@ void VrTestContext::HandleInput(ui::Event* event) {
         fullscreen_ = !fullscreen_;
         ui_->SetFullscreen(fullscreen_);
         break;
+      case ui::DomCode::US_H:
+        handedness_ = handedness_ == PlatformController::kRightHanded
+                          ? PlatformController::kLeftHanded
+                          : PlatformController::kRightHanded;
+        break;
       case ui::DomCode::US_I:
         incognito_ = !incognito_;
         ui_->SetIncognito(incognito_);
         break;
       case ui::DomCode::US_D:
-        ui_->Dump();
+        ui_->Dump(false);
         break;
+      case ui::DomCode::US_B:
+        ui_->Dump(true);
       case ui::DomCode::US_V:
         CreateFakeVoiceSearchResult();
         break;
@@ -178,6 +205,20 @@ void VrTestContext::HandleInput(ui::Event* event) {
       case ui::DomCode::US_E:
         model_->exiting_vr = !model_->exiting_vr;
         break;
+      case ui::DomCode::US_O:
+        CycleOrigin();
+        model_->can_navigate_back = !model_->can_navigate_back;
+        break;
+      case ui::DomCode::US_C:
+        model_->can_apply_new_background = true;
+        break;
+      case ui::DomCode::US_P:
+        model_->toggle_mode(kModeRepositionWindow);
+        break;
+      case ui::DomCode::US_X:
+        model_->experimental_features_enabled =
+            !model_->experimental_features_enabled;
+        break;
       default:
         break;
     }
@@ -198,6 +239,12 @@ void VrTestContext::HandleInput(ui::Event* event) {
   }
 
   const ui::MouseEvent* mouse_event = event->AsMouseEvent();
+
+  if (mouse_event->IsMiddleMouseButton()) {
+    if (mouse_event->type() == ui::ET_MOUSE_RELEASED) {
+      ui_->OnAppButtonClicked();
+    }
+  }
 
   // TODO(cjgrant): Figure out why, quite regularly, mouse click events do not
   // make it into this method and are missed.
@@ -235,10 +282,10 @@ void VrTestContext::HandleInput(ui::Event* event) {
   head_pose_.RotateAboutYAxis(-head_angle_y_degrees_);
 
   last_mouse_point_ = gfx::Point(mouse_event->x(), mouse_event->y());
-  last_controller_model_ = UpdateController();
+  last_controller_model_ = UpdateController(GetRenderInfo());
 }
 
-ControllerModel VrTestContext::UpdateController() {
+ControllerModel VrTestContext::UpdateController(const RenderInfo& render_info) {
   // We could map mouse position to controller position, and skip this logic,
   // but it will make targeting elements with a mouse feel strange and not
   // mouse-like. Instead, we make the reticle track the mouse position linearly
@@ -273,8 +320,10 @@ ControllerModel VrTestContext::UpdateController() {
   CHECK(controller_model.laser_direction.GetNormalized(
       &controller_model.laser_direction));
 
-  controller_model.transform.Translate3d(kLaserOrigin.x(), kLaserOrigin.y(),
-                                         kLaserOrigin.z());
+  gfx::Point3F laser_origin = LaserOrigin();
+
+  controller_model.transform.Translate3d(laser_origin.x(), laser_origin.y(),
+                                         laser_origin.z());
   controller_model.transform.Scale3d(
       kControllerScaleFactor, kControllerScaleFactor, kControllerScaleFactor);
   RotateToward(controller_model.laser_direction, &controller_model.transform);
@@ -282,23 +331,25 @@ ControllerModel VrTestContext::UpdateController() {
   // Hit testing is done in terms of this synthesized controller model.
   GestureList gesture_list;
   ReticleModel reticle_model;
-  ui_->input_manager()->HandleInput(base::TimeTicks::Now(), controller_model,
-                                    &reticle_model, &gesture_list);
+  ui_->input_manager()->HandleInput(base::TimeTicks::Now(), render_info,
+                                    controller_model, &reticle_model,
+                                    &gesture_list);
 
   // Now that we have accurate hit information, we use this to construct a
   // controller model for display.
-  controller_model.laser_direction = reticle_model.target_point - kLaserOrigin;
+  controller_model.laser_direction = reticle_model.target_point - laser_origin;
 
   controller_model.transform.MakeIdentity();
-  controller_model.transform.Translate3d(kLaserOrigin.x(), kLaserOrigin.y(),
-                                         kLaserOrigin.z());
+  controller_model.transform.Translate3d(laser_origin.x(), laser_origin.y(),
+                                         laser_origin.z());
   controller_model.transform.Scale3d(
       kControllerScaleFactor, kControllerScaleFactor, kControllerScaleFactor);
   RotateToward(controller_model.laser_direction, &controller_model.transform);
 
   gfx::Vector3dF local_offset = kLaserLocalOffset;
   controller_model.transform.TransformVector(&local_offset);
-  controller_model.laser_origin = kLaserOrigin + local_offset;
+  controller_model.laser_origin = laser_origin + local_offset;
+  controller_model.handedness = handedness_;
 
   ui_->OnControllerUpdated(controller_model, reticle_model);
 
@@ -308,8 +359,9 @@ ControllerModel VrTestContext::UpdateController() {
 void VrTestContext::OnGlInitialized() {
   unsigned int content_texture_id = CreateFakeContentTexture();
 
-  ui_->OnGlInitialized(content_texture_id,
-                       UiElementRenderer::kTextureLocationLocal, false);
+  ui_->OnGlInitialized(
+      content_texture_id, UiElementRenderer::kTextureLocationLocal,
+      content_texture_id, UiElementRenderer::kTextureLocationLocal, false);
 
   keyboard_delegate_->Initialize(ui_->scene()->SurfaceProviderForTesting(),
                                  ui_->ui_element_renderer());
@@ -359,17 +411,19 @@ void VrTestContext::CreateFakeTextInputOrCommit(bool commit) {
 }
 
 void VrTestContext::CreateFakeVoiceSearchResult() {
-  if (!model_->speech.recognizing_speech)
+  if (!model_->voice_search_enabled())
     return;
   ui_->SetRecognitionResult(
       base::UTF8ToUTF16("I would like to see cat videos, please."));
-  SetVoiceSearchActive(false);
+  ui_->SetSpeechRecognitionEnabled(false);
 }
 
 void VrTestContext::CycleWebVrModes() {
-  switch (model_->web_vr_timeout_state) {
+  switch (model_->web_vr.state) {
     case kWebVrNoTimeoutPending:
       ui_->SetWebVrMode(true, false);
+      break;
+    case kWebVrAwaitingMinSplashScreenDuration:
       break;
     case kWebVrAwaitingFirstFrame:
       ui_->OnWebVrTimeoutImminent();
@@ -380,12 +434,15 @@ void VrTestContext::CycleWebVrModes() {
     case kWebVrTimedOut:
       ui_->SetWebVrMode(false, false);
       break;
+    default:
+      break;
   }
 }
 
 void VrTestContext::ToggleSplashScreen() {
   if (!show_web_vr_splash_screen_) {
     UiInitialState state;
+    state.in_web_vr = true;
     state.web_vr_autopresentation_expected = true;
     ui_->ReinitializeForTest(state);
   } else {
@@ -426,9 +483,13 @@ void VrTestContext::Navigate(GURL gurl) {
   ToolbarState state(gurl, security_state::SecurityLevel::HTTP_SHOW_WARNING,
                      &toolbar::kHttpIcon, base::string16(), true, false);
   ui_->SetToolbarState(state);
+  page_load_start_ = base::TimeTicks::Now();
 }
 
-void VrTestContext::NavigateBack() {}
+void VrTestContext::NavigateBack() {
+  page_load_start_ = base::TimeTicks::Now();
+}
+
 void VrTestContext::ExitCct() {}
 
 void VrTestContext::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
@@ -450,20 +511,134 @@ void VrTestContext::OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
 void VrTestContext::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {}
 
 void VrTestContext::StartAutocomplete(const base::string16& string) {
-  auto result = base::MakeUnique<OmniboxSuggestions>();
-  for (int i = 0; i < 5; i++) {
-    result->suggestions.emplace_back(OmniboxSuggestion(
-        base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
-        base::UTF8ToUTF16(
-            "Very lengthy description of the suggestion that would wrap "
-            "if not truncated through some other means."),
-        AutocompleteMatch::Type::VOICE_SUGGEST, GURL("http://www.test.com/")));
+  auto result = std::make_unique<OmniboxSuggestions>();
+  for (int i = 0; i < 4; i++) {
+    if (i == 0) {
+      result->suggestions.emplace_back(OmniboxSuggestion(
+          base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
+          base::UTF8ToUTF16("none url match dim invsible"),
+          ACMatchClassifications(),
+          {
+              ACMatchClassification(0, ACMatchClassification::NONE),
+              ACMatchClassification(5, ACMatchClassification::URL),
+              ACMatchClassification(9, ACMatchClassification::MATCH),
+              ACMatchClassification(15, ACMatchClassification::DIM),
+              ACMatchClassification(19, ACMatchClassification::INVISIBLE),
+          },
+          AutocompleteMatch::Type::VOICE_SUGGEST,
+          GURL("http://www.test.com/")));
+    } else {
+      result->suggestions.emplace_back(OmniboxSuggestion(
+          base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
+          base::UTF8ToUTF16(
+              "Very lengthy description of the suggestion that would wrap "
+              "if not truncated through some other means."),
+          ACMatchClassifications(), ACMatchClassifications(),
+          AutocompleteMatch::Type::VOICE_SUGGEST,
+          GURL("http://www.test.com/")));
+    }
   }
   ui_->SetOmniboxSuggestions(std::move(result));
 }
 
 void VrTestContext::StopAutocomplete() {
-  ui_->SetOmniboxSuggestions(base::MakeUnique<OmniboxSuggestions>());
+  ui_->SetOmniboxSuggestions(std::make_unique<OmniboxSuggestions>());
+}
+
+void VrTestContext::CycleOrigin() {
+  const std::vector<ToolbarState> states = {
+      {GURL("http://domain.com"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domaaaaaaaaaaain.com"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaain.com"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domain.com/a/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domain.com/aaaaaaa/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domain.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domaaaaaaaaaaaaaaaaain.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaa/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaain.com/aaaaaaaaaa/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://www.domain.com/path/segment/directory/file.html"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://subdomain.domain.com/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("https://www.domain.com/path/segment/directory/file.html"),
+       security_state::SecurityLevel::SECURE, &toolbar::kHttpsValidIcon,
+       base::UTF8ToUTF16("Secure"), true, false},
+      {GURL("https://www.domain.com/path/segment/directory/file.html"),
+       security_state::SecurityLevel::DANGEROUS, &toolbar::kHttpsInvalidIcon,
+       base::UTF8ToUTF16("Dangerous"), true, false},
+      {GURL("https://www.domain.com/path/segment/directory/file.html"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING,
+       &toolbar::kOfflinePinIcon, base::UTF8ToUTF16("Offline"), true, true},
+      {GURL("file:///C:/path/filename"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("file:///C:/path/path/path/path/path/path/path/path"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+  };
+
+  static int state = 0;
+  ui_->SetToolbarState(states[state]);
+  state = (state + 1) % states.size();
+}
+
+void VrTestContext::LoadAssets() {
+  base::Version assets_component_version(VR_ASSETS_COMPONENT_VERSION);
+#if defined(GOOGLE_CHROME_BUILD)
+  auto assets = std::make_unique<Assets>();
+  if (!(LoadPng(IDR_VR_BACKGROUND_IMAGE, &assets->background) &&
+        LoadPng(IDR_VR_NORMAL_GRADIENT_IMAGE, &assets->normal_gradient) &&
+        LoadPng(IDR_VR_INCOGNITO_GRADIENT_IMAGE, &assets->incognito_gradient) &&
+        LoadPng(IDR_VR_FULLSCREEN_GRADIENT_IMAGE,
+                &assets->fullscreen_gradient))) {
+    ui_->OnAssetsLoaded(AssetsLoadStatus::kInvalidContent, nullptr,
+                        assets_component_version);
+    return;
+  }
+  ui_->OnAssetsLoaded(AssetsLoadStatus::kSuccess, std::move(assets),
+                      assets_component_version);
+#else   // defined(GOOGLE_CHROME_BUILD)
+  LOG(ERROR) << "Cannot load assets. Make testapp Chrome branded.";
+  ui_->OnAssetsLoaded(AssetsLoadStatus::kNotFound, nullptr,
+                      assets_component_version);
+#endif  // defined(GOOGLE_CHROME_BUILD)
+}
+
+RenderInfo VrTestContext::GetRenderInfo() const {
+  RenderInfo render_info;
+  render_info.head_pose = head_pose_;
+  render_info.surface_texture_size = window_size_;
+  render_info.left_eye_model.viewport = gfx::Rect(window_size_);
+  render_info.left_eye_model.view_matrix = head_pose_;
+  render_info.left_eye_model.proj_matrix = ProjectionMatrix();
+  render_info.left_eye_model.view_proj_matrix = ViewProjectionMatrix();
+  render_info.right_eye_model = render_info.left_eye_model;
+  return render_info;
+}
+
+gfx::Point3F VrTestContext::LaserOrigin() const {
+  gfx::Point3F origin = kDefaultLaserOrigin;
+  if (handedness_ == PlatformController::kLeftHanded) {
+    origin.set_x(-origin.x());
+  }
+  return origin;
 }
 
 }  // namespace vr

@@ -15,6 +15,7 @@
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/sync/base/time.h"
 #include "components/variations/net/variations_http_headers.h"
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"
@@ -56,18 +57,22 @@ void AddVariationHeaders(const std::unique_ptr<net::URLFetcher>& fetcher) {
 //
 //     urls: {
 //       url : <current_url>
+//       // timestamp_usec is the timestamp for the page visit time.
+//       timestamp_usec: <visit_time>
 //     }
 //     // stream_type = 1 corresponds to zero suggest suggestions.
 //     stream_type: 1
 //     // experiment_id is only set when <experiment_id> is well defined.
 //     experiment_id: <experiment_id>
 //
-std::string FormatRequestBodyExperimentalService(
-    const std::string& current_url) {
+std::string FormatRequestBodyExperimentalService(const std::string& current_url,
+                                                 const base::Time& visit_time) {
   auto request = std::make_unique<base::DictionaryValue>();
   auto url_list = std::make_unique<base::ListValue>();
   auto url_entry = std::make_unique<base::DictionaryValue>();
   url_entry->SetString("url", current_url);
+  url_entry->SetString("timestamp_usec",
+                       std::to_string(syncer::TimeToProtoTime(visit_time)));
   url_list->Append(std::move(url_entry));
   request->Set("urls", std::move(url_list));
   // stream_type = 1 corresponds to zero suggest suggestions.
@@ -96,13 +101,14 @@ ContextualSuggestionsService::~ContextualSuggestionsService() {}
 
 void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
     const std::string& current_url,
+    const base::Time& visit_time,
     const TemplateURLService* template_url_service,
     net::URLFetcherDelegate* fetcher_delegate,
     ContextualSuggestionsCallback callback) {
   const GURL experimental_suggest_url =
       ExperimentalContextualSuggestionsUrl(current_url, template_url_service);
   if (experimental_suggest_url.is_valid())
-    CreateExperimentalRequest(current_url, experimental_suggest_url,
+    CreateExperimentalRequest(current_url, visit_time, experimental_suggest_url,
                               fetcher_delegate, std::move(callback));
   else
     CreateDefaultRequest(current_url, template_url_service, fetcher_delegate,
@@ -110,8 +116,8 @@ void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
 }
 
 void ContextualSuggestionsService::StopCreatingContextualSuggestionsRequest() {
-  std::unique_ptr<PrimaryAccountAccessTokenFetcher> token_fetcher_deleter(
-      std::move(token_fetcher_));
+  std::unique_ptr<identity::PrimaryAccountAccessTokenFetcher>
+      token_fetcher_deleter(std::move(token_fetcher_));
 }
 
 // static
@@ -234,6 +240,7 @@ void ContextualSuggestionsService::CreateDefaultRequest(
 
 void ContextualSuggestionsService::CreateExperimentalRequest(
     const std::string& current_url,
+    const base::Time& visit_time,
     const GURL& suggest_url,
     net::URLFetcherDelegate* fetcher_delegate,
     ContextualSuggestionsCallback callback) {
@@ -272,7 +279,8 @@ void ContextualSuggestionsService::CreateExperimentalRequest(
           }
         })");
   const int kFetcherID = 1;
-  std::string request_body = FormatRequestBodyExperimentalService(current_url);
+  std::string request_body =
+      FormatRequestBodyExperimentalService(current_url, visit_time);
   std::unique_ptr<net::URLFetcher> fetcher =
       net::URLFetcher::Create(kFetcherID, suggest_url,
                               /*request_type=*/net::URLFetcher::POST,
@@ -298,11 +306,12 @@ void ContextualSuggestionsService::CreateExperimentalRequest(
   // Create the oauth2 token fetcher.
   const OAuth2TokenService::ScopeSet scopes{
       "https://www.googleapis.com/auth/cusco-chrome-extension"};
-  token_fetcher_ = std::make_unique<PrimaryAccountAccessTokenFetcher>(
+  token_fetcher_ = std::make_unique<identity::PrimaryAccountAccessTokenFetcher>(
       "contextual_suggestions_service", signin_manager_, token_service_, scopes,
       base::BindOnce(&ContextualSuggestionsService::AccessTokenAvailable,
                      base::Unretained(this), std::move(fetcher),
-                     std::move(callback)));
+                     std::move(callback)),
+      identity::PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 }
 
 void ContextualSuggestionsService::AccessTokenAvailable(
@@ -311,8 +320,8 @@ void ContextualSuggestionsService::AccessTokenAvailable(
     const GoogleServiceAuthError& error,
     const std::string& access_token) {
   DCHECK(token_fetcher_);
-  std::unique_ptr<PrimaryAccountAccessTokenFetcher> token_fetcher_deleter(
-      std::move(token_fetcher_));
+  std::unique_ptr<identity::PrimaryAccountAccessTokenFetcher>
+      token_fetcher_deleter(std::move(token_fetcher_));
 
   // If there were no errors obtaining the access token, append it to the
   // request as a header.

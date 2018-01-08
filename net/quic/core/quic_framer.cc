@@ -22,6 +22,7 @@
 #include "net/quic/core/quic_utils.h"
 #include "net/quic/platform/api/quic_aligned.h"
 #include "net/quic/platform/api/quic_bug_tracker.h"
+#include "net/quic/platform/api/quic_fallthrough.h"
 #include "net/quic/platform/api/quic_flag_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
@@ -65,34 +66,34 @@ const uint8_t kPublicHeaderSequenceNumberShift = 4;
 
 // Masks to determine if the frame type is a special use
 // and for specific special frame types.
-const uint8_t kQuicFrameTypeSpecialMask = 0xE0;  // 0b 11100000
-const uint8_t kQuicFrameTypeStreamMask_Pre40 = 0x80;
-const uint8_t kQuicFrameTypeStreamMask = 0xC0;
-const uint8_t kQuicFrameTypeAckMask_Pre40 = 0x40;
-const uint8_t kQuicFrameTypeAckMask = 0xA0;
+const uint8_t kQuicFrameTypeSpecialMask = 0b11100000;
+const uint8_t kQuicFrameTypeStreamMask_Pre40 = 0b10000000;
+const uint8_t kQuicFrameTypeStreamMask = 0b11000000;
+const uint8_t kQuicFrameTypeAckMask_Pre40 = 0b01000000;
+const uint8_t kQuicFrameTypeAckMask = 0b10100000;
 
 // Stream type format is 11FSSOOD.
 // Stream frame relative shifts and masks for interpreting the stream flags.
 // StreamID may be 1, 2, 3, or 4 bytes.
 const uint8_t kQuicStreamIdShift_Pre40 = 2;
-const uint8_t kQuicStreamIDLengthMask_Pre40 = 0x03;
+const uint8_t kQuicStreamIDLengthMask_Pre40 = 0b00000011;
 const uint8_t kQuicStreamIDLengthShift = 3;
 const uint8_t kQuicStreamIDLengthNumBits = 2;
 
 // Offset may be 0, 2, 4, or 8 bytes.
 const uint8_t kQuicStreamShift_Pre40 = 3;
-const uint8_t kQuicStreamOffsetMask_Pre40 = 0x07;
+const uint8_t kQuicStreamOffsetMask_Pre40 = 0b00000111;
 const uint8_t kQuicStreamOffsetNumBits = 2;
 const uint8_t kQuicStreamOffsetShift = 1;
 
 // Data length may be 0 or 2 bytes.
 const uint8_t kQuicStreamDataLengthShift_Pre40 = 1;
-const uint8_t kQuicStreamDataLengthMask_Pre40 = 0x01;
+const uint8_t kQuicStreamDataLengthMask_Pre40 = 0b00000001;
 const uint8_t kQuicStreamDataLengthShift = 0;
 
 // Fin bit may be set or not.
 const uint8_t kQuicStreamFinShift_Pre40 = 1;
-const uint8_t kQuicStreamFinMask_Pre40 = 0x01;
+const uint8_t kQuicStreamFinMask_Pre40 = 0b00000001;
 const uint8_t kQuicStreamFinShift = 5;
 
 // packet number size shift used in AckFrames.
@@ -299,7 +300,7 @@ bool QuicFramer::IsSupportedTransportVersion(
 }
 
 bool QuicFramer::IsSupportedVersion(const ParsedQuicVersion version) const {
-  for (ParsedQuicVersion supported_version : supported_versions_) {
+  for (const ParsedQuicVersion& supported_version : supported_versions_) {
     if (version == supported_version) {
       return true;
     }
@@ -417,7 +418,8 @@ size_t QuicFramer::BuildDataPacket(const QuicPacketHeader& header,
         }
         break;
       case MTU_DISCOVERY_FRAME:
-      // MTU discovery frames are serialized as ping frames.
+        // MTU discovery frames are serialized as ping frames.
+        QUIC_FALLTHROUGH_INTENDED;
       case PING_FRAME:
         // Ping has no payload.
         break;
@@ -564,7 +566,7 @@ std::unique_ptr<QuicEncryptedPacket> QuicFramer::BuildVersionNegotiationPacket(
     return nullptr;
   }
 
-  for (ParsedQuicVersion version : versions) {
+  for (const ParsedQuicVersion& version : versions) {
     // TODO(rch): Use WriteUInt32() once QUIC_VERSION_38 and earlier
     // are removed.
     if (!writer.WriteTag(
@@ -1410,7 +1412,7 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
   }
 
   QuicPacketNumber first_received = largest_acked + 1 - first_block_length;
-  ack_frame->deprecated_largest_observed = largest_acked;
+  ack_frame->largest_acked = largest_acked;
   ack_frame->packets.AddRange(first_received, largest_acked + 1);
 
   if (num_ack_blocks > 0) {
@@ -1884,7 +1886,8 @@ size_t QuicFramer::ComputeFrameLength(
       return GetStopWaitingFrameSize(version_.transport_version,
                                      packet_number_length);
     case MTU_DISCOVERY_FRAME:
-    // MTU discovery frames are serialized as ping frames.
+      // MTU discovery frames are serialized as ping frames.
+      QUIC_FALLTHROUGH_INTENDED;
     case PING_FRAME:
       // Ping has no payload.
       return kQuicFrameTypeSize;

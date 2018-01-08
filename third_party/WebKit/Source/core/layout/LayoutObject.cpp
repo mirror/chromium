@@ -75,11 +75,10 @@
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutAPIShim.h"
-#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/ng/layout_ng_table_cell.h"
+#include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/layout/svg/LayoutSVGResourceClipper.h"
@@ -101,6 +100,7 @@
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 #ifndef NDEBUG
 #include <stdio.h>
 #endif
@@ -111,12 +111,47 @@ namespace {
 
 static bool g_modify_layout_tree_structure_any_state = false;
 
-bool ShouldUseNewLayout(const ComputedStyle& style) {
-  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
-    return false;
-  // TODO(layout-dev): Remove user-modify style check once editing handles
-  // LayoutNG.
-  return style.UserModify() == EUserModify::kReadOnly;
+inline bool ShouldUseNewLayout(const ComputedStyle& style) {
+  return RuntimeEnabledFeatures::LayoutNGEnabled() &&
+         !style.ForceLegacyLayout();
+}
+
+template <typename Predicate>
+LayoutObject* FindAncestorByPredicate(const LayoutObject* descendant,
+                                      LayoutObject::AncestorSkipInfo* skip_info,
+                                      Predicate predicate) {
+  for (auto* object = descendant->Parent(); object; object = object->Parent()) {
+    if (predicate(object))
+      return object;
+    if (skip_info)
+      skip_info->Update(*object);
+  }
+  return nullptr;
+}
+
+LayoutBlock* FindContainingBlock(LayoutObject* container,
+                                 LayoutObject::AncestorSkipInfo* skip_info) {
+  // For inlines, we return the nearest non-anonymous enclosing
+  // block. We don't try to return the inline itself. This allows us to avoid
+  // having a positioned objects list in all LayoutInlines and lets us return a
+  // strongly-typed LayoutBlock* result from this method. The
+  // LayoutObject::Container() method can actually be used to obtain the inline
+  // directly.
+  if (container && container->IsInline() && !container->IsAtomicInlineLevel()) {
+    DCHECK(container->Style()->HasInFlowPosition());
+    container = container->ContainingBlock(skip_info);
+  }
+
+  if (container && !container->IsLayoutBlock())
+    container = container->ContainingBlock(skip_info);
+
+  while (container && container->IsAnonymousBlock())
+    container = container->ContainingBlock(skip_info);
+
+  if (!container || !container->IsLayoutBlock())
+    return nullptr;  // This can still happen in case of an orphaned tree
+
+  return ToLayoutBlock(container);
 }
 
 }  // namespace
@@ -136,7 +171,7 @@ LayoutObject::SetLayoutNeededForbiddenScope::~SetLayoutNeededForbiddenScope() {
 #endif
 
 struct SameSizeAsLayoutObject : DisplayItemClient {
-  ~SameSizeAsLayoutObject() override {}  // Allocate vtable pointer.
+  ~SameSizeAsLayoutObject() override = default;  // Allocate vtable pointer.
   void* pointers[5];
   Member<void*> members[1];
 #if DCHECK_IS_ON()
@@ -224,7 +259,7 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kTableColumn:
       return new LayoutTableCol(element);
     case EDisplay::kTableCell:
-      if (RuntimeEnabledFeatures::LayoutNGEnabled())
+      if (ShouldUseNewLayout(style))
         return new LayoutNGTableCell(element);
       return new LayoutTableCell(element);
     case EDisplay::kTableCaption:
@@ -238,6 +273,10 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kGrid:
     case EDisplay::kInlineGrid:
       return new LayoutGrid(element);
+    case EDisplay::kLayoutCustom:
+    case EDisplay::kInlineLayoutCustom:
+      // TODO(ikilpatrick): return new LayoutCustom(element);
+      return nullptr;
   }
 
   NOTREACHED();
@@ -430,8 +469,19 @@ LayoutObject* LayoutObject::NextInPreOrder() const {
 }
 
 bool LayoutObject::HasClipRelatedProperty() const {
-  if (HasClip() || HasOverflowClip() || HasClipPath() ||
-      Style()->ContainsPaint())
+  // TODO(trchen): Refactor / remove this function.
+  // This function detects a bunch of properties that can potentially affect
+  // clip inheritance chain. However such generalization is practially useless
+  // because these properties change clip inheritance in different way that
+  // needs to be handled explicitly.
+  // CSS clip applies clip to the current element and all descendants.
+  // CSS overflow clip applies only to containg-block descendants.
+  // CSS contain:paint applies to all descendants by making itself a containing
+  // block for all descendants.
+  // CSS clip-path/mask/filter induces a stacking context and applies inherited
+  // clip to that stacking context, while resetting clip for descendants. This
+  // special behavior is already handled elsewhere.
+  if (HasClip() || HasOverflowClip() || Style()->ContainsPaint())
     return true;
   if (IsBox() && ToLayoutBox(this)->HasControlClip())
     return true;
@@ -656,19 +706,16 @@ bool LayoutObject::IsFixedPositionObjectInPagedMedia() const {
 }
 
 bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
-                                       const ScrollAlignment& align_x,
-                                       const ScrollAlignment& align_y,
-                                       ScrollType scroll_type,
-                                       bool make_visible_in_visual_viewport,
-                                       ScrollBehavior scroll_behavior) {
+                                       const WebScrollIntoViewParams& params) {
   LayoutBox* enclosing_box = EnclosingBox();
   if (!enclosing_box)
     return false;
 
   GetDocument().GetPage()->GetSmoothScrollSequencer()->AbortAnimations();
-  enclosing_box->ScrollRectToVisibleRecursive(
-      rect, align_x, align_y, scroll_type, make_visible_in_visual_viewport,
-      scroll_behavior, scroll_type == kProgrammaticScroll);
+  WebScrollIntoViewParams new_params(params);
+  new_params.is_for_scroll_sequence =
+      params.GetScrollType() == kProgrammaticScroll;
+  enclosing_box->ScrollRectToVisibleRecursive(rect, new_params);
   GetDocument().GetPage()->GetSmoothScrollSequencer()->RunQueuedAnimations();
 
   return true;
@@ -703,13 +750,13 @@ LayoutBlockFlow* LayoutObject::EnclosingNGBlockFlow() const {
     return nullptr;
   LayoutBox* box = EnclosingBox();
   DCHECK(box);
-  return box->IsLayoutNGMixin() ? ToLayoutBlockFlow(box) : nullptr;
+  return NGBlockNode::CanUseNewLayout(*box) ? ToLayoutBlockFlow(box) : nullptr;
 }
 
 const NGPhysicalBoxFragment* LayoutObject::EnclosingBlockFlowFragment() const {
   DCHECK(IsInline() || IsText());
   LayoutBlockFlow* const block_flow = EnclosingNGBlockFlow();
-  if (!block_flow || !block_flow->HasNGInlineNodeData())
+  if (!block_flow || !block_flow->ChildrenInline())
     return nullptr;
   // TODO(kojii): CurrentFragment isn't always available after layout clean.
   // Investigate why.
@@ -947,56 +994,29 @@ inline void LayoutObject::InvalidateContainerPreferredLogicalWidths() {
 
 LayoutObject* LayoutObject::ContainerForAbsolutePosition(
     AncestorSkipInfo* skip_info) const {
-  // We technically just want our containing block, but we may not have one if
-  // we're part of an uninstalled subtree. We'll climb as high as we can though.
-  for (LayoutObject* object = Parent(); object; object = object->Parent()) {
-    if (object->CanContainAbsolutePositionObjects())
-      return object;
-    if (skip_info)
-      skip_info->Update(*object);
-  }
-  return nullptr;
+  return FindAncestorByPredicate(this, skip_info, [](LayoutObject* candidate) {
+    return candidate->CanContainAbsolutePositionObjects();
+  });
 }
 
-LayoutBlock* LayoutObject::ContainerForFixedPosition(
+LayoutObject* LayoutObject::ContainerForFixedPosition(
     AncestorSkipInfo* skip_info) const {
   DCHECK(!IsText());
-
-  LayoutObject* object = Parent();
-  for (; object && !object->CanContainFixedPositionObjects();
-       object = object->Parent()) {
-    if (skip_info)
-      skip_info->Update(*object);
-  }
-
-  DCHECK(!object || !object->IsAnonymousBlock());
-  return ToLayoutBlock(object);
+  return FindAncestorByPredicate(this, skip_info, [](LayoutObject* candidate) {
+    return candidate->CanContainFixedPositionObjects();
+  });
 }
 
 LayoutBlock* LayoutObject::ContainingBlockForAbsolutePosition(
     AncestorSkipInfo* skip_info) const {
-  LayoutObject* object = ContainerForAbsolutePosition(skip_info);
+  auto* container = ContainerForAbsolutePosition(skip_info);
+  return FindContainingBlock(container, skip_info);
+}
 
-  // For relpositioned inlines, we return the nearest non-anonymous enclosing
-  // block. We don't try to return the inline itself. This allows us to avoid
-  // having a positioned objects list in all LayoutInlines and lets us return a
-  // strongly-typed LayoutBlock* result from this method. The container() method
-  // can actually be used to obtain the inline directly.
-  if (object && object->IsInline() && !object->IsAtomicInlineLevel()) {
-    DCHECK(object->Style()->HasInFlowPosition());
-    object = object->ContainingBlock(skip_info);
-  }
-
-  if (object && !object->IsLayoutBlock())
-    object = object->ContainingBlock(skip_info);
-
-  while (object && object->IsAnonymousBlock())
-    object = object->ContainingBlock(skip_info);
-
-  if (!object || !object->IsLayoutBlock())
-    return nullptr;  // This can still happen in case of an orphaned tree
-
-  return ToLayoutBlock(object);
+LayoutBlock* LayoutObject::ContainingBlockForFixedPosition(
+    AncestorSkipInfo* skip_info) const {
+  auto* container = ContainerForFixedPosition(skip_info);
+  return FindContainingBlock(container, skip_info);
 }
 
 LayoutBlock* LayoutObject::ContainingBlock(AncestorSkipInfo* skip_info) const {
@@ -1005,7 +1025,7 @@ LayoutBlock* LayoutObject::ContainingBlock(AncestorSkipInfo* skip_info) const {
     object = ToLayoutScrollbarPart(this)->ScrollbarStyleSource();
   if (!IsTextOrSVGChild()) {
     if (style_->GetPosition() == EPosition::kFixed)
-      return ContainerForFixedPosition(skip_info);
+      return ContainingBlockForFixedPosition(skip_info);
     if (style_->GetPosition() == EPosition::kAbsolute)
       return ContainingBlockForAbsolutePosition(skip_info);
   }
@@ -1069,6 +1089,226 @@ IntRect LayoutObject::AbsoluteBoundingBoxRectIgnoringTransforms() const {
   return result;
 }
 
+LayoutRect LayoutObject::AbsoluteBoundingBoxRectHandlingEmptyAnchor() const {
+  return AbsoluteBoundingBoxRectHelper(ExpandScrollMargin::kIgnore);
+}
+
+LayoutRect LayoutObject::AbsoluteBoundingBoxRectForScrollIntoView() const {
+  return AbsoluteBoundingBoxRectHelper(ExpandScrollMargin::kExpand);
+}
+
+LayoutRect LayoutObject::AbsoluteBoundingBoxRectHelper(
+    ExpandScrollMargin expand) const {
+  FloatPoint upper_left, lower_right;
+  bool found_upper_left = GetUpperLeftCorner(expand, upper_left);
+  bool found_lower_right = GetLowerRightCorner(expand, lower_right);
+
+  // If we've found one corner, but not the other,
+  // then we should just return a point at the corner that we did find.
+  if (found_upper_left != found_lower_right) {
+    if (found_upper_left)
+      lower_right = upper_left;
+    else
+      upper_left = lower_right;
+  }
+
+  FloatSize size = lower_right.ExpandedTo(upper_left) - upper_left;
+  if (std::isnan(size.Width()) || std::isnan(size.Height()))
+    return LayoutRect();
+
+  return EnclosingLayoutRect(FloatRect(upper_left, size));
+}
+
+namespace {
+
+enum class MarginCorner { kTopLeft, kBottomRight };
+
+void MovePointByScrollMargin(const LayoutObject* layout_object,
+                             MarginCorner corner,
+                             FloatPoint& point) {
+  FloatSize offset;
+  const ComputedStyle* style = layout_object->Style();
+
+  if (corner == MarginCorner::kTopLeft)
+    offset = FloatSize(-style->ScrollMarginLeft(), -style->ScrollMarginTop());
+  else
+    offset = FloatSize(style->ScrollMarginRight(), style->ScrollMarginBottom());
+
+  point.Move(offset);
+}
+
+inline const LayoutObject* EndOfContinuations(
+    const LayoutObject* layout_object) {
+  const LayoutObject* prev = nullptr;
+  const LayoutObject* cur = layout_object;
+
+  if (!cur->IsLayoutInline() && !cur->IsLayoutBlockFlow())
+    return nullptr;
+
+  while (cur) {
+    prev = cur;
+    if (cur->IsLayoutInline())
+      cur = ToLayoutInline(cur)->Continuation();
+    else
+      cur = ToLayoutBlockFlow(cur)->Continuation();
+  }
+
+  return prev;
+}
+
+}  // namespace
+
+bool LayoutObject::GetUpperLeftCorner(ExpandScrollMargin expand,
+                                      FloatPoint& point) const {
+  if (!IsInline() || IsAtomicInlineLevel()) {
+    point = LocalToAbsolute(FloatPoint(), kUseTransforms);
+    if (expand == ExpandScrollMargin::kExpand)
+      MovePointByScrollMargin(this, MarginCorner::kTopLeft, point);
+    return true;
+  }
+
+  // Find the next text/image child, to get a position.
+  const LayoutObject* runner = this;
+  while (runner) {
+    const LayoutObject* const previous = runner;
+    if (LayoutObject* runner_first_child = runner->SlowFirstChild()) {
+      runner = runner_first_child;
+    } else if (runner->NextSibling()) {
+      runner = runner->NextSibling();
+    } else {
+      LayoutObject* next = nullptr;
+      while (!next && runner->Parent()) {
+        runner = runner->Parent();
+        next = runner->NextSibling();
+      }
+      runner = next;
+
+      if (!runner)
+        break;
+    }
+    DCHECK(runner);
+
+    if (!runner->IsInline() || runner->IsAtomicInlineLevel()) {
+      point = runner->LocalToAbsolute(FloatPoint(), kUseTransforms);
+      if (expand == ExpandScrollMargin::kExpand)
+        MovePointByScrollMargin(runner, MarginCorner::kTopLeft, point);
+      return true;
+    }
+
+    if (runner->IsText() && !runner->IsBR()) {
+      const Optional<FloatPoint> maybe_point =
+          ToLayoutText(runner)->GetUpperLeftCorner();
+      if (maybe_point.has_value()) {
+        point = runner->LocalToAbsolute(maybe_point.value(), kUseTransforms);
+        return true;
+      }
+      if (previous->GetNode() == GetNode()) {
+        // Do nothing - skip unrendered whitespace that is a child or next
+        // sibling of the anchor.
+        // FIXME: This fails to skip a whitespace sibling when there was also a
+        // whitespace child (because |previous| has moved).
+        continue;
+      }
+      point = runner->LocalToAbsolute(FloatPoint(), kUseTransforms);
+      if (expand == ExpandScrollMargin::kExpand)
+        MovePointByScrollMargin(runner, MarginCorner::kTopLeft, point);
+      return true;
+    }
+
+    if (runner->IsAtomicInlineLevel()) {
+      DCHECK(runner->IsBox());
+      const LayoutBox* box = ToLayoutBox(runner);
+      point = FloatPoint(box->Location());
+      point = runner->Container()->LocalToAbsolute(point, kUseTransforms);
+      if (expand == ExpandScrollMargin::kExpand)
+        MovePointByScrollMargin(box, MarginCorner::kTopLeft, point);
+      return true;
+    }
+  }
+
+  // If the target doesn't have any children or siblings that could be used to
+  // calculate the scroll position, we must be at the end of the
+  // document. Scroll to the bottom.
+  // FIXME: who said anything about scrolling?
+  if (!runner && GetDocument().View()) {
+    point = FloatPoint(0, GetDocument()
+                              .View()
+                              ->LayoutViewportScrollableArea()
+                              ->ContentsSize()
+                              .Height());
+    return true;
+  }
+  return false;
+}
+
+bool LayoutObject::GetLowerRightCorner(ExpandScrollMargin expand,
+                                       FloatPoint& point) const {
+  if (!IsInline() || IsAtomicInlineLevel()) {
+    const LayoutBox* box = ToLayoutBox(this);
+    point = LocalToAbsolute(FloatPoint(box->Size()), kUseTransforms);
+    if (expand == ExpandScrollMargin::kExpand)
+      MovePointByScrollMargin(this, MarginCorner::kBottomRight, point);
+    return true;
+  }
+
+  const LayoutObject* runner = this;
+  const LayoutObject* start_continuation = nullptr;
+  // Find the last text/image child, to get a position.
+  while (runner) {
+    if (LayoutObject* runner_last_child = runner->SlowLastChild()) {
+      runner = runner_last_child;
+    } else if (runner != this && runner->PreviousSibling()) {
+      runner = runner->PreviousSibling();
+    } else {
+      const LayoutObject* prev = nullptr;
+      while (!prev) {
+        // Check if the current layoutObject has contiunation and move the
+        // location for finding the layoutObject to the end of continuations if
+        // there is the continuation.  Skip to check the contiunation on
+        // contiunations section
+        if (start_continuation == runner) {
+          start_continuation = nullptr;
+        } else if (!start_continuation) {
+          if (const LayoutObject* continuation = EndOfContinuations(runner)) {
+            start_continuation = runner;
+            prev = continuation;
+            break;
+          }
+        }
+        // Prevent to overrun out of own layout tree
+        if (runner == this) {
+          return false;
+        }
+        runner = runner->Parent();
+        if (!runner)
+          return false;
+        prev = runner->PreviousSibling();
+      }
+      runner = prev;
+    }
+    DCHECK(runner);
+    if (runner->IsText() || runner->IsAtomicInlineLevel()) {
+      point = FloatPoint();
+      if (runner->IsText()) {
+        const LayoutText* text = ToLayoutText(runner);
+        IntRect lines_box = EnclosingIntRect(text->LinesBoundingBox());
+        if (!lines_box.MaxX() && !lines_box.MaxY())
+          continue;
+        point.MoveBy(lines_box.MaxXMaxYCorner());
+        point = runner->LocalToAbsolute(point, kUseTransforms);
+      } else {
+        const LayoutBox* box = ToLayoutBox(runner);
+        point.MoveBy(box->FrameRect().MaxXMaxYCorner());
+        point = runner->Container()->LocalToAbsolute(point, kUseTransforms);
+        if (expand == ExpandScrollMargin::kExpand)
+          MovePointByScrollMargin(box, MarginCorner::kBottomRight, point);
+      }
+      return true;
+    }
+  }
+  return true;
+}
+
 IntRect LayoutObject::AbsoluteElementBoundingBoxRect() const {
   Vector<LayoutRect> rects;
   const LayoutBoxModelObject& container = EnclosingLayer()->GetLayoutObject();
@@ -1118,8 +1358,7 @@ const LayoutBoxModelObject& LayoutObject::ContainerForPaintInvalidation()
   // frame's LayoutView so that we generate invalidations on the window.
   const LayoutView* layout_view = View();
   while (const LayoutObject* owner_object =
-             LayoutAPIShim::ConstLayoutObjectFrom(
-                 layout_view->GetFrame()->OwnerLayoutItem()))
+             layout_view->GetFrame()->OwnerLayoutObject())
     layout_view = owner_object->View();
 
   DCHECK(layout_view);
@@ -1600,7 +1839,7 @@ void LayoutObject::FirstLineStyleDidChange(const ComputedStyle& old_style,
     SetNeedsLayoutAndPrefWidthsRecalc(LayoutInvalidationReason::kStyleChange);
 }
 
-void LayoutObject::MarkAncestorsForOverflowRecalcIfNeeded() {
+void LayoutObject::MarkContainerChainForOverflowRecalcIfNeeded() {
   LayoutObject* object = this;
   do {
     // Cell and row need to propagate the flag to their containing section and
@@ -1619,22 +1858,14 @@ void LayoutObject::SetNeedsOverflowRecalcAfterStyleChange() {
   SetSelfNeedsOverflowRecalcAfterStyleChange();
   SetMayNeedPaintInvalidation();
   if (!needed_recalc)
-    MarkAncestorsForOverflowRecalcIfNeeded();
+    MarkContainerChainForOverflowRecalcIfNeeded();
 }
 
 DISABLE_CFI_PERF
 void LayoutObject::SetStyle(scoped_refptr<ComputedStyle> style) {
   DCHECK(style);
-
-  if (style_ == style) {
-    // We need to run through adjustStyleDifference() for iframes, plugins, and
-    // canvas so style sharing is disabled for them. That should ensure that we
-    // never hit this code path.
-    DCHECK(!IsLayoutIFrame());
-    DCHECK(!IsEmbeddedObject());
-    DCHECK(!IsCanvas());
+  if (style_ == style)
     return;
-  }
 
   StyleDifference diff;
   if (style_)
@@ -1894,7 +2125,7 @@ void LayoutObject::StyleDidChange(StyleDifference diff,
     // Ditto.
     if (NeedsOverflowRecalcAfterStyleChange() &&
         old_style->GetPosition() != style_->GetPosition())
-      MarkAncestorsForOverflowRecalcIfNeeded();
+      MarkContainerChainForOverflowRecalcIfNeeded();
 
     SetNeedsLayoutAndPrefWidthsRecalc(LayoutInvalidationReason::kStyleChange);
   } else if (diff.NeedsPositionedMovementLayout()) {
@@ -2409,12 +2640,12 @@ LayoutSize LayoutObject::OffsetFromAncestorContainer(
     DCHECK(next_container);
     if (!next_container)
       break;
-    // Table sections can have transforms but are not containers (they are
+    // Table sections/rows can have transforms but are not containers (they are
     // not derived from LayoutBlock). Allow them here. It is the responsibility
     // of calling code to correctly handle the fact that the value returned from
-    // this method does not account for the table section transform.
+    // this method does not account for the table part transform.
     DCHECK(!curr_container->HasTransformRelatedProperty() ||
-           curr_container->IsTableSection());
+           curr_container->IsTablePart());
     LayoutSize current_offset =
         curr_container->OffsetFromContainer(next_container);
     offset += current_offset;
@@ -3247,10 +3478,9 @@ Element* LayoutObject::OffsetParent(const Element* base) const {
     // TODO(kochi): If |base| or |node| is nested deep in shadow roots, this
     // loop may get expensive, as isUnclosedNodeOf() can take up to O(N+M) time
     // (N and M are depths).
-    if (base &&
-        (node->IsClosedShadowHiddenFrom(*base) ||
-         (node->IsInShadowTree() && node->ContainingShadowRoot()->GetType() ==
-                                        ShadowRootType::kUserAgent))) {
+    if (base && (node->IsClosedShadowHiddenFrom(*base) ||
+                 (node->IsInShadowTree() &&
+                  node->ContainingShadowRoot()->IsUserAgent()))) {
       // If 'position: fixed' node is found while traversing up, terminate the
       // loop and return null.
       if (ancestor->IsFixedPositioned())

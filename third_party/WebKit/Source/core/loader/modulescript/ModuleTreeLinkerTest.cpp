@@ -55,7 +55,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
  public:
   ModuleTreeLinkerTestModulator(scoped_refptr<ScriptState> script_state)
       : script_state_(std::move(script_state)) {}
-  ~ModuleTreeLinkerTestModulator() override {}
+  ~ModuleTreeLinkerTestModulator() override = default;
 
   void Trace(blink::Visitor*) override;
 
@@ -82,7 +82,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
     source_text.Append("export default 'grapes';");
 
     ScriptModule script_module = ScriptModule::Compile(
-        script_state_->GetIsolate(), source_text.ToString(), url.GetString(),
+        script_state_->GetIsolate(), source_text.ToString(), url, url,
         ScriptFetchOptions(), kSharableCrossOrigin,
         TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
     auto* module_script = ModuleScript::CreateForTest(this, script_module, url);

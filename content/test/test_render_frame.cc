@@ -15,9 +15,9 @@
 #include "content/common/navigation_params.h"
 #include "content/common/navigation_params.mojom.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/test/mock_render_thread.h"
 #include "content/renderer/loader/web_url_loader_impl.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
@@ -90,6 +90,8 @@ class MockFrameHost : public mojom::FrameHost {
 
   void EnforceInsecureRequestPolicy(
       blink::WebInsecureRequestPolicy policy) override {}
+  void EnforceInsecureNavigationsSet(
+      const std::vector<uint32_t>& set) override {}
 
   void DidSetFramePolicyHeaders(
       blink::WebSandboxFlags sandbox_flags,
@@ -137,17 +139,13 @@ void TestRenderFrame::WillSendRequest(blink::WebURLRequest& request) {
 }
 
 void TestRenderFrame::Navigate(const CommonNavigationParams& common_params,
-                               const StartNavigationParams& start_params,
                                const RequestNavigationParams& request_params) {
-  // PlzNavigate
-  if (IsBrowserSideNavigationEnabled()) {
-    CommitNavigation(ResourceResponseHead(), GURL(), common_params,
-                     request_params, mojom::URLLoaderClientEndpointsPtr(),
-                     URLLoaderFactoryBundle(),
-                     base::UnguessableToken::Create());
-  } else {
-    OnNavigate(common_params, start_params, request_params);
-  }
+  CommitNavigation(network::ResourceResponseHead(), GURL(), common_params,
+                   request_params,
+                   network::mojom::URLLoaderClientEndpointsPtr(),
+                   std::make_unique<URLLoaderFactoryBundleInfo>(),
+                   mojom::ControllerServiceWorkerInfoPtr(),
+                   base::UnguessableToken::Create());
 }
 
 void TestRenderFrame::SwapOut(

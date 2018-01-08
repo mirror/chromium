@@ -29,13 +29,15 @@
 #include "content/browser/payments/payment_app_context_impl.h"
 #include "content/browser/push_messaging/push_messaging_context.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
+#include "content/browser/shared_worker/shared_worker_service_impl.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/content_export.h"
 #include "content/common/storage_partition_service.mojom.h"
 #include "content/public/browser/storage_partition.h"
-#include "content/public/common/network_service.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "net/cookies/cookie_store.h"
+#include "services/network/public/interfaces/cookie_manager.mojom.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
 #include "storage/browser/quota/special_storage_policy.h"
 
 #if !defined(OS_ANDROID)
@@ -76,8 +78,10 @@ class CONTENT_EXPORT StoragePartitionImpl
   base::FilePath GetPath() override;
   net::URLRequestContextGetter* GetURLRequestContext() override;
   net::URLRequestContextGetter* GetMediaURLRequestContext() override;
-  mojom::NetworkContext* GetNetworkContext() override;
-  mojom::URLLoaderFactory* GetURLLoaderFactoryForBrowserProcess() override;
+  network::mojom::NetworkContext* GetNetworkContext() override;
+  network::mojom::URLLoaderFactory* GetURLLoaderFactoryForBrowserProcess()
+      override;
+  network::mojom::CookieManager* GetCookieManagerForBrowserProcess() override;
   storage::QuotaManager* GetQuotaManager() override;
   ChromeAppCacheService* GetAppCacheService() override;
   storage::FileSystemContext* GetFileSystemContext() override;
@@ -87,6 +91,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   IndexedDBContextImpl* GetIndexedDBContext() override;
   CacheStorageContextImpl* GetCacheStorageContext() override;
   ServiceWorkerContextWrapper* GetServiceWorkerContext() override;
+  SharedWorkerServiceImpl* GetSharedWorkerService() override;
 #if !defined(OS_ANDROID)
   HostZoomMap* GetHostZoomMap() override;
   HostZoomLevelContext* GetHostZoomLevelContext() override;
@@ -271,6 +276,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   scoped_refptr<IndexedDBContextImpl> indexed_db_context_;
   scoped_refptr<CacheStorageContextImpl> cache_storage_context_;
   scoped_refptr<ServiceWorkerContextWrapper> service_worker_context_;
+  std::unique_ptr<SharedWorkerServiceImpl> shared_worker_service_;
   scoped_refptr<PushMessagingContext> push_messaging_context_;
   scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy_;
 #if !defined(OS_ANDROID)
@@ -296,12 +302,14 @@ class CONTENT_EXPORT StoragePartitionImpl
   // service. When it's disabled, the underlying NetworkContext may either be
   // provided by the embedder, or is created by the StoragePartition and owned
   // by |network_context_owner_|.
-  mojom::NetworkContextPtr network_context_;
+  network::mojom::NetworkContextPtr network_context_;
 
-  // URLLoaderFactory for use in the browser process only. See the method
-  // comment for StoragePartition::GetURLLoaderFactoryForBrowserProcess() for
+  // URLLoaderFactory/CookieManager for use in the browser process only.
+  // See the method comment for
+  // StoragePartition::GetURLLoaderFactoryForBrowserProcess() for
   // more details
-  mojom::URLLoaderFactoryPtr url_loader_factory_for_browser_process_;
+  network::mojom::URLLoaderFactoryPtr url_loader_factory_for_browser_process_;
+  ::network::mojom::CookieManagerPtr cookie_manager_for_browser_process_;
 
   // When the network service is disabled, a NetworkContext is created on the IO
   // thread that wraps access to the URLRequestContext.

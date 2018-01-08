@@ -27,6 +27,7 @@
 #include "content/common/gpu_stream_constants.h"
 #include "content/common/renderer.mojom.h"
 #include "content/common/unique_name_helper.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/common/page_state.h"
 #include "content/public/common/screen_info.h"
 #include "content/public/renderer/renderer_gamepad_provider.h"
@@ -285,7 +286,8 @@ class CopyRequestSwapPromise : public cc::SwapPromise {
     DCHECK(layer_tree_frame_sink_from_commit_);
   }
   void DidActivate() override {}
-  void WillSwap(viz::CompositorFrameMetadata*) override {
+  void WillSwap(viz::CompositorFrameMetadata*,
+                cc::RenderFrameMetadata*) override {
     layer_tree_frame_sink_from_commit_->RequestCopyOfOutput(
         std::move(copy_request_));
   }
@@ -331,6 +333,9 @@ class LayoutTestDependenciesImpl : public LayoutTestDependencies,
     renderer_settings.allow_antialiasing &=
         !cmd->HasSwitch(cc::switches::kDisableCompositedAntialiasing);
     renderer_settings.highp_threshold_min = 2048;
+    // Keep texture sizes exactly matching the bounds of the RenderPass to avoid
+    // floating point badness in texcoords.
+    renderer_settings.dont_round_texture_sizes_for_pixel_tests = true;
 
     constexpr bool disable_display_vsync = false;
     constexpr double refresh_rate = 60.0;
@@ -366,7 +371,7 @@ class LayoutTestDependenciesImpl : public LayoutTestDependencies,
       override {
     // This is for an offscreen context for the compositor. So the default
     // framebuffer doesn't need alpha, depth, stencil, antialiasing.
-    gpu::gles2::ContextCreationAttribHelper attributes;
+    gpu::ContextCreationAttribs attributes;
     attributes.alpha_size = -1;
     attributes.depth_size = 0;
     attributes.stencil_size = 0;
@@ -436,8 +441,10 @@ void EnableBrowserLayoutTestMode() {
   RenderWidgetHostImpl::DisableResizeAckCheckForTesting();
 }
 
-void TerminateAllSharedWorkersForTesting(base::OnceClosure callback) {
-  static_cast<SharedWorkerServiceImpl*>(SharedWorkerService::GetInstance())
+void TerminateAllSharedWorkersForTesting(StoragePartition* storage_partition,
+                                         base::OnceClosure callback) {
+  static_cast<SharedWorkerServiceImpl*>(
+      storage_partition->GetSharedWorkerService())
       ->TerminateAllWorkersForTesting(std::move(callback));
 }
 

@@ -17,6 +17,7 @@
 #include <stdint.h>
 
 #include <algorithm>
+#include <memory>
 #include <limits>
 
 #include "base/base64url.h"
@@ -29,7 +30,6 @@
 #include "base/json/json_reader.h"
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
@@ -56,6 +56,7 @@
 #include "net/base/load_timing_info_test_util.h"
 #include "net/base/net_errors.h"
 #include "net/base/net_module.h"
+#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
 #include "net/base/upload_bytes_element_reader.h"
@@ -89,8 +90,7 @@
 #include "net/log/test_net_log_util.h"
 #include "net/net_features.h"
 #include "net/nqe/external_estimate_provider.h"
-#include "net/proxy/proxy_server.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/quic/chromium/mock_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_server_info.h"
 #include "net/socket/socket_test_util.h"
@@ -144,6 +144,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_REPORTING)
+#include "net/reporting/reporting_policy.h"
 #include "net/reporting/reporting_service.h"
 #include "net/url_request/network_error_logging_delegate.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
@@ -732,7 +733,8 @@ class TestURLRequestContextWithProxy : public TestURLRequestContext {
   TestURLRequestContextWithProxy(const std::string& proxy,
                                  NetworkDelegate* delegate)
       : TestURLRequestContext(true) {
-    context_storage_.set_proxy_service(ProxyService::CreateFixed(proxy));
+    context_storage_.set_proxy_resolution_service(
+        ProxyResolutionService::CreateFixed(proxy));
     set_network_delegate(delegate);
     Init();
   }
@@ -7048,6 +7050,12 @@ class TestReportingService : public ReportingService {
     return true;
   }
 
+  const ReportingPolicy& GetPolicy() const override {
+    static ReportingPolicy dummy_policy_;
+    NOTIMPLEMENTED();
+    return dummy_policy_;
+  }
+
  private:
   std::vector<Header> headers_;
 };
@@ -7193,6 +7201,11 @@ class TestNetworkErrorLoggingDelegate : public NetworkErrorLoggingDelegate {
     errors_.push_back(details);
   }
 
+  void RemoveBrowsingData(const base::RepeatingCallback<bool(const GURL&)>&
+                              origin_filter) override {
+    NOTREACHED();
+  }
+
  private:
   std::vector<Header> headers_;
   std::vector<ErrorDetails> errors_;
@@ -7210,7 +7223,7 @@ std::unique_ptr<test_server::HttpResponse> SendNelHeader(
 
 std::unique_ptr<test_server::HttpResponse> SendEmptyResponse(
     const test_server::HttpRequest& request) {
-  return base::MakeUnique<test_server::RawHttpResponse>("", "");
+  return std::make_unique<test_server::RawHttpResponse>("", "");
 }
 
 }  // namespace
@@ -10133,7 +10146,7 @@ TEST_F(HTTPSRequestTest, SSLSessionCacheShardTest) {
   session_context.cert_transparency_verifier =
       default_context_.cert_transparency_verifier();
   session_context.ct_policy_enforcer = default_context_.ct_policy_enforcer();
-  session_context.proxy_service = default_context_.proxy_service();
+  session_context.proxy_resolution_service = default_context_.proxy_resolution_service();
   session_context.ssl_config_service = default_context_.ssl_config_service();
   session_context.http_auth_handler_factory =
       default_context_.http_auth_handler_factory();
@@ -11188,8 +11201,7 @@ INSTANTIATE_TEST_CASE_P(OCSPVerify,
                         testing::ValuesIn(kOCSPVerifyData));
 
 static bool SystemSupportsAIA() {
-#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
-  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
+#if defined(OS_ANDROID)
   return false;
 #else
   return true;

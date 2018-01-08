@@ -86,7 +86,6 @@ UIColor* BackgroundColorIncognito() {
 
 - (void)dealloc {
   self.tableView.delegate = nil;
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (UIScrollView*)scrollView {
@@ -151,6 +150,13 @@ UIColor* BackgroundColorIncognito() {
 
 - (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
   [self layoutRows];
+}
+
+#pragma mark - Properties accessors
+
+- (void)setIncognito:(BOOL)incognito {
+  DCHECK(!self.viewLoaded);
+  _incognito = incognito;
 }
 
 #pragma mark - AutocompleteResultConsumer
@@ -353,10 +359,9 @@ UIColor* BackgroundColorIncognito() {
 }
 
 - (void)updateContentInsetForKeyboard {
-  UIView* toView =
-      [UIApplication sharedApplication].keyWindow.rootViewController.view;
   CGRect absoluteRect =
-      [self.tableView convertRect:self.tableView.bounds toView:toView];
+      [self.tableView convertRect:self.tableView.bounds
+                toCoordinateSpace:UIScreen.mainScreen.coordinateSpace];
   CGFloat screenHeight = CurrentScreenHeight();
   CGFloat bottomInset = screenHeight - self.tableView.contentSize.height -
                         _keyboardHeight - absoluteRect.origin.y -

@@ -32,9 +32,10 @@ void RecordHistogramsOnLauncherThread(base::TimeDelta launch_time) {
 }  // namespace
 
 ChildProcessLauncherHelper::Process::Process(Process&& other)
-  : process(std::move(other.process))
-#if defined(OS_LINUX)
-   , zygote(other.zygote)
+    : process(std::move(other.process))
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+      ,
+      zygote(other.zygote)
 #endif
 {
 }
@@ -44,7 +45,7 @@ ChildProcessLauncherHelper::Process::Process::operator=(
     ChildProcessLauncherHelper::Process&& other) {
   DCHECK_NE(this, &other);
   process = std::move(other.process);
-#if defined(OS_LINUX)
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
   zygote = other.zygote;
 #endif
   return *this;
@@ -100,14 +101,15 @@ void ChildProcessLauncherHelper::LaunchOnLauncherThread() {
   bool is_synchronous_launch = true;
   int launch_result = LAUNCH_RESULT_FAILURE;
   base::LaunchOptions options;
-  BeforeLaunchOnLauncherThread(*files_to_register, &options);
 
-  Process process = LaunchProcessOnLauncherThread(options,
-                                                  std::move(files_to_register),
-                                                  &is_synchronous_launch,
-                                                  &launch_result);
+  Process process;
+  if (BeforeLaunchOnLauncherThread(*files_to_register, &options)) {
+    process =
+        LaunchProcessOnLauncherThread(options, std::move(files_to_register),
+                                      &is_synchronous_launch, &launch_result);
 
-  AfterLaunchOnLauncherThread(process, options);
+    AfterLaunchOnLauncherThread(process, options);
+  }
 
   if (is_synchronous_launch) {
     PostLaunchOnLauncherThread(std::move(process), launch_result);

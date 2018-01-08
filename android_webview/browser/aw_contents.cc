@@ -1155,8 +1155,9 @@ void AwContents::SmoothScroll(JNIEnv* env,
                               jlong duration_ms) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  float scale = browser_view_renderer_.dip_scale() *
-                browser_view_renderer_.page_scale_factor();
+  float scale = browser_view_renderer_.page_scale_factor();
+  if (!content::IsUseZoomForDSFEnabled())
+    scale *= browser_view_renderer_.dip_scale();
   render_view_host_ext_->SmoothScroll(target_x / scale, target_y / scale,
                                       duration_ms);
 }
@@ -1179,9 +1180,9 @@ void AwContents::OnWebLayoutContentsSizeChanged(
   if (obj.is_null())
     return;
   gfx::Size contents_size_css =
-      content::UseZoomForDSFEnabled()
-          ? ScaleToCeiledSize(contents_size,
-                              1 / browser_view_renderer_.dip_scale())
+      content::IsUseZoomForDSFEnabled()
+          ? ScaleToRoundedSize(contents_size,
+                               1 / browser_view_renderer_.dip_scale())
           : contents_size;
   Java_AwContents_onWebLayoutContentsSizeChanged(
       env, obj, contents_size_css.width(), contents_size_css.height());

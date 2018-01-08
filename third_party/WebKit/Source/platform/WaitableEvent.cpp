@@ -23,7 +23,7 @@ WaitableEvent::WaitableEvent(ResetPolicy policy, InitialState state) {
           : base::WaitableEvent::InitialState::NOT_SIGNALED));
 }
 
-WaitableEvent::~WaitableEvent() {}
+WaitableEvent::~WaitableEvent() = default;
 
 void WaitableEvent::Reset() {
   impl_->Reset();
@@ -35,10 +35,6 @@ void WaitableEvent::Wait() {
 
 void WaitableEvent::Signal() {
   impl_->Signal();
-}
-
-bool WaitableEvent::IsSignaled() {
-  return impl_->IsSignaled();
 }
 
 size_t WaitableEvent::WaitMultiple(const WTF::Vector<WaitableEvent*>& events) {

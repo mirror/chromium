@@ -13,7 +13,6 @@
 #include "base/trace_event/trace_event.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
-#include "gpu/command_buffer/client/gles2_lib.h"
 #include "gpu/command_buffer/client/raster_implementation_gles.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/ipc/gl_in_process_context.h"
@@ -25,7 +24,7 @@ namespace ui {
 
 // static
 scoped_refptr<InProcessContextProvider> InProcessContextProvider::Create(
-    const gpu::gles2::ContextCreationAttribHelper& attribs,
+    const gpu::ContextCreationAttribs& attribs,
     InProcessContextProvider* shared_context,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
@@ -44,7 +43,7 @@ InProcessContextProvider::CreateOffscreen(
     gpu::ImageFactory* image_factory,
     InProcessContextProvider* shared_context,
     bool support_locking) {
-  gpu::gles2::ContextCreationAttribHelper attribs;
+  gpu::ContextCreationAttribs attribs;
   attribs.alpha_size = 8;
   attribs.blue_size = 8;
   attribs.green_size = 8;
@@ -61,7 +60,7 @@ InProcessContextProvider::CreateOffscreen(
 }
 
 InProcessContextProvider::InProcessContextProvider(
-    const gpu::gles2::ContextCreationAttribHelper& attribs,
+    const gpu::ContextCreationAttribs& attribs,
     InProcessContextProvider* shared_context,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
@@ -122,7 +121,7 @@ gpu::ContextResult InProcessContextProvider::BindToCurrentThread() {
       "gpu_toplevel", unique_context_name.c_str());
 
   raster_context_ = std::make_unique<gpu::raster::RasterImplementationGLES>(
-      context_->GetImplementation(),
+      context_->GetImplementation(), context_->GetImplementation(),
       context_->GetImplementation()->capabilities());
 
   return bind_result_;
@@ -187,6 +186,8 @@ void InProcessContextProvider::InvalidateGrContext(uint32_t state) {
 }
 
 base::Lock* InProcessContextProvider::GetLock() {
+  if (!support_locking_)
+    return nullptr;
   return &context_lock_;
 }
 

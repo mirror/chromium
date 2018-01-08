@@ -77,17 +77,20 @@ class VIZ_SERVICE_EXPORT ProgramKey {
   ~ProgramKey();
 
   static ProgramKey DebugBorder();
-  static ProgramKey SolidColor(AAMode aa_mode);
+  static ProgramKey SolidColor(AAMode aa_mode, bool tint_color);
   static ProgramKey Tile(TexCoordPrecision precision,
                          SamplerType sampler,
                          AAMode aa_mode,
                          SwizzleMode swizzle_mode,
-                         bool is_opaque);
+                         bool is_opaque,
+                         bool has_tex_clamp_rect,
+                         bool tint_color);
   static ProgramKey Texture(TexCoordPrecision precision,
                             SamplerType sampler,
                             PremultipliedAlphaMode premultiplied_alpha,
                             bool has_background_color,
-                            bool has_tex_clamp_rect);
+                            bool has_tex_clamp_rect,
+                            bool tint_color);
 
   // TODO(ccameron): Merge |mask_for_background| into MaskMode.
   static ProgramKey RenderPass(TexCoordPrecision precision,
@@ -96,12 +99,14 @@ class VIZ_SERVICE_EXPORT ProgramKey {
                                AAMode aa_mode,
                                MaskMode mask_mode,
                                bool mask_for_background,
-                               bool has_color_matrix);
+                               bool has_color_matrix,
+                               bool tint_color);
   static ProgramKey VideoStream(TexCoordPrecision precision);
   static ProgramKey YUVVideo(TexCoordPrecision precision,
                              SamplerType sampler,
                              YUVAlphaTextureMode yuv_alpha_texture_mode,
-                             UVTextureMode uv_texture_mode);
+                             UVTextureMode uv_texture_mode,
+                             bool tint_color);
 
   bool operator==(const ProgramKey& other) const;
   bool operator!=(const ProgramKey& other) const;
@@ -141,6 +146,7 @@ class VIZ_SERVICE_EXPORT ProgramKey {
   bool has_tex_clamp_rect_ = false;
 
   bool has_output_color_matrix_ = false;
+  bool has_tint_color_matrix_ = false;
 };
 
 struct ProgramKeyHash {
@@ -161,7 +167,8 @@ struct ProgramKeyHash {
            (static_cast<size_t>(key.uv_texture_mode_) << 25) ^
            (static_cast<size_t>(key.color_conversion_mode_) << 26) ^
            (static_cast<size_t>(key.has_tex_clamp_rect_) << 28) ^
-           (static_cast<size_t>(key.has_output_color_matrix_) << 29);
+           (static_cast<size_t>(key.has_output_color_matrix_) << 29) ^
+           (static_cast<size_t>(key.has_tint_color_matrix_) << 30);
   }
 };
 
@@ -183,6 +190,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
     fragment_shader_.color_conversion_mode_ = key.color_conversion_mode_;
     fragment_shader_.color_transform_ = key.color_transform_;
     fragment_shader_.has_output_color_matrix_ = key.has_output_color_matrix_;
+    fragment_shader_.has_tint_color_matrix_ = key.has_tint_color_matrix_;
 
     switch (key.type_) {
       case PROGRAM_TYPE_DEBUG_BORDER:
@@ -308,6 +316,9 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
   int output_color_matrix_location() const {
     return fragment_shader_.output_color_matrix_location_;
   }
+  int tint_color_matrix_location() const {
+    return fragment_shader_.tint_color_matrix_location_;
+  }
 
  private:
   void InitializeDebugBorderProgram() {
@@ -341,6 +352,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
     vertex_shader_.has_matrix_ = true;
 
     // Initialize fragment program.
+    fragment_shader_.has_tex_clamp_rect_ = key.has_tex_clamp_rect_;
     if (key.is_opaque_) {
       DCHECK_EQ(key.aa_mode_, NO_AA);
       fragment_shader_.frag_color_mode_ = FRAG_COLOR_MODE_OPAQUE;
@@ -351,12 +363,13 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
         fragment_shader_.frag_color_mode_ = FRAG_COLOR_MODE_APPLY_BLEND_MODE;
       fragment_shader_.has_uniform_alpha_ = true;
     }
-
     // AA changes the texture coordinate mode (affecting both shaders).
     if (key.aa_mode_ == USE_AA) {
       vertex_shader_.tex_coord_source_ = TEX_COORD_SOURCE_POSITION;
       vertex_shader_.aa_mode_ = USE_AA;
       fragment_shader_.has_rgba_fragment_tex_transform_ = true;
+      // Tiles that have AA do their own clamping.
+      DCHECK(!fragment_shader_.has_tex_clamp_rect_);
     }
   }
 

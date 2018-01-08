@@ -18,7 +18,6 @@
 #include "components/viz/common/gl_helper.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/resources/single_release_callback.h"
-#include "components/viz/common/surfaces/stub_surface_reference_factory.h"
 #include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -54,7 +53,6 @@ DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
       enable_surface_synchronization_(enable_surface_synchronization),
       enable_viz_(enable_viz),
       tick_clock_(base::DefaultTickClock::GetInstance()),
-      background_color_(SK_ColorRED),
       frame_evictor_(std::make_unique<viz::FrameEvictor>(this)),
       weak_ptr_factory_(this) {
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
@@ -181,8 +179,7 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceToVideoFrame(
 }
 
 bool DelegatedFrameHost::CanCopyFromCompositingSurface() const {
-  return compositor_ &&
-         client_->DelegatedFrameHostGetLayer()->has_external_content();
+  return compositor_ && HasFallbackSurface();
 }
 
 void DelegatedFrameHost::BeginFrameSubscription(
@@ -197,24 +194,6 @@ void DelegatedFrameHost::EndFrameSubscription() {
 
 viz::FrameSinkId DelegatedFrameHost::GetFrameSinkId() {
   return frame_sink_id_;
-}
-
-viz::SurfaceId DelegatedFrameHost::SurfaceIdAtPoint(
-    viz::SurfaceHittestDelegate* delegate,
-    const gfx::PointF& point,
-    gfx::PointF* transformed_point) {
-  *transformed_point = point;
-  viz::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
-  if (!surface_id.is_valid() || enable_viz_)
-    return surface_id;
-  viz::SurfaceHittest hittest(delegate,
-                              GetFrameSinkManager()->surface_manager());
-  gfx::Transform target_transform;
-  viz::SurfaceId target_local_surface_id = hittest.GetTargetSurfaceAtPoint(
-      surface_id, gfx::ToFlooredPoint(point), &target_transform);
-  if (target_local_surface_id.is_valid())
-    target_transform.TransformPoint(transformed_point);
-  return target_local_surface_id;
 }
 
 bool DelegatedFrameHost::TransformPointToLocalCoordSpace(
@@ -254,6 +233,15 @@ void DelegatedFrameHost::SetNeedsBeginFrames(bool needs_begin_frames) {
 
   needs_begin_frame_ = needs_begin_frames;
   support_->SetNeedsBeginFrame(needs_begin_frames);
+}
+
+void DelegatedFrameHost::SetWantsAnimateOnlyBeginFrames() {
+  if (enable_viz_) {
+    NOTIMPLEMENTED();
+    return;
+  }
+
+  support_->SetWantsAnimateOnlyBeginFrames();
 }
 
 void DelegatedFrameHost::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
@@ -301,24 +289,27 @@ void DelegatedFrameHost::OnAggregatedSurfaceDamage(
 void DelegatedFrameHost::WasResized() {
   const viz::SurfaceId* primary_surface_id =
       client_->DelegatedFrameHostGetLayer()->GetPrimarySurfaceId();
+  gfx::Size new_size_in_dip = client_->DelegatedFrameHostDesiredSizeInDIP();
+
   if (enable_surface_synchronization_ &&
       client_->DelegatedFrameHostIsVisible() &&
       (!primary_surface_id || primary_surface_id->local_surface_id() !=
                                   client_->GetLocalSurfaceId())) {
-    current_frame_size_in_dip_ = client_->DelegatedFrameHostDesiredSizeInDIP();
+    current_frame_size_in_dip_ = new_size_in_dip;
 
     viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_id, current_frame_size_in_dip_, GetSurfaceReferenceFactory());
-    if (compositor_)
+        surface_id, current_frame_size_in_dip_, GetGutterColor());
+    if (compositor_ && !base::CommandLine::ForCurrentProcess()->HasSwitch(
+                           switches::kDisableResizeLock)) {
       compositor_->OnChildResizing();
+    }
     // Input throttling and guttering are handled differently when surface
     // synchronization is enabled so exit early here.
     return;
   }
 
-  if (client_->DelegatedFrameHostDesiredSizeInDIP() !=
-          current_frame_size_in_dip_ &&
+  if (new_size_in_dip != current_frame_size_in_dip_ &&
       !client_->DelegatedFrameHostIsVisible()) {
     EvictDelegatedFrame();
   }
@@ -335,7 +326,7 @@ SkColor DelegatedFrameHost::GetGutterColor() const {
   // In fullscreen mode resizing is uncommon, so it makes more sense to
   // make the initial switch to fullscreen mode look better by using black as
   // the gutter color.
-  return client_->DelegatedFrameHostGetGutterColor(background_color_);
+  return client_->DelegatedFrameHostGetGutterColor();
 }
 
 void DelegatedFrameHost::UpdateGutters() {
@@ -345,14 +336,13 @@ void DelegatedFrameHost::UpdateGutters() {
     return;
   }
 
-  if (current_frame_size_in_dip_.width() <
-      client_->DelegatedFrameHostDesiredSizeInDIP().width()) {
+  gfx::Size size_in_dip = client_->DelegatedFrameHostDesiredSizeInDIP();
+  if (current_frame_size_in_dip_.width() < size_in_dip.width()) {
     right_gutter_.reset(new ui::Layer(ui::LAYER_SOLID_COLOR));
     right_gutter_->SetColor(GetGutterColor());
-    int width = client_->DelegatedFrameHostDesiredSizeInDIP().width() -
-                current_frame_size_in_dip_.width();
+    int width = size_in_dip.width() - current_frame_size_in_dip_.width();
     // The right gutter also includes the bottom-right corner, if necessary.
-    int height = client_->DelegatedFrameHostDesiredSizeInDIP().height();
+    int height = size_in_dip.height();
     right_gutter_->SetBounds(
         gfx::Rect(current_frame_size_in_dip_.width(), 0, width, height));
 
@@ -361,13 +351,11 @@ void DelegatedFrameHost::UpdateGutters() {
     right_gutter_.reset();
   }
 
-  if (current_frame_size_in_dip_.height() <
-      client_->DelegatedFrameHostDesiredSizeInDIP().height()) {
+  if (current_frame_size_in_dip_.height() < size_in_dip.height()) {
     bottom_gutter_.reset(new ui::Layer(ui::LAYER_SOLID_COLOR));
     bottom_gutter_->SetColor(GetGutterColor());
     int width = current_frame_size_in_dip_.width();
-    int height = client_->DelegatedFrameHostDesiredSizeInDIP().height() -
-                 current_frame_size_in_dip_.height();
+    int height = size_in_dip.height() - current_frame_size_in_dip_.height();
     bottom_gutter_->SetBounds(
         gfx::Rect(0, current_frame_size_in_dip_.height(), width, height));
     client_->DelegatedFrameHostGetLayer()->Add(bottom_gutter_.get());
@@ -508,8 +496,6 @@ void DelegatedFrameHost::SubmitCompositorFrame(
     root_pass->damage_rect = gfx::Rect(frame_size);
   }
 
-  background_color_ = frame.metadata.root_background_color;
-
   if (frame_size.IsEmpty()) {
     DCHECK(frame.resource_list.empty());
     EvictDelegatedFrame();
@@ -521,9 +507,8 @@ void DelegatedFrameHost::SubmitCompositorFrame(
 
     // If surface synchronization is off, then OnFirstSurfaceActivation will be
     // called in the same call stack.
-    bool result = support_->SubmitCompositorFrame(
-        local_surface_id, std::move(frame), std::move(hit_test_region_list));
-    DCHECK(result);
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                    std::move(hit_test_region_list));
   }
 }
 
@@ -569,8 +554,33 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
       surface_info.device_scale_factor(), surface_info.size_in_pixels());
-
   if (enable_surface_synchronization_) {
+    // If this is the first Surface created after navigation, notify |client_|.
+    // If the Surface was created before navigation, drop it.
+    uint32_t parent_sequence_number =
+        surface_info.id().local_surface_id().parent_sequence_number();
+    uint32_t latest_parent_sequence_number =
+        client_->GetLocalSurfaceId().parent_sequence_number();
+    // If |latest_parent_sequence_number| is less than
+    // |first_parent_sequence_number_after_navigation_|, then the parent id has
+    // wrapped around. Make sure that case is covered.
+    if (parent_sequence_number >=
+            first_parent_sequence_number_after_navigation_ ||
+        (latest_parent_sequence_number <
+             first_parent_sequence_number_after_navigation_ &&
+         parent_sequence_number <= latest_parent_sequence_number)) {
+      if (!received_frame_after_navigation_) {
+        received_frame_after_navigation_ = true;
+        client_->DidReceiveFirstFrameAfterNavigation();
+      }
+    } else {
+      ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
+      viz::HostFrameSinkManager* host_frame_sink_manager =
+          factory->GetContextFactoryPrivate()->GetHostFrameSinkManager();
+      host_frame_sink_manager->DropTemporaryReference(surface_info.id());
+      return;
+    }
+
     // If there's no primary surface, then we don't wish to display content at
     // this time (e.g. the view is hidden) and so we don't need a fallback
     // surface either. Since we won't use the fallback surface, we drop the
@@ -584,7 +594,7 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     }
   } else {
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_info.id(), frame_size_in_dip, GetSurfaceReferenceFactory());
+        surface_info.id(), frame_size_in_dip, GetGutterColor());
   }
 
   client_->DelegatedFrameHostGetLayer()->SetFallbackSurfaceId(
@@ -600,8 +610,10 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     UpdateGutters();
   }
 
-  if (HasFallbackSurface())
-    frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
+  // This is used by macOS' unique resize path.
+  client_->OnFirstSurfaceActivation(surface_info);
+
+  frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
   // Note: the frame may have been evicted immediately.
 }
 
@@ -628,9 +640,9 @@ void DelegatedFrameHost::EvictDelegatedFrame() {
     UpdateGutters();
   }
 
-  // TODO(samans): Ensure that with --enable-viz the latest frame is evicted and
-  // that DelegatedFrameHost updates the SurfaceLayer when the frame becomes
-  // visible again.
+  // TODO(samans): Ensure that with VizDisplayCompositor enabled the latest
+  // frame is evicted and that DelegatedFrameHost updates the SurfaceLayer when
+  // the frame becomes visible again.
   if (!enable_viz_)
     support_->EvictCurrentSurface();
 
@@ -960,12 +972,10 @@ void DelegatedFrameHost::ResetCompositorFrameSinkSupport() {
   support_.reset();
 }
 
-scoped_refptr<viz::SurfaceReferenceFactory>
-DelegatedFrameHost::GetSurfaceReferenceFactory() {
-  if (enable_viz_)
-    return base::MakeRefCounted<viz::StubSurfaceReferenceFactory>();
-
-  return GetFrameSinkManager()->surface_manager()->reference_factory();
+void DelegatedFrameHost::DidNavigate() {
+  first_parent_sequence_number_after_navigation_ =
+      client_->GetLocalSurfaceId().parent_sequence_number();
+  received_frame_after_navigation_ = false;
 }
 
 }  // namespace content

@@ -17,7 +17,6 @@
 #include "base/logging.h"
 #import "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -39,6 +38,7 @@
 #include "components/payments/core/payment_response.h"
 #include "components/payments/core/payment_shipping_option.h"
 #include "components/payments/core/web_payment_request.h"
+#include "components/payments/mojom/payment_request_data.mojom.h"
 #include "components/prefs/pref_service.h"
 #include "components/url_formatter/elide_url.h"
 #include "ios/chrome/browser/autofill/personal_data_manager_factory.h"
@@ -387,6 +387,10 @@ struct PendingPaymentResponse {
   DCHECK(_pendingPaymentRequest->state() ==
          payments::PaymentRequest::State::INTERACTIVE);
 
+  [_unblockEventQueueTimer invalidate];
+  [_paymentResponseTimeoutTimer invalidate];
+  [_updateEventTimeoutTimer invalidate];
+
   [self resetIOSPaymentInstrumentLauncherDelegate];
 
   __weak PaymentRequestManager* weakSelf = self;
@@ -491,7 +495,7 @@ newPaymentRequestFromMessage:(const base::DictionaryValue&)message
   }
 
   return _paymentRequestCache->AddPaymentRequest(
-      _activeWebState, base::MakeUnique<payments::PaymentRequest>(
+      _activeWebState, std::make_unique<payments::PaymentRequest>(
                            webPaymentRequest, _browserState, _activeWebState,
                            _personalDataManager, self));
 }
@@ -661,10 +665,6 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
     return YES;
   }
 
-  [_unblockEventQueueTimer invalidate];
-  [_paymentResponseTimeoutTimer invalidate];
-  [_updateEventTimeoutTimer invalidate];
-
   __weak PaymentRequestManager* weakSelf = self;
   ProceduralBlockWithBool cancellationCallback = ^(BOOL) {
     [[weakSelf paymentRequestJsManager]
@@ -755,10 +755,6 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
     return YES;
   }
 
-  [_unblockEventQueueTimer invalidate];
-  [_paymentResponseTimeoutTimer invalidate];
-  [_updateEventTimeoutTimer invalidate];
-
   __weak PaymentRequestManager* weakSelf = self;
   ProceduralBlock callback = ^{
     [weakSelf abortPendingRequestWithReason:payments::JourneyLogger::
@@ -779,9 +775,8 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
 }
 
 - (BOOL)handleResponseComplete:(const base::DictionaryValue&)message {
-  DCHECK(_pendingPaymentRequest);
-
-  // TODO(crbug.com/602666): Check that there *is* a pending response here.
+  if (!_pendingPaymentRequest)
+    return YES;
 
   [_unblockEventQueueTimer invalidate];
   [_paymentResponseTimeoutTimer invalidate];
@@ -1030,10 +1025,10 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
     return;
   }
 
-  payments::PaymentAddress address =
+  payments::mojom::PaymentAddressPtr address =
       payments::data_util::GetPaymentAddressFromAutofillProfile(
           shippingAddress, coordinator.paymentRequest->GetApplicationLocale());
-  [_paymentRequestJsManager updateShippingAddress:address
+  [_paymentRequestJsManager updateShippingAddress:*address
                                 completionHandler:nil];
   [self setUnblockEventQueueTimer];
   [self setUpdateEventTimeoutTimer];
@@ -1098,6 +1093,10 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
 - (void)webState:(web::WebState*)webState
     didStartNavigation:(web::NavigationContext*)navigation {
+  // Ignore navigations within the same document, e.g., history.pushState().
+  if (navigation->IsSameDocument())
+    return;
+
   DCHECK_EQ(_activeWebState, webState);
   payments::JourneyLogger::AbortReason abortReason =
       navigation->IsRendererInitiated()

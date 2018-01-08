@@ -60,6 +60,7 @@
 #include "ui/events/ozone/layout/keyboard_layout_engine.h"
 #include "ui/events/ozone/layout/keyboard_layout_engine_manager.h"
 #include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/ozone_switches.h"
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -80,27 +81,22 @@ const char kResourceFile200[] = "mus_app_resources_200.pak";
 
 class ThreadedImageCursorsFactoryImpl : public ws::ThreadedImageCursorsFactory {
  public:
-  // Uses the same InProcessConfig as the UI Service. |config| will be null when
-  // the UI Service runs in it's own separate process as opposed to the WM's
-  // process.
-  explicit ThreadedImageCursorsFactoryImpl(
-      const Service::InProcessConfig* config) {
-    if (config) {
-      resource_runner_ = config->resource_runner;
-      image_cursors_set_weak_ptr_ = config->image_cursors_set_weak_ptr;
-      DCHECK(resource_runner_);
+  explicit ThreadedImageCursorsFactoryImpl(const Service::InitParams& params) {
+    // When running in-process use |resource_runner_| to load cursors.
+    if (params.resource_runner) {
+      resource_runner_ = params.resource_runner;
+      // |params.image_cursors_set_weak_ptr| must be set, but don't DCHECK
+      // because it can only be dereferenced on |resource_runner_|.
+      image_cursors_set_weak_ptr_ = params.image_cursors_set_weak_ptr;
     }
   }
 
-  ~ThreadedImageCursorsFactoryImpl() override {}
+  ~ThreadedImageCursorsFactoryImpl() override = default;
 
   // ws::ThreadedImageCursorsFactory:
   std::unique_ptr<ws::ThreadedImageCursors> CreateCursors() override {
-    // |resource_runner_| will not be initialized if and only if UI Service runs
-    // in it's own separate process. In this case we can (lazily) initialize it
-    // to the current thread (i.e. the UI Services's thread). We also initialize
-    // the local |image_cursors_set_| and make |image_cursors_set_weak_ptr_|
-    // point to it.
+    // When running out-of-process lazily initialize the resource runner to the
+    // UI service's thread.
     if (!resource_runner_) {
       resource_runner_ = base::ThreadTaskRunnerHandle::Get();
       image_cursors_set_ = std::make_unique<ui::ImageCursorsSet>();
@@ -135,19 +131,21 @@ struct Service::UserState {
   std::unique_ptr<ws::WindowTreeHostFactory> window_tree_host_factory;
 };
 
-Service::InProcessConfig::InProcessConfig() = default;
+Service::InitParams::InitParams() = default;
 
-Service::InProcessConfig::~InProcessConfig() = default;
+Service::InitParams::~InitParams() = default;
 
-Service::Service(const InProcessConfig* config)
-    : is_in_process_(config != nullptr),
+Service::Service(const InitParams& params)
+    : running_standalone_(params.running_standalone),
       threaded_image_cursors_factory_(
-          std::make_unique<ThreadedImageCursorsFactoryImpl>(config)),
+          std::make_unique<ThreadedImageCursorsFactoryImpl>(params)),
       test_config_(false),
       ime_registrar_(&ime_driver_),
-      discardable_shared_memory_manager_(config ? config->memory_manager
-                                                : nullptr),
-      should_host_viz_(!config || config->should_host_viz) {}
+      discardable_shared_memory_manager_(params.memory_manager),
+      should_host_viz_(params.should_host_viz) {
+  // UI service must host viz when running in its own process.
+  DCHECK(!running_standalone_ || should_host_viz_);
+}
 
 Service::~Service() {
   in_destructor_ = true;
@@ -171,7 +169,7 @@ Service::~Service() {
 }
 
 bool Service::InitializeResources(service_manager::Connector* connector) {
-  if (is_in_process() || ui::ResourceBundle::HasSharedInstance())
+  if (!running_standalone_ || ui::ResourceBundle::HasSharedInstance())
     return true;
 
   std::set<std::string> resource_paths;
@@ -187,8 +185,7 @@ bool Service::InitializeResources(service_manager::Connector* connector) {
     return false;
   }
 
-  if (running_standalone_)
-    ui::RegisterPathProvider();
+  ui::RegisterPathProvider();
 
   // Initialize resource bundle with 1x and 2x cursor bitmaps.
   ui::ResourceBundle::InitSharedInstanceWithPakFileRegion(
@@ -246,9 +243,13 @@ void Service::OnStart() {
   if (should_host_viz_) {
     // If mus is hosting viz, then it needs to set up ozone so that it can
     // connect to the gpu service through the connector.
+    // Currently mus hosting viz (i.e. --mash mode) only runs single-process.
     params.connector = context()->connector();
-    // TODO(crbug.com/620927): This should be false once ozone-mojo is done.
     params.single_process = true;
+    params.using_mojo = true;
+  } else {
+    params.using_mojo = base::CommandLine::ForCurrentProcess()->HasSwitch(
+        ::switches::kEnableDrmMojo);
   }
   ui::OzonePlatform::InitializeForUI(params);
 
@@ -256,7 +257,7 @@ void Service::OnStart() {
   ui::KeyboardLayoutEngineManager::GetKeyboardLayoutEngine()
       ->SetCurrentLayoutByName("us");
 
-  if (!is_in_process()) {
+  if (running_standalone_) {
     client_native_pixmap_factory_ = ui::CreateClientNativePixmapFactoryOzone();
     gfx::ClientNativePixmapFactory::SetInstance(
         client_native_pixmap_factory_.get());
@@ -288,13 +289,13 @@ void Service::OnStart() {
 
     registry_.AddInterface<mojom::Gpu>(
         base::Bind(&Service::BindGpuRequest, base::Unretained(this)));
-    registry_.AddInterface<mojom::VideoDetector>(
-        base::Bind(&Service::BindVideoDetectorRequest, base::Unretained(this)));
 #if defined(OS_CHROMEOS)
     registry_.AddInterface<mojom::Arc>(
         base::Bind(&Service::BindArcRequest, base::Unretained(this)));
 #endif  // defined(OS_CHROMEOS)
   }
+  registry_.AddInterface<mojom::VideoDetector>(
+      base::Bind(&Service::BindVideoDetectorRequest, base::Unretained(this)));
 
   ime_driver_.Init(context()->connector(), test_config_);
 
@@ -411,8 +412,9 @@ void Service::OnWillCreateTreeForWindowManager(
       ws::DisplayCreationConfig::MANUAL) {
 #if defined(OS_CHROMEOS)
     display::ScreenManagerForwarding::Mode mode =
-        is_in_process() ? display::ScreenManagerForwarding::Mode::IN_WM_PROCESS
-                        : display::ScreenManagerForwarding::Mode::OWN_PROCESS;
+        running_standalone_
+            ? display::ScreenManagerForwarding::Mode::OWN_PROCESS
+            : display::ScreenManagerForwarding::Mode::IN_WM_PROCESS;
     screen_manager_ = std::make_unique<display::ScreenManagerForwarding>(mode);
 #else
     CHECK(false);
@@ -556,6 +558,8 @@ void Service::BindRemoteEventDispatcherRequest(
 }
 
 void Service::BindVideoDetectorRequest(mojom::VideoDetectorRequest request) {
+  if (!should_host_viz_)
+    return;
   window_server_->video_detector()->AddBinding(std::move(request));
 }
 

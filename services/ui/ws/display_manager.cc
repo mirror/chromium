@@ -141,8 +141,12 @@ bool DisplayManager::SetDisplayConfiguration(
     LOG(ERROR) << "SetDisplayConfiguration primary id not in displays";
     return false;
   }
+
+  // Ignore a temporarily missing interal display during ash unified mode setup.
   if (!found_internal_display &&
-      internal_display_id != display::kInvalidDisplayId) {
+      internal_display_id != display::kInvalidDisplayId &&
+      (displays.size() != 1 ||
+       displays[0].id() != display::kUnifiedDisplayId)) {
     LOG(ERROR) << "SetDisplayConfiguration internal display id not in displays";
     return false;
   }
@@ -186,12 +190,8 @@ bool DisplayManager::SetDisplayConfiguration(
   std::set<int64_t> removed_display_ids =
       base::STLSetDifference<std::set<int64_t>>(existing_display_ids,
                                                 display_ids);
-  for (int64_t display_id : removed_display_ids) {
+  for (int64_t display_id : removed_display_ids)
     display_list.RemoveDisplay(display_id);
-    // If the destroyed display still has a root window, it is orphaned here.
-    // Root windows are destroyed by explicit window manager instruction.
-    DestroyDisplay(GetDisplayById(display_id));
-  }
 
   for (auto& pair : user_display_managers_)
     pair.second->CallOnDisplaysChanged();
@@ -304,7 +304,7 @@ const Display* DisplayManager::GetDisplayContaining(
   return nullptr;
 }
 
-Display* DisplayManager::GetDisplayById(int64_t display_id) {
+const Display* DisplayManager::GetDisplayById(int64_t display_id) const {
   for (Display* display : displays_) {
     if (display->GetId() == display_id)
       return display;
@@ -331,6 +331,10 @@ WindowManagerDisplayRoot* DisplayManager::GetWindowManagerDisplayRoot(
   return const_cast<WindowManagerDisplayRoot*>(
       const_cast<const DisplayManager*>(this)->GetWindowManagerDisplayRoot(
           window));
+}
+
+bool DisplayManager::InUnifiedDisplayMode() const {
+  return GetDisplayById(display::kUnifiedDisplayId) != nullptr;
 }
 
 WindowId DisplayManager::GetAndAdvanceNextRootId() {

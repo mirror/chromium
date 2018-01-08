@@ -11,6 +11,12 @@
       "bounds": [800, 300],
       "backfaceVisibility": "hidden",
       "backgroundColor": "#FF0000E6",
+      "maskLayer": [
+        {
+          "name": "Mask Layer",
+          "bounds": [800, 300]
+        }
+      ],
       "transform": 2
     }
   ],

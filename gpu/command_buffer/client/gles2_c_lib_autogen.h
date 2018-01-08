@@ -1765,19 +1765,11 @@ void GL_APIENTRY GLES2BeginRasterCHROMIUM(GLuint texture_id,
       texture_id, sk_color, msaa_sample_count, can_use_lcd_text,
       use_distance_field_text, pixel_config);
 }
-void GL_APIENTRY GLES2RasterCHROMIUM(const cc::DisplayItemList* list,
-                                     GLint translate_x,
-                                     GLint translate_y,
-                                     GLint clip_x,
-                                     GLint clip_y,
-                                     GLint clip_w,
-                                     GLint clip_h,
-                                     GLfloat post_translate_x,
-                                     GLfloat post_translate_y,
-                                     GLfloat post_scale) {
-  gles2::GetGLContext()->RasterCHROMIUM(
-      list, translate_x, translate_y, clip_x, clip_y, clip_w, clip_h,
-      post_translate_x, post_translate_y, post_scale);
+void* GL_APIENTRY GLES2MapRasterCHROMIUM(GLsizeiptr size) {
+  return gles2::GetGLContext()->MapRasterCHROMIUM(size);
+}
+void GL_APIENTRY GLES2UnmapRasterCHROMIUM(GLsizeiptr written_size) {
+  gles2::GetGLContext()->UnmapRasterCHROMIUM(written_size);
 }
 void GL_APIENTRY GLES2EndRasterCHROMIUM() {
   gles2::GetGLContext()->EndRasterCHROMIUM();
@@ -3143,8 +3135,12 @@ extern const NameToFunc g_gles2_function_table[] = {
         reinterpret_cast<GLES2FunctionPointer>(glBeginRasterCHROMIUM),
     },
     {
-        "glRasterCHROMIUM",
-        reinterpret_cast<GLES2FunctionPointer>(glRasterCHROMIUM),
+        "glMapRasterCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glMapRasterCHROMIUM),
+    },
+    {
+        "glUnmapRasterCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glUnmapRasterCHROMIUM),
     },
     {
         "glEndRasterCHROMIUM",

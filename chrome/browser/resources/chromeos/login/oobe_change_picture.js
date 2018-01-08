@@ -68,7 +68,10 @@ Polymer({
      */
     cameraVideoModeEnabled: {
       type: Boolean,
-      value: true,
+      value: function() {
+        return loadTimeData.getBoolean('changePictureVideoModeEnabled');
+      },
+      readOnly: true,
     },
 
     /**
@@ -202,8 +205,8 @@ Polymer({
   onPhotoTaken_: function(event) {
     chrome.send('photoTaken', [event.detail.photoDataUrl]);
     this.pictureList_.setOldImageUrl(event.detail.photoDataUrl);
-
     this.pictureList_.setFocus();
+    this.sendSelectImage_(CrPicture.SelectionTypes.OLD, '');
     announceAccessibleMessage(
         loadTimeData.getString('photoCaptureAccessibleText'));
   },

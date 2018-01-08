@@ -11,7 +11,6 @@
 #include "base/command_line.h"
 #include "base/ios/device_util.h"
 #include "base/ios/ios_util.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/string16.h"
@@ -24,7 +23,6 @@
 #include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/ui/omnibox/chrome_omnibox_client_ios.h"
-#import "ios/chrome/browser/ui/omnibox/location_bar_view.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_util.h"
 #include "ios/chrome/browser/ui/omnibox/web_omnibox_edit_controller.h"
@@ -165,7 +163,7 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
                                ios::ChromeBrowserState* browser_state)
     : OmniboxView(
           controller,
-          base::MakeUnique<ChromeOmniboxClientIOS>(controller, browser_state)),
+          std::make_unique<ChromeOmniboxClientIOS>(controller, browser_state)),
       browser_state_(browser_state),
       field_(field),
       controller_(controller),
@@ -174,11 +172,11 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
       attributing_display_string_(nil),
       popup_provider_(nullptr) {
   DCHECK(field_);
-  field_delegate_.reset(
-      [[AutocompleteTextFieldDelegate alloc] initWithEditView:this]);
+  field_delegate_ =
+      [[AutocompleteTextFieldDelegate alloc] initWithEditView:this];
 
   if (@available(iOS 11.0, *)) {
-    paste_delegate_.reset([[OmniboxTextFieldPasteDelegate alloc] init]);
+    paste_delegate_ = [[OmniboxTextFieldPasteDelegate alloc] init];
     [field_ setPasteDelegate:paste_delegate_];
   }
 
@@ -287,7 +285,7 @@ bool OmniboxViewIOS::OnInlineAutocompleteTextMaybeChanged(
 
 void OmniboxViewIOS::OnBeforePossibleChange() {
   GetState(&state_before_change_);
-  marked_text_before_change_.reset([[field_ markedText] copy]);
+  marked_text_before_change_ = [[field_ markedText] copy];
 }
 
 bool OmniboxViewIOS::OnAfterPossibleChange(bool allow_keyword_ui_change) {
@@ -708,8 +706,7 @@ NSAttributedString* OmniboxViewIOS::ApplyTextAttributes(
 }
 
 void OmniboxViewIOS::UpdateAppearance() {
-  base::string16 text =
-      controller_->GetToolbarModel()->GetFormattedURL(nullptr);
+  base::string16 text = controller_->GetToolbarModel()->GetFormattedFullURL();
   // If Siri is thinking, treat that as user input being in progress.  It is
   // unsafe to modify the text field while voice entry is pending.
   if (model()->SetPermanentText(text)) {

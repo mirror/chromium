@@ -9,18 +9,14 @@
 
 #include "base/macros.h"
 #include "net/base/net_export.h"
-#include "net/proxy/proxy_retry_info.h"
+#include "net/proxy_resolution/proxy_retry_info.h"
 
 class GURL;
 
 namespace net {
 
-class HttpRequestHeaders;
-class HttpResponseHeaders;
-class HostPortPair;
 class ProxyInfo;
 class ProxyServer;
-class ProxyService;
 
 // Delegate for setting up a connection.
 class NET_EXPORT ProxyDelegate {
@@ -34,8 +30,8 @@ class NET_EXPORT ProxyDelegate {
   // Called as the proxy is being resolved for |url| for a |method| request.
   // The caller may pass an empty string to get method agnostic resoulution.
   // Allows the delegate to override the proxy resolution decision made by
-  // ProxyService. The delegate may override the decision by modifying the
-  // ProxyInfo |result|.
+  // ProxyResolutionService. The delegate may override the decision by modifying
+  // the ProxyInfo |result|.
   virtual void OnResolveProxy(const GURL& url,
                               const std::string& method,
                               const ProxyRetryInfoMap& proxy_retry_info,
@@ -47,30 +43,6 @@ class NET_EXPORT ProxyDelegate {
   // explicitly directed to skip a proxy).
   virtual void OnFallback(const ProxyServer& bad_proxy,
                           int net_error) = 0;
-
-  // Called immediately before a proxy tunnel request is sent.
-  // Provides the embedder an opportunity to add extra request headers.
-  virtual void OnBeforeTunnelRequest(const HostPortPair& proxy_server,
-                                     HttpRequestHeaders* extra_headers) = 0;
-
-  // Called when the connect attempt to a CONNECT proxy has completed.
-  virtual void OnTunnelConnectCompleted(const HostPortPair& endpoint,
-                                        const HostPortPair& proxy_server,
-                                        int net_error) = 0;
-
-  // Called after the response headers for the tunnel request are received.
-  virtual void OnTunnelHeadersReceived(
-      const HostPortPair& origin,
-      const HostPortPair& proxy_server,
-      const HttpResponseHeaders& response_headers) = 0;
-
-  // Returns true if |proxy_server| is a trusted SPDY/HTTP2 proxy that is
-  // allowed to push cross-origin resources.
-  virtual bool IsTrustedSpdyProxy(const net::ProxyServer& proxy_server) = 0;
-
-  // Notifies the ProxyDelegate that |alternative_proxy_server| is broken.
-  virtual void OnAlternativeProxyBroken(
-      const ProxyServer& alternative_proxy_server) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ProxyDelegate);

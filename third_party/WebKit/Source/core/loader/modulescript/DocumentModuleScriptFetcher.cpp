@@ -57,7 +57,7 @@ bool WasModuleLoadSuccessful(
         "HTML spec.";
     error_messages->push_back(ConsoleMessage::CreateForRequest(
         kJSMessageSource, kErrorMessageLevel, message,
-        response.Url().GetString(), resource->Identifier()));
+        response.Url().GetString(), nullptr, resource->Identifier()));
     return false;
   }
 
@@ -75,8 +75,7 @@ DocumentModuleScriptFetcher::DocumentModuleScriptFetcher(
 void DocumentModuleScriptFetcher::Fetch(FetchParameters& fetch_params,
                                         ModuleScriptFetcher::Client* client) {
   SetClient(client);
-  if (!ScriptResource::Fetch(fetch_params, fetcher_, this))
-    NotifyFinished(nullptr /* resource */);
+  ScriptResource::Fetch(fetch_params, fetcher_, this);
 }
 
 void DocumentModuleScriptFetcher::NotifyFinished(Resource* resource) {

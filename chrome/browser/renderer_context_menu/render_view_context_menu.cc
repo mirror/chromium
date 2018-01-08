@@ -1807,7 +1807,10 @@ void RenderViewContextMenu::ExecuteCommand(int id, int event_flags) {
 
   switch (id) {
     case IDC_CONTENT_CONTEXT_OPENLINKNEWTAB:
-      ExecOpenLinkNewTab();
+      OpenURLWithExtraHeaders(params_.link_url, GetDocumentURL(params_),
+                              WindowOpenDisposition::NEW_BACKGROUND_TAB,
+                              ui::PAGE_TRANSITION_LINK, "" /* extra_headers */,
+                              true /* started_from_context_menu */);
       break;
 
     case IDC_CONTENT_CONTEXT_OPENLINKNEWWINDOW:
@@ -2263,13 +2266,6 @@ bool RenderViewContextMenu::IsOpenLinkOTREnabled() const {
   return incognito_avail != IncognitoModePrefs::DISABLED;
 }
 
-void RenderViewContextMenu::ExecOpenLinkNewTab() {
-  OpenURLWithExtraHeaders(params_.link_url, GetDocumentURL(params_),
-                          WindowOpenDisposition::NEW_BACKGROUND_TAB,
-                          ui::PAGE_TRANSITION_LINK, "" /* extra_headers */,
-                          true /* started_from_context_menu */);
-}
-
 void RenderViewContextMenu::ExecOpenBookmarkApp() {
   const extensions::Extension* bookmark_app =
       GetBookmarkAppForURL(browser_context_, params_.link_url);
@@ -2388,6 +2384,7 @@ void RenderViewContextMenu::ExecSaveLinkAs() {
   dl_params->set_referrer_encoding(params_.frame_charset);
   dl_params->set_suggested_name(params_.suggested_filename);
   dl_params->set_prompt(true);
+  dl_params->set_download_source(content::DownloadSource::CONTEXT_MENU);
 
   BrowserContext::GetDownloadManager(browser_context_)
       ->DownloadUrl(std::move(dl_params));

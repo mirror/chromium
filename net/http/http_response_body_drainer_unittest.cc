@@ -26,7 +26,7 @@
 #include "net/http/http_server_properties_impl.h"
 #include "net/http/http_stream.h"
 #include "net/http/transport_security_state.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/ssl/ssl_config_service_defaults.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -88,6 +88,7 @@ class MockHttpStream : public HttpStream {
 
   // HttpStream implementation.
   int InitializeStream(const HttpRequestInfo* request_info,
+                       bool can_send_early,
                        RequestPriority priority,
                        const NetLogWithSource& net_log,
                        const CompletionCallback& callback) override {
@@ -236,7 +237,7 @@ void MockHttpStream::CompleteRead() {
 class HttpResponseBodyDrainerTest : public testing::Test {
  protected:
   HttpResponseBodyDrainerTest()
-      : proxy_service_(ProxyService::CreateDirect()),
+      : proxy_resolution_service_(ProxyResolutionService::CreateDirect()),
         ssl_config_service_(new SSLConfigServiceDefaults),
         http_server_properties_(new HttpServerPropertiesImpl()),
         session_(CreateNetworkSession()),
@@ -247,7 +248,7 @@ class HttpResponseBodyDrainerTest : public testing::Test {
 
   HttpNetworkSession* CreateNetworkSession() {
     HttpNetworkSession::Context context;
-    context.proxy_service = proxy_service_.get();
+    context.proxy_resolution_service = proxy_resolution_service_.get();
     context.ssl_config_service = ssl_config_service_.get();
     context.http_server_properties = http_server_properties_.get();
     context.cert_verifier = &cert_verifier_;
@@ -257,7 +258,7 @@ class HttpResponseBodyDrainerTest : public testing::Test {
     return new HttpNetworkSession(HttpNetworkSession::Params(), context);
   }
 
-  std::unique_ptr<ProxyService> proxy_service_;
+  std::unique_ptr<ProxyResolutionService> proxy_resolution_service_;
   scoped_refptr<SSLConfigService> ssl_config_service_;
   std::unique_ptr<HttpServerPropertiesImpl> http_server_properties_;
   MockCertVerifier cert_verifier_;

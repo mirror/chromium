@@ -35,12 +35,6 @@ class V8TestNotEnumerableNamedGetter {
   }
   MODULES_EXPORT static TestNotEnumerableNamedGetter* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   MODULES_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestNotEnumerableNamedGetter>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestNotEnumerableNamedGetter>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   // Callback functions
@@ -58,6 +52,7 @@ class V8TestNotEnumerableNamedGetter {
 template <>
 struct NativeValueTraits<TestNotEnumerableNamedGetter> : public NativeValueTraitsBase<TestNotEnumerableNamedGetter> {
   MODULES_EXPORT static TestNotEnumerableNamedGetter* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  MODULES_EXPORT static TestNotEnumerableNamedGetter* NullValue() { return nullptr; }
 };
 
 template <>

@@ -209,8 +209,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, FailedNavigation) {
   // Now navigate to an unreachable url.
   {
     TestNavigationObserver observer(shell()->web_contents());
-    GURL error_url(
-        net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_CONNECTION_RESET));
+    GURL error_url(embedded_test_server()->GetURL("/close-socket"));
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&net::URLRequestFailedJob::AddUrlHandler));
@@ -348,8 +347,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 
   // Revoke the access to the file and submit the form. The renderer process
   // should be terminated.
-  RenderProcessHostWatcher process_exit_observer(
-      rfh->GetProcess(), RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
+  RenderProcessHostKillWaiter process_kill_waiter(rfh->GetProcess());
   ChildProcessSecurityPolicyImpl* security_policy =
       ChildProcessSecurityPolicyImpl::GetInstance();
   security_policy->RevokeAllPermissionsForFile(rfh->GetProcess()->GetID(),
@@ -366,7 +364,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
       "document.getElementById('file-form').submit();",
       &result));
   EXPECT_TRUE(result);
-  process_exit_observer.Wait();
+  EXPECT_EQ(bad_message::RFH_ILLEGAL_UPLOAD_PARAMS, process_kill_waiter.Wait());
 }
 
 // Test case to verify that redirects to data: URLs are properly disallowed,
@@ -463,7 +461,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
       base::TimeTicks::Now() /* navigation_start */, "GET",
       nullptr /* post_data */, base::Optional<SourceLocation>(),
       CSPDisposition::CHECK, false /* started_from_context_menu */,
-      false /* has_user_gesture */);
+      false /* has_user_gesture */, base::nullopt /* suggested_filename */);
   mojom::BeginNavigationParamsPtr begin_params =
       mojom::BeginNavigationParams::New(
           std::string() /* headers */, net::LOAD_NORMAL,
@@ -475,12 +473,11 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
 
   // Receiving the invalid IPC message should lead to renderer process
   // termination.
-  RenderProcessHostWatcher process_exit_observer(
-      rfh->GetProcess(), RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
-
+  RenderProcessHostKillWaiter process_kill_waiter(rfh->GetProcess());
   rfh->frame_host_binding_for_testing().impl()->BeginNavigation(
       common_params, std::move(begin_params));
-  process_exit_observer.Wait();
+  EXPECT_EQ(bad_message::RFH_BASE_URL_FOR_DATA_URL_SPECIFIED,
+            process_kill_waiter.Wait());
 
   EXPECT_FALSE(ChildProcessSecurityPolicyImpl::GetInstance()->CanReadFile(
       rfh->GetProcess()->GetID(), file_path));
@@ -766,8 +763,7 @@ IN_PROC_BROWSER_TEST_F(NavigationMojoResponseBrowserTest, FailedNavigation) {
   // Now navigate to an unreachable url.
   {
     TestNavigationObserver observer(shell()->web_contents());
-    GURL error_url(
-        net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_CONNECTION_RESET));
+    GURL error_url(embedded_test_server()->GetURL("/close-socket"));
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&net::URLRequestFailedJob::AddUrlHandler));
@@ -777,6 +773,29 @@ IN_PROC_BROWSER_TEST_F(NavigationMojoResponseBrowserTest, FailedNavigation) {
         shell()->web_contents()->GetController().GetLastCommittedEntry();
     EXPECT_EQ(PAGE_TYPE_ERROR, entry->GetPageType());
   }
+}
+
+// Data URLs can have a reference fragment like any other URLs. This test makes
+// sure it is taken into account.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
+                       DataURLWithReferenceFragment) {
+  GURL url("data:text/html,body#foo");
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  std::string body;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      shell(),
+      "window.domAutomationController.send(document.body.textContent);",
+      &body));
+  // TODO(arthursonzogni): This is wrong. The correct value for |body| is
+  // "body", not "body#foo". See https://crbug.com/123004.
+  EXPECT_EQ("body#foo", body);
+
+  std::string reference_fragment;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      shell(), "window.domAutomationController.send(location.hash);",
+      &reference_fragment));
+  EXPECT_EQ("#foo", reference_fragment);
 }
 
 }  // namespace content

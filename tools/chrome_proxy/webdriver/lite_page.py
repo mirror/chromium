@@ -147,7 +147,7 @@ class LitePage(IntegrationTest):
   # Android because it depends on window size of the browser.
   @AndroidOnly
   @ChromeVersionBeforeM(65)
-  def testLitePageBTF(self):
+  def testLitePageBTFOldFlags(self):
     # If it was attempted to run with another experiment, skip this test.
     if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
         in common.ParseFlags().browser_args):
@@ -192,12 +192,12 @@ class LitePage(IntegrationTest):
         self.assertHasChromeProxyViaHeader(response)
         self.assertIn(response.status, [200, 204])
 
-  # Checks that a Nano Lite Page does not have an error when scrolling to the
-  # bottom of the page and is able to load all resources. This test is only run
-  # on Android because it depends on window size of the browser.
+  # Checks that a Lite Page does not have an error when scrolling to the bottom
+  # of the page and is able to load all resources. This test is only run on
+  # Android because it depends on window size of the browser.
   @AndroidOnly
-  @ChromeVersionEqualOrAfterM(61)
-  def testLitePageBTFNano(self):
+  @ChromeVersionEqualOrAfterM(65)
+  def testLitePageBTFWithoutFallback(self):
     # If it was attempted to run with another experiment, skip this test.
     if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
         in common.ParseFlags().browser_args):
@@ -206,8 +206,10 @@ class LitePage(IntegrationTest):
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       # Need to force 2G speed to get lite-page response.
       test_driver.AddChromeArg('--force-effective-connection-type=2G')
-      # Set exp=alt2 to force Nano response.
-      test_driver.AddChromeArg('--data-reduction-proxy-experiment=alt2')
+
+      # Need to force lite page so target page doesn't fallback to Lo-Fi
+      # Set exp=alt1 to force Lite-page response.
+      test_driver.AddChromeArg('--data-reduction-proxy-experiment=alt1')
 
       # This page is long and has many media resources.
       test_driver.LoadURL('http://check.googlezip.net/metrics/index.html')
@@ -215,10 +217,14 @@ class LitePage(IntegrationTest):
       # Verify that a Lite Page response for the main frame was seen.
       lite_page_responses = 0
       for response in test_driver.GetHTTPResponses():
-        # Check main frame for Lite Page response.
-        if response.url.endswith('html'):
-          if (self.checkLitePageResponse(response)):
-             lite_page_responses = lite_page_responses + 1
+        # Skip CSI requests when validating Lite Page headers. CSI requests
+        # aren't expected to have LoFi headers.
+        if '/csi?' in response.url:
+          continue
+        if response.url.startswith('data:'):
+          continue
+        if (self.checkLitePageResponse(response)):
+          lite_page_responses = lite_page_responses + 1
       self.assertEqual(1, lite_page_responses)
 
       # Scroll to the bottom of the window and ensure scrollHeight increases.
@@ -236,11 +242,57 @@ class LitePage(IntegrationTest):
       responses = test_driver.GetHTTPResponses(override_has_logs=True)
       self.assertNotEqual(0, len(responses))
       for response in responses:
-        if 'content-type' in response.response_headers and ('video/mp4' in
-            response.response_headers['content-type']):
-          continue
         self.assertHasChromeProxyViaHeader(response)
-        self.assertIn(response.status, [200, 204, 304])
+        self.assertIn(response.status, [200, 204])
+
+  # Checks that a Nano Lite Page does not have an error when scrolling to the
+  # bottom of the page and is able to load all resources. Nano pages don't
+  # request additional resources when scrolling. This test is only run on
+  # Android because it depends on window size of the browser.
+  @AndroidOnly
+  @ChromeVersionEqualOrAfterM(65)
+  def testLitePageNano(self):
+    # If it was attempted to run with another experiment, skip this test.
+    if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
+        in common.ParseFlags().browser_args):
+      self.skipTest('This test cannot be run with other experiments.')
+    with TestDriver() as test_driver:
+      test_driver.AddChromeArg('--enable-spdy-proxy-auth')
+      # Need to force 2G speed to get lite-page response.
+      test_driver.AddChromeArg('--force-effective-connection-type=2G')
+      # Set exp=alt2 to force Nano response.
+      test_driver.AddChromeArg('--data-reduction-proxy-experiment=alt2')
+
+      # This page is long and has many media resources.
+      test_driver.LoadURL('http://check.googlezip.net/metrics/index.html')
+      time.sleep(2)
+
+      lite_page_responses = 0
+      btf_response = 0
+      image_responses = 0
+      for response in test_driver.GetHTTPResponses():
+        # Verify that a Lite Page response for the main frame was seen.
+        if response.url.endswith('html'):
+          if (self.checkLitePageResponse(response)):
+             lite_page_responses = lite_page_responses + 1
+        # Keep track of BTF responses.
+        if response.url.startswith("http://googleweblight.com/b"):
+          btf_response = btf_response + 1
+        # Keep track of image responses.
+        if response.url.startswith("data:image"):
+          image_responses = image_responses + 1
+        # Some video requests don't go through Flywheel.
+        if 'content-type' in response.response_headers and ('video/mp4'
+            in response.response_headers['content-type']):
+          continue
+        # Make sure non-video requests are proxied.
+        self.assertHasChromeProxyViaHeader(response)
+        # Make sure there are no 4XX or 5xx status codes.
+        self.assertLess(response.status, 400)
+
+      self.assertEqual(1, lite_page_responses)
+      self.assertEqual(1, btf_response)
+      self.assertGreater(1, image_responses)
 
   # Lo-Fi fallback is not supported without the
   # DataReductionProxyDecidesTransform feature. Check that no Lo-Fi response
@@ -315,7 +367,6 @@ class LitePage(IntegrationTest):
             lofi_resource = lofi_resource + 1
 
       self.assertEqual(0, lite_page_responses)
-      self.assertNotEqual(0, lofi_resource)
       self.assertNotEqual(0, lofi_resource)
 
   # Checks that the server provides a preview (either Lite Page or fallback
@@ -400,44 +451,6 @@ class LitePage(IntegrationTest):
       self.assertEqual(histogram, {})
       histogram = test_driver.GetHistogram('Previews.InfoBarAction.LoFi', 5)
       self.assertEqual(histogram, {})
-
-  # Checks that the server provides a preview (either Lite Page or fallback
-  # to LoFi) for a "heavy" page over a 3G connection.
-  @ChromeVersionEqualOrAfterM(61)
-  def testPreviewProvidedForHeavyPage(self):
-    with TestDriver() as test_driver:
-      test_driver.AddChromeArg('--enable-spdy-proxy-auth')
-      test_driver.AddChromeArg('--enable-features='
-                               'DataReductionProxyDecidesTransform')
-      test_driver.AddChromeArg(
-          '--force-fieldtrial-params=NetworkQualityEstimator.Enabled:'
-          'force_effective_connection_type/3G,'
-          'DataReductionProxyServerExperiments.Enabled:'
-          'exp/integration_test_policy')
-      test_driver.AddChromeArg(
-          '--force-fieldtrials=NetworkQualityEstimator/Enabled/'
-          'DataReductionProxyServerExperiments/Enabled')
-
-      # Open a URL that is specially marked as a heavy page for integration
-      # test purposes (requires using the "exp=integration_test_policy" value
-      # in chrome-proxy header).
-      test_driver.LoadURL('http://check.googlezip.net/previews/heavy_page.html')
-
-      lite_page_responses = 0
-      page_policies_responses = 0
-      for response in test_driver.GetHTTPResponses():
-        self.assertEqual('3G', response.request_headers['chrome-proxy-ect'])
-        self.assertIn('exp=integration_test_policy',
-          response.request_headers['chrome-proxy'])
-        if response.url.endswith('html'):
-          if self.checkLitePageResponse(response):
-            lite_page_responses = lite_page_responses + 1
-          elif 'chrome-proxy' in response.response_headers:
-            self.assertIn('page-policies',
-                             response.response_headers['chrome-proxy'])
-            page_policies_responses = page_policies_responses + 1
-
-      self.assertTrue(lite_page_responses == 1 or page_policies_responses == 1)
 
   # Checks the default of whether server previews are enabled or not
   # based on whether running on Android (enabled) or not (disabled).

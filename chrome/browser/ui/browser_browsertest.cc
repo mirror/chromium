@@ -23,7 +23,6 @@
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
@@ -34,6 +33,7 @@
 #include "chrome/browser/devtools/devtools_window_testing.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/first_run/first_run.h"
@@ -106,6 +106,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -1118,6 +1119,45 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, MAYBE_TabClosingWhenRemovingExtension) {
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
 }
 
+// Tests that when an extension is unloaded, if only one tab is opened
+// containing extenions-related content, then the tab is kept open and is
+// directed to the default NTP.
+IN_PROC_BROWSER_TEST_F(BrowserTest, NavigateToDefaultNTPPageOnExtensionUnload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  TabStripModel* tab_strip_model = browser()->tab_strip_model();
+
+  const Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("options_page/"));
+  ASSERT_TRUE(extension);
+
+  GURL extension_url = extension->GetResourceURL("options.html");
+  ui_test_utils::NavigateToURL(browser(), extension_url);
+  content::WaitForLoadStop(tab_strip_model->GetActiveWebContents());
+
+  ASSERT_EQ(1, browser()->tab_strip_model()->count());
+  EXPECT_EQ(
+      extension_url.spec(),
+      tab_strip_model->GetActiveWebContents()->GetLastCommittedURL().spec());
+
+  // Uninstall the extension.
+  ExtensionService* service =
+      extensions::ExtensionSystem::Get(browser()->profile())
+          ->extension_service();
+  extensions::ExtensionRegistry* registry =
+      extensions::ExtensionRegistry::Get(browser()->profile());
+  extensions::TestExtensionRegistryObserver registry_observer(registry);
+  service->UnloadExtension(extension->id(),
+                           extensions::UnloadedExtensionReason::UNINSTALL);
+  registry_observer.WaitForExtensionUnloaded();
+  content::WaitForLoadStop(tab_strip_model->GetActiveWebContents());
+
+  // There should only be one tab now, with the NTP loaded.
+  ASSERT_EQ(1, tab_strip_model->count());
+  EXPECT_EQ(
+      chrome::kChromeUINewTabURL,
+      tab_strip_model->GetActiveWebContents()->GetLastCommittedURL().spec());
+}
+
 // Open with --app-id=<id>, and see that an application tab opens by default.
 IN_PROC_BROWSER_TEST_F(BrowserTest, AppIdSwitch) {
   ASSERT_TRUE(embedded_test_server()->Start());
@@ -1887,7 +1927,13 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose2) {
   EXPECT_EQ(title, title_watcher.WaitAndGetTitle());
 }
 
-IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose3) {
+#if defined(OS_WIN) && !defined(NDEBUG)
+// Times out on windows (dbg). https://crbug.com/753691.
+#define MAYBE_WindowOpenClose3 DISABLED_WindowOpenClose3
+#else
+#define MAYBE_WindowOpenClose3 WindowOpenClose3
+#endif
+IN_PROC_BROWSER_TEST_F(BrowserTest, MAYBE_WindowOpenClose3) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kDisablePopupBlocking);
   ASSERT_TRUE(embedded_test_server()->Start());
@@ -2372,7 +2418,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, GetSizeForNewRenderView) {
       web_contents->GetContainerBounds().size();
   RenderViewSizeObserver observer(web_contents, browser()->window());
 
-  // Navigate to a non-NTP page, without resizing WebContentsView.
+  // Navigate to a non-NTP, without resizing WebContentsView.
   ui_test_utils::NavigateToURL(browser(),
                                embedded_test_server()->GetURL("/title1.html"));
   ASSERT_EQ(BookmarkBar::HIDDEN, browser()->bookmark_bar_state());
@@ -2410,7 +2456,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, GetSizeForNewRenderView) {
   EXPECT_EQ(wcv_commit_size0, web_contents->GetContainerBounds().size());
 #endif
 
-  // Navigate to another non-NTP page, without resizing WebContentsView.
+  // Navigate to another non-NTP, without resizing WebContentsView.
   ui_test_utils::NavigateToURL(browser(),
                                https_test_server.GetURL("/title2.html"));
   ASSERT_EQ(BookmarkBar::HIDDEN, browser()->bookmark_bar_state());
@@ -2426,7 +2472,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, GetSizeForNewRenderView) {
             web_contents->GetRenderWidgetHostView()->GetViewBounds().size());
   EXPECT_EQ(wcv_commit_size1, web_contents->GetContainerBounds().size());
 
-  // Navigate from NTP to a non-NTP page, resizing WebContentsView while
+  // Navigate from NTP to a non-NTP, resizing WebContentsView while
   // navigation entry is pending.
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://newtab"));
   gfx::Size wcv_resize_insets(1, 1);

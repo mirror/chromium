@@ -55,7 +55,6 @@
 #include "chrome/browser/ui/browser_window_state.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/sync/bubble_sync_promo_delegate.h"
-#include "chrome/browser/ui/tabs/tab_features.h"
 #include "chrome/browser/ui/tabs/tab_menu_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_utils.h"
@@ -82,15 +81,12 @@
 #include "chrome/browser/ui/views/infobars/infobar_container_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/location_bar/star_view.h"
-#include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
-#include "chrome/browser/ui/views/new_back_shortcut_bubble.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_view_views.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/status_bubble_views.h"
 #include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
-#include "chrome/browser/ui/views/tabs/tab_strip_experimental.h"
-#include "chrome/browser/ui/views/tabs/tab_strip_impl.h"
+#include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "chrome/browser/ui/views/toolbar/app_menu_button.h"
 #include "chrome/browser/ui/views/toolbar/browser_actions_container.h"
 #include "chrome/browser/ui/views/toolbar/reload_button.h"
@@ -755,6 +751,14 @@ void BrowserView::OnActiveTabChanged(content::WebContents* old_contents,
   // we don't want any WebContents to be attached, so that we
   // avoid an unnecessary resize and re-layout of a WebContents.
   if (change_tab_contents) {
+    if (GetWidget() &&
+        (contents_web_view_->HasFocus() || devtools_web_view_->HasFocus())) {
+      // Manually clear focus before setting focus behavior so that the focus
+      // is not temporarily advanced to an arbitrary place in the UI via
+      // SetFocusBehavior(FocusBehavior::NEVER), confusing screen readers.
+      // The saved focus for new_contents is restored after it is attached.
+      GetWidget()->GetFocusManager()->ClearFocus();
+    }
     contents_web_view_->SetWebContents(nullptr);
     devtools_web_view_->SetWebContents(nullptr);
   }
@@ -796,7 +800,6 @@ void BrowserView::OnActiveTabChanged(content::WebContents* old_contents,
   UpdateTitleBar();
 
   TranslateBubbleView::CloseCurrentBubble();
-  ZoomBubbleView::CloseCurrentBubble();
 }
 
 void BrowserView::ZoomChangedForActiveTab(bool can_show_bubble) {
@@ -891,9 +894,6 @@ void BrowserView::UpdateExclusiveAccessExitBubbleContent(
     return;
   }
 
-  // Hide the backspace shortcut bubble, to avoid overlapping.
-  new_back_shortcut_bubble_.reset();
-
   exclusive_access_bubble_.reset(new ExclusiveAccessBubbleViews(
       this, url, bubble_type, std::move(bubble_first_hide_callback)));
 }
@@ -917,41 +917,6 @@ bool BrowserView::IsFullscreen() const {
 
 bool BrowserView::IsFullscreenBubbleVisible() const {
   return exclusive_access_bubble_ != nullptr;
-}
-
-void BrowserView::MaybeShowNewBackShortcutBubble(bool forward) {
-  if (!new_back_shortcut_bubble_ || !new_back_shortcut_bubble_->IsVisible()) {
-    // Show the bubble at most five times.
-    PrefService* prefs = browser_->profile()->GetPrefs();
-    int shown_count = prefs->GetInteger(prefs::kBackShortcutBubbleShownCount);
-    constexpr int kMaxShownCount = 5;
-    if (shown_count >= kMaxShownCount)
-      return;
-
-    // Only show the bubble when the user presses a shortcut twice within three
-    // seconds.
-    const base::TimeTicks now = base::TimeTicks::Now();
-    constexpr base::TimeDelta kRepeatWindow = base::TimeDelta::FromSeconds(3);
-    if (last_back_shortcut_press_time_.is_null() ||
-        ((now - last_back_shortcut_press_time_) > kRepeatWindow)) {
-      last_back_shortcut_press_time_ = now;
-      return;
-    }
-
-    // Hide the exclusive access bubble, to avoid overlapping.
-    exclusive_access_bubble_.reset();
-
-    new_back_shortcut_bubble_.reset(new NewBackShortcutBubble(this));
-    prefs->SetInteger(prefs::kBackShortcutBubbleShownCount, shown_count + 1);
-    last_back_shortcut_press_time_ = base::TimeTicks();
-  }
-
-  new_back_shortcut_bubble_->UpdateContent(forward);
-}
-
-void BrowserView::HideNewBackShortcutBubble() {
-  if (new_back_shortcut_bubble_)
-    new_back_shortcut_bubble_->Hide();
 }
 
 void BrowserView::RestoreFocus() {
@@ -1086,7 +1051,10 @@ void BrowserView::FocusBookmarksToolbar() {
   }
 }
 
-void BrowserView::FocusInfobars() {
+void BrowserView::FocusInactivePopupForAccessibility() {
+  if (GetLocationBarView()->ActivateFirstInactiveBubbleForAccessibility())
+    return;
+
   if (infobar_container_->child_count() > 0)
     infobar_container_->SetPaneFocusAndFocusDefault();
 }
@@ -1632,8 +1600,8 @@ FullscreenControlHost* BrowserView::GetFullscreenControlHost() {
   if (!fullscreen_control_host_) {
     // This is a do-nothing view that controls the z-order of the fullscreen
     // control host. See DropdownBarHost::SetHostViewNative() for more details.
-    auto fullscreen_exit_host_view = base::MakeUnique<views::View>();
-    fullscreen_control_host_ = base::MakeUnique<FullscreenControlHost>(
+    auto fullscreen_exit_host_view = std::make_unique<views::View>();
+    fullscreen_control_host_ = std::make_unique<FullscreenControlHost>(
         this, fullscreen_exit_host_view.get());
     AddChildView(fullscreen_exit_host_view.release());
   }
@@ -1683,6 +1651,13 @@ gfx::ImageSkia BrowserView::GetWindowIcon() {
 
   if (browser_->is_app() || browser_->is_type_popup())
     return browser_->GetCurrentPageIcon().AsImageSkia();
+
+#if defined(OS_CHROMEOS)
+  if (browser_->is_type_tabbed()) {
+    ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+    return rb.GetImageNamed(IDR_PRODUCT_LOGO_32).AsImageSkia();
+  }
+#endif
 
   return gfx::ImageSkia();
 }
@@ -2010,7 +1985,7 @@ void BrowserView::ChildPreferredSizeChanged(View* child) {
 }
 
 void BrowserView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_CLIENT;
+  node_data->role = ax::mojom::Role::kClient;
 }
 
 void BrowserView::OnThemeChanged() {
@@ -2115,23 +2090,13 @@ void BrowserView::InitViews() {
   top_container_ = new TopContainerView(this);
   AddChildView(top_container_);
 
-#if defined(TOOLKIT_VIEWS)
-  if (IsExperimentalTabStripEnabled()) {
-    tabstrip_ = new TabStripExperimental(browser_->tab_strip_model());
-    top_container_->AddChildView(tabstrip_);  // Takes ownership.
-  } else {  // Avoid a "} else" which will trigger presubmit warning.
-#else
-  {
-#endif
-    // TabStrip takes ownership of the controller.
-    BrowserTabStripController* tabstrip_controller =
-        new BrowserTabStripController(browser_->tab_strip_model(), this);
-    TabStripImpl* tab_strip_impl = new TabStripImpl(
-        std::unique_ptr<TabStripController>(tabstrip_controller));
-    tabstrip_ = tab_strip_impl;
-    top_container_->AddChildView(tabstrip_);  // Takes ownership.
-    tabstrip_controller->InitFromModel(tab_strip_impl);
-  }
+  // TabStrip takes ownership of the controller.
+  BrowserTabStripController* tabstrip_controller =
+      new BrowserTabStripController(browser_->tab_strip_model(), this);
+  tabstrip_ =
+      new TabStrip(std::unique_ptr<TabStripController>(tabstrip_controller));
+  top_container_->AddChildView(tabstrip_);  // Takes ownership.
+  tabstrip_controller->InitFromModel(tabstrip_);
 
   toolbar_ = new ToolbarView(browser_.get());
   top_container_->AddChildView(toolbar_);
@@ -2223,7 +2188,7 @@ bool BrowserView::MaybeShowBookmarkBar(WebContents* contents) {
     bookmark_bar_view_.reset(new BookmarkBarView(browser_.get(), this));
     bookmark_bar_view_->set_owned_by_client();
     bookmark_bar_view_->SetBackground(
-        base::MakeUnique<BookmarkBarViewBackground>(this,
+        std::make_unique<BookmarkBarViewBackground>(this,
                                                     bookmark_bar_view_.get()));
     bookmark_bar_view_->SetBookmarkBarState(
         browser_->bookmark_bar_state(),
@@ -2723,7 +2688,6 @@ gfx::Rect BrowserView::GetTopContainerBoundsInScreen() {
 
 void BrowserView::DestroyAnyExclusiveAccessBubble() {
   exclusive_access_bubble_.reset();
-  new_back_shortcut_bubble_.reset();
 }
 
 bool BrowserView::CanTriggerOnMouse() const {

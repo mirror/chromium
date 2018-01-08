@@ -13,9 +13,15 @@ cr.define('settings_sections_tests', function() {
     Dpi: 'dpi',
     Scaling: 'scaling',
     Other: 'other',
+    SetPages: 'set pages',
     SetCopies: 'set copies',
     SetLayout: 'set layout',
     SetColor: 'set color',
+    SetMediaSize: 'set media size',
+    SetDpi: 'set dpi',
+    SetMargins: 'set margins',
+    SetScaling: 'set scaling',
+    SetOther: 'set other',
   };
 
   const suiteName = 'SettingsSectionsTests';
@@ -36,13 +42,29 @@ cr.define('settings_sections_tests', function() {
           print_preview_test_utils.getCddTemplate(fooDestination.id)
               .capabilities;
       page.set('destination_', fooDestination);
+      initDocumentInfo(false, false);
+      Polymer.dom.flush();
     });
 
-    /** @param {boolean} isPdf Whether the document should be a PDF. */
-    function setPdfDocument(isPdf) {
+    /**
+     * @param {boolean} isPdf Whether the document should be a PDF.
+     * @param {boolean} hasSelection Whether the document has a selection.
+     */
+    function initDocumentInfo(isPdf, hasSelection) {
       const info = new print_preview.DocumentInfo();
-      info.init(!isPdf, 'title', false);
+      info.init(!isPdf, 'title', hasSelection);
+      if (isPdf)
+        info.fitToPageScaling_ = '98';
+      info.updatePageCount(3);
       page.set('documentInfo_', info);
+    }
+
+    function addSelection() {
+      // Add a selection.
+      let info = new print_preview.DocumentInfo();
+      info.init(page.documentInfo_.isModifiable, 'title', true);
+      page.set('documentInfo_', info);
+      Polymer.dom.flush();
     }
 
     function setPdfDestination() {
@@ -75,8 +97,8 @@ cr.define('settings_sections_tests', function() {
     test(assert(TestNames.Layout), function() {
       const layoutElement = page.$$('print-preview-layout-settings');
 
-      // Set up with HTML document.
-      setPdfDocument(false);
+      // Set up with HTML document. No selection.
+      initDocumentInfo(false, false);
       expectEquals(false, layoutElement.hidden);
 
       // Remove layout capability.
@@ -103,7 +125,7 @@ cr.define('settings_sections_tests', function() {
       expectEquals(false, layoutElement.hidden);
 
       // Test with PDF - should be hidden.
-      setPdfDocument(true);
+      initDocumentInfo(true, false);
       expectEquals(true, layoutElement.hidden);
     });
 
@@ -167,7 +189,7 @@ cr.define('settings_sections_tests', function() {
       page.set('destination_.capabilities', capabilities);
 
       // Set PDF document type.
-      setPdfDocument(true);
+      initDocumentInfo(true, false);
       expectEquals(false, mediaSizeElement.hidden);
 
       // Set save as PDF. This should hide the settings section.
@@ -175,7 +197,7 @@ cr.define('settings_sections_tests', function() {
       expectEquals(true, mediaSizeElement.hidden);
 
       // Set HTML document type, should now show the section.
-      setPdfDocument(false);
+      initDocumentInfo(false, false);
       expectEquals(false, mediaSizeElement.hidden);
     });
 
@@ -183,11 +205,11 @@ cr.define('settings_sections_tests', function() {
       const marginsElement = page.$$('print-preview-margins-settings');
 
       // Section is available for HTML (modifiable) documents
-      setPdfDocument(false);
+      initDocumentInfo(false, false);
       expectEquals(false, marginsElement.hidden);
 
       // Unavailable for PDFs.
-      setPdfDocument(true);
+      initDocumentInfo(true, false);
       expectEquals(true, marginsElement.hidden);
     });
 
@@ -217,8 +239,8 @@ cr.define('settings_sections_tests', function() {
       expectEquals(false, scalingElement.hidden);
 
       // HTML to non-PDF destination -> only input shown
-      setPdfDocument(false);
-      const fitToPageContainer = scalingElement.$$('#fit-to-page-container');
+      initDocumentInfo(false, false);
+      const fitToPageContainer = scalingElement.$$('.checkbox');
       const scalingInput =
           scalingElement.$$('print-preview-number-settings-section')
               .$$('.user-value');
@@ -227,7 +249,7 @@ cr.define('settings_sections_tests', function() {
       expectEquals(false, scalingInput.hidden);
 
       // PDF to non-PDF destination -> checkbox and input shown.
-      setPdfDocument(true);
+      initDocumentInfo(true, false);
       expectEquals(false, scalingElement.hidden);
       expectEquals(false, fitToPageContainer.hidden);
       expectEquals(false, scalingInput.hidden);
@@ -239,14 +261,14 @@ cr.define('settings_sections_tests', function() {
 
     test(assert(TestNames.Other), function() {
       const optionsElement = page.$$('print-preview-other-options-settings');
-      const headerFooter = optionsElement.$$('#header-footer-container');
-      const duplex = optionsElement.$$('#duplex-container');
-      const cssBackground = optionsElement.$$('#css-background-container');
-      const rasterize = optionsElement.$$('#rasterize-container');
-      const selectionOnly = optionsElement.$$('#selection-only-container');
+      const headerFooter = optionsElement.$$('#header-footer').parentElement;
+      const duplex = optionsElement.$$('#duplex').parentElement;
+      const cssBackground = optionsElement.$$('#css-background').parentElement;
+      const rasterize = optionsElement.$$('#rasterize').parentElement;
+      const selectionOnly = optionsElement.$$('#selection-only').parentElement;
 
       // Start with HTML + duplex capability.
-      setPdfDocument(false);
+      initDocumentInfo(false, false);
       let capabilities =
           print_preview_test_utils.getCddTemplate('FooPrinter').capabilities;
       page.set('destination_.capabilities', capabilities);
@@ -257,10 +279,8 @@ cr.define('settings_sections_tests', function() {
       expectEquals(true, rasterize.hidden);
       expectEquals(true, selectionOnly.hidden);
 
-      // Add a selection.
-      let info = new print_preview.DocumentInfo();
-      info.init(true, 'title', true);
-      page.set('documentInfo_', info);
+      // Add a selection - should show selection only.
+      initDocumentInfo(false, true);
       expectEquals(false, optionsElement.hidden);
       expectEquals(false, selectionOnly.hidden);
 
@@ -269,11 +289,13 @@ cr.define('settings_sections_tests', function() {
           print_preview_test_utils.getCddTemplate('FooPrinter').capabilities;
       delete capabilities.printer.duplex;
       page.set('destination_.capabilities', capabilities);
+      Polymer.dom.flush();
       expectEquals(false, optionsElement.hidden);
       expectEquals(true, duplex.hidden);
 
       // PDF
-      setPdfDocument(true);
+      initDocumentInfo(true, false);
+      Polymer.dom.flush();
       expectEquals(cr.isWindows || cr.isMac, optionsElement.hidden);
       expectEquals(true, headerFooter.hidden);
       expectEquals(true, duplex.hidden);
@@ -282,9 +304,7 @@ cr.define('settings_sections_tests', function() {
       expectEquals(true, selectionOnly.hidden);
 
       // Add a selection - should do nothing for PDFs.
-      info = new print_preview.DocumentInfo();
-      info.init(false, 'title', true);
-      page.set('documentInfo_', info);
+      initDocumentInfo(true, true);
       expectEquals(cr.isWindows || cr.isMac, optionsElement.hidden);
       expectEquals(true, selectionOnly.hidden);
 
@@ -292,8 +312,71 @@ cr.define('settings_sections_tests', function() {
       capabilities =
           print_preview_test_utils.getCddTemplate('FooPrinter').capabilities;
       page.set('destination_.capabilities', capabilities);
+      Polymer.dom.flush();
       expectEquals(false, optionsElement.hidden);
       expectEquals(false, duplex.hidden);
+    });
+
+    test(assert(TestNames.SetPages), function() {
+      const pagesElement = page.$$('print-preview-pages-settings');
+      // This section is always visible.
+      expectEquals(false, pagesElement.hidden);
+
+      // Default value is all pages. Print ticket expects this to be empty.
+      const allRadio = pagesElement.$$('#all-radio-button');
+      const customRadio = pagesElement.$$('#custom-radio-button');
+      const pagesInput = pagesElement.$$('#page-settings-custom-input');
+      const hint = pagesElement.$$('.hint');
+
+      /**
+       * @param {boolean} allChecked Whether the all pages radio button is
+       *     selected.
+       * @param {string} inputString The expected string in the pages input.
+       * @param {boolean} valid Whether the input string is valid.
+       */
+      const validateInputState = function(allChecked, inputString, valid) {
+        expectEquals(allChecked, allRadio.checked);
+        expectEquals(!allChecked, customRadio.checked);
+        expectEquals(inputString, pagesInput.value);
+        expectEquals(valid, hint.hidden);
+      };
+      validateInputState(true, '', true);
+      expectEquals(0, page.settings.ranges.value.length);
+      expectEquals(3, page.settings.pages.value.length);
+      expectEquals(true, page.settings.pages.valid);
+
+      // Set selection of pages 1 and 2.
+      customRadio.checked = true;
+      allRadio.dispatchEvent(new CustomEvent('change'));
+      pagesInput.value = '1-2';
+      pagesInput.dispatchEvent(new CustomEvent('input'));
+      validateInputState(false, '1-2', true);
+      assertEquals(1, page.settings.ranges.value.length);
+      expectEquals(1, page.settings.ranges.value[0].from);
+      expectEquals(2, page.settings.ranges.value[0].to);
+      expectEquals(2, page.settings.pages.value.length);
+      expectEquals(true, page.settings.pages.valid);
+
+      // Select pages 1 and 3
+      pagesInput.value = '1, 3';
+      pagesInput.dispatchEvent(new CustomEvent('input'));
+      validateInputState(false, '1, 3', true);
+      assertEquals(2, page.settings.ranges.value.length);
+      expectEquals(1, page.settings.ranges.value[0].from);
+      expectEquals(1, page.settings.ranges.value[0].to);
+      expectEquals(3, page.settings.ranges.value[1].from);
+      expectEquals(3, page.settings.ranges.value[1].to);
+      expectEquals(2, page.settings.pages.value.length);
+      expectEquals(true, page.settings.pages.valid);
+
+      // Enter an out of bounds value.
+      pagesInput.value = '5';
+      pagesInput.dispatchEvent(new CustomEvent('input'));
+
+      // Now the pages settings value should be invalid, and the error
+      // message should be displayed.
+      validateInputState(false, '5', false);
+      expectEquals(false, page.settings.pages.valid);
     });
 
     test(assert(TestNames.SetCopies), function() {
@@ -352,6 +435,178 @@ cr.define('settings_sections_tests', function() {
       colorInput.value = 'bw';
       colorInput.dispatchEvent(new CustomEvent('change'));
       expectEquals(false, page.settings.color.value);
+    });
+
+    test(assert(TestNames.SetMediaSize), function() {
+      const mediaSizeElement = page.$$('print-preview-media-size-settings');
+      expectEquals(false, mediaSizeElement.hidden);
+
+      const mediaSizeCapabilities =
+          page.destination_.capabilities.printer.media_size;
+      const letterOption = JSON.stringify(mediaSizeCapabilities.option[0]);
+      const squareOption = JSON.stringify(mediaSizeCapabilities.option[1]);
+
+      // Default is letter
+      const mediaSizeInput =
+          mediaSizeElement.$$('print-preview-settings-select').$$('select');
+      expectEquals(letterOption, mediaSizeInput.value);
+      expectEquals(letterOption, JSON.stringify(page.settings.mediaSize.value));
+
+      // Change to square
+      mediaSizeInput.value = squareOption;
+      mediaSizeInput.dispatchEvent(new CustomEvent('change'));
+
+      expectEquals(squareOption, JSON.stringify(page.settings.mediaSize.value));
+    });
+
+    test(assert(TestNames.SetDpi), function() {
+      const dpiElement = page.$$('print-preview-dpi-settings');
+      expectEquals(false, dpiElement.hidden);
+
+      const dpiCapabilities = page.destination_.capabilities.printer.dpi;
+      const highQualityOption = dpiCapabilities.option[0];
+      const lowQualityOption = dpiCapabilities.option[1];
+
+      // Default is 200
+      const dpiInput =
+          dpiElement.$$('print-preview-settings-select').$$('select');
+      const isDpiEqual = function(value1, value2) {
+        return value1.horizontal_dpi == value2.horizontal_dpi &&
+            value1.vertical_dpi == value2.vertical_dpi &&
+            value1.vendor_id == value2.vendor_id;
+      };
+      expectTrue(isDpiEqual(highQualityOption, JSON.parse(dpiInput.value)));
+      expectTrue(isDpiEqual(highQualityOption, page.settings.dpi.value));
+
+      // Change to 100
+      dpiInput.value =
+          JSON.stringify(dpiElement.capabilityWithLabels_.option[1]);
+      dpiInput.dispatchEvent(new CustomEvent('change'));
+
+      expectTrue(isDpiEqual(lowQualityOption, JSON.parse(dpiInput.value)));
+      expectTrue(isDpiEqual(lowQualityOption, page.settings.dpi.value));
+    });
+
+    test(assert(TestNames.SetMargins), function() {
+      const marginsElement = page.$$('print-preview-margins-settings');
+      expectEquals(false, marginsElement.hidden);
+
+      // Default is DEFAULT_MARGINS
+      const marginsInput = marginsElement.$$('select');
+      expectEquals(
+          print_preview.ticket_items.MarginsTypeValue.DEFAULT.toString(),
+          marginsInput.value);
+      expectEquals(
+          print_preview.ticket_items.MarginsTypeValue.DEFAULT,
+          page.settings.margins.value);
+
+      // Change to minimum.
+      marginsInput.value =
+          print_preview.ticket_items.MarginsTypeValue.MINIMUM.toString();
+      marginsInput.dispatchEvent(new CustomEvent('change'));
+      expectEquals(
+          print_preview.ticket_items.MarginsTypeValue.MINIMUM,
+          page.settings.margins.value);
+    });
+
+    test(assert(TestNames.SetScaling), function() {
+      // Set PDF so both scaling and fit to page are active.
+      initDocumentInfo(true, false);
+      const scalingElement = page.$$('print-preview-scaling-settings');
+      expectEquals(false, scalingElement.hidden);
+
+      // Default is 100
+      const scalingInput =
+          scalingElement.$$('print-preview-number-settings-section')
+              .$$('input');
+      const fitToPageCheckbox =
+          scalingElement.$$('#fit-to-page-checkbox');
+
+      const validateScalingState = (scalingValue, scalingValid, fitToPage) => {
+        // Invalid scalings are always set directly in the input, so no need to
+        // verify that the input matches them.
+        if (scalingValid) {
+          const scalingDisplay =
+              fitToPage ? page.documentInfo_.fitToPageScaling : scalingValue;
+          expectEquals(scalingDisplay, scalingInput.value);
+        }
+        expectEquals(scalingValue, page.settings.scaling.value);
+        expectEquals(scalingValid, page.settings.scaling.valid);
+        expectEquals(fitToPage, fitToPageCheckbox.checked);
+        expectEquals(fitToPage, page.settings.fitToPage.value);
+      };
+      validateScalingState('100', true, false);
+
+      // Change to 105
+      scalingInput.value = '105';
+      scalingInput.dispatchEvent(new CustomEvent('input'));
+      validateScalingState('105', true, false);
+
+      // Change to fit to page. Should display fit to page scaling but not
+      // alter the scaling setting.
+      fitToPageCheckbox.checked = true;
+      fitToPageCheckbox.dispatchEvent(new CustomEvent('change'));
+      validateScalingState('105', true, true);
+
+      // Set scaling. Should uncheck fit to page and set the settings for
+      // scaling and fit to page.
+      scalingInput.value = '95';
+      scalingInput.dispatchEvent(new CustomEvent('input'));
+      validateScalingState('95', true, false);
+
+      // Set scaling to something invalid. Should change setting validity but
+      // not value.
+      scalingInput.value = '5';
+      scalingInput.dispatchEvent(new CustomEvent('input'));
+      validateScalingState('95', false, false);
+
+      // Check fit to page. Should set scaling valid.
+      fitToPageCheckbox.checked = true;
+      fitToPageCheckbox.dispatchEvent(new CustomEvent('change'));
+      validateScalingState('95', true, true);
+
+      // Uncheck fit to page. Should reset scaling to last valid.
+      fitToPageCheckbox.checked = false;
+      fitToPageCheckbox.dispatchEvent(new CustomEvent('change'));
+      validateScalingState('95', true, false);
+    });
+
+    test(assert(TestNames.SetOther), function() {
+      const optionsElement = page.$$('print-preview-other-options-settings');
+      expectEquals(false, optionsElement.hidden);
+
+      // HTML - Header/footer, duplex, and CSS background. Also add selection.
+      initDocumentInfo(false, true);
+
+      const testOptionCheckbox = (element, defaultValue, optionSetting) => {
+        expectEquals(false, element.hidden);
+        expectEquals(defaultValue, element.checked);
+        expectEquals(defaultValue, optionSetting.value);
+        element.checked = !defaultValue;
+        element.dispatchEvent(new CustomEvent('change'));
+        expectEquals(!defaultValue, optionSetting.value);
+      };
+
+      // Check HTML settings
+      const ids =
+          ['header-footer', 'duplex', 'css-background', 'selection-only'];
+      const defaults = [true, true, false, false];
+      const optionSettings =
+          [page.settings.headerFooter, page.settings.duplex,
+           page.settings.cssBackground, page.settings.selectionOnly];
+
+      optionSettings.forEach((option, index) => {
+        testOptionCheckbox(
+            optionsElement.$$('#' + ids[index]), defaults[index],
+            optionSettings[index]);
+      });
+
+      // Set PDF to test rasterize
+      if (!cr.isWindows && !cr.isMac) {
+        initDocumentInfo(true, false);
+        testOptionCheckbox(
+            optionsElement.$$('#rasterize'), false, page.settings.rasterize);
+      }
     });
   });
 

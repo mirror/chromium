@@ -38,15 +38,14 @@
 #include "core/editing/WritingDirection.h"
 #include "core/editing/finder/FindOptions.h"
 #include "core/events/InputEvent.h"
-#include "core/layout/ScrollAlignment.h"
 #include "platform/PasteMode.h"
 #include "platform/heap/Handle.h"
+#include "platform/scroll/ScrollAlignment.h"
 
 namespace blink {
 
 class CompositeEditCommand;
 class DragData;
-class EditorClient;
 class EditorInternalCommand;
 class FrameSelection;
 class LocalFrame;
@@ -64,7 +63,6 @@ enum class DeleteDirection;
 enum class DeleteMode { kSimple, kSmart };
 enum class InsertMode { kSimple, kSmart };
 enum class DragSourceType { kHTMLSource, kPlainTextSource };
-enum class TypingContinuation { kContinue, kEnd };
 
 enum EditorCommandSource { kCommandFromMenuOrKeyBinding, kCommandFromDOM };
 enum EditorParagraphSeparator {
@@ -76,8 +74,6 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
  public:
   static Editor* Create(LocalFrame&);
   ~Editor();
-
-  EditorClient& Client() const;
 
   CompositeEditCommand* LastEditCommand() { return last_edit_command_.Get(); }
 
@@ -248,12 +244,14 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
                            FindOptions);
 
   const VisibleSelection& Mark() const;  // Mark, to be used as emacs uses it.
+  bool MarkIsDirectional() const;
   void SetMark();
 
   void ComputeAndSetTypingStyle(CSSPropertyValueSet*, InputEvent::InputType);
 
   // |firstRectForRange| requires up-to-date layout.
   IntRect FirstRectForRange(const EphemeralRange&) const;
+  EphemeralRange RangeForPoint(const IntPoint&) const;
 
   void RespondToChangedSelection();
 
@@ -333,6 +331,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   EditorParagraphSeparator default_paragraph_separator_;
   bool overwrite_mode_enabled_;
   Member<EditingStyle> typing_style_;
+  bool mark_is_directional_ = false;
 
   explicit Editor(LocalFrame&);
 
@@ -378,6 +377,10 @@ inline const VisibleSelection& Editor::Mark() const {
   return mark_;
 }
 
+inline bool Editor::MarkIsDirectional() const {
+  return mark_is_directional_;
+}
+
 inline bool Editor::MarkedTextMatchesAreHighlighted() const {
   return are_marked_text_matches_highlighted_;
 }
@@ -393,10 +396,6 @@ inline void Editor::ClearTypingStyle() {
 inline void Editor::SetTypingStyle(EditingStyle* style) {
   typing_style_ = style;
 }
-
-// TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in
-// "EditorCommand.cpp"
-void Transpose(LocalFrame&);
 
 }  // namespace blink
 

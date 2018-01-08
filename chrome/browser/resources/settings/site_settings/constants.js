@@ -33,6 +33,7 @@ settings.ContentSettingsTypes = {
   PROTECTED_CONTENT: 'protectedContent',
   ADS: 'ads',
   CLIPBOARD: 'clipboard',
+  SENSORS: 'sensors',
 };
 
 /**
@@ -72,12 +73,12 @@ settings.SiteSettingSource = {
 
 /**
  * A category value to use for the All Sites list.
- * @const {string}
+ * @type {string}
  */
 settings.ALL_SITES = 'all-sites';
 
 /**
  * An invalid subtype value.
- * @const {string}
+ * @type {string}
  */
 settings.INVALID_CATEGORY_SUBTYPE = '';

@@ -37,6 +37,7 @@
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleUnits.h"
+#include "core/editing/commands/EditingCommandsUtilities.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/HTMLBRElement.h"
 #include "core/html/HTMLStyleElement.h"
@@ -225,6 +226,29 @@ void DeleteSelectionCommand::SetStartingSelectionOnSmartDelete(
       SelectionForUndoStep::From(visible_selection.AsSelection()));
 }
 
+// This assumes that it starts in editable content.
+static Position TrailingWhitespacePosition(const Position& position,
+                                           WhitespacePositionOption option) {
+  DCHECK(!NeedsLayoutTreeUpdate(position));
+  DCHECK(IsEditablePosition(position)) << position;
+  if (position.IsNull())
+    return Position();
+
+  const VisiblePosition visible_position = CreateVisiblePosition(position);
+  const UChar character_after_visible_position =
+      CharacterAfter(visible_position);
+  const bool is_space =
+      option == kConsiderNonCollapsibleWhitespace
+          ? (IsSpaceOrNewline(character_after_visible_position) ||
+             character_after_visible_position == kNoBreakSpaceCharacter)
+          : IsCollapsibleWhitespace(character_after_visible_position);
+  // The space must not be in another paragraph and it must be editable.
+  if (is_space && !IsEndOfParagraph(visible_position) &&
+      NextPositionOf(visible_position, kCannotCrossEditingBoundary).IsNotNull())
+    return position;
+  return Position();
+}
+
 void DeleteSelectionCommand::InitializePositionData(
     EditingState* editing_state) {
   DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
@@ -300,9 +324,10 @@ void DeleteSelectionCommand::InitializePositionData(
 
   // Handle leading and trailing whitespace, as well as smart delete adjustments
   // to the selection
-  leading_whitespace_ = LeadingWhitespacePosition(
+  leading_whitespace_ = LeadingCollapsibleWhitespacePosition(
       upstream_start_, selection_to_delete_.Affinity());
-  trailing_whitespace_ = TrailingWhitespacePosition(downstream_end_);
+  trailing_whitespace_ = TrailingWhitespacePosition(
+      downstream_end_, kNotConsiderNonCollapsibleWhitespace);
 
   if (smart_delete_) {
     // skip smart delete if the selection to delete already starts or ends with
@@ -313,17 +338,18 @@ void DeleteSelectionCommand::InitializePositionData(
     bool skip_smart_delete =
         TrailingWhitespacePosition(pos, kConsiderNonCollapsibleWhitespace)
             .IsNotNull();
-    if (!skip_smart_delete)
-      skip_smart_delete =
-          LeadingWhitespacePosition(downstream_end_, TextAffinity::kDefault,
-                                    kConsiderNonCollapsibleWhitespace)
-              .IsNotNull();
+    if (!skip_smart_delete) {
+      skip_smart_delete = LeadingCollapsibleWhitespacePosition(
+                              downstream_end_, TextAffinity::kDefault,
+                              kConsiderNonCollapsibleWhitespace)
+                              .IsNotNull();
+    }
 
     // extend selection upstream if there is whitespace there
     bool has_leading_whitespace_before_adjustment =
-        LeadingWhitespacePosition(upstream_start_,
-                                  selection_to_delete_.Affinity(),
-                                  kConsiderNonCollapsibleWhitespace)
+        LeadingCollapsibleWhitespacePosition(upstream_start_,
+                                             selection_to_delete_.Affinity(),
+                                             kConsiderNonCollapsibleWhitespace)
             .IsNotNull();
     if (!skip_smart_delete && has_leading_whitespace_before_adjustment) {
       VisiblePosition visible_pos =
@@ -333,8 +359,8 @@ void DeleteSelectionCommand::InitializePositionData(
       // positions based on this change.
       upstream_start_ = MostBackwardCaretPosition(pos);
       downstream_start_ = MostForwardCaretPosition(pos);
-      leading_whitespace_ =
-          LeadingWhitespacePosition(upstream_start_, visible_pos.Affinity());
+      leading_whitespace_ = LeadingCollapsibleWhitespacePosition(
+          upstream_start_, visible_pos.Affinity());
 
       SetStartingSelectionOnSmartDelete(upstream_start_, upstream_end_);
     }
@@ -352,7 +378,8 @@ void DeleteSelectionCommand::InitializePositionData(
                 .DeepEquivalent();
       upstream_end_ = MostBackwardCaretPosition(pos);
       downstream_end_ = MostForwardCaretPosition(pos);
-      trailing_whitespace_ = TrailingWhitespacePosition(downstream_end_);
+      trailing_whitespace_ = TrailingWhitespacePosition(
+          downstream_end_, kNotConsiderNonCollapsibleWhitespace);
 
       SetStartingSelectionOnSmartDelete(downstream_start_, downstream_end_);
     }

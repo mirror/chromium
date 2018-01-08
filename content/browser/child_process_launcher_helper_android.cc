@@ -84,9 +84,11 @@ ChildProcessLauncherHelper::GetFilesToMap() {
   return files_to_register;
 }
 
-void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
+bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
     const PosixFileDescriptorInfo& files_to_register,
-    base::LaunchOptions* options) {}
+    base::LaunchOptions* options) {
+  return true;
+}
 
 ChildProcessLauncherHelper::Process
 ChildProcessLauncherHelper::LaunchProcessOnLauncherThread(
@@ -128,9 +130,8 @@ ChildProcessLauncherHelper::LaunchProcessOnLauncherThread(
     }
   }
 
-  constexpr int param_key = 0;  // TODO(boliu): Use this.
   java_peer_.Reset(Java_ChildProcessLauncherHelper_createAndStart(
-      env, reinterpret_cast<intptr_t>(this), param_key, j_argv, j_file_infos));
+      env, reinterpret_cast<intptr_t>(this), j_argv, j_file_infos));
   AddRef();  // Balanced by OnChildProcessStarted.
   BrowserThread::PostTask(
       client_thread_id_, FROM_HERE,

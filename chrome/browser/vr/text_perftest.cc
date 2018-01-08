@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "cc/base/lap_timer.h"
 #include "chrome/browser/vr/cpu_surface_provider.h"
@@ -29,10 +28,10 @@ class TextPerfTest : public testing::Test {
  public:
   void SetUp() override {
     gl_test_environment_ =
-        base::MakeUnique<GlTestEnvironment>(kPixelHalfScreen);
-    provider_ = base::MakeUnique<GaneshSurfaceProvider>();
+        std::make_unique<GlTestEnvironment>(kPixelHalfScreen);
+    provider_ = std::make_unique<GaneshSurfaceProvider>();
 
-    text_element_ = base::MakeUnique<Text>(kFontHeightMeters);
+    text_element_ = std::make_unique<Text>(kFontHeightMeters);
     text_element_->SetSize(kTextWidthMeters, 0);
     text_element_->Initialize(provider_.get());
   }
@@ -44,9 +43,9 @@ class TextPerfTest : public testing::Test {
 
  protected:
   void PrintResults(const std::string& name) {
-    perf_test::PrintResult(name, "", "render_time_avg", timer_.MsPerLap(), "ms",
-                           true);
-    perf_test::PrintResult(name, "", "number_of_runs",
+    perf_test::PrintResult("TextPerfTest", ".render_time_avg", name,
+                           timer_.MsPerLap(), "ms", true);
+    perf_test::PrintResult("TextPerfTest", ".number_of_runs", name,
                            static_cast<size_t>(timer_.NumLaps()), "runs", true);
   }
 

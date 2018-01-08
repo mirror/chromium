@@ -976,9 +976,8 @@ class AndroidDownloadInfobarCounter
  private:
   void OnInfoBarAdded(infobars::InfoBar* infobar) override {
     if (infobar->delegate()->GetIdentifier() ==
-        infobars::InfoBarDelegate::CHROME_DUPLICATE_DOWNLOAD_INFOBAR_DELEGATE) {
+        infobars::InfoBarDelegate::DUPLICATE_DOWNLOAD_INFOBAR_DELEGATE_ANDROID)
       ++infobar_count_;
-    }
     infobar->delegate()->InfoBarDismissed();
     infobar->RemoveSelf();
   }
@@ -1016,9 +1015,10 @@ TEST_F(ChromeDownloadManagerDelegateTest, RequestConfirmation_Android) {
        DownloadConfirmationResult::CONTINUE_WITHOUT_CONFIRMATION,
        WebContents::AVAILABLE, ExpectInfoBar::NO, ExpectPath::FULL},
 
-      {DownloadConfirmationReason::PREFERENCE,
-       DownloadConfirmationResult::CONTINUE_WITHOUT_CONFIRMATION,
-       WebContents::AVAILABLE, ExpectInfoBar::NO, ExpectPath::FULL},
+      // TODO(jming): Fix test when download location storage is complete.
+      // {DownloadConfirmationReason::PREFERENCE,
+      //  DownloadConfirmationResult::CONTINUE_WITHOUT_CONFIRMATION,
+      //  WebContents::AVAILABLE, ExpectInfoBar::NO, ExpectPath::FULL},
 
       // This case results in an infobar. The logic above dismisses the infobar
       // and counts it for testing. The functionality of the infobar is not

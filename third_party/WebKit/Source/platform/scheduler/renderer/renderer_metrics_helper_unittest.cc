@@ -28,16 +28,15 @@ using base::Bucket;
 
 class RendererMetricsHelperTest : public ::testing::Test {
  public:
-  RendererMetricsHelperTest() {}
-  ~RendererMetricsHelperTest() {}
+  RendererMetricsHelperTest() = default;
+  ~RendererMetricsHelperTest() = default;
 
   void SetUp() {
     histogram_tester_.reset(new base::HistogramTester());
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, true);
     scheduler_ = std::make_unique<RendererSchedulerImpl>(
-        CreateTaskQueueManagerWithUnownedClockForTest(
-            nullptr, mock_task_runner_, &clock_));
+        CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_));
     metrics_helper_ = &scheduler_->main_thread_only().metrics_helper;
   }
 
@@ -58,7 +57,7 @@ class RendererMetricsHelperTest : public ::testing::Test {
     TaskQueue::PostedTask posted_task(base::Closure(), FROM_HERE);
     TaskQueue::Task task(std::move(posted_task), base::TimeTicks());
     metrics_helper_->RecordTaskMetrics(queue.get(), task, start,
-                                       start + duration);
+                                       start + duration, base::nullopt);
   }
 
   void RunTask(WebFrameScheduler* scheduler,
@@ -73,7 +72,7 @@ class RendererMetricsHelperTest : public ::testing::Test {
     TaskQueue::PostedTask posted_task(base::Closure(), FROM_HERE);
     TaskQueue::Task task(std::move(posted_task), base::TimeTicks());
     metrics_helper_->RecordTaskMetrics(queue.get(), task, start,
-                                       start + duration);
+                                       start + duration, base::nullopt);
   }
 
   base::TimeTicks Milliseconds(int milliseconds) {
@@ -219,8 +218,6 @@ TEST_F(RendererMetricsHelperTest, Metrics) {
   RunTask(QueueType::kDefault, Milliseconds(3),
           base::TimeDelta::FromMicroseconds(700));
 
-  RunTask(QueueType::kDefaultLoading, Milliseconds(200),
-          base::TimeDelta::FromMilliseconds(20));
   RunTask(QueueType::kControl, Milliseconds(400),
           base::TimeDelta::FromMilliseconds(30));
   RunTask(QueueType::kDefaultTimer, Milliseconds(600),
@@ -250,7 +247,7 @@ TEST_F(RendererMetricsHelperTest, Metrics) {
           base::TimeDelta::FromMilliseconds(20));
   RunTask(QueueType::kIdle, Milliseconds(3600),
           base::TimeDelta::FromMilliseconds(50));
-  RunTask(QueueType::kFrameLoading_kControl, Milliseconds(4000),
+  RunTask(QueueType::kFrameLoadingControl, Milliseconds(4000),
           base::TimeDelta::FromMilliseconds(5));
   RunTask(QueueType::kControl, Milliseconds(4200),
           base::TimeDelta::FromMilliseconds(20));
@@ -264,14 +261,13 @@ TEST_F(RendererMetricsHelperTest, Metrics) {
   std::vector<base::Bucket> expected_samples = {
       {static_cast<int>(QueueType::kControl), 75},
       {static_cast<int>(QueueType::kDefault), 2},
-      {static_cast<int>(QueueType::kDefaultLoading), 20},
       {static_cast<int>(QueueType::kDefaultTimer), 5},
       {static_cast<int>(QueueType::kUnthrottled), 25},
       {static_cast<int>(QueueType::kFrameLoading), 105},
       {static_cast<int>(QueueType::kCompositor), 45},
       {static_cast<int>(QueueType::kIdle), 1650},
       {static_cast<int>(QueueType::kTest), 85},
-      {static_cast<int>(QueueType::kFrameLoading_kControl), 5},
+      {static_cast<int>(QueueType::kFrameLoadingControl), 5},
       {static_cast<int>(QueueType::kFrameThrottleable), 295},
       {static_cast<int>(QueueType::kFramePausable), 195}};
   EXPECT_THAT(histogram_tester_->GetAllSamples(
@@ -283,7 +279,6 @@ TEST_F(RendererMetricsHelperTest, Metrics) {
               UnorderedElementsAre(
                   Bucket(static_cast<int>(QueueType::kControl), 30),
                   Bucket(static_cast<int>(QueueType::kDefault), 2),
-                  Bucket(static_cast<int>(QueueType::kDefaultLoading), 20),
                   Bucket(static_cast<int>(QueueType::kDefaultTimer), 5),
                   Bucket(static_cast<int>(QueueType::kFrameLoading), 70),
                   Bucket(static_cast<int>(QueueType::kCompositor), 25),
@@ -301,7 +296,7 @@ TEST_F(RendererMetricsHelperTest, Metrics) {
           Bucket(static_cast<int>(QueueType::kFramePausable), 175),
           Bucket(static_cast<int>(QueueType::kCompositor), 20),
           Bucket(static_cast<int>(QueueType::kIdle), 1650),
-          Bucket(static_cast<int>(QueueType::kFrameLoading_kControl), 5)));
+          Bucket(static_cast<int>(QueueType::kFrameLoadingControl), 5)));
 }
 
 TEST_F(RendererMetricsHelperTest, GetFrameStatusTest) {

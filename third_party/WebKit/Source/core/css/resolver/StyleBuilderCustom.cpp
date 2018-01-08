@@ -50,6 +50,7 @@
 #include "core/css/CSSFunctionValue.h"
 #include "core/css/CSSGridTemplateAreasValue.h"
 #include "core/css/CSSImageSetValue.h"
+#include "core/css/CSSLayoutFunctionValue.h"
 #include "core/css/CSSPendingSubstitutionValue.h"
 #include "core/css/CSSPrimitiveValueMappings.h"
 #include "core/css/CSSPropertyValueSet.h"
@@ -119,7 +120,7 @@ void StyleBuilder::ApplyProperty(const CSSProperty& property,
   if (id != CSSPropertyVariable && (value.IsVariableReferenceValue() ||
                                     value.IsPendingSubstitutionValue())) {
     bool omit_animation_tainted =
-        CSSAnimations::IsAnimationAffectingProperty(id);
+        CSSAnimations::IsAnimationAffectingProperty(property);
     const CSSValue* resolved_value =
         CSSVariableResolver(state).ResolveVariableReferences(
             id, value, omit_animation_tainted);
@@ -233,6 +234,42 @@ void StyleBuilderFunctions::applyValueCSSPropertyCursor(
   } else {
     state.Style()->SetCursor(ToCSSIdentifierValue(value).ConvertTo<ECursor>());
   }
+}
+
+void StyleBuilderFunctions::applyInitialCSSPropertyDisplay(
+    StyleResolverState& state) {
+  state.Style()->SetDisplay(ComputedStyleInitialValues::InitialDisplay());
+  state.Style()->SetDisplayLayoutCustomName(
+      ComputedStyleInitialValues::InitialDisplayLayoutCustomName());
+}
+
+void StyleBuilderFunctions::applyInheritCSSPropertyDisplay(
+    StyleResolverState& state) {
+  state.Style()->SetDisplay(state.ParentStyle()->Display());
+  state.Style()->SetDisplayLayoutCustomName(
+      state.ParentStyle()->DisplayLayoutCustomName());
+}
+
+void StyleBuilderFunctions::applyValueCSSPropertyDisplay(
+    StyleResolverState& state,
+    const CSSValue& value) {
+  if (value.IsIdentifierValue()) {
+    state.Style()->SetDisplay(
+        ToCSSIdentifierValue(value).ConvertTo<EDisplay>());
+    state.Style()->SetDisplayLayoutCustomName(
+        ComputedStyleInitialValues::InitialDisplayLayoutCustomName());
+    return;
+  }
+
+  DCHECK(value.IsLayoutFunctionValue());
+  const CSSLayoutFunctionValue& layout_function_value =
+      ToCSSLayoutFunctionValue(value);
+
+  EDisplay display = layout_function_value.IsInline()
+                         ? EDisplay::kInlineLayoutCustom
+                         : EDisplay::kLayoutCustom;
+  state.Style()->SetDisplay(display);
+  state.Style()->SetDisplayLayoutCustomName(layout_function_value.GetName());
 }
 
 void StyleBuilderFunctions::applyValueCSSPropertyDirection(
@@ -741,17 +778,18 @@ void StyleBuilderFunctions::applyValueCSSPropertyContent(
       switch (ToCSSIdentifierValue(*item).GetValueID()) {
         default:
           NOTREACHED();
+          FALLTHROUGH;
         case CSSValueOpenQuote:
-          quote_type = OPEN_QUOTE;
+          quote_type = QuoteType::kOpen;
           break;
         case CSSValueCloseQuote:
-          quote_type = CLOSE_QUOTE;
+          quote_type = QuoteType::kClose;
           break;
         case CSSValueNoOpenQuote:
-          quote_type = NO_OPEN_QUOTE;
+          quote_type = QuoteType::kNoOpen;
           break;
         case CSSValueNoCloseQuote:
-          quote_type = NO_CLOSE_QUOTE;
+          quote_type = QuoteType::kNoClose;
           break;
       }
       next_content = ContentData::Create(quote_type);

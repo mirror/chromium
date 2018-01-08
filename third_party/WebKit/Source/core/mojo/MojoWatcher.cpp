@@ -43,7 +43,7 @@ MojoWatcher* MojoWatcher::Create(mojo::Handle handle,
   return watcher;
 }
 
-MojoWatcher::~MojoWatcher() {}
+MojoWatcher::~MojoWatcher() = default;
 
 MojoResult MojoWatcher::cancel() {
   if (!watcher_handle_.is_valid())
@@ -60,6 +60,7 @@ void MojoWatcher::Trace(blink::Visitor* visitor) {
 }
 
 void MojoWatcher::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  ScriptWrappable::TraceWrappers(visitor);
   visitor->TraceWrappers(callback_);
 }
 
@@ -154,8 +155,8 @@ void MojoWatcher::OnHandleReady(uintptr_t context,
   // dispatch a |MOJO_RESULT_CANCELLED| notification. That is always the last
   // notification received by this callback.
   MojoWatcher* watcher = reinterpret_cast<MojoWatcher*>(context);
-  watcher->task_runner_->PostTask(
-      FROM_HERE,
+  PostCrossThreadTask(
+      *watcher->task_runner_, FROM_HERE,
       CrossThreadBind(&MojoWatcher::RunReadyCallback,
                       WrapCrossThreadWeakPersistent(watcher), result));
 }

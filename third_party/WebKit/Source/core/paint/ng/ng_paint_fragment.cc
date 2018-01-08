@@ -69,11 +69,11 @@ void NGPaintFragment::PopulateDescendants(bool stop_at_block_layout_root) {
 void NGPaintFragment::UpdateVisualRectFromLayoutObject() {
   DCHECK_EQ(PhysicalFragment().Type(), NGPhysicalFragment::kFragmentBox);
 
-  UpdateVisualRectFromLayoutObject({nullptr});
+  UpdateVisualRectFromLayoutObject({});
 }
 
 void NGPaintFragment::UpdateVisualRectFromLayoutObject(
-    const UpdateContext& context) {
+    const NGPhysicalOffset& parent_paint_offset) {
   // Compute VisualRect from fragment if:
   // - Text fragment, including generated content
   // - Line box fragment (does not have LayoutObject)
@@ -82,15 +82,14 @@ void NGPaintFragment::UpdateVisualRectFromLayoutObject(
   // fragments.
   const NGPhysicalFragment& fragment = PhysicalFragment();
   const LayoutObject* layout_object = fragment.GetLayoutObject();
-  if (fragment.IsText() || fragment.IsLineBox() ||
-      (fragment.IsBox() && layout_object && layout_object->IsLayoutInline())) {
+  bool is_inline =
+      fragment.IsText() || fragment.IsLineBox() ||
+      (fragment.IsBox() && layout_object && layout_object->IsLayoutInline());
+  NGPhysicalOffset paint_offset;
+  if (is_inline) {
     NGPhysicalOffsetRect visual_rect = fragment.SelfVisualRect();
-    DCHECK(context.parent_box);
-    // TODO(kojii): Review the use of FirstFragment() and PaintOffset(). This is
-    // likely incorrect.
-    visual_rect.offset +=
-        fragment.Offset() + context.offset_to_parent_box +
-        NGPhysicalOffset(context.parent_box->FirstFragment().PaintOffset());
+    paint_offset = parent_paint_offset + fragment.Offset();
+    visual_rect.offset += paint_offset;
     SetVisualRect(visual_rect.ToLayoutRect());
   } else {
     // Copy the VisualRect from the corresponding LayoutObject.
@@ -107,31 +106,32 @@ void NGPaintFragment::UpdateVisualRectFromLayoutObject(
   }
 
   if (!children_.IsEmpty()) {
-    // If this fragment isn't from a LayoutObject; i.e., a line box or an
-    // anonymous, keep the offset to the parent box.
-    UpdateContext child_context =
-        !layout_object || fragment.IsAnonymousBox()
-            ? UpdateContext{context.parent_box,
-                            context.offset_to_parent_box + fragment.Offset()}
-            : UpdateContext{layout_object};
+    // |VisualRect| of children of an inline box are relative to their inline
+    // formatting context. Accumulate offset to convert to the |VisualRect|
+    // space.
+    if (!is_inline) {
+      DCHECK(layout_object);
+      paint_offset =
+          NGPhysicalOffset{layout_object->FirstFragment().PaintOffset()};
+    }
     for (auto& child : children_) {
-      child->UpdateVisualRectFromLayoutObject(child_context);
+      child->UpdateVisualRectFromLayoutObject(paint_offset);
     }
   }
 }
 
-void NGPaintFragment::AddOutlineRects(
+void NGPaintFragment::AddSelfOutlineRect(
     Vector<LayoutRect>* outline_rects,
     const LayoutPoint& additional_offset) const {
   DCHECK(outline_rects);
+  //
+  LayoutRect outline_rect(additional_offset, Size().ToLayoutSize());
+  // LayoutRect outline_rect = VisualRect();
+  // outline_rect.MoveBy(additional_offset);
+  // outline_rect.Inflate(-Style().OutlineOffset());
+  // outline_rect.Inflate(-Style().OutlineWidth());
 
-  // TODO(layout-dev): This isn't correct but is close enough until we have
-  // the right set of rects for outlines.
-  for (const auto& child : children_) {
-    LayoutRect outline_rect = child->VisualRect();
-    outline_rect.MoveBy(additional_offset);
-    outline_rects->push_back(outline_rect);
-  }
+  outline_rects->push_back(outline_rect);
 }
 
 void NGPaintFragment::PaintInlineBoxForDescendants(

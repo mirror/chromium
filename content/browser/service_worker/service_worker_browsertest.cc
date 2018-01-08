@@ -175,7 +175,8 @@ void ReadResponseBody(std::string* body,
   std::unique_ptr<storage::BlobDataSnapshot> data =
       blob_data_handle->CreateSnapshot();
   ASSERT_EQ(1U, data->items().size());
-  *body = std::string(data->items()[0]->bytes(), data->items()[0]->length());
+  *body =
+      std::string(data->items()[0]->bytes().data(), data->items()[0]->length());
 }
 
 void ExpectResultAndRun(bool expected,
@@ -477,12 +478,6 @@ class ServiceWorkerBrowserTest : public ContentBrowserTest {
   ServiceWorkerContextWrapper* wrapper() { return wrapper_.get(); }
   ServiceWorkerContext* public_context() { return wrapper(); }
 
-  void AssociateRendererProcessToPattern(const GURL& pattern) {
-    wrapper_->process_manager()->AddProcessReferenceToPattern(
-        pattern,
-        shell()->web_contents()->GetMainFrame()->GetProcess()->GetID());
-  }
-
  private:
   scoped_refptr<ServiceWorkerContextWrapper> wrapper_;
 };
@@ -670,8 +665,6 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     // Make the registration findable via storage functions.
     wrapper()->context()->storage()->NotifyInstallingRegistration(
         registration_.get());
-
-    AssociateRendererProcessToPattern(pattern);
   }
 
   void TimeoutWorkerOnIOThread() {
@@ -799,13 +792,15 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     version_->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::INSTALL,
         base::BindOnce(&self::DispatchInstallEventOnIOThread,
-                       base::Unretained(this), done, result),
-        CreateReceiver(BrowserThread::UI, done, result));
+                       base::Unretained(this), done, result));
   }
 
-  void DispatchInstallEventOnIOThread(const base::Closure& done,
-                                      ServiceWorkerStatusCode* result) {
+  void DispatchInstallEventOnIOThread(
+      const base::Closure& done,
+      ServiceWorkerStatusCode* result,
+      ServiceWorkerStatusCode start_worker_status) {
     ASSERT_TRUE(BrowserThread::CurrentlyOn(BrowserThread::IO));
+    ASSERT_EQ(SERVICE_WORKER_OK, start_worker_status);
     version_->SetStatus(ServiceWorkerVersion::INSTALLING);
     int request_id =
         version_->StartRequest(ServiceWorkerMetrics::EventType::INSTALL,
@@ -852,13 +847,15 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     version_->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::ACTIVATE,
         base::BindOnce(&self::DispatchActivateEventOnIOThread,
-                       base::Unretained(this), done, result),
-        CreateReceiver(BrowserThread::UI, done, result));
+                       base::Unretained(this), done, result));
   }
 
-  void DispatchActivateEventOnIOThread(const base::Closure& done,
-                                       ServiceWorkerStatusCode* result) {
+  void DispatchActivateEventOnIOThread(
+      const base::Closure& done,
+      ServiceWorkerStatusCode* result,
+      ServiceWorkerStatusCode start_worker_status) {
     ASSERT_TRUE(BrowserThread::CurrentlyOn(BrowserThread::IO));
+    ASSERT_EQ(SERVICE_WORKER_OK, start_worker_status);
     version_->SetStatus(ServiceWorkerVersion::ACTIVATING);
     registration_->SetActiveVersion(version_.get());
     int request_id =
@@ -879,22 +876,21 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     ServiceWorkerFetchDispatcher::FetchCallback fetch_callback =
         CreateResponseReceiver(done, blob_context_.get(), result);
     if (ServiceWorkerUtils::IsServicificationEnabled()) {
-      auto request = std::make_unique<ResourceRequest>();
+      auto request = std::make_unique<network::ResourceRequest>();
       request->url = url;
       request->method = "GET";
       request->resource_type = resource_type;
       fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-          std::move(request), version_, base::nullopt /* timeout */,
-          net::NetLogWithSource(), std::move(prepare_callback),
-          std::move(fetch_callback));
+          std::move(request), version_, net::NetLogWithSource(),
+          std::move(prepare_callback), std::move(fetch_callback));
     } else {
       auto legacy_request = std::make_unique<ServiceWorkerFetchRequest>(
           url, "GET", ServiceWorkerHeaderMap(), Referrer(),
           false /* is_reload */);
       fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
           std::move(legacy_request), version_, resource_type,
-          base::nullopt /* timeout */, net::NetLogWithSource(),
-          std::move(prepare_callback), std::move(fetch_callback));
+          net::NetLogWithSource(), std::move(prepare_callback),
+          std::move(fetch_callback));
     }
     fetch_dispatcher_->Run();
   }
@@ -2257,10 +2253,11 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerNavigationPreloadTest,
 }
 
 // When the content type of the page is not correctly set,
-// OnStartLoadingResponseBody() of mojom::URLLoaderClient is called before
-// OnReceiveResponse(). This behavior is caused by MimeSniffingResourceHandler.
-// This test checks that even if the MimeSniffingResourceHandler is triggered
-// navigation preload must be handled correctly.
+// OnStartLoadingResponseBody() of network::mojom::URLLoaderClient is called
+// before OnReceiveResponse(). This behavior is caused by
+// MimeSniffingResourceHandler. This test checks that even if the
+// MimeSniffingResourceHandler is triggered navigation preload must be handled
+// correctly.
 IN_PROC_BROWSER_TEST_F(ServiceWorkerNavigationPreloadTest,
                        RespondWithNavigationPreloadWithMimeSniffing) {
   const char kPageUrl[] = "/service_worker/navigation_preload.html";

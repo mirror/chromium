@@ -31,7 +31,6 @@ interface BackgroundFetchRegistration : EventTarget
     getter downloaded
     getter id
     getter onprogress
-    getter totalDownloadSize
     getter uploadTotal
     getter uploaded
     method abort
@@ -712,6 +711,7 @@ interface LockManager
     attribute @@toStringTag
     method acquire
     method constructor
+    method query
 interface MessageChannel
     attribute @@toStringTag
     getter port1
@@ -984,6 +984,7 @@ interface PerformanceObserver
     method constructor
     method disconnect
     method observe
+    method takeRecords
 interface PerformanceObserverEntryList
     attribute @@toStringTag
     method constructor
@@ -1082,6 +1083,7 @@ interface Request
     getter bodyUsed
     getter cache
     getter credentials
+    getter destination
     getter headers
     getter integrity
     getter keepalive
@@ -1140,11 +1142,6 @@ interface ServiceWorkerRegistration : EventTarget
     method unregister
     method update
     setter onupdatefound
-interface SharedArrayBuffer
-    attribute @@toStringTag
-    getter byteLength
-    method constructor
-    method slice
 interface StorageManager
     attribute @@toStringTag
     method constructor
@@ -2563,6 +2560,7 @@ interface WorkerNavigator
     getter appVersion
     getter budget
     getter connection
+    getter deviceMemory
     getter hardwareConcurrency
     getter locks
     getter onLine
@@ -2578,7 +2576,6 @@ interface WritableStream
     method constructor
     method getWriter
 [GLOBAL OBJECT]
-    attribute Atomics
     attribute console
     attribute internals
     getter clients

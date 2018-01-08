@@ -35,6 +35,7 @@
         // Test-only interfaces.
         "test": [
           "ash::mojom::ShelfTestApi",
+          "ash::mojom::ShellTestApi",
           "ash::mojom::SystemTrayTestApi",
           "ash::mojom::TimeToFirstPresentRecorderTestApi"
         ],
@@ -46,11 +47,13 @@
       },
       "requires": {
         "*": [ "accessibility", "app" ],
+        "accessibility_autoclick": [ "mash:launchable" ],
         "ash_pref_connector": [ "pref_connector" ],
         "catalog": [ "directory" ],
         "local_state": [ "pref_client" ],
         "ui": [ "display_dev", "window_manager", "video_detector" ],
-        "touch_hud": [ "mash:launchable" ]
+        "touch_hud": [ "mash:launchable" ],
+        "data_decoder": [ "image_decoder" ]
       }
     }
   }

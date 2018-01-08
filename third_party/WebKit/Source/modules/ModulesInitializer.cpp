@@ -17,7 +17,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/WebLocalFrameImpl.h"
-#include "core/html/HTMLCanvasElement.h"
+#include "core/html/canvas/HTMLCanvasElement.h"
 #include "core/html/media/HTMLMediaElement.h"
 #include "core/inspector/InspectorSession.h"
 #include "core/leak_detector/BlinkLeakDetector.h"
@@ -38,7 +38,6 @@
 #include "modules/canvas/canvas2d/CanvasRenderingContext2D.h"
 #include "modules/canvas/imagebitmap/ImageBitmapRenderingContext.h"
 #include "modules/canvas/offscreencanvas2d/OffscreenCanvasRenderingContext2D.h"
-#include "modules/credentialmanager/CredentialManagerClient.h"
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
 #include "modules/device_orientation/DeviceMotionController.h"
 #include "modules/device_orientation/DeviceOrientationAbsoluteController.h"
@@ -66,7 +65,6 @@
 #include "modules/presentation/PresentationController.h"
 #include "modules/presentation/PresentationReceiver.h"
 #include "modules/push_messaging/PushController.h"
-#include "modules/quota/StorageQuotaClient.h"
 #include "modules/remoteplayback/HTMLMediaElementRemotePlayback.h"
 #include "modules/remoteplayback/RemotePlayback.h"
 #include "modules/screen_orientation/ScreenOrientationControllerImpl.h"
@@ -252,19 +250,11 @@ WebRemotePlaybackClient* ModulesInitializer::CreateWebRemotePlaybackClient(
   return HTMLMediaElementRemotePlayback::remote(html_media_element);
 }
 
-void ModulesInitializer::ProvideCredentialManagerClient(
-    Page& page,
-    WebCredentialManagerClient* web_credential_manager_client) const {
-  ::blink::ProvideCredentialManagerClientTo(
-      page, new CredentialManagerClient(web_credential_manager_client));
-}
-
 void ModulesInitializer::ProvideModulesToPage(Page& page,
                                               WebViewClient* client) const {
   MediaKeysController::ProvideMediaKeysTo(page);
   ::blink::ProvideContextFeaturesTo(page, ContextFeaturesClientImpl::Create());
   ::blink::ProvideDatabaseClientTo(page, new DatabaseClient);
-  ::blink::ProvideStorageQuotaClientTo(page, StorageQuotaClient::Create());
   StorageNamespaceController::ProvideStorageNamespaceTo(page, client);
   ::blink::ProvideSpeechRecognitionTo(
       page, SpeechRecognitionClientProxy::Create(

@@ -36,6 +36,10 @@ void TestContentPaymentRequestDelegate::ShowErrorMessage() {
   core_delegate_.ShowErrorMessage();
 }
 
+void TestContentPaymentRequestDelegate::ShowProcessingSpinner() {
+  core_delegate_.ShowProcessingSpinner();
+}
+
 bool TestContentPaymentRequestDelegate::IsBrowserWindowActive() const {
   return core_delegate_.IsBrowserWindowActive();
 }
@@ -90,6 +94,10 @@ std::string TestContentPaymentRequestDelegate::GetAuthenticatedEmail() const {
 PrefService* TestContentPaymentRequestDelegate::GetPrefService() {
   return core_delegate_.GetPrefService();
 }
+
+void TestContentPaymentRequestDelegate::EmbedPaymentHandlerWindow(
+    const GURL& url,
+    PaymentHandlerOpenWindowCallback callback) {}
 
 autofill::TestAddressNormalizer*
 TestContentPaymentRequestDelegate::test_address_normalizer() {

@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
@@ -18,6 +19,7 @@
 #include "components/previews/content/previews_ui_service.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_opt_out_store.h"
+#include "components/previews/core/previews_switches.h"
 #include "components/previews/core/previews_user_data.h"
 #include "net/base/load_flags.h"
 #include "net/nqe/network_quality_estimator.h"
@@ -52,6 +54,7 @@ bool AllowedOnReload(PreviewsType type) {
     case PreviewsType::OFFLINE:
       return false;
     case PreviewsType::NONE:
+    case PreviewsType::UNSPECIFIED:
     case PreviewsType::LAST:
       break;
   }
@@ -70,6 +73,7 @@ bool IsServerWhitelistedType(PreviewsType type) {
     case PreviewsType::AMP_REDIRECTION:
       return false;
     case PreviewsType::NONE:
+    case PreviewsType::UNSPECIFIED:
     case PreviewsType::LAST:
       break;
   }
@@ -77,12 +81,17 @@ bool IsServerWhitelistedType(PreviewsType type) {
   return false;
 }
 
+bool IsPreviewsBlacklistIgnoredViaFlag() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kIgnorePreviewsBlacklist);
+}
+
 }  // namespace
 
 PreviewsIOData::PreviewsIOData(
     const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner,
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
-    : blacklist_ignored_(false),
+    : blacklist_ignored_(IsPreviewsBlacklistIgnoredViaFlag()),
       ui_task_runner_(ui_task_runner),
       io_task_runner_(io_task_runner),
       page_id_(1u),
@@ -207,6 +216,10 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
     PreviewsType type,
     net::EffectiveConnectionType effective_connection_type_threshold,
     const std::vector<std::string>& host_blacklist_from_server) const {
+  if (!previews::params::ArePreviewsAllowed()) {
+    return false;
+  }
+
   if (!request.url().has_host() || !PreviewsUserData::GetData(request)) {
     // Don't capture UMA on this case, as it is not important and can happen
     // when navigating to files on disk, etc.

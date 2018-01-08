@@ -131,32 +131,23 @@ LayoutUnit InlineTextBox::LineHeight() const {
                   kPositionOnContainingLine);
 }
 
-LayoutUnit InlineTextBox::OffsetTo(LineVerticalPositionType position_type,
+LayoutUnit InlineTextBox::OffsetTo(FontVerticalPositionType position_type,
                                    FontBaseline baseline_type) const {
   if (IsText() &&
-      (position_type == LineVerticalPositionType::TopOfEmHeight ||
-       position_type == LineVerticalPositionType::BottomOfEmHeight)) {
+      (position_type == FontVerticalPositionType::TopOfEmHeight ||
+       position_type == FontVerticalPositionType::BottomOfEmHeight)) {
     const Font& font = GetLineLayoutItem().Style(IsFirstLineStyle())->GetFont();
     if (const SimpleFontData* font_data = font.PrimaryFont()) {
-      const FontMetrics& metrics = font_data->GetFontMetrics();
-      if (position_type == LineVerticalPositionType::TopOfEmHeight) {
-        // Use Ascent, not FixedAscent, to match to how InlineTextBoxPainter
-        // computes the baseline position.
-        return metrics.Ascent(baseline_type) -
-               font_data->EmHeightAscent(baseline_type);
-      }
-      if (position_type == LineVerticalPositionType::BottomOfEmHeight) {
-        return metrics.Ascent(baseline_type) +
-               font_data->EmHeightDescent(baseline_type);
-      }
+      return font_data->GetFontMetrics().Ascent(baseline_type) -
+             font_data->VerticalPosition(position_type, baseline_type);
     }
   }
   switch (position_type) {
-    case LineVerticalPositionType::TextTop:
-    case LineVerticalPositionType::TopOfEmHeight:
+    case FontVerticalPositionType::TextTop:
+    case FontVerticalPositionType::TopOfEmHeight:
       return LayoutUnit();
-    case LineVerticalPositionType::TextBottom:
-    case LineVerticalPositionType::BottomOfEmHeight:
+    case FontVerticalPositionType::TextBottom:
+    case FontVerticalPositionType::BottomOfEmHeight:
       return LogicalHeight();
   }
   NOTREACHED();
@@ -164,7 +155,7 @@ LayoutUnit InlineTextBox::OffsetTo(LineVerticalPositionType position_type,
 }
 
 LayoutUnit InlineTextBox::VerticalPosition(
-    LineVerticalPositionType position_type,
+    FontVerticalPositionType position_type,
     FontBaseline baseline_type) const {
   return LogicalTop() + OffsetTo(position_type, baseline_type);
 }
@@ -518,12 +509,7 @@ bool InlineTextBox::GetEmphasisMarkPosition(
 
   emphasis_position = style.GetTextEmphasisPosition();
   // Ruby text is always over, so it cannot suppress emphasis marks under.
-  if ((IsHorizontal() &&
-       (emphasis_position == TextEmphasisPosition::kUnderRight ||
-        emphasis_position == TextEmphasisPosition::kUnderLeft)) ||
-      (!IsHorizontal() &&
-       (emphasis_position == TextEmphasisPosition::kOverLeft ||
-        emphasis_position == TextEmphasisPosition::kUnderLeft)))
+  if (style.GetTextEmphasisLineLogicalSide() != LineLogicalSide::kOver)
     return true;
 
   LineLayoutBox containing_block = GetLineLayoutItem().ContainingBlock();
@@ -784,22 +770,21 @@ String InlineTextBox::GetText() const {
 
 #ifndef NDEBUG
 
-void InlineTextBox::ShowBox(int printed_characters) const {
+void InlineTextBox::DumpBox(StringBuilder& string_inlinetextbox) const {
   String value = GetText();
   value.Replace('\\', "\\\\");
   value.Replace('\n', "\\n");
-  printed_characters += fprintf(stderr, "%s %p", BoxName(), this);
-  for (; printed_characters < kShowTreeCharacterOffset; printed_characters++)
-    fputc(' ', stderr);
+  string_inlinetextbox.Append(String::Format("%s %p", BoxName(), this));
+  while (string_inlinetextbox.length() < kShowTreeCharacterOffset)
+    string_inlinetextbox.Append(" ");
   const LineLayoutText obj = GetLineLayoutItem();
-  printed_characters =
-      fprintf(stderr, "\t%s %p", obj.GetName(), obj.DebugPointer());
+  string_inlinetextbox.Append(
+      String::Format("\t%s %p", obj.GetName(), obj.DebugPointer()));
   const int kLayoutObjectCharacterOffset = 75;
-  for (; printed_characters < kLayoutObjectCharacterOffset;
-       printed_characters++)
-    fputc(' ', stderr);
-  fprintf(stderr, "(%d,%d) \"%s\"\n", Start(), Start() + Len(),
-          value.Utf8().data());
+  while (string_inlinetextbox.length() < kLayoutObjectCharacterOffset)
+    string_inlinetextbox.Append(" ");
+  string_inlinetextbox.Append(String::Format(
+      "(%d,%d) \"%s\"", Start(), Start() + Len(), value.Utf8().data()));
 }
 
 #endif

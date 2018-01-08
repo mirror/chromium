@@ -775,6 +775,13 @@ TEST(WindowManagerStateEventTest, AdjustEventLocation) {
   window_server->user_id_tracker()->SetActiveUserId(kUserId1);
   const int64_t first_display_id = screen_manager.AddDisplay();
   const int64_t second_display_id = screen_manager.AddDisplay();
+  Display* first_display =
+      window_server->display_manager()->GetDisplayById(first_display_id);
+  // As there are no child windows make sure the root is a valid target.
+  first_display->GetWindowManagerDisplayRootForUser(kUserId1)
+      ->GetClientVisibleRoot()
+      ->set_event_targeting_policy(
+          mojom::EventTargetingPolicy::TARGET_AND_DESCENDANTS);
   Display* second_display =
       window_server->display_manager()->GetDisplayById(second_display_id);
   ASSERT_TRUE(second_display);
@@ -830,6 +837,27 @@ TEST_F(WindowManagerStateTest, CursorLocationManagerUpdatedOnMouseMove) {
       gfx::Point(19, 18),
       Atomic32ToPoint(CursorLocationManagerTestApi(cursor_location_manager)
                           .current_cursor_location()));
+}
+
+TEST_F(WindowManagerStateTest, SetCapture) {
+  ASSERT_EQ(1u, window_server()->display_manager()->displays().size());
+  Display* display = *(window_server()->display_manager()->displays().begin());
+  TestPlatformDisplay* platform_display =
+      static_cast<TestPlatformDisplay*>(display->platform_display());
+  EXPECT_TRUE(window_tree()->SetCapture(FirstRootId(window_tree())));
+  EXPECT_EQ(FirstRoot(window_tree()), window_manager_state()->capture_window());
+  EXPECT_TRUE(platform_display->has_capture());
+  EXPECT_TRUE(window_tree()->ReleaseCapture(FirstRootId(window_tree())));
+  EXPECT_FALSE(platform_display->has_capture());
+
+  // In unified mode capture should not propagate to the PlatformDisplay. This
+  // is for compatibility with classic ash. See http://crbug.com/773348.
+  display->SetDisplay(display::Display(display::kUnifiedDisplayId));
+  EXPECT_TRUE(window_tree()->SetCapture(FirstRootId(window_tree())));
+  EXPECT_EQ(FirstRoot(window_tree()), window_manager_state()->capture_window());
+  EXPECT_FALSE(platform_display->has_capture());
+  EXPECT_TRUE(window_tree()->ReleaseCapture(FirstRootId(window_tree())));
+  EXPECT_FALSE(platform_display->has_capture());
 }
 
 TEST_F(WindowManagerStateTestAsync, CursorResetOverNoTargetAsync) {

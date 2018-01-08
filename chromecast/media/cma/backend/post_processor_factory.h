@@ -18,15 +18,17 @@ class ScopedNativeLibrary;
 namespace chromecast {
 namespace media {
 
-class AudioPostProcessor;
+class AudioPostProcessor2;
 
 class PostProcessorFactory {
  public:
   PostProcessorFactory();
   ~PostProcessorFactory();
 
-  std::unique_ptr<AudioPostProcessor> CreatePostProcessor(
-      const std::string& so_name,
+  // Creates an instance of AudioPostProcessor2 or a wrapped AudioPostProcessor.
+  std::unique_ptr<AudioPostProcessor2> CreatePostProcessor(
+      const std::string& library_path,
+      const std::string& post_processor_type,
       const std::string& config,
       int channels);
 

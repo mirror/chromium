@@ -18,12 +18,11 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/surface_id.h"
-#include "components/viz/common/surfaces/surface_reference_factory.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 #include "components/viz/service/surfaces/surface_dependency_tracker.h"
 #include "components/viz/service/surfaces/surface_observer.h"
 #include "components/viz/service/surfaces/surface_reference.h"
@@ -45,13 +44,7 @@ struct BeginFrameArgs;
 
 class VIZ_SERVICE_EXPORT SurfaceManager {
  public:
-  enum class LifetimeType {
-    REFERENCES,
-    SEQUENCES,
-  };
-
-  SurfaceManager(LifetimeType lifetime_type,
-                 uint32_t number_of_frames_to_activation_deadline);
+  explicit SurfaceManager(uint32_t number_of_frames_to_activation_deadline);
   ~SurfaceManager();
 
 #if DCHECK_IS_ON()
@@ -59,13 +52,14 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   std::string SurfaceReferencesToString();
 #endif
 
-  void RequestSurfaceResolution(Surface* surface);
+  SurfaceDependencyTracker* dependency_tracker() {
+    return &dependency_tracker_;
+  }
 
   // Creates a Surface for the given SurfaceClient. The surface will be
   // destroyed when DestroySurface is called, all of its destruction
   // dependencies are satisfied, and it is not reachable from the root surface.
-  // If LifetimeType=REFERENCES, then a temporary reference will be added to
-  // the new Surface.
+  // A temporary reference will be added to the new Surface.
   Surface* CreateSurface(base::WeakPtr<SurfaceClient> surface_client,
                          const SurfaceInfo& surface_info,
                          BeginFrameSource* begin_frame_source,
@@ -73,10 +67,6 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
 
   // Destroy the Surface once a set of sequence numbers has been satisfied.
   void DestroySurface(const SurfaceId& surface_id);
-
-  // Called when |surface_id| or one of its descendents is determined to be
-  // damaged at aggregation time.
-  void SurfaceSubtreeDamaged(const SurfaceId& surface_id);
 
   Surface* GetSurfaceForId(const SurfaceId& surface_id);
 
@@ -113,15 +103,6 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // and, thus, is expected to produce damage soon.
   void SurfaceDamageExpected(const SurfaceId& surface_id,
                              const BeginFrameArgs& args);
-
-  // Require that the given sequence number must be satisfied (using
-  // SatisfySequence) before the given surface can be destroyed.
-  void RequireSequence(const SurfaceId& surface_id,
-                       const SurfaceSequence& sequence);
-
-  // Satisfies the given sequence number. Once all sequence numbers that
-  // a surface depends on are satisfied, the surface can be destroyed.
-  void SatisfySequence(const SurfaceSequence& sequence);
 
   void RegisterFrameSinkId(const FrameSinkId& frame_sink_id);
 
@@ -190,14 +171,6 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   const base::flat_set<SurfaceId>& GetSurfacesThatReferenceChild(
       const SurfaceId& surface_id) const;
 
-  const scoped_refptr<SurfaceReferenceFactory>& reference_factory() {
-    return reference_factory_;
-  }
-
-  bool using_surface_references() const {
-    return lifetime_type_ == LifetimeType::REFERENCES;
-  }
-
   // Returns the most recent surface associated with the |fallback_surface_id|'s
   // FrameSinkId that was created prior to the current primary surface and
   // verified by the viz host to be owned by the fallback surface's parent. If
@@ -217,6 +190,16 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   friend class test::SurfaceReferencesTest;
 
   using SurfaceIdSet = std::unordered_set<SurfaceId, SurfaceIdHash>;
+
+  // The reason for removing a temporary reference.
+  enum class RemovedReason {
+    EMBEDDED,     // The surface was embedded.
+    DROPPED,      // The surface won't be embedded so it was dropped.
+    SKIPPED,      // A newer surface was embedded and the surface was skipped.
+    INVALIDATED,  // The expected embedder was invalidated.
+    EXPIRED,      // The surface was never embedded and expired.
+    COUNT
+  };
 
   struct SurfaceReferenceInfo {
     SurfaceReferenceInfo();
@@ -267,13 +250,15 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // owner initially.
   void AddTemporaryReference(const SurfaceId& surface_id);
 
-  // Removes temporary reference to |surface_id|. If |remove_range| is true then
-  // all temporary references to surfaces with the same FrameSinkId as
-  // |surface_id| that were added before |surface_id| will also be removed.
-  void RemoveTemporaryReference(const SurfaceId& surface_id, bool remove_range);
+  // Removes temporary reference to |surface_id|. The |reason| for removing will
+  // be recorded with UMA. If |reason| is EMBEDDED then older temporary
+  // references from the same FrameSinkId will also be removed.
+  void RemoveTemporaryReference(const SurfaceId& surface_id,
+                                RemovedReason reason);
 
-  // Marks old temporary references for logging and deletion.
-  void MarkOldTemporaryReference();
+  // Marks and then expires old temporary references. This function is run
+  // periodically by a timer.
+  void ExpireOldTemporaryReferences();
 
   // Removes the surface from the surface map and destroys it.
   void DestroySurfaceInternal(const SurfaceId& surface_id);
@@ -294,9 +279,6 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
       const base::flat_set<SurfaceId>& fallback_parents,
       const base::Optional<FrameSinkId>& owner) const;
 
-  // Use reference or sequence based lifetime management.
-  LifetimeType lifetime_type_;
-
   // SurfaceDependencyTracker needs to be destroyed after Surfaces are destroyed
   // because they will call back into the dependency tracker.
   SurfaceDependencyTracker dependency_tracker_;
@@ -306,10 +288,6 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   base::ThreadChecker thread_checker_;
 
   base::flat_set<SurfaceId> surfaces_to_destroy_;
-
-  // Set of SurfaceSequences that have been satisfied by a frame but not yet
-  // waited on.
-  base::flat_set<SurfaceSequence> satisfied_sequences_;
 
   // Set of valid FrameSinkIds and their labels. When a FrameSinkId is removed
   // from this set, any remaining (surface) sequences with that FrameSinkId are
@@ -323,10 +301,6 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // Always empty set that is returned when there is no entry in |references_|
   // for a SurfaceId.
   const base::flat_set<SurfaceId> empty_surface_id_set_;
-
-  // The DirectSurfaceReferenceFactory that uses this manager to create surface
-  // references.
-  scoped_refptr<SurfaceReferenceFactory> reference_factory_;
 
   // Keeps track of surface references for a surface. The graph of references is
   // stored in both directions, so we know the parents and children for each
@@ -350,8 +324,10 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   std::unordered_map<FrameSinkId, std::vector<LocalSurfaceId>, FrameSinkIdHash>
       temporary_reference_ranges_;
 
-  // Timer that ticks every 10 seconds and calls MarkTemporaryReference().
-  base::RepeatingTimer temporary_reference_timer_;
+  // Timer to remove old temporary references that aren't removed after an
+  // interval of time. The timer will started/stopped so it only runs if there
+  // are temporary references. Also the timer isn't used with Android WebView.
+  base::Optional<base::RepeatingTimer> expire_timer_;
 
   base::WeakPtrFactory<SurfaceManager> weak_factory_;
 

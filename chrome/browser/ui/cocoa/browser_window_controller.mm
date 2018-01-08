@@ -13,7 +13,6 @@
 #import "base/mac/foundation_util.h"
 #include "base/mac/mac_util.h"
 #import "base/mac/sdk_forward_declarations.h"
-#include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -68,7 +67,6 @@
 #import "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_editor.h"
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #import "chrome/browser/ui/cocoa/location_bar/star_decoration.h"
-#include "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_cocoa.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_button_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_icon_controller.h"
@@ -251,13 +249,8 @@ bool IsTabDetachingInFullscreenEnabled() {
 @implementation BrowserWindowController
 
 + (BrowserWindowController*)browserWindowControllerForWindow:(NSWindow*)window {
-  while (window) {
-    id controller = [window windowController];
-    if ([controller isKindOfClass:[BrowserWindowController class]])
-      return (BrowserWindowController*)controller;
-    window = [window parentWindow];
-  }
-  return nil;
+  return base::mac::ObjCCast<BrowserWindowController>(
+      [TabWindowController tabWindowControllerForWindow:window]);
 }
 
 + (BrowserWindowController*)browserWindowControllerForView:(NSView*)view {
@@ -437,7 +430,7 @@ bool IsTabDetachingInFullscreenEnabled() {
             windowShim_.get()));
 
     omniboxPopupModelObserverBridge_ =
-        base::MakeUnique<OmniboxPopupModelObserverBridge>(self);
+        std::make_unique<OmniboxPopupModelObserverBridge>(self);
 
     blockLayoutSubviews_ = NO;
 
@@ -750,10 +743,9 @@ bool IsTabDetachingInFullscreenEnabled() {
 
   WebContents* contents = browser_->tab_strip_model()->GetActiveWebContents();
   if (contents) {
+    CGFloat intrinsicWidth =
+        static_cast<CGFloat>(contents->GetPreferredSize().width());
     // If the intrinsic width is bigger, then make it the zoomed width.
-    const int kScrollbarWidth = 16;  // TODO(viettrungluu): ugh.
-    CGFloat intrinsicWidth = static_cast<CGFloat>(
-        contents->GetPreferredSize().width() + kScrollbarWidth);
     zoomedWidth = std::max(zoomedWidth,
                            std::min(intrinsicWidth, NSWidth(frame)));
   }
@@ -776,7 +768,7 @@ bool IsTabDetachingInFullscreenEnabled() {
 }
 
 - (void)activate {
-  [BrowserWindowUtils activateWindowForController:self];
+  [BrowserWindowUtils activateWindowForController:[self nsWindowController]];
 }
 
 // Determine whether we should let a window zoom/unzoom to the given |newFrame|.
@@ -1288,9 +1280,8 @@ bool IsTabDetachingInFullscreenEnabled() {
       CreateNewStripWithContents(contentses, browserRect, false);
 
   // Get the new controller by asking the new window for its delegate.
-  BrowserWindowController* controller =
-      reinterpret_cast<BrowserWindowController*>(
-          [newBrowser->window()->GetNativeWindow() delegate]);
+  BrowserWindowController* controller = [BrowserWindowController
+      browserWindowControllerForWindow:newBrowser->window()->GetNativeWindow()];
   DCHECK(controller && [controller isKindOfClass:[TabWindowController class]]);
 
   // Ensure that the window will appear on top of the source window in

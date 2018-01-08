@@ -20,6 +20,7 @@
 namespace viz {
 
 class Display;
+class ExternalBeginFrameControllerImpl;
 class FrameSinkManagerImpl;
 class SyntheticBeginFrameSource;
 
@@ -35,6 +36,8 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
       const FrameSinkId& frame_sink_id,
       std::unique_ptr<Display> display,
       std::unique_ptr<SyntheticBeginFrameSource> begin_frame_source,
+      std::unique_ptr<ExternalBeginFrameControllerImpl>
+          external_begin_frame_controller,
       mojom::CompositorFrameSinkAssociatedRequest request,
       mojom::CompositorFrameSinkClientPtr client,
       mojom::DisplayPrivateAssociatedRequest display_private_request,
@@ -54,6 +57,7 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
 
   // mojom::CompositorFrameSink:
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
+  void SetWantsAnimateOnlyBeginFrames() override;
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              CompositorFrame frame,
                              mojom::HitTestRegionListPtr hit_test_region_list,
@@ -80,6 +84,8 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
 
   void OnClientConnectionLost();
 
+  BeginFrameSource* begin_frame_source();
+
   mojom::CompositorFrameSinkClientPtr compositor_frame_sink_client_;
   mojo::AssociatedBinding<mojom::CompositorFrameSink>
       compositor_frame_sink_binding_;
@@ -94,6 +100,9 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
   // RootCompositorFrameSinkImpl holds a Display and its BeginFrameSource if
   // it was created with a non-null gpu::SurfaceHandle.
   std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source_;
+  // If non-null, |synthetic_begin_frame_source_| will not exist.
+  std::unique_ptr<ExternalBeginFrameControllerImpl>
+      external_begin_frame_controller_;
   std::unique_ptr<Display> display_;
 
   HitTestAggregator hit_test_aggregator_;

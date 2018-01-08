@@ -55,6 +55,7 @@ static void CreateContextProviderOnMainThread(
 
   Platform::ContextAttributes context_attributes;
   context_attributes.web_gl_version = 1;  // GLES2
+  context_attributes.enable_raster_interface = true;
 
   *gpu_compositing_disabled = Platform::Current()->IsGpuCompositingDisabled();
   if (*gpu_compositing_disabled && only_if_gpu_compositing) {
@@ -122,8 +123,8 @@ void SharedGpuContext::CreateContextProviderIfNeeded(
     WaitableEvent waitable_event;
     scoped_refptr<WebTaskRunner> task_runner =
         Platform::Current()->MainThread()->GetWebTaskRunner();
-    task_runner->PostTask(
-        FROM_HERE,
+    PostCrossThreadTask(
+        *task_runner, FROM_HERE,
         CrossThreadBind(&CreateContextProviderOnMainThread,
                         only_if_gpu_compositing,
                         CrossThreadUnretained(&is_gpu_compositing_disabled_),

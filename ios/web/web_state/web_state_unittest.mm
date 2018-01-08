@@ -31,7 +31,7 @@ typedef web::WebTestWithWebState WebStateTest;
 
 // Tests script execution with and without callback.
 TEST_F(WebStateTest, ScriptExecution) {
-  LoadHtml("<html></html>");
+  ASSERT_TRUE(LoadHtml("<html></html>"));
 
   // Execute script without callback.
   web_state()->ExecuteJavaScript(base::UTF8ToUTF16("window.foo = 'bar'"));
@@ -61,7 +61,7 @@ TEST_F(WebStateTest, UserScriptExecution) {
   web_state()->SetDelegate(&delegate);
   ASSERT_TRUE(delegate.child_windows().empty());
 
-  LoadHtml("<html></html>");
+  ASSERT_TRUE(LoadHtml("<html></html>"));
   web_state()->ExecuteUserJavaScript(@"window.open('', target='_blank');");
 
   web::TestWebStateDelegate* delegate_ptr = &delegate;
@@ -77,7 +77,7 @@ TEST_F(WebStateTest, UserScriptExecution) {
 // Tests loading progress.
 TEST_F(WebStateTest, LoadingProgress) {
   EXPECT_FLOAT_EQ(0.0, web_state()->GetLoadingProgress());
-  LoadHtml("<html></html>");
+  ASSERT_TRUE(LoadHtml("<html></html>"));
   WaitForCondition(^bool() {
     return web_state()->GetLoadingProgress() == 1.0;
   });
@@ -97,11 +97,11 @@ TEST_F(WebStateTest, OverridingWebKitObject) {
 
   // Load the page which overrides window.webkit object and wait until the
   // test message is received.
-  LoadHtml(
+  ASSERT_TRUE(LoadHtml(
       "<script>"
       "  webkit = undefined;"
       "  __gCrWeb.message.invokeOnHost({'command': 'test.webkit-overriding'});"
-      "</script>");
+      "</script>"));
 
   WaitForCondition(^{
     return message_received;
@@ -141,33 +141,11 @@ TEST_F(WebStateTest, ReloadWithOriginalTypeWithEmptyNavigationManager) {
   ASSERT_FALSE(navigation_manager->GetLastCommittedItem());
 }
 
-// Tests that taking a snapshot after disabling web usage or adding an overlay
-// will force the creation of the WebState's view.
-TEST_F(WebStateTest, CanTakeSnapshot) {
-  // The test fixture forces the creation of the view, so it is initially
-  // possible to take a snapshot.
-  ASSERT_TRUE(web_state()->CanTakeSnapshot());
-
-  // Taking snapshot after disabling web usage will cause a reload.
-  web_state()->SetWebUsageEnabled(false);
-  EXPECT_FALSE(web_state()->CanTakeSnapshot());
-
-  // Even after re-enabling web usage, taking a snapshot will create the
-  // WebState's view as it is lazily created.
-  web_state()->SetWebUsageEnabled(true);
-  EXPECT_FALSE(web_state()->CanTakeSnapshot());
-
-  // After re-creating the view, it is possible to take a snapshot without
-  // reloading.
-  web_state()->GetView();
-  EXPECT_TRUE(web_state()->CanTakeSnapshot());
-}
-
 // Tests that the snapshot method returns an image of a rendered html page.
 TEST_F(WebStateTest, Snapshot) {
-  LoadHtml(
-      "<html><div style='background-color:#FF0000; width:50%; "
-      "height:100%;'></div></html>");
+  ASSERT_TRUE(
+      LoadHtml("<html><div style='background-color:#FF0000; width:50%; "
+               "height:100%;'></div></html>"));
   __block bool snapshot_complete = false;
   [[[UIApplication sharedApplication] keyWindow]
       addSubview:web_state()->GetView()];

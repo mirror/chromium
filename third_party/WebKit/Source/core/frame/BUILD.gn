@@ -59,6 +59,7 @@ blink_core_sources("frame") {
     "Intervention.cpp",
     "Intervention.h",
     "InterventionReport.h",
+    "IntrinsicSizingInfo.h",
     "LayoutSubtreeRootList.cpp",
     "LayoutSubtreeRootList.h",
     "LocalDOMWindow.cpp",
@@ -75,6 +76,8 @@ blink_core_sources("frame") {
     "Navigator.h",
     "NavigatorConcurrentHardware.cpp",
     "NavigatorConcurrentHardware.h",
+    "NavigatorDeviceMemory.cpp",
+    "NavigatorDeviceMemory.h",
     "NavigatorID.cpp",
     "NavigatorID.h",
     "NavigatorLanguage.cpp",
@@ -88,6 +91,8 @@ blink_core_sources("frame") {
     "PageScaleConstraintsSet.h",
     "PausableScriptExecutor.cpp",
     "PausableScriptExecutor.h",
+    "PausableTask.cpp",
+    "PausableTask.h",
     "PausableTimer.cpp",
     "PausableTimer.h",
     "PerformanceMonitor.cpp",
@@ -158,10 +163,5 @@ blink_core_sources("frame") {
     "csp/MediaListDirective.h",
     "csp/SourceListDirective.cpp",
     "csp/SourceListDirective.h",
-  ]
-
-  configs += [
-    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-    "//build/config/compiler:no_size_t_to_int_warning",
   ]
 }

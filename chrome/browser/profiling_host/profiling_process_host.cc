@@ -22,6 +22,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "base/trace_event/trace_log.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -69,14 +70,15 @@ class StringWrapper : public base::trace_event::ConvertableToTraceFormat {
   std::string json_;
 };
 
-base::trace_event::TraceConfig GetBackgroundTracingConfig() {
+base::trace_event::TraceConfig GetBackgroundTracingConfig(bool anonymize) {
   // Disable all categories other than memory-infra.
   base::trace_event::TraceConfig trace_config(
       "-*,disabled-by-default-memory-infra",
       base::trace_event::RECORD_UNTIL_FULL);
 
   // This flag is set by background tracing to filter out undesired events.
-  trace_config.EnableArgumentFilter();
+  if (anonymize)
+    trace_config.EnableArgumentFilter();
 
   // Trigger a background memory dump exactly once by setting a time-delta
   // between dumps of 2**29.
@@ -101,6 +103,7 @@ namespace profiling {
 const base::Feature kOOPHeapProfilingFeature{"OOPHeapProfiling",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 const char kOOPHeapProfilingFeatureMode[] = "mode";
+const char kOOPHeapProfilingFeatureStackMode[] = "stack-mode";
 
 bool ProfilingProcessHost::has_started_ = false;
 
@@ -269,8 +272,11 @@ void ProfilingProcessHost::OnMemoryDumpOnIOThread(uint64_t dump_guid) {
   bool keep_small_allocations =
       !force_prune && cmdline->HasSwitch(switches::kMemlogKeepSmallAllocations);
 
+  bool strip_path_from_mapped_files = base::trace_event::TraceLog::GetInstance()
+                                          ->GetCurrentTraceConfig()
+                                          .IsArgumentFilterEnabled();
   profiling_service_->DumpProcessesForTracing(
-      keep_small_allocations,
+      keep_small_allocations, strip_path_from_mapped_files,
       base::BindOnce(&ProfilingProcessHost::OnDumpProcessesForTracingCallback,
                      base::Unretained(this), dump_guid));
 }
@@ -351,7 +357,7 @@ void ProfilingProcessHost::AddClientToProfilingService(
       pid, std::move(client),
       mojo::WrapPlatformFile(pipes.PassSender().release().handle),
       mojo::WrapPlatformFile(pipes.PassReceiver().release().handle),
-      process_type);
+      process_type, stack_mode_);
 }
 
 // static
@@ -413,13 +419,47 @@ ProfilingProcessHost::Mode ProfilingProcessHost::ConvertStringToMode(
 }
 
 // static
+profiling::mojom::StackMode ProfilingProcessHost::GetStackModeForStartup() {
+  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  std::string stack_mode;
+
+  // Respect the commandline switch above the field trial.
+  if (cmdline->HasSwitch(switches::kMemlogStackMode)) {
+    stack_mode = cmdline->GetSwitchValueASCII(switches::kMemlogStackMode);
+  } else {
+    stack_mode = base::GetFieldTrialParamValueByFeature(
+        kOOPHeapProfilingFeature, kOOPHeapProfilingFeatureStackMode);
+  }
+
+  return ConvertStringToStackMode(stack_mode);
+}
+
+// static
+mojom::StackMode ProfilingProcessHost::ConvertStringToStackMode(
+    const std::string& input) {
+  if (input == switches::kMemlogStackModeNative)
+    return profiling::mojom::StackMode::NATIVE_WITHOUT_THREAD_NAMES;
+  if (input == switches::kMemlogStackModeNativeWithThreadNames)
+    return profiling::mojom::StackMode::NATIVE_WITH_THREAD_NAMES;
+  if (input == switches::kMemlogStackModePseudo)
+    return profiling::mojom::StackMode::PSEUDO;
+  if (input == switches::kMemlogStackModeMixed)
+    return profiling::mojom::StackMode::MIXED;
+  DLOG(ERROR) << "Unsupported value: \"" << input << "\" passed to --"
+              << switches::kMemlogStackMode;
+  return profiling::mojom::StackMode::NATIVE_WITHOUT_THREAD_NAMES;
+}
+
+// static
 ProfilingProcessHost* ProfilingProcessHost::Start(
     content::ServiceManagerConnection* connection,
-    Mode mode) {
+    Mode mode,
+    mojom::StackMode stack_mode) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   CHECK(!has_started_);
   has_started_ = true;
   ProfilingProcessHost* host = GetInstance();
+  host->stack_mode_ = stack_mode;
   host->SetMode(mode);
   host->Register();
   host->MakeConnector(connection);
@@ -474,7 +514,8 @@ void ProfilingProcessHost::SaveTraceWithHeapDumpToFile(
       },
       std::move(dest), std::move(done));
   RequestTraceWithHeapDump(std::move(finish_trace_callback),
-                           stop_immediately_after_heap_dump_for_tests);
+                           stop_immediately_after_heap_dump_for_tests,
+                           false /* anonymize */);
 }
 
 void ProfilingProcessHost::RequestProcessReport(std::string trigger_name) {
@@ -504,12 +545,15 @@ void ProfilingProcessHost::RequestProcessReport(std::string trigger_name) {
         }
       },
       base::Unretained(this), std::move(trigger_name));
-  RequestTraceWithHeapDump(std::move(finish_report_callback), false);
+  RequestTraceWithHeapDump(std::move(finish_report_callback),
+                           false /* keep_small_allocations */,
+                           true /* anonymize */);
 }
 
 void ProfilingProcessHost::RequestTraceWithHeapDump(
     TraceFinishedCallback callback,
-    bool stop_immediately_after_heap_dump_for_tests) {
+    bool stop_immediately_after_heap_dump_for_tests,
+    bool anonymize) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
 
   if (!connector_) {
@@ -521,7 +565,7 @@ void ProfilingProcessHost::RequestTraceWithHeapDump(
   }
 
   bool result = content::TracingController::GetInstance()->StartTracing(
-      GetBackgroundTracingConfig(), base::Closure());
+      GetBackgroundTracingConfig(anonymize), base::Closure());
   if (!result) {
     DLOG(ERROR) << "Requesting heap dump when tracing has already started.";
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -609,7 +653,8 @@ void ProfilingProcessHost::StartManualProfiling(base::ProcessId pid) {
 
   if (!has_started_) {
     profiling::ProfilingProcessHost::Start(
-        content::ServiceManagerConnection::GetForProcess(), Mode::kManual);
+        content::ServiceManagerConnection::GetForProcess(), Mode::kManual,
+        GetStackModeForStartup());
   } else {
     SetMode(Mode::kManual);
   }
@@ -629,6 +674,14 @@ void ProfilingProcessHost::StartManualProfiling(base::ProcessId pid) {
           FROM_HERE,
           base::BindOnce(&ProfilingProcessHost::StartProfilingPidOnIOThread,
                          base::Unretained(this), pid));
+}
+
+void ProfilingProcessHost::StartProfilingRenderersForTesting() {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+  for (auto iter = content::RenderProcessHost::AllHostsIterator();
+       !iter.IsAtEnd(); iter.Advance()) {
+    StartProfilingRenderer(iter.GetCurrentValue());
+  }
 }
 
 void ProfilingProcessHost::StartProfilingPidOnIOThread(base::ProcessId pid) {

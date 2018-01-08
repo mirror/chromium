@@ -31,6 +31,7 @@
 #include "modules/serviceworkers/ServiceWorkerThread.h"
 
 #include <memory>
+
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
@@ -46,8 +47,8 @@ ServiceWorkerThread::ServiceWorkerThread(
         installed_scripts_manager)
     : WorkerThread(loading_context, *global_scope_proxy),
       global_scope_proxy_(global_scope_proxy),
-      worker_backing_thread_(
-          WorkerBackingThread::Create("ServiceWorker Thread")),
+      worker_backing_thread_(WorkerBackingThread::Create(
+          WebThreadCreationParams("ServiceWorker Thread"))),
       installed_scripts_manager_(std::move(installed_scripts_manager)) {}
 
 ServiceWorkerThread::~ServiceWorkerThread() {
@@ -60,6 +61,11 @@ void ServiceWorkerThread::ClearWorkerBackingThread() {
 
 InstalledScriptsManager* ServiceWorkerThread::GetInstalledScriptsManager() {
   return installed_scripts_manager_.get();
+}
+
+void ServiceWorkerThread::TerminateForTesting() {
+  global_scope_proxy_->TerminateWorkerContext();
+  WorkerThread::TerminateForTesting();
 }
 
 WorkerOrWorkletGlobalScope* ServiceWorkerThread::CreateWorkerGlobalScope(

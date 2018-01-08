@@ -34,7 +34,7 @@ namespace blink {
 
 class HTMLImageLoader;
 class LayoutEmbeddedContent;
-class LayoutEmbeddedItem;
+class LayoutEmbeddedObject;
 class WebPluginContainerImpl;
 
 enum PreferPlugInsForImagesOption {
@@ -50,6 +50,8 @@ class CORE_EXPORT HTMLPlugInElement
  public:
   ~HTMLPlugInElement() override;
   virtual void Trace(blink::Visitor*);
+
+  bool IsPlugin() override { return true; }
 
   bool HasPendingActivity() const final;
 
@@ -112,7 +114,7 @@ class CORE_EXPORT HTMLPlugInElement
   virtual LayoutEmbeddedContent* LayoutEmbeddedContentForJSBindings() const;
 
   bool IsImageType();
-  LayoutEmbeddedItem GetLayoutEmbeddedItem() const;
+  LayoutEmbeddedObject* GetLayoutEmbeddedObject() const;
   bool AllowedToLoadFrameURL(const String& url);
   bool RequestObject(const Vector<String>& param_names,
                      const Vector<String>& param_values);
@@ -142,7 +144,7 @@ class CORE_EXPORT HTMLPlugInElement
   // Element overrides:
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
   bool SupportsFocus() const final { return true; }
-  bool LayoutObjectIsFocusable() const final;
+  bool IsFocusableStyle() const final;
   bool IsKeyboardFocusable() const final;
   void DidAddUserAgentShadowRoot(ShadowRoot&) final;
 
@@ -152,6 +154,7 @@ class CORE_EXPORT HTMLPlugInElement
 
   // HTMLFrameOwnerElement overrides:
   void DisconnectContentFrame() override;
+  void IntrinsicSizingInfoChanged() final;
 
   // Return any existing LayoutEmbeddedContent without triggering relayout, or 0
   // if it doesn't yet exist.

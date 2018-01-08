@@ -90,6 +90,7 @@ component("services") {
   ]
 
   deps = [
+    "//gpu/ipc/service",
     "//media:shared_memory_support",
     "//media/cdm:cdm_manager",
     "//media/gpu",
@@ -114,6 +115,8 @@ component("services") {
 
   if (enable_library_cdms) {
     sources += [
+      "cdm_service.cc",
+      "cdm_service.h",
       "mojo_cdm_allocator.cc",
       "mojo_cdm_allocator.h",
       "mojo_cdm_file_io.cc",
@@ -256,6 +259,7 @@ source_set("unit_tests") {
       "mojo_cdm_allocator_unittest.cc",
       "mojo_cdm_file_io_unittest.cc",
       "mojo_cdm_helper_unittest.cc",
+      "mojo_cdm_proxy_unittest.cc",
     ]
 
     deps += [ "//media/cdm:cdm_api" ]

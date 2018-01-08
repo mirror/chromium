@@ -15,6 +15,7 @@ import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.website.SiteSettingsCategory;
 import org.chromium.chrome.browser.preferences.website.Website;
 import org.chromium.chrome.browser.preferences.website.WebsitePermissionsFetcher;
@@ -80,6 +81,9 @@ public class WebApkUma {
     public static final int WEBAPK_OPEN_LAUNCH_SUCCESS = 0;
     // Obsolete: WEBAPK_OPEN_NO_LAUNCH_INTENT = 1;
     public static final int WEBAPK_OPEN_ACTIVITY_NOT_FOUND = 2;
+
+    private static final String ADJUST_WEBAPK_INSTALLATION_SPACE_PARAM =
+            "webapk_extra_installation_space_mb";
 
     /**
      * Records the time point when a request to update a WebAPK is sent to the WebAPK Server.
@@ -215,8 +219,9 @@ public class WebApkUma {
      * previous WebAPK launch. Not recorded the first time that a WebAPK is launched.
      */
     public static void recordLaunchInterval(long intervalMs) {
-        RecordHistogram.recordCustomTimesHistogram("WebApk.LaunchInterval", intervalMs,
-                TimeUnit.HOURS.toMillis(1), TimeUnit.DAYS.toMillis(30), TimeUnit.MILLISECONDS, 50);
+        RecordHistogram.recordCustomCountHistogram("WebApk.LaunchInterval2",
+                (int) TimeUnit.MILLISECONDS.toMinutes(intervalMs), 30,
+                (int) TimeUnit.DAYS.toMinutes(90), 50);
     }
 
     /** Records to UMA the count of old "WebAPK update request" files. */
@@ -329,7 +334,12 @@ public class WebApkUma {
         }
         long minimumFreeBytes = getLowSpaceLimitBytes(partitionTotalBytes);
 
-        return partitionAvailableBytes - minimumFreeBytes;
+        long webApkExtraSpaceBytes = ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
+                                             ChromeFeatureList.ADJUST_WEBAPK_INSTALLATION_SPACE,
+                                             ADJUST_WEBAPK_INSTALLATION_SPACE_PARAM, 0)
+                * 1024L * 1024L;
+
+        return partitionAvailableBytes - minimumFreeBytes + webApkExtraSpaceBytes;
     }
 
     /**

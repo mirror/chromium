@@ -6,10 +6,11 @@
 
 #include <stddef.h>
 
+#include <memory>
+
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/android/feature_utilities.h"
@@ -100,6 +101,14 @@ infobars::InfoBar* FindHungRendererInfoBar(InfoBarService* infobar_service) {
   return nullptr;
 }
 
+void ShowFramebustBlockInfobarInternal(content::WebContents* web_contents,
+                                       const GURL& url) {
+  FramebustBlockInfoBar::Show(
+      web_contents,
+      std::make_unique<FramebustBlockMessageDelegate>(
+          web_contents, url, FramebustBlockMessageDelegate::OutcomeCallback()));
+}
+
 }  // anonymous namespace
 
 namespace android {
@@ -132,7 +141,7 @@ TabWebContentsDelegateAndroid::RunBluetoothChooser(
     vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kBluetoothChooser);
     return nullptr;
   }
-  return base::MakeUnique<BluetoothChooserAndroid>(frame, event_handler);
+  return std::make_unique<BluetoothChooserAndroid>(frame, event_handler);
 }
 
 void TabWebContentsDelegateAndroid::CloseContents(
@@ -435,10 +444,7 @@ void TabWebContentsDelegateAndroid::OnAudioStateChanged(
 void TabWebContentsDelegateAndroid::OnDidBlockFramebust(
     content::WebContents* web_contents,
     const GURL& url) {
-  FramebustBlockInfoBar::Show(
-      web_contents,
-      base::MakeUnique<FramebustBlockMessageDelegate>(
-          web_contents, url, FramebustBlockMessageDelegate::OutcomeCallback()));
+  ShowFramebustBlockInfobarInternal(web_contents, url);
 }
 
 }  // namespace android
@@ -526,4 +532,15 @@ void JNI_TabWebContentsDelegateAndroid_NotifyStopped(
       MediaCaptureDevicesDispatcher::GetInstance()
           ->GetMediaStreamCaptureIndicator();
   indicator->NotifyStopped(web_contents);
+}
+
+void JNI_TabWebContentsDelegateAndroid_ShowFramebustBlockInfoBar(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    const JavaParamRef<jobject>& java_web_contents,
+    const JavaParamRef<jstring>& java_url) {
+  GURL url(base::android::ConvertJavaStringToUTF16(env, java_url));
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(java_web_contents);
+  ShowFramebustBlockInfobarInternal(web_contents, url);
 }

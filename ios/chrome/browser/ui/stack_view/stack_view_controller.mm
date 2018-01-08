@@ -27,6 +27,7 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/feature_engagement/tracker_factory.h"
 #include "ios/chrome/browser/feature_engagement/tracker_util.h"
+#import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
@@ -221,8 +222,6 @@ NSString* const kTransitionToolbarAnimationKey =
 // scroll to one of its boundaries without also having reached the
 // corresponding boundary of the stack being scrolled.
 - (void)updateScrollViewContentSize;
-// Deregisters for the notifications |registerForNotifications| specifies.
-- (void)deregisterForNotifications;
 // Eliminates the ability for the user to perform any further interactions
 // with the stack view. Should be called when the stack view starts being
 // dismissed.
@@ -403,10 +402,6 @@ NSString* const kTransitionToolbarAnimationKey =
 // so this should *not* be called frequently.
 - (StackCard*)cardForView:(CardView*)view;
 
-// All local tab state is cleared, and |currentlyClosingAllTabs_| is set to
-// |NO|.
-- (void)allModelTabsHaveClosed:(NSNotification*)notify;
-
 // Updates the display views so that they are aligned to the scroll view's
 // viewport. Should be called any time the scroll view's content offset
 // changes.
@@ -566,10 +561,10 @@ NSString* const kTransitionToolbarAnimationKey =
     [_dispatcher startDispatchingToTarget:applicationCommandEndpoint
                               forProtocol:@protocol(ApplicationCommands)];
 
-    _toolsMenuCoordinator =
-        [[ToolsMenuCoordinator alloc] initWithBaseViewController:self];
+    _toolsMenuCoordinator = [[ToolsMenuCoordinator alloc] init];
     _toolsMenuCoordinator.dispatcher = _dispatcher;
     _toolsMenuCoordinator.configurationProvider = self;
+    [_toolsMenuCoordinator start];
   }
   return self;
 }
@@ -603,8 +598,9 @@ NSString* const kTransitionToolbarAnimationKey =
   return nil;
 }
 
-- (id<ApplicationCommands, BrowserCommands>)dispatcher {
-  return static_cast<id<ApplicationCommands, BrowserCommands>>(_dispatcher);
+- (id<ApplicationCommands, BrowserCommands, ToolbarCommands>)dispatcher {
+  return static_cast<id<ApplicationCommands, BrowserCommands, ToolbarCommands>>(
+      _dispatcher);
 }
 
 - (void)setUpWithMainCardSet:(CardSet*)mainCardSet
@@ -667,11 +663,6 @@ NSString* const kTransitionToolbarAnimationKey =
   DCHECK(!_isActive);
   [[_mainCardSet displayView] removeFromSuperview];
   [[_otrCardSet displayView] removeFromSuperview];
-
-  // Only deregister from the specific notifications for which this class
-  // registered. Do not use the blanket |removeObserver|, otherwise the low
-  // memory notification is not received and the view is never unloaded.
-  [self deregisterForNotifications];
 
   [_mainCardSet disconnect];
   _mainCardSet = nil;
@@ -751,8 +742,6 @@ NSString* const kTransitionToolbarAnimationKey =
             ? UIInterfaceOrientationPortrait
             : UIInterfaceOrientationLandscapeRight;
   }
-  [self registerForNotifications];
-
   // TODO(blundell): Why isn't this recognizer initialized with the
   // pinch and mode switch recognizers?
   UIPanGestureRecognizer* panGestureRecognizer =
@@ -1034,21 +1023,6 @@ NSString* const kTransitionToolbarAnimationKey =
                    completion:nil];
 }
 
-- (void)registerForNotifications {
-  NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter addObserver:self
-                    selector:@selector(allModelTabsHaveClosed:)
-                        name:kTabModelAllTabsDidCloseNotification
-                      object:nil];
-}
-
-- (void)deregisterForNotifications {
-  NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
-  [defaultCenter removeObserver:self
-                           name:kTabModelAllTabsDidCloseNotification
-                         object:nil];
-}
-
 - (void)prepareForDismissal {
   UIView* activeView = [_activeCardSet displayView];
   [activeView removeGestureRecognizer:_pinchRecognizer];
@@ -1168,6 +1142,7 @@ NSString* const kTransitionToolbarAnimationKey =
       void (^toDoWhenDone)(void) = NULL;
       if (card == lastVisibleCard) {
         toDoWhenDone = ^{
+          [cardSet setIgnoresTabModelChanges:NO];
           [cardSet.tabModel closeAllTabs];
         };
       }
@@ -2247,7 +2222,9 @@ NSString* const kTransitionToolbarAnimationKey =
   // generating a snapshot, but then restore the original frame.
   CGRect originalTabFrame = [tab view].frame;
   [tab view].frame = viewBounds;
-  newCard.image = [tab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
+  newCard.image =
+      SnapshotTabHelper::FromWebState(tab.webState)
+          ->UpdateSnapshot(/*with_overlays=*/true, /*visible_frame_only=*/true);
   [tab view].frame = originalTabFrame;
   newCard.center =
       CGPointMake(CGRectGetMidX(viewBounds), CGRectGetMidY(viewBounds));
@@ -2919,27 +2896,17 @@ NSString* const kTransitionToolbarAnimationKey =
 
 #pragma mark Notification Handlers
 
-- (void)allModelTabsHaveClosed:(NSNotification*)notify {
+- (void)cardSetDidCloseAllTabs:(CardSet*)cardSet {
   // Early return if the stack view is not active.  This can sometimes occur if
   // |clearInternalState| triggers the deletion of a tab model.
   if (!_isActive)
     return;
 
-  CardSet* closedSet =
-      (notify.object == [_mainCardSet tabModel]) ? _mainCardSet : _otrCardSet;
-
-  // If the tabModel that send the notification is not one handled by one of
-  // the two card sets, just return. This will happen when the otr tab model is
-  // deleted because the incognito profile is deleted.
-  if (notify.object != [closedSet tabModel])
-    return;
-
-  if (closedSet == _activeCardSet)
+  if (cardSet == _activeCardSet)
     [self activeCardCountChanged];
-  for (UIView* card in [closedSet.displayView subviews]) {
+  for (UIView* card in [cardSet.displayView subviews]) {
     [card removeFromSuperview];
   }
-  [closedSet setIgnoresTabModelChanges:NO];
   // No need to re-sync with the card set here, since the tab model (and thus
   // the card set) is known to be empty.
 
@@ -2948,8 +2915,8 @@ NSString* const kTransitionToolbarAnimationKey =
   // finishes closing while the main set is still animating (in the case of
   // closing all cards at once) wait until the main set finishes before updating
   // the display (necessary so the state is right if a new tab is opened).
-  if ((closedSet == _otrCardSet && ![_mainCardSet ignoresTabModelChanges]) ||
-      (closedSet == _mainCardSet && [[_otrCardSet cards] count] == 0)) {
+  if ((cardSet == _otrCardSet && ![_mainCardSet ignoresTabModelChanges]) ||
+      (cardSet == _mainCardSet && [[_otrCardSet cards] count] == 0)) {
     [self displayMainCardSetOnly];
   }
 
@@ -3067,6 +3034,13 @@ NSString* const kTransitionToolbarAnimationKey =
 - (void)cardSet:(CardSet*)cardSet
     didRemoveCard:(StackCard*)removedCard
           atIndex:(NSUInteger)index {
+  // If card was tapped during a transition, but its WebState was closed before
+  // the animation finishes, reset |transitionTappedCard|, as attempting to
+  // show that Tab upon finishing the animation will result in a crash since its
+  // WebState is destroyed.
+  if (removedCard == self.transitionTappedCard)
+    self.transitionTappedCard = nil;
+
   if (cardSet == _activeCardSet) {
     // Reenable the gesture handlers (disabled in
     // -cardSet:willRemoveCard:atIndex). It is now safe to do so as the card

@@ -9,14 +9,18 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
+#include "chrome/browser/offline_pages/offline_page_model_factory.h"
 #include "chrome/browser/offline_pages/offline_page_request_job.h"
+#include "chrome/browser/offline_pages/offline_page_utils.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
 #include "chrome/browser/offline_pages/request_coordinator_factory.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/offline_page_item.h"
+#include "components/offline_pages/core/offline_page_model.h"
 #include "components/offline_pages/core/offline_store_utils.h"
 #include "components/offline_pages/core/prefetch/offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
+#include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
@@ -36,6 +40,10 @@ bool SchemeIsForUntrustedOfflinePages(const GURL& url) {
     return true;
 #endif
   return url.SchemeIsFile();
+}
+
+void SavePageLaterCallback(AddRequestResult result) {
+  // do nothing.
 }
 }  // namespace
 
@@ -119,14 +127,42 @@ void OfflinePageTabHelper::FinalizeOfflineInfo(
 
   // If a MHTML archive is being loaded for file: or content: URL, create an
   // untrusted offline page.
+  content::WebContents* web_contents = navigation_handle->GetWebContents();
   if (SchemeIsForUntrustedOfflinePages(navigated_url) &&
-      navigation_handle->GetWebContents()->GetContentsMimeType() ==
-          "multipart/related") {
+      web_contents->GetContentsMimeType() == "multipart/related") {
     offline_info_.offline_page = std::make_unique<OfflinePageItem>();
     offline_info_.offline_page->offline_id = store_utils::GenerateOfflineId();
     offline_info_.is_trusted = false;
     // TODO(jianli): Extract the url where the MHTML acrhive claims from the
     // MHTML headers and set it in OfflinePageItem::original_url.
+
+    // If the file: or content: URL is launched due to opening an item from
+    // Downloads home, a custom offline header containing the offline ID should
+    // be present. If so, find and use the corresponding offline page.
+    content::NavigationEntry* entry =
+        web_contents->GetController().GetLastCommittedEntry();
+    DCHECK(entry);
+    std::string header_value =
+        OfflinePageUtils::ExtractOfflineHeaderValueFromNavigationEntry(*entry);
+    if (!header_value.empty()) {
+      OfflinePageHeader header(header_value);
+      if (header.reason == OfflinePageHeader::Reason::DOWNLOAD &&
+          !header.id.empty()) {
+        int64_t offline_id;
+        if (base::StringToInt64(header.id, &offline_id)) {
+          offline_info_.offline_page->offline_id = offline_id;
+          OfflinePageModel* model =
+              OfflinePageModelFactory::GetForBrowserContext(
+                  web_contents->GetBrowserContext());
+          DCHECK(model);
+          model->GetPageByOfflineId(
+              offline_id,
+              base::Bind(&OfflinePageTabHelper::GetPageByOfflineIdDone,
+                         weak_ptr_factory_.GetWeakPtr()));
+        }
+      }
+    }
+
     return;
   }
 
@@ -217,17 +253,17 @@ void OfflinePageTabHelper::TryLoadingOfflinePageOnNetError(
     return;
   }
 
-  OfflinePageUtils::SelectPageForURL(
+  OfflinePageUtils::SelectPagesForURL(
       web_contents()->GetBrowserContext(), navigation_handle->GetURL(),
       URLSearchMode::SEARCH_BY_ALL_URLS, tab_id,
-      base::Bind(&OfflinePageTabHelper::SelectPageForURLDone,
+      base::Bind(&OfflinePageTabHelper::SelectPagesForURLDone,
                  weak_ptr_factory_.GetWeakPtr()));
 }
 
-void OfflinePageTabHelper::SelectPageForURLDone(
-    const OfflinePageItem* offline_page) {
+void OfflinePageTabHelper::SelectPagesForURLDone(
+    const std::vector<OfflinePageItem>& offline_pages) {
   // Bails out if no offline page is found.
-  if (!offline_page) {
+  if (offline_pages.empty()) {
     OfflinePageRequestJob::ReportAggregatedRequestResult(
         OfflinePageRequestJob::AggregatedRequestResult::
             PAGE_NOT_FOUND_ON_FLAKY_NETWORK);
@@ -237,12 +273,29 @@ void OfflinePageTabHelper::SelectPageForURLDone(
   reloading_url_on_net_error_ = true;
 
   // Reloads the page with extra header set to force loading the offline page.
-  content::NavigationController::LoadURLParams load_params(offline_page->url);
+  content::NavigationController::LoadURLParams load_params(
+      offline_pages.front().url);
   load_params.transition_type = ui::PAGE_TRANSITION_RELOAD;
   OfflinePageHeader offline_header;
   offline_header.reason = OfflinePageHeader::Reason::NET_ERROR;
   load_params.extra_headers = offline_header.GetCompleteHeaderString();
   web_contents()->GetController().LoadURLWithParams(load_params);
+}
+
+void OfflinePageTabHelper::GetPageByOfflineIdDone(
+    const OfflinePageItem* offline_page) {
+  if (!offline_page)
+    return;
+
+  // Update the temporary offline page which only contains the offline ID with
+  // the one retrieved from the metadata database. Do this only when the stored
+  // offline info is not changed since last time the asynchronous query is
+  // issued.
+  if (offline_info_.offline_page && !offline_info_.is_trusted &&
+      offline_info_.offline_page->offline_id == offline_page->offline_id) {
+    offline_info_.offline_page =
+        base::MakeUnique<OfflinePageItem>(*offline_page);
+  }
 }
 
 // This is a callback from network request interceptor. It happens between
@@ -330,7 +383,8 @@ void OfflinePageTabHelper::DoDownloadPageLater(
   params.url = url;
   params.client_id = offline_pages::ClientId(name_space, base::GenerateGUID());
   params.request_origin = request_origin;
-  request_coordinator->SavePageLater(params);
+  request_coordinator->SavePageLater(params,
+                                     base::Bind(&SavePageLaterCallback));
 
   if (static_cast<int>(ui_action) &
       static_cast<int>(OfflinePageUtils::DownloadUIActionFlags::

@@ -35,6 +35,7 @@
 #include "build/build_config.h"
 #include "core/dom/DocumentFragment.h"
 #include "core/dom/NodeWithIndex.h"
+#include "core/dom/Range.h"
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/dom/Text.h"
 #include "core/frame/LocalFrameView.h"
@@ -314,8 +315,8 @@ class MockDocumentValidationMessageClient
 
 class MockWebApplicationCacheHost : public blink::WebApplicationCacheHost {
  public:
-  MockWebApplicationCacheHost() {}
-  ~MockWebApplicationCacheHost() override {}
+  MockWebApplicationCacheHost() = default;
+  ~MockWebApplicationCacheHost() override = default;
 
   void SelectCacheWithoutManifest() override {
     without_manifest_was_called_ = true;
@@ -330,6 +331,20 @@ class MockWebApplicationCacheHost : public blink::WebApplicationCacheHost {
 };
 
 }  // anonymous namespace
+
+TEST_F(DocumentTest, CreateRangeAdjustedToTreeScopeWithPositionInShadowTree) {
+  GetDocument().body()->SetInnerHTMLFromString(
+      "<div><select><option>012</option></div>");
+  Element* const select_element = GetDocument().QuerySelector("select");
+  const Position& position =
+      Position::AfterNode(*select_element->UserAgentShadowRoot());
+  Range* const range =
+      Document::CreateRangeAdjustedToTreeScope(GetDocument(), position);
+  EXPECT_EQ(range->startContainer(), select_element->parentNode());
+  EXPECT_EQ(static_cast<unsigned>(range->startOffset()),
+            select_element->NodeIndex());
+  EXPECT_TRUE(range->collapsed());
+}
 
 TEST_F(DocumentTest, DomTreeVersionForRemoval) {
   // ContainerNode::CollectChildrenAndRemoveFromOldParentWithCheck assumes this
@@ -930,6 +945,27 @@ TEST_F(DocumentTest, ViewportPropagationNoRecalc) {
   EXPECT_EQ(1, new_element_count - old_element_count);
 }
 
+class InvalidatorObserver : public InterfaceInvalidator::Observer {
+ public:
+  void OnInvalidate() { ++invalidate_called_counter_; }
+
+  int CountInvalidateCalled() const { return invalidate_called_counter_; }
+
+ private:
+  int invalidate_called_counter_ = 0;
+};
+
+TEST_F(DocumentTest, InterfaceInvalidatorDestruction) {
+  InvalidatorObserver obs;
+  InterfaceInvalidator* invalidator = GetDocument().GetInterfaceInvalidator();
+  invalidator->AddObserver(&obs);
+  EXPECT_EQ(obs.CountInvalidateCalled(), 0);
+
+  GetDocument().Shutdown();
+  EXPECT_FALSE(GetDocument().GetInterfaceInvalidator());
+  EXPECT_EQ(1, obs.CountInvalidateCalled());
+}
+
 typedef bool TestParamRootLayerScrolling;
 class ParameterizedDocumentTest
     : public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
@@ -944,6 +980,7 @@ INSTANTIATE_TEST_CASE_P(All, ParameterizedDocumentTest, ::testing::Bool());
 // Android does not support non-overlay top-level scrollbars.
 #if !defined(OS_ANDROID)
 TEST_P(ParameterizedDocumentTest, ElementFromPointOnScrollbar) {
+  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   // This test requires that scrollbars take up space.
   ScopedOverlayScrollbarsForTest no_overlay_scrollbars(false);
 
@@ -971,6 +1008,7 @@ TEST_P(ParameterizedDocumentTest, ElementFromPointOnScrollbar) {
 #endif  // defined(OS_ANDROID)
 
 TEST_P(ParameterizedDocumentTest, ElementFromPointWithPageZoom) {
+  GetDocument().SetCompatibilityMode(Document::kQuirksMode);
   // This test requires that scrollbars take up space.
   ScopedOverlayScrollbarsForTest no_overlay_scrollbars(false);
 

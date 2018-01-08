@@ -218,12 +218,12 @@ Your data is encrypted with your sync passphrase. Enter it to start sync.</trans
 <translation id="5300589172476337783">Show</translation>
 <translation id="5317780077021120954">Save</translation>
 <translation id="5327248766486351172">Name</translation>
+<translation id="533632423981297619">Your passwords will be visible to anyone who can see the exported file. Do not share this file with anyone.</translation>
 <translation id="5388358297987318779">Open Image</translation>
 <translation id="5409365236829784218">There are no applications installed that can open this file.</translation>
 <translation id="5433691172869980887">Username copied</translation>
 <translation id="54401264925851789">Page Security Info</translation>
 <translation id="5525269841082836315">Create a Pass phrase</translation>
-<translation id="5531274207066050939">Google Payments</translation>
 <translation id="5548760955356983418">Handoff lets you start browsing a website on this device and then easily continue on your Mac. The current open website will appear in the Dock of your Mac.
 
 Handoff must also be enabled in the General section of Settings, and your devices must use the same iCloud account.</translation>
@@ -248,7 +248,6 @@ Handoff must also be enabled in the General section of Settings, and your device
 <translation id="5911030830365207728">Google Translate</translation>
 <translation id="5916664084637901428">On</translation>
 <translation id="5948291296578561264">This lets you save photos to your photo library.</translation>
-<translation id="5953603475187800576">Show addresses and credit cards from Google Payments</translation>
 <translation id="5955891643922670672">Viewing Offline Version</translation>
 <translation id="5964480694698977962">Create new incognito tab.</translation>
 <translation id="5965679971710331625">You're signed in</translation>
@@ -350,6 +349,7 @@ Your data was encrypted with your sync passphrase on <ph name="TIME" />. Enter i
 <translation id="780301667611848630">No, thank you</translation>
 <translation id="7859704718976024901">Browsing history</translation>
 <translation id="7938254975914653459">FaceTime</translation>
+<translation id="7939128259257418052">Export Passwords…</translation>
 <translation id="7947953824732555851">Accept and sign in</translation>
 <translation id="7961015016161918242">Never</translation>
 <translation id="7971521879845308059">Block Pop-ups</translation>

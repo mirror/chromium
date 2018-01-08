@@ -11,7 +11,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLIFrameElement.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintLayer.h"
@@ -43,7 +43,7 @@ namespace {
 
 class MockWebDisplayItemList : public WebDisplayItemList {
  public:
-  ~MockWebDisplayItemList() override {}
+  ~MockWebDisplayItemList() override = default;
 
   MOCK_METHOD2(AppendDrawingItem,
                void(const WebRect& visual_rect, sk_sp<const cc::PaintRecord>));
@@ -1127,8 +1127,8 @@ TEST_P(FrameThrottlingTest, SkipPaintingLayersInThrottledFrames) {
   // Simulate the paint for a graphics layer being externally invalidated
   // (e.g., by video playback).
   frame_document->View()
-      ->GetLayoutViewItem()
-      .InvalidatePaintForViewAndCompositedLayers();
+      ->GetLayoutView()
+      ->InvalidatePaintForViewAndCompositedLayers();
 
   // The layer inside the throttled frame should not get painted.
   auto display_items2 = CompositeFrame();

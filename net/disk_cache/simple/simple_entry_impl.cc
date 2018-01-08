@@ -200,7 +200,7 @@ SimpleEntryImpl::SimpleEntryImpl(
       last_modified_(last_used_),
       sparse_data_size_(0),
       open_count_(0),
-      doomed_(false),
+      doom_state_(DOOM_NONE),
       optimistic_create_pending_doom_state_(CREATE_NORMAL),
       state_(STATE_UNINITIALIZED),
       synchronous_entry_(NULL),
@@ -216,7 +216,7 @@ SimpleEntryImpl::SimpleEntryImpl(
                 "arrays should be the same size");
   static_assert(arraysize(data_size_) == arraysize(crc_check_state_),
                 "arrays should be the same size");
-  MakeUninitialized();
+  ResetEntry();
   net_log_.BeginEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY,
                       CreateNetLogSimpleEntryConstructionCallback(this));
 }
@@ -309,12 +309,12 @@ int SimpleEntryImpl::CreateEntry(Entry** out_entry,
 }
 
 int SimpleEntryImpl::DoomEntry(const CompletionCallback& callback) {
-  if (doomed_)
+  if (doom_state_ != DOOM_NONE)
     return net::OK;
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_DOOM_CALL);
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_DOOM_BEGIN);
 
-  MarkAsDoomed();
+  MarkAsDoomed(DOOM_QUEUED);
   if (backend_.get()) {
     if (optimistic_create_pending_doom_state_ == CREATE_NORMAL) {
       backend_->OnDoomStart(entry_hash_);
@@ -628,8 +628,11 @@ void SimpleEntryImpl::PostClientCallback(const CompletionCallback& callback,
       base::Bind(&InvokeCallbackIfBackendIsAlive, backend_, callback, result));
 }
 
-void SimpleEntryImpl::MakeUninitialized() {
-  state_ = STATE_UNINITIALIZED;
+void SimpleEntryImpl::ResetEntry() {
+  // If we're doomed, we can't really do anything else with the entry, since
+  // we no longer own the name and are disconnected from the active entry table.
+  // We preserve doom_state_ accross this entry for this same reason.
+  state_ = doom_state_ == DOOM_COMPLETED ? STATE_FAILURE : STATE_UNINITIALIZED;
   std::memset(crc32s_end_offset_, 0, sizeof(crc32s_end_offset_));
   std::memset(crc32s_, 0, sizeof(crc32s_));
   std::memset(have_written_, 0, sizeof(have_written_));
@@ -655,8 +658,9 @@ void SimpleEntryImpl::ReturnEntryToCaller(Entry** out_entry) {
   *out_entry = this;
 }
 
-void SimpleEntryImpl::MarkAsDoomed() {
-  doomed_ = true;
+void SimpleEntryImpl::MarkAsDoomed(DoomState new_state) {
+  DCHECK_NE(DOOM_NONE, new_state);
+  doom_state_ = new_state;
   if (!backend_.get())
     return;
   backend_->index()->Remove(entry_hash_);
@@ -922,7 +926,7 @@ int SimpleEntryImpl::ReadDataInternal(bool sync_possible,
   }
 
   state_ = STATE_IO_PENDING;
-  if (!doomed_ && backend_.get())
+  if (doom_state_ == DOOM_NONE && backend_.get())
     backend_->index()->UseIfExists(entry_hash_);
 
   // Figure out if we should be computing the checksum for this read,
@@ -1010,7 +1014,7 @@ void SimpleEntryImpl::WriteDataInternal(int stream_index,
     }
   }
   state_ = STATE_IO_PENDING;
-  if (!doomed_ && backend_.get())
+  if (doom_state_ == DOOM_NONE && backend_.get())
     backend_->index()->UseIfExists(entry_hash_);
 
   // Any stream 1 write invalidates the prefetched data.
@@ -1044,10 +1048,13 @@ void SimpleEntryImpl::WriteDataInternal(int stream_index,
   // Retain a reference to |buf| in |reply| instead of |task|, so that we can
   // reduce cross thread malloc/free pairs. The cross thread malloc/free pair
   // increases the apparent memory usage due to the thread cached free list.
+  // TODO(morlovich): Remove the doom_state_ argument to WriteData, since with
+  // renaming rather than delete, creating a new stream 2 of doomed entry will
+  // just work.
   Closure task = base::Bind(
       &SimpleSynchronousEntry::WriteData, base::Unretained(synchronous_entry_),
-      SimpleSynchronousEntry::EntryOperationData(stream_index, offset, buf_len,
-                                                 truncate, doomed_),
+      SimpleSynchronousEntry::EntryOperationData(
+          stream_index, offset, buf_len, truncate, doom_state_ != DOOM_NONE),
       base::Unretained(buf), entry_stat.get(), result.get());
   Closure reply = base::Bind(&SimpleEntryImpl::WriteOperationComplete, this,
                              stream_index, callback, base::Passed(&entry_stat),
@@ -1194,14 +1201,23 @@ void SimpleEntryImpl::GetAvailableRangeInternal(
 }
 
 void SimpleEntryImpl::DoomEntryInternal(const CompletionCallback& callback) {
+  if (doom_state_ == DOOM_COMPLETED) {
+    // During the time we were sitting on a queue, some operation failed
+    // and cleaned our files up, so we don't have to do anything.
+    DoomOperationComplete(callback, state_, net::OK);
+    return;
+  }
+
   if (!backend_) {
     // If there's no backend, we want to truncate the files rather than delete
-    // them. Removing files will update the entry directory's mtime, which will
-    // likely force a full index rebuild on the next startup; this is clearly an
-    // undesirable cost. Instead, the lesser evil is to set the entry files to
-    // length zero, leaving the invalid entry in the index. On the next attempt
-    // to open the entry, it will fail asynchronously (since the magic numbers
-    // will not be found), and the files will actually be removed.
+    // or rename them. Either op will update the entry directory's mtime, which
+    // will likely force a full index rebuild on the next startup; this is
+    // clearly an undesirable cost. Instead, the lesser evil is to set the entry
+    // files to length zero, leaving the invalid entry in the index. On the next
+    // attempt to open the entry, it will fail asynchronously (since the magic
+    // numbers will not be found), and the files will actually be removed.
+    // Since there is no backend, new entries to conflict with us also can't be
+    // created.
     PostTaskAndReplyWithResult(
         worker_pool_.get(), FROM_HERE,
         base::Bind(&SimpleSynchronousEntry::TruncateEntryFiles, path_,
@@ -1213,12 +1229,28 @@ void SimpleEntryImpl::DoomEntryInternal(const CompletionCallback& callback) {
     state_ = STATE_IO_PENDING;
     return;
   }
-  PostTaskAndReplyWithResult(
-      worker_pool_.get(),
-      FROM_HERE,
-      base::Bind(&SimpleSynchronousEntry::DoomEntry, path_, entry_hash_),
-      base::Bind(
-          &SimpleEntryImpl::DoomOperationComplete, this, callback, state_));
+
+  if (synchronous_entry_) {
+    // If there is a backing object, we have to go through its instance methods,
+    // so that it can rename itself and keep track of the altenative name.
+    PostTaskAndReplyWithResult(
+        worker_pool_.get(), FROM_HERE,
+        base::Bind(&SimpleSynchronousEntry::Doom,
+                   base::Unretained(synchronous_entry_)),
+        base::Bind(&SimpleEntryImpl::DoomOperationComplete, this, callback,
+                   state_));
+  } else {
+    DCHECK_EQ(STATE_UNINITIALIZED, state_);
+    // If nothing is open, we can just delete the files. We know they have the
+    // base names, since if we ever renamed them our doom_state_ would be
+    // DOOM_COMPLETED, and we would exit at function entry.
+    PostTaskAndReplyWithResult(
+        worker_pool_.get(), FROM_HERE,
+        base::Bind(&SimpleSynchronousEntry::DeleteEntryFiles, path_,
+                   cache_type_, entry_hash_),
+        base::Bind(&SimpleEntryImpl::DoomOperationComplete, this, callback,
+                   state_));
+  }
   state_ = STATE_IO_PENDING;
 }
 
@@ -1236,14 +1268,29 @@ void SimpleEntryImpl::CreationOperationComplete(
                    "EntryCreationResult", cache_type_,
                    in_results->result == net::OK);
   if (in_results->result != net::OK) {
-    if (in_results->result != net::ERR_FILE_EXISTS)
-      MarkAsDoomed();
+    if (in_results->result != net::ERR_FILE_EXISTS) {
+      // Here we keep index up-to-date, but don't remove ourselves from active
+      // entries since we may have queued operations, and it would be
+      // problematic to run further Creates, Opens, or Dooms if we are not
+      // the active entry.  We can only do this because OpenEntryInternal
+      // and CreateEntryInternal have to start from STATE_UNINITIALIZED, so
+      // nothing else is going on which may be confused.
+      if (backend_)
+        backend_->index()->Remove(entry_hash_);
+    }
 
     net_log_.AddEventWithNetErrorCode(end_event_type, net::ERR_FAILED);
     PostClientCallback(completion_callback, net::ERR_FAILED);
-    MakeUninitialized();
+    ResetEntry();
     return;
   }
+
+  // Make sure to keep the index up-to-date. We likely already did this when
+  // CreateEntry was called, but it's possible we were sitting on a queue
+  // after an op that removed us.
+  if (backend_ && doom_state_ == DOOM_NONE)
+    backend_->index()->Insert(entry_hash_);
+
   // If out_entry is NULL, it means we already called ReturnEntryToCaller from
   // the optimistic Create case.
   if (out_entry)
@@ -1299,7 +1346,7 @@ void SimpleEntryImpl::EntryOperationComplete(
   DCHECK(result);
   if (*result < 0) {
     state_ = STATE_FAILURE;
-    MarkAsDoomed();
+    MarkAsDoomed(DOOM_COMPLETED);
   } else {
     state_ = STATE_READY;
     UpdateDataFromEntryStat(entry_stat);
@@ -1430,6 +1477,7 @@ void SimpleEntryImpl::DoomOperationComplete(
     State state_to_restore,
     int result) {
   state_ = state_to_restore;
+  doom_state_ = DOOM_COMPLETED;
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_DOOM_END);
   PostClientCallback(callback, result);
   RunNextOperationIfNeeded();
@@ -1461,7 +1509,7 @@ void SimpleEntryImpl::CloseOperationComplete() {
          STATE_UNINITIALIZED == state_);
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_CLOSE_END);
   AdjustOpenEntryCountBy(cache_type_, -1);
-  MakeUninitialized();
+  ResetEntry();
   RunNextOperationIfNeeded();
 }
 
@@ -1477,7 +1525,7 @@ void SimpleEntryImpl::UpdateDataFromEntryStat(
     data_size_[i] = entry_stat.data_size(i);
   }
   sparse_data_size_ = entry_stat.sparse_data_size();
-  if (!doomed_ && backend_.get()) {
+  if (doom_state_ == DOOM_NONE && backend_.get()) {
     backend_->index()->UpdateEntrySize(
         entry_hash_, base::checked_cast<uint32_t>(GetDiskUsage()));
   }

@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "base/callback.h"
 #include "base/command_line.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
@@ -16,12 +18,12 @@
 #include "content/browser/media/capture/web_contents_audio_input_stream.h"
 #include "content/browser/media/media_internals.h"
 #include "content/browser/renderer_host/media/audio_input_device_manager.h"
-#include "content/browser/renderer_host/media/audio_input_sync_writer.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents_media_capture_id.h"
 #include "media/audio/audio_input_controller.h"
+#include "media/audio/audio_input_sync_writer.h"
 #include "media/audio/audio_logging.h"
 #include "media/audio/audio_manager.h"
 #include "media/base/media_switches.h"
@@ -46,11 +48,10 @@ void NotifyProcessHostStreamRemoved(int render_process_id) {
 }
 
 // Safe to call from any thread.
-void LogMessage(int stream_id, base::StringPiece message) {
+void LogMessage(int stream_id, const std::string& message) {
   const std::string out_message =
-      base::StringPrintf("[stream_id=%d] %.*s", stream_id,
-                         static_cast<int>(message.size()), message.data());
-  content::MediaStreamManager::SendMessageToNativeLog(out_message);
+      base::StringPrintf("[stream_id=%d] %s", stream_id, message.c_str());
+  MediaStreamManager::SendMessageToNativeLog(out_message);
   DVLOG(1) << out_message;
 }
 
@@ -81,7 +82,7 @@ class AudioInputDelegateImpl::ControllerEventHandler
   }
 
   void OnLog(base::StringPiece message) override {
-    LogMessage(stream_id_, message);
+    LogMessage(stream_id_, message.as_string());
   }
 
   void OnMuted(bool is_muted) override {
@@ -132,8 +133,10 @@ std::unique_ptr<media::AudioInputDelegate> AudioInputDelegateImpl::Create(
 
   auto foreign_socket = std::make_unique<base::CancelableSyncSocket>();
 
-  std::unique_ptr<AudioInputSyncWriter> writer = AudioInputSyncWriter::Create(
-      shared_memory_count, possibly_modified_parameters, foreign_socket.get());
+  std::unique_ptr<media::AudioInputSyncWriter> writer =
+      media::AudioInputSyncWriter::Create(
+          base::BindRepeating(&LogMessage, stream_id), shared_memory_count,
+          possibly_modified_parameters, foreign_socket.get());
 
   if (!writer) {
     LogMessage(stream_id, "Failed to set up sync writer.");
@@ -168,7 +171,7 @@ AudioInputDelegateImpl::AudioInputDelegateImpl(
     bool automatic_gain_control,
     EventHandler* subscriber,
     const MediaStreamDevice* device,
-    std::unique_ptr<AudioInputSyncWriter> writer,
+    std::unique_ptr<media::AudioInputSyncWriter> writer,
     std::unique_ptr<base::CancelableSyncSocket> foreign_socket)
     : subscriber_(subscriber),
       controller_event_handler_(),
@@ -242,7 +245,7 @@ AudioInputDelegateImpl::~AudioInputDelegateImpl() {
   // stay alive until |controller_| has finished closing.
   controller_->Close(base::BindOnce(
       [](int stream_id, std::unique_ptr<ControllerEventHandler>,
-         std::unique_ptr<AudioInputSyncWriter>) {
+         std::unique_ptr<media::AudioInputSyncWriter>) {
         LogMessage(stream_id, "Stream is now closed");
       },
       stream_id_, std::move(controller_event_handler_), std::move(writer_)));

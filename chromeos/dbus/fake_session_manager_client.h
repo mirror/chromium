@@ -14,6 +14,7 @@
 #include "base/observer_list.h"
 #include "base/time/time.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
+#include "chromeos/dbus/login_manager/arc.pb.h"
 #include "chromeos/dbus/session_manager_client.h"
 
 namespace chromeos {
@@ -22,7 +23,14 @@ namespace chromeos {
 // returns them unmodified.
 class FakeSessionManagerClient : public SessionManagerClient {
  public:
+  enum FakeSessionManagerOptions : uint32_t {
+    NONE = 0,
+    USE_HOST_POLICY = 1 << 0,
+  };
+
   FakeSessionManagerClient();
+  explicit FakeSessionManagerClient(
+      uint32_t options /* bitwise or of multiple FakeSessionManagerOptions */);
   ~FakeSessionManagerClient() override;
 
   // SessionManagerClient overrides
@@ -36,6 +44,7 @@ class FakeSessionManagerClient : public SessionManagerClient {
   void RestartJob(int socket_fd,
                   const std::vector<std::string>& argv,
                   VoidDBusMethodCallback callback) override;
+  void SaveLoginPassword(const std::string& password) override;
   void StartSession(const cryptohome::Identification& cryptohome_id) override;
   void StopSession() override;
   void NotifySupervisedUserCreationStarted() override;
@@ -76,11 +85,7 @@ class FakeSessionManagerClient : public SessionManagerClient {
                        const std::vector<std::string>& flags) override;
   void GetServerBackedStateKeys(StateKeysCallback callback) override;
 
-  void StartArcInstance(ArcStartupMode startup_mode,
-                        const cryptohome::Identification& cryptohome_id,
-                        bool disable_boot_completed_broadcast,
-                        bool enable_vendor_privileged,
-                        bool native_bridge_experiment,
+  void StartArcInstance(const login_manager::StartArcInstanceRequest& request,
                         StartArcInstanceCallback callback) override;
   void StopArcInstance(VoidDBusMethodCallback callback) override;
   void SetArcCpuRestriction(
@@ -118,6 +123,10 @@ class FakeSessionManagerClient : public SessionManagerClient {
       const std::string& account_id) const;
   void set_device_local_account_policy(const std::string& account_id,
                                        const std::string& policy_blob);
+
+  const login_manager::StartArcInstanceRequest& last_start_arc_request() const {
+    return last_start_arc_request_;
+  }
 
   // Notify observers about a property change completion.
   void OnPropertyChangeComplete(bool success);
@@ -176,6 +185,7 @@ class FakeSessionManagerClient : public SessionManagerClient {
   int request_lock_screen_call_count_;
   int notify_lock_screen_shown_call_count_;
   int notify_lock_screen_dismissed_call_count_;
+  bool screen_is_locked_;
 
   bool arc_available_;
   base::TimeTicks arc_start_time_;
@@ -183,6 +193,15 @@ class FakeSessionManagerClient : public SessionManagerClient {
   bool low_disk_ = false;
   // Pseudo running container id. If not running, empty.
   std::string container_instance_id_;
+
+  // Contains last requst passed to StartArcInstance
+  login_manager::StartArcInstanceRequest last_start_arc_request_;
+
+  StubDelegate* delegate_;
+
+  // Options for FakeSessionManagerClient with value of bitwise or of
+  // multiple FakeSessionManagerOptions.
+  uint32_t options_;
 
   base::WeakPtrFactory<FakeSessionManagerClient> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(FakeSessionManagerClient);

@@ -25,6 +25,22 @@ Polymer({
       notify: true,
     },
 
+    // <if expr="not chromeos">
+    /**
+     * This flag is used to conditionally show a set of new sign-in UIs to the
+     * profiles that have been migrated to be consistent with the web sign-ins.
+     * TODO(scottchen): In the future when all profiles are completely migrated,
+     * this should be removed, and UIs hidden behind it should become default.
+     * @private
+     */
+    diceEnabled_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('diceEnabled');
+      },
+    },
+    // </if>
+
     /**
      * The current sync status, supplied by SyncBrowserProxy.
      * @type {?settings.SyncStatus}
@@ -33,16 +49,19 @@ Polymer({
 
     /**
      * The currently selected profile icon URL. May be a data URL.
+     * @private
      */
     profileIconUrl_: String,
 
     /**
      * The current profile name.
+     * @private
      */
     profileName_: String,
 
     /**
      * True if the current profile manages supervised users.
+     * @private
      */
     profileManagesSupervisedUsers_: Boolean,
 
@@ -50,16 +69,19 @@ Polymer({
      * The profile deletion warning. The message indicates the number of
      * profile stats that will be deleted if a non-zero count for the profile
      * stats is returned from the browser.
+     * @private
      */
     deleteProfileWarning_: String,
 
     /**
      * True if the profile deletion warning is visible.
+     * @private
      */
     deleteProfileWarningVisible_: Boolean,
 
     /**
      * True if the checkbox to delete the profile has been checked.
+     * @private
      */
     deleteProfile_: Boolean,
 
@@ -92,7 +114,7 @@ Polymer({
     focusConfig_: {
       type: Object,
       value: function() {
-        var map = new Map();
+        const map = new Map();
         if (settings.routes.SYNC)
           map.set(settings.routes.SYNC.path, '#sync-status .subpage-arrow');
         // <if expr="not chromeos">
@@ -129,7 +151,7 @@ Polymer({
 
   /** @override */
   attached: function() {
-    var profileInfoProxy = settings.ProfileInfoBrowserProxyImpl.getInstance();
+    const profileInfoProxy = settings.ProfileInfoBrowserProxyImpl.getInstance();
     profileInfoProxy.getProfileInfo().then(this.handleProfileInfo_.bind(this));
     this.addWebUIListener(
         'profile-info-changed', this.handleProfileInfo_.bind(this));
@@ -251,7 +273,7 @@ Polymer({
   },
 
   /** @private */
-  onPictureTap_: function() {
+  onProfileTap_: function() {
     // <if expr="chromeos">
     settings.navigateTo(settings.routes.CHANGE_PICTURE);
     // </if>
@@ -259,13 +281,6 @@ Polymer({
     settings.navigateTo(settings.routes.MANAGE_PROFILE);
     // </if>
   },
-
-  // <if expr="not chromeos">
-  /** @private */
-  onProfileNameTap_: function() {
-    settings.navigateTo(settings.routes.MANAGE_PROFILE);
-  },
-  // </if>
 
   /** @private */
   onSigninTap_: function() {
@@ -275,7 +290,16 @@ Polymer({
   /** @private */
   onDisconnectClosed_: function() {
     this.showDisconnectDialog_ = false;
+    // <if expr="not chromeos">
+    if (!this.diceEnabled_) {
+      // If DICE-enabled, this button won't exist here.
+      cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
+    }
+    // </if>
+
+    // <if expr="chromeos">
     cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
+    // </if>
 
     if (settings.getCurrentRoute() == settings.routes.SIGN_OUT)
       settings.navigateToPreviousRoute();
@@ -294,7 +318,7 @@ Polymer({
 
   /** @private */
   onDisconnectConfirm_: function() {
-    var deleteProfile = !!this.syncStatus.domain || this.deleteProfile_;
+    const deleteProfile = !!this.syncStatus.domain || this.deleteProfile_;
     // Trigger the sign out event after the navigateToPreviousRoute().
     // So that the navigation to the setting page could be finished before the
     // sign out if navigateToPreviousRoute() returns synchronously even the
@@ -377,7 +401,7 @@ Polymer({
    * @return {string}
    */
   getDomainHtml_: function(domain) {
-    var innerSpan = '<span id="managed-by-domain-name">' + domain + '</span>';
+    const innerSpan = '<span id="managed-by-domain-name">' + domain + '</span>';
     return loadTimeData.getStringF('domainManagedProfile', innerSpan);
   },
 
@@ -441,7 +465,7 @@ Polymer({
     if (!syncStatus)
       return '';
 
-    var syncIcon = 'settings:sync';
+    let syncIcon = 'settings:sync';
 
     if (syncStatus.hasError)
       syncIcon = 'settings:sync-problem';

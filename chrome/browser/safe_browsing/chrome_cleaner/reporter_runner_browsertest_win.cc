@@ -31,7 +31,6 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
-#include "components/chrome_cleaner/public/constants/constants.h"
 #include "components/component_updater/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
@@ -211,7 +210,7 @@ class ReporterRunnerTest
                 OnReporterSequenceDone(Eq(expected_result)))
         .WillOnce(InvokeWithoutArgs(&on_sequence_done, &Waiter::Signal));
     auto invocations = CreateInvocationSequence(container);
-    RunSwReportersForTesting(invocation_type_, std::move(invocations));
+    MaybeStartSwReporter(invocation_type_, std::move(invocations));
     on_sequence_done.Wait();
   }
 
@@ -415,8 +414,8 @@ class ReporterRunnerTest
                   InvokeWithoutArgs(&first_sequence_done, &Waiter::Signal)));
 
     SwReporterInvocationSequence::Queue invocations1({CreateInvocation(path1)});
-    RunSwReportersForTesting(invocation_type1,
-                             CreateInvocationSequence(invocations1));
+    MaybeStartSwReporter(invocation_type1,
+                         CreateInvocationSequence(invocations1));
 
     EXPECT_CALL(
         mock_chrome_cleaner_controller_,
@@ -424,8 +423,8 @@ class ReporterRunnerTest
         .WillOnce(InvokeWithoutArgs(&second_sequence_done, &Waiter::Signal));
 
     SwReporterInvocationSequence::Queue invocations2({CreateInvocation(path2)});
-    RunSwReportersForTesting(invocation_type2,
-                             CreateInvocationSequence(invocations2));
+    MaybeStartSwReporter(invocation_type2,
+                         CreateInvocationSequence(invocations2));
 
     first_sequence_done.Wait();
 
@@ -492,6 +491,10 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, CleanupNeeded) {
     EXPECT_EQ(invocation_type_ ==
                   SwReporterInvocationType::kUserInitiatedWithLogsAllowed,
               scan_invocation.cleaner_logs_upload_enabled());
+    EXPECT_EQ(invocation_type_ == SwReporterInvocationType::kPeriodicRun
+                  ? chrome_cleaner::ChromePromptValue::kPrompted
+                  : chrome_cleaner::ChromePromptValue::kUserInitiated,
+              scan_invocation.chrome_prompt());
   }
 }
 

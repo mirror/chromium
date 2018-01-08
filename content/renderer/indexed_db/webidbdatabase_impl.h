@@ -28,8 +28,10 @@ namespace content {
 
 class CONTENT_EXPORT WebIDBDatabaseImpl : public blink::WebIDBDatabase {
  public:
-  WebIDBDatabaseImpl(indexed_db::mojom::DatabaseAssociatedPtrInfo database,
-                     scoped_refptr<base::SingleThreadTaskRunner> io_runner);
+  WebIDBDatabaseImpl(
+      indexed_db::mojom::DatabaseAssociatedPtrInfo database,
+      scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> callback_runner);
   ~WebIDBDatabaseImpl() override;
 
   // blink::WebIDBDatabase
@@ -77,14 +79,14 @@ class CONTENT_EXPORT WebIDBDatabaseImpl : public blink::WebIDBDatabase {
            long long object_store_id,
            const blink::WebData& value,
            const blink::WebVector<blink::WebBlobInfo>&,
-           const blink::WebIDBKey&,
+           blink::WebIDBKeyView primary_key,
            blink::WebIDBPutMode,
            blink::WebIDBCallbacks*,
            const blink::WebVector<long long>& index_ids,
-           const blink::WebVector<WebIndexKeys>&) override;
+           blink::WebVector<WebIndexKeys>) override;
   void SetIndexKeys(long long transaction_id,
                     long long object_store_id,
-                    const blink::WebIDBKey&,
+                    blink::WebIDBKeyView primary_key,
                     const blink::WebVector<long long>& index_ids,
                     const blink::WebVector<WebIndexKeys>&) override;
   void SetIndexesReady(long long transaction_id,
@@ -103,6 +105,10 @@ class CONTENT_EXPORT WebIDBDatabaseImpl : public blink::WebIDBDatabase {
              long long index_id,
              const blink::WebIDBKeyRange&,
              blink::WebIDBCallbacks*) override;
+  void Delete(long long transaction_id,
+              long long object_store_id,
+              blink::WebIDBKeyView primary_key,
+              blink::WebIDBCallbacks*) override;
   void DeleteRange(long long transaction_id,
                    long long object_store_id,
                    const blink::WebIDBKeyRange&,
@@ -126,8 +132,6 @@ class CONTENT_EXPORT WebIDBDatabaseImpl : public blink::WebIDBDatabase {
                    const blink::WebString& new_name) override;
   void Abort(long long transaction_id) override;
   void Commit(long long transaction_id) override;
-  void AckReceivedBlobs(
-      const blink::WebVector<blink::WebString>& uuids) override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(WebIDBDatabaseImplTest, ValueSizeTest);
@@ -144,6 +148,7 @@ class CONTENT_EXPORT WebIDBDatabaseImpl : public blink::WebIDBDatabase {
   IOThreadHelper* helper_;
   std::set<int32_t> observer_ids_;
   scoped_refptr<base::SingleThreadTaskRunner> io_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> callback_runner_;
 };
 
 }  // namespace content

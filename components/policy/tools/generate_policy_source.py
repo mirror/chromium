@@ -518,7 +518,7 @@ class SchemaNodesGenerator:
       min_value = int(schema['minimum'])
       min_value_set = True
     if 'maximum' in schema:
-      max_value = int(schema['minimum'])
+      max_value = int(schema['maximum'])
       max_value_set = True
     if min_value_set and max_value_set and min_value > max_value:
       raise RuntimeError('Invalid ranged type in %s' % name)
@@ -708,12 +708,12 @@ def _GenerateDefaultValue(value):
 
   |value|: The deserialized value to convert to base::Value."""
   if type(value) == bool or type(value) == int:
-    return [], 'base::MakeUnique<base::Value>(%s)' %\
+    return [], 'std::make_unique<base::Value>(%s)' %\
                     json.dumps(value)
   elif type(value) == str:
-    return [], 'base::MakeUnique<base::Value>("%s")' % value
+    return [], 'std::make_unique<base::Value>("%s")' % value
   elif type(value) == list:
-    setup = ['auto default_value = base::MakeUnique<base::ListValue>();']
+    setup = ['auto default_value = std::make_unique<base::ListValue>();']
     for entry in value:
       decl, fetch = _GenerateDefaultValue(entry)
       # Nested lists are not supported.
@@ -728,9 +728,9 @@ def _WritePolicyConstantSource(policies, os, f, risk_tags):
           '\n'
           '#include <algorithm>\n'
           '#include <climits>\n'
+          '#include <memory>\n'
           '\n'
           '#include "base/logging.h"\n'
-          '#include "base/memory/ptr_util.h"\n'
           '#include "components/policy/core/common/policy_types.h"\n'
           '#include "components/policy/core/common/schema_internal.h"\n'
           '#include "components/policy/risk_tag.h"\n'

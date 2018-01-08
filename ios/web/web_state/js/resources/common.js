@@ -654,6 +654,10 @@ __gCrWeb['common'] = __gCrWeb.common;
     // Some frameworks will use the data field to update their cache value.
     changeEvent.data = element.value;
 
+    // Adding a |simulated| flag on the event will force the React framework to
+    // update the backend store.
+    changeEvent.simulated = true;
+
     // A timer is used to avoid reentering JavaScript evaluation.
     window.setTimeout(function() {
       element.dispatchEvent(changeEvent);
@@ -690,72 +694,6 @@ __gCrWeb['common'] = __gCrWeb.common;
       }
     }
     return favicons;
-  };
-
-  /**
-   * Checks whether an <object> node is plugin content (as <object> can also be
-   * used to embed images).
-   * @param {HTMLElement} node The <object> node to check.
-   * @return {boolean} Whether the node appears to be a plugin.
-   * @private
-   */
-  var objectNodeIsPlugin_ = function(node) {
-    return node.hasAttribute('classid') ||
-           (node.hasAttribute('type') && node.type.indexOf('image/') != 0);
-  };
-
-  /**
-   * Checks whether plugin a node has fallback content.
-   * @param {HTMLElement} node The node to check.
-   * @return {boolean} Whether the node has fallback.
-   * @private
-   */
-  var pluginHasFallbackContent_ = function(node) {
-    return node.textContent.trim().length > 0 ||
-           node.getElementsByTagName('img').length > 0;
-  };
-
-  /**
-   * Returns a list of plugin elements in the document that have no fallback
-   * content. For nested plugins, only the innermost plugin element is returned.
-   * @return {!Array<!HTMLElement>} A list of plugin elements.
-   * @private
-   */
-  var findPluginNodesWithoutFallback_ = function() {
-    var i, pluginNodes = [];
-    var objects = document.getElementsByTagName('object');
-    var objectCount = objects.length;
-    for (i = 0; i < objectCount; i++) {
-      var object = /** @type {!HTMLElement} */(objects[i]);
-      if (objectNodeIsPlugin_(object) &&
-          !pluginHasFallbackContent_(object)) {
-        pluginNodes.push(object);
-      }
-    }
-    var applets = document.getElementsByTagName('applet');
-    var appletsCount = applets.length;
-    for (i = 0; i < appletsCount; i++) {
-      var applet = /** @type {!HTMLElement} */(applets[i]);
-      if (!pluginHasFallbackContent_(applet)) {
-        pluginNodes.push(applet);
-      }
-    }
-    return pluginNodes;
-  };
-
-  /**
-   * Finds and stores any plugins that don't have placeholders.
-   * Returns true if any plugins without placeholders are found.
-   */
-  __gCrWeb.common.updatePluginPlaceholders = function() {
-    var plugins = findPluginNodesWithoutFallback_();
-    if (plugins.length > 0) {
-      // Store the list of plugins in a known place for the replacement script
-      // to use, then trigger it.
-      __gCrWeb['placeholderTargetPlugins'] = plugins;
-      return true;
-    }
-    return false;
   };
 
   /**

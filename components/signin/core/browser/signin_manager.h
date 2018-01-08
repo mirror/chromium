@@ -45,6 +45,7 @@ class GoogleServiceAuthError;
 class PrefService;
 class ProfileOAuth2TokenService;
 class SigninClient;
+class SigninErrorController;
 
 class SigninManager : public SigninManagerBase,
                       public AccountTrackerService::Observer,
@@ -66,7 +67,8 @@ class SigninManager : public SigninManagerBase,
   SigninManager(SigninClient* client,
                 ProfileOAuth2TokenService* token_service,
                 AccountTrackerService* account_tracker_service,
-                GaiaCookieManagerService* cookie_manager_service);
+                GaiaCookieManagerService* cookie_manager_service,
+                SigninErrorController* signin_error_controller);
   ~SigninManager() override;
 
   // Returns true if the username is allowed based on the policy string.
@@ -205,6 +207,10 @@ class SigninManager : public SigninManagerBase,
 
   // Send all observers |GoogleSigninSucceeded| notifications.
   void FireGoogleSigninSucceeded();
+
+  // Send all observers |GoogleSignedOut| notifications.
+  void FireGoogleSignedOut(const std::string& account_id,
+                           const AccountInfo& account_info);
 
   // Waits for the AccountTrackerService, then sends GoogleSigninSucceeded to
   // the client and clears the local password.

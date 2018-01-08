@@ -23,6 +23,34 @@ class TaskQueueManagerForRendererSchedulerTest : public TaskQueueManager {
       : TaskQueueManager(std::move(thread_controller)) {}
 };
 
+class WebTaskRunnerProxy : public WebTaskRunner {
+ public:
+  explicit WebTaskRunnerProxy(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+      : task_runner_(task_runner) {}
+
+  bool PostDelayedTask(const base::Location& location,
+                       base::OnceClosure closure,
+                       base::TimeDelta time_delta) override {
+    return task_runner_->PostDelayedTask(location, std::move(closure),
+                                         time_delta);
+  }
+
+  bool PostNonNestableDelayedTask(const base::Location& location,
+                                  base::OnceClosure closure,
+                                  base::TimeDelta time_delta) override {
+    return task_runner_->PostNonNestableDelayedTask(
+        location, std::move(closure), time_delta);
+  }
+
+  bool RunsTasksInCurrentSequence() const override {
+    return task_runner_->RunsTasksInCurrentSequence();
+  }
+
+ private:
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+};
+
 }  // namespace
 
 std::unique_ptr<RendererScheduler> CreateRendererSchedulerForTests() {
@@ -45,6 +73,10 @@ scoped_refptr<base::SequencedTaskRunner> GetSequencedTaskRunnerForTesting() {
 scoped_refptr<base::SingleThreadTaskRunner>
 GetSingleThreadTaskRunnerForTesting() {
   return base::ThreadTaskRunnerHandle::Get();
+}
+
+scoped_refptr<WebTaskRunner> CreateWebTaskRunnerForTesting() {
+  return new WebTaskRunnerProxy(GetSingleThreadTaskRunnerForTesting());
 }
 
 }  // namespace scheduler

@@ -15,6 +15,7 @@
 #include "base/metrics/histogram_functions.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/download/download_create_info.h"
@@ -25,6 +26,7 @@
 #include "content/browser/download/download_task_runner.h"
 #include "content/browser/download/download_utils.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
+#include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/service_manager/service_manager_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_interrupt_reasons.h"
@@ -142,7 +144,8 @@ std::string DownloadRequestUtils::GetRequestOriginFromRequest(
 
 DownloadRequestCore::DownloadRequestCore(net::URLRequest* request,
                                          Delegate* delegate,
-                                         bool is_parallel_request)
+                                         bool is_parallel_request,
+                                         DownloadSource download_source)
     : delegate_(delegate),
       request_(request),
       download_id_(DownloadItem::kInvalidId),
@@ -153,11 +156,12 @@ DownloadRequestCore::DownloadRequestCore(net::URLRequest* request,
       was_deferred_(false),
       is_partial_request_(false),
       started_(false),
-      abort_reason_(DOWNLOAD_INTERRUPT_REASON_NONE) {
+      abort_reason_(DOWNLOAD_INTERRUPT_REASON_NONE),
+      download_source_(download_source) {
   DCHECK(request_);
   DCHECK(delegate_);
   if (!is_parallel_request)
-    RecordDownloadCount(UNTHROTTLED_COUNT);
+    RecordDownloadCountWithSource(UNTHROTTLED_COUNT, download_source);
 
   // Request Wake Lock.
   service_manager::Connector* connector =
@@ -188,6 +192,12 @@ DownloadRequestCore::DownloadRequestCore(net::URLRequest* request,
     is_partial_request_ = save_info_->offset > 0;
   } else {
     save_info_.reset(new DownloadSaveInfo);
+    ResourceRequestInfoImpl* request_info =
+        ResourceRequestInfoImpl::ForRequest(request_);
+    if (request_info && request_info->suggested_filename().has_value()) {
+      save_info_->suggested_name =
+          base::UTF8ToUTF16(*request_info->suggested_filename());
+    }
   }
 }
 
@@ -218,6 +228,7 @@ DownloadRequestCore::CreateDownloadCreateInfo(DownloadInterruptReason result) {
   create_info->response_headers = request()->response_headers();
   create_info->offset = create_info->save_info->offset;
   create_info->fetch_error_body = fetch_error_body_;
+  create_info->download_source = download_source_;
   return create_info;
 }
 

@@ -12,7 +12,7 @@
 namespace blink {
 
 class ComputedStyle;
-enum class LineVerticalPositionType;
+enum class FontVerticalPositionType;
 enum class ResolvedUnderlinePosition;
 class FontMetrics;
 
@@ -21,11 +21,11 @@ class CORE_EXPORT TextDecorationOffsetBase {
 
  public:
   TextDecorationOffsetBase(const ComputedStyle& style) : style_(style) {}
-  ~TextDecorationOffsetBase() {}
+  ~TextDecorationOffsetBase() = default;
 
   virtual int ComputeUnderlineOffsetForUnder(
       float text_decoration_thickness,
-      LineVerticalPositionType) const = 0;
+      FontVerticalPositionType) const = 0;
 
   int ComputeUnderlineOffsetForRoman(const FontMetrics&,
                                      float text_decoration_thickness) const;

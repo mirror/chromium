@@ -64,6 +64,7 @@ class GpuArcVideoDecodeAccelerator
   void Decode(mojom::BitstreamBufferPtr bitstream_buffer) override;
   void AssignPictureBuffers(uint32_t count) override;
   void ImportBufferForPicture(int32_t picture_buffer_id,
+                              mojom::HalPixelFormat format,
                               mojo::ScopedHandle handle,
                               std::vector<VideoFramePlane> planes) override;
   void ReusePictureBuffer(int32_t picture_buffer_id) override;
@@ -81,10 +82,6 @@ class GpuArcVideoDecodeAccelerator
       base::OnceCallback<void(PendingCallback, media::VideoDecodeAccelerator*)>;
 
   class ScopedBitstreamBuffer;
-
-  // Return true if |planes| is valid for |dmabuf_fd|.
-  bool VerifyDmabuf(int dmabuf_fd,
-                    const std::vector<VideoFramePlane>& planes) const;
 
   // Initialize GpuArcVDA and create VDA. It returns SUCCESS if they are
   // successful. Otherwise, returns an error status.
@@ -147,7 +144,6 @@ class GpuArcVideoDecodeAccelerator
 
   gfx::Size coded_size_;
   gfx::Size pending_coded_size_;
-  media::VideoPixelFormat output_pixel_format_ = media::PIXEL_FORMAT_UNKNOWN;
 
   // Owned by caller.
   ProtectedBufferManager* const protected_buffer_manager_;

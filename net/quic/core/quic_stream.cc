@@ -58,7 +58,8 @@ QuicStream::QuicStream(QuicStreamId id, QuicSession* session)
       rst_sent_(false),
       rst_received_(false),
       perspective_(session_->perspective()),
-      flow_controller_(session_->connection(),
+      flow_controller_(session_,
+                       session_->connection(),
                        id_,
                        perspective_,
                        GetReceivedFlowControlWindow(session),
@@ -73,9 +74,8 @@ QuicStream::QuicStream(QuicStreamId id, QuicSession* session)
       send_buffer_(
           session->connection()->helper()->GetStreamSendBufferAllocator(),
           session->allow_multiple_acks_for_data()),
-      buffered_data_threshold_(GetQuicFlag(FLAGS_quic_buffered_data_threshold)),
-      remove_on_stream_frame_discarded_(
-          GetQuicReloadableFlag(quic_remove_on_stream_frame_discarded)) {
+      buffered_data_threshold_(
+          GetQuicFlag(FLAGS_quic_buffered_data_threshold)) {
   SetFromConfig();
 }
 
@@ -466,6 +466,10 @@ QuicTransportVersion QuicStream::transport_version() const {
   return session_->connection()->transport_version();
 }
 
+HandshakeProtocol QuicStream::handshake_protocol() const {
+  return session_->connection()->version().handshake_protocol;
+}
+
 void QuicStream::StopReading() {
   QUIC_DLOG(INFO) << ENDPOINT << "Stop reading from stream " << id();
   sequencer_.StopReading();
@@ -505,12 +509,20 @@ void QuicStream::OnClose() {
 
 void QuicStream::OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) {
   if (flow_controller_.UpdateSendWindowOffset(frame.byte_offset)) {
-    // Writing can be done again!
-    // TODO(rjshade): This does not respect priorities (e.g. multiple
-    //                outstanding POSTs are unblocked on arrival of
-    //                SHLO with initial window).
-    // As long as the connection is not flow control blocked, write on!
-    OnCanWrite();
+    if (session_->session_unblocks_stream()) {
+      if (HasBufferedData()) {
+        QUIC_FLAG_COUNT(quic_reloadable_flag_quic_streams_unblocked_by_session);
+        // Let session unblock this stream.
+        session_->MarkConnectionLevelWriteBlocked(id_);
+      }
+    } else {
+      // Writing can be done again!
+      // TODO(rjshade): This does not respect priorities (e.g. multiple
+      //                outstanding POSTs are unblocked on arrival of
+      //                SHLO with initial window).
+      // As long as the connection is not flow control blocked, write on!
+      OnCanWrite();
+    }
   }
 }
 
@@ -561,7 +573,7 @@ void QuicStream::AddRandomPaddingAfterFin() {
   add_random_padding_after_fin_ = true;
 }
 
-void QuicStream::OnStreamFrameAcked(QuicStreamOffset offset,
+bool QuicStream::OnStreamFrameAcked(QuicStreamOffset offset,
                                     QuicByteCount data_length,
                                     bool fin_acked,
                                     QuicTime::Delta ack_delay_time) {
@@ -570,12 +582,12 @@ void QuicStream::OnStreamFrameAcked(QuicStreamOffset offset,
                                       &newly_acked_length)) {
     CloseConnectionWithDetails(QUIC_INTERNAL_ERROR,
                                "Trying to ack unsent data.");
-    return;
+    return false;
   }
   if (!fin_sent_ && fin_acked) {
     CloseConnectionWithDetails(QUIC_INTERNAL_ERROR,
                                "Trying to ack unsent fin.");
-    return;
+    return false;
   }
   // Indicates whether ack listener's OnPacketAcked should be called.
   const bool new_data_acked = !session()->allow_multiple_acks_for_data() ||
@@ -591,6 +603,7 @@ void QuicStream::OnStreamFrameAcked(QuicStreamOffset offset,
   if (ack_listener_ != nullptr && new_data_acked) {
     ack_listener_->OnPacketAcked(newly_acked_length, ack_delay_time);
   }
+  return new_data_acked;
 }
 
 void QuicStream::OnStreamFrameRetransmitted(QuicStreamOffset offset,
@@ -602,39 +615,6 @@ void QuicStream::OnStreamFrameRetransmitted(QuicStreamOffset offset,
   }
   if (ack_listener_ != nullptr) {
     ack_listener_->OnPacketRetransmitted(data_length);
-  }
-}
-
-void QuicStream::OnStreamFrameDiscarded(QuicStreamOffset offset,
-                                        QuicByteCount data_length,
-                                        bool fin_discarded) {
-  if (remove_on_stream_frame_discarded_) {
-    // TODO(fayang): Remove OnStreamFrameDiscarded from StreamNotifierInterface
-    // when deprecating
-    // quic_reloadable_flag_quic_remove_on_stream_frame_discarded.
-    QUIC_FLAG_COUNT_N(
-        quic_reloadable_flag_quic_remove_on_stream_frame_discarded, 1, 2);
-    return;
-  }
-
-  QuicByteCount newly_acked_length = 0;
-  if (!send_buffer_.OnStreamDataAcked(offset, data_length,
-                                      &newly_acked_length)) {
-    CloseConnectionWithDetails(QUIC_INTERNAL_ERROR,
-                               "Trying to discard unsent data.");
-    return;
-  }
-  if (!fin_sent_ && fin_discarded) {
-    CloseConnectionWithDetails(QUIC_INTERNAL_ERROR,
-                               "Trying to discard unsent fin.");
-    return;
-  }
-  if (fin_discarded) {
-    fin_outstanding_ = false;
-    fin_lost_ = false;
-  }
-  if (!IsWaitingForAcks()) {
-    session_->OnStreamDoneWaitingForAcks(id_);
   }
 }
 
@@ -650,8 +630,7 @@ void QuicStream::OnStreamFrameLost(QuicStreamOffset offset,
 }
 
 bool QuicStream::IsWaitingForAcks() const {
-  return (!remove_on_stream_frame_discarded_ || !rst_sent_ ||
-          stream_error_ == QUIC_STREAM_NO_ERROR) &&
+  return (!rst_sent_ || stream_error_ == QUIC_STREAM_NO_ERROR) &&
          (send_buffer_.stream_bytes_outstanding() || fin_outstanding_);
 }
 
@@ -659,6 +638,8 @@ bool QuicStream::WriteStreamData(QuicStreamOffset offset,
                                  QuicByteCount data_length,
                                  QuicDataWriter* writer) {
   DCHECK_LT(0u, data_length);
+  QUIC_DVLOG(2) << ENDPOINT << "Write stream " << id_ << " data from offset "
+                << offset << " length " << data_length;
   return send_buffer_.WriteStreamData(offset, data_length, writer);
 }
 

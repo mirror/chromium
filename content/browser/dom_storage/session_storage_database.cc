@@ -15,6 +15,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "build/build_config.h"
@@ -100,16 +101,23 @@ class SessionStorageDatabase::DBOperation {
   SessionStorageDatabase* session_storage_database_;
 };
 
-
-SessionStorageDatabase::SessionStorageDatabase(const base::FilePath& file_path)
-    : file_path_(file_path),
+SessionStorageDatabase::SessionStorageDatabase(
+    const base::FilePath& file_path,
+    scoped_refptr<base::SequencedTaskRunner> commit_task_runner)
+    : RefCountedDeleteOnSequence<SessionStorageDatabase>(
+          std::move(commit_task_runner)),
+      file_path_(file_path),
       db_error_(false),
       is_inconsistent_(false),
       invalid_db_deleted_(false),
       operation_count_(0) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
 SessionStorageDatabase::~SessionStorageDatabase() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  base::ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
+  db_.reset();
 }
 
 void SessionStorageDatabase::ReadAreaValues(
@@ -163,6 +171,7 @@ bool SessionStorageDatabase::CommitAreaChanges(
     const GURL& origin,
     bool clear_all_first,
     const DOMStorageValuesMap& changes) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // Even if |changes| is empty, we need to write the appropriate placeholders
   // in the database, so that it can be later shallow-copied successfully.
   if (!LazyOpen(true))
@@ -203,6 +212,7 @@ bool SessionStorageDatabase::CommitAreaChanges(
 
   WriteValuesToMap(map_id, changes, &batch);
 
+  base::ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   leveldb::Status s = db_->Write(leveldb::WriteOptions(), &batch);
   UMA_HISTOGRAM_ENUMERATION("SessionStorageDatabase.Commit",
                             leveldb_env::GetLevelDBStatusUMAValue(s),
@@ -230,6 +240,7 @@ bool SessionStorageDatabase::CloneNamespace(
   // | namespace-2-                   | dummy               |
   // | namespace-2-origin1            | 1 (mapid) << references the same map
 
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!LazyOpen(true))
     return false;
   DBOperation operation(this);
@@ -251,12 +262,14 @@ bool SessionStorageDatabase::CloneNamespace(
       return false;
     AddAreaToNamespace(new_namespace_id, origin, map_id, &batch);
   }
+  base::ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   leveldb::Status s = db_->Write(leveldb::WriteOptions(), &batch);
   return DatabaseErrorCheck(s.ok());
 }
 
 bool SessionStorageDatabase::DeleteArea(const std::string& namespace_id,
                                         const GURL& origin) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!LazyOpen(false)) {
     // No need to create the database if it doesn't exist.
     return true;
@@ -265,11 +278,13 @@ bool SessionStorageDatabase::DeleteArea(const std::string& namespace_id,
   leveldb::WriteBatch batch;
   if (!DeleteAreaHelper(namespace_id, origin.spec(), &batch))
     return false;
+  base::ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   leveldb::Status s = db_->Write(leveldb::WriteOptions(), &batch);
   return DatabaseErrorCheck(s.ok());
 }
 
 bool SessionStorageDatabase::DeleteNamespace(const std::string& namespace_id) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   {
     // The caller should have called other methods to open the DB before this
     // function. Otherwise, DB stores nothing interesting related to the
@@ -292,6 +307,7 @@ bool SessionStorageDatabase::DeleteNamespace(const std::string& namespace_id) {
       return false;
   }
   batch.Delete(NamespaceStartKey(namespace_id));
+  base::ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
   leveldb::Status s = db_->Write(leveldb::WriteOptions(), &batch);
   return DatabaseErrorCheck(s.ok());
 }

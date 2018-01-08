@@ -22,6 +22,7 @@
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/profiles/profile.h"
@@ -367,7 +368,7 @@ IncidentReportingService::~IncidentReportingService() {
 
 std::unique_ptr<IncidentReceiver>
 IncidentReportingService::GetIncidentReceiver() {
-  return base::MakeUnique<Receiver>(receiver_weak_ptr_factory_.GetWeakPtr());
+  return std::make_unique<Receiver>(receiver_weak_ptr_factory_.GetWeakPtr());
 }
 
 std::unique_ptr<prefs::mojom::TrackedPreferenceValidationDelegate>
@@ -376,7 +377,7 @@ IncidentReportingService::CreatePreferenceValidationDelegate(Profile* profile) {
 
   if (profile->IsOffTheRecord())
     return std::unique_ptr<prefs::mojom::TrackedPreferenceValidationDelegate>();
-  return base::MakeUnique<PreferenceValidationDelegate>(profile,
+  return std::make_unique<PreferenceValidationDelegate>(profile,
                                                         GetIncidentReceiver());
 }
 
@@ -522,7 +523,7 @@ IncidentReportingService::ProfileContext*
 IncidentReportingService::GetOrCreateProfileContext(Profile* profile) {
   std::unique_ptr<ProfileContext>& context = profiles_[profile];
   if (!context)
-    context = base::MakeUnique<ProfileContext>();
+    context = std::make_unique<ProfileContext>();
   return context.get();
 }
 
@@ -824,7 +825,8 @@ void IncidentReportingService::ProcessIncidentsIfCollectionComplete() {
       report->mutable_environment()->mutable_process();
 
   process->set_metrics_consent(
-      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled());
+      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+          g_browser_process->local_state()));
 
   // Associate process-wide incidents with any eligible profile. If there is no
   // eligible profile, drop the incidents.

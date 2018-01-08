@@ -15,6 +15,7 @@
 #include "net/quic/core/crypto/quic_random.h"
 #include "net/quic/core/quic_crypto_stream.h"
 #include "net/quic/core/quic_utils.h"
+#include "net/quic/core/tls_server_handshaker.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
 #include "net/quic/platform/api/quic_str_cat.h"
@@ -179,7 +180,8 @@ class QuicDispatcherTest : public QuicTest {
         version_manager_(AllSupportedVersions()),
         crypto_config_(QuicCryptoServerConfig::TESTING,
                        QuicRandom::GetInstance(),
-                       std::move(proof_source)),
+                       std::move(proof_source),
+                       TlsServerHandshaker::CreateSslCtx()),
         dispatcher_(new TestDispatcher(config_,
                                        &crypto_config_,
                                        &version_manager_,
@@ -260,7 +262,7 @@ class QuicDispatcherTest : public QuicTest {
     std::unique_ptr<QuicReceivedPacket> received_packet(
         ConstructReceivedPacket(*packet, helper_.GetClock()->Now()));
 
-    if (ChloExtractor::Extract(*packet, versions, nullptr)) {
+    if (ChloExtractor::Extract(*packet, versions, {}, nullptr)) {
       // Add CHLO packet to the beginning to be verified first, because it is
       // also processed first by new session.
       data_connection_map_[connection_id].push_front(

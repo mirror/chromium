@@ -18,6 +18,7 @@
 #include "crypto/ec_signature_creator.h"
 #include "net/base/completion_callback.h"
 #include "net/base/proxy_delegate.h"
+#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
 #include "net/cert/cert_verifier.h"
@@ -27,8 +28,7 @@
 #include "net/http/http_response_info.h"
 #include "net/http/http_server_properties_impl.h"
 #include "net/http/transport_security_state.h"
-#include "net/proxy/proxy_server.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/core/spdy_protocol.h"
@@ -179,7 +179,8 @@ struct SpdySessionDependencies {
   SpdySessionDependencies();
 
   // Custom proxy service dependency.
-  explicit SpdySessionDependencies(std::unique_ptr<ProxyService> proxy_service);
+  explicit SpdySessionDependencies(
+      std::unique_ptr<ProxyResolutionService> proxy_resolution_service);
 
   ~SpdySessionDependencies();
 
@@ -203,7 +204,7 @@ struct SpdySessionDependencies {
   std::unique_ptr<TransportSecurityState> transport_security_state;
   std::unique_ptr<CTVerifier> cert_transparency_verifier;
   std::unique_ptr<CTPolicyEnforcer> ct_policy_enforcer;
-  std::unique_ptr<ProxyService> proxy_service;
+  std::unique_ptr<ProxyResolutionService> proxy_resolution_service;
   scoped_refptr<SSLConfigService> ssl_config_service;
   std::unique_ptr<MockClientSocketFactory> socket_factory;
   std::unique_ptr<HttpAuthHandlerFactory> http_auth_handler_factory;
@@ -218,8 +219,10 @@ struct SpdySessionDependencies {
   SpdySession::TimeFunc time_func;
   std::unique_ptr<ProxyDelegate> proxy_delegate;
   bool enable_http2_alternative_service;
+  bool enable_websocket_over_http2;
   NetLog* net_log;
   bool http_09_on_non_default_ports_enabled;
+  bool disable_idle_sockets_close_on_memory_pressure;
 };
 
 class SpdyURLRequestContext : public URLRequestContext {
@@ -244,6 +247,13 @@ bool HasSpdySession(SpdySessionPool* pool, const SpdySessionKey& key);
 base::WeakPtr<SpdySession> CreateSpdySession(HttpNetworkSession* http_session,
                                              const SpdySessionKey& key,
                                              const NetLogWithSource& net_log);
+
+// Like CreateSpdySession(), but the host is considered a trusted proxy and
+// allowed to push cross-origin resources.
+base::WeakPtr<SpdySession> CreateTrustedSpdySession(
+    HttpNetworkSession* http_session,
+    const SpdySessionKey& key,
+    const NetLogWithSource& net_log);
 
 // Like CreateSpdySession(), but does not fail if there is already an IP
 // pooled session for |key|.
@@ -372,10 +382,10 @@ class SpdyTestUtil {
                                            RequestPriority priority,
                                            const HostPortPair& host_port_pair);
 
-  // Constructs a SPDY PUSH_PROMISE frame.
+  // Constructs a PUSH_PROMISE frame and a HEADERS frame on the pushed stream.
   // |extra_headers| are the extra header-value pairs, which typically
   // will vary the most between calls.
-  // Returns a SpdySerializedFrame.
+  // Returns a SpdySerializedFrame object with the two frames concatenated.
   SpdySerializedFrame ConstructSpdyPush(const char* const extra_headers[],
                                         int extra_header_count,
                                         int stream_id,
@@ -389,9 +399,11 @@ class SpdyTestUtil {
                                         const char* status,
                                         const char* location);
 
-  SpdySerializedFrame ConstructInitialSpdyPushFrame(SpdyHeaderBlock headers,
-                                                    int stream_id,
-                                                    int associated_stream_id);
+  // Constructs a PUSH_PROMISE frame.
+  SpdySerializedFrame ConstructSpdyPushPromise(
+      SpdyStreamId associated_stream_id,
+      SpdyStreamId stream_id,
+      SpdyHeaderBlock headers);
 
   SpdySerializedFrame ConstructSpdyPushHeaders(
       int stream_id,

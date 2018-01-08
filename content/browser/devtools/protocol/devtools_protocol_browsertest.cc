@@ -878,7 +878,8 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, CaptureScreenshotJpeg) {
 }
 
 // Setting frame size (through RWHV) is not supported on Android.
-#if defined(OS_ANDROID) || defined(OS_LINUX)
+// This test seems to be very flaky on windows: https://crbug.com/801173
+#if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_WIN)
 #define MAYBE_CaptureScreenshotArea DISABLED_CaptureScreenshotArea
 #else
 #define MAYBE_CaptureScreenshotArea CaptureScreenshotArea
@@ -944,11 +945,10 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest,
   CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, true);
 }
 
-// Verifies that setDefaultBackgroundColor and captureScreenshot support a
-// transparent background, and that setDeviceMetricsOverride doesn't affect it.
-
-// Temporarily disabled while protocol methods are being refactored.
-IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, DISABLED_TransparentScreenshots) {
+// Verifies that setDefaultBackgroundColor and captureScreenshot support a fully
+// and semi-transparent background, and that setDeviceMetricsOverride doesn't
+// affect it.
+IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, TransparentScreenshots) {
   if (base::SysInfo::IsLowEndDevice())
     return;
 
@@ -957,13 +957,13 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, DISABLED_TransparentScreenshots) {
   WaitForLoadStop(shell()->web_contents());
   Attach();
 
-  // Override background to transparent.
-  std::unique_ptr<base::DictionaryValue> color(new base::DictionaryValue());
+  // Override background to fully transparent.
+  auto color = std::make_unique<base::DictionaryValue>();
   color->SetInteger("r", 0);
   color->SetInteger("g", 0);
   color->SetInteger("b", 0);
   color->SetDouble("a", 0);
-  std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+  auto params = std::make_unique<base::DictionaryValue>();
   params->Set("color", std::move(color));
   SendCommand("Emulation.setDefaultBackgroundColorOverride", std::move(params));
 
@@ -978,8 +978,9 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, DISABLED_TransparentScreenshots) {
   expected_bitmap.eraseColor(SK_ColorTRANSPARENT);
   CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, true);
 
+#if !defined(OS_ANDROID)
   // Check that device emulation does not affect the transparency.
-  params.reset(new base::DictionaryValue());
+  params = std::make_unique<base::DictionaryValue>();
   params->SetInteger("width", view_size.width());
   params->SetInteger("height", view_size.height());
   params->SetDouble("deviceScaleFactor", 0);
@@ -987,6 +988,34 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, DISABLED_TransparentScreenshots) {
   params->SetBoolean("fitWindow", false);
   SendCommand("Emulation.setDeviceMetricsOverride", std::move(params));
   CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, true);
+  SendCommand("Emulation.clearDeviceMetricsOverride", nullptr);
+#endif  // !defined(OS_ANDROID)
+
+  // Override background to a semi-transparent color.
+  color = std::make_unique<base::DictionaryValue>();
+  color->SetInteger("r", 255);
+  color->SetInteger("g", 0);
+  color->SetInteger("b", 0);
+  color->SetDouble("a", 1.0 / 255 * 16);
+  params = std::make_unique<base::DictionaryValue>();
+  params->Set("color", std::move(color));
+  SendCommand("Emulation.setDefaultBackgroundColorOverride", std::move(params));
+
+  expected_bitmap.eraseColor(SkColorSetARGB(16, 255, 0, 0));
+  CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, true);
+
+#if !defined(OS_ANDROID)
+  // Check that device emulation does not affect the transparency.
+  params = std::make_unique<base::DictionaryValue>();
+  params->SetInteger("width", view_size.width());
+  params->SetInteger("height", view_size.height());
+  params->SetDouble("deviceScaleFactor", 0);
+  params->SetBoolean("mobile", false);
+  params->SetBoolean("fitWindow", false);
+  SendCommand("Emulation.setDeviceMetricsOverride", std::move(params));
+  CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, true);
+  SendCommand("Emulation.clearDeviceMetricsOverride", nullptr);
+#endif  // !defined(OS_ANDROID)
 }
 
 #if defined(OS_ANDROID)
@@ -1164,6 +1193,40 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CrossSiteCrash) {
   NavigateToURLBlockUntilNavigationsComplete(shell(), test_url2, 1);
 
   // Should not crash at this point.
+}
+
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, InspectorTargetCrashedNavigate) {
+  set_agent_host_can_close();
+  GURL url = GURL("data:text/html,<body></body>");
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
+  Attach();
+  SendCommand("Inspector.enable", nullptr);
+
+  shell()->LoadURL(GURL(content::kChromeUICrashURL));
+  WaitForNotification("Inspector.targetCrashed");
+  ClearNotifications();
+  shell()->LoadURL(url);
+  WaitForNotification("Inspector.targetReloadedAfterCrash", true);
+}
+
+#if defined(OS_ANDROID)
+#define MAYBE_InspectorTargetCrashedReload DISABLED_InspectorTargetCrashedReload
+#else
+#define MAYBE_InspectorTargetCrashedReload InspectorTargetCrashedReload
+#endif
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest,
+                       MAYBE_InspectorTargetCrashedReload) {
+  set_agent_host_can_close();
+  GURL url = GURL("data:text/html,<body></body>");
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
+  Attach();
+  SendCommand("Inspector.enable", nullptr);
+
+  shell()->LoadURL(GURL(content::kChromeUICrashURL));
+  WaitForNotification("Inspector.targetCrashed");
+  ClearNotifications();
+  SendCommand("Page.reload", nullptr, false);
+  WaitForNotification("Inspector.targetReloadedAfterCrash", true);
 }
 
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, ReconnectPreservesState) {
@@ -2056,73 +2119,6 @@ class SitePerProcessDevToolsProtocolTest : public DevToolsProtocolTest {
   }
 };
 
-IN_PROC_BROWSER_TEST_F(SitePerProcessDevToolsProtocolTest, TargetNoDiscovery) {
-  std::string temp;
-  std::string target_id;
-  std::unique_ptr<base::DictionaryValue> command_params;
-  std::unique_ptr<base::DictionaryValue> params;
-
-  GURL main_url(embedded_test_server()->GetURL("/site_per_process_main.html"));
-  NavigateToURLBlockUntilNavigationsComplete(shell(), main_url, 1);
-  // It is safe to obtain the root frame tree node here, as it doesn't change.
-  FrameTreeNode* root =
-      static_cast<WebContentsImpl*>(shell()->web_contents())->
-          GetFrameTree()->root();
-
-  // Load cross-site page into iframe.
-  GURL::Replacements replace_host;
-  GURL cross_site_url(embedded_test_server()->GetURL("/title1.html"));
-  replace_host.SetHostStr("foo.com");
-  cross_site_url = cross_site_url.ReplaceComponents(replace_host);
-  NavigateFrameToURL(root->child_at(0), cross_site_url);
-
-  // Enable auto-attach.
-  Attach();
-  command_params.reset(new base::DictionaryValue());
-  command_params->SetBoolean("autoAttach", true);
-  command_params->SetBoolean("waitForDebuggerOnStart", false);
-  SendCommand("Target.setAutoAttach", std::move(command_params), true);
-  EXPECT_TRUE(notifications_.empty());
-  command_params.reset(new base::DictionaryValue());
-  command_params->SetBoolean("value", true);
-  SendCommand("Target.setAttachToFrames", std::move(command_params), false);
-  params = WaitForNotification("Target.attachedToTarget", true);
-  std::string session_id;
-  EXPECT_TRUE(params->GetString("sessionId", &session_id));
-  EXPECT_TRUE(params->GetString("targetInfo.targetId", &target_id));
-  EXPECT_TRUE(params->GetString("targetInfo.type", &temp));
-  EXPECT_EQ("iframe", temp);
-
-  // Load same-site page into iframe.
-  FrameTreeNode* child = root->child_at(0);
-  GURL http_url(embedded_test_server()->GetURL("/title1.html"));
-  NavigateFrameToURL(child, http_url);
-  params = WaitForNotification("Target.detachedFromTarget", true);
-  EXPECT_TRUE(params->GetString("targetId", &temp));
-  EXPECT_EQ(target_id, temp);
-  EXPECT_TRUE(params->GetString("sessionId", &temp));
-  EXPECT_EQ(session_id, temp);
-
-  // Navigate back to cross-site iframe.
-  NavigateFrameToURL(root->child_at(0), cross_site_url);
-  params = WaitForNotification("Target.attachedToTarget", true);
-  EXPECT_TRUE(params->GetString("sessionId", &session_id));
-  EXPECT_TRUE(params->GetString("targetInfo.targetId", &target_id));
-  EXPECT_TRUE(params->GetString("targetInfo.type", &temp));
-  EXPECT_EQ("iframe", temp);
-
-  // Disable auto-attach.
-  command_params.reset(new base::DictionaryValue());
-  command_params->SetBoolean("autoAttach", false);
-  command_params->SetBoolean("waitForDebuggerOnStart", false);
-  SendCommand("Target.setAutoAttach", std::move(command_params), false);
-  params = WaitForNotification("Target.detachedFromTarget", true);
-  EXPECT_TRUE(params->GetString("targetId", &temp));
-  EXPECT_EQ(target_id, temp);
-  EXPECT_TRUE(params->GetString("sessionId", &temp));
-  EXPECT_EQ(session_id, temp);
-}
-
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, SetAndGetCookies) {
   ASSERT_TRUE(embedded_test_server()->Start());
   GURL test_url = embedded_test_server()->GetURL("/title1.html");
@@ -2186,6 +2182,65 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, SetAndGetCookies) {
     }
   }
   EXPECT_EQ(2u, found);
+}
+
+class DevToolsProtocolDeviceEmulationTest : public DevToolsProtocolTest {
+ public:
+  ~DevToolsProtocolDeviceEmulationTest() override {}
+
+  void EmulateDeviceSize(gfx::Size size) {
+    auto params = base::MakeUnique<base::DictionaryValue>();
+    params->SetInteger("width", size.width());
+    params->SetInteger("height", size.height());
+    params->SetDouble("deviceScaleFactor", 0);
+    params->SetBoolean("mobile", false);
+    SendCommand("Emulation.setDeviceMetricsOverride", std::move(params));
+  }
+
+  gfx::Size GetViewSize() {
+    return shell()
+        ->web_contents()
+        ->GetMainFrame()
+        ->GetView()
+        ->GetViewBounds()
+        .size();
+  }
+};
+
+// Setting frame size (through RWHV) is not supported on Android.
+#if defined(OS_ANDROID)
+#define MAYBE_DeviceSize DISABLED_DeviceSize
+#else
+#define MAYBE_DeviceSize DeviceSize
+#endif
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolDeviceEmulationTest, MAYBE_DeviceSize) {
+  content::SetupCrossSiteRedirector(embedded_test_server());
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL test_url1 =
+      embedded_test_server()->GetURL("A.com", "/devtools/navigation.html");
+  NavigateToURLBlockUntilNavigationsComplete(shell(), test_url1, 1);
+  Attach();
+
+  const gfx::Size original_size = GetViewSize();
+  const gfx::Size emulated_size_1 =
+      gfx::Size(original_size.width() - 50, original_size.height() - 50);
+  const gfx::Size emulated_size_2 =
+      gfx::Size(original_size.width() - 100, original_size.height() - 100);
+
+  EmulateDeviceSize(emulated_size_1);
+  EXPECT_EQ(emulated_size_1, GetViewSize());
+
+  EmulateDeviceSize(emulated_size_2);
+  EXPECT_EQ(emulated_size_2, GetViewSize());
+
+  GURL test_url2 =
+      embedded_test_server()->GetURL("B.com", "/devtools/navigation.html");
+  NavigateToURLBlockUntilNavigationsComplete(shell(), test_url2, 1);
+  EXPECT_EQ(emulated_size_2, GetViewSize());
+
+  SendCommand("Emulation.clearDeviceMetricsOverride", nullptr);
+  EXPECT_EQ(original_size, GetViewSize());
 }
 
 class DevToolsProtocolTouchTest : public DevToolsProtocolTest {

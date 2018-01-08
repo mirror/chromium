@@ -19,7 +19,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "build/build_config.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/class_property.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
@@ -75,7 +75,7 @@ class DragController;
 class FocusManager;
 class FocusTraversable;
 class LayoutManager;
-class NativeViewAccessibility;
+class ViewAccessibility;
 class ScrollView;
 class ViewObserver;
 class Widget;
@@ -530,9 +530,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
     SetLayoutManagerImpl(std::move(layout_manager));
     return lm;
   }
-  void SetLayoutManager(nullptr_t);
-  // DEPRECATED version that takes ownership of a raw pointer.
-  void SetLayoutManager(LayoutManager* layout);
+  void SetLayoutManager(std::nullptr_t);
 
   // Attributes ----------------------------------------------------------------
 
@@ -1095,6 +1093,9 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
 
   // Accessibility -------------------------------------------------------------
 
+  // Get the object managing the accessibility interface for this View.
+  ViewAccessibility& GetViewAccessibility();
+
   // Modifies |node_data| to reflect the current accessible state of this view.
   virtual void GetAccessibleNodeData(ui::AXNodeData* node_data) {}
 
@@ -1114,12 +1115,12 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // cases where the view is a native control that's already sending a
   // native accessibility event and the duplicate event would cause
   // problems.
-  void NotifyAccessibilityEvent(ui::AXEvent event_type,
+  void NotifyAccessibilityEvent(ax::mojom::Event event_type,
                                 bool send_native_event);
 
   // Views may override this function to know when an accessibility
   // event is fired. This will be called by NotifyAccessibilityEvent.
-  virtual void OnAccessibilityEvent(ui::AXEvent event_type);
+  virtual void OnAccessibilityEvent(ax::mojom::Event event_type);
 
   // Scrolling -----------------------------------------------------------------
   // TODO(beng): Figure out if this can live somewhere other than View, i.e.
@@ -1830,8 +1831,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
 
   // Accessibility -------------------------------------------------------------
 
-  // The accessibility element used to represent this View.
-  std::unique_ptr<NativeViewAccessibility> native_view_accessibility_;
+  // Manages the accessibility interface for this View.
+  std::unique_ptr<ViewAccessibility> view_accessibility_;
 
   // Observers -------------------------------------------------------------
 

@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/base/switches.h"
 #include "components/viz/common/display/renderer_settings.h"
@@ -16,6 +15,7 @@
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
 #include "components/viz/service/display_embedder/compositing_mode_reporter_impl.h"
+#include "components/viz/service/display_embedder/external_begin_frame_controller_impl.h"
 #include "components/viz/service/display_embedder/gl_output_surface.h"
 #include "components/viz/service/display_embedder/in_process_gpu_memory_buffer_manager.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
@@ -35,6 +35,7 @@
 #if defined(OS_MACOSX)
 #include "components/viz/service/display_embedder/gl_output_surface_mac.h"
 #include "components/viz/service/display_embedder/software_output_device_mac.h"
+#include "ui/base/cocoa/remote_layer_api.h"
 #endif
 
 #if defined(USE_X11)
@@ -70,7 +71,7 @@ GpuDisplayProvider::GpuDisplayProvider(
       gpu_service_(std::move(gpu_service)),
       gpu_channel_manager_delegate_(gpu_channel_manager->delegate()),
       gpu_memory_buffer_manager_(
-          base::MakeUnique<InProcessGpuMemoryBufferManager>(
+          std::make_unique<InProcessGpuMemoryBufferManager>(
               gpu_channel_manager)),
       image_factory_(GetImageFactory(gpu_channel_manager)),
       compositing_mode_reporter_(compositing_mode_reporter),
@@ -84,12 +85,20 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
     bool force_software_compositing,
+    ExternalBeginFrameControllerImpl* external_begin_frame_controller,
     const RendererSettings& renderer_settings,
     std::unique_ptr<SyntheticBeginFrameSource>* out_begin_frame_source) {
-  auto synthetic_begin_frame_source =
-      base::MakeUnique<DelayBasedBeginFrameSource>(
-          base::MakeUnique<DelayBasedTimeSource>(task_runner_.get()),
-          restart_id_);
+  BeginFrameSource* display_begin_frame_source = nullptr;
+  std::unique_ptr<DelayBasedBeginFrameSource> synthetic_begin_frame_source;
+  if (external_begin_frame_controller) {
+    display_begin_frame_source =
+        external_begin_frame_controller->begin_frame_source();
+  } else {
+    synthetic_begin_frame_source = std::make_unique<DelayBasedBeginFrameSource>(
+        std::make_unique<DelayBasedTimeSource>(task_runner_.get()),
+        restart_id_);
+    display_begin_frame_source = synthetic_begin_frame_source.get();
+  }
 
   // TODO(crbug.com/730660): Fallback to software if gpu doesn't work with
   // compositing_mode_reporter_->SetUsingSoftwareCompositing(), and once that
@@ -126,19 +135,20 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
 
     if (context_provider->ContextCapabilities().surfaceless) {
 #if defined(USE_OZONE)
-      output_surface = base::MakeUnique<GLOutputSurfaceOzone>(
+      output_surface = std::make_unique<GLOutputSurfaceOzone>(
           std::move(context_provider), surface_handle,
           synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get(),
           GL_TEXTURE_2D, GL_RGB);
 #elif defined(OS_MACOSX)
-      output_surface = base::MakeUnique<GLOutputSurfaceMac>(
+      output_surface = std::make_unique<GLOutputSurfaceMac>(
           std::move(context_provider), surface_handle,
-          synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get());
+          synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get(),
+          renderer_settings.allow_overlays);
 #else
       NOTREACHED();
 #endif
     } else {
-      output_surface = base::MakeUnique<GLOutputSurface>(
+      output_surface = std::make_unique<GLOutputSurface>(
           std::move(context_provider), synthetic_begin_frame_source.get());
     }
   }
@@ -146,17 +156,15 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
   int max_frames_pending = output_surface->capabilities().max_frames_pending;
   DCHECK_GT(max_frames_pending, 0);
 
-  auto scheduler = base::MakeUnique<DisplayScheduler>(
-      synthetic_begin_frame_source.get(), task_runner_.get(),
-      max_frames_pending);
+  auto scheduler = std::make_unique<DisplayScheduler>(
+      display_begin_frame_source, task_runner_.get(), max_frames_pending);
 
   // The ownership of the BeginFrameSource is transfered to the caller.
   *out_begin_frame_source = std::move(synthetic_begin_frame_source);
 
-  return base::MakeUnique<Display>(
-      ServerSharedBitmapManager::current(), gpu_memory_buffer_manager_.get(),
-      renderer_settings, frame_sink_id, std::move(output_surface),
-      std::move(scheduler), task_runner_);
+  return std::make_unique<Display>(
+      ServerSharedBitmapManager::current(), renderer_settings, frame_sink_id,
+      std::move(output_surface), std::move(scheduler), task_runner_);
 }
 
 std::unique_ptr<SoftwareOutputDevice>

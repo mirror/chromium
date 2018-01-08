@@ -19,6 +19,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
@@ -88,15 +89,16 @@
 #include "net/net_features.h"
 #include "net/nqe/external_estimate_provider.h"
 #include "net/nqe/network_quality_estimator_params.h"
-#include "net/proxy/proxy_config_service.h"
-#include "net/proxy/proxy_script_fetcher_impl.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/pac_file_fetcher_impl.h"
+#include "net/proxy_resolution/proxy_config_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/quic/chromium/quic_utils_chromium.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/cpp/network_switches.h"
 #include "url/url_constants.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -112,21 +114,24 @@
 #include "chrome/browser/android/data_usage/external_data_use_observer.h"
 #include "chrome/browser/android/net/external_estimate_provider_android.h"
 #include "components/data_usage/android/traffic_stats_amortizer.h"
-#include "net/cert/cert_net_fetcher.h"
 #include "net/cert/cert_verify_proc_android.h"
-#include "net/cert_net/cert_net_fetcher_impl.h"
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/net/cert_verify_proc_chromeos.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
-#include "chromeos/network/dhcp_proxy_script_fetcher_factory_chromeos.h"
+#include "chromeos/network/dhcp_pac_file_fetcher_factory_chromeos.h"
 #include "chromeos/network/host_resolver_impl_chromeos.h"
 #endif
 
 #if defined(OS_ANDROID) && defined(ARCH_CPU_ARMEL)
 #include "crypto/openssl_util.h"
 #include "third_party/boringssl/src/include/openssl/cpu.h"
+#endif
+
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#include "net/cert/cert_net_fetcher.h"
+#include "net/cert_net/cert_net_fetcher_impl.h"
 #endif
 
 using content::BrowserThread;
@@ -190,13 +195,13 @@ std::unique_ptr<net::HostResolver> CreateGlobalHostResolver(
   // through a designated test server.
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
-  if (!command_line.HasSwitch(switches::kHostResolverRules))
+  if (!command_line.HasSwitch(network::switches::kHostResolverRules))
     return global_host_resolver;
 
   auto remapped_resolver = std::make_unique<net::MappedHostResolver>(
       std::move(global_host_resolver));
   remapped_resolver->SetRulesFromString(
-      command_line.GetSwitchValueASCII(switches::kHostResolverRules));
+      command_line.GetSwitchValueASCII(network::switches::kHostResolverRules));
   return std::move(remapped_resolver);
 }
 
@@ -221,6 +226,20 @@ void UpdateMetricsUsagePrefsOnUIThread(const std::string& service_name,
                                 }
                               },
                               service_name, message_size, is_cellular));
+}
+
+// Check the AsyncDns field trial and return true if it should be enabled. On
+// Android this includes checking the Android version in the field trial.
+bool ShouldEnableAsyncDns() {
+  bool feature_can_be_enabled = true;
+#if defined(OS_ANDROID)
+  int min_sdk =
+      base::GetFieldTrialParamByFeatureAsInt(features::kAsyncDns, "min_sdk", 0);
+  if (base::android::BuildInfo::GetInstance()->sdk_int() < min_sdk)
+    feature_can_be_enabled = false;
+#endif
+  return feature_can_be_enabled &&
+         base::FeatureList::IsEnabled(features::kAsyncDns);
 }
 
 }  // namespace
@@ -344,9 +363,8 @@ IOThread::IOThread(
           local_state,
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)));
 
-  local_state->SetDefaultPrefValue(
-      prefs::kBuiltInDnsClientEnabled,
-      base::Value(base::FeatureList::IsEnabled(features::kAsyncDns)));
+  local_state->SetDefaultPrefValue(prefs::kBuiltInDnsClientEnabled,
+                                   base::Value(ShouldEnableAsyncDns()));
 
   dns_client_enabled_.Init(prefs::kBuiltInDnsClientEnabled,
                            local_state,
@@ -531,14 +549,13 @@ void IOThread::Init() {
                         CRYPTO_needs_hwcap2_workaround());
 #endif
 
+  std::vector<scoped_refptr<const net::CTLogVerifier>> ct_logs(
+      net::ct::CreateLogVerifiersForKnownLogs());
+  globals_->ct_logs.assign(ct_logs.begin(), ct_logs.end());
+
   ConstructSystemRequestContext();
 
   UpdateDnsClientEnabled();
-
-  std::vector<scoped_refptr<const net::CTLogVerifier>> ct_logs(
-      net::ct::CreateLogVerifiersForKnownLogs());
-
-  globals_->ct_logs.assign(ct_logs.begin(), ct_logs.end());
 
   ct_tree_tracker_ =
       std::make_unique<certificate_transparency::TreeStateTracker>(
@@ -568,13 +585,13 @@ void IOThread::CleanUp() {
   UnregisterSTHObserver(ct_tree_tracker_.get());
   ct_tree_tracker_.reset();
 
-  globals_->system_request_context->proxy_service()->OnShutdown();
+  globals_->system_request_context->proxy_resolution_service()->OnShutdown();
 
 #if defined(USE_NSS_CERTS)
   net::SetURLRequestContextForNSSHttpIO(nullptr);
 #endif
 
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
   net::ShutdownGlobalCertNetFetcher();
 #endif
 
@@ -611,7 +628,7 @@ void IOThread::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kQuickCheckEnabled, true);
   registry->RegisterBooleanPref(prefs::kPacHttpsUrlStrippingEnabled, true);
 #if defined(OS_POSIX)
-  registry->RegisterBooleanPref(prefs::kNtlmV2Enabled, false);
+  registry->RegisterBooleanPref(prefs::kNtlmV2Enabled, true);
 #endif
 }
 
@@ -735,8 +752,8 @@ void IOThread::SetUpProxyService(
   builder->set_pac_quick_check_enabled(WpadQuickCheckEnabled());
   builder->set_pac_sanitize_url_policy(
       PacHttpsUrlStrippingEnabled()
-          ? net::ProxyService::SanitizeUrlPolicy::SAFE
-          : net::ProxyService::SanitizeUrlPolicy::UNSAFE);
+          ? net::ProxyResolutionService::SanitizeUrlPolicy::SAFE
+          : net::ProxyResolutionService::SanitizeUrlPolicy::UNSAFE);
 }
 
 certificate_transparency::TreeStateTracker* IOThread::ct_tree_tracker() const {
@@ -817,7 +834,7 @@ void IOThread::ConstructSystemRequestContext() {
 #if defined(USE_NSS_CERTS)
   net::SetURLRequestContextForNSSHttpIO(globals_->system_request_context);
 #endif
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
   net::SetGlobalCertNetFetcher(
       net::CreateCertNetFetcher(globals_->system_request_context));
 #endif

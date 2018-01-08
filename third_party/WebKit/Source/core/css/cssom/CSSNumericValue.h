@@ -10,6 +10,7 @@
 #include "core/CoreExport.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/cssom/CSSNumericSumValue.h"
+#include "core/css/cssom/CSSNumericType.h"
 #include "core/css/cssom/CSSNumericValueType.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -19,6 +20,7 @@ namespace blink {
 
 class CSSUnitValue;
 class ExceptionState;
+class CSSCalcExpressionNode;
 
 class CSSNumericValue;
 class CSSMathSum;
@@ -45,10 +47,16 @@ class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
   bool equals(const HeapVector<CSSNumberish>&);
 
   // Converts between compatible types, as defined in the IDL.
-  CSSNumericValue* to(const String&, ExceptionState&);
+  CSSUnitValue* to(const String&, ExceptionState&);
   CSSMathSum* toSum(const Vector<String>&, ExceptionState&);
 
+  void type(CSSNumericType&) const;
+
   // Internal methods.
+  // Arithmetic
+  virtual CSSNumericValue* Negate();
+  virtual CSSNumericValue* Invert();
+
   // Converts between compatible types.
   CSSUnitValue* to(CSSPrimitiveValue::UnitType) const;
   virtual bool IsUnitValue() const = 0;
@@ -57,6 +65,8 @@ class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
   virtual bool Equals(const CSSNumericValue&) const = 0;
   const CSSNumericValueType& Type() const { return type_; }
 
+  virtual CSSCalcExpressionNode* ToCalcExpressionNode() const = 0;
+
  protected:
   static bool IsValidUnit(CSSPrimitiveValue::UnitType);
   static CSSPrimitiveValue::UnitType UnitFromName(const String& name);
@@ -64,9 +74,6 @@ class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
   CSSNumericValue(const CSSNumericValueType& type) : type_(type) {}
 
  private:
-  virtual CSSNumericValue* Negate();
-  virtual CSSNumericValue* Invert();
-
   CSSNumericValueType type_;
   DISALLOW_COPY_AND_ASSIGN(CSSNumericValue);
 };

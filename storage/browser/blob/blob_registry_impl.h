@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/storage_browser_export.h"
 #include "third_party/WebKit/common/blob/blob_registry.mojom.h"
@@ -45,20 +46,19 @@ class STORAGE_EXPORT BlobRegistryImpl : public blink::mojom::BlobRegistry {
                        const std::string& uuid,
                        GetBlobFromUUIDCallback callback) override;
 
-  void RegisterURL(blink::mojom::BlobPtr blob,
-                   const GURL& url,
-                   RegisterURLCallback callback) override;
+  void URLStoreForOrigin(
+      const url::Origin& origin,
+      blink::mojom::BlobURLStoreAssociatedRequest url_store) override;
 
   size_t BlobsUnderConstructionForTesting() const {
     return blobs_under_construction_.size();
   }
 
- private:
-  void RegisterURLWithUUID(const GURL& url,
-                           blink::mojom::BlobPtr blob,
-                           RegisterURLCallback callback,
-                           const std::string& uuid);
+  using URLStoreCreationHook = base::RepeatingCallback<void(
+      mojo::StrongAssociatedBindingPtr<blink::mojom::BlobURLStore>)>;
+  static void SetURLStoreCreationHookForTesting(URLStoreCreationHook* hook);
 
+ private:
   class BlobUnderConstruction;
 
   base::WeakPtr<BlobStorageContext> context_;

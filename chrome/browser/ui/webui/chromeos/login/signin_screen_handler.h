@@ -143,17 +143,9 @@ class SigninScreenHandlerDelegate {
   // Signs out if the screen is currently locked.
   virtual void Signout() = 0;
 
-  // --------------- Account creation methods.
-  // Confirms sign up by provided credentials in |user_context|.
-  // Used for new user login via GAIA extension.
-  virtual void CompleteLogin(const UserContext& user_context) = 0;
-
   // --------------- Shared with login display methods.
   // Notify the delegate when the sign-in UI is finished loading.
   virtual void OnSigninScreenReady() = 0;
-
-  // Notify the delegate when the GAIA UI is finished loading.
-  virtual void OnGaiaScreenReady() = 0;
 
   // Shows Enterprise Enrollment screen.
   virtual void ShowEnterpriseEnrollmentScreen() = 0;
@@ -173,25 +165,9 @@ class SigninScreenHandlerDelegate {
   // Show update required screen.
   virtual void ShowUpdateRequiredScreen() = 0;
 
-  // Sets the displayed email for the next login attempt. If it succeeds,
-  // user's displayed email value will be updated to |email|.
-  virtual void SetDisplayEmail(const std::string& email) = 0;
-
-  // Sets the displayed name and given name for the next login attempt. If it
-  // succeeds, user's displayed name and give name values will be updated to
-  // |display_name| and |given_name|.
-  virtual void SetDisplayAndGivenName(const std::string& display_name,
-                                      const std::string& given_name) = 0;
-
   // --------------- Rest of the methods.
   // Cancels user adding.
   virtual void CancelUserAdding() = 0;
-
-  // Load wallpaper for given |account_id|.
-  virtual void LoadWallpaper(const AccountId& account_id) = 0;
-
-  // Loads the default sign-in wallpaper.
-  virtual void LoadSigninWallpaper() = 0;
 
   // Attempts to remove given user.
   virtual void RemoveUser(const AccountId& account_id) = 0;
@@ -223,9 +199,6 @@ class SigninScreenHandlerDelegate {
 
   // Runs an OAuth token validation check for user.
   virtual void CheckUserStatus(const AccountId& account_id) = 0;
-
-  // Returns true if user is allowed to log in by domain policy.
-  virtual bool IsUserWhitelisted(const AccountId& account_id) = 0;
 
  protected:
   virtual ~SigninScreenHandlerDelegate() {}
@@ -483,6 +456,10 @@ class SigninScreenHandler
   // Called when the cros property controlling allowed input methods changes.
   void OnAllowedInputMethodsChanged();
 
+  // After proxy auth information has been supplied, this function re-enables
+  // responding to network state notifications.
+  void ReenableNetworkStateUpdatesAfterProxyAuth();
+
   // Current UI state of the signin screen.
   UIState ui_state_ = UI_STATE_UNKNOWN;
 
@@ -522,10 +499,10 @@ class SigninScreenHandler
   std::unique_ptr<CrosSettings::ObserverSubscription>
       allowed_input_methods_subscription_;
 
-  // Whether there is an auth UI pending. This flag is set on receiving
-  // NOTIFICATION_AUTH_NEEDED and reset on either NOTIFICATION_AUTH_SUPPLIED or
-  // NOTIFICATION_AUTH_CANCELLED.
-  bool has_pending_auth_ui_ = false;
+  // Whether we're currently ignoring network state updates because a proxy auth
+  // UI pending (or we're waiting for a grace period after the proxy auth UI is
+  // finished for the network to switch into the ONLINE state).
+  bool network_state_ignored_until_proxy_auth_ = false;
 
   // Used for pending GAIA reloads.
   NetworkError::ErrorReason gaia_reload_reason_ =

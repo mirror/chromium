@@ -4,28 +4,38 @@
 
 package org.chromium.chrome.browser.preferences.password;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SearchView;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.Callback;
+import org.chromium.base.ContentUriUtils;
+import org.chromium.base.ContextUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
-import org.chromium.chrome.browser.PasswordManagerHandler;
-import org.chromium.chrome.browser.PasswordUIView;
-import org.chromium.chrome.browser.SavedPasswordEntry;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
 import org.chromium.chrome.browser.preferences.ChromeBasePreference;
 import org.chromium.chrome.browser.preferences.ChromeSwitchPreference;
@@ -36,6 +46,14 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.widget.Toast;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.util.Locale;
 
 /**
  * The "Save passwords" screen in Settings, which allows the user to enable or disable password
@@ -55,6 +73,9 @@ public class SavePasswordsPreferences
     // The key for saving |mExportRequested| to instance bundle.
     private static final String SAVED_STATE_EXPORT_REQUESTED = "saved-state-export-requested";
 
+    // The key for saving |mExportFileUri| to instance bundle.
+    private static final String SAVED_STATE_EXPORT_FILE_URI = "saved-state-export-file-uri";
+
     public static final String PREF_SAVE_PASSWORDS_SWITCH = "save_passwords_switch";
     public static final String PREF_AUTOSIGNIN_SWITCH = "autosignin_switch";
 
@@ -64,7 +85,10 @@ public class SavePasswordsPreferences
     private static final String PREF_KEY_SAVED_PASSWORDS_NO_TEXT = "saved_passwords_no_text";
 
     // Name of the feature controlling the password export functionality.
-    private static final String EXPORT_PASSWORDS = "password-export";
+    private static final String EXPORT_PASSWORDS = "PasswordExport";
+
+    // Name of the subdirectory in cache which stores the exported passwords file.
+    private static final String PASSWORDS_CACHE_DIR = "/passwords";
 
     private static final int ORDER_SWITCH = 0;
     private static final int ORDER_AUTO_SIGNIN_CHECKBOX = 1;
@@ -78,10 +102,25 @@ public class SavePasswordsPreferences
     // True if the user triggered the password export flow and this fragment is waiting for the
     // result of the user's reauthentication.
     private boolean mExportRequested;
+    // True if the option to export passwords in the three-dots menu should be disabled due to an
+    // ongoing export.
+    private boolean mExportOptionSuspended = false;
+    // True if the user just finished the UI flow for confirming a password export.
+    private boolean mExportConfirmed;
+    // When the user requests that passwords are exported and once the passwords are sent over from
+    // native code and stored in a cache file, this variable contains the content:// URI for that
+    // cache file, or an empty URI if there was a problem with storing to that file. During all
+    // other times, this variable is null. In particular, after the export is requested, the
+    // variable being null means that the passwords have not arrived from the native code yet.
+    @Nullable
+    private Uri mExportFileUri;
+
+    private String mSearchQuery;
     private Preference mLinkPref;
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
     private TextMessagePreference mEmptyView;
+    private Menu mMenuForTesting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,45 +128,163 @@ public class SavePasswordsPreferences
         getActivity().setTitle(R.string.prefs_saved_passwords);
         setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getActivity()));
         PasswordManagerHandlerProvider.getInstance().addObserver(this);
-        if (ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)
-                && ReauthenticationManager.isReauthenticationApiAvailable()) {
-            setHasOptionsMenu(true);
-        }
-        if (savedInstanceState != null
-                && savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
+
+        setHasOptionsMenu(providesPasswordExport() || providesPasswordSearch());
+
+        if (savedInstanceState == null) return;
+
+        if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
             mExportRequested =
                     savedInstanceState.getBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
+        }
+        if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_FILE_URI)) {
+            String uriString = savedInstanceState.getString(SAVED_STATE_EXPORT_FILE_URI);
+            if (uriString.isEmpty()) {
+                mExportFileUri = Uri.EMPTY;
+            } else {
+                mExportFileUri = Uri.parse(uriString);
+            }
         }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
+        mMenuForTesting = menu;
         inflater.inflate(R.menu.save_password_preferences_action_bar_menu, menu);
+        menu.findItem(R.id.export_passwords).setVisible(providesPasswordExport());
         menu.findItem(R.id.export_passwords).setEnabled(false);
+        MenuItem searchItem = menu.findItem(R.id.menu_id_search);
+        searchItem.setVisible(providesPasswordSearch());
+        if (providesPasswordSearch()) {
+            setUpSearchAction(searchItem);
+        }
+    }
+
+    /**
+     * Prepares the searchItem's icon and searchView. Sets up listeners to clicks and interactions
+     * with the searchItem or its searchView.
+     * @param searchItem the item containing the SearchView. Must not be null.
+     */
+    private void setUpSearchAction(MenuItem searchItem) {
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN);
+        searchItem.setIcon(convertToPlainWhite(searchItem.getIcon()));
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                filterPasswords(""); // Hide other menu elements.
+                return true; // Continue expanding.
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                filterPasswords(null); // Reset filter to bring back all preferences.
+                return true; // Continue collapsing.
+            }
+        });
+        searchView.setOnSearchClickListener(view -> filterPasswords(""));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true; // Continue with default action - nothing.
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                return filterPasswords(query);
+            }
+        });
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.export_passwords).setEnabled(!mNoPasswords);
+        menu.findItem(R.id.export_passwords).setEnabled(!mNoPasswords && !mExportOptionSuspended);
         super.onPrepareOptionsMenu(menu);
+    }
+
+    // An encapsulation of a URI and an error string, used by the processing in
+    // exportPasswordsIntoFile.
+    private static class ExportResult {
+        public final Uri mUri;
+        @Nullable
+        public final String mError;
+
+        // Constructs the successful result: a valid URI and no error.
+        public ExportResult(Uri uri) {
+            assert uri != null && uri != Uri.EMPTY;
+            mUri = uri;
+            mError = null;
+        }
+
+        // Constructs the failed result: an empty URI and a non-empty error string.
+        public ExportResult(String error) {
+            assert !TextUtils.isEmpty(error);
+            mUri = Uri.EMPTY;
+            mError = error;
+        }
+    }
+
+    /**
+     * A helper method which first fires an AsyncTask to turn the string with serialized passwords
+     * into a cache file with a shareable URI, and then, depending on success, either calls the code
+     * for firing the share intent or displays an error.
+     * @param serializedPasswords A string with a CSV representation of the user's passwords.
+     */
+    private void shareSerializedPasswords(String serializedPasswords) {
+        AsyncTask<String, Void, ExportResult> task = new AsyncTask<String, Void, ExportResult>() {
+            @Override
+            protected ExportResult doInBackground(String... serializedPasswords) {
+                assert serializedPasswords.length == 1;
+                return exportPasswordsIntoFile(serializedPasswords[0]);
+            }
+
+            @Override
+            protected void onPostExecute(ExportResult result) {
+                if (result.mError != null) {
+                    showExportErrorAndAbort(result.mError);
+                } else {
+                    mExportFileUri = result.mUri;
+                    tryExporting();
+                }
+            }
+        };
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, serializedPasswords);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.export_passwords) {
+            // Disable re-triggering exporting until the current exporting finishes.
+            mExportOptionSuspended = true;
+
+            // Start fetching the serialized passwords now to use the time the user spends
+            // reauthenticating and reading the warning message. If the user cancels the export or
+            // fails the reauthentication, the serialised passwords will simply get ignored when
+            // they arrive.
+            PasswordManagerHandlerProvider.getInstance()
+                    .getPasswordManagerHandler()
+                    .serializePasswords(new Callback<String>() {
+                        @Override
+                        public void onResult(String serializedPasswords) {
+                            shareSerializedPasswords(serializedPasswords);
+                        }
+                    });
             if (!ReauthenticationManager.isScreenLockSetUp(getActivity().getApplicationContext())) {
                 Toast.makeText(getActivity().getApplicationContext(),
                              R.string.password_export_set_lock_screen, Toast.LENGTH_LONG)
                         .show();
-            } else if (ReauthenticationManager.authenticationStillValid()) {
+                // Re-enable exporting, the current one was cancelled by Chrome.
+                mExportOptionSuspended = false;
+            } else if (ReauthenticationManager.authenticationStillValid(
+                               ReauthenticationManager.REAUTH_SCOPE_BULK)) {
                 exportAfterReauth();
             } else {
                 mExportRequested = true;
                 ReauthenticationManager.displayReauthenticationFragment(
                         R.string.lockscreen_description_export, getView().getId(),
-                        getFragmentManager());
+                        getFragmentManager(), ReauthenticationManager.REAUTH_SCOPE_BULK);
             }
             return true;
         }
@@ -142,15 +299,103 @@ public class SavePasswordsPreferences
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == AlertDialog.BUTTON_POSITIVE) {
-                    exportAfterWarning();
+                    mExportConfirmed = true;
+                    tryExporting();
                 }
+                // Re-enable exporting, the current one was either finished or dismissed.
+                mExportOptionSuspended = false;
             }
         });
         exportWarningDialogFragment.show(getFragmentManager(), null);
     }
 
-    private void exportAfterWarning() {
-        // TODO(crbug.com/788701): Start the export.
+    /**
+     * Starts the exporting intent if both blocking events are completed: serializing and the
+     * confirmation flow.
+     */
+    private void tryExporting() {
+        // TODO(crbug.com/788701): Display a progress indicator if user
+        // confirmed but serialising is not done yet and dismiss it once called
+        // again with serialising done.
+        if (mExportConfirmed && mExportFileUri != null) sendExportIntent();
+    }
+
+    /**
+     * Call this to abort the export UI flow and display an error description to the user.
+     * @param description A string with a brief explanation of the error.
+     */
+    private void showExportErrorAndAbort(String description) {
+        // TODO(crbug.com/788701): Implement.
+        // Re-enable exporting, the current one was just cancelled.
+        mExportOptionSuspended = false;
+    }
+
+    /**
+     * This method saves the contents of |serializedPasswords| into a temporary file and returns a
+     * sharing URI for it. In case of failure, returns EMPTY. It should only be run on the
+     * background thread of an AsyncTask, because it does I/O operations.
+     * @param serializedPasswords A string with serialized passwords in CSV format
+     */
+    private ExportResult exportPasswordsIntoFile(String serializedPasswords) {
+        // First ensure that the PASSWORDS_CACHE_DIR cache directory exists.
+        File passwordsDir =
+                new File(ContextUtils.getApplicationContext().getCacheDir() + PASSWORDS_CACHE_DIR);
+        passwordsDir.mkdir();
+        // Now create or overwrite the temporary file for exported passwords there and return its
+        // content:// URI.
+        File tempFile;
+        try {
+            tempFile = File.createTempFile("pwd-export", ".csv", passwordsDir);
+        } catch (IOException e) {
+            // TODO(crbug.com/788701): Change e.getMessage to an appropriate error, following the
+            // mocks.
+            return new ExportResult(e.getMessage());
+        }
+        tempFile.deleteOnExit();
+        try (BufferedWriter tempWriter = new BufferedWriter(new OutputStreamWriter(
+                     new FileOutputStream(tempFile), Charset.forName("UTF-8")))) {
+            tempWriter.write(serializedPasswords);
+        } catch (IOException e) {
+            // TODO(crbug.com/788701): Change e.getMessage to an appropriate error, following the
+            // mocks.
+            return new ExportResult(e.getMessage());
+        }
+        try {
+            return new ExportResult(ContentUriUtils.getContentUriFromFile(tempFile));
+        } catch (IllegalArgumentException e) {
+            // TODO(crbug.com/788701): Display an error, because the result of Uri.fromFile is not
+            // going to be shareable.
+            return new ExportResult(e.getMessage());
+        }
+    }
+
+    /**
+     * If the URI of the file with exported passwords is not null, passes it into an implicit
+     * intent, so that the user can use a storage app to save the exported passwords.
+     */
+    private void sendExportIntent() {
+        mExportConfirmed = false;
+        if (mExportFileUri == Uri.EMPTY) return;
+
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("text/csv");
+        send.putExtra(Intent.EXTRA_STREAM, mExportFileUri);
+
+        try {
+            Intent chooser = Intent.createChooser(send, null);
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ContextUtils.getApplicationContext().startActivity(chooser);
+        } catch (ActivityNotFoundException e) {
+            // TODO(crbug.com/788701): If no app handles it, display the appropriate error.
+            showExportErrorAndAbort(e.getMessage());
+        }
+        mExportFileUri = null;
+    }
+
+    private boolean filterPasswords(String query) {
+        mSearchQuery = query;
+        rebuildPasswordLists();
+        return false; // Query has been handled. Don't trigger default action of SearchView.
     }
 
     /**
@@ -167,7 +412,7 @@ public class SavePasswordsPreferences
     @Override
     public void onDetach() {
         super.onDetach();
-        ReauthenticationManager.setLastReauthTimeMillis(0);
+        ReauthenticationManager.resetLastReauth();
     }
 
     void rebuildPasswordLists() {
@@ -226,10 +471,13 @@ public class SavePasswordsPreferences
             SavedPasswordEntry saved = PasswordManagerHandlerProvider.getInstance()
                                                .getPasswordManagerHandler()
                                                .getSavedPasswordEntry(i);
-            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             String url = saved.getUrl();
             String name = saved.getUserName();
             String password = saved.getPassword();
+            if (shouldBeFiltered(url, name)) {
+                continue; // The current password won't show with the active filter, try the next.
+            }
+            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             screen.setTitle(url);
             screen.setOnPreferenceClickListener(this);
             screen.setSummary(name);
@@ -240,10 +488,32 @@ public class SavePasswordsPreferences
             args.putInt(PASSWORD_LIST_ID, i);
             profileCategory.addPreference(screen);
         }
+        mNoPasswords = profileCategory.getPreferenceCount() == 0;
+        if (mNoPasswords) {
+            displayManageAccountLink(); // Maybe the password is just not on the device.
+            displayEmptyScreenMessage();
+        }
+    }
+
+    /**
+     * Returns true if there is a search query that requires the exclusion of an entry based on
+     * the passed url or name.
+     * @param url the visible URL of the entry to check. May be empty but must not be null.
+     * @param name the visible user name of the entry to check. May be empty but must not be null.
+     * @return Returns whether the entry with the passed url and name should be filtered.
+     */
+    private boolean shouldBeFiltered(final String url, final String name) {
+        if (mSearchQuery == null) {
+            return false;
+        }
+        return !url.toLowerCase(Locale.ENGLISH).contains(mSearchQuery.toLowerCase(Locale.ENGLISH))
+                && !name.toLowerCase(Locale.getDefault())
+                            .contains(mSearchQuery.toLowerCase(Locale.getDefault()));
     }
 
     @Override
     public void passwordExceptionListAvailable(int count) {
+        if (mSearchQuery != null) return; // Don't show exceptions if a search is ongoing.
         resetList(PREF_KEY_CATEGORY_EXCEPTIONS);
         resetNoEntriesTextMessage();
 
@@ -279,7 +549,14 @@ public class SavePasswordsPreferences
         super.onResume();
         if (mExportRequested) {
             mExportRequested = false;
-            if (ReauthenticationManager.authenticationStillValid()) exportAfterReauth();
+            // Depending on the authentication result, either carry on with exporting or re-enable
+            // the export menu for future attempts.
+            if (ReauthenticationManager.authenticationStillValid(
+                        ReauthenticationManager.REAUTH_SCOPE_BULK)) {
+                exportAfterReauth();
+            } else {
+                mExportOptionSuspended = false;
+            }
         }
         rebuildPasswordLists();
     }
@@ -288,6 +565,9 @@ public class SavePasswordsPreferences
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
+        if (mExportFileUri != null) {
+            outState.putString(SAVED_STATE_EXPORT_FILE_URI, mExportFileUri.toString());
+        }
     }
 
     @Override
@@ -318,7 +598,23 @@ public class SavePasswordsPreferences
         return true;
     }
 
+    /**
+     * Convert a given icon to a plain white version by applying the MATRIX_TRANSFORM_TO_WHITE color
+     * filter. The resulting drawable will be brighter than a usual grayscale conversion.
+     *
+     * For grayscale conversion, use the function ColorMatrix#setSaturation(0) instead.
+     * @param icon The drawable to be converted.
+     * @return Returns the bright white version of the passed drawable.
+     */
+    private static Drawable convertToPlainWhite(Drawable icon) {
+        icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        return icon;
+    }
+
     private void createSavePasswordsSwitch() {
+        if (mSearchQuery != null) {
+            return; // Don't create this option when the preferences are filtered for passwords.
+        }
         mSavePasswordsSwitch = new ChromeSwitchPreference(getActivity(), null);
         mSavePasswordsSwitch.setKey(PREF_SAVE_PASSWORDS_SWITCH);
         mSavePasswordsSwitch.setTitle(R.string.prefs_saved_passwords);
@@ -349,6 +645,9 @@ public class SavePasswordsPreferences
     }
 
     private void createAutoSignInCheckbox() {
+        if (mSearchQuery != null) {
+            return; // Don't create this option when the preferences are filtered for passwords.
+        }
         mAutoSignInSwitch = new ChromeBaseCheckBoxPreference(getActivity(), null);
         mAutoSignInSwitch.setKey(PREF_AUTOSIGNIN_SWITCH);
         mAutoSignInSwitch.setTitle(R.string.passwords_auto_signin_title);
@@ -374,20 +673,48 @@ public class SavePasswordsPreferences
     }
 
     private void displayManageAccountLink() {
-        if (getPreferenceScreen().findPreference(PREF_KEY_MANAGE_ACCOUNT_LINK) == null) {
-            if (mLinkPref == null) {
-                ForegroundColorSpan colorSpan = new ForegroundColorSpan(
-                        ApiCompatibilityUtils.getColor(getResources(), R.color.google_blue_700));
-                SpannableString title = SpanApplier.applySpans(
-                        getString(R.string.manage_passwords_text),
-                        new SpanApplier.SpanInfo("<link>", "</link>", colorSpan));
-                mLinkPref = new ChromeBasePreference(getActivity());
-                mLinkPref.setKey(PREF_KEY_MANAGE_ACCOUNT_LINK);
-                mLinkPref.setTitle(title);
-                mLinkPref.setOnPreferenceClickListener(this);
-                mLinkPref.setOrder(ORDER_MANAGE_ACCOUNT_LINK);
-            }
-            getPreferenceScreen().addPreference(mLinkPref);
+        if (mSearchQuery != null && !mNoPasswords) {
+            return; // Don't add the Manage Account link if there is a search going on.
         }
+        if (getPreferenceScreen().findPreference(PREF_KEY_MANAGE_ACCOUNT_LINK) != null) {
+            return; // Don't add the Manage Account link if it's present.
+        }
+        if (mLinkPref != null) {
+            // If we created the link before, reuse it.
+            getPreferenceScreen().addPreference(mLinkPref);
+            return;
+        }
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(
+                ApiCompatibilityUtils.getColor(getResources(), R.color.google_blue_700));
+        SpannableString title = SpanApplier.applySpans(getString(R.string.manage_passwords_text),
+                new SpanApplier.SpanInfo("<link>", "</link>", colorSpan));
+        mLinkPref = new ChromeBasePreference(getActivity());
+        mLinkPref.setKey(PREF_KEY_MANAGE_ACCOUNT_LINK);
+        mLinkPref.setTitle(title);
+        mLinkPref.setOnPreferenceClickListener(this);
+        mLinkPref.setOrder(ORDER_MANAGE_ACCOUNT_LINK);
+        getPreferenceScreen().addPreference(mLinkPref);
+    }
+
+    /**
+     * Returns whether the password export feature is ready to use.
+     * @return Returns true if the flag is set and the Reauthentication Api is available.
+     */
+    private boolean providesPasswordExport() {
+        return ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)
+                && ReauthenticationManager.isReauthenticationApiAvailable();
+    }
+
+    /**
+     * Returns whether the password search feature is ready to use.
+     * @return Returns true if the flag is set.
+     */
+    private boolean providesPasswordSearch() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.PASSWORD_SEARCH);
+    }
+
+    @VisibleForTesting
+    Menu getMenuForTesting() {
+        return mMenuForTesting;
     }
 }

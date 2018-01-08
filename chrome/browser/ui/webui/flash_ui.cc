@@ -16,7 +16,6 @@
 #include "base/bind_helpers.h"
 #include "base/i18n/time_formatting.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/string16.h"
@@ -27,6 +26,7 @@
 #include "base/timer/timer.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/crash_upload_list/crash_upload_list.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/plugins/plugin_prefs.h"
@@ -242,7 +242,7 @@ void FlashDOMHandler::MaybeRespondToPage() {
   // need to jump through hoops to offload this to the IO thread.
   base::ThreadRestrictions::ScopedAllowIO allow_io;
 
-  auto list = base::MakeUnique<base::ListValue>();
+  auto list = std::make_unique<base::ListValue>();
 
   // Chrome version information.
   AddPair(list.get(), l10n_util::GetStringUTF16(IDS_PRODUCT_NAME),
@@ -301,7 +301,8 @@ void FlashDOMHandler::MaybeRespondToPage() {
   // Crash information.
   AddPair(list.get(), base::string16(), "--- Crash data ---");
   bool crash_reporting_enabled =
-      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
+      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+          g_browser_process->local_state());
   if (crash_reporting_enabled) {
     std::vector<UploadList::UploadInfo> crashes;
     upload_list_->GetUploads(10, &crashes);
@@ -386,7 +387,7 @@ void FlashDOMHandler::MaybeRespondToPage() {
 FlashUI::FlashUI(content::WebUI* web_ui) : WebUIController(web_ui) {
   base::RecordAction(UserMetricsAction("ViewAboutFlash"));
 
-  web_ui->AddMessageHandler(base::MakeUnique<FlashDOMHandler>());
+  web_ui->AddMessageHandler(std::make_unique<FlashDOMHandler>());
 
   // Set up the about:flash source.
   Profile* profile = Profile::FromWebUI(web_ui);

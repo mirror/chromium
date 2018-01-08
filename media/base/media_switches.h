@@ -72,6 +72,7 @@ MEDIA_EXPORT extern const char kUseFakeJpegDecodeAccelerator[];
 MEDIA_EXPORT extern const char kEnableInbandTextTracks[];
 
 MEDIA_EXPORT extern const char kRequireAudioHardwareForTesting[];
+MEDIA_EXPORT extern const char kMuteAudio[];
 
 MEDIA_EXPORT extern const char kVideoUnderflowThresholdMs[];
 
@@ -115,9 +116,11 @@ MEDIA_EXPORT extern const base::Feature kRecordMediaEngagementScores;
 MEDIA_EXPORT extern const base::Feature kMediaEngagementBypassAutoplayPolicies;
 MEDIA_EXPORT extern const base::Feature kMemoryPressureBasedSourceBufferGC;
 MEDIA_EXPORT extern const base::Feature kMojoCdm;
+MEDIA_EXPORT extern const base::Feature kMojoVideoDecoder;
 MEDIA_EXPORT extern const base::Feature kMseBufferByPts;
 MEDIA_EXPORT extern const base::Feature kMseFlacInIsobmff;
 MEDIA_EXPORT extern const base::Feature kNewAudioRenderingMixingStrategy;
+MEDIA_EXPORT extern const base::Feature kNewEncodeCpuLoadEstimator;
 MEDIA_EXPORT extern const base::Feature kNewRemotePlaybackPipeline;
 MEDIA_EXPORT extern const base::Feature kOverflowIconsForMediaControls;
 MEDIA_EXPORT extern const base::Feature kOverlayFullscreenVideo;

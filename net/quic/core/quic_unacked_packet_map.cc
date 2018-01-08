@@ -17,7 +17,7 @@ QuicUnackedPacketMap::QuicUnackedPacketMap()
       least_unacked_(1),
       bytes_in_flight_(0),
       pending_crypto_packet_count_(0),
-      stream_notifier_(nullptr) {}
+      session_notifier_(nullptr) {}
 
 QuicUnackedPacketMap::~QuicUnackedPacketMap() {
   for (QuicTransmissionInfo& transmission_info : unacked_packets_) {
@@ -102,10 +102,10 @@ void QuicUnackedPacketMap::TransferRetransmissionInfo(
   QuicTransmissionInfo* transmission_info =
       &unacked_packets_.at(old_packet_number - least_unacked_);
   QuicFrames* frames = &transmission_info->retransmittable_frames;
-  if (stream_notifier_ != nullptr) {
+  if (session_notifier_ != nullptr) {
     for (const QuicFrame& frame : *frames) {
       if (frame.type == STREAM_FRAME) {
-        stream_notifier_->OnStreamFrameRetransmitted(*frame.stream_frame);
+        session_notifier_->OnStreamFrameRetransmitted(*frame.stream_frame);
       }
     }
   }
@@ -136,8 +136,13 @@ bool QuicUnackedPacketMap::HasRetransmittableFrames(
     QuicPacketNumber packet_number) const {
   DCHECK_GE(packet_number, least_unacked_);
   DCHECK_LT(packet_number, least_unacked_ + unacked_packets_.size());
-  return !unacked_packets_[packet_number - least_unacked_]
-              .retransmittable_frames.empty();
+  return HasRetransmittableFrames(
+      unacked_packets_[packet_number - least_unacked_]);
+}
+
+bool QuicUnackedPacketMap::HasRetransmittableFrames(
+    const QuicTransmissionInfo& info) const {
+  return !info.retransmittable_frames.empty();
 }
 
 void QuicUnackedPacketMap::RemoveRetransmittability(
@@ -149,7 +154,7 @@ void QuicUnackedPacketMap::RemoveRetransmittability(
   }
 
   if (info->has_crypto_handshake) {
-    DCHECK(!info->retransmittable_frames.empty());
+    DCHECK(HasRetransmittableFrames(*info));
     DCHECK_LT(0u, pending_crypto_packet_count_);
     --pending_crypto_packet_count_;
     info->has_crypto_handshake = false;
@@ -190,7 +195,7 @@ bool QuicUnackedPacketMap::IsPacketUsefulForRetransmittableData(
     const QuicTransmissionInfo& info) const {
   // Packet may have retransmittable frames, or the data may have been
   // retransmitted with a new packet number.
-  return !info.retransmittable_frames.empty() ||
+  return HasRetransmittableFrames(info) ||
          // Allow for an extra 1 RTT before stopping to track old packets.
          info.retransmission > largest_observed_;
 }
@@ -236,15 +241,6 @@ void QuicUnackedPacketMap::CancelRetransmissionsForStream(
     QuicFrames* frames = &it->retransmittable_frames;
     if (frames->empty()) {
       continue;
-    }
-    if (stream_notifier_ != nullptr) {
-      for (const QuicFrame& frame : *frames) {
-        if (frame.type != STREAM_FRAME ||
-            frame.stream_frame->stream_id != stream_id) {
-          continue;
-        }
-        stream_notifier_->OnStreamFrameDiscarded(*frame.stream_frame);
-      }
     }
     RemoveFramesForStream(frames, stream_id);
     if (frames->empty()) {
@@ -321,7 +317,7 @@ bool QuicUnackedPacketMap::HasPendingCryptoPackets() const {
 bool QuicUnackedPacketMap::HasUnackedRetransmittableFrames() const {
   for (UnackedPacketMap::const_reverse_iterator it = unacked_packets_.rbegin();
        it != unacked_packets_.rend(); ++it) {
-    if (it->in_flight && !it->retransmittable_frames.empty()) {
+    if (it->in_flight && HasRetransmittableFrames(*it)) {
       return true;
     }
   }
@@ -332,23 +328,23 @@ QuicPacketNumber QuicUnackedPacketMap::GetLeastUnacked() const {
   return least_unacked_;
 }
 
-void QuicUnackedPacketMap::SetStreamNotifier(
-    StreamNotifierInterface* stream_notifier) {
-  stream_notifier_ = stream_notifier;
+void QuicUnackedPacketMap::SetSessionNotifier(
+    SessionNotifierInterface* session_notifier) {
+  session_notifier_ = session_notifier;
 }
 
-void QuicUnackedPacketMap::NotifyStreamFramesAcked(
-    const QuicTransmissionInfo& info,
-    QuicTime::Delta ack_delay) {
-  if (stream_notifier_ == nullptr) {
-    return;
+bool QuicUnackedPacketMap::NotifyFramesAcked(const QuicTransmissionInfo& info,
+                                             QuicTime::Delta ack_delay) {
+  if (session_notifier_ == nullptr) {
+    return false;
   }
-
+  bool new_data_acked = false;
   for (const QuicFrame& frame : info.retransmittable_frames) {
-    if (frame.type == STREAM_FRAME) {
-      stream_notifier_->OnStreamFrameAcked(*frame.stream_frame, ack_delay);
+    if (session_notifier_->OnFrameAcked(frame, ack_delay)) {
+      new_data_acked = true;
     }
   }
+  return new_data_acked;
 }
 
 }  // namespace net

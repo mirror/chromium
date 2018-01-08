@@ -40,7 +40,7 @@ class WebThreadBase::TaskObserverAdapter
   WebThread::TaskObserver* observer_;
 };
 
-WebThreadBase::WebThreadBase() {}
+WebThreadBase::WebThreadBase() = default;
 
 WebThreadBase::~WebThreadBase() {
   for (auto& observer_entry : task_observer_map_) {
@@ -65,6 +65,12 @@ void WebThreadBase::RemoveTaskObserver(TaskObserver* observer) {
   RemoveTaskObserverInternal(iter->second);
   delete iter->second;
   task_observer_map_.erase(iter);
+}
+
+scoped_refptr<base::SingleThreadTaskRunner>
+WebThreadBase::GetSingleThreadTaskRunner() const {
+  NOTIMPLEMENTED();
+  return nullptr;
 }
 
 void WebThreadBase::AddTaskTimeObserver(TaskTimeObserver* task_time_observer) {
@@ -100,7 +106,7 @@ void WebThreadBase::PostIdleTask(const base::Location& location,
 }
 
 bool WebThreadBase::IsCurrentThread() const {
-  return GetTaskRunner()->BelongsToCurrentThread();
+  return GetSingleThreadTaskRunner()->BelongsToCurrentThread();
 }
 
 namespace {
@@ -111,7 +117,7 @@ class WebThreadForCompositor : public WebThreadImplForWorkerScheduler {
       : WebThreadImplForWorkerScheduler("Compositor", options) {
     Init();
   }
-  ~WebThreadForCompositor() override {}
+  ~WebThreadForCompositor() override = default;
 
  private:
   // WebThreadImplForWorkerScheduler:

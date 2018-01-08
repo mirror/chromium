@@ -44,6 +44,7 @@
 #include "core/editing/VisibleUnits.h"
 #include "core/editing/commands/ApplyStyleCommand.h"
 #include "core/editing/commands/BreakBlockquoteCommand.h"
+#include "core/editing/commands/EditingCommandsUtilities.h"
 #include "core/editing/commands/SimplifyMarkupCommand.h"
 #include "core/editing/commands/SmartReplace.h"
 #include "core/editing/iterators/TextIterator.h"
@@ -1143,10 +1144,11 @@ void ReplaceSelectionCommand::InsertParagraphSeparatorIfNeeds(
 void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   TRACE_EVENT0("blink", "ReplaceSelectionCommand::doApply");
   const VisibleSelection& selection = EndingVisibleSelection();
-  if (selection.IsNone() || !selection.IsValidFor(GetDocument())) {
-    NOTREACHED();
-    return;
-  }
+
+  // ReplaceSelectionCommandTest.CrashWithNoSelection hits below abort
+  // condition.
+  ABORT_EDITING_COMMAND_IF(selection.IsNone());
+  ABORT_EDITING_COMMAND_IF(!selection.IsValidFor(GetDocument()));
 
   if (!selection.RootEditableElement())
     return;

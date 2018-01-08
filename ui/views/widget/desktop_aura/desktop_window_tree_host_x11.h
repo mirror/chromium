@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include "base/cancelable_callback.h"
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -174,6 +175,9 @@ class VIEWS_EXPORT DesktopWindowTreeHostX11
   // Called after the window is maximized or restored.
   virtual void OnMaximizedStateChanged();
 
+  // Called after the window is fullscreened or unfullscreened.
+  virtual void OnFullscreenStateChanged();
+
  private:
   friend class DesktopWindowTreeHostX11HighDPITest;
   // Initializes our X11 surface to draw on. This method performs all
@@ -221,13 +225,6 @@ class VIEWS_EXPORT DesktopWindowTreeHostX11
 
   // Updates |xwindow_|'s _NET_WM_USER_TIME if |xwindow_| is active.
   void UpdateWMUserTime(const ui::PlatformEvent& event);
-
-  // Sends a message to the x11 window manager, enabling or disabling the
-  // states |state1| and |state2|.
-  void SetWMSpecState(bool enabled, ::Atom state1, ::Atom state2);
-
-  // Checks if the window manager has set a specific state.
-  bool HasWMSpecProperty(const char* property) const;
 
   // Sets whether the window's borders are provided by the window manager.
   void SetUseNativeFrame(bool use_native_frame);
@@ -323,7 +320,7 @@ class VIEWS_EXPORT DesktopWindowTreeHostX11
   std::string workspace_;
 
   // The window manager state bits.
-  std::set< ::Atom> window_properties_;
+  base::flat_set<::Atom> window_properties_;
 
   // Whether |xwindow_| was requested to be fullscreen via SetFullscreen().
   bool is_fullscreen_;

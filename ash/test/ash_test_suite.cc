@@ -10,7 +10,6 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/i18n/rtl.h"
-#include "base/metrics/statistics_recorder.h"
 #include "base/path_service.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -30,8 +29,6 @@ AshTestSuite::~AshTestSuite() = default;
 
 void AshTestSuite::Initialize() {
   base::TestSuite::Initialize();
-  // Ensure histograms hit during tests are registered properly.
-  base::StatisticsRecorder::Initialize();
   gl::GLSurfaceTestSupport::InitializeOneOff();
 
   gfx::RegisterPathProvider();
@@ -76,8 +73,9 @@ void AshTestSuite::Initialize() {
     env_->set_context_factory(context_factory_.get());
     env_->set_context_factory_private(nullptr);
     // mus needs to host viz, because ash by itself cannot.
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kMus, switches::kMusHostVizValue);
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(switches::kMus);
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kMusHostingViz);
   }
 }
 

@@ -9,16 +9,22 @@
 #include <limits>
 #include <string>
 
+#include "base/build_time.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/platform_thread.h"
+#include "base/time/time_override.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-#if defined(OS_IOS)
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#elif defined(OS_IOS)
 #include "base/ios/ios_util.h"
+#elif defined(OS_WIN)
+#include <windows.h>
 #endif
 
 namespace base {
@@ -114,6 +120,26 @@ class TimeTest : public testing::Test {
   Time comparison_time_local_;
   Time comparison_time_pdt_;
 };
+
+// Test conversion to/from TimeDeltas elapsed since the Windows epoch.
+// Conversions should be idempotent and non-lossy.
+TEST_F(TimeTest, DeltaSinceWindowsEpoch) {
+  const TimeDelta delta = TimeDelta::FromMicroseconds(123);
+  EXPECT_EQ(delta,
+            Time::FromDeltaSinceWindowsEpoch(delta).ToDeltaSinceWindowsEpoch());
+
+  const Time now = Time::Now();
+  const Time actual =
+      Time::FromDeltaSinceWindowsEpoch(now.ToDeltaSinceWindowsEpoch());
+  EXPECT_EQ(now, actual);
+
+  // Null times should remain null after a round-trip conversion. This is an
+  // important invariant for the common use case of serialization +
+  // deserialization.
+  const Time should_be_null =
+      Time::FromDeltaSinceWindowsEpoch(Time().ToDeltaSinceWindowsEpoch());
+  EXPECT_TRUE(should_be_null.is_null());
+}
 
 // Test conversion to/from time_t.
 TEST_F(TimeTest, TimeT) {
@@ -726,6 +752,73 @@ TEST_F(TimeTest, FromExploded_MinMax) {
   }
 }
 
+class TimeOverride {
+ public:
+  static Time Now() {
+    now_time_ += TimeDelta::FromSeconds(1);
+    return now_time_;
+  }
+
+  static Time now_time_;
+};
+
+// static
+Time TimeOverride::now_time_;
+
+TEST_F(TimeTest, NowOverride) {
+  TimeOverride::now_time_ = Time::UnixEpoch();
+
+  // Choose a reference time that we know to be in the past but close to now.
+  Time build_time = GetBuildTime();
+
+  // Override is not active. All Now() methods should return a time greater than
+  // the build time.
+  EXPECT_LT(build_time, Time::Now());
+  EXPECT_GT(Time::Max(), Time::Now());
+  EXPECT_LT(build_time, subtle::TimeNowIgnoringOverride());
+  EXPECT_GT(Time::Max(), subtle::TimeNowIgnoringOverride());
+  EXPECT_LT(build_time, Time::NowFromSystemTime());
+  EXPECT_GT(Time::Max(), Time::NowFromSystemTime());
+  EXPECT_LT(build_time, subtle::TimeNowFromSystemTimeIgnoringOverride());
+  EXPECT_GT(Time::Max(), subtle::TimeNowFromSystemTimeIgnoringOverride());
+
+  {
+    // Set override.
+    subtle::ScopedTimeClockOverrides overrides(&TimeOverride::Now, nullptr,
+                                               nullptr);
+
+    // Overridden value is returned and incremented when Now() or
+    // NowFromSystemTime() is called.
+    EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(1), Time::Now());
+    EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(2), Time::Now());
+    EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(3),
+              Time::NowFromSystemTime());
+    EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(4),
+              Time::NowFromSystemTime());
+
+    // IgnoringOverride methods still return real time.
+    EXPECT_LT(build_time, subtle::TimeNowIgnoringOverride());
+    EXPECT_GT(Time::Max(), subtle::TimeNowIgnoringOverride());
+    EXPECT_LT(build_time, subtle::TimeNowFromSystemTimeIgnoringOverride());
+    EXPECT_GT(Time::Max(), subtle::TimeNowFromSystemTimeIgnoringOverride());
+
+    // IgnoringOverride methods didn't call NowOverrideClock::Now().
+    EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(5), Time::Now());
+    EXPECT_EQ(Time::UnixEpoch() + TimeDelta::FromSeconds(6),
+              Time::NowFromSystemTime());
+  }
+
+  // All methods return real time again.
+  EXPECT_LT(build_time, Time::Now());
+  EXPECT_GT(Time::Max(), Time::Now());
+  EXPECT_LT(build_time, subtle::TimeNowIgnoringOverride());
+  EXPECT_GT(Time::Max(), subtle::TimeNowIgnoringOverride());
+  EXPECT_LT(build_time, Time::NowFromSystemTime());
+  EXPECT_GT(Time::Max(), Time::NowFromSystemTime());
+  EXPECT_LT(build_time, subtle::TimeNowFromSystemTimeIgnoringOverride());
+  EXPECT_GT(Time::Max(), subtle::TimeNowFromSystemTimeIgnoringOverride());
+}
+
 TEST(TimeTicks, Deltas) {
   for (int index = 0; index < 50; index++) {
     TimeTicks ticks_start = TimeTicks::Now();
@@ -792,6 +885,109 @@ static void HighResClockTest(TimeTicks (*GetTicks)()) {
 
 TEST(TimeTicks, HighRes) {
   HighResClockTest(&TimeTicks::Now);
+}
+
+class TimeTicksOverride {
+ public:
+  static TimeTicks Now() {
+    now_ticks_ += TimeDelta::FromSeconds(1);
+    return now_ticks_;
+  }
+
+  static TimeTicks now_ticks_;
+};
+
+// static
+TimeTicks TimeTicksOverride::now_ticks_;
+
+TEST(TimeTicks, NowOverride) {
+  TimeTicksOverride::now_ticks_ = TimeTicks::Min();
+
+  // Override is not active. All Now() methods should return a sensible value.
+  EXPECT_LT(TimeTicks::Min(), TimeTicks::UnixEpoch());
+  EXPECT_LT(TimeTicks::UnixEpoch(), TimeTicks::Now());
+  EXPECT_GT(TimeTicks::Max(), TimeTicks::Now());
+  EXPECT_LT(TimeTicks::UnixEpoch(), subtle::TimeTicksNowIgnoringOverride());
+  EXPECT_GT(TimeTicks::Max(), subtle::TimeTicksNowIgnoringOverride());
+
+  {
+    // Set override.
+    subtle::ScopedTimeClockOverrides overrides(nullptr, &TimeTicksOverride::Now,
+                                               nullptr);
+
+    // Overridden value is returned and incremented when Now() is called.
+    EXPECT_EQ(TimeTicks::Min() + TimeDelta::FromSeconds(1), TimeTicks::Now());
+    EXPECT_EQ(TimeTicks::Min() + TimeDelta::FromSeconds(2), TimeTicks::Now());
+
+    // NowIgnoringOverride() still returns real ticks.
+    EXPECT_LT(TimeTicks::UnixEpoch(), subtle::TimeTicksNowIgnoringOverride());
+    EXPECT_GT(TimeTicks::Max(), subtle::TimeTicksNowIgnoringOverride());
+
+    // IgnoringOverride methods didn't call NowOverrideTickClock::NowTicks().
+    EXPECT_EQ(TimeTicks::Min() + TimeDelta::FromSeconds(3), TimeTicks::Now());
+  }
+
+  // All methods return real ticks again.
+  EXPECT_LT(TimeTicks::UnixEpoch(), TimeTicks::Now());
+  EXPECT_GT(TimeTicks::Max(), TimeTicks::Now());
+  EXPECT_LT(TimeTicks::UnixEpoch(), subtle::TimeTicksNowIgnoringOverride());
+  EXPECT_GT(TimeTicks::Max(), subtle::TimeTicksNowIgnoringOverride());
+}
+
+class ThreadTicksOverride {
+ public:
+  static ThreadTicks Now() {
+    now_ticks_ += TimeDelta::FromSeconds(1);
+    return now_ticks_;
+  }
+
+  static ThreadTicks now_ticks_;
+};
+
+// static
+ThreadTicks ThreadTicksOverride::now_ticks_;
+
+// IOS doesn't support ThreadTicks::Now().
+#if defined(OS_IOS)
+#define MAYBE_NowOverride DISABLED_NowOverride
+#else
+#define MAYBE_NowOverride NowOverride
+#endif
+TEST(ThreadTicks, MAYBE_NowOverride) {
+  ThreadTicksOverride::now_ticks_ = ThreadTicks::Min();
+
+  // Override is not active. All Now() methods should return a sensible value.
+  ThreadTicks initial_thread_ticks = ThreadTicks::Now();
+  EXPECT_LE(initial_thread_ticks, ThreadTicks::Now());
+  EXPECT_GT(ThreadTicks::Max(), ThreadTicks::Now());
+  EXPECT_LE(initial_thread_ticks, subtle::ThreadTicksNowIgnoringOverride());
+  EXPECT_GT(ThreadTicks::Max(), subtle::ThreadTicksNowIgnoringOverride());
+
+  {
+    // Set override.
+    subtle::ScopedTimeClockOverrides overrides(nullptr, nullptr,
+                                               &ThreadTicksOverride::Now);
+
+    // Overridden value is returned and incremented when Now() is called.
+    EXPECT_EQ(ThreadTicks::Min() + TimeDelta::FromSeconds(1),
+              ThreadTicks::Now());
+    EXPECT_EQ(ThreadTicks::Min() + TimeDelta::FromSeconds(2),
+              ThreadTicks::Now());
+
+    // NowIgnoringOverride() still returns real ticks.
+    EXPECT_LE(initial_thread_ticks, subtle::ThreadTicksNowIgnoringOverride());
+    EXPECT_GT(ThreadTicks::Max(), subtle::ThreadTicksNowIgnoringOverride());
+
+    // IgnoringOverride methods didn't call NowOverrideTickClock::NowTicks().
+    EXPECT_EQ(ThreadTicks::Min() + TimeDelta::FromSeconds(3),
+              ThreadTicks::Now());
+  }
+
+  // All methods return real ticks again.
+  EXPECT_LE(initial_thread_ticks, ThreadTicks::Now());
+  EXPECT_GT(ThreadTicks::Max(), ThreadTicks::Now());
+  EXPECT_LE(initial_thread_ticks, subtle::ThreadTicksNowIgnoringOverride());
+  EXPECT_GT(ThreadTicks::Max(), subtle::ThreadTicksNowIgnoringOverride());
 }
 
 // Fails frequently on Android http://crbug.com/352633 with:
@@ -877,6 +1073,28 @@ TEST(TimeTicks, SnappedToNextTickOverflow) {
             big_timestamp.SnappedToNextTick(big_timestamp, interval)
                 .ToInternalValue());
 }
+
+#if defined(OS_ANDROID)
+TEST(TimeTicks, Android_FromUptimeMillis_ClocksMatch) {
+  JNIEnv* const env = android::AttachCurrentThread();
+  android::ScopedJavaLocalRef<jclass> clazz(
+      android::GetClass(env, "android/os/SystemClock"));
+  ASSERT_TRUE(clazz.obj());
+  const jmethodID method_id =
+      android::MethodID::Get<android::MethodID::TYPE_STATIC>(
+          env, clazz.obj(), "uptimeMillis", "()J");
+  ASSERT_FALSE(!method_id);
+  // Subtract 1ms from the expected lower bound to allow millisecon-level
+  // truncation performed in uptimeMillis().
+  const TimeTicks lower_bound_ticks =
+      TimeTicks::Now() - TimeDelta::FromMilliseconds(1);
+  const TimeTicks converted_ticks = TimeTicks::FromUptimeMillis(
+      env->CallStaticLongMethod(clazz.obj(), method_id));
+  const TimeTicks upper_bound_ticks = TimeTicks::Now();
+  EXPECT_LE(lower_bound_ticks, converted_ticks);
+  EXPECT_GE(upper_bound_ticks, converted_ticks);
+}
+#endif  // OS_ANDROID
 
 TEST(TimeDelta, FromAndIn) {
   // static_assert also checks that the contained expression is a constant

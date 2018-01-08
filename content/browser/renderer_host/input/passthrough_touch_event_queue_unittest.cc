@@ -42,7 +42,7 @@ base::TimeDelta DefaultTouchTimeoutDelay() {
 }  // namespace
 
 class PassthroughTouchEventQueueTest : public testing::Test,
-                                       public TouchEventQueueClient {
+                                       public PassthroughTouchEventQueueClient {
  public:
   PassthroughTouchEventQueueTest()
       : scoped_task_environment_(
@@ -55,13 +55,13 @@ class PassthroughTouchEventQueueTest : public testing::Test,
 
   // testing::Test
   void SetUp() override {
-    ResetQueueWithConfig(TouchEventQueue::Config());
+    ResetQueueWithConfig(PassthroughTouchEventQueue::Config());
     sent_events_ids_.clear();
   }
 
   void TearDown() override { queue_.reset(); }
 
-  // TouchEventQueueClient
+  // PassthroughTouchEventQueueClient
   void SendTouchEventImmediately(
       const TouchEventWithLatencyInfo& event) override {
     sent_events_.push_back(event.event);
@@ -102,7 +102,7 @@ class PassthroughTouchEventQueueTest : public testing::Test,
 
   void SetUpForTimeoutTesting(base::TimeDelta desktop_timeout_delay,
                               base::TimeDelta mobile_timeout_delay) {
-    TouchEventQueue::Config config;
+    PassthroughTouchEventQueue::Config config;
     config.desktop_touch_ack_timeout_delay = desktop_timeout_delay;
     config.mobile_touch_ack_timeout_delay = mobile_timeout_delay;
     config.touch_ack_timeout_supported = true;
@@ -325,7 +325,7 @@ class PassthroughTouchEventQueueTest : public testing::Test,
     touch_event_.ResetPoints();
   }
 
-  void ResetQueueWithConfig(const TouchEventQueue::Config& config) {
+  void ResetQueueWithConfig(const PassthroughTouchEventQueue::Config& config) {
     queue_.reset(new PassthroughTouchEventQueue(this, config));
     queue_->OnHasTouchEventHandlers(true);
   }
@@ -1685,7 +1685,7 @@ TEST_F(PassthroughTouchEventQueueTest, FilterTouchMovesWhenNoPointerChanged) {
 
   // Do not really move any touch points, but use previous values.
   MoveTouchPoint(0, 10, 10);
-  ChangeTouchPointRadius(1, 1, 1);
+  ChangeTouchPointRadius(1, 20, 20);
   MoveTouchPoint(1, 2, 2);
   EXPECT_EQ(4U, queued_event_count());
   EXPECT_EQ(0U, GetAndResetSentEventCount());

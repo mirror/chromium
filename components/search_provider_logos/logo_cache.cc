@@ -7,12 +7,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
 #include <utility>
 
 #include "base/files/file_util.h"
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 
@@ -32,6 +32,8 @@ const char kAltTextKey[] = "alt_text";
 const char kMimeTypeKey[] = "mime_type";
 const char kNumBytesKey[] = "num_bytes";
 const char kAnimatedUrlKey[] = "animated_url";
+const char kLogUrlKey[] = "log_url";
+const char kCtaLogUrlKey[] = "cta_log_url";
 
 const char kSimpleType[] = "SIMPLE";
 const char kAnimatedType[] = "ANIMATED";
@@ -103,7 +105,7 @@ void LogoCache::UpdateCachedLogoMetadata(const LogoMetadata& metadata) {
   DCHECK(metadata_);
   DCHECK_EQ(metadata_->fingerprint, metadata.fingerprint);
 
-  UpdateMetadata(base::MakeUnique<LogoMetadata>(metadata));
+  UpdateMetadata(std::make_unique<LogoMetadata>(metadata));
   WriteMetadata();
 }
 
@@ -117,7 +119,7 @@ void LogoCache::SetCachedLogo(const EncodedLogo* logo) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   std::unique_ptr<LogoMetadata> metadata;
   if (logo) {
-    metadata = base::MakeUnique<LogoMetadata>(logo->metadata);
+    metadata = std::make_unique<LogoMetadata>(logo->metadata);
     logo_num_bytes_ = static_cast<int>(logo->encoded_image->size());
   }
   UpdateMetadata(std::move(metadata));
@@ -166,6 +168,8 @@ std::unique_ptr<LogoMetadata> LogoCache::LogoMetadataFromString(
   std::string on_click_url;
   std::string full_page_url;
   std::string animated_url;
+  std::string log_url;
+  std::string cta_log_url;
   if (!dict->GetString(kSourceUrlKey, &source_url) ||
       !dict->GetString(kFingerprintKey, &metadata->fingerprint) ||
       !dict->GetString(kTypeKey, &type) ||
@@ -173,6 +177,8 @@ std::unique_ptr<LogoMetadata> LogoCache::LogoMetadataFromString(
       !dict->GetString(kFullPageURLKey, &full_page_url) ||
       !dict->GetString(kAltTextKey, &metadata->alt_text) ||
       !dict->GetString(kAnimatedUrlKey, &animated_url) ||
+      !dict->GetString(kLogUrlKey, &log_url) ||
+      !dict->GetString(kCtaLogUrlKey, &cta_log_url) ||
       !dict->GetString(kMimeTypeKey, &metadata->mime_type) ||
       !dict->GetBoolean(kCanShowAfterExpirationKey,
                         &metadata->can_show_after_expiration) ||
@@ -185,6 +191,8 @@ std::unique_ptr<LogoMetadata> LogoCache::LogoMetadataFromString(
   metadata->on_click_url = GURL(on_click_url);
   metadata->full_page_url = GURL(full_page_url);
   metadata->animated_url = GURL(animated_url);
+  metadata->log_url = GURL(log_url);
+  metadata->cta_log_url = GURL(cta_log_url);
 
   return metadata;
 }
@@ -201,6 +209,8 @@ void LogoCache::LogoMetadataToString(const LogoMetadata& metadata,
   dict.SetString(kFullPageURLKey, metadata.full_page_url.spec());
   dict.SetString(kAltTextKey, metadata.alt_text);
   dict.SetString(kAnimatedUrlKey, metadata.animated_url.spec());
+  dict.SetString(kLogUrlKey, metadata.log_url.spec());
+  dict.SetString(kCtaLogUrlKey, metadata.cta_log_url.spec());
   dict.SetString(kMimeTypeKey, metadata.mime_type);
   dict.SetBoolean(kCanShowAfterExpirationKey,
                   metadata.can_show_after_expiration);

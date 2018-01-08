@@ -85,7 +85,7 @@ class PLATFORM_EXPORT TimerBase {
   double RepeatInterval() const { return RepeatIntervalDelta().InSecondsF(); }
 
   void AugmentRepeatInterval(TimeDelta delta) {
-    TimeTicks now = TimerCurrentTimeTicksInSeconds();
+    TimeTicks now = TimerCurrentTimeTicks();
     SetNextFireTime(now, std::max(next_fire_time_ - now + delta, TimeDelta()));
     repeat_interval_ += delta;
   }
@@ -110,7 +110,7 @@ class PLATFORM_EXPORT TimerBase {
   NO_SANITIZE_ADDRESS
   virtual bool CanFire() const { return true; }
 
-  TimeTicks TimerCurrentTimeTicksInSeconds() const;
+  TimeTicks TimerCurrentTimeTicks() const;
 
   void SetNextFireTime(TimeTicks now, TimeDelta delay);
 
@@ -155,7 +155,7 @@ class TaskRunnerTimer : public TimerBase {
                   TimerFiredFunction f)
       : TimerBase(std::move(web_task_runner)), object_(o), function_(f) {}
 
-  ~TaskRunnerTimer() override {}
+  ~TaskRunnerTimer() override = default;
 
  protected:
   void Fired() override { (object_->*function_)(this); }
@@ -186,7 +186,7 @@ class Timer : public TaskRunnerTimer<TimerFiredClass> {
   using TimerFiredFunction =
       typename TaskRunnerTimer<TimerFiredClass>::TimerFiredFunction;
 
-  ~Timer() override {}
+  ~Timer() override = default;
 
   Timer(TimerFiredClass* timer_fired_class,
         TimerFiredFunction timer_fired_function)

@@ -201,6 +201,9 @@ class ExpireHistoryBackend {
   // any now-unused favicons.
   void ExpireURLsForVisits(const VisitVector& visits, DeleteEffects* effects);
 
+  void ExpireVisitsInternal(const VisitVector& visits,
+                            const DeletionTimeRange& time_range);
+
   // Deletes the favicons listed in |effects->affected_favicons| if they are
   // unsued. Fails silently (we don't care about favicons so much, so don't want
   // to stop everything if it fails). Fills |expired_favicons| with the set of
@@ -218,7 +221,9 @@ class ExpireHistoryBackend {
   };
 
   // Broadcasts URL modified and deleted notifications.
-  void BroadcastNotifications(DeleteEffects* effects, DeletionType type);
+  void BroadcastNotifications(DeleteEffects* effects,
+                              DeletionType type,
+                              const DeletionTimeRange& time_range);
 
   // Schedules a call to DoExpireIteration.
   void ScheduleExpire();
@@ -228,8 +233,10 @@ class ExpireHistoryBackend {
   // future.
   void DoExpireIteration();
 
-  // Clears all old on-demand favicons from thumbnail database.
-  void ClearOldOnDemandFavicons(base::Time expiration_threshold);
+  // Clears all old on-demand favicons from thumbnail database. Fails silently
+  // (we don't care about favicons so much, so don't want to stop everything if
+  // it fails).
+  void ClearOldOnDemandFaviconsIfPossible(base::Time expiration_threshold);
 
   // Tries to expire the oldest |max_visits| visits from history that are older
   // than |time_threshold|. The return value indicates if we think there might

@@ -6,7 +6,7 @@
 
 #include <utility>
 
-namespace app_list {
+#include "chrome/browser/ui/app_list/chrome_app_list_item.h"
 
 FakeAppListModelUpdater::FakeAppListModelUpdater() {}
 
@@ -19,7 +19,8 @@ void FakeAppListModelUpdater::AddItem(std::unique_ptr<ChromeAppListItem> item) {
 void FakeAppListModelUpdater::AddItemToFolder(
     std::unique_ptr<ChromeAppListItem> item,
     const std::string& folder_id) {
-  item->set_folder_id(folder_id);
+  ChromeAppListItem::TestApi test_api(item.get());
+  test_api.SetFolderId(folder_id);
   items_.push_back(std::move(item));
 }
 
@@ -36,16 +37,20 @@ void FakeAppListModelUpdater::RemoveUninstalledItem(const std::string& id) {
 void FakeAppListModelUpdater::MoveItemToFolder(const std::string& id,
                                                const std::string& folder_id) {
   size_t index;
-  if (FindItemIndexForTest(id, &index))
-    items_[index]->set_folder_id(folder_id);
+  if (FindItemIndexForTest(id, &index)) {
+    ChromeAppListItem::TestApi test_api(items_[index].get());
+    test_api.SetFolderId(folder_id);
+  }
 }
 
 void FakeAppListModelUpdater::SetItemPosition(
     const std::string& id,
     const syncer::StringOrdinal& new_position) {
   size_t index;
-  if (FindItemIndexForTest(id, &index))
-    items_[index]->set_position(new_position);
+  if (FindItemIndexForTest(id, &index)) {
+    ChromeAppListItem::TestApi test_api(items_[index].get());
+    test_api.SetPosition(new_position);
+  }
 }
 
 void FakeAppListModelUpdater::SetSearchEngineIsGoogle(bool is_google) {
@@ -78,29 +83,29 @@ bool FakeAppListModelUpdater::FindItemIndexForTest(const std::string& id,
   return false;
 }
 
-AppListFolderItem* FakeAppListModelUpdater::FindFolderItem(
+ChromeAppListItem* FakeAppListModelUpdater::FindFolderItem(
     const std::string& folder_id) {
-  return nullptr;
+  ChromeAppListItem* item = FindItem(folder_id);
+  return (item && item->is_folder()) ? item : nullptr;
 }
 
-bool FakeAppListModelUpdater::TabletMode() {
-  return false;
-}
-
-app_list::AppListViewState FakeAppListModelUpdater::StateFullscreen() {
-  return app_list::AppListViewState::CLOSED;
-}
-
-std::map<std::string, size_t>
-FakeAppListModelUpdater::GetIdToAppListIndexMap() {
-  std::map<std::string, size_t> id_to_app_list_index;
+void FakeAppListModelUpdater::GetIdToAppListIndexMap(
+    GetIdToAppListIndexMapCallback callback) {
+  std::unordered_map<std::string, size_t> id_to_app_list_index;
   for (size_t i = 0; i < items_.size(); ++i)
     id_to_app_list_index[items_[i]->id()] = i;
-  return id_to_app_list_index;
+  std::move(callback).Run(id_to_app_list_index);
+}
+
+size_t FakeAppListModelUpdater::BadgedItemCount() {
+  return 0u;
 }
 
 bool FakeAppListModelUpdater::SearchEngineIsGoogle() {
   return search_engine_is_google_;
 }
 
-}  // namespace app_list
+void FakeAppListModelUpdater::PublishSearchResults(
+    std::vector<std::unique_ptr<app_list::SearchResult>> results) {
+  search_results_ = std::move(results);
+}

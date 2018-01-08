@@ -31,8 +31,7 @@ import org.chromium.net.test.EmbeddedTestServer;
 
 /** Test suite for Web Share (navigator.share) functionality. */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
 public class WebShareTest {
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
@@ -255,7 +254,7 @@ public class WebShareTest {
             @Override
             public void onCustomChooserShown(AlertDialog dialog) {
                 // Click on an app (it doesn't matter which, because we will hook the intent).
-                assert dialog.getListView().getCount() > 0;
+                Assert.assertTrue(dialog.getListView().getCount() > 0);
                 dialog
                     .getListView()
                     .performItemClick(null, 0, dialog.getListView().getItemIdAtPosition(0));

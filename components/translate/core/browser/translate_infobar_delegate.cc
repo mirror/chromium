@@ -56,7 +56,7 @@ TranslateInfoBarDelegate::~TranslateInfoBarDelegate() {
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 TranslateInfoBarDelegate::GetIdentifier() const {
-  return TRANSLATE_INFOBAR_DELEGATE;
+  return TRANSLATE_INFOBAR_DELEGATE_NON_AURA;
 }
 
 // static
@@ -402,11 +402,6 @@ TranslateInfoBarDelegate::TranslateInfoBarDelegate(
   DCHECK_NE((step_ == translate::TRANSLATE_STEP_TRANSLATE_ERROR),
             (error_type_ == TranslateErrors::NONE));
   DCHECK(translate_manager_);
-}
-
-infobars::InfoBarDelegate::Type
-TranslateInfoBarDelegate::GetInfoBarType() const {
-  return PAGE_ACTION_TYPE;
 }
 
 int TranslateInfoBarDelegate::GetIconId() const {

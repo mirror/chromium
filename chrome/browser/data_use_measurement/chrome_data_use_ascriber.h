@@ -12,6 +12,7 @@
 #include <tuple>
 #include <utility>
 
+#include "base/feature_list.h"
 #include "base/hash.h"
 #include "base/macros.h"
 #include "base/supports_user_data.h"
@@ -26,6 +27,9 @@ class RenderFrameHost;
 }
 
 namespace data_use_measurement {
+
+// Disables data use ascriber if data saver is disabled.
+extern const base::Feature kDisableAscriberIfDataSaverDisabled;
 
 class URLRequestClassifier;
 
@@ -59,8 +63,7 @@ class ChromeDataUseAscriber : public DataUseAscriber {
       net::URLRequest* request) override;
   ChromeDataUseRecorder* GetDataUseRecorder(
       const net::URLRequest& request) override;
-  void OnUrlRequestCompleted(const net::URLRequest& request,
-                             bool started) override;
+  void OnUrlRequestCompleted(net::URLRequest* request, bool started) override;
   void OnUrlRequestDestroyed(net::URLRequest* request) override;
   std::unique_ptr<URLRequestClassifier> CreateURLRequestClassifier()
       const override;
@@ -112,6 +115,8 @@ class ChromeDataUseAscriber : public DataUseAscriber {
 
  private:
   friend class ChromeDataUseAscriberTest;
+
+  void OnUrlRequestCompletedOrDestroyed(net::URLRequest* request);
 
   // Entry in the |data_use_recorders_| list which owns all instances of
   // DataUseRecorder. std::list is used so that iterators remain valid until the
@@ -180,6 +185,11 @@ class ChromeDataUseAscriber : public DataUseAscriber {
   void AscribeRecorderWithRequest(net::URLRequest* request,
                                   DataUseRecorderEntry entry);
 
+  void DisableAscriber() override;
+
+  // Returns true if data use ascriber is disabled.
+  bool IsDisabled() const;
+
   // Owner for all instances of DataUseRecorder. An instance is kept in this
   // list if any entity (render frame hosts, URLRequests, pending navigations)
   // that ascribe data use to the instance exists, and deleted when all
@@ -201,6 +211,13 @@ class ChromeDataUseAscriber : public DataUseAscriber {
   // |data_use_recorders_| that the navigation ascribes data use to.
   std::map<content::GlobalRequestID, DataUseRecorderEntry>
       pending_navigation_data_use_map_;
+
+  // Detects heavy pages. Can be null when the feature is disabled.
+  std::unique_ptr<DataUseAscriber::PageLoadObserver> page_capping_observer_;
+
+  // True if the dtaa use ascriber should be disabled. The ascriber is enabled
+  // by default.
+  bool disable_ascriber_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeDataUseAscriber);
 };

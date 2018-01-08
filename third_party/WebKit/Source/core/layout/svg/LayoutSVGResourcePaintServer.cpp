@@ -98,6 +98,7 @@ static SVGPaintDescription RequestPaint(const LayoutObject& object,
       color = apply_to_fill ? svg_style.FillPaintColor()
                             : svg_style.StrokePaintColor();
       has_color = true;
+      break;
     default:
       break;
   }
@@ -187,7 +188,7 @@ bool SVGPaintServer::ExistsForLayoutObject(
 LayoutSVGResourcePaintServer::LayoutSVGResourcePaintServer(SVGElement* element)
     : LayoutSVGResourceContainer(element) {}
 
-LayoutSVGResourcePaintServer::~LayoutSVGResourcePaintServer() {}
+LayoutSVGResourcePaintServer::~LayoutSVGResourcePaintServer() = default;
 
 SVGPaintDescription LayoutSVGResourcePaintServer::RequestPaintDescription(
     const LayoutObject& layout_object,

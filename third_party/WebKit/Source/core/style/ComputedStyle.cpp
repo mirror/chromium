@@ -1003,9 +1003,11 @@ void ComputedStyle::ApplyMotionPathTransform(
     point.SetX(float_distance * cos(deg2rad(angle)));
     point.SetY(float_distance * sin(deg2rad(angle)));
   } else {
+    float zoom = EffectiveZoom();
     const StylePath& motion_path = ToStylePath(*path);
     float path_length = motion_path.length();
-    float float_distance = FloatValueForLength(distance, path_length);
+    float float_distance =
+        FloatValueForLength(distance, path_length * zoom) / zoom;
     float computed_distance;
     if (motion_path.IsClosed() && path_length > 0) {
       computed_distance = fmod(float_distance, path_length);
@@ -1017,27 +1019,29 @@ void ComputedStyle::ApplyMotionPathTransform(
 
     motion_path.GetPath().PointAndNormalAtLength(computed_distance, point,
                                                  angle);
+
+    point.Scale(zoom, zoom);
   }
 
-  if (rotate.type == kOffsetRotationFixed)
+  if (rotate.type == OffsetRotationType::kFixed)
     angle = 0;
 
   float origin_shift_x = 0;
   float origin_shift_y = 0;
   // If the offset-position and offset-anchor properties are not yet enabled,
   // they will have the default value, auto.
+  FloatPoint anchor_point(origin_x, origin_y);
   if (!position.X().IsAuto() || !anchor.X().IsAuto()) {
+    anchor_point = FloatPointForLengthPoint(anchor, bounding_box.Size());
+    anchor_point += bounding_box.Location();
+
     // Shift the origin from transform-origin to offset-anchor.
-    origin_shift_x =
-        FloatValueForLength(anchor.X(), bounding_box.Width()) -
-        FloatValueForLength(TransformOriginX(), bounding_box.Width());
-    origin_shift_y =
-        FloatValueForLength(anchor.Y(), bounding_box.Height()) -
-        FloatValueForLength(TransformOriginY(), bounding_box.Height());
+    origin_shift_x = anchor_point.X() - origin_x;
+    origin_shift_y = anchor_point.Y() - origin_y;
   }
 
-  transform.Translate(point.X() - origin_x + origin_shift_x,
-                      point.Y() - origin_y + origin_shift_y);
+  transform.Translate(point.X() - anchor_point.X() + origin_shift_x,
+                      point.Y() - anchor_point.Y() + origin_shift_y);
   transform.Rotate(angle + rotate.angle);
 
   if (!position.X().IsAuto() || !anchor.X().IsAuto())
@@ -1047,26 +1051,6 @@ void ComputedStyle::ApplyMotionPathTransform(
 
 bool ComputedStyle::TextShadowDataEquivalent(const ComputedStyle& other) const {
   return DataEquivalent(TextShadow(), other.TextShadow());
-}
-
-static FloatRoundedRect::Radii CalcRadiiFor(const LengthSize& top_left,
-                                            const LengthSize& top_right,
-                                            const LengthSize& bottom_left,
-                                            const LengthSize& bottom_right,
-                                            LayoutSize size) {
-  return FloatRoundedRect::Radii(
-      FloatSize(
-          FloatValueForLength(top_left.Width(), size.Width().ToFloat()),
-          FloatValueForLength(top_left.Height(), size.Height().ToFloat())),
-      FloatSize(
-          FloatValueForLength(top_right.Width(), size.Width().ToFloat()),
-          FloatValueForLength(top_right.Height(), size.Height().ToFloat())),
-      FloatSize(
-          FloatValueForLength(bottom_left.Width(), size.Width().ToFloat()),
-          FloatValueForLength(bottom_left.Height(), size.Height().ToFloat())),
-      FloatSize(
-          FloatValueForLength(bottom_right.Width(), size.Width().ToFloat()),
-          FloatValueForLength(bottom_right.Height(), size.Height().ToFloat())));
 }
 
 StyleImage* ComputedStyle::ListStyleImage() const {
@@ -1083,6 +1067,17 @@ void ComputedStyle::SetColor(const Color& v) {
   SetColorInternal(v);
 }
 
+static FloatRoundedRect::Radii CalcRadiiFor(const LengthSize& top_left,
+                                            const LengthSize& top_right,
+                                            const LengthSize& bottom_left,
+                                            const LengthSize& bottom_right,
+                                            FloatSize size) {
+  return FloatRoundedRect::Radii(FloatSizeForLengthSize(top_left, size),
+                                 FloatSizeForLengthSize(top_right, size),
+                                 FloatSizeForLengthSize(bottom_left, size),
+                                 FloatSizeForLengthSize(bottom_right, size));
+}
+
 FloatRoundedRect ComputedStyle::GetRoundedBorderFor(
     const LayoutRect& border_rect,
     bool include_logical_left_edge,
@@ -1091,7 +1086,7 @@ FloatRoundedRect ComputedStyle::GetRoundedBorderFor(
   if (HasBorderRadius()) {
     FloatRoundedRect::Radii radii = CalcRadiiFor(
         BorderTopLeftRadius(), BorderTopRightRadius(), BorderBottomLeftRadius(),
-        BorderBottomRightRadius(), border_rect.Size());
+        BorderBottomRightRadius(), FloatSize(border_rect.Size()));
     rounded_rect.IncludeLogicalEdges(radii, IsHorizontalWritingMode(),
                                      include_logical_left_edge,
                                      include_logical_right_edge);
@@ -1357,6 +1352,26 @@ const AtomicString& ComputedStyle::TextEmphasisMarkString() const {
 
   NOTREACHED();
   return g_null_atom;
+}
+
+LineLogicalSide ComputedStyle::GetTextEmphasisLineLogicalSide() const {
+  TextEmphasisPosition position = GetTextEmphasisPosition();
+  if (IsHorizontalWritingMode()) {
+    return position == TextEmphasisPosition::kOverRight ||
+                   position == TextEmphasisPosition::kOverLeft
+               ? LineLogicalSide::kOver
+               : LineLogicalSide::kUnder;
+  }
+  if (GetWritingMode() != WritingMode::kSidewaysLr) {
+    return position == TextEmphasisPosition::kOverRight ||
+                   position == TextEmphasisPosition::kUnderRight
+               ? LineLogicalSide::kOver
+               : LineLogicalSide::kUnder;
+  }
+  return position == TextEmphasisPosition::kOverLeft ||
+                 position == TextEmphasisPosition::kUnderLeft
+             ? LineLogicalSide::kOver
+             : LineLogicalSide::kUnder;
 }
 
 CSSAnimationData& ComputedStyle::AccessAnimations() {
@@ -1673,7 +1688,8 @@ void ComputedStyle::SetTextAutosizingMultiplier(float multiplier) {
 
   float autosized_font_size =
       TextAutosizer::ComputeAutosizedFontSize(size, multiplier);
-  desc.SetComputedSize(std::min(kMaximumAllowedFontSize, autosized_font_size));
+  float computed_size = autosized_font_size * EffectiveZoom();
+  desc.SetComputedSize(std::min(kMaximumAllowedFontSize, computed_size));
 
   SetFontDescription(desc);
   GetFont().Update(current_font_selector);
@@ -1761,7 +1777,7 @@ void ComputedStyle::RestoreParentTextDecorations(
 }
 
 void ComputedStyle::ClearMultiCol() {
-  SetColumnGapInternal(ComputedStyleInitialValues::InitialColumnGap());
+  SetColumnGap(ComputedStyleInitialValues::InitialColumnGap());
   SetColumnWidthInternal(ComputedStyleInitialValues::InitialColumnWidth());
   SetColumnRuleStyle(ComputedStyleInitialValues::InitialColumnRuleStyle());
   SetColumnRuleWidthInternal(
@@ -1778,8 +1794,6 @@ void ComputedStyle::ClearMultiCol() {
   SetHasAutoColumnWidthInternal(
       ComputedStyleInitialValues::InitialHasAutoColumnWidth());
   ResetColumnFill();
-  SetHasNormalColumnGapInternal(
-      ComputedStyleInitialValues::InitialHasNormalColumnGap());
   ResetColumnSpan();
 }
 
@@ -1938,7 +1952,8 @@ bool ComputedStyle::BorderObscuresBackground() const {
   BorderEdge edges[4];
   GetBorderEdgeInfo(edges);
 
-  for (int i = kBSTop; i <= kBSLeft; ++i) {
+  for (unsigned int i = static_cast<unsigned>(BoxSide::kTop);
+       i <= static_cast<unsigned>(BoxSide::kLeft); ++i) {
     const BorderEdge& curr_edge = edges[i];
     if (!curr_edge.ObscuresBackground())
       return false;
@@ -1952,21 +1967,21 @@ void ComputedStyle::GetBorderEdgeInfo(BorderEdge edges[],
                                       bool include_logical_right_edge) const {
   bool horizontal = IsHorizontalWritingMode();
 
-  edges[kBSTop] = BorderEdge(
+  edges[static_cast<unsigned>(BoxSide::kTop)] = BorderEdge(
       BorderTopWidth(), VisitedDependentColor(GetCSSPropertyBorderTopColor()),
       BorderTopStyle(), horizontal || include_logical_left_edge);
 
-  edges[kBSRight] =
+  edges[static_cast<unsigned>(BoxSide::kRight)] =
       BorderEdge(BorderRightWidth(),
                  VisitedDependentColor(GetCSSPropertyBorderRightColor()),
                  BorderRightStyle(), !horizontal || include_logical_right_edge);
 
-  edges[kBSBottom] =
+  edges[static_cast<unsigned>(BoxSide::kBottom)] =
       BorderEdge(BorderBottomWidth(),
                  VisitedDependentColor(GetCSSPropertyBorderBottomColor()),
                  BorderBottomStyle(), horizontal || include_logical_right_edge);
 
-  edges[kBSLeft] = BorderEdge(
+  edges[static_cast<unsigned>(BoxSide::kLeft)] = BorderEdge(
       BorderLeftWidth(), VisitedDependentColor(GetCSSPropertyBorderLeftColor()),
       BorderLeftStyle(), !horizontal || include_logical_left_edge);
 }

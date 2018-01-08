@@ -23,7 +23,6 @@
 #include "base/sys_byteorder.h"
 #include "base/task_runner_util.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -386,6 +385,8 @@ void FFmpegDemuxerStream::EnqueuePacket(ScopedAVPacket packet) {
   }
 #endif
 
+  const bool is_audio = type() == AUDIO;
+
   scoped_refptr<DecoderBuffer> buffer;
 
   if (type() == DemuxerStream::TEXT) {
@@ -451,11 +452,15 @@ void FFmpegDemuxerStream::EnqueuePacket(ScopedAVPacket packet) {
 
       const int discard_end_samples =
           base::ByteSwapToLE32(*(skip_samples_ptr + kSkipEndSamplesOffset));
-      const int samples_per_second =
-          audio_decoder_config().samples_per_second();
-      buffer->set_discard_padding(std::make_pair(
-          FramesToTimeDelta(discard_front_samples, samples_per_second),
-          FramesToTimeDelta(discard_end_samples, samples_per_second)));
+
+      if (discard_front_samples || discard_end_samples) {
+        DCHECK(is_audio);
+        const int samples_per_second =
+            audio_decoder_config().samples_per_second();
+        buffer->set_discard_padding(std::make_pair(
+            FramesToTimeDelta(discard_front_samples, samples_per_second),
+            FramesToTimeDelta(discard_end_samples, samples_per_second)));
+      }
     }
 
     if (decrypt_config)
@@ -482,8 +487,6 @@ void FFmpegDemuxerStream::EnqueuePacket(ScopedAVPacket packet) {
     demuxer_->NotifyDemuxerError(DEMUXER_ERROR_COULD_NOT_PARSE);
     return;
   }
-
-  const bool is_audio = type() == AUDIO;
 
   // If this file has negative timestamps don't rebase any other stream types
   // against the negative starting time.

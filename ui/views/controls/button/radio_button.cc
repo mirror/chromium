@@ -75,7 +75,7 @@ const char* RadioButton::GetClassName() const {
 
 void RadioButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   Checkbox::GetAccessibleNodeData(node_data);
-  node_data->role = ui::AX_ROLE_RADIO_BUTTON;
+  node_data->role = ax::mojom::Role::kRadioButton;
 }
 
 View* RadioButton::GetSelectedViewForGroup(int group) {
@@ -102,6 +102,18 @@ bool RadioButton::IsGroupFocusTraversable() const {
 void RadioButton::OnFocus() {
   Checkbox::OnFocus();
   SetChecked(true);
+}
+
+void RadioButton::RequestFocusFromEvent() {
+  Checkbox::RequestFocusFromEvent();
+  // Take focus only if another radio button in the group has focus.
+  Views views;
+  GetWidget()->GetRootView()->GetViewsInGroup(GetGroup(), &views);
+  if (std::find_if(views.begin(), views.end(), [](View* v) -> bool {
+        return v->HasFocus();
+      }) != views.end()) {
+    RequestFocus();
+  }
 }
 
 void RadioButton::NotifyClick(const ui::Event& event) {

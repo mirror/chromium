@@ -40,7 +40,7 @@
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/layout/LayoutEmbeddedContent.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
@@ -238,7 +238,7 @@ InspectorLayerTreeAgent::InspectorLayerTreeAgent(
       client_(client),
       suppress_layer_paint_events_(false) {}
 
-InspectorLayerTreeAgent::~InspectorLayerTreeAgent() {}
+InspectorLayerTreeAgent::~InspectorLayerTreeAgent() = default;
 
 void InspectorLayerTreeAgent::Trace(blink::Visitor* visitor) {
   visitor->Trace(inspected_frames_);
@@ -331,14 +331,15 @@ void InspectorLayerTreeAgent::BuildLayerIdToNodeIdMap(
     BuildLayerIdToNodeIdMap(child, layer_id_to_node_id_map);
   if (!root->GetLayoutObject().IsLayoutIFrame())
     return;
-  LocalFrameView* child_frame_view =
+  FrameView* child_frame_view =
       ToLayoutEmbeddedContent(root->GetLayoutObject()).ChildFrameView();
-  if (!child_frame_view)
+  if (!child_frame_view || !child_frame_view->IsLocalFrameView())
     return;
-  LayoutViewItem child_layout_view_item = child_frame_view->GetLayoutViewItem();
-  if (child_layout_view_item.IsNull())
+  LayoutView* child_layout_view =
+      ToLocalFrameView(child_frame_view)->GetLayoutView();
+  if (!child_layout_view)
     return;
-  PaintLayerCompositor* child_compositor = child_layout_view_item.Compositor();
+  PaintLayerCompositor* child_compositor = child_layout_view->Compositor();
   if (!child_compositor)
     return;
   BuildLayerIdToNodeIdMap(child_compositor->RootLayer(),
@@ -367,9 +368,9 @@ int InspectorLayerTreeAgent::IdForNode(Node* node) {
 }
 
 PaintLayerCompositor* InspectorLayerTreeAgent::GetPaintLayerCompositor() {
-  LayoutViewItem layout_view = inspected_frames_->Root()->ContentLayoutItem();
+  auto* layout_view = inspected_frames_->Root()->ContentLayoutObject();
   PaintLayerCompositor* compositor =
-      layout_view.IsNull() ? nullptr : layout_view.Compositor();
+      layout_view ? layout_view->Compositor() : nullptr;
   return compositor;
 }
 

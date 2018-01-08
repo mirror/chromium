@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/profiler/stack_sampling_profiler.h"
+#include "base/single_thread_task_runner.h"
 #include "content/public/gpu/content_gpu_client.h"
 
 #if defined(OS_CHROMEOS)
@@ -31,6 +32,13 @@ class ChromeContentGpuClient : public content::ContentGpuClient {
   void InitializeRegistry(service_manager::BinderRegistry* registry) override;
   void GpuServiceInitialized(
       const gpu::GpuPreferences& gpu_preferences) override;
+  void PostIOThreadCreated(
+      base::SingleThreadTaskRunner* io_task_runner) override;
+
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+  std::unique_ptr<media::CdmProxy> CreateCdmProxy(
+      const std::string& cdm_guid) override;
+#endif
 
  private:
 #if defined(OS_CHROMEOS)

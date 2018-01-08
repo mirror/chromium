@@ -16,6 +16,17 @@ html {
   --logo-margin-top: 56px; /* Expected OGB height, so logo doesn't overlap. */
   --logo-margin-bottom: 29px; /* Between logo and fakebox. */
 
+  /* Initial height determines the margin between the logo and the fakebox. If
+   * the iframe height exceeds the normal --logo-height, the difference is
+   * subtracted from the margin. The actual --logo-iframe-{width,height} can be
+   * changed later, but the initial height, and therefore the margin, remains
+   * the same.
+   */
+  --logo-iframe-initial-height: var(--logo-height);
+  --logo-iframe-height: var(--logo-height);
+  --logo-iframe-resize-duration: 150ms;
+  --logo-iframe-width: 500px;
+
   --tile-height: 128px;
   --tile-margin: 16px;
   --tile-width: 154px;
@@ -26,6 +37,8 @@ html {
       4px + var(--tile-height) + var(--tile-margin) + var(--tile-height) + 8px);
   /* Base height 16px, plus 8px each of padding on top and bottom. */
   --mv-notice-height: calc(8px + 16px + 8px);
+
+  --mv-notice-time: 10s;
 
   /* These can be overridden by themes. */
   --text-color: #000;
@@ -178,9 +191,12 @@ body.alternate-logo #logo-non-white {
 
 #logo-doodle-iframe {
   border: 0;
-  height: var(--logo-height);
-  margin: 0 auto var(--logo-margin-bottom) auto;
-  width: var(--content-width);
+  height: var(--logo-iframe-height);
+  margin: 0 auto calc(var(--logo-height) + var(--logo-margin-bottom)
+                      - var(--logo-iframe-initial-height)) auto;
+  transition: width var(--logo-iframe-resize-duration),
+              height var(--logo-iframe-resize-duration);
+  width: var(--logo-iframe-width);
 }
 
 #logo-doodle-notifier {
@@ -305,7 +321,7 @@ html[dir=rtl] #fakebox > input {
 
 #fakebox-text {
   bottom: 4px;
-  color: rgba(0, 0, 0, 0.38);
+  color: rgba(0, 0, 0, 0.42);
   font-family: arial, sans-serif;
   font-size: 16px;
   left: 13px;
@@ -478,9 +494,9 @@ html[dir=rtl] #mv-notice-x {
   color: #fff;
 }
 
-#mv-notice.mv-notice-delayed-hide {
+#mv-notice.mv-notice-delayed-hide:not(:focus-within) {
   opacity: 0;
-  transition-delay: 10s;
+  transition-delay: var(--mv-notice-time);
   transition-property: opacity;
 }
 

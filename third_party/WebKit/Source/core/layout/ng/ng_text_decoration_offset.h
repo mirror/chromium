@@ -26,10 +26,10 @@ class CORE_EXPORT NGTextDecorationOffset : public TextDecorationOffsetBase {
       : TextDecorationOffsetBase(style),
         text_fragment_(text_fragment),
         decorating_box_(decorating_box) {}
-  ~NGTextDecorationOffset() {}
+  ~NGTextDecorationOffset() = default;
 
   int ComputeUnderlineOffsetForUnder(float text_decoration_thickness,
-                                     LineVerticalPositionType) const override;
+                                     FontVerticalPositionType) const override;
 
  private:
   const NGPhysicalTextFragment& text_fragment_;

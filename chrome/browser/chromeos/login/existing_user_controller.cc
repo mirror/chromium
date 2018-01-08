@@ -13,7 +13,6 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/optional.h"
@@ -97,7 +96,7 @@
 #include "net/http/http_transaction_factory.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/widget/widget.h"
 
@@ -435,6 +434,7 @@ void ExistingUserController::Observe(
     // just after the UI is closed but before the new credentials were stored
     // in the profile. Therefore we have to give it some time to make sure it
     // has been updated before we copy it.
+    // TODO(pmarko): Find a better way to do this, see https://crbug.com/796512.
     VLOG(1) << "Authentication was entered manually, possibly for proxyauth.";
     scoped_refptr<net::URLRequestContextGetter> browser_process_context_getter =
         g_browser_process->system_request_context();
@@ -600,14 +600,24 @@ void ExistingUserController::PerformLogin(
         user_context.GetKey()->GetSecret());
   }
 
+  // If plain text password is available, computes its salt, hash, and length,
+  // and saves them in |user_context|. They will be saved to prefs when user
+  // profile is ready.
+  UserContext new_user_context = user_context;
+  if (user_context.GetKey()->GetKeyType() == Key::KEY_TYPE_PASSWORD_PLAIN) {
+    base::string16 password(
+        base::UTF8ToUTF16(new_user_context.GetKey()->GetSecret()));
+    new_user_context.SetSyncPasswordData(password_manager::SyncPasswordData(
+        password, auth_mode == LoginPerformer::AUTH_MODE_EXTENSION));
+  }
+
   if (user_manager::UserManager::Get()->IsSupervisedAccountId(
           user_context.GetAccountId())) {
-    login_performer_->LoginAsSupervisedUser(user_context);
+    login_performer_->LoginAsSupervisedUser(new_user_context);
   } else {
     // If a regular user log in to a device which supports ARC, we should make
     // sure that the user's cryptohome is encrypted in ext4 dircrypto to run the
     // latest Android runtime.
-    UserContext new_user_context = user_context;
     new_user_context.SetIsForcingDircrypto(
         ShouldForceDircrypto(new_user_context.GetAccountId()));
     login_performer_->PerformLogin(new_user_context, auth_mode);
@@ -723,8 +733,8 @@ bool ExistingUserController::IsUserWhitelisted(const AccountId& account_id) {
   if (login_performer_.get())
     return login_performer_->IsUserWhitelisted(account_id, &wildcard_match);
 
-  return chromeos::CrosSettings::IsWhitelisted(account_id.GetUserEmail(),
-                                               &wildcard_match);
+  return cros_settings_->IsUserWhitelisted(account_id.GetUserEmail(),
+                                           &wildcard_match);
 }
 
 void ExistingUserController::OnConsumerKioskAutoLaunchCheckCompleted(
@@ -1059,11 +1069,11 @@ void ExistingUserController::OnOldEncryptionDetected(
   // Use signin profile request context
   net::URLRequestContextGetter* const signin_profile_context =
       ProfileHelper::GetSigninProfile()->GetRequestContext();
-  auto cloud_policy_client = base::MakeUnique<policy::CloudPolicyClient>(
+  auto cloud_policy_client = std::make_unique<policy::CloudPolicyClient>(
       std::string() /* machine_id */, std::string() /* machine_model */,
       device_management_service, signin_profile_context,
       nullptr /* signing_service */);
-  pre_signin_policy_fetcher_ = base::MakeUnique<policy::PreSigninPolicyFetcher>(
+  pre_signin_policy_fetcher_ = std::make_unique<policy::PreSigninPolicyFetcher>(
       DBusThreadManager::Get()->GetCryptohomeClient(),
       DBusThreadManager::Get()->GetSessionManagerClient(),
       std::move(cloud_policy_client), IsActiveDirectoryManaged(),

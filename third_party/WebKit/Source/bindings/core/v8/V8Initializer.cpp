@@ -55,7 +55,7 @@
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/bindings/DOMWrapperWorld.h"
-#include "platform/bindings/ScriptWrappableVisitor.h"
+#include "platform/bindings/ScriptWrappableMarkingVisitor.h"
 #include "platform/bindings/V8PerContextData.h"
 #include "platform/bindings/V8PrivateProperty.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -353,10 +353,10 @@ static bool CodeGenerationCheckCallbackInMainThread(
     v8::Local<v8::String> source) {
   if (ExecutionContext* execution_context = ToExecutionContext(context)) {
     DCHECK(execution_context->IsDocument() ||
-           execution_context->IsPaintWorkletGlobalScope());
+           execution_context->IsMainThreadWorkletGlobalScope());
     if (ContentSecurityPolicy* policy =
             execution_context->GetContentSecurityPolicy()) {
-      v8::String::Value source_str(source);
+      v8::String::Value source_str(context->GetIsolate(), source);
       UChar snippet[ContentSecurityPolicy::kMaxSampleLength + 1];
       size_t len = std::min((sizeof(snippet) / sizeof(UChar)) - 1,
                             static_cast<size_t>(source_str.length()));
@@ -376,7 +376,7 @@ static bool WasmCodeGenerationCheckCallbackInMainThread(
   if (ExecutionContext* execution_context = ToExecutionContext(context)) {
     if (ContentSecurityPolicy* policy =
             ToDocument(execution_context)->GetContentSecurityPolicy()) {
-      v8::String::Value source_str(source);
+      v8::String::Value source_str(context->GetIsolate(), source);
       UChar snippet[ContentSecurityPolicy::kMaxSampleLength + 1];
       size_t len = std::min((sizeof(snippet) / sizeof(UChar)) - 1,
                             static_cast<size_t>(source_str.length()));
@@ -473,17 +473,19 @@ static v8::MaybeLocal<v8::Promise> HostImportModuleDynamically(
   }
 
   String specifier = ToCoreStringWithNullCheck(v8_specifier);
-  v8::Local<v8::Value> v8_referrer_url = v8_referrer->GetResourceName();
-  KURL referrer_url;
-  if (v8_referrer_url->IsString()) {
-    String referrer_url_str =
-        ToCoreString(v8::Local<v8::String>::Cast(v8_referrer_url));
-    referrer_url = KURL(NullURL(), referrer_url_str);
+  v8::Local<v8::Value> v8_referrer_resource_url =
+      v8_referrer->GetResourceName();
+  KURL referrer_resource_url;
+  if (v8_referrer_resource_url->IsString()) {
+    String referrer_resource_url_str =
+        ToCoreString(v8::Local<v8::String>::Cast(v8_referrer_resource_url));
+    if (!referrer_resource_url_str.IsEmpty())
+      referrer_resource_url = KURL(NullURL(), referrer_resource_url_str);
   }
   ReferrerScriptInfo referrer_info =
       ReferrerScriptInfo::FromV8HostDefinedOptions(
           context, v8_referrer->GetHostDefinedOptions());
-  modulator->ResolveDynamically(specifier, referrer_url, referrer_info,
+  modulator->ResolveDynamically(specifier, referrer_resource_url, referrer_info,
                                 resolver);
   return v8::Local<v8::Promise>::Cast(promise.V8Value());
 }
@@ -513,12 +515,12 @@ static void HostGetImportMetaProperties(v8::Local<v8::Context> context,
 static void InitializeV8Common(v8::Isolate* isolate) {
   isolate->AddGCPrologueCallback(V8GCController::GcPrologue);
   isolate->AddGCEpilogueCallback(V8GCController::GcEpilogue);
-  std::unique_ptr<ScriptWrappableVisitor> visitor(
-      new ScriptWrappableVisitor(isolate));
-  V8PerIsolateData::From(isolate)->SetScriptWrappableVisitor(
+  std::unique_ptr<ScriptWrappableMarkingVisitor> visitor(
+      new ScriptWrappableMarkingVisitor(isolate));
+  V8PerIsolateData::From(isolate)->SetScriptWrappableMarkingVisitor(
       std::move(visitor));
   isolate->SetEmbedderHeapTracer(
-      V8PerIsolateData::From(isolate)->GetScriptWrappableVisitor());
+      V8PerIsolateData::From(isolate)->GetScriptWrappableMarkingVisitor());
 
   isolate->SetMicrotasksPolicy(v8::MicrotasksPolicy::kScoped);
 
@@ -574,20 +576,19 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
     }
   }
 
-  void SetProtection(void* data, size_t length, Protection protection) {
-    CHECK(SetProtection(protection, data, length));
-  }
-
-  bool SetProtection(Protection protection, void* data, size_t length) {
+  void SetProtection(void* data,
+                     size_t length,
+                     Protection protection) override {
     switch (protection) {
       case Protection::kNoAccess:
-        return WTF::SetSystemPagesAccess(data, length, WTF::PageInaccessible);
+        CHECK(WTF::SetSystemPagesAccess(data, length, WTF::PageInaccessible));
+        return;
       case Protection::kReadWrite:
-        return WTF::SetSystemPagesAccess(data, length, WTF::PageReadWrite);
+        CHECK(WTF::SetSystemPagesAccess(data, length, WTF::PageReadWrite));
+        return;
       default:
         NOTREACHED();
     }
-    return false;
   }
 };
 
@@ -642,8 +643,9 @@ void V8Initializer::InitializeMainThread(const intptr_t* reference_table) {
 #endif  // USE_V8_CONTEXT_SNAPSHOT
 
   v8::Isolate* isolate = V8PerIsolateData::Initialize(
-      scheduler ? scheduler->V8TaskRunner()
-                : Platform::Current()->CurrentThread()->GetWebTaskRunner(),
+      scheduler
+          ? scheduler->V8TaskRunner()
+          : Platform::Current()->CurrentThread()->GetSingleThreadTaskRunner(),
       v8_context_snapshot_mode);
 
   InitializeV8Common(isolate);
@@ -677,8 +679,8 @@ void V8Initializer::InitializeMainThread(const intptr_t* reference_table) {
   DCHECK(ThreadState::MainThreadState());
   ThreadState::MainThreadState()->RegisterTraceDOMWrappers(
       isolate, V8GCController::TraceDOMWrappers,
-      ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque,
-      ScriptWrappableVisitor::PerformCleanup);
+      ScriptWrappableMarkingVisitor::InvalidateDeadObjectsInMarkingDeque,
+      ScriptWrappableMarkingVisitor::PerformCleanup);
 
   V8PerIsolateData::From(isolate)->SetThreadDebugger(
       std::make_unique<MainThreadDebugger>(isolate));

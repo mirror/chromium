@@ -31,7 +31,7 @@
 #include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/background/ash_wallpaper_delegate.h"
 #include "chrome/browser/chromeos/display/display_configuration_observer.h"
-#include "chrome/browser/chromeos/display/display_preferences.h"
+#include "chrome/browser/chromeos/display/display_prefs.h"
 #include "chrome/browser/chromeos/policy/display_rotation_default_handler.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -43,7 +43,7 @@
 #include "chrome/browser/ui/ash/chrome_screenshot_grabber.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
-#include "chrome/browser/ui/ash/networking_config_delegate_chromeos.h"
+#include "chrome/browser/ui/ash/network/networking_config_delegate_chromeos.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/ash/session_util.h"
 #include "chrome/browser/ui/browser.h"
@@ -94,23 +94,8 @@ void InitAfterFirstSessionStart() {
 
 class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
  public:
-  AccessibilityDelegateImpl() {
-    ash::Shell::Get()->AddShellObserver(AccessibilityManager::Get());
-  }
-  ~AccessibilityDelegateImpl() override {
-    ash::Shell::Get()->RemoveShellObserver(AccessibilityManager::Get());
-  }
-
-  bool IsSpokenFeedbackEnabled() const override {
-    DCHECK(AccessibilityManager::Get());
-    return AccessibilityManager::Get()->IsSpokenFeedbackEnabled();
-  }
-
-  void ToggleSpokenFeedback(
-      ash::AccessibilityNotificationVisibility notify) override {
-    DCHECK(AccessibilityManager::Get());
-    AccessibilityManager::Get()->ToggleSpokenFeedback(notify);
-  }
+  AccessibilityDelegateImpl() = default;
+  ~AccessibilityDelegateImpl() override = default;
 
   void SetMagnifierEnabled(bool enabled) override {
     DCHECK(chromeos::MagnificationManager::Get());
@@ -120,16 +105,6 @@ class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
   bool IsMagnifierEnabled() const override {
     DCHECK(chromeos::MagnificationManager::Get());
     return chromeos::MagnificationManager::Get()->IsMagnifierEnabled();
-  }
-
-  void SetAutoclickEnabled(bool enabled) override {
-    DCHECK(AccessibilityManager::Get());
-    return AccessibilityManager::Get()->EnableAutoclick(enabled);
-  }
-
-  bool IsAutoclickEnabled() const override {
-    DCHECK(AccessibilityManager::Get());
-    return AccessibilityManager::Get()->IsAutoclickEnabled();
   }
 
   void SetVirtualKeyboardEnabled(bool enabled) override {
@@ -217,11 +192,6 @@ class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
     return AccessibilityManager::Get()->ShouldShowAccessibilityMenu();
   }
 
-  bool IsBrailleDisplayConnected() const override {
-    DCHECK(AccessibilityManager::Get());
-    return AccessibilityManager::Get()->IsBrailleDisplayConnected();
-  }
-
   void SilenceSpokenFeedback() const override {
     TtsController::GetInstance()->Stop();
   }
@@ -267,7 +237,7 @@ class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
 
 ChromeShellDelegate::ChromeShellDelegate()
     : networking_config_delegate_(
-          base::MakeUnique<chromeos::NetworkingConfigDelegateChromeos>()) {
+          std::make_unique<chromeos::NetworkingConfigDelegateChromeos>()) {
   PlatformInit();
 }
 
@@ -304,7 +274,9 @@ void ChromeShellDelegate::PreInit() {
 
   bool first_run_after_boot = base::CommandLine::ForCurrentProcess()->HasSwitch(
       chromeos::switches::kFirstExecAfterBoot);
-  chromeos::LoadDisplayPreferences(first_run_after_boot);
+  display_prefs_ = std::make_unique<chromeos::DisplayPrefs>(
+      g_browser_process->local_state());
+  display_prefs_->LoadDisplayPreferences(first_run_after_boot);
   // Object owns itself, and deletes itself when Observer::OnShutdown is called:
   new policy::DisplayRotationDefaultHandler();
   // Set the observer now so that we can save the initial state
@@ -368,7 +340,7 @@ void ChromeShellDelegate::OpenKeyboardShortcutHelpPage() const {
 }
 
 std::unique_ptr<keyboard::KeyboardUI> ChromeShellDelegate::CreateKeyboardUI() {
-  return base::MakeUnique<ChromeKeyboardUI>(
+  return std::make_unique<ChromeKeyboardUI>(
       ProfileManager::GetActiveUserProfile());
 }
 

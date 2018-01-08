@@ -17,7 +17,6 @@
 #include "base/logging.h"
 #include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
@@ -45,11 +44,12 @@
 #import "ios/chrome/browser/ui/commands/external_search_commands.h"
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
-#import "ios/chrome/browser/ui/image_util.h"
+#import "ios/chrome/browser/ui/image_util/image_util.h"
+#import "ios/chrome/browser/ui/location_bar/location_bar_url_loader.h"
+#include "ios/chrome/browser/ui/location_bar/location_bar_view.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
-#include "ios/chrome/browser/ui/omnibox/location_bar_view.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h"
@@ -108,6 +108,7 @@ using ios::material::TimingFunction;
 
 @interface WebToolbarController ()<DropAndNavigateDelegate,
                                    LocationBarDelegate,
+                                   LocationBarURLLoader,
                                    OmniboxPopupPositioner,
                                    ToolbarViewDelegate> {
   // Top-level view for web content.
@@ -123,7 +124,6 @@ using ios::material::TimingFunction;
   // Progress bar used to show what fraction of the page has loaded.
   MDCProgressView* _determinateProgressView;
   UIImageView* _omniboxBackground;
-  BOOL _prerenderAnimating;
   UIImageView* _incognitoIcon;
   UIView* _clippingView;
 
@@ -152,6 +152,14 @@ using ios::material::TimingFunction;
   ToolbarAssistiveKeyboardDelegateImpl* _keyboardDelegate;
 }
 
+// Whether the current WebState is loading.
+@property(nonatomic, assign, getter=isLoading) BOOL loading;
+// Whether the progress view stop animation is occurring.
+@property(nonatomic, assign, getter=isAnimatingStop) BOOL animatingStop;
+// Whether the progress view prerender animation is occurring.
+@property(nonatomic, assign, getter=isAnimatingPrerender)
+    BOOL animatingPrerender;
+
 // Accessor for cancel button. Handles lazy initialization.
 - (UIButton*)cancelButton;
 // Handler called after user pressed the cancel button.
@@ -166,7 +174,6 @@ using ios::material::TimingFunction;
 - (void)setForwardButtonEnabled:(BOOL)enabled;
 - (void)startProgressBar;
 - (void)stopProgressBar;
-- (void)hideProgressBar;
 - (void)showReloadButton;
 - (void)showStopButton;
 // Called by long press gesture recognizer, used to display back/forward
@@ -216,12 +223,17 @@ using ios::material::TimingFunction;
 @synthesize buttonUpdater = _buttonUpdater;
 @synthesize delegate = _delegate;
 @synthesize urlLoader = _urlLoader;
+@synthesize loading = _loading;
+@synthesize animatingStop = _animatingStop;
+@synthesize animatingPrerender = _animatingPrerender;
 
 - (instancetype)initWithDelegate:(id<WebToolbarDelegate>)delegate
                        urlLoader:(id<UrlLoader>)urlLoader
                     browserState:(ios::ChromeBrowserState*)browserState
-                      dispatcher:
-                          (id<ApplicationCommands, BrowserCommands>)dispatcher {
+                      dispatcher:(id<ApplicationCommands,
+                                     BrowserCommands,
+                                     OmniboxFocuser,
+                                     ToolbarCommands>)dispatcher {
   DCHECK(delegate);
   DCHECK(urlLoader);
   DCHECK(browserState);
@@ -259,6 +271,9 @@ using ios::material::TimingFunction;
   _keyboardDelegate = [[ToolbarAssistiveKeyboardDelegateImpl alloc] init];
   _keyboardDelegate.dispatcher = dispatcher;
   _keyboardDelegate.omniboxTextField = _locationBarView.textField;
+  [_locationBarView
+      setContentCompressionResistancePriority:UILayoutPriorityDefaultLow
+                                      forAxis:UILayoutConstraintAxisHorizontal];
 
   // Disable default drop interactions on the omnibox.
   // TODO(crbug.com/739903): Handle drop events once Chrome iOS is built with
@@ -294,6 +309,7 @@ using ios::material::TimingFunction;
       _browserState->IsOffTheRecord() ? INCOGNITO : NORMAL;
   ToolbarButtonFactory* factory =
       [[ToolbarButtonFactory alloc] initWithStyle:incognitoStyle];
+  factory.dispatcher = self.dispatcher;
   _buttonUpdater = [[ToolbarButtonUpdater alloc] init];
   _buttonUpdater.factory = factory;
 
@@ -491,9 +507,10 @@ using ios::material::TimingFunction;
   [_webToolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                    UIViewAutoresizingFlexibleTopMargin];
   [_webToolbar setFrame:[self specificControlsArea]];
-  _locationBar = base::MakeUnique<LocationBarControllerImpl>(
+  _locationBar = std::make_unique<LocationBarControllerImpl>(
       _locationBarView, _browserState, self, self.dispatcher);
   _omniboxPopupCoordinator = _locationBar->CreatePopupCoordinator(self);
+  _locationBar->SetURLLoader(self);
   [_omniboxPopupCoordinator start];
 
   // Create the determinate progress bar (phone only).
@@ -555,15 +572,14 @@ using ios::material::TimingFunction;
   return self;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (UIViewController*)viewController {
   return self;
 }
 
 - (void)start {
+}
+
+- (void)stop {
 }
 
 - (void)didMoveToParentViewController:(UIViewController*)parent {
@@ -589,6 +605,19 @@ using ios::material::TimingFunction;
     [self startObservingTTSNotifications];
 }
 
+- (void)setLoading:(BOOL)loading {
+  if (_loading == loading)
+    return;
+  _loading = loading;
+  if (_loading) {
+    [self showStopButton];
+    [self startProgressBar];
+  } else {
+    [self stopProgressBar];
+    [self showReloadButton];
+  }
+}
+
 #pragma mark -
 #pragma mark Public methods.
 
@@ -602,16 +631,12 @@ using ios::material::TimingFunction;
 
 - (void)updateToolbarState {
   ToolbarModelIOS* toolbarModelIOS = [self.delegate toolbarModelIOS];
-  if (toolbarModelIOS->IsLoading()) {
-    [self showStopButton];
-    [self startProgressBar];
+  self.loading = toolbarModelIOS->IsLoading();
+  if (self.loading) {
     [_determinateProgressView
         setProgress:toolbarModelIOS->GetLoadProgressFraction()
            animated:YES
          completion:nil];
-  } else {
-    [self stopProgressBar];
-    [self showReloadButton];
   }
 
   _locationBar->SetShouldShowHintText(toolbarModelIOS->ShouldDisplayHintText());
@@ -630,7 +655,7 @@ using ios::material::TimingFunction;
 - (void)updateToolbarForSideSwipeSnapshot:(Tab*)tab {
   web::WebState* webState = tab.webState;
   BOOL isCurrentTab = webState == [self.delegate currentWebState];
-  BOOL isNTP = webState->GetVisibleURL() == GURL(kChromeUINewTabURL);
+  BOOL isNTP = webState->GetVisibleURL() == kChromeUINewTabURL;
 
   // Don't do anything for a live non-ntp tab.
   if (isCurrentTab && !isNTP) {
@@ -665,34 +690,57 @@ using ios::material::TimingFunction;
 }
 
 - (void)showPrerenderingAnimation {
-  _prerenderAnimating = YES;
+  // Early return if there's no progress bar or if a hiding animation is
+  // already occurring.
+  if (IsIPadIdiom() || self.animatingPrerender || self.animatingStop)
+    return;
+
+  // Set |animatingPrerender| to YES while the stop animation is occurring,
+  // resetting it in the completion block.
+  self.animatingPrerender = YES;
+  __weak WebToolbarController* weakSelf = self;
+  void (^hideCompletion)(BOOL finished) = ^void(BOOL finished) {
+    if (finished)
+      [weakSelf setAnimatingPrerender:NO];
+  };
+
+  // After the progress is animated, perform a hide animation.
   __weak MDCProgressView* weakDeterminateProgressView =
       _determinateProgressView;
+  void (^progressCompletion)(BOOL finished) = ^void(BOOL finished) {
+    if (!finished || !self.animatingPrerender)
+      return;
+    [weakDeterminateProgressView setHidden:YES
+                                  animated:YES
+                                completion:hideCompletion];
+  };
+
+  // After the progress bar is animated to be visible, animate its progress to
+  // 1.0.
+  void (^showCompletion)(BOOL finished) = ^void(BOOL finished) {
+    if (!finished || !self.animatingPrerender)
+      return;
+    [weakDeterminateProgressView setProgress:1.0
+                                    animated:YES
+                                  completion:progressCompletion];
+  };
+
+  // Prepare the progress bar from an animation from 0.0 => 1.0, then make the
+  // progress bar visible and start the animation.
   [_determinateProgressView setProgress:0];
   [_determinateProgressView setHidden:NO
                              animated:YES
-                           completion:^(BOOL finished) {
-                             [weakDeterminateProgressView
-                                 setProgress:1
-                                    animated:YES
-                                  completion:^(BOOL finished) {
-                                    [weakDeterminateProgressView setHidden:YES
-                                                                  animated:YES
-                                                                completion:nil];
-                                  }];
-                           }];
+                           completion:showCompletion];
 }
 
 - (void)currentPageLoadStarted {
-  [self startProgressBar];
+  [self updateToolbarState];
 }
 
 - (CGRect)visibleOmniboxFrame {
   CGRect frame = _omniboxBackground.frame;
-  frame = [self.view.superview convertRect:frame
-                                  fromView:[_omniboxBackground superview]];
-  // Account for the omnibox background image transparent sides.
-  return CGRectInset(frame, -kBackgroundImageVisibleRectOffset, 0);
+  return [self.view.superview convertRect:frame
+                                 fromView:[_omniboxBackground superview]];
 }
 
 - (BOOL)isOmniboxFirstResponder {
@@ -867,7 +915,7 @@ using ios::material::TimingFunction;
 }
 
 #pragma mark -
-#pragma mark LocationBarDelegate methods.
+#pragma mark LocationBarURLLoader methods.
 
 - (void)loadGURLFromLocationBar:(const GURL&)url
                      transition:(ui::PageTransition)transition {
@@ -898,6 +946,9 @@ using ios::material::TimingFunction;
   [self cancelOmniboxEdit];
 }
 
+#pragma mark -
+#pragma mark LocationBarDelegate methods.
+
 - (void)locationBarHasBecomeFirstResponder {
   [self.delegate locationBarDidBecomeFirstResponder];
   [self animateMaterialOmnibox];
@@ -912,7 +963,7 @@ using ios::material::TimingFunction;
   [self.delegate locationBarBeganEdit];
 }
 
-- (web::WebState*)getWebState {
+- (web::WebState*)webState {
   return [self.delegate currentWebState];
 }
 
@@ -933,6 +984,9 @@ using ios::material::TimingFunction;
   _locationBar->HideKeyboardAndEndEditing();
   [self updateToolbarState];
 }
+
+#pragma mark -
+#pragma mark FakeboxFocuser methods.
 
 - (void)focusFakebox {
   if (IsIPadIdiom()) {
@@ -958,7 +1012,7 @@ using ios::material::TimingFunction;
   DCHECK(!IsIPadIdiom());
   // Hide the toolbar if the NTP is currently displayed.
   web::WebState* webState = [self.delegate currentWebState];
-  if (webState && (webState->GetVisibleURL() == GURL(kChromeUINewTabURL))) {
+  if (webState && (webState->GetVisibleURL() == kChromeUINewTabURL)) {
     [self.view setHidden:YES];
   }
 }
@@ -973,6 +1027,11 @@ using ios::material::TimingFunction;
 
 - (UIView*)popupAnchorView {
   return self.view;
+}
+
+- (UIView*)popupParentView {
+  NOTREACHED();
+  return nil;
 }
 
 #pragma mark -
@@ -1262,46 +1321,44 @@ using ios::material::TimingFunction;
 }
 
 - (void)startProgressBar {
-  if ([_determinateProgressView isHidden]) {
+  if ([_determinateProgressView isHidden] || self.animatingPrerender ||
+      self.animatingStop) {
     [_determinateProgressView setProgress:0];
     [_determinateProgressView setHidden:NO animated:YES completion:nil];
+    self.animatingStop = NO;
+    self.animatingPrerender = NO;
   }
 }
 
 - (void)stopProgressBar {
-  if (_determinateProgressView && ![_determinateProgressView isHidden]) {
-    // Update the toolbar snapshot, but only after the progress bar has
-    // disappeared.
-
-    if (!_prerenderAnimating) {
-      __weak MDCProgressView* weakDeterminateProgressView =
-          _determinateProgressView;
-      // Calling -completeAndHide while a prerender animation is in progress
-      // will result in hiding the progress bar before the animation is
-      // complete.
-      [_determinateProgressView setProgress:1
-                                   animated:YES
-                                 completion:^(BOOL finished) {
-                                   [weakDeterminateProgressView setHidden:YES
-                                                                 animated:YES
-                                                               completion:nil];
-                                 }];
-    }
-    CGFloat delay = _unitTesting ? 0 : kLoadCompleteHideProgressBarDelay;
-    [self performSelector:@selector(hideProgressBar)
-               withObject:nil
-               afterDelay:delay];
-  }
-}
-
-- (void)hideProgressBar {
-  // The UI may have been torn down while this selector was queued.  If
-  // |self.delegate| is nil, it is not safe to continue.
-  if (!self.delegate)
+  // Early return if there's no progress bar or if a hiding animation is
+  // already occurring.
+  if (IsIPadIdiom() || self.animatingPrerender || self.animatingStop)
     return;
 
-  [_determinateProgressView setHidden:YES];
-  _prerenderAnimating = NO;
+  // Set |animatingStop| to YES while the stop animation is occurring, resetting
+  // it in the completion block when the progress bar is removed.
+  self.animatingStop = YES;
+  __weak WebToolbarController* weakSelf = self;
+  void (^hideCompletion)(BOOL finished) = ^void(BOOL finished) {
+    if (finished)
+      [weakSelf setAnimatingStop:NO];
+  };
+
+  // After the progress is animated, perform a hide animation.
+  __weak MDCProgressView* weakDeterminateProgressView =
+      _determinateProgressView;
+  void (^progressCompletion)(BOOL finished) = ^void(BOOL finished) {
+    if (!finished || !weakSelf.animatingStop)
+      return;
+    [weakDeterminateProgressView setHidden:YES
+                                  animated:YES
+                                completion:hideCompletion];
+  };
+
+  [_determinateProgressView setProgress:1
+                               animated:YES
+                             completion:progressCompletion];
 }
 
 - (void)showReloadButton {
@@ -1351,7 +1408,7 @@ using ios::material::TimingFunction;
     [_voiceSearchButton setHidden:isCompactTabletView];
     [_starButton setHidden:isCompactTabletView];
     [_reloadButton setHidden:isCompactTabletView];
-    [_stopButton setHidden:isCompactTabletView];
+    [_stopButton setHidden:YES];
     [self updateToolbarState];
 
     if ([_locationBarView.textField isFirstResponder]) {
@@ -1533,7 +1590,7 @@ using ios::material::TimingFunction;
   // If app is on the regular New Tab Page, make this animation occur instantly
   // since this page has a fakebox to omnibox transition.
   web::WebState* webState = [self.delegate currentWebState];
-  if (webState && webState->GetVisibleURL() == GURL(kChromeUINewTabURL) &&
+  if (webState && webState->GetVisibleURL() == kChromeUINewTabURL &&
       !_incognito) {
     duration = 0.0;
   }
@@ -1877,8 +1934,9 @@ using ios::material::TimingFunction;
 
 - (void)viewSafeAreaInsetsDidChange {
   [super viewSafeAreaInsetsDidChange];
-  if (!IsIPadIdiom()) {
-    if (IsSafeAreaCompatibleToolbarEnabled()) {
+  if (IsSafeAreaCompatibleToolbarEnabled()) {
+    [self adjustToolbarHeight];
+    if (!IsIPadIdiom()) {
       // The clipping view's height is supposed to match the toolbar's height.
       // The clipping view can't match the toolbar's height with autoresizing
       // masks because the clipping view is not a direct child of the toolbar.
@@ -1888,6 +1946,12 @@ using ios::material::TimingFunction;
       [self layoutClippingView];
     }
   }
+}
+
+#pragma mark - Toolbar
+
+- (void)transitionToLocationBarFocusedState:(BOOL)focused {
+  // This is a no-op, since this class implements LocationBarDelegate directly.
 }
 
 @end
@@ -1920,12 +1984,8 @@ using ios::material::TimingFunction;
   return base::UTF16ToUTF8([_locationBarView.textField displayedText]);
 }
 
-- (BOOL)isLoading {
-  return ![_determinateProgressView isHidden];
-}
-
 - (BOOL)isPrerenderAnimationRunning {
-  return _prerenderAnimating;
+  return self.animatingPrerender;
 }
 
 - (OmniboxTextFieldIOS*)omnibox {

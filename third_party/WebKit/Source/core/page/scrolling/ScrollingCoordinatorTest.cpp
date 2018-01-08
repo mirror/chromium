@@ -34,7 +34,7 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/layout/LayoutEmbeddedContent.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
@@ -77,8 +77,8 @@ class ScrollingCoordinatorTest : public ::testing::Test,
                                                 ->MainFrameImpl()
                                                 ->GetFrame()
                                                 ->View()
-                                                ->GetLayoutViewItem()
-                                                .Compositor()
+                                                ->GetLayoutView()
+                                                ->Compositor()
                                                 ->RootGraphicsLayer());
   }
 
@@ -747,13 +747,14 @@ TEST_P(ScrollingCoordinatorTest, iframeScrolling) {
       ToLayoutEmbeddedContent(layout_object);
   ASSERT_TRUE(layout_embedded_content);
 
-  LocalFrameView* inner_frame_view = layout_embedded_content->ChildFrameView();
+  LocalFrameView* inner_frame_view =
+      ToLocalFrameView(layout_embedded_content->ChildFrameView());
   ASSERT_TRUE(inner_frame_view);
 
-  LayoutViewItem inner_layout_view_item = inner_frame_view->GetLayoutViewItem();
-  ASSERT_FALSE(inner_layout_view_item.IsNull());
+  auto* inner_layout_view = inner_frame_view->GetLayoutView();
+  ASSERT_TRUE(inner_layout_view);
 
-  PaintLayerCompositor* inner_compositor = inner_layout_view_item.Compositor();
+  PaintLayerCompositor* inner_compositor = inner_layout_view->Compositor();
   ASSERT_TRUE(inner_compositor->InCompositingMode());
 
   GraphicsLayer* scroll_layer =
@@ -800,13 +801,14 @@ TEST_P(ScrollingCoordinatorTest, rtlIframe) {
       ToLayoutEmbeddedContent(layout_object);
   ASSERT_TRUE(layout_embedded_content);
 
-  LocalFrameView* inner_frame_view = layout_embedded_content->ChildFrameView();
+  LocalFrameView* inner_frame_view =
+      ToLocalFrameView(layout_embedded_content->ChildFrameView());
   ASSERT_TRUE(inner_frame_view);
 
-  LayoutViewItem inner_layout_view_item = inner_frame_view->GetLayoutViewItem();
-  ASSERT_FALSE(inner_layout_view_item.IsNull());
+  auto* inner_layout_view = inner_frame_view->GetLayoutView();
+  ASSERT_TRUE(inner_layout_view);
 
-  PaintLayerCompositor* inner_compositor = inner_layout_view_item.Compositor();
+  PaintLayerCompositor* inner_compositor = inner_layout_view->Compositor();
   ASSERT_TRUE(inner_compositor->InCompositingMode());
 
   GraphicsLayer* scroll_layer =
@@ -979,13 +981,14 @@ TEST_P(ScrollingCoordinatorTest,
       ToLayoutEmbeddedContent(layout_object);
   ASSERT_TRUE(layout_embedded_content);
 
-  LocalFrameView* inner_frame_view = layout_embedded_content->ChildFrameView();
+  LocalFrameView* inner_frame_view =
+      ToLocalFrameView(layout_embedded_content->ChildFrameView());
   ASSERT_TRUE(inner_frame_view);
 
-  LayoutViewItem inner_layout_view_item = inner_frame_view->GetLayoutViewItem();
-  ASSERT_FALSE(inner_layout_view_item.IsNull());
+  auto* inner_layout_view = inner_frame_view->GetLayoutView();
+  ASSERT_TRUE(inner_layout_view);
 
-  PaintLayerCompositor* inner_compositor = inner_layout_view_item.Compositor();
+  PaintLayerCompositor* inner_compositor = inner_layout_view->Compositor();
   ASSERT_TRUE(inner_compositor->InCompositingMode());
 
   GraphicsLayer* scroll_layer =

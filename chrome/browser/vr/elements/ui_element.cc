@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
+#include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "chrome/browser/vr/model/camera_model.h"
@@ -22,13 +23,7 @@ namespace vr {
 
 namespace {
 
-static constexpr char kRed[] = "\x1b[31m";
-static constexpr char kGreen[] = "\x1b[32m";
-static constexpr char kBlue[] = "\x1b[34m";
-static constexpr char kCyan[] = "\x1b[36m";
-static constexpr char kReset[] = "\x1b[0m";
-
-static constexpr float kHitTestResolutionInMeter = 0.000001f;
+constexpr float kHitTestResolutionInMeter = 0.000001f;
 
 int AllocateId() {
   static int g_next_id = 1;
@@ -48,6 +43,44 @@ bool GetRayPlaneDistance(const gfx::Point3F& ray_origin,
   *distance = gfx::DotProduct(plane_normal, rel) / denom;
   return true;
 }
+
+#ifndef NDEBUG
+constexpr char kRed[] = "\x1b[31m";
+constexpr char kGreen[] = "\x1b[32m";
+constexpr char kBlue[] = "\x1b[34m";
+constexpr char kCyan[] = "\x1b[36m";
+constexpr char kYellow[] = "\x1b[33m";
+constexpr char kReset[] = "\x1b[0m";
+
+void DumpTransformOperations(const cc::TransformOperations& ops,
+                             std::ostringstream* os) {
+  if (!ops.at(0).IsIdentity()) {
+    const auto& translate = ops.at(0).translate;
+    *os << "t(" << translate.x << ", " << translate.y << ", " << translate.z
+        << ") ";
+  }
+
+  if (ops.size() < 2u) {
+    return;
+  }
+
+  if (!ops.at(1).IsIdentity()) {
+    const auto& rotate = ops.at(1).rotate;
+    if (rotate.axis.x > 0.0f) {
+      *os << "rx(" << rotate.angle << ") ";
+    } else if (rotate.axis.y > 0.0f) {
+      *os << "ry(" << rotate.angle << ") ";
+    } else if (rotate.axis.z > 0.0f) {
+      *os << "rz(" << rotate.angle << ") ";
+    }
+  }
+
+  if (!ops.at(2).IsIdentity()) {
+    const auto& scale = ops.at(2).scale;
+    *os << "s(" << scale.x << ", " << scale.y << ", " << scale.z << ") ";
+  }
+}
+#endif
 
 }  // namespace
 
@@ -100,7 +133,7 @@ void UiElement::Render(UiElementRenderer* renderer,
   // draw phase set to kPhaseNone and should, consequently, be filtered out when
   // the UiRenderer collects elements to draw. Therefore, if we invoke this
   // function, it is an error.
-  NOTREACHED();
+  NOTREACHED() << "element: " << DebugName();
 }
 
 void UiElement::Initialize(SkiaSurfaceProvider* provider) {}
@@ -173,7 +206,7 @@ bool UiElement::PrepareToDraw() {
 }
 
 bool UiElement::DoBeginFrame(const base::TimeTicks& time,
-                             const gfx::Vector3dF& look_at) {
+                             const gfx::Transform& head_pose) {
   // TODO(mthiesse): This is overly cautious. We may have animations but not
   // trigger any updates, so we should refine this logic and have
   // AnimationPlayer::Tick return a boolean.
@@ -181,7 +214,7 @@ bool UiElement::DoBeginFrame(const base::TimeTicks& time,
   animation_player_.Tick(time);
   last_frame_time_ = time;
   set_update_phase(kUpdatedAnimations);
-  bool begin_frame_updated = OnBeginFrame(time, look_at);
+  bool begin_frame_updated = OnBeginFrame(time, head_pose);
   UpdateComputedOpacity();
   bool was_visible_at_any_point = IsVisible() || updated_visibility_this_frame_;
   return (begin_frame_updated || animations_updated) &&
@@ -189,7 +222,7 @@ bool UiElement::DoBeginFrame(const base::TimeTicks& time,
 }
 
 bool UiElement::OnBeginFrame(const base::TimeTicks& time,
-                             const gfx::Vector3dF& look_at) {
+                             const gfx::Transform& head_pose) {
   return false;
 }
 
@@ -274,6 +307,13 @@ void UiElement::SetOpacity(float opacity) {
   animation_player_.TransitionFloatTo(last_frame_time_, OPACITY, opacity_,
                                       opacity);
 }
+
+void UiElement::SetCornerRadii(const CornerRadii& radii) {
+  corner_radii_ = radii;
+  OnSetCornerRadii(radii);
+}
+
+void UiElement::OnSetCornerRadii(const CornerRadii& radii) {}
 
 gfx::SizeF UiElement::GetTargetSize() const {
   return animation_player_.GetTargetSizeValue(TargetProperty::BOUNDS, size_);
@@ -383,8 +423,27 @@ std::string UiElement::DebugName() const {
       type() == kTypeNone ? "" : UiElementTypeToString(type()).c_str());
 }
 
+#ifndef NDEBUG
+void DumpLines(const std::vector<size_t>& counts,
+               const std::vector<const UiElement*>& ancestors,
+               std::ostringstream* os) {
+  for (size_t i = 0; i < counts.size(); ++i) {
+    size_t current_count = counts[i];
+    if (i + 1 < counts.size()) {
+      current_count++;
+    }
+    if (ancestors[ancestors.size() - i - 1]->children().size() >
+        current_count) {
+      *os << "| ";
+    } else {
+      *os << "  ";
+    }
+  }
+}
+
 void UiElement::DumpHierarchy(std::vector<size_t> counts,
-                              std::ostringstream* os) const {
+                              std::ostringstream* os,
+                              bool include_bindings) const {
   // Put our ancestors in a vector for easy reverse traversal.
   std::vector<const UiElement*> ancestors;
   for (const UiElement* ancestor = parent(); ancestor;
@@ -413,45 +472,52 @@ void UiElement::DumpHierarchy(std::vector<size_t> counts,
   *os << DebugName() << kReset << " " << kCyan << DrawPhaseToString(draw_phase_)
       << " " << kReset;
 
-  if (!size().IsEmpty()) {
+  if (size().width() != 0.0f || size().height() != 0.0f) {
     *os << kRed << "[" << size().width() << ", " << size().height() << "] "
         << kReset;
   }
 
   *os << kGreen;
   DumpGeometry(os);
-  *os << kReset << std::endl;
 
   counts.push_back(0u);
+
+  if (include_bindings) {
+    std::ostringstream binding_stream;
+    for (auto& binding : bindings_) {
+      std::string binding_text = binding->ToString();
+      if (binding_text.empty())
+        continue;
+      binding_stream << binding->ToString() << std::endl;
+    }
+
+    auto split_bindings =
+        base::SplitString(binding_stream.str(), "\n", base::TRIM_WHITESPACE,
+                          base::SPLIT_WANT_NONEMPTY);
+    if (!split_bindings.empty()) {
+      ancestors.insert(ancestors.begin(), this);
+    }
+    for (const auto& split : split_bindings) {
+      *os << std::endl << kBlue;
+      DumpLines(counts, ancestors, os);
+      *os << kGreen << split;
+    }
+  }
+
+  *os << kReset << std::endl;
+
   for (auto& child : children_) {
-    child->DumpHierarchy(counts, os);
+    child->DumpHierarchy(counts, os, include_bindings);
     counts.back()++;
   }
 }
 
 void UiElement::DumpGeometry(std::ostringstream* os) const {
-  if (!transform_operations_.at(0).IsIdentity()) {
-    const auto& translate = transform_operations_.at(0).translate;
-    *os << "t(" << translate.x << ", " << translate.y << ", " << translate.z
-        << ") ";
-  }
-
-  if (!transform_operations_.at(1).IsIdentity()) {
-    const auto& rotate = transform_operations_.at(1).rotate;
-    if (rotate.axis.x > 0.0f) {
-      *os << "rx(" << rotate.angle << ") ";
-    } else if (rotate.axis.y > 0.0f) {
-      *os << "ry(" << rotate.angle << ") ";
-    } else if (rotate.axis.z > 0.0f) {
-      *os << "rz(" << rotate.angle << ") ";
-    }
-  }
-
-  if (!transform_operations_.at(2).IsIdentity()) {
-    const auto& scale = transform_operations_.at(2).scale;
-    *os << "s(" << scale.x << ", " << scale.y << ", " << scale.z << ") ";
-  }
+  DumpTransformOperations(transform_operations_, os);
+  *os << kYellow;
+  DumpTransformOperations(layout_offset_, os);
 }
+#endif
 
 void UiElement::OnUpdatedWorldSpaceTransform() {}
 
@@ -502,8 +568,7 @@ gfx::Point3F UiElement::GetCenter() const {
 
 gfx::PointF UiElement::GetUnitRectangleCoordinates(
     const gfx::Point3F& world_point) const {
-  // TODO(acondor): Simplify the math in this function.
-  gfx::Point3F origin(0, 0, 0);
+  gfx::Point3F origin;
   gfx::Vector3dF x_axis(1, 0, 0);
   gfx::Vector3dF y_axis(0, 1, 0);
   world_space_transform_.TransformPoint(&origin);

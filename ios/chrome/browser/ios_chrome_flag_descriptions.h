@@ -7,15 +7,6 @@
 
 namespace flag_descriptions {
 
-// Title and description for the flag to enable the new bookmark edit page in
-// the new bookmark UI.
-extern const char kBookmarkNewEditPageName[];
-extern const char kBookmarkNewEditPageDescription[];
-
-// Title and description for the flag to enable the new bookmark UI.
-extern const char kBookmarkNewGenerationName[];
-extern const char kBookmarkNewGenerationDescription[];
-
 // Title and description for the flag to control redirection to the task
 // scheduler.
 extern const char kBrowserTaskScheduler[];
@@ -28,6 +19,10 @@ extern const char kCaptivePortalDescription[];
 // Title and description for the flag to enable Clean Toolbar.
 extern const char kCleanToolbarName[];
 extern const char kCleanToolbarDescription[];
+
+// Title and description for the flag to enable Omnibox Clipping.
+extern const char kClippingTextfieldName[];
+extern const char kClippingTextfieldDescription[];
 
 // Title and description for the flag to enable Contextual Search.
 extern const char kContextualSearch[];
@@ -54,7 +49,10 @@ extern const char kInProductHelpDemoModeDescription[];
 // display of omnibox warnings about non-secure pages.
 extern const char kMarkHttpAsName[];
 extern const char kMarkHttpAsDescription[];
-extern const char kMarkHttpAsDangerous[];
+
+// Title and description for the flag to enable the Memex Tab Switcher.
+extern const char kMemexTabSwitcherName[];
+extern const char kMemexTabSwitcherDescription[];
 
 // Title and description for the flag to enable the new fullscreen
 // implementation.
@@ -118,6 +116,10 @@ extern const char kShowAutofillTypePredictionsDescription[];
 // BVC.
 extern const char kTabSwitcherPresentsBVCName[];
 extern const char kTabSwitcherPresentsBVCDescription[];
+
+// Title and description for the flag to enable the phase 1 UI Refresh.
+extern const char kUIRefreshPhase1Name[];
+extern const char kUIRefreshPhase1Description[];
 
 // Title and description for the flag to enable the ddljson Doodle API.
 extern const char kUseDdljsonApiName[];

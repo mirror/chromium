@@ -20,11 +20,15 @@
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintPhase.h"
+#include "core/paint/ScrollRecorder.h"
+#include "core/paint/ScrollableAreaPainter.h"
+#include "core/paint/ng/ng_box_clipper.h"
 #include "core/paint/ng/ng_fragment_painter.h"
 #include "core/paint/ng/ng_paint_fragment.h"
 #include "core/paint/ng/ng_text_fragment_painter.h"
 #include "platform/geometry/LayoutRectOutsets.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
+#include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/scroll/ScrollTypes.h"
 
@@ -46,7 +50,8 @@ NGBoxFragmentPainter::NGBoxFragmentPainter(const NGPaintFragment& box)
           box.Style(),
           box.GetLayoutObject()->GeneratingNode(),
           BoxStrutToLayoutRectOutsets(box.PhysicalFragment().BorderWidths()),
-          LayoutRectOutsets()),
+          BoxStrutToLayoutRectOutsets(
+              ToNGPhysicalBoxFragment(box.PhysicalFragment()).Padding())),
       box_fragment_(box),
       border_edges_(
           NGBorderEdges::FromPhysical(box.PhysicalFragment().BorderEdges(),
@@ -110,9 +115,7 @@ void NGBoxFragmentPainter::PaintWithAdjustedOffset(
 
   if (original_phase != PaintPhase::kSelfBlockBackgroundOnly &&
       original_phase != PaintPhase::kSelfOutlineOnly) {
-    // TODO(layout-dev): Clip using BoxClipper.
-    // BoxClipper box_clipper(layout_block_, info, paint_offset,
-    //                       contents_clip_behavior);
+    NGBoxClipper box_clipper(box_fragment_, info);
     PaintObject(info, paint_offset);
   }
 
@@ -141,8 +144,10 @@ void NGBoxFragmentPainter::PaintObject(const PaintInfo& paint_info,
     // PaintBoxDecorationBackground should be called here but is currently
     // called during the foreground phase instead for all box types, not just
     // for inline flow boxes.
-    // if (is_visible && style.HasBoxDecorationBackground())
-    //  PaintBoxDecorationBackground(paint_info, paint_offset);
+    // The paint phase and inline/block box distinction needs cleanup, but
+    // without this, borders on 'overflow: scroll' are clipped.
+    if (is_visible && style.HasBoxDecorationBackground() && !is_inline_)
+      PaintBoxDecorationBackground(paint_info, paint_offset);
 
     // Record the scroll hit test after the background so background squashing
     // is not affected. Hit test order would be equivalent if this were
@@ -169,30 +174,58 @@ void NGBoxFragmentPainter::PaintObject(const PaintInfo& paint_info,
   //  ObjectPainter(box_fragment_)
   //      .AddPDFURLRectIfNeeded(paint_info, paint_offset);
 
-  // TODO(layout-dev): Add support for scrolling.
-  Optional<PaintInfo> scrolled_paint_info;
+  if (paint_phase != PaintPhase::kSelfOutlineOnly) {
+    // TODO(layout-dev): Figure out where paint properties should live.
+    const auto& layout_object = *box_fragment_.GetLayoutObject();
+    Optional<PaintInfo> scrolled_paint_info;
+    if (const auto* fragment = paint_info.FragmentToPaint(layout_object)) {
+      Optional<ScopedPaintChunkProperties> scoped_scroll_property;
+      Optional<ScrollRecorder> scroll_recorder;
+      DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+      const auto* object_properties = fragment->PaintProperties();
+      auto* scroll_translation =
+          object_properties ? object_properties->ScrollTranslation() : nullptr;
+      if (scroll_translation) {
+        scoped_scroll_property.emplace(
+            paint_info.context.GetPaintController(), scroll_translation,
+            box_fragment_, DisplayItem::PaintPhaseToScrollType(paint_phase));
+        scrolled_paint_info.emplace(paint_info);
+        if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+          scrolled_paint_info->UpdateCullRectForScrollingContents(
+              EnclosingIntRect(box_fragment_.OverflowClipRect(
+                  paint_offset, kIgnorePlatformOverlayScrollbarSize)),
+              scroll_translation->Matrix().ToAffineTransform());
+        } else {
+          scrolled_paint_info->UpdateCullRect(
+              scroll_translation->Matrix().ToAffineTransform());
+        }
+      }
+    }
 
-  const PaintInfo& contents_paint_info =
-      scrolled_paint_info ? *scrolled_paint_info : paint_info;
+    const PaintInfo& contents_paint_info =
+        scrolled_paint_info ? *scrolled_paint_info : paint_info;
 
-  // Paint our background, border and box-shadow.
-  // TODO(eae): We should only paint box-decorations during the foreground phase
-  // for inline boxes. Split this method into PaintBlock and PaintInline once we
-  // can tell the two types of fragments apart or we've eliminated the extra
-  // block wrapper fragments.
-  if (paint_info.phase == PaintPhase::kForeground)
-    PaintBoxDecorationBackground(paint_info, paint_offset);
+    // Paint our background, border and box-shadow.
+    // TODO(eae): We should only paint box-decorations during the foreground
+    // phase for inline boxes. Split this method into PaintBlock and PaintInline
+    // once we can tell the two types of fragments apart or we've eliminated the
+    // extra block wrapper fragments.
+    if (paint_info.phase == PaintPhase::kForeground && is_inline_)
+      PaintBoxDecorationBackground(paint_info, paint_offset);
 
-  PaintContents(contents_paint_info, paint_offset);
+    PaintContents(contents_paint_info, paint_offset);
 
-  if (paint_phase == PaintPhase::kFloat ||
-      paint_phase == PaintPhase::kSelection ||
-      paint_phase == PaintPhase::kTextClip)
-    PaintFloats(contents_paint_info, paint_offset);
+    if (paint_phase == PaintPhase::kFloat ||
+        paint_phase == PaintPhase::kSelection ||
+        paint_phase == PaintPhase::kTextClip)
+      PaintFloats(contents_paint_info, paint_offset);
+  }
 
   if (ShouldPaintSelfOutline(paint_phase))
     NGFragmentPainter(box_fragment_).PaintOutline(paint_info, paint_offset);
-
+  if (ShouldPaintDescendantOutlines(paint_phase))
+    NGFragmentPainter(box_fragment_)
+        .PaintDescendantOutlines(paint_info, paint_offset);
   // TODO(layout-dev): Implement once we have selections in LayoutNG.
   // If the caret's node's layout object's containing block is this block, and
   // the paint action is PaintPhaseForeground, then paint the caret.
@@ -496,9 +529,31 @@ bool NGBoxFragmentPainter::
   return false;
 }
 
-void NGBoxFragmentPainter::PaintOverflowControlsIfNeeded(const PaintInfo&,
-                                                         const LayoutPoint&) {
-  // TODO(layout-dev): Implement once we have support for scrolling.
+// Clone of BlockPainter::PaintOverflowControlsIfNeeded
+void NGBoxFragmentPainter::PaintOverflowControlsIfNeeded(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) {
+  if (box_fragment_.HasOverflowClip() &&
+      box_fragment_.Style().Visibility() == EVisibility::kVisible &&
+      ShouldPaintSelfBlockBackground(paint_info.phase) &&
+      !paint_info.PaintRootBackgroundOnly()) {
+    LayoutObject* layout_object =
+        box_fragment_.PhysicalFragment().GetLayoutObject();
+    if (layout_object->IsLayoutBlock()) {
+      LayoutBlock* layout_block = ToLayoutBlock(layout_object);
+      Optional<ClipRecorder> clip_recorder;
+      if (!layout_block->Layer()->IsSelfPaintingLayer()) {
+        LayoutRect clip_rect = layout_block->BorderBoxRect();
+        clip_rect.MoveBy(paint_offset);
+        clip_recorder.emplace(paint_info.context, *layout_block,
+                              DisplayItem::kClipScrollbarsToBoxBounds,
+                              PixelSnappedIntRect(clip_rect));
+      }
+      ScrollableAreaPainter(*layout_block->Layer()->GetScrollableArea())
+          .PaintOverflowControls(paint_info, RoundedIntPoint(paint_offset),
+                                 false /* painting_overlay_controls */);
+    }
+  }
 }
 
 bool NGBoxFragmentPainter::IntersectsPaintRect(
@@ -511,40 +566,13 @@ bool NGBoxFragmentPainter::IntersectsPaintRect(
   return paint_info.GetCullRect().IntersectsCullRect(overflow_rect);
 }
 
-void NGBoxFragmentPainter::PaintFillLayerTextFillBox(
-    GraphicsContext& context,
-    const BoxPainterBase::FillLayerInfo& info,
-    Image* image,
-    SkBlendMode composite_op,
-    const BackgroundImageGeometry& geometry,
-    const LayoutRect& rect,
-    LayoutRect scrolled_paint_rect) {
-  // First figure out how big the mask has to be. It should be no bigger
-  // than what we need to actually render, so we should intersect the dirty
-  // rect with the border box of the background.
-  IntRect mask_rect = PixelSnappedIntRect(rect);
-
-  // We draw the background into a separate layer, to be later masked with
-  // yet another layer holding the text content.
-  GraphicsContextStateSaver background_clip_state_saver(context, false);
-  background_clip_state_saver.Save();
-  context.Clip(mask_rect);
-  context.BeginLayer();
-
-  PaintFillLayerBackground(context, info, image, composite_op, geometry,
-                           scrolled_paint_rect);
-
-  // Create the text mask layer and draw the text into the mask. We do this by
-  // painting using a special paint phase that signals to InlineTextBoxes that
-  // they should just add their contents to the clip.
-  context.BeginLayer(1, SkBlendMode::kDstIn);
+void NGBoxFragmentPainter::PaintTextClipMask(GraphicsContext& context,
+                                             const IntRect& mask_rect,
+                                             const LayoutPoint& paint_offset) {
   PaintInfo paint_info(context, mask_rect, PaintPhase::kTextClip,
                        kGlobalPaintNormalPhase, 0);
 
   // TODO(eae): Paint text child fragments.
-
-  context.EndLayer();  // Text mask layer.
-  context.EndLayer();  // Background layer.
 }
 
 LayoutRect NGBoxFragmentPainter::AdjustForScrolledContent(

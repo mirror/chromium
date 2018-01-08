@@ -11,12 +11,10 @@
 #include "ash/app_list/app_list_presenter_delegate_factory.h"
 #include "ash/shell.h"
 #include "base/files/file_path.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_view_delegate.h"
-#include "chrome/browser/ui/app_list/start_page_service.h"
 #include "chrome/browser/ui/ash/app_list/app_list_controller_ash.h"
 #include "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.h"
 #include "chrome/browser/ui/ash/app_list/app_list_presenter_service.h"
@@ -66,7 +64,7 @@ class AppListPresenterDelegateFactoryMus
 
   std::unique_ptr<app_list::AppListPresenterDelegate> GetDelegate(
       app_list::AppListPresenterImpl* presenter) override {
-    return base::MakeUnique<AppListPresenterDelegateMus>(
+    return std::make_unique<AppListPresenterDelegateMus>(
         presenter, view_delegate_factory_.get());
   }
 
@@ -93,17 +91,17 @@ AppListServiceAsh* AppListServiceAsh::GetInstance() {
 AppListServiceAsh::AppListServiceAsh() {
   std::unique_ptr<app_list::AppListPresenterDelegateFactory> factory;
   if (ash_util::IsRunningInMash()) {
-    factory = base::MakeUnique<AppListPresenterDelegateFactoryMus>(
-        base::MakeUnique<ViewDelegateFactoryImpl>(this));
+    factory = std::make_unique<AppListPresenterDelegateFactoryMus>(
+        std::make_unique<ViewDelegateFactoryImpl>(this));
   } else {
-    factory = base::MakeUnique<ash::AppListPresenterDelegateFactory>(
-        base::MakeUnique<ViewDelegateFactoryImpl>(this));
+    factory = std::make_unique<ash::AppListPresenterDelegateFactory>(
+        std::make_unique<ViewDelegateFactoryImpl>(this));
   }
   app_list_presenter_ =
-      base::MakeUnique<app_list::AppListPresenterImpl>(std::move(factory));
+      std::make_unique<app_list::AppListPresenterImpl>(std::move(factory));
   controller_delegate_ =
-      base::MakeUnique<AppListControllerDelegateAsh>(app_list_presenter_.get());
-  app_list_presenter_service_ = base::MakeUnique<AppListPresenterService>();
+      std::make_unique<AppListControllerDelegateAsh>(app_list_presenter_.get());
+  app_list_presenter_service_ = std::make_unique<AppListPresenterService>();
 }
 
 AppListServiceAsh::~AppListServiceAsh() {}
@@ -114,20 +112,12 @@ app_list::AppListPresenterImpl* AppListServiceAsh::GetAppListPresenter() {
 
 void AppListServiceAsh::Init(Profile* initial_profile) {
   app_list_presenter_service_->Init();
-
-  // Ensure the StartPageService is created here. This early initialization is
-  // necessary to allow the WebContents to load before the app list is shown.
-  app_list::StartPageService* service =
-      app_list::StartPageService::Get(initial_profile);
-  if (service)
-    service->Init();
 }
 
 void AppListServiceAsh::OnProfileWillBeRemoved(
     const base::FilePath& profile_path) {}
 
-void AppListServiceAsh::ShowAndSwitchToState(
-    app_list::AppListModel::State state) {
+void AppListServiceAsh::ShowAndSwitchToState(ash::AppListState state) {
   bool app_list_was_open = true;
   app_list::AppListView* app_list_view = app_list_presenter_->GetView();
   if (!app_list_view) {
@@ -140,7 +130,7 @@ void AppListServiceAsh::ShowAndSwitchToState(
     DCHECK(app_list_view);
   }
 
-  if (state == app_list::AppListModel::INVALID_STATE)
+  if (state == ash::AppListState::kInvalidState)
     return;
 
   app_list::ContentsView* contents_view =
@@ -164,7 +154,7 @@ void AppListServiceAsh::ShowForAppInstall(Profile* profile,
                                           bool start_discovery_tracking) {
   if (app_list::features::IsFullscreenAppListEnabled())
     return;
-  ShowAndSwitchToState(app_list::AppListModel::STATE_APPS);
+  ShowAndSwitchToState(ash::AppListState::kStateApps);
   AppListServiceImpl::ShowForAppInstall(profile, extension_id,
                                         start_discovery_tracking);
 }

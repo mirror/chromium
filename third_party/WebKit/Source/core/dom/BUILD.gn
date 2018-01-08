@@ -38,6 +38,8 @@ blink_core_sources("dom") {
     "CollectionIndexCache.h",
     "Comment.cpp",
     "Comment.h",
+    "ComputedAccessibleNode.cpp",
+    "ComputedAccessibleNode.h",
     "ContainerNode.cpp",
     "ContainerNode.h",
     "ContextFeatures.cpp",
@@ -48,6 +50,7 @@ blink_core_sources("dom") {
     "ContextLifecycleNotifier.h",
     "ContextLifecycleObserver.cpp",
     "ContextLifecycleObserver.h",
+    "CreateElementFlags.h",
     "DOMException.cpp",
     "DOMException.h",
     "DOMHighResTimeStamp.h",
@@ -302,11 +305,6 @@ blink_core_sources("dom") {
     "trustedtypes/TrustedScriptURL.h",
     "trustedtypes/TrustedURL.cpp",
     "trustedtypes/TrustedURL.h",
-  ]
-
-  configs += [
-    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-    "//build/config/compiler:no_size_t_to_int_warning",
   ]
 
   public_deps = [

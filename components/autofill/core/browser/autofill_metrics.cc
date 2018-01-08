@@ -79,8 +79,7 @@ std::string PreviousSaveCreditCardPromptUserDecisionToString(
 ukm::SourceId NewUkmSourceWithUrl(ukm::UkmRecorder* ukm_recorder,
                                   const GURL& url) {
   ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
-  if (ukm_recorder)
-    ukm_recorder->UpdateSourceURL(source_id, url);
+  AutofillMetrics::UpdateSourceURL(ukm_recorder, source_id, url);
   return source_id;
 }
 
@@ -144,6 +143,7 @@ int GetFieldTypeGroupMetric(ServerFieldType field_type,
           break;
         case ADDRESS_HOME_STREET_ADDRESS:
           group = GROUP_STREET_ADDRESS;
+          break;
         case ADDRESS_HOME_CITY:
           group = GROUP_ADDRESS_CITY;
           break;
@@ -615,6 +615,14 @@ AutofillMetrics::FormEvent GetCardNumberStatusFormEvent(
 }
 
 }  // namespace
+
+// static
+void AutofillMetrics::UpdateSourceURL(ukm::UkmRecorder* ukm_recorder,
+                                      ukm::SourceId source_id,
+                                      const GURL& url) {
+  if (ukm_recorder)
+    ukm_recorder->UpdateSourceURL(source_id, url);
+}
 
 // static
 void AutofillMetrics::LogSubmittedServerCardExpirationStatusMetric(
@@ -1714,7 +1722,7 @@ void AutofillMetrics::FormInteractionsUkmLogger::UpdateSourceURL(
     const GURL& url) {
   url_ = url;
   if (CanLog())
-    ukm_recorder_->UpdateSourceURL(source_id_, url_);
+    AutofillMetrics::UpdateSourceURL(ukm_recorder_, source_id_, url_);
 }
 
 bool AutofillMetrics::FormInteractionsUkmLogger::CanLog() const {
@@ -1732,7 +1740,7 @@ int64_t AutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormParsed(
 
 void AutofillMetrics::FormInteractionsUkmLogger::GetNewSourceID() {
   source_id_ = ukm_recorder_->GetNewSourceID();
-  ukm_recorder_->UpdateSourceURL(source_id_, url_);
+  AutofillMetrics::UpdateSourceURL(ukm_recorder_, source_id_, url_);
 }
 
 AutofillMetrics::UkmTimestampPin::UkmTimestampPin(

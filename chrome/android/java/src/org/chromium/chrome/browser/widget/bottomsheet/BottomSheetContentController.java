@@ -50,11 +50,12 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.ViewHighlighter;
+import org.chromium.chrome.browser.widget.ViewRectProvider;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
 import org.chromium.chrome.browser.widget.bottomsheet.base.BottomNavigationView;
 import org.chromium.chrome.browser.widget.bottomsheet.base.BottomNavigationView.OnNavigationItemSelectedListener;
-import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
+import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.ui.UiUtils;
 
@@ -103,8 +104,8 @@ public class BottomSheetContentController
     private int mBottomNavHeight;
 
     private final Map<Integer, BottomSheetContent> mBottomSheetContents = new HashMap<>();
-
     private boolean mLabelsEnabled;
+    private boolean mDestroyed;
 
     private final BottomSheetObserver mBottomSheetObserver = new EmptyBottomSheetObserver() {
         @Override
@@ -152,7 +153,11 @@ public class BottomSheetContentController
         public void onSheetClosed(@StateChangeReason int reason) {
             removeIcons();
 
-            if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)) {
+            if (ChromeFeatureList.isInitialized()
+                    && ChromeFeatureList.isEnabled(
+                               ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)
+                    && !ChromeFeatureList.isEnabled(
+                               ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_ABOVE_ARTICLES)) {
                 // TODO(bauerb): Implement support for destroying the home sheet after a delay.
                 mSelectedItemId = NO_CONTENT_ID;
                 mBottomSheet.showContent(null);
@@ -228,6 +233,7 @@ public class BottomSheetContentController
 
     /** Called when the activity containing the bottom sheet is destroyed. */
     public void destroy() {
+        mDestroyed = true;
         clearBottomSheetContents(true);
         if (mPlaceholderContent != null) {
             mPlaceholderContent.destroy();
@@ -237,6 +243,22 @@ public class BottomSheetContentController
             mTabModelSelector.removeObserver(mTabModelSelectorObserver);
             mTabModelSelector = null;
         }
+    }
+
+    @Override
+    public void onFinishInflate() {
+        super.onFinishInflate();
+        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
+                    @Override
+                    public void onSuccess(boolean alreadyStarted) {
+                        initBottomNavMenu();
+                        setIconsEnabled(true);
+                    }
+
+                    @Override
+                    public void onFailure() {}
+                });
     }
 
     /**
@@ -251,17 +273,7 @@ public class BottomSheetContentController
         mBottomSheet.addObserver(mBottomSheetObserver);
         mActivity = activity;
         mTabModelSelector = tabModelSelector;
-
-        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
-                .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
-                    @Override
-                    public void onSuccess(boolean alreadyStarted) {
-                        initBottomNavMenu();
-                    }
-
-                    @Override
-                    public void onFailure() {}
-                });
+        setIconsEnabled(mActivity.didFinishNativeInitialization());
 
         mTabModelSelectorObserver = new EmptyTabModelSelectorObserver() {
             @Override
@@ -347,10 +359,13 @@ public class BottomSheetContentController
      * Needs to be called after the native library is loaded.
      */
     private void initializeMenuView() {
+        if (mDestroyed) return;
+
         mLabelsEnabled =
                 ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_BOTTOM_NAV_LABELS);
         if (mLabelsEnabled) {
-            ((ImageView) findViewById(R.id.bottom_nav_shadow)).setVisibility(View.VISIBLE);
+            ImageView bottomNavShadow = (ImageView) findViewById(R.id.bottom_nav_shadow);
+            if (bottomNavShadow != null) bottomNavShadow.setVisibility(View.VISIBLE);
         } else {
             hideMenuLabels();
         }
@@ -579,6 +594,12 @@ public class BottomSheetContentController
         getMenu().findItem(R.id.action_history).setIcon(null);
     }
 
+    private void setIconsEnabled(boolean enabled) {
+        getMenu().findItem(R.id.action_downloads).setEnabled(enabled);
+        getMenu().findItem(R.id.action_bookmarks).setEnabled(enabled);
+        getMenu().findItem(R.id.action_history).setEnabled(enabled);
+    }
+
     /**
      * Get the background color resource ID for the bottom navigation menu based on whether
      * we're in incognito mode.
@@ -781,8 +802,9 @@ public class BottomSheetContentController
             throw new RuntimeException("Attempting to show invalid content in bottom sheet.");
         }
 
-        final ViewAnchoredTextBubble helpBubble =
-                new ViewAnchoredTextBubble(getContext(), mBottomSheet, stringId, stringId);
+        ViewRectProvider rectProvider = new ViewRectProvider(mBottomSheet);
+        final TextBubble helpBubble =
+                new TextBubble(getContext(), mBottomSheet, stringId, stringId, rectProvider);
         helpBubble.setDismissOnTouchInteraction(true);
 
         mBottomSheet.addObserver(new EmptyBottomSheetObserver() {
@@ -809,7 +831,7 @@ public class BottomSheetContentController
                 if (state != BottomSheet.SHEET_STATE_HALF || mHelpBubbleShown) return;
                 int inset = getContext().getResources().getDimensionPixelSize(
                         R.dimen.bottom_sheet_help_bubble_inset);
-                helpBubble.setInsetPx(0, inset, 0, inset);
+                rectProvider.setInsetPx(0, inset, 0, inset);
                 helpBubble.show();
                 mHelpBubbleShown = true;
             }

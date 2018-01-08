@@ -225,9 +225,8 @@ MinMaxSize NGBlockNode::ComputeMinMaxSize() {
   }
 
   scoped_refptr<NGConstraintSpace> constraint_space =
-      NGConstraintSpaceBuilder(
-          Style().GetWritingMode(),
-          /* icb_size */ {NGSizeIndefinite, NGSizeIndefinite})
+      NGConstraintSpaceBuilder(Style().GetWritingMode(),
+                               InitialContainingBlockSize())
           .SetTextDirection(Style().Direction())
           .ToConstraintSpace(Style().GetWritingMode());
 
@@ -246,9 +245,8 @@ MinMaxSize NGBlockNode::ComputeMinMaxSize() {
 
   // Now, redo with infinite space for max_content
   constraint_space =
-      NGConstraintSpaceBuilder(
-          Style().GetWritingMode(),
-          /* icb_size */ {NGSizeIndefinite, NGSizeIndefinite})
+      NGConstraintSpaceBuilder(Style().GetWritingMode(),
+                               InitialContainingBlockSize())
           .SetTextDirection(Style().Direction())
           .SetAvailableSize({LayoutUnit::Max(), LayoutUnit()})
           .SetPercentageResolutionSize({LayoutUnit(), LayoutUnit()})
@@ -297,11 +295,16 @@ NGLayoutInputNode NGBlockNode::FirstChild() const {
   return NGBlockNode(ToLayoutBox(child));
 }
 
-bool NGBlockNode::CanUseNewLayout() const {
-  if (!box_->IsLayoutNGMixin())
-    return false;
+bool NGBlockNode::CanUseNewLayout(const LayoutBox& box) {
+  DCHECK(RuntimeEnabledFeatures::LayoutNGEnabled());
 
-  return RuntimeEnabledFeatures::LayoutNGEnabled();
+  // When the style has |ForceLegacyLayout|, it's usually not LayoutNGMixin,
+  // but anonymous block can be.
+  return box.IsLayoutNGMixin() && !box.StyleRef().ForceLegacyLayout();
+}
+
+bool NGBlockNode::CanUseNewLayout() const {
+  return CanUseNewLayout(*box_);
 }
 
 String NGBlockNode::ToString() const {
@@ -565,6 +568,7 @@ scoped_refptr<NGLayoutResult> NGBlockNode::RunOldLayout(
   builder.SetIsOldLayoutRoot();
   builder.SetInlineSize(box_size.inline_size);
   builder.SetBlockSize(box_size.block_size);
+  builder.SetPadding(ComputePadding(constraint_space, box_->StyleRef()));
 
   // For now we copy the exclusion space straight through, this is incorrect
   // but needed as not all elements which participate in a BFC are switched
@@ -631,11 +635,17 @@ void NGBlockNode::UseOldOutOfFlowPositioning() {
 }
 
 // Save static position for legacy AbsPos layout.
-void NGBlockNode::SaveStaticOffsetForLegacy(const NGLogicalOffset& offset) {
+void NGBlockNode::SaveStaticOffsetForLegacy(
+    const NGLogicalOffset& offset,
+    const LayoutObject* offset_container) {
   DCHECK(box_->IsOutOfFlowPositioned());
-  DCHECK(box_->Layer());
-  box_->Layer()->SetStaticBlockPosition(offset.block_offset);
-  box_->Layer()->SetStaticInlinePosition(offset.inline_offset);
+  // Only set static position if the current offset container
+  // is one that Legacy layout expects static offset from.
+  if (box_->Parent() == offset_container) {
+    DCHECK(box_->Layer());
+    box_->Layer()->SetStaticBlockPosition(offset.block_offset);
+    box_->Layer()->SetStaticInlinePosition(offset.inline_offset);
+  }
 }
 
 }  // namespace blink

@@ -22,6 +22,10 @@
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/common/previews_state.h"
 
+namespace network {
+class ResourceRequestBody;
+}
+
 namespace content {
 
 class FrameNavigationEntry;
@@ -30,7 +34,6 @@ class NavigationControllerImpl;
 class NavigationHandleImpl;
 class NavigationURLLoader;
 class NavigationData;
-class ResourceRequestBody;
 class SiteInstanceImpl;
 class StreamHandle;
 struct SubresourceLoaderParams;
@@ -86,7 +89,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
       PreviewsState previews_state,
       bool is_same_document_history_load,
       bool is_history_navigation_in_new_child,
-      const scoped_refptr<ResourceRequestBody>& post_body,
+      const scoped_refptr<network::ResourceRequestBody>& post_body,
       const base::TimeTicks& navigation_start,
       NavigationControllerImpl* controller);
 
@@ -168,13 +171,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // NavigationRequest for the FrameTreeNode has been destroyed.
   void CreateNavigationHandle();
 
-  // Transfers the ownership of the NavigationHandle to |render_frame_host|.
-  // This should be called when the navigation is ready to commit, because the
-  // NavigationHandle outlives the NavigationRequest. The NavigationHandle's
-  // lifetime is the entire navigation, while the NavigationRequest is
-  // destroyed when a navigation is ready for commit.
-  void TransferNavigationHandleOwnership(
-      RenderFrameHostImpl* render_frame_host);
+  // Returns ownership of the navigation handle.
+  std::unique_ptr<NavigationHandleImpl> TakeNavigationHandle();
 
   void set_on_start_checks_complete_closure_for_testing(
       const base::Closure& closure) {
@@ -220,10 +218,10 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // NavigationURLLoaderDelegate implementation.
   void OnRequestRedirected(
       const net::RedirectInfo& redirect_info,
-      const scoped_refptr<ResourceResponse>& response) override;
+      const scoped_refptr<network::ResourceResponse>& response) override;
   void OnResponseStarted(
-      const scoped_refptr<ResourceResponse>& response,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      const scoped_refptr<network::ResourceResponse>& response,
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       std::unique_ptr<StreamHandle> body,
       const net::SSLInfo& ssl_info,
       std::unique_ptr<NavigationData> navigation_data,
@@ -352,9 +350,9 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // completed, these objects will be used to continue the navigation.
   // The URLLoaderClientEndpointsPtr is used when the Network Service or
   // NavigationMojoResponse is enabled. Otherwise the StreamHandle is used.
-  scoped_refptr<ResourceResponse> response_;
+  scoped_refptr<network::ResourceResponse> response_;
   std::unique_ptr<StreamHandle> body_;
-  mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints_;
+  network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints_;
   net::SSLInfo ssl_info_;
   bool is_download_;
 

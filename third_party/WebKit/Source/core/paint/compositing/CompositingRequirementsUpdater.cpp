@@ -29,7 +29,6 @@
 #include "base/macros.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerStackingNode.h"
 #include "core/paint/PaintLayerStackingNodeIterator.h"
@@ -225,7 +224,7 @@ CompositingRequirementsUpdater::CompositingRequirementsUpdater(
     : layout_view_(layout_view),
       compositing_reason_finder_(compositing_reason_finder) {}
 
-CompositingRequirementsUpdater::~CompositingRequirementsUpdater() {}
+CompositingRequirementsUpdater::~CompositingRequirementsUpdater() = default;
 
 void CompositingRequirementsUpdater::Update(
     PaintLayer* root,

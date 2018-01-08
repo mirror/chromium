@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -31,10 +32,7 @@ import java.io.IOException;
  * Tests for the appearance and behaviour of AllDismissedItem.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({
-        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
-})
+@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
 public class AllDismissedItemTest {
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
@@ -72,8 +70,10 @@ public class AllDismissedItemTest {
     }
 
     @Test
-    @MediumTest
-    @Feature({"Cards", "RenderTest"})
+    //@MediumTest
+    //@Feature({"Cards", "RenderTest"})
+    // crbug.com/780555
+    @DisabledTest
     @ChromeHome.Enable
     public void testChromeHomeAppearance() throws IOException {
         renderAtHour(new ViewHolder(mContentView, null), 0, "modern");

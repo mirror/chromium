@@ -222,6 +222,7 @@ extern const char kDisplayPowerState[];
 extern const char kDisplayProperties[];
 extern const char kDisplayTouchAssociations[];
 extern const char kExternalDisplayMirrorInfo[];
+extern const char kDisplayMixedMirrorModeParams[];
 extern const char kSecondaryDisplays[];
 extern const char kDisplayRotationLock[];
 extern const char kNoteTakingAppId[];
@@ -344,7 +345,6 @@ extern const char kShowUpdatePromotionInfoBar[];
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
 extern const char kUseCustomChromeFrame[];
 #endif
-extern const char kBackShortcutBubbleShownCount[];
 #if BUILDFLAG(ENABLE_PLUGINS)
 extern const char kContentSettingsPluginWhitelist[];
 #endif
@@ -501,6 +501,9 @@ extern const char kDownloadDirUpgraded[];
 #if defined(OS_WIN) || defined(OS_LINUX) || defined(OS_MACOSX)
 extern const char kOpenPdfDownloadInSystemReader[];
 #endif
+#if defined(OS_ANDROID)
+extern const char kPromptForDownloadAndroid[];
+#endif
 
 extern const char kSaveFileDefaultDirectory[];
 extern const char kSaveFileType[];
@@ -515,7 +518,6 @@ extern const char kSelectFileLastDirectory[];
 extern const char kExcludedSchemes[];
 
 extern const char kOptionsWindowLastTabIndex[];
-extern const char kShowFirstRunBubbleOption[];
 
 extern const char kLastKnownIntranetRedirectOrigin[];
 

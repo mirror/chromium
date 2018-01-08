@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "base/strings/stringprintf.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/socket/socket_test_util.h"
 #include "url/origin.h"
 
@@ -172,8 +172,9 @@ void WebSocketTestURLRequestContextHost::AddSSLSocketDataProvider(
 void WebSocketTestURLRequestContextHost::SetProxyConfig(
     const std::string& proxy_rules) {
   DCHECK(!url_request_context_initialized_);
-  proxy_service_ = ProxyService::CreateFixed(proxy_rules);
-  url_request_context_.set_proxy_service(proxy_service_.get());
+  proxy_resolution_service_ = ProxyResolutionService::CreateFixed(proxy_rules);
+  url_request_context_.set_proxy_resolution_service(
+      proxy_resolution_service_.get());
 }
 
 TestURLRequestContext*

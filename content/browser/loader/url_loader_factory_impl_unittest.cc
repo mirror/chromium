@@ -29,15 +29,13 @@
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/common/content_paths.h"
-#include "content/public/common/resource_request.h"
-#include "content/public/common/url_loader.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/c/system/types.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
@@ -50,7 +48,10 @@
 #include "net/test/url_request/url_request_slow_download_job.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_filter.h"
+#include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -103,10 +104,10 @@ class URLLoaderFactoryImplTest : public ::testing::TestWithParam<size_t> {
     MojoAsyncResourceHandler::SetAllocationSizeForTesting(GetParam());
     rdh_.SetLoaderDelegate(&loader_deleate_);
 
-    URLLoaderFactoryImpl::Create(
-        resource_message_filter_->requester_info_for_test(),
-        mojo::MakeRequest(&factory_),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+    mojo::StrongBinding<network::mojom::URLLoaderFactory>::Create(
+        std::make_unique<URLLoaderFactoryImpl>(
+            resource_message_filter_->requester_info_for_test()),
+        mojo::MakeRequest(&factory_));
 
     // Calling this function creates a request context.
     browser_context_->GetResourceContext()->GetRequestContext();
@@ -139,7 +140,7 @@ class URLLoaderFactoryImplTest : public ::testing::TestWithParam<size_t> {
   ResourceDispatcherHostImpl rdh_;
   std::unique_ptr<TestBrowserContext> browser_context_;
   scoped_refptr<ResourceMessageFilter> resource_message_filter_;
-  mojom::URLLoaderFactoryPtr factory_;
+  network::mojom::URLLoaderFactoryPtr factory_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderFactoryImplTest);
 };
@@ -147,11 +148,11 @@ class URLLoaderFactoryImplTest : public ::testing::TestWithParam<size_t> {
 TEST_P(URLLoaderFactoryImplTest, GetResponse) {
   constexpr int32_t kRoutingId = 81;
   constexpr int32_t kRequestId = 28;
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   base::FilePath root;
   PathService::Get(DIR_TEST_DATA, &root);
   net::URLRequestMockHTTPJob::AddUrlHandlers(root);
-  ResourceRequest request;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   // Assume the file contents is small enough to be stored in the data pipe.
   request.url = net::URLRequestMockHTTPJob::GetMockUrl("hello.html");
@@ -164,7 +165,7 @@ TEST_P(URLLoaderFactoryImplTest, GetResponse) {
   request.request_initiator = url::Origin::Create(request.url);
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), kRoutingId, kRequestId,
-      mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),
+      network::mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   ASSERT_FALSE(client.has_received_response());
@@ -225,8 +226,8 @@ TEST_P(URLLoaderFactoryImplTest, GetResponse) {
 }
 
 TEST_P(URLLoaderFactoryImplTest, GetFailedResponse) {
-  mojom::URLLoaderPtr loader;
-  ResourceRequest request;
+  network::mojom::URLLoaderPtr loader;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   net::URLRequestFailedJob::AddUrlHandler();
   request.url = net::URLRequestFailedJob::GetMockHttpUrlWithFailurePhase(
@@ -239,8 +240,8 @@ TEST_P(URLLoaderFactoryImplTest, GetFailedResponse) {
   // Need to set same-site |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin::Create(request.url);
   factory_->CreateLoaderAndStart(
-      mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
-      client.CreateInterfacePtr(),
+      mojo::MakeRequest(&loader), 2, 1, network::mojom::kURLLoadOptionNone,
+      request, client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   client.RunUntilComplete();
@@ -254,8 +255,8 @@ TEST_P(URLLoaderFactoryImplTest, GetFailedResponse) {
 
 // In this case, the loading fails after receiving a response.
 TEST_P(URLLoaderFactoryImplTest, GetFailedResponse2) {
-  mojom::URLLoaderPtr loader;
-  ResourceRequest request;
+  network::mojom::URLLoaderPtr loader;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   net::URLRequestFailedJob::AddUrlHandler();
   request.url = net::URLRequestFailedJob::GetMockHttpUrlWithFailurePhase(
@@ -268,8 +269,8 @@ TEST_P(URLLoaderFactoryImplTest, GetFailedResponse2) {
   // Need to set same-site |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin::Create(request.url);
   factory_->CreateLoaderAndStart(
-      mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
-      client.CreateInterfacePtr(),
+      mojo::MakeRequest(&loader), 2, 1, network::mojom::kURLLoadOptionNone,
+      request, client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   client.RunUntilComplete();
@@ -283,8 +284,8 @@ TEST_P(URLLoaderFactoryImplTest, GetFailedResponse2) {
 
 // This test tests a case where resource loading is cancelled before started.
 TEST_P(URLLoaderFactoryImplTest, InvalidURL) {
-  mojom::URLLoaderPtr loader;
-  ResourceRequest request;
+  network::mojom::URLLoaderPtr loader;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   request.url = GURL();
   request.method = "GET";
@@ -296,8 +297,8 @@ TEST_P(URLLoaderFactoryImplTest, InvalidURL) {
   request.request_initiator = url::Origin::Create(request.url);
   ASSERT_FALSE(request.url.is_valid());
   factory_->CreateLoaderAndStart(
-      mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
-      client.CreateInterfacePtr(),
+      mojo::MakeRequest(&loader), 2, 1, network::mojom::kURLLoadOptionNone,
+      request, client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   client.RunUntilComplete();
@@ -309,10 +310,10 @@ TEST_P(URLLoaderFactoryImplTest, InvalidURL) {
 
 // This test tests a case where resource loading is cancelled before started.
 TEST_P(URLLoaderFactoryImplTest, ShouldNotRequestURL) {
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   RejectingResourceDispatcherHostDelegate rdh_delegate;
   rdh_.SetDelegate(&rdh_delegate);
-  ResourceRequest request;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   request.url = GURL("http://localhost/");
   request.method = "GET";
@@ -323,8 +324,8 @@ TEST_P(URLLoaderFactoryImplTest, ShouldNotRequestURL) {
   // Need to set same-site |request_initiator| for non main frame type request.
   request.request_initiator = url::Origin::Create(request.url);
   factory_->CreateLoaderAndStart(
-      mojo::MakeRequest(&loader), 2, 1, mojom::kURLLoadOptionNone, request,
-      client.CreateInterfacePtr(),
+      mojo::MakeRequest(&loader), 2, 1, network::mojom::kURLLoadOptionNone,
+      request, client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   client.RunUntilComplete();
@@ -340,12 +341,12 @@ TEST_P(URLLoaderFactoryImplTest, DownloadToFile) {
   constexpr int32_t kRoutingId = 1;
   constexpr int32_t kRequestId = 2;
 
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   base::FilePath root;
   PathService::Get(DIR_TEST_DATA, &root);
   net::URLRequestMockHTTPJob::AddUrlHandlers(root);
 
-  ResourceRequest request;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   request.url = net::URLRequestMockHTTPJob::GetMockUrl("hello.html");
   request.method = "GET";
@@ -408,12 +409,12 @@ TEST_P(URLLoaderFactoryImplTest, DownloadToFileFailure) {
   constexpr int32_t kRoutingId = 1;
   constexpr int32_t kRequestId = 2;
 
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   base::FilePath root;
   PathService::Get(DIR_TEST_DATA, &root);
   net::URLRequestSlowDownloadJob::AddUrlHandler();
 
-  ResourceRequest request;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   request.url = GURL(net::URLRequestSlowDownloadJob::kKnownSizeUrl);
   request.method = "GET";
@@ -466,11 +467,11 @@ TEST_P(URLLoaderFactoryImplTest, DownloadToFileFailure) {
 TEST_P(URLLoaderFactoryImplTest, OnTransferSizeUpdated) {
   constexpr int32_t kRoutingId = 81;
   constexpr int32_t kRequestId = 28;
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   base::FilePath root;
   PathService::Get(DIR_TEST_DATA, &root);
   net::URLRequestMockHTTPJob::AddUrlHandlers(root);
-  ResourceRequest request;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   // Assume the file contents is small enough to be stored in the data pipe.
   request.url = net::URLRequestMockHTTPJob::GetMockUrl("gzip-content.svgz");
@@ -484,7 +485,7 @@ TEST_P(URLLoaderFactoryImplTest, OnTransferSizeUpdated) {
   request.report_raw_headers = true;
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), kRoutingId, kRequestId,
-      mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),
+      network::mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   client.RunUntilComplete();
@@ -526,11 +527,11 @@ TEST_P(URLLoaderFactoryImplTest, OnTransferSizeUpdated) {
 TEST_P(URLLoaderFactoryImplTest, CancelFromRenderer) {
   constexpr int32_t kRoutingId = 81;
   constexpr int32_t kRequestId = 28;
-  mojom::URLLoaderPtr loader;
+  network::mojom::URLLoaderPtr loader;
   base::FilePath root;
   PathService::Get(DIR_TEST_DATA, &root);
   net::URLRequestFailedJob::AddUrlHandler();
-  ResourceRequest request;
+  network::ResourceRequest request;
   TestURLLoaderClient client;
   // Assume the file contents is small enough to be stored in the data pipe.
   request.url = net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_IO_PENDING);
@@ -544,7 +545,7 @@ TEST_P(URLLoaderFactoryImplTest, CancelFromRenderer) {
   request.request_initiator = url::Origin::Create(request.url);
   factory_->CreateLoaderAndStart(
       mojo::MakeRequest(&loader), kRoutingId, kRequestId,
-      mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),
+      network::mojom::kURLLoadOptionNone, request, client.CreateInterfacePtr(),
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   base::RunLoop().RunUntilIdle();

@@ -18,13 +18,13 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/autofill/core/browser/credit_card_save_manager.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
-#include "mojo/public/cpp/bindings/binding.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/url_request/test_url_fetcher_factory.h"
-#include "services/service_manager/public/cpp/binder_registry.h"
-#include "services/service_manager/public/cpp/connector.h"
 #include "testing/gmock/include/gmock/gmock.h"
+
+namespace device {
+class ScopedGeolocationOverrider;
+}
 
 namespace autofill {
 
@@ -50,7 +50,6 @@ class SaveCardBubbleViewsBrowserTestBase
       const std::string& test_file_path);
   ~SaveCardBubbleViewsBrowserTestBase() override;
 
-  void SetUpCommandLine(base::CommandLine* command_line) override;
   void SetUpOnMainThread() override;
 
   void NavigateTo(const std::string& file_path);
@@ -62,15 +61,9 @@ class SaveCardBubbleViewsBrowserTestBase
   void OnReceivedGetUploadDetailsResponse() override;
   void OnSentUploadCardRequest() override;
 
-  // Experiments.
-  void DisableRequestCvcIfMissingAndSendDetectedValuesExperiments();
-  void DisableSendDetectedValuesExperiment();
-  void DisableSecondaryUiMdExperiment();
-  void EnableRequestCvcIfMissingExperiment();
-  void EnableSecondaryUiMdExperiment();
-
   // Will call JavaScript to fill and submit the form in different ways.
   void FillAndSubmitForm();
+  void FillAndSubmitFormWithCardDetailsOnly();
   void FillAndSubmitFormWithoutCvc();
   void FillAndSubmitFormWithInvalidCvc();
   void FillAndSubmitFormWithAmexWithoutCvc();
@@ -85,9 +78,14 @@ class SaveCardBubbleViewsBrowserTestBase
   void SetUploadDetailsRpcPaymentsDeclines();
   void SetUploadDetailsRpcServerError();
 
+  // Clicks on the given views::View*.
+  void ClickOnDialogView(views::View* view);
+
   // Clicks on a view from within the dialog and waits for a certain event to be
   // observed.
   void ClickOnDialogViewWithIdAndWait(DialogViewId view_id);
+
+  // Returns the views::View* that was previously assigned the id |view_id|.
   views::View* FindViewInBubbleById(DialogViewId view_id);
 
   // Gets the views::View* instance of the save credit card bubble.
@@ -100,17 +98,13 @@ class SaveCardBubbleViewsBrowserTestBase
   // Wait for the event(s) passed to ResetEventWaiter*() to occur.
   void WaitForObservedEvent();
 
+  base::test::ScopedFeatureList scoped_feature_list_;
+
  private:
   std::unique_ptr<DialogEventWaiter<DialogEvent>> event_waiter_;
   std::unique_ptr<net::FakeURLFetcherFactory> url_fetcher_factory_;
-  base::test::ScopedFeatureList scoped_feature_list_;
+  std::unique_ptr<device::ScopedGeolocationOverrider> geolocation_overrider_;
   const std::string test_file_path_;
-
-  // FakeGeolocation setup:
-  class FakeGeolocation;
-  std::unique_ptr<FakeGeolocation> fake_geolocation_;
-  std::unique_ptr<service_manager::Connector> connector_;
-  service_manager::BinderRegistry registry_;
 
   DISALLOW_COPY_AND_ASSIGN(SaveCardBubbleViewsBrowserTestBase);
 };

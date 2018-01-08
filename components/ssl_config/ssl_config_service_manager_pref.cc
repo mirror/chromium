@@ -171,7 +171,6 @@ class SSLConfigServiceManagerPref : public ssl_config::SSLConfigServiceManager {
   BooleanPrefMember rev_checking_enabled_;
   BooleanPrefMember rev_checking_required_local_anchors_;
   BooleanPrefMember sha1_local_anchors_enabled_;
-  BooleanPrefMember common_name_fallback_local_anchors_enabled_;
   StringPrefMember ssl_version_min_;
   StringPrefMember ssl_version_max_;
   StringPrefMember tls13_variant_;
@@ -196,24 +195,27 @@ SSLConfigServiceManagerPref::SSLConfigServiceManagerPref(
   const std::string tls13_variant =
       base::GetFieldTrialParamValue(kTLS13VariantExperimentName, "variant");
   const char* tls13_value = nullptr;
-  const char* experiment_value = nullptr;
+  const char* version_value = nullptr;
   if (tls13_variant == "disabled") {
     tls13_value = switches::kTLS13VariantDisabled;
   } else if (tls13_variant == "draft22") {
     tls13_value = switches::kTLS13VariantDraft22;
-    experiment_value = switches::kSSLVersionTLSv13;
+    version_value = switches::kSSLVersionTLSv13;
+  } else if (tls13_variant == "draft23") {
+    tls13_value = switches::kTLS13VariantDraft23;
+    version_value = switches::kSSLVersionTLSv13;
   } else if (tls13_variant == "experiment2") {
     tls13_value = switches::kTLS13VariantExperiment2;
-    experiment_value = switches::kSSLVersionTLSv13;
+    version_value = switches::kSSLVersionTLSv13;
   }
 
   if (tls13_value) {
     local_state->SetDefaultPrefValue(ssl_config::prefs::kTLS13Variant,
                                      base::Value(tls13_value));
   }
-  if (experiment_value) {
+  if (version_value) {
     local_state->SetDefaultPrefValue(ssl_config::prefs::kSSLVersionMax,
-                                     base::Value(experiment_value));
+                                     base::Value(version_value));
   }
 
   PrefChangeRegistrar::NamedChangeCallback local_state_callback =
@@ -227,9 +229,6 @@ SSLConfigServiceManagerPref::SSLConfigServiceManagerPref(
       local_state, local_state_callback);
   sha1_local_anchors_enabled_.Init(
       ssl_config::prefs::kCertEnableSha1LocalAnchors, local_state,
-      local_state_callback);
-  common_name_fallback_local_anchors_enabled_.Init(
-      ssl_config::prefs::kCertEnableCommonNameFallbackLocalAnchors, local_state,
       local_state_callback);
   ssl_version_min_.Init(ssl_config::prefs::kSSLVersionMin, local_state,
                         local_state_callback);
@@ -260,8 +259,6 @@ void SSLConfigServiceManagerPref::RegisterPrefs(PrefRegistrySimple* registry) {
       default_config.rev_checking_required_local_anchors);
   registry->RegisterBooleanPref(ssl_config::prefs::kCertEnableSha1LocalAnchors,
                                 false);
-  registry->RegisterBooleanPref(
-      ssl_config::prefs::kCertEnableCommonNameFallbackLocalAnchors, false);
   registry->RegisterStringPref(ssl_config::prefs::kSSLVersionMin,
                                std::string());
   registry->RegisterStringPref(ssl_config::prefs::kSSLVersionMax,
@@ -302,8 +299,6 @@ void SSLConfigServiceManagerPref::GetSSLConfigFromPrefs(
   config->rev_checking_required_local_anchors =
       rev_checking_required_local_anchors_.GetValue();
   config->sha1_local_anchors_enabled = sha1_local_anchors_enabled_.GetValue();
-  config->common_name_fallback_local_anchors_enabled =
-      common_name_fallback_local_anchors_enabled_.GetValue();
   std::string version_min_str = ssl_version_min_.GetValue();
   std::string version_max_str = ssl_version_max_.GetValue();
   std::string tls13_variant_str = tls13_variant_.GetValue();
@@ -323,6 +318,8 @@ void SSLConfigServiceManagerPref::GetSSLConfigFromPrefs(
       config->version_max = net::SSL_PROTOCOL_VERSION_TLS1_2;
   } else if (tls13_variant_str == switches::kTLS13VariantDraft22) {
     config->tls13_variant = net::kTLS13VariantDraft22;
+  } else if (tls13_variant_str == switches::kTLS13VariantDraft23) {
+    config->tls13_variant = net::kTLS13VariantDraft23;
   } else if (tls13_variant_str == switches::kTLS13VariantExperiment2) {
     config->tls13_variant = net::kTLS13VariantExperiment2;
   }

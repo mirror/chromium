@@ -43,6 +43,7 @@
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/LinkedHashSet.h"
 #include "platform/wtf/ThreadSpecific.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/ThreadingPrimitives.h"
@@ -53,6 +54,10 @@ class Isolate;
 };
 
 namespace blink {
+
+namespace incremental_marking_test {
+class IncrementalMarkingScope;
+}  // namespace incremental_marking_test
 
 class GarbageCollectedMixinConstructorMarkerBase;
 class PersistentNode;
@@ -265,8 +270,7 @@ class PLATFORM_EXPORT ThreadState {
   void IncrementalMarkingFinalize();
 
   bool IsIncrementalMarkingInProgress() const {
-    return GcState() == kIncrementalMarkingStartScheduled ||
-           GcState() == kIncrementalMarkingStepScheduled ||
+    return GcState() == kIncrementalMarkingStepScheduled ||
            GcState() == kIncrementalMarkingFinalizeScheduled;
   }
 
@@ -336,6 +340,8 @@ class PLATFORM_EXPORT ThreadState {
 
   bool IsIncrementalMarking() const { return incremental_marking_; }
   void SetIncrementalMarking(bool value) { incremental_marking_ = value; }
+
+  void CheckObjectNotInCallbackStacks(const void*);
 
   class MainThreadGCForbiddenScope final {
     STACK_ALLOCATED();
@@ -519,7 +525,11 @@ class PLATFORM_EXPORT ThreadState {
 
   int GcAge() const { return gc_age_; }
 
+  Visitor* CurrentVisitor() { return current_gc_data_.visitor.get(); }
+
  private:
+  // Needs to set up visitor for testing purposes.
+  friend class incremental_marking_test::IncrementalMarkingScope;
   template <typename T>
   friend class PrefinalizerRegistration;
 
@@ -628,7 +638,7 @@ class PLATFORM_EXPORT ThreadState {
   // Pre-finalizers are called in the reverse order in which they are
   // registered by the constructors (including constructors of Mixin objects)
   // for an object, by processing the ordered_pre_finalizers_ back-to-front.
-  ListHashSet<PreFinalizer> ordered_pre_finalizers_;
+  LinkedHashSet<PreFinalizer> ordered_pre_finalizers_;
 
   v8::Isolate* isolate_;
   void (*trace_dom_wrappers_)(v8::Isolate*, Visitor*);

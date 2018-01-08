@@ -88,7 +88,6 @@ class CORE_EXPORT SVGElement : public Element {
     kAncestorScope  // Used by SVGSVGElement::get{Enclosure|Intersection}List()
   };
   virtual AffineTransform LocalCoordinateSpaceTransform(CTMScope) const;
-  virtual bool NeedsPendingResourceHandling() const { return true; }
 
   bool InstanceUpdatesBlocked() const;
   void SetInstanceUpdatesBlocked(bool);
@@ -174,8 +173,8 @@ class CORE_EXPORT SVGElement : public Element {
 
   SVGElementProxySet* ElementProxySet();
 
-  SVGElementSet* SetOfIncomingReferences() const;
   void AddReferenceTo(SVGElement*);
+  void NotifyIncomingReferences(bool needs_layout);
   void RebuildAllIncomingReferences();
   void RemoveAllIncomingReferences();
   void RemoveAllOutgoingReferences();
@@ -243,6 +242,8 @@ class CORE_EXPORT SVGElement : public Element {
 
   bool HasSVGParent() const;
 
+  SVGElementSet* SetOfIncomingReferences() const;
+
   SVGElementRareData* EnsureSVGRareData();
   inline bool HasSVGRareData() const { return svg_rare_data_; }
   inline SVGElementRareData* SvgRareData() const {
@@ -272,8 +273,6 @@ class CORE_EXPORT SVGElement : public Element {
     return EnsureComputedStyle(pseudo_element_specifier);
   }
   void WillRecalcStyle(StyleRecalcChange) override;
-
-  void BuildPendingResourcesIfNeeded();
 
   HeapHashSet<WeakMember<SVGElement>> elements_with_relative_lengths_;
 

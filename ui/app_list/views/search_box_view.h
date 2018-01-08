@@ -14,7 +14,6 @@
 #include "base/macros.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_view_delegate_observer.h"
-#include "ui/app_list/speech_ui_model_observer.h"
 #include "ui/gfx/shadow_value.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
@@ -28,17 +27,6 @@ class Textfield;
 }  // namespace views
 
 namespace app_list {
-
-// Possible locations for partial keyboard focus (but note that the search
-// box always handles typing).
-enum SearchBoxFocus {
-  FOCUS_NONE,           // No focus
-  FOCUS_BACK_BUTTON,    // Back button, only responds to ENTER
-  FOCUS_SEARCH_BOX,     // Nothing else has partial focus
-  FOCUS_MIC_BUTTON,     // Mic button, only responds to ENTER
-  FOCUS_CLOSE_BUTTON,   // Close button, only responds to ENTER
-  FOCUS_CONTENTS_VIEW,  // Something outside the SearchBox is selected
-};
 
 class AppListView;
 class AppListViewDelegate;
@@ -55,7 +43,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
                                       public views::TextfieldController,
                                       public views::ButtonListener,
                                       public SearchBoxModelObserver,
-                                      public SpeechUIModelObserver,
                                       public AppListViewDelegateObserver {
  public:
   SearchBoxView(SearchBoxViewDelegate* delegate,
@@ -79,15 +66,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   void set_contents_view(views::View* contents_view) {
     contents_view_ = contents_view;
   }
-
-  // Moves focus in response to arrow key.
-  bool MoveArrowFocus(const ui::KeyEvent& event);
-
-  // Moves focus forward/backwards in response to TAB.
-  bool MoveTabFocus(bool move_backwards);
-
-  // Moves focus to contents or SearchBox and unselects buttons.
-  void ResetTabFocus(bool on_contents);
 
   // Sets voice label for Back button depending on whether a folder is open.
   void SetBackButtonLabel(bool folder);
@@ -120,7 +98,7 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   void OnKeyEvent(ui::KeyEvent* evetn) override;
 
   // Overridden from views::WidgetDelegate:
-  ui::AXRole GetAccessibleWindowRole() const override;
+  ax::mojom::Role GetAccessibleWindowRole() const override;
   bool ShouldAdvanceFocusToTopLevelWidget() const override;
 
   // Overridden from views::ButtonListener:
@@ -129,22 +107,22 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   // Updates the search box's background corner radius and color based on the
   // state of AppListModel.
   void UpdateBackground(double progress,
-                        AppListModel::State current_state,
-                        AppListModel::State target_state);
+                        ash::AppListState current_state,
+                        ash::AppListState target_state);
 
   // Updates the search box's layout based on the state of AppListModel.
   void UpdateLayout(double progress,
-                    AppListModel::State current_state,
-                    AppListModel::State target_state);
+                    ash::AppListState current_state,
+                    ash::AppListState target_state);
 
   // Called when tablet mode starts and ends.
   void OnTabletModeChanged(bool started);
 
   // Returns background border corner radius in the given state.
-  int GetSearchBoxBorderCornerRadiusForState(AppListModel::State state) const;
+  int GetSearchBoxBorderCornerRadiusForState(ash::AppListState state) const;
 
   // Returns background color for the given state.
-  SkColor GetBackgroundColorForState(AppListModel::State state) const;
+  SkColor GetBackgroundColorForState(ash::AppListState state) const;
 
   // Updates the opacity of the searchbox.
   void UpdateOpacity();
@@ -152,21 +130,13 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   // Used only in the tests to get the current search icon.
   views::ImageView* get_search_icon_for_test() { return search_icon_; }
 
-  // Used only in the tests to get the current focused view.
-  SearchBoxFocus get_focused_view_for_test() const { return focused_view_; }
-
   // Whether the search box is active.
   bool is_search_box_active() const { return is_search_box_active_; }
-
-  // Whether the key event is an arrow up/down/left/right.
-  // TODO(weidongg): move this function to utility class.
-  static bool IsArrowKey(const ui::KeyEvent& event);
 
   // Returns selected view in contents view.
   views::View* GetSelectedViewInContentsView() const;
 
-  bool selected() { return selected_; }
-  void SetSelected(bool selected);
+  void OnOnSearchBoxFocusedChanged();
 
  private:
   // Updates model text and selection model with current Textfield info.
@@ -211,14 +181,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
                           const ui::GestureEvent& gesture_event) override;
 
   // Overridden from SearchBoxModelObserver:
-  void SpeechRecognitionButtonPropChanged() override;
   void HintTextChanged() override;
   void SelectionModelChanged() override;
   void Update() override;
-
-  // Overridden from SpeechUIModelObserver:
-  void OnSpeechRecognitionStateChanged(
-      SpeechRecognitionState new_state) override;
 
   // Overridden from AppListViewDelegateObserver:
   void OnWallpaperColorsChanged() override;
@@ -234,7 +199,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   views::View* content_container_;
   views::ImageView* search_icon_ = nullptr;
   SearchBoxImageButton* back_button_ = nullptr;
-  SearchBoxImageButton* speech_button_ = nullptr;
   SearchBoxImageButton* close_button_ = nullptr;
   views::Textfield* search_box_;
   views::View* search_box_right_space_ = nullptr;
@@ -244,11 +208,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   // Owned by |content_container_|. It is deleted when the view is deleted.
   views::BoxLayout* box_layout_ = nullptr;
 
-  // Whether the app list focus is enabled.
-  const bool is_app_list_focus_enabled_;
-
-  SearchBoxFocus focused_view_;  // Which element has TAB'd focus.
-
   // Whether the search box is active.
   bool is_search_box_active_ = false;
   // Whether tablet mode is active.
@@ -257,9 +216,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   SkColor background_color_ = kSearchBoxBackgroundDefault;
   // The current search box color.
   SkColor search_box_color_ = kDefaultSearchboxColor;
-
-  // Whether the search box is selected.
-  bool selected_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SearchBoxView);
 };

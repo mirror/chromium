@@ -65,12 +65,6 @@ class ProviderHostEndpoints : public mojom::ServiceWorkerContainerHost {
         blink::mojom::ServiceWorkerRegistrationOptions::New();
     registration_object_host_request_ =
         mojo::MakeRequest(&(provider_info->registration->host_ptr_info));
-    provider_info->registration->installing =
-        blink::mojom::ServiceWorkerObjectInfo::New();
-    provider_info->registration->waiting =
-        blink::mojom::ServiceWorkerObjectInfo::New();
-    provider_info->registration->active =
-        blink::mojom::ServiceWorkerObjectInfo::New();
     binding_.Bind(mojo::MakeRequest(&provider_info->host_ptr_info));
     provider_info->client_request = mojo::MakeRequest(&client_);
     mojo::MakeRequest(&provider_info->interface_provider);
@@ -189,9 +183,7 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     mojom::EmbeddedWorkerStartParamsPtr params =
         CreateStartParams(id, pattern, url);
     worker->Start(
-        std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-        CreateController(), GetInstalledScriptsInfoPtr(),
-        GetServiceWorkerHostPtrInfo(),
+        std::move(params), CreateProviderInfoGetter(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     return status;
@@ -205,6 +197,11 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     params->script_url = script_url;
     params->pause_after_download = false;
     params->is_installed = false;
+
+    params->dispatcher_request = CreateEventDispatcher();
+    params->controller_request = CreateController();
+    params->installed_scripts_info = GetInstalledScriptsInfoPtr();
+    params->service_worker_host = GetServiceWorkerHostPtrInfo();
     return params;
   }
 
@@ -360,19 +357,13 @@ TEST_F(EmbeddedWorkerInstanceTest, StartAndStop) {
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
   worker->AddListener(this);
 
-  // Simulate adding one process to the pattern.
-  helper_->SimulateAddProcessToPattern(pattern,
-                                       helper_->mock_render_process_id());
-
   // Start should succeed.
   ServiceWorkerStatusCode status;
   base::RunLoop run_loop;
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(service_worker_version_id, pattern, url);
   worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      CreateController(), GetInstalledScriptsInfoPtr(),
-      GetServiceWorkerHostPtrInfo(),
+      std::move(params), CreateProviderInfoGetter(),
       base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
   run_loop.Run();
@@ -412,17 +403,6 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
       embedded_worker_registry()->CreateWorker(pair.second.get());
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
 
-  // Simulate adding one process to the pattern.
-  helper_->SimulateAddProcessToPattern(pattern,
-                                       helper_->mock_render_process_id());
-
-  // Also simulate adding a "newly created" process to the pattern because
-  // unittests can't actually create a new process itself.
-  // ServiceWorkerProcessManager only chooses this process id in unittests if
-  // can_use_existing_process is false.
-  helper_->SimulateAddProcessToPattern(pattern,
-                                       helper_->new_render_process_id());
-
   {
     // Start once normally.
     ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
@@ -430,9 +410,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     mojom::EmbeddedWorkerStartParamsPtr params =
         CreateStartParams(service_worker_version_id, pattern, url);
     worker->Start(
-        std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-        CreateController(), GetInstalledScriptsInfoPtr(),
-        GetServiceWorkerHostPtrInfo(),
+        std::move(params), CreateProviderInfoGetter(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -457,9 +435,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     mojom::EmbeddedWorkerStartParamsPtr params =
         CreateStartParams(service_worker_version_id, pattern, url);
     worker->Start(
-        std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-        CreateController(), GetInstalledScriptsInfoPtr(),
-        GetServiceWorkerHostPtrInfo(),
+        std::move(params), CreateProviderInfoGetter(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
     run_loop.Run();
@@ -482,10 +458,6 @@ TEST_F(EmbeddedWorkerInstanceTest, StopWhenDevToolsAttached) {
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
-
-  // Simulate adding one process to the pattern.
-  helper_->SimulateAddProcessToPattern(pattern,
-                                       helper_->mock_render_process_id());
 
   // Start the worker and then call StopIfNotAttachedToDevTools().
   EXPECT_EQ(SERVICE_WORKER_OK,
@@ -538,7 +510,6 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
   const int64_t version_id2 = pair2.second->version_id();
   int process_id = helper_->mock_render_process_id();
 
-  helper_->SimulateAddProcessToPattern(pattern, process_id);
   {
     // Start worker1.
     ServiceWorkerStatusCode status;
@@ -546,9 +517,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     mojom::EmbeddedWorkerStartParamsPtr params =
         CreateStartParams(version_id1, pattern, url);
     worker1->Start(
-        std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-        CreateController(), GetInstalledScriptsInfoPtr(),
-        GetServiceWorkerHostPtrInfo(),
+        std::move(params), CreateProviderInfoGetter(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -561,9 +530,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     mojom::EmbeddedWorkerStartParamsPtr params =
         CreateStartParams(version_id2, pattern, url);
     worker2->Start(
-        std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-        CreateController(), GetInstalledScriptsInfoPtr(),
-        GetServiceWorkerHostPtrInfo(),
+        std::move(params), CreateProviderInfoGetter(),
         base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -602,8 +569,6 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachDuringProcessAllocation) {
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
-                CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   worker->Detach();
@@ -638,8 +603,6 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachAfterSendingStartWorkerMessage) {
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
-                CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
@@ -681,8 +644,6 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
-                CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   worker->Stop();
@@ -706,9 +667,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   std::unique_ptr<base::RunLoop> run_loop(new base::RunLoop);
   params = CreateStartParams(version_id, scope, url);
   worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      CreateController(), GetInstalledScriptsInfoPtr(),
-      GetServiceWorkerHostPtrInfo(),
+      std::move(params), CreateProviderInfoGetter(),
       base::BindOnce(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
   run_loop->Run();
 
@@ -761,8 +720,6 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringPausedAfterDownload) {
       CreateStartParams(version_id, scope, url);
   params->pause_after_download = true;
   worker->Start(std::move(params), CreateProviderInfoGetter(),
-                CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
@@ -794,8 +751,6 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
-                CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&SaveStatusAndCall, &status,
                                base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
@@ -829,9 +784,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
 
   params = CreateStartParams(version_id, scope, url);
   worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      CreateController(), GetInstalledScriptsInfoPtr(),
-      GetServiceWorkerHostPtrInfo(),
+      std::move(params), CreateProviderInfoGetter(),
       base::BindOnce(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
   run_loop->Run();
 
@@ -854,8 +807,6 @@ TEST_F(EmbeddedWorkerInstanceTest, Detach) {
   const int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
-  helper_->SimulateAddProcessToPattern(pattern,
-                                       helper_->mock_render_process_id());
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_FAILED;
   worker->AddListener(this);
 
@@ -864,9 +815,7 @@ TEST_F(EmbeddedWorkerInstanceTest, Detach) {
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      CreateController(), GetInstalledScriptsInfoPtr(),
-      GetServiceWorkerHostPtrInfo(),
+      std::move(params), CreateProviderInfoGetter(),
       base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
   run_loop.Run();
 
@@ -894,16 +843,12 @@ TEST_F(EmbeddedWorkerInstanceTest, FailToSendStartIPC) {
   const int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
-  helper_->SimulateAddProcessToPattern(pattern,
-                                       helper_->mock_render_process_id());
   worker->AddListener(this);
 
   // Attempt to start the worker.
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
-                CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
@@ -924,16 +869,7 @@ class FailEmbeddedWorkerInstanceClientImpl
       : EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient(helper) {}
 
  private:
-  void StartWorker(
-      mojom::EmbeddedWorkerStartParamsPtr,
-      mojom::ServiceWorkerEventDispatcherRequest,
-      mojom::ControllerServiceWorkerRequest,
-      blink::mojom::ServiceWorkerInstalledScriptsInfoPtr /* unused */,
-      blink::mojom::ServiceWorkerHostAssociatedPtrInfo,
-      mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo,
-      mojom::ServiceWorkerProviderInfoForStartWorkerPtr,
-      blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy)
-      override {
+  void StartWorker(mojom::EmbeddedWorkerStartParamsPtr) override {
     helper_->mock_instance_clients()->clear();
   }
 };
@@ -952,16 +888,12 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveRemoteInterface) {
   const int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
-  helper_->SimulateAddProcessToPattern(pattern,
-                                       helper_->mock_render_process_id());
   worker->AddListener(this);
 
   // Attempt to start the worker.
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
-                CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
@@ -1008,8 +940,6 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
   const int64_t version_id = pair.second->version_id();
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
-  helper_->SimulateAddProcessToPattern(pattern,
-                                       helper_->mock_render_process_id());
   worker->AddListener(this);
 
   // Attempt to start the worker and immediate AddMessageToConsole should not
@@ -1019,8 +949,6 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
   mojom::EmbeddedWorkerStartParamsPtr params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
-                CreateEventDispatcher(), CreateController(),
-                GetInstalledScriptsInfoPtr(), GetServiceWorkerHostPtrInfo(),
                 base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   worker->AddMessageToConsole(test_message.first, test_message.second);
   base::RunLoop().RunUntilIdle();

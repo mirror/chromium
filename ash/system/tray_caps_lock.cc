@@ -14,7 +14,6 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/actionable_view.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_popup_item_style.h"
@@ -31,8 +30,8 @@
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
+#include "ui/message_center/public/cpp/notification.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
@@ -49,6 +48,7 @@ namespace {
 const int kCaptionRightPadding = 6;
 
 const char kCapsLockNotificationId[] = "capslock";
+const char kNotifierCapsLock[] = "ash.caps-lock";
 
 bool IsCapsLockEnabled() {
   return Shell::Get()->ime_controller()->IsCapsLockEnabled();
@@ -81,7 +81,7 @@ std::unique_ptr<Notification> CreateNotification() {
       l10n_util::GetStringUTF16(string_id), gfx::Image(),
       base::string16() /* display_source */, GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 system_notifier::kNotifierCapsLock),
+                                 kNotifierCapsLock),
       message_center::RichNotificationData(), nullptr,
       kNotificationCapslockIcon,
       message_center::SystemNotificationWarningLevel::NORMAL);
@@ -152,7 +152,7 @@ class CapsLockDefaultView : public ActionableView {
 
  private:
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
-    node_data->role = ui::AX_ROLE_BUTTON;
+    node_data->role = ax::mojom::Role::kButton;
     node_data->SetName(text_label_->text());
   }
 

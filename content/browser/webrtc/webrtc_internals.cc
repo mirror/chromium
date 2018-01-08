@@ -20,6 +20,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/service_manager_connection.h"
 #include "ipc/ipc_platform_file.h"
+#include "media/audio/audio_debug_recording_session.h"
 #include "media/audio/audio_manager.h"
 #include "media/media_features.h"
 #include "services/device/public/interfaces/constants.mojom.h"
@@ -40,9 +41,6 @@ namespace content {
 
 namespace {
 
-base::LazyInstance<WebRTCInternals>::Leaky g_webrtc_internals =
-    LAZY_INSTANCE_INITIALIZER;
-
 // Makes sure that |dict| has a ListValue under path "log".
 base::ListValue* EnsureLogList(base::DictionaryValue* dict) {
   base::ListValue* log = nullptr;
@@ -59,6 +57,8 @@ void FreeLogList(base::Value* value) {
 }
 
 }  // namespace
+
+WebRTCInternals* WebRTCInternals::g_webrtc_internals = nullptr;
 
 WebRTCInternals::PendingUpdate::PendingUpdate(
     const char* command,
@@ -88,12 +88,13 @@ WebRTCInternals::WebRTCInternals() : WebRTCInternals(500, true) {}
 WebRTCInternals::WebRTCInternals(int aggregate_updates_ms,
                                  bool should_block_power_saving)
     : selection_type_(SelectionType::kAudioDebugRecordings),
-      audio_debug_recordings_(false),
       event_log_recordings_(false),
       num_open_connections_(0),
       should_block_power_saving_(should_block_power_saving),
       aggregate_updates_ms_(aggregate_updates_ms),
       weak_factory_(this) {
+  DCHECK(!g_webrtc_internals);
+
 // TODO(grunell): Shouldn't all the webrtc_internals* files be excluded from the
 // build if WebRTC is disabled?
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -115,17 +116,23 @@ WebRTCInternals::WebRTCInternals(int aggregate_updates_ms,
         event_log_recordings_file_path_.Append(FILE_PATH_LITERAL("event_log"));
   }
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
+
+  g_webrtc_internals = this;
 }
 
 WebRTCInternals::~WebRTCInternals() {
+  DCHECK(g_webrtc_internals);
+  g_webrtc_internals = nullptr;
+}
+
+WebRTCInternals* WebRTCInternals::CreateSingletonInstance() {
+  DCHECK(!g_webrtc_internals);
+  g_webrtc_internals = new WebRTCInternals;
+  return g_webrtc_internals;
 }
 
 WebRTCInternals* WebRTCInternals::GetInstance() {
-  return g_webrtc_internals.Pointer();
-}
-
-WebRtcEventLogManager* WebRTCInternals::GetWebRtcEventLogManager() {
-  return WebRtcEventLogManager::GetInstance();
+  return g_webrtc_internals;
 }
 
 void WebRTCInternals::OnAddPeerConnection(int render_process_id,
@@ -311,10 +318,9 @@ void WebRTCInternals::EnableAudioDebugRecordings(
 void WebRTCInternals::DisableAudioDebugRecordings() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 #if BUILDFLAG(ENABLE_WEBRTC)
-  if (!audio_debug_recordings_)
+  if (!audio_debug_recording_session_)
     return;
-
-  audio_debug_recordings_ = false;
+  audio_debug_recording_session_.reset();
 
   // Tear down the dialog since the user has unchecked the audio debug
   // recordings box.
@@ -325,21 +331,12 @@ void WebRTCInternals::DisableAudioDebugRecordings() {
        !i.IsAtEnd(); i.Advance()) {
     i.GetCurrentValue()->DisableAudioDebugRecordings();
   }
-
-  // It's safe to get the AudioManager pointer here. That pointer is invalidated
-  // on the UI thread, which we're on.
-  // AudioManager is deleted on the audio thread, and the AudioManager outlives
-  // this object, so it's safe to post unretained to the audio thread.
-  media::AudioManager* audio_manager = media::AudioManager::Get();
-  audio_manager->GetTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&media::AudioManager::DisableDebugRecording,
-                                base::Unretained(audio_manager)));
 #endif
 }
 
 bool WebRTCInternals::IsAudioDebugRecordingsEnabled() const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return audio_debug_recordings_;
+  return !!audio_debug_recording_session_;
 }
 
 const base::FilePath& WebRTCInternals::GetAudioDebugRecordingsFilePath() const {
@@ -352,8 +349,11 @@ void WebRTCInternals::EnableLocalEventLogRecordings(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 #if BUILDFLAG(ENABLE_WEBRTC)
 #if defined(OS_ANDROID)
-  GetWebRtcEventLogManager()->EnableLocalLogging(
-      event_log_recordings_file_path_);
+  auto* webrtc_event_log_manager = WebRtcEventLogManager::GetInstance();
+  if (webrtc_event_log_manager) {
+    webrtc_event_log_manager->EnableLocalLogging(
+        event_log_recordings_file_path_);
+  }
 #else
   DCHECK(web_contents);
   DCHECK(!select_file_dialog_);
@@ -372,7 +372,10 @@ void WebRTCInternals::DisableLocalEventLogRecordings() {
   event_log_recordings_ = false;
   // Tear down the dialog since the user has unchecked the event log checkbox.
   select_file_dialog_ = nullptr;
-  GetWebRtcEventLogManager()->DisableLocalLogging();
+  auto* webrtc_event_log_manager = WebRtcEventLogManager::GetInstance();
+  if (webrtc_event_log_manager) {
+    webrtc_event_log_manager->DisableLocalLogging();
+  }
 #endif
 }
 
@@ -413,17 +416,21 @@ void WebRTCInternals::FileSelected(const base::FilePath& path,
 #if BUILDFLAG(ENABLE_WEBRTC)
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   switch (selection_type_) {
-    case SelectionType::kRtcEventLogs:
+    case SelectionType::kRtcEventLogs: {
       event_log_recordings_file_path_ = path;
       event_log_recordings_ = true;
-      GetWebRtcEventLogManager()->EnableLocalLogging(path);
+      auto* webrtc_event_log_manager = WebRtcEventLogManager::GetInstance();
+      if (webrtc_event_log_manager) {
+        webrtc_event_log_manager->EnableLocalLogging(path);
+      }
       break;
-    case SelectionType::kAudioDebugRecordings:
+    }
+    case SelectionType::kAudioDebugRecordings: {
       audio_debug_recordings_file_path_ = path;
       EnableAudioDebugRecordingsOnAllRenderProcessHosts();
       break;
-    default:
-      NOTREACHED();
+    }
+    default: { NOTREACHED(); }
   }
 #endif
 }
@@ -500,8 +507,9 @@ void WebRTCInternals::OnRendererExit(int render_process_id) {
 #if BUILDFLAG(ENABLE_WEBRTC)
 void WebRTCInternals::EnableAudioDebugRecordingsOnAllRenderProcessHosts() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  audio_debug_recordings_ = true;
+  DCHECK(!audio_debug_recording_session_);
+  audio_debug_recording_session_ = media::AudioDebugRecordingSession::Create(
+      audio_debug_recordings_file_path_);
 
   for (RenderProcessHost::iterator i(
            content::RenderProcessHost::AllHostsIterator());
@@ -509,16 +517,6 @@ void WebRTCInternals::EnableAudioDebugRecordingsOnAllRenderProcessHosts() {
     i.GetCurrentValue()->EnableAudioDebugRecordings(
         audio_debug_recordings_file_path_);
   }
-
-  // It's safe to get the AudioManager pointer here. That pointer is invalidated
-  // on the UI thread, which we're on.
-  // AudioManager is deleted on the audio thread, and the AudioManager outlives
-  // this object, so it's safe to post unretained to the audio thread.
-  media::AudioManager* audio_manager = media::AudioManager::Get();
-  audio_manager->GetTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&media::AudioManager::EnableDebugRecording,
-                                base::Unretained(audio_manager),
-                                audio_debug_recordings_file_path_));
 }
 #endif
 

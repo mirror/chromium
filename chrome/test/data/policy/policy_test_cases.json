@@ -751,13 +751,7 @@
   },
 
   "EnableCommonNameFallbackForLocalAnchors": {
-    "os": ["win", "linux", "mac", "chromeos", "android"],
-    "test_policy": { "EnableCommonNameFallbackForLocalAnchors": true },
-    "pref_mappings": [
-      { "pref": "ssl.common_name_fallback_enabled_for_local_anchors",
-        "local_state": true
-      }
-    ]
+    "note": "This policy is deprecated and removed since Chrome 66."
   },
 
   "AuthSchemes": {
@@ -3438,6 +3432,47 @@
     },
     "pref_mappings": [
       { "pref": "abusive_experience_intervention_enforce"}
+    ]
+  },
+
+  "AdsSettingForIntrusiveAdsSites": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": {
+      "AdsSettingForIntrusiveAdsSites": 1
+    },
+    "pref_mappings": [
+      { "pref": "profile.managed_default_content_settings.ads",
+        "indicator_selector": "[content-setting=ads]",
+        "indicator_tests": [
+          { "policy": { "DefaultAdsSetting": 1 },
+            "value": "allow"},
+          { "policy": { "DefaultAdsSetting": 2 },
+            "value": "block"}
+        ]
+      }
+    ]
+  },
+
+  "RestrictAccountsToPatterns": {
+  },
+
+  "PasswordProtectionWarningTrigger": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": {
+      "PasswordProtectionWarningTrigger": 2
+    },
+    "pref_mappings": [
+      { "pref": "safe_browsing.password_protection_warning_trigger"}
+    ]
+  },
+
+  "PasswordProtectionRiskTrigger": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": {
+      "PasswordProtectionRiskTrigger": 2
+    },
+    "pref_mappings": [
+      { "pref": "safe_browsing.password_protection_risk_trigger"}
     ]
   },
 

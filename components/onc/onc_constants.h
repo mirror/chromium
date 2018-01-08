@@ -402,6 +402,7 @@ ONC_EXPORT extern const char kShaper[];
 ONC_EXPORT extern const char kStaticChallenge[];
 ONC_EXPORT extern const char kTLSAuthContents[];
 ONC_EXPORT extern const char kTLSRemote[];
+ONC_EXPORT extern const char kTLSVersionMin[];
 ONC_EXPORT extern const char kUserAuthenticationType[];
 ONC_EXPORT extern const char kVerb[];
 ONC_EXPORT extern const char kVerifyHash[];
@@ -437,6 +438,7 @@ ONC_EXPORT extern const char kSubject[];
 
 namespace substitutes {
 ONC_EXPORT extern const char kEmailField[];
+ONC_EXPORT extern const char kPasswordField[];
 ONC_EXPORT extern const char kLoginIDField[];
 ONC_EXPORT extern const char kCertSANEmail[];
 ONC_EXPORT extern const char kCertSANUPN[];

@@ -399,15 +399,6 @@ bool BrowserWindowCocoa::IsFullscreenBubbleVisible() const {
   return false;  // Currently only called from toolkit-views page_info.
 }
 
-void BrowserWindowCocoa::MaybeShowNewBackShortcutBubble(bool forward) {
-  [controller_ exclusiveAccessController]->MaybeShowNewBackShortcutBubble(
-      forward);
-}
-
-void BrowserWindowCocoa::HideNewBackShortcutBubble() {
-  [controller_ exclusiveAccessController]->HideNewBackShortcutBubble();
-}
-
 LocationBar* BrowserWindowCocoa::GetLocationBar() const {
   return [controller_ locationBarBridge];
 }
@@ -455,7 +446,7 @@ void BrowserWindowCocoa::FocusBookmarksToolbar() {
   // Not needed on the Mac.
 }
 
-void BrowserWindowCocoa::FocusInfobars() {
+void BrowserWindowCocoa::FocusInactivePopupForAccessibility() {
   // Not needed on the Mac.
 }
 

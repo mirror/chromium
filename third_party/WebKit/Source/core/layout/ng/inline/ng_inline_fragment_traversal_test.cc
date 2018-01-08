@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
+#include "core/layout/ng/inline/ng_inline_fragment_traversal.h"
 
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_layout_test.h"
@@ -57,7 +57,8 @@ class NGInlineFragmentTraversalTest
   {                                                                          \
     const auto& current = *iter++;                                           \
     EXPECT_TRUE(current.fragment->IsText()) << current.fragment->ToString(); \
-    EXPECT_EQ(content, ToNGPhysicalTextFragment(current.fragment)->Text());  \
+    EXPECT_EQ(content,                                                       \
+              ToNGPhysicalTextFragment(current.fragment.get())->Text());     \
   }
 
 TEST_F(NGInlineFragmentTraversalTest, DescendantsOf) {
@@ -103,11 +104,15 @@ TEST_F(NGInlineFragmentTraversalTest, SelfFragmentsOf) {
       "<div id=t>foo<b id=filter>bar<br>baz</b>bla</div>");
   const auto descendants = NGInlineFragmentTraversal::SelfFragmentsOf(
       GetRootFragmentById("t"), GetLayoutObjectByElementId("filter"));
+
   auto iter = descendants.begin();
 
   // <b> generates two box fragments since its content is in two lines.
   EXPECT_NEXT_BOX(iter, "filter");
+  EXPECT_NEXT_TEXT(iter, "bar");
+  EXPECT_NEXT_TEXT(iter, "\n");
   EXPECT_NEXT_BOX(iter, "filter");
+  EXPECT_NEXT_TEXT(iter, "baz");
   EXPECT_EQ(iter, descendants.end());
 }
 

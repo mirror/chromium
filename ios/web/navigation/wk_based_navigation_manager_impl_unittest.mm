@@ -7,7 +7,6 @@
 #include <WebKit/WebKit.h>
 #include <memory>
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -20,6 +19,7 @@
 #import "ios/web/public/web_client.h"
 #import "ios/web/test/fakes/crw_fake_back_forward_list.h"
 #include "ios/web/test/test_url_constants.h"
+#import "net/base/mac/url_conversions.h"
 #include "net/base/url_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -70,7 +70,8 @@ class MockNavigationManagerDelegate : public NavigationManagerDelegate {
 
   MOCK_METHOD0(ClearTransientContent, void());
   MOCK_METHOD0(RecordPageStateInNavigationItem, void());
-  MOCK_METHOD0(UpdateHtml5HistoryState, void());
+  MOCK_METHOD1(OnGoToIndexSameDocumentNavigation,
+               void(NavigationInitiationType type));
   MOCK_METHOD0(WillChangeUserAgentType, void());
   MOCK_METHOD0(LoadCurrentItem, void());
   MOCK_METHOD0(LoadIfNecessary, void());
@@ -568,10 +569,10 @@ TEST_F(WKBasedNavigationManagerTest, CanGoToOffset) {
 
 // Tests that non-empty session history can be restored.
 TEST_F(WKBasedNavigationManagerTest, RestoreSessionWithHistory) {
-  auto item0 = base::MakeUnique<NavigationItemImpl>();
+  auto item0 = std::make_unique<NavigationItemImpl>();
   item0->SetURL(GURL("http://www.0.com"));
   item0->SetTitle(base::ASCIIToUTF16("Test Website 0"));
-  auto item1 = base::MakeUnique<NavigationItemImpl>();
+  auto item1 = std::make_unique<NavigationItemImpl>();
   item1->SetURL(GURL("http://www.1.com"));
 
   std::vector<std::unique_ptr<NavigationItem>> items;
@@ -636,7 +637,7 @@ TEST_F(WKBasedNavigationManagerTest, RestoreSessionResetsHistory) {
 
   // Restores a fake session.
   std::vector<std::unique_ptr<NavigationItem>> items;
-  items.push_back(base::MakeUnique<NavigationItemImpl>());
+  items.push_back(std::make_unique<NavigationItemImpl>());
   manager_->Restore(0 /* last_committed_item_index */, std::move(items));
 
   // Check that last_committed_index, previous_item_index and pending_item_index
@@ -677,6 +678,95 @@ TEST_F(WKBasedNavigationManagerTest, HideInternalRedirectUrl) {
   ASSERT_TRUE(item);
   EXPECT_EQ(target_url, item->GetVirtualURL());
   EXPECT_EQ(url, item->GetURL());
+}
+
+// Tests that all NavigationManager APIs return reasonable values in the Empty
+// Window Open Navigation edge case. See comments in header file for details.
+TEST_F(WKBasedNavigationManagerTest, EmptyWindowOpenNavigation) {
+  // Set up the precondition for an empty window open item.
+  OCMExpect([mock_web_view_ URL])
+      .andReturn(net::NSURLWithGURL(GURL(url::kAboutBlankURL)));
+  mock_wk_list_.currentItem = nil;
+
+  manager_->AddPendingItem(
+      GURL(url::kAboutBlankURL), Referrer(), ui::PAGE_TRANSITION_LINK,
+      web::NavigationInitiationType::RENDERER_INITIATED,
+      web::NavigationManager::UserAgentOverrideOption::INHERIT);
+
+  const NavigationItem* pending_item = manager_->GetPendingItem();
+  ASSERT_TRUE(pending_item);
+  EXPECT_EQ(-1, manager_->GetPendingItemIndex());
+  EXPECT_EQ(url::kAboutBlankURL, pending_item->GetURL().spec());
+
+  manager_->CommitPendingItem();
+
+  const NavigationItem* last_committed_item = manager_->GetLastCommittedItem();
+  ASSERT_EQ(pending_item, last_committed_item);
+  EXPECT_EQ(last_committed_item, manager_->GetVisibleItem());
+
+  EXPECT_EQ(0, manager_->GetIndexForOffset(0));
+  EXPECT_EQ(1, manager_->GetIndexForOffset(1));
+  EXPECT_EQ(-1, manager_->GetIndexForOffset(-1));
+
+  EXPECT_EQ(-1, manager_->GetPreviousItemIndex());
+  EXPECT_EQ(1, manager_->GetItemCount());
+  EXPECT_EQ(last_committed_item, manager_->GetItemAtIndex(0));
+  EXPECT_FALSE(manager_->GetItemAtIndex(1));
+
+  EXPECT_EQ(0, manager_->GetIndexOfItem(last_committed_item));
+  EXPECT_EQ(-1, manager_->GetPendingItemIndex());
+  EXPECT_EQ(0, manager_->GetLastCommittedItemIndex());
+
+  EXPECT_FALSE(manager_->CanGoBack());
+  EXPECT_FALSE(manager_->CanGoForward());
+  EXPECT_TRUE(manager_->CanGoToOffset(0));
+  EXPECT_FALSE(manager_->CanGoToOffset(-1));
+  EXPECT_FALSE(manager_->CanGoToOffset(1));
+
+  // This is allowed on an empty window open item.
+  manager_->GoToIndex(0);
+
+  // Add another navigation and verify that it replaces the empty window open
+  // item.
+  manager_->AddPendingItem(
+      GURL("http://www.2.com"), Referrer(), ui::PAGE_TRANSITION_TYPED,
+      web::NavigationInitiationType::USER_INITIATED,
+      web::NavigationManager::UserAgentOverrideOption::INHERIT);
+
+  const NavigationItem* pending_item_2 = manager_->GetPendingItem();
+  ASSERT_TRUE(pending_item_2);
+  EXPECT_EQ("http://www.2.com/", pending_item_2->GetURL().spec());
+
+  [mock_wk_list_ setCurrentURL:@"http://www.2.com"];
+  manager_->CommitPendingItem();
+
+  const NavigationItem* last_committed_item_2 =
+      manager_->GetLastCommittedItem();
+  ASSERT_EQ(pending_item_2, last_committed_item_2);
+  EXPECT_EQ(last_committed_item_2, manager_->GetVisibleItem());
+
+  EXPECT_EQ(0, manager_->GetIndexForOffset(0));
+  EXPECT_EQ(1, manager_->GetIndexForOffset(1));
+  EXPECT_EQ(-1, manager_->GetIndexForOffset(-1));
+
+  EXPECT_EQ(-1, manager_->GetPreviousItemIndex());
+  EXPECT_EQ(1, manager_->GetItemCount());
+  EXPECT_EQ(last_committed_item_2, manager_->GetItemAtIndex(0));
+  EXPECT_FALSE(manager_->GetItemAtIndex(1));
+
+  EXPECT_EQ(-1, manager_->GetIndexOfItem(last_committed_item));
+  EXPECT_EQ(0, manager_->GetIndexOfItem(last_committed_item_2));
+  EXPECT_EQ(-1, manager_->GetPendingItemIndex());
+  EXPECT_EQ(0, manager_->GetLastCommittedItemIndex());
+
+  EXPECT_FALSE(manager_->CanGoBack());
+  EXPECT_FALSE(manager_->CanGoForward());
+  EXPECT_TRUE(manager_->CanGoToOffset(0));
+  EXPECT_FALSE(manager_->CanGoToOffset(-1));
+  EXPECT_FALSE(manager_->CanGoToOffset(1));
+
+  // This is still allowed on a length-1 navigation history.
+  manager_->GoToIndex(0);
 }
 
 }  // namespace web

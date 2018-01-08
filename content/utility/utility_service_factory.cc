@@ -32,9 +32,8 @@
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #include "media/cdm/cdm_adapter_factory.h"           // nogncheck
-#include "media/mojo/features.h"                     // nogncheck
 #include "media/mojo/interfaces/constants.mojom.h"   // nogncheck
-#include "media/mojo/services/media_service.h"       // nogncheck
+#include "media/mojo/services/cdm_service.h"         // nogncheck
 #include "media/mojo/services/mojo_cdm_helper.h"     // nogncheck
 #include "media/mojo/services/mojo_media_client.h"   // nogncheck
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
@@ -48,32 +47,21 @@
 extern sandbox::TargetServices* g_utility_target_services;
 #endif
 
-namespace {
-
-std::unique_ptr<service_manager::Service> CreateVideoCaptureService() {
-  return std::make_unique<video_capture::ServiceImpl>();
-}
-
-}  // anonymous namespace
-
 namespace content {
 
 namespace {
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
-static_assert(BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE), "");
-static_assert(BUILDFLAG(ENABLE_MOJO_CDM), "");
-
 std::unique_ptr<media::CdmAuxiliaryHelper> CreateCdmHelper(
     service_manager::mojom::InterfaceProvider* interface_provider) {
   return std::make_unique<media::MojoCdmHelper>(interface_provider);
 }
 
-class CdmMojoMediaClient final : public media::MojoMediaClient {
+class ContentCdmServiceClient final : public media::CdmService::Client {
  public:
-  CdmMojoMediaClient() {}
-  ~CdmMojoMediaClient() override {}
+  ContentCdmServiceClient() {}
+  ~ContentCdmServiceClient() override {}
 
   void EnsureSandboxed() override {
 #if defined(OS_WIN)
@@ -100,7 +88,7 @@ class CdmMojoMediaClient final : public media::MojoMediaClient {
 
 std::unique_ptr<service_manager::Service> CreateCdmService() {
   return std::unique_ptr<service_manager::Service>(
-      new ::media::MediaService(std::make_unique<CdmMojoMediaClient>()));
+      new ::media::CdmService(std::make_unique<ContentCdmServiceClient>()));
 }
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
@@ -122,18 +110,21 @@ UtilityServiceFactory::~UtilityServiceFactory() {}
 
 void UtilityServiceFactory::CreateService(
     service_manager::mojom::ServiceRequest request,
-    const std::string& name) {
+    const std::string& name,
+    service_manager::mojom::PIDReceiverPtr pid_receiver) {
   auto* trace_log = base::trace_event::TraceLog::GetInstance();
   if (trace_log->IsProcessNameEmpty())
     trace_log->set_process_name("Service: " + name);
-  ServiceFactory::CreateService(std::move(request), name);
+  ServiceFactory::CreateService(std::move(request), name,
+                                std::move(pid_receiver));
 }
 
 void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
   GetContentClient()->utility()->RegisterServices(services);
 
   service_manager::EmbeddedServiceInfo video_capture_info;
-  video_capture_info.factory = base::Bind(&CreateVideoCaptureService);
+  video_capture_info.factory =
+      base::BindRepeating(&video_capture::ServiceImpl::Create);
   services->insert(
       std::make_pair(video_capture::mojom::kServiceName, video_capture_info));
 

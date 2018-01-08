@@ -51,7 +51,7 @@
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/database/database_tracker.h"
 #include "storage/browser/quota/quota_manager.h"
-#include "third_party/WebKit/common/quota/quota_status_code.h"
+#include "third_party/WebKit/common/quota/quota_types.mojom.h"
 
 #if !defined(OS_ANDROID)
 #include "content/browser/host_zoom_map_impl.h"
@@ -124,15 +124,16 @@ void CheckQuotaManagedDataDeletionStatus(size_t* deletion_task_count,
 }
 
 void OnQuotaManagedOriginDeleted(const GURL& origin,
-                                 storage::StorageType type,
+                                 blink::mojom::StorageType type,
                                  size_t* deletion_task_count,
                                  const base::Closure& callback,
-                                 blink::QuotaStatusCode status) {
+                                 blink::mojom::QuotaStatusCode status) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_GT(*deletion_task_count, 0u);
-  if (status != blink::QuotaStatusCode::kOk) {
-    DLOG(ERROR) << "Couldn't remove data of type " << type << " for origin "
-                << origin << ". Status: " << static_cast<int>(status);
+  if (status != blink::mojom::QuotaStatusCode::kOk) {
+    DLOG(ERROR) << "Couldn't remove data of type " << static_cast<int>(type)
+                << " for origin " << origin
+                << ". Status: " << static_cast<int>(status);
   }
 
   (*deletion_task_count)--;
@@ -260,7 +261,7 @@ class StoragePartitionImpl::NetworkContextOwner {
 
   ~NetworkContextOwner() { DCHECK_CURRENTLY_ON(BrowserThread::IO); }
 
-  void Initialize(mojom::NetworkContextRequest network_context_request,
+  void Initialize(network::mojom::NetworkContextRequest network_context_request,
                   scoped_refptr<net::URLRequestContextGetter> context_getter) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     context_getter_ = std::move(context_getter);
@@ -276,7 +277,7 @@ class StoragePartitionImpl::NetworkContextOwner {
   // needed to keep the URLRequestContext alive until the NetworkContext is
   // destroyed.
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
-  std::unique_ptr<mojom::NetworkContext> network_context_;
+  std::unique_ptr<network::mojom::NetworkContext> network_context_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkContextOwner);
 };
@@ -338,7 +339,7 @@ struct StoragePartitionImpl::QuotaManagedDataDeletionHelper {
       const StoragePartition::OriginMatcherFunction& origin_matcher,
       const base::Closure& callback,
       const std::set<GURL>& origins,
-      storage::StorageType quota_storage_type);
+      blink::mojom::StorageType quota_storage_type);
 
   // All of these data are accessed on IO thread.
   uint32_t remove_mask;
@@ -456,6 +457,9 @@ StoragePartitionImpl::StoragePartitionImpl(
 StoragePartitionImpl::~StoragePartitionImpl() {
   browser_context_ = nullptr;
 
+  if (url_loader_factory_getter_)
+    url_loader_factory_getter_->OnStoragePartitionDestroyed();
+
   if (GetDatabaseTracker()) {
     GetDatabaseTracker()->task_runner()->PostTask(
         FROM_HERE, base::BindOnce(&storage::DatabaseTracker::Shutdown,
@@ -546,6 +550,9 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
   partition->service_worker_context_ = new ServiceWorkerContextWrapper(context);
   partition->service_worker_context_->set_storage_partition(partition.get());
 
+  partition->shared_worker_service_ =
+      std::make_unique<SharedWorkerServiceImpl>();
+
   partition->appcache_service_ =
       new ChromeAppCacheService(quota_manager_proxy.get());
 
@@ -592,10 +599,8 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
       path, quota_manager_proxy.get(), context->GetSpecialStoragePolicy(),
       blob_context.get(), partition->url_loader_factory_getter_.get());
 
-  if (features::IsMojoBlobsEnabled()) {
-    partition->blob_registry_ = BlobRegistryWrapper::Create(
-        blob_context, partition->filesystem_context_);
-  }
+  partition->blob_registry_ =
+      BlobRegistryWrapper::Create(blob_context, partition->filesystem_context_);
 
   partition->appcache_service_->set_url_loader_factory_getter(
       partition->url_loader_factory_getter_.get());
@@ -616,7 +621,7 @@ StoragePartitionImpl::GetMediaURLRequestContext() {
   return media_url_request_context_.get();
 }
 
-mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
+network::mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
   // Create the NetworkContext as needed, when the network service is disabled.
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     if (network_context_)
@@ -638,7 +643,7 @@ mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
   return network_context_.get();
 }
 
-mojom::URLLoaderFactory*
+network::mojom::URLLoaderFactory*
 StoragePartitionImpl::GetURLLoaderFactoryForBrowserProcess() {
   // Create the URLLoaderFactory as needed.
   if (!url_loader_factory_for_browser_process_ ||
@@ -647,6 +652,17 @@ StoragePartitionImpl::GetURLLoaderFactoryForBrowserProcess() {
         mojo::MakeRequest(&url_loader_factory_for_browser_process_), 0);
   }
   return url_loader_factory_for_browser_process_.get();
+}
+
+network::mojom::CookieManager*
+StoragePartitionImpl::GetCookieManagerForBrowserProcess() {
+  // Create the CookieManager as needed.
+  if (!cookie_manager_for_browser_process_ ||
+      cookie_manager_for_browser_process_.encountered_error()) {
+    GetNetworkContext()->GetCookieManager(
+        mojo::MakeRequest(&cookie_manager_for_browser_process_));
+  }
+  return cookie_manager_for_browser_process_.get();
 }
 
 storage::QuotaManager* StoragePartitionImpl::GetQuotaManager() {
@@ -683,6 +699,10 @@ CacheStorageContextImpl* StoragePartitionImpl::GetCacheStorageContext() {
 
 ServiceWorkerContextWrapper* StoragePartitionImpl::GetServiceWorkerContext() {
   return service_worker_context_.get();
+}
+
+SharedWorkerServiceImpl* StoragePartitionImpl::GetSharedWorkerService() {
+  return shared_worker_service_.get();
 }
 
 #if !defined(OS_ANDROID)
@@ -815,7 +835,7 @@ void StoragePartitionImpl::QuotaManagedDataDeletionHelper::ClearDataOnIOThread(
     // within the user-specified timeframe, and deal with the resulting set in
     // ClearQuotaManagedOriginsOnIOThread().
     quota_manager->GetOriginsModifiedSince(
-        storage::kStorageTypePersistent, begin,
+        blink::mojom::StorageType::kPersistent, begin,
         base::Bind(&QuotaManagedDataDeletionHelper::ClearOriginsOnIOThread,
                    base::Unretained(this), base::RetainedRef(quota_manager),
                    special_storage_policy, origin_matcher, decrement_callback));
@@ -825,7 +845,7 @@ void StoragePartitionImpl::QuotaManagedDataDeletionHelper::ClearDataOnIOThread(
   if (quota_storage_remove_mask & QUOTA_MANAGED_STORAGE_MASK_TEMPORARY) {
     IncrementTaskCountOnIO();
     quota_manager->GetOriginsModifiedSince(
-        storage::kStorageTypeTemporary, begin,
+        blink::mojom::StorageType::kTemporary, begin,
         base::Bind(&QuotaManagedDataDeletionHelper::ClearOriginsOnIOThread,
                    base::Unretained(this), base::RetainedRef(quota_manager),
                    special_storage_policy, origin_matcher, decrement_callback));
@@ -835,7 +855,7 @@ void StoragePartitionImpl::QuotaManagedDataDeletionHelper::ClearDataOnIOThread(
   if (quota_storage_remove_mask & QUOTA_MANAGED_STORAGE_MASK_SYNCABLE) {
     IncrementTaskCountOnIO();
     quota_manager->GetOriginsModifiedSince(
-        storage::kStorageTypeSyncable, begin,
+        blink::mojom::StorageType::kSyncable, begin,
         base::Bind(&QuotaManagedDataDeletionHelper::ClearOriginsOnIOThread,
                    base::Unretained(this), base::RetainedRef(quota_manager),
                    special_storage_policy, origin_matcher, decrement_callback));
@@ -844,14 +864,15 @@ void StoragePartitionImpl::QuotaManagedDataDeletionHelper::ClearDataOnIOThread(
   DecrementTaskCountOnIO();
 }
 
-void
-StoragePartitionImpl::QuotaManagedDataDeletionHelper::ClearOriginsOnIOThread(
-    storage::QuotaManager* quota_manager,
-    const scoped_refptr<storage::SpecialStoragePolicy>& special_storage_policy,
-    const StoragePartition::OriginMatcherFunction& origin_matcher,
-    const base::Closure& callback,
-    const std::set<GURL>& origins,
-    storage::StorageType quota_storage_type) {
+void StoragePartitionImpl::QuotaManagedDataDeletionHelper::
+    ClearOriginsOnIOThread(
+        storage::QuotaManager* quota_manager,
+        const scoped_refptr<storage::SpecialStoragePolicy>&
+            special_storage_policy,
+        const StoragePartition::OriginMatcherFunction& origin_matcher,
+        const base::Closure& callback,
+        const std::set<GURL>& origins,
+        blink::mojom::StorageType quota_storage_type) {
   // The QuotaManager manages all storage other than cookies, LocalStorage,
   // and SessionStorage. This loop wipes out most HTML5 storage for the given
   // origins.

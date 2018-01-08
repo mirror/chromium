@@ -6,20 +6,24 @@
 #define GPU_COMMAND_BUFFER_CLIENT_RASTER_IMPLEMENTATION_GLES_H_
 
 #include "base/macros.h"
-#include "gles2_impl_export.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
+#include "gpu/raster_export.h"
 
 namespace gpu {
+
+class ContextSupport;
+
 namespace raster {
 
 struct Capabilities;
 
 // An implementation of RasterInterface on top of GLES2Interface.
-class GLES2_IMPL_EXPORT RasterImplementationGLES : public RasterInterface {
+class RASTER_EXPORT RasterImplementationGLES : public RasterInterface {
  public:
   RasterImplementationGLES(gles2::GLES2Interface* gl,
+                           ContextSupport* support,
                            const gpu::Capabilities& caps);
   ~RasterImplementationGLES() override;
 
@@ -135,14 +139,10 @@ class GLES2_IMPL_EXPORT RasterImplementationGLES : public RasterInterface {
                            GLboolean use_distance_field_text,
                            GLint pixel_config) override;
   void RasterCHROMIUM(const cc::DisplayItemList* list,
-                      GLint translate_x,
-                      GLint translate_y,
-                      GLint clip_x,
-                      GLint clip_y,
-                      GLint clip_w,
-                      GLint clip_h,
-                      GLfloat post_translate_x,
-                      GLfloat post_translate_y,
+                      cc::ImageProvider* provider,
+                      const gfx::Vector2d& translate,
+                      const gfx::Rect& playback_rect,
+                      const gfx::Vector2dF& post_translate,
                       GLfloat post_scale) override;
   void EndRasterCHROMIUM() override;
 
@@ -152,6 +152,7 @@ class GLES2_IMPL_EXPORT RasterImplementationGLES : public RasterInterface {
 
  private:
   gles2::GLES2Interface* gl_;
+  ContextSupport* support_;
   bool use_texture_storage_;
   bool use_texture_storage_image_;
 

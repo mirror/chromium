@@ -4,6 +4,7 @@
 
 import("//android_webview/system_webview_apk_tmpl.gni")
 import("//android_webview/webview_repack_locales.gni")
+import("//android_webview/variables.gni")
 import("//build/config/android/config.gni")
 import("//build/config/android/rules.gni")
 import("//build/config/locales.gni")
@@ -20,9 +21,6 @@ if (enable_resource_whitelist_generation) {
   system_webview_pak_whitelist =
       "$target_gen_dir/system_webview_pak_whitelist.txt"
 }
-
-system_webview_android_manifest =
-    "$target_gen_dir/system_webview_apk/AndroidManifest.xml"
 
 group("android_webview") {
   if (public_android_sdk) {
@@ -57,6 +55,7 @@ generate_jni("native_jni") {
     "java/src/org/chromium/android_webview/AwResource.java",
     "java/src/org/chromium/android_webview/AwSettings.java",
     "java/src/org/chromium/android_webview/AwTokenBindingManager.java",
+    "java/src/org/chromium/android_webview/AwTracingController.java",
     "java/src/org/chromium/android_webview/AwWebContentsDelegate.java",
     "java/src/org/chromium/android_webview/AwWebResourceResponse.java",
     "java/src/org/chromium/android_webview/InputStreamUtil.java",
@@ -103,7 +102,10 @@ java_cpp_enum("aw_safe_browsing_action") {
 jinja_template("system_webview_manifest") {
   input = "apk/java/AndroidManifest.xml"
   output = system_webview_android_manifest
-  variables = [ "package=$system_webview_package_name" ]
+  variables = [
+    "package=$system_webview_package_name",
+    "sandboxed_service_extra_flags=android:visibleToInstantApps=\"true\"",
+  ]
 }
 
 webview_repack_locales("repack_locales") {
@@ -613,6 +615,10 @@ source_set("common") {
     "browser/surfaces_instance.cc",
     "browser/surfaces_instance.h",
     "browser/token_binding_manager_bridge.cc",
+    "browser/tracing/aw_trace_event_args_whitelist.cc",
+    "browser/tracing/aw_trace_event_args_whitelist.h",
+    "browser/tracing/aw_tracing_controller.cc",
+    "browser/tracing/aw_tracing_controller.h",
     "browser/tracing/aw_tracing_delegate.cc",
     "browser/tracing/aw_tracing_delegate.h",
     "common/android_webview_message_generator.cc",
@@ -661,6 +667,8 @@ source_set("common") {
     "renderer/aw_render_thread_observer.h",
     "renderer/aw_render_view_ext.cc",
     "renderer/aw_render_view_ext.h",
+    "renderer/aw_url_loader_throttle_provider.cc",
+    "renderer/aw_url_loader_throttle_provider.h",
     "renderer/print_render_frame_observer.cc",
     "renderer/print_render_frame_observer.h",
   ]
@@ -721,9 +729,7 @@ source_set("common") {
     "//content/public/common:service_names",
     "//crypto",
     "//gin",
-    "//gpu/command_buffer/client:gles2_c_lib",
     "//gpu/command_buffer/client:gles2_implementation",
-    "//gpu/command_buffer/common:gles2_utils",
     "//gpu/command_buffer/service",
     "//gpu/ipc:gl_in_process_context",
     "//gpu/skia_bindings",
@@ -806,6 +812,7 @@ android_library("android_webview_java") {
     "java/src/org/chromium/android_webview/AwSettings.java",
     "java/src/org/chromium/android_webview/AwSwitches.java",
     "java/src/org/chromium/android_webview/AwTokenBindingManager.java",
+    "java/src/org/chromium/android_webview/AwTracingController.java",
     "java/src/org/chromium/android_webview/AwViewMethods.java",
     "java/src/org/chromium/android_webview/AwViewAndroidDelegate.java",
     "java/src/org/chromium/android_webview/AwWebContentsDelegate.java",
@@ -880,8 +887,7 @@ android_library("android_webview_java") {
     "//components/safe_browsing/db:sb_threat_values",
   ]
 
-  # Manifest used for linting (determining unused resources).
-  android_manifest = system_webview_android_manifest
+  android_manifest_for_lint = system_webview_android_manifest
 }
 
 java_strings_grd("strings_grd") {

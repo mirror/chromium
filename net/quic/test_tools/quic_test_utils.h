@@ -323,6 +323,7 @@ class MockQuicConnectionVisitor : public QuicConnectionVisitorInterface {
   MOCK_METHOD0(OnConfigNegotiated, void());
   MOCK_METHOD0(PostProcessAfterData, void());
   MOCK_METHOD0(OnAckNeedsRetransmittableFrame, void());
+  MOCK_METHOD0(SendPing, void());
   MOCK_CONST_METHOD0(AllowSelfAddressChange, bool());
 
  private:
@@ -443,6 +444,9 @@ class MockQuicConnection : public QuicConnection {
                void(const CachedNetworkParameters&, bool));
   MOCK_METHOD1(SetMaxPacingRate, void(QuicBandwidth));
 
+  MOCK_METHOD2(OnStreamReset, void(QuicStreamId, QuicRstStreamErrorCode));
+  MOCK_METHOD1(SendControlFrame, bool(const QuicFrame& frame));
+
   MOCK_METHOD1(OnError, void(QuicFramer* framer));
   void QuicConnection_OnError(QuicFramer* framer) {
     QuicConnection::OnError(framer);
@@ -456,6 +460,9 @@ class MockQuicConnection : public QuicConnection {
 
   bool OnProtocolVersionMismatch(ParsedQuicVersion version) override;
 
+  bool ReallySendControlFrame(const QuicFrame& frame) {
+    return QuicConnection::SendControlFrame(frame);
+  }
   void ReallySendGoAway(QuicErrorCode error,
                         QuicStreamId last_good_stream_id,
                         const std::string& reason) {
@@ -535,11 +542,11 @@ class MockQuicSession : public QuicSession {
 
   // Returns a QuicConsumedData that indicates all of |write_length| (and |fin|
   // if set) has been consumed.
-  static QuicConsumedData ConsumeAllData(QuicStream* stream,
-                                         QuicStreamId id,
-                                         size_t write_length,
-                                         QuicStreamOffset offset,
-                                         StreamSendingState state);
+  static QuicConsumedData ConsumeData(QuicStream* stream,
+                                      QuicStreamId id,
+                                      size_t write_length,
+                                      QuicStreamOffset offset,
+                                      StreamSendingState state);
 
  private:
   std::unique_ptr<QuicCryptoStream> crypto_stream_;
@@ -934,6 +941,16 @@ class MockPacketCreatorDelegate : public QuicPacketCreator::DelegateInterface {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockPacketCreatorDelegate);
+};
+
+class MockSessionNotifier : public SessionNotifierInterface {
+ public:
+  MockSessionNotifier();
+  ~MockSessionNotifier() override;
+
+  MOCK_METHOD2(OnFrameAcked, bool(const QuicFrame&, QuicTime::Delta));
+  MOCK_METHOD1(OnStreamFrameRetransmitted, void(const QuicStreamFrame&));
+  MOCK_METHOD1(OnFrameLost, void(const QuicFrame&));
 };
 
 // Creates a client session for testing.

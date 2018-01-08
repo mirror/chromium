@@ -272,6 +272,7 @@ interface CDATASection : Text
     attribute @@toStringTag
     method constructor
 interface CSS
+    static getter paintWorklet
     static method escape
     static method supports
     attribute @@toStringTag
@@ -1550,6 +1551,7 @@ interface HTMLAnchorElement : HTMLElement
     getter protocol
     getter referrerPolicy
     getter rel
+    getter relList
     getter rev
     getter search
     getter shape
@@ -1575,6 +1577,7 @@ interface HTMLAnchorElement : HTMLElement
     setter protocol
     setter referrerPolicy
     setter rel
+    setter relList
     setter rev
     setter search
     setter shape
@@ -1600,6 +1603,7 @@ interface HTMLAreaElement : HTMLElement
     getter protocol
     getter referrerPolicy
     getter rel
+    getter relList
     getter search
     getter shape
     getter target
@@ -1621,6 +1625,7 @@ interface HTMLAreaElement : HTMLElement
     setter protocol
     setter referrerPolicy
     setter rel
+    setter relList
     setter search
     setter shape
     setter target
@@ -1799,6 +1804,7 @@ interface HTMLDocument : Document
 interface HTMLElement : Element
     attribute @@toStringTag
     getter accessKey
+    getter autocapitalize
     getter contentEditable
     getter dataset
     getter dir
@@ -1898,6 +1904,7 @@ interface HTMLElement : Element
     method constructor
     method focus
     setter accessKey
+    setter autocapitalize
     setter contentEditable
     setter dir
     setter draggable
@@ -2247,7 +2254,6 @@ interface HTMLInputElement : HTMLElement
     getter accept
     getter align
     getter alt
-    getter autocapitalize
     getter autocomplete
     getter autofocus
     getter checked
@@ -2306,7 +2312,6 @@ interface HTMLInputElement : HTMLElement
     setter accept
     setter align
     setter alt
-    setter autocapitalize
     setter autocomplete
     setter autofocus
     setter checked
@@ -2631,7 +2636,6 @@ interface HTMLOptionsCollection : HTMLCollection
     method @@iterator
     method add
     method constructor
-    method namedItem
     method remove
     setter length
     setter selectedIndex
@@ -2720,6 +2724,7 @@ interface HTMLScriptElement : HTMLElement
     setter type
 interface HTMLSelectElement : HTMLElement
     attribute @@toStringTag
+    getter autocomplete
     getter autofocus
     getter disabled
     getter form
@@ -2746,6 +2751,7 @@ interface HTMLSelectElement : HTMLElement
     method remove
     method reportValidity
     method setCustomValidity
+    setter autocomplete
     setter autofocus
     setter disabled
     setter length
@@ -2762,6 +2768,7 @@ interface HTMLShadowElement : HTMLElement
 interface HTMLSlotElement : HTMLElement
     attribute @@toStringTag
     getter name
+    method assignedElements
     method assignedNodes
     method constructor
     setter name
@@ -2919,7 +2926,7 @@ interface HTMLTemplateElement : HTMLElement
     method constructor
 interface HTMLTextAreaElement : HTMLElement
     attribute @@toStringTag
-    getter autocapitalize
+    getter autocomplete
     getter autofocus
     getter cols
     getter defaultValue
@@ -2951,7 +2958,7 @@ interface HTMLTextAreaElement : HTMLElement
     method setCustomValidity
     method setRangeText
     method setSelectionRange
-    setter autocapitalize
+    setter autocomplete
     setter autofocus
     setter cols
     setter defaultValue
@@ -3262,7 +3269,6 @@ interface ImageCapture
     method getPhotoCapabilities
     method getPhotoSettings
     method grabFrame
-    method setOptions
     method takePhoto
 interface ImageData
     attribute @@toStringTag
@@ -3472,6 +3478,7 @@ interface MediaList
     method constructor
     method deleteMedium
     method item
+    method toString
     setter mediaText
 interface MediaQueryList : EventTarget
     attribute @@toStringTag
@@ -4074,6 +4081,7 @@ interface PerformanceObserver
     method constructor
     method disconnect
     method observe
+    method takeRecords
 interface PerformanceObserverEntryList
     attribute @@toStringTag
     method constructor
@@ -4100,8 +4108,16 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter responseEnd
     getter responseStart
     getter secureConnectionStart
+    getter serverTiming
     getter transferSize
     getter workerStart
+    method constructor
+    method toJSON
+interface PerformanceServerTiming
+    attribute @@toStringTag
+    getter description
+    getter duration
+    getter name
     method constructor
     method toJSON
 interface PerformanceTiming
@@ -4391,6 +4407,7 @@ interface RTCRtpSender
     attribute @@toStringTag
     getter track
     method constructor
+    method replaceTrack
 interface RTCSessionDescription
     attribute @@toStringTag
     getter sdp
@@ -4485,6 +4502,7 @@ interface Request
     getter bodyUsed
     getter cache
     getter credentials
+    getter destination
     getter headers
     getter integrity
     getter method
@@ -5737,11 +5755,6 @@ interface ShadowRoot : DocumentFragment
     method elementsFromPoint
     method getSelection
     setter innerHTML
-interface SharedArrayBuffer
-    attribute @@toStringTag
-    getter byteLength
-    method constructor
-    method slice
 interface SharedWorker : EventTarget
     attribute @@toStringTag
     getter onerror
@@ -6200,7 +6213,9 @@ interface VTTCue : TextTrackCue
     attribute @@toStringTag
     getter align
     getter line
+    getter lineAlign
     getter position
+    getter positionAlign
     getter size
     getter snapToLines
     getter text
@@ -6209,7 +6224,9 @@ interface VTTCue : TextTrackCue
     method getCueAsHTML
     setter align
     setter line
+    setter lineAlign
     setter position
+    setter positionAlign
     setter size
     setter snapToLines
     setter text
@@ -7655,6 +7672,10 @@ interface Worker : EventTarget
     method terminate
     setter onerror
     setter onmessage
+interface Worklet
+    attribute @@toStringTag
+    method addModule
+    method constructor
 interface WritableStream
     getter locked
     method abort
@@ -7920,7 +7941,6 @@ interface webkitURL
     setter search
     setter username
 [GLOBAL OBJECT]
-    attribute Atomics
     attribute GCController
     attribute accessibilityController
     attribute chrome

@@ -17,6 +17,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
+#include "base/optional.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -33,7 +34,6 @@
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_service.h"
-#include "chrome/browser/extensions/test_extension_dir.h"
 #include "chrome/browser/extensions/unpacked_installer.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/profiles/profile.h"
@@ -77,6 +77,7 @@
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/common/switches.h"
 #include "extensions/common/value_builder.h"
+#include "extensions/test/test_extension_dir.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "net/test/url_request/url_request_mock_http_job.h"
@@ -328,6 +329,20 @@ class DevToolsSanityTest : public InProcessBrowserTest {
   }
 
   DevToolsWindow* window_;
+};
+
+class SitePerProcessDevToolsSanityTest : public DevToolsSanityTest {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    DevToolsSanityTest::SetUpCommandLine(command_line);
+    content::IsolateAllSitesForTesting(command_line);
+  };
+
+  void SetUpOnMainThread() override {
+    DevToolsSanityTest::SetUpOnMainThread();
+    content::SetupCrossSiteRedirector(embedded_test_server());
+    ASSERT_TRUE(embedded_test_server()->Start());
+  }
 };
 
 // Used to block until a dev tools window gets beforeunload event.
@@ -1798,7 +1813,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsReattachAfterCrashTest,
 
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, AutoAttachToWindowOpen) {
   OpenDevToolsWindow(kWindowOpenTestPage, false);
-  DispatchOnTestSuite(window_, "enableAutoAttachToCreatedPages");
+  DevToolsWindowTesting::Get(window_)->SetOpenNewWindowForPopups(true);
   DevToolsWindowCreationObserver observer;
   ASSERT_TRUE(content::ExecuteScript(
       GetInspectedTab(), "window.open('window_open.html', '_blank');"));
@@ -1839,7 +1854,7 @@ IN_PROC_BROWSER_TEST_F(WorkerDevToolsSanityTest, InspectSharedWorker) {
 
 // Flaky on multiple platforms. See http://crbug.com/432444
 IN_PROC_BROWSER_TEST_F(WorkerDevToolsSanityTest,
-                       DISABLED_PauseInSharedWorkerInitialization) {
+                       PauseInSharedWorkerInitialization) {
   ASSERT_TRUE(spawned_test_server()->Start());
   GURL url = spawned_test_server()->GetURL(kReloadSharedWorkerTestPage);
   ui_test_utils::NavigateToURL(browser(), url);
@@ -2027,9 +2042,8 @@ class MockWebUIProvider
 // This tests checks that window is correctly initialized when DevTools is
 // opened while navigation through history with forward and back actions.
 // (crbug.com/627407)
-// Flaky on Windows and ChromeOS. http://crbug.com/628174#c4
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest,
-                       DISABLED_TestWindowInitializedOnNavigateBack) {
+                       TestWindowInitializedOnNavigateBack) {
   TestChromeWebUIControllerFactory test_factory;
   MockWebUIProvider mock_provider("dummyurl",
                                   "<script>\n"
@@ -2088,4 +2102,66 @@ IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestRawHeadersWithRedirectAndHSTS) {
   DispatchOnTestSuite(window_, "testRawHeadersWithHSTS",
                       redirect_url.spec().c_str());
   CloseDevToolsWindow();
+}
+
+// Tests that OpenInNewTab filters URLs.
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestOpenInNewTabFilter) {
+  OpenDevToolsWindow(kDebuggerTestPage, false);
+  DevToolsUIBindings::Delegate* bindings_delegate_ =
+      static_cast<DevToolsUIBindings::Delegate*>(window_);
+  std::string test_url =
+      spawned_test_server()->GetURL(kDebuggerTestPage).spec();
+  const std::string self_blob_url =
+      base::StringPrintf("blob:%s", test_url.c_str());
+  const std::string self_filesystem_url =
+      base::StringPrintf("filesystem:%s", test_url.c_str());
+
+  // Pairs include a URL string and boolean whether it should be allowed.
+  std::vector<std::pair<const std::string, const std::string>> tests = {
+      {test_url, test_url},
+      {"data:,foo", "data:,foo"},
+      {"about://inspect", "about:blank"},
+      {"chrome://inspect", "about:blank"},
+      {"chrome://inspect/#devices", "about:blank"},
+      {self_blob_url, self_blob_url},
+      {"blob:chrome://inspect", "about:blank"},
+      {self_filesystem_url, self_filesystem_url},
+      {"filesystem:chrome://inspect", "about:blank"},
+      {"view-source:http://chromium.org", "about:blank"},
+      {"file:///", "about:blank"},
+      {"about://gpu", "about:blank"},
+      {"chrome://gpu", "about:blank"},
+      {"chrome://crash", "about:blank"},
+      {"", "about:blank"},
+  };
+
+  TabStripModel* tabs = browser()->tab_strip_model();
+  int i = 0;
+  for (const std::pair<const std::string, const std::string> pair : tests) {
+    bindings_delegate_->OpenInNewTab(pair.first);
+    i++;
+
+    std::string opened_url = tabs->GetWebContentsAt(i)->GetVisibleURL().spec();
+    SCOPED_TRACE(
+        base::StringPrintf("while testing URL: %s", pair.first.c_str()));
+    EXPECT_EQ(opened_url, pair.second);
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(SitePerProcessDevToolsSanityTest, InspectElement) {
+  GURL url(embedded_test_server()->GetURL("a.com", "/devtools/oopif.html"));
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(browser(), url, 2);
+
+  std::vector<RenderFrameHost*> frames = GetInspectedTab()->GetAllFrames();
+  ASSERT_EQ(2u, frames.size());
+  ASSERT_NE(frames[0]->GetProcess(), frames[1]->GetProcess());
+  RenderFrameHost* frame_host = frames[0]->GetParent() ? frames[0] : frames[1];
+
+  DevToolsWindowCreationObserver observer;
+  DevToolsWindow::InspectElement(frame_host, 100, 100);
+  observer.WaitForLoad();
+  DevToolsWindow* window = observer.devtools_window();
+
+  DispatchOnTestSuite(window, "testInspectedElementIs", "INSPECTED-DIV");
+  DevToolsWindowTesting::CloseDevToolsWindowSync(window);
 }

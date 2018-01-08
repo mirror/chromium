@@ -81,7 +81,7 @@ Polymer((function() {
     },
 
     onForgotPasswordCloseTap_: function() {
-      this.$$('#.forgotPasswordDlg').close();
+      this.$$('#forgotPasswordDlg').close();
     },
 
     onDialogOverlayClosed_: function() {
@@ -141,6 +141,7 @@ Polymer((function() {
 
     onSlideAnimationEnd_: function() {
       this.animationInProgress = false;
+      this.focus();
     },
 
     onEmailSubmitted_: function() {

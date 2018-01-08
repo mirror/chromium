@@ -13,6 +13,7 @@
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/bind_test_util.h"
+#include "base/test/gtest_util.h"
 #include "build/build_config.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
@@ -95,7 +96,8 @@ class RenderFrameImplTest : public RenderViewTest {
         kSubframeRouteId, std::move(stub_interface_provider), MSG_ROUTING_NONE,
         MSG_ROUTING_NONE, kFrameProxyRouteId, MSG_ROUTING_NONE,
         base::UnguessableToken::Create(), frame_replication_state,
-        &compositor_deps_, widget_params, FrameOwnerProperties());
+        &compositor_deps_, widget_params, FrameOwnerProperties(),
+        /*has_committed_real_load=*/true);
 
     frame_ = static_cast<TestRenderFrame*>(
         RenderFrameImpl::FromRoutingID(kSubframeRouteId));
@@ -180,6 +182,7 @@ TEST_F(RenderFrameImplTest, FrameResize) {
   resize_params.top_controls_height = 0.f;
   resize_params.browser_controls_shrink_blink_size = false;
   resize_params.is_fullscreen_granted = false;
+  resize_params.content_source_id = frame_widget()->GetContentSourceId();
 
   ViewMsg_Resize resize_message(0, resize_params);
   frame_widget()->OnMessageReceived(resize_message);
@@ -406,10 +409,7 @@ TEST_F(RenderFrameImplTest, ZoomLimit) {
   common_params.url = GURL("data:text/html,min_zoomlimit_test");
   common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
   GetMainRenderFrame()->SetHostZoomLevel(common_params.url, kMinZoomLevel);
-  GetMainRenderFrame()->NavigateInternal(
-      common_params, StartNavigationParams(), RequestNavigationParams(),
-      std::unique_ptr<StreamOverrideParameters>(), URLLoaderFactoryBundle(),
-      base::UnguessableToken::Create());
+  GetMainRenderFrame()->Navigate(common_params, RequestNavigationParams());
   base::RunLoop().RunUntilIdle();
   EXPECT_DOUBLE_EQ(kMinZoomLevel, view_->GetWebView()->ZoomLevel());
 
@@ -418,10 +418,7 @@ TEST_F(RenderFrameImplTest, ZoomLimit) {
                                          ZoomFactorToZoomLevel(1.0));
   common_params.url = GURL("data:text/html,max_zoomlimit_test");
   GetMainRenderFrame()->SetHostZoomLevel(common_params.url, kMaxZoomLevel);
-  GetMainRenderFrame()->NavigateInternal(
-      common_params, StartNavigationParams(), RequestNavigationParams(),
-      std::unique_ptr<StreamOverrideParameters>(), URLLoaderFactoryBundle(),
-      base::UnguessableToken::Create());
+  GetMainRenderFrame()->Navigate(common_params, RequestNavigationParams());
   base::RunLoop().RunUntilIdle();
   EXPECT_DOUBLE_EQ(kMaxZoomLevel, view_->GetWebView()->ZoomLevel());
 }
@@ -546,95 +543,20 @@ TEST_F(RenderFrameImplTest, PreviewsStateAfterWillSendRequest) {
   }
 }
 
-TEST_F(RenderFrameImplTest, IsClientLoFiActiveForFrame) {
-  const struct {
-    PreviewsState frame_previews_state;
-    bool expected_is_client_lo_fi_active_for_frame;
-  } tests[] = {
-      // With no previews enabled for the frame, no previews should be
-      // activated.
-      {PREVIEWS_UNSPECIFIED, false},
+TEST_F(RenderFrameImplTest, GetPreviewsStateForFrame) {
+  SetPreviewsState(frame(), CLIENT_LOFI_ON | SERVER_LOFI_ON);
+  EXPECT_EQ(WebURLRequest::kClientLoFiOn | WebURLRequest::kServerLoFiOn,
+            frame()->GetPreviewsStateForFrame());
 
-      // Server Lo-Fi should not make Client Lo-Fi active.
-      {SERVER_LOFI_ON, false},
+  SetPreviewsState(frame(), PREVIEWS_OFF);
+  EXPECT_EQ(WebURLRequest::kPreviewsOff, frame()->GetPreviewsStateForFrame());
 
-      // PREVIEWS_NO_TRANSFORM and PREVIEWS_OFF should
-      // take precedence over Client Lo-Fi.
-      {CLIENT_LOFI_ON | PREVIEWS_NO_TRANSFORM, false},
-      {CLIENT_LOFI_ON | PREVIEWS_OFF, false},
+  SetPreviewsState(frame(), PREVIEWS_OFF | PREVIEWS_NO_TRANSFORM);
+  EXPECT_EQ(WebURLRequest::kPreviewsOff | WebURLRequest::kPreviewsNoTransform,
+            frame()->GetPreviewsStateForFrame());
 
-      // Otherwise, if Client Lo-Fi is enabled on its own or with
-      // SERVER_LOFI_ON, then it is active for the frame.
-      {CLIENT_LOFI_ON, true},
-      {CLIENT_LOFI_ON | SERVER_LOFI_ON, true},
-  };
-
-  for (const auto& test : tests) {
-    SetPreviewsState(frame(), test.frame_previews_state);
-
-    EXPECT_EQ(test.expected_is_client_lo_fi_active_for_frame,
-              frame()->IsClientLoFiActiveForFrame())
-        << (&test - tests);
-  }
-}
-
-TEST_F(RenderFrameImplTest, ShouldUseClientLoFiForRequest) {
-  const struct {
-    PreviewsState frame_previews_state;
-    bool is_https;
-    WebURLRequest::PreviewsState initial_request_previews_state;
-    bool expected_should_use_client_lo_fi_for_request;
-  } tests[] = {
-      // With no previews enabled for the frame, no previews should be
-      // activated.
-      {PREVIEWS_UNSPECIFIED, false, WebURLRequest::kPreviewsUnspecified, false},
-
-      // If the request already has a previews state set, then Client Lo-Fi
-      // should only be used if the request already has that bit set.
-      {CLIENT_LOFI_ON, false, WebURLRequest::kServerLoFiOn, false},
-      {PREVIEWS_UNSPECIFIED, false, WebURLRequest::kClientLoFiOn, true},
-      {CLIENT_LOFI_ON, false, WebURLRequest::kClientLoFiOn, true},
-      {CLIENT_LOFI_ON | SERVER_LITE_PAGE_ON, true,
-       WebURLRequest::kPreviewsUnspecified, true},
-      {CLIENT_LOFI_ON | SERVER_LITE_PAGE_ON, false,
-       WebURLRequest::kPreviewsUnspecified, true},
-
-      // If Client Lo-Fi isn't enabled for the frame, then it shouldn't be used
-      // for any requests.
-      {SERVER_LOFI_ON, true, WebURLRequest::kPreviewsUnspecified, false},
-
-      // PREVIEWS_NO_TRANSFORM and PREVIEWS_OFF should take precedence
-      // over Client Lo-Fi.
-      {CLIENT_LOFI_ON | PREVIEWS_NO_TRANSFORM, false,
-       WebURLRequest::kPreviewsUnspecified, false},
-      {CLIENT_LOFI_ON | PREVIEWS_OFF, false,
-       WebURLRequest::kPreviewsUnspecified, false},
-
-      // If both Server Lo-Fi and Client Lo-Fi are enabled for the frame, then
-      // only https:// requests should use Client Lo-Fi.
-      {CLIENT_LOFI_ON | SERVER_LOFI_ON, false,
-       WebURLRequest::kPreviewsUnspecified, false},
-      {CLIENT_LOFI_ON | SERVER_LOFI_ON, true,
-       WebURLRequest::kPreviewsUnspecified, true},
-
-      // Otherwise, if Client Lo-Fi is enabled on its own, then requests should
-      // use Client Lo-Fi.
-      {CLIENT_LOFI_ON, false, WebURLRequest::kPreviewsUnspecified, true},
-      {CLIENT_LOFI_ON, true, WebURLRequest::kPreviewsUnspecified, true},
-  };
-
-  for (const auto& test : tests) {
-    SetPreviewsState(frame(), test.frame_previews_state);
-
-    WebURLRequest request;
-    request.SetURL(
-        GURL(test.is_https ? "https://example.com" : "http://example.com"));
-    request.SetPreviewsState(test.initial_request_previews_state);
-
-    EXPECT_EQ(test.expected_should_use_client_lo_fi_for_request,
-              frame()->ShouldUseClientLoFiForRequest(request))
-        << (&test - tests);
-  }
+  SetPreviewsState(frame(), CLIENT_LOFI_ON | PREVIEWS_OFF);
+  EXPECT_DCHECK_DEATH(frame()->GetPreviewsStateForFrame());
 }
 
 // RenderFrameRemoteInterfacesTest ------------------------------------

@@ -152,7 +152,7 @@ bool MenuItemView::GetTooltipText(const gfx::Point& p,
 }
 
 void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_MENU_ITEM;
+  node_data->role = ax::mojom::Role::kMenuItem;
 
   base::string16 item_text;
   if (IsContainer()) {
@@ -161,7 +161,8 @@ void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
     View* child = child_at(0);
     ui::AXNodeData node_data;
     child->GetAccessibleNodeData(&node_data);
-    item_text = node_data.GetString16Attribute(ui::AX_ATTR_NAME);
+    item_text =
+        node_data.GetString16Attribute(ax::mojom::StringAttribute::kName);
   } else {
     item_text = title_;
   }
@@ -169,14 +170,13 @@ void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 
   switch (GetType()) {
     case SUBMENU:
-      node_data->AddState(ui::AX_STATE_HASPOPUP);
+      node_data->AddState(ax::mojom::State::kHaspopup);
       break;
     case CHECKBOX:
     case RADIO: {
       const bool is_checked = GetDelegate()->IsItemChecked(GetCommand());
-      const ui::AXCheckedState checked_state =
-          is_checked ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE;
-      node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE, checked_state);
+      node_data->SetCheckedState(is_checked ? ax::mojom::CheckedState::kTrue
+                                            : ax::mojom::CheckedState::kFalse);
     } break;
     case NORMAL:
     case SEPARATOR:
@@ -188,7 +188,7 @@ void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   base::char16 mnemonic = GetMnemonic();
   if (mnemonic != '\0') {
     node_data->AddStringAttribute(
-        ui::AX_ATTR_KEY_SHORTCUTS,
+        ax::mojom::StringAttribute::kKeyShortcuts,
         base::UTF16ToUTF8(base::string16(1, mnemonic)));
   }
 }

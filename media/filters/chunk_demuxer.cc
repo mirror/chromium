@@ -6,13 +6,13 @@
 
 #include <algorithm>
 #include <limits>
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -773,8 +773,10 @@ void ChunkDemuxer::OnEnabledAudioTracksChanged(
   base::AutoLock auto_lock(lock_);
   std::set<ChunkDemuxerStream*> enabled_streams;
   for (const auto& id : track_ids) {
-    ChunkDemuxerStream* stream = track_id_to_demux_stream_map_[id];
-    DCHECK(stream);
+    auto it = track_id_to_demux_stream_map_.find(id);
+    if (it == track_id_to_demux_stream_map_.end())
+      continue;
+    ChunkDemuxerStream* stream = it->second;
     DCHECK_EQ(DemuxerStream::AUDIO, stream->type());
     // TODO(servolk): Remove after multiple enabled audio tracks are supported
     // by the media::RendererImpl.
@@ -806,9 +808,12 @@ void ChunkDemuxer::OnSelectedVideoTrackChanged(
   base::AutoLock auto_lock(lock_);
   ChunkDemuxerStream* selected_stream = nullptr;
   if (track_id) {
-    selected_stream = track_id_to_demux_stream_map_[*track_id];
-    DCHECK(selected_stream);
-    DCHECK_EQ(DemuxerStream::VIDEO, selected_stream->type());
+    auto it = track_id_to_demux_stream_map_.find(*track_id);
+    if (it != track_id_to_demux_stream_map_.end()) {
+      selected_stream = it->second;
+      DCHECK(selected_stream);
+      DCHECK_EQ(DemuxerStream::VIDEO, selected_stream->type());
+    }
   }
 
   // First disable all streams that need to be disabled and then enable the
@@ -1184,9 +1189,13 @@ void ChunkDemuxer::OnSourceInitDone(
   DVLOG(1) << "OnSourceInitDone source_id=" << source_id
            << " duration=" << params.duration.InSecondsF();
   lock_.AssertAcquired();
-  DCHECK_EQ(state_, INITIALIZING);
-  DCHECK(pending_source_init_ids_.find(source_id) !=
-         pending_source_init_ids_.end());
+
+  // TODO(wolenetz): Change these to DCHECKs once less verification in release
+  // build is needed. See https://crbug.com/786975.
+  CHECK_EQ(state_, INITIALIZING);
+  CHECK(!init_cb_.is_null());
+  CHECK(pending_source_init_ids_.find(source_id) !=
+        pending_source_init_ids_.end());
   if (audio_streams_.empty() && video_streams_.empty()) {
     ReportError_Locked(DEMUXER_ERROR_COULD_NOT_OPEN);
     return;
@@ -1245,7 +1254,11 @@ void ChunkDemuxer::OnSourceInitDone(
     duration_ = kInfiniteDuration;
 
   // The demuxer is now initialized after the |start_timestamp_| was set.
+  // TODO(wolenetz): Change these to DCHECKs once less verification in release
+  // build is needed. See https://crbug.com/786975.
+  CHECK_EQ(state_, INITIALIZING);
   ChangeState_Locked(INITIALIZED);
+  CHECK(!init_cb_.is_null());
   base::ResetAndReturn(&init_cb_).Run(PIPELINE_OK);
 }
 
@@ -1285,7 +1298,7 @@ ChunkDemuxerStream* ChunkDemuxer::CreateDemuxerStream(
   }
 
   std::unique_ptr<ChunkDemuxerStream> stream =
-      base::MakeUnique<ChunkDemuxerStream>(
+      std::make_unique<ChunkDemuxerStream>(
           type, media_track_id,
           (buffering_by_pts_ ? ChunkDemuxerStream::RangeApi::kNewByPts
                              : ChunkDemuxerStream::RangeApi::kLegacyByDts));

@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"
@@ -52,6 +51,7 @@
 namespace {
 
 const char kNotificationId[] = "screenshot";
+const char kNotifierScreenshot[] = "ash.screenshot";
 
 const char kNotificationOriginUrl[] = "chrome://screenshot";
 
@@ -60,7 +60,7 @@ constexpr base::TaskTraits kBlockingTaskTraits = {
     base::MayBlock(), base::TaskPriority::USER_VISIBLE,
     base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN};
 
-ChromeScreenshotGrabber* g_instance = nullptr;
+ChromeScreenshotGrabber* g_chrome_screenshot_grabber_instance = nullptr;
 
 void CopyScreenshotToClipboard(const SkBitmap& decoded_image) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -310,19 +310,19 @@ ChromeScreenshotGrabber::ChromeScreenshotGrabber()
     : screenshot_grabber_(new ui::ScreenshotGrabber(this)),
       weak_factory_(this) {
   screenshot_grabber_->AddObserver(this);
-  DCHECK(!g_instance);
-  g_instance = this;
+  DCHECK(!g_chrome_screenshot_grabber_instance);
+  g_chrome_screenshot_grabber_instance = this;
 }
 
 ChromeScreenshotGrabber::~ChromeScreenshotGrabber() {
-  DCHECK_EQ(this, g_instance);
-  g_instance = nullptr;
+  DCHECK_EQ(this, g_chrome_screenshot_grabber_instance);
+  g_chrome_screenshot_grabber_instance = nullptr;
   screenshot_grabber_->RemoveObserver(this);
 }
 
 // static
 ChromeScreenshotGrabber* ChromeScreenshotGrabber::Get() {
-  return g_instance;
+  return g_chrome_screenshot_grabber_instance;
 }
 
 void ChromeScreenshotGrabber::HandleTakeScreenshotForAllRootWindows() {
@@ -585,10 +585,6 @@ void ChromeScreenshotGrabber::OnReadScreenshotFileForPreviewCompleted(
 
     // Assign image for notification preview. It might be empty.
     optional_field.image = image;
-
-    // Screenshot notification has different representation in new style
-    // notification. This has no effect on old style notification.
-    optional_field.use_image_as_icon = true;
   }
 
   std::unique_ptr<message_center::Notification> notification =
@@ -603,7 +599,7 @@ void ChromeScreenshotGrabber::OnReadScreenshotFileForPreviewCompleted(
           GURL(kNotificationOriginUrl),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              ash::system_notifier::kNotifierScreenshot),
+              kNotifierScreenshot),
           optional_field,
           new ScreenshotGrabberNotificationDelegate(success, GetProfile(),
                                                     screenshot_path),

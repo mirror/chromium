@@ -8,28 +8,24 @@
 #include "base/strings/string_number_conversions.h"
 
 namespace switches {
-
 namespace {
-constexpr uint32_t kDefaultNumberOfFramesToDeadline = 4;
-}
 
-// Disable surface lifetime management using surface references. This enables
-// adding surface sequences and disables adding temporary references.
-const char kDisableSurfaceReferences[] = "disable-surface-references";
+constexpr uint32_t kDefaultNumberOfFramesToDeadline = 4;
+
+}  // namespace
+
+// The default number of the BeginFrames to wait to activate a surface with
+// dependencies.
+const char kDeadlineToSynchronizeSurfaces[] =
+    "deadline-to-synchronize-surfaces";
 
 // Enables multi-client Surface synchronization. In practice, this indicates
 // that LayerTreeHost expects to be given a valid viz::LocalSurfaceId provided
 // by the parent compositor.
 const char kEnableSurfaceSynchronization[] = "enable-surface-synchronization";
 
-// Enables running viz. This basically entails running the display compositor
-// in the viz process instead of the browser process.
-const char kEnableViz[] = "enable-viz";
-
-// The default number of the BeginFrames to wait to activate a surface with
-// dependencies.
-const char kDeadlineToSynchronizeSurfaces[] =
-    "deadline-to-synchronize-surfaces";
+// Enables the viz hit-test logic (HitTestAggregator and HitTestQuery).
+const char kUseVizHitTest[] = "use-viz-hit-test";
 
 uint32_t GetDeadlineToSynchronizeSurfaces() {
   std::string deadline_to_synchronize_surfaces_string =

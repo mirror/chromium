@@ -34,7 +34,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/array_buffer_or_array_buffer_view_or_blob_or_usv_string.h"
 #include "core/CoreExport.h"
-#include "core/html/URLRegistry.h"
+#include "core/fileapi/URLRegistry.h"
 #include "core/imagebitmap/ImageBitmapSource.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/typed_arrays/DOMArrayBufferView.h"
@@ -112,6 +112,7 @@ class CORE_EXPORT Blob : public ScriptWrappable,
 
   // URLRegistrable to support PublicURLs.
   URLRegistry& Registry() const final;
+  mojom::blink::BlobPtr AsMojoBlob() final;
 
   // ImageBitmapSource implementation
   bool IsBlob() const override { return true; }
@@ -133,10 +134,9 @@ class CORE_EXPORT Blob : public ScriptWrappable,
   static String NormalizeType(const String& type);
 
  private:
-  Blob();
+  Blob() = delete;
 
   scoped_refptr<BlobDataHandle> blob_data_handle_;
-  bool is_closed_;
 };
 
 }  // namespace blink

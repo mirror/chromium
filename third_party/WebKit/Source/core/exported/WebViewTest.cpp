@@ -59,7 +59,7 @@
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLTextAreaElement.h"
 #include "core/inspector/DevToolsEmulator.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/page/ChromeClient.h"
@@ -467,8 +467,8 @@ TEST_P(WebViewTest, SetBaseBackgroundColorBeforeMainFrame) {
   // initialization code between WebView and WebLocalFrame creation.
   const WebColor kBlue = 0xFF0000FF;
   FrameTestHelpers::TestWebViewClient web_view_client;
-  WebViewImpl* web_view = static_cast<WebViewImpl*>(
-      WebView::Create(&web_view_client, mojom::PageVisibilityState::kVisible));
+  WebViewImpl* web_view = static_cast<WebViewImpl*>(WebView::Create(
+      &web_view_client, mojom::PageVisibilityState::kVisible, nullptr));
   EXPECT_NE(kBlue, web_view->BackgroundColor());
   // webView does not have a frame yet, but we should still be able to set the
   // background color.
@@ -506,7 +506,7 @@ TEST_P(WebViewTest, SetBaseBackgroundColorAndBlendWithExistingContent) {
   // Paint the root of the main frame in the way that CompositedLayerMapping
   // would.
   LocalFrameView* view = web_view_helper_.LocalMainFrame()->GetFrameView();
-  PaintLayer* root_layer = view->GetLayoutViewItem().Layer();
+  PaintLayer* root_layer = view->GetLayoutView()->Layer();
   LayoutRect paint_rect(0, 0, kWidth, kHeight);
   PaintLayerPaintingInfo painting_info(root_layer, paint_rect,
                                        kGlobalPaintNormalPhase, LayoutSize());
@@ -876,36 +876,22 @@ TEST_P(WebViewTest, InputMode) {
                 "input_mode_default.html");
   TestInputMode(WebTextInputMode::kWebTextInputModeDefault,
                 "input_mode_default_unknown.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeVerbatim,
-                "input_mode_default_verbatim.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeVerbatim,
-                "input_mode_type_text_verbatim.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeVerbatim,
-                "input_mode_type_search_verbatim.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeDefault,
-                "input_mode_type_url_verbatim.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeLatin,
-                "input_mode_type_latin.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeLatinName,
-                "input_mode_type_latin_name.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeLatinProse,
-                "input_mode_type_latin_prose.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeFullWidthLatin,
-                "input_mode_type_full_width_latin.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeKana,
-                "input_mode_type_kana.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeKanaName,
-                "input_mode_type_kana_name.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeKataKana,
-                "input_mode_type_kata_kana.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeNumeric,
-                "input_mode_type_numeric.html");
+  TestInputMode(WebTextInputMode::kWebTextInputModeNone,
+                "input_mode_type_none.html");
+  TestInputMode(WebTextInputMode::kWebTextInputModeText,
+                "input_mode_type_text.html");
   TestInputMode(WebTextInputMode::kWebTextInputModeTel,
                 "input_mode_type_tel.html");
-  TestInputMode(WebTextInputMode::kWebTextInputModeEmail,
-                "input_mode_type_email.html");
   TestInputMode(WebTextInputMode::kWebTextInputModeUrl,
                 "input_mode_type_url.html");
+  TestInputMode(WebTextInputMode::kWebTextInputModeEmail,
+                "input_mode_type_email.html");
+  TestInputMode(WebTextInputMode::kWebTextInputModeNumeric,
+                "input_mode_type_numeric.html");
+  TestInputMode(WebTextInputMode::kWebTextInputModeDecimal,
+                "input_mode_type_decimal.html");
+  TestInputMode(WebTextInputMode::kWebTextInputModeSearch,
+                "input_mode_type_search.html");
 }
 
 TEST_P(WebViewTest, TextInputInfoWithReplacedElements) {
@@ -2561,7 +2547,7 @@ TEST_P(WebViewTest, ClientTapHandlingNullWebViewClient) {
   // Note: this test doesn't use WebViewHelper since WebViewHelper creates an
   // internal WebViewClient on demand if the supplied WebViewClient is null.
   WebViewImpl* web_view = static_cast<WebViewImpl*>(
-      WebView::Create(nullptr, mojom::PageVisibilityState::kVisible));
+      WebView::Create(nullptr, mojom::PageVisibilityState::kVisible, nullptr));
   FrameTestHelpers::TestWebFrameClient web_frame_client;
   FrameTestHelpers::TestWebWidgetClient web_widget_client;
   WebLocalFrame* local_frame = WebLocalFrame::CreateMainFrame(
@@ -3187,7 +3173,7 @@ class MockAutofillClient : public WebAutofillClient {
         text_changes_from_user_gesture_(0),
         user_gesture_notifications_count_(0) {}
 
-  ~MockAutofillClient() override {}
+  ~MockAutofillClient() override = default;
 
   void TextFieldDidChange(const WebFormControlElement&) override {
     ++text_changes_;

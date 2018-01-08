@@ -5,7 +5,7 @@
 <translation id="1013923882670373915">El dispositivo Bluetooth "<ph name="DEVICE_NAME" />" solicita permiso para vincularse. Introduce el código PIN <ph name="PINCODE" /> en el dispositivo</translation>
 <translation id="1032891413405719768">El lápiz óptico tiene poca batería</translation>
 <translation id="1059194134494239015"><ph name="DISPLAY_NAME" />: <ph name="RESOLUTION" /></translation>
-<translation id="112308213915226829">Ocultar automáticamente estantería</translation>
+<translation id="112308213915226829">Ocultar estantería automáticamente</translation>
 <translation id="1153356358378277386">Dispositivos vinculados</translation>
 <translation id="1195412055398077112">reajustar</translation>
 <translation id="119944043368869598">Eliminar todo</translation>
@@ -107,7 +107,7 @@
 <translation id="3364721542077212959">Herramientas del lápiz óptico</translation>
 <translation id="3368922792935385530">Con conexión</translation>
 <translation id="3371140690572404006">Dispositivo USB tipo C (puerto frontal derecho)</translation>
-<translation id="3400357268283240774">Ajustes adicionales</translation>
+<translation id="3400357268283240774">Configuración adicional</translation>
 <translation id="3413817803639110246">Aún no hay contenido</translation>
 <translation id="3445925074670675829">Dispositivo USB-C</translation>
 <translation id="3465566417615315331">Haz clic en tu foto</translation>
@@ -133,7 +133,7 @@
 <translation id="3893630138897523026">ChromeVox (mensajes de voz)</translation>
 <translation id="3899995891769452915">Entrada de voz</translation>
 <translation id="3901991538546252627">Conectando con: <ph name="NAME" /></translation>
-<translation id="394485226368336402">Ajustes de audio</translation>
+<translation id="394485226368336402">Configuración de audio</translation>
 <translation id="397105322502079400">Calculando...</translation>
 <translation id="3995138139523574647">Dispositivo USB tipo C (puerto trasero derecho)</translation>
 <translation id="4017989525502048489">Puntero láser</translation>
@@ -167,12 +167,13 @@
 <translation id="5207949376430453814">Resaltar el símbolo de intercalación del texto</translation>
 <translation id="5222676887888702881">Cerrar sesión</translation>
 <translation id="523505283826916779">Configuración de accesibilidad</translation>
-<translation id="5313326810920013265">Ajustes de Bluetooth</translation>
+<translation id="5313326810920013265">Configuración de Bluetooth</translation>
 <translation id="5331975486040154427">Dispositivo USB tipo C (puerto trasero izquierdo)</translation>
 <translation id="5397578532367286026">El administrador puede consultar el uso y el historial de este usuario (<ph name="MANAGER_EMAIL" />) en la página chrome.com.</translation>
 <translation id="5430931332414098647">Conexión compartida instantánea</translation>
 <translation id="5431825016875453137">OpenVPN/L2TP</translation>
 <translation id="544691375626129091">Todos los usuarios disponibles ya se han añadido a esta sesión.</translation>
+<translation id="5457599981699367932">Navegar como invitado</translation>
 <translation id="553675580533261935">Saliendo de la sesión</translation>
 <translation id="5548285847212963613">La extensión "<ph name="EXTENSION_NAME" />" puede permitir conectarse a esta red.</translation>
 <translation id="5571066253365925590">Bluetooth habilitado</translation>
@@ -183,6 +184,7 @@
 <translation id="5744083938413354016">Tocar y arrastrar</translation>
 <translation id="5777841717266010279">¿Dejar de compartir la pantalla?</translation>
 <translation id="57838592816432529">Silenciar</translation>
+<translation id="5832805196449965646">Añadir perfil</translation>
 <translation id="5860033963881614850">No</translation>
 <translation id="5895138241574237353">Reiniciar</translation>
 <translation id="5901316534475909376">Mayús+Esc</translation>
@@ -291,7 +293,7 @@ Solo debes usar esta función con las cuentas de confianza.</translation>
 <translation id="8308637677604853869">Menú anterior</translation>
 <translation id="8351131234907093545">Crear nota</translation>
 <translation id="8392451568018454956">Menú de opciones de <ph name="USER_EMAIL_ADDRESS" /></translation>
-<translation id="8428213095426709021">Ajustes</translation>
+<translation id="8428213095426709021">Configuración</translation>
 <translation id="8433186206711564395">Configuración de red</translation>
 <translation id="8433977262951327081">La combinación de teclas para mostrar el cuadro del menú de opciones de entrada en la estantería ha cambiado. Utiliza <ph name="NEW_SHORTCUT" /> en lugar de <ph name="OLD_SHORTCUT" />.</translation>
 <translation id="8452135315243592079">Falta la tarjeta SIM</translation>

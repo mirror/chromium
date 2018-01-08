@@ -44,7 +44,7 @@ class Settings;
 class CORE_EXPORT WebSettingsImpl final : public WebSettings {
  public:
   WebSettingsImpl(Settings*, DevToolsEmulator*);
-  virtual ~WebSettingsImpl() {}
+  virtual ~WebSettingsImpl() = default;
 
   void SetFromStrings(const WebString& name, const WebString& value) override;
 
@@ -94,6 +94,7 @@ class CORE_EXPORT WebSettingsImpl final : public WebSettings {
                             UScriptCode = USCRIPT_COMMON) override;
   void SetFixedFontFamily(const WebString&,
                           UScriptCode = USCRIPT_COMMON) override;
+  void SetForceMainWorldInitialization(bool) override;
   void SetForcePreloadNoneForMediaElements(bool) override;
   void SetForceZeroLayoutHeight(bool) override;
   void SetFullscreenSupported(bool) override;
@@ -201,6 +202,7 @@ class CORE_EXPORT WebSettingsImpl final : public WebSettings {
   void SetMediaControlsEnabled(bool) override;
   void SetDoNotUpdateSelectionOnMutatingSelectionRange(bool) override;
   void SetMediaDownloadInProductHelpEnabled(bool) override;
+  void SetLowPriorityIframesThreshold(WebEffectiveConnectionType) override;
 
   bool ShowFPSCounter() const { return show_fps_counter_; }
   bool ShowPaintRects() const { return show_paint_rects_; }

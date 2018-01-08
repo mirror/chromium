@@ -40,12 +40,6 @@ class V8TestTypedefs {
   }
   CORE_EXPORT static TestTypedefs* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestTypedefs>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestTypedefs>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   // Callback functions
@@ -82,6 +76,7 @@ class V8TestTypedefs {
 template <>
 struct NativeValueTraits<TestTypedefs> : public NativeValueTraitsBase<TestTypedefs> {
   CORE_EXPORT static TestTypedefs* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static TestTypedefs* NullValue() { return nullptr; }
 };
 
 template <>

@@ -16,6 +16,7 @@
 #include "base/command_line.h"
 #include "base/time/time.h"
 #include "base/version.h"
+#include "components/chrome_cleaner/public/constants/constants.h"
 
 namespace base {
 class TaskRunner;
@@ -37,6 +38,9 @@ const int kDaysBetweenReporterLogsSent = 7;
 // or because the user explicitly initiated a cleanup. The invocation type
 // controls whether a prompt dialog will be shown to the user and under what
 // conditions logs may be uploaded to Google.
+//
+// These values are used to send UMA information and are replicated in the
+// enums.xml file, so the order MUST NOT CHANGE.
 enum class SwReporterInvocationType {
   // Default value that should never be used for valid invocations.
   kUnspecified,
@@ -61,6 +65,8 @@ enum class SwReporterInvocationType {
   // the reporter and the cleaner in scanning mode (which will only run if
   // unwanted software is found by the reporter).
   kUserInitiatedWithLogsAllowed,
+
+  kMax,
 };
 
 bool IsUserInitiated(SwReporterInvocationType invocation_type);
@@ -118,6 +124,9 @@ class SwReporterInvocation {
   bool cleaner_logs_upload_enabled() const;
   void set_cleaner_logs_upload_enabled(bool cleaner_logs_upload_enabled);
 
+  chrome_cleaner::ChromePromptValue chrome_prompt() const;
+  void set_chrome_prompt(chrome_cleaner::ChromePromptValue chrome_prompt);
+
  private:
   base::CommandLine command_line_;
 
@@ -127,8 +136,13 @@ class SwReporterInvocation {
 
   bool reporter_logs_upload_enabled_ = false;
   bool cleaner_logs_upload_enabled_ = false;
+
+  chrome_cleaner::ChromePromptValue chrome_prompt_ =
+      chrome_cleaner::ChromePromptValue::kUnspecified;
 };
 
+// These values are used to send UMA information and are replicated in the
+// enums.xml file, so the order MUST NOT CHANGE.
 enum class SwReporterInvocationResult {
   kUnspecified,
   // Tried to start a new run, but a user-initiated run was already
@@ -136,6 +150,9 @@ enum class SwReporterInvocationResult {
   kNotScheduled,
   // The reporter process timed-out while running.
   kTimedOut,
+  // The on-demand reporter run failed to download a new version of the reporter
+  // component.
+  kComponentNotAvailable,
   // The reporter failed to start.
   kProcessFailedToLaunch,
   // The reporter ended with a failure.
@@ -149,6 +166,8 @@ enum class SwReporterInvocationResult {
   // a cleanup should be offered. A notification with this result should be
   // immediately followed by an attempt to run the cleaner in scanning mode.
   kCleanupToBeOffered,
+
+  kMax,
 };
 
 // Called when all reporter invocations have completed, with a result parameter
@@ -163,6 +182,8 @@ class SwReporterInvocationSequence {
   explicit SwReporterInvocationSequence(
       const base::Version& version = base::Version());
   SwReporterInvocationSequence(SwReporterInvocationSequence&& queue);
+  SwReporterInvocationSequence(
+      const SwReporterInvocationSequence& invocations_sequence);
   virtual ~SwReporterInvocationSequence();
 
   void PushInvocation(const SwReporterInvocation& invocation);
@@ -184,12 +205,6 @@ class SwReporterInvocationSequence {
   OnReporterSequenceDone on_sequence_done_;
 };
 
-// This is used only by tests and exists solely to make the browser tests happy
-// while we implement user-initiated runs.
-// TODO(proberge): Remove this by Q1 2018.
-void RunSwReportersForTesting(SwReporterInvocationType invocation_type,
-                              SwReporterInvocationSequence&& invocations);
-
 // Tries to run the given invocations. If this runs successfully, than any
 // calls made in the next |kDaysBetweenSuccessfulSwReporterRuns| days will be
 // ignored.
@@ -198,7 +213,8 @@ void RunSwReportersForTesting(SwReporterInvocationType invocation_type,
 // executions of the tool with different command lines. |invocations| is the
 // queue of SwReporters to execute as a single "run". When a new try is
 // scheduled the entire queue is executed.
-void OnSwReporterReady(SwReporterInvocationSequence&& invocations);
+void MaybeStartSwReporter(SwReporterInvocationType invocation_type,
+                          SwReporterInvocationSequence&& invocations);
 
 // A delegate used by tests to implement test doubles (e.g., stubs, fakes, or
 // mocks).

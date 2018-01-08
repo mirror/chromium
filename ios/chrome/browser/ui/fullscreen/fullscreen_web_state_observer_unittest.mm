@@ -4,10 +4,10 @@
 
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_observer.h"
 
-#include "base/memory/ptr_util.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_model.h"
 #import "ios/chrome/browser/ui/fullscreen/test/fullscreen_model_test_util.h"
 #import "ios/chrome/browser/ui/fullscreen/test/test_fullscreen_controller.h"
+#import "ios/chrome/browser/ui/fullscreen/test/test_fullscreen_mediator.h"
 #import "ios/web/public/navigation_item.h"
 #include "ios/web/public/ssl_status.h"
 #import "ios/web/public/test/fakes/fake_navigation_context.h"
@@ -22,20 +22,23 @@
 class FullscreenWebStateObserverTest : public PlatformTest {
  public:
   FullscreenWebStateObserverTest()
-      : PlatformTest(), controller_(&model_), observer_(&controller_, &model_) {
-    // Set up model.
-    SetUpFullscreenModelForTesting(&model_, 100.0);
+      : PlatformTest(),
+        controller_(&model_),
+        mediator_(&controller_, &model_),
+        observer_(&controller_, &model_, &mediator_) {
     // Set up a TestNavigationManager.
     std::unique_ptr<web::TestNavigationManager> navigation_manager =
-        base::MakeUnique<web::TestNavigationManager>();
+        std::make_unique<web::TestNavigationManager>();
     navigation_manager_ = navigation_manager.get();
     web_state_.SetNavigationManager(std::move(navigation_manager));
     // Begin observing the WebState.
     observer_.SetWebState(&web_state_);
+    // Set up model.
+    SetUpFullscreenModelForTesting(&model_, 100.0);
   }
 
   ~FullscreenWebStateObserverTest() override {
-    // Stop observing the WebState.
+    mediator_.Disconnect();
     observer_.SetWebState(nullptr);
   }
 
@@ -48,6 +51,7 @@ class FullscreenWebStateObserverTest : public PlatformTest {
  private:
   FullscreenModel model_;
   TestFullscreenController controller_;
+  TestFullscreenMediator mediator_;
   web::TestWebState web_state_;
   web::TestNavigationManager* navigation_manager_;
   FullscreenWebStateObserver observer_;

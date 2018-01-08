@@ -36,7 +36,6 @@ class HttpAuthCache;
 class HttpResponseInfo;
 class HttpStream;
 class IOBuffer;
-class ProxyDelegate;
 class SpdySessionPool;
 class SSLClientSocketPool;
 class TransportClientSocketPool;
@@ -58,6 +57,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketWrapper
   HttpProxyClientSocketWrapper(
       const std::string& group_name,
       RequestPriority priority,
+      const SocketTag& socket_tag,
       ClientSocketPool::RespectLimits respect_limits,
       base::TimeDelta connect_timeout_duration,
       base::TimeDelta proxy_negotiation_timeout_duration,
@@ -72,8 +72,8 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketWrapper
       HttpAuthHandlerFactory* http_auth_handler_factory,
       SpdySessionPool* spdy_session_pool,
       QuicStreamFactory* quic_stream_factory,
+      bool is_trusted_proxy,
       bool tunnel,
-      ProxyDelegate* proxy_delegate,
       const NetLogWithSource& net_log);
 
   // On destruction Disconnect() is called.
@@ -172,8 +172,6 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketWrapper
   int DoRestartWithAuth();
   int DoRestartWithAuthComplete(int result);
 
-  void NotifyProxyDelegateOfCompletion(int result);
-
   void SetConnectTimer(base::TimeDelta duration);
   void ConnectTimeout();
 
@@ -183,6 +181,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketWrapper
 
   const std::string group_name_;
   RequestPriority priority_;
+  const SocketTag initial_socket_tag_;
   ClientSocketPool::RespectLimits respect_limits_;
   const base::TimeDelta connect_timeout_duration_;
   const base::TimeDelta proxy_negotiation_timeout_duration_;
@@ -200,9 +199,9 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketWrapper
 
   bool has_restarted_;
   const bool tunnel_;
-  ProxyDelegate* const proxy_delegate_;
 
   bool using_spdy_;
+  bool is_trusted_proxy_;
   NextProto negotiated_protocol_;
 
   std::unique_ptr<HttpResponseInfo> error_response_info_;

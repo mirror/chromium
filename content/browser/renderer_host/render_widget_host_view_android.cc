@@ -41,9 +41,9 @@
 #include "content/browser/android/content_view_core.h"
 #include "content/browser/android/ime_adapter_android.h"
 #include "content/browser/android/overscroll_controller_android.h"
-#include "content/browser/android/popup_zoomer.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
+#include "content/browser/android/tap_disambiguator.h"
 #include "content/browser/android/text_suggestion_host_android.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
@@ -64,7 +64,6 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/ui_events_helper.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/gpu_stream_constants.h"
 #include "content/common/input_messages.h"
 #include "content/common/view_messages.h"
@@ -76,6 +75,7 @@
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "ipc/ipc_message_macros.h"
@@ -201,7 +201,7 @@ void GLHelperHolder::Initialize() {
 
   // This is for an offscreen context, so we don't need the default framebuffer
   // to have alpha, stencil, depth, antialiasing.
-  gpu::gles2::ContextCreationAttribHelper attributes;
+  gpu::ContextCreationAttribs attributes;
   attributes.alpha_size = -1;
   attributes.stencil_size = 0;
   attributes.depth_size = 0;
@@ -398,10 +398,9 @@ void PrepareTextureCopyOutputResult(
     output_size_in_pixel = dst_size_in_pixel;
 
   std::unique_ptr<SkBitmap> bitmap(new SkBitmap);
-  if (!bitmap->tryAllocPixels(SkImageInfo::Make(output_size_in_pixel.width(),
-                                                output_size_in_pixel.height(),
-                                                color_type,
-                                                kOpaque_SkAlphaType))) {
+  if (!bitmap->tryAllocPixels(SkImageInfo::Make(
+          output_size_in_pixel.width(), output_size_in_pixel.height(),
+          color_type, kPremul_SkAlphaType))) {
     scoped_callback_runner.ReplaceClosure(
         base::Bind(callback, SkBitmap(), READBACK_BITMAP_ALLOCATION_FAILURE));
     return;
@@ -466,7 +465,7 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
       is_in_vr_(false),
       content_view_core_(nullptr),
       ime_adapter_android_(nullptr),
-      popup_zoomer_(nullptr),
+      tap_disambiguator_(nullptr),
       selection_popup_controller_(nullptr),
       text_suggestion_host_(nullptr),
       background_color_(SK_ColorWHITE),
@@ -494,9 +493,8 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
   if (using_browser_compositor_) {
     viz::FrameSinkId frame_sink_id =
         host_->AllocateFrameSinkId(false /* is_guest_view_hack */);
-    delegated_frame_host_.reset(new ui::DelegatedFrameHostAndroid(
-        &view_, CompositorImpl::GetHostFrameSinkManager(),
-        CompositorImpl::GetFrameSinkManager(), this, frame_sink_id));
+    delegated_frame_host_ = std::make_unique<ui::DelegatedFrameHostAndroid>(
+        &view_, CompositorImpl::GetHostFrameSinkManager(), this, frame_sink_id);
 
     // Let the page-level input event router know about our frame sink ID
     // for surface-based hit testing.
@@ -571,6 +569,8 @@ void RenderWidgetHostViewAndroid::InitAsFullscreen(
 }
 
 void RenderWidgetHostViewAndroid::WasResized() {
+  if (delegated_frame_host_)
+    delegated_frame_host_->WasResized();
   host_->WasResized();
 }
 
@@ -845,43 +845,13 @@ void RenderWidgetHostViewAndroid::SetNeedsBeginFrames(bool needs_begin_frames) {
     ClearBeginFrameRequest(PERSISTENT_BEGIN_FRAME);
 }
 
-viz::SurfaceId RenderWidgetHostViewAndroid::SurfaceIdForTesting() const {
-  return delegated_frame_host_ ? delegated_frame_host_->SurfaceId()
-                               : viz::SurfaceId();
+void RenderWidgetHostViewAndroid::SetWantsAnimateOnlyBeginFrames() {
+  wants_animate_only_begin_frames_ = true;
 }
 
-viz::FrameSinkId RenderWidgetHostViewAndroid::FrameSinkIdAtPoint(
-    viz::SurfaceHittestDelegate* delegate,
-    const gfx::PointF& point,
-    gfx::PointF* transformed_point) {
-  if (!delegated_frame_host_)
-    return viz::FrameSinkId();
-
-  float scale_factor = view_.GetDipScale();
-  DCHECK_GT(scale_factor, 0);
-  // The surface hittest happens in device pixels, so we need to convert the
-  // |point| from DIPs to pixels before hittesting.
-  gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
-
-  viz::SurfaceId surface_id = delegated_frame_host_->SurfaceId();
-  if (surface_id.is_valid()) {
-    viz::SurfaceHittest hittest(delegate,
-                                GetFrameSinkManager()->surface_manager());
-    gfx::Transform target_transform;
-    surface_id = hittest.GetTargetSurfaceAtPoint(
-        surface_id, gfx::ToFlooredPoint(point_in_pixels), &target_transform);
-    *transformed_point = point_in_pixels;
-    if (surface_id.is_valid())
-      target_transform.TransformPoint(transformed_point);
-    *transformed_point =
-        gfx::ConvertPointToDIP(scale_factor, *transformed_point);
-  }
-
-  // It is possible that the renderer has not yet produced a surface, in which
-  // case we return our current namespace.
-  if (!surface_id.is_valid())
-    return GetFrameSinkId();
-  return surface_id.frame_sink_id();
+viz::SurfaceId RenderWidgetHostViewAndroid::GetCurrentSurfaceId() const {
+  return delegated_frame_host_ ? delegated_frame_host_->SurfaceId()
+                               : viz::SurfaceId();
 }
 
 bool RenderWidgetHostViewAndroid::TransformPointToLocalCoordSpace(
@@ -1168,10 +1138,10 @@ void RenderWidgetHostViewAndroid::CopyFromSurface(
 
 void RenderWidgetHostViewAndroid::ShowDisambiguationPopup(
     const gfx::Rect& rect_pixels, const SkBitmap& zoomed_bitmap) {
-  if (!popup_zoomer_)
+  if (!tap_disambiguator_)
     return;
 
-  popup_zoomer_->ShowPopup(rect_pixels, zoomed_bitmap);
+  tap_disambiguator_->ShowPopup(rect_pixels, zoomed_bitmap);
 }
 
 std::unique_ptr<SyntheticGestureTarget>
@@ -1725,8 +1695,7 @@ void RenderWidgetHostViewAndroid::SendBeginFrame(viz::BeginFrameArgs args) {
   args.deadline = sync_compositor_ ? base::TimeTicks()
   : args.frame_time + (args.interval * 0.6);
   if (sync_compositor_) {
-    host_->Send(new ViewMsg_BeginFrame(host_->GetRoutingID(), args));
-    sync_compositor_->DidSendBeginFrame(view_.GetWindowAndroid());
+    sync_compositor_->SendBeginFrame(view_.GetWindowAndroid(), args);
   } else if (renderer_compositor_frame_sink_) {
     renderer_compositor_frame_sink_->OnBeginFrame(args);
   }
@@ -2180,6 +2149,12 @@ RenderWidgetHostViewAndroid::GetTouchSelectionControllerClientManager() {
   return touch_selection_controller_client_manager_.get();
 }
 
+viz::LocalSurfaceId RenderWidgetHostViewAndroid::GetLocalSurfaceId() const {
+  if (delegated_frame_host_)
+    return delegated_frame_host_->GetLocalSurfaceId();
+  return viz::LocalSurfaceId();
+}
+
 bool RenderWidgetHostViewAndroid::OnMouseEvent(
     const ui::MotionEventAndroid& event) {
   RecordToolTypeForActionDown(event);
@@ -2211,8 +2186,8 @@ void RenderWidgetHostViewAndroid::OnGestureEvent(
 void RenderWidgetHostViewAndroid::OnSizeChanged() {
   if (ime_adapter_android_)
     ime_adapter_android_->UpdateAfterViewSizeChanged();
-  if (popup_zoomer_)
-    popup_zoomer_->HidePopup();
+  if (tap_disambiguator_)
+    tap_disambiguator_->HidePopup();
 }
 
 void RenderWidgetHostViewAndroid::OnPhysicalBackingSizeChanged() {
@@ -2306,6 +2281,7 @@ void RenderWidgetHostViewAndroid::OnBeginFrame(
     OnDidNotProduceFrame(
         viz::BeginFrameAck(args.source_id, args.sequence_number, false));
   }
+  host_->ProgressFling(args.frame_time);
 }
 
 const viz::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
@@ -2313,14 +2289,16 @@ const viz::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
   return last_begin_frame_args_;
 }
 
+bool RenderWidgetHostViewAndroid::WantsAnimateOnlyBeginFrames() const {
+  return wants_animate_only_begin_frames_;
+}
+
 void RenderWidgetHostViewAndroid::SendBeginFramePaused() {
   bool paused = begin_frame_paused_ || !observing_root_window_;
 
   if (!using_browser_compositor_) {
-    if (host_) {
-      host_->Send(
-          new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), paused));
-    }
+    if (sync_compositor_)
+      sync_compositor_->SetBeginFramePaused(paused);
   } else if (renderer_compositor_frame_sink_) {
     renderer_compositor_frame_sink_->OnBeginFramePausedChanged(paused);
   }

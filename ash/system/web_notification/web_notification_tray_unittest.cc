@@ -37,8 +37,8 @@
 #include "ui/gfx/image/image_unittest_util.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification_list.h"
-#include "ui/message_center/notification_types.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
+#include "ui/message_center/public/cpp/notification_types.h"
 #include "ui/message_center/ui_controller.h"
 #include "ui/message_center/views/message_popup_collection.h"
 #include "ui/views/controls/label.h"
@@ -279,7 +279,7 @@ TEST_F(WebNotificationTrayTest, PopupShownOnBothDisplays) {
   // http://crbug.com/263664
 
   // Turn on mirror mode.
-  display_manager()->SetMirrorMode(true);
+  display_manager()->SetMirrorMode(display::MirrorMode::kNormal, base::nullopt);
   EXPECT_TRUE(GetTray()->IsPopupVisible());
   EXPECT_FALSE(GetSecondaryTray());
 
@@ -296,7 +296,7 @@ TEST_F(WebNotificationTrayTest, PopupShownOnBothDisplays) {
   EXPECT_FALSE(GetSecondaryTray());
 
   // Turn off mirror mode.
-  display_manager()->SetMirrorMode(false);
+  display_manager()->SetMirrorMode(display::MirrorMode::kOff, base::nullopt);
   display_manager()->OnNativeDisplaysChanged(display_info_list);
   secondary_tray = GetSecondaryTray();
   ASSERT_TRUE(secondary_tray);

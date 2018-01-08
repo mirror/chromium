@@ -167,6 +167,10 @@ ParsedFeaturePolicy ParseFeaturePolicy(
       }
 
       for (size_t i = 1; i < tokens.size(); i++) {
+        if (!tokens[i].ContainsOnlyASCII()) {
+          messages->push_back("Non-ASCII characters in origin.");
+          continue;
+        }
         if (EqualIgnoringASCIICase(tokens[i], "'self'")) {
           origins.push_back(self_origin->ToUrlOrigin());
         } else if (src_origin && EqualIgnoringASCIICase(tokens[i], "'src'")) {
@@ -207,9 +211,10 @@ bool IsSupportedInFeaturePolicy(FeaturePolicyFeature feature) {
     case FeaturePolicyFeature::kAmbientLightSensor:
     case FeaturePolicyFeature::kGyroscope:
     case FeaturePolicyFeature::kMagnetometer:
-      return true;
     case FeaturePolicyFeature::kSyncXHR:
+      return true;
     case FeaturePolicyFeature::kVibrate:
+    case FeaturePolicyFeature::kUnsizedMedia:
       return RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled();
     default:
       return false;
@@ -232,6 +237,7 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
     default_feature_name_map.Set("geolocation",
                                  FeaturePolicyFeature::kGeolocation);
     default_feature_name_map.Set("midi", FeaturePolicyFeature::kMidiFeature);
+    default_feature_name_map.Set("sync-xhr", FeaturePolicyFeature::kSyncXHR);
     default_feature_name_map.Set("vr", FeaturePolicyFeature::kWebVr);
     default_feature_name_map.Set("accelerometer",
                                  FeaturePolicyFeature::kAccelerometer);
@@ -250,7 +256,8 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
                                    FeaturePolicyFeature::kDocumentWrite);
       default_feature_name_map.Set("sync-script",
                                    FeaturePolicyFeature::kSyncScript);
-      default_feature_name_map.Set("sync-xhr", FeaturePolicyFeature::kSyncXHR);
+      default_feature_name_map.Set("unsized-media",
+                                   FeaturePolicyFeature::kUnsizedMedia);
     }
     if (RuntimeEnabledFeatures::FeaturePolicyAutoplayFeatureEnabled()) {
       default_feature_name_map.Set("autoplay", FeaturePolicyFeature::kAutoplay);

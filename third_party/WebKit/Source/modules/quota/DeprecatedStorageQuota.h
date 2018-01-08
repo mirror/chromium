@@ -31,15 +31,18 @@
 #ifndef DeprecatedStorageQuota_h
 #define DeprecatedStorageQuota_h
 
+#include "core/dom/ExceptionCode.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
+#include "third_party/WebKit/common/quota/quota_dispatcher_host.mojom-blink.h"
 
 namespace blink {
 
+class ExecutionContext;
 class ScriptState;
-class StorageErrorCallback;
-class StorageQuotaCallback;
-class StorageUsageCallback;
+class V8StorageErrorCallback;
+class V8StorageQuotaCallback;
+class V8StorageUsageCallback;
 
 class DeprecatedStorageQuota final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
@@ -54,18 +57,28 @@ class DeprecatedStorageQuota final : public ScriptWrappable {
     return new DeprecatedStorageQuota(type);
   }
 
+  static void EnqueueStorageErrorCallback(ScriptState*,
+                                          V8StorageErrorCallback*,
+                                          ExceptionCode);
+
   void queryUsageAndQuota(ScriptState*,
-                          StorageUsageCallback*,
-                          StorageErrorCallback*);
+                          V8StorageUsageCallback*,
+                          V8StorageErrorCallback* = nullptr);
 
   void requestQuota(ScriptState*,
                     unsigned long long new_quota_in_bytes,
-                    StorageQuotaCallback*,
-                    StorageErrorCallback*);
+                    V8StorageQuotaCallback* = nullptr,
+                    V8StorageErrorCallback* = nullptr);
 
  private:
   explicit DeprecatedStorageQuota(Type);
+
+  // Binds the interface (if not already bound) with the given interface
+  // provider, and returns it,
+  mojom::blink::QuotaDispatcherHost& GetQuotaHost(ExecutionContext*);
+
   Type type_;
+  mojom::blink::QuotaDispatcherHostPtr quota_host_;
 };
 
 }  // namespace blink

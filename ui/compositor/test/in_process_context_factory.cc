@@ -27,7 +27,7 @@
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
-#include "gpu/command_buffer/common/gles2_cmd_utils.h"
+#include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/reflector.h"
@@ -203,7 +203,7 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
       shared_worker_context_provider_ = nullptr;
   }
 
-  gpu::gles2::ContextCreationAttribHelper attribs;
+  gpu::ContextCreationAttribs attribs;
   attribs.alpha_size = 8;
   attribs.blue_size = 8;
   attribs.green_size = 8;
@@ -255,9 +255,9 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
       display_output_surface->capabilities().max_frames_pending);
 
   data->display = std::make_unique<viz::Display>(
-      &shared_bitmap_manager_, &gpu_memory_buffer_manager_, renderer_settings_,
-      compositor->frame_sink_id(), std::move(display_output_surface),
-      std::move(scheduler), compositor->task_runner());
+      &shared_bitmap_manager_, renderer_settings_, compositor->frame_sink_id(),
+      std::move(display_output_surface), std::move(scheduler),
+      compositor->task_runner());
   GetFrameSinkManager()->RegisterBeginFrameSource(begin_frame_source.get(),
                                                   compositor->frame_sink_id());
   // Note that we are careful not to destroy a prior |data->begin_frame_source|

@@ -15,7 +15,6 @@
 #include "base/i18n/break_iterator.h"
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
@@ -493,12 +492,11 @@ bool DownloadItemView::GetTooltipText(const gfx::Point& p,
 
 void DownloadItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->SetName(accessible_name_);
-  node_data->role = ui::AX_ROLE_BUTTON;
+  node_data->role = ax::mojom::Role::kButton;
   if (model_.IsDangerous()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_DISABLED);
+    node_data->SetRestriction(ax::mojom::Restriction::kDisabled);
   } else {
-    node_data->AddState(ui::AX_STATE_HASPOPUP);
+    node_data->AddState(ax::mojom::State::kHaspopup);
   }
 }
 
@@ -530,7 +528,7 @@ std::unique_ptr<views::InkDrop> DownloadItemView::CreateInkDrop() {
 
 std::unique_ptr<views::InkDropRipple> DownloadItemView::CreateInkDropRipple()
     const {
-  return base::MakeUnique<views::FloodFillInkDropRipple>(
+  return std::make_unique<views::FloodFillInkDropRipple>(
       size(), GetInkDropCenterBasedOnLastEvent(),
       color_utils::DeriveDefaultIconColor(GetTextColor()),
       ink_drop_visible_opacity());
@@ -539,7 +537,7 @@ std::unique_ptr<views::InkDropRipple> DownloadItemView::CreateInkDropRipple()
 std::unique_ptr<views::InkDropHighlight>
 DownloadItemView::CreateInkDropHighlight() const {
   gfx::Size size = GetPreferredSize();
-  return base::MakeUnique<views::InkDropHighlight>(
+  return std::make_unique<views::InkDropHighlight>(
       size, kInkDropSmallCornerRadius,
       gfx::RectF(gfx::SizeF(size)).CenterPoint(),
       color_utils::DeriveDefaultIconColor(GetTextColor()));
@@ -824,7 +822,7 @@ void DownloadItemView::UpdateColorsFromTheme() {
   if (!GetThemeProvider())
     return;
 
-  SetBorder(base::MakeUnique<SeparatorBorder>(GetThemeProvider()->GetColor(
+  SetBorder(std::make_unique<SeparatorBorder>(GetThemeProvider()->GetColor(
       ThemeProperties::COLOR_TOOLBAR_VERTICAL_SEPARATOR)));
 
   if (dangerous_download_label_)
@@ -1121,7 +1119,7 @@ void DownloadItemView::UpdateAccessibleName() {
   // has changed so they can announce it immediately.
   if (new_name != accessible_name_) {
     accessible_name_ = new_name;
-    NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
+    NotifyAccessibilityEvent(ax::mojom::Event::kTextChanged, true);
   }
 }
 

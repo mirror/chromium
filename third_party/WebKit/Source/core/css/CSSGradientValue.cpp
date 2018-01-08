@@ -36,8 +36,6 @@
 #include "core/css/CSSValuePair.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/TextLinkColors.h"
-#include "core/layout/LayoutObject.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/ColorBlend.h"
 #include "platform/graphics/Gradient.h"
@@ -108,7 +106,7 @@ scoped_refptr<Image> CSSGradientValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,
-    const IntSize& size) {
+    const FloatSize& size) {
   if (size.IsEmpty())
     return nullptr;
 
@@ -116,37 +114,29 @@ scoped_refptr<Image> CSSGradientValue::GetImage(
     if (!Clients().Contains(&client))
       return nullptr;
 
-    // Need to look up our size.  Create a string of width*height to use as a
-    // hash key.
-    Image* result =
-        this->CSSImageGeneratorValue::GetImage(&client, document, style, size);
-    if (result)
+    if (Image* result = CSSImageGeneratorValue::GetImage(&client, size))
       return result;
   }
 
   // We need to create an image.
-  scoped_refptr<Gradient> gradient;
-
   const ComputedStyle* root_style =
       document.documentElement()->GetComputedStyle();
-  // TODO: Break dependency on LayoutObject.
-  const LayoutObject& layout_object = static_cast<const LayoutObject&>(client);
   CSSToLengthConversionData conversion_data(
-      &style, root_style, LayoutViewItem(layout_object.View()),
-      style.EffectiveZoom());
+      &style, root_style, document.GetLayoutView(), style.EffectiveZoom());
 
+  scoped_refptr<Gradient> gradient;
   switch (GetClassType()) {
     case kLinearGradientClass:
       gradient = ToCSSLinearGradientValue(this)->CreateGradient(
-          conversion_data, size, layout_object);
+          conversion_data, size, document, style);
       break;
     case kRadialGradientClass:
       gradient = ToCSSRadialGradientValue(this)->CreateGradient(
-          conversion_data, size, layout_object);
+          conversion_data, size, document, style);
       break;
     case kConicGradientClass:
       gradient = ToCSSConicGradientValue(this)->CreateGradient(
-          conversion_data, size, layout_object);
+          conversion_data, size, document, style);
       break;
     default:
       NOTREACHED();
@@ -300,13 +290,9 @@ static Color ResolveStopColor(const CSSValue& stop_color,
       stop_color, style.VisitedDependentColor(GetCSSPropertyColor()));
 }
 
-static Color ResolveStopColor(const CSSValue& stop_color,
-                              const LayoutObject& obj) {
-  return ResolveStopColor(stop_color, obj.GetDocument(), obj.StyleRef());
-}
-
 void CSSGradientValue::AddDeprecatedStops(GradientDesc& desc,
-                                          const LayoutObject& object) {
+                                          const Document& document,
+                                          const ComputedStyle& style) {
   DCHECK(gradient_type_ == kCSSDeprecatedLinearGradient ||
          gradient_type_ == kCSSDeprecatedRadialGradient);
 
@@ -323,7 +309,8 @@ void CSSGradientValue::AddDeprecatedStops(GradientDesc& desc,
     else
       offset = stop.offset_->GetFloatValue();
 
-    desc.stops.emplace_back(offset, ResolveStopColor(*stop.color_, object));
+    const Color color = ResolveStopColor(*stop.color_, document, style);
+    desc.stops.emplace_back(offset, color);
   }
 }
 
@@ -469,10 +456,11 @@ void AdjustGradientRadiiForOffsetRange(CSSGradientValue::GradientDesc& desc,
 void CSSGradientValue::AddStops(
     CSSGradientValue::GradientDesc& desc,
     const CSSToLengthConversionData& conversion_data,
-    const LayoutObject& object) {
+    const Document& document,
+    const ComputedStyle& style) {
   if (gradient_type_ == kCSSDeprecatedLinearGradient ||
       gradient_type_ == kCSSDeprecatedRadialGradient) {
-    AddDeprecatedStops(desc, object);
+    AddDeprecatedStops(desc, document, style);
     return;
   }
 
@@ -503,7 +491,7 @@ void CSSGradientValue::AddStops(
     if (stop.IsHint())
       has_hints = true;
     else
-      stops[i].color = ResolveStopColor(*stop.color_, object);
+      stops[i].color = ResolveStopColor(*stop.color_, document, style);
 
     if (stop.offset_) {
       if (stop.offset_->IsPercentage()) {
@@ -637,11 +625,11 @@ void CSSGradientValue::AddStops(
 
 static float PositionFromValue(const CSSValue* value,
                                const CSSToLengthConversionData& conversion_data,
-                               const IntSize& size,
+                               const FloatSize& size,
                                bool is_horizontal) {
-  int origin = 0;
+  float origin = 0;
   int sign = 1;
-  int edge_distance = is_horizontal ? size.Width() : size.Height();
+  float edge_distance = is_horizontal ? size.Width() : size.Height();
 
   // In this case the center of the gradient is given relative to an edge in the
   // form of: [ top | bottom | right | left ] [ <percentage> | <length> ].
@@ -702,7 +690,7 @@ static FloatPoint ComputeEndPoint(
     const CSSValue* horizontal,
     const CSSValue* vertical,
     const CSSToLengthConversionData& conversion_data,
-    const IntSize& size) {
+    const FloatSize& size) {
   FloatPoint result;
 
   if (horizontal)
@@ -724,12 +712,15 @@ bool CSSGradientValue::KnownToBeOpaque(const Document& document,
   return true;
 }
 
-void CSSGradientValue::GetStopColors(Vector<Color>& stop_colors,
-                                     const LayoutObject& object) const {
-  for (auto& stop : stops_) {
+Vector<Color> CSSGradientValue::GetStopColors(
+    const Document& document,
+    const ComputedStyle& style) const {
+  Vector<Color> stop_colors;
+  for (const auto& stop : stops_) {
     if (!stop.IsHint())
-      stop_colors.push_back(ResolveStopColor(*stop.color_, object));
+      stop_colors.push_back(ResolveStopColor(*stop.color_, document, style));
   }
+  return stop_colors;
 }
 
 void CSSGradientValue::TraceAfterDispatch(blink::Visitor* visitor) {
@@ -810,7 +801,7 @@ String CSSLinearGradientValue::CustomCSSText() const {
 // Compute the endpoints so that a gradient of the given angle covers a box of
 // the given size.
 static void EndPointsFromAngle(float angle_deg,
-                               const IntSize& size,
+                               const FloatSize& size,
                                FloatPoint& first_point,
                                FloatPoint& second_point,
                                CSSGradientType type) {
@@ -882,8 +873,9 @@ static void EndPointsFromAngle(float angle_deg,
 
 scoped_refptr<Gradient> CSSLinearGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
-    const IntSize& size,
-    const LayoutObject& object) {
+    const FloatSize& size,
+    const Document& document,
+    const ComputedStyle& style) {
   DCHECK(!size.IsEmpty());
 
   FloatPoint first_point;
@@ -948,7 +940,7 @@ scoped_refptr<Gradient> CSSLinearGradientValue::CreateGradient(
 
   GradientDesc desc(first_point, second_point,
                     repeating_ ? kSpreadMethodRepeat : kSpreadMethodPad);
-  AddStops(desc, conversion_data, object);
+  AddStops(desc, conversion_data, document, style);
 
   scoped_refptr<Gradient> gradient =
       Gradient::CreateLinear(desc.p0, desc.p1, desc.spread_method,
@@ -1248,8 +1240,9 @@ FloatSize RadiusToCorner(const FloatPoint& point,
 
 scoped_refptr<Gradient> CSSRadialGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
-    const IntSize& size,
-    const LayoutObject& object) {
+    const FloatSize& size,
+    const Document& document,
+    const ComputedStyle& style) {
   DCHECK(!size.IsEmpty());
 
   FloatPoint first_point =
@@ -1291,23 +1284,22 @@ scoped_refptr<Gradient> CSSRadialGradientValue::CreateGradient(
                              ? kCircleEndShape
                              : kEllipseEndShape;
 
-    FloatSize float_size(size);
     switch (sizing_behavior_ ? sizing_behavior_->GetValueID() : 0) {
       case CSSValueContain:
       case CSSValueClosestSide:
-        second_radius = RadiusToSide(second_point, float_size, shape,
+        second_radius = RadiusToSide(second_point, size, shape,
                                      [](float a, float b) { return a < b; });
         break;
       case CSSValueFarthestSide:
-        second_radius = RadiusToSide(second_point, float_size, shape,
+        second_radius = RadiusToSide(second_point, size, shape,
                                      [](float a, float b) { return a > b; });
         break;
       case CSSValueClosestCorner:
-        second_radius = RadiusToCorner(second_point, float_size, shape,
+        second_radius = RadiusToCorner(second_point, size, shape,
                                        [](float a, float b) { return a < b; });
         break;
       default:
-        second_radius = RadiusToCorner(second_point, float_size, shape,
+        second_radius = RadiusToCorner(second_point, size, shape,
                                        [](float a, float b) { return a > b; });
         break;
     }
@@ -1321,7 +1313,7 @@ scoped_refptr<Gradient> CSSRadialGradientValue::CreateGradient(
   GradientDesc desc(first_point, second_point, first_radius,
                     is_degenerate ? 0 : second_radius.Width(),
                     repeating_ ? kSpreadMethodRepeat : kSpreadMethodPad);
-  AddStops(desc, conversion_data, object);
+  AddStops(desc, conversion_data, document, style);
 
   scoped_refptr<Gradient> gradient = Gradient::CreateRadial(
       desc.p0, desc.r0, desc.p1, desc.r1,
@@ -1424,8 +1416,9 @@ String CSSConicGradientValue::CustomCSSText() const {
 
 scoped_refptr<Gradient> CSSConicGradientValue::CreateGradient(
     const CSSToLengthConversionData& conversion_data,
-    const IntSize& size,
-    const LayoutObject& object) {
+    const FloatSize& size,
+    const Document& document,
+    const ComputedStyle& style) {
   DCHECK(!size.IsEmpty());
 
   const float angle = from_angle_ ? from_angle_->ComputeDegrees() : 0;
@@ -1438,7 +1431,7 @@ scoped_refptr<Gradient> CSSConicGradientValue::CreateGradient(
 
   GradientDesc desc(position, position,
                     repeating_ ? kSpreadMethodRepeat : kSpreadMethodPad);
-  AddStops(desc, conversion_data, object);
+  AddStops(desc, conversion_data, document, style);
 
   scoped_refptr<Gradient> gradient = Gradient::CreateConic(
       position, angle, desc.start_angle, desc.end_angle, desc.spread_method,

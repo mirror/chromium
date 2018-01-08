@@ -33,6 +33,7 @@
 
 #include <algorithm>
 #include "bindings/core/v8/V8ObjectBuilder.h"
+#include "bindings/core/v8/double_or_performance_mark_options.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentTiming.h"
 #include "core/dom/events/Event.h"
@@ -45,6 +46,7 @@
 #include "core/timing/PerformanceResourceTiming.h"
 #include "core/timing/PerformanceUserTiming.h"
 #include "platform/Histogram.h"
+#include "platform/TimeClamper.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/runtime_enabled_features.h"
@@ -87,7 +89,7 @@ using PerformanceObserverVector = HeapVector<Member<PerformanceObserver>>;
 static const size_t kDefaultResourceTimingBufferSize = 150;
 static const size_t kDefaultFrameTimingBufferSize = 150;
 
-PerformanceBase::PerformanceBase(double time_origin,
+PerformanceBase::PerformanceBase(TimeTicks time_origin,
                                  scoped_refptr<WebTaskRunner> task_runner)
     : frame_timing_buffer_size_(kDefaultFrameTimingBufferSize),
       resource_timing_buffer_size_(kDefaultResourceTimingBufferSize),
@@ -99,7 +101,7 @@ PerformanceBase::PerformanceBase(double time_origin,
           this,
           &PerformanceBase::DeliverObservationsTimerFired) {}
 
-PerformanceBase::~PerformanceBase() {}
+PerformanceBase::~PerformanceBase() = default;
 
 const AtomicString& PerformanceBase::InterfaceName() const {
   return EventTargetNames::Performance;
@@ -110,9 +112,9 @@ PerformanceTiming* PerformanceBase::timing() const {
 }
 
 DOMHighResTimeStamp PerformanceBase::timeOrigin() const {
-  DCHECK(time_origin_ > 0.0);
+  DCHECK(!time_origin_.is_null());
   return GetUnixAtZeroMonotonic() +
-         ConvertSecondsToDOMHighResTimeStamp(time_origin_);
+         ConvertTimeTicksToDOMHighResTimeStamp(time_origin_);
 }
 
 PerformanceEntryVector PerformanceBase::getEntries() {
@@ -318,58 +320,90 @@ bool PerformanceBase::AllowsTimingRedirect(
   return true;
 }
 
-void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
+void PerformanceBase::GenerateAndAddResourceTiming(
+    const ResourceTimingInfo& info,
+    const AtomicString& initiator_type) {
   if (IsResourceTimingBufferFull() &&
       !HasObserverFor(PerformanceEntry::kResource))
     return;
+
   ExecutionContext* context = GetExecutionContext();
   const SecurityOrigin* security_origin = GetSecurityOrigin(context);
   if (!security_origin)
     return;
+  AddResourceTiming(
+      GenerateResourceTiming(*security_origin, info, *context),
+      !initiator_type.IsNull() ? initiator_type : info.InitiatorType());
+}
 
+WebResourceTimingInfo PerformanceBase::GenerateResourceTiming(
+    const SecurityOrigin& destination_origin,
+    const ResourceTimingInfo& info,
+    ExecutionContext& context_for_use_counter) {
+  // TODO(dcheng): It would be nicer if the performance entries simply held this
+  // data internally, rather than requiring it be marshalled back and forth.
   const ResourceResponse& final_response = info.FinalResponse();
-  bool allow_timing_details =
-      PassesTimingAllowCheck(final_response, *security_origin,
-                             info.OriginalTimingAllowOrigin(), context);
-  double start_time = info.InitialTime();
+  WebResourceTimingInfo result;
+  result.name = info.InitialURL().GetString();
+  result.start_time = info.InitialTime();
+  result.alpn_negotiated_protocol = final_response.AlpnNegotiatedProtocol();
+  result.connection_info = final_response.ConnectionInfoString();
+  result.timing = final_response.GetResourceLoadTiming();
+  result.finish_time = info.LoadFinishTime();
 
-  PerformanceServerTimingVector serverTiming =
-      PerformanceServerTiming::ParseServerTiming(
-          info, allow_timing_details
-                    ? PerformanceServerTiming::ShouldAllowTimingDetails::Yes
-                    : PerformanceServerTiming::ShouldAllowTimingDetails::No);
-  if (serverTiming.size()) {
-    UseCounter::Count(context, WebFeature::kPerformanceServerTiming);
-  }
-
-  if (info.RedirectChain().IsEmpty()) {
-    PerformanceEntry* entry = PerformanceResourceTiming::Create(
-        info, GetTimeOrigin(), start_time, allow_timing_details, serverTiming);
-    NotifyObserversOfEntry(*entry);
-    if (!IsResourceTimingBufferFull())
-      AddResourceTimingBuffer(*entry);
-    return;
-  }
+  result.allow_timing_details = PassesTimingAllowCheck(
+      final_response, destination_origin, info.OriginalTimingAllowOrigin(),
+      &context_for_use_counter);
 
   const Vector<ResourceResponse>& redirect_chain = info.RedirectChain();
-  bool allow_redirect_details = AllowsTimingRedirect(
-      redirect_chain, final_response, *security_origin, context);
+  if (!redirect_chain.IsEmpty()) {
+    result.allow_redirect_details =
+        AllowsTimingRedirect(redirect_chain, final_response, destination_origin,
+                             &context_for_use_counter);
 
-  if (!allow_redirect_details) {
-    ResourceLoadTiming* final_timing = final_response.GetResourceLoadTiming();
-    DCHECK(final_timing);
-    if (final_timing)
-      start_time = final_timing->RequestTime();
+    result.last_redirect_end_time = TimeTicksInSeconds(
+        redirect_chain.back().GetResourceLoadTiming()->ReceiveHeadersEnd());
+
+    if (!result.allow_redirect_details) {
+      // TODO(https://crbug.com/803913): There was previously a DCHECK that
+      // |final_timing| is non-null. However, it clearly can be null: removing
+      // this check caused https://crbug.com/803811. Figure out how this can
+      // happen so test coverage can be added.
+      if (ResourceLoadTiming* final_timing =
+              final_response.GetResourceLoadTiming()) {
+        result.start_time = TimeTicksInSeconds(final_timing->RequestTime());
+      }
+    }
+  } else {
+    result.allow_redirect_details = false;
+    result.last_redirect_end_time = 0.0;
   }
 
-  ResourceLoadTiming* last_redirect_timing =
-      redirect_chain.back().GetResourceLoadTiming();
-  CHECK(last_redirect_timing);
-  double last_redirect_end_time = last_redirect_timing->ReceiveHeadersEnd();
+  result.transfer_size = info.TransferSize();
+  result.encoded_body_size = final_response.EncodedBodyLength();
+  result.decoded_body_size = final_response.DecodedBodyLength();
+  result.did_reuse_connection = final_response.ConnectionReused();
+  result.allow_negative_values = info.NegativeAllowed();
 
-  PerformanceEntry* entry = PerformanceResourceTiming::Create(
-      info, GetTimeOrigin(), start_time, last_redirect_end_time,
-      allow_timing_details, allow_redirect_details, serverTiming);
+  if (result.allow_timing_details) {
+    result.server_timing = PerformanceServerTiming::ParseServerTiming(info);
+  }
+  if (!result.server_timing.empty()) {
+    UseCounter::Count(&context_for_use_counter,
+                      WebFeature::kPerformanceServerTiming);
+  }
+
+  return result;
+}
+
+void PerformanceBase::AddResourceTiming(const WebResourceTimingInfo& info,
+                                        const AtomicString& initiator_type) {
+  if (IsResourceTimingBufferFull() &&
+      !HasObserverFor(PerformanceEntry::kResource))
+    return;
+
+  PerformanceEntry* entry =
+      PerformanceResourceTiming::Create(info, time_origin_, initiator_type);
   NotifyObserversOfEntry(*entry);
   if (!IsResourceTimingBufferFull())
     AddResourceTimingBuffer(*entry);
@@ -383,17 +417,17 @@ void PerformanceBase::NotifyNavigationTimingToObservers() {
     NotifyObserversOfEntry(*navigation_timing_);
 }
 
-void PerformanceBase::AddFirstPaintTiming(double start_time) {
+void PerformanceBase::AddFirstPaintTiming(TimeTicks start_time) {
   AddPaintTiming(PerformancePaintTiming::PaintType::kFirstPaint, start_time);
 }
 
-void PerformanceBase::AddFirstContentfulPaintTiming(double start_time) {
+void PerformanceBase::AddFirstContentfulPaintTiming(TimeTicks start_time) {
   AddPaintTiming(PerformancePaintTiming::PaintType::kFirstContentfulPaint,
                  start_time);
 }
 
 void PerformanceBase::AddPaintTiming(PerformancePaintTiming::PaintType type,
-                                     double start_time) {
+                                     TimeTicks start_time) {
   if (!RuntimeEnabledFeatures::PerformancePaintTimingEnabled())
     return;
 
@@ -419,8 +453,8 @@ bool PerformanceBase::IsResourceTimingBufferFull() {
 }
 
 void PerformanceBase::AddLongTaskTiming(
-    double start_time,
-    double end_time,
+    TimeTicks start_time,
+    TimeTicks end_time,
     const String& name,
     const String& frame_src,
     const String& frame_id,
@@ -432,7 +466,8 @@ void PerformanceBase::AddLongTaskTiming(
   for (auto&& it : sub_task_attributions) {
     it->setHighResStartTime(
         MonotonicTimeToDOMHighResTimeStamp(it->startTime()));
-    it->setHighResDuration(ConvertSecondsToDOMHighResTimeStamp(it->duration()));
+    it->setHighResDuration(
+        ConvertTimeDeltaToDOMHighResTimeStamp(it->duration()));
   }
   PerformanceEntry* entry = PerformanceLongTaskTiming::Create(
       MonotonicTimeToDOMHighResTimeStamp(start_time),
@@ -441,11 +476,45 @@ void PerformanceBase::AddLongTaskTiming(
   NotifyObserversOfEntry(*entry);
 }
 
-void PerformanceBase::mark(const String& mark_name,
+void PerformanceBase::mark(ScriptState* script_state,
+                           const String& mark_name,
                            ExceptionState& exception_state) {
+  DoubleOrPerformanceMarkOptions startOrOptions;
+  this->mark(script_state, mark_name, startOrOptions, exception_state);
+}
+
+void PerformanceBase::mark(
+    ScriptState* script_state,
+    const String& mark_name,
+    DoubleOrPerformanceMarkOptions& start_time_or_mark_options,
+    ExceptionState& exception_state) {
+  if (!RuntimeEnabledFeatures::CustomUserTimingEnabled()) {
+    DCHECK(start_time_or_mark_options.IsNull());
+  }
+
   if (!user_timing_)
     user_timing_ = UserTiming::Create(*this);
-  if (PerformanceEntry* entry = user_timing_->Mark(mark_name, exception_state))
+
+  DOMHighResTimeStamp start = 0.0;
+  if (start_time_or_mark_options.IsDouble()) {
+    start = start_time_or_mark_options.GetAsDouble();
+  } else if (start_time_or_mark_options.IsPerformanceMarkOptions() &&
+             start_time_or_mark_options.GetAsPerformanceMarkOptions()
+                 .hasStartTime()) {
+    start =
+        start_time_or_mark_options.GetAsPerformanceMarkOptions().startTime();
+  } else {
+    start = now();
+  }
+
+  ScriptValue detail = ScriptValue::CreateNull(script_state);
+  if (start_time_or_mark_options.IsPerformanceMarkOptions()) {
+    detail = start_time_or_mark_options.GetAsPerformanceMarkOptions().detail();
+  }
+
+  // Pass in a null ScriptValue if the mark's detail doesn't exist.
+  if (PerformanceEntry* entry = user_timing_->Mark(
+          script_state, mark_name, start, detail, exception_state))
     NotifyObserversOfEntry(*entry);
 }
 
@@ -581,34 +650,35 @@ void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
 
 // static
 double PerformanceBase::ClampTimeResolution(double time_seconds) {
-  const double kResolutionSeconds = 0.000005;
-  return floor(time_seconds / kResolutionSeconds) * kResolutionSeconds;
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(TimeClamper, clamper, ());
+  return clamper.ClampTimeResolution(time_seconds);
 }
 
 // static
 DOMHighResTimeStamp PerformanceBase::MonotonicTimeToDOMHighResTimeStamp(
-    double time_origin,
-    double monotonic_time,
+    TimeTicks time_origin,
+    TimeTicks monotonic_time,
     bool allow_negative_value) {
   // Avoid exposing raw platform timestamps.
-  if (!monotonic_time || !time_origin)
+  if (monotonic_time.is_null() || time_origin.is_null())
     return 0.0;
 
-  double time_in_seconds = monotonic_time - time_origin;
-  if (time_in_seconds < 0 && !allow_negative_value)
+  double clamped_time_in_seconds =
+      ClampTimeResolution(TimeTicksInSeconds(monotonic_time)) -
+      ClampTimeResolution(TimeTicksInSeconds(time_origin));
+  if (clamped_time_in_seconds < 0 && !allow_negative_value)
     return 0.0;
-  return ConvertSecondsToDOMHighResTimeStamp(
-      ClampTimeResolution(time_in_seconds));
+  return ConvertSecondsToDOMHighResTimeStamp(clamped_time_in_seconds);
 }
 
 DOMHighResTimeStamp PerformanceBase::MonotonicTimeToDOMHighResTimeStamp(
-    double monotonic_time) const {
+    TimeTicks monotonic_time) const {
   return MonotonicTimeToDOMHighResTimeStamp(time_origin_, monotonic_time,
                                             false /* allow_negative_value */);
 }
 
 DOMHighResTimeStamp PerformanceBase::now() const {
-  return MonotonicTimeToDOMHighResTimeStamp(CurrentTimeTicksInSeconds());
+  return MonotonicTimeToDOMHighResTimeStamp(CurrentTimeTicks());
 }
 
 ScriptValue PerformanceBase::toJSONForBinding(ScriptState* script_state) const {

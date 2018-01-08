@@ -48,7 +48,7 @@ class ClipPathOperation : public RefCounted<ClipPathOperation> {
  public:
   enum OperationType { REFERENCE, SHAPE };
 
-  virtual ~ClipPathOperation() {}
+  virtual ~ClipPathOperation() = default;
 
   virtual bool operator==(const ClipPathOperation&) const = 0;
   bool operator!=(const ClipPathOperation& o) const { return !(*this == o); }
@@ -59,7 +59,7 @@ class ClipPathOperation : public RefCounted<ClipPathOperation> {
   }
 
  protected:
-  ClipPathOperation() {}
+  ClipPathOperation() = default;
 };
 
 class ReferenceClipPathOperation final : public ClipPathOperation {
@@ -70,7 +70,7 @@ class ReferenceClipPathOperation final : public ClipPathOperation {
     return base::AdoptRef(new ReferenceClipPathOperation(url, element_proxy));
   }
 
-  void AddClient(SVGResourceClient*);
+  void AddClient(SVGResourceClient*, WebTaskRunner*);
   void RemoveClient(SVGResourceClient*);
 
   SVGElement* FindElement(TreeScope&) const;

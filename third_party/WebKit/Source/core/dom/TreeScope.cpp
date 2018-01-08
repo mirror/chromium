@@ -46,7 +46,7 @@
 #include "core/html/HTMLMapElement.h"
 #include "core/html_names.h"
 #include "core/layout/HitTestResult.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/svg/SVGTreeScopeResources.h"
@@ -74,7 +74,7 @@ TreeScope::TreeScope(Document& document)
   root_node_->SetTreeScope(this);
 }
 
-TreeScope::~TreeScope() {}
+TreeScope::~TreeScope() = default;
 
 void TreeScope::ResetTreeScope() {
   selection_ = nullptr;
@@ -237,7 +237,7 @@ HitTestResult HitTestInDocument(Document* document,
     return HitTestResult();
 
   HitTestResult result(request, LayoutPoint(hit_point));
-  document->GetLayoutViewItem().HitTest(result);
+  document->GetLayoutView()->HitTest(result);
   return result;
 }
 
@@ -251,16 +251,20 @@ Element* TreeScope::HitTestPoint(double x,
                                  const HitTestRequest& request) const {
   HitTestResult result =
       HitTestInDocument(&RootNode().GetDocument(), x, y, request);
-  Node* node = result.InnerNode();
+  return HitTestPointInternal(result.InnerNode());
+}
+
+Element* TreeScope::HitTestPointInternal(Node* node) const {
   if (!node || node->IsDocumentNode())
     return nullptr;
+  Element* element;
   if (node->IsPseudoElement() || node->IsTextNode())
-    node = node->ParentOrShadowHostNode();
-  DCHECK(!node || node->IsElementNode() || node->IsShadowRoot());
-  node = AncestorInThisScope(node);
-  if (!node || !node->IsElementNode())
+    element = node->ParentOrShadowHostElement();
+  else
+    element = ToElement(node);
+  if (!element)
     return nullptr;
-  return ToElement(node);
+  return Retarget(*element);
 }
 
 HeapVector<Member<Element>> TreeScope::ElementsFromHitTestResult(
@@ -270,13 +274,11 @@ HeapVector<Member<Element>> TreeScope::ElementsFromHitTestResult(
   Node* last_node = nullptr;
   for (const auto rect_based_node : result.ListBasedTestResult()) {
     Node* node = rect_based_node.Get();
-    if (!node || !node->IsElementNode() || node->IsDocumentNode())
+    // In some cases the hit test doesn't return slot elements, so we can only
+    // get it through its child and can't skip it.
+    if (!node->IsElementNode() && !IsHTMLSlotElement(node->parentNode()))
       continue;
-
-    if (node->IsPseudoElement() || node->IsTextNode())
-      node = node->ParentOrShadowHostNode();
-    node = AncestorInThisScope(node);
-
+    node = HitTestPointInternal(node);
     // Prune duplicate entries. A pseduo ::before content above its parent
     // node should only result in a single entry.
     if (node == last_node)
@@ -309,7 +311,7 @@ HeapVector<Member<Element>> TreeScope::ElementsFromPoint(double x,
                          HitTestRequest::kListBased |
                          HitTestRequest::kPenetratingList);
   HitTestResult result(request, LayoutPoint(hit_point));
-  document.GetLayoutViewItem().HitTest(result);
+  document.GetLayoutView()->HitTest(result);
 
   return ElementsFromHitTestResult(result);
 }
@@ -366,7 +368,43 @@ void TreeScope::AdoptIfNeeded(Node& node) {
     adopter.Execute();
 }
 
+// This method corresponds to the Retarget algorithm specified in
+// https://dom.spec.whatwg.org/#retarget
+// This retargets |target| against the root of |this|.
+// The steps are different with the spec for performance reasons,
+// but the results should be the same.
 Element* TreeScope::Retarget(const Element& target) const {
+  const TreeScope& target_scope = target.GetTreeScope();
+  if (!target_scope.RootNode().IsShadowRoot())
+    return const_cast<Element*>(&target);
+
+  HeapVector<Member<const TreeScope>> target_ancestor_scopes;
+  HeapVector<Member<const TreeScope>> context_ancestor_scopes;
+  for (const TreeScope* tree_scope = &target_scope; tree_scope;
+       tree_scope = tree_scope->ParentTreeScope())
+    target_ancestor_scopes.push_back(tree_scope);
+  for (const TreeScope* tree_scope = this; tree_scope;
+       tree_scope = tree_scope->ParentTreeScope())
+    context_ancestor_scopes.push_back(tree_scope);
+
+  auto target_ancestor_riterator = target_ancestor_scopes.rbegin();
+  auto context_ancestor_riterator = context_ancestor_scopes.rbegin();
+  while (context_ancestor_riterator != context_ancestor_scopes.rend() &&
+         target_ancestor_riterator != target_ancestor_scopes.rend() &&
+         *context_ancestor_riterator == *target_ancestor_riterator) {
+    ++context_ancestor_riterator;
+    ++target_ancestor_riterator;
+  }
+
+  if (target_ancestor_riterator == target_ancestor_scopes.rend())
+    return const_cast<Element*>(&target);
+  Node& first_different_scope_root =
+      (*target_ancestor_riterator).Get()->RootNode();
+  return &ToShadowRoot(first_different_scope_root).host();
+}
+
+Element* TreeScope::AdjustedFocusedElementInternal(
+    const Element& target) const {
   for (const Element* ancestor = &target; ancestor;
        ancestor = ancestor->OwnerShadowHost()) {
     if (this == ancestor->GetTreeScope())
@@ -385,7 +423,7 @@ Element* TreeScope::AdjustedFocusedElement() const {
     return nullptr;
 
   if (RootNode().IsInV1ShadowTree()) {
-    if (Element* retargeted = Retarget(*element)) {
+    if (Element* retargeted = AdjustedFocusedElementInternal(*element)) {
       return (this == &retargeted->GetTreeScope()) ? retargeted : nullptr;
     }
     return nullptr;

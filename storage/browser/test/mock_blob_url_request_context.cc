@@ -4,7 +4,8 @@
 
 #include "storage/browser/test/mock_blob_url_request_context.h"
 
-#include "base/memory/ptr_util.h"
+#include <memory>
+
 #include "base/threading/thread_task_runner_handle.h"
 #include "storage/browser/blob/blob_data_builder.h"
 #include "storage/browser/blob/blob_storage_context.h"
@@ -17,7 +18,7 @@ MockBlobURLRequestContext::MockBlobURLRequestContext()
     : blob_storage_context_(new storage::BlobStorageContext) {
   // Job factory owns the protocol handler.
   job_factory_.SetProtocolHandler(
-      "blob", base::MakeUnique<storage::BlobProtocolHandler>(
+      "blob", std::make_unique<storage::BlobProtocolHandler>(
                   blob_storage_context_.get()));
   set_job_factory(&job_factory_);
 }
@@ -31,10 +32,10 @@ ScopedTextBlob::ScopedTextBlob(const MockBlobURLRequestContext& request_context,
                                const std::string& data)
     : blob_id_(blob_id), context_(request_context.blob_storage_context()) {
   DCHECK(context_);
-  storage::BlobDataBuilder blob_builder(blob_id_);
+  auto blob_builder = std::make_unique<storage::BlobDataBuilder>(blob_id_);
   if (!data.empty())
-    blob_builder.AppendData(data);
-  handle_ = context_->AddFinishedBlob(&blob_builder);
+    blob_builder->AppendData(data);
+  handle_ = context_->AddFinishedBlob(std::move(blob_builder));
 }
 
 ScopedTextBlob::~ScopedTextBlob() = default;

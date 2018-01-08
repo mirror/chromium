@@ -11,6 +11,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "base/unguessable_token.h"
 #include "content/public/browser/devtools_agent_host.h"
 
 namespace content {
@@ -27,23 +28,19 @@ class CONTENT_EXPORT SharedWorkerDevToolsManager {
 
   void AddAllAgentHosts(
       std::vector<scoped_refptr<SharedWorkerDevToolsAgentHost>>* result);
+  void AgentHostDestroyed(SharedWorkerDevToolsAgentHost* agent_host);
 
-  // Returns true when the worker must be paused on start because a DevTool
-  // window for the same former SharedWorkerInstance is still opened.
-  bool WorkerCreated(SharedWorkerHost* worker_host);
+  void WorkerCreated(SharedWorkerHost* worker_host,
+                     bool* pause_on_start,
+                     base::UnguessableToken* devtools_worker_token);
   void WorkerReadyForInspection(SharedWorkerHost* worker_host);
   void WorkerDestroyed(SharedWorkerHost* worker_host);
 
  private:
   friend struct base::DefaultSingletonTraits<SharedWorkerDevToolsManager>;
-  friend class SharedWorkerDevToolsAgentHost;
-  friend class SharedWorkerDevToolsManagerTest;
-  FRIEND_TEST_ALL_PREFIXES(SharedWorkerDevToolsManagerTest, BasicTest);
-  FRIEND_TEST_ALL_PREFIXES(SharedWorkerDevToolsManagerTest, AttachTest);
 
   SharedWorkerDevToolsManager();
   ~SharedWorkerDevToolsManager();
-  void AgentHostDestroyed(SharedWorkerDevToolsAgentHost* agent_host);
 
   // We retatin agent hosts as long as the shared worker is alive.
   std::map<SharedWorkerHost*, scoped_refptr<SharedWorkerDevToolsAgentHost>>

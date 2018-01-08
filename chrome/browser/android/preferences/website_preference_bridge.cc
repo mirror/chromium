@@ -45,7 +45,7 @@
 #include "jni/WebsitePreferenceBridge_jni.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "storage/browser/quota/quota_manager.h"
-#include "third_party/WebKit/common/quota/quota_status_code.h"
+#include "third_party/WebKit/common/quota/quota_types.mojom.h"
 #include "url/origin.h"
 #include "url/url_constants.h"
 
@@ -261,6 +261,35 @@ void JNI_WebsitePreferenceBridge_SetSettingForOrigin(
 }
 
 }  // anonymous namespace
+
+static void JNI_WebsitePreferenceBridge_GetClipboardOrigins(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    const JavaParamRef<jobject>& list) {
+  JNI_WebsitePreferenceBridge_GetOrigins(
+      env, CONTENT_SETTINGS_TYPE_CLIPBOARD_READ,
+      &Java_WebsitePreferenceBridge_insertClipboardInfoIntoList, list, false);
+}
+
+static jint JNI_WebsitePreferenceBridge_GetClipboardSettingForOrigin(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    const JavaParamRef<jstring>& origin,
+    jboolean is_incognito) {
+  return JNI_WebsitePreferenceBridge_GetSettingForOrigin(
+      env, CONTENT_SETTINGS_TYPE_CLIPBOARD_READ, origin, origin, is_incognito);
+}
+
+static void JNI_WebsitePreferenceBridge_SetClipboardSettingForOrigin(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    const JavaParamRef<jstring>& origin,
+    jint value,
+    jboolean is_incognito) {
+  JNI_WebsitePreferenceBridge_SetSettingForOrigin(
+      env, CONTENT_SETTINGS_TYPE_CLIPBOARD_READ, origin, origin,
+      static_cast<ContentSetting>(value), is_incognito);
+}
 
 static void JNI_WebsitePreferenceBridge_GetGeolocationOrigins(
     JNIEnv* env,
@@ -671,15 +700,15 @@ void OnStorageInfoReady(const ScopedJavaGlobalRef<jobject>& java_callback,
       continue;
     ScopedJavaLocalRef<jstring> host = ConvertUTF8ToJavaString(env, i->host);
 
-    Java_WebsitePreferenceBridge_insertStorageInfoIntoList(env, list, host,
-                                                           i->type, i->usage);
+    Java_WebsitePreferenceBridge_insertStorageInfoIntoList(
+        env, list, host, static_cast<jint>(i->type), i->usage);
   }
 
   base::android::RunCallbackAndroid(java_callback, list);
 }
 
 void OnStorageInfoCleared(const ScopedJavaGlobalRef<jobject>& java_callback,
-                          blink::QuotaStatusCode code) {
+                          blink::mojom::QuotaStatusCode code) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   Java_StorageInfoClearedCallback_onStorageInfoCleared(
@@ -800,7 +829,7 @@ static void JNI_WebsitePreferenceBridge_ClearStorageData(
 
   auto storage_info_fetcher = base::MakeRefCounted<StorageInfoFetcher>(profile);
   storage_info_fetcher->ClearStorage(
-      host, static_cast<storage::StorageType>(type),
+      host, static_cast<blink::mojom::StorageType>(type),
       base::Bind(&OnStorageInfoCleared,
                  ScopedJavaGlobalRef<jobject>(java_callback)));
 }

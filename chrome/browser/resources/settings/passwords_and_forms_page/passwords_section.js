@@ -10,6 +10,8 @@
 
 /**
  * Interface for all callbacks to the password API.
+ * TODO(crbug.com/802352) Move the PasswordManager proxy to a separate
+ * location.
  * @interface
  */
 class PasswordManager {
@@ -84,8 +86,27 @@ class PasswordManager {
 
   /**
    * Triggers the dialogue for exporting passwords.
+   * @param {function():void} callback
    */
-  exportPasswords() {}
+  exportPasswords(callback) {}
+
+  /**
+   * Queries the status of any ongoing export.
+   * @param {function(!PasswordManager.ExportProgressStatus):void} callback
+   */
+  requestExportProgressStatus(callback) {}
+
+  /**
+   * Add an observer to the export progress.
+   * @param {function(!PasswordManager.PasswordExportProgress):void} listener
+   */
+  addPasswordsFileExportProgressListener(listener) {}
+
+  /**
+   * Remove an observer from the export progress.
+   * @param {function(!PasswordManager.PasswordExportProgress):void} listener
+   */
+  removePasswordsFileExportProgressListener(listener) {}
 }
 
 /** @typedef {chrome.passwordsPrivate.PasswordUiEntry} */
@@ -102,6 +123,12 @@ PasswordManager.PlaintextPasswordEvent;
 
 /** @typedef {{ entry: !PasswordManager.PasswordUiEntry, password: string }} */
 PasswordManager.UiEntryWithPassword;
+
+/** @typedef {chrome.passwordsPrivate.PasswordExportProgress} */
+PasswordManager.PasswordExportProgress;
+
+/** @typedef {chrome.passwordsPrivate.ExportProgressStatus} */
+PasswordManager.ExportProgressStatus;
 
 /**
  * Implementation that accesses the private API.
@@ -158,7 +185,7 @@ class PasswordManagerImpl {
 
   /** @override */
   getPlaintextPassword(index, callback) {
-    var listener = function(reply) {
+    const listener = function(reply) {
       // Only handle the reply for our loginPair request.
       if (reply.index == index) {
         chrome.passwordsPrivate.onPlaintextPasswordRetrieved.removeListener(
@@ -176,18 +203,34 @@ class PasswordManagerImpl {
   }
 
   /** @override */
-  exportPasswords() {
-    chrome.passwordsPrivate.exportPasswords();
+  exportPasswords(callback) {
+    chrome.passwordsPrivate.exportPasswords(callback);
+  }
+
+  /** @override */
+  requestExportProgressStatus(callback) {
+    chrome.passwordsPrivate.requestExportProgressStatus(callback);
+  }
+
+  /** @override */
+  addPasswordsFileExportProgressListener(listener) {
+    chrome.passwordsPrivate.onPasswordsFileExportProgress.addListener(listener);
+  }
+
+  /** @override */
+  removePasswordsFileExportProgressListener(listener) {
+    chrome.passwordsPrivate.onPasswordsFileExportProgress.removeListener(
+        listener);
   }
 }
 
 cr.addSingletonGetter(PasswordManagerImpl);
 
 /** @typedef {!{model: !{item: !chrome.passwordsPrivate.PasswordUiEntry}}} */
-var PasswordUiEntryEvent;
+let PasswordUiEntryEvent;
 
 /** @typedef {!{model: !{item: !chrome.passwordsPrivate.ExceptionEntry}}} */
-var ExceptionEntryEntryEvent;
+let ExceptionEntryEntryEvent;
 
 (function() {
 'use strict';
@@ -322,7 +365,7 @@ Polymer({
   /** @override */
   attached: function() {
     // Create listener functions.
-    var setSavedPasswordsListener = list => {
+    const setSavedPasswordsListener = list => {
       this.savedPasswords = list.map(entry => {
         return {
           entry: entry,
@@ -331,7 +374,7 @@ Polymer({
       });
     };
 
-    var setPasswordExceptionsListener = list => {
+    const setPasswordExceptionsListener = list => {
       this.passwordExceptions = list;
     };
 
@@ -457,8 +500,8 @@ Polymer({
    * @private
    */
   onPasswordMenuTap_: function(event) {
-    var menu = /** @type {!CrActionMenuElement} */ (this.$.menu);
-    var target = /** @type {!HTMLElement} */ (event.detail.target);
+    const menu = /** @type {!CrActionMenuElement} */ (this.$.menu);
+    const target = /** @type {!HTMLElement} */ (event.detail.target);
 
     this.activePassword =
         /** @type {!PasswordListItemElement} */ (event.detail.listItem);
@@ -471,8 +514,8 @@ Polymer({
    * @private
    */
   onImportExportMenuTap_: function() {
-    var menu = /** @type {!CrActionMenuElement} */ (this.$.exportImportMenu);
-    var target =
+    const menu = /** @type {!CrActionMenuElement} */ (this.$.exportImportMenu);
+    const target =
         /** @type {!HTMLElement} */ (this.$$('#exportImportMenuButton'));
 
     menu.showAt(target);
@@ -489,6 +532,7 @@ Polymer({
    */
   onImportTap_: function() {
     this.passwordManager_.importPasswords();
+    this.$.exportImportMenu.close();
   },
 
   /**

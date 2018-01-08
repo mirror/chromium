@@ -25,14 +25,17 @@ bool g_log_for_testing = false;
 
 APIActivityLogger::APIActivityLogger(ScriptContext* context,
                                      Dispatcher* dispatcher)
-    : ObjectBackedNativeHandler(context), dispatcher_(dispatcher) {
-  RouteFunction("LogEvent", base::Bind(&APIActivityLogger::LogForJS,
-                                       base::Unretained(this), EVENT));
-  RouteFunction("LogAPICall", base::Bind(&APIActivityLogger::LogForJS,
-                                         base::Unretained(this), APICALL));
-}
+    : ObjectBackedNativeHandler(context), dispatcher_(dispatcher) {}
 
 APIActivityLogger::~APIActivityLogger() {}
+
+void APIActivityLogger::AddRoutes() {
+  RouteHandlerFunction("LogEvent", base::Bind(&APIActivityLogger::LogForJS,
+                                              base::Unretained(this), EVENT));
+  RouteHandlerFunction("LogAPICall",
+                       base::Bind(&APIActivityLogger::LogForJS,
+                                  base::Unretained(this), APICALL));
+}
 
 // static
 void APIActivityLogger::LogAPICall(
@@ -88,12 +91,12 @@ void APIActivityLogger::LogForJS(
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
-  std::string extension_id = *v8::String::Utf8Value(args[0]);
-  std::string call_name = *v8::String::Utf8Value(args[1]);
+  std::string extension_id = *v8::String::Utf8Value(isolate, args[0]);
+  std::string call_name = *v8::String::Utf8Value(isolate, args[1]);
   std::string extra;
   if (args.Length() == 4) {  // Extras are optional.
     CHECK(args[3]->IsString());
-    extra = *v8::String::Utf8Value(args[3]);
+    extra = *v8::String::Utf8Value(isolate, args[3]);
   }
 
   // Get the array of call arguments.

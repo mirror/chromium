@@ -28,6 +28,7 @@
 #include "build/build_config.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
+#include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/renderer_host/media/audio_input_device_manager.h"
 #include "content/browser/renderer_host/media/in_process_video_capture_provider.h"
 #include "content/browser/renderer_host/media/media_capture_devices_impl.h"
@@ -44,6 +45,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents_media_capture_id.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "crypto/hmac.h"
 #include "media/audio/audio_device_description.h"
@@ -53,7 +55,6 @@
 #include "media/base/media_switches.h"
 #include "media/capture/video/video_capture_device_factory.h"
 #include "media/capture/video/video_capture_system_impl.h"
-#include "services/video_capture/public/cpp/constants.h"
 #include "services/video_capture/public/uma/video_capture_service_event.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -91,6 +92,24 @@ std::string RandomLabel() {
     DCHECK(std::isalnum(c)) << c;
   }
   return label;
+}
+
+void CreateJpegDecodeAcceleratorOnIOThread(
+    media::mojom::JpegDecodeAcceleratorRequest request) {
+  auto* host =
+      GpuProcessHost::Get(GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED, false);
+  if (host) {
+    host->gpu_service()->CreateJpegDecodeAccelerator(std::move(request));
+  } else {
+    LOG(ERROR) << "No GpuProcessHost";
+  }
+}
+
+void CreateJpegDecodeAccelerator(
+    media::mojom::JpegDecodeAcceleratorRequest request) {
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(&CreateJpegDecodeAcceleratorOnIOThread,
+                                         base::Passed(std::move(request))));
 }
 
 void ParseStreamType(const StreamControls& controls,
@@ -305,8 +324,7 @@ class MediaStreamManager::DeviceRequest {
   void SetState(MediaStreamType stream_type, MediaRequestState new_state) {
     if (stream_type == NUM_MEDIA_TYPES) {
       for (int i = MEDIA_NO_SERVICE + 1; i < NUM_MEDIA_TYPES; ++i) {
-        const MediaStreamType stream_type = static_cast<MediaStreamType>(i);
-        state_[stream_type] = new_state;
+        state_[static_cast<MediaStreamType>(i)] = new_state;
       }
     } else {
       state_[stream_type] = new_state;
@@ -453,7 +471,7 @@ MediaStreamManager::MediaStreamManager(
     CHECK(video_capture_thread_.Start());
     device_task_runner = video_capture_thread_.task_runner();
 #endif
-    if (base::FeatureList::IsEnabled(video_capture::kMojoVideoCapture)) {
+    if (base::FeatureList::IsEnabled(features::kMojoVideoCapture)) {
       video_capture_provider = std::make_unique<VideoCaptureProviderSwitcher>(
           std::make_unique<ServiceVideoCaptureProvider>(
               base::BindRepeating(&SendVideoCaptureLogMessage)),
@@ -467,7 +485,8 @@ MediaStreamManager::MediaStreamManager(
           std::make_unique<media::VideoCaptureSystemImpl>(
               media::VideoCaptureDeviceFactory::CreateFactory(
                   BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-                  BrowserGpuMemoryBufferManager::current())),
+                  BrowserGpuMemoryBufferManager::current(),
+                  base::BindRepeating(&CreateJpegDecodeAccelerator))),
           std::move(device_task_runner),
           base::BindRepeating(&SendVideoCaptureLogMessage));
     }

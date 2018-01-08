@@ -226,7 +226,7 @@ TouchEvent::TouchEvent(const WebCoalescedInputEvent& event,
           view,
           0,
           static_cast<WebInputEvent::Modifiers>(event.Event().GetModifiers()),
-          TimeTicks::FromSeconds(event.Event().TimeStampSeconds()),
+          TimeTicksFromSeconds(event.Event().TimeStampSeconds()),
           view ? view->GetInputDeviceCapabilities()->FiresTouchEvents(true)
                : nullptr),
       touches_(touches),
@@ -246,7 +246,7 @@ TouchEvent::TouchEvent(const AtomicString& type,
       changed_touches_(TouchList::Create(initializer.changedTouches())),
       current_touch_action_(TouchAction::kTouchActionAuto) {}
 
-TouchEvent::~TouchEvent() {}
+TouchEvent::~TouchEvent() = default;
 
 const AtomicString& TouchEvent::InterfaceName() const {
   return EventNames::TouchEvent;

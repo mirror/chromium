@@ -95,16 +95,17 @@ class WebLayerTreeView;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
 class WebMediaPlayerSource;
-class WebRemotePlaybackClient;
 class WebRTCPeerConnectionHandler;
+class WebRemotePlaybackClient;
+struct WebResourceTimingInfo;
 class WebServiceWorkerProvider;
 class WebSpellCheckPanelHostClient;
-struct WebRemoteScrollProperties;
+struct WebScrollIntoViewParams;
 class WebTextCheckClient;
 
 class CORE_EXPORT LocalFrameClient : public FrameClient {
  public:
-  ~LocalFrameClient() override {}
+  ~LocalFrameClient() override = default;
 
   virtual WebFrame* GetWebFrame() const { return nullptr; }
 
@@ -157,6 +158,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void ProgressEstimateChanged(double progress_estimate) = 0;
   virtual void DidStopLoading() = 0;
 
+  virtual void ForwardResourceTimingToParent(const WebResourceTimingInfo&) = 0;
+
   virtual void DownloadURL(const ResourceRequest&,
                            const String& suggested_name) = 0;
   virtual void LoadErrorPage(int reason) = 0;
@@ -183,14 +186,14 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidDispatchPingLoader(const KURL&) = 0;
 
   // The frame displayed content with certificate errors with given URL.
-  virtual void DidDisplayContentWithCertificateErrors(const KURL&) = 0;
+  virtual void DidDisplayContentWithCertificateErrors() = 0;
   // The frame ran content with certificate errors with the given URL.
-  virtual void DidRunContentWithCertificateErrors(const KURL&) = 0;
+  virtual void DidRunContentWithCertificateErrors() = 0;
 
   // The frame loaded a resource with an otherwise-valid legacy Symantec
   // certificate that is slated for distrust. Prints a console message (possibly
   // overridden by the embedder) to warn about the certificate.
-  virtual void ReportLegacySymantecCert(const KURL&, Time) {}
+  virtual void ReportLegacySymantecCert(const KURL&) {}
 
   // Will be called when |PerformanceTiming| events are updated
   virtual void DidChangePerformanceTiming() {}
@@ -278,6 +281,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidChangeName(const String&) {}
 
   virtual void DidEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) {}
+  virtual void DidEnforceInsecureNavigationsSet(const std::vector<unsigned>&) {}
 
   virtual void DidChangeFramePolicy(Frame* child_frame,
                                     SandboxFlags,
@@ -335,14 +339,9 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void SetEffectiveConnectionTypeForTesting(
       WebEffectiveConnectionType) {}
 
-  // Returns whether or not Client Lo-Fi is enabled for the frame
-  // (and so image requests may be replaced with a placeholder).
-  virtual bool IsClientLoFiActiveForFrame() { return false; }
-
-  // Returns whether or not the requested image should be replaced with a
-  // placeholder as part of the Client Lo-Fi previews feature.
-  virtual bool ShouldUseClientLoFiForRequest(const ResourceRequest&) {
-    return false;
+  // Returns the PreviewsState active for the frame.
+  virtual WebURLRequest::PreviewsState GetPreviewsStateForFrame() const {
+    return WebURLRequest::kPreviewsUnspecified;
   }
 
   // Overwrites the given URL to use an HTML5 embed if possible. An empty URL is
@@ -376,16 +375,24 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void DidBlockFramebust(const KURL&) {}
 
-  virtual String GetInstrumentationToken() = 0;
-
   // Called when the corresponding frame should be scrolled in a remote parent
   // frame.
   virtual void ScrollRectToVisibleInParentFrame(
       const WebRect&,
-      const WebRemoteScrollProperties&) {}
+      const WebScrollIntoViewParams&) {}
 
   virtual void SetVirtualTimePauser(
       WebScopedVirtualTimePauser virtual_time_pauser) {}
+
+  virtual String evaluateInInspectorOverlayForTesting(const String& script) = 0;
+
+  virtual bool HandleCurrentKeyboardEvent() { return false; }
+
+  virtual void DidChangeSelection(bool is_selection_empty) {}
+
+  virtual void DidChangeContents() {}
+
+  virtual Frame* FindFrame(const AtomicString& name) const = 0;
 };
 
 }  // namespace blink

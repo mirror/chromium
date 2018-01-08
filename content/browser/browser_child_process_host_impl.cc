@@ -363,8 +363,12 @@ void BrowserChildProcessHostImpl::OnChannelError() {
 
 void BrowserChildProcessHostImpl::OnBadMessageReceived(
     const IPC::Message& message) {
-  std::string log_message =
-      base::StringPrintf("Bad message received of type: %u", message.type());
+  std::string log_message = "Bad message received of type: ";
+  if (message.IsValid()) {
+    log_message += std::to_string(message.type());
+  } else {
+    log_message += "unknown";
+  }
   TerminateOnBadMessageReceived(log_message);
 }
 
@@ -435,6 +439,7 @@ void BrowserChildProcessHostImpl::OnChildDisconnected() {
         UMA_HISTOGRAM_ENUMERATION("ChildProcess.DisconnectedAlive2",
                                   static_cast<ProcessType>(data_.process_type),
                                   PROCESS_TYPE_MAX);
+        break;
       }
       default:
         break;
@@ -528,7 +533,8 @@ void BrowserChildProcessHostImpl::ShareMetricsAllocatorToProcess() {
         GetHost(),
         mojo::WrapSharedMemoryHandle(
             metrics_allocator_->shared_memory()->handle().Duplicate(),
-            metrics_allocator_->shared_memory()->mapped_size(), false));
+            metrics_allocator_->shared_memory()->mapped_size(),
+            mojo::UnwrappedSharedMemoryHandleProtection::kReadWrite));
   } else {
     HistogramController::GetInstance()->SetHistogramMemory<ChildProcessHost>(
         GetHost(), mojo::ScopedSharedBufferHandle());

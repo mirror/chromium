@@ -776,6 +776,7 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
     }
 
     @Override
+    @TargetApi(Build.VERSION_CODES.M)
     public void insertVisualStateCallback(
             final long requestId, final VisualStateCallback callback) {
         if (checkNeedsPost()) {
@@ -2309,13 +2310,6 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
                     throw new RuntimeException("Invalid reflection", e);
                 }
             }
-        }
-
-        @Override
-        public boolean awakenScrollBars() {
-            mWebViewPrivate.awakenScrollBars(0);
-            // TODO: modify the WebView.PrivateAccess to provide a return value.
-            return true;
         }
 
         @Override

@@ -83,8 +83,8 @@ public final class DownloadNotificationFactory {
                 boolean indeterminate = downloadUpdate.getProgress().isIndeterminate()
                         || downloadUpdate.getIsDownloadPending();
                 if (downloadUpdate.getIsDownloadPending()) {
-                    contentText = context.getResources().getString(
-                            R.string.download_notification_pending);
+                    contentText =
+                            DownloadUtils.getPendingStatusString(downloadUpdate.getPendingState());
                 } else if (indeterminate || downloadUpdate.getTimeRemainingInMillis() < 0) {
                     // TODO(dimich): Enable the byte count back in M59. See bug 704049 for more info
                     // and details of what was temporarily reverted (for M58).
@@ -152,8 +152,6 @@ public final class DownloadNotificationFactory {
                         downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
                 cancelIntent = buildActionIntent(context, ACTION_DOWNLOAD_CANCEL,
                         downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
-                PendingIntent deleteIntent = buildPendingIntent(
-                        context, cancelIntent, downloadUpdate.getNotificationId());
 
                 builder.setAutoCancel(false)
                         .setLargeIcon(downloadUpdate.getIcon())
@@ -166,8 +164,12 @@ public final class DownloadNotificationFactory {
                                 context.getResources().getString(
                                         R.string.download_notification_cancel_button),
                                 buildPendingIntent(
-                                        context, cancelIntent, downloadUpdate.getNotificationId()))
-                        .setDeleteIntent(deleteIntent);
+                                        context, cancelIntent, downloadUpdate.getNotificationId()));
+
+                if (downloadUpdate.getIsTransient()) {
+                    builder.setDeleteIntent(buildPendingIntent(
+                            context, cancelIntent, downloadUpdate.getNotificationId()));
+                }
 
                 break;
 

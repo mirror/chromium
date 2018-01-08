@@ -59,7 +59,7 @@ class GLInProcessContextImpl
       bool is_offscreen,
       SurfaceHandle window,
       GLInProcessContext* share_context,
-      const gpu::gles2::ContextCreationAttribHelper& attribs,
+      const gpu::ContextCreationAttribs& attribs,
       const SharedMemoryLimits& mem_limits,
       GpuMemoryBufferManager* gpu_memory_buffer_manager,
       ImageFactory* image_factory,
@@ -78,7 +78,7 @@ class GLInProcessContextImpl
       const gpu::InProcessCommandBuffer::PresentationCallback& callback)
       override;
   void SetLock(base::Lock* lock) override;
-  gpu::gles2::ContextGroup* ContextGroupForTesting() const override;
+  gpu::ServiceTransferCache* GetTransferCacheForTest() const override;
 
  private:
   void OnSignalSyncPoint(const base::Closure& callback);
@@ -143,9 +143,9 @@ void GLInProcessContextImpl::SetLock(base::Lock* lock) {
   NOTREACHED();
 }
 
-gpu::gles2::ContextGroup* GLInProcessContextImpl::ContextGroupForTesting()
+gpu::ServiceTransferCache* GLInProcessContextImpl::GetTransferCacheForTest()
     const {
-  return command_buffer_->ContextGroupForTesting();
+  return command_buffer_->GetTransferCacheForTest();
 }
 
 gpu::ContextResult GLInProcessContextImpl::Initialize(
@@ -154,7 +154,7 @@ gpu::ContextResult GLInProcessContextImpl::Initialize(
     bool is_offscreen,
     SurfaceHandle window,
     GLInProcessContext* share_context,
-    const gles2::ContextCreationAttribHelper& attribs,
+    const ContextCreationAttribs& attribs,
     const SharedMemoryLimits& mem_limits,
     GpuMemoryBufferManager* gpu_memory_buffer_manager,
     ImageFactory* image_factory,

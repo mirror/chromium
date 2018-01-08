@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//components/vector_icons/vector_icons.gni")
 import("//testing/test.gni")
@@ -16,6 +17,7 @@ aggregate_vector_icons("message_center_vector_icons") {
     "notification_close_button.icon",
     "notification_expand_less.icon",
     "notification_expand_more.icon",
+    "notification_inline_reply.icon",
     "notification_settings_button.1x.icon",
     "notification_settings_button.icon",
     "product.icon",
@@ -23,13 +25,16 @@ aggregate_vector_icons("message_center_vector_icons") {
 }
 
 # TODO(msw|mukai|dewittj): Move ash-specific files: crbug.com/585175
-component("message_center") {
+jumbo_component("message_center") {
   deps = [
     "//base",
     "//ui/base",
-    "//ui/message_center/public/cpp",
     "//ui/strings",
     "//url",
+  ]
+
+  public_deps = [
+    "//ui/message_center/public/cpp",
   ]
 
   defines = [ "MESSAGE_CENTER_IMPLEMENTATION" ]
@@ -76,18 +81,10 @@ component("message_center") {
       "message_center_style.cc",
       "message_center_style.h",
       "message_center_types.h",
-      "notification.cc",
-      "notification.h",
       "notification_blocker.cc",
       "notification_blocker.h",
-      "notification_delegate.cc",
-      "notification_delegate.h",
       "notification_list.cc",
       "notification_list.h",
-      "notification_types.cc",
-      "notification_types.h",
-      "notifier_id.cc",
-      "notifier_id.h",
       "popup_timer.cc",
       "popup_timer.h",
       "popup_timers_controller.cc",
@@ -126,8 +123,6 @@ component("message_center") {
         "views/message_popup_collection.h",
         "views/message_view.cc",
         "views/message_view.h",
-        "views/message_view_context_menu_controller.cc",
-        "views/message_view_context_menu_controller.h",
         "views/message_view_factory.cc",
         "views/message_view_factory.h",
         "views/notification_button.cc",
@@ -136,8 +131,6 @@ component("message_center") {
         "views/notification_control_buttons_view.h",
         "views/notification_header_view.cc",
         "views/notification_header_view.h",
-        "views/notification_menu_model.cc",
-        "views/notification_menu_model.h",
         "views/notification_view.cc",
         "views/notification_view.h",
         "views/notification_view_md.cc",
@@ -153,6 +146,14 @@ component("message_center") {
         "views/toast_contents_view.cc",
         "views/toast_contents_view.h",
       ]
+      if (!is_chromeos) {
+        sources += [
+          "views/message_view_context_menu_controller.cc",
+          "views/message_view_context_menu_controller.h",
+          "views/notification_menu_model.cc",
+          "views/notification_menu_model.h",
+        ]
+      }
       deps += [
         "//ui/compositor",
         "//ui/events",
@@ -163,21 +164,7 @@ component("message_center") {
     # Notification service disabled.
     sources = [
       "dummy_message_center.cc",
-      "notification_delegate.cc",
-      "notification_delegate.h",
     ]
-
-    # Android implements its own notification UI manager instead of deferring to
-    # the message center (when notifications are enabled). Include a minimal
-    # set of files required for notifications on Android.
-    if (is_android) {
-      sources += [
-        "notification.cc",
-        "notification.h",
-        "notifier_id.cc",
-        "notifier_id.h",
-      ]
-    }
   }
 }
 
@@ -202,6 +189,7 @@ if (enable_message_center) {
 
     public_deps = [
       ":message_center",
+      "//ui/message_center/public/cpp",
     ]
   }
 
@@ -212,8 +200,8 @@ if (enable_message_center) {
       "cocoa/popup_collection_unittest.mm",
       "cocoa/popup_controller_unittest.mm",
       "message_center_impl_unittest.cc",
-      "notification_delegate_unittest.cc",
       "notification_list_unittest.cc",
+      "public/cpp/notification_delegate_unittest.cc",
       "test/run_all_unittests.cc",
       "ui_controller_unittest.cc",
     ]
@@ -247,10 +235,10 @@ if (enable_message_center) {
     ]
 
     if (is_chromeos) {
-      sources += [ "mojo/struct_traits_unittest.cc" ]
+      sources += [ "public/mojo/struct_traits_unittest.cc" ]
       deps += [
         "//mojo/edk/system",
-        "//ui/message_center/mojo:test_interfaces",
+        "//ui/message_center/public/mojo:test_interfaces",
       ]
     }
 
@@ -262,10 +250,12 @@ if (enable_message_center) {
       sources += [
         "views/bounded_label_unittest.cc",
         "views/message_popup_collection_unittest.cc",
-        "views/notification_menu_model_unittest.cc",
         "views/notification_view_md_unittest.cc",
         "views/notification_view_unittest.cc",
       ]
+      if (!is_chromeos) {
+        sources += [ "views/notification_menu_model_unittest.cc" ]
+      }
       deps += [
         # Compositor is needed by message_center_view_unittest.cc and for the
         # fonts used by bounded_label_unittest.cc.

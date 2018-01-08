@@ -9,12 +9,13 @@ import("//testing/test.gni")
 group("capture") {
   public_deps = [
     ":capture_lib",
-    "//media/capture/mojo:capture_types",
+    "//media/capture/mojo:image_capture",
+    "//media/capture/mojo:video_capture",
     "//services/service_manager/public/cpp",
   ]
 }
 
-# Things needed by //media/capture/mojo:capture_types.
+# Things needed by //media/capture/mojo/video_capture_types.mojom.
 component("capture_base") {
   defines = [ "CAPTURE_IMPLEMENTATION" ]
   sources = [
@@ -82,6 +83,7 @@ source_set("capture_device_specific") {
     "//gpu/command_buffer/client",
     "//media",
     "//media/capture/mojo:image_capture",
+    "//media/mojo/interfaces:interfaces",
     "//ui/gfx",
   ]
 }
@@ -143,6 +145,8 @@ component("capture_lib") {
     "video/win/video_capture_device_factory_win.h",
     "video/win/video_capture_device_mf_win.cc",
     "video/win/video_capture_device_mf_win.h",
+    "video/win/video_capture_device_utils_win.cc",
+    "video/win/video_capture_device_utils_win.h",
     "video/win/video_capture_device_win.cc",
     "video/win/video_capture_device_win.h",
     "video_capturer_source.cc",
@@ -158,8 +162,8 @@ component("capture_lib") {
     "//base",
     "//base:i18n",
     "//media",
-    "//media/capture/mojo:capture_types",
     "//media/capture/mojo:image_capture",
+    "//media/capture/mojo:video_capture",
     "//media/mojo/interfaces:interfaces",
     "//services/service_manager/public/cpp",
     "//third_party/libyuv",
@@ -262,10 +266,12 @@ test("capture_unittests") {
     "content/capture_resolution_chooser_unittest.cc",
     "content/smooth_event_sampler_unittest.cc",
     "content/video_capture_oracle_unittest.cc",
+    "run_all_unittests.cc",
     "video/fake_video_capture_device_unittest.cc",
     "video/linux/camera_config_chromeos_unittest.cc",
     "video/linux/v4l2_capture_delegate_unittest.cc",
     "video/mac/video_capture_device_factory_mac_unittest.mm",
+    "video/shared_memory_handle_provider_unittest.cc",
     "video/video_capture_device_client_unittest.cc",
     "video/video_capture_device_unittest.cc",
     "video_capture_types_unittest.cc",
@@ -274,7 +280,6 @@ test("capture_unittests") {
   deps = [
     ":capture",
     ":test_support",
-    "//base/test:run_all_unittests",
     "//base/test:test_support",
     "//media:test_support",
     "//media/capture/mojo:image_capture",

@@ -6,8 +6,11 @@
 
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/app_launch_controller.h"
+#include "chrome/browser/chromeos/login/arc_kiosk_controller.h"
 #include "chrome/browser/chromeos/login/demo_mode/demo_app_launcher.h"
+#include "chrome/browser/chromeos/login/existing_user_controller.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
+#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/mobile_config.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/system/device_disabling_manager.h"
@@ -25,9 +28,14 @@ constexpr int64_t kPolicyServiceInitializationDelayMilliseconds = 100;
 // static
 LoginDisplayHost* LoginDisplayHost::default_host_ = nullptr;
 
-LoginDisplayHost::LoginDisplayHost() : weak_factory_(this) {}
+LoginDisplayHost::LoginDisplayHost() : weak_factory_(this) {
+  DCHECK(default_host() == nullptr);
+  default_host_ = this;
+}
 
-LoginDisplayHost::~LoginDisplayHost() = default;
+LoginDisplayHost::~LoginDisplayHost() {
+  default_host_ = nullptr;
+}
 
 AppLaunchController* LoginDisplayHost::GetAppLaunchController() {
   return app_launch_controller_.get();
@@ -116,8 +124,63 @@ void LoginDisplayHost::StartDemoAppLaunch() {
   demo_app_launcher_->StartDemoAppLaunch();
 }
 
+void LoginDisplayHost::StartArcKiosk(const AccountId& account_id) {
+  VLOG(1) << "Login >> start ARC kiosk.";
+  SetStatusAreaVisible(false);
+  arc_kiosk_controller_ =
+      std::make_unique<ArcKioskController>(this, GetOobeUI());
+  arc_kiosk_controller_->StartArcKiosk(account_id);
+
+  OnStartArcKiosk();
+}
+
 void LoginDisplayHost::OnAuthPrewarmDone() {
   auth_prewarmer_.reset();
+}
+
+void LoginDisplayHost::CompleteLogin(const UserContext& user_context) {
+  ExistingUserController* controller =
+      ExistingUserController::current_controller();
+  if (controller)
+    controller->CompleteLogin(user_context);
+}
+
+void LoginDisplayHost::OnGaiaScreenReady() {
+  ExistingUserController* controller =
+      ExistingUserController::current_controller();
+  if (controller)
+    controller->OnGaiaScreenReady();
+}
+
+void LoginDisplayHost::SetDisplayEmail(const std::string& email) {
+  ExistingUserController* controller =
+      ExistingUserController::current_controller();
+  if (controller)
+    controller->SetDisplayEmail(email);
+}
+
+void LoginDisplayHost::SetDisplayAndGivenName(const std::string& display_name,
+                                              const std::string& given_name) {
+  ExistingUserController* controller =
+      ExistingUserController::current_controller();
+  if (controller)
+    controller->SetDisplayAndGivenName(display_name, given_name);
+}
+
+void LoginDisplayHost::LoadWallpaper(const AccountId& account_id) {
+  WallpaperManager::Get()->ShowUserWallpaper(account_id);
+}
+
+void LoginDisplayHost::LoadSigninWallpaper() {
+  WallpaperManager::Get()->ShowSigninWallpaper();
+}
+
+bool LoginDisplayHost::IsUserWhitelisted(const AccountId& account_id) {
+  ExistingUserController* controller =
+      ExistingUserController::current_controller();
+  if (!controller)
+    return true;
+  return controller->IsUserWhitelisted(account_id);
 }
 
 }  // namespace chromeos

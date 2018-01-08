@@ -71,7 +71,7 @@ class DevToolsURLInterceptorRequestJob::SubRequest
       devtools_interceptor_request_job_;  // NOT OWNED.
 
   DevToolsURLRequestInterceptor* const interceptor_;
-  bool fetch_in_progress_;
+  bool was_cancelled_;
 };
 
 DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
@@ -80,7 +80,7 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
     DevToolsURLRequestInterceptor* interceptor)
     : devtools_interceptor_request_job_(devtools_interceptor_request_job),
       interceptor_(interceptor),
-      fetch_in_progress_(true) {
+      was_cancelled_(false) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("devtools_interceptor", R"(
@@ -112,6 +112,8 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
       request_details.url, request_details.priority, this, traffic_annotation);
   request_->set_method(request_details.method);
   request_->SetExtraRequestHeaders(request_details.extra_request_headers);
+  request_->SetReferrer(request_details.referrer);
+  request_->set_referrer_policy(request_details.referrer_policy);
 
   // Mimic the ResourceRequestInfoImpl of the original request.
   const ResourceRequestInfoImpl* resource_request_info =
@@ -137,12 +139,13 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
       resource_request_info->do_not_prompt_for_login(),
       resource_request_info->keepalive(),
       resource_request_info->GetReferrerPolicy(),
-      resource_request_info->GetVisibilityState(),
+      resource_request_info->IsPrerendering(),
       resource_request_info->GetContext(),
       resource_request_info->ShouldReportRawHeaders(),
       resource_request_info->IsAsync(),
       resource_request_info->GetPreviewsState(), resource_request_info->body(),
-      resource_request_info->initiated_in_secure_context());
+      resource_request_info->initiated_in_secure_context(),
+      resource_request_info->suggested_filename());
   extra_data->AssociateWithRequest(request_.get());
 
   if (request_details.post_data)
@@ -154,16 +157,15 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
 
 DevToolsURLInterceptorRequestJob::SubRequest::~SubRequest() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  fetch_in_progress_ = false;
   interceptor_->UnregisterSubRequest(request_.get());
 }
 
 void DevToolsURLInterceptorRequestJob::SubRequest::Cancel() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!fetch_in_progress_)
+  if (was_cancelled_)
     return;
 
-  fetch_in_progress_ = false;
+  was_cancelled_ = true;
   request_->Cancel();
 }
 
@@ -203,7 +205,7 @@ void DevToolsURLInterceptorRequestJob::SubRequest::OnReadCompleted(
   DCHECK_NE(bytes_read, net::ERR_IO_PENDING);
   // OnReadCompleted may get called while canceling the subrequest, in that
   // event theres no need to call ReadRawDataComplete.
-  if (fetch_in_progress_)
+  if (!was_cancelled_)
     devtools_interceptor_request_job_->ReadRawDataComplete(bytes_read);
 }
 
@@ -242,8 +244,8 @@ class DevToolsURLInterceptorRequestJob::InterceptedRequest
   void FetchResponseBody();
 
  private:
-  void OnDataChunkRead(int result);
-  bool ShouldContinueRead();
+  // |this| may be deleted if this method returns false.
+  bool ProcessChunkRead(int result);
   void ReadIntoBuffer();
 
   scoped_refptr<net::GrowableIOBuffer> response_buffer_;
@@ -287,17 +289,11 @@ void DevToolsURLInterceptorRequestJob::InterceptedRequest::OnReadCompleted(
   // OnReadComplete may be called while request is being cancelled, in this
   // event the result should be |net::ERR_ABORTED| which should complete any
   // |pending_body_requests_|.
-  OnDataChunkRead(result);
-  if (ShouldContinueRead())
+  if (ProcessChunkRead(result))
     ReadIntoBuffer();
 }
 
-bool DevToolsURLInterceptorRequestJob::InterceptedRequest::
-    ShouldContinueRead() {
-  return fetch_in_progress_ && read_response_result_ == net::ERR_IO_PENDING;
-}
-
-void DevToolsURLInterceptorRequestJob::InterceptedRequest::OnDataChunkRead(
+bool DevToolsURLInterceptorRequestJob::InterceptedRequest::ProcessChunkRead(
     int result) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_NE(result, net::ERR_IO_PENDING);
@@ -319,8 +315,9 @@ void DevToolsURLInterceptorRequestJob::InterceptedRequest::OnDataChunkRead(
   if (read_response_result_ != net::ERR_IO_PENDING) {
     devtools_interceptor_request_job_->OnInterceptedRequestResponseReady(
         *response_buffer_.get(), read_response_result_);
-    return;
+    return false;
   }
+  return true;
 }
 
 int DevToolsURLInterceptorRequestJob::InterceptedRequest::Read(
@@ -345,7 +342,7 @@ void DevToolsURLInterceptorRequestJob::InterceptedRequest::FetchResponseBody() {
     }
     return;
   }
-  if (!fetch_in_progress_) {
+  if (was_cancelled_) {
     // Cannot request body on cancelled request.
     devtools_interceptor_request_job_->OnInterceptedRequestResponseReady(
         *response_buffer_.get(), net::ERR_ABORTED);
@@ -359,16 +356,14 @@ void DevToolsURLInterceptorRequestJob::InterceptedRequest::FetchResponseBody() {
 void DevToolsURLInterceptorRequestJob::InterceptedRequest::ReadIntoBuffer() {
   // OnReadCompleted may get called while canceling the subrequest, in that
   // event we cannot call URLRequest::Read().
-  DCHECK(fetch_in_progress_);
-  while (ShouldContinueRead()) {
+  DCHECK(!was_cancelled_);
+  int result;
+  do {
     if (response_buffer_->RemainingCapacity() == 0)
       response_buffer_->SetCapacity(response_buffer_->capacity() * 2);
-    int result = request_->Read(response_buffer_.get(),
-                                response_buffer_->RemainingCapacity());
-    if (result == net::ERR_IO_PENDING)
-      return;
-    OnDataChunkRead(result);
-  }
+    result = request_->Read(response_buffer_.get(),
+                            response_buffer_->RemainingCapacity());
+  } while (result != net::ERR_IO_PENDING && ProcessChunkRead(result));
 }
 
 class DevToolsURLInterceptorRequestJob::MockResponseDetails {
@@ -541,6 +536,8 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
                        original_request->method(),
                        GetUploadData(original_request),
                        original_request->extra_request_headers(),
+                       original_request->referrer(),
+                       original_request->referrer_policy(),
                        original_request->priority(),
                        original_request->context()),
       waiting_for_user_response_(WaitingForUserResponse::NOT_WAITING),
@@ -1099,10 +1096,17 @@ void DevToolsURLInterceptorRequestJob::ProcessInterceptionRespose(
       std::unique_ptr<protocol::DictionaryValue> headers =
           modifications->modified_headers.fromJust()->toValue();
       for (size_t i = 0; i < headers->size(); i++) {
+        protocol::DictionaryValue::Entry entry = headers->at(i);
         std::string value;
-        if (headers->at(i).second->asString(&value)) {
-          request_details_.extra_request_headers.SetHeader(headers->at(i).first,
-                                                           value);
+        if (!entry.second->asString(&value))
+          continue;
+        if (base::EqualsCaseInsensitiveASCII(
+                entry.first, net::HttpRequestHeaders::kReferer)) {
+          request_details_.referrer = value;
+          request_details_.referrer_policy =
+              net::URLRequest::NEVER_CLEAR_REFERRER;
+        } else {
+          request_details_.extra_request_headers.SetHeader(entry.first, value);
         }
       }
     }
@@ -1156,12 +1160,16 @@ DevToolsURLInterceptorRequestJob::RequestDetails::RequestDetails(
     const std::string& method,
     std::unique_ptr<net::UploadDataStream> post_data,
     const net::HttpRequestHeaders& extra_request_headers,
+    const std::string& referrer,
+    net::URLRequest::ReferrerPolicy referrer_policy,
     const net::RequestPriority& priority,
     const net::URLRequestContext* url_request_context)
     : url(url),
       method(method),
       post_data(std::move(post_data)),
       extra_request_headers(extra_request_headers),
+      referrer(referrer),
+      referrer_policy(referrer_policy),
       priority(priority),
       url_request_context(url_request_context) {}
 

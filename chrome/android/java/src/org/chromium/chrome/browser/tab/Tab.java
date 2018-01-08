@@ -20,7 +20,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
 import android.view.ViewGroup;
@@ -95,9 +94,10 @@ import org.chromium.chrome.browser.tabmodel.TabReparentingParams;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
+import org.chromium.chrome.browser.widget.AnchoredPopupWindow;
 import org.chromium.chrome.browser.widget.PulseDrawable;
+import org.chromium.chrome.browser.widget.ViewRectProvider;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
-import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
@@ -111,8 +111,10 @@ import org.chromium.content.browser.crypto.CipherFactory;
 import org.chromium.content_public.browser.ChildProcessImportance;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
+import org.chromium.content_public.browser.ImeAdapter;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.BrowserControlsState;
 import org.chromium.content_public.common.Referrer;
@@ -234,6 +236,7 @@ public class Tab
 
     private boolean mIsClosing;
     private boolean mIsShowingErrorPage;
+    private boolean mIsShowingTabModalDialog;
 
     private Bitmap mFavicon;
 
@@ -517,8 +520,10 @@ public class Tab
                 mFullscreenManager.setPersistentFullscreenMode(enable);
             }
 
-            if (enable && mContentViewCore != null) {
-                mContentViewCore.destroySelectActionMode();
+            if (enable && getWebContents() != null) {
+                SelectionPopupController controller =
+                        SelectionPopupController.fromWebContents(getWebContents());
+                controller.destroySelectActionMode();
             }
 
             // When going into fullscreen, we want to remove any cached thumbnail of the Tab.
@@ -628,7 +633,8 @@ public class Tab
     }
 
     private int calculateDefaultThemeColor() {
-        boolean useModernDesign = getActivity() != null && getActivity().getBottomSheet() != null;
+        boolean useModernDesign = getActivity() != null && getActivity().supportsModernDesign()
+                && FeatureUtilities.isChromeModernDesignEnabled();
         Resources resources = mThemedApplicationContext.getResources();
         return ColorUtils.getDefaultThemeColor(resources, useModernDesign, mIncognito);
     }
@@ -803,6 +809,13 @@ public class Tab
      */
     public boolean isShowingInterstitialPage() {
         return getWebContents() != null && getWebContents().isShowingInterstitialPage();
+    }
+
+    /**
+     * @return Whether a tab modal dialog is showing.
+     */
+    public boolean isShowingTabModalDialog() {
+        return mIsShowingTabModalDialog;
     }
 
     /**
@@ -1719,10 +1732,11 @@ public class Tab
 
         if (!(getActivity() instanceof ChromeTabbedActivity)) return;
 
-        ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(getActivity(),
-                getActivity().getToolbarManager().getMenuButton(),
-                R.string.iph_data_saver_detail_text,
-                R.string.iph_data_saver_detail_accessibility_text);
+        View anchorView = getActivity().getToolbarManager().getMenuButton();
+        ViewRectProvider rectProvider = new ViewRectProvider(anchorView);
+        TextBubble textBubble =
+                new TextBubble(getActivity(), anchorView, R.string.iph_data_saver_detail_text,
+                        R.string.iph_data_saver_detail_accessibility_text, rectProvider);
         textBubble.setDismissOnTouchInteraction(true);
         getActivity().getAppMenuHandler().setMenuHighlight(R.id.app_menu_footer);
         textBubble.addOnDismissListener(new OnDismissListener() {
@@ -1739,7 +1753,7 @@ public class Tab
         });
         int yInsetPx = mThemedApplicationContext.getResources().getDimensionPixelOffset(
                 R.dimen.text_bubble_menu_anchor_y_inset);
-        textBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
+        rectProvider.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
                 FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
         textBubble.show();
     }
@@ -1785,9 +1799,10 @@ public class Tab
         cv.setContentDescription(mThemedApplicationContext.getResources().getString(
                 R.string.accessibility_content_view));
         cvc.initialize(new TabViewAndroidDelegate(this, cv), cv, webContents, getWindowAndroid());
-        ChromeActionModeCallback actionModeCallback = new ChromeActionModeCallback(
-                mThemedApplicationContext, this, cvc.getActionModeCallbackHelper());
-        cvc.setActionModeCallback(actionModeCallback);
+        SelectionPopupController controller = SelectionPopupController.fromWebContents(webContents);
+        ChromeActionModeCallback actionModeCallback =
+                new ChromeActionModeCallback(this, controller.getActionModeCallbackHelper());
+        controller.setActionModeCallback(actionModeCallback);
         return cvc;
     }
 
@@ -1858,24 +1873,22 @@ public class Tab
             // web views.
             mContentViewCore.setShouldSetAccessibilityFocusOnPageLoad(true);
 
-            mContentViewCore.addImeEventObserver(new ImeEventObserver() {
-                @Override
-                public void onImeEvent() {
-                    // Some text was set in the page. Don't reuse it if a tab is
-                    // open from the same external application, we might lose some
-                    // user data.
-                    mAppAssociatedWith = null;
-                }
+            ImeAdapter.fromWebContents(mContentViewCore.getWebContents())
+                    .addEventObserver(new ImeEventObserver() {
+                        @Override
+                        public void onImeEvent() {
+                            // Some text was set in the page. Don't reuse it if a tab is
+                            // open from the same external application, we might lose some
+                            // user data.
+                            mAppAssociatedWith = null;
+                        }
 
-                @Override
-                public void onNodeAttributeUpdated(boolean editable, boolean password) {
-                    if (getFullscreenManager() == null) return;
-                    updateFullscreenEnabledState();
-                }
-
-                @Override
-                public void onBeforeSendKeyEvent(KeyEvent event) {}
-            });
+                        @Override
+                        public void onNodeAttributeUpdated(boolean editable, boolean password) {
+                            if (getFullscreenManager() == null) return;
+                            updateFullscreenEnabledState();
+                        }
+                    });
 
             setInterceptNavigationDelegate(mDelegateFactory.createInterceptNavigationDelegate(
                     this));
@@ -3358,8 +3371,21 @@ public class Tab
         hideMediaDownloadInProductHelp();
     }
 
+    /**
+     * Handle browser controls when a tab modal dialog is shown.
+     * @param isShowing Whether a tab modal dialog is showing.
+     */
+    public void onTabModalDialogStateChanged(boolean isShowing) {
+        mIsShowingTabModalDialog = isShowing;
+        if (mFullscreenManager == null) return;
+        mFullscreenManager.setPositionsForTabToNonFullscreen();
+        updateBrowserControlsState(BrowserControlsState.SHOWN, false);
+    }
+
     @CalledByNative
     private void showMediaDownloadInProductHelp(int x, int y, int width, int height) {
+        Rect rect = new Rect(x, y, x + width, y + height);
+
         // If we are not currently showing the widget, ask the tracker if we can show it.
         if (mDownloadIPHBubble == null) {
             Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
@@ -3373,7 +3399,7 @@ public class Tab
 
             mDownloadIPHBubble = new TextBubble(getApplicationContext(),
                     mContentViewCore.getContainerView(), R.string.iph_media_download_text,
-                    R.string.iph_media_download_accessibility_text);
+                    R.string.iph_media_download_accessibility_text, rect);
             mDownloadIPHBubble.setDismissOnTouchInteraction(true);
             mDownloadIPHBubble.addOnDismissListener(new OnDismissListener() {
                 @Override
@@ -3388,9 +3414,7 @@ public class Tab
             });
         }
 
-        Rect rect = new Rect(x, y, x + width, y + height);
-        mDownloadIPHBubble.setAnchorRect(rect);
-        mDownloadIPHBubble.setPreferredOrientation(TextBubble.Orientation.BELOW);
+        mDownloadIPHBubble.setPreferredOrientation(AnchoredPopupWindow.Orientation.BELOW);
         mDownloadIPHBubble.show();
         createPulse(rect);
     }

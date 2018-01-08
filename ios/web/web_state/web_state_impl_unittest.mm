@@ -14,8 +14,8 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #import "base/mac/bind_objc_block.h"
-#include "base/memory/ptr_util.h"
 #import "base/test/ios/wait_util.h"
+#include "ios/web/navigation/placeholder_navigation_util.h"
 #import "ios/web/public/java_script_dialog_presenter.h"
 #include "ios/web/public/load_committed_details.h"
 #import "ios/web/public/test/fakes/fake_navigation_context.h"
@@ -63,6 +63,7 @@ class TestGlobalWebStateObserver : public GlobalWebStateObserver {
         navigation_item_committed_called_(false),
         did_start_loading_called_(false),
         did_stop_loading_called_(false),
+        did_start_navigation_called_(false),
         page_loaded_called_with_success_(false),
         web_state_destroyed_called_(false) {}
 
@@ -79,6 +80,9 @@ class TestGlobalWebStateObserver : public GlobalWebStateObserver {
   }
   bool did_start_loading_called() const { return did_start_loading_called_; }
   bool did_stop_loading_called() const { return did_stop_loading_called_; }
+  bool did_start_navigation_called() const {
+    return did_start_navigation_called_;
+  }
   bool page_loaded_called_with_success() const {
     return page_loaded_called_with_success_;
   }
@@ -106,6 +110,11 @@ class TestGlobalWebStateObserver : public GlobalWebStateObserver {
   void WebStateDidStopLoading(WebState* web_state) override {
     did_stop_loading_called_ = true;
   }
+  void WebStateDidStartNavigation(
+      WebState* web_state,
+      NavigationContext* navigation_context) override {
+    did_start_navigation_called_ = true;
+  }
   void PageLoaded(WebState* web_state,
                   PageLoadCompletionStatus load_completion_status) override {
     page_loaded_called_with_success_ =
@@ -120,6 +129,7 @@ class TestGlobalWebStateObserver : public GlobalWebStateObserver {
   bool navigation_item_committed_called_;
   bool did_start_loading_called_;
   bool did_stop_loading_called_;
+  bool did_start_navigation_called_;
   bool page_loaded_called_with_success_;
   bool web_state_destroyed_called_;
 };
@@ -174,7 +184,7 @@ class WebStateImplTest : public web::WebTest {
  protected:
   WebStateImplTest() : web::WebTest() {
     web::WebState::CreateParams params(GetBrowserState());
-    web_state_ = base::MakeUnique<web::WebStateImpl>(params);
+    web_state_ = std::make_unique<web::WebStateImpl>(params);
   }
 
   std::unique_ptr<WebStateImpl> web_state_;
@@ -452,7 +462,7 @@ TEST_F(WebStateImplTest, ObserverTest) {
   EXPECT_TRUE(observer->load_page_info()->success);
 
   // Test that OnTitleChanged() is called.
-  observer = base::MakeUnique<TestWebStateObserver>(web_state_.get());
+  observer = std::make_unique<TestWebStateObserver>(web_state_.get());
   ASSERT_FALSE(observer->title_was_set_info());
   web_state_->OnTitleChanged();
   ASSERT_TRUE(observer->title_was_set_info());
@@ -464,6 +474,28 @@ TEST_F(WebStateImplTest, ObserverTest) {
   EXPECT_TRUE(observer->web_state_destroyed_info());
 
   EXPECT_EQ(nullptr, observer->web_state());
+}
+
+// Tests that placeholder navigations are not visible to WebStateObservers.
+TEST_F(WebStateImplTest, PlaceholderNavigationNotExposedToObservers) {
+  TestWebStateObserver observer(web_state_.get());
+  FakeNavigationContext context;
+  context.SetUrl(placeholder_navigation_util::CreatePlaceholderUrlForUrl(
+      GURL("chrome://newtab")));
+
+  // Test that OnPageLoaded() is not called.
+  web_state_->OnPageLoaded(context.GetUrl(), true /* load_success */);
+  EXPECT_FALSE(observer.load_page_info());
+  web_state_->OnPageLoaded(context.GetUrl(), false /* load_success */);
+  EXPECT_FALSE(observer.load_page_info());
+
+  // Test that OnNavigationStarted() is not called.
+  web_state_->OnNavigationStarted(&context);
+  EXPECT_FALSE(observer.did_start_navigation_info());
+
+  // Test that OnNavigationFinished() is not called.
+  web_state_->OnNavigationFinished(&context);
+  EXPECT_FALSE(observer.did_finish_navigation_info());
 }
 
 // Tests that WebStateDelegate methods appropriately called.
@@ -603,6 +635,12 @@ TEST_F(WebStateImplTest, GlobalObserverTest) {
   LoadCommittedDetails details;
   web_state_->OnNavigationItemCommitted(details);
   EXPECT_TRUE(observer->navigation_item_committed_called());
+
+  // Test that DidStartNavigation() is called.
+  EXPECT_FALSE(observer->did_start_navigation_called());
+  FakeNavigationContext context;
+  web_state_->OnNavigationStarted(&context);
+  EXPECT_TRUE(observer->did_start_navigation_called());
 
   // Test that WebStateDidStartLoading() is called.
   EXPECT_FALSE(observer->did_start_loading_called());
@@ -789,7 +827,7 @@ TEST_F(WebStateImplTest, FaviconUpdateForSameDocumentNavigations) {
   EXPECT_FALSE(observer->update_favicon_url_candidates_info());
 
   // Callback is called when icons were fetched.
-  observer = base::MakeUnique<TestWebStateObserver>(web_state_.get());
+  observer = std::make_unique<TestWebStateObserver>(web_state_.get());
   web::FaviconURL favicon_url(GURL("https://chromium.test/"),
                               web::FaviconURL::IconType::kTouchIcon,
                               {gfx::Size(5, 6)});
@@ -824,29 +862,6 @@ TEST_F(WebStateImplTest, FaviconUpdateForSameDocumentNavigations) {
   context.SetIsSameDocument(true);
   web_state_->OnNavigationFinished(&context);
   EXPECT_FALSE(observer->update_favicon_url_candidates_info());
-}
-
-// Tests that taking a snapshot after disabling web usage or adding an overlay
-// will force the creation of the WebState's view.
-TEST_F(WebStateImplTest, CanTakeSnapshot) {
-  // The view is lazily created, so taking a snapshot is not possible initially.
-  ASSERT_FALSE(web_state_->CanTakeSnapshot());
-
-  // Enabling overlay does not create the creation of the View.
-  [web_state_->GetWebController() setOverlayPreviewMode:YES];
-  EXPECT_FALSE(web_state_->CanTakeSnapshot());
-
-  // Loading the page will create the view (and add the placeholder overlay).
-  [web_state_->GetWebController() loadCurrentURLIfNecessary];
-  EXPECT_TRUE(web_state_->CanTakeSnapshot());
-
-  // Disabling the overlay will remove the view.
-  [web_state_->GetWebController() setOverlayPreviewMode:NO];
-  EXPECT_FALSE(web_state_->CanTakeSnapshot());
-
-  // Loading the page will create the view again.
-  [web_state_->GetWebController() loadCurrentURLIfNecessary];
-  EXPECT_TRUE(web_state_->CanTakeSnapshot());
 }
 
 }  // namespace web

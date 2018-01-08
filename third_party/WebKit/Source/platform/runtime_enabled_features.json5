@@ -40,7 +40,7 @@
     // feature to be enabled at runtime on a per-page basis through a signed
     // token for the corresponding feature name. Declaring the
     // origin_trial_feature_name will cause a static method to be generated in
-    // OriginTrials.h/cpp. This static method allows the feature implementation
+    // origin_trials.h/cpp. This static method allows the feature implementation
     // to check if it is enabled for the current context.
     origin_trial_feature_name: {
     },
@@ -219,7 +219,7 @@
     },
     {
       name: "CSSDisplayContents",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "CSSFontSizeAdjust",
@@ -238,7 +238,15 @@
       status: "experimental",
     },
     {
+      name: "CSSLayoutAPI",
+      status: "experimental",
+    },
+    {
       name: "CSSMaskSourceType",
+      status: "experimental",
+    },
+    {
+      name: "CSSMatches",
       status: "experimental",
     },
     {
@@ -264,7 +272,7 @@
     {
       name: "CSSPaintAPI",
       depends_on: ["Worklet"],
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "CSSPaintAPIArguments",
@@ -273,7 +281,7 @@
     },
     {
       name: "CSSScrollSnapPoints",
-      status: "test",
+      status: "experimental",
     },
     {
       name: "CSSSnapSize",
@@ -308,6 +316,9 @@
       status: "test",
     },
     {
+      name: "CustomUserTiming",
+    },
+    {
       name: "Database",
       status: "stable",
     },
@@ -334,7 +345,7 @@
     },
     {
       name: "DisplayNoneIFrameCreatesNoLayoutObject",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "DocumentCookie",
@@ -491,6 +502,11 @@
       status: "test",
     },
     {
+      name: "ImplicitRootScroller",
+      status: "experimental",
+      settable_from_internals: true,
+    },
+    {
       name: "IncrementalShadowDOM",
     },
     {
@@ -642,7 +658,7 @@
       name: "ModuleScriptsImportMetaUrl",
     },
     {
-      name: "MojoBlobs",
+      name: "MojoBlobURLs",
     },
     {
       name: "MojoJS",
@@ -807,6 +823,7 @@
     },
     {
       name: "PictureInPicture",
+      settable_from_internals: true,
     },
     {
       name: "PreciseMemoryInfo",
@@ -891,6 +908,10 @@
       name: "RootLayerScrolling",
     },
     {
+      name: "RTCUnifiedPlan",
+      status: "experimental",
+    },
+    {
       name: "ScriptedSpeech",
       status: "stable",
     },
@@ -933,7 +954,7 @@
     },
     {
       name: "ServerTiming",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "ServiceWorkerScriptFullCodeCache",
@@ -962,6 +983,10 @@
     {
       name: "ShapeDetection",
       status: "experimental",
+    },
+    {
+      name: "SharedArrayBuffer",
+      status: "stable",
     },
     {
       name: "SharedWorker",
@@ -998,7 +1023,15 @@
       status: "experimental",
     },
     {
-      name: "StopLoadingInBackgroundAndroid",
+      name: "StopInBackground",
+      status: "test",
+    },
+    {
+      name: "StopLoadingInBackground",
+      status: "test",
+    },
+    {
+      name: "StopNonTimersInBackground",
       status: "test",
     },
     {
@@ -1051,6 +1084,10 @@
     },
     {
       name: "UnclosedFormControlIsInvalid",
+      status: "experimental",
+    },
+    {
+      name: "UnifiedTouchAdjustment",
       status: "experimental",
     },
     {
@@ -1147,14 +1184,6 @@
       status: "test",
     },
     {
-      name: "WebVRExperimentalRendering",
-      // Don't mark this as depends_on: ["WebVR"], we want to be able to turn
-      // it on for just origin trial sites where the dependency is unset.
-      // We also need it for tests since the default mode requires re-entrant
-      // mojo event handling, and the Javascript mocks don't support that.
-      status: "test",
-    },
-    {
       name: "WebVTTRegions",
       status: "experimental",
     },
@@ -1164,7 +1193,7 @@
     },
     {
       name: "Worklet",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "WorkStealingInScriptRunner",

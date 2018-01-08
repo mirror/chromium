@@ -32,8 +32,8 @@ class CORE_EXPORT PerformanceNavigationTiming final
  public:
   PerformanceNavigationTiming(LocalFrame*,
                               ResourceTimingInfo*,
-                              double time_origin,
-                              PerformanceServerTimingVector&);
+                              TimeTicks time_origin,
+                              const WebVector<WebServerTimingInfo>&);
 
   // Attributes inheritted from PerformanceEntry.
   DOMHighResTimeStamp duration() const override;

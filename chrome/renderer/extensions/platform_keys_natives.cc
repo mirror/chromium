@@ -94,10 +94,12 @@ std::unique_ptr<base::DictionaryValue> WebCryptoAlgorithmToBaseValue(
 }  // namespace
 
 PlatformKeysNatives::PlatformKeysNatives(ScriptContext* context)
-    : ObjectBackedNativeHandler(context) {
-  RouteFunction("NormalizeAlgorithm",
-                base::Bind(&PlatformKeysNatives::NormalizeAlgorithm,
-                           base::Unretained(this)));
+    : ObjectBackedNativeHandler(context) {}
+
+void PlatformKeysNatives::AddRoutes() {
+  RouteHandlerFunction("NormalizeAlgorithm",
+                       base::Bind(&PlatformKeysNatives::NormalizeAlgorithm,
+                                  base::Unretained(this)));
 }
 
 void PlatformKeysNatives::NormalizeAlgorithm(
@@ -107,8 +109,9 @@ void PlatformKeysNatives::NormalizeAlgorithm(
   DCHECK(call_info[1]->IsString());
 
   blink::WebCryptoOperation operation;
-  if (!StringToWebCryptoOperation(*v8::String::Utf8Value(call_info[1]),
-                                  &operation)) {
+  if (!StringToWebCryptoOperation(
+          *v8::String::Utf8Value(call_info.GetIsolate(), call_info[1]),
+          &operation)) {
     return;
   }
 

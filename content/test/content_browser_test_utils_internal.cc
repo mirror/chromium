@@ -92,10 +92,7 @@ std::string FrameTreeVisualizer::DepictFrameTree(FrameTreeNode* root) {
       to_explore.push(node->child_at(i));
     }
 
-    RenderFrameHost* pending = node->render_manager()->pending_frame_host();
     RenderFrameHost* spec = node->render_manager()->speculative_frame_host();
-    if (pending)
-      legend[GetName(pending->GetSiteInstance())] = pending->GetSiteInstance();
     if (spec)
       legend[GetName(spec->GetSiteInstance())] = spec->GetSiteInstance();
   }
@@ -170,14 +167,9 @@ std::string FrameTreeVisualizer::DepictFrameTree(FrameTreeNode* root) {
     // RenderFrameHost, and show any exceptional state of the node, like a
     // pending or speculative RenderFrameHost.
     RenderFrameHost* current = node->render_manager()->current_frame_host();
-    RenderFrameHost* pending = node->render_manager()->pending_frame_host();
     RenderFrameHost* spec = node->render_manager()->speculative_frame_host();
     base::StringAppendF(&line, "Site %s",
                         GetName(current->GetSiteInstance()).c_str());
-    if (pending) {
-      base::StringAppendF(&line, " (%s pending)",
-                          GetName(pending->GetSiteInstance()).c_str());
-    }
     if (spec) {
       base::StringAppendF(&line, " (%s speculative)",
                           GetName(spec->GetSiteInstance()).c_str());
@@ -431,6 +423,38 @@ bool UpdateResizeParamsMessageFilter::OnMessageReceived(
   // We do not consume the message, so that we can verify the effects of it
   // being processed.
   return false;
+}
+
+RenderProcessHostKillWaiter::RenderProcessHostKillWaiter(
+    RenderProcessHost* render_process_host)
+    : exit_watcher_(render_process_host,
+                    RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT) {}
+
+base::Optional<bad_message::BadMessageReason>
+RenderProcessHostKillWaiter::Wait() {
+  base::Optional<bad_message::BadMessageReason> result;
+
+  // Wait for the renderer kill.
+  exit_watcher_.Wait();
+  if (exit_watcher_.did_exit_normally())
+    return result;
+
+  // Find the logged Stability.BadMessageTerminated.Content data (if present).
+  std::vector<base::Bucket> uma_samples =
+      histogram_tester_.GetAllSamples("Stability.BadMessageTerminated.Content");
+  // No UMA will be present if the kill was not trigerred by the //content layer
+  // (e.g. if it was trigerred by bad_message::ReceivedBadMessage from //chrome
+  // layer or from somewhere in the //components layer).
+  if (uma_samples.empty())
+    return result;
+  const base::Bucket& bucket = uma_samples.back();
+  // Assumming that user of RenderProcessHostKillWatcher makes sure that only
+  // one kill can happen while using the class.
+  DCHECK_EQ(1u, uma_samples.size())
+      << "Multiple renderer kills are unsupported";
+
+  // Translate contents of the bucket into bad_message::BadMessageReason.
+  return static_cast<bad_message::BadMessageReason>(bucket.min);
 }
 
 }  // namespace content

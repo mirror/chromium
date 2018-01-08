@@ -96,8 +96,7 @@ MessageView::MessageView(const Notification& notification)
   UpdateWithNotification(notification);
 }
 
-MessageView::~MessageView() {
-}
+MessageView::~MessageView() {}
 
 void MessageView::UpdateWithNotification(const Notification& notification) {
   pinned_ = notification.pinned();
@@ -149,9 +148,9 @@ void MessageView::OnContainerAnimationEnded() {
 }
 
 void MessageView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_BUTTON;
+  node_data->role = ax::mojom::Role::kButton;
   node_data->AddStringAttribute(
-      ui::AX_ATTR_ROLE_DESCRIPTION,
+      ax::mojom::StringAttribute::kRoleDescription,
       l10n_util::GetStringUTF8(
           IDS_MESSAGE_NOTIFICATION_SETTINGS_BUTTON_ACCESSIBLE_NAME));
   node_data->SetName(accessible_name_);
@@ -274,7 +273,9 @@ void MessageView::OnSlideOut() {
 }
 
 bool MessageView::GetPinned() const {
-  return pinned_ && !force_disable_pinned_;
+  // Only nested notifications can be pinned. Standalones (i.e. popups) can't
+  // be.
+  return pinned_ && is_nested_;
 }
 
 void MessageView::OnCloseButtonPressed() {

@@ -32,6 +32,10 @@ struct CONTENT_EXPORT ResizeParams {
   // URL-bar (always false on platforms where URL-bar hiding isn't supported).
   bool browser_controls_shrink_blink_size;
 
+  // Whether or not the focused node should be scrolled into view after the
+  // resize.
+  bool scroll_focused_node_into_view;
+
   // The height of the top controls (always 0 on platforms where URL-bar hiding
   // isn't supported).
   float top_controls_height;
@@ -57,6 +61,11 @@ struct CONTENT_EXPORT ResizeParams {
   // ViewHostMsg_ResizeOrRepaint_ACK with the
   // ViewHostMsg_ResizeOrRepaint_ACK_Flags::IS_RESIZE_ACK bit set in flags.
   bool needs_resize_ack;
+
+  // This variable is increased after each cross-document navigation. If the
+  // renderer receives a ResizeParams with stale content_source_id, it still
+  // performs the resize but doesn't use the given LocalSurfaceId.
+  uint32_t content_source_id;
 };
 
 }  // namespace content

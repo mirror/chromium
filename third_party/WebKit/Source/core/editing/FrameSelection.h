@@ -34,10 +34,10 @@
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/editing/Forward.h"
 #include "core/editing/SetSelectionOptions.h"
-#include "core/layout/ScrollAlignment.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/heap/Handle.h"
+#include "platform/scroll/ScrollAlignment.h"
 #include "platform/wtf/Optional.h"
 
 namespace blink {
@@ -80,6 +80,7 @@ class CORE_EXPORT FrameSelection final
   Document& GetDocument() const;
   LocalFrame* GetFrame() const { return frame_; }
   Element* RootEditableElementOrDocumentElement() const;
+  size_t CharacterIndexForPoint(const IntPoint&) const;
 
   // An implementation of |WebFrame::moveCaretSelection()|
   void MoveCaretSelection(const IntPoint&);
@@ -94,14 +95,10 @@ class CORE_EXPORT FrameSelection final
   VisibleSelection ComputeVisibleSelectionInDOMTreeDeprecated() const;
 
   void SetSelection(const SelectionInDOMTree&, const SetSelectionOptions&);
-
-  // TODO(editing-dev): We should rename this function to
-  // SetSelectionAndEndTyping()
-  // Set selection with end of typing processing == close typing and clear
-  // typing style.
-  void SetSelection(const SelectionInDOMTree&);
+  void SetSelectionAndEndTyping(const SelectionInDOMTree&);
   void SelectAll(SetSelectionBy);
   void SelectAll();
+  void SelectSubString(const Element&, int offset, int count);
   void Clear();
   bool IsHidden() const;
 
@@ -130,8 +127,8 @@ class CORE_EXPORT FrameSelection final
   // extent is resolved to the same position as the current base, this
   // function will do nothing.
   void MoveRangeSelectionExtent(const IntPoint&);
-  void MoveRangeSelection(const VisiblePosition& base,
-                          const VisiblePosition& extent,
+  void MoveRangeSelection(const IntPoint& base_point,
+                          const IntPoint& extent_point,
                           TextGranularity);
 
   TextGranularity Granularity() const { return granularity_; }
@@ -254,14 +251,11 @@ class CORE_EXPORT FrameSelection final
 
   void SetUseSecureKeyboardEntry(bool);
 
-  void UpdateSelectionIfNeeded(const Position& base,
-                               const Position& extent,
-                               const Position& start,
-                               const Position& end);
-
   GranularityStrategy* GetGranularityStrategy();
 
   IntRect ComputeRectToScroll(RevealExtentOption);
+
+  void MoveRangeSelectionInternal(const SelectionInDOMTree&, TextGranularity);
 
   // Implementation of |SynchronousMutationObserver| member functions.
   void ContextDestroyed(Document*) final;
@@ -277,6 +271,9 @@ class CORE_EXPORT FrameSelection final
 
   bool focused_ : 1;
   bool is_handle_visible_ = false;
+  // TODO(editing-dev): We should change is_directional_ type to enum.
+  // as directional can have three values forward, backward or directionless.
+  bool is_directional_;
   bool should_shrink_next_tap_ = false;
 
   // Controls text granularity used to adjust the selection's extent in

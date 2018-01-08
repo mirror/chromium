@@ -118,7 +118,7 @@ class Resource::CachedMetadataHandlerImpl : public CachedMetadataHandler {
   static Resource::CachedMetadataHandlerImpl* Create(Resource* resource) {
     return new CachedMetadataHandlerImpl(resource);
   }
-  ~CachedMetadataHandlerImpl() override {}
+  ~CachedMetadataHandlerImpl() override = default;
   void Trace(blink::Visitor*) override;
   void SetCachedMetadata(uint32_t, const char*, size_t, CacheType) override;
   void ClearCachedMetadata(CacheType) override;
@@ -217,7 +217,7 @@ class Resource::ServiceWorkerResponseCachedMetadataHandler
     return new ServiceWorkerResponseCachedMetadataHandler(resource,
                                                           security_origin);
   }
-  ~ServiceWorkerResponseCachedMetadataHandler() override {}
+  ~ServiceWorkerResponseCachedMetadataHandler() override = default;
   void Trace(blink::Visitor*) override;
 
  protected:
@@ -685,7 +685,7 @@ void Resource::WillAddClientOrObserver() {
   }
 }
 
-void Resource::AddClient(ResourceClient* client) {
+void Resource::AddClient(ResourceClient* client, WebTaskRunner* task_runner) {
   CHECK(!is_add_remove_client_prohibited_);
 
   WillAddClientOrObserver();
@@ -701,14 +701,9 @@ void Resource::AddClient(ResourceClient* client) {
       !TypeNeedsSynchronousCacheHit(GetType())) {
     clients_awaiting_callback_.insert(client);
     if (!async_finish_pending_clients_task_.IsActive()) {
-      async_finish_pending_clients_task_ =
-          Platform::Current()
-              ->CurrentThread()
-              ->Scheduler()
-              ->LoadingTaskRunner()
-              ->PostCancellableTask(FROM_HERE,
-                                    WTF::Bind(&Resource::FinishPendingClients,
-                                              WrapWeakPersistent(this)));
+      async_finish_pending_clients_task_ = PostCancellableTask(
+          *task_runner, FROM_HERE,
+          WTF::Bind(&Resource::FinishPendingClients, WrapWeakPersistent(this)));
     }
     return;
   }
@@ -1224,8 +1219,10 @@ const char* Resource::ResourceTypeToString(
       return "Text track";
     case Resource::kImportResource:
       return "Imported resource";
-    case Resource::kMedia:
-      return "Media";
+    case Resource::kAudio:
+      return "Audio";
+    case Resource::kVideo:
+      return "Video";
     case Resource::kManifest:
       return "Manifest";
     case Resource::kMock:
@@ -1253,7 +1250,8 @@ bool Resource::IsLoadEventBlockingResourceType() const {
     case Resource::kRaw:
     case Resource::kLinkPrefetch:
     case Resource::kTextTrack:
-    case Resource::kMedia:
+    case Resource::kAudio:
+    case Resource::kVideo:
     case Resource::kManifest:
     case Resource::kMock:
       return false;

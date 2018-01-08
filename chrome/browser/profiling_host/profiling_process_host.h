@@ -100,12 +100,15 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // Returns the mode specified by the command line or via about://flags.
   static Mode GetModeForStartup();
   static Mode ConvertStringToMode(const std::string& input);
+  static mojom::StackMode GetStackModeForStartup();
+  static mojom::StackMode ConvertStringToStackMode(const std::string& input);
   bool ShouldProfileNonRendererProcessType(int process_type);
 
   // Launches the profiling process and returns a pointer to it.
   static ProfilingProcessHost* Start(
       content::ServiceManagerConnection* connection,
-      Mode mode);
+      Mode mode,
+      mojom::StackMode stack_mode);
 
   // Returns true if Start() has been called.
   static bool has_started() { return has_started_; }
@@ -143,9 +146,9 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // finished signal, in case there's a problem with the profiling process and
   // the heap-dump is never added to the trace.
   // Public for testing.
-  void RequestTraceWithHeapDump(
-      TraceFinishedCallback callback,
-      bool stop_immediately_after_heap_dump_for_tests);
+  void RequestTraceWithHeapDump(TraceFinishedCallback callback,
+                                bool stop_immediately_after_heap_dump_for_tests,
+                                bool anonymize);
 
   // Returns the pids of all profiled processes. The callback is posted on the
   // UI thread.
@@ -155,6 +158,11 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
   // Starts profiling the process with the given id.
   void StartManualProfiling(base::ProcessId pid);
+
+  // This function starts profiling all renderers. Attempting to start profiling
+  // a renderer that is already being profiled is a no-op [the new request is
+  // dropped by the profiling service].
+  void StartProfilingRenderersForTesting();
 
  private:
   friend struct base::DefaultSingletonTraits<ProfilingProcessHost>;
@@ -252,6 +260,10 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // The mode determines which processes should be profiled.
   Mode mode_;
   base::Lock mode_lock_;
+
+  // The stack mode determines the type of information that is stored for each
+  // stack.
+  profiling::mojom::StackMode stack_mode_;
 
   // Whether or not the profiling host is started.
   static bool has_started_;

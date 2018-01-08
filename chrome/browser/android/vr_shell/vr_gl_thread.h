@@ -20,6 +20,10 @@
 #include "chrome/browser/vr/ui_browser_interface.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"
 
+namespace base {
+class Version;
+}  // namespace base
+
 namespace vr_shell {
 
 class VrShell;
@@ -44,14 +48,17 @@ class VrGLThread : public base::android::JavaHandlerThread,
   base::WeakPtr<VrShellGl> GetVrShellGl();
 
   // GlBrowserInterface implementation (GL calling to VrShell).
-  void ContentSurfaceChanged(jobject surface) override;
-  void GvrDelegateReady(gvr::ViewerType viewer_type) override;
+  void ContentSurfaceCreated(jobject surface,
+                             gl::SurfaceTexture* texture) override;
+  void ContentOverlaySurfaceCreated(jobject surface,
+                                    gl::SurfaceTexture* texture) override;
+  void GvrDelegateReady(
+      gvr::ViewerType viewer_type,
+      device::mojom::VRDisplayFrameTransportOptionsPtr) override;
   void UpdateGamepadData(device::GvrGamepadData) override;
   void ForceExitVr() override;
   void OnContentPaused(bool enabled) override;
   void ToggleCardboardGamepad(bool enabled) override;
-  void OnAssetsLoaded(vr::AssetsLoadStatus status,
-                      const base::Version& component_version) override;
 
   // vr::ContentInputForwarder
   void ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
@@ -70,6 +77,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetVoiceSearchActive(bool active) override;
   void StartAutocomplete(const base::string16& string) override;
   void StopAutocomplete() override;
+  void LoadAssets() override;
 
   // vr::BrowserUiInterface implementation (Browser calling to UI).
   void SetWebVrMode(bool enabled, bool show_toast) override;
@@ -84,7 +92,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetScreenCaptureEnabled(bool enabled) override;
   void SetAudioCaptureEnabled(bool enabled) override;
   void SetBluetoothConnected(bool enabled) override;
-  void SetLocationAccess(bool enabled) override;
+  void SetLocationAccessEnabled(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
@@ -92,6 +100,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void OnSpeechRecognitionStateChanged(int new_state) override;
   void SetOmniboxSuggestions(
       std::unique_ptr<vr::OmniboxSuggestions> result) override;
+  void OnAssetsComponentReady() override;
 
  protected:
   void Init() override;
@@ -100,6 +109,10 @@ class VrGLThread : public base::android::JavaHandlerThread,
  private:
   bool OnMainThread() const;
   bool OnGlThread() const;
+
+  void OnAssetsLoaded(vr::AssetsLoadStatus status,
+                      std::unique_ptr<vr::Assets> assets,
+                      const base::Version& component_version);
 
   // Created on GL thread.
   std::unique_ptr<VrShellGl> vr_shell_gl_;

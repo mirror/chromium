@@ -6,12 +6,14 @@ compiled_resources*.gyp
 demo*.html
 */demos/
 docs.html
+.eslintrc.json
 .github
 .gitignore
 hero.svg
 index.html
 *.md
 metadata.html
+package.json
 */test/
 */tests/
 .travis.yml
@@ -24,6 +26,8 @@ metadata.html
 # iron-flex-layout
 iron-flex-layout/classes/
 
-#paper-material
-paper-material/paper-material.html
-paper-material/paper-material.js
+# paper-spinner
+paper-spinner/paper-spinner.html
+
+# paper-styles
+paper-styles/classes/shadow-layout.html

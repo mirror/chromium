@@ -18,6 +18,7 @@
 #include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/ui/animation_util.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_clipping_feature.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_util.h"
 #import "ios/chrome/browser/ui/reversed_animation.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
@@ -296,43 +297,33 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
                                   [self fadeAnimationLayers]);
 }
 
-- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator {
+- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator
+                completionAnimator:(UIViewPropertyAnimator*)completionAnimator {
   // Hide the rightView button so its not visibile on its initial layout
   // while the expan animation is happening.
-  self.rightView.hidden = YES;
-  self.rightView.frame = [self rightViewRectForBounds:self.bounds];
-  [animator addAnimations:^{
-    [self layoutIfNeeded];
-    [self.rightView layoutIfNeeded];
-  }];
+  self.clearButton.hidden = YES;
+  self.clearButton.alpha = 0;
+  self.clearButton.frame =
+      CGRectLayoutOffset([self rightViewRectForBounds:self.bounds],
+                         [self clearButtonAnimationOffset]);
 
-  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    self.rightView.hidden = NO;
-    self.rightView.alpha = 0;
-    self.rightView.frame =
-        CGRectLayoutOffset(self.rightView.frame, kToolbarButtonAnimationOffset);
-    [UIViewPropertyAnimator
-        runningPropertyAnimatorWithDuration:0.2
-                                      delay:0.1
-                                    options:UIViewAnimationOptionCurveEaseOut
-                                 animations:^{
-                                   self.rightView.alpha = 1.0;
-                                   self.rightView.frame = CGRectLayoutOffset(
-                                       self.rightView.frame,
-                                       -kToolbarButtonAnimationOffset);
-                                 }
-                                 completion:nil];
+  [completionAnimator addAnimations:^{
+    self.clearButton.hidden = NO;
+    self.clearButton.alpha = 1.0;
+
+    self.clearButton.frame = CGRectLayoutOffset(
+        self.clearButton.frame, -[self clearButtonAnimationOffset]);
   }];
 }
 
 - (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator {
   [animator addAnimations:^{
-    self.rightView.alpha = 0;
-    self.rightView.frame =
-        CGRectLayoutOffset(self.rightView.frame, kToolbarButtonAnimationOffset);
+    self.clearButton.alpha = 0;
+    self.clearButton.frame = CGRectLayoutOffset(self.clearButton.frame,
+                                                kToolbarButtonAnimationOffset);
   }];
   [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    self.rightView = nil;
+    [self resetClearButton];
   }];
 }
 
@@ -533,6 +524,12 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
 // Enumerate url components (host, path) and draw each one in different rect.
 - (void)drawTextInRect:(CGRect)rect {
+  if (base::FeatureList::IsEnabled(kClippingTextfield)) {
+    // With the new clipping logic, this override is unnecessary.
+    [super drawTextInRect:rect];
+    return;
+  }
+
   if (base::ios::IsRunningOnOrLater(11, 1, 0)) {
     // -[UITextField drawTextInRect:] ignores the argument, so we can't do
     // anything on 11.1 and up.
@@ -839,6 +836,11 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 }
 
 - (CGRect)rectForDrawTextInRect:(CGRect)rect {
+  if (base::FeatureList::IsEnabled(kClippingTextfield)) {
+    // With the new clipping logic, this override is unnecessary.
+    return rect;
+  }
+
   // The goal is to always show the most significant part of the hostname
   // (i.e. the end of the TLD).
   //
@@ -939,6 +941,31 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
 - (CGRect)layoutLeftViewForBounds:(CGRect)bounds {
   return CGRectZero;
+}
+
+// Accesses the clear button view when it's available; correctly resolves RTL.
+- (UIView*)clearButton {
+  if ([self isTextFieldLTR]) {
+    return self.rightView;
+  } else {
+    return self.leftView;
+  }
+}
+
+- (void)resetClearButton {
+  if ([self isTextFieldLTR]) {
+    self.rightView = nil;
+  } else {
+    self.rightView = nil;
+  }
+}
+
+- (CGFloat)clearButtonAnimationOffset {
+  if ([self isTextFieldLTR]) {
+    return kToolbarButtonAnimationOffset;
+  } else {
+    return -kToolbarButtonAnimationOffset;
+  }
 }
 
 @end

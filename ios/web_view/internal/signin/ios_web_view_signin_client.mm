@@ -115,18 +115,18 @@ std::unique_ptr<GaiaAuthFetcher> IOSWebViewSigninClient::CreateGaiaAuthFetcher(
     GaiaAuthConsumer* consumer,
     const std::string& source,
     net::URLRequestContextGetter* getter) {
-  return base::MakeUnique<GaiaAuthFetcher>(consumer, source, getter);
+  return std::make_unique<GaiaAuthFetcher>(consumer, source, getter);
 }
 
 void IOSWebViewSigninClient::OnErrorChanged() {}
 
 void IOSWebViewSigninClient::SetAuthenticationController(
     CWVAuthenticationController* authentication_controller) {
-  DCHECK(!authentication_controller || !authentication_controller_.get());
-  authentication_controller_.reset(authentication_controller);
+  DCHECK(!authentication_controller || !authentication_controller_);
+  authentication_controller_ = authentication_controller;
 }
 
 CWVAuthenticationController*
 IOSWebViewSigninClient::GetAuthenticationController() {
-  return authentication_controller_.get();
+  return authentication_controller_;
 }

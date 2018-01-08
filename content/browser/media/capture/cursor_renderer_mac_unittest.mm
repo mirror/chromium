@@ -12,8 +12,8 @@
 #include "base/time/time.h"
 #include "media/base/video_frame.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/test/cocoa_helper.h"
 #include "ui/gfx/mac/coordinate_conversion.h"
-#include "ui/gfx/test/ui_cocoa_test_helper.h"
 
 namespace content {
 
@@ -62,7 +62,7 @@ class CursorRendererMacTest : public ui::CocoaTest {
     if (!dummy_frame_) {
       constexpr gfx::Size dummy_frame_size = gfx::Size(320, 200);
       dummy_frame_ = media::VideoFrame::CreateZeroInitializedFrame(
-          media::PIXEL_FORMAT_YV12, dummy_frame_size,
+          media::PIXEL_FORMAT_I420, dummy_frame_size,
           gfx::Rect(dummy_frame_size), dummy_frame_size, base::TimeDelta());
     }
     return RenderCursorOnVideoFrame(dummy_frame_.get(), nullptr);
@@ -210,7 +210,7 @@ TEST_F(CursorRendererMacTest, CursorRenderedOnFrame) {
 
   gfx::Size size(kTestViewWidth, kTestViewHeight);
   scoped_refptr<media::VideoFrame> frame =
-      media::VideoFrame::CreateZeroInitializedFrame(media::PIXEL_FORMAT_YV12,
+      media::VideoFrame::CreateZeroInitializedFrame(media::PIXEL_FORMAT_I420,
                                                     size, gfx::Rect(size), size,
                                                     base::TimeDelta());
 

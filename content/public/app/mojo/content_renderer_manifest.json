@@ -27,7 +27,11 @@
       },
       "requires": {
         "*": [ "app" ],
-        "content_browser": [ "renderer" ],
+        "content_browser": [
+          "dwrite_font_proxy",
+          "field_trials",
+          "renderer"
+        ],
         "metrics": [ "url_keyed_metrics" ],
         "device": [
           "device:power_monitor",
@@ -51,6 +55,7 @@
           "blink::mojom::TextSuggestionBackend",
           "content::mojom::ImageDownloader",
           "content::mojom::FrameInputHandler",
+          "content::mojom::FullscreenVideoElementHandler",
           "content::mojom::MediaStreamDispatcher",
           "content::mojom::Widget",
           "viz::mojom::InputTargetClient"
@@ -87,10 +92,6 @@
         "platform": "android"
       }
     ],
-    "v8_snapshot_data" : [{
-      "path": "snapshot_blob.bin",
-      "platform": "linux"
-    }],
     "v8_snapshot_32_data" : [{
       "path": "assets/snapshot_blob_32.bin",
       "platform": "android"
@@ -98,12 +99,6 @@
     "v8_snapshot_64_data" : [{
       "path": "assets/snapshot_blob_64.bin",
       "platform": "android"
-    }],
-    "v8_context_snapshot_data" : [
-      {
-        "path": "v8_context_snapshot.bin",
-        "platform": "linux"
-      }
-    ]
+    }]
   }
 }

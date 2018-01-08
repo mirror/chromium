@@ -9,7 +9,6 @@
 
 #include <memory>
 
-#import "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #import "ios/web/public/web_state/navigation_context.h"
@@ -45,6 +44,7 @@ class NavigationContextImpl : public NavigationContext {
   ~NavigationContextImpl() override;
 
   // Setters for navigation context data members.
+  void SetUrl(const GURL& url);
   void SetIsSameDocument(bool is_same_document);
   void SetIsPost(bool is_post);
   void SetError(NSError* error);
@@ -71,7 +71,7 @@ class NavigationContextImpl : public NavigationContext {
   const ui::PageTransition page_transition_;
   bool is_same_document_ = false;
   bool is_post_ = false;
-  base::scoped_nsobject<NSError> error_;
+  NSError* error_;
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
   bool is_renderer_initiated_ = false;
   int navigation_item_unique_id_ = -1;

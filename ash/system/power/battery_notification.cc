@@ -8,7 +8,6 @@
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/power/power_status.h"
-#include "ash/system/system_notifier.h"
 #include "base/i18n/message_formatter.h"
 #include "base/i18n/time_formatting.h"
 #include "base/strings/utf_string_conversions.h"
@@ -17,7 +16,7 @@
 #include "ui/base/l10n/time_format.h"
 #include "ui/gfx/image/image.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 
 using message_center::MessageCenter;
 using message_center::Notification;
@@ -27,6 +26,7 @@ namespace ash {
 namespace {
 
 const char kBatteryNotificationId[] = "battery";
+const char kNotifierBattery[] = "ash.battery";
 
 const gfx::VectorIcon& GetBatteryImageMD(
     TrayPower::NotificationState notification_state) {
@@ -94,8 +94,7 @@ std::unique_ptr<Notification> CreateNotification(
           message_center::NOTIFICATION_TYPE_SIMPLE, kBatteryNotificationId,
           base::string16(), message, gfx::Image(), base::string16(), GURL(),
           message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierBattery),
+              message_center::NotifierId::SYSTEM_COMPONENT, kNotifierBattery),
           message_center::RichNotificationData(), nullptr,
           GetBatteryImageMD(notification_state),
           GetWarningLevelMD(notification_state));

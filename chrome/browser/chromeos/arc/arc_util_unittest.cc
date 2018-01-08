@@ -18,6 +18,7 @@
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/install_attributes.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
@@ -155,6 +156,8 @@ class ChromeArcUtilTest : public testing::Test {
         std::make_unique<FakeUserManagerWithLocalState>());
     // Used by FakeChromeUserManager.
     chromeos::WallpaperManager::Initialize();
+    chromeos::DeviceSettingsService::Initialize();
+    chromeos::CrosSettings::Initialize();
     wallpaper_controller_client_ =
         std::make_unique<WallpaperControllerClient>();
     wallpaper_controller_client_->InitForTesting(
@@ -263,7 +266,7 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_PublicAccount) {
   ScopedLogIn login(GetFakeUserManager(),
                     AccountId::FromUserEmail("public_user@gmail.com"),
                     user_manager::USER_TYPE_PUBLIC_ACCOUNT);
-  EXPECT_FALSE(IsArcAllowedForProfileOnFirstCall(profile()));
+  EXPECT_TRUE(IsArcAllowedForProfile(profile()));
 }
 
 TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_ActiveDirectoryEnabled) {
@@ -344,7 +347,7 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_GuestAccount) {
       {"", "--arc-availability=officially-supported"});
   ScopedLogIn login(GetFakeUserManager(),
                     GetFakeUserManager()->GetGuestAccountId());
-  EXPECT_FALSE(IsArcAllowedForProfileOnFirstCall(profile()));
+  EXPECT_TRUE(IsArcAllowedForProfileOnFirstCall(profile()));
 }
 
 // Demo account is interpreted as EphemeralDataUser.
@@ -352,7 +355,7 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_DemoAccount) {
   base::CommandLine::ForCurrentProcess()->InitFromArgv(
       {"", "--arc-availability=officially-supported"});
   ScopedLogIn login(GetFakeUserManager(), user_manager::DemoAccountId());
-  EXPECT_FALSE(IsArcAllowedForProfileOnFirstCall(profile()));
+  EXPECT_TRUE(IsArcAllowedForProfileOnFirstCall(profile()));
 }
 
 TEST_F(ChromeArcUtilTest, IsArcCompatibleFileSystemUsedForProfile) {

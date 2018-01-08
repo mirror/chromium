@@ -31,7 +31,7 @@ class BrowserUiInterface {
   virtual void SetScreenCaptureEnabled(bool enabled) = 0;
   virtual void SetAudioCaptureEnabled(bool enabled) = 0;
   virtual void SetBluetoothConnected(bool enabled) = 0;
-  virtual void SetLocationAccess(bool enabled) = 0;
+  virtual void SetLocationAccessEnabled(bool enabled) = 0;
   virtual void SetExitVrPromptEnabled(bool enabled,
                                       UiUnsupportedMode reason) = 0;
   virtual void SetSpeechRecognitionEnabled(bool enabled) = 0;
@@ -39,6 +39,7 @@ class BrowserUiInterface {
   virtual void OnSpeechRecognitionStateChanged(int new_state) = 0;
   virtual void SetOmniboxSuggestions(
       std::unique_ptr<OmniboxSuggestions> suggestions) = 0;
+  virtual void OnAssetsComponentReady() = 0;
 
   // Tab handling.
   virtual void AppendToTabList(bool incognito,

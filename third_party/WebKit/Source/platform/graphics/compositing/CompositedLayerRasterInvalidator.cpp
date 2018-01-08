@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 
+#include "platform/graphics/compositing/PaintChunksToCcLayer.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 
 namespace blink {
@@ -32,17 +33,8 @@ void CompositedLayerRasterInvalidator::SetTracksRasterInvalidations(
 IntRect CompositedLayerRasterInvalidator::MapRectFromChunkToLayer(
     const FloatRect& r,
     const PaintChunk& chunk) const {
-  FloatClipRect rect(r);
-  GeometryMapper::LocalToAncestorVisualRect(
-      chunk.properties.property_tree_state, layer_state_, rect);
-  if (rect.Rect().IsEmpty())
-    return IntRect();
-
-  // Now rect is in the space of the containing transform node of pending_layer,
-  // so need to subtract off the layer offset.
-  rect.Rect().Move(-layer_bounds_.x(), -layer_bounds_.y());
-  rect.Rect().Inflate(chunk.outset_for_raster_effects);
-  return ClipByLayerBounds(EnclosingIntRect(rect.Rect()));
+  return ClipByLayerBounds(PaintChunksToCcLayer::MapRectFromChunkToLayer(
+      r, chunk, layer_state_, layer_bounds_.OffsetFromOrigin()));
 }
 
 TransformationMatrix CompositedLayerRasterInvalidator::ChunkToLayerTransform(
@@ -322,6 +314,42 @@ void CompositedLayerRasterInvalidator::Generate(
     tracking_info_->old_client_debug_names.clear();
     std::swap(tracking_info_->old_client_debug_names,
               tracking_info_->new_client_debug_names);
+  }
+}
+
+void CompositedLayerRasterInvalidator::GenerateForPropertyChanges(
+    const Vector<const PaintChunk*>& paint_chunks) {
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
+  DCHECK(paint_chunks.size() == paint_chunks_info_.size() ||
+         // The previous painting has raster under-invalidation overlay.
+         paint_chunks.size() == paint_chunks_info_.size() + 1);
+
+  Vector<PaintChunkInfo> new_chunks_info;
+  bool changed = false;
+  for (size_t i = 0; i < paint_chunks_info_.size(); ++i) {
+    const auto* chunk = paint_chunks[i];
+    new_chunks_info.push_back(PaintChunkInfo(
+        MapRectFromChunkToLayer(chunk->bounds, *chunk),
+        ChunkToLayerTransform(*chunk), ChunkToLayerClip(*chunk), *chunk));
+    const auto& new_chunk_info = new_chunks_info.back();
+
+    const auto& old_chunk_info = paint_chunks_info_[i];
+    DCHECK(chunk->id == old_chunk_info.id);
+
+    auto reason = ChunkPropertiesChanged(new_chunk_info, old_chunk_info);
+    if (reason == PaintInvalidationReason::kNone)
+      continue;
+
+    changed = true;
+    if (IsFullPaintInvalidationReason(reason))
+      FullyInvalidateChunk(old_chunk_info, new_chunk_info, reason);
+    else
+      IncrementallyInvalidateChunk(old_chunk_info, new_chunk_info);
+  }
+
+  if (changed) {
+    paint_chunks_info_.clear();
+    std::swap(paint_chunks_info_, new_chunks_info);
   }
 }
 

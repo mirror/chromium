@@ -13,7 +13,6 @@
 #include "base/base64.h"
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
@@ -33,9 +32,9 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
 #include "components/data_reduction_proxy/proto/client_config.pb.h"
 #include "net/base/network_change_notifier.h"
+#include "net/base/proxy_server.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
-#include "net/proxy/proxy_server.h"
 #include "net/socket/socket_test_util.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_context_storage.h"
@@ -394,7 +393,7 @@ class DataReductionProxyConfigServiceClientTest : public testing::Test {
 
   void AddMockSuccess() {
     socket_data_providers_.push_back(
-        (base::MakeUnique<net::StaticSocketDataProvider>(
+        (std::make_unique<net::StaticSocketDataProvider>(
             success_reads_, arraysize(success_reads_), nullptr, 0)));
     mock_socket_factory_->AddSocketDataProvider(
         socket_data_providers_.back().get());
@@ -402,7 +401,7 @@ class DataReductionProxyConfigServiceClientTest : public testing::Test {
 
   void AddMockPreviousSuccess() {
     socket_data_providers_.push_back(
-        (base::MakeUnique<net::StaticSocketDataProvider>(
+        (std::make_unique<net::StaticSocketDataProvider>(
             previous_success_reads_, arraysize(previous_success_reads_),
             nullptr, 0)));
     mock_socket_factory_->AddSocketDataProvider(
@@ -411,7 +410,7 @@ class DataReductionProxyConfigServiceClientTest : public testing::Test {
 
   void AddMockFailure() {
     socket_data_providers_.push_back(
-        (base::MakeUnique<net::StaticSocketDataProvider>(
+        (std::make_unique<net::StaticSocketDataProvider>(
             not_found_reads_, arraysize(not_found_reads_), nullptr, 0)));
     mock_socket_factory_->AddSocketDataProvider(
         socket_data_providers_.back().get());
@@ -447,10 +446,6 @@ class DataReductionProxyConfigServiceClientTest : public testing::Test {
   }
   const std::string& half_reporting_fraction_encoded_config() const {
     return half_reporting_fraction_encoded_config_;
-  }
-
-  bool IsTrustedSpdyProxy(const net::ProxyServer& proxy_server) const {
-    return delegate_->IsTrustedSpdyProxy(proxy_server);
   }
 
   const std::string& loaded_config() const { return loaded_config_; }

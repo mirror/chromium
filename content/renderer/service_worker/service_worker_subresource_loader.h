@@ -12,18 +12,18 @@
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_fetch_response_callback.mojom.h"
 #include "content/common/service_worker/service_worker_status_code.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "content/renderer/service_worker/controller_service_worker_connector.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "third_party/WebKit/common/blob/blob.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_stream_handle.mojom.h"
 
 namespace content {
 
-class ChildURLLoaderFactoryGetter;
+class SharedURLLoaderFactory;
 class ControllerServiceWorkerConnector;
 
 // S13nServiceWorker:
@@ -32,22 +32,22 @@ class ControllerServiceWorkerConnector;
 // Currently an instance of this class is created and used only on
 // the main thread (while the implementation itself is thread agnostic).
 class CONTENT_EXPORT ServiceWorkerSubresourceLoader
-    : public mojom::URLLoader,
+    : public network::mojom::URLLoader,
       public mojom::ServiceWorkerFetchResponseCallback,
       public ControllerServiceWorkerConnector::Observer {
  public:
   // See the comments for ServiceWorkerSubresourceLoaderFactory's ctor (below)
   // to see how each parameter is used.
   ServiceWorkerSubresourceLoader(
-      mojom::URLLoaderRequest request,
+      network::mojom::URLLoaderRequest request,
       int32_t routing_id,
       int32_t request_id,
       uint32_t options,
-      const ResourceRequest& resource_request,
-      mojom::URLLoaderClientPtr client,
+      const network::ResourceRequest& resource_request,
+      network::mojom::URLLoaderClientPtr client,
       const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
       scoped_refptr<ControllerServiceWorkerConnector> controller_connector,
-      scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
+      scoped_refptr<SharedURLLoaderFactory> default_loader_factory);
 
   ~ServiceWorkerSubresourceLoader() override;
 
@@ -57,7 +57,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
  private:
   void DeleteSoon();
 
-  void StartRequest(const ResourceRequest& resource_request);
+  void StartRequest(const network::ResourceRequest& resource_request);
   void DispatchFetchEvent();
   void OnFetchEventFinished(blink::mojom::ServiceWorkerEventStatus status,
                             base::Time dispatch_event_time);
@@ -82,8 +82,9 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
                      blink::mojom::BlobPtr blob,
                      blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream);
 
-  // mojom::URLLoader overrides:
+  // network::mojom::URLLoader overrides:
   void FollowRedirect() override;
+  void ProceedWithResponse() override;
   void SetPriority(net::RequestPriority priority,
                    int intra_priority_value) override;
   void PauseReadingBodyFromNet() override;
@@ -97,12 +98,12 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   // CommitResponseHeaders (i.e. status_ == kSentHeader).
   void CommitCompleted(int error_code);
 
-  ResourceResponseHead response_head_;
+  network::ResourceResponseHead response_head_;
   base::Optional<net::RedirectInfo> redirect_info_;
   int redirect_limit_;
 
-  mojom::URLLoaderClientPtr url_loader_client_;
-  mojo::Binding<mojom::URLLoader> url_loader_binding_;
+  network::mojom::URLLoaderClientPtr url_loader_client_;
+  mojo::Binding<network::mojom::URLLoader> url_loader_binding_;
 
   // For handling FetchEvent response.
   mojo::Binding<ServiceWorkerFetchResponseCallback> response_callback_binding_;
@@ -111,7 +112,10 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
 
   scoped_refptr<ControllerServiceWorkerConnector> controller_connector_;
 
-  std::unique_ptr<ResourceRequest> inflight_fetch_request_;
+  // The request destined for the controller service worker. This is used
+  // separately from |resource_request_| for the restarting mechanism when the
+  // first attempt to dispatch to the controller failed.
+  std::unique_ptr<network::ResourceRequest> inflight_fetch_request_;
   bool fetch_request_restarted_;
 
   // These are given by the constructor (as the params for
@@ -121,11 +125,12 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   const uint32_t options_;
   net::MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
-  // |resource_request_| changes due to redirects.
-  ResourceRequest resource_request_;
+  // |resource_request_| is initialized in the constructor, and may change
+  // over the lifetime of this loader due to redirects.
+  network::ResourceRequest resource_request_;
 
   // For network fallback.
-  scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter_;
+  scoped_refptr<SharedURLLoaderFactory> default_loader_factory_;
 
   enum class Status {
     kNotStarted,
@@ -145,35 +150,35 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
 // A custom URLLoaderFactory implementation used by Service Worker controllees
 // for loading subresources via the controller Service Worker.
 class CONTENT_EXPORT ServiceWorkerSubresourceLoaderFactory
-    : public mojom::URLLoaderFactory {
+    : public network::mojom::URLLoaderFactory {
  public:
   // |controller_connector_| is used to get a connection to the controller
   // ServiceWorker.
-  // |default_loader_factory_getter| is used to get the associated loading
-  // context's default URLLoaderFactory for network fallback.
+  // |default_loader_factory| is used to get the associated loading context's
+  // default URLLoaderFactory for network fallback.
   ServiceWorkerSubresourceLoaderFactory(
       scoped_refptr<ControllerServiceWorkerConnector> controller_connector,
-      scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
+      scoped_refptr<SharedURLLoaderFactory> default_loader_factory);
 
   ~ServiceWorkerSubresourceLoaderFactory() override;
 
-  // mojom::URLLoaderFactory overrides:
-  void CreateLoaderAndStart(mojom::URLLoaderRequest request,
+  // network::mojom::URLLoaderFactory overrides:
+  void CreateLoaderAndStart(network::mojom::URLLoaderRequest request,
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const ResourceRequest& resource_request,
-                            mojom::URLLoaderClientPtr client,
+                            const network::ResourceRequest& resource_request,
+                            network::mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override;
-  void Clone(mojom::URLLoaderFactoryRequest request) override;
+  void Clone(network::mojom::URLLoaderFactoryRequest request) override;
 
  private:
   scoped_refptr<ControllerServiceWorkerConnector> controller_connector_;
 
   // Contains a set of default loader factories for the associated loading
   // context. Used to load a blob, and for network fallback.
-  scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter_;
+  scoped_refptr<SharedURLLoaderFactory> default_loader_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerSubresourceLoaderFactory);
 };

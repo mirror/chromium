@@ -7,11 +7,13 @@
 #include <string>
 #include <utility>
 
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/extensions/chrome_test_extension_loader.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_icon_manager.h"
@@ -33,6 +35,7 @@
 #include "extensions/common/permissions/permission_message_provider.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
@@ -242,11 +245,13 @@ class ExtensionInstallDialogViewInteractiveBrowserTest
     icon.allocN32Pixels(800, 800);
     icon.eraseARGB(255, 128, 255, 128);
 
-    auto prompt = std::make_unique<ExtensionInstallPrompt::Prompt>(
-        external_install_ ? ExtensionInstallPrompt::EXTERNAL_INSTALL_PROMPT
-                          : ExtensionInstallPrompt::INLINE_INSTALL_PROMPT);
+    auto prompt = std::make_unique<ExtensionInstallPrompt::Prompt>(type_);
     prompt->AddPermissions(permissions_,
                            ExtensionInstallPrompt::REGULAR_PERMISSIONS);
+    prompt->AddPermissions(withheld_permissions_,
+                           ExtensionInstallPrompt::WITHHELD_PERMISSIONS);
+    prompt->set_retained_files(retained_files_);
+    prompt->set_retained_device_messages(retained_devices_);
 
     if (from_webstore_)
       prompt->SetWebstoreData("69,420", true, 2.5, 37);
@@ -259,12 +264,26 @@ class ExtensionInstallDialogViewInteractiveBrowserTest
         &icon, std::move(prompt), ExtensionInstallPrompt::ShowDialogCallback());
   }
 
-  void set_external_install() { external_install_ = true; }
   void set_from_webstore() { from_webstore_ = true; }
+
+  void set_type(ExtensionInstallPrompt::PromptType type) { type_ = type; }
 
   void AddPermission(std::string permission) {
     permissions_.push_back(
         PermissionMessage(base::ASCIIToUTF16(permission), PermissionIDSet()));
+  }
+
+  void AddWithheldPermission(std::string permission) {
+    withheld_permissions_.push_back(
+        PermissionMessage(base::ASCIIToUTF16(permission), PermissionIDSet()));
+  }
+
+  void AddRetainedFile(const base::FilePath& path) {
+    retained_files_.push_back(path);
+  }
+
+  void AddRetainedDevice(const std::string& device) {
+    retained_devices_.push_back(base::ASCIIToUTF16(device));
   }
 
   void AddPermissionWithDetails(
@@ -276,9 +295,13 @@ class ExtensionInstallDialogViewInteractiveBrowserTest
   }
 
  private:
-  bool external_install_ = false;
+  ExtensionInstallPrompt::PromptType type_ =
+      ExtensionInstallPrompt::INLINE_INSTALL_PROMPT;
   bool from_webstore_ = false;
   PermissionMessages permissions_;
+  PermissionMessages withheld_permissions_;
+  std::vector<base::FilePath> retained_files_;
+  std::vector<base::string16> retained_devices_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionInstallDialogViewInteractiveBrowserTest);
 };
@@ -290,13 +313,20 @@ IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
                        InvokeUi_External) {
-  set_external_install();
+  set_type(ExtensionInstallPrompt::EXTERNAL_INSTALL_PROMPT);
   ShowAndVerifyUi();
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
                        InvokeUi_ExternalWithPermission) {
-  set_external_install();
+  set_type(ExtensionInstallPrompt::EXTERNAL_INSTALL_PROMPT);
+  AddPermission("Example permission");
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
+                       InvokeUi_ReEnable) {
+  set_type(ExtensionInstallPrompt::RE_ENABLE_PROMPT);
   AddPermission("Example permission");
   ShowAndVerifyUi();
 }
@@ -332,10 +362,50 @@ IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
                        InvokeUi_DetailedPermission) {
-  AddPermissionWithDetails("Example header permission",
+  AddPermissionWithDetails(
+      "Example header permission",
+      {base::ASCIIToUTF16("Detailed permission 1"),
+       base::ASCIIToUTF16("Detailed permission 2"),
+       base::ASCIIToUTF16("Very very very very very very long detailed "
+                          "permission that wraps to a new line")});
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
+                       InvokeUi_WithheldPermission) {
+  AddWithheldPermission("Example permission");
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
+                       InvokeUi_WithRetainedFiles) {
+  AddRetainedFile(base::FilePath(FILE_PATH_LITERAL("/dev/null")));
+  AddRetainedFile(base::FilePath(FILE_PATH_LITERAL("/dev/zero")));
+  AddRetainedFile(base::FilePath(FILE_PATH_LITERAL("/dev/random")));
+  AddRetainedFile(base::FilePath(FILE_PATH_LITERAL(
+      "/some/very/very/very/very/very/long/path/longer/than/the/"
+      "line/length/file_with_long_name_too.txt")));
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
+                       InvokeUi_WithRetainedDevices) {
+  AddRetainedDevice("USB Device");
+  AddRetainedDevice("USB Device With Longer Name");
+  AddRetainedDevice(
+      "Another USB Device With A Very Very Very Very Very Very "
+      "Long Name So That It Hopefully Wraps to A New Line");
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
+                       InvokeUi_AllInfoTypes) {
+  AddPermission("Example permission");
+  AddPermissionWithDetails("This permission has details",
                            {base::ASCIIToUTF16("Detailed permission 1"),
-                            base::ASCIIToUTF16("Detailed permission 2"),
-                            base::ASCIIToUTF16("Detailed permission 3")});
+                            base::ASCIIToUTF16("Detailed permission 2")});
+  AddRetainedDevice("USB Device");
+  AddRetainedFile(base::FilePath(FILE_PATH_LITERAL("/dev/null")));
   ShowAndVerifyUi();
 }
 
@@ -373,21 +443,22 @@ void ExtensionInstallDialogRatingsSectionTest::TestRatingsSectionA11y(
       platform_util::GetViewForWindow(browser()->window()->GetNativeWindow()));
   modal_dialog->Show();
 
-  views::View* rating_view =
-      dialog->GetViewByID(ExtensionInstallDialogView::kRatingsViewId);
+  views::View* rating_view = modal_dialog->non_client_view()->GetViewByID(
+      ExtensionInstallDialogView::kRatingsViewId);
   ASSERT_TRUE(rating_view);
   {
     ui::AXNodeData node_data;
     rating_view->GetAccessibleNodeData(&node_data);
-    EXPECT_EQ(ui::AX_ROLE_STATIC_TEXT, node_data.role);
-    EXPECT_EQ(expected_text, node_data.GetStringAttribute(ui::AX_ATTR_NAME));
+    EXPECT_EQ(ax::mojom::Role::kStaticText, node_data.role);
+    EXPECT_EQ(expected_text,
+              node_data.GetStringAttribute(ax::mojom::StringAttribute::kName));
   }
 
   for (int i = 0; i < rating_view->child_count(); ++i) {
     views::View* child = rating_view->child_at(i);
     ui::AXNodeData node_data;
     child->GetAccessibleNodeData(&node_data);
-    EXPECT_EQ(ui::AX_ROLE_IGNORED, node_data.role);
+    EXPECT_EQ(ax::mojom::Role::kIgnored, node_data.role);
   }
 
   modal_dialog->Close();

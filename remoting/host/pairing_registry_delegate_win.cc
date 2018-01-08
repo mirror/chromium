@@ -8,10 +8,11 @@
 
 #include "base/json/json_string_value_serializer.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "base/win/registry.h"
+
+#include <windows.h>
 
 namespace remoting {
 
@@ -266,7 +267,7 @@ bool PairingRegistryDelegateWin::Delete(const std::string& client_id) {
 }
 
 std::unique_ptr<PairingRegistry::Delegate> CreatePairingRegistryDelegate() {
-  return base::MakeUnique<PairingRegistryDelegateWin>();
+  return std::make_unique<PairingRegistryDelegateWin>();
 }
 
 }  // namespace remoting

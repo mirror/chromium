@@ -8,15 +8,11 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.util.Pair;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
-
-import java.lang.annotation.Annotation;
-import java.util.Map;
 
 /**
  * The WebContents Java wrapper to allow communicating with the native WebContents object.
@@ -489,7 +485,7 @@ public interface WebContents extends Parcelable {
     void setHasPersistentVideo(boolean value);
 
     /**
-     * Set the view size of WebContents. The size is in physical pixel.
+     * Set the view size of the WebContents. The size is in physical pixels.
      *
      * @param width The width of the view.
      * @param height The height of the view.
@@ -497,73 +493,16 @@ public interface WebContents extends Parcelable {
     void setSize(int width, int height);
 
     /**
-     * Returns JavaScript interface objects previously injected via
-     * {@link #addJavascriptInterface(Object, String)}.
+     * Gets the view size width of the WebContents. The size is in physical pixels.
      *
-     * @return the mapping of names to interface objects and corresponding annotation classes
+     * @return The width of the view.
      */
-    Map<String, Pair<Object, Class>> getJavascriptInterfaces();
+    int getWidth();
 
     /**
-     * Enables or disables inspection of JavaScript objects added via
-     * {@link #addJavascriptInterface(Object, String)} by means of Object.keys() method and
-     * &quot;for .. in&quot; loop. Being able to inspect JavaScript objects is useful
-     * when debugging hybrid Android apps, but can't be enabled for legacy applications due
-     * to compatibility risks.
+     * Gets the view size width of the WebContents. The size is in physical pixels.
      *
-     * @param allow Whether to allow JavaScript objects inspection.
+     * @return The width of the view.
      */
-    void setAllowJavascriptInterfacesInspection(boolean allow);
-
-    /**
-     * This method injects the supplied Java object into the WebContents.
-     * The object is injected into the JavaScript context of the main frame,
-     * using the supplied name. This allows the Java object to be accessed from
-     * JavaScript. Note that that injected objects will not appear in
-     * JavaScript until the page is next (re)loaded. For example:
-     * <pre> view.addJavascriptInterface(new Object(), "injectedObject");
-     * view.loadData("<!DOCTYPE html><title></title>", "text/html", null);
-     * view.loadUrl("javascript:alert(injectedObject.toString())");</pre>
-     * <p><strong>IMPORTANT:</strong>
-     * <ul>
-     * <li> addJavascriptInterface() can be used to allow JavaScript to control
-     * the host application. This is a powerful feature, but also presents a
-     * security risk. Use of this method in a WebContents containing
-     * untrusted content could allow an attacker to manipulate the host
-     * application in unintended ways, executing Java code with the permissions
-     * of the host application. Use extreme care when using this method in a
-     * WebContents which could contain untrusted content. Particular care
-     * should be taken to avoid unintentional access to inherited methods, such
-     * as {@link Object#getClass()}. To prevent access to inherited methods,
-     * pass an annotation for {@code requiredAnnotation}.  This will ensure
-     * that only methods with {@code requiredAnnotation} are exposed to the
-     * Javascript layer.  {@code requiredAnnotation} will be passed to all
-     * subsequently injected Java objects if any methods return an object.  This
-     * means the same restrictions (or lack thereof) will apply.  Alternatively,
-     * {@link #addJavascriptInterface(Object, String)} can be called, which
-     * automatically uses the {@link JavascriptInterface} annotation.
-     * <li> JavaScript interacts with Java objects on a private, background
-     * thread of the WebContents. Care is therefore required to maintain
-     * thread safety.</li>
-     * </ul></p>
-     *
-     * @param object             The Java object to inject into the
-     *                           WebContents's JavaScript context. Null
-     *                           values are ignored.
-     * @param name               The name used to expose the instance in
-     *                           JavaScript.
-     * @param requiredAnnotation Restrict exposed methods to ones with this
-     *                           annotation.  If {@code null} all methods are
-     *                           exposed.
-     *
-     */
-    void addPossiblyUnsafeJavascriptInterface(
-            Object object, String name, Class<? extends Annotation> requiredAnnotation);
-
-    /**
-     * Removes a previously added JavaScript interface with the given name.
-     *
-     * @param name The name of the interface to remove.
-     */
-    void removeJavascriptInterface(String name);
+    int getHeight();
 }

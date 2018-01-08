@@ -91,7 +91,7 @@ struct RendererPreferences;
 //
 // That's it; go to your kitchen, grab a scone, and chill. WebContents will do
 // all the multi-process stuff behind the scenes. More details are at
-// http://www.chromium.org/developers/design-documents/multi-process-architecture
+// https://www.chromium.org/developers/design-documents/multi-process-architecture
 // .
 //
 // Each WebContents has exactly one NavigationController; each
@@ -271,10 +271,10 @@ class WebContents : public PageNavigator,
   // Calls |on_frame| for each frame in the currently active view.
   // Note: The RenderFrameHost parameter is not guaranteed to have a live
   // RenderFrame counterpart in the renderer process. Callbacks should check
-  // IsRenderFrameLive, as sending IPC messages to it in this case will fail
+  // IsRenderFrameLive(), as sending IPC messages to it in this case will fail
   // silently.
   virtual void ForEachFrame(
-      const base::Callback<void(RenderFrameHost*)>& on_frame) = 0;
+      const base::RepeatingCallback<void(RenderFrameHost*)>& on_frame) = 0;
 
   // Returns a vector of all RenderFrameHosts in the currently active view in
   // breadth-first traversal order.
@@ -353,10 +353,6 @@ class WebContents : public PageNavigator,
   // Returns the SiteInstance associated with the current page.
   virtual SiteInstance* GetSiteInstance() const = 0;
 
-  // Returns the SiteInstance for the pending navigation, if any.  Otherwise
-  // returns the current SiteInstance.
-  virtual SiteInstance* GetPendingSiteInstance() const = 0;
-
   // Returns whether this WebContents is loading a resource.
   virtual bool IsLoading() const = 0;
 
@@ -427,9 +423,6 @@ class WebContents : public PageNavigator,
   // was created or shown with WasShown()).
   virtual base::TimeTicks GetLastActiveTime() const = 0;
   virtual void SetLastActiveTime(base::TimeTicks last_active_time) = 0;
-
-  // Get the last time that the WebContents was made hidden.
-  virtual base::TimeTicks GetLastHiddenTime() const = 0;
 
   // Invoked when the WebContents becomes shown/hidden. A hidden WebContents
   // isn't painted on the screen.

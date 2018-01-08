@@ -16,7 +16,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/task_scheduler.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -409,8 +408,7 @@ void WebContentsDestroyedWatcher::WebContentsDestroyed() {
 
 GURL EffectiveURLContentBrowserClient::GetEffectiveURL(
     BrowserContext* browser_context,
-    const GURL& url,
-    bool is_isolated_origin) {
+    const GURL& url) {
   if (url == url_to_modify_)
     return url_to_return_;
   return url;

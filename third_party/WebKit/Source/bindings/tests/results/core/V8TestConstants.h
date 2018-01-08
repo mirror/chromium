@@ -36,12 +36,6 @@ class V8TestConstants {
   }
   CORE_EXPORT static TestConstants* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestConstants>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestConstants>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   static void installFeatureName1(v8::Isolate*, const DOMWrapperWorld&, v8::Local<v8::Object> instance, v8::Local<v8::Object> prototype, v8::Local<v8::Function> interface);
@@ -65,6 +59,7 @@ class V8TestConstants {
 template <>
 struct NativeValueTraits<TestConstants> : public NativeValueTraitsBase<TestConstants> {
   CORE_EXPORT static TestConstants* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static TestConstants* NullValue() { return nullptr; }
 };
 
 template <>

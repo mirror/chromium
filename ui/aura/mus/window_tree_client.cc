@@ -166,17 +166,6 @@ std::unique_ptr<ui::Event> MapEvent(const ui::Event& event) {
   return ui::Event::Clone(event);
 }
 
-// Set the |target| to be the target window of this |event| and send it to
-// the EventSink.
-void DispatchEventToTarget(ui::Event* event, WindowMus* target) {
-  ui::Event::DispatcherApi dispatch_helper(event);
-  // Ignore the target for key events. They need to go to the focused window,
-  // which may have changed by the time we process the event.
-  if (!event->IsKeyEvent())
-    dispatch_helper.set_target(target->GetWindow());
-  GetWindowTreeHostMus(target)->SendEventToSink(event);
-}
-
 // Use for acks from mus that are expected to always succeed and if they don't
 // a crash is triggered.
 void OnAckMustSucceed(const base::Location& from_here, bool success) {
@@ -1478,11 +1467,11 @@ void WindowTreeClient::OnWindowInputEvent(
     uint32_t event_id,
     Id window_id,
     int64_t display_id,
+    Id display_root_window_id,
     const gfx::PointF& event_location_in_screen_pixel_layout,
     std::unique_ptr<ui::Event> event,
     bool matches_pointer_watcher) {
   DCHECK(event);
-
   WindowMus* window = GetWindowByServerId(window_id);  // May be null.
 
   if (matches_pointer_watcher && has_pointer_watcher_) {
@@ -1546,7 +1535,27 @@ void WindowTreeClient::OnWindowInputEvent(
     event_to_dispatch = mapped_event_with_native.get();
   }
 #endif
-  DispatchEventToTarget(event_to_dispatch, window);
+
+  WindowMus* display_root_window = GetWindowByServerId(display_root_window_id);
+  if (display_root_window && event->IsLocatedEvent() &&
+      display::Screen::GetScreen()->GetPrimaryDisplay().id() ==
+          display::kUnifiedDisplayId) {
+    // In Ash's unified desktop mode, each physical display mirrors part of a
+    // single virtual display. Dispatch events to the root window of the mirror
+    // display supplying the event, using locations relative to that display.
+    // Use a null target to ensure events reach the MusUnifiedEventTargeter.
+    // This paralells the behavior of unified desktop mode in classic Ash.
+    ui::Event::DispatcherApi(event_to_dispatch).set_target(nullptr);
+    ui::LocatedEvent* located_event = event_to_dispatch->AsLocatedEvent();
+    located_event->set_location_f(located_event->root_location_f());
+    window = display_root_window;
+  } else if (!event->IsKeyEvent()) {
+    // Set |window| as the target, except for key events. Key events go to the
+    // focused window, which may have changed by the time we process the event.
+    ui::Event::DispatcherApi(event_to_dispatch).set_target(window->GetWindow());
+  }
+  GetWindowTreeHostMus(window)->SendEventToSink(event_to_dispatch);
+
   ack_handler.set_handled(event_to_dispatch->handled());
 }
 
@@ -2213,6 +2222,13 @@ void WindowTreeClient::SwapDisplayRoots(WindowTreeHostMus* window_tree_host1,
   DCHECK_NE(display_id1, display_id2);
   window_tree_host1->set_display_id(display_id2);
   window_tree_host2->set_display_id(display_id1);
+
+  // Swap the accelerated widgets so each host paints to the correct display.
+  gfx::AcceleratedWidget widget1 = window_tree_host1->GetAcceleratedWidget();
+  gfx::AcceleratedWidget widget2 = window_tree_host2->GetAcceleratedWidget();
+  window_tree_host1->OverrideAcceleratedWidget(widget2);
+  window_tree_host2->OverrideAcceleratedWidget(widget1);
+
   if (window_manager_client_) {
     window_manager_client_->SwapDisplayRoots(
         display_id1, display_id2, base::Bind(&OnAckMustSucceed, FROM_HERE));

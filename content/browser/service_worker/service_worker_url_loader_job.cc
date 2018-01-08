@@ -19,6 +19,20 @@
 
 namespace content {
 
+namespace {
+
+bool BodyHasNoDataPipeGetters(const network::ResourceRequestBody* body) {
+  if (!body)
+    return true;
+  for (const auto& elem : *body->elements()) {
+    if (elem.type() == network::DataElement::TYPE_DATA_PIPE)
+      return false;
+  }
+  return true;
+}
+
+}  // namespace
+
 // This class waits for completion of a stream response from the service worker.
 // It calls ServiceWorkerURLLoader::CommitComplete() upon completion of the
 // response.
@@ -59,7 +73,7 @@ class ServiceWorkerURLLoaderJob::StreamWaiter
 ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
     LoaderCallback callback,
     Delegate* delegate,
-    const ResourceRequest& resource_request,
+    const network::ResourceRequest& resource_request,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter)
     : loader_callback_(std::move(callback)),
       delegate_(delegate),
@@ -67,13 +81,13 @@ ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
       url_loader_factory_getter_(std::move(url_loader_factory_getter)),
       binding_(this),
       weak_factory_(this) {
-  DCHECK(
-      ServiceWorkerUtils::IsMainResourceType(resource_request.resource_type));
+  DCHECK(ServiceWorkerUtils::IsMainResourceType(
+      static_cast<ResourceType>(resource_request.resource_type)));
   DCHECK_EQ(network::mojom::FetchRequestMode::kNavigate,
             resource_request_.fetch_request_mode);
   DCHECK_EQ(network::mojom::FetchCredentialsMode::kInclude,
             resource_request_.fetch_credentials_mode);
-  DCHECK_EQ(FetchRedirectMode::MANUAL_MODE,
+  DCHECK_EQ(network::mojom::FetchRedirectMode::kManual,
             resource_request_.fetch_redirect_mode);
   response_head_.load_timing.request_start = base::TimeTicks::Now();
   response_head_.load_timing.request_start_time = base::Time::Now();
@@ -154,10 +168,24 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
     return;
   }
 
+  // ServiceWorkerFetchDispatcher requires a std::unique_ptr<ResourceRequest>
+  // so make one here.
+  // TODO(crbug.com/803125): Try to eliminate unnecessary copying?
+  auto request = std::make_unique<network::ResourceRequest>(resource_request_);
+
+  // Passing the request body over Mojo moves out the DataPipeGetter elements,
+  // which would mean we should clone the body like
+  // ServiceWorkerSubresourceLoader does. But we don't expect DataPipeGetters
+  // here yet: they are only created by the renderer when converting from a
+  // Blob, which doesn't happen for navigations. In interest of speed, just
+  // don't clone until proven necessary.
+  DCHECK(BodyHasNoDataPipeGetters(request->request_body.get()))
+      << "We assumed there would be no data pipe getter elements here, but "
+         "there are. Add code here to clone the body before proceeding.";
+
   // Dispatch the fetch event.
   fetch_dispatcher_ = std::make_unique<ServiceWorkerFetchDispatcher>(
-      std::make_unique<ResourceRequest>(resource_request_), active_worker,
-      base::nullopt /* timeout */,
+      std::move(request), active_worker,
       net::NetLogWithSource() /* TODO(scottmg): net log? */,
       base::BindOnce(&ServiceWorkerURLLoaderJob::DidPrepareFetchEvent,
                      weak_factory_.GetWeakPtr(),
@@ -264,8 +292,8 @@ void ServiceWorkerURLLoaderJob::StartResponse(
     scoped_refptr<ServiceWorkerVersion> version,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
     blink::mojom::BlobPtr body_as_blob,
-    mojom::URLLoaderRequest request,
-    mojom::URLLoaderClientPtr client) {
+    network::mojom::URLLoaderRequest request,
+    network::mojom::URLLoaderClientPtr client) {
   DCHECK(!binding_.is_bound());
   DCHECK(!url_loader_client_.is_bound());
   binding_.Bind(std::move(request));
@@ -333,8 +361,8 @@ void ServiceWorkerURLLoaderJob::StartResponse(
 }
 
 void ServiceWorkerURLLoaderJob::StartErrorResponse(
-    mojom::URLLoaderRequest request,
-    mojom::URLLoaderClientPtr client) {
+    network::mojom::URLLoaderRequest request,
+    network::mojom::URLLoaderClientPtr client) {
   DCHECK_EQ(Status::kStarted, status_);
   DCHECK(!url_loader_client_.is_bound());
   url_loader_client_ = std::move(client);
@@ -345,6 +373,12 @@ void ServiceWorkerURLLoaderJob::StartErrorResponse(
 
 void ServiceWorkerURLLoaderJob::FollowRedirect() {
   NOTIMPLEMENTED();
+}
+
+void ServiceWorkerURLLoaderJob::ProceedWithResponse() {
+  // TODO(arthursonzogni): Implement this for navigation requests if the
+  // ServiceWorker service is enabled before the Network Service.
+  NOTREACHED();
 }
 
 void ServiceWorkerURLLoaderJob::SetPriority(net::RequestPriority priority,

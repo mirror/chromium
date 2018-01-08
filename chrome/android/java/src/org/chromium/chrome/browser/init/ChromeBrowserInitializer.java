@@ -43,12 +43,12 @@ import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelImpl;
 import org.chromium.chrome.browser.webapps.ActivityAssigner;
 import org.chromium.chrome.browser.webapps.ChromeWebApkHost;
 import org.chromium.components.crash.browser.CrashDumpManager;
-import org.chromium.content.app.ContentApplication;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content.browser.DeviceUtils;
 import org.chromium.content.browser.SpeechRecognition;
 import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.policy.CombinedPolicyProvider;
+import org.chromium.ui.base.DeviceFormFactor;
 
 import java.io.File;
 import java.util.Locale;
@@ -211,7 +211,7 @@ public class ChromeBrowserInitializer {
         // Ensure critical files are available, so they aren't blocked on the file-system
         // behind long-running accesses in next phase.
         // Don't do any large file access here!
-        ContentApplication.initCommandLine(mApplication);
+        mApplication.initCommandLine();
         ChromeStrictMode.configureStrictMode();
         ChromeWebApkHost.init();
 
@@ -410,6 +410,8 @@ public class ChromeBrowserInitializer {
                         Log.e(TAG, "Killing process because of locale change.");
                         Process.killProcess(Process.myPid());
                     }
+
+                    DeviceFormFactor.resetValuesIfNeeded(mApplication);
                 }
             }
         };

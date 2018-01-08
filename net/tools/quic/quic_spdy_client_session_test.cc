@@ -8,6 +8,7 @@
 
 #include "net/quic/core/crypto/aes_128_gcm_12_encrypter.h"
 #include "net/quic/core/spdy_utils.h"
+#include "net/quic/core/tls_client_handshaker.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
 #include "net/quic/platform/api/quic_socket_address.h"
@@ -66,7 +67,8 @@ class TestQuicSpdyClientSession : public QuicSpdyClientSession {
 class QuicSpdyClientSessionTest : public QuicTestWithParam<ParsedQuicVersion> {
  protected:
   QuicSpdyClientSessionTest()
-      : crypto_config_(crypto_test_utils::ProofVerifierForTesting()),
+      : crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
+                       TlsClientHandshaker::CreateSslCtx()),
         promised_stream_id_(kInvalidStreamId),
         associated_stream_id_(kInvalidStreamId) {
     Initialize();
@@ -94,7 +96,7 @@ class QuicSpdyClientSessionTest : public QuicTestWithParam<ParsedQuicVersion> {
     push_promise_[":version"] = "HTTP/1.1";
     push_promise_[":method"] = "GET";
     push_promise_[":scheme"] = "https";
-    promise_url_ = SpdyUtils::GetUrlFromHeaderBlock(push_promise_);
+    promise_url_ = SpdyUtils::GetPromisedUrlFromHeaderBlock(push_promise_);
     promised_stream_id_ =
         QuicSpdySessionPeer::GetNthServerInitiatedStreamId(*session_, 0);
     associated_stream_id_ =
@@ -175,7 +177,12 @@ TEST_P(QuicSpdyClientSessionTest, NoEncryptionAfterInitialEncryption) {
 }
 
 TEST_P(QuicSpdyClientSessionTest, MaxNumStreamsWithNoFinOrRst) {
-  EXPECT_CALL(*connection_, SendRstStream(_, _, _)).Times(AnyNumber());
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_)).Times(AnyNumber());
+    EXPECT_CALL(*connection_, OnStreamReset(_, _)).Times(AnyNumber());
+  } else {
+    EXPECT_CALL(*connection_, SendRstStream(_, _, _)).Times(AnyNumber());
+  }
 
   const uint32_t kServerMaxIncomingStreams = 1;
   CompleteCryptoHandshake(kServerMaxIncomingStreams);
@@ -194,7 +201,12 @@ TEST_P(QuicSpdyClientSessionTest, MaxNumStreamsWithNoFinOrRst) {
 }
 
 TEST_P(QuicSpdyClientSessionTest, MaxNumStreamsWithRst) {
-  EXPECT_CALL(*connection_, SendRstStream(_, _, _)).Times(AnyNumber());
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_)).Times(AnyNumber());
+    EXPECT_CALL(*connection_, OnStreamReset(_, _)).Times(AnyNumber());
+  } else {
+    EXPECT_CALL(*connection_, SendRstStream(_, _, _)).Times(AnyNumber());
+  }
 
   const uint32_t kServerMaxIncomingStreams = 1;
   CompleteCryptoHandshake(kServerMaxIncomingStreams);
@@ -226,7 +238,12 @@ TEST_P(QuicSpdyClientSessionTest, ResetAndTrailers) {
   EXPECT_FALSE(session_->CreateOutgoingDynamicStream());
 
   QuicStreamId stream_id = stream->id();
-  EXPECT_CALL(*connection_, SendRstStream(_, _, _)).Times(1);
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_)).Times(1);
+    EXPECT_CALL(*connection_, OnStreamReset(_, _)).Times(1);
+  } else {
+    EXPECT_CALL(*connection_, SendRstStream(_, _, _)).Times(1);
+  }
   session_->SendRstStream(stream_id, QUIC_STREAM_PEER_GOING_AWAY, 0);
 
   // A new stream cannot be created as the reset stream still counts as an open
@@ -262,7 +279,12 @@ TEST_P(QuicSpdyClientSessionTest, ReceivedMalformedTrailersAfterSendingRst) {
   // Send the RST, which results in the stream being closed locally (but some
   // state remains while the client waits for a response from the server).
   QuicStreamId stream_id = stream->id();
-  EXPECT_CALL(*connection_, SendRstStream(_, _, _)).Times(1);
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_)).Times(1);
+    EXPECT_CALL(*connection_, OnStreamReset(_, _)).Times(1);
+  } else {
+    EXPECT_CALL(*connection_, SendRstStream(_, _, _)).Times(1);
+  }
   session_->SendRstStream(stream_id, QUIC_STREAM_PEER_GOING_AWAY, 0);
 
   // The stream receives trailers with final byte offset, but the header value
@@ -369,8 +391,14 @@ TEST_P(QuicSpdyClientSessionTest, PushPromiseOnPromiseHeadersAlreadyClosed) {
 
   session_->CreateOutgoingDynamicStream();
 
-  EXPECT_CALL(*connection_,
-              SendRstStream(associated_stream_id_, QUIC_REFUSED_STREAM, 0));
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_));
+    EXPECT_CALL(*connection_,
+                OnStreamReset(associated_stream_id_, QUIC_REFUSED_STREAM));
+  } else {
+    EXPECT_CALL(*connection_,
+                SendRstStream(associated_stream_id_, QUIC_REFUSED_STREAM, 0));
+  }
   session_->ResetPromised(associated_stream_id_, QUIC_REFUSED_STREAM);
 
   session_->OnPromiseHeaderList(associated_stream_id_, promised_stream_id_, 0,
@@ -417,8 +445,14 @@ TEST_P(QuicSpdyClientSessionTest, PushPromiseAlreadyClosed) {
   session_->CreateOutgoingDynamicStream();
   session_->GetOrCreateStream(promised_stream_id_);
 
-  EXPECT_CALL(*connection_,
-              SendRstStream(promised_stream_id_, QUIC_REFUSED_STREAM, 0));
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_));
+    EXPECT_CALL(*connection_,
+                OnStreamReset(promised_stream_id_, QUIC_REFUSED_STREAM));
+  } else {
+    EXPECT_CALL(*connection_,
+                SendRstStream(promised_stream_id_, QUIC_REFUSED_STREAM, 0));
+  }
 
   session_->ResetPromised(promised_stream_id_, QUIC_REFUSED_STREAM);
   SpdyHeaderBlock promise_headers;
@@ -443,8 +477,14 @@ TEST_P(QuicSpdyClientSessionTest, PushPromiseDuplicateUrl) {
   EXPECT_NE(session_->GetPromisedByUrl(promise_url_), nullptr);
 
   promised_stream_id_ += 2;
-  EXPECT_CALL(*connection_, SendRstStream(promised_stream_id_,
-                                          QUIC_DUPLICATE_PROMISE_URL, 0));
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_));
+    EXPECT_CALL(*connection_,
+                OnStreamReset(promised_stream_id_, QUIC_DUPLICATE_PROMISE_URL));
+  } else {
+    EXPECT_CALL(*connection_, SendRstStream(promised_stream_id_,
+                                            QUIC_DUPLICATE_PROMISE_URL, 0));
+  }
 
   session_->HandlePromised(associated_stream_id_, promised_stream_id_,
                            push_promise_);
@@ -462,7 +502,7 @@ TEST_P(QuicSpdyClientSessionTest, ReceivingPromiseEnhanceYourCalm) {
     session_->HandlePromised(associated_stream_id_, id, push_promise_);
 
     // Verify that the promise is in the unclaimed streams map.
-    string promise_url(SpdyUtils::GetUrlFromHeaderBlock(push_promise_));
+    string promise_url(SpdyUtils::GetPromisedUrlFromHeaderBlock(push_promise_));
     EXPECT_NE(session_->GetPromisedByUrl(promise_url), nullptr);
     EXPECT_NE(session_->GetPromisedById(id), nullptr);
   }
@@ -472,11 +512,16 @@ TEST_P(QuicSpdyClientSessionTest, ReceivingPromiseEnhanceYourCalm) {
   push_promise_[":path"] = QuicStringPrintf("/bar%d", i);
 
   QuicStreamId id = promised_stream_id_ + i * 2;
-  EXPECT_CALL(*connection_, SendRstStream(id, QUIC_REFUSED_STREAM, 0));
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_));
+    EXPECT_CALL(*connection_, OnStreamReset(id, QUIC_REFUSED_STREAM));
+  } else {
+    EXPECT_CALL(*connection_, SendRstStream(id, QUIC_REFUSED_STREAM, 0));
+  }
   session_->HandlePromised(associated_stream_id_, id, push_promise_);
 
   // Verify that the promise was not created.
-  string promise_url(SpdyUtils::GetUrlFromHeaderBlock(push_promise_));
+  string promise_url(SpdyUtils::GetPromisedUrlFromHeaderBlock(push_promise_));
   EXPECT_EQ(session_->GetPromisedById(id), nullptr);
   EXPECT_EQ(session_->GetPromisedByUrl(promise_url), nullptr);
 }
@@ -486,8 +531,14 @@ TEST_P(QuicSpdyClientSessionTest, IsClosedTrueAfterResetPromisedAlreadyOpen) {
   CompleteCryptoHandshake();
 
   session_->GetOrCreateStream(promised_stream_id_);
-  EXPECT_CALL(*connection_,
-              SendRstStream(promised_stream_id_, QUIC_REFUSED_STREAM, 0));
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_));
+    EXPECT_CALL(*connection_,
+                OnStreamReset(promised_stream_id_, QUIC_REFUSED_STREAM));
+  } else {
+    EXPECT_CALL(*connection_,
+                SendRstStream(promised_stream_id_, QUIC_REFUSED_STREAM, 0));
+  }
   session_->ResetPromised(promised_stream_id_, QUIC_REFUSED_STREAM);
   EXPECT_TRUE(session_->IsClosedStream(promised_stream_id_));
 }
@@ -496,8 +547,14 @@ TEST_P(QuicSpdyClientSessionTest, IsClosedTrueAfterResetPromisedNonexistant) {
   // Initialize crypto before the client session will create a stream.
   CompleteCryptoHandshake();
 
-  EXPECT_CALL(*connection_,
-              SendRstStream(promised_stream_id_, QUIC_REFUSED_STREAM, 0));
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_));
+    EXPECT_CALL(*connection_,
+                OnStreamReset(promised_stream_id_, QUIC_REFUSED_STREAM));
+  } else {
+    EXPECT_CALL(*connection_,
+                SendRstStream(promised_stream_id_, QUIC_REFUSED_STREAM, 0));
+  }
   session_->ResetPromised(promised_stream_id_, QUIC_REFUSED_STREAM);
   EXPECT_TRUE(session_->IsClosedStream(promised_stream_id_));
 }
@@ -545,8 +602,14 @@ TEST_P(QuicSpdyClientSessionTest, ResetPromised) {
   session_->GetOrCreateStream(promised_stream_id_);
   session_->HandlePromised(associated_stream_id_, promised_stream_id_,
                            push_promise_);
-  EXPECT_CALL(*connection_, SendRstStream(promised_stream_id_,
-                                          QUIC_STREAM_PEER_GOING_AWAY, 0));
+  if (session_->use_control_frame_manager()) {
+    EXPECT_CALL(*connection_, SendControlFrame(_));
+    EXPECT_CALL(*connection_, OnStreamReset(promised_stream_id_,
+                                            QUIC_STREAM_PEER_GOING_AWAY));
+  } else {
+    EXPECT_CALL(*connection_, SendRstStream(promised_stream_id_,
+                                            QUIC_STREAM_PEER_GOING_AWAY, 0));
+  }
   session_->SendRstStream(promised_stream_id_, QUIC_STREAM_PEER_GOING_AWAY, 0);
   QuicClientPromisedInfo* promised =
       session_->GetPromisedById(promised_stream_id_);

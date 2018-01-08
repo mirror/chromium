@@ -29,12 +29,11 @@ class IdleRequestCallbackWrapper
       ScriptedIdleTaskController* controller) {
     return base::AdoptRef(new IdleRequestCallbackWrapper(id, controller));
   }
-  virtual ~IdleRequestCallbackWrapper() {}
+  virtual ~IdleRequestCallbackWrapper() = default;
 
   static void IdleTaskFired(
       scoped_refptr<IdleRequestCallbackWrapper> callback_wrapper,
       double deadline_seconds) {
-    // TODO(rmcilroy): Implement clamping of deadline in some form.
     if (ScriptedIdleTaskController* controller =
             callback_wrapper->Controller()) {
       // If we are going to yield immediately, reschedule the callback for
@@ -108,7 +107,7 @@ ScriptedIdleTaskController::ScriptedIdleTaskController(
   PauseIfNeeded();
 }
 
-ScriptedIdleTaskController::~ScriptedIdleTaskController() {}
+ScriptedIdleTaskController::~ScriptedIdleTaskController() = default;
 
 void ScriptedIdleTaskController::Trace(blink::Visitor* visitor) {
   visitor->Trace(idle_tasks_);
@@ -222,11 +221,6 @@ void ScriptedIdleTaskController::RunCallback(
 
   double allotted_time_millis =
       std::max((deadline_seconds - CurrentTimeTicksInSeconds()) * 1000, 0.0);
-
-  DEFINE_STATIC_LOCAL(
-      CustomCountHistogram, idle_callback_deadline_histogram,
-      ("WebCore.ScriptedIdleTaskController.IdleCallbackDeadline", 0, 50, 50));
-  idle_callback_deadline_histogram.Count(allotted_time_millis);
 
   probe::AsyncTask async_task(GetExecutionContext(), idle_task);
   probe::UserCallback probe(GetExecutionContext(), "requestIdleCallback",

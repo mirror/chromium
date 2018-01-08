@@ -34,8 +34,10 @@ _CONFIG = [
             'base::Location',
             'base::MakeRefCounted',
             'base::Optional',
-            'base::RunLoop',
             'base::SingleThreadTaskRunner',
+            'base::Time',
+            'base::TimeDelta',
+            'base::TimeTicks',
             'base::UnguessableToken',
             'base::WeakPtr',
             'base::WeakPtrFactory',
@@ -47,7 +49,6 @@ _CONFIG = [
 
             # //base/callback.h is allowed, but you need to use WTF::Bind or
             # WTF::BindRepeating to create callbacks in Blink.
-            'base::BarrierClosure',
             'base::OnceCallback',
             'base::OnceClosure',
             'base::RepeatingCallback',
@@ -90,7 +91,10 @@ _CONFIG = [
 
             # Blink uses Mojo, so it needs mojo::Binding, mojo::InterfacePtr, et
             # cetera, as well as generated Mojo bindings.
-            'mojo::.+',
+            # Note that the Mojo callback helpers are explicitly forbidden:
+            # Blink already has a signal for contexts being destroyed, and
+            # other types of failures should be explicitly signalled.
+            'mojo::(?!WrapCallback).+',
             '(?:.+::)?mojom::.+',
             "service_manager::BinderRegistry",
             # TODO(dcheng): Remove this once Connector isn't needed in Blink
@@ -134,12 +138,9 @@ _CONFIG = [
             'third_party/WebKit/Source/modules/webgl/',
             'third_party/WebKit/Source/modules/xr/',
         ],
-        # These modules need access to GL drawing, cross-process image
-        # transport, and related interfaces.
+        # These modules need access to GL drawing.
         'allowed': [
-            'gfx::GpuMemoryBufferHandle',
             'gpu::gles2::GLES2Interface',
-            'gpu::MailboxHolder',
         ],
     },
     {

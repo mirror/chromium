@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/callback_helpers.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -288,7 +289,7 @@ void BrowsingDataRemoverImpl::RemoveImpl(
   // 3. Do not support partial deletion, i.e. only delete your data if
   //    |filter_builder.IsEmptyBlacklist()|. Add a comment explaining why this
   //    is acceptable.
-  base::OnceClosure synchronous_clear_operations(
+  base::ScopedClosureRunner synchronous_clear_operations(
       CreatePendingTaskCompletionClosure());
 
   // crbug.com/140910: Many places were calling this with base::Time() as
@@ -335,6 +336,7 @@ void BrowsingDataRemoverImpl::RemoveImpl(
   // Channel IDs are not separated for protected and unprotected web
   // origins. We check the origin_type_mask_ to prevent unintended deletion.
   if (remove_mask & DATA_TYPE_CHANNEL_IDS &&
+      !(remove_mask & DATA_TYPE_AVOID_CLOSING_CONNECTIONS) &&
       origin_type_mask_ & ORIGIN_TYPE_UNPROTECTED_WEB) {
     base::RecordAction(UserMetricsAction("ClearBrowsingData_ChannelIDs"));
     // Since we are running on the UI thread don't call GetURLRequestContext().
@@ -465,7 +467,8 @@ void BrowsingDataRemoverImpl::RemoveImpl(
 
   //////////////////////////////////////////////////////////////////////////////
   // Auth cache.
-  if (remove_mask & DATA_TYPE_COOKIES) {
+  if ((remove_mask & DATA_TYPE_COOKIES) &&
+      !(remove_mask & DATA_TYPE_AVOID_CLOSING_CONNECTIONS)) {
     scoped_refptr<net::URLRequestContextGetter> request_context =
         BrowserContext::GetDefaultStoragePartition(browser_context_)
             ->GetURLRequestContext();
@@ -483,9 +486,6 @@ void BrowsingDataRemoverImpl::RemoveImpl(
         delete_begin_, delete_end_, remove_mask, filter_builder,
         origin_type_mask, CreatePendingTaskCompletionClosure());
   }
-
-  // Notify in case all actions taken were synchronous.
-  std::move(synchronous_clear_operations).Run();
 }
 
 void BrowsingDataRemoverImpl::AddObserver(Observer* observer) {
@@ -602,7 +602,7 @@ base::OnceClosure
 BrowsingDataRemoverImpl::CreatePendingTaskCompletionClosure() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   num_pending_tasks_++;
-  return base::Bind(&BrowsingDataRemoverImpl::OnTaskComplete, GetWeakPtr());
+  return base::BindOnce(&BrowsingDataRemoverImpl::OnTaskComplete, GetWeakPtr());
 }
 
 base::WeakPtr<BrowsingDataRemoverImpl> BrowsingDataRemoverImpl::GetWeakPtr() {

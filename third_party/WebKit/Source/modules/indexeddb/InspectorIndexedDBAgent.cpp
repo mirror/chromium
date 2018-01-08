@@ -30,6 +30,9 @@
 
 #include "modules/indexeddb/InspectorIndexedDBAgent.h"
 
+#include <memory>
+#include <utility>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
@@ -120,7 +123,7 @@ class GetDatabaseNamesCallback final : public EventListener {
                                         security_origin);
   }
 
-  ~GetDatabaseNamesCallback() override {}
+  ~GetDatabaseNamesCallback() override = default;
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -171,7 +174,7 @@ class DeleteCallback final : public EventListener {
     return new DeleteCallback(std::move(request_callback), security_origin);
   }
 
-  ~DeleteCallback() override {}
+  ~DeleteCallback() override = default;
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -207,7 +210,7 @@ template <typename RequestCallback>
 class ExecutableWithDatabase
     : public RefCounted<ExecutableWithDatabase<RequestCallback>> {
  public:
-  virtual ~ExecutableWithDatabase() {}
+  virtual ~ExecutableWithDatabase() = default;
   virtual void Execute(IDBDatabase*, ScriptState*) = 0;
   virtual RequestCallback* GetRequestCallback() = 0;
   void Start(LocalFrame* frame, const String& database_name) {
@@ -270,7 +273,7 @@ class OpenDatabaseCallback final : public EventListener {
     return new OpenDatabaseCallback(executable_with_database, script_state);
   }
 
-  ~OpenDatabaseCallback() override {}
+  ~OpenDatabaseCallback() override = default;
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -318,7 +321,7 @@ class UpgradeDatabaseCallback final : public EventListener {
     return new UpgradeDatabaseCallback(executable_with_database);
   }
 
-  ~UpgradeDatabaseCallback() override {}
+  ~UpgradeDatabaseCallback() override = default;
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -396,7 +399,7 @@ static std::unique_ptr<KeyPath> KeyPathFromIDBKeyPath(
     case IDBKeyPath::kStringType:
       key_path = KeyPath::create()
                      .setType(KeyPath::TypeEnum::String)
-                     .setString(idb_key_path.GetString())
+                     .setString(idb_key_path.String())
                      .build();
       break;
     case IDBKeyPath::kArrayType: {
@@ -424,7 +427,7 @@ class DatabaseLoader final
     return base::AdoptRef(new DatabaseLoader(std::move(request_callback)));
   }
 
-  ~DatabaseLoader() override {}
+  ~DatabaseLoader() override = default;
 
   void Execute(IDBDatabase* idb_database, ScriptState*) override {
     const IDBDatabaseMetadata database_metadata = idb_database->Metadata();
@@ -483,8 +486,9 @@ class DatabaseLoader final
   std::unique_ptr<RequestDatabaseCallback> request_callback_;
 };
 
-static IDBKey* IdbKeyFromInspectorObject(protocol::IndexedDB::Key* key) {
-  IDBKey* idb_key;
+static std::unique_ptr<IDBKey> IdbKeyFromInspectorObject(
+    protocol::IndexedDB::Key* key) {
+  std::unique_ptr<IDBKey> idb_key;
 
   if (!key)
     return nullptr;
@@ -512,7 +516,7 @@ static IDBKey* IdbKeyFromInspectorObject(protocol::IndexedDB::Key* key) {
     auto array = key->getArray(nullptr);
     for (size_t i = 0; array && i < array->length(); ++i)
       key_array.push_back(IdbKeyFromInspectorObject(array->get(i)));
-    idb_key = IDBKey::CreateArray(key_array);
+    idb_key = IDBKey::CreateArray(std::move(key_array));
   } else {
     return nullptr;
   }
@@ -522,11 +526,13 @@ static IDBKey* IdbKeyFromInspectorObject(protocol::IndexedDB::Key* key) {
 
 static IDBKeyRange* IdbKeyRangeFromKeyRange(
     protocol::IndexedDB::KeyRange* key_range) {
-  IDBKey* idb_lower = IdbKeyFromInspectorObject(key_range->getLower(nullptr));
+  std::unique_ptr<IDBKey> idb_lower =
+      IdbKeyFromInspectorObject(key_range->getLower(nullptr));
   if (key_range->hasLower() && !idb_lower)
     return nullptr;
 
-  IDBKey* idb_upper = IdbKeyFromInspectorObject(key_range->getUpper(nullptr));
+  std::unique_ptr<IDBKey> idb_upper =
+      IdbKeyFromInspectorObject(key_range->getUpper(nullptr));
   if (key_range->hasUpper() && !idb_upper)
     return nullptr;
 
@@ -536,8 +542,8 @@ static IDBKeyRange* IdbKeyRangeFromKeyRange(
   IDBKeyRange::UpperBoundType upper_bound_type =
       key_range->getUpperOpen() ? IDBKeyRange::kUpperBoundOpen
                                 : IDBKeyRange::kUpperBoundClosed;
-  return IDBKeyRange::Create(idb_lower, idb_upper, lower_bound_type,
-                             upper_bound_type);
+  return IDBKeyRange::Create(std::move(idb_lower), std::move(idb_upper),
+                             lower_bound_type, upper_bound_type);
 }
 
 class DataLoader;
@@ -555,7 +561,7 @@ class OpenCursorCallback final : public EventListener {
                                   page_size);
   }
 
-  ~OpenCursorCallback() override {}
+  ~OpenCursorCallback() override = default;
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -676,7 +682,7 @@ class DataLoader final : public ExecutableWithDatabase<RequestDataCallback> {
         idb_key_range, skip_count, page_size));
   }
 
-  ~DataLoader() override {}
+  ~DataLoader() override = default;
 
   void Execute(IDBDatabase* idb_database, ScriptState* script_state) override {
     IDBTransaction* idb_transaction =
@@ -750,7 +756,7 @@ InspectorIndexedDBAgent::InspectorIndexedDBAgent(
     v8_inspector::V8InspectorSession* v8_session)
     : inspected_frames_(inspected_frames), v8_session_(v8_session) {}
 
-InspectorIndexedDBAgent::~InspectorIndexedDBAgent() {}
+InspectorIndexedDBAgent::~InspectorIndexedDBAgent() = default;
 
 void InspectorIndexedDBAgent::Restore() {
   if (state_->booleanProperty(IndexedDBAgentState::kIndexedDBAgentEnabled,
@@ -863,7 +869,7 @@ class DeleteObjectStoreEntriesListener final : public EventListener {
     return new DeleteObjectStoreEntriesListener(std::move(request_callback));
   }
 
-  ~DeleteObjectStoreEntriesListener() override {}
+  ~DeleteObjectStoreEntriesListener() override = default;
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -972,7 +978,7 @@ class ClearObjectStoreListener final : public EventListener {
     return new ClearObjectStoreListener(std::move(request_callback));
   }
 
-  ~ClearObjectStoreListener() override {}
+  ~ClearObjectStoreListener() override = default;
 
   bool operator==(const EventListener& other) const override {
     return this == &other;

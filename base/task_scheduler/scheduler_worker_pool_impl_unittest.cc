@@ -75,7 +75,7 @@ class TaskSchedulerWorkerPoolImplTestBase {
 
   void CommonTearDown() {
     service_thread_.Stop();
-    task_tracker_.Flush();
+    task_tracker_.FlushForTesting();
     worker_pool_->WaitForAllWorkersIdleForTesting();
     worker_pool_->JoinForTesting();
   }
@@ -85,7 +85,7 @@ class TaskSchedulerWorkerPoolImplTestBase {
     service_thread_.Start();
     delayed_task_manager_.Start(service_thread_.task_runner());
     worker_pool_ = std::make_unique<SchedulerWorkerPoolImpl>(
-        "TestWorkerPool", ThreadPriority::NORMAL, &task_tracker_,
+        "TestWorkerPool", "A", ThreadPriority::NORMAL, &task_tracker_,
         &delayed_task_manager_);
     ASSERT_TRUE(worker_pool_);
   }
@@ -107,7 +107,7 @@ class TaskSchedulerWorkerPoolImplTestBase {
 
   std::unique_ptr<SchedulerWorkerPoolImpl> worker_pool_;
 
-  TaskTracker task_tracker_;
+  TaskTracker task_tracker_ = {"Test"};
   Thread service_thread_;
 
  private:
@@ -422,7 +422,7 @@ TEST_F(TaskSchedulerWorkerPoolImplPostTaskBeforeStartTest,
   EXPECT_NE(task_1_thread_ref, task_2_thread_ref);
 
   barrier.Signal();
-  task_tracker_.Flush();
+  task_tracker_.FlushForTesting();
 }
 
 // Verify that posting many tasks before Start will cause the number of workers
@@ -779,13 +779,13 @@ TEST_F(TaskSchedulerWorkerPoolHistogramTest, NumTasksBeforeCleanup) {
 }
 
 TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, InitOne) {
-  TaskTracker task_tracker;
+  TaskTracker task_tracker("Test");
   DelayedTaskManager delayed_task_manager;
   scoped_refptr<TaskRunner> service_thread_task_runner =
       MakeRefCounted<TestSimpleTaskRunner>();
   delayed_task_manager.Start(service_thread_task_runner);
   auto worker_pool = std::make_unique<SchedulerWorkerPoolImpl>(
-      "OnePolicyWorkerPool", ThreadPriority::NORMAL, &task_tracker,
+      "OnePolicyWorkerPool", "A", ThreadPriority::NORMAL, &task_tracker,
       &delayed_task_manager);
   worker_pool->Start(SchedulerWorkerPoolParams(8U, TimeDelta::Max()),
                      service_thread_task_runner,
@@ -800,13 +800,13 @@ TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, InitOne) {
 TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, VerifyStandbyThread) {
   constexpr size_t worker_capacity = 3;
 
-  TaskTracker task_tracker;
+  TaskTracker task_tracker("Test");
   DelayedTaskManager delayed_task_manager;
   scoped_refptr<TaskRunner> service_thread_task_runner =
       MakeRefCounted<TestSimpleTaskRunner>();
   delayed_task_manager.Start(service_thread_task_runner);
   auto worker_pool = std::make_unique<SchedulerWorkerPoolImpl>(
-      "StandbyThreadWorkerPool", ThreadPriority::NORMAL, &task_tracker,
+      "StandbyThreadWorkerPool", "A", ThreadPriority::NORMAL, &task_tracker,
       &delayed_task_manager);
   worker_pool->Start(
       SchedulerWorkerPoolParams(worker_capacity, kReclaimTimeForCleanupTests),
@@ -1012,7 +1012,7 @@ TEST_P(TaskSchedulerWorkerPoolBlockingTest, ThreadBlockedUnblocked) {
             2 * kNumWorkersInWorkerPool);
 
   UnblockTasks();
-  task_tracker_.Flush();
+  task_tracker_.FlushForTesting();
   EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
             kNumWorkersInWorkerPool);
 }
@@ -1106,7 +1106,7 @@ TEST_P(TaskSchedulerWorkerPoolBlockingTest, PostBeforeBlocking) {
   extra_threads_continue.Signal();
 
   thread_continue.Signal();
-  task_tracker_.Flush();
+  task_tracker_.FlushForTesting();
 }
 // Verify that workers become idle when the pool is over-capacity and that
 // those workers do no work.
@@ -1192,7 +1192,7 @@ TEST_P(TaskSchedulerWorkerPoolBlockingTest, WorkersIdleWhenOverCapacity) {
   is_exiting.Set();
   // Unblocks the new workers.
   thread_continue.Signal();
-  task_tracker_.Flush();
+  task_tracker_.FlushForTesting();
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -1231,7 +1231,7 @@ TEST_F(TaskSchedulerWorkerPoolBlockingTest, ThreadBlockUnblockPremature) {
             kNumWorkersInWorkerPool);
 
   UnblockTasks();
-  task_tracker_.Flush();
+  task_tracker_.FlushForTesting();
   EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
             kNumWorkersInWorkerPool);
 }
@@ -1312,7 +1312,7 @@ TEST_F(TaskSchedulerWorkerPoolBlockingTest,
 
   // Tear down.
   can_return.Signal();
-  task_tracker_.Flush();
+  task_tracker_.FlushForTesting();
   EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
             kNumWorkersInWorkerPool);
 }
@@ -1322,12 +1322,12 @@ TEST_F(TaskSchedulerWorkerPoolBlockingTest,
 TEST(TaskSchedulerWorkerPoolOverWorkerCapacityTest, VerifyCleanup) {
   constexpr size_t kWorkerCapacity = 3;
 
-  TaskTracker task_tracker;
+  TaskTracker task_tracker("Test");
   DelayedTaskManager delayed_task_manager;
   scoped_refptr<TaskRunner> service_thread_task_runner =
       MakeRefCounted<TestSimpleTaskRunner>();
   delayed_task_manager.Start(service_thread_task_runner);
-  SchedulerWorkerPoolImpl worker_pool("OverWorkerCapacityTestWorkerPool",
+  SchedulerWorkerPoolImpl worker_pool("OverWorkerCapacityTestWorkerPool", "A",
                                       ThreadPriority::NORMAL, &task_tracker,
                                       &delayed_task_manager);
   worker_pool.Start(
@@ -1530,7 +1530,7 @@ TEST_F(TaskSchedulerWorkerPoolBlockingTest, MaximumWorkersTest) {
             kNumWorkersInWorkerPool + kNumExtraTasks);
   late_release_thread_contine.Signal();
   final_tasks_continue.Signal();
-  task_tracker_.Flush();
+  task_tracker_.FlushForTesting();
 }
 
 }  // namespace internal

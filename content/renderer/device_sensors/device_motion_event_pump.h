@@ -32,18 +32,21 @@ class CONTENT_EXPORT DeviceMotionEventPump
   // DeviceSensorEventPump:
   void FireEvent() override;
 
+  void SendStartMessageImpl();
+
   SensorEntry accelerometer_;
   SensorEntry linear_acceleration_sensor_;
   SensorEntry gyroscope_;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(DeviceMotionEventPumpTest,
-                           SensorInitializedButItsSharedBufferIsNot);
+  friend class DeviceMotionEventPumpTest;
 
   // DeviceSensorEventPump:
-  bool SensorSharedBuffersReady() const override;
+  bool SensorsReadyOrErrored() const override;
 
   void GetDataFromSharedMemory(device::MotionData* data);
+
+  bool ShouldFireEvent(const device::MotionData& data) const;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceMotionEventPump);
 };

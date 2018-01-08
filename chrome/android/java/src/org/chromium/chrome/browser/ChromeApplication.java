@@ -9,6 +9,7 @@ import android.content.Context;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.BaseChromiumApplication;
 import org.chromium.base.CommandLineInitUtil;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
@@ -29,14 +30,13 @@ import org.chromium.chrome.browser.tabmodel.document.ActivityDelegateImpl;
 import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelSelector;
 import org.chromium.chrome.browser.tabmodel.document.StorageDelegate;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
-import org.chromium.content.app.ContentApplication;
 
 /**
  * Basic application functionality that should be shared among all browser applications that use
  * chrome layer.
  */
 @MainDex
-public class ChromeApplication extends ContentApplication {
+public class ChromeApplication extends BaseChromiumApplication {
     public static final String COMMAND_LINE_FILE = "chrome-command-line";
     private static final String TAG = "ChromiumApplication";
 
@@ -48,6 +48,7 @@ public class ChromeApplication extends ContentApplication {
         super.attachBaseContext(base);
         ContextUtils.initApplicationContext(this);
         BuildHooksAndroid.initCustomResources(this);
+        ApplicationStatus.initialize(this);
         Boolean isIsolatedProcess = PureJavaExceptionReporter.detectIsIsolatedProcess();
         if (isIsolatedProcess != null && !isIsolatedProcess.booleanValue()) {
             PureJavaExceptionHandler.installHandler();
@@ -98,7 +99,6 @@ public class ChromeApplication extends ContentApplication {
         InvalidStartupDialog.show(activity, e.getErrorCode());
     }
 
-    @Override
     public void initCommandLine() {
         CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE);
     }

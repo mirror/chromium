@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/content_setting_bubble_contents.h"
 
 #include <algorithm>
+#include <memory>
 #include <set>
 #include <string>
 #include <utility>
@@ -223,6 +224,7 @@ void ContentSettingBubbleContents::ListItemContainer::AddItem(
     icon->SetImage(item.image.AsImageSkia());
     label = new views::Label(item.title);
   }
+  label->SetHorizontalAlignment(gfx::HorizontalAlignment::ALIGN_LEFT);
   list_item_views_.push_back(Row(icon, label));
   AddRowToLayout(list_item_views_.back());
 }
@@ -511,7 +513,7 @@ void ContentSettingBubbleContents::Init() {
            bubble_content.domain_lists.begin());
        i != bubble_content.domain_lists.end(); ++i) {
     auto list_view =
-        base::MakeUnique<ContentSettingDomainListView>(i->title, i->hosts);
+        std::make_unique<ContentSettingDomainListView>(i->title, i->hosts);
     layout->StartRow(0, kSingleColumnSetId);
     layout->AddView(list_view.release());
     bubble_content_empty = false;
@@ -520,6 +522,7 @@ void ContentSettingBubbleContents::Init() {
   if (!bubble_content.custom_link.empty()) {
     custom_link_ = new views::Link(bubble_content.custom_link);
     custom_link_->SetEnabled(bubble_content.custom_link_enabled);
+    custom_link_->SetMultiLine(true);
     custom_link_->set_listener(this);
     if (!bubble_content_empty)
       layout->AddPaddingRow(0, related_control_vertical_spacing);

@@ -20,13 +20,109 @@ sys.path.append(build_utils.COLORAMA_ROOT)
 import colorama
 
 
-def ColorJavacOutput(output):
+ERRORPRONE_WARNINGS_TO_TURN_OFF = [
+  # TODO(crbug.com/801208): Follow steps in bug.
+  'FloatingPointLiteralPrecision',
+  # TODO(crbug.com/801210): Follow steps in bug.
+  'SynchronizeOnNonFinalField',
+  # TODO(crbug.com/801253): Follow steps in bug.
+  'JavaLangClash',
+  # TODO(crbug.com/801261): Follow steps in bug
+  'ArgumentSelectionDefectChecker',
+  # TODO(crbug.com/801268): Follow steps in bug.
+  'NarrowingCompoundAssignment',
+  # TODO(crbug.com/802073): Follow steps in bug.
+  'TypeParameterUnusedInFormals',
+  # TODO(crbug.com/802075): Follow steps in bug.
+  'ReferenceEquality',
+  # TODO(crbug.com/803482): Follow steps in bug.
+  'UseCorrectAssertInTests',
+  # TODO(crbug.com/803484): Follow steps in bug.
+  'CatchFail',
+  # TODO(crbug.com/803485): Follow steps in bug.
+  'JUnitAmbiguousTestClass',
+  # TODO(crbug.com/803486): Follow steps in bug.
+  'AssertionFailureIgnored',
+  # TODO(crbug.com/803587): Follow steps in bug.
+  'MissingOverride',
+  # TODO(crbug.com/803589): Follow steps in bug.
+  'MissingFail',
+  # TODO(crbug.com/803625): Follow steps in bug.
+  'StaticGuardedByInstance',
+  # Android platform default is always UTF-8.
+  # https://developer.android.com/reference/java/nio/charset/Charset.html#defaultCharset()
+  'DefaultCharset',
+  # Low priority since the alternatives still work.
+  'JdkObsolete',
+  # We don't use that many lambdas.
+  'FunctionalInterfaceClash',
+  # There are lots of times when we just want to post a task.
+  'FutureReturnValueIgnored',
+  # Nice to be explicit about operators, but not necessary.
+  'OperatorPrecedence',
+  # Just false positives in our code.
+  'ThreadJoinLoop',
+  # Alias of ParameterName warning.
+  'NamedParameters',
+  # Low priority corner cases with String.split.
+  # Linking Guava and using Splitter was rejected
+  # in the https://chromium-review.googlesource.com/c/chromium/src/+/871630.
+  'StringSplitter',
+  # Preferred to use another method since it propagates exceptions better.
+  'ClassNewInstance',
+  # Nice to have static inner classes but not necessary.
+  'ClassCanBeStatic',
+  # Explicit is better than implicit.
+  'FloatCast',
+  # Results in false positives.
+  'ThreadLocalUsage',
+  # Also just false positives.
+  'Finally',
+  # False positives for Chromium.
+  'FragmentNotInstantiable',
+  # Low priority to fix.
+  'HidingField',
+  # Low priority.
+  'IntLongMath',
+  # Low priority.
+  'BadComparable',
+  # Low priority.
+  'EqualsHashCode',
+  # Nice to fix but low priority.
+  'TypeParameterShadowing',
+  # Good to have immutable enums, also low priority.
+  'ImmutableEnumChecker',
+  # False positives for testing.
+  'InputStreamSlowMultibyteRead',
+  # Nice to have better primitives.
+  'BoxedPrimitiveConstructor',
+  # Not necessary for tests.
+  'OverrideThrowableToString',
+  # Nice to have better type safety.
+  'CollectionToArraySafeParameter',
+]
+
+ERRORPRONE_WARNINGS_TO_ERROR = [
+  # Add warnings to this after fixing/suppressing all instances in our codebase.
+  'ParameterName',
+]
+
+
+def ProcessJavacOutput(output):
   fileline_prefix = r'(?P<fileline>(?P<file>[-.\w/\\]+.java):(?P<line>[0-9]+):)'
   warning_re = re.compile(
       fileline_prefix + r'(?P<full_message> warning: (?P<message>.*))$')
   error_re = re.compile(
       fileline_prefix + r'(?P<full_message> (?P<message>.*))$')
   marker_re = re.compile(r'\s*(?P<marker>\^)\s*$')
+
+  # These warnings cannot be suppressed even for third party code. Deprecation
+  # warnings especially do not help since we must support older android version.
+  deprecated_re = re.compile(
+      r'(Note: .* uses? or overrides? a deprecated API.)$')
+  unchecked_re = re.compile(
+      r'(Note: .* uses? unchecked or unsafe operations.)$')
+  recompile_re = re.compile(r'(Note: Recompile with -Xlint:.* for details.)$')
 
   warning_color = ['full_message', colorama.Fore.YELLOW + colorama.Style.DIM]
   error_color = ['full_message', colorama.Fore.MAGENTA + colorama.Style.BRIGHT]
@@ -41,7 +137,12 @@ def ColorJavacOutput(output):
             + colorama.Fore.RESET + colorama.Style.RESET_ALL
             + line[end:])
 
-  def ApplyColor(line):
+  def ApplyFilters(line):
+    return not (deprecated_re.match(line)
+        or unchecked_re.match(line)
+        or recompile_re.match(line))
+
+  def ApplyColors(line):
     if warning_re.match(line):
       line = Colorize(line, warning_re, warning_color)
     elif error_re.match(line):
@@ -50,7 +151,7 @@ def ColorJavacOutput(output):
       line = Colorize(line, marker_re, marker_color)
     return line
 
-  return '\n'.join(map(ApplyColor, output.split('\n')))
+  return '\n'.join(map(ApplyColors, filter(ApplyFilters, output.split('\n'))))
 
 
 def _ExtractClassFiles(jar_path, dest_dir, java_files):
@@ -139,13 +240,14 @@ def _CheckPathMatchesClassName(java_file):
                     (java_file, expected_path_suffix))
 
 
-def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs):
+def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs,
+                classpath):
   incremental = options.incremental
   # Don't bother enabling incremental compilation for third_party code, since
   # _CheckPathMatchesClassName() fails on some of it, and it's not really much
   # benefit.
   for java_file in java_files:
-    if 'third_party' in java_file:
+    if 'third_party' in java_file or not options.chromium_code:
       incremental = False
     else:
       _CheckPathMatchesClassName(java_file)
@@ -209,12 +311,7 @@ def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs):
         # Add the extracted files to the classpath. This is required because
         # when compiling only a subset of files, classes that haven't changed
         # need to be findable.
-        try:
-          classpath_idx = javac_cmd.index('-classpath')
-          javac_cmd[classpath_idx + 1] += ':' + classes_dir
-        except ValueError:
-          # If there is no class path in the command line then add the arg
-          javac_cmd.extend(["-classpath", classes_dir])
+        classpath.append(classes_dir)
 
       # Can happen when a target goes from having no sources, to having sources.
       # It's created by the call to build_utils.Touch() below.
@@ -224,7 +321,20 @@ def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs):
 
       # Don't include the output directory in the initial set of args since it
       # being in a temp dir makes it unstable (breaks md5 stamping).
-      cmd = javac_cmd + ['-d', classes_dir] + java_files
+      cmd = javac_cmd + ['-d', classes_dir]
+
+      # Pass classpath and source paths as response files to avoid extremely
+      # long command lines that are tedius to debug.
+      if classpath:
+        classpath_rsp_path = os.path.join(temp_dir, 'classpath.txt')
+        with open(classpath_rsp_path, 'w') as f:
+          f.write(':'.join(classpath))
+        cmd += ['-classpath', '@' + classpath_rsp_path]
+
+      java_files_rsp_path = os.path.join(temp_dir, 'files_list.txt')
+      with open(java_files_rsp_path, 'w') as f:
+        f.write(' '.join(java_files))
+      cmd += ['@' + java_files_rsp_path]
 
       # JMake prints out some diagnostic logs that we want to ignore.
       # This assumes that all compiler output goes through stderr.
@@ -236,7 +346,7 @@ def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs):
           cmd,
           print_stdout=options.chromium_code,
           stdout_filter=stdout_filter,
-          stderr_filter=ColorJavacOutput)
+          stderr_filter=ProcessJavacOutput)
       try:
         attempt_build()
       except build_utils.CalledProcessError as e:
@@ -399,6 +509,12 @@ def main(argv):
     '-sourcepath', ':',
   ))
 
+  if options.use_errorprone_path:
+    for warning in ERRORPRONE_WARNINGS_TO_TURN_OFF:
+      javac_cmd.append('-Xep:{}:OFF'.format(warning))
+    for warning in ERRORPRONE_WARNINGS_TO_ERROR:
+      javac_cmd.append('-Xep:{}:ERROR'.format(warning))
+
   if options.java_version:
     javac_cmd.extend([
       '-source', options.java_version,
@@ -406,7 +522,7 @@ def main(argv):
     ])
 
   if options.chromium_code:
-    javac_cmd.extend(['-Xlint:unchecked', '-Xlint:deprecation'])
+    javac_cmd.extend(['-Xlint:unchecked'])
   else:
     # XDignore.symbol.file makes javac compile against rt.jar instead of
     # ct.sym. This means that using a java internal package/class will not
@@ -422,8 +538,9 @@ def main(argv):
   # Annotation processors crash when given interface jars.
   active_classpath = (
       options.classpath if options.processors else options.interface_classpath)
+  classpath = []
   if active_classpath:
-    javac_cmd.extend(['-classpath', ':'.join(active_classpath)])
+    classpath.extend(active_classpath)
 
   if options.processorpath:
     javac_cmd.extend(['-processorpath', ':'.join(options.processorpath)])
@@ -454,11 +571,11 @@ def main(argv):
   # of them does not change what gets written to the depsfile.
   build_utils.CallAndWriteDepfileIfStale(
       lambda changes: _OnStaleMd5(changes, options, javac_cmd, java_files,
-                                  classpath_inputs),
+                                  classpath_inputs, classpath),
       options,
       depfile_deps=depfile_deps,
       input_paths=input_paths,
-      input_strings=javac_cmd,
+      input_strings=javac_cmd + classpath,
       output_paths=output_paths,
       force=force,
       pass_changes=True)

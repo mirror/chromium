@@ -6,7 +6,7 @@
 
 """Process Android resources to generate R.java, and prepare for packaging.
 
-This will crunch images and generate v14 compatible resources
+This will crunch images with aapt2 and generate v14 compatible resources
 (see generate_v14_compatible_resources.py).
 """
 
@@ -27,10 +27,15 @@ import generate_v14_compatible_resources
 
 from util import build_utils
 
+_SOURCE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
+    __file__))))
 # Import jinja2 from third_party/jinja2
-sys.path.insert(1,
-    os.path.join(os.path.dirname(__file__), '../../../third_party'))
+sys.path.insert(1, os.path.join(_SOURCE_ROOT, 'third_party'))
 from jinja2 import Template # pylint: disable=F0401
+
+
+_EMPTY_ANDROID_MANIFEST_PATH = os.path.join(
+    _SOURCE_ROOT, 'build', 'android', 'AndroidManifest.xml')
 
 
 # Represents a line from a R.txt file.
@@ -224,6 +229,10 @@ def _ParseArgs(args):
                     help='Convert png files to webp format.')
   parser.add_option('--webp-binary', default='',
                     help='Path to the cwebp binary.')
+  parser.add_option('--no-xml-namespaces',
+                    action='store_true',
+                    help='Whether to strip xml namespaces from processed xml '
+                    'resources')
 
   options, positional_args = parser.parse_args(args)
 
@@ -234,7 +243,6 @@ def _ParseArgs(args):
   required_options = (
       'android_sdk_jar',
       'aapt_path',
-      'android_manifest',
       'dependencies_res_zips',
       )
   build_utils.CheckOptions(options, parser, required=required_options)
@@ -436,63 +444,24 @@ public final class R {
                          non_final_resources=non_final_resources_by_type)
 
 
-def _CrunchDirectory(aapt, input_dir, output_dir):
-  """Crunches the images in input_dir and its subdirectories into output_dir.
-
-  If an image is already optimized, crunching often increases image size. In
-  this case, the crunched image is overwritten with the original image.
-  """
-  aapt_cmd = [aapt,
-              'crunch',
-              '-C', output_dir,
-              '-S', input_dir,
-              '--ignore-assets', build_utils.AAPT_IGNORE_PATTERN]
-  build_utils.CheckOutput(aapt_cmd, stderr_filter=_FilterCrunchStderr,
-                          fail_func=_DidCrunchFail)
-
-  # Check for images whose size increased during crunching and replace them
-  # with their originals (except for 9-patches, which must be crunched).
-  for dir_, _, files in os.walk(output_dir):
-    for crunched in files:
-      if crunched.endswith('.9.png'):
-        continue
-      if not crunched.endswith('.png'):
-        raise Exception('Unexpected file in crunched dir: ' + crunched)
-      crunched = os.path.join(dir_, crunched)
-      original = os.path.join(input_dir, os.path.relpath(crunched, output_dir))
-      original_size = os.path.getsize(original)
-      crunched_size = os.path.getsize(crunched)
-      if original_size < crunched_size:
-        shutil.copyfile(original, crunched)
+def _GenerateGlobs(pattern):
+  # This function processes the aapt ignore assets pattern into a list of globs
+  # to be used to exclude files on the python side. It removes the '!', which is
+  # used by aapt to mean 'not chatty' so it does not output if the file is
+  # ignored (we dont output anyways, so it is not required). This function does
+  # not handle the <dir> and <file> prefixes used by aapt and are assumed not to
+  # be included in the pattern string.
+  return pattern.replace('!', '').split(':')
 
 
-def _FilterCrunchStderr(stderr):
-  """Filters out lines from aapt crunch's stderr that can safely be ignored."""
-  filtered_lines = []
-  for line in stderr.splitlines(True):
-    # Ignore this libpng warning, which is a known non-error condition.
-    # http://crbug.com/364355
-    if ('libpng warning: iCCP: Not recognizing known sRGB profile that has '
-        + 'been edited' in line):
-      continue
-    filtered_lines.append(line)
-  return ''.join(filtered_lines)
-
-
-def _DidCrunchFail(returncode, stderr):
-  """Determines whether aapt crunch failed from its return code and output.
-
-  Because aapt's return code cannot be trusted, any output to stderr is
-  an indication that aapt has failed (http://crbug.com/314885).
-  """
-  return returncode != 0 or stderr
-
-
-def _ZipResources(resource_dirs, zip_path):
+def _ZipResources(resource_dirs, zip_path, ignore_pattern):
   # Python zipfile does not provide a way to replace a file (it just writes
   # another file with the same name). So, first collect all the files to put
   # in the zip (with proper overriding), and then zip them.
+  # ignore_pattern is a string of ':' delimited list of globs used to ignore
+  # files that should not be part of the final resource zip.
   files_to_zip = dict()
+  globs = _GenerateGlobs(ignore_pattern)
   for d in resource_dirs:
     for root, _, files in os.walk(d):
       for f in files:
@@ -501,6 +470,8 @@ def _ZipResources(resource_dirs, zip_path):
         if parent_dir != '.':
           archive_path = os.path.join(parent_dir, f)
         path = os.path.join(root, f)
+        if build_utils.MatchesGlob(archive_path, globs):
+          continue
         files_to_zip[archive_path] = path
   build_utils.DoZip(files_to_zip.iteritems(), zip_path)
 
@@ -567,7 +538,7 @@ def _MoveImagesToNonMdpiFolders(res_root):
     dst_dir = os.path.join(res_root, dst_dir_name)
     build_utils.MakeDirectory(dst_dir)
     for src_file_name in os.listdir(src_dir):
-      if not src_file_name.endswith('.png'):
+      if not os.path.splitext(src_file_name)[1] in ('.png', '.webp'):
         continue
       src_file = os.path.join(src_dir, src_file_name)
       dst_file = os.path.join(dst_dir, src_file_name)
@@ -647,19 +618,42 @@ def _CreateLinkApkArgs(options):
         options.locale_whitelist, options.support_zh_hk)
     link_command += ['-c', ','.join(aapt_locales)]
 
+  if options.no_xml_namespaces:
+    link_command.append('--no-xml-namespaces')
+
   return link_command
 
 
-def _EnableDebugInManifest(manifest_path, temp_dir):
+def _ExtractVersionFromSdk(aapt_path, sdk_path):
+  output = subprocess.check_output([aapt_path, 'dump', 'badging', sdk_path])
+  version_code = re.search(r"versionCode='(.*?)'", output).group(1)
+  version_name = re.search(r"versionName='(.*?)'", output).group(1)
+  return version_code, version_name,
+
+
+def _FixManifest(options, temp_dir):
   debug_manifest_path = os.path.join(temp_dir, 'AndroidManifest.xml')
   _ANDROID_NAMESPACE = 'http://schemas.android.com/apk/res/android'
   _TOOLS_NAMESPACE = 'http://schemas.android.com/tools'
   ElementTree.register_namespace('android', _ANDROID_NAMESPACE)
   ElementTree.register_namespace('tools', _TOOLS_NAMESPACE)
-  original_manifest = ElementTree.parse(manifest_path)
+  original_manifest = ElementTree.parse(options.android_manifest)
 
-  app_node = original_manifest.find('application')
-  app_node.set('{%s}%s' % (_ANDROID_NAMESPACE, 'debuggable'), 'true')
+  version_code, version_name = _ExtractVersionFromSdk(
+      options.aapt_path, options.android_sdk_jar)
+
+  # ElementTree.find does not work if the required tag is the root.
+  if original_manifest.getroot().tag == 'manifest':
+    manifest_node = original_manifest.getroot()
+  else:
+    manifest_node = original_manifest.find('manifest')
+
+  manifest_node.set('platformBuildVersionCode', version_code)
+  manifest_node.set('platformBuildVersionName', version_name)
+
+  if options.debuggable:
+    app_node = original_manifest.find('application')
+    app_node.set('{%s}%s' % (_ANDROID_NAMESPACE, 'debuggable'), 'true')
 
   with open(debug_manifest_path, 'w') as debug_manifest:
     debug_manifest.write(ElementTree.tostring(
@@ -705,7 +699,9 @@ def _ConvertToWebP(webp_binary, png_files):
     subprocess.check_call(args)
     os.remove(png_path)
   # Android requires pngs for 9-patch images.
-  pool.map(convert_image, [f for f in png_files if not f.endswith('.9.png')])
+  # Daydream (*.dd) requires pngs for icon files.
+  pool.map(convert_image, [f for f in png_files if not (f.endswith('.9.png') or
+                           f.endswith('.dd.png'))])
   pool.close()
   pool.join()
 
@@ -716,7 +712,8 @@ def _CompileDeps(aapt_path, dep_subdirs, temp_dir):
   partial_compile_command = [
       aapt_path + '2',
       'compile',
-      '--no-crunch',
+      # TODO(wnwen): Turn this on once aapt2 forces 9-patch to be crunched.
+      # '--no-crunch',
   ]
   pool = multiprocessing.pool.ThreadPool(10)
   def compile_partial(directory):
@@ -760,16 +757,11 @@ def _PackageApk(options, dep_subdirs, temp_dir, gen_dir, r_txt_path):
   link_command += ['--output-text-symbols', r_txt_path]
   link_command += ['--java', gen_dir]
 
-  if options.debuggable:
-    debug_manifest = _EnableDebugInManifest(options.android_manifest, temp_dir)
-    link_command += ['--manifest', debug_manifest]
-  else:
-    link_command += ['--manifest', options.android_manifest]
+  fixed_manifest = _FixManifest(options, temp_dir)
+  link_command += ['--manifest', fixed_manifest]
 
   partials = _CompileDeps(options.aapt_path, dep_subdirs, temp_dir)
-  # It only works if partials are reversed (resource clobbering). This could be
-  # due to aapt2 processes the partials in reversed order (compared to aapt)
-  for partial in reversed(partials):
+  for partial in partials:
     link_command += ['-R', partial]
 
   # Creates a .zip with AndroidManifest.xml, resources.arsc, res/*
@@ -799,7 +791,7 @@ def _PackageLibrary(options, dep_subdirs, temp_dir, gen_dir):
   package_command = [options.aapt_path,
                      'package',
                      '-m',
-                     '-M', options.android_manifest,
+                     '-M', _EMPTY_ANDROID_MANIFEST_PATH,
                      '--no-crunch',
                      '--auto-add-overlay',
                      '--no-version-vectors',
@@ -829,22 +821,11 @@ def _PackageLibrary(options, dep_subdirs, temp_dir, gen_dir):
           v14_dir)
 
   # This is the list of directories with resources to put in the final .zip
-  # file. The order of these is important so that crunched/v14 resources
-  # override the normal ones.
   zip_resource_dirs = input_resource_dirs + [v14_dir]
 
-  base_crunch_dir = os.path.join(temp_dir, 'crunch')
-  # Crunch image resources. This shrinks png files and is necessary for
-  # 9-patch images to display correctly. 'aapt crunch' accepts only a single
-  # directory at a time and deletes everything in the output directory.
-  for idx, input_dir in enumerate(input_resource_dirs):
-    crunch_dir = os.path.join(base_crunch_dir, str(idx))
-    build_utils.MakeDirectory(crunch_dir)
-    zip_resource_dirs.append(crunch_dir)
-    _CrunchDirectory(options.aapt_path, input_dir, crunch_dir)
-
   if options.resource_zip_out:
-    _ZipResources(zip_resource_dirs, options.resource_zip_out)
+    _ZipResources(zip_resource_dirs, options.resource_zip_out,
+                  build_utils.AAPT_IGNORE_PATTERN)
 
   # Only creates an R.txt
   build_utils.CheckOutput(
@@ -863,7 +844,7 @@ def _CreateRTxtAndSrcJar(options, r_txt_path, srcjar_dir):
   r_txt_files = list(options.extra_r_text_files)
 
   cur_package = options.custom_package
-  if not options.custom_package:
+  if not options.custom_package and options.android_manifest:
     cur_package = _ExtractPackageFromManifest(options.android_manifest)
 
   # Don't create a .java file for the current resource target when:
@@ -871,7 +852,7 @@ def _CreateRTxtAndSrcJar(options, r_txt_path, srcjar_dir):
   # - there was already a dependent android_resources() with the same
   #   package (occurs mostly when an apk target and resources target share
   #   an AndroidManifest.xml)
-  if cur_package != 'org.dummy' and cur_package not in packages:
+  if cur_package and cur_package not in packages:
     packages.append(cur_package)
     r_txt_files.append(r_txt_path)
 
@@ -955,6 +936,7 @@ def main(args):
     str(options.debuggable),
     str(options.png_to_webp),
     str(options.support_zh_hk),
+    str(options.no_xml_namespaces),
   ]
 
   if options.apk_path:

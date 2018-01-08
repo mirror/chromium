@@ -60,7 +60,7 @@ SiteEngagementService::Helper::~Helper() {
 void SiteEngagementService::Helper::OnEngagementLevelChanged(
     const GURL& url,
     blink::mojom::EngagementLevel level) {
-  web_contents()->ForEachFrame(base::Bind(
+  web_contents()->ForEachFrame(base::BindRepeating(
       &SiteEngagementService::Helper::SendEngagementLevelToFramesMatchingOrigin,
       base::Unretained(this), url::Origin::Create(url), level));
 }
@@ -170,6 +170,19 @@ void SiteEngagementService::Helper::MediaTracker::TrackingStarted() {
     helper()->RecordMediaPlaying(is_hidden_);
 
   Pause();
+}
+
+void SiteEngagementService::Helper::MediaTracker::DidFinishNavigation(
+    content::NavigationHandle* handle) {
+  // Ignore subframe navigation to avoid clearing main frame active media
+  // players when they navigate.
+  if (!handle->HasCommitted() || !handle->IsInMainFrame() ||
+      handle->IsSameDocument()) {
+    return;
+  }
+
+  // Media stops playing on navigation, so clear our state.
+  active_media_players_.clear();
 }
 
 void SiteEngagementService::Helper::MediaTracker::MediaStartedPlaying(

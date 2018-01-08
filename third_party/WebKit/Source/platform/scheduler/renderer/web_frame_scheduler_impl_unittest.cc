@@ -25,16 +25,15 @@ namespace web_frame_scheduler_impl_unittest {
 
 class WebFrameSchedulerImplTest : public ::testing::Test {
  public:
-  WebFrameSchedulerImplTest() {}
-  ~WebFrameSchedulerImplTest() override {}
+  WebFrameSchedulerImplTest() = default;
+  ~WebFrameSchedulerImplTest() override = default;
 
   void SetUp() override {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, true);
-    scheduler_.reset(
-        new RendererSchedulerImpl(CreateTaskQueueManagerWithUnownedClockForTest(
-            nullptr, mock_task_runner_, &clock_)));
+    scheduler_.reset(new RendererSchedulerImpl(
+        CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_)));
     web_view_scheduler_.reset(
         new WebViewSchedulerImpl(nullptr, nullptr, scheduler_.get(), false));
     web_frame_scheduler_ = web_view_scheduler_->CreateWebFrameSchedulerImpl(

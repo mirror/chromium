@@ -43,6 +43,10 @@ namespace net {
 class IOBuffer;
 }  // namespace net
 
+namespace network {
+class ResourceRequestBody;
+}
+
 namespace storage {
 class BlobDataHandle;
 class BlobStorageContext;
@@ -51,7 +55,6 @@ class BlobStorageContext;
 namespace content {
 
 class ResourceContext;
-class ResourceRequestBody;
 class ServiceWorkerBlobReader;
 class ServiceWorkerDataPipeReader;
 class ServiceWorkerVersion;
@@ -79,15 +82,14 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
       const ResourceContext* resource_context,
       network::mojom::FetchRequestMode request_mode,
       network::mojom::FetchCredentialsMode credentials_mode,
-      FetchRedirectMode redirect_mode,
+      network::mojom::FetchRedirectMode redirect_mode,
       const std::string& integrity,
       bool keepalive,
       ResourceType resource_type,
       RequestContextType request_context_type,
       network::mojom::RequestContextFrameType frame_type,
-      scoped_refptr<ResourceRequestBody> body,
+      scoped_refptr<network::ResourceRequestBody> body,
       ServiceWorkerFetchType fetch_type,
-      const base::Optional<base::TimeDelta>& timeout,
       Delegate* delegate);
 
   ~ServiceWorkerURLRequestJob() override;
@@ -311,7 +313,7 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
 
   network::mojom::FetchRequestMode request_mode_;
   network::mojom::FetchCredentialsMode credentials_mode_;
-  FetchRedirectMode redirect_mode_;
+  network::mojom::FetchRedirectMode redirect_mode_;
   std::string integrity_;
   const bool keepalive_;
   const ResourceType resource_type_;
@@ -320,11 +322,10 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
   bool fall_back_required_;
   // ResourceRequestBody has a collection of BlobDataHandles attached to it
   // using the userdata mechanism. So we have to keep it not to free the blobs.
-  scoped_refptr<ResourceRequestBody> body_;
+  scoped_refptr<network::ResourceRequestBody> body_;
   std::unique_ptr<storage::BlobDataHandle> request_body_blob_data_handle_;
   scoped_refptr<storage::BlobHandle> request_body_blob_handle_;
   ServiceWorkerFetchType fetch_type_;
-  base::Optional<base::TimeDelta> timeout_;
 
   ResponseBodyType response_body_type_ = UNKNOWN;
   bool did_record_result_ = false;

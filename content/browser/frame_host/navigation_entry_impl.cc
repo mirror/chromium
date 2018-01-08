@@ -490,11 +490,12 @@ int64_t NavigationEntryImpl::GetPostID() const {
 }
 
 void NavigationEntryImpl::SetPostData(
-    const scoped_refptr<ResourceRequestBody>& data) {
-  post_data_ = static_cast<ResourceRequestBody*>(data.get());
+    const scoped_refptr<network::ResourceRequestBody>& data) {
+  post_data_ = static_cast<network::ResourceRequestBody*>(data.get());
 }
 
-scoped_refptr<ResourceRequestBody> NavigationEntryImpl::GetPostData() const {
+scoped_refptr<network::ResourceRequestBody> NavigationEntryImpl::GetPostData()
+    const {
   return post_data_.get();
 }
 
@@ -658,13 +659,14 @@ std::unique_ptr<NavigationEntryImpl> NavigationEntryImpl::CloneAndReplace(
   // ResetForCommit: reload_type_
   copy->extra_data_ = extra_data_;
   copy->replaced_entry_data_ = replaced_entry_data_;
+  // ResetForCommit: suggested_filename_
 
   return copy;
 }
 
 CommonNavigationParams NavigationEntryImpl::ConstructCommonNavigationParams(
     const FrameNavigationEntry& frame_entry,
-    const scoped_refptr<ResourceRequestBody>& post_body,
+    const scoped_refptr<network::ResourceRequestBody>& post_body,
     const GURL& dest_url,
     const Referrer& dest_referrer,
     FrameMsg_Navigate_Type::Value navigation_type,
@@ -698,14 +700,7 @@ CommonNavigationParams NavigationEntryImpl::ConstructCommonNavigationParams(
       navigation_start, method, post_body ? post_body : post_data_,
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
-      has_started_from_context_menu(), user_gesture);
-}
-
-StartNavigationParams NavigationEntryImpl::ConstructStartNavigationParams()
-    const {
-  return StartNavigationParams(extra_headers(),
-                               transferred_global_request_id().child_id,
-                               transferred_global_request_id().request_id);
+      has_started_from_context_menu(), user_gesture, suggested_filename_);
 }
 
 RequestNavigationParams NavigationEntryImpl::ConstructRequestNavigationParams(
@@ -714,7 +709,6 @@ RequestNavigationParams NavigationEntryImpl::ConstructRequestNavigationParams(
     const std::string& original_method,
     bool is_history_navigation_in_new_child,
     const std::map<std::string, bool>& subframe_unique_names,
-    bool has_committed_real_load,
     bool intended_as_new_entry,
     int pending_history_list_offset,
     int current_history_list_offset,
@@ -742,9 +736,8 @@ RequestNavigationParams NavigationEntryImpl::ConstructRequestNavigationParams(
       GetIsOverridingUserAgent(), redirects, original_url, original_method,
       GetCanLoadLocalResources(), frame_entry.page_state(), GetUniqueID(),
       is_history_navigation_in_new_child, subframe_unique_names,
-      has_committed_real_load, intended_as_new_entry, pending_offset_to_send,
-      current_offset_to_send, current_length_to_send, IsViewSourceMode(),
-      should_clear_history_list());
+      intended_as_new_entry, pending_offset_to_send, current_offset_to_send,
+      current_length_to_send, IsViewSourceMode(), should_clear_history_list());
 #if defined(OS_ANDROID)
   if (GetDataURLAsString() &&
       GetDataURLAsString()->size() <= kMaxLengthOfDataURLString) {
@@ -785,6 +778,7 @@ void NavigationEntryImpl::ResetForCommit(FrameNavigationEntry* frame_entry) {
   // loaded again in the future.
   set_intent_received_timestamp(base::TimeTicks());
 #endif
+  suggested_filename_.reset();
 }
 
 NavigationEntryImpl::TreeNode* NavigationEntryImpl::GetTreeNode(

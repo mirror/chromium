@@ -95,7 +95,8 @@ AutomationPredicate.button = function(node) {
  * @return {boolean}
  */
 AutomationPredicate.editText = function(node) {
-  return node.state.editable && node.parent && !node.parent.state.editable;
+  return node.role == Role.TEXT_FIELD ||
+      (node.state.editable && node.parent && !node.parent.state.editable);
 };
 
 /** @type {AutomationPredicate.Unary} */
@@ -144,7 +145,7 @@ AutomationPredicate.landmark = AutomationPredicate.roles([
  * @return {boolean}
  */
 AutomationPredicate.visitedLink = function(node) {
-  return node.state.visited;
+  return node.state[State.VISITED];
 };
 
 /**
@@ -161,7 +162,7 @@ AutomationPredicate.focused = function(node) {
  */
 AutomationPredicate.leaf = function(node) {
   return !node.firstChild || node.role == Role.BUTTON ||
-      node.role == Role.BUTTON_DROP_DOWN || node.role == Role.POP_UP_BUTTON ||
+      node.role == Role.POP_UP_BUTTON ||
       node.role == Role.SLIDER || node.role == Role.TEXT_FIELD ||
       node.state[State.INVISIBLE] || node.children.every(function(n) {
         return n.state[State.INVISIBLE];
@@ -224,11 +225,20 @@ AutomationPredicate.object = function(node) {
   if (node.name && node.name.length > constants.OBJECT_MAX_CHARCOUNT)
     return false;
 
-  return node.state.focusable ||
-      (AutomationPredicate.leafOrStaticText(node) &&
-       (/\S+/.test(node.name) ||
-        (node.role != Role.LINE_BREAK && node.role != Role.STATIC_TEXT &&
-         node.role != Role.INLINE_TEXT_BOX)));
+  // Given no other information, ChromeVox wants to visit focusable
+  // (e.g. tabindex=0) nodes only when it has a name or is a control.
+  if (node.state.focusable &&
+      (node.name || node.state[State.EDITABLE] ||
+       AutomationPredicate.formField(node)))
+    return true;
+
+  // Otherwise, leaf or static text nodes that don't contain only whitespace
+  // should be visited with the exception of non-text only nodes. This covers
+  // cases where an author might make a link with a name of ' '.
+  return AutomationPredicate.leafOrStaticText(node) &&
+      (/\S+/.test(node.name) ||
+       (node.role != Role.LINE_BREAK && node.role != Role.STATIC_TEXT &&
+        node.role != Role.INLINE_TEXT_BOX));
 };
 
 /**
@@ -328,7 +338,7 @@ AutomationPredicate.root = function(node) {
           (node.parent.root.role == Role.DESKTOP &&
            node.parent.role == Role.WEB_VIEW);
     default:
-      return false;
+      return !!node.modal;
   }
 };
 

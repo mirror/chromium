@@ -59,7 +59,8 @@ CSSSkew* CSSSkew::FromCSSValue(const CSSFunctionValue& value) {
         return CSSSkew::Create(CSSNumericValue::FromCSSValue(x_value),
                                CSSNumericValue::FromCSSValue(y_value));
       }
-    // Else fall through; skew(ax) == skewX(ax).
+      // Else fall through; skew(ax) == skewX(ax).
+      FALLTHROUGH;
     case CSSValueSkewX:
       DCHECK_EQ(value.length(), 1U);
       return CSSSkew::Create(
@@ -87,16 +88,15 @@ const DOMMatrix* CSSSkew::AsMatrix(ExceptionState&) const {
   return result;
 }
 
-const CSSFunctionValue* CSSSkew::ToCSSValue(SecureContextMode) const {
-  // TDOO(meade): Handle calc angles here.
-  CSSUnitValue* ax = ToCSSUnitValue(ax_);
-  CSSUnitValue* ay = ToCSSUnitValue(ay_);
+const CSSFunctionValue* CSSSkew::ToCSSValue() const {
+  const CSSValue* ax = ax_->ToCSSValue();
+  const CSSValue* ay = ay_->ToCSSValue();
+  if (!ax || !ay)
+    return nullptr;
 
   CSSFunctionValue* result = CSSFunctionValue::Create(CSSValueSkew);
-  result->Append(
-      *CSSPrimitiveValue::Create(ax->value(), ax->GetInternalUnit()));
-  result->Append(
-      *CSSPrimitiveValue::Create(ay->value(), ay->GetInternalUnit()));
+  result->Append(*ax);
+  result->Append(*ay);
   return result;
 }
 

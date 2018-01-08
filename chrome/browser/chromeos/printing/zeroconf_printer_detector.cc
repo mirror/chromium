@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "base/md5.h"
-#include "base/memory/ptr_util.h"
 #include "base/observer_list_threadsafe.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/lock.h"
@@ -141,11 +140,15 @@ bool ConvertToPrinter(const ServiceDescription& service_description,
   printer.set_description(metadata.note);
   printer.set_make_and_model(metadata.product);
   const char* uri_protocol;
-  if (service_description.service_type() ==
-      base::StringPiece(kIppServiceName)) {
+  if ((service_description.service_type() ==
+       base::StringPiece(kIppServiceName)) ||
+      (service_description.service_type() ==
+       base::StringPiece(kIppEverywhereServiceName))) {
     uri_protocol = "ipp";
-  } else if (service_description.service_type() ==
-             base::StringPiece(kIppsServiceName)) {
+  } else if ((service_description.service_type() ==
+              base::StringPiece(kIppsServiceName)) ||
+             (service_description.service_type() ==
+              base::StringPiece(kIppsEverywhereServiceName))) {
     uri_protocol = "ipps";
   } else {
     // Since we only register for these services, we should never get back
@@ -224,7 +227,7 @@ class ZeroconfPrinterDetectorImpl
     // constructor.
     for (const char* service : services) {
       device_listers_.emplace_back(
-          base::MakeUnique<ServiceDiscoveryDeviceLister>(
+          std::make_unique<ServiceDiscoveryDeviceLister>(
               this, discovery_client_.get(), service));
       device_listers_.back()->Start();
       device_listers_.back()->DiscoverNewDevices();
@@ -244,18 +247,6 @@ class ZeroconfPrinterDetectorImpl
 
   void RemoveObserver(Observer* observer) override {
     observer_list_->RemoveObserver(observer);
-  }
-
-  // Schedules callbacks for the observers using ThreadSafeObserverList. This
-  // means that the callbacks are posted for later execution and not executed
-  // immediately.
-  void StartObservers() override {
-    observer_list_->Notify(
-        FROM_HERE, &PrinterDetector::Observer::OnPrintersFound, GetPrinters());
-    // TODO(justincarlson) - Figure out a more intelligent way to figure out
-    // when a scan is reasonably "done".
-    observer_list_->Notify(FROM_HERE,
-                           &PrinterDetector::Observer::OnPrinterScanComplete);
   }
 
   // ServiceDiscoveryDeviceLister::Delegate implementation
@@ -327,7 +318,7 @@ class ZeroconfPrinterDetectorImpl
 //
 std::unique_ptr<ZeroconfPrinterDetector> ZeroconfPrinterDetector::Create(
     Profile* profile) {
-  return base::MakeUnique<ZeroconfPrinterDetectorImpl>(profile);
+  return std::make_unique<ZeroconfPrinterDetectorImpl>(profile);
 }
 
 }  // namespace chromeos

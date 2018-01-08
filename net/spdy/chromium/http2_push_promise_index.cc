@@ -84,28 +84,27 @@ SpdyStreamId Http2PushPromiseIndex::FindStream(const GURL& url,
   return it->stream_id;
 }
 
-void Http2PushPromiseIndex::FindSession(const SpdySessionKey& key,
-                                        const GURL& url,
-                                        base::WeakPtr<SpdySession>* session,
-                                        SpdyStreamId* stream_id) const {
+void Http2PushPromiseIndex::ClaimPushedStream(
+    const SpdySessionKey& key,
+    const GURL& url,
+    const HttpRequestInfo& request_info,
+    base::WeakPtr<SpdySession>* session,
+    SpdyStreamId* stream_id) {
   DCHECK(!url.is_empty());
 
   *session = nullptr;
   *stream_id = kNoPushedStreamFound;
-
-  // Do not allow cross-origin push for non-cryptographic schemes.
-  if (!url.SchemeIsCryptographic())
-    return;
 
   // Find the first entry for |url|, if such exists.
   auto it = unclaimed_pushed_streams_.lower_bound(
       UnclaimedPushedStream{url, nullptr, kNoPushedStreamFound});
 
   while (it != unclaimed_pushed_streams_.end() && it->url == url) {
-    if (it->delegate->ValidatePushedStream(key)) {
+    if (it->delegate->ValidatePushedStream(it->stream_id, url, request_info,
+                                           key)) {
       *session = it->delegate->GetWeakPtrToSession();
       *stream_id = it->stream_id;
-      it->delegate->OnPushedStreamClaimed(it->url, it->stream_id);
+      unclaimed_pushed_streams_.erase(it);
       return;
     }
     ++it;

@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -14,7 +15,6 @@
 #include "base/callback.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/values.h"
 #include "components/bookmarks/browser/bookmark_model.h"
@@ -106,7 +106,7 @@ LoadExtraCallback ManagedBookmarkService::GetLoadExtraNodesCallback() {
 
   managed_node_ = managed.get();
 
-  auto loader = base::MakeUnique<BookmarkPermanentNodeLoader>(
+  auto loader = std::make_unique<BookmarkPermanentNodeLoader>(
       std::move(managed),
       managed_bookmarks_tracker_->GetInitialManagedBookmarks(),
       IDS_BOOKMARK_BAR_MANAGED_FOLDER_DEFAULT_NAME);

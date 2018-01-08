@@ -361,6 +361,11 @@ bool SizedFormatAvailable(const FeatureInfo* feature_info,
     return true;
   }
 
+  if (feature_info->feature_flags().chromium_image_xr30 &&
+      internal_format == GL_RGB10_A2_EXT) {
+    return true;
+  }
+
   // TODO(dshwang): check if it's possible to remove
   // CHROMIUM_color_buffer_float_rgb. crbug.com/329605
   if (feature_info->feature_flags().chromium_color_buffer_float_rgb &&
@@ -475,30 +480,6 @@ void TextureManager::Destroy() {
   }
 
   DCHECK_EQ(0u, memory_type_tracker_->GetMemRepresented());
-}
-
-TextureBase::TextureBase(GLuint service_id)
-    : service_id_(service_id), target_(GL_NONE), mailbox_manager_(nullptr) {}
-
-TextureBase::~TextureBase() {
-  DCHECK_EQ(nullptr, mailbox_manager_);
-}
-
-void TextureBase::SetTarget(GLenum target) {
-  DCHECK_EQ(0u, target_);  // you can only set this once.
-  target_ = target;
-}
-
-void TextureBase::DeleteFromMailboxManager() {
-  if (mailbox_manager_) {
-    mailbox_manager_->TextureDeleted(this);
-    mailbox_manager_ = nullptr;
-  }
-}
-
-void TextureBase::SetMailboxManager(MailboxManager* mailbox_manager) {
-  DCHECK(!mailbox_manager_ || mailbox_manager_ == mailbox_manager);
-  mailbox_manager_ = mailbox_manager;
 }
 
 TexturePassthrough::TexturePassthrough(GLuint service_id, GLenum target)
@@ -2818,7 +2799,8 @@ void TextureManager::ValidateAndDoTexImage(
     }
   }
 
-  if (texture_state->unpack_alignment_workaround_with_unpack_buffer && buffer) {
+  if (texture_state->unpack_alignment_workaround_with_unpack_buffer && buffer &&
+      args.width && args.height && args.depth) {
     uint32_t buffer_size = static_cast<uint32_t>(buffer->size());
     if (buffer_size - args.pixels_size - ToGLuint(args.pixels) < args.padding) {
       // In ValidateTexImage(), we already made sure buffer size is no less
@@ -3047,7 +3029,8 @@ void TextureManager::ValidateAndDoTexSubImage(
     }
   }
 
-  if (texture_state->unpack_alignment_workaround_with_unpack_buffer && buffer) {
+  if (texture_state->unpack_alignment_workaround_with_unpack_buffer && buffer &&
+      args.width && args.height && args.depth) {
     uint32_t buffer_size = static_cast<uint32_t>(buffer->size());
     if (buffer_size - args.pixels_size - ToGLuint(args.pixels) < args.padding) {
       DoTexSubImageWithAlignmentWorkaround(texture_state, state, args);

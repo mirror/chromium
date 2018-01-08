@@ -67,6 +67,7 @@
 #include "extensions/features/features.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "net/base/url_util.h"
+#include "net/cert/cert_status_flags.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/re2/src/re2/re2.h"
 #include "url/url_constants.h"
@@ -263,8 +264,15 @@ bool ChromePasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage()
 }
 
 bool ChromePasswordManagerClient::IsFillingEnabledForCurrentPage() const {
-  return !DidLastPageLoadEncounterSSLErrors() &&
-         IsPasswordManagementEnabledForCurrentPage();
+  const bool ssl_errors = net::IsCertStatusError(GetMainFrameCertStatus());
+
+  if (log_manager_->IsLoggingActive()) {
+    password_manager::BrowserSavePasswordProgressLogger logger(
+        log_manager_.get());
+    logger.LogBoolean(Logger::STRING_SSL_ERRORS_PRESENT, ssl_errors);
+  }
+
+  return !ssl_errors && IsPasswordManagementEnabledForCurrentPage();
 }
 
 bool ChromePasswordManagerClient::IsFillingFallbackEnabledForCurrentPage()
@@ -587,21 +595,12 @@ bool ChromePasswordManagerClient::WasLastNavigationHTTPError() const {
   return false;
 }
 
-bool ChromePasswordManagerClient::DidLastPageLoadEncounterSSLErrors() const {
+net::CertStatus ChromePasswordManagerClient::GetMainFrameCertStatus() const {
   content::NavigationEntry* entry =
       web_contents()->GetController().GetLastCommittedEntry();
-  bool ssl_errors = true;
-  if (!entry) {
-    ssl_errors = false;
-  } else {
-    ssl_errors = net::IsCertStatusError(entry->GetSSL().cert_status);
-  }
-  if (log_manager_->IsLoggingActive()) {
-    password_manager::BrowserSavePasswordProgressLogger logger(
-        log_manager_.get());
-    logger.LogBoolean(Logger::STRING_SSL_ERRORS_PRESENT, ssl_errors);
-  }
-  return ssl_errors;
+  if (!entry)
+    return 0;
+  return entry->GetSSL().cert_status;
 }
 
 bool ChromePasswordManagerClient::IsIncognito() const {
@@ -708,7 +707,8 @@ bool ChromePasswordManagerClient::ShouldAnnotateNavigationEntries(
     Profile* profile) {
   // Only annotate PasswordState onto the navigation entry if user is
   // opted into UMA and they're not syncing w/ a custom passphrase.
-  if (!ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled())
+  if (!ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+          g_browser_process->local_state()))
     return false;
 
   browser_sync::ProfileSyncService* profile_sync_service =
@@ -755,7 +755,7 @@ const password_manager::LogManager* ChromePasswordManagerClient::GetLogManager()
 
 // static
 void ChromePasswordManagerClient::BindCredentialManager(
-    password_manager::mojom::CredentialManagerAssociatedRequest request,
+    password_manager::mojom::CredentialManagerRequest request,
     content::RenderFrameHost* render_frame_host) {
   // Only valid for the main frame.
   if (render_frame_host->GetParent())

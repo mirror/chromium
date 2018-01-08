@@ -13,7 +13,6 @@
 #import "ios/chrome/browser/ui/commands/page_info_commands.h"
 #import "ios/chrome/browser/ui/commands/qr_scanner_commands.h"
 #import "ios/chrome/browser/ui/commands/snackbar_commands.h"
-#import "ios/chrome/browser/ui/commands/toolbar_commands.h"
 #import "ios/chrome/browser/ui/commands/tools_menu_commands.h"
 
 @class OpenNewTabCommand;
@@ -28,7 +27,6 @@
                           QRScannerCommands,
                           SnackbarCommands,
                           TabHistoryPopupCommands,
-                          ToolbarCommands,
                           ToolsMenuCommands>
 
 // Closes the current tab.
@@ -108,6 +106,10 @@
 
 // Requests the "mobile" version of the current page in the active tab.
 - (void)requestMobileSite;
+
+// Navigates to the Memex tab switcher.
+// TODO(crbug.com/799601): Delete this once its not needed.
+- (void)navigateToMemexTabSwitcher;
 
 @end
 

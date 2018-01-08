@@ -74,6 +74,7 @@
 #include "platform/text/PlatformLocale.h"
 #include "platform/wtf/MathExtras.h"
 #include "public/platform/TaskType.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -151,7 +152,7 @@ HTMLImageLoader& HTMLInputElement::EnsureImageLoader() {
   return *image_loader_;
 }
 
-HTMLInputElement::~HTMLInputElement() {}
+HTMLInputElement::~HTMLInputElement() = default;
 
 const AtomicString& HTMLInputElement::GetName() const {
   return name_.IsNull() ? g_empty_atom : name_;
@@ -314,8 +315,10 @@ void HTMLInputElement::UpdateFocusAppearanceWithOptions(
     // case of RangeSelection. crbug.com/443061.
     GetDocument().EnsurePaintLocationDataValidForNode(this);
     if (!options.preventScroll()) {
-      if (GetLayoutObject())
-        GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+      if (GetLayoutObject()) {
+        GetLayoutObject()->ScrollRectToVisible(BoundingBoxForScrollIntoView(),
+                                               WebScrollIntoViewParams());
+      }
       if (GetDocument().GetFrame())
         GetDocument().GetFrame()->Selection().RevealSelection();
     }
@@ -957,6 +960,14 @@ void HTMLInputElement::DispatchChangeEventIfNeeded() {
     DispatchChangeEvent();
 }
 
+void HTMLInputElement::DispatchInputAndChangeEventIfNeeded() {
+  if (isConnected() &&
+      input_type_->ShouldSendChangeEventAfterCheckedChanged()) {
+    DispatchInputEvent();
+    DispatchChangeEvent();
+  }
+}
+
 bool HTMLInputElement::checked() const {
   input_type_->ReadingChecked();
   return is_checked_;
@@ -990,10 +1001,9 @@ void HTMLInputElement::setChecked(bool now_checked,
   // unchecked to match other browsers. DOM is not a useful standard for this
   // because it says only to fire change events at "lose focus" time, which is
   // definitely wrong in practice for these types of elements.
-  if (event_behavior != kDispatchNoEvent && isConnected() &&
+  if (event_behavior == kDispatchInputAndChangeEvent && isConnected() &&
       input_type_->ShouldSendChangeEventAfterCheckedChanged()) {
-    if (event_behavior == kDispatchInputAndChangeEvent)
-      DispatchInputEvent();
+    DispatchInputEvent();
   }
 
   PseudoStateChanged(CSSSelector::kPseudoChecked);
@@ -1713,14 +1723,6 @@ void HTMLInputElement::UpdatePlaceholderText() {
 
 String HTMLInputElement::GetPlaceholderValue() const {
   return !SuggestedValue().IsEmpty() ? SuggestedValue() : StrippedPlaceholder();
-}
-
-bool HTMLInputElement::SupportsAutocapitalize() const {
-  return input_type_->SupportsAutocapitalize();
-}
-
-const AtomicString& HTMLInputElement::DefaultAutocapitalize() const {
-  return input_type_->DefaultAutocapitalize();
 }
 
 String HTMLInputElement::DefaultToolTip() const {

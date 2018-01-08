@@ -9,11 +9,13 @@
 #include "base/memory/ref_counted.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/resources/returned_resource.h"
+#include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/host/host_frame_sink_client.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
 #include "ui/android/ui_android_export.h"
+#include "ui/compositor/compositor_lock.h"
 
 namespace cc {
 class SurfaceLayer;
@@ -22,7 +24,6 @@ enum class SurfaceDrawStatus;
 
 namespace viz {
 class CompositorFrame;
-class FrameSinkManagerImpl;
 class HostFrameSinkManager;
 }  // namespace viz
 
@@ -33,7 +34,8 @@ class WindowAndroidCompositor;
 class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
     : public viz::mojom::CompositorFrameSinkClient,
       public viz::ExternalBeginFrameSourceClient,
-      public viz::HostFrameSinkClient {
+      public viz::HostFrameSinkClient,
+      public ui::CompositorLockClient {
  public:
   class Client {
    public:
@@ -47,7 +49,6 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
 
   DelegatedFrameHostAndroid(ViewAndroid* view,
                             viz::HostFrameSinkManager* host_frame_sink_manager,
-                            viz::FrameSinkManagerImpl* frame_sink_manager,
                             Client* client,
                             const viz::FrameSinkId& frame_sink_id);
 
@@ -78,8 +79,14 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
   void AttachToCompositor(WindowAndroidCompositor* compositor);
   void DetachFromCompositor();
 
-  // Returns the ID for the current Surface.
-  viz::SurfaceId SurfaceId() const;
+  void WasResized();
+
+  // Returns the ID for the current Surface. Returns an invalid ID if no
+  // surface exists (!HasDelegatedContent()).
+  const viz::SurfaceId& SurfaceId() const;
+
+  // Returns the local surface ID for this delegated content.
+  const viz::LocalSurfaceId& GetLocalSurfaceId() const;
 
  private:
   // viz::mojom::CompositorFrameSinkClient implementation.
@@ -102,6 +109,9 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
 
+  // ui::CompositorLockClient implementation.
+  void CompositorLockTimedOut() override;
+
   void CreateNewCompositorFrameSinkSupport();
 
   const viz::FrameSinkId frame_sink_id_;
@@ -109,7 +119,6 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
   ViewAndroid* view_;
 
   viz::HostFrameSinkManager* const host_frame_sink_manager_;
-  viz::FrameSinkManagerImpl* const frame_sink_manager_;
   WindowAndroidCompositor* registered_parent_compositor_ = nullptr;
   Client* client_;
 
@@ -120,6 +129,15 @@ class UI_ANDROID_EXPORT DelegatedFrameHostAndroid
   bool has_transparent_background_ = false;
 
   scoped_refptr<cc::SurfaceLayer> content_layer_;
+
+  const bool enable_surface_synchronization_;
+  viz::ParentLocalSurfaceIdAllocator local_surface_id_allocator_;
+  viz::LocalSurfaceId local_surface_id_;
+
+  // A lock that is held from the point at which we attach to the compositor to
+  // the point at which we submit our first frame to the compositor. This
+  // ensures that the compositor doesn't swap without a frame available.
+  std::unique_ptr<ui::CompositorLock> compositor_attach_until_frame_lock_;
 
   DISALLOW_COPY_AND_ASSIGN(DelegatedFrameHostAndroid);
 };

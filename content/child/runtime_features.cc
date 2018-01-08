@@ -80,6 +80,10 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
 #if !defined(OS_MACOSX)
   WebRuntimeFeatures::EnableNotificationContentImage(true);
 #endif
+
+#if defined(OS_ANDROID)
+  WebRuntimeFeatures::EnableDoubleTapToJumpOnVideo(true);
+#endif
 }
 
 void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
@@ -115,6 +119,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnableWebAssemblyStreaming(
       base::FeatureList::IsEnabled(features::kWebAssemblyStreaming));
+
+  WebRuntimeFeatures::EnableSharedArrayBuffer(
+      base::FeatureList::IsEnabled(features::kSharedArrayBuffer));
 
   if (command_line.HasSwitch(switches::kDisableSharedWorkers))
     WebRuntimeFeatures::EnableSharedWorker(false);
@@ -205,9 +212,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (command_line.HasSwitch(switches::kEnableWebVR))
     WebRuntimeFeatures::EnableWebVR(true);
 
-  WebRuntimeFeatures::EnableWebVRExperimentalRendering(
-      base::FeatureList::IsEnabled(features::kWebVrExperimentalRendering));
-
   WebRuntimeFeatures::EnableWebXR(
       base::FeatureList::IsEnabled(features::kWebXr));
 
@@ -223,6 +227,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnableUserActivationV2(
       base::FeatureList::IsEnabled(features::kUserActivationV2));
+
+  if (base::FeatureList::IsEnabled(features::kScrollAnchorSerialization))
+    WebRuntimeFeatures::EnableScrollAnchorSerialization(true);
 
   if (command_line.HasSwitch(switches::kEnableSlimmingPaintV175))
     WebRuntimeFeatures::EnableFeatureFromString("SlimmingPaintV175", true);
@@ -288,8 +295,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableServiceWorkerScriptFullCodeCache(
       base::FeatureList::IsEnabled(
           features::kServiceWorkerScriptFullCodeCache));
-
-  WebRuntimeFeatures::EnableMojoBlobs(features::IsMojoBlobsEnabled());
 
   WebRuntimeFeatures::EnableNetworkService(
       base::FeatureList::IsEnabled(features::kNetworkService));
@@ -404,8 +409,11 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (base::FeatureList::IsEnabled(features::kV8ContextSnapshot))
     WebRuntimeFeatures::EnableV8ContextSnapshot(true);
 
+  if (base::FeatureList::IsEnabled(features::kStopInBackground))
+    WebRuntimeFeatures::EnableStopInBackground(true);
+
   if (base::FeatureList::IsEnabled(features::kStopLoadingInBackground))
-    WebRuntimeFeatures::EnableStopLoadingInBackgroundAndroid(true);
+    WebRuntimeFeatures::EnableStopLoadingInBackground(true);
 
   WebRuntimeFeatures::EnablePWAFullCodeCache(
       base::FeatureList::IsEnabled(features::kPWAFullCodeCache));

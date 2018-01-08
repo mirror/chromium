@@ -5,6 +5,7 @@
 #include "components/ukm/ukm_service.h"
 
 #include <map>
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -124,7 +125,7 @@ class UkmServiceTest : public testing::Test {
   Report GetPersistedReport() {
     EXPECT_GE(GetPersistedLogCount(), 1);
     metrics::PersistedLogs result_persisted_logs(
-        base::MakeUnique<ukm::PersistedLogsMetricsImpl>(), &prefs_,
+        std::make_unique<ukm::PersistedLogsMetricsImpl>(), &prefs_,
         prefs::kUkmPersistedLogs,
         3,     // log count limit
         1000,  // byte limit
@@ -167,9 +168,7 @@ TEST_F(UkmServiceTest, EnableDisableSchedule) {
   UkmService service(&prefs_, &client_);
   EXPECT_FALSE(task_runner_->HasPendingTask());
   service.Initialize();
-  EXPECT_TRUE(task_runner_->HasPendingTask());
-  // Allow initialization to complete.
-  task_runner_->RunUntilIdle();
+  EXPECT_FALSE(task_runner_->HasPendingTask());
   service.EnableRecording();
   service.EnableReporting();
   EXPECT_TRUE(task_runner_->HasPendingTask());

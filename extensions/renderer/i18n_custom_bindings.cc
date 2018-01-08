@@ -148,16 +148,18 @@ void InitDetectedLanguages(
 }  // namespace
 
 I18NCustomBindings::I18NCustomBindings(ScriptContext* context)
-    : ObjectBackedNativeHandler(context) {
-  RouteFunction(
+    : ObjectBackedNativeHandler(context) {}
+
+void I18NCustomBindings::AddRoutes() {
+  RouteHandlerFunction(
       "GetL10nMessage", "i18n",
       base::Bind(&I18NCustomBindings::GetL10nMessage, base::Unretained(this)));
-  RouteFunction("GetL10nUILanguage", "i18n",
-                base::Bind(&I18NCustomBindings::GetL10nUILanguage,
-                           base::Unretained(this)));
-  RouteFunction("DetectTextLanguage", "i18n",
-                base::Bind(&I18NCustomBindings::DetectTextLanguage,
-                           base::Unretained(this)));
+  RouteHandlerFunction("GetL10nUILanguage", "i18n",
+                       base::Bind(&I18NCustomBindings::GetL10nUILanguage,
+                                  base::Unretained(this)));
+  RouteHandlerFunction("DetectTextLanguage", "i18n",
+                       base::Bind(&I18NCustomBindings::DetectTextLanguage,
+                                  base::Unretained(this)));
 }
 
 void I18NCustomBindings::GetL10nMessage(
@@ -167,11 +169,12 @@ void I18NCustomBindings::GetL10nMessage(
     return;
   }
 
+  v8::Isolate* isolate = args.GetIsolate();
   std::string extension_id;
   if (args[2]->IsNull() || !args[2]->IsString()) {
     return;
   } else {
-    extension_id = *v8::String::Utf8Value(args[2]);
+    extension_id = *v8::String::Utf8Value(isolate, args[2]);
     if (extension_id.empty())
       return;
   }
@@ -198,11 +201,10 @@ void I18NCustomBindings::GetL10nMessage(
     l10n_messages = GetL10nMessagesMap(extension_id);
   }
 
-  std::string message_name = *v8::String::Utf8Value(args[0]);
+  std::string message_name = *v8::String::Utf8Value(isolate, args[0]);
   std::string message =
       MessageBundle::GetL10nMessage(message_name, *l10n_messages);
 
-  v8::Isolate* isolate = args.GetIsolate();
   std::vector<std::string> substitutions;
   if (args[1]->IsArray()) {
     // chrome.i18n.getMessage("message_name", ["more", "params"]);
@@ -211,12 +213,12 @@ void I18NCustomBindings::GetL10nMessage(
     if (count > 9)
       return;
     for (uint32_t i = 0; i < count; ++i) {
-      substitutions.push_back(*v8::String::Utf8Value(placeholders->Get(
-          v8::Integer::New(isolate, i))));
+      substitutions.push_back(*v8::String::Utf8Value(
+          isolate, placeholders->Get(v8::Integer::New(isolate, i))));
     }
   } else if (args[1]->IsString()) {
     // chrome.i18n.getMessage("message_name", "one param");
-    substitutions.push_back(*v8::String::Utf8Value(args[1]));
+    substitutions.push_back(*v8::String::Utf8Value(isolate, args[1]));
   }
 
   args.GetReturnValue().Set(v8::String::NewFromUtf8(
@@ -235,7 +237,7 @@ void I18NCustomBindings::DetectTextLanguage(
   CHECK(args.Length() == 1);
   CHECK(args[0]->IsString());
 
-  std::string text = *v8::String::Utf8Value(args[0]);
+  std::string text = *v8::String::Utf8Value(args.GetIsolate(), args[0]);
   chrome_lang_id::NNetLanguageIdentifier nnet_lang_id(/*min_num_bytes=*/0,
                                                       /*max_num_bytes=*/512);
   std::vector<chrome_lang_id::NNetLanguageIdentifier::Result> lang_results =

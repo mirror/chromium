@@ -55,9 +55,9 @@
 #include "net/http/http_util.h"
 #include "net/http/transport_security_persister.h"
 #include "net/nqe/network_quality_estimator.h"
-#include "net/proxy/proxy_config_service_fixed.h"
-#include "net/proxy/proxy_script_fetcher_impl.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_config_service_fixed.h"
+#include "net/proxy_resolution/pac_file_fetcher_impl.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/data_protocol_handler.h"
@@ -356,7 +356,7 @@ void ChromeBrowserStateIOData::Init(
 
   // NOTE: Proxy service uses the default io thread network delegate, not the
   // delegate just created.
-  proxy_service_ = ProxyServiceFactory::CreateProxyService(
+  proxy_resolution_service_ = ProxyServiceFactory::CreateProxyService(
       io_thread->net_log(), nullptr,
       io_thread_globals->system_network_delegate.get(),
       std::move(profile_params_->proxy_config_service),
@@ -399,7 +399,7 @@ void ChromeBrowserStateIOData::Init(
             "Not implemented, this is a feature that websites can opt into and "
             "thus there is no Chrome-wide policy to disable it."
         })");
-  certificate_report_sender_ = base::MakeUnique<net::ReportSender>(
+  certificate_report_sender_ = std::make_unique<net::ReportSender>(
       main_request_context_.get(), traffic_annotation);
   transport_security_state_->SetReportSender(certificate_report_sender_.get());
 
@@ -435,19 +435,19 @@ ChromeBrowserStateIOData::SetUpJobFactoryDefaults(
   // ChromeBrowserStateIOData::IsHandledProtocol().
   bool set_protocol = job_factory->SetProtocolHandler(
       url::kFileScheme,
-      base::MakeUnique<net::FileProtocolHandler>(
+      std::make_unique<net::FileProtocolHandler>(
           base::CreateTaskRunnerWithTraits(
               {base::MayBlock(), base::TaskPriority::BACKGROUND,
                base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})));
   DCHECK(set_protocol);
 
   set_protocol = job_factory->SetProtocolHandler(
-      url::kDataScheme, base::MakeUnique<net::DataProtocolHandler>());
+      url::kDataScheme, std::make_unique<net::DataProtocolHandler>());
   DCHECK(set_protocol);
 
   job_factory->SetProtocolHandler(
       url::kAboutScheme,
-      base::MakeUnique<about_handler::AboutProtocolHandler>());
+      std::make_unique<about_handler::AboutProtocolHandler>());
 
   return job_factory;
 }

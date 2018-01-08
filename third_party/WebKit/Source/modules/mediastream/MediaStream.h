@@ -26,7 +26,7 @@
 #ifndef MediaStream_h
 #define MediaStream_h
 
-#include "core/html/URLRegistry.h"
+#include "core/fileapi/URLRegistry.h"
 #include "modules/EventTargetModules.h"
 #include "modules/ModulesExport.h"
 #include "modules/mediastream/MediaStreamTrack.h"
@@ -41,7 +41,7 @@ class ScriptState;
 
 class MODULES_EXPORT MediaStreamObserver : public GarbageCollectedMixin {
  public:
-  virtual ~MediaStreamObserver() {}
+  virtual ~MediaStreamObserver() = default;
 
   // Invoked when |MediaStream::addTrack| is called.
   virtual void OnStreamAddTrack(MediaStream*, MediaStreamTrack*) = 0;

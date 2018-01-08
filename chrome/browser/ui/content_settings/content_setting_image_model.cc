@@ -44,6 +44,7 @@ using content::WebContents;
 //     ContentSettingRPHImageModel               - protocol handlers
 //     ContentSettingMIDISysExImageModel         - midi sysex
 //     ContentSettingDownloadsImageModel         - automatic downloads
+//     ContentSettingClipboardReadImageModel     - clipboard read
 //   ContentSettingMediaImageModel             - media
 //   ContentSettingSubresourceFilterImageModel - deceptive content
 //   ContentSettingFramebustBlockImageModel    - blocked framebust
@@ -86,6 +87,7 @@ class ContentSettingMIDISysExImageModel
   ContentSettingMIDISysExImageModel();
 
   void UpdateFromWebContents(WebContents* web_contents) override;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(ContentSettingMIDISysExImageModel);
 };
@@ -99,6 +101,17 @@ class ContentSettingDownloadsImageModel
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ContentSettingDownloadsImageModel);
+};
+
+class ContentSettingClipboardReadImageModel
+    : public ContentSettingSimpleImageModel {
+ public:
+  ContentSettingClipboardReadImageModel();
+
+  void UpdateFromWebContents(WebContents* web_contents) override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ContentSettingClipboardReadImageModel);
 };
 
 // Image model for displaying media icons in the location bar.
@@ -133,7 +146,7 @@ struct ContentSettingsImageDetails {
 const ContentSettingsImageDetails kImageDetails[] = {
     {CONTENT_SETTINGS_TYPE_COOKIES, kCookieIcon, IDS_BLOCKED_COOKIES_MESSAGE, 0,
      IDS_ACCESSED_COOKIES_MESSAGE},
-    {CONTENT_SETTINGS_TYPE_IMAGES, kImageIcon, IDS_BLOCKED_IMAGES_MESSAGE, 0,
+    {CONTENT_SETTINGS_TYPE_IMAGES, kPhotoIcon, IDS_BLOCKED_IMAGES_MESSAGE, 0,
      0},
     {CONTENT_SETTINGS_TYPE_JAVASCRIPT, kCodeIcon,
      IDS_BLOCKED_JAVASCRIPT_MESSAGE, 0, 0},
@@ -242,6 +255,8 @@ ContentSettingImageModel::CreateForContentType(ImageType image_type) {
           ImageType::SOUND, CONTENT_SETTINGS_TYPE_SOUND);
     case ImageType::FRAMEBUST:
       return std::make_unique<ContentSettingFramebustBlockImageModel>();
+    case ImageType::CLIPBOARD_READ:
+      return std::make_unique<ContentSettingClipboardReadImageModel>();
     case ImageType::NUM_IMAGE_TYPES:
       break;
   }
@@ -451,6 +466,33 @@ void ContentSettingDownloadsImageModel::UpdateFromWebContents(
   }
 }
 
+// Clipboard -------------------------------------------------------------------
+
+ContentSettingClipboardReadImageModel::ContentSettingClipboardReadImageModel()
+    : ContentSettingSimpleImageModel(ImageType::CLIPBOARD_READ,
+                                     CONTENT_SETTINGS_TYPE_CLIPBOARD_READ) {}
+
+void ContentSettingClipboardReadImageModel::UpdateFromWebContents(
+    WebContents* web_contents) {
+  set_visible(false);
+  if (!web_contents)
+    return;
+  TabSpecificContentSettings* content_settings =
+      TabSpecificContentSettings::FromWebContents(web_contents);
+  if (!content_settings)
+    return;
+  ContentSettingsType content_type = CONTENT_SETTINGS_TYPE_CLIPBOARD_READ;
+  bool blocked = content_settings->IsContentBlocked(content_type);
+  bool allowed = content_settings->IsContentAllowed(content_type);
+  if (!blocked && !allowed)
+    return;
+  set_visible(true);
+
+  set_icon(kContentPasteIcon, allowed ? gfx::kNoneIcon : kBlockedBadgeIcon);
+  set_tooltip(l10n_util::GetStringUTF16(
+      allowed ? IDS_ALLOWED_CLIPBOARD_MESSAGE : IDS_BLOCKED_CLIPBOARD_MESSAGE));
+}
+
 // Media -----------------------------------------------------------------------
 
 ContentSettingMediaImageModel::ContentSettingMediaImageModel()
@@ -552,7 +594,7 @@ void ContentSettingSubresourceFilterImageModel::UpdateFromWebContents(
     return;
   }
 
-  set_icon(kSubresourceFilterActiveIcon, kBlockedBadgeIcon);
+  set_icon(kAdsIcon, kBlockedBadgeIcon);
   set_explanatory_string_id(IDS_BLOCKED_ADS_PROMPT_TITLE);
   set_tooltip(l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_TOOLTIP));
   set_visible(true);
@@ -677,6 +719,7 @@ ContentSettingImageModel::GenerateContentSettingImageModels() {
       ImageType::MIDI_SYSEX,
       ImageType::SOUND,
       ImageType::FRAMEBUST,
+      ImageType::CLIPBOARD_READ,
   };
 
   std::vector<std::unique_ptr<ContentSettingImageModel>> result;

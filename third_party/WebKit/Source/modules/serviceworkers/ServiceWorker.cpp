@@ -75,7 +75,7 @@ void ServiceWorker::postMessage(ScriptState* script_state,
   }
 
   WebString message_string = message->ToWireString();
-  handle_->ServiceWorker()->PostMessage(
+  handle_->ServiceWorker()->PostMessageToWorker(
       client->Provider(), message_string,
       WebSecurityOrigin(GetExecutionContext()->GetSecurityOrigin()),
       std::move(channels));
@@ -156,7 +156,7 @@ ServiceWorker::ServiceWorker(ExecutionContext* execution_context,
   handle_->ServiceWorker()->SetProxy(this);
 }
 
-ServiceWorker::~ServiceWorker() {}
+ServiceWorker::~ServiceWorker() = default;
 
 void ServiceWorker::Trace(blink::Visitor* visitor) {
   AbstractWorker::Trace(visitor);

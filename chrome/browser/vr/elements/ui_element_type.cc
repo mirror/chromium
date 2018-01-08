@@ -28,6 +28,12 @@ static const char* g_ui_element_type_strings[] = {
     "kTypeTextInputHint",
     "kTypeTextInputText",
     "kTypeTextInputCursor",
+    "kTypeToastBackground",
+    "kTypeToastContainer",
+    "kTypeToastIcon",
+    "kTypeToastText",
+    "kTypeSnackbarButton",
+    "kTypeSnackbarDescription",
 };
 
 static_assert(

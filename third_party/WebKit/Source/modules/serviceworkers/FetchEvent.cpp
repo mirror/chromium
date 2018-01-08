@@ -7,11 +7,11 @@
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/fetch/BytesConsumerForDataConsumerHandle.h"
+#include "core/fetch/Request.h"
+#include "core/fetch/Response.h"
 #include "core/frame/UseCounter.h"
 #include "core/timing/WorkerGlobalScopePerformance.h"
-#include "modules/fetch/BytesConsumerForDataConsumerHandle.h"
-#include "modules/fetch/Request.h"
-#include "modules/fetch/Response.h"
 #include "modules/serviceworkers/FetchRespondWithObserver.h"
 #include "modules/serviceworkers/ServiceWorkerError.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
@@ -120,7 +120,7 @@ FetchEvent::FetchEvent(ScriptState* script_state,
   }
 }
 
-FetchEvent::~FetchEvent() {}
+FetchEvent::~FetchEvent() = default;
 
 void FetchEvent::OnNavigationPreloadResponse(
     ScriptState* script_state,
@@ -189,7 +189,9 @@ void FetchEvent::OnNavigationPreloadComplete(
   // navigation preload request must be "other". But it may change when the spec
   // discussion is settled. https://github.com/w3c/resource-timing/issues/110
   scoped_refptr<ResourceTimingInfo> info = ResourceTimingInfo::Create(
-      "other", resource_response.GetResourceLoadTiming()->RequestTime(),
+      "other",
+      TimeTicksInSeconds(
+          resource_response.GetResourceLoadTiming()->RequestTime()),
       false /* is_main_resource */);
   info->SetNegativeAllowed(true);
   info->SetLoadFinishTime(completion_time);
@@ -197,7 +199,7 @@ void FetchEvent::OnNavigationPreloadComplete(
   info->SetFinalResponse(resource_response);
   info->AddFinalTransferSize(encoded_data_length);
   WorkerGlobalScopePerformance::performance(*worker_global_scope)
-      ->AddResourceTiming(*info);
+      ->GenerateAndAddResourceTiming(*info);
 }
 
 void FetchEvent::Trace(blink::Visitor* visitor) {

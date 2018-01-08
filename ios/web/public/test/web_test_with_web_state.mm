@@ -36,6 +36,10 @@ namespace web {
 
 WebTestWithWebState::WebTestWithWebState() {}
 
+WebTestWithWebState::WebTestWithWebState(
+    std::unique_ptr<web::WebClient> web_client)
+    : WebTest(std::move(web_client)) {}
+
 WebTestWithWebState::~WebTestWithWebState() {}
 
 void WebTestWithWebState::SetUp() {
@@ -132,8 +136,10 @@ void WebTestWithWebState::LoadHtml(NSString* html) {
   LoadHtml(html, url);
 }
 
-void WebTestWithWebState::LoadHtml(const std::string& html) {
+bool WebTestWithWebState::LoadHtml(const std::string& html) {
   LoadHtml(base::SysUTF8ToNSString(html));
+  // TODO(crbug.com/780062): LoadHtml(NSString*) should return bool.
+  return true;
 }
 
 void WebTestWithWebState::WaitForBackgroundTasks() {

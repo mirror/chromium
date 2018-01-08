@@ -89,8 +89,8 @@ class CORE_EXPORT InlineTextBox : public InlineBox {
   bool GetEmphasisMarkPosition(const ComputedStyle&,
                                TextEmphasisPosition&) const;
 
-  LayoutUnit OffsetTo(LineVerticalPositionType, FontBaseline) const;
-  LayoutUnit VerticalPosition(LineVerticalPositionType, FontBaseline) const;
+  LayoutUnit OffsetTo(FontVerticalPositionType, FontBaseline) const;
+  LayoutUnit VerticalPosition(FontVerticalPositionType, FontBaseline) const;
 
   LayoutRect LogicalOverflowRect() const;
   void SetLogicalOverflowRect(const LayoutRect&);
@@ -113,7 +113,7 @@ class CORE_EXPORT InlineTextBox : public InlineBox {
       StringBuilder* characters_with_hyphen = nullptr) const;
 
 #ifndef NDEBUG
-  void ShowBox(int = 0) const override;
+  void DumpBox(StringBuilder&) const override;
 #endif
   const char* BoxName() const override;
   String DebugName() const override;

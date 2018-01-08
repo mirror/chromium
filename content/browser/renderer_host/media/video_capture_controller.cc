@@ -19,10 +19,10 @@
 #include "components/viz/common/gl_helper.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/media/video_capture_manager.h"
-#include "content/common/video_capture.mojom.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
 #include "media/base/video_frame.h"
+#include "media/capture/mojo/video_capture_types.mojom.h"
 #include "media/capture/video/video_capture_buffer_pool.h"
 #include "media/capture/video/video_capture_buffer_tracker_factory_impl.h"
 #include "media/capture/video/video_capture_device_client.h"
@@ -160,7 +160,14 @@ void VideoCaptureController::BufferContext::DecreaseConsumerCount() {
 
 mojo::ScopedSharedBufferHandle
 VideoCaptureController::BufferContext::CloneHandle() {
-  return buffer_handle_->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY);
+  // Special behavior here: If the handle was already read-only, the Clone()
+  // call here will maintain that read-only permission. If it was read-write,
+  // the cloned handle will have read-write permission.
+  //
+  // TODO(crbug.com/797470): We should be able to demote read-write to read-only
+  // permissions when Clone()'ing handles. Currently, this causes a crash.
+  return buffer_handle_->Clone(
+      mojo::SharedBufferHandle::AccessMode::READ_WRITE);
 }
 
 VideoCaptureController::VideoCaptureController(

@@ -9,14 +9,15 @@
 #include "build/build_config.h"
 #include "device/geolocation/geolocation_provider.h"
 #include "device/geolocation/geolocation_provider_impl.h"
-#include "device/geolocation/public/interfaces/geolocation.mojom.h"
-#include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
-#include "device/geolocation/public/interfaces/geolocation_control.mojom.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/device/geolocation/public_ip_address_geolocation_provider.h"
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/public/interfaces/fingerprint.mojom.h"
+#include "services/device/public/interfaces/geolocation.mojom.h"
+#include "services/device/public/interfaces/geolocation_config.mojom.h"
+#include "services/device/public/interfaces/geolocation_context.mojom.h"
+#include "services/device/public/interfaces/geolocation_control.mojom.h"
 #include "services/device/public/interfaces/nfc_provider.mojom.h"
 #include "services/device/public/interfaces/power_monitor.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
@@ -103,6 +104,7 @@ class DeviceService : public service_manager::Service {
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
 
   void BindFingerprintRequest(mojom::FingerprintRequest request);
+  void BindGeolocationConfigRequest(mojom::GeolocationConfigRequest request);
   void BindGeolocationContextRequest(mojom::GeolocationContextRequest request);
   void BindGeolocationControlRequest(mojom::GeolocationControlRequest request);
 

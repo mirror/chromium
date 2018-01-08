@@ -30,6 +30,7 @@
 
 namespace {
 
+// Please refer to the comment in class header if the usage changes.
 constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
     net::DefineNetworkTrafficAnnotation("websocket_stream", R"(
         semantics {
@@ -314,7 +315,7 @@ void Delegate::OnResponseStarted(URLRequest* request, int net_error) {
   // All error codes, including OK and ABORTED, as with
   // Net.ErrorCodesForMainFrame3
   base::UmaHistogramSparse("Net.WebSocket.ErrorCodes", -net_error);
-  if (net::IsLocalhost(request->url().HostNoBrackets())) {
+  if (net::IsLocalhost(request->url())) {
     base::UmaHistogramSparse("Net.WebSocket.ErrorCodes_Localhost", -net_error);
   } else {
     base::UmaHistogramSparse("Net.WebSocket.ErrorCodes_NotLocalhost",

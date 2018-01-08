@@ -39,7 +39,6 @@
 #include "components/url_formatter/url_formatter.h"
 #include "components/web_resource/web_resource_pref_names.h"
 #import "ios/chrome/app/application_delegate/app_state.h"
-#import "ios/chrome/app/application_delegate/background_activity.h"
 #import "ios/chrome/app/application_delegate/metrics_mediator.h"
 #import "ios/chrome/app/application_delegate/url_opener.h"
 #include "ios/chrome/app/application_mode.h"
@@ -72,8 +71,8 @@
 #include "ios/chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "ios/chrome/browser/crash_loop_detection_util.h"
 #include "ios/chrome/browser/crash_report/breakpad_helper.h"
-#import "ios/chrome/browser/crash_report/crash_report_background_uploader.h"
 #import "ios/chrome/browser/crash_report/crash_restore_helper.h"
+#include "ios/chrome/browser/download/download_directory_util.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/feature_engagement/tracker_factory.h"
 #include "ios/chrome/browser/file_metadata_util.h"
@@ -97,10 +96,13 @@
 #import "ios/chrome/browser/share_extension/share_extension_service.h"
 #import "ios/chrome/browser/share_extension/share_extension_service_factory.h"
 #include "ios/chrome/browser/signin/authentication_service.h"
+#include "ios/chrome/browser/signin/authentication_service_delegate.h"
 #include "ios/chrome/browser/signin/authentication_service_factory.h"
+#import "ios/chrome/browser/signin/browser_state_data_remover.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache_factory.h"
+#import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
@@ -131,10 +133,13 @@
 #import "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h"
 #import "ios/chrome/browser/ui/stack_view/stack_view_controller.h"
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.h"
+#import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/top_view_controller.h"
 #import "ios/chrome/browser/ui/webui/chrome_web_ui_ios_controller_factory.h"
+#import "ios/chrome/browser/web/tab_id_tab_helper.h"
+#import "ios/chrome/browser/web_state_list/web_state_list.h"
 #include "ios/chrome/common/app_group/app_group_utils.h"
 #include "ios/net/cookies/cookie_store_ios.h"
 #import "ios/net/crn_http_protocol_handler.h"
@@ -232,6 +237,36 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 // The delay, in seconds, for cleaning external files.
 const int kExternalFilesCleanupDelaySeconds = 60;
+
+// Delegate for the AuthenticationService.
+class MainControllerAuthenticationServiceDelegate
+    : public AuthenticationServiceDelegate {
+ public:
+  explicit MainControllerAuthenticationServiceDelegate(
+      ios::ChromeBrowserState* browser_state);
+  ~MainControllerAuthenticationServiceDelegate() override;
+
+  // AuthenticationServiceDelegate implementation.
+  void ClearBrowsingData(ProceduralBlock completion) override;
+
+ private:
+  ios::ChromeBrowserState* browser_state_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(MainControllerAuthenticationServiceDelegate);
+};
+
+MainControllerAuthenticationServiceDelegate::
+    MainControllerAuthenticationServiceDelegate(
+        ios::ChromeBrowserState* browser_state)
+    : browser_state_(browser_state) {}
+
+MainControllerAuthenticationServiceDelegate::
+    ~MainControllerAuthenticationServiceDelegate() = default;
+
+void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
+    ProceduralBlock completion) {
+  BrowserStateDataRemover::ClearData(browser_state_, completion);
+}
 
 }  // namespace
 
@@ -361,10 +396,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 @property(nonatomic, strong)
     SigninInteractionCoordinator* signinInteractionCoordinator;
 
-// Activates browsing and enables web views if |enabled| is YES.
-// Disables browsing and purges web views if |enabled| is NO.
-// Must be called only on the main thread.
-- (void)setWebUsageEnabled:(BOOL)enabled;
 // Activates |mainBVC| and |otrBVC| and sets |currentBVC| as primary iff
 // |currentBVC| can be made active.
 - (void)activateBVCAndMakeCurrentBVCPrimary;
@@ -529,7 +560,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
   net::HTTPProtocolHandlerDelegate::SetInstance(nullptr);
   net::RequestTracker::SetRequestTrackerFactory(nullptr);
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -624,14 +654,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   // and setting up the required support structures.
   [_metricsMediator updateMetricsStateBasedOnPrefsUserTriggered:NO];
 
-  // Resets the number of crash reports that have been uploaded since the
-  // previous Foreground initialization.
-  [CrashReportBackgroundUploader resetReportsUploadedInBackgroundCount];
-
-  // Resets the interval stats between two background fetch as this value may be
-  // obsolete.
-  [BackgroundActivity foregroundStarted];
-
   // Crash the app during startup if requested but only after we have enabled
   // uploading crash reports.
   [self crashIfRequested];
@@ -672,6 +694,16 @@ const int kExternalFilesCleanupDelaySeconds = 60;
       [[BrowserViewWrangler alloc] initWithBrowserState:_mainBrowserState
                                        tabModelObserver:self
                              applicationCommandEndpoint:self];
+
+  // Force an obvious initialization of the AuthenticationService. This must
+  // be done before creation of the UI to ensure the service is initialised
+  // before use (it is a security issue, so accessing the service CHECK if
+  // this is not the case).
+  DCHECK(_mainBrowserState);
+  AuthenticationServiceFactory::CreateAndInitializeForBrowserState(
+      _mainBrowserState,
+      std::make_unique<MainControllerAuthenticationServiceDelegate>(
+          _mainBrowserState));
 
   // Send "Chrome Opened" event to the feature_engagement::Tracker on cold
   // start.
@@ -832,16 +864,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   return _browsingDataRemovalController;
 }
 
-- (void)setWebUsageEnabled:(BOOL)enabled {
-  DCHECK([NSThread isMainThread]);
-  if (enabled) {
-    [self activateBVCAndMakeCurrentBVCPrimary];
-  } else {
-    [self.mainBVC setActive:NO];
-    [self.otrBVC setActive:NO];
-  }
-}
-
 - (void)activateBVCAndMakeCurrentBVCPrimary {
   // If there are pending removal operations, the activation will be deferred
   // until the callback for |removeBrowsingDataFromBrowserState:| is received.
@@ -917,10 +939,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 }
 
 #pragma mark - BrowserViewInformation implementation.
-
-- (void)haltAllTabs {
-  [_browserViewWrangler haltAllTabs];
-}
 
 - (void)cleanDeviceSharingManager {
   [_browserViewWrangler cleanDeviceSharingManager];
@@ -1011,22 +1029,9 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   [[DeferredInitializationRunner sharedInstance]
       enqueueBlockNamed:kAuthenticationServiceNotification
                   block:^{
-                    DCHECK(_mainBrowserState);
-                    // Force an obvious initialization of the
-                    // AuthenticationService.
-                    // This is done for clarity purpose only, and should be
-                    // removed
-                    // alongside the delayed initialization. See
-                    // crbug.com/464306.
-                    AuthenticationServiceFactory::GetForBrowserState(
-                        _mainBrowserState);
-                    if (![self currentBrowserState]) {
-                      // Active browser state should have been set before
-                      // scheduling
-                      // any authentication service notification.
-                      NOTREACHED();
-                      return;
-                    }
+                    // Active browser state should have been set before
+                    // scheduling any authentication service notification.
+                    DCHECK([self currentBrowserState]);
                     if ([SignedInAccountsViewController
                             shouldBePresentedForBrowserState:
                                 [self currentBrowserState]]) {
@@ -1138,7 +1143,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   [[DeferredInitializationRunner sharedInstance]
       enqueueBlockNamed:kDeleteDownloads
                   block:^{
-                    [LegacyDownloadManagerController clearDownloadsDirectory];
+                    DeleteDownloadsDirectory();
                   }];
 }
 
@@ -1520,6 +1525,23 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                      completion:nil];
 }
 
+- (void)prepareForBrowsingDataRemoval {
+  // Disables browsing and purges web views.
+  // Must be called only on the main thread.
+  DCHECK([NSThread isMainThread]);
+  [self.mainBVC setActive:NO];
+  [self.otrBVC setActive:NO];
+}
+
+- (void)browsingDataWasRemoved {
+  // Activates browsing and enables web views.
+  // Must be called only on the main thread.
+  DCHECK([NSThread isMainThread]);
+  [self.mainBVC setActive:YES];
+  [self.otrBVC setActive:YES];
+  [self.currentBVC setPrimary:YES];
+}
+
 #pragma mark - ApplicationSettingsCommands
 
 // TODO(crbug.com/779791) : Remove show settings from MainController.
@@ -1812,12 +1834,18 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   // expensive we activate snapshot coalescing in the scope of this function
   // which will cache the first snapshot for the tab and reuse it instead of
   // regenerating a new one each time.
-  [currentTab setSnapshotCoalescingEnabled:YES];
-  base::ScopedClosureRunner runner(base::BindBlockArc(^{
-    [currentTab setSnapshotCoalescingEnabled:NO];
-  }));
+  base::ScopedClosureRunner runner;
+  if (currentTab && currentTab.webState) {
+    SnapshotTabHelper::FromWebState(currentTab.webState)
+        ->SetSnapshotCoalescingEnabled(true);
+    runner.ReplaceClosure(base::BindBlockArc(^{
+      SnapshotTabHelper::FromWebState(currentTab.webState)
+          ->SetSnapshotCoalescingEnabled(false);
+    }));
 
-  [currentTab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
+    SnapshotTabHelper::FromWebState(currentTab.webState)
+        ->UpdateSnapshot(/*with_overlays=*/true, /*visible_frame_only=*/true);
+  }
 
   if (!_tabSwitcherController) {
     if (IsIPadIdiom()) {
@@ -2014,10 +2042,10 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   // TODO(crbug.com/632772): Remove web usage disabling once
   // https://bugs.webkit.org/show_bug.cgi?id=149079 has been fixed.
   if (mask & IOSChromeBrowsingDataRemover::REMOVE_SITE_DATA) {
-    [self setWebUsageEnabled:NO];
+    [self prepareForBrowsingDataRemoval];
   }
   ProceduralBlock browsingDataRemoved = ^{
-    [self setWebUsageEnabled:YES];
+    [self browsingDataWasRemoved];
     if (completionHandler) {
       completionHandler();
     }
@@ -2160,7 +2188,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
       };
     case FOCUS_OMNIBOX:
       return ^{
-        [self.currentBVC focusOmnibox];
+        [self.currentBVC.dispatcher focusOmnibox];
       };
     default:
       return nil;
@@ -2320,9 +2348,11 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 }
 
 - (NSMutableSet*)liveSessionsForTabModel:(TabModel*)tabModel {
-  NSMutableSet* result = [NSMutableSet setWithCapacity:[tabModel count]];
-  for (Tab* tab in tabModel) {
-    [result addObject:tab.tabId];
+  WebStateList* webStateList = tabModel.webStateList;
+  NSMutableSet* result = [NSMutableSet setWithCapacity:webStateList->count()];
+  for (int index = 0; index < webStateList->count(); ++index) {
+    web::WebState* webState = webStateList->GetWebStateAt(index);
+    [result addObject:TabIdTabHelper::FromWebState(webState)->tab_id()];
   }
   return result;
 }
@@ -2440,7 +2470,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 }
 
 - (UIImage*)currentPageScreenshot {
-  UIView* lastView = self.mainViewController.view;
+  UIView* lastView = self.mainViewController.activeViewController.view;
   DCHECK(lastView);
   CGFloat scale = 0.0;
   // For screenshots of the Stack View we need to use a scale of 1.0 to avoid

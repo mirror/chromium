@@ -12,25 +12,9 @@
 
 namespace app_list {
 
-SearchBoxModel::SpeechButtonProperty::SpeechButtonProperty(
-    const gfx::ImageSkia& icon,
-    const base::string16& tooltip,
-    const base::string16& accessible_name)
-    : icon(icon), tooltip(tooltip), accessible_name(accessible_name) {}
-
-SearchBoxModel::SpeechButtonProperty::~SpeechButtonProperty() = default;
-
-SearchBoxModel::SearchBoxModel()
-    : is_voice_query_(false), is_tablet_mode_(false) {}
+SearchBoxModel::SearchBoxModel() : is_tablet_mode_(false) {}
 
 SearchBoxModel::~SearchBoxModel() = default;
-
-void SearchBoxModel::SetSpeechRecognitionButton(
-    std::unique_ptr<SearchBoxModel::SpeechButtonProperty> speech_button) {
-  speech_button_ = std::move(speech_button);
-  for (auto& observer : observers_)
-    observer.SpeechRecognitionButtonPropChanged();
-}
 
 void SearchBoxModel::SetHintText(const base::string16& hint_text) {
   if (hint_text_ == hint_text)
@@ -74,9 +58,8 @@ void SearchBoxModel::SetTabletMode(bool started) {
 }
 
 void SearchBoxModel::Update(const base::string16& text,
-                            bool is_voice_query,
                             bool initiated_by_user) {
-  if (text_ == text && is_voice_query_ == is_voice_query)
+  if (text_ == text)
     return;
 
   if (initiated_by_user) {
@@ -88,7 +71,6 @@ void SearchBoxModel::Update(const base::string16& text,
     }
   }
   text_ = text;
-  is_voice_query_ = is_voice_query;
   for (auto& observer : observers_)
     observer.Update();
 }

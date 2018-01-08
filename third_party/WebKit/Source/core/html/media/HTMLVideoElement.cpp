@@ -37,6 +37,7 @@
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/media/MediaCustomControlsFullscreenDetector.h"
 #include "core/html/media/MediaRemotingInterstitial.h"
+#include "core/html/media/PictureInPictureInterstitial.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html_names.h"
 #include "core/imagebitmap/ImageBitmap.h"
@@ -44,8 +45,8 @@
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutVideo.h"
 #include "platform/Histogram.h"
+#include "platform/graphics/CanvasResourceProvider.h"
 #include "platform/graphics/GraphicsContext.h"
-#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/gpu/Extensions3DUtil.h"
 #include "platform/runtime_enabled_features.h"
 #include "public/platform/WebCanvas.h"
@@ -66,7 +67,9 @@ enum VideoPersistenceControlsType {
 }  // anonymous namespace
 
 inline HTMLVideoElement::HTMLVideoElement(Document& document)
-    : HTMLMediaElement(videoTag, document), remoting_interstitial_(nullptr) {
+    : HTMLMediaElement(videoTag, document),
+      remoting_interstitial_(nullptr),
+      picture_in_picture_interstitial_(nullptr) {
   if (document.GetSettings()) {
     default_poster_url_ =
         AtomicString(document.GetSettings()->GetDefaultVideoPosterURL());
@@ -89,6 +92,7 @@ void HTMLVideoElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(image_loader_);
   visitor->Trace(custom_controls_fullscreen_detector_);
   visitor->Trace(remoting_interstitial_);
+  visitor->Trace(picture_in_picture_interstitial_);
   HTMLMediaElement::Trace(visitor);
 }
 
@@ -189,10 +193,13 @@ void HTMLVideoElement::ParseAttribute(
     // Notify the player when the poster image URL changes.
     if (GetWebMediaPlayer())
       GetWebMediaPlayer()->SetPoster(PosterImageURL());
-    // Media remoting doesn't show the original poster image, instead, it shows
-    // a grayscaled and blurred copy.
+
+    // Media remoting and picture in picture doesn't show the original poster
+    // image, instead, it shows a grayscaled and blurred copy.
     if (remoting_interstitial_)
       remoting_interstitial_->OnPosterImageChanged();
+    if (picture_in_picture_interstitial_)
+      picture_in_picture_interstitial_->OnPosterImageChanged();
   } else {
     HTMLMediaElement::ParseAttribute(params);
   }
@@ -442,7 +449,6 @@ KURL HTMLVideoElement::PosterImageURL() const {
 scoped_refptr<Image> HTMLVideoElement::GetSourceImageForCanvas(
     SourceImageStatus* status,
     AccelerationHint,
-    SnapshotReason,
     const FloatSize&) {
   if (!HasAvailableVideoFrame()) {
     *status = kInvalidSourceImageStatus;
@@ -451,17 +457,18 @@ scoped_refptr<Image> HTMLVideoElement::GetSourceImageForCanvas(
 
   IntSize intrinsic_size(videoWidth(), videoHeight());
   // FIXME: Not sure if we dhould we be doing anything with the AccelerationHint
-  // argument here?
-  std::unique_ptr<ImageBuffer> image_buffer =
-      ImageBuffer::Create(intrinsic_size);
-  if (!image_buffer) {
+  // argument here? Currently we use unacceleration mode.
+  std::unique_ptr<CanvasResourceProvider> resource_provider =
+      CanvasResourceProvider::Create(
+          intrinsic_size, CanvasResourceProvider::kSoftwareResourceUsage);
+  if (!resource_provider) {
     *status = kInvalidSourceImageStatus;
     return nullptr;
   }
 
-  PaintCurrentFrame(image_buffer->Canvas(),
+  PaintCurrentFrame(resource_provider->Canvas(),
                     IntRect(IntPoint(0, 0), intrinsic_size), nullptr);
-  scoped_refptr<Image> snapshot = image_buffer->NewImageSnapshot();
+  scoped_refptr<Image> snapshot = resource_provider->Snapshot();
   if (!snapshot) {
     *status = kInvalidSourceImageStatus;
     return nullptr;
@@ -521,9 +528,26 @@ void HTMLVideoElement::MediaRemotingStarted(
   remoting_interstitial_->Show(remote_device_friendly_name);
 }
 
-void HTMLVideoElement::MediaRemotingStopped() {
+void HTMLVideoElement::MediaRemotingStopped(
+    WebLocalizedString::Name error_msg) {
   if (remoting_interstitial_)
-    remoting_interstitial_->Hide();
+    remoting_interstitial_->Hide(error_msg);
+}
+
+void HTMLVideoElement::PictureInPictureStarted() {
+  if (!picture_in_picture_interstitial_) {
+    picture_in_picture_interstitial_ = new PictureInPictureInterstitial(*this);
+    ShadowRoot& shadow_root = EnsureUserAgentShadowRoot();
+    shadow_root.InsertBefore(picture_in_picture_interstitial_,
+                             shadow_root.firstChild());
+    HTMLMediaElement::AssertShadowRootChildren(shadow_root);
+  }
+  picture_in_picture_interstitial_->Show();
+}
+
+void HTMLVideoElement::PictureInPictureStopped() {
+  if (picture_in_picture_interstitial_)
+    picture_in_picture_interstitial_->Hide();
 }
 
 WebMediaPlayer::DisplayType HTMLVideoElement::DisplayType() const {

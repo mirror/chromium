@@ -43,11 +43,11 @@ SharedWorkerThread::SharedWorkerThread(
     ThreadableLoadingContext* loading_context,
     WorkerReportingProxy& worker_reporting_proxy)
     : WorkerThread(loading_context, worker_reporting_proxy),
-      worker_backing_thread_(
-          WorkerBackingThread::Create("SharedWorker Thread")),
+      worker_backing_thread_(WorkerBackingThread::Create(
+          WebThreadCreationParams("SharedWorker Thread"))),
       name_(name.IsolatedCopy()) {}
 
-SharedWorkerThread::~SharedWorkerThread() {}
+SharedWorkerThread::~SharedWorkerThread() = default;
 
 void SharedWorkerThread::ClearWorkerBackingThread() {
   worker_backing_thread_ = nullptr;

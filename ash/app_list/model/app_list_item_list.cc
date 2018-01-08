@@ -4,6 +4,8 @@
 
 #include "ash/app_list/model/app_list_item_list.h"
 
+#include <utility>
+
 #include "ash/app_list/model/app_list_item.h"
 #include "base/memory/ptr_util.h"
 

@@ -359,6 +359,10 @@ class NET_EXPORT NetworkQualityEstimator
   // the signal quality.
   virtual int32_t GetCurrentSignalStrength() const;
 
+  // Forces computation of effective connection type, and notifies observers
+  // if there is a change in its value.
+  void ComputeEffectiveConnectionType();
+
   // Observer list for RTT or throughput estimates. Protected for testing.
   base::ObserverList<RTTAndThroughputEstimatesObserver>
       rtt_and_throughput_estimates_observer_list_;
@@ -420,9 +424,6 @@ class NET_EXPORT NetworkQualityEstimator
   // Queries external estimate provider for network quality. When the network
   // quality is available, OnUpdatedEstimateAvailable() is called.
   void MaybeQueryExternalEstimateProvider() const;
-
-  // Records UMA when there is a change in connection type.
-  void RecordMetricsOnConnectionTypeChanged() const;
 
   // Records UMA on whether the NetworkID was available or not. Called right
   // after a network change event.
@@ -532,10 +533,6 @@ class NET_EXPORT NetworkQualityEstimator
 
   // Periodically updates |increase_in_transport_rtt_| by posting delayed tasks.
   void IncreaseInTransportRTTUpdater();
-
-  // Forces computation of effective connection type, and notifies observers
-  // if there is a change in its value.
-  void ComputeEffectiveConnectionType();
 
   const char* GetNameForStatistic(int i) const;
 

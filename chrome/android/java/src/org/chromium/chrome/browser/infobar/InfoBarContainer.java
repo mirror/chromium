@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.infobar;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,7 @@ public class InfoBarContainer extends SwipableOverlayView {
                 boolean isFragmentNavigation, Integer pageTransition, int errorCode,
                 int httpStatusCode) {
             if (hasCommitted && isInMainFrame) {
-                setIsObscuredByOtherView(false);
+                setHidden(false);
             }
         }
 
@@ -171,8 +172,8 @@ public class InfoBarContainer extends SwipableOverlayView {
     /** The view that {@link Tab#getView()} returns. */
     private View mTabView;
 
-    /** Whether or not another View is occupying the same space as this one. */
-    private boolean mIsObscured;
+    /** Whether or not this View should be hidden. */
+    private boolean mIsHidden;
 
     /** Animation used to snap the container to the nearest state if scroll direction changes. */
     private Animator mScrollDirectionChangeAnimation;
@@ -413,15 +414,13 @@ public class InfoBarContainer extends SwipableOverlayView {
     }
 
     /**
-     * Tells this class that a View with higher priority is occupying the same space.
+     * Hides or stops hiding this View/
      *
-     * Causes this View to hide itself until the obscuring View goes away.
-     *
-     * @param isObscured Whether this View is obscured by another one.
+     * @param isHidden Whether this View is should be hidden.
      */
-    public void setIsObscuredByOtherView(boolean isObscured) {
-        mIsObscured = isObscured;
-        if (isObscured) {
+    public void setHidden(boolean isHidden) {
+        mIsHidden = isHidden;
+        if (isHidden) {
             setVisibility(View.GONE);
         } else {
             setVisibility(View.VISIBLE);
@@ -445,7 +444,7 @@ public class InfoBarContainer extends SwipableOverlayView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (!mIsObscured) {
+        if (!mIsHidden) {
             setVisibility(VISIBLE);
             setAlpha(0f);
             animate().alpha(1f).setDuration(REATTACH_FADE_IN_MS);
@@ -481,7 +480,7 @@ public class InfoBarContainer extends SwipableOverlayView {
                 setVisibility(View.INVISIBLE);
             }
         } else {
-            if (!isShowing && !mIsObscured) {
+            if (!isShowing && !mIsHidden) {
                 setVisibility(View.VISIBLE);
             }
         }
@@ -542,6 +541,15 @@ public class InfoBarContainer extends SwipableOverlayView {
             }
         });
         mScrollDirectionChangeAnimation.start();
+    }
+
+    /**
+     * @return The infobar in front.
+     */
+    @Nullable
+    InfoBar getFrontInfoBar() {
+        if (mInfoBars.isEmpty()) return null;
+        return mInfoBars.get(0);
     }
 
     private native long nativeInit();

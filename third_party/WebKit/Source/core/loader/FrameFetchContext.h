@@ -112,7 +112,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   void DispatchDidFinishLoading(unsigned long identifier,
                                 double finish_time,
                                 int64_t encoded_data_length,
-                                int64_t decoded_body_length) override;
+                                int64_t decoded_body_length,
+                                bool blocked_cross_site_document) override;
   void DispatchDidFail(unsigned long identifier,
                        const ResourceError&,
                        int64_t encoded_data_length,
@@ -170,6 +171,9 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   void Trace(blink::Visitor*) override;
 
+  ResourceLoadPriority ModifyPriorityForExperiments(
+      ResourceLoadPriority) const override;
+
  private:
   struct FrozenState;
 
@@ -187,7 +191,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   LocalFrame* FrameOfImportsController() const;
 
   // FetchContext overrides:
-  WebFrameScheduler* GetFrameScheduler() override;
+  WebFrameScheduler* GetFrameScheduler() const override;
   scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   // BaseFetchContext overrides:
@@ -216,7 +220,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   String GetOutgoingReferrer() const override;
   const KURL& Url() const override;
   const SecurityOrigin* GetParentSecurityOrigin() const override;
-  Optional<WebAddressSpace> GetAddressSpace() const override;
+  Optional<mojom::IPAddressSpace> GetAddressSpace() const override;
   const ContentSecurityPolicy* GetContentSecurityPolicy() const override;
   void AddConsoleMessage(ConsoleMessage*) const override;
 

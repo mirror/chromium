@@ -42,7 +42,7 @@ class TestModuleScriptLoaderClient final
 
  public:
   TestModuleScriptLoaderClient() = default;
-  ~TestModuleScriptLoaderClient() override {}
+  ~TestModuleScriptLoaderClient() override = default;
 
   void Trace(blink::Visitor* visitor) override {
     visitor->Trace(module_script_);
@@ -73,7 +73,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
     fetcher_ = ResourceFetcher::Create(fetch_context);
   }
 
-  ~ModuleScriptLoaderTestModulator() override {}
+  ~ModuleScriptLoaderTestModulator() override = default;
 
   const SecurityOrigin* GetSecurityOriginForFetch() override {
     return security_origin_.get();
@@ -82,15 +82,16 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
   ScriptState* GetScriptState() override { return script_state_.get(); }
 
   ScriptModule CompileModule(const String& script,
-                             const String& url_str,
+                             const KURL& source_url,
+                             const KURL& base_url,
                              const ScriptFetchOptions& options,
                              AccessControlStatus access_control_status,
                              const TextPosition& position,
                              ExceptionState& exception_state) override {
     ScriptState::Scope scope(script_state_.get());
-    return ScriptModule::Compile(script_state_->GetIsolate(), script, url_str,
-                                 options, access_control_status, position,
-                                 exception_state);
+    return ScriptModule::Compile(
+        script_state_->GetIsolate(), script, source_url, base_url, options,
+        access_control_status, position, exception_state);
   }
 
   void SetModuleRequests(const Vector<String>& requests) {
@@ -181,8 +182,7 @@ void ModuleScriptLoaderTest::InitializeForWorklet() {
       OriginTrialContext::GetTokens(&GetDocument()).get(),
       nullptr /* worker_settings */, kV8CacheOptionsDefault);
   global_scope_ = new MainThreadWorkletGlobalScope(
-      &GetFrame(), std::move(creation_params), ToIsolate(&GetDocument()),
-      *reporting_proxy_);
+      &GetFrame(), std::move(creation_params), *reporting_proxy_);
   global_scope_->ScriptController()->InitializeContextIfNeeded("Dummy Context");
   modulator_ = new ModuleScriptLoaderTestModulator(
       global_scope_->ScriptController()->GetScriptState(),

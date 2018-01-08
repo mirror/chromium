@@ -12,7 +12,6 @@
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "build/build_config.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_hittest.h"
@@ -20,16 +19,17 @@
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/mus_util.h"
+#include "content/browser/renderer_host/cursor_manager.h"
 #include "content/browser/renderer_host/input/input_router.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/common/browser_plugin/browser_plugin_messages.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/frame_messages.h"
 #include "content/common/input/web_touch_event_traits.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "skia/ext/platform_canvas.h"
 #include "ui/base/ui_base_switches_util.h"
@@ -79,6 +79,26 @@ RenderWidgetHostViewGuest* RenderWidgetHostViewGuest::Create(
       new RenderWidgetHostViewGuest(widget, guest, platform_view);
   view->Init();
   return view;
+}
+
+// static
+RenderWidgetHostViewBase* RenderWidgetHostViewGuest::GetRootView(
+    RenderWidgetHostViewBase* rwhv) {
+  // If we're a pdf in a WebView, we could have nested guest views here.
+  while (rwhv && rwhv->IsRenderWidgetHostViewGuest()) {
+    rwhv = static_cast<RenderWidgetHostViewGuest*>(rwhv)
+               ->GetOwnerRenderWidgetHostView();
+  }
+  if (!rwhv)
+    return nullptr;
+
+  // We could be a guest inside an oopif frame, in which case we're not the
+  // root.
+  if (rwhv->IsRenderWidgetHostViewChildFrame()) {
+    rwhv = static_cast<RenderWidgetHostViewChildFrame*>(rwhv)
+               ->GetRootRenderWidgetHostView();
+  }
+  return rwhv;
 }
 
 RenderWidgetHostViewGuest::RenderWidgetHostViewGuest(
@@ -230,28 +250,6 @@ gfx::Rect RenderWidgetHostViewGuest::GetBoundsInRootWindow() {
   return GetViewBounds();
 }
 
-namespace {
-
-RenderWidgetHostViewBase* GetRootView(RenderWidgetHostViewBase* rwhv) {
-  // If we're a pdf in a WebView, we could have nested guest views here.
-  while (rwhv && rwhv->IsRenderWidgetHostViewGuest()) {
-    rwhv = static_cast<RenderWidgetHostViewGuest*>(rwhv)
-               ->GetOwnerRenderWidgetHostView();
-  }
-  if (!rwhv)
-    return nullptr;
-
-  // We could be a guest inside an oopif frame, in which case we're not the
-  // root.
-  if (rwhv->IsRenderWidgetHostViewChildFrame()) {
-    rwhv = static_cast<RenderWidgetHostViewChildFrame*>(rwhv)
-               ->GetRootRenderWidgetHostView();
-  }
-  return rwhv;
-}
-
-}  // namespace
-
 gfx::PointF RenderWidgetHostViewGuest::TransformPointToRootCoordSpaceF(
     const gfx::PointF& point) {
   if (!guest_ || !last_received_local_surface_id_.is_valid())
@@ -330,6 +328,10 @@ void RenderWidgetHostViewGuest::Destroy() {
   if (platform_view_)  // The platform view might have been destroyed already.
     platform_view_->Destroy();
 
+  RenderWidgetHostViewBase* root_view = GetRootView(this);
+  if (root_view)
+    root_view->GetCursorManager()->ViewBeingDestroyed(this);
+
   // RenderWidgetHostViewChildFrame::Destroy destroys this object.
   RenderWidgetHostViewChildFrame::Destroy();
 }
@@ -369,10 +371,9 @@ void RenderWidgetHostViewGuest::SetTooltipText(
 }
 
 void RenderWidgetHostViewGuest::SendSurfaceInfoToEmbedderImpl(
-    const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
+    const viz::SurfaceInfo& surface_info) {
   if (guest_ && !guest_->is_in_destruction())
-    guest_->SetChildFrameSurface(surface_info, sequence);
+    guest_->SetChildFrameSurface(surface_info);
 }
 
 void RenderWidgetHostViewGuest::SubmitCompositorFrame(
@@ -459,9 +460,9 @@ void RenderWidgetHostViewGuest::UpdateCursor(const WebCursor& cursor) {
   // and so we will always hit this code path.
   if (!guest_)
     return;
-  RenderWidgetHostViewBase* rwhvb = GetOwnerRenderWidgetHostView();
-  if (rwhvb)
-    rwhvb->UpdateCursor(cursor);
+  RenderWidgetHostViewBase* rwhvb = GetRootView(this);
+  if (rwhvb && rwhvb->GetCursorManager())
+    rwhvb->GetCursorManager()->UpdateCursor(this, cursor);
 }
 
 void RenderWidgetHostViewGuest::SetIsLoading(bool is_loading) {

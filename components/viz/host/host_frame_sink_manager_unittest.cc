@@ -68,15 +68,8 @@ class MockFrameSinkManagerImpl : public FrameSinkManagerImpl {
   MOCK_METHOD1(MockCreateCompositorFrameSink,
                void(const FrameSinkId& frame_sink_id));
   void CreateRootCompositorFrameSink(
-      const FrameSinkId& frame_sink_id,
-      gpu::SurfaceHandle surface_handle,
-      bool force_software_compositor,
-      const RendererSettings& renderer_settings,
-      mojom::CompositorFrameSinkAssociatedRequest request,
-      mojom::CompositorFrameSinkClientPtr client,
-      mojom::DisplayPrivateAssociatedRequest display_private_request,
-      mojom::DisplayClientPtr display_client) override {
-    MockCreateRootCompositorFrameSink(frame_sink_id);
+      mojom::RootCompositorFrameSinkParamsPtr params) override {
+    MockCreateRootCompositorFrameSink(params->frame_sink_id);
   }
   MOCK_METHOD1(MockCreateRootCompositorFrameSink,
                void(const FrameSinkId& frame_sink_id));
@@ -150,8 +143,8 @@ class HostFrameSinkManagerLocalTest : public HostFrameSinkManagerTestBase {
   // testing::Test:
   void SetUp() override {
     manager_impl_ =
-        base::MakeUnique<testing::NiceMock<MockFrameSinkManagerImpl>>();
-    host_manager_ = base::MakeUnique<HostFrameSinkManager>();
+        std::make_unique<testing::NiceMock<MockFrameSinkManagerImpl>>();
+    host_manager_ = std::make_unique<HostFrameSinkManager>();
 
     manager_impl_->SetLocalClient(host_manager_.get());
     host_manager_->SetLocalManager(manager_impl_.get());
@@ -174,7 +167,7 @@ class HostFrameSinkManagerRemoteTest : public HostFrameSinkManagerTestBase {
     DCHECK(!manager_impl_);
 
     manager_impl_ =
-        base::MakeUnique<testing::NiceMock<MockFrameSinkManagerImpl>>();
+        std::make_unique<testing::NiceMock<MockFrameSinkManagerImpl>>();
 
     mojom::FrameSinkManagerPtr frame_sink_manager;
     mojom::FrameSinkManagerRequest frame_sink_manager_request =
@@ -193,7 +186,7 @@ class HostFrameSinkManagerRemoteTest : public HostFrameSinkManagerTestBase {
 
   // testing::Test:
   void SetUp() override {
-    host_manager_ = base::MakeUnique<HostFrameSinkManager>();
+    host_manager_ = std::make_unique<HostFrameSinkManager>();
     ConnectToGpu();
   }
 
@@ -509,15 +502,12 @@ TEST_F(HostFrameSinkManagerLocalTest, DisplayHitTestQueryMap) {
   EXPECT_TRUE(FrameSinkDataExists(kFrameSinkChild1));
 
   EXPECT_FALSE(DisplayHitTestQueryExists(kFrameSinkChild1));
-  host().CreateRootCompositorFrameSink(
-      kFrameSinkChild1, 0 /* surface_handle */,
-      false /* force_software_compositing */,
-      RendererSettings() /* renderer_settings */, nullptr /* request */,
-      nullptr /* client */, nullptr /* display_private_request */,
-      nullptr /* display_client */);
+  auto support =
+      CreateCompositorFrameSinkSupport(kFrameSinkChild1, true /* is_root */);
   EXPECT_TRUE(DisplayHitTestQueryExists(kFrameSinkChild1));
 
   host().InvalidateFrameSinkId(kFrameSinkChild1);
+  support.reset();
   EXPECT_FALSE(FrameSinkDataExists(kFrameSinkChild1));
   EXPECT_FALSE(DisplayHitTestQueryExists(kFrameSinkChild1));
 }
@@ -588,13 +578,17 @@ TEST_F(HostFrameSinkManagerRemoteTest, DeletedHitTestQuery) {
   MockCompositorFrameSinkClient compositor_frame_sink_client;
   mojom::DisplayPrivateAssociatedPtr display_private;
   MockDisplayClient display_client;
-  host().CreateRootCompositorFrameSink(
-      kFrameSinkChild1, 0 /* surface_handle */,
-      false /* force_software_compositing */,
-      RendererSettings() /* renderer_settings */,
-      MakeRequest(&compositor_frame_sink_associated_info),
-      compositor_frame_sink_client.BindInterfacePtr(),
-      MakeRequest(&display_private), display_client.BindInterfacePtr());
+
+  auto params = mojom::RootCompositorFrameSinkParams::New();
+  params->frame_sink_id = kFrameSinkChild1;
+  params->widget = 0;
+  params->compositor_frame_sink =
+      MakeRequest(&compositor_frame_sink_associated_info);
+  params->compositor_frame_sink_client =
+      compositor_frame_sink_client.BindInterfacePtr().PassInterface();
+  params->display_private = MakeRequest(&display_private);
+  params->display_client = display_client.BindInterfacePtr().PassInterface();
+  host().CreateRootCompositorFrameSink(std::move(params));
 
   EXPECT_TRUE(DisplayHitTestQueryExists(kFrameSinkChild1));
 

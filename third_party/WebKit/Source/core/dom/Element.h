@@ -36,6 +36,7 @@
 #include "core/resize_observer/ResizeObserver.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
+#include "platform/scroll/ScrollCustomization.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "public/platform/WebFocusType.h"
 
@@ -44,6 +45,7 @@ namespace blink {
 class AccessibleNode;
 class Attr;
 class Attribute;
+class ComputedAccessibleNode;
 class CSSStyleDeclaration;
 class CustomElementDefinition;
 class DOMRect;
@@ -117,7 +119,7 @@ enum class NamedItemType {
 struct FocusParams {
   STACK_ALLOCATED();
 
-  FocusParams() {}
+  FocusParams() = default;
   FocusParams(SelectionBehaviorOnFocus selection,
               WebFocusType focus_type,
               InputDeviceCapabilities* capabilities,
@@ -294,6 +296,8 @@ class CORE_EXPORT Element : public ContainerNode {
   AccessibleNode* ExistingAccessibleNode() const;
   AccessibleNode* accessibleNode();
 
+  ComputedAccessibleNode* GetComputedAccessibleNode();
+
   void DidMoveToNewDocument(Document&) override;
 
   void removeAttribute(const AtomicString& name);
@@ -378,6 +382,7 @@ class CORE_EXPORT Element : public ContainerNode {
                               bool important = false);
 
   bool RemoveInlineStyleProperty(CSSPropertyID);
+  bool RemoveInlineStyleProperty(const AtomicString&);
   void RemoveAllInlineStyleProperties();
 
   void SynchronizeStyleAttributeInternal() const;
@@ -462,8 +467,11 @@ class CORE_EXPORT Element : public ContainerNode {
   void RecalcStyleForReattach();
   bool NeedsRebuildLayoutTree(
       const WhitespaceAttacher& whitespace_attacher) const {
+    // TODO(futhark@chromium.org): !CanParticipateInFlatTree() can be replaced
+    // by IsActiveV0InsertionPoint() when slots are always part of the flat
+    // tree, and removed completely when Shadow DOM V0 support is removed.
     return NeedsReattachLayoutTree() || ChildNeedsReattachLayoutTree() ||
-           IsActiveSlotOrActiveV0InsertionPoint() ||
+           !CanParticipateInFlatTree() ||
            (whitespace_attacher.TraverseIntoDisplayContents() &&
             HasDisplayContentsStyle());
   }
@@ -736,12 +744,19 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual bool IsClearButtonElement() const { return false; }
   virtual bool IsScriptElement() const { return false; }
 
+  // Elements that may have an insertion mode other than "in body" should
+  // override this and return true.
+  // https://html.spec.whatwg.org/multipage/parsing.html#reset-the-insertion-mode-appropriately
+  virtual bool HasNonInBodyInsertionMode() const { return false; }
+
   bool CanContainRangeEndPoint() const override { return true; }
 
   // Used for disabled form elements; if true, prevents mouse events from being
   // dispatched to event listeners, and prevents DOMActivate events from being
   // sent at all.
   virtual bool IsDisabledFormControl() const { return false; }
+
+  virtual bool ShouldForceLegacyLayout() const { return false; }
 
   bool HasPendingResources() const {
     return HasElementFlag(kHasPendingResources);
@@ -780,6 +795,7 @@ class CORE_EXPORT Element : public ContainerNode {
   bool HasID() const;
   bool HasClass() const;
   const SpaceSplitString& ClassNames() const;
+  bool HasClassName(const AtomicString& class_name) const;
 
   ScrollOffset SavedLayerScrollOffset() const;
   void SetSavedLayerScrollOffset(const ScrollOffset&);
@@ -826,6 +842,9 @@ class CORE_EXPORT Element : public ContainerNode {
   EnsureResizeObserverData();
   void SetNeedsResizeObserverUpdate();
 
+  void WillBeginCustomizedScrollPhase(ScrollCustomization::ScrollDirection);
+  void DidEndCustomizedScrollPhase();
+
  protected:
   Element(const QualifiedName& tag_name, Document*, ConstructionType);
 
@@ -842,17 +861,16 @@ class CORE_EXPORT Element : public ContainerNode {
   void AddPropertyToPresentationAttributeStyle(MutableCSSPropertyValueSet*,
                                                CSSPropertyID,
                                                const String& value);
-  // TODO(sashab): Make this take a const CSSValue&.
   void AddPropertyToPresentationAttributeStyle(MutableCSSPropertyValueSet*,
                                                CSSPropertyID,
-                                               const CSSValue*);
+                                               const CSSValue&);
 
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void RemovedFrom(ContainerNode*) override;
   void ChildrenChanged(const ChildrenChange&) override;
 
   virtual void WillRecalcStyle(StyleRecalcChange);
-  virtual void DidRecalcStyle();
+  virtual void DidRecalcStyle(StyleRecalcChange);
   virtual scoped_refptr<ComputedStyle> CustomStyleForLayoutObject();
 
   virtual NamedItemType GetNamedItemType() const {
@@ -869,8 +887,7 @@ class CORE_EXPORT Element : public ContainerNode {
   // However, it must not retrieve layout information like position and size.
   // This method cannot be moved to LayoutObject because some focusable nodes
   // don't have layoutObjects. e.g., HTMLOptionElement.
-  // TODO(tkent): Rename this to isFocusableStyle.
-  virtual bool LayoutObjectIsFocusable() const;
+  virtual bool IsFocusableStyle() const;
 
   virtual bool ChildrenCanHaveStyle() const { return true; }
 
@@ -943,6 +960,7 @@ class CORE_EXPORT Element : public ContainerNode {
   // FIXME: Everyone should allow author shadows.
   virtual bool AreAuthorShadowsAllowed() const { return true; }
   virtual void DidAddUserAgentShadowRoot(ShadowRoot&) {}
+  virtual bool AlwaysCreateUserAgentShadowRoot() const { return false; }
 
   enum SynchronizationOfLazyAttribute {
     kNotInSynchronizationOfLazyAttribute = 0,
@@ -1181,6 +1199,10 @@ inline const SpaceSplitString& Element::ClassNames() const {
   DCHECK(HasClass());
   DCHECK(GetElementData());
   return GetElementData()->ClassNames();
+}
+
+inline bool Element::HasClassName(const AtomicString& class_name) const {
+  return HasClass() && ClassNames().Contains(class_name);
 }
 
 inline bool Element::HasID() const {

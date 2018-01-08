@@ -117,10 +117,10 @@ Main.Main = class {
     Runtime.experiments.register('colorContrastRatio', 'Color contrast ratio line in color picker', true);
     Runtime.experiments.register('emptySourceMapAutoStepping', 'Empty sourcemap auto-stepping');
     Runtime.experiments.register('inputEventsOnTimelineOverview', 'Input events on Timeline overview', true);
+    Runtime.experiments.register('oopifInlineDOM', 'OOPIF: inline DOM ', true);
     Runtime.experiments.register('logManagement', 'Log management', true);
-    Runtime.experiments.register('networkPersistence', 'Override requests with workspace project');
+    Runtime.experiments.register('nativeHeapProfiler', 'Native memory sampling heap profiler', true);
     Runtime.experiments.register('performanceMonitor', 'Performance Monitor', true);
-    Runtime.experiments.register('persistence2', 'Persistence 2.0');
     Runtime.experiments.register('sourceDiff', 'Source diff');
     Runtime.experiments.register(
         'stepIntoAsync', 'Introduce separate step action, stepInto becomes powerful enough to go inside async call');
@@ -147,13 +147,13 @@ Main.Main = class {
         Runtime.experiments.enableForTest('accessibilityInspection');
       if (testPath.indexOf('console-sidebar/') !== -1)
         Runtime.experiments.enableForTest('logManagement');
-      if (testPath.indexOf('overrides/') !== -1)
-        Runtime.experiments.enableForTest('networkPersistence');
+      if (testPath.indexOf('oopif/') !== -1)
+        Runtime.experiments.enableForTest('oopifInlineDOM');
     }
 
     Runtime.experiments.setDefaultExperiments([
-      'accessibilityInspection', 'colorContrastRatio', 'logManagement', 'performanceMonitor', 'persistence2',
-      'stepIntoAsync', 'timelineKeepHistory'
+      'accessibilityInspection', 'colorContrastRatio', 'logManagement', 'performanceMonitor', 'stepIntoAsync',
+      'timelineKeepHistory', 'oopifInlineDOM'
     ]);
   }
 
@@ -185,7 +185,6 @@ Main.Main = class {
     Components.dockController = new Components.DockController(canDock);
     ConsoleModel.consoleModel = new ConsoleModel.ConsoleModel();
     SDK.multitargetNetworkManager = new SDK.MultitargetNetworkManager();
-    NetworkLog.networkLog = new NetworkLog.NetworkLog();
     SDK.domDebuggerManager = new SDK.DOMDebuggerManager();
     SDK.targetManager.addEventListener(
         SDK.TargetManager.Events.SuspendStateChanged, this._onSuspendStateChanged.bind(this));
@@ -199,7 +198,6 @@ Main.Main = class {
 
     Workspace.fileManager = new Workspace.FileManager();
     Workspace.workspace = new Workspace.Workspace();
-    Persistence.fileSystemMapping = new Persistence.FileSystemMapping(Persistence.isolatedFileSystemManager);
 
     Bindings.networkProjectManager = new Bindings.NetworkProjectManager(SDK.targetManager, Workspace.workspace);
     Bindings.resourceMapping = new Bindings.ResourceMapping(SDK.targetManager, Workspace.workspace);
@@ -211,8 +209,7 @@ Main.Main = class {
     Extensions.extensionServer = new Extensions.ExtensionServer();
 
     new Persistence.FileSystemWorkspaceBinding(Persistence.isolatedFileSystemManager, Workspace.workspace);
-    Persistence.persistence =
-        new Persistence.Persistence(Workspace.workspace, Bindings.breakpointManager, Persistence.fileSystemMapping);
+    Persistence.persistence = new Persistence.Persistence(Workspace.workspace, Bindings.breakpointManager);
     Persistence.networkPersistenceManager = new Persistence.NetworkPersistenceManager(Workspace.workspace);
 
     new Main.ExecutionContextSelector(SDK.targetManager, UI.context);
@@ -276,21 +273,19 @@ Main.Main = class {
       handler.handleQueryParam(value);
     }
 
-    if (Host.isStartupTest()) {
-      setTimeout(() => InspectorFrontendHost.readyForTest(), 0);
-    } else {
-      // Allow UI cycles to repaint prior to creating connection.
-      setTimeout(this._initializeTarget.bind(this), 0);
-    }
+    // Allow UI cycles to repaint prior to creating connection.
+    setTimeout(this._initializeTarget.bind(this), 0);
     Main.Main.timeEnd('Main._showAppUI');
   }
 
   _initializeTarget() {
     Main.Main.time('Main._initializeTarget');
     SDK.targetManager.connectToMainTarget(webSocketConnectionLost);
+    InspectorFrontendHost.connectionReady();
 
-    if (!Host.isStartupTest())
-      InspectorFrontendHost.readyForTest();
+    // Used for browser tests.
+    InspectorFrontendHost.readyForTest();
+
     // Asynchronously run the extensions.
     setTimeout(this._lateInitialization.bind(this), 100);
     Main.Main.timeEnd('Main._initializeTarget');
@@ -305,8 +300,10 @@ Main.Main = class {
     console.timeStamp('Main._lateInitialization');
     this._registerShortcuts();
     Extensions.extensionServer.initializeExtensions();
-    if (!Host.isUnderTest())
-      Help.showReleaseNoteIfNeeded();
+    if (Host.isUnderTest())
+      return;
+    for (var extension of self.runtime.extensions('late-initialization'))
+      extension.instance().then(instance => (/** @type {!Common.Runnable} */ (instance)).run());
   }
 
   _registerForwardedShortcuts() {
@@ -476,6 +473,7 @@ Main.Main.InspectorModel = class extends SDK.SDKModel {
     super(target);
     target.registerInspectorDispatcher(this);
     target.inspectorAgent().enable();
+    this._hideCrashedDialog = null;
   }
 
   /**
@@ -491,9 +489,23 @@ Main.Main.InspectorModel = class extends SDK.SDKModel {
    * @override
    */
   targetCrashed() {
-    var debuggerModel = this.target().model(SDK.DebuggerModel);
-    if (debuggerModel)
-      Main.TargetCrashedScreen.show(debuggerModel);
+    var dialog = new UI.Dialog();
+    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
+    dialog.addCloseButton();
+    dialog.setDimmed(true);
+    this._hideCrashedDialog = dialog.hide.bind(dialog);
+    new Main.TargetCrashedScreen(() => this._hideCrashedDialog = null).show(dialog.contentElement);
+    dialog.show();
+  }
+
+  /**
+   * @override;
+   */
+  targetReloadedAfterCrash() {
+    if (this._hideCrashedDialog) {
+      this._hideCrashedDialog.call(null);
+      this._hideCrashedDialog = null;
+    }
   }
 };
 
@@ -671,9 +683,7 @@ Main.Main.MainMenuItem = class {
     }
 
     var helpSubMenu = contextMenu.footerSection().appendSubMenuItem(Common.UIString('Help'));
-    helpSubMenu.defaultSection().appendAction('settings.documentation');
-    helpSubMenu.defaultSection().appendItem(
-        'Release Notes', () => InspectorFrontendHost.openInNewTab(Help.latestReleaseNote().link));
+    helpSubMenu.appendItemsAtLocation('mainMenuHelp');
   }
 };
 
@@ -862,25 +872,6 @@ Main.TargetCrashedScreen = class extends UI.VBox {
   }
 
   /**
-   * @param {!SDK.DebuggerModel} debuggerModel
-   */
-  static show(debuggerModel) {
-    var dialog = new UI.Dialog();
-    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
-    dialog.addCloseButton();
-    dialog.setDimmed(true);
-    var hideBound = dialog.hide.bind(dialog);
-    debuggerModel.addEventListener(SDK.DebuggerModel.Events.GlobalObjectCleared, hideBound);
-
-    new Main.TargetCrashedScreen(onHide).show(dialog.contentElement);
-    dialog.show();
-
-    function onHide() {
-      debuggerModel.removeEventListener(SDK.DebuggerModel.Events.GlobalObjectCleared, hideBound);
-    }
-  }
-
-  /**
    * @override
    */
   willHide() {
@@ -896,7 +887,8 @@ Main.TargetCrashedScreen = class extends UI.VBox {
 Main.BackendSettingsSync = class {
   constructor() {
     this._autoAttachSetting = Common.settings.moduleSetting('autoAttachToCreatedPages');
-    this._autoAttachSetting.addChangeListener(this._update, this);
+    this._autoAttachSetting.addChangeListener(this._updateAutoAttach, this);
+    this._updateAutoAttach();
 
     this._adBlockEnabledSetting = Common.settings.moduleSetting('network.adBlockingEnabled');
     this._adBlockEnabledSetting.addChangeListener(this._update, this);
@@ -908,8 +900,11 @@ Main.BackendSettingsSync = class {
    * @param {!SDK.Target} target
    */
   _updateTarget(target) {
-    target.pageAgent().setAutoAttachToCreatedPages(this._autoAttachSetting.get());
     target.pageAgent().setAdBlockingEnabled(this._adBlockEnabledSetting.get());
+  }
+
+  _updateAutoAttach() {
+    InspectorFrontendHost.setOpenNewWindowForPopups(this._autoAttachSetting.get());
   }
 
   _update() {

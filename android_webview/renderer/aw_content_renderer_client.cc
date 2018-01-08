@@ -17,6 +17,7 @@
 #include "android_webview/renderer/aw_print_render_frame_helper_delegate.h"
 #include "android_webview/renderer/aw_render_frame_ext.h"
 #include "android_webview/renderer/aw_render_view_ext.h"
+#include "android_webview/renderer/aw_url_loader_throttle_provider.h"
 #include "android_webview/renderer/print_render_frame_observer.h"
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
@@ -25,7 +26,6 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/printing/renderer/print_render_frame_helper.h"
-#include "components/safe_browsing/renderer/renderer_url_loader_throttle.h"
 #include "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h"
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/supervised_user_error_page/gin_wrapper.h"
@@ -94,10 +94,8 @@ void AwContentRendererClient::RenderThreadStarted() {
           std::move(registry)));
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  if (!spellcheck_) {
-    spellcheck_ = std::make_unique<SpellCheck>(this);
-    thread->AddObserver(spellcheck_.get());
-  }
+  if (!spellcheck_)
+    spellcheck_ = std::make_unique<SpellCheck>(nullptr, this);
 #endif
 }
 
@@ -196,7 +194,7 @@ bool AwContentRendererClient::HasErrorPage(int http_status_code) {
   return http_status_code >= 400;
 }
 
-void AwContentRendererClient::GetNavigationErrorStrings(
+void AwContentRendererClient::PrepareErrorPage(
     content::RenderFrame* render_frame,
     const blink::WebURLRequest& failed_request,
     const blink::WebURLError& error,
@@ -295,23 +293,6 @@ AwContentRendererClient::CreateWebSocketHandshakeThrottle() {
       safe_browsing_.get());
 }
 
-bool AwContentRendererClient::WillSendRequest(
-    blink::WebLocalFrame* frame,
-    ui::PageTransition transition_type,
-    const blink::WebURL& url,
-    std::vector<std::unique_ptr<content::URLLoaderThrottle>>* throttles,
-    GURL* new_url) {
-  if (UsingSafeBrowsingMojoService()) {
-    content::RenderFrame* render_frame =
-        content::RenderFrame::FromWebFrame(frame);
-    throttles->push_back(
-        std::make_unique<safe_browsing::RendererURLLoaderThrottle>(
-            safe_browsing_.get(), render_frame->GetRoutingID()));
-  }
-
-  return false;
-}
-
 bool AwContentRendererClient::ShouldUseMediaPlayerForURL(const GURL& url) {
   // Android WebView needs to support codecs that Chrome does not, for these
   // cases we must force the usage of Android MediaPlayer instead of Chrome's
@@ -356,6 +337,12 @@ bool AwContentRendererClient::ShouldUseMediaPlayerForURL(const GURL& url) {
     }
   }
   return false;
+}
+
+std::unique_ptr<content::URLLoaderThrottleProvider>
+AwContentRendererClient::CreateURLLoaderThrottleProvider(
+    content::URLLoaderThrottleProviderType provider_type) {
+  return std::make_unique<AwURLLoaderThrottleProvider>(provider_type);
 }
 
 void AwContentRendererClient::GetInterface(

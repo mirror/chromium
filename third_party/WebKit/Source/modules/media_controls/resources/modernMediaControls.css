@@ -314,12 +314,12 @@ input[pseudo="-webkit-media-controls-timeline" i]::-internal-track-segment-highl
 }
 
 input[pseudo="-webkit-media-controls-timeline" i]::-internal-track-segment-highlight-before {
-  background: rgba(0, 0, 0, .54);
+  background: rgba(0, 0, 0, .87);
   border-radius: 100px;
 }
 
 input[pseudo="-webkit-media-controls-timeline" i]::-internal-track-segment-highlight-after {
-  background: rgba(0, 0, 0, .87);
+  background: rgba(0, 0, 0, .54);
   border-radius: 2px;
 }
 
@@ -409,6 +409,23 @@ video::-internal-media-controls-overflow-menu-list-item {
 label[pseudo="-internal-media-controls-overflow-menu-list-item"] input {
   margin-left: -9px;
   margin-right: 6px;
+}
+
+label[pseudo="-internal-media-controls-overflow-menu-list-item"] div {
+  display: inline-grid;
+  margin: 16px 0 16px 0;
+}
+
+label[pseudo="-internal-media-controls-overflow-menu-list-item"] div.with-subtitle {
+  margin: 8px 0 8px 0;
+}
+
+label[pseudo="-internal-media-controls-overflow-menu-list-item"] div span {
+  line-height: normal;
+}
+
+label[pseudo="-internal-media-controls-overflow-menu-list-item"] div span.subtitle {
+  color: rgba(0,0,0,0.54);
 }
 
 audio::-internal-media-controls-text-track-list-header:hover,
@@ -521,7 +538,7 @@ audio::-internal-media-controls-overflow-button {
 .state-no-source input[pseudo="-webkit-media-controls-overlay-play-button" i],
 .use-default-poster div[pseudo="-internal-media-controls-button-panel" i],
 .use-default-poster input[pseudo="-webkit-media-controls-timeline" i] {
-  display: none;
+  visibility: hidden;
 }
 
 /**

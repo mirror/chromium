@@ -63,8 +63,6 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/SelectionTemplate.h"
-#include "core/editing/SurroundingText.h"
-#include "core/editing/VisiblePosition.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/editing/markers/DocumentMarkerController.h"
@@ -107,8 +105,7 @@
 #include "core/layout/LayoutMenuList.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTreeAsText.h"
-#include "core/layout/api/LayoutMenuListItem.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/HistoryItem.h"
@@ -116,6 +113,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/page/PrintContext.h"
+#include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/ScrollState.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
@@ -161,6 +159,7 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Time.h"
 #include "platform/wtf/dtoa.h"
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
@@ -356,7 +355,7 @@ unsigned Internals::hitTestCount(Document* doc,
     return 0;
   }
 
-  return doc->GetLayoutViewItem().HitTestCount();
+  return doc->GetLayoutView()->HitTestCount();
 }
 
 unsigned Internals::hitTestCacheHits(Document* doc,
@@ -367,7 +366,7 @@ unsigned Internals::hitTestCacheHits(Document* doc,
     return 0;
   }
 
-  return doc->GetLayoutViewItem().HitTestCacheHits();
+  return doc->GetLayoutView()->HitTestCacheHits();
 }
 
 Element* Internals::elementFromPoint(Document* doc,
@@ -382,7 +381,7 @@ Element* Internals::elementFromPoint(Document* doc,
     return nullptr;
   }
 
-  if (doc->GetLayoutViewItem().IsNull())
+  if (!doc->GetLayoutView())
     return nullptr;
 
   HitTestRequest::HitTestRequestType hit_type =
@@ -405,10 +404,10 @@ void Internals::clearHitTestCache(Document* doc,
     return;
   }
 
-  if (doc->GetLayoutViewItem().IsNull())
+  if (!doc->GetLayoutView())
     return;
 
-  doc->GetLayoutViewItem().ClearHitTestCache();
+  doc->GetLayoutView()->ClearHitTestCache();
 }
 
 Element* Internals::innerEditorElement(Element* container,
@@ -751,6 +750,13 @@ void Internals::setBrowserControlsShownRatio(float ratio) {
   document_->GetPage()->GetChromeClient().SetBrowserControlsShownRatio(ratio);
 }
 
+Node* Internals::effectiveRootScroller(Document* document) {
+  if (!document)
+    document = document_;
+
+  return &document->GetRootScrollerController().EffectiveRootScroller();
+}
+
 ShadowRoot* Internals::shadowRoot(Element* host) {
   // FIXME: Internals::shadowRoot() in tests should be converted to
   // youngestShadowRoot() or oldestShadowRoot().
@@ -917,13 +923,13 @@ DOMRectReadOnly* Internals::absoluteCaretBounds(
 }
 
 String Internals::textAffinity() {
-  if (GetFrame()
-          ->GetPage()
-          ->GetFocusController()
-          .FocusedFrame()
-          ->Selection()
-          .GetSelectionInDOMTree()
-          .Affinity() == TextAffinity::kUpstream) {
+  if (GetFrame() && GetFrame()
+                            ->GetPage()
+                            ->GetFocusController()
+                            .FocusedFrame()
+                            ->Selection()
+                            .GetSelectionInDOMTree()
+                            .Affinity() == TextAffinity::kUpstream) {
     return "Upstream";
   }
   return "Downstream";
@@ -1389,13 +1395,13 @@ void Internals::setAutofilledValue(Element* element,
 
   if (auto* input = ToHTMLInputElementOrNull(*element)) {
     input->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keydown));
-    input->setValue(value, kDispatchInputAndChangeEvent);
+    input->SetAutofillValue(value);
     input->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keyup));
   }
 
   if (auto* textarea = ToHTMLTextAreaElementOrNull(*element)) {
     textarea->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keydown));
-    textarea->setValue(value, kDispatchInputAndChangeEvent);
+    textarea->SetAutofillValue(value);
     textarea->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keyup));
   }
 
@@ -1619,36 +1625,6 @@ Node* Internals::touchNodeAdjustedToBestContextMenuNode(
   event_handler.BestContextMenuNodeForHitTestResult(result, adjusted_point,
                                                     target_node);
   return target_node;
-}
-
-DOMRectReadOnly* Internals::bestZoomableAreaForTouchPoint(
-    long x,
-    long y,
-    long width,
-    long height,
-    Document* document,
-    ExceptionState& exception_state) {
-  DCHECK(document);
-  if (!document->GetFrame()) {
-    exception_state.ThrowDOMException(kInvalidAccessError,
-                                      "The document provided is invalid.");
-    return nullptr;
-  }
-
-  document->UpdateStyleAndLayout();
-
-  IntSize radius(width / 2, height / 2);
-  IntPoint point(x + radius.Width(), y + radius.Height());
-
-  Node* target_node = nullptr;
-  IntRect zoomable_area;
-  bool found_node =
-      document->GetFrame()->GetEventHandler().BestZoomableAreaForTouchPoint(
-          point, radius, zoomable_area, target_node);
-  if (found_node)
-    return DOMRectReadOnly::FromIntRect(zoomable_area);
-
-  return nullptr;
 }
 
 int Internals::lastSpellCheckRequestSequence(Document* document,
@@ -2019,9 +1995,8 @@ LayerRectList* Internals::touchEventTargetLayerRects(
     }
   }
 
-  LayoutViewItem view = document->GetLayoutViewItem();
-  if (!view.IsNull()) {
-    if (PaintLayerCompositor* compositor = view.Compositor()) {
+  if (auto* view = document->GetLayoutView()) {
+    if (PaintLayerCompositor* compositor = view->Compositor()) {
       if (GraphicsLayer* root_layer = compositor->RootGraphicsLayer()) {
         LayerRectList* rects = LayerRectList::Create();
         AccumulateLayerRectList(compositor, root_layer, rects);
@@ -2095,9 +2070,9 @@ StaticNodeList* Internals::nodesFromRect(
 
   LocalFrame* frame = document->GetFrame();
   LocalFrameView* frame_view = document->View();
-  LayoutViewItem layout_view_item = document->GetLayoutViewItem();
+  auto* layout_view = document->GetLayoutView();
 
-  if (layout_view_item.IsNull())
+  if (!layout_view)
     return nullptr;
 
   float zoom_factor = frame->PageZoomFactor();
@@ -2126,7 +2101,7 @@ StaticNodeList* Internals::nodesFromRect(
   HeapVector<Member<Node>> matches;
   HitTestResult result(request, point, top_padding, right_padding,
                        bottom_padding, left_padding);
-  layout_view_item.HitTest(result);
+  layout_view->HitTest(result);
   CopyToVector(result.ListBasedTestResult(), matches);
 
   return StaticNodeList::Adopt(matches);
@@ -2684,9 +2659,9 @@ void Internals::forceFullRepaint(Document* document,
     return;
   }
 
-  LayoutViewItem layout_view_item = document->GetLayoutViewItem();
-  if (!layout_view_item.IsNull())
-    layout_view_item.InvalidatePaintForViewAndCompositedLayers();
+  auto* layout_view = document->GetLayoutView();
+  if (layout_view)
+    layout_view->InvalidatePaintForViewAndCompositedLayers();
 }
 
 DOMRectList* Internals::draggableRegions(Document* document,
@@ -2862,12 +2837,11 @@ bool Internals::fakeMouseMovePending() const {
 
 DOMArrayBuffer* Internals::serializeObject(
     scoped_refptr<SerializedScriptValue> value) const {
-  StringView view = value->GetWireData();
-  DCHECK(view.Is8Bit());
+  base::span<const uint8_t> span = value->GetWireData();
   DOMArrayBuffer* buffer =
-      DOMArrayBuffer::CreateUninitializedOrNull(view.length(), sizeof(LChar));
+      DOMArrayBuffer::CreateUninitializedOrNull(span.length(), sizeof(uint8_t));
   if (buffer)
-    memcpy(buffer->Data(), view.Characters8(), view.length());
+    memcpy(buffer->Data(), span.data(), span.length());
   return buffer;
 }
 
@@ -2991,9 +2965,8 @@ String Internals::selectMenuListText(HTMLSelectElement* select) {
   if (!layout_object || !layout_object->IsMenuList())
     return String();
 
-  LayoutMenuListItem menu_list_item =
-      LayoutMenuListItem(ToLayoutMenuList(layout_object));
-  return menu_list_item.GetText();
+  LayoutMenuList* menu_list = ToLayoutMenuList(layout_object);
+  return menu_list->GetText();
 }
 
 bool Internals::isSelectPopupVisible(Node* node) {
@@ -3058,7 +3031,7 @@ bool Internals::loseSharedGraphicsContext3D() {
 void Internals::forceCompositingUpdate(Document* document,
                                        ExceptionState& exception_state) {
   DCHECK(document);
-  if (document->GetLayoutViewItem().IsNull()) {
+  if (!document->GetLayoutView()) {
     exception_state.ThrowDOMException(kInvalidAccessError,
                                       "The document provided is invalid.");
     return;
@@ -3194,31 +3167,6 @@ void Internals::setValueForUser(HTMLInputElement* element,
   element->SetValueForUser(value);
 }
 
-String Internals::textSurroundingNode(Node* node,
-                                      int x,
-                                      int y,
-                                      unsigned long max_length) {
-  if (!node)
-    return String();
-
-  // VisiblePosition and SurroundingText must be created with clean layout.
-  node->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  DocumentLifecycle::DisallowTransitionScope disallow_transition(
-      node->GetDocument().Lifecycle());
-
-  if (!node->GetLayoutObject())
-    return String();
-  blink::WebPoint point(x, y);
-  SurroundingText surrounding_text(
-      EphemeralRange(
-          CreateVisiblePosition(node->GetLayoutObject()->PositionForPoint(
-                                    static_cast<IntPoint>(point)))
-              .DeepEquivalent()
-              .ParentAnchoredEquivalent()),
-      max_length);
-  return surrounding_text.Content();
-}
-
 void Internals::setFocused(bool focused) {
   if (!GetFrame())
     return;
@@ -3243,6 +3191,8 @@ bool Internals::ignoreLayoutWithPendingStylesheets(Document* document) {
 void Internals::setNetworkConnectionInfoOverride(
     bool on_line,
     const String& type,
+    const String& effective_type,
+    unsigned long http_rtt_msec,
     double downlink_max_mbps,
     ExceptionState& exception_state) {
   WebConnectionType webtype;
@@ -3272,14 +3222,6 @@ void Internals::setNetworkConnectionInfoOverride(
         ExceptionMessages::FailedToEnumerate("connection type", type));
     return;
   }
-  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(on_line, webtype,
-                                                             downlink_max_mbps);
-}
-
-void Internals::setNetworkQualityInfoOverride(const String& effective_type,
-                                              unsigned long transport_rtt_msec,
-                                              double downlink_throughput_mbps,
-                                              ExceptionState& exception_state) {
   WebEffectiveConnectionType web_effective_type =
       WebEffectiveConnectionType::kTypeUnknown;
   if (effective_type == "offline") {
@@ -3298,10 +3240,8 @@ void Internals::setNetworkQualityInfoOverride(const String& effective_type,
                             "effective connection type", effective_type));
     return;
   }
-
-  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
-      web_effective_type, transport_rtt_msec, downlink_throughput_mbps);
-
+  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(
+      on_line, webtype, web_effective_type, http_rtt_msec, downlink_max_mbps);
   GetFrame()->Client()->SetEffectiveConnectionTypeForTesting(
       web_effective_type);
 }
@@ -3520,7 +3460,7 @@ double Internals::monotonicTimeToZeroBasedDocumentTime(
     double platform_time,
     ExceptionState& exception_state) {
   return document_->Loader()->GetTiming().MonotonicTimeToZeroBasedDocumentTime(
-      platform_time);
+      TimeTicksFromSeconds(platform_time));
 }
 
 String Internals::getScrollAnimationState(Node* node) const {
@@ -3545,6 +3485,13 @@ DOMRect* Internals::visualRect(Node* node) {
 
 void Internals::crash() {
   CHECK(false) << "Intentional crash";
+}
+
+String Internals::evaluateInInspectorOverlay(const String& script) {
+  LocalFrame* frame = GetFrame();
+  if (frame && frame->Client())
+    return frame->Client()->evaluateInInspectorOverlayForTesting(script);
+  return g_empty_string;
 }
 
 void Internals::setIsLowEndDevice(bool is_low_end_device) {

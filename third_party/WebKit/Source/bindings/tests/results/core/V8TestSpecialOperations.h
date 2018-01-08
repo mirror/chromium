@@ -36,12 +36,6 @@ class V8TestSpecialOperations {
   }
   CORE_EXPORT static TestSpecialOperations* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestSpecialOperations>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestSpecialOperations>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   // Callback functions
@@ -65,6 +59,7 @@ class V8TestSpecialOperations {
 template <>
 struct NativeValueTraits<TestSpecialOperations> : public NativeValueTraitsBase<TestSpecialOperations> {
   CORE_EXPORT static TestSpecialOperations* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static TestSpecialOperations* NullValue() { return nullptr; }
 };
 
 template <>

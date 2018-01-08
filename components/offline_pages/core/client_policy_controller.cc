@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/offline_page_feature.h"
@@ -77,6 +76,7 @@ ClientPolicyController::ClientPolicyController() {
                                      kUnlimitedPages)
           .SetIsRemovedOnCacheReset(false)
           .SetIsSupportedByDownload(true)
+          .SetShouldAllowDownload(true)
           .Build()));
 
   // Fallback policy.
@@ -132,7 +132,7 @@ ClientPolicyController::GetNamespacesRemovedOnCacheReset() const {
   if (cache_reset_namespace_cache_)
     return *cache_reset_namespace_cache_;
 
-  cache_reset_namespace_cache_ = base::MakeUnique<std::vector<std::string>>();
+  cache_reset_namespace_cache_ = std::make_unique<std::vector<std::string>>();
   for (const auto& policy_item : policies_) {
     if (policy_item.second.feature_policy.is_removed_on_cache_reset)
       cache_reset_namespace_cache_->emplace_back(policy_item.first);
@@ -145,7 +145,7 @@ ClientPolicyController::GetNamespacesSupportedByDownload() const {
   if (download_namespace_cache_)
     return *download_namespace_cache_;
 
-  download_namespace_cache_ = base::MakeUnique<std::vector<std::string>>();
+  download_namespace_cache_ = std::make_unique<std::vector<std::string>>();
   for (const auto& policy_item : policies_) {
     if (policy_item.second.feature_policy.is_supported_by_download)
       download_namespace_cache_->emplace_back(policy_item.first);
@@ -163,7 +163,7 @@ ClientPolicyController::GetNamespacesShownAsRecentlyVisitedSite() const {
   if (recent_tab_namespace_cache_)
     return *recent_tab_namespace_cache_;
 
-  recent_tab_namespace_cache_ = base::MakeUnique<std::vector<std::string>>();
+  recent_tab_namespace_cache_ = std::make_unique<std::vector<std::string>>();
   for (const auto& policy_item : policies_) {
     if (policy_item.second.feature_policy.is_supported_by_recent_tabs)
       recent_tab_namespace_cache_->emplace_back(policy_item.first);
@@ -182,7 +182,7 @@ ClientPolicyController::GetNamespacesRestrictedToOriginalTab() const {
   if (show_in_original_tab_cache_)
     return *show_in_original_tab_cache_;
 
-  show_in_original_tab_cache_ = base::MakeUnique<std::vector<std::string>>();
+  show_in_original_tab_cache_ = std::make_unique<std::vector<std::string>>();
   for (const auto& policy_item : policies_) {
     if (policy_item.second.feature_policy.only_shown_in_original_tab)
       show_in_original_tab_cache_->emplace_back(policy_item.first);
@@ -202,7 +202,7 @@ ClientPolicyController::GetNamespacesDisabledWhenPrefetchDisabled() const {
     return *disabled_when_prefetch_disabled_cache_;
 
   disabled_when_prefetch_disabled_cache_ =
-      base::MakeUnique<std::vector<std::string>>();
+      std::make_unique<std::vector<std::string>>();
   for (const auto& policy_item : policies_) {
     if (policy_item.second.feature_policy.disabled_when_prefetch_disabled)
       disabled_when_prefetch_disabled_cache_->emplace_back(policy_item.first);
@@ -213,6 +213,11 @@ ClientPolicyController::GetNamespacesDisabledWhenPrefetchDisabled() const {
 
 bool ClientPolicyController::IsSuggested(const std::string& name_space) const {
   return GetPolicy(name_space).feature_policy.is_suggested;
+}
+
+bool ClientPolicyController::ShouldAllowDownloads(
+    const std::string& name_space) const {
+  return GetPolicy(name_space).feature_policy.should_allow_download;
 }
 
 void ClientPolicyController::AddPolicyForTest(

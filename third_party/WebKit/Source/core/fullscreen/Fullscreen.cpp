@@ -45,7 +45,6 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/LayoutFullScreen.h"
-#include "core/layout/api/LayoutFullScreenItem.h"
 #include "core/page/ChromeClient.h"
 #include "core/svg/SVGSVGElement.h"
 #include "platform/ScopedOrientationChangeIndicator.h"
@@ -411,7 +410,7 @@ Fullscreen::Fullscreen(Document& document)
   document.SetHasFullscreenSupplement();
 }
 
-Fullscreen::~Fullscreen() {}
+Fullscreen::~Fullscreen() = default;
 
 Document* Fullscreen::GetDocument() {
   return ToDocument(LifecycleContext());

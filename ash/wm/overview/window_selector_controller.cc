@@ -9,8 +9,8 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/shell_port.h"
 #include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/overview/overview_utils.h"
 #include "ash/wm/overview/window_grid.h"
 #include "ash/wm/overview/window_selector.h"
 #include "ash/wm/overview/window_selector_item.h"
@@ -49,7 +49,7 @@ bool WindowSelectorController::CanSelect() {
   SessionController* session_controller = Shell::Get()->session_controller();
   return session_controller->GetSessionState() ==
              session_manager::SessionState::ACTIVE &&
-         !ShellPort::Get()->IsSystemModalWindowOpen() &&
+         !Shell::IsSystemModalWindowOpen() &&
          !Shell::Get()->screen_pinning_controller()->IsPinned() &&
          !session_controller->IsRunningInAppMode();
 }
@@ -86,7 +86,7 @@ bool WindowSelectorController::ToggleOverview() {
 
     if (!Shell::Get()->IsSplitViewModeActive()) {
       // Don't enter overview with no window if the split view mode is inactive.
-      if (windows.empty())
+      if (!IsNewOverviewUi() && windows.empty())
         return false;
     } else {
       // Don't enter overview with less than 1 window if the split view mode is

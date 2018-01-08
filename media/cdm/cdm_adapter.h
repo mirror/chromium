@@ -58,6 +58,10 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
       const SessionExpirationUpdateCB& session_expiration_update_cb,
       const CdmCreatedCB& cdm_created_cb);
 
+  // Returns the version of the CDM interface that the created CDM uses. Must
+  // only be called after the CDM is successfully initialized.
+  int GetInterfaceVersion();
+
   // ContentDecryptionModule implementation.
   void SetServerCertificate(const std::vector<uint8_t>& certificate,
                             std::unique_ptr<SimpleCdmPromise> promise) final;
@@ -144,7 +148,8 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
   void RequestStorageId(uint32_t version) override;
 
   // cdm::Host_10 specific implementation.
-  cdm::CdmProxy* CreateCdmProxy() override;
+  void OnInitialized(bool success) override;
+  cdm::CdmProxy* CreateCdmProxy(cdm::CdmProxyClient* client) override;
 
   // cdm::Host_8 specific implementation.
   void OnRejectPromise(uint32_t promise_id,
@@ -232,6 +237,9 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   scoped_refptr<AudioBufferMemoryPool> pool_;
 
+  // Callback for Initialize().
+  uint32_t init_promise_id_ = CdmPromiseAdapter::kInvalidPromiseId;
+
   // Callbacks for deferred initialization.
   DecoderInitCB audio_init_cb_;
   DecoderInitCB video_init_cb_;
@@ -256,6 +264,8 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
   // Tracks CDM file IO related states.
   int last_read_file_size_kb_ = 0;
   bool file_size_uma_reported_ = false;
+
+  bool cdm_proxy_created_ = false;
 
   // Used to keep track of promises while the CDM is processing the request.
   CdmPromiseAdapter cdm_promise_adapter_;

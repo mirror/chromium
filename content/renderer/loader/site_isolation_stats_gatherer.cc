@@ -11,8 +11,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
-#include "content/public/common/resource_response_info.h"
 #include "net/http/http_response_headers.h"
+#include "services/network/public/cpp/resource_response_info.h"
 
 namespace content {
 
@@ -105,7 +105,7 @@ SiteIsolationStatsGatherer::OnReceivedResponse(
     const url::Origin& frame_origin,
     const GURL& response_url,
     ResourceType resource_type,
-    const ResourceResponseInfo& info) {
+    const network::ResourceResponseInfo& info) {
   if (!g_stats_gathering_enabled)
     return nullptr;
 
@@ -119,9 +119,7 @@ SiteIsolationStatsGatherer::OnReceivedResponse(
   if (!CrossSiteDocumentClassifier::IsBlockableScheme(response_url))
     return nullptr;
 
-  // TODO(csharrison): Add a path for IsSameSite/IsValidCorsHeaderSet to take an
-  // Origin.
-  if (CrossSiteDocumentClassifier::IsSameSite(frame_origin, response_url))
+  if (frame_origin.IsSameOriginWith(url::Origin::Create(response_url)))
     return nullptr;
 
   CrossSiteDocumentMimeType canonical_mime_type =
@@ -140,7 +138,7 @@ SiteIsolationStatsGatherer::OnReceivedResponse(
   info.headers->EnumerateHeader(nullptr, "access-control-allow-origin",
                                 &access_control_origin);
   if (CrossSiteDocumentClassifier::IsValidCorsHeaderSet(
-          frame_origin, response_url, access_control_origin)) {
+          frame_origin, access_control_origin)) {
     return nullptr;
   }
 

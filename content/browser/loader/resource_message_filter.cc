@@ -4,6 +4,7 @@
 
 #include "content/browser/loader/resource_message_filter.h"
 
+#include "base/feature_list.h"
 #include "base/logging.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
@@ -12,13 +13,15 @@
 #include "content/browser/loader/url_loader_factory_impl.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/common/resource_messages.h"
+#include "content/network/cors/cors_url_loader_factory.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/common/content_features.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
 namespace content {
 namespace {
-mojom::URLLoaderFactory* g_test_factory;
+network::mojom::URLLoaderFactory* g_test_factory;
 ResourceMessageFilter* g_current_filter;
 }  // namespace
 
@@ -31,7 +34,7 @@ ResourceMessageFilter::ResourceMessageFilter(
     const GetContextsCallback& get_contexts_callback,
     const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_runner)
     : BrowserMessageFilter(ResourceMsgStart),
-      BrowserAssociatedInterface<mojom::URLLoaderFactory>(this, this),
+      BrowserAssociatedInterface<network::mojom::URLLoaderFactory>(this, this),
       is_channel_closed_(false),
       requester_info_(
           ResourceRequesterInfo::CreateForRenderer(child_id,
@@ -57,9 +60,7 @@ void ResourceMessageFilter::OnFilterAdded(IPC::Channel*) {
 void ResourceMessageFilter::OnChannelClosing() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
 
-  // Close all additional Mojo connections opened to this object so that
-  // messages are not dispatched while it is being shut down.
-  bindings_.CloseAllBindings();
+  url_loader_factory_ = nullptr;
 
   // Unhook us from all pending network requests so they don't get sent to a
   // deleted object.
@@ -72,10 +73,7 @@ void ResourceMessageFilter::OnChannelClosing() {
 
 bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
-  // Check if InitializeOnIOThread() has been called.
-  DCHECK_EQ(this, requester_info_->filter());
-  return ResourceDispatcherHostImpl::Get()->OnMessageReceived(
-      message, requester_info_.get());
+  return false;
 }
 
 void ResourceMessageFilter::OnDestruct() const {
@@ -94,12 +92,12 @@ base::WeakPtr<ResourceMessageFilter> ResourceMessageFilter::GetWeakPtr() {
 }
 
 void ResourceMessageFilter::CreateLoaderAndStart(
-    mojom::URLLoaderRequest request,
+    network::mojom::URLLoaderRequest request,
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
-    const ResourceRequest& url_request,
-    mojom::URLLoaderClientPtr client,
+    const network::ResourceRequest& url_request,
+    network::mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
   if (g_test_factory && !g_current_filter) {
     g_current_filter = this;
@@ -110,14 +108,14 @@ void ResourceMessageFilter::CreateLoaderAndStart(
     return;
   }
 
-  URLLoaderFactoryImpl::CreateLoaderAndStart(
-      requester_info_.get(), std::move(request), routing_id, request_id,
-      options, url_request, std::move(client),
-      net::NetworkTrafficAnnotationTag(traffic_annotation));
+  url_loader_factory_->CreateLoaderAndStart(
+      std::move(request), routing_id, request_id, options, url_request,
+      std::move(client), traffic_annotation);
 }
 
-void ResourceMessageFilter::Clone(mojom::URLLoaderFactoryRequest request) {
-  bindings_.AddBinding(this, std::move(request));
+void ResourceMessageFilter::Clone(
+    network::mojom::URLLoaderFactoryRequest request) {
+  url_loader_factory_->Clone(std::move(request));
 }
 
 int ResourceMessageFilter::child_id() const {
@@ -129,7 +127,7 @@ void ResourceMessageFilter::InitializeForTest() {
 }
 
 void ResourceMessageFilter::SetNetworkFactoryForTesting(
-    mojom::URLLoaderFactory* test_factory) {
+    network::mojom::URLLoaderFactory* test_factory) {
   DCHECK(!BrowserThread::IsThreadInitialized(BrowserThread::IO) ||
          BrowserThread::CurrentlyOn(BrowserThread::IO));
   DCHECK(!test_factory || !g_test_factory);
@@ -146,6 +144,12 @@ void ResourceMessageFilter::InitializeOnIOThread() {
   // The WeakPtr of the filter must be created on the IO thread. So sets the
   // WeakPtr of |requester_info_| now.
   requester_info_->set_filter(GetWeakPtr());
+  url_loader_factory_ = std::make_unique<URLLoaderFactoryImpl>(requester_info_);
+
+  if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS)) {
+    url_loader_factory_ =
+        std::make_unique<CORSURLLoaderFactory>(std::move(url_loader_factory_));
+  }
 }
 
 }  // namespace content

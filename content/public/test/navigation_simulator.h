@@ -213,6 +213,9 @@ class NavigationSimulator : public WebContentsObserver {
   // navigations.
   void SetReloadType(ReloadType reload_type);
 
+  // Sets the HTTP method for the navigation.
+  void SetMethod(const std::string& method);
+
   // The following parameters can change during redirects. They should be
   // specified before calling |Start| if they need to apply to the navigation to
   // the original url. Otherwise, they should be specified before calling
@@ -307,13 +310,8 @@ class NavigationSimulator : public WebContentsObserver {
   // NavigationHandle.
   void PrepareCompleteCallbackOnHandle();
 
-  // Simulates the DidFailProvisionalLoad IPC following a NavigationThrottle
-  // cancelling the navigation.
-  // PlzNavigate: this is not needed.
-  void FailFromThrottleCheck(NavigationThrottle::ThrottleCheckResult result);
-
   // Check if the navigation corresponds to a same-document navigation.
-  // PlzNavigate: only use on renderer-initiated navigations.
+  // Only use on renderer-initiated navigations.
   bool CheckIfSameDocument();
 
   // Infers from internal parameters whether the navigation created a new
@@ -348,6 +346,7 @@ class NavigationSimulator : public WebContentsObserver {
 
   GURL navigation_url_;
   net::HostPortPair socket_address_;
+  std::string initial_method_;
   bool browser_initiated_;
   bool same_document_ = false;
   Referrer referrer_;

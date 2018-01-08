@@ -73,16 +73,22 @@ const char kQueueFunctionName[] = "base::PostTask";
 // its implementation details.
 const char kRunFunctionName[] = "TaskSchedulerRunTask";
 
-HistogramBase* GetTaskLatencyHistogram(const char* suffix) {
+HistogramBase* GetTaskLatencyHistogram(StringPiece histogram_label,
+                                       StringPiece task_type_suffix) {
+  DCHECK(!histogram_label.empty());
+  DCHECK(!task_type_suffix.empty());
   // Mimics the UMA_HISTOGRAM_TIMES macro except we don't specify bounds with
   // TimeDeltas as FactoryTimeGet assumes millisecond granularity. The minimums
   // and maximums were chosen to place the 1ms mark at around the 70% range
   // coverage for buckets giving us good info for tasks that have a latency
   // below 1ms (most of them) and enough info to assess how bad the latency is
   // for tasks that exceed this threshold.
-  return Histogram::FactoryGet(
-      std::string("TaskScheduler.TaskLatencyMicroseconds.") + suffix, 1, 20000,
-      50, HistogramBase::kUmaTargetedHistogramFlag);
+  std::string histogram_name =
+      JoinString({"TaskScheduler.TaskLatencyMicroseconds", histogram_label,
+                  task_type_suffix},
+                 ".");
+  return Histogram::FactoryGet(histogram_name, 1, 20000, 50,
+                               HistogramBase::kUmaTargetedHistogramFlag);
 }
 
 // Upper bound for the
@@ -214,19 +220,23 @@ struct TaskTracker::PreemptedBackgroundSequence {
   CanScheduleSequenceObserver* observer = nullptr;
 };
 
-TaskTracker::TaskTracker(int max_num_scheduled_background_sequences)
+TaskTracker::TaskTracker(StringPiece histogram_label,
+                         int max_num_scheduled_background_sequences)
     : state_(new State),
       flush_cv_(flush_lock_.CreateConditionVariable()),
       shutdown_lock_(&flush_lock_),
       max_num_scheduled_background_sequences_(
           max_num_scheduled_background_sequences),
       task_latency_histograms_{
-          {GetTaskLatencyHistogram("BackgroundTaskPriority"),
-           GetTaskLatencyHistogram("BackgroundTaskPriority.MayBlock")},
-          {GetTaskLatencyHistogram("UserVisibleTaskPriority"),
-           GetTaskLatencyHistogram("UserVisibleTaskPriority.MayBlock")},
-          {GetTaskLatencyHistogram("UserBlockingTaskPriority"),
-           GetTaskLatencyHistogram("UserBlockingTaskPriority.MayBlock")}} {
+          {GetTaskLatencyHistogram(histogram_label, "BackgroundTaskPriority"),
+           GetTaskLatencyHistogram(histogram_label,
+                                   "BackgroundTaskPriority_MayBlock")},
+          {GetTaskLatencyHistogram(histogram_label, "UserVisibleTaskPriority"),
+           GetTaskLatencyHistogram(histogram_label,
+                                   "UserVisibleTaskPriority_MayBlock")},
+          {GetTaskLatencyHistogram(histogram_label, "UserBlockingTaskPriority"),
+           GetTaskLatencyHistogram(histogram_label,
+                                   "UserBlockingTaskPriority_MayBlock")}} {
   // Confirm that all |task_latency_histograms_| have been initialized above.
   DCHECK(*(&task_latency_histograms_[static_cast<int>(TaskPriority::HIGHEST) +
                                      1][0] -
@@ -239,16 +249,35 @@ void TaskTracker::Shutdown() {
   PerformShutdown();
   DCHECK(IsShutdownComplete());
 
-  // Unblock Flush() when shutdown completes.
-  AutoSchedulerLock auto_lock(flush_lock_);
-  flush_cv_->Signal();
+  // Unblock FlushForTesting() and perform the FlushAsyncForTesting callback
+  // when shutdown completes.
+  {
+    AutoSchedulerLock auto_lock(flush_lock_);
+    flush_cv_->Signal();
+  }
+  CallFlushCallbackForTesting();
 }
 
-void TaskTracker::Flush() {
+void TaskTracker::FlushForTesting() {
   AutoSchedulerLock auto_lock(flush_lock_);
   while (subtle::Acquire_Load(&num_incomplete_undelayed_tasks_) != 0 &&
          !IsShutdownComplete()) {
     flush_cv_->Wait();
+  }
+}
+
+void TaskTracker::FlushAsyncForTesting(OnceClosure flush_callback) {
+  DCHECK(flush_callback);
+  {
+    AutoSchedulerLock auto_lock(flush_lock_);
+    DCHECK(!flush_callback_for_testing_)
+        << "Only one FlushAsyncForTesting() may be pending at any time.";
+    flush_callback_for_testing_ = std::move(flush_callback);
+  }
+
+  if (subtle::Acquire_Load(&num_incomplete_undelayed_tasks_) == 0 ||
+      IsShutdownComplete()) {
+    CallFlushCallbackForTesting();
   }
 }
 
@@ -477,8 +506,8 @@ bool TaskTracker::IsPostingBlockShutdownTaskAfterShutdownAllowed() {
 }
 #endif
 
-int TaskTracker::GetNumIncompleteUndelayedTasksForTesting() const {
-  return subtle::NoBarrier_Load(&num_incomplete_undelayed_tasks_);
+bool TaskTracker::HasIncompleteUndelayedTasksForTesting() const {
+  return subtle::Acquire_Load(&num_incomplete_undelayed_tasks_) != 0;
 }
 
 bool TaskTracker::BeforePostTask(TaskShutdownBehavior shutdown_behavior) {
@@ -601,8 +630,11 @@ void TaskTracker::DecrementNumIncompleteUndelayedTasks() {
       subtle::Barrier_AtomicIncrement(&num_incomplete_undelayed_tasks_, -1);
   DCHECK_GE(new_num_incomplete_undelayed_tasks, 0);
   if (new_num_incomplete_undelayed_tasks == 0) {
-    AutoSchedulerLock auto_lock(flush_lock_);
-    flush_cv_->Signal();
+    {
+      AutoSchedulerLock auto_lock(flush_lock_);
+      flush_cv_->Signal();
+    }
+    CallFlushCallbackForTesting();
   }
 }
 
@@ -672,6 +704,16 @@ void TaskTracker::RecordTaskLatencyHistogram(const Task& task) {
                                ? 1
                                : 0]
                               ->Add(task_latency.InMicroseconds());
+}
+
+void TaskTracker::CallFlushCallbackForTesting() {
+  OnceClosure flush_callback;
+  {
+    AutoSchedulerLock auto_lock(flush_lock_);
+    flush_callback = std::move(flush_callback_for_testing_);
+  }
+  if (flush_callback)
+    std::move(flush_callback).Run();
 }
 
 }  // namespace internal

@@ -44,6 +44,7 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
+#include "content/browser/service_manager/service_manager_context.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/fileapi/file_system_messages.h"
@@ -69,8 +70,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/network_service.mojom.h"
-#include "content/public/common/network_service_test.mojom.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/simple_url_loader.h"
 #include "content/public/test/simple_url_loader_test_helper.h"
@@ -93,6 +93,8 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "services/network/public/interfaces/cookie_manager.mojom.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
+#include "services/network/public/interfaces/network_service_test.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -633,8 +635,9 @@ void SimulateUnresponsiveRenderer(WebContents* web_contents,
 #if defined(USE_AURA)
 bool IsResizeComplete(aura::test::WindowEventDispatcherTestApi* dispatcher_test,
                       RenderWidgetHostImpl* widget_host) {
-  return !dispatcher_test->HoldingPointerMoves() &&
-      !widget_host->resize_ack_pending_for_testing();
+  dispatcher_test->WaitUntilPointerMovesDispatched();
+  widget_host->WasResized();
+  return !widget_host->resize_ack_pending_for_testing();
 }
 
 void WaitForResizeComplete(WebContents* web_contents) {
@@ -923,6 +926,34 @@ void SimulateTouchPressAt(WebContents* web_contents, const gfx::Point& point) {
       web_contents->GetRenderWidgetHostView())
       ->OnTouchEvent(&touch);
 }
+
+void SimulateLongPressAt(WebContents* web_contents, const gfx::Point& point) {
+  RenderWidgetHostViewAura* rwhva = static_cast<RenderWidgetHostViewAura*>(
+      web_contents->GetRenderWidgetHostView());
+
+  ui::TouchEvent touch_start(
+      ui::ET_TOUCH_PRESSED, point, base::TimeTicks(),
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0));
+  rwhva->OnTouchEvent(&touch_start);
+
+  ui::GestureEventDetails tap_down_details(ui::ET_GESTURE_TAP_DOWN);
+  tap_down_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
+  ui::GestureEvent tap_down(point.x(), point.y(), 0, ui::EventTimeForNow(),
+                            tap_down_details, touch_start.unique_event_id());
+  rwhva->OnGestureEvent(&tap_down);
+
+  ui::GestureEventDetails long_press_details(ui::ET_GESTURE_LONG_PRESS);
+  long_press_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
+  ui::GestureEvent long_press(point.x(), point.y(), 0, ui::EventTimeForNow(),
+                              long_press_details,
+                              touch_start.unique_event_id());
+  rwhva->OnGestureEvent(&long_press);
+
+  ui::TouchEvent touch_end(
+      ui::ET_TOUCH_RELEASED, point, base::TimeTicks(),
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0));
+  rwhva->OnTouchEvent(&touch_end);
+}
 #endif
 
 void SimulateKeyPress(WebContents* web_contents,
@@ -1154,8 +1185,8 @@ RenderFrameHost* FrameMatchingPredicate(
     WebContents* web_contents,
     const base::Callback<bool(RenderFrameHost*)>& predicate) {
   std::set<RenderFrameHost*> frame_set;
-  web_contents->ForEachFrame(
-      base::Bind(&AddToSetIfFrameMatchesPredicate, &frame_set, predicate));
+  web_contents->ForEachFrame(base::BindRepeating(
+      &AddToSetIfFrameMatchesPredicate, &frame_set, predicate));
   EXPECT_EQ(1U, frame_set.size());
   return frame_set.size() == 1 ? *frame_set.begin() : nullptr;
 }
@@ -1344,7 +1375,7 @@ ui::AXNodeData GetFocusedAccessibilityNodeInfo(WebContents* web_contents) {
 
 bool AccessibilityTreeContainsNodeWithName(BrowserAccessibility* node,
                                            const std::string& name) {
-  if (node->GetStringAttribute(ui::AX_ATTR_NAME) == name)
+  if (node->GetStringAttribute(ax::mojom::StringAttribute::kName) == name)
     return true;
   for (unsigned i = 0; i < node->PlatformChildCount(); i++) {
     if (AccessibilityTreeContainsNodeWithName(node->PlatformGetChild(i), name))
@@ -1372,8 +1403,8 @@ void WaitForAccessibilityTreeToContainNodeWithName(WebContents* web_contents,
   FrameTree* frame_tree = web_contents_impl->GetFrameTree();
   while (!main_frame_manager || !AccessibilityTreeContainsNodeWithName(
              main_frame_manager->GetRoot(), name)) {
-    AccessibilityNotificationWaiter accessibility_waiter(main_frame,
-                                                         ui::AX_EVENT_NONE);
+    AccessibilityNotificationWaiter accessibility_waiter(
+        main_frame, ax::mojom::Event::kNone);
     for (FrameTreeNode* node : frame_tree->Nodes()) {
       accessibility_waiter.ListenToAdditionalFrame(
           node->current_frame_host());
@@ -1529,7 +1560,7 @@ SurfaceHitTestReadyNotifier::SurfaceHitTestReadyNotifier(
 
 void SurfaceHitTestReadyNotifier::WaitForSurfaceReady(
     RenderWidgetHostViewBase* root_view) {
-  viz::SurfaceId root_surface_id = root_view->SurfaceIdForTesting();
+  viz::SurfaceId root_surface_id = root_view->GetCurrentSurfaceId();
   while (!ContainsSurfaceId(root_surface_id)) {
     // TODO(kenrb): Need a better way to do this. Needs investigation on
     // whether we can add a callback through RenderWidgetHostViewBaseObserver
@@ -1555,7 +1586,7 @@ bool SurfaceHitTestReadyNotifier::ContainsSurfaceId(
 
   for (const viz::SurfaceId& id :
        *container_surface->active_referenced_surfaces()) {
-    if (id == target_view_->SurfaceIdForTesting() || ContainsSurfaceId(id))
+    if (id == target_view_->GetCurrentSurfaceId() || ContainsSurfaceId(id))
       return true;
   }
   return false;
@@ -2361,9 +2392,18 @@ WebContents* GetEmbedderForGuest(content::WebContents* guest) {
   return static_cast<content::WebContentsImpl*>(guest)->GetOuterWebContents();
 }
 
+bool IsNetworkServiceRunningInProcess() {
+  return base::FeatureList::IsEnabled(features::kNetworkService) &&
+         (base::CommandLine::ForCurrentProcess()->HasSwitch(
+              switches::kSingleProcess) ||
+          base::FeatureList::IsEnabled(features::kNetworkServiceInProcess));
+}
+
 void SimulateNetworkServiceCrash() {
   CHECK(base::FeatureList::IsEnabled(features::kNetworkService));
-  mojom::NetworkServiceTestPtr network_service_test;
+  CHECK(!IsNetworkServiceRunningInProcess())
+      << "Can't crash the network service if it's running in-process!";
+  network::mojom::NetworkServiceTestPtr network_service_test;
   ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
       mojom::kNetworkServiceName, &network_service_test);
 
@@ -2377,11 +2417,11 @@ void SimulateNetworkServiceCrash() {
   FlushNetworkServiceInstanceForTesting();
 }
 
-int LoadBasicRequest(mojom::NetworkContext* network_context,
+int LoadBasicRequest(network::mojom::NetworkContext* network_context,
                      const GURL& url,
                      int process_id,
                      int render_frame_id) {
-  mojom::URLLoaderFactoryPtr url_loader_factory;
+  network::mojom::URLLoaderFactoryPtr url_loader_factory;
   network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory),
                                           process_id);
   // |url_loader_factory| will receive error notification asynchronously if
@@ -2389,7 +2429,7 @@ int LoadBasicRequest(mojom::NetworkContext* network_context,
   // at this point.
   EXPECT_FALSE(url_loader_factory.encountered_error());
 
-  auto request = std::make_unique<ResourceRequest>();
+  auto request = std::make_unique<network::ResourceRequest>();
   request->url = url;
   request->render_frame_id = render_frame_id;
 
@@ -2403,6 +2443,11 @@ int LoadBasicRequest(mojom::NetworkContext* network_context,
   simple_loader_helper.WaitForCallback();
 
   return simple_loader->NetError();
+}
+
+bool HasValidProcessForProcessGroup(const std::string& process_group_name) {
+  return ServiceManagerContext::HasValidProcessForProcessGroup(
+      process_group_name);
 }
 
 }  // namespace content

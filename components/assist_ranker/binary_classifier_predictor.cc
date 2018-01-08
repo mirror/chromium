@@ -9,7 +9,6 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/files/file_path.h"
-#include "base/memory/ptr_util.h"
 #include "components/assist_ranker/generic_logistic_regression_inference.h"
 #include "components/assist_ranker/proto/ranker_model.pb.h"
 #include "components/assist_ranker/ranker_model.h"
@@ -37,7 +36,7 @@ std::unique_ptr<BinaryClassifierPredictor> BinaryClassifierPredictor::Create(
   const GURL& model_url = predictor->GetModelUrl();
   DVLOG(1) << "Creating predictor instance for " << predictor->GetModelName();
   DVLOG(1) << "Model URL: " << model_url;
-  auto model_loader = base::MakeUnique<RankerModelLoaderImpl>(
+  auto model_loader = std::make_unique<RankerModelLoaderImpl>(
       base::BindRepeating(&BinaryClassifierPredictor::ValidateModel),
       base::BindRepeating(&BinaryClassifierPredictor::OnModelAvailable,
                           base::Unretained(predictor.get())),
@@ -76,14 +75,33 @@ RankerModelStatus BinaryClassifierPredictor::ValidateModel(
     DVLOG(0) << "Model is incompatible.";
     return RankerModelStatus::INCOMPATIBLE;
   }
+  const GenericLogisticRegressionModel& glr =
+      model.proto().logistic_regression();
+  if (glr.is_preprocessed_model()) {
+    if (glr.fullname_weights().empty() || !glr.weights().empty()) {
+      DVLOG(0) << "Model is incompatible. Preprocessed model should use "
+                  "fullname_weights.";
+      return RankerModelStatus::INCOMPATIBLE;
+    }
+    if (!glr.preprocessor_config().feature_indices().empty()) {
+      DVLOG(0) << "Preprocessed model doesn't need feature indices.";
+      return RankerModelStatus::INCOMPATIBLE;
+    }
+  } else {
+    if (!glr.fullname_weights().empty() || glr.weights().empty()) {
+      DVLOG(0) << "Model is incompatible. Non-preprocessed model should use "
+                  "weights.";
+      return RankerModelStatus::INCOMPATIBLE;
+    }
+  }
   return RankerModelStatus::OK;
 }
 
 bool BinaryClassifierPredictor::Initialize() {
   if (ranker_model_->proto().model_case() ==
       RankerModelProto::kLogisticRegression) {
-    inference_module_.reset(new GenericLogisticRegressionInference(
-        ranker_model_->proto().logistic_regression()));
+    inference_module_ = std::make_unique<GenericLogisticRegressionInference>(
+        ranker_model_->proto().logistic_regression());
     return true;
   }
 

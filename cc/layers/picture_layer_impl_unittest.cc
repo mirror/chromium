@@ -38,7 +38,6 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/tile_draw_quad.h"
-#include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -2619,6 +2618,31 @@ TEST_F(CommitToActiveTreePictureLayerImplTest,
   EXPECT_EQ(8u, NumberOfTilesRequired(active_layer()->HighResTiling()));
 }
 
+TEST_F(CommitToActiveTreePictureLayerImplTest,
+       RequiredTilesWithGpuRasterizationAndFractionalDsf) {
+  host_impl()->SetHasGpuRasterizationTrigger(true);
+  host_impl()->CommitComplete();
+
+  gfx::Size viewport_size(1502, 2560);
+  host_impl()->SetViewportSize(viewport_size);
+
+  float dsf = 3.5f;
+  gfx::Size layer_bounds = gfx::ScaleToCeiledSize(viewport_size, 1.0f / dsf);
+  SetupDefaultTrees(layer_bounds);
+  EXPECT_TRUE(host_impl()->use_gpu_rasterization());
+
+  SetContentsScaleOnBothLayers(
+      dsf /* contents_scale */, dsf /* device_scale_factor */,
+      1.0f /* page_scale_factor */, 1.0f /* maximum_animation_contents_scale */,
+      1.0f /* starting_animation_contents_scale */,
+      false /* animating_transform */);
+
+  active_layer()->HighResTiling()->UpdateAllRequiredStateForTesting();
+
+  // High res tiling should have 4 tiles (1x4 tile grid).
+  EXPECT_EQ(4u, active_layer()->HighResTiling()->AllTilesForTesting().size());
+}
+
 TEST_F(PictureLayerImplTest, NoTilingIfDoesNotDrawContent) {
   // Set up layers with tilings.
   SetupDefaultTrees(gfx::Size(10, 10));
@@ -3341,7 +3365,8 @@ TEST_F(PictureLayerImplTest, OcclusionOnSolidColorPictureLayer) {
 
   scoped_refptr<FakeRasterSource> pending_raster_source =
       FakeRasterSource::CreateFilledSolidColor(layer_bounds);
-  SetupPendingTree(pending_raster_source);
+  SetupPendingTree(std::move(pending_raster_source), gfx::Size(), Region(),
+                   Layer::LayerMaskType::MULTI_TEXTURE_MASK);
   host_impl()->pending_tree()->SetDeviceScaleFactor(2.f);
   ActivateTree();
 
@@ -4590,21 +4615,25 @@ void PictureLayerImplTest::TestQuadsForSolidColor(bool test_for_solid,
     ASSERT_TRUE(active_layer()->tilings());
     ASSERT_GT(active_layer()->tilings()->num_tilings(), 0u);
     std::vector<Tile*> tiles =
-        active_layer()->tilings()->tiling_at(0)->AllTilesForTesting();
-    EXPECT_FALSE(tiles.empty());
-    host_impl()->tile_manager()->InitializeTilesWithResourcesForTesting(tiles);
-  }
-
-  if (partial_opaque) {
-    std::vector<Tile*> high_res_tiles =
         active_layer()->HighResTiling()->AllTilesForTesting();
-    size_t i = 0;
-    for (std::vector<Tile*>::iterator tile_it = high_res_tiles.begin();
-         tile_it != high_res_tiles.end() && i < 5; ++tile_it, ++i) {
-      Tile* tile = *tile_it;
-      TileDrawInfo& draw_info = tile->draw_info();
-      draw_info.SetSolidColorForTesting(0);
+    EXPECT_FALSE(tiles.empty());
+
+    std::vector<Tile*> resource_tiles;
+    if (!partial_opaque) {
+      resource_tiles = tiles;
+    } else {
+      size_t i = 0;
+      for (auto it = tiles.begin(); it != tiles.end(); ++it, ++i) {
+        if (i < 5) {
+          TileDrawInfo& draw_info = (*it)->draw_info();
+          draw_info.SetSolidColorForTesting(0);
+        } else {
+          resource_tiles.push_back(*it);
+        }
+      }
     }
+    host_impl()->tile_manager()->InitializeTilesWithResourcesForTesting(
+        resource_tiles);
   }
 
   std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
@@ -5062,6 +5091,14 @@ TEST_F(HalfWidthTileTest, TileSizes) {
   layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
   result = layer->CalculateTileSize(gfx::Size(10000, 10000));
   EXPECT_EQ(result.width(), 288);
+  EXPECT_EQ(result.height(), 256);
+
+  // If content would fit in a single tile after rounding, we shouldn't halve
+  // the tile width.
+  host_impl()->SetViewportSize(gfx::Size(511, 1000));
+  layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
+  result = layer->CalculateTileSize(gfx::Size(530, 10000));
+  EXPECT_EQ(result.width(), 544);
   EXPECT_EQ(result.height(), 256);
 }
 

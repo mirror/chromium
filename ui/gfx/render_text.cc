@@ -343,8 +343,14 @@ std::unique_ptr<RenderText> RenderText::CreateHarfBuzzInstance() {
 }
 
 // static
-std::unique_ptr<RenderText> RenderText::CreateInstanceForPlatformUI() {
+std::unique_ptr<RenderText> RenderText::CreateFor(Typesetter typesetter) {
 #if defined(OS_MACOSX)
+  if (typesetter == Typesetter::NATIVE)
+    return std::make_unique<RenderTextMac>();
+
+  if (typesetter == Typesetter::HARFBUZZ)
+    return CreateHarfBuzzInstance();
+
   static const bool use_native =
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableHarfBuzzRenderText);
@@ -356,7 +362,7 @@ std::unique_ptr<RenderText> RenderText::CreateInstanceForPlatformUI() {
 
 // static
 std::unique_ptr<RenderText> RenderText::CreateInstanceDeprecated() {
-  return CreateInstanceForPlatformUI();
+  return CreateFor(Typesetter::BROWSER);
 }
 
 std::unique_ptr<RenderText> RenderText::CreateInstanceOfSameStyle(
@@ -907,11 +913,6 @@ SelectionModel RenderText::GetSelectionModelForSelectionStart() const {
                         sel.is_reversed() ? CURSOR_BACKWARD : CURSOR_FORWARD);
 }
 
-std::vector<Rect> RenderText::GetSubstringBoundsForTesting(
-    const gfx::Range& range) {
-  return GetSubstringBounds(range);
-}
-
 const Vector2d& RenderText::GetUpdatedDisplayOffset() {
   UpdateCachedBoundsAndOffset();
   return display_offset_;
@@ -1269,6 +1270,11 @@ void RenderText::ApplyFadeEffects(internal::SkiaTextRenderer* renderer) {
     right_part.Inset(solid_part.width() - gradient_width, 0, 0, 0);
     solid_part.Inset(0, 0, gradient_width, 0);
   }
+
+  // CreateFadeShader() expects at least one part to not be empty.
+  // See https://crbug.com/706835.
+  if (left_part.IsEmpty() && right_part.IsEmpty())
+    return;
 
   Rect text_rect = display_rect();
   text_rect.Inset(GetAlignmentOffset(0).x(), 0, 0, 0);
@@ -1715,6 +1721,20 @@ Range RenderText::ExpandRangeToWordBoundary(const Range& range) const {
 
   return range.is_reversed() ? Range(range_max, range_min)
                              : Range(range_min, range_max);
+}
+
+internal::TextRunList* RenderText::GetRunList() {
+  NOTREACHED();
+  return nullptr;
+}
+
+const internal::TextRunList* RenderText::GetRunList() const {
+  NOTREACHED();
+  return nullptr;
+}
+
+void RenderText::SetGlyphWidthForTest(float test_width) {
+  NOTREACHED();
 }
 
 }  // namespace gfx

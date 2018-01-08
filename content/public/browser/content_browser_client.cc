@@ -15,6 +15,7 @@
 #include "content/public/browser/memory_coordinator_delegate.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/network_service_instance.h"
+#include "content/public/browser/page_navigator.h"
 #include "content/public/browser/vpn_service_proxy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/url_loader_throttle.h"
@@ -24,6 +25,7 @@
 #include "media/media_features.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "net/ssl/client_cert_identity.h"
+#include "net/ssl/client_cert_store.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "storage/browser/quota/quota_manager.h"
@@ -69,8 +71,7 @@ bool ContentBrowserClient::AllowGpuLaunchRetryOnIOThread() {
 }
 
 GURL ContentBrowserClient::GetEffectiveURL(BrowserContext* browser_context,
-                                           const GURL& url,
-                                           bool is_isolated_origin) {
+                                           const GURL& url) {
   return url;
 }
 
@@ -519,6 +520,26 @@ std::unique_ptr<base::Value> ContentBrowserClient::GetServiceManifestOverlay(
   return nullptr;
 }
 
+ContentBrowserClient::OutOfProcessServiceInfo::OutOfProcessServiceInfo() =
+    default;
+
+ContentBrowserClient::OutOfProcessServiceInfo::OutOfProcessServiceInfo(
+    const base::string16& process_name)
+    : process_name(process_name) {
+  DCHECK(!process_name.empty());
+}
+
+ContentBrowserClient::OutOfProcessServiceInfo::OutOfProcessServiceInfo(
+    const base::string16& process_name,
+    const std::string& process_group)
+    : process_name(process_name), process_group(process_group) {
+  DCHECK(!process_name.empty());
+  DCHECK(!process_group.empty());
+}
+
+ContentBrowserClient::OutOfProcessServiceInfo::~OutOfProcessServiceInfo() =
+    default;
+
 bool ContentBrowserClient::ShouldTerminateOnServiceQuit(
     const service_manager::Identity& id) {
   return false;
@@ -545,7 +566,8 @@ ContentBrowserClient::GetTaskSchedulerInitParams() {
 
 std::vector<std::unique_ptr<URLLoaderThrottle>>
 ContentBrowserClient::CreateURLLoaderThrottles(
-    const base::Callback<WebContents*()>& wc_getter) {
+    const base::Callback<WebContents*()>& wc_getter,
+    NavigationUIData* navigation_ui_data) {
   return std::vector<std::unique_ptr<URLLoaderThrottle>>();
 }
 
@@ -558,16 +580,17 @@ void ContentBrowserClient::RegisterNonNetworkSubresourceURLLoaderFactories(
     const GURL& frame_url,
     NonNetworkURLLoaderFactoryMap* factories) {}
 
-mojom::NetworkContextPtr ContentBrowserClient::CreateNetworkContext(
+network::mojom::NetworkContextPtr ContentBrowserClient::CreateNetworkContext(
     BrowserContext* context,
     bool in_memory,
     const base::FilePath& relative_partition_path) {
   if (!base::FeatureList::IsEnabled(features::kNetworkService))
     return nullptr;
 
-  mojom::NetworkContextPtr network_context;
-  mojom::NetworkContextParamsPtr context_params =
-      mojom::NetworkContextParams::New();
+  network::mojom::NetworkContextPtr network_context;
+  network::mojom::NetworkContextParamsPtr context_params =
+      network::mojom::NetworkContextParams::New();
+  context_params->user_agent = GetContentClient()->GetUserAgent();
   context_params->enable_data_url_support = true;
   context_params->enable_file_url_support = true;
   GetNetworkService()->CreateNetworkContext(MakeRequest(&network_context),
@@ -607,5 +630,27 @@ void ContentBrowserClient::CreateUsbDeviceManager(
 void ContentBrowserClient::CreateUsbChooserService(
     RenderFrameHost* render_frame_host,
     device::mojom::UsbChooserServiceRequest request) {}
+
+bool ContentBrowserClient::ShowPaymentHandlerWindow(
+    content::BrowserContext* browser_context,
+    const GURL& url,
+    base::OnceCallback<void(bool, int, int)> callback) {
+  return false;
+}
+
+bool ContentBrowserClient::ShouldCreateTaskScheduler() {
+  return true;
+}
+
+bool ContentBrowserClient::ShouldPermitIndividualAttestationForWebauthnRPID(
+    content::BrowserContext* browser_context,
+    const std::string& rp_id) {
+  return false;
+}
+
+std::unique_ptr<net::ClientCertStore>
+ContentBrowserClient::CreateClientCertStore(ResourceContext* resource_context) {
+  return nullptr;
+}
 
 }  // namespace content

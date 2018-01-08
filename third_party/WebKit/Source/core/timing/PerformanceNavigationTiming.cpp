@@ -19,21 +19,19 @@ namespace blink {
 PerformanceNavigationTiming::PerformanceNavigationTiming(
     LocalFrame* frame,
     ResourceTimingInfo* info,
-    double time_origin,
-    PerformanceServerTimingVector& serverTiming)
+    TimeTicks time_origin,
+    const WebVector<WebServerTimingInfo>& server_timing)
     : PerformanceResourceTiming(info ? info->InitialURL().GetString() : "",
                                 "navigation",
                                 time_origin,
-                                0.0,
-                                0.0,
-                                serverTiming),
+                                server_timing),
       ContextClient(frame),
       resource_timing_info_(info) {
   DCHECK(frame);
   DCHECK(info);
 }
 
-PerformanceNavigationTiming::~PerformanceNavigationTiming() {}
+PerformanceNavigationTiming::~PerformanceNavigationTiming() = default;
 
 void PerformanceNavigationTiming::Trace(blink::Visitor* visitor) {
   ContextClient::Trace(visitor);

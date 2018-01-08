@@ -74,6 +74,15 @@ Polymer({
       },
     },
 
+    /** @private */
+    enableSensorsContentSetting_: {
+      type: Boolean,
+      readOnly: true,
+      value: function() {
+        return loadTimeData.getBoolean('enableSensorsContentSetting');
+      },
+    },
+
     /**
      * The type of storage for the origin.
      * @private
@@ -108,7 +117,7 @@ Polymer({
    * @protected
    */
   currentRouteChanged: function(route) {
-    var site = settings.getQueryParameters().get('site');
+    const site = settings.getQueryParameters().get('site');
     if (!site)
       return;
     this.origin = site;
@@ -167,7 +176,7 @@ Polymer({
    * @private
    */
   updatePermissions_: function(categoryList) {
-    var permissionsMap =
+    const permissionsMap =
         /** @type {!Object<!settings.ContentSettingsTypes,
          *         !SiteDetailsPermissionElement>} */
         (Array.prototype.reduce.call(
@@ -249,7 +258,7 @@ Polymer({
    * @private
    */
   getCategoryList_: function() {
-    var categoryList = [];
+    const categoryList = [];
     this.root.querySelectorAll('site-details-permission').forEach((element) => {
       if (!element.hidden)
         categoryList.push(element.category);

@@ -33,8 +33,6 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.PasswordManagerHandler.PasswordListObserver;
-import org.chromium.chrome.browser.PasswordUIView;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.components.sync.AndroidSyncSettings;
@@ -177,7 +175,8 @@ public class PasswordEntryEditor extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (ReauthenticationManager.authenticationStillValid()) {
+        if (ReauthenticationManager.authenticationStillValid(
+                    ReauthenticationManager.REAUTH_SCOPE_ONE_AT_A_TIME)) {
             if (mViewButtonPressed) displayPassword();
 
             if (mCopyButtonPressed) copyPassword();
@@ -207,7 +206,8 @@ public class PasswordEntryEditor extends Fragment {
 
     // Delete was clicked.
     private void removeItem() {
-        final PasswordListObserver passwordDeleter = new PasswordListObserver() {
+        final PasswordManagerHandler.PasswordListObserver
+                passwordDeleter = new PasswordManagerHandler.PasswordListObserver() {
             @Override
             public void passwordListAvailable(int count) {
                 if (!mException) {
@@ -357,13 +357,15 @@ public class PasswordEntryEditor extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(),
                              R.string.password_entry_editor_set_lock_screen, Toast.LENGTH_LONG)
                         .show();
-            } else if (ReauthenticationManager.authenticationStillValid()) {
+            } else if (ReauthenticationManager.authenticationStillValid(
+                               ReauthenticationManager.REAUTH_SCOPE_ONE_AT_A_TIME)) {
                 copyPassword();
             } else {
                 mCopyButtonPressed = true;
                 ReauthenticationManager.displayReauthenticationFragment(
                         R.string.lockscreen_description_copy,
-                        R.id.password_entry_editor_interactive, getFragmentManager());
+                        R.id.password_entry_editor_interactive, getFragmentManager(),
+                        ReauthenticationManager.REAUTH_SCOPE_ONE_AT_A_TIME);
             }
         });
         viewPasswordButton.setOnClickListener(v -> {
@@ -376,13 +378,15 @@ public class PasswordEntryEditor extends Fragment {
                                & InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
                     == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
                 hidePassword();
-            } else if (ReauthenticationManager.authenticationStillValid()) {
+            } else if (ReauthenticationManager.authenticationStillValid(
+                               ReauthenticationManager.REAUTH_SCOPE_ONE_AT_A_TIME)) {
                 displayPassword();
             } else {
                 mViewButtonPressed = true;
                 ReauthenticationManager.displayReauthenticationFragment(
                         R.string.lockscreen_description_view,
-                        R.id.password_entry_editor_interactive, getFragmentManager());
+                        R.id.password_entry_editor_interactive, getFragmentManager(),
+                        ReauthenticationManager.REAUTH_SCOPE_ONE_AT_A_TIME);
             }
         });
     }

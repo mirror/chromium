@@ -7,13 +7,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
 #include <string>
 
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
-#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/time/time.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -32,6 +32,8 @@ LogoMetadata GetExampleMetadata() {
   metadata.animated_url = GURL("http://www.google.com/logos/doodle.png");
   metadata.alt_text = "A logo about chickens";
   metadata.mime_type = "image/jpeg";
+  metadata.log_url = GURL("https://www.google.com/ddllog?a=b");
+  metadata.cta_log_url = GURL("https://www.google.com/ddllog?c=d");
   return metadata;
 }
 
@@ -61,14 +63,14 @@ base::RefCountedString* CreateExampleImage(size_t num_bytes) {
 }
 
 std::unique_ptr<EncodedLogo> GetExampleLogo() {
-  auto logo = base::MakeUnique<EncodedLogo>();
+  auto logo = std::make_unique<EncodedLogo>();
   logo->encoded_image = CreateExampleImage(837);
   logo->metadata = GetExampleMetadata();
   return logo;
 }
 
 std::unique_ptr<EncodedLogo> GetExampleLogo2() {
-  auto logo = base::MakeUnique<EncodedLogo>();
+  auto logo = std::make_unique<EncodedLogo>();
   logo->encoded_image = CreateExampleImage(345);
   logo->metadata = GetExampleMetadata2();
   return logo;
@@ -87,6 +89,8 @@ void ExpectMetadataEqual(const LogoMetadata& expected_metadata,
   EXPECT_EQ(expected_metadata.animated_url, actual_metadata.animated_url);
   EXPECT_EQ(expected_metadata.alt_text, actual_metadata.alt_text);
   EXPECT_EQ(expected_metadata.mime_type, actual_metadata.mime_type);
+  EXPECT_EQ(expected_metadata.log_url, actual_metadata.log_url);
+  EXPECT_EQ(expected_metadata.cta_log_url, actual_metadata.cta_log_url);
 }
 
 void ExpectLogosEqual(const EncodedLogo& expected_logo,
@@ -113,7 +117,7 @@ class LogoCacheTest : public ::testing::Test {
   }
 
   void InitCache() {
-    cache_ = base::MakeUnique<LogoCache>(
+    cache_ = std::make_unique<LogoCache>(
         cache_parent_dir_.GetPath().Append(FILE_PATH_LITERAL("cache")));
   }
 

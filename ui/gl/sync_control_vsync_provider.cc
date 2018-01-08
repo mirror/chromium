@@ -65,13 +65,9 @@ bool SyncControlVSyncProvider::GetVSyncParametersIfAvailable(
   // Both Intel and Mali drivers will return TRUE for GetSyncValues
   // but a value of 0 for MSC if they cannot access the CRTC data structure
   // associated with the surface. crbug.com/231945
-  bool prev_invalid_msc = invalid_msc_;
   invalid_msc_ = (media_stream_counter == 0);
-  if (invalid_msc_) {
-    LOG_IF(ERROR, !prev_invalid_msc) << "glXGetSyncValuesOML "
-        "should not return TRUE with a media stream counter of 0.";
+  if (invalid_msc_)
     return false;
-  }
 
   struct timespec real_time;
   clock_gettime(CLOCK_REALTIME, &real_time);
@@ -139,17 +135,10 @@ bool SyncControlVSyncProvider::GetVSyncParametersIfAvailable(
     if (relative_change < kRelativeIntervalDifferenceThreshold) {
       if (new_interval.InMicroseconds() < kMinVsyncIntervalUs ||
           new_interval.InMicroseconds() > kMaxVsyncIntervalUs) {
-#if defined(OS_CHROMEOS)
-        // On ash platforms (ChromeOS essentially), the real refresh interval is
-        // queried from XRandR, regardless of the value calculated here, and
-        // this value is overriden by ui::CompositorVSyncManager.  The log
-        // should not be fatal in this case. Reconsider all this when XRandR
-        // support is added to non-ash platforms.
+        // For ChromeOS, we get the refresh interval from DRM through Ozone.
+        // For Linux, we could use XRandR.
         // http://crbug.com/340851
         LOG(ERROR)
-#else
-        LOG(FATAL)
-#endif  // OS_CHROMEOS
             << "Calculated bogus refresh interval=" << new_interval
             << ", last_timebase_=" << last_timebase_
             << ", timebase=" << timebase
@@ -171,7 +160,7 @@ bool SyncControlVSyncProvider::GetVSyncParametersIfAvailable(
 #endif  // defined(OS_LINUX)
 }
 
-bool SyncControlVSyncProvider::SupportGetVSyncParametersIfAvailable() {
+bool SyncControlVSyncProvider::SupportGetVSyncParametersIfAvailable() const {
 #if defined(OS_LINUX)
   return true;
 #else

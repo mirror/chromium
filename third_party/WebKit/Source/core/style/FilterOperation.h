@@ -87,7 +87,7 @@ class CORE_EXPORT FilterOperation
     return false;
   }
 
-  virtual ~FilterOperation() {}
+  virtual ~FilterOperation() = default;
   virtual void Trace(blink::Visitor* visitor) {}
 
   static FilterOperation* Blend(const FilterOperation* from,
@@ -146,7 +146,7 @@ class CORE_EXPORT ReferenceFilterOperation : public FilterOperation {
 
   SVGElementProxy& ElementProxy() const { return *element_proxy_; }
 
-  void AddClient(SVGResourceClient*);
+  void AddClient(SVGResourceClient*, WebTaskRunner*);
   void RemoveClient(SVGResourceClient*);
 
   virtual void Trace(blink::Visitor*);

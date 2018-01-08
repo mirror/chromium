@@ -214,7 +214,7 @@ TEST_F(LockActionHandlerLayoutManagerTest, PreserveNormalWindowBounds) {
   EXPECT_EQ(bounds.ToString(), window->GetBoundsInScreen().ToString());
 
   gfx::Rect work_area =
-      ScreenUtil::GetDisplayWorkAreaBoundsInParent(window.get());
+      screen_util::GetDisplayWorkAreaBoundsInParent(window.get());
   window->SetBounds(work_area);
 
   EXPECT_EQ(work_area.ToString(), window->GetBoundsInScreen().ToString());
@@ -487,8 +487,6 @@ TEST_F(LockActionHandlerLayoutManagerTest, MultipleMonitors) {
 
   window->SetBoundsInScreen(gfx::Rect(0, 0, 30, 40), GetSecondaryDisplay());
   target_bounds = gfx::Rect(400, 500);
-  target_bounds.Inset(0 /* left */, 0 /* top */, 0 /* right */,
-                      kShelfSize /* bottom */);
   target_bounds.Offset(300, 0);
   EXPECT_EQ(root_windows[1], window->GetRootWindow());
   EXPECT_EQ(target_bounds.ToString(), window->GetBoundsInScreen().ToString());

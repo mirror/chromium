@@ -29,7 +29,6 @@ public class JavaBridgeBareboneTest {
             new JavaBridgeActivityTestRule().shouldSetUp(false);
 
     private TestCallbackHelperContainer mTestCallbackHelperContainer;
-    private final JavaBridgeTestCommon mTestCommon = new JavaBridgeTestCommon(mActivityTestRule);
 
     @Before
     public void setUp() throws Exception {
@@ -44,7 +43,7 @@ public class JavaBridgeBareboneTest {
         mActivityTestRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getWebContents().addPossiblyUnsafeJavascriptInterface(
+                mActivityTestRule.getJavascriptInjector().addPossiblyUnsafeInterface(
                         new Object(), name, null);
             }
         });

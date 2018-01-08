@@ -57,6 +57,7 @@
 namespace {
 
 using ::payments::mojom::blink::CanMakePaymentQueryResult;
+using ::payments::mojom::blink::PaymentAddress;
 using ::payments::mojom::blink::PaymentAddressPtr;
 using ::payments::mojom::blink::PaymentCurrencyAmount;
 using ::payments::mojom::blink::PaymentCurrencyAmountPtr;
@@ -796,7 +797,7 @@ PaymentRequest* PaymentRequest::Create(
                             exception_state);
 }
 
-PaymentRequest::~PaymentRequest() {}
+PaymentRequest::~PaymentRequest() = default;
 
 ScriptPromise PaymentRequest::show(ScriptState* script_state) {
   if (!payment_provider_.is_bound() || show_resolver_) {
@@ -1247,13 +1248,13 @@ void PaymentRequest::OnCanMakePayment(CanMakePaymentQueryResult result) {
   switch (result) {
     case CanMakePaymentQueryResult::WARNING_CAN_MAKE_PAYMENT:
       WarnIgnoringQueryQuotaForCanMakePayment(*GetExecutionContext());
-    // Intentionally fall through.
+      FALLTHROUGH;
     case CanMakePaymentQueryResult::CAN_MAKE_PAYMENT:
       can_make_payment_resolver_->Resolve(true);
       break;
     case CanMakePaymentQueryResult::WARNING_CANNOT_MAKE_PAYMENT:
       WarnIgnoringQueryQuotaForCanMakePayment(*GetExecutionContext());
-    // Intentionally fall through.
+      FALLTHROUGH;
     case CanMakePaymentQueryResult::CANNOT_MAKE_PAYMENT:
       can_make_payment_resolver_->Resolve(false);
       break;

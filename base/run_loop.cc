@@ -63,7 +63,10 @@ void RunLoop::RegisterDelegateForCurrentThread(Delegate* delegate) {
   DCHECK_CALLED_ON_VALID_THREAD(delegate->bound_thread_checker_);
 
   // There can only be one RunLoop::Delegate per thread.
-  DCHECK(!tls_delegate.Get().Get());
+  DCHECK(!tls_delegate.Get().Get())
+      << "Error: Multiple RunLoop::Delegates registered on the same thread.\n\n"
+         "Hint: You perhaps instantiated a second "
+         "MessageLoop/ScopedTaskEnvironment on a thread that already had one?";
   tls_delegate.Get().Set(delegate);
   delegate->bound_ = true;
 }
@@ -320,6 +323,11 @@ void RunLoop::AfterRun() {
 
   RunLoop* previous_run_loop =
       active_run_loops_.empty() ? nullptr : active_run_loops_.top();
+
+  if (previous_run_loop) {
+    for (auto& observer : delegate_->nesting_observers_)
+      observer.OnExitNestedRunLoop();
+  }
 
   // Execute deferred Quit, if any:
   if (previous_run_loop && previous_run_loop->quit_called_)

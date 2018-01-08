@@ -19,6 +19,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/shared_memory.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
@@ -30,9 +31,9 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
+#include "cc/trees/render_frame_metadata.h"
 #include "components/viz/common/features.h"
 #include "components/viz/common/quads/compositor_frame.h"
-#include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
@@ -62,10 +63,10 @@
 #include "content/browser/renderer_host/render_widget_host_owner_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/common/content_constants_internal.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/cursors/webcursor.h"
 #include "content/common/drag_messages.h"
 #include "content/common/frame_messages.h"
+#include "content/common/input/sync_compositor_messages.h"
 #include "content/common/input_messages.h"
 #include "content/common/resize_params.h"
 #include "content/common/text_input_state.h"
@@ -81,6 +82,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/result_codes.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/public/common/web_preferences.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
@@ -383,25 +385,21 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
   touch_emulator_.reset();
   SetWidget(std::move(widget));
 
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableHangMonitor)) {
+  const auto* command_line = base::CommandLine::ForCurrentProcess();
+  if (!command_line->HasSwitch(switches::kDisableHangMonitor)) {
     hang_monitor_timeout_.reset(new TimeoutMonitor(
         base::Bind(&RenderWidgetHostImpl::RendererIsUnresponsive,
                    weak_factory_.GetWeakPtr())));
   }
 
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableNewContentRenderingTimeout)) {
+  if (!command_line->HasSwitch(switches::kDisableNewContentRenderingTimeout)) {
     new_content_rendering_timeout_.reset(new TimeoutMonitor(
         base::Bind(&RenderWidgetHostImpl::ClearDisplayedGraphics,
                    weak_factory_.GetWeakPtr())));
   }
 
   enable_surface_synchronization_ = features::IsSurfaceSynchronizationEnabled();
-
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  enable_viz_ = command_line.HasSwitch(switches::kEnableViz);
+  enable_viz_ = base::FeatureList::IsEnabled(features::kVizDisplayCompositor);
 
   delegate_->RenderWidgetCreated(this);
 }
@@ -584,13 +582,9 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
   if (!renderer_initialized()) {
     // SetNeedsBeginFrame messages are only sent by the renderer once and so
     // should never be dropped.
-    bool handled = true;
-    IPC_BEGIN_MESSAGE_MAP(RenderWidgetHostImpl, msg)
-      IPC_MESSAGE_HANDLER(ViewHostMsg_SetNeedsBeginFrames,
-                          OnSetNeedsBeginFrames)
-      IPC_MESSAGE_UNHANDLED(handled = false)
-    IPC_END_MESSAGE_MAP()
-    return handled;
+    if (msg.type() == SyncCompositorHostMsg_SetNeedsBeginFrames::ID && view_)
+      return view_->OnMessageReceived(msg);
+    return false;
   }
 
   if (owner_delegate_ && owner_delegate_->OnMessageReceived(msg))
@@ -623,12 +617,13 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnSelectionBoundsChanged)
     IPC_MESSAGE_HANDLER(InputHostMsg_ImeCompositionRangeChanged,
                         OnImeCompositionRangeChanged)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_SetNeedsBeginFrames, OnSetNeedsBeginFrames)
     IPC_MESSAGE_HANDLER(ViewHostMsg_FocusedNodeTouched, OnFocusedNodeTouched)
     IPC_MESSAGE_HANDLER(DragHostMsg_StartDragging, OnStartDragging)
     IPC_MESSAGE_HANDLER(DragHostMsg_UpdateDragCursor, OnUpdateDragCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_FrameSwapMessages,
                         OnFrameSwapMessagesReceived)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_OnRenderFrameSubmitted,
+                        OnRenderFrameMetadata)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -760,9 +755,23 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
     resize_params->browser_controls_shrink_blink_size =
         view_->DoBrowserControlsShrinkBlinkSize();
     resize_params->visible_viewport_size = view_->GetVisibleViewportSize();
+    // TODO(ccameron): GetLocalSurfaceId is not synchronized with the device
+    // scale factor of the surface. Fix this.
     viz::LocalSurfaceId local_surface_id = view_->GetLocalSurfaceId();
     if (local_surface_id.is_valid())
       resize_params->local_surface_id = local_surface_id;
+  }
+
+  resize_params->content_source_id = current_content_source_id_;
+
+  if (screen_orientation_type_for_testing_) {
+    resize_params->screen_info.orientation_type =
+        *screen_orientation_type_for_testing_;
+  }
+
+  if (screen_orientation_angle_for_testing_) {
+    resize_params->screen_info.orientation_angle =
+        *screen_orientation_angle_for_testing_;
   }
 
   const bool size_changed =
@@ -770,6 +779,7 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
       old_resize_params_->new_size != resize_params->new_size ||
       (old_resize_params_->physical_backing_size.IsEmpty() &&
        !resize_params->physical_backing_size.IsEmpty());
+
   bool dirty =
       size_changed ||
       old_resize_params_->screen_info != resize_params->screen_info ||
@@ -787,16 +797,21 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
       old_resize_params_->visible_viewport_size !=
           resize_params->visible_viewport_size ||
       (enable_surface_synchronization_ &&
+       old_resize_params_->content_source_id !=
+           resize_params->content_source_id) ||
+      (enable_surface_synchronization_ &&
        old_resize_params_->local_surface_id != resize_params->local_surface_id);
 
   // We don't expect to receive an ACK when the requested size or the physical
   // backing size is empty, or when the main viewport size didn't change.
   resize_params->needs_resize_ack =
       g_check_for_pending_resize_ack && !resize_params->new_size.IsEmpty() &&
-      !resize_params->physical_backing_size.IsEmpty() && size_changed &&
+      !resize_params->physical_backing_size.IsEmpty() &&
+      (size_changed || next_resize_needs_resize_ack_) &&
       (!enable_surface_synchronization_ ||
        (resize_params->local_surface_id.has_value() &&
         resize_params->local_surface_id->is_valid()));
+
   return dirty;
 }
 
@@ -808,6 +823,10 @@ void RenderWidgetHostImpl::SetInitialRenderSizeParams(
 }
 
 void RenderWidgetHostImpl::WasResized() {
+  WasResized(false);
+}
+
+void RenderWidgetHostImpl::WasResized(bool scroll_focused_node_into_view) {
   // Skip if the |delegate_| has already been detached because
   // it's web contents is being deleted.
   if (resize_ack_pending_ || !process_->HasConnection() || !view_ ||
@@ -818,12 +837,14 @@ void RenderWidgetHostImpl::WasResized() {
   std::unique_ptr<ResizeParams> params(new ResizeParams);
   if (!GetResizeParams(params.get()))
     return;
+  params->scroll_focused_node_into_view = scroll_focused_node_into_view;
 
   bool width_changed =
       !old_resize_params_ ||
       old_resize_params_->new_size.width() != params->new_size.width();
   if (Send(new ViewMsg_Resize(routing_id_, *params))) {
     resize_ack_pending_ = params->needs_resize_ack;
+    next_resize_needs_resize_ack_ = false;
     old_resize_params_.swap(params);
   }
 
@@ -1064,17 +1085,29 @@ void RenderWidgetHostImpl::StopHangMonitorTimeout() {
   RendererIsResponsive();
 }
 
-void RenderWidgetHostImpl::StartNewContentRenderingTimeout(
-    uint32_t next_source_id) {
+void RenderWidgetHostImpl::DidNavigate(uint32_t next_source_id) {
   current_content_source_id_ = next_source_id;
 
-  if (!new_content_rendering_timeout_)
-    return;
+  if (enable_surface_synchronization_) {
+    if (view_)
+      view_->DidNavigate();
+    // Resize messages before navigation are not acked, so reset
+    // |resize_ack_pending_| and make sure the next resize will be acked if the
+    // last resize before navigation was supposed to be acked.
+    next_resize_needs_resize_ack_ = resize_ack_pending_;
+    resize_ack_pending_ = false;
+    // If |view_| decides we need a new LocalSurfaceId, we should notify
+    // RenderWidget.
+    WasResized();
+  } else {
+    // It is possible for a compositor frame to arrive before the browser is
+    // notified about the page being committed, in which case no timer is
+    // necessary.
+    if (last_received_content_source_id_ >= current_content_source_id_)
+      return;
+  }
 
-  // It is possible for a compositor frame to arrive before the browser is
-  // notified about the page being committed, in which case no timer is
-  // necessary.
-  if (last_received_content_source_id_ >= current_content_source_id_)
+  if (!new_content_rendering_timeout_)
     return;
 
   new_content_rendering_timeout_->Start(new_content_rendering_delay_);
@@ -1091,7 +1124,7 @@ void RenderWidgetHostImpl::ForwardMouseEvent(const WebMouseEvent& mouse_event) {
   }
 
   ForwardMouseEventWithLatencyInfo(mouse_event,
-                                   ui::LatencyInfo(ui::SourceEventType::OTHER));
+                                   ui::LatencyInfo(ui::SourceEventType::MOUSE));
   if (owner_delegate_)
     owner_delegate_->RenderWidgetDidForwardMouseEvent(mouse_event);
 }
@@ -1175,22 +1208,42 @@ void RenderWidgetHostImpl::ForwardGestureEventWithLatencyInfo(
              blink::WebInputEvent::kGestureScrollEnd) {
     DCHECK(is_in_gesture_scroll_[gesture_event.source_device]);
     is_in_gesture_scroll_[gesture_event.source_device] = false;
+    is_in_touchpad_gesture_fling_ = false;
   } else if (gesture_event.GetType() ==
              blink::WebInputEvent::kGestureFlingStart) {
     if (gesture_event.source_device ==
         blink::WebGestureDevice::kWebGestureDeviceTouchpad) {
-      if (GetView()->wheel_scroll_latching_enabled()) {
+      // TODO(sahel): Remove the VR specific case when motion events are used
+      // for Android VR event processing and VR touchpad scrolling is handled by
+      // sending wheel events rather than directly injecting Gesture Scroll
+      // Events. https://crbug.com/797322
+      if (GetView()->IsInVR()) {
+        // Regardless of the state of the wheel scroll latching
+        // WebContentsEventForwarder doesn't inject any GSE events before GFS.
+        DCHECK(is_in_gesture_scroll_[gesture_event.source_device]);
+
+        // Reset the is_in_gesture_scroll since while scrolling in Android VR
+        // the first wheel event sent by the FlingController will cause a GSB
+        // generation in MouseWheelEventQueue. This is because GSU events before
+        // the GFS are directly injected to RWHI rather than being generated
+        // from wheel events in MouseWheelEventQueue.
+        is_in_gesture_scroll_[gesture_event.source_device] = false;
+      } else if (GetView()->wheel_scroll_latching_enabled()) {
         // When wheel scroll latching is enabled, no GSE is sent before GFS, so
         // is_in_gesture_scroll must be true.
         DCHECK(is_in_gesture_scroll_[gesture_event.source_device]);
 
-        // When wheel scroll latching is enabled GFS with touchpad source is
-        // handled by FlingController on browser side and GSU events with
-        // inertial phase will be sent to the renderer. Therefore,
-        // is_in_gesture_scroll must stay true till the fling progress is
-        // finished. Then the FlingController will generate and send a GSE event
-        // to show the end of a scroll sequence.
-      } else {
+        // The FlingController handles GFS with touchpad source and sends wheel
+        // events to progress the fling, the wheel events will get processed by
+        // the MouseWheelEventQueue and GSU events with inertial phase will be
+        // sent to the renderer. is_in_gesture_scroll must stay true till the
+        // fling progress is finished. Then the FlingController will generate
+        // and send a wheel event with phaseEnded. MouseWheelEventQueue will
+        // process the wheel event to generate and send a GSE which shows the
+        // end of a scroll sequence.
+      } else {  // !GetView()->IsInVR() &&
+                // !GetView()->wheel_scroll_latching_enabled()
+
         // When wheel scroll latching is disabled a GSE is sent before a GFS.
         // The GSE has already finished the scroll sequence.
         DCHECK(!is_in_gesture_scroll_[gesture_event.source_device]);
@@ -1616,15 +1669,6 @@ void RenderWidgetHostImpl::OnSelectionBoundsChanged(
     view_->SelectionBoundsChanged(params);
 }
 
-void RenderWidgetHostImpl::OnSetNeedsBeginFrames(bool needs_begin_frames) {
-  if (needs_begin_frames_ == needs_begin_frames)
-    return;
-
-  needs_begin_frames_ = needs_begin_frames;
-  if (view_)
-    view_->SetNeedsBeginFrames(needs_begin_frames);
-}
-
 void RenderWidgetHostImpl::OnFocusedNodeTouched(bool editable) {
   if (delegate_)
     delegate_->FocusedNodeTouched(editable);
@@ -1766,6 +1810,8 @@ void RenderWidgetHostImpl::RendererExited(base::TerminationStatus status,
   // destroy the aura window, which may dispatch a synthetic mouse move.)
   SetupInputRouter();
   synthetic_gesture_controller_.reset();
+
+  current_content_source_id_ = 0;
 
   last_received_frame_token_ = 0;
   auto doomed = std::move(queued_messages_);
@@ -2195,24 +2241,22 @@ void RenderWidgetHostImpl::OnUnlockMouse() {
 void RenderWidgetHostImpl::OnShowDisambiguationPopup(
     const gfx::Rect& rect_pixels,
     const gfx::Size& size,
-    const viz::SharedBitmapId& id) {
+    base::SharedMemoryHandle handle) {
   DCHECK(!rect_pixels.IsEmpty());
   DCHECK(!size.IsEmpty());
 
-  std::unique_ptr<viz::SharedBitmap> bitmap =
-      viz::ServerSharedBitmapManager::current()->GetSharedBitmapFromId(size,
-                                                                       id);
-  if (!bitmap) {
+  SkImageInfo info = SkImageInfo::MakeN32Premul(size.width(), size.height());
+  size_t shm_size = info.computeMinByteSize();
+
+  base::SharedMemory shm(handle, false /* read_only */);
+  if (shm_size == 0 || !shm.Map(shm_size)) {
     bad_message::ReceivedBadMessage(GetProcess(),
                                     bad_message::RWH_SHARED_BITMAP);
     return;
   }
 
-  DCHECK(bitmap->pixels());
-
-  SkImageInfo info = SkImageInfo::MakeN32Premul(size.width(), size.height());
   SkBitmap zoomed_bitmap;
-  zoomed_bitmap.installPixels(info, bitmap->pixels(), info.minRowBytes());
+  zoomed_bitmap.installPixels(info, shm.memory(), info.minRowBytes());
 
   // Note that |rect| is in coordinates of pixels relative to the window origin.
   // Aura-based systems will want to convert this to DIPs.
@@ -2220,9 +2264,7 @@ void RenderWidgetHostImpl::OnShowDisambiguationPopup(
     view_->ShowDisambiguationPopup(rect_pixels, zoomed_bitmap);
 
   // It is assumed that the disambiguation popup will make a copy of the
-  // provided zoomed image, so we delete this one.
-  zoomed_bitmap.setPixels(nullptr);
-  Send(new ViewMsg_ReleaseDisambiguationPopupBitmap(GetRoutingID(), id));
+  // provided zoomed image, so we delete |zoomed_bitmap| and free shared memory.
 }
 
 void RenderWidgetHostImpl::SetIgnoreInputEvents(bool ignore_input_events) {
@@ -2480,7 +2522,8 @@ void RenderWidgetHostImpl::DidAllocateLocalSurfaceIdForAutoResize(
     GetScreenInfo(&screen_info);
     Send(new ViewMsg_SetLocalSurfaceIdForAutoResize(
         routing_id_, sequence_number, min_size_for_auto_resize_,
-        max_size_for_auto_resize_, screen_info, local_surface_id));
+        max_size_for_auto_resize_, screen_info, current_content_source_id_,
+        local_surface_id));
   }
 }
 
@@ -2653,8 +2696,18 @@ bool RenderWidgetHostImpl::HasGestureStopped() {
   return !input_router_->HasPendingEvents();
 }
 
-void RenderWidgetHostImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
-  OnSetNeedsBeginFrames(needs_begin_frame);
+void RenderWidgetHostImpl::SetNeedsBeginFrame(bool needs_begin_frames) {
+  if (needs_begin_frames_ == needs_begin_frames)
+    return;
+
+  needs_begin_frames_ = needs_begin_frames;
+  if (view_)
+    view_->SetNeedsBeginFrames(needs_begin_frames);
+}
+
+void RenderWidgetHostImpl::SetWantsAnimateOnlyBeginFrames() {
+  if (view_)
+    view_->SetWantsAnimateOnlyBeginFrames();
 }
 
 void RenderWidgetHostImpl::SubmitCompositorFrame(
@@ -2680,7 +2733,8 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
       RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
 
   if (local_surface_id == last_local_surface_id_ &&
-      new_surface_properties != last_surface_properties_) {
+      SurfacePropertiesMismatch(new_surface_properties,
+                                last_surface_properties_)) {
     static auto* crash_key = base::debug::AllocateCrashKeyString(
         "surface-invariants-violation", base::debug::CrashKeySize::Size256);
     base::debug::ScopedCrashKeyString key_value(
@@ -2731,32 +2785,47 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
   if (touch_emulator_)
     touch_emulator_->SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
-  // Ignore this frame if its content has already been unloaded. Source ID
-  // is always zero for an OOPIF because we are only concerned with displaying
-  // stale graphics on top-level frames. We accept frames that have a source ID
-  // greater than |current_content_source_id_| because in some cases the first
-  // compositor frame can arrive before the navigation commit message that
-  // updates that value.
-  if (view_ && frame.metadata.content_source_id >= current_content_source_id_) {
-    view_->SubmitCompositorFrame(local_surface_id, std::move(frame),
-                                 std::move(hit_test_region_list));
-    view_->DidReceiveRendererFrame();
-  } else {
+  if (enable_surface_synchronization_) {
     if (view_) {
-      frame.metadata.begin_frame_ack.has_damage = false;
-      view_->OnDidNotProduceFrame(frame.metadata.begin_frame_ack);
+      // If Surface Synchronization is on, then |new_content_rendering_timeout_|
+      // is stopped in DidReceiveFirstFrameAfterNavigation.
+      view_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                   std::move(hit_test_region_list));
+      view_->DidReceiveRendererFrame();
+    } else {
+      std::vector<viz::ReturnedResource> resources =
+          viz::TransferableResource::ReturnResources(frame.resource_list);
+      renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
     }
-    std::vector<viz::ReturnedResource> resources =
-        viz::TransferableResource::ReturnResources(frame.resource_list);
-    renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
-  }
+  } else {
+    // Ignore this frame if its content has already been unloaded. Source ID
+    // is always zero for an OOPIF because we are only concerned with displaying
+    // stale graphics on top-level frames. We accept frames that have a source
+    // ID greater than |current_content_source_id_| because in some cases the
+    // first compositor frame can arrive before the navigation commit message
+    // that updates that value.
+    if (view_ &&
+        frame.metadata.content_source_id >= current_content_source_id_) {
+      view_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                   std::move(hit_test_region_list));
+      view_->DidReceiveRendererFrame();
+    } else {
+      if (view_) {
+        frame.metadata.begin_frame_ack.has_damage = false;
+        view_->OnDidNotProduceFrame(frame.metadata.begin_frame_ack);
+      }
+      std::vector<viz::ReturnedResource> resources =
+          viz::TransferableResource::ReturnResources(frame.resource_list);
+      renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
+    }
 
-  // After navigation, if a frame belonging to the new page is received, stop
-  // the timer that triggers clearing the graphics of the last page.
-  if (new_content_rendering_timeout_ &&
-      last_received_content_source_id_ >= current_content_source_id_ &&
-      new_content_rendering_timeout_->IsRunning()) {
-    new_content_rendering_timeout_->Stop();
+    // After navigation, if a frame belonging to the new page is received, stop
+    // the timer that triggers clearing the graphics of the last page.
+    if (new_content_rendering_timeout_ &&
+        last_received_content_source_id_ >= current_content_source_id_ &&
+        new_content_rendering_timeout_->IsRunning()) {
+      new_content_rendering_timeout_->Stop();
+    }
   }
 
   if (delegate_)
@@ -2875,6 +2944,11 @@ void RenderWidgetHostImpl::SetWidgetInputHandler(
   }
 }
 
+void RenderWidgetHostImpl::SetInputTargetClient(
+    viz::mojom::InputTargetClientPtr input_target_client) {
+  input_target_client_ = std::move(input_target_client);
+}
+
 void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
   if (widget && base::FeatureList::IsEnabled(features::kMojoInputMessages)) {
     // If we have a bound handler ensure that we destroy the old input router.
@@ -2893,6 +2967,63 @@ void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
 void RenderWidgetHostImpl::ProgressFling(base::TimeTicks current_time) {
   if (input_router_)
     input_router_->ProgressFling(current_time);
+}
+
+void RenderWidgetHostImpl::DidReceiveFirstFrameAfterNavigation() {
+  DCHECK(enable_surface_synchronization_);
+  if (!new_content_rendering_timeout_ ||
+      !new_content_rendering_timeout_->IsRunning()) {
+    return;
+  }
+  new_content_rendering_timeout_->Stop();
+}
+
+void RenderWidgetHostImpl::StopFling() {
+  if (input_router_)
+    input_router_->StopFling();
+}
+
+void RenderWidgetHostImpl::OnRenderFrameMetadata(
+    const cc::RenderFrameMetadata& metadata) {
+  last_render_frame_metadata_ = metadata;
+}
+
+void RenderWidgetHostImpl::SetScreenOrientationForTesting(
+    uint16_t angle,
+    ScreenOrientationValues type) {
+  screen_orientation_angle_for_testing_ = angle;
+  screen_orientation_type_for_testing_ = type;
+  WasResized();
+}
+
+// TODO(ericrk): On Android, with surface synchronization enabled,  we need to
+// request a new surface ID when things like top/bottom control height or
+// selection handles change. This will be enabled by child surface id
+// generation. For now ignore these mismatches.  Remove this function when this
+// issue is resolved: https://crbug.com/789259 and https://crbug.com/801350
+bool RenderWidgetHostImpl::SurfacePropertiesMismatch(
+    const RenderWidgetSurfaceProperties& first,
+    const RenderWidgetSurfaceProperties& second) const {
+#ifdef OS_ANDROID
+  if (enable_surface_synchronization_) {
+    // To make this comparison resistant to changes in
+    // RenderWidgetSurfaceProperties, create new properties which are forced to
+    // match only for those categories we want to ignore.
+    RenderWidgetSurfaceProperties second_reduced = second;
+    second_reduced.top_controls_height = first.top_controls_height;
+    second_reduced.top_controls_shown_ratio = first.top_controls_shown_ratio;
+    second_reduced.bottom_controls_height = first.bottom_controls_height;
+    second_reduced.bottom_controls_shown_ratio =
+        first.bottom_controls_shown_ratio;
+    second_reduced.selection = first.selection;
+
+    return first != second_reduced;
+  }
+#endif
+
+  // For non-Android or when surface synchronization is not enabled, just use a
+  // basic comparison.
+  return first != second;
 }
 
 }  // namespace content

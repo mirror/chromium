@@ -187,6 +187,10 @@ void LayoutTestMessageFilter::OnSetPermission(
     type = PermissionType::BACKGROUND_SYNC;
   } else if (name == "accessibility-events") {
     type = PermissionType::ACCESSIBILITY_EVENTS;
+  } else if (name == "clipboard-read") {
+    type = PermissionType::CLIPBOARD_READ;
+  } else if (name == "clipboard-write") {
+    type = PermissionType::CLIPBOARD_WRITE;
   } else {
     NOTREACHED();
     type = PermissionType::NOTIFICATIONS;
@@ -210,18 +214,22 @@ void LayoutTestMessageFilter::OnResetPermissions() {
 void LayoutTestMessageFilter::OnLayoutTestRuntimeFlagsChanged(
     const base::DictionaryValue& changed_layout_test_runtime_flags) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BlinkTestController::Get()->OnLayoutTestRuntimeFlagsChanged(
-      render_process_id_, changed_layout_test_runtime_flags);
+  if (BlinkTestController::Get()) {
+    BlinkTestController::Get()->OnLayoutTestRuntimeFlagsChanged(
+        render_process_id_, changed_layout_test_runtime_flags);
+  }
 }
 
 void LayoutTestMessageFilter::OnTestFinishedInSecondaryRenderer() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BlinkTestController::Get()->OnTestFinishedInSecondaryRenderer();
+  if (BlinkTestController::Get())
+    BlinkTestController::Get()->OnTestFinishedInSecondaryRenderer();
 }
 
 void LayoutTestMessageFilter::OnInspectSecondaryWindow() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BlinkTestController::Get()->OnInspectSecondaryWindow();
+  if (BlinkTestController::Get())
+    BlinkTestController::Get()->OnInspectSecondaryWindow();
 }
 
 }  // namespace content

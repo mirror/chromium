@@ -12,7 +12,7 @@
 #include "base/lazy_instance.h"
 #include "components/viz/common/features.h"
 #include "content/common/content_switches_internal.h"
-#include "content/common/frame_messages.h"
+#include "content/common/frame_message_structs.h"
 #include "content/common/frame_owner_properties.h"
 #include "content/common/frame_replication_state.h"
 #include "content/common/input_messages.h"
@@ -29,11 +29,13 @@
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/render_view_impl.h"
 #include "content/renderer/render_widget.h"
+#include "content/renderer/resource_timing_info_conversions.h"
 #include "ipc/ipc_message_macros.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
+#include "third_party/WebKit/public/platform/WebResourceTimingInfo.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
@@ -71,6 +73,7 @@ RenderFrameProxy* RenderFrameProxy::CreateProxyToReplaceFrame(
 
   std::unique_ptr<RenderFrameProxy> proxy(new RenderFrameProxy(routing_id));
   proxy->unique_name_ = frame_to_replace->unique_name();
+  proxy->devtools_frame_token_ = frame_to_replace->GetDevToolsFrameToken();
 
   // When a RenderFrame is replaced by a RenderProxy, the WebRemoteFrame should
   // always come from WebRemoteFrame::create and a call to WebFrame::swap must
@@ -290,6 +293,8 @@ void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
 
   web_frame_->SetReplicatedName(blink::WebString::FromUTF8(state.name));
   web_frame_->SetReplicatedInsecureRequestPolicy(state.insecure_request_policy);
+  web_frame_->SetReplicatedInsecureNavigationsSet(
+      state.insecure_navigations_set);
   web_frame_->SetReplicatedFeaturePolicyHeader(state.feature_policy_header);
   if (state.has_received_user_gesture)
     web_frame_->SetHasReceivedUserGesture();
@@ -335,8 +340,7 @@ void RenderFrameProxy::OnDidSetActiveSandboxFlags(
 }
 
 void RenderFrameProxy::SetChildFrameSurface(
-    const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
+    const viz::SurfaceInfo& surface_info) {
   // If this WebFrame has already been detached, its parent will be null. This
   // can happen when swapping a WebRemoteFrame with a WebLocalFrame, where this
   // message may arrive after the frame was removed from the frame tree, but
@@ -349,7 +353,7 @@ void RenderFrameProxy::SetChildFrameSurface(
                                              frame_rect().size());
   }
   compositing_helper_->SetFallbackSurfaceId(surface_info.id(),
-                                            frame_rect().size(), sequence);
+                                            frame_rect().size());
 }
 
 bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
@@ -366,6 +370,8 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_DeleteProxy, OnDeleteProxy)
     IPC_MESSAGE_HANDLER(FrameMsg_ChildFrameProcessGone, OnChildFrameProcessGone)
     IPC_MESSAGE_HANDLER(FrameMsg_SetChildFrameSurface, OnSetChildFrameSurface)
+    IPC_MESSAGE_HANDLER(FrameMsg_IntrinsicSizingInfoOfChildChanged,
+                        OnIntrinsicSizingInfoOfChildChanged)
     IPC_MESSAGE_HANDLER(FrameMsg_UpdateOpener, OnUpdateOpener)
     IPC_MESSAGE_HANDLER(FrameMsg_ViewChanged, OnViewChanged)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStartLoading, OnDidStartLoading)
@@ -373,6 +379,8 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateFramePolicy, OnDidUpdateFramePolicy)
     IPC_MESSAGE_HANDLER(FrameMsg_DidSetActiveSandboxFlags,
                         OnDidSetActiveSandboxFlags)
+    IPC_MESSAGE_HANDLER(FrameMsg_ForwardResourceTimingToParent,
+                        OnForwardResourceTimingToParent)
     IPC_MESSAGE_HANDLER(FrameMsg_DispatchLoad, OnDispatchLoad)
     IPC_MESSAGE_HANDLER(FrameMsg_Collapse, OnCollapse)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateName, OnDidUpdateName)
@@ -382,6 +390,8 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
                         OnResetContentSecurityPolicy)
     IPC_MESSAGE_HANDLER(FrameMsg_EnforceInsecureRequestPolicy,
                         OnEnforceInsecureRequestPolicy)
+    IPC_MESSAGE_HANDLER(FrameMsg_EnforceInsecureNavigationsSet,
+                        OnEnforceInsecureNavigationsSet)
     IPC_MESSAGE_HANDLER(FrameMsg_SetFrameOwnerProperties,
                         OnSetFrameOwnerProperties)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateOrigin, OnDidUpdateOrigin)
@@ -415,9 +425,13 @@ void RenderFrameProxy::OnChildFrameProcessGone() {
 }
 
 void RenderFrameProxy::OnSetChildFrameSurface(
-    const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
-  SetChildFrameSurface(surface_info, sequence);
+    const viz::SurfaceInfo& surface_info) {
+  SetChildFrameSurface(surface_info);
+}
+
+void RenderFrameProxy::OnIntrinsicSizingInfoOfChildChanged(
+    blink::WebIntrinsicSizingInfo sizing_info) {
+  web_frame()->IntrinsicSizingInfoChanged(sizing_info);
 }
 
 void RenderFrameProxy::OnUpdateOpener(int opener_routing_id) {
@@ -429,10 +443,11 @@ void RenderFrameProxy::OnDidStartLoading() {
   web_frame_->DidStartLoading();
 }
 
-void RenderFrameProxy::OnViewChanged(const viz::FrameSinkId& frame_sink_id) {
+void RenderFrameProxy::OnViewChanged(
+    const FrameMsg_ViewChanged_Params& params) {
   // In mash the FrameSinkId comes from RendererWindowTreeClient.
   if (!switches::IsMusHostingViz())
-    frame_sink_id_ = frame_sink_id;
+    frame_sink_id_ = *params.frame_sink_id;
 
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.
@@ -443,8 +458,14 @@ void RenderFrameProxy::OnDidStopLoading() {
   web_frame_->DidStopLoading();
 }
 
+void RenderFrameProxy::OnForwardResourceTimingToParent(
+    const ResourceTimingInfo& info) {
+  web_frame_->ForwardResourceTimingToParent(
+      ResourceTimingInfoToWebResourceTimingInfo(info));
+}
+
 void RenderFrameProxy::OnDispatchLoad() {
-  web_frame_->DispatchLoadEventOnFrameOwner();
+  web_frame_->DispatchLoadEventForFrameOwner();
 }
 
 void RenderFrameProxy::OnCollapse(bool collapsed) {
@@ -473,6 +494,11 @@ void RenderFrameProxy::OnResetContentSecurityPolicy() {
 void RenderFrameProxy::OnEnforceInsecureRequestPolicy(
     blink::WebInsecureRequestPolicy policy) {
   web_frame_->SetReplicatedInsecureRequestPolicy(policy);
+}
+
+void RenderFrameProxy::OnEnforceInsecureNavigationsSet(
+    const std::vector<uint32_t>& set) {
+  web_frame_->SetReplicatedInsecureNavigationsSet(set);
 }
 
 void RenderFrameProxy::OnSetFrameOwnerProperties(
@@ -508,8 +534,8 @@ void RenderFrameProxy::OnSetHasReceivedUserGesture() {
 
 void RenderFrameProxy::OnScrollRectToVisible(
     const gfx::Rect& rect_to_scroll,
-    const blink::WebRemoteScrollProperties& properties) {
-  web_frame_->ScrollRectToVisible(rect_to_scroll, properties);
+    const blink::WebScrollIntoViewParams& params) {
+  web_frame_->ScrollRectToVisible(rect_to_scroll, params);
 }
 
 void RenderFrameProxy::OnResizeDueToAutoResize(uint64_t sequence_number) {
@@ -649,6 +675,11 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
   params.should_replace_current_entry = should_replace_current_entry;
   params.user_gesture = request.HasUserGesture();
   params.triggering_event_info = blink::WebTriggeringEventInfo::kUnknown;
+  params.suggested_filename =
+      request.GetSuggestedFilename().has_value()
+          ? base::Optional<std::string>(request.GetSuggestedFilename()->Utf8())
+          : base::nullopt;
+
   Send(new FrameHostMsg_OpenURL(routing_id_, params));
 }
 
@@ -704,10 +735,14 @@ void RenderFrameProxy::FrameFocused() {
   Send(new FrameHostMsg_FrameFocused(routing_id_));
 }
 
+blink::WebString RenderFrameProxy::GetDevToolsFrameToken() {
+  return devtools_frame_token_;
+}
+
 #if defined(USE_AURA)
 void RenderFrameProxy::OnMusEmbeddedFrameSurfaceChanged(
     const viz::SurfaceInfo& surface_info) {
-  SetChildFrameSurface(surface_info, viz::SurfaceSequence());
+  SetChildFrameSurface(surface_info);
 }
 
 void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(

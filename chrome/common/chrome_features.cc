@@ -28,6 +28,11 @@ const base::Feature kAllowAutoplayUnmutedInWebappManifestScope{
 const base::Feature kAppleScriptExecuteJavaScriptMenuItem{
     "AppleScriptExecuteJavaScriptMenuItem", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables the "this OS is obsolete" infobar on Mac 10.9.
+// TODO(ellyjones): Remove this after the last 10.9 release.
+const base::Feature kShow10_9ObsoleteInfobar{"Show109ObsoleteInfobar",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables the fullscreen toolbar to reveal itself if it's hidden.
 const base::Feature kFullscreenToolbarReveal{"FullscreenToolbarReveal",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
@@ -133,9 +138,6 @@ const base::Feature kTabMetricsLogging{"TabMetricsLogging",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
-// Enables Basic/Advanced tabs in ClearBrowsingData.
-const base::Feature kTabsInCbd{"TabsInCBD", base::FEATURE_ENABLED_BY_DEFAULT};
-
 // If enabled, we'll only take thumbnails of unknown URLs (i.e. URLs that are
 // not (yet) part of TopSites) if they have an interesting transition type, i.e.
 // one that qualifies for inclusion in TopSites.
@@ -147,6 +149,10 @@ const base::Feature kCaptureThumbnailDependingOnTransitionType{
 // (in addition to any other times this might happen).
 const base::Feature kCaptureThumbnailOnNavigatingAway{
     "CaptureThumbnailOnNavigatingAway", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables change picture video mode.
+const base::Feature kChangePictureVideoMode{"ChangePictureVideoMode",
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Whether to trigger app banner installability checks on page load.
 const base::Feature kCheckInstallabilityForBannerOnLoad{
@@ -177,6 +183,11 @@ const base::Feature kCopylessPaste{"CopylessPaste",
                                    base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
+#if defined(OS_CHROMEOS)
+// Enable project Crostini, Linux VMs on Chrome OS.
+const base::Feature kCrostini{"Crostini", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 #if defined(OS_WIN)
 // Enables or disables desktop ios promotion, which shows a promotion to the
 // user promoting Chrome for iOS.
@@ -196,7 +207,7 @@ const base::Feature kDoodlesOnLocalNtp{"DoodlesOnLocalNtp",
 #if defined(OS_ANDROID)
 // Enables downloads as a foreground service for all versions of Android.
 const base::Feature kDownloadsForeground{"DownloadsForeground",
-                                         base::FEATURE_ENABLED_BY_DEFAULT};
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 #if defined(OS_ANDROID)
@@ -235,7 +246,7 @@ const base::Feature kVrBrowsing {
 #if BUILDFLAG(ENABLE_VR)
 // Enables the virtual keyboard for Chrome VR.
 const base::Feature kVrBrowserKeyboard{"VrBrowserKeyboard",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Controls features related to VR browsing that are under development.
 const base::Feature kVrBrowsingExperimentalFeatures{
@@ -386,7 +397,7 @@ const base::Feature kNetworkPrediction{"NetworkPrediction",
 #if defined(OS_POSIX)
 // Enables NTLMv2, which implicitly disables NTLMv1.
 const base::Feature kNtlmV2Enabled{"NtlmV2Enabled",
-                                   base::FEATURE_DISABLED_BY_DEFAULT};
+                                   base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
 // If enabled, the list of content suggestions on the New Tab page will contain
@@ -463,10 +474,6 @@ const base::Feature kPrintPdfAsImage{"PrintPdfAsImage",
 const base::Feature kPushMessagingBackgroundMode{
     "PushMessagingBackgroundMode", base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enables support for Minimal-UI PWA display mode.
-const base::Feature kPwaMinimalUi{"PwaMinimalUi",
-                                  base::FEATURE_ENABLED_BY_DEFAULT};
-
 #if !defined(OS_ANDROID)
 const base::Feature kRemoveUsageOfDeprecatedGaiaSigninEndpoint{
     "RemoveUsageOfDeprecatedGaiaSigninEndpoint",
@@ -482,6 +489,10 @@ const base::Feature kRuntimeMemoryLeakDetector{
 
 const base::Feature kSafeSearchUrlReporting{"SafeSearchUrlReporting",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Controls whether the user is prompted when sites request attestation.
+const base::Feature kSecurityKeyAttestationPrompt{
+    "SecurityKeyAttestationPrompt", base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_MACOSX)
 // Whether to show all dialogs with toolkit-views on Mac, rather than Cocoa. A
@@ -542,8 +553,8 @@ const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",
 #if defined(OS_CHROMEOS)
 // Enables or disables user activity event logging for power management on
 // Chrome OS.
-const base::Feature kUserActivityEventLogging{
-    "UserActivityEventLogging", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kUserActivityEventLogging{"UserActivityEventLogging",
+                                              base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
 #if !defined(OS_ANDROID)
@@ -575,7 +586,7 @@ const base::Feature kEHVInputOnImeMenu{"EmojiHandwritingVoiceInput",
 
 // Enables or disables the bulk printer policies on Chrome OS.
 const base::Feature kBulkPrinters{"BulkPrinters",
-                                  base::FEATURE_DISABLED_BY_DEFAULT};
+                                  base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables or disables flash component updates on Chrome OS.
 const base::Feature kCrosCompUpdates{"CrosCompUpdates",

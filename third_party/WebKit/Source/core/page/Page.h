@@ -58,7 +58,6 @@ class Document;
 class DOMRectList;
 class DragCaret;
 class DragController;
-class EditorClient;
 class EventHandlerRegistry;
 class FocusController;
 class Frame;
@@ -101,7 +100,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
     ~PageClients();
 
     Member<ChromeClient> chrome_client;
-    EditorClient* editor_client;
     DISALLOW_COPY_AND_ASSIGN(PageClients);
   };
 
@@ -110,7 +108,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   }
 
   // An "ordinary" page is a fully-featured page owned by a web view.
-  static Page* CreateOrdinary(PageClients&);
+  static Page* CreateOrdinary(PageClients&, Page* opener);
 
   ~Page() override;
 
@@ -125,6 +123,11 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   // This set does not include Pages created for other, internal purposes
   // (SVGImages, inspector overlays, page popups etc.)
   static PageSet& OrdinaryPages();
+
+  // Returns pages related to the current browsing context (excluding the
+  // current page).  See also
+  // https://html.spec.whatwg.org/multipage/browsers.html#unit-of-related-browsing-contexts
+  HeapVector<Member<Page>> RelatedPages();
 
   static void PlatformColorsChanged();
 
@@ -142,8 +145,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   // Resets the plugin data for all pages in the renderer process and notifies
   // PluginsChangedObservers.
   static void ResetPluginData();
-
-  EditorClient& GetEditorClient() const { return *editor_client_; }
 
   void SetMainFrame(Frame*);
   Frame* MainFrame() const { return main_frame_; }
@@ -354,7 +355,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   Member<PluginData> plugin_data_;
 
-  EditorClient* const editor_client_;
   Member<ValidationMessageClient> validation_message_client_;
 
   UseCounter use_counter_;
@@ -388,6 +388,11 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   int subframe_count_;
 
   HeapHashSet<WeakMember<PluginsChangedObserver>> plugins_changed_observers_;
+
+  // A circular, double-linked list of pages that are related to the current
+  // browsing context.  See also RelatedPages method.
+  Member<Page> next_related_page_;
+  Member<Page> prev_related_page_;
 
   DISALLOW_COPY_AND_ASSIGN(Page);
 };

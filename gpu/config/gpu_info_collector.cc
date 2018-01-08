@@ -24,6 +24,7 @@
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_surface.h"
+#include "ui/gl/gl_switches.h"
 #include "ui/gl/gl_version_info.h"
 #include "ui/gl/init/gl_factory.h"
 
@@ -111,6 +112,34 @@ int StringContainsName(
 
 namespace gpu {
 
+CollectInfoResult CollectBasicGraphicsInfo(
+    const base::CommandLine* command_line,
+    GPUInfo* gpu_info) {
+  const char* software_gl_impl_name =
+      gl::GetGLImplementationName(gl::GetSoftwareGLImplementation());
+  if ((command_line->GetSwitchValueASCII(switches::kUseGL) ==
+       software_gl_impl_name) ||
+      command_line->HasSwitch(switches::kOverrideUseSoftwareGLForTests)) {
+    // If using the software GL implementation, use fake vendor and
+    // device ids to make sure it never gets blacklisted. It allows us
+    // to proceed with loading the blacklist which may have non-device
+    // specific entries we want to apply anyways (e.g., OS version
+    // blacklisting).
+    gpu_info->gpu.vendor_id = 0xffff;
+    gpu_info->gpu.device_id = 0xffff;
+
+    // Also declare the driver_vendor to be <software GL> to be able to
+    // specify exceptions based on driver_vendor==<software GL> for some
+    // blacklist rules.
+    gpu_info->driver_vendor = software_gl_impl_name;
+
+    gpu_info->basic_info_state = gpu::kCollectInfoSuccess;
+    return kCollectInfoSuccess;
+  }
+
+  return CollectBasicGraphicsInfo(gpu_info);
+}
+
 CollectInfoResult CollectGraphicsInfoGL(GPUInfo* gpu_info) {
   TRACE_EVENT0("startup", "gpu_info_collector::CollectGraphicsInfoGL");
   DCHECK_NE(gl::GetGLImplementation(), gl::kGLImplementationNone);
@@ -131,20 +160,6 @@ CollectInfoResult CollectGraphicsInfoGL(GPUInfo* gpu_info) {
   gpu_info->gl_vendor = GetGLString(GL_VENDOR);
   gpu_info->gl_version = GetGLString(GL_VERSION);
   std::string glsl_version_string = GetGLString(GL_SHADING_LANGUAGE_VERSION);
-
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kGpuTestingGLVendor)) {
-    gpu_info->gl_vendor =
-        command_line->GetSwitchValueASCII(switches::kGpuTestingGLVendor);
-  }
-  if (command_line->HasSwitch(switches::kGpuTestingGLRenderer)) {
-    gpu_info->gl_renderer =
-        command_line->GetSwitchValueASCII(switches::kGpuTestingGLRenderer);
-  }
-  if (command_line->HasSwitch(switches::kGpuTestingGLVersion)) {
-    gpu_info->gl_version =
-        command_line->GetSwitchValueASCII(switches::kGpuTestingGLVersion);
-  }
 
   gpu_info->gl_extensions = gl::GetGLExtensionsFromCurrentContext();
   gl::ExtensionSet extension_set =
@@ -210,56 +225,6 @@ CollectInfoResult CollectGraphicsInfoGL(GPUInfo* gpu_info) {
   return CollectDriverInfoGL(gpu_info);
 }
 
-void MergeGPUInfoGL(GPUInfo* basic_gpu_info,
-                    const GPUInfo& context_gpu_info) {
-  DCHECK(basic_gpu_info);
-  // Copy over GPUs because which one is active could change.
-  basic_gpu_info->gpu = context_gpu_info.gpu;
-  basic_gpu_info->secondary_gpus = context_gpu_info.secondary_gpus;
-
-  basic_gpu_info->gl_renderer = context_gpu_info.gl_renderer;
-  basic_gpu_info->gl_vendor = context_gpu_info.gl_vendor;
-  basic_gpu_info->gl_version = context_gpu_info.gl_version;
-  basic_gpu_info->gl_extensions = context_gpu_info.gl_extensions;
-  basic_gpu_info->pixel_shader_version =
-      context_gpu_info.pixel_shader_version;
-  basic_gpu_info->vertex_shader_version =
-      context_gpu_info.vertex_shader_version;
-  basic_gpu_info->max_msaa_samples =
-      context_gpu_info.max_msaa_samples;
-  basic_gpu_info->gl_ws_vendor = context_gpu_info.gl_ws_vendor;
-  basic_gpu_info->gl_ws_version = context_gpu_info.gl_ws_version;
-  basic_gpu_info->gl_ws_extensions = context_gpu_info.gl_ws_extensions;
-  basic_gpu_info->gl_reset_notification_strategy =
-      context_gpu_info.gl_reset_notification_strategy;
-
-  if (!context_gpu_info.driver_vendor.empty())
-    basic_gpu_info->driver_vendor = context_gpu_info.driver_vendor;
-  if (!context_gpu_info.driver_version.empty())
-    basic_gpu_info->driver_version = context_gpu_info.driver_version;
-
-  basic_gpu_info->sandboxed = context_gpu_info.sandboxed;
-  basic_gpu_info->direct_rendering = context_gpu_info.direct_rendering;
-  basic_gpu_info->in_process_gpu = context_gpu_info.in_process_gpu;
-  basic_gpu_info->passthrough_cmd_decoder =
-      context_gpu_info.passthrough_cmd_decoder;
-  basic_gpu_info->direct_composition = context_gpu_info.direct_composition;
-  basic_gpu_info->supports_overlays = context_gpu_info.supports_overlays;
-  basic_gpu_info->context_info_state = context_gpu_info.context_info_state;
-  basic_gpu_info->initialization_time = context_gpu_info.initialization_time;
-  basic_gpu_info->video_decode_accelerator_capabilities =
-      context_gpu_info.video_decode_accelerator_capabilities;
-  basic_gpu_info->video_encode_accelerator_supported_profiles =
-      context_gpu_info.video_encode_accelerator_supported_profiles;
-  basic_gpu_info->jpeg_decode_accelerator_supported =
-      context_gpu_info.jpeg_decode_accelerator_supported;
-
-#if defined(USE_X11)
-  basic_gpu_info->system_visual = context_gpu_info.system_visual;
-  basic_gpu_info->rgba_visual = context_gpu_info.rgba_visual;
-#endif
-}
-
 void IdentifyActiveGPU(GPUInfo* gpu_info) {
   const std::string kNVidiaName = "nvidia";
   const std::string kNouveauName = "nouveau";
@@ -277,8 +242,11 @@ void IdentifyActiveGPU(GPUInfo* gpu_info) {
                                  kATIID};
 
   DCHECK(gpu_info);
-  if (gpu_info->secondary_gpus.size() == 0)
+  if (gpu_info->secondary_gpus.size() == 0) {
+    // If there is only a single GPU, that GPU is active.
+    gpu_info->gpu.active = true;
     return;
+  }
 
   uint32_t active_vendor_id = 0;
   if (!gpu_info->gl_vendor.empty()) {

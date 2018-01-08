@@ -46,7 +46,7 @@ class HttpUserAgentSettings;
 class NetLog;
 class NetworkDelegate;
 class NetworkQualityEstimator;
-class ProxyService;
+class ProxyResolutionService;
 class URLRequest;
 class URLRequestJobFactory;
 class URLRequestThrottlerManager;
@@ -132,9 +132,12 @@ class NET_EXPORT URLRequestContext
   }
 
   // Get the proxy service for this context.
-  ProxyService* proxy_service() const { return proxy_service_; }
-  void set_proxy_service(ProxyService* proxy_service) {
-    proxy_service_ = proxy_service;
+  ProxyResolutionService* proxy_resolution_service() const {
+    return proxy_resolution_service_;
+  }
+  void set_proxy_resolution_service(
+      ProxyResolutionService* proxy_resolution_service) {
+    proxy_resolution_service_ = proxy_resolution_service;
   }
 
   // Get the ssl config service for this context.
@@ -215,13 +218,9 @@ class NET_EXPORT URLRequestContext
 
   // Gets the URLRequest objects that hold a reference to this
   // URLRequestContext.
-  const std::set<const URLRequest*>& url_requests() const {
-    return url_requests_;
+  std::set<const URLRequest*>* url_requests() const {
+    return url_requests_.get();
   }
-
-  void InsertURLRequest(const URLRequest* request) const;
-
-  void RemoveURLRequest(const URLRequest* request) const;
 
   // CHECKs that no URLRequests using this context remain. Subclasses should
   // additionally call AssertNoURLRequests() within their own destructor,
@@ -305,7 +304,7 @@ class NET_EXPORT URLRequestContext
   CertVerifier* cert_verifier_;
   ChannelIDService* channel_id_service_;
   HttpAuthHandlerFactory* http_auth_handler_factory_;
-  ProxyService* proxy_service_;
+  ProxyResolutionService* proxy_resolution_service_;
   scoped_refptr<SSLConfigService> ssl_config_service_;
   NetworkDelegate* network_delegate_;
   HttpServerProperties* http_server_properties_;
@@ -328,7 +327,7 @@ class NET_EXPORT URLRequestContext
   // be added to CopyFrom.
   // ---------------------------------------------------------------------------
 
-  mutable std::set<const URLRequest*> url_requests_;
+  std::unique_ptr<std::set<const URLRequest*>> url_requests_;
 
   // Enables Brotli Content-Encoding support.
   bool enable_brotli_;
@@ -340,10 +339,6 @@ class NET_EXPORT URLRequestContext
   // Used in MemoryDumpProvier to annotate memory usage. The name does not need
   // to be unique.
   std::string name_;
-
-  // The largest number of outstanding URLRequests that have been created by
-  // |this| and are not yet destroyed. This doesn't need to be in CopyFrom.
-  mutable size_t largest_outstanding_requests_count_seen_;
 
   THREAD_CHECKER(thread_checker_);
 

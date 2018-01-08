@@ -8,7 +8,6 @@
 
 #include "base/command_line.h"
 #include "base/memory/singleton.h"
-#include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs_factory.h"
 #include "chromeos/chromeos_switches.h"
@@ -210,23 +209,20 @@ void ArcAccessibilityHelperBridge::Shutdown() {
 }
 
 void ArcAccessibilityHelperBridge::OnConnectionReady() {
-  arc::mojom::AccessibilityFilterType filter_type =
-      GetFilterTypeForProfile(profile_);
-  auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->accessibility_helper(), SetFilter);
-  instance->SetFilter(filter_type);
+  UpdateFilterType();
+
+  chromeos::AccessibilityManager* accessibility_manager =
+      chromeos::AccessibilityManager::Get();
+  if (accessibility_manager) {
+    accessibility_status_subscription_ =
+        accessibility_manager->RegisterCallback(base::BindRepeating(
+            &ArcAccessibilityHelperBridge::OnAccessibilityStatusChanged,
+            base::Unretained(this)));
+  }
 
   auto* surface_manager = ArcNotificationSurfaceManager::Get();
   if (surface_manager)
     surface_manager->AddObserver(this);
-
-  if (filter_type == arc::mojom::AccessibilityFilterType::ALL ||
-      filter_type ==
-          arc::mojom::AccessibilityFilterType::WHITELISTED_PACKAGE_NAME) {
-    // TODO(yawano): Handle the case where filter_type has changed between
-    // OFF/FOCUS and ALL/WHITELISTED_PACKAGE_NAME after this initialization.
-    exo::WMHelper::GetInstance()->AddActivationObserver(this);
-  }
 }
 
 void ArcAccessibilityHelperBridge::OnAccessibilityEventDeprecated(
@@ -290,12 +286,12 @@ void ArcAccessibilityHelperBridge::OnAccessibilityEvent(
       if (surface && tree_source->GetTreeData(&tree_data)) {
         surface->SetAXTreeId(tree_data.tree_id);
 
-        // Dispatch AX_EVENT_CHILDREN_CHANGED to force AXNodeData of the
-        // notification updated. Before AXTreeId is set, its AXNodeData is
+        // Dispatch ax::mojom::Event::kChildrenChanged to force AXNodeData of
+        // the notification updated. Before AXTreeId is set, its AXNodeData is
         // populated as a button.
         if (surface->IsAttached()) {
           surface->GetAttachedHost()->NotifyAccessibilityEvent(
-              ui::AX_EVENT_CHILDREN_CHANGED, false);
+              ax::mojom::Event::kChildrenChanged, false);
         }
       }
     }
@@ -373,41 +369,41 @@ void ArcAccessibilityHelperBridge::OnAction(
   action_data->window_id = tree_source->window_id();
 
   switch (data.action) {
-    case ui::AX_ACTION_DO_DEFAULT:
+    case ax::mojom::Action::kDoDefault:
       action_data->action_type = arc::mojom::AccessibilityActionType::CLICK;
       break;
-    case ui::AX_ACTION_FOCUS:
+    case ax::mojom::Action::kFocus:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::ACCESSIBILITY_FOCUS;
       break;
-    case ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE:
+    case ax::mojom::Action::kScrollToMakeVisible:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SHOW_ON_SCREEN;
       break;
-    case ui::AX_ACTION_SCROLL_BACKWARD:
+    case ax::mojom::Action::kScrollBackward:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_BACKWARD;
       break;
-    case ui::AX_ACTION_SCROLL_FORWARD:
+    case ax::mojom::Action::kScrollForward:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_FORWARD;
       break;
-    case ui::AX_ACTION_SCROLL_UP:
+    case ax::mojom::Action::kScrollUp:
       action_data->action_type = arc::mojom::AccessibilityActionType::SCROLL_UP;
       break;
-    case ui::AX_ACTION_SCROLL_DOWN:
+    case ax::mojom::Action::kScrollDown:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_DOWN;
       break;
-    case ui::AX_ACTION_SCROLL_LEFT:
+    case ax::mojom::Action::kScrollLeft:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_LEFT;
       break;
-    case ui::AX_ACTION_SCROLL_RIGHT:
+    case ax::mojom::Action::kScrollRight:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_RIGHT;
       break;
-    case ui::AX_ACTION_CUSTOM_ACTION:
+    case ax::mojom::Action::kCustomAction:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::CUSTOM_ACTION;
       action_data->custom_action_id = data.custom_action_id;
@@ -434,6 +430,66 @@ void ArcAccessibilityHelperBridge::OnActionResult(const ui::AXActionData& data,
   tree_source->NotifyActionResult(data, result);
 }
 
+void ArcAccessibilityHelperBridge::OnAccessibilityStatusChanged(
+    const chromeos::AccessibilityStatusEventDetails& event_details) {
+  // TODO(yawano): Add case for select to speak and switch access.
+  if (event_details.notification_type !=
+          chromeos::ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK &&
+      event_details.notification_type !=
+          chromeos::ACCESSIBILITY_TOGGLE_FOCUS_HIGHLIGHT) {
+    return;
+  }
+
+  UpdateFilterType();
+  UpdateTouchExplorationPassThrough(GetActiveWindow());
+}
+
+void ArcAccessibilityHelperBridge::UpdateFilterType() {
+  arc::mojom::AccessibilityFilterType filter_type =
+      GetFilterTypeForProfile(profile_);
+
+  auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service_->accessibility_helper(), SetFilter);
+  if (instance)
+    instance->SetFilter(filter_type);
+
+  bool add_activation_observer =
+      filter_type == arc::mojom::AccessibilityFilterType::ALL ||
+      filter_type ==
+          arc::mojom::AccessibilityFilterType::WHITELISTED_PACKAGE_NAME;
+  if (add_activation_observer == activation_observer_added_)
+    return;
+
+  exo::WMHelper* wm_helper = exo::WMHelper::GetInstance();
+  if (!wm_helper)
+    return;
+
+  if (add_activation_observer)
+    wm_helper->AddActivationObserver(this);
+  else
+    wm_helper->RemoveActivationObserver(this);
+}
+
+void ArcAccessibilityHelperBridge::UpdateTouchExplorationPassThrough(
+    aura::Window* window) {
+  if (!window)
+    return;
+
+  if (!GetArcSurface(window))
+    return;
+
+  // First, do a lookup for the task id associated with this app. There should
+  // always be a valid entry.
+  int32_t task_id = GetTaskId(window);
+
+  // Do a lookup for the tree source. A tree source may not exist because the
+  // app isn't whitelisted Android side or no data has been received for the
+  // app.
+  auto it = task_id_to_tree_.find(task_id);
+  window->SetProperty(aura::client::kAccessibilityTouchExplorationPassThrough,
+                      it == task_id_to_tree_.end());
+}
+
 aura::Window* ArcAccessibilityHelperBridge::GetActiveWindow() {
   exo::WMHelper* wm_helper = exo::WMHelper::GetInstance();
   if (!wm_helper)
@@ -449,24 +505,7 @@ void ArcAccessibilityHelperBridge::OnWindowActivated(
   if (gained_active == lost_active)
     return;
 
-  if (!GetArcSurface(gained_active))
-    return;
-
-  // First, do a lookup for the task id associated with this app. There should
-  // always be a valid entry.
-  int32_t task_id = GetTaskId(gained_active);
-
-  // Do a lookup for the tree source. A tree source may not exist because the
-  // app isn't whitelisted Android side or no data has been received for the
-  // app.
-  auto it = task_id_to_tree_.find(task_id);
-  if (it != task_id_to_tree_.end()) {
-    gained_active->SetProperty(
-        aura::client::kAccessibilityTouchExplorationPassThrough, false);
-  } else {
-    gained_active->SetProperty(
-        aura::client::kAccessibilityTouchExplorationPassThrough, true);
-  }
+  UpdateTouchExplorationPassThrough(gained_active);
 }
 
 void ArcAccessibilityHelperBridge::OnTaskDestroyed(int32_t task_id) {
@@ -488,15 +527,15 @@ void ArcAccessibilityHelperBridge::OnNotificationSurfaceAdded(
 
   surface->SetAXTreeId(tree_data.tree_id);
 
-  // Dispatch AX_EVENT_CHILDREN_CHANGED to force AXNodeData of the notification
-  // updated. As order of OnNotificationSurfaceAdded call is not guaranteed, we
-  // are dispatching the event in both ArcAccessibilityHelperBridge and
-  // ArcNotificationContentView. The event needs to be dispatched after 1. ax
-  // tree id is set to the surface, 2 the surface is attached to the content
-  // view.
+  // Dispatch ax::mojom::Event::kChildrenChanged to force AXNodeData of the
+  // notification updated. As order of OnNotificationSurfaceAdded call is not
+  // guaranteed, we are dispatching the event in both
+  // ArcAccessibilityHelperBridge and ArcNotificationContentView. The event
+  // needs to be dispatched after 1. ax tree id is set to the surface, 2 the
+  // surface is attached to the content view.
   if (surface->IsAttached()) {
     surface->GetAttachedHost()->NotifyAccessibilityEvent(
-        ui::AX_EVENT_CHILDREN_CHANGED, false);
+        ax::mojom::Event::kChildrenChanged, false);
   }
 }
 

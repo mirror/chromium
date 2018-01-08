@@ -12,7 +12,7 @@
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
-#include "net/proxy/proxy_config.h"
+#include "net/proxy_resolution/proxy_config.h"
 
 namespace net {
 class NetLog;
@@ -56,8 +56,11 @@ class DataReductionProxyConfigurator {
   const net::ProxyConfig& GetProxyConfig() const;
 
   // Constructs a proxy configuration suitable for enabling the Data Reduction
-  // proxy.
+  // proxy. |probe_url_config| should be true if the proxy config is needed for
+  // fetching the probe URL. If |probe_url_config| is true, then proxies that
+  // are temporarily disabled may be included in the generated proxy config.
   net::ProxyConfig CreateProxyConfig(
+      bool probe_url_config,
       const NetworkPropertiesManager& network_properties_manager,
       const std::vector<DataReductionProxyServer>& proxies_for_http) const;
 

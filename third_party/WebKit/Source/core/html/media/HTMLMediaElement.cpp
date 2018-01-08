@@ -46,7 +46,6 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLSourceElement.h"
-#include "core/html/HTMLTrackElement.h"
 #include "core/html/TimeRanges.h"
 #include "core/html/media/AutoplayPolicy.h"
 #include "core/html/media/HTMLMediaElementControlsList.h"
@@ -58,6 +57,7 @@
 #include "core/html/track/AudioTrackList.h"
 #include "core/html/track/AutomaticTrackSelection.h"
 #include "core/html/track/CueTimeline.h"
+#include "core/html/track/HTMLTrackElement.h"
 #include "core/html/track/InbandTextTrack.h"
 #include "core/html/track/TextTrackContainer.h"
 #include "core/html/track/TextTrackList.h"
@@ -67,7 +67,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/IntersectionGeometry.h"
 #include "core/layout/LayoutMedia.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
@@ -713,7 +713,7 @@ void HTMLMediaElement::AttachLayoutTree(AttachContext& context) {
     GetLayoutObject()->UpdateFromElement();
 }
 
-void HTMLMediaElement::DidRecalcStyle() {
+void HTMLMediaElement::DidRecalcStyle(StyleRecalcChange) {
   if (GetLayoutObject())
     GetLayoutObject()->UpdateFromElement();
 }
@@ -2574,6 +2574,11 @@ double HTMLMediaElement::EffectiveMediaVolume() const {
   return volume_;
 }
 
+void HTMLMediaElement::pictureInPicture() {
+  if (GetWebMediaPlayer())
+    GetWebMediaPlayer()->PictureInPicture();
+}
+
 // The spec says to fire periodic timeupdate events (those sent while playing)
 // every "15 to 250ms", we choose the slowest frequency
 static const TimeDelta kMaxTimeupdateEventFrequency =
@@ -3559,7 +3564,7 @@ void HTMLMediaElement::DidEnterFullscreen() {
   // Cache this in case the player is destroyed before leaving fullscreen.
   in_overlay_fullscreen_video_ = UsesOverlayFullscreenVideo();
   if (in_overlay_fullscreen_video_) {
-    GetDocument().GetLayoutViewItem().Compositor()->SetNeedsCompositingUpdate(
+    GetDocument().GetLayoutView()->Compositor()->SetNeedsCompositingUpdate(
         kCompositingUpdateRebuildTree);
   }
 }
@@ -3573,7 +3578,7 @@ void HTMLMediaElement::DidExitFullscreen() {
   }
 
   if (in_overlay_fullscreen_video_) {
-    GetDocument().GetLayoutViewItem().Compositor()->SetNeedsCompositingUpdate(
+    GetDocument().GetLayoutView()->Compositor()->SetNeedsCompositingUpdate(
         kCompositingUpdateRebuildTree);
   }
   in_overlay_fullscreen_video_ = false;
@@ -3602,11 +3607,11 @@ bool HTMLMediaElement::TextTracksVisible() const {
 // static
 void HTMLMediaElement::AssertShadowRootChildren(ShadowRoot& shadow_root) {
 #if DCHECK_IS_ON()
-  // There can be up to three children: media remoting interstitial, text track
-  // container, and media controls. The media controls has to be the last child
-  // if presend, and has to be the next sibling of the text track container if
-  // both present. When present, media remoting interstitial has to be the first
-  // child.
+  // There can be up to three children: an interstitial (media remoting or
+  // picture in picture), text track container, and media controls. The media
+  // controls has to be the last child if present, and has to be the next
+  // sibling of the text track container if both present. When present, media
+  // remoting interstitial has to be the first child.
   unsigned number_of_children = shadow_root.CountChildren();
   DCHECK_LE(number_of_children, 3u);
   Node* first_child = shadow_root.firstChild();
@@ -3614,16 +3619,19 @@ void HTMLMediaElement::AssertShadowRootChildren(ShadowRoot& shadow_root) {
   if (number_of_children == 1) {
     DCHECK(first_child->IsTextTrackContainer() ||
            first_child->IsMediaControls() ||
-           first_child->IsMediaRemotingInterstitial());
+           first_child->IsMediaRemotingInterstitial() ||
+           first_child->IsPictureInPictureInterstitial());
   } else if (number_of_children == 2) {
     DCHECK(first_child->IsTextTrackContainer() ||
-           first_child->IsMediaRemotingInterstitial());
+           first_child->IsMediaRemotingInterstitial() ||
+           first_child->IsPictureInPictureInterstitial());
     DCHECK(last_child->IsTextTrackContainer() || last_child->IsMediaControls());
     if (first_child->IsTextTrackContainer())
       DCHECK(last_child->IsMediaControls());
   } else if (number_of_children == 3) {
     Node* second_child = first_child->nextSibling();
-    DCHECK(first_child->IsMediaRemotingInterstitial());
+    DCHECK(first_child->IsMediaRemotingInterstitial() ||
+           first_child->IsPictureInPictureInterstitial());
     DCHECK(second_child->IsTextTrackContainer());
     DCHECK(last_child->IsMediaControls());
   }
@@ -3925,6 +3933,7 @@ void HTMLMediaElement::TraceWrappers(
   visitor->TraceWrappers(audio_tracks_);
   visitor->TraceWrappers(text_tracks_);
   HTMLElement::TraceWrappers(visitor);
+  Supplementable<HTMLMediaElement>::TraceWrappers(visitor);
 }
 
 void HTMLMediaElement::CreatePlaceholderTracksIfNecessary() {
@@ -3992,13 +4001,10 @@ void HTMLMediaElement::ScheduleResolvePlayPromises() {
   if (play_promise_resolve_task_handle_.IsActive())
     return;
 
-  play_promise_resolve_task_handle_ =
-      GetDocument()
-          .GetTaskRunner(TaskType::kMediaElementEvent)
-          ->PostCancellableTask(
-              FROM_HERE,
-              WTF::Bind(&HTMLMediaElement::ResolveScheduledPlayPromises,
-                        WrapWeakPersistent(this)));
+  play_promise_resolve_task_handle_ = PostCancellableTask(
+      *GetDocument().GetTaskRunner(TaskType::kMediaElementEvent), FROM_HERE,
+      WTF::Bind(&HTMLMediaElement::ResolveScheduledPlayPromises,
+                WrapWeakPersistent(this)));
 }
 
 void HTMLMediaElement::ScheduleRejectPlayPromises(ExceptionCode code) {
@@ -4022,13 +4028,10 @@ void HTMLMediaElement::ScheduleRejectPlayPromises(ExceptionCode code) {
   // TODO(nhiroki): Bind this error code to a cancellable task instead of a
   // member field.
   play_promise_error_code_ = code;
-  play_promise_reject_task_handle_ =
-      GetDocument()
-          .GetTaskRunner(TaskType::kMediaElementEvent)
-          ->PostCancellableTask(
-              FROM_HERE,
-              WTF::Bind(&HTMLMediaElement::RejectScheduledPlayPromises,
-                        WrapWeakPersistent(this)));
+  play_promise_reject_task_handle_ = PostCancellableTask(
+      *GetDocument().GetTaskRunner(TaskType::kMediaElementEvent), FROM_HERE,
+      WTF::Bind(&HTMLMediaElement::RejectScheduledPlayPromises,
+                WrapWeakPersistent(this)));
 }
 
 void HTMLMediaElement::ScheduleNotifyPlaying() {

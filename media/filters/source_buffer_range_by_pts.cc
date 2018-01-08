@@ -5,11 +5,11 @@
 #include "media/filters/source_buffer_range_by_pts.h"
 
 #include <algorithm>
+#include <memory>
 #include <sstream>
 #include <string>
 
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "media/base/timestamp_constants.h"
 
 namespace media {
@@ -49,7 +49,8 @@ void SourceBufferRangeByPts::AppendRangeToEnd(
   if (transfer_current_position && range.next_buffer_index_ >= 0)
     next_buffer_index_ = range.next_buffer_index_ + buffers_.size();
 
-  AppendBuffersToEnd(range.buffers_, kNoTimestamp);
+  AppendBuffersToEnd(range.buffers_,
+                     NextRangeStartTimeForAppendRangeToEnd(range));
 }
 
 bool SourceBufferRangeByPts::CanAppendRangeToEnd(
@@ -57,7 +58,8 @@ bool SourceBufferRangeByPts::CanAppendRangeToEnd(
   DVLOG(1) << __func__;
   DVLOG(4) << ToStringForDebugging();
 
-  return CanAppendBuffersToEnd(range.buffers_, kNoTimestamp);
+  return CanAppendBuffersToEnd(range.buffers_,
+                               NextRangeStartTimeForAppendRangeToEnd(range));
 }
 
 bool SourceBufferRangeByPts::CanAppendBuffersToEnd(
@@ -211,14 +213,9 @@ std::unique_ptr<SourceBufferRangeByPts> SourceBufferRangeByPts::SplitRange(
   BufferQueue::iterator starting_point = buffers_.begin() + keyframe_index;
   BufferQueue removed_buffers(starting_point, buffers_.end());
 
-  base::TimeDelta new_range_start_pts = kNoTimestamp;
-  if (GetStartTimestamp() < buffers_.front()->timestamp() &&
-      timestamp < removed_buffers.front()->timestamp()) {
-    // The split is in the gap between |range_start_pts_| and the first
-    // buffer of the new range so we should set the start time of the new range
-    // to |timestamp| so we preserve part of the gap in the new range.
-    new_range_start_pts = timestamp;
-  }
+  base::TimeDelta new_range_start_pts =
+      std::max(timestamp, GetStartTimestamp());
+  DCHECK(new_range_start_pts <= removed_buffers.front()->timestamp());
 
   keyframe_map_.erase(new_beginning_keyframe, keyframe_map_.end());
   FreeBufferRange(starting_point, buffers_.end());
@@ -226,7 +223,7 @@ std::unique_ptr<SourceBufferRangeByPts> SourceBufferRangeByPts::SplitRange(
 
   // Create a new range with |removed_buffers|.
   std::unique_ptr<SourceBufferRangeByPts> split_range =
-      base::MakeUnique<SourceBufferRangeByPts>(gap_policy_, removed_buffers,
+      std::make_unique<SourceBufferRangeByPts>(gap_policy_, removed_buffers,
                                                new_range_start_pts,
                                                interbuffer_distance_cb_);
 
@@ -486,8 +483,16 @@ base::TimeDelta SourceBufferRangeByPts::GetBufferedEndTimestamp() const {
 
   DCHECK(!buffers_.empty());
   base::TimeDelta duration = highest_frame_->duration();
-  if (duration == kNoTimestamp || duration.is_zero())
-    duration = GetApproximateDuration();
+
+  // FrameProcessor should protect against unknown buffer durations.
+  DCHECK_NE(duration, kNoTimestamp);
+
+  // Because media::Ranges<base::TimeDelta>::Add() ignores 0 duration ranges,
+  // report 1 microsecond for the last buffer's duration if it is a 0 duration
+  // buffer.
+  if (duration.is_zero())
+    duration = base::TimeDelta::FromMicroseconds(1);
+
   return GetEndTimestamp() + duration;
 }
 
@@ -499,6 +504,54 @@ bool SourceBufferRangeByPts::BelongsToRange(base::TimeDelta timestamp) const {
 
   return (IsNextInPresentationSequence(timestamp) ||
           (GetStartTimestamp() <= timestamp && timestamp <= GetEndTimestamp()));
+}
+
+base::TimeDelta SourceBufferRangeByPts::FindHighestBufferedTimestampAtOrBefore(
+    base::TimeDelta timestamp) const {
+  DVLOG(1) << __func__;
+  DVLOG(4) << ToStringForDebugging();
+
+  DCHECK(!buffers_.empty());
+  DCHECK(BelongsToRange(timestamp));
+
+  if (keyframe_map_.begin()->first > timestamp) {
+    // If the first keyframe in the range starts after |timestamp|, then
+    // return the range start time (which could be earlier due to coded frame
+    // group signalling.)
+    base::TimeDelta range_start = GetStartTimestamp();
+    DCHECK(timestamp >= range_start) << "BelongsToRange() semantics failed.";
+    return range_start;
+  }
+
+  if (keyframe_map_.begin()->first == timestamp) {
+    return timestamp;
+  }
+
+  KeyframeMap::const_iterator key_iter = GetFirstKeyframeAtOrBefore(timestamp);
+  DCHECK(key_iter != keyframe_map_.end())
+      << "BelongsToRange() semantics failed.";
+  DCHECK(key_iter->first <= timestamp);
+
+  // Scan forward in |buffers_| to find the highest frame with timestamp <=
+  // |timestamp|. Stop once a frame with timestamp > |timestamp| is encountered.
+  size_t key_index = key_iter->second - keyframe_map_index_base_;
+  SourceBufferRange::BufferQueue::const_iterator search_iter =
+      buffers_.begin() + key_index;
+  CHECK(search_iter != buffers_.end());
+  base::TimeDelta cur_frame_time = (*search_iter)->timestamp();
+  base::TimeDelta result = cur_frame_time;
+  while (true) {
+    result = std::max(result, cur_frame_time);
+    search_iter++;
+    if (search_iter == buffers_.end())
+      return result;
+    cur_frame_time = (*search_iter)->timestamp();
+    if (cur_frame_time > timestamp)
+      return result;
+  }
+
+  NOTREACHED();
+  return base::TimeDelta();
 }
 
 base::TimeDelta SourceBufferRangeByPts::NextKeyframeTimestamp(
@@ -570,6 +623,26 @@ bool SourceBufferRangeByPts::GetBuffersInRange(base::TimeDelta start,
     buffers->push_back(buffer);
   }
   return previous_size < buffers->size();
+}
+
+base::TimeDelta SourceBufferRangeByPts::NextRangeStartTimeForAppendRangeToEnd(
+    const SourceBufferRangeByPts& range) const {
+  DCHECK(!buffers_.empty());
+  DCHECK(!range.buffers_.empty());
+
+  base::TimeDelta next_range_first_buffer_time =
+      range.buffers_.front()->timestamp();
+  base::TimeDelta this_range_end_time = GetEndTimestamp();
+  if (next_range_first_buffer_time < this_range_end_time)
+    return kNoTimestamp;
+
+  base::TimeDelta next_range_start_time = range.GetStartTimestamp();
+  DCHECK(next_range_start_time <= next_range_first_buffer_time);
+
+  if (next_range_start_time >= this_range_end_time)
+    return next_range_start_time;
+
+  return this_range_end_time;
 }
 
 size_t SourceBufferRangeByPts::GetBufferIndexAt(

@@ -31,7 +31,6 @@
 #include "ui/views/widget/widget_removals_observer.h"
 #include "ui/wm/public/scoped_drag_drop_disabler.h"
 
-class AccountId;
 class ScopedKeepAlive;
 
 namespace ash {
@@ -40,7 +39,6 @@ class FocusRingController;
 
 namespace chromeos {
 
-class ArcKioskController;
 class LoginDisplayWebUI;
 class WebUILoginView;
 
@@ -74,7 +72,7 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
   void OnStartSignInScreen(const LoginScreenContext& context) override;
   void OnPreferencesChanged() override;
   void OnStartAppLaunch() override;
-  void StartArcKiosk(const AccountId& account_id) override;
+  void OnStartArcKiosk() override;
   bool IsVoiceInteractionOobe() override;
   void StartVoiceInteractionOobe() override;
 
@@ -178,7 +176,7 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
   // Tries to play startup sound. If sound can't be played right now,
   // for instance, because cras server is not initialized, playback
   // will be delayed.
-  void TryToPlayStartupSound();
+  void TryToPlayOobeStartupSound();
 
   // Called when login-prompt-visible signal is caught.
   void OnLoginPromptVisible();
@@ -195,9 +193,6 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
   std::unique_ptr<WizardController> wizard_controller_;
 
   std::unique_ptr<SignInScreenController> signin_screen_controller_;
-
-  // ARC kiosk controller.
-  std::unique_ptr<ArcKioskController> arc_kiosk_controller_;
 
   // Make sure chrome won't exit while we are at login/oobe screen.
   std::unique_ptr<ScopedKeepAlive> keep_alive_;
@@ -246,10 +241,6 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
   // wallpaper load animation to finish.
   bool waiting_for_wallpaper_load_;
 
-  // True if WebUI is initialized in hidden state and we're waiting for user
-  // pods to load.
-  bool waiting_for_user_pods_;
-
   // How many times renderer has crashed.
   int crash_count_ = 0;
 
@@ -279,7 +270,7 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
   // True when request to play startup sound was sent to
   // SoundsManager.
   // After OOBE is completed, this is always initialized with true.
-  bool startup_sound_played_ = false;
+  bool oobe_startup_sound_played_ = false;
 
   // Keeps a copy of the old Drag'n'Drop client, so that it would be disabled
   // during a login session and restored afterwards.

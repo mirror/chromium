@@ -1225,7 +1225,8 @@ std::vector<Rect> RenderTextHarfBuzz::GetSubstringBounds(const Range& range) {
             run.GetGraphemeSpanForCharRange(this, intersection);
         int start_x = std::ceil(selected_span.start() - line_start_x);
         int end_x = std::ceil(selected_span.end() - line_start_x);
-        gfx::Rect rect(start_x, 0, end_x - start_x, line.size.height());
+        gfx::Rect rect(start_x, 0, end_x - start_x,
+                       std::ceil(line.size.height()));
         rects.push_back(rect + GetLineOffset(line_index));
       }
     }
@@ -1738,6 +1739,8 @@ void RenderTextHarfBuzz::EnsureLayoutRunList() {
   }
 }
 
+// Returns the current run list, |display_run_list_| if the text is elided, or
+// |layout_run_list_| otherwise.
 internal::TextRunList* RenderTextHarfBuzz::GetRunList() {
   DCHECK(!update_layout_run_list_);
   DCHECK(!update_display_run_list_);
@@ -1784,6 +1787,10 @@ bool RenderTextHarfBuzz::GetDecoratedTextForRange(
     }
   }
   return true;
+}
+
+void RenderTextHarfBuzz::SetGlyphWidthForTest(float test_width) {
+  glyph_width_for_test_ = test_width;
 }
 
 }  // namespace gfx

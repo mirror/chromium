@@ -36,7 +36,15 @@ void MediaSinkServiceBase::OnDiscoveryComplete() {
     return;
   }
 
-  ForceSinkDiscoveryCallback();
+  DVLOG(2) << "Send sinks to media router, [size]: " << current_sinks_.size();
+
+  std::vector<MediaSinkInternal> sinks;
+  for (const auto& sink_it : current_sinks_)
+    sinks.push_back(sink_it.second);
+
+  on_sinks_discovered_cb_.Run(std::move(sinks));
+  mrp_sinks_ = current_sinks_;
+  discovery_timer_->Stop();
   RecordDeviceCounts();
 }
 
@@ -53,15 +61,6 @@ void MediaSinkServiceBase::RestartTimer() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!discovery_timer_->IsRunning())
     DoStart();
-}
-
-void MediaSinkServiceBase::ForceSinkDiscoveryCallback() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DVLOG(2) << "Send sinks to media router, [size]: " << current_sinks_.size();
-  on_sinks_discovered_cb_.Run(std::vector<MediaSinkInternal>(
-      current_sinks_.begin(), current_sinks_.end()));
-  mrp_sinks_ = current_sinks_;
-  discovery_timer_->Stop();
 }
 
 void MediaSinkServiceBase::DoStart() {

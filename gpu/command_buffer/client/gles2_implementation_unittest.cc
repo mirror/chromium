@@ -151,6 +151,7 @@ class MockTransferBuffer : public TransferBufferInterface {
   void FreePendingToken(void* p, unsigned int /* token */) override;
   unsigned int GetSize() const override;
   unsigned int GetFreeSize() const override;
+  unsigned int GetFragmentedFreeSize() const override;
   void ShrinkLastBlock(unsigned int new_size) override;
 
   size_t MaxTransferBufferSize() {
@@ -333,6 +334,10 @@ unsigned int MockTransferBuffer::GetSize() const {
 }
 
 unsigned int MockTransferBuffer::GetFreeSize() const {
+  return 0;
+}
+
+unsigned int MockTransferBuffer::GetFragmentedFreeSize() const {
   return 0;
 }
 
@@ -4380,21 +4385,22 @@ TEST_F(GLES3ImplementationTest, GetBufferSubDataAsyncCHROMIUM) {
   const GLuint kBufferId = 123;
   void* mem;
 
-  const int TARGET_COUNT = 8;
-  GLenum targets[TARGET_COUNT] = {
-    GL_ARRAY_BUFFER,
-    GL_ELEMENT_ARRAY_BUFFER,
-    GL_COPY_READ_BUFFER,
-    GL_COPY_WRITE_BUFFER,
-    GL_TRANSFORM_FEEDBACK_BUFFER,
-    GL_UNIFORM_BUFFER,
-    GL_PIXEL_PACK_BUFFER,
-    GL_PIXEL_UNPACK_BUFFER,
+  std::vector<GLenum> targets = {
+      GL_ARRAY_BUFFER,      GL_ELEMENT_ARRAY_BUFFER,      GL_COPY_READ_BUFFER,
+      GL_COPY_WRITE_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER,
+      GL_PIXEL_PACK_BUFFER, GL_PIXEL_UNPACK_BUFFER,
   };
 
   // Positive tests
-  for (int i = 0; i < TARGET_COUNT; i++) {
+  for (size_t i = 0; i < targets.size(); i++) {
     gl_->BindBuffer(targets[i], kBufferId);
+    if (targets[i] == GL_TRANSFORM_FEEDBACK_BUFFER) {
+      ExpectedMemoryInfo result =
+          GetExpectedResultMemory(sizeof(cmds::GetIntegerv::Result));
+      EXPECT_CALL(*command_buffer(), OnFlush())
+          .WillOnce(SetMemory(result.ptr, SizedResultHelper<GLuint>(1)))
+          .RetiresOnSaturation();
+    }
     mem = gl_->GetBufferSubDataAsyncCHROMIUM(targets[i], 10, 64);
     EXPECT_TRUE(mem != nullptr);
     EXPECT_EQ(GL_NO_ERROR, CheckError());
@@ -4404,9 +4410,16 @@ TEST_F(GLES3ImplementationTest, GetBufferSubDataAsyncCHROMIUM) {
   }
 
   // Negative tests: invalid target
-  for (int i = 0; i < TARGET_COUNT; i++) {
-    GLenum wrong_target = targets[(i + 1) % TARGET_COUNT];
+  for (size_t i = 0; i < targets.size(); i++) {
+    GLenum wrong_target = targets[(i + 1) % targets.size()];
     gl_->BindBuffer(targets[i], kBufferId);
+    if (wrong_target == GL_TRANSFORM_FEEDBACK_BUFFER) {
+      ExpectedMemoryInfo result =
+          GetExpectedResultMemory(sizeof(cmds::GetIntegerv::Result));
+      EXPECT_CALL(*command_buffer(), OnFlush())
+          .WillOnce(SetMemory(result.ptr, SizedResultHelper<GLuint>(0)))
+          .RetiresOnSaturation();
+    }
     mem = gl_->GetBufferSubDataAsyncCHROMIUM(wrong_target, 10, 64);
     EXPECT_TRUE(mem == nullptr);
     EXPECT_EQ(GL_INVALID_OPERATION, CheckError());
@@ -4583,13 +4596,16 @@ TEST_F(GLES2ImplementationTest, DiscardableMemoryDelete) {
       share_group_->discardable_texture_manager()->TextureIsValid(texture_id));
 }
 
-TEST_F(GLES2ImplementationTest, DiscardableMemoryLockFail) {
+TEST_F(GLES2ImplementationTest, DiscardableTextureLockFail) {
   const GLuint texture_id = 1;
   gl_->InitializeDiscardableTextureCHROMIUM(texture_id);
   EXPECT_TRUE(
       share_group_->discardable_texture_manager()->TextureIsValid(texture_id));
 
-  // Unlock and delete the handle.
+  // Unlock the handle on the client side.
+  gl_->UnlockDiscardableTextureCHROMIUM(texture_id);
+
+  // Unlock and delete the handle on the service side.
   ClientDiscardableHandle client_handle =
       share_group_->discardable_texture_manager()->GetHandleForTesting(
           texture_id);
@@ -4605,7 +4621,7 @@ TEST_F(GLES2ImplementationTest, DiscardableMemoryLockFail) {
       share_group_->discardable_texture_manager()->TextureIsValid(texture_id));
 }
 
-TEST_F(GLES2ImplementationTest, DiscardableMemoryDoubleInitError) {
+TEST_F(GLES2ImplementationTest, DiscardableTextureDoubleInitError) {
   const GLuint texture_id = 1;
   gl_->InitializeDiscardableTextureCHROMIUM(texture_id);
   EXPECT_EQ(GL_NO_ERROR, CheckError());
@@ -4613,10 +4629,40 @@ TEST_F(GLES2ImplementationTest, DiscardableMemoryDoubleInitError) {
   EXPECT_EQ(GL_INVALID_VALUE, CheckError());
 }
 
-TEST_F(GLES2ImplementationTest, DiscardableMemoryLockError) {
+TEST_F(GLES2ImplementationTest, DiscardableTextureLockError) {
   const GLuint texture_id = 1;
   EXPECT_FALSE(gl_->LockDiscardableTextureCHROMIUM(texture_id));
   EXPECT_EQ(GL_INVALID_VALUE, CheckError());
+}
+
+TEST_F(GLES2ImplementationTest, DiscardableTextureLockCounting) {
+  const GLint texture_id = 1;
+  gl_->InitializeDiscardableTextureCHROMIUM(texture_id);
+  EXPECT_TRUE(
+      share_group_->discardable_texture_manager()->TextureIsValid(texture_id));
+
+  // Bind the texture.
+  gl_->BindTexture(GL_TEXTURE_2D, texture_id);
+  GLint bound_texture_id = 0;
+  gl_->GetIntegerv(GL_TEXTURE_BINDING_2D, &bound_texture_id);
+  EXPECT_EQ(texture_id, bound_texture_id);
+
+  // Lock the texture 3 more times (for 4 locks total).
+  for (int i = 0; i < 3; ++i) {
+    gl_->LockDiscardableTextureCHROMIUM(texture_id);
+  }
+
+  // Unlock 4 times. Only after the last unlock should the texture be unbound.
+  for (int i = 0; i < 4; ++i) {
+    gl_->UnlockDiscardableTextureCHROMIUM(texture_id);
+    bound_texture_id = 0;
+    gl_->GetIntegerv(GL_TEXTURE_BINDING_2D, &bound_texture_id);
+    if (i < 3) {
+      EXPECT_EQ(texture_id, bound_texture_id);
+    } else {
+      EXPECT_EQ(0, bound_texture_id);
+    }
+  }
 }
 
 #include "base/macros.h"

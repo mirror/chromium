@@ -10,11 +10,13 @@
 #include "base/logging.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
+#include "components/viz/service/display_embedder/external_begin_frame_controller_impl.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
 #include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/video_capture/capturable_frame_sink.h"
+#include "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.h"
 
 #if DCHECK_IS_ON()
 #include <sstream>
@@ -35,22 +37,11 @@ FrameSinkManagerImpl::FrameSinkSourceMapping&
 FrameSinkManagerImpl::FrameSinkSourceMapping::operator=(
     FrameSinkSourceMapping&& other) = default;
 
-FrameSinkManagerImpl::SinkAndSupport::SinkAndSupport() = default;
-
-FrameSinkManagerImpl::SinkAndSupport::SinkAndSupport(SinkAndSupport&& other) =
-    default;
-
-FrameSinkManagerImpl::SinkAndSupport::~SinkAndSupport() = default;
-
-FrameSinkManagerImpl::SinkAndSupport& FrameSinkManagerImpl::SinkAndSupport::
-operator=(SinkAndSupport&& other) = default;
-
 FrameSinkManagerImpl::FrameSinkManagerImpl(
-    SurfaceManager::LifetimeType lifetime_type,
     uint32_t number_of_frames_to_activation_deadline,
     DisplayProvider* display_provider)
     : display_provider_(display_provider),
-      surface_manager_(lifetime_type, number_of_frames_to_activation_deadline),
+      surface_manager_(number_of_frames_to_activation_deadline),
       hit_test_manager_(this),
       binding_(this) {
   surface_manager_.AddObserver(&hit_test_manager_);
@@ -59,10 +50,18 @@ FrameSinkManagerImpl::FrameSinkManagerImpl(
 
 FrameSinkManagerImpl::~FrameSinkManagerImpl() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  // All FrameSinks should be unregistered prior to FrameSinkManager
+  video_capturers_.clear();
+
+  // Delete any remaining owned CompositorFrameSinks.
+  sink_map_.clear();
+
+  // All BeginFrameSources should be deleted before FrameSinkManagerImpl
   // destruction.
-  compositor_frame_sinks_.clear();
-  DCHECK_EQ(registered_sources_.size(), 0u);
+  DCHECK(registered_sources_.empty());
+
+  // TODO(kylechar): Enforce that all CompositorFrameSinks are destroyed before
+  // ~FrameSinkManagerImpl() runs.
+
   surface_manager_.RemoveObserver(this);
   surface_manager_.RemoveObserver(&hit_test_manager_);
 }
@@ -101,12 +100,8 @@ void FrameSinkManagerImpl::InvalidateFrameSinkId(
   if (video_detector_)
     video_detector_->OnFrameSinkIdInvalidated(frame_sink_id);
 
-  // Destroy the [Root]CompositorFrameSinkImpl if there is one. This will result
-  // in UnregisterCompositorFrameSinkSupport() being called and |iter| will be
-  // invalidated afterwards
-  auto iter = compositor_frame_sinks_.find(frame_sink_id);
-  if (iter != compositor_frame_sinks_.end())
-    iter->second.sink.reset();
+  // Destroy the [Root]CompositorFrameSinkImpl if there is one.
+  sink_map_.erase(frame_sink_id);
 }
 
 void FrameSinkManagerImpl::SetFrameSinkDebugLabel(
@@ -116,31 +111,38 @@ void FrameSinkManagerImpl::SetFrameSinkDebugLabel(
 }
 
 void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
-    const FrameSinkId& frame_sink_id,
-    gpu::SurfaceHandle surface_handle,
-    bool force_software_compositing,
-    const RendererSettings& renderer_settings,
-    mojom::CompositorFrameSinkAssociatedRequest request,
-    mojom::CompositorFrameSinkClientPtr client,
-    mojom::DisplayPrivateAssociatedRequest display_private_request,
-    mojom::DisplayClientPtr display_client) {
+    mojom::RootCompositorFrameSinkParamsPtr params) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK_NE(surface_handle, gpu::kNullSurfaceHandle);
-  DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
+  DCHECK(!base::ContainsKey(sink_map_, params->frame_sink_id));
   DCHECK(display_provider_);
+
+  std::unique_ptr<ExternalBeginFrameControllerImpl>
+      external_begin_frame_controller;
+  if (params->external_begin_frame_controller.is_pending() &&
+      params->external_begin_frame_controller_client) {
+    external_begin_frame_controller =
+        std::make_unique<ExternalBeginFrameControllerImpl>(
+            std::move(params->external_begin_frame_controller),
+            mojom::ExternalBeginFrameControllerClientPtr(
+                std::move(params->external_begin_frame_controller_client)));
+  }
 
   std::unique_ptr<SyntheticBeginFrameSource> begin_frame_source;
   auto display = display_provider_->CreateDisplay(
-      frame_sink_id, surface_handle, force_software_compositing,
-      renderer_settings, &begin_frame_source);
+      params->frame_sink_id, params->widget, params->force_software_compositing,
+      external_begin_frame_controller.get(), params->renderer_settings,
+      &begin_frame_source);
 
-  auto frame_sink = std::make_unique<RootCompositorFrameSinkImpl>(
-      this, frame_sink_id, std::move(display), std::move(begin_frame_source),
-      std::move(request), std::move(client), std::move(display_private_request),
-      std::move(display_client));
-  SinkAndSupport& entry = compositor_frame_sinks_[frame_sink_id];
-  DCHECK(entry.support);  // |entry| was created by RootCompositorFrameSinkImpl.
-  entry.sink = std::move(frame_sink);
+  sink_map_[params->frame_sink_id] =
+      std::make_unique<RootCompositorFrameSinkImpl>(
+          this, params->frame_sink_id, std::move(display),
+          std::move(begin_frame_source),
+          std::move(external_begin_frame_controller),
+          std::move(params->compositor_frame_sink),
+          mojom::CompositorFrameSinkClientPtr(
+              std::move(params->compositor_frame_sink_client)),
+          std::move(params->display_private),
+          mojom::DisplayClientPtr(std::move(params->display_client)));
 }
 
 void FrameSinkManagerImpl::CreateCompositorFrameSink(
@@ -148,13 +150,17 @@ void FrameSinkManagerImpl::CreateCompositorFrameSink(
     mojom::CompositorFrameSinkRequest request,
     mojom::CompositorFrameSinkClientPtr client) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
+  DCHECK(!base::ContainsKey(sink_map_, frame_sink_id));
 
-  auto frame_sink = std::make_unique<CompositorFrameSinkImpl>(
+  sink_map_[frame_sink_id] = std::make_unique<CompositorFrameSinkImpl>(
       this, frame_sink_id, std::move(request), std::move(client));
-  SinkAndSupport& entry = compositor_frame_sinks_[frame_sink_id];
-  DCHECK(entry.support);  // |entry| was created by CompositorFrameSinkImpl.
-  entry.sink = std::move(frame_sink);
+}
+
+void FrameSinkManagerImpl::DestroyCompositorFrameSink(
+    const FrameSinkId& frame_sink_id,
+    DestroyCompositorFrameSinkCallback callback) {
+  sink_map_.erase(frame_sink_id);
+  std::move(callback).Run();
 }
 
 void FrameSinkManagerImpl::RegisterFrameSinkHierarchy(
@@ -222,14 +228,31 @@ void FrameSinkManagerImpl::DropTemporaryReference(const SurfaceId& surface_id) {
   surface_manager_.DropTemporaryReference(surface_id);
 }
 
+void FrameSinkManagerImpl::AddVideoDetectorObserver(
+    mojom::VideoDetectorObserverPtr observer) {
+  if (!video_detector_)
+    video_detector_ = std::make_unique<VideoDetector>(&surface_manager_);
+  video_detector_->AddObserver(std::move(observer));
+}
+
+void FrameSinkManagerImpl::CreateVideoCapturer(
+    mojom::FrameSinkVideoCapturerRequest request) {
+  video_capturers_.emplace(
+      std::make_unique<FrameSinkVideoCapturerImpl>(this, std::move(request)));
+}
+
 void FrameSinkManagerImpl::RegisterCompositorFrameSinkSupport(
     const FrameSinkId& frame_sink_id,
     CompositorFrameSinkSupport* support) {
   DCHECK(support);
+  DCHECK(!base::ContainsKey(support_map_, frame_sink_id));
 
-  SinkAndSupport& entry = compositor_frame_sinks_[frame_sink_id];
-  DCHECK(!entry.support);
-  entry.support = support;
+  support_map_[frame_sink_id] = support;
+
+  for (auto& capturer : video_capturers_) {
+    if (capturer->requested_target() == frame_sink_id)
+      capturer->SetResolvedTarget(support);
+  }
 
   auto it = frame_sink_source_map_.find(frame_sink_id);
   if (it != frame_sink_source_map_.end() && it->second.source)
@@ -238,8 +261,14 @@ void FrameSinkManagerImpl::RegisterCompositorFrameSinkSupport(
 
 void FrameSinkManagerImpl::UnregisterCompositorFrameSinkSupport(
     const FrameSinkId& frame_sink_id) {
-  DCHECK_EQ(compositor_frame_sinks_.count(frame_sink_id), 1u);
-  compositor_frame_sinks_.erase(frame_sink_id);
+  DCHECK(base::ContainsKey(support_map_, frame_sink_id));
+
+  for (auto& capturer : video_capturers_) {
+    if (capturer->requested_target() == frame_sink_id)
+      capturer->OnTargetWillGoAway();
+  }
+
+  support_map_.erase(frame_sink_id);
 }
 
 void FrameSinkManagerImpl::RegisterBeginFrameSource(
@@ -286,9 +315,9 @@ void FrameSinkManagerImpl::RecursivelyAttachBeginFrameSource(
   FrameSinkSourceMapping& mapping = frame_sink_source_map_[frame_sink_id];
   if (!mapping.source) {
     mapping.source = source;
-    auto iter = compositor_frame_sinks_.find(frame_sink_id);
-    if (iter != compositor_frame_sinks_.end())
-      iter->second.support->SetBeginFrameSource(source);
+    auto iter = support_map_.find(frame_sink_id);
+    if (iter != support_map_.end())
+      iter->second->SetBeginFrameSource(source);
   }
 
   // Copy the list of children because RecursivelyAttachBeginFrameSource() can
@@ -308,9 +337,9 @@ void FrameSinkManagerImpl::RecursivelyDetachBeginFrameSource(
   auto& mapping = iter->second;
   if (mapping.source == source) {
     mapping.source = nullptr;
-    auto client_iter = compositor_frame_sinks_.find(frame_sink_id);
-    if (client_iter != compositor_frame_sinks_.end())
-      client_iter->second.support->SetBeginFrameSource(nullptr);
+    auto client_iter = support_map_.find(frame_sink_id);
+    if (client_iter != support_map_.end())
+      client_iter->second->SetBeginFrameSource(nullptr);
   }
 
   // Delete the FrameSinkSourceMapping for |frame_sink_id| if empty.
@@ -328,10 +357,15 @@ void FrameSinkManagerImpl::RecursivelyDetachBeginFrameSource(
 
 CapturableFrameSink* FrameSinkManagerImpl::FindCapturableFrameSink(
     const FrameSinkId& frame_sink_id) {
-  const auto it = compositor_frame_sinks_.find(frame_sink_id);
-  if (it == compositor_frame_sinks_.end())
+  const auto it = support_map_.find(frame_sink_id);
+  if (it == support_map_.end())
     return nullptr;
-  return it->second.support;
+  return it->second;
+}
+
+void FrameSinkManagerImpl::OnCapturerConnectionLost(
+    FrameSinkVideoCapturerImpl* capturer) {
+  video_capturers_.erase(capturer);
 }
 
 bool FrameSinkManagerImpl::ChildContains(
@@ -353,8 +387,13 @@ bool FrameSinkManagerImpl::ChildContains(
 void FrameSinkManagerImpl::OnSurfaceCreated(const SurfaceId& surface_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
-  if (client_)
+  if (client_) {
     client_->OnSurfaceCreated(surface_id);
+  } else {
+    // There is no client to assign an owner for the temporary reference, so we
+    // can drop the temporary reference safely.
+    surface_manager_.DropTemporaryReference(surface_id);
+  }
 }
 
 void FrameSinkManagerImpl::OnFirstSurfaceActivation(
@@ -380,9 +419,6 @@ void FrameSinkManagerImpl::OnSurfaceDestroyed(const SurfaceId& surface_id) {}
 void FrameSinkManagerImpl::OnSurfaceDamageExpected(const SurfaceId& surface_id,
                                                    const BeginFrameArgs& args) {
 }
-
-void FrameSinkManagerImpl::OnSurfaceSubtreeDamaged(
-    const SurfaceId& surface_id) {}
 
 void FrameSinkManagerImpl::OnClientConnectionLost(
     const FrameSinkId& frame_sink_id) {
@@ -432,13 +468,6 @@ void FrameSinkManagerImpl::SwitchActiveAggregatedHitTestRegionList(
     client_->SwitchActiveAggregatedHitTestRegionList(frame_sink_id,
                                                      active_handle_index);
   }
-}
-
-void FrameSinkManagerImpl::AddVideoDetectorObserver(
-    mojom::VideoDetectorObserverPtr observer) {
-  if (!video_detector_)
-    video_detector_ = std::make_unique<VideoDetector>(&surface_manager_);
-  video_detector_->AddObserver(std::move(observer));
 }
 
 VideoDetector* FrameSinkManagerImpl::CreateVideoDetectorForTesting(

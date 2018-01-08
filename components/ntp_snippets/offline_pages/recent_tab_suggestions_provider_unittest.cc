@@ -4,6 +4,7 @@
 
 #include "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -67,6 +68,8 @@ OfflinePageItem CreateDummyRecentTab(int id, base::Time time) {
   return item;
 }
 
+void GetAllItemsDummyCallback(const std::vector<OfflineItem>& items) {}
+
 }  // namespace
 
 class RecentTabSuggestionsProviderTestNoLoad : public testing::Test {
@@ -78,7 +81,7 @@ class RecentTabSuggestionsProviderTestNoLoad : public testing::Test {
     RecentTabSuggestionsProvider::RegisterProfilePrefs(
         pref_service()->registry());
 
-    taco_ = base::MakeUnique<offline_pages::RequestCoordinatorStubTaco>();
+    taco_ = std::make_unique<offline_pages::RequestCoordinatorStubTaco>();
     taco_->CreateRequestCoordinator();
 
     ui_adapter_ = offline_pages::RecentTabsUIAdapterDelegate::
@@ -86,8 +89,10 @@ class RecentTabSuggestionsProviderTestNoLoad : public testing::Test {
     delegate_ =
         offline_pages::RecentTabsUIAdapterDelegate::FromDownloadUIAdapter(
             ui_adapter_);
-    provider_ = base::MakeUnique<RecentTabSuggestionsProvider>(
+    provider_ = std::make_unique<RecentTabSuggestionsProvider>(
         &observer_, ui_adapter_, pref_service());
+    // Force adapter to load its cache.
+    ui_adapter_->GetAllItems(base::BindOnce(&GetAllItemsDummyCallback));
   }
 
   Category recent_tabs_category() {

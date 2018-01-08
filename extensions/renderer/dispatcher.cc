@@ -112,6 +112,7 @@
 #include "third_party/WebKit/public/web/WebScopedUserGesture.h"
 #include "third_party/WebKit/public/web/WebScriptController.h"
 #include "third_party/WebKit/public/web/WebSecurityPolicy.h"
+#include "third_party/WebKit/public/web/WebSettings.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "ui/base/layout.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -163,8 +164,11 @@ void CallModuleMethod(const std::string& module_name,
 class ChromeNativeHandler : public ObjectBackedNativeHandler {
  public:
   explicit ChromeNativeHandler(ScriptContext* context)
-      : ObjectBackedNativeHandler(context) {
-    RouteFunction(
+      : ObjectBackedNativeHandler(context) {}
+
+  // ObjectBackedNativeHandler:
+  void AddRoutes() override {
+    RouteHandlerFunction(
         "GetChrome",
         base::Bind(&ChromeNativeHandler::GetChrome, base::Unretained(this)));
   }
@@ -295,7 +299,7 @@ void Dispatcher::DidCreateScriptContext(
   {
     std::unique_ptr<ModuleSystem> module_system(
         new ModuleSystem(context, &source_map_));
-    context->set_module_system(std::move(module_system));
+    context->SetModuleSystem(std::move(module_system));
   }
   ModuleSystem* module_system = context->module_system();
 
@@ -415,7 +419,7 @@ void Dispatcher::DidInitializeServiceWorkerContextOnWorkerThread(
 
     // TODO(lazyboy): Make sure accessing |source_map_| in worker thread is
     // safe.
-    context->set_module_system(
+    context->SetModuleSystem(
         std::make_unique<ModuleSystem>(context, &source_map_));
 
     ModuleSystem* module_system = context->module_system();
@@ -460,6 +464,7 @@ void Dispatcher::DidInitializeServiceWorkerContextOnWorkerThread(
   // LoggingNativeHandler. Admire the neat base::Bind trick to both Invalidate
   // and delete the native handler.
   LoggingNativeHandler* logging = new LoggingNativeHandler(context);
+  logging->Initialize();
   context->AddInvalidationObserver(
       base::Bind(&NativeHandler::Invalidate, base::Owned(logging)));
 
@@ -1406,6 +1411,17 @@ void Dispatcher::RequireGuestViewModules(ScriptContext* context) {
       base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames)) {
     module_system->Require("guestViewIframe");
     module_system->Require("guestViewIframeContainer");
+  }
+
+  if (requires_guest_view_module) {
+    // If a frame has guest view custom elements defined, we need to make sure
+    // the custom elements are also defined in subframes. The subframes will
+    // need a scripting context which we will need to forcefully create if
+    // the subframe doesn't otherwise have any scripts.
+    context->web_frame()
+        ->View()
+        ->GetSettings()
+        ->SetForceMainWorldInitialization(true);
   }
 
   // The "guestViewDeny" module must always be loaded last. It registers

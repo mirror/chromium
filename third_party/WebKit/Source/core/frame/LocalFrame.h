@@ -63,13 +63,12 @@ class FrameConsole;
 class FrameResourceCoordinator;
 class FrameSelection;
 class InputMethodController;
+class InspectorTraceEvents;
 class CoreProbeSink;
 class IdlenessDetector;
 class InterfaceRegistry;
-class IntPoint;
 class IntSize;
 class LayoutView;
-class LayoutViewItem;
 class LocalDOMWindow;
 class LocalWindowProxy;
 class LocalFrameClient;
@@ -115,7 +114,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
                 UserGestureStatus) override;
   void Navigate(const FrameLoadRequest&) override;
   void Reload(FrameLoadType, ClientRedirectPolicy) override;
-  void AddResourceTiming(const ResourceTimingInfo&) override;
   void Detach(FrameDetachType) override;
   bool ShouldClose() override;
   SecurityContext* GetSecurityContext() const override;
@@ -149,7 +147,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   // Root of the layout tree for the document contained in this frame.
   LayoutView* ContentLayoutObject() const;
-  LayoutViewItem ContentLayoutItem() const;
 
   Editor& GetEditor() const;
   EventHandler& GetEventHandler() const;
@@ -161,6 +158,8 @@ class CORE_EXPORT LocalFrame final : public Frame,
   ScriptController& GetScriptController() const;
   SpellChecker& GetSpellChecker() const;
   FrameConsole& Console() const;
+
+  void IntrinsicSizingInfoChanged(const IntrinsicSizingInfo&);
 
   // This method is used to get the highest level LocalFrame in this
   // frame's in-process subtree.
@@ -212,8 +211,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   PositionWithAffinityTemplate<EditingAlgorithm<NodeTraversal>>
   PositionForPoint(const LayoutPoint& frame_point);
   Document* DocumentAtPoint(const LayoutPoint&);
-  EphemeralRangeTemplate<EditingAlgorithm<NodeTraversal>> RangeForPoint(
-      const IntPoint& frame_point);
 
   bool ShouldReuseDefaultView(const KURL&) const;
   void RemoveSpellingMarkersUnderWords(const Vector<String>& words);
@@ -247,8 +244,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   // channel-associated interfaces. See
   // https://chromium.googlesource.com/chromium/src/+/master/ipc#Using-Channel_associated-Interfaces.
   AssociatedInterfaceProvider* GetRemoteNavigationAssociatedInterfaces();
-
-  String GetInstrumentationToken() { return instrumentation_token_; }
 
   LocalFrameClient* Client() const;
 
@@ -300,6 +295,13 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void ForceSynchronousDocumentInstall(const AtomicString& mime_type,
                                        scoped_refptr<SharedBuffer> data);
 
+  bool should_send_resource_timing_info_to_parent() const {
+    return should_send_resource_timing_info_to_parent_;
+  }
+  void DidSendResourceTimingInfoToParent() {
+    should_send_resource_timing_info_to_parent_ = false;
+  }
+
  private:
   friend class FrameNavigationDisabler;
 
@@ -341,6 +343,11 @@ class CORE_EXPORT LocalFrame final : public Frame,
   const Member<TextSuggestionController> text_suggestion_controller_;
 
   int navigation_disable_count_;
+  // TODO(dcheng): In theory, this could be replaced by checking the
+  // FrameLoaderStateMachine if a real load has committed. Unfortunately, the
+  // internal state tracked there is incorrect today. See
+  // https://crbug.com/778318.
+  bool should_send_resource_timing_info_to_parent_ = true;
 
   float page_zoom_factor_;
   float text_zoom_factor_;
@@ -350,9 +357,9 @@ class CORE_EXPORT LocalFrame final : public Frame,
   Member<CoreProbeSink> probe_sink_;
   Member<PerformanceMonitor> performance_monitor_;
   Member<IdlenessDetector> idleness_detector_;
+  Member<InspectorTraceEvents> inspector_trace_events_;
 
   InterfaceRegistry* const interface_registry_;
-  String instrumentation_token_;
 
   IntRect remote_viewport_intersection_;
   std::unique_ptr<FrameResourceCoordinator> frame_resource_coordinator_;

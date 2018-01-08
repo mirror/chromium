@@ -13,13 +13,14 @@ fun:*ThreadSpecific*
 src:*third_party/mesa*
 
 # LLVM's allocator
-src:*third_party/swiftshader/third_party/llvm-subzero/include/llvm/Support/Allocator.h*
+src:*llvm/Support/Allocator.h
 
 # Deliberate bad cast to derived class to hide functions.
 type:*BlockIUnknownMethods*
 type:*BlockRefType*
 type:*SkAutoTUnref*
 type:*SkBlockComRef*
+type:*RemoveIUnknown*
 src:*atlcomcli.h
 
 # invalid downcasts for IPC messages
@@ -152,7 +153,7 @@ src:*audio/pulse/pulse_stubs.cc
 
 # Calls to auto-generated stubs by generate_library_loader.py
 src:*device/udev_linux/udev1_loader.cc
-src:*net/proxy/proxy_config_service_linux.cc
+src:*net/proxy_resolution/proxy_config_service_linux.cc
 
 # Calls to auto-generated stubs by ui/gl/generate_bindings.py
 src:*ui/gl/gl_bindings_autogen_*
@@ -176,9 +177,6 @@ fun:*GlobalMenuBarX11*
 # third_party/skia/include/gpu/gl/GrGLFunctions.h
 fun:*GrGLFunction*
 
-# chrome/browser/ui/libgtkui/gtk_util.cc
-fun:*AppendCssNodeToStyleContext*
-
 ######### Function pointers cast to incorrect type signatures
 
 # libicu is currently compiled such that in libicu the 'UChar' type is a
@@ -193,14 +191,13 @@ fun:*LocaleConvertCase*
 # third_party/boringssl/src/crypto/pem/pem_lib.c
 fun:*PEM_ASN1_write*
 
-src:*third_party/libsrtp/*
-src:*third_party/libvpx/*
-src:*third_party/libxml/*
-src:*third_party/pdfium/third_party/lcms/*
 src:*third_party/sqlite/*
-src:*third_party/webrtc/*
 
-src:*v8/*
+# PropertyCallbackArguments::Call methods cast function pointers
+src:*v8/src/api-arguments-inl.h
+
+# v8 callback that casts argument template parameters
+fun:*PendingPhantomCallback*Invoke*
 
 ######### Uncategorized
 

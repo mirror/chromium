@@ -69,14 +69,12 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   void PlaceLayoutResult(NGInlineItemResult*,
                          NGInlineBoxState*,
                          LayoutUnit inline_offset = LayoutUnit());
+  bool PlaceOutOfFlowObjects(const NGLineInfo&, const NGLineHeightMetrics&);
   void PlaceListMarker(const NGInlineItem&,
                        NGInlineItemResult*,
                        const NGLineInfo&);
 
-  void ApplyTextAlign(const NGLineInfo&,
-                      ETextAlign,
-                      LayoutUnit* line_left,
-                      LayoutUnit inline_size);
+  LayoutUnit OffsetForTextAlign(const NGLineInfo&, ETextAlign) const;
   bool ApplyJustify(NGLineInfo*);
 
   LayoutUnit ComputeContentSize(const NGLineInfo&,

@@ -7,6 +7,7 @@
 
 #include "chrome/common/profiling/memlog_sender_pipe.h"
 #include "chrome/common/profiling/memlog_stream.h"
+#include "chrome/common/profiling/profiling_client.mojom.h"
 
 namespace profiling {
 
@@ -16,8 +17,11 @@ namespace profiling {
 void InitTLSSlot();
 
 // Begin profiling all allocations in the process. Send the results to
-// |sender_pipe|.
-void InitAllocatorShim(MemlogSenderPipe* sender_pipe);
+// |sender_pipe|. |stack_mode| describes the type of stack to record for each
+// allocation. |include_thread_names| describes whether to insert thread names
+// into NATIVE stacks.
+void InitAllocatorShim(MemlogSenderPipe* sender_pipe,
+                       mojom::StackMode stack_mode);
 
 // Stop profiling allocations by dropping shim callbacks. There is no way to
 // consistently, synchronously stop the allocator shim without negatively
@@ -53,6 +57,15 @@ using SetGCAllocHookFunction = void (*)(void (*)(uint8_t*,
 using SetGCFreeHookFunction = void (*)(void (*)(uint8_t*));
 void SetGCHeapAllocationHookFunctions(SetGCAllocHookFunction hook_alloc,
                                       SetGCFreeHookFunction hook_free);
+
+// Exists for testing only. |callback| is called on |task_runner| after the
+// allocator shim is initialized.
+void SetOnInitAllocatorShimCallbackForTesting(
+    base::OnceClosure callback,
+    scoped_refptr<base::TaskRunner> task_runner);
+
+void DisableAllocationTrackingForCurrentThreadForTesting();
+void EnableAllocationTrackingForCurrentThreadForTesting();
 
 }  // namespace profiling
 

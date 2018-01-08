@@ -292,8 +292,11 @@ void SingleThreadProxy::Stop() {
     // Take away the LayerTreeFrameSink before destroying things so it doesn't
     // try to call into its client mid-shutdown.
     host_impl_->ReleaseLayerTreeFrameSink();
-    scheduler_on_impl_thread_ = nullptr;
+
+    // It is important to destroy LTHI before the Scheduler since it can make
+    // callbacks that access it during destruction cleanup.
     host_impl_ = nullptr;
+    scheduler_on_impl_thread_ = nullptr;
   }
   layer_tree_host_ = nullptr;
 }
@@ -625,14 +628,20 @@ bool SingleThreadProxy::MainFrameWillHappenForTesting() {
   return scheduler_on_impl_thread_->MainFrameForTestingWillHappen();
 }
 
-void SingleThreadProxy::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
+void SingleThreadProxy::ClearHistoryOnNavigation() {
+  DCHECK(task_runner_provider_->IsImplThread());
+  if (scheduler_on_impl_thread_)
+    scheduler_on_impl_thread_->ClearHistoryOnNavigation();
+}
+
+bool SingleThreadProxy::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   DebugScopedSetImplThread impl(task_runner_provider_);
 #if DCHECK_IS_ON()
   DCHECK(!inside_impl_frame_)
       << "WillBeginImplFrame called while already inside an impl frame!";
   inside_impl_frame_ = true;
 #endif
-  host_impl_->WillBeginImplFrame(args);
+  return host_impl_->WillBeginImplFrame(args);
 }
 
 void SingleThreadProxy::ScheduledActionSendBeginMainFrame(
@@ -707,7 +716,7 @@ void SingleThreadProxy::BeginMainFrame(
 
   // At this point the main frame may have deferred commits to avoid committing
   // right now.
-  if (defer_commits_) {
+  if (defer_commits_ || begin_frame_args.animate_only) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_DeferCommit_InsideBeginMainFrame",
                          TRACE_EVENT_SCOPE_THREAD);
     BeginMainFrameAbortedOnImplThread(
@@ -741,7 +750,10 @@ void SingleThreadProxy::DoBeginMainFrame(
   layer_tree_host_->WillBeginMainFrame();
   layer_tree_host_->BeginMainFrame(begin_frame_args);
   layer_tree_host_->AnimateLayers(begin_frame_args.frame_time);
-  layer_tree_host_->RequestMainFrameUpdate();
+  layer_tree_host_->RequestMainFrameUpdate(
+      begin_frame_args.animate_only
+          ? LayerTreeHost::VisualStateUpdate::kPrePaint
+          : LayerTreeHost::VisualStateUpdate::kAll);
 }
 
 void SingleThreadProxy::DoPainting() {

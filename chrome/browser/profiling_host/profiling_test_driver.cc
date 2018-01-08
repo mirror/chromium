@@ -12,16 +12,27 @@
 #include "base/process/process_handle.h"
 #include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/platform_thread.h"
+#include "base/trace_event/heap_profiler_event_filter.h"
 #include "base/trace_event/trace_config_memory_test_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/common/profiling/memlog_allocator_shim.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/tracing_controller.h"
 #include "content/public/common/service_manager_connection.h"
 
 namespace profiling {
 
 namespace {
+
+const char kTestCategory[] = "kTestCategory";
+const char kMallocEvent[] = "kMallocEvent";
+const char kMallocTypeTag[] = "kMallocTypeTag";
+const char kPAEvent[] = "kPAEvent";
+const char kVariadicEvent[] = "kVariadicEvent";
+const char kThreadName[] = "kThreadName";
 
 // Make some specific allocations in Browser to do a deeper test of the
 // allocation tracking.
@@ -36,11 +47,29 @@ constexpr int kPartitionAllocSize = 8 * 23;
 constexpr int kPartitionAllocCount = 107;
 static const char* kPartitionAllocTypeName = "kPartitionAllocTypeName";
 
+// Whether at least 1 renderer exists, and all renderers are being profiled.
+bool RenderersAreBeingProfiled(
+    const std::vector<base::ProcessId>& profiled_pids) {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+  size_t renderer_count = 0;
+  for (auto iter = content::RenderProcessHost::AllHostsIterator();
+       !iter.IsAtEnd(); iter.Advance()) {
+    base::ProcessId pid = base::GetProcId(iter.GetCurrentValue()->GetHandle());
+    if (std::find(profiled_pids.begin(), profiled_pids.end(), pid) ==
+        profiled_pids.end()) {
+      return false;
+    }
+    ++renderer_count;
+  }
+
+  return renderer_count != 0;
+}
+
 // On success, populates |pid|.
 int NumProcessesWithName(base::Value* dump_json, std::string name, int* pid) {
   int num_processes = 0;
   base::Value* events = dump_json->FindKey("traceEvents");
-  for (base::Value& event : events->GetList()) {
+  for (const base::Value& event : events->GetList()) {
     const base::Value* found_name =
         event.FindKeyOfType("name", base::Value::Type::STRING);
     if (!found_name)
@@ -98,12 +127,98 @@ base::Value* FindHeapsV2(base::ProcessId pid, base::Value* dump_json) {
   return nullptr;
 }
 
+constexpr uint64_t kNullParent = std::numeric_limits<int>::max();
+struct Node {
+  int name_id;
+  std::string name;
+  int parent_id = kNullParent;
+};
+using NodeMap = std::unordered_map<uint64_t, Node>;
+
+// Parses maps.nodes and maps.strings. Returns |true| on success.
+bool ParseNodes(base::Value* heaps_v2, NodeMap* output) {
+  base::Value* nodes = heaps_v2->FindPath({"maps", "nodes"});
+  for (const base::Value& node_value : nodes->GetList()) {
+    const base::Value* id = node_value.FindKey("id");
+    const base::Value* name_sid = node_value.FindKey("name_sid");
+    if (!id || !name_sid) {
+      LOG(ERROR) << "Node missing id or name_sid field";
+      return false;
+    }
+
+    Node node;
+    node.name_id = name_sid->GetInt();
+
+    const base::Value* parent_id = node_value.FindKey("parent");
+    if (parent_id) {
+      node.parent_id = parent_id->GetInt();
+    }
+
+    (*output)[id->GetInt()] = node;
+  }
+
+  base::Value* strings = heaps_v2->FindPath({"maps", "strings"});
+  for (const base::Value& string_value : strings->GetList()) {
+    const base::Value* id = string_value.FindKey("id");
+    const base::Value* string = string_value.FindKey("string");
+    if (!id || !string) {
+      LOG(ERROR) << "String struct missing id or string field";
+      return false;
+    }
+    for (auto& pair : *output) {
+      if (pair.second.name_id == id->GetInt()) {
+        pair.second.name = string->GetString();
+        break;
+      }
+    }
+  }
+
+  return true;
+}
+
+// Parses maps.types and maps.strings. Returns |true| on success.
+bool ParseTypes(base::Value* heaps_v2, NodeMap* output) {
+  base::Value* types = heaps_v2->FindPath({"maps", "types"});
+  for (const base::Value& type_value : types->GetList()) {
+    const base::Value* id = type_value.FindKey("id");
+    const base::Value* name_sid = type_value.FindKey("name_sid");
+    if (!id || !name_sid) {
+      LOG(ERROR) << "Node missing id or name_sid field";
+      return false;
+    }
+
+    Node node;
+    node.name_id = name_sid->GetInt();
+    (*output)[id->GetInt()] = node;
+  }
+
+  base::Value* strings = heaps_v2->FindPath({"maps", "strings"});
+  for (const base::Value& string_value : strings->GetList()) {
+    const base::Value* id = string_value.FindKey("id");
+    const base::Value* string = string_value.FindKey("string");
+    if (!id || !string) {
+      LOG(ERROR) << "String struct missing id or string field";
+      return false;
+    }
+    for (auto& pair : *output) {
+      if (pair.second.name_id == id->GetInt()) {
+        pair.second.name = string->GetString();
+        break;
+      }
+    }
+  }
+
+  return true;
+}
+
 // Verify expectations are present in heap dump.
 bool ValidateDump(base::Value* heaps_v2,
                   int expected_alloc_size,
                   int expected_alloc_count,
                   const char* allocator_name,
-                  const char* type_name) {
+                  const char* type_name,
+                  const std::string& frame_name,
+                  const std::string& thread_name) {
   base::Value* sizes =
       heaps_v2->FindPath({"allocators", allocator_name, "sizes"});
   if (!sizes) {
@@ -157,6 +272,22 @@ bool ValidateDump(base::Value* heaps_v2,
     return false;
   }
 
+  base::Value* nodes =
+      heaps_v2->FindPath({"allocators", allocator_name, "nodes"});
+  if (!nodes) {
+    LOG(ERROR) << "Failed to find path: 'allocators." << allocator_name
+               << ".nodes' in heaps v2";
+    return false;
+  }
+
+  const base::Value::ListStorage& nodes_list = nodes->GetList();
+  if (sizes_list.size() != nodes_list.size()) {
+    LOG(ERROR)
+        << "'allocators." << allocator_name
+        << ".sizes' does not have the same number of elements as *.nodes";
+    return false;
+  }
+
   bool found_browser_alloc = false;
   size_t browser_alloc_index = 0;
   for (size_t i = 0; i < sizes_list.size(); i++) {
@@ -184,28 +315,76 @@ bool ValidateDump(base::Value* heaps_v2,
 
   // Find the type, if an expectation was passed in.
   if (type_name) {
-    bool found = false;
-    int type = types_list[browser_alloc_index].GetInt();
-    base::Value* strings = heaps_v2->FindPath({"maps", "strings"});
-    for (base::Value& dict : strings->GetList()) {
-      // Each dict has the format {"id":1,"string":"kPartitionAllocTypeName"}
-      int id = dict.FindKey("id")->GetInt();
-      if (id == type) {
-        found = true;
-        std::string name = dict.FindKey("string")->GetString();
-        if (name != type_name) {
-          LOG(ERROR) << "actual name: " << name
-                     << " expected name: " << type_name;
-          return false;
-        }
-        break;
-      }
+    NodeMap node_map;
+    if (!ParseTypes(heaps_v2, &node_map)) {
+      LOG(ERROR) << "Failed to parse type and string structs";
+      return false;
     }
-    if (!found) {
-      LOG(ERROR) << "Failed to find type name string: " << type_name;
+
+    int type = types_list[browser_alloc_index].GetInt();
+    auto it = node_map.find(type);
+    if (it == node_map.end()) {
+      LOG(ERROR) << "Failed to look up type.";
+      return false;
+    }
+    if (it->second.name != type_name) {
+      LOG(ERROR) << "actual name: " << it->second.name
+                 << " expected name: " << type_name;
       return false;
     }
   }
+
+  // Check that the frame has the right name.
+  if (!frame_name.empty()) {
+    NodeMap node_map;
+    if (!ParseNodes(heaps_v2, &node_map)) {
+      LOG(ERROR) << "Failed to parse node and string structs";
+      return false;
+    }
+
+    int node_id = nodes_list[browser_alloc_index].GetInt();
+    auto it = node_map.find(node_id);
+
+    if (it == node_map.end()) {
+      LOG(ERROR) << "Failed to find frame for node with id: " << node_id;
+      return false;
+    }
+
+    if (it->second.name != frame_name) {
+      LOG(ERROR) << "Wrong name: " << it->second.name
+                 << " for frame with expected name: " << frame_name;
+      return false;
+    }
+  }
+
+  // Check that the thread [top frame] has the right name.
+  if (!thread_name.empty()) {
+    NodeMap node_map;
+    if (!ParseNodes(heaps_v2, &node_map)) {
+      LOG(ERROR) << "Failed to parse node and string structs";
+      return false;
+    }
+
+    int node_id = nodes_list[browser_alloc_index].GetInt();
+    auto it = node_map.find(node_id);
+    while (true) {
+      if (it == node_map.end() || it->second.parent_id == kNullParent)
+        break;
+      it = node_map.find(it->second.parent_id);
+    }
+
+    if (it == node_map.end()) {
+      LOG(ERROR) << "Failed to find root for node with id: " << node_id;
+      return false;
+    }
+
+    if (it->second.name != thread_name) {
+      LOG(ERROR) << "Wrong name: " << it->second.name
+                 << " for thread with expected name: " << thread_name;
+      return false;
+    }
+  }
+
   return true;
 }
 
@@ -234,17 +413,46 @@ bool ProfilingTestDriver::RunTest(const Options& options) {
   }
 
   if (running_on_ui_thread_) {
-    if (!RunInitializationOnUIThread())
+    if (!CheckOrStartProfiling())
       return false;
+    if (ShouldProfileRenderer())
+      WaitForProfilingToStartForAllRenderersUIThread();
+    if (ShouldProfileBrowser())
+      MakeTestAllocations();
     CollectResults(true);
   } else {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&ProfilingTestDriver::RunInitializationOnUIThreadAndSignal,
-                   base::Unretained(this)));
+        base::Bind(
+            &ProfilingTestDriver::CheckOrStartProfilingOnUIThreadAndSignal,
+            base::Unretained(this)));
     wait_for_ui_thread_.Wait();
     if (!initialization_success_)
       return false;
+    if (ShouldProfileRenderer()) {
+      // On Android, there is a warm-up renderer that is sometimes started
+      // before the ProfilingProcessHost can be started. This renderer will
+      // therefore not be profiled, even if Chrome is started with the
+      // --memlog=all-renderers switch.
+      content::BrowserThread::PostTask(
+          content::BrowserThread::UI, FROM_HERE,
+          base::Bind(&ProfilingProcessHost::StartProfilingRenderersForTesting,
+                     base::Unretained(ProfilingProcessHost::GetInstance())));
+
+      content::BrowserThread::PostTask(
+          content::BrowserThread::UI, FROM_HERE,
+          base::Bind(
+              &ProfilingTestDriver::
+                  WaitForProfilingToStartForAllRenderersUIThreadAndSignal,
+              base::Unretained(this)));
+      wait_for_ui_thread_.Wait();
+    }
+    if (ShouldProfileBrowser()) {
+      content::BrowserThread::PostTask(
+          content::BrowserThread::UI, FROM_HERE,
+          base::Bind(&ProfilingTestDriver::MakeTestAllocations,
+                     base::Unretained(this)));
+    }
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::Bind(&ProfilingTestDriver::CollectResults, base::Unretained(this),
@@ -272,25 +480,19 @@ bool ProfilingTestDriver::RunTest(const Options& options) {
   return true;
 }
 
-void ProfilingTestDriver::RunInitializationOnUIThreadAndSignal() {
+void ProfilingTestDriver::CheckOrStartProfilingOnUIThreadAndSignal() {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-  initialization_success_ = RunInitializationOnUIThread();
-  wait_for_ui_thread_.Signal();
-}
+  initialization_success_ = CheckOrStartProfiling();
 
-bool ProfilingTestDriver::RunInitializationOnUIThread() {
-  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-
-  LOG(ERROR) << "RunInitializationOnUIThread: "
-             << base::CommandLine::ForCurrentProcess()->GetCommandLineString();
-  if (!CheckOrStartProfiling())
-    return false;
-
-  MakeTestAllocations();
-  return true;
+  // If the flag is true, then the WaitableEvent will be signaled after
+  // profiling has started.
+  if (!wait_for_profiling_to_start_)
+    wait_for_ui_thread_.Signal();
 }
 
 bool ProfilingTestDriver::CheckOrStartProfiling() {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+
   if (options_.profiling_already_started) {
     if (ProfilingProcessHost::has_started())
       return true;
@@ -306,24 +508,70 @@ bool ProfilingTestDriver::CheckOrStartProfiling() {
     return false;
   }
 
-  ProfilingProcessHost::Start(connection, options_.mode);
+  // When this is not-null, initialization should wait for the QuitClosure to be
+  // called.
+  std::unique_ptr<base::RunLoop> run_loop;
+
+  if (ShouldProfileBrowser()) {
+    if (running_on_ui_thread_) {
+      run_loop.reset(new base::RunLoop);
+      profiling::SetOnInitAllocatorShimCallbackForTesting(
+          run_loop->QuitClosure(), base::ThreadTaskRunnerHandle::Get());
+    } else {
+      wait_for_profiling_to_start_ = true;
+      profiling::SetOnInitAllocatorShimCallbackForTesting(
+          base::Bind(&base::WaitableEvent::Signal,
+                     base::Unretained(&wait_for_ui_thread_)),
+          base::ThreadTaskRunnerHandle::Get());
+    }
+  }
+
+  ProfilingProcessHost::Start(connection, options_.mode, options_.stack_mode);
+
+  if (run_loop)
+    run_loop->Run();
+
   return true;
 }
 
 void ProfilingTestDriver::MakeTestAllocations() {
-  leaks_.reserve(2 * kMallocAllocCount + kPartitionAllocSize);
-  for (int i = 0; i < kMallocAllocCount; ++i) {
-    leaks_.push_back(new char[kMallocAllocSize]);
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+
+  base::PlatformThread::SetName(kThreadName);
+
+  leaks_.reserve(2 * kMallocAllocCount + 1 + kPartitionAllocSize);
+
+  {
+    DisableAllocationTrackingForCurrentThreadForTesting();
+    TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION event(kMallocTypeTag);
+    TRACE_EVENT0(kTestCategory, kMallocEvent);
+    EnableAllocationTrackingForCurrentThreadForTesting();
+
+    for (int i = 0; i < kMallocAllocCount; ++i) {
+      leaks_.push_back(new char[kMallocAllocSize]);
+    }
   }
 
-  for (int i = 0; i < kPartitionAllocCount; ++i) {
-    leaks_.push_back(static_cast<char*>(partition_allocator_.root()->Alloc(
-        kPartitionAllocSize, kPartitionAllocTypeName)));
+  {
+    DisableAllocationTrackingForCurrentThreadForTesting();
+    TRACE_EVENT0(kTestCategory, kPAEvent);
+    EnableAllocationTrackingForCurrentThreadForTesting();
+
+    for (int i = 0; i < kPartitionAllocCount; ++i) {
+      leaks_.push_back(static_cast<char*>(partition_allocator_.root()->Alloc(
+          kPartitionAllocSize, kPartitionAllocTypeName)));
+    }
   }
 
-  for (int i = 0; i < kVariadicAllocCount; ++i) {
-    leaks_.push_back(new char[i + 8000]);  // Variadic allocation.
-    total_variadic_allocations_ += i + 8000;
+  {
+    DisableAllocationTrackingForCurrentThreadForTesting();
+    TRACE_EVENT0(kTestCategory, kVariadicEvent);
+    EnableAllocationTrackingForCurrentThreadForTesting();
+
+    for (int i = 0; i < kVariadicAllocCount; ++i) {
+      leaks_.push_back(new char[i + 8000]);  // Variadic allocation.
+      total_variadic_allocations_ += i + 8000;
+    }
   }
 
   // // Navigate around to force allocations in the renderer.
@@ -350,7 +598,8 @@ void ProfilingTestDriver::CollectResults(bool synchronous) {
   profiling::ProfilingProcessHost::GetInstance()->RequestTraceWithHeapDump(
       base::Bind(&ProfilingTestDriver::TraceFinished, base::Unretained(this),
                  std::move(finish_tracing_closure)),
-      true);
+      true /* keep_small_allocations */,
+      false /* strip_path_from_mapped_files */);
 
   if (synchronous)
     run_loop->Run();
@@ -377,28 +626,44 @@ bool ProfilingTestDriver::ValidateBrowserAllocations(base::Value* dump_json) {
     return true;
   }
 
+  if (!heaps_v2) {
+    LOG(ERROR) << "Browser heap dump missing.";
+    return false;
+  }
+
   bool result = false;
 
-// TODO(ajwong): This step fails on Nexus 5X devices running kit-kat. It works
-// on Nexus 5X devices running oreo. The problem is that all allocations have
-// the same [an effectively empty] backtrace and get glommed together. More
-// investigation is necessary. For now, I'm turning this off for Android.
-// https://crbug.com/786450.
-#if !defined(OS_ANDROID)
-  result = ValidateDump(heaps_v2, kMallocAllocSize * kMallocAllocCount,
-                        kMallocAllocCount, "malloc", nullptr);
-  if (!result) {
-    LOG(ERROR) << "Failed to validate malloc fixed allocations";
-    return false;
-  }
-
-  result = ValidateDump(heaps_v2, total_variadic_allocations_,
-                        kVariadicAllocCount, "malloc", nullptr);
-  if (!result) {
-    LOG(ERROR) << "Failed to validate malloc variadic allocations";
-    return false;
-  }
+  bool should_validate_dumps = true;
+#if defined(OS_ANDROID)
+  // TODO(ajwong): This step fails on Nexus 5X devices running kit-kat. It works
+  // on Nexus 5X devices running oreo. The problem is that all allocations have
+  // the same [an effectively empty] backtrace and get glommed together. More
+  // investigation is necessary. For now, I'm turning this off for Android.
+  // https://crbug.com/786450.
+  if (!HasPseudoFrames())
+    should_validate_dumps = false;
 #endif
+
+  std::string thread_name = ShouldIncludeNativeThreadNames() ? kThreadName : "";
+
+  if (should_validate_dumps) {
+    result = ValidateDump(heaps_v2, kMallocAllocSize * kMallocAllocCount,
+                          kMallocAllocCount, "malloc",
+                          HasPseudoFrames() ? kMallocTypeTag : nullptr,
+                          HasPseudoFrames() ? kMallocEvent : "", thread_name);
+    if (!result) {
+      LOG(ERROR) << "Failed to validate malloc fixed allocations";
+      return false;
+    }
+
+    result = ValidateDump(heaps_v2, total_variadic_allocations_,
+                          kVariadicAllocCount, "malloc", nullptr,
+                          HasPseudoFrames() ? kVariadicEvent : "", thread_name);
+    if (!result) {
+      LOG(ERROR) << "Failed to validate malloc variadic allocations";
+      return false;
+    }
+  }
 
   // TODO(ajwong): Like malloc, all Partition-Alloc allocations get glommed
   // together for some Android device/OS configurations. However, since there is
@@ -407,7 +672,8 @@ bool ProfilingTestDriver::ValidateBrowserAllocations(base::Value* dump_json) {
   // fixing backtrace. https://crbug.com/786450.
   result = ValidateDump(heaps_v2, kPartitionAllocSize * kPartitionAllocCount,
                         kPartitionAllocCount, "partition_alloc",
-                        kPartitionAllocTypeName);
+                        kPartitionAllocTypeName,
+                        HasPseudoFrames() ? kPAEvent : "", thread_name);
   if (!result) {
     LOG(ERROR) << "Failed to validate PA allocations";
     return false;
@@ -433,8 +699,7 @@ bool ProfilingTestDriver::ValidateRendererAllocations(base::Value* dump_json) {
 
   base::ProcessId renderer_pid = static_cast<base::ProcessId>(pid);
   base::Value* heaps_v2 = FindHeapsV2(renderer_pid, dump_json);
-  if (options_.mode == ProfilingProcessHost::Mode::kAll ||
-      options_.mode == ProfilingProcessHost::Mode::kAllRenderers) {
+  if (ShouldProfileRenderer()) {
     if (!heaps_v2) {
       LOG(ERROR) << "Failed to find heaps v2 for renderer";
       return false;
@@ -467,7 +732,64 @@ bool ProfilingTestDriver::ValidateRendererAllocations(base::Value* dump_json) {
   return true;
 }
 
-// Attempt to dump a gpu process.
-// TODO(ajwong): Implement this.  http://crbug.com/780955
+bool ProfilingTestDriver::ShouldProfileBrowser() {
+  return options_.mode == ProfilingProcessHost::Mode::kAll ||
+         options_.mode == ProfilingProcessHost::Mode::kBrowser ||
+         options_.mode == ProfilingProcessHost::Mode::kMinimal;
+}
+
+bool ProfilingTestDriver::ShouldProfileRenderer() {
+  return options_.mode == ProfilingProcessHost::Mode::kAll ||
+         options_.mode == ProfilingProcessHost::Mode::kAllRenderers;
+}
+
+bool ProfilingTestDriver::ShouldIncludeNativeThreadNames() {
+  return options_.stack_mode == mojom::StackMode::NATIVE_WITH_THREAD_NAMES;
+}
+
+bool ProfilingTestDriver::HasPseudoFrames() {
+  return options_.stack_mode == mojom::StackMode::PSEUDO ||
+         options_.stack_mode == mojom::StackMode::MIXED;
+}
+
+void ProfilingTestDriver::WaitForProfilingToStartForAllRenderersUIThread() {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+  while (true) {
+    std::vector<base::ProcessId> profiled_pids;
+    base::RunLoop run_loop;
+    auto callback = base::BindOnce(
+        [](std::vector<base::ProcessId>* results, base::OnceClosure finished,
+           std::vector<base::ProcessId> pids) {
+          results->swap(pids);
+          std::move(finished).Run();
+        },
+        &profiled_pids, run_loop.QuitClosure());
+    profiling::ProfilingProcessHost::GetInstance()->GetProfiledPids(
+        std::move(callback));
+    run_loop.Run();
+
+    if (RenderersAreBeingProfiled(profiled_pids))
+      break;
+  }
+}
+
+void ProfilingTestDriver::
+    WaitForProfilingToStartForAllRenderersUIThreadAndSignal() {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+  profiling::ProfilingProcessHost::GetInstance()->GetProfiledPids(
+      base::BindOnce(&ProfilingTestDriver::
+                         WaitForProfilingToStartForAllRenderersUIThreadCallback,
+                     base::Unretained(this)));
+}
+
+void ProfilingTestDriver::
+    WaitForProfilingToStartForAllRenderersUIThreadCallback(
+        std::vector<base::ProcessId> results) {
+  if (RenderersAreBeingProfiled(results)) {
+    wait_for_ui_thread_.Signal();
+    return;
+  }
+  WaitForProfilingToStartForAllRenderersUIThreadAndSignal();
+}
 
 }  // namespace profiling

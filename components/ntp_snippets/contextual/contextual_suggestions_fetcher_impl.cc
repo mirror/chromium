@@ -4,7 +4,6 @@
 
 #include "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.h"
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/default_clock.h"
@@ -14,6 +13,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
+#include "services/identity/public/cpp/identity_manager.h"
 #include "services/identity/public/cpp/primary_account_access_token_fetcher.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -111,13 +111,11 @@ bool AddSuggestionsFromListValue(bool content_suggestions_api,
 }  // namespace
 
 ContextualSuggestionsFetcherImpl::ContextualSuggestionsFetcherImpl(
-    SigninManagerBase* signin_manager,
-    OAuth2TokenService* token_service,
+    identity::IdentityManager* identity_manager,
     scoped_refptr<URLRequestContextGetter> url_request_context_getter,
     PrefService* pref_service,
     const ParseJSONCallback& parse_json_callback)
-    : signin_manager_(signin_manager),
-      token_service_(token_service),
+    : identity_manager_(identity_manager),
       url_request_context_getter_(std::move(url_request_context_getter)),
       parse_json_callback_(parse_json_callback),
       fetch_url_(GetFetchEndpoint()) {}
@@ -153,7 +151,7 @@ void ContextualSuggestionsFetcherImpl::StartRequest(
     SuggestionsAvailableCallback callback,
     const std::string& oauth_access_token) {
   builder.SetUrl(fetch_url_)
-      .SetAuthentication(signin_manager_->GetAuthenticatedAccountId(),
+      .SetAuthentication(identity_manager_->GetPrimaryAccountInfo().account_id,
                          base::StringPrintf(kAuthorizationRequestHeaderFormat,
                                             oauth_access_token.c_str()));
   DVLOG(1) << "ContextualSuggestionsFetcherImpl::StartRequest";
@@ -171,11 +169,12 @@ void ContextualSuggestionsFetcherImpl::StartTokenRequest() {
   }
 
   OAuth2TokenService::ScopeSet scopes{kContentSuggestionsApiScope};
-  token_fetcher_ = base::MakeUnique<PrimaryAccountAccessTokenFetcher>(
-      "ntp_snippets", signin_manager_, token_service_, scopes,
+  token_fetcher_ = identity_manager_->CreateAccessTokenFetcherForPrimaryAccount(
+      "ntp_snippets", scopes,
       base::BindOnce(
           &ContextualSuggestionsFetcherImpl::AccessTokenFetchFinished,
-          base::Unretained(this)));
+          base::Unretained(this)),
+      identity::PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 }
 
 void ContextualSuggestionsFetcherImpl::AccessTokenFetchFinished(
@@ -184,8 +183,8 @@ void ContextualSuggestionsFetcherImpl::AccessTokenFetchFinished(
   // Delete the fetcher only after we leave this method (which is called from
   // the fetcher itself).
   DCHECK(token_fetcher_);
-  std::unique_ptr<PrimaryAccountAccessTokenFetcher> token_fetcher_deleter(
-      std::move(token_fetcher_));
+  std::unique_ptr<identity::PrimaryAccountAccessTokenFetcher>
+      token_fetcher_deleter(std::move(token_fetcher_));
 
   if (error.state() != GoogleServiceAuthError::NONE) {
     AccessTokenError(error);

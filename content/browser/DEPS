@@ -19,6 +19,7 @@ include_rules = [
   "+components/ukm",
   "+components/url_formatter",
   "+components/viz",
+  "+components/cbor",
 
   "+content/app/strings/grit",  # For generated headers
   "+content/public/browser",
@@ -77,6 +78,7 @@ include_rules = [
   "+third_party/WebKit/public/platform/WebGestureEvent.h",
   "+third_party/WebKit/public/platform/WebInputEvent.h",
   "+third_party/WebKit/public/platform/WebInsecureRequestPolicy.h",
+  "+third_party/WebKit/public/platform/WebIntrinsicSizingInfo.h",
   "+third_party/WebKit/public/platform/WebKeyboardEvent.h",
   "+third_party/WebKit/public/platform/WebMixedContentContextType.h",
   "+third_party/WebKit/public/platform/WebMouseEvent.h",
@@ -84,8 +86,8 @@ include_rules = [
   "+third_party/WebKit/public/platform/WebPageVisibilityState.h",
   "+third_party/WebKit/public/platform/WebReferrerPolicy.h",
   "+third_party/WebKit/public/platform/WebRemoteFrameProperties.h",
-  "+third_party/WebKit/public/platform/WebRemoteScrollProperties.h",
   "+third_party/WebKit/public/platform/WebScreenInfo.h",
+  "+third_party/WebKit/public/platform/WebScrollIntoViewParams.h",
   "+third_party/WebKit/public/platform/WebSecurityStyle.h",
   "+third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h",
   "+third_party/WebKit/public/platform/WebTouchEvent.h",
@@ -100,6 +102,7 @@ include_rules = [
   "+third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h",
   "+third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
   "+third_party/WebKit/public/public_features.h",
+  "+third_party/WebKit/public/web/devtools_agent.mojom.h",
   "+third_party/WebKit/public/web/devtools_frontend.mojom.h",
   "+third_party/WebKit/public/web/WebAXEnums.h",
   "+third_party/WebKit/public/web/WebConsoleMessage.h",

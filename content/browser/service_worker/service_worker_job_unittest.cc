@@ -63,6 +63,16 @@ class KeepHandlesDispatcherHost : public ServiceWorkerDispatcherHost {
     handles_.push_back(std::move(handle));
   }
 
+  void UnregisterServiceWorkerHandle(int handle_id) override {
+    auto iter = handles_.begin();
+    for (; iter != handles_.end(); ++iter) {
+      if ((*iter)->handle_id() == handle_id)
+        break;
+    }
+    ASSERT_NE(handles_.end(), iter);
+    handles_.erase(iter);
+  }
+
   void Clear() {
     handles_.clear();
   }
@@ -184,7 +194,7 @@ scoped_refptr<ServiceWorkerRegistration> ServiceWorkerJobTest::RunRegisterJob(
   scoped_refptr<ServiceWorkerRegistration> registration;
   bool called;
   job_coordinator()->Register(
-      script_url, options, nullptr,
+      script_url, options,
       SaveRegistration(expected_status, &called, &registration));
   EXPECT_FALSE(called);
   base::RunLoop().RunUntilIdle();
@@ -282,7 +292,7 @@ TEST_F(ServiceWorkerJobTest, DifferentMatchDifferentRegistration) {
   options1.scope = GURL("http://www.example.com/one/");
   scoped_refptr<ServiceWorkerRegistration> original_registration1;
   job_coordinator()->Register(
-      GURL("http://www.example.com/service_worker.js"), options1, nullptr,
+      GURL("http://www.example.com/service_worker.js"), options1,
       SaveRegistration(SERVICE_WORKER_OK, &called1, &original_registration1));
 
   bool called2;
@@ -290,7 +300,7 @@ TEST_F(ServiceWorkerJobTest, DifferentMatchDifferentRegistration) {
   options2.scope = GURL("http://www.example.com/two/");
   scoped_refptr<ServiceWorkerRegistration> original_registration2;
   job_coordinator()->Register(
-      GURL("http://www.example.com/service_worker.js"), options2, nullptr,
+      GURL("http://www.example.com/service_worker.js"), options2,
       SaveRegistration(SERVICE_WORKER_OK, &called2, &original_registration2));
 
   EXPECT_FALSE(called1);
@@ -454,7 +464,67 @@ TEST_F(ServiceWorkerJobTest, RegisterDuplicateScript) {
   scoped_refptr<ServiceWorkerRegistration> new_registration_by_pattern =
       FindRegistrationForPattern(options.scope);
 
-  ASSERT_EQ(new_registration, old_registration);
+  EXPECT_EQ(new_registration_by_pattern, old_registration);
+}
+
+// Make sure that the same registration is used and the update_via_cache value
+// is updated when registering a duplicate pattern+script_url with a different
+// update_via_cache value.
+TEST_F(ServiceWorkerJobTest, RegisterWithDifferentUpdateViaCache) {
+  // During registration, handles will be created for hosting the worker's
+  // context. KeepHandlesDispatcherHost will store the handles.
+  auto dispatcher_host = base::MakeRefCounted<KeepHandlesDispatcherHost>(
+      helper_->mock_render_process_id(),
+      helper_->browser_context()->GetResourceContext());
+  helper_->RegisterDispatcherHost(helper_->mock_render_process_id(),
+                                  dispatcher_host);
+  dispatcher_host->Init(helper_->context_wrapper());
+
+  GURL script_url("https://www.example.com/service_worker.js");
+  blink::mojom::ServiceWorkerRegistrationOptions options;
+  options.scope = GURL("https://www.example.com/");
+
+  scoped_refptr<ServiceWorkerRegistration> old_registration =
+      RunRegisterJob(script_url, options);
+
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kImports,
+            old_registration->update_via_cache());
+
+  // During the above registration, a service worker registration object host
+  // for ServiceWorkerGlobalScope#registration has been created/added into
+  // |provider_host|.
+  ServiceWorkerProviderHost* provider_host =
+      old_registration->active_version()->provider_host();
+  ASSERT_NE(nullptr, provider_host);
+
+  // Clear all service worker handles.
+  dispatcher_host->Clear();
+  // Ensure that the registration's object host doesn't have the reference.
+  EXPECT_EQ(1UL, provider_host->registration_object_hosts_.size());
+  provider_host->registration_object_hosts_.clear();
+  EXPECT_EQ(0UL, provider_host->registration_object_hosts_.size());
+  ASSERT_TRUE(old_registration->HasOneRef());
+
+  scoped_refptr<ServiceWorkerRegistration> old_registration_by_pattern =
+      FindRegistrationForPattern(options.scope);
+
+  ASSERT_TRUE(old_registration_by_pattern.get());
+
+  options.update_via_cache = blink::mojom::ServiceWorkerUpdateViaCache::kNone;
+  scoped_refptr<ServiceWorkerRegistration> new_registration =
+      RunRegisterJob(script_url, options);
+
+  // Ensure that the registration object is not copied.
+  ASSERT_EQ(old_registration, new_registration);
+  EXPECT_EQ(blink::mojom::ServiceWorkerUpdateViaCache::kNone,
+            new_registration->update_via_cache());
+
+  ASSERT_FALSE(old_registration->HasOneRef());
+
+  scoped_refptr<ServiceWorkerRegistration> new_registration_by_pattern =
+      FindRegistrationForPattern(options.scope);
+
+  EXPECT_EQ(new_registration_by_pattern, old_registration);
 }
 
 class FailToStartWorkerTestHelper : public EmbeddedWorkerTestHelper {
@@ -503,7 +573,7 @@ TEST_F(ServiceWorkerJobTest, ParallelRegUnreg) {
   bool registration_called = false;
   scoped_refptr<ServiceWorkerRegistration> registration;
   job_coordinator()->Register(
-      script_url, options, nullptr,
+      script_url, options,
       SaveRegistration(SERVICE_WORKER_OK, &registration_called, &registration));
 
   bool unregistration_called = false;
@@ -536,7 +606,6 @@ TEST_F(ServiceWorkerJobTest, ParallelRegNewScript) {
       script_url1,
       blink::mojom::ServiceWorkerRegistrationOptions(
           pattern, blink::mojom::ServiceWorkerUpdateViaCache::kNone),
-      nullptr,
       SaveRegistration(SERVICE_WORKER_OK, &registration1_called,
                        &registration1));
 
@@ -547,7 +616,6 @@ TEST_F(ServiceWorkerJobTest, ParallelRegNewScript) {
       script_url2,
       blink::mojom::ServiceWorkerRegistrationOptions(
           pattern, blink::mojom::ServiceWorkerUpdateViaCache::kAll),
-      nullptr,
       SaveRegistration(SERVICE_WORKER_OK, &registration2_called,
                        &registration2));
 
@@ -574,14 +642,14 @@ TEST_F(ServiceWorkerJobTest, ParallelRegSameScript) {
   bool registration1_called = false;
   scoped_refptr<ServiceWorkerRegistration> registration1;
   job_coordinator()->Register(
-      script_url, options, nullptr,
+      script_url, options,
       SaveRegistration(SERVICE_WORKER_OK, &registration1_called,
                        &registration1));
 
   bool registration2_called = false;
   scoped_refptr<ServiceWorkerRegistration> registration2;
   job_coordinator()->Register(
-      script_url, options, nullptr,
+      script_url, options,
       SaveRegistration(SERVICE_WORKER_OK, &registration2_called,
                        &registration2));
 
@@ -643,14 +711,14 @@ TEST_F(ServiceWorkerJobTest, AbortAll_Register) {
   bool registration_called1 = false;
   scoped_refptr<ServiceWorkerRegistration> registration1;
   job_coordinator()->Register(
-      script_url1, options1, nullptr,
+      script_url1, options1,
       SaveRegistration(SERVICE_WORKER_ERROR_ABORT, &registration_called1,
                        &registration1));
 
   bool registration_called2 = false;
   scoped_refptr<ServiceWorkerRegistration> registration2;
   job_coordinator()->Register(
-      script_url2, options2, nullptr,
+      script_url2, options2,
       SaveRegistration(SERVICE_WORKER_ERROR_ABORT, &registration_called2,
                        &registration2));
 
@@ -713,7 +781,7 @@ TEST_F(ServiceWorkerJobTest, AbortAll_RegUnreg) {
   bool registration_called = false;
   scoped_refptr<ServiceWorkerRegistration> registration;
   job_coordinator()->Register(
-      script_url, options, nullptr,
+      script_url, options,
       SaveRegistration(SERVICE_WORKER_ERROR_ABORT, &registration_called,
                        &registration));
 
@@ -917,7 +985,7 @@ class UpdateJobTestHelper
     scoped_refptr<ServiceWorkerRegistration> registration;
     bool called = false;
     job_coordinator()->Register(
-        test_origin.Resolve(kScript), options, nullptr,
+        test_origin.Resolve(kScript), options,
         SaveRegistration(SERVICE_WORKER_OK, &called, &registration));
     base::RunLoop().RunUntilIdle();
     EXPECT_TRUE(called);
@@ -1781,24 +1849,12 @@ class CheckPauseAfterDownloadEmbeddedWorkerInstanceClient
   }
 
  protected:
-  void StartWorker(
-      mojom::EmbeddedWorkerStartParamsPtr params,
-      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-      mojom::ControllerServiceWorkerRequest controller_request,
-      blink::mojom::ServiceWorkerInstalledScriptsInfoPtr scripts_info,
-      blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
-      mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-      blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy)
-      override {
+  void StartWorker(mojom::EmbeddedWorkerStartParamsPtr params) override {
     ASSERT_TRUE(next_pause_after_download_.has_value());
     EXPECT_EQ(next_pause_after_download_.value(), params->pause_after_download);
     num_of_startworker_++;
     EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
-        std::move(params), std::move(dispatcher_request),
-        std::move(controller_request), std::move(scripts_info),
-        std::move(service_worker_host), std::move(instance_host),
-        std::move(provider_info), std::move(content_settings_proxy));
+        std::move(params));
   }
 
  private:

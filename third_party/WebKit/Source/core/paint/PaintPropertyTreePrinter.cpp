@@ -177,6 +177,8 @@ class PropertyTreePrinterTraits<ClipPaintPropertyNode> {
       printer.AddPropertyNode(c, "CssClip", object);
     if (const auto* c = properties.CssClipFixedPosition())
       printer.AddPropertyNode(c, "CssClipFixedPosition", object);
+    if (const auto* c = properties.OverflowControlsClip())
+      printer.AddPropertyNode(c, "OverflowControlsClip", object);
     if (const auto* c = properties.InnerBorderRadiusClip())
       printer.AddPropertyNode(c, "InnerBorderRadiusClip", object);
     if (const auto* c = properties.OverflowClip())
@@ -225,7 +227,7 @@ class PropertyTreePrinterTraits<ScrollPaintPropertyNode> {
 
 class PaintPropertyTreeGraphBuilder {
  public:
-  PaintPropertyTreeGraphBuilder() {}
+  PaintPropertyTreeGraphBuilder() = default;
 
   void GenerateTreeGraph(const LocalFrameView& frame_view,
                          StringBuilder& string_builder) {
@@ -478,10 +480,9 @@ class PaintPropertyTreeGraphBuilder {
          child = child->NextSibling())
       WriteLayoutObjectNode(*child);
     if (object.IsLayoutEmbeddedContent()) {
-      LocalFrameView* frame_view =
-          ToLayoutEmbeddedContent(object).ChildFrameView();
-      if (frame_view)
-        WriteFrameViewNode(*frame_view, &object);
+      FrameView* frame_view = ToLayoutEmbeddedContent(object).ChildFrameView();
+      if (frame_view && frame_view->IsLocalFrameView())
+        WriteFrameViewNode(*ToLocalFrameView(frame_view), &object);
     }
   }
 

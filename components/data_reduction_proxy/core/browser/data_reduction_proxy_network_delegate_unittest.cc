@@ -15,7 +15,6 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/numerics/safe_conversions.h"
@@ -51,16 +50,16 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
+#include "net/base/proxy_server.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
 #include "net/nqe/effective_connection_type.h"
 #include "net/nqe/network_quality_estimator_test_util.h"
-#include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_retry_info.h"
-#include "net/proxy/proxy_server.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_config.h"
+#include "net/proxy_resolution/proxy_info.h"
+#include "net/proxy_resolution/proxy_retry_info.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/socket/socket_test_util.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/gtest_util.h"
@@ -366,9 +365,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     }
     context_.reset(new net::TestURLRequestContext(true));
     context_storage_.reset(new net::URLRequestContextStorage(context_.get()));
-    proxy_service_ =
-        net::ProxyService::CreateFixedFromPacResult(proxy_server.ToPacString());
-    context_->set_proxy_service(proxy_service_.get());
+    proxy_resolution_service_ = net::ProxyResolutionService::CreateFixedFromPacResult(
+        proxy_server.ToPacString());
+    context_->set_proxy_resolution_service(proxy_resolution_service_.get());
+    context_->set_network_quality_estimator(&test_network_quality_estimator_);
 
     mock_socket_factory_.reset(new net::MockClientSocketFactory());
 
@@ -396,7 +396,6 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     test_context_->io_data()->set_lofi_ui_service(std::move(lofi_ui_service));
 
     context_->set_enable_brotli(enable_brotli_globally);
-    context_->set_network_quality_estimator(&test_network_quality_estimator_);
     context_->Init();
 
     test_context_->DisableWarmupURLFetch();
@@ -470,7 +469,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     }
 
     EXPECT_FALSE(socket_);
-    socket_ = base::MakeUnique<net::StaticSocketDataProvider>(
+    socket_ = std::make_unique<net::StaticSocketDataProvider>(
         reads_list->data(), reads_list->size(), writes_list->data(),
         writes_list->size());
     mock_socket_factory_->AddSocketDataProvider(socket_.get());
@@ -747,10 +746,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
 
     std::unique_ptr<net::StaticSocketDataProvider> socket;
     if (!redirect_once) {
-      socket = base::MakeUnique<net::StaticSocketDataProvider>(
+      socket = std::make_unique<net::StaticSocketDataProvider>(
           reads, arraysize(reads), writes, arraysize(writes));
     } else {
-      socket = base::MakeUnique<net::StaticSocketDataProvider>(
+      socket = std::make_unique<net::StaticSocketDataProvider>(
           redirect_reads, arraysize(redirect_reads), redirect_writes,
           arraysize(redirect_writes));
     }
@@ -869,7 +868,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
  private:
   base::MessageLoopForIO message_loop_;
   std::unique_ptr<net::MockClientSocketFactory> mock_socket_factory_;
-  std::unique_ptr<net::ProxyService> proxy_service_;
+  std::unique_ptr<net::ProxyResolutionService> proxy_resolution_service_;
   std::unique_ptr<net::TestURLRequestContext> context_;
   std::unique_ptr<net::URLRequestContextStorage> context_storage_;
 

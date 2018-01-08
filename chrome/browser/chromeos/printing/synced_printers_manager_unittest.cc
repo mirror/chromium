@@ -10,7 +10,6 @@
 
 #include "base/bind.h"
 #include "base/debug/dump_without_crashing.h"
-#include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/run_loop.h"
 #include "base/scoped_observer.h"
@@ -30,11 +29,11 @@ namespace chromeos {
 
 namespace {
 
-const char kTestPrinterId[] = "UUID-UUID-UUID-PRINTER";
-const char kTestPrinterId2[] = "UUID-UUID-UUID-PRINTR2";
-const char kTestUri[] = "ipps://printer.chromium.org/ipp/print";
+constexpr char kTestPrinterId[] = "UUID-UUID-UUID-PRINTER";
+constexpr char kTestPrinterId2[] = "UUID-UUID-UUID-PRINTR2";
+constexpr char kTestUri[] = "ipps://printer.chromium.org/ipp/print";
 
-const char kLexJson[] = R"({
+constexpr char kLexJson[] = R"({
         "display_name": "LexaPrint",
         "description": "Laser on the test shelf",
         "manufacturer": "LexaPrint, Inc.",
@@ -46,7 +45,7 @@ const char kLexJson[] = R"({
         },
       } )";
 
-const char kColorLaserJson[] = R"json({
+constexpr char kColorLaserJson[] = R"json({
       "display_name": "Color Laser",
       "description": "The printer next to the water cooler.",
       "manufacturer": "Printer Manufacturer",
@@ -95,7 +94,7 @@ class SyncedPrintersManagerTest : public testing::Test {
   SyncedPrintersManagerTest()
       : manager_(SyncedPrintersManager::Create(
             &profile_,
-            base::MakeUnique<PrintersSyncBridge>(
+            std::make_unique<PrintersSyncBridge>(
                 base::Bind(&syncer::ModelTypeStore::CreateInMemoryStoreForTest),
                 base::BindRepeating(
                     base::IgnoreResult(&base::debug::DumpWithoutCrashing))))) {
@@ -190,7 +189,7 @@ TEST_F(SyncedPrintersManagerTest, EnterprisePrinters) {
   std::string first_printer = kColorLaserJson;
   std::string second_printer = kLexJson;
 
-  auto value = base::MakeUnique<base::ListValue>();
+  auto value = std::make_unique<base::ListValue>();
   value->AppendString(first_printer);
   value->AppendString(second_printer);
 
@@ -208,7 +207,7 @@ TEST_F(SyncedPrintersManagerTest, EnterprisePrinters) {
 
 TEST_F(SyncedPrintersManagerTest, GetEnterprisePrinter) {
   std::string printer = kLexJson;
-  auto value = base::MakeUnique<base::ListValue>();
+  auto value = std::make_unique<base::ListValue>();
   value->AppendString(printer);
 
   sync_preferences::TestingPrefServiceSyncable* prefs =
@@ -241,7 +240,7 @@ TEST_F(SyncedPrintersManagerTest, PrinterIsInstalled) {
 // enterprise or configured printer lists.
 TEST_F(SyncedPrintersManagerTest, PrinterInstalledConfiguresPrinter) {
   // Set up an enterprise printer.
-  auto value = base::MakeUnique<base::ListValue>();
+  auto value = std::make_unique<base::ListValue>();
   value->AppendString(kColorLaserJson);
 
   sync_preferences::TestingPrefServiceSyncable* prefs =

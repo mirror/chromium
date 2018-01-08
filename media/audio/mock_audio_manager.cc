@@ -17,7 +17,9 @@ MockAudioManager::MockAudioManager(std::unique_ptr<AudioThread> audio_thread)
 
 MockAudioManager::~MockAudioManager() = default;
 
-void MockAudioManager::ShutdownOnAudioThread() {}
+void MockAudioManager::ShutdownOnAudioThread() {
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+}
 
 bool MockAudioManager::HasAudioOutputDevices() {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
@@ -80,6 +82,7 @@ void MockAudioManager::RemoveOutputDeviceChangeListener(
 }
 
 AudioParameters MockAudioManager::GetDefaultOutputStreamParameters() {
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   return default_output_params_;
 }
 
@@ -122,11 +125,6 @@ std::unique_ptr<AudioLog> MockAudioManager::CreateAudioLog(
 }
 
 void MockAudioManager::InitializeDebugRecording() {}
-
-void MockAudioManager::EnableDebugRecording(
-    const base::FilePath& base_file_name) {}
-
-void MockAudioManager::DisableDebugRecording() {}
 
 const char* MockAudioManager::GetName() {
   return nullptr;

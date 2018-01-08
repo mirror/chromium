@@ -13,12 +13,15 @@ source_set("tests") {
     "//base/test:test_support",
     "//components/viz/common:common",
     "//components/viz/test:test_support",
-    "//media/capture/mojo:capture_types",
+    "//gpu/ipc/common:struct_traits",
+    "//media/capture/mojo:video_capture",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/cpp:service_test_support",
     "//services/viz/public/interfaces",
     "//skia/public/interfaces",
     "//testing/gtest",
     "//ui/gfx:test_support",
+    "//ui/gfx/geometry/mojo:struct_traits",
+    "//ui/gfx/ipc/color:color",
   ]
 }

@@ -107,8 +107,6 @@ class PLATFORM_EXPORT FontCache {
 
   void ReleaseFontData(const SimpleFontData*);
 
-  // This method is implemented by the plaform and used by
-  // FontFastPath to lookup the font for a given character.
   scoped_refptr<SimpleFontData> FallbackFontForCharacter(
       const FontDescription&,
       UChar32,
@@ -236,9 +234,15 @@ class PLATFORM_EXPORT FontCache {
   void DumpFontPlatformDataCache(base::trace_event::ProcessMemoryDump*);
   void DumpShapeResultCache(base::trace_event::ProcessMemoryDump*);
 
-  ~FontCache() {}
+  ~FontCache() = default;
 
  private:
+  scoped_refptr<SimpleFontData> PlatformFallbackFontForCharacter(
+      const FontDescription&,
+      UChar32,
+      const SimpleFontData* font_data_to_substitute,
+      FontFallbackPriority = FontFallbackPriority::kText);
+
   friend class FontGlobalContext;
   FontCache();
 

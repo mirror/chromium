@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 
+#include "ash/public/interfaces/app_list.mojom.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -25,6 +26,7 @@
 #include "components/sync/protocol/app_list_specifics.pb.h"
 
 class ArcAppModelBuilder;
+class ChromeAppListModelUpdater;
 class ChromeAppListItem;
 class ExtensionAppModelBuilder;
 class Profile;
@@ -43,13 +45,11 @@ class PrefRegistrySyncable;
 
 namespace app_list {
 
+// TODO(hejq): Remove AppListItem when we have a mojo struct for this.
 class AppListItem;
 // TODO(hejq): Remove these when we get rid of |GetModel| and |GetSearchModel|.
 class AppListModel;
 class SearchModel;
-
-class AppListModelUpdater;
-class ChromeAppListModelUpdater;
 
 // Keyed Service that owns, stores, and syncs an AppListModel for a profile.
 class AppListSyncableService : public syncer::SyncableService,
@@ -102,7 +102,7 @@ class AppListSyncableService : public syncer::SyncableService,
   void RemoveUninstalledItem(const std::string& id);
 
   // Called when properties of an item may have changed, e.g. default/oem state.
-  void UpdateItem(AppListItem* app_item);
+  void UpdateItem(const ChromeAppListItem* app_item);
 
   // Returns the existing sync item matching |id| or NULL.
   const SyncItem* GetSyncItem(const std::string& id) const;
@@ -121,7 +121,7 @@ class AppListSyncableService : public syncer::SyncableService,
                       const syncer::StringOrdinal& item_pin_ordinal);
 
   // Gets the app list model updater.
-  AppListModelUpdater* GetModelUpdater();
+  ChromeAppListModelUpdater* GetModelUpdater();
 
   // Gets the app list model.
   // Note: This will be removed. Use |GetModelUpdater| instead.
@@ -159,7 +159,7 @@ class AppListSyncableService : public syncer::SyncableService,
       const syncer::SyncChangeList& change_list) override;
 
  private:
-  class ModelObserver;
+  class ModelUpdaterDelegate;
 
   // Builds the model once ExtensionService is ready.
   void BuildModel();
@@ -170,25 +170,25 @@ class AppListSyncableService : public syncer::SyncableService,
   // If |app_item| matches an existing sync item, returns it. Otherwise adds
   // |app_item| to |sync_items_| and returns the new item. If |app_item| is
   // invalid returns NULL.
-  SyncItem* FindOrAddSyncItem(AppListItem* app_item);
+  SyncItem* FindOrAddSyncItem(const ChromeAppListItem* app_item);
 
   // Creates a sync item for |app_item| and sends an ADD SyncChange event.
-  SyncItem* CreateSyncItemFromAppItem(AppListItem* app_item);
+  SyncItem* CreateSyncItemFromAppItem(const ChromeAppListItem* app_item);
 
   // If a sync item for |app_item| already exists, update |app_item| from the
   // sync item, otherwise create a new sync item from |app_item|.
-  void AddOrUpdateFromSyncItem(AppListItem* app_item);
+  void AddOrUpdateFromSyncItem(const ChromeAppListItem* app_item);
 
   // Either uninstalling a default app or remove the REMOVE_DEFAULT sync item.
   // Returns true if the app is removed. Otherwise deletes the existing sync
   // item and returns false.
-  bool RemoveDefaultApp(AppListItem* item, SyncItem* sync_item);
+  bool RemoveDefaultApp(const ChromeAppListItem* item, SyncItem* sync_item);
 
   // Deletes a sync item from |sync_items_| and sends a DELETE action.
   void DeleteSyncItem(const std::string& item_id);
 
   // Updates existing entry in |sync_items_| from |app_item|.
-  void UpdateSyncItem(AppListItem* app_item);
+  void UpdateSyncItem(const ChromeAppListItem* app_item);
 
   // Removes sync item matching |id|.
   void RemoveSyncItem(const std::string& id);
@@ -210,10 +210,6 @@ class AppListSyncableService : public syncer::SyncableService,
 
   // Handles an existing sync item.
   void ProcessExistingSyncItem(SyncItem* sync_item);
-
-  // Updates |app_item| from |sync_item| (e.g. updates item positions).
-  void UpdateAppItemFromSyncItem(const SyncItem* sync_item,
-                                 AppListItem* app_item);
 
   // Sends ADD or CHANGED for sync item.
   void SendSyncChange(SyncItem* sync_item,
@@ -269,7 +265,7 @@ class AppListSyncableService : public syncer::SyncableService,
   Profile* profile_;
   extensions::ExtensionSystem* extension_system_;
   std::unique_ptr<ChromeAppListModelUpdater> model_updater_;
-  std::unique_ptr<ModelObserver> model_observer_;
+  std::unique_ptr<ModelUpdaterDelegate> model_updater_delegate_;
   std::unique_ptr<ExtensionAppModelBuilder> apps_builder_;
   std::unique_ptr<ArcAppModelBuilder> arc_apps_builder_;
   std::unique_ptr<syncer::SyncChangeProcessor> sync_processor_;

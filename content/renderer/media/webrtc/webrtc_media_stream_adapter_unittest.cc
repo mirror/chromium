@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -40,8 +41,9 @@ class WebRtcMediaStreamAdapterTest : public ::testing::Test {
  public:
   void SetUp() override {
     dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
-    track_adapter_map_ =
-        new WebRtcMediaStreamTrackAdapterMap(dependency_factory_.get());
+    track_adapter_map_ = new WebRtcMediaStreamTrackAdapterMap(
+        dependency_factory_.get(),
+        blink::scheduler::GetSingleThreadTaskRunnerForTesting());
   }
 
   void TearDown() override {
@@ -77,6 +79,7 @@ class LocalWebRtcMediaStreamAdapterTest : public WebRtcMediaStreamAdapterTest {
                           media::AudioParameters::kAudioCDSampleRate,
                           media::CHANNEL_LAYOUT_STEREO,
                           media::AudioParameters::kAudioCDSampleRate / 50),
+        false /* hotword_enabled */, false /* disable_local_echo */,
         AudioProcessingProperties(),
         base::Bind(&LocalWebRtcMediaStreamAdapterTest::OnAudioSourceStarted),
         dependency_factory_.get());

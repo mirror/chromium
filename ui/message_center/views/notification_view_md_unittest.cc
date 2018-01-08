@@ -54,6 +54,11 @@ class NotificationTestDelegate : public NotificationDelegate {
     submitted_reply_string_ = reply;
   }
 
+  void Reset() {
+    clicked_button_index_ = -1;
+    submitted_reply_string_ = base::EmptyString16();
+  }
+
   void DisableNotification() override { disable_notification_called_ = true; }
 
   int clicked_button_index() const { return clicked_button_index_; }
@@ -501,17 +506,53 @@ TEST_F(NotificationViewMDTest, TestInlineReply) {
   generator.ClickLeftButton();
   generator.ClickLeftButton();
   EXPECT_TRUE(notification_view()->inline_reply_->visible());
-  EXPECT_TRUE(notification_view()->inline_reply_->HasFocus());
+  EXPECT_TRUE(notification_view()->inline_reply_->textfield()->visible());
+  EXPECT_TRUE(notification_view()->inline_reply_->textfield()->HasFocus());
 
-  // Type the text and submit.
-  ui::KeyboardCode keycodes[] = {ui::VKEY_T, ui::VKEY_E, ui::VKEY_S, ui::VKEY_T,
-                                 ui::VKEY_RETURN};
-
+  // Type the text.
+  ui::KeyboardCode keycodes[] = {ui::VKEY_T, ui::VKEY_E, ui::VKEY_S,
+                                 ui::VKEY_T};
   for (ui::KeyboardCode keycode : keycodes) {
     generator.PressKey(keycode, ui::EF_NONE);
     generator.ReleaseKey(keycode, ui::EF_NONE);
   }
 
+  // Submit by typing RETURN key.
+  generator.PressKey(ui::VKEY_RETURN, ui::EF_NONE);
+  generator.ReleaseKey(ui::VKEY_RETURN, ui::EF_NONE);
+  EXPECT_EQ(1, delegate_->clicked_button_index());
+  EXPECT_EQ(base::ASCIIToUTF16("test"), delegate_->submitted_reply_string());
+
+  // Reset values.
+  delegate_->Reset();
+
+  // Now construct a mouse click event 1 pixel inside the boundary of the action
+  // button.
+  cursor_location = gfx::Point(1, 1);
+  views::View::ConvertPointToScreen(notification_view()->action_buttons_[1],
+                                    &cursor_location);
+  generator.MoveMouseTo(cursor_location);
+  generator.ClickLeftButton();
+
+  // Nothing should be submitted at this point.
+  EXPECT_EQ(-1, delegate_->clicked_button_index());
+  EXPECT_EQ(base::EmptyString16(), delegate_->submitted_reply_string());
+
+  // Click the button again and focus on the inline textfield.
+  generator.ClickLeftButton();
+
+  // Type the text.
+  for (ui::KeyboardCode keycode : keycodes) {
+    generator.PressKey(keycode, ui::EF_NONE);
+    generator.ReleaseKey(keycode, ui::EF_NONE);
+  }
+
+  // Submit by clicking the reply button.
+  cursor_location = gfx::Point(1, 1);
+  views::View::ConvertPointToScreen(
+      notification_view()->inline_reply_->button(), &cursor_location);
+  generator.MoveMouseTo(cursor_location);
+  generator.ClickLeftButton();
   EXPECT_EQ(1, delegate_->clicked_button_index());
   EXPECT_EQ(base::ASCIIToUTF16("test"), delegate_->submitted_reply_string());
 }
@@ -637,20 +678,6 @@ TEST_F(NotificationViewMDTest, ExpandLongMessage) {
   EXPECT_EQ(collapsed_height, notification_view()->message_view_->height());
   EXPECT_EQ(collapsed_preferred_height,
             notification_view()->GetPreferredSize().height());
-
-  // Test |manually_expanded_or_collapsed| being set when the toggle is done by
-  // user interaction.
-  EXPECT_FALSE(notification_view()->manually_expanded_or_collapsed());
-
-  // Construct a mouse click event 1 pixel inside the header.
-  gfx::Point done_cursor_location(1, 1);
-  views::View::ConvertPointToScreen(notification_view()->header_row_,
-                                    &done_cursor_location);
-  ui::test::EventGenerator generator(widget()->GetNativeWindow());
-  generator.MoveMouseTo(done_cursor_location);
-  generator.ClickLeftButton();
-
-  EXPECT_TRUE(notification_view()->manually_expanded_or_collapsed());
 }
 
 TEST_F(NotificationViewMDTest, TestAccentColor) {
@@ -713,7 +740,7 @@ TEST_F(NotificationViewMDTest, UseImageAsIcon) {
   EXPECT_FALSE(notification_view()->expanded_);
 
   // Test notification with use_image_as_icon e.g. screenshot preview.
-  notification()->set_use_image_as_icon(true);
+  notification()->set_icon(gfx::Image());
   UpdateNotificationViews();
   EXPECT_TRUE(notification_view()->icon_view_->visible());
 

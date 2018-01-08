@@ -20,10 +20,15 @@ class WebState;
 
 // Designated initializer.
 - (instancetype)initWithWebState:(web::WebState*)webState
-                        delegate:(id<SnapshotGeneratorDelegate>)delegate
+               snapshotSessionId:(NSString*)snapshotSessionId
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
+
+// Returns the size the snapshot for the current page would have if it
+// was regenerated. If capturing the snapshot is not possible, returns
+// CGSizeZero.
+- (CGSize)snapshotSize;
 
 // If |snapshotCoalescingEnabled| is YES snapshots of the web page are
 // coalesced until this method is called with |snapshotCoalescingEnabled| set to
@@ -32,11 +37,13 @@ class WebState;
 - (void)setSnapshotCoalescingEnabled:(BOOL)snapshotCoalescingEnabled;
 
 // Gets a color snapshot for the current page, calling |callback| once it has
-// been retrieved or regenerated.
+// been retrieved or regenerated. If the snapshot cannot be generated, the
+// |callback| will be called with nil.
 - (void)retrieveSnapshot:(void (^)(UIImage*))callback;
 
 // Gets a grey snapshot for the current page, calling |callback| once it has
-// been retrieved or regenerated.
+// been retrieved or regenerated. If the snapshot cannot be generated, the
+// |callback| will be called with nil.
 - (void)retrieveGreySnapshot:(void (^)(UIImage*))callback;
 
 // Invalidates the cached snapshot for the current page, generates and caches
@@ -52,6 +59,15 @@ class WebState;
 // screen.
 - (UIImage*)generateSnapshotWithOverlays:(BOOL)shouldAddOverlay
                         visibleFrameOnly:(BOOL)visibleFrameOnly;
+
+// Requests deletion of the current page snapshot from disk and memory.
+- (void)removeSnapshot;
+
+// Returns an image to use as replacement of a missing snapshot.
++ (UIImage*)defaultSnapshotImage;
+
+// The SnapshotGenerator delegate.
+@property(nonatomic, weak) id<SnapshotGeneratorDelegate> delegate;
 
 @end
 

@@ -750,14 +750,7 @@ IN_PROC_BROWSER_TEST_F(TaskManagerBrowserTest, TotalSentDataObserved) {
 }
 
 // Checks that task manager counts idle wakeups.
-// Flakily fails on Mac: http://crbug.com/639939
-#if defined(OS_MACOSX)
-#define MAYBE_IdleWakeups DISABLED_IdleWakeups
-#else
-#define MAYBE_IdleWakeups IdleWakeups
-#endif  // defined(OS_MACOSX)
-IN_PROC_BROWSER_TEST_F(TaskManagerBrowserTest,
-                       MAYBE_IdleWakeups) {
+IN_PROC_BROWSER_TEST_F(TaskManagerBrowserTest, IdleWakeups) {
   ShowTaskManager();
   model()->ToggleColumnVisibility(ColumnSpecifier::IDLE_WAKEUPS);
 
@@ -775,10 +768,17 @@ IN_PROC_BROWSER_TEST_F(TaskManagerBrowserTest,
       browser()->tab_strip_model()->GetActiveWebContents(), test_js, &ok));
   ASSERT_EQ("okay", ok);
 
-  // The script above should trigger a lot of idle wakeups - up to 1000 per
-  // second. Let's make sure we get at least 100 (in case the test runs slow).
+// The script above should trigger a lot of idle wakeups - up to 1000 per
+// second. Let's make sure we get at least 100 (in case the test runs slow).
+// On Mac, set a lower threshold because Chrome Mac generates fewer wakes.
+#if defined(OS_MACOSX)
+  const int kMinExpectedWakeCount = 50;
+#else
+  const int kMinExpectedWakeCount = 100;
+#endif  // defined(OS_MACOSX)
   ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerStatToExceed(
-      MatchTab("title1.html"), ColumnSpecifier::IDLE_WAKEUPS, 100));
+      MatchTab("title1.html"), ColumnSpecifier::IDLE_WAKEUPS,
+      kMinExpectedWakeCount));
   ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(1, MatchAnyTab()));
   ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(1, MatchTab("title1.html")));
 }
@@ -975,7 +975,8 @@ IN_PROC_BROWSER_TEST_P(TaskManagerOOPIFBrowserTest, SubframeHistoryNavigation) {
       MatchSubframe("http://e.com/"), ColumnSpecifier::MEMORY_FOOTPRINT, 1000));
 }
 
-IN_PROC_BROWSER_TEST_P(TaskManagerOOPIFBrowserTest, KillSubframe) {
+// Flaky, see https://crbug.com/797860.
+IN_PROC_BROWSER_TEST_P(TaskManagerOOPIFBrowserTest, DISABLED_KillSubframe) {
   ShowTaskManager();
 
   content::TestNavigationObserver navigation_observer(
@@ -1186,10 +1187,12 @@ IN_PROC_BROWSER_TEST_P(TaskManagerOOPIFBrowserTest,
 
   // Navigate the b.com frame back to a.com. It is no longer a cross-site iframe
   navigation_observer.Wait();
+  const std::string r_script =
+      R"( document.getElementById('frame1').src='/title1.html';
+          document.title='aac'; )";
   ASSERT_TRUE(content::ExecuteScript(
       browser()->tab_strip_model()->GetActiveWebContents()->GetMainFrame(),
-      R"( document.getElementById('frame1').src='/title1.html';
-          document.title='aac'; )"));
+      r_script));
   ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(1, MatchTab("aac")));
   ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerRows(1, MatchAnyTab()));
   if (!ShouldExpectSubframes()) {

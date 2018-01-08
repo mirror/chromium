@@ -10,7 +10,7 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/config/gpu_info.h"
-#include "gpu/gpu_export.h"
+#include "gpu/ipc/service/gpu_ipc_service_export.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 
 namespace base {
@@ -19,7 +19,7 @@ class CommandLine;
 
 namespace gpu {
 
-class GPU_EXPORT GpuSandboxHelper {
+class GPU_IPC_SERVICE_EXPORT GpuSandboxHelper {
  public:
   virtual ~GpuSandboxHelper() = default;
 
@@ -30,7 +30,7 @@ class GPU_EXPORT GpuSandboxHelper {
                                         const GpuPreferences& gpu_prefs) = 0;
 };
 
-class GPU_EXPORT GpuInit {
+class GPU_IPC_SERVICE_EXPORT GpuInit {
  public:
   GpuInit();
   ~GpuInit();
@@ -41,8 +41,13 @@ class GPU_EXPORT GpuInit {
 
   // TODO(zmo): Get rid of |command_line| in the following two functions.
   // Pass all bits through GpuPreferences.
+  // Mostly we collect GPUInfo and compute GpuFeatureInfo inside this function,
+  // but on certain platforms (Chromecast, MacOSX) they might be computed
+  // somewhere else.
   bool InitializeAndStartSandbox(base::CommandLine* command_line,
-                                 const GpuPreferences& gpu_preferences);
+                                 const GpuPreferences& gpu_preferences,
+                                 const GPUInfo* gpu_info,
+                                 const GpuFeatureInfo* gpu_feature_info);
   void InitializeInProcess(base::CommandLine* command_line,
                            const GpuPreferences& gpu_preferences,
                            const GPUInfo* gpu_info = nullptr,
@@ -64,6 +69,9 @@ class GPU_EXPORT GpuInit {
   GpuPreferences gpu_preferences_;
   bool init_successful_ = false;
 
+  bool ShouldEnableSwiftShader(base::CommandLine* command_line,
+                               bool blacklist_needs_more_info);
+  void AdjustInfoToSwiftShader();
   DISALLOW_COPY_AND_ASSIGN(GpuInit);
 };
 

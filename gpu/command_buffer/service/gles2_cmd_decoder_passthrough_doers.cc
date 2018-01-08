@@ -5,6 +5,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 
 #include "base/strings/string_number_conversions.h"
+#include "gpu/command_buffer/service/decoder_client.h"
 #include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -326,6 +327,8 @@ error::Error GLES2DecoderPassthroughImpl::DoActiveTexture(GLenum texture) {
   }
 
   active_texture_unit_ = static_cast<size_t>(texture) - GL_TEXTURE0;
+  DCHECK(active_texture_unit_ < kMaxTextureUnits);
+
   return error::kNoError;
 }
 
@@ -461,8 +464,7 @@ error::Error GLES2DecoderPassthroughImpl::DoBindTexture(GLenum target,
   }
 
   // Track the currently bound textures
-  DCHECK(bound_textures_.find(target) != bound_textures_.end());
-  DCHECK(bound_textures_[target].size() > active_texture_unit_);
+  DCHECK(GLenumToTextureTarget(target) != TextureTarget::kUnkown);
   scoped_refptr<TexturePassthrough> texture_passthrough = nullptr;
 
   if (service_id != 0) {
@@ -478,7 +480,9 @@ error::Error GLES2DecoderPassthroughImpl::DoBindTexture(GLenum target,
     }
   }
 
-  BoundTexture* bound_texture = &bound_textures_[target][active_texture_unit_];
+  BoundTexture* bound_texture =
+      &bound_textures_[static_cast<size_t>(GLenumToTextureTarget(target))]
+                      [active_texture_unit_];
   bound_texture->client_id = texture;
   bound_texture->texture = std::move(texture_passthrough);
 
@@ -946,7 +950,8 @@ error::Error GLES2DecoderPassthroughImpl::DoDeleteTextures(
   for (GLsizei ii = 0; ii < n; ++ii) {
     GLuint client_id = textures[ii];
     scoped_refptr<TexturePassthrough> texture = nullptr;
-    if (!resources_->texture_object_map.GetServiceID(client_id, &texture)) {
+    if (!resources_->texture_object_map.GetServiceID(client_id, &texture) ||
+        texture == nullptr) {
       // Delete with DeleteHelper
       non_mailbox_client_ids.push_back(client_id);
     } else {
@@ -3386,8 +3391,9 @@ error::Error GLES2DecoderPassthroughImpl::DoResizeCHROMIUM(GLuint width,
                                                            GLfloat scale_factor,
                                                            GLenum color_space,
                                                            GLboolean alpha) {
+  gfx::Size safe_size(std::max(1U, width), std::max(1U, height));
   if (offscreen_) {
-    if (!ResizeOffscreenFramebuffer(gfx::Size(width, height))) {
+    if (!ResizeOffscreenFramebuffer(safe_size)) {
       LOG(ERROR) << "GLES2DecoderPassthroughImpl: Context lost because "
                  << "ResizeOffscreenFramebuffer failed.";
       return error::kLostContext;
@@ -3413,8 +3419,8 @@ error::Error GLES2DecoderPassthroughImpl::DoResizeCHROMIUM(GLuint width,
                       "specified color space was invalid.";
         return error::kLostContext;
     }
-    if (!surface_->Resize(gfx::Size(width, height), scale_factor,
-                          surface_color_space, !!alpha)) {
+    if (!surface_->Resize(safe_size, scale_factor, surface_color_space,
+                          !!alpha)) {
       LOG(ERROR)
           << "GLES2DecoderPassthroughImpl: Context lost because resize failed.";
       return error::kLostContext;
@@ -4016,7 +4022,8 @@ error::Error GLES2DecoderPassthroughImpl::DoReleaseTexImage2DCHROMIUM(
   }
 
   const BoundTexture& bound_texture =
-      bound_textures_[GL_TEXTURE_2D][active_texture_unit_];
+      bound_textures_[static_cast<size_t>(TextureTarget::k2D)]
+                     [active_texture_unit_];
   if (bound_texture.texture == nullptr) {
     InsertError(GL_INVALID_OPERATION, "No texture bound");
     return error::kNoError;
@@ -4044,6 +4051,7 @@ error::Error GLES2DecoderPassthroughImpl::DoTraceBeginCHROMIUM(
     InsertError(GL_INVALID_OPERATION, "Failed to create begin trace");
     return error::kNoError;
   }
+  debug_marker_manager_.PushGroup(trace_name);
   return error::kNoError;
 }
 
@@ -4052,6 +4060,7 @@ error::Error GLES2DecoderPassthroughImpl::DoTraceEndCHROMIUM() {
     InsertError(GL_INVALID_OPERATION, "No trace to end");
     return error::kNoError;
   }
+  debug_marker_manager_.PopGroup();
   return error::kNoError;
 }
 
@@ -4631,6 +4640,14 @@ error::Error GLES2DecoderPassthroughImpl::DoBeginRasterCHROMIUM(
     GLboolean can_use_lcd_text,
     GLboolean use_distance_field_text,
     GLint pixel_config) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoRasterCHROMIUM(GLsizeiptr size,
+                                                           const void* list) {
+  // TODO(enne): Add CHROMIUM_raster_transport extension support to the
+  // passthrough command buffer.
   NOTIMPLEMENTED();
   return error::kNoError;
 }

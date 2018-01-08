@@ -132,7 +132,7 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
 
 // Flaky: crbug.com/715963
 WRAPPED_INSTANTIATE_TEST_CASE_P(
-    CreateNewFolder,
+    DISABLED_CreateNewFolder,
     FileManagerBrowserTest,
     ::testing::Values(
         TestParameter(NOT_IN_GUEST_MODE, "createNewFolderAfterSelectFile"),
@@ -559,7 +559,8 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
     ::testing::Values(
         TestParameter(NOT_IN_GUEST_MODE, "showHiddenFilesOnDownloads"),
         TestParameter(NOT_IN_GUEST_MODE, "showHiddenFilesOnDrive"),
-        TestParameter(NOT_IN_GUEST_MODE, "hideGoogleDocs")));
+        TestParameter(NOT_IN_GUEST_MODE, "hideGoogleDocs"),
+        TestParameter(NOT_IN_GUEST_MODE, "showPasteInGearMenu")));
 
 // Structure to describe an account info.
 struct TestAccountInfo {

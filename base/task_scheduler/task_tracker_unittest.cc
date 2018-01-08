@@ -208,11 +208,11 @@ class TaskSchedulerTaskTrackerTest
     EXPECT_FALSE(tracker_.IsShutdownComplete());
   }
 
-  // Calls tracker_->Flush() on a new thread.
-  void CallFlushAsync() {
+  // Calls tracker_->FlushForTesting() on a new thread.
+  void CallFlushFromAnotherThread() {
     ASSERT_FALSE(thread_calling_flush_);
-    thread_calling_flush_.reset(
-        new CallbackThread(Bind(&TaskTracker::Flush, Unretained(&tracker_))));
+    thread_calling_flush_.reset(new CallbackThread(
+        Bind(&TaskTracker::FlushForTesting, Unretained(&tracker_))));
     thread_calling_flush_->Start();
   }
 
@@ -232,7 +232,7 @@ class TaskSchedulerTaskTrackerTest
     return num_tasks_executed_;
   }
 
-  TaskTracker tracker_;
+  TaskTracker tracker_ = {"Test"};
   testing::StrictMock<MockCanScheduleSequenceObserver> never_notified_observer_;
 
  private:
@@ -578,8 +578,20 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingDelayedTask) {
   const Task delayed_task(FROM_HERE, BindOnce(&DoNothing),
                           TaskTraits(GetParam()), TimeDelta::FromDays(1));
   tracker_.WillPostTask(delayed_task);
-  // Flush() should return even if the delayed task didn't run.
-  tracker_.Flush();
+  // FlushForTesting() should return even if the delayed task didn't run.
+  tracker_.FlushForTesting();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, FlushAsyncForTestingPendingDelayedTask) {
+  const Task delayed_task(FROM_HERE, BindOnce(&DoNothing),
+                          TaskTraits(GetParam()), TimeDelta::FromDays(1));
+  tracker_.WillPostTask(delayed_task);
+  // FlushAsyncForTesting() should callback even if the delayed task didn't run.
+  bool called_back = false;
+  tracker_.FlushAsyncForTesting(
+      BindOnce([](bool* called_back) { *called_back = true; },
+               Unretained(&called_back)));
+  EXPECT_TRUE(called_back);
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingUndelayedTask) {
@@ -587,14 +599,32 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingUndelayedTask) {
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
-  // Flush() shouldn't return before the undelayed task runs.
-  CallFlushAsync();
+  // FlushForTesting() shouldn't return before the undelayed task runs.
+  CallFlushFromAnotherThread();
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
-  // Flush() should return after the undelayed task runs.
+  // FlushForTesting() should return after the undelayed task runs.
   DispatchAndRunTaskWithTracker(std::move(undelayed_task));
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, FlushAsyncForTestingPendingUndelayedTask) {
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsyncForTesting() shouldn't callback before the undelayed task runs.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsyncForTesting(
+      BindOnce(&WaitableEvent::Signal, Unretained(&event)));
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // FlushAsyncForTesting() should callback after the undelayed task runs.
+  DispatchAndRunTaskWithTracker(std::move(undelayed_task));
+  event.Wait();
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
@@ -602,8 +632,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
-  // Flush() shouldn't return before the undelayed task runs.
-  CallFlushAsync();
+  // FlushForTesting() shouldn't return before the undelayed task runs.
+  CallFlushFromAnotherThread();
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
@@ -615,13 +645,45 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
   // Run the first undelayed task.
   DispatchAndRunTaskWithTracker(std::move(undelayed_task));
 
-  // Flush() shouldn't return before the second undelayed task runs.
+  // FlushForTesting() shouldn't return before the second undelayed task runs.
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
-  // Flush() should return after the second undelayed task runs.
+  // FlushForTesting() should return after the second undelayed task runs.
   DispatchAndRunTaskWithTracker(std::move(other_undelayed_task));
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlushAsyncForTesting) {
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsyncForTesting() shouldn't callback before the undelayed task runs.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsyncForTesting(
+      BindOnce(&WaitableEvent::Signal, Unretained(&event)));
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // Simulate posting another undelayed task.
+  Task other_undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                            TimeDelta());
+  tracker_.WillPostTask(other_undelayed_task);
+
+  // Run the first undelayed task.
+  DispatchAndRunTaskWithTracker(std::move(undelayed_task));
+
+  // FlushAsyncForTesting() shouldn't callback before the second undelayed task
+  // runs.
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // FlushAsyncForTesting() should callback after the second undelayed task
+  // runs.
+  DispatchAndRunTaskWithTracker(std::move(other_undelayed_task));
+  event.Wait();
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
@@ -633,15 +695,15 @@ TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
-  // Flush() shouldn't return before the undelayed task runs.
-  CallFlushAsync();
+  // FlushForTesting() shouldn't return before the undelayed task runs.
+  CallFlushFromAnotherThread();
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
   // Run the delayed task.
   DispatchAndRunTaskWithTracker(std::move(delayed_task));
 
-  // Flush() shouldn't return since there is still a pending undelayed
+  // FlushForTesting() shouldn't return since there is still a pending undelayed
   // task.
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
@@ -649,8 +711,40 @@ TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
   // Run the undelayed task.
   DispatchAndRunTaskWithTracker(std::move(undelayed_task));
 
-  // Flush() should now return.
+  // FlushForTesting() should now return.
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlushAsyncForTesting) {
+  // Simulate posting a delayed and an undelayed task.
+  Task delayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                    TimeDelta::FromDays(1));
+  tracker_.WillPostTask(delayed_task);
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsyncForTesting() shouldn't callback before the undelayed task runs.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsyncForTesting(
+      BindOnce(&WaitableEvent::Signal, Unretained(&event)));
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // Run the delayed task.
+  DispatchAndRunTaskWithTracker(std::move(delayed_task));
+
+  // FlushAsyncForTesting() shouldn't callback since there is still a pending
+  // undelayed task.
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // Run the undelayed task.
+  DispatchAndRunTaskWithTracker(std::move(undelayed_task));
+
+  // FlushAsyncForTesting() should now callback.
+  event.Wait();
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, FlushAfterShutdown) {
@@ -666,9 +760,31 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushAfterShutdown) {
   // BLOCK_SHUTDOWN tasks.
   tracker_.Shutdown();
 
-  // Flush() should return immediately after shutdown, even if an
+  // FlushForTesting() should return immediately after shutdown, even if an
   // undelayed task hasn't run.
-  tracker_.Flush();
+  tracker_.FlushForTesting();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, FlushAfterShutdownAsync) {
+  if (GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN)
+    return;
+
+  // Simulate posting a task.
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // Shutdown() should return immediately since there are no pending
+  // BLOCK_SHUTDOWN tasks.
+  tracker_.Shutdown();
+
+  // FlushForTesting() should callback immediately after shutdown, even if an
+  // undelayed task hasn't run.
+  bool called_back = false;
+  tracker_.FlushAsyncForTesting(
+      BindOnce([](bool* called_back) { *called_back = true; },
+               Unretained(&called_back)));
+  EXPECT_TRUE(called_back);
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlush) {
@@ -680,9 +796,9 @@ TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlush) {
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
-  // Flush() shouldn't return before the undelayed task runs or
+  // FlushForTesting() shouldn't return before the undelayed task runs or
   // shutdown completes.
-  CallFlushAsync();
+  CallFlushFromAnotherThread();
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
@@ -690,8 +806,49 @@ TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlush) {
   // BLOCK_SHUTDOWN tasks.
   tracker_.Shutdown();
 
-  // Flush() should now return, even if an undelayed task hasn't run.
+  // FlushForTesting() should now return, even if an undelayed task hasn't run.
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlushAsyncForTesting) {
+  if (GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN)
+    return;
+
+  // Simulate posting a task.
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsyncForTesting() shouldn't callback before the undelayed task runs or
+  // shutdown completes.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsyncForTesting(
+      BindOnce(&WaitableEvent::Signal, Unretained(&event)));
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // Shutdown() should return immediately since there are no pending
+  // BLOCK_SHUTDOWN tasks.
+  tracker_.Shutdown();
+
+  // FlushAsyncForTesting() should now callback, even if an undelayed task
+  // hasn't run.
+  event.Wait();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, DoublePendingFlushAsyncForTestingFails) {
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsyncForTesting() shouldn't callback before the undelayed task runs.
+  bool called_back = false;
+  tracker_.FlushAsyncForTesting(
+      BindOnce([](bool* called_back) { *called_back = true; },
+               Unretained(&called_back)));
+  EXPECT_FALSE(called_back);
+  EXPECT_DCHECK_DEATH({ tracker_.FlushAsyncForTesting(BindOnce([]() {})); });
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -901,7 +1058,7 @@ TEST_F(TaskSchedulerTaskTrackerTest, RunNextTaskReturnsSequenceToReschedule) {
 TEST_F(TaskSchedulerTaskTrackerTest,
        WillScheduleBackgroundSequenceWithMaxBackgroundSequences) {
   constexpr int kMaxNumDispatchedBackgroundSequences = 2;
-  TaskTracker tracker(kMaxNumDispatchedBackgroundSequences);
+  TaskTracker tracker("Test", kMaxNumDispatchedBackgroundSequences);
 
   // Simulate posting |kMaxNumDispatchedBackgroundSequences| background tasks
   // and scheduling the associated sequences. This should succeed.
@@ -980,7 +1137,7 @@ void SetBool(bool* arg) {
 TEST_F(TaskSchedulerTaskTrackerTest,
        RunNextBackgroundTaskWithEarlierPendingBackgroundTask) {
   constexpr int kMaxNumDispatchedBackgroundSequences = 1;
-  TaskTracker tracker(kMaxNumDispatchedBackgroundSequences);
+  TaskTracker tracker("Test", kMaxNumDispatchedBackgroundSequences);
   testing::StrictMock<MockCanScheduleSequenceObserver> never_notified_observer;
 
   // Simulate posting a background task and scheduling the associated sequence.
@@ -1050,7 +1207,7 @@ class WaitAllowedTestThread : public SimpleThread {
 
  private:
   void Run() override {
-    TaskTracker tracker;
+    TaskTracker tracker("Test");
 
     // Waiting is allowed by default. Expect TaskTracker to disallow it before
     // running a task without the WithBaseSyncPrimitives() trait.
@@ -1109,35 +1266,39 @@ TEST(TaskSchedulerTaskTrackerWaitAllowedTest, WaitAllowed) {
 TEST(TaskSchedulerTaskTrackerHistogramTest, TaskLatency) {
   auto statistics_recorder = StatisticsRecorder::CreateTemporaryForTesting();
 
-  TaskTracker tracker;
+  TaskTracker tracker("Test");
   testing::StrictMock<MockCanScheduleSequenceObserver> never_notified_observer;
 
   struct {
     const TaskTraits traits;
     const char* const expected_histogram;
-  } tests[] = {
-      {{TaskPriority::BACKGROUND},
-       "TaskScheduler.TaskLatencyMicroseconds.BackgroundTaskPriority"},
-      {{MayBlock(), TaskPriority::BACKGROUND},
-       "TaskScheduler.TaskLatencyMicroseconds.BackgroundTaskPriority.MayBlock"},
-      {{WithBaseSyncPrimitives(), TaskPriority::BACKGROUND},
-       "TaskScheduler.TaskLatencyMicroseconds.BackgroundTaskPriority.MayBlock"},
-      {{TaskPriority::USER_VISIBLE},
-       "TaskScheduler.TaskLatencyMicroseconds.UserVisibleTaskPriority"},
-      {{MayBlock(), TaskPriority::USER_VISIBLE},
-       "TaskScheduler.TaskLatencyMicroseconds.UserVisibleTaskPriority."
-       "MayBlock"},
-      {{WithBaseSyncPrimitives(), TaskPriority::USER_VISIBLE},
-       "TaskScheduler.TaskLatencyMicroseconds.UserVisibleTaskPriority."
-       "MayBlock"},
-      {{TaskPriority::USER_BLOCKING},
-       "TaskScheduler.TaskLatencyMicroseconds.UserBlockingTaskPriority"},
-      {{MayBlock(), TaskPriority::USER_BLOCKING},
-       "TaskScheduler.TaskLatencyMicroseconds.UserBlockingTaskPriority."
-       "MayBlock"},
-      {{WithBaseSyncPrimitives(), TaskPriority::USER_BLOCKING},
-       "TaskScheduler.TaskLatencyMicroseconds.UserBlockingTaskPriority."
-       "MayBlock"}};
+  } tests[] = {{{TaskPriority::BACKGROUND},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "BackgroundTaskPriority"},
+               {{MayBlock(), TaskPriority::BACKGROUND},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "BackgroundTaskPriority_MayBlock"},
+               {{WithBaseSyncPrimitives(), TaskPriority::BACKGROUND},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "BackgroundTaskPriority_MayBlock"},
+               {{TaskPriority::USER_VISIBLE},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "UserVisibleTaskPriority"},
+               {{MayBlock(), TaskPriority::USER_VISIBLE},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "UserVisibleTaskPriority_MayBlock"},
+               {{WithBaseSyncPrimitives(), TaskPriority::USER_VISIBLE},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "UserVisibleTaskPriority_MayBlock"},
+               {{TaskPriority::USER_BLOCKING},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "UserBlockingTaskPriority"},
+               {{MayBlock(), TaskPriority::USER_BLOCKING},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "UserBlockingTaskPriority_MayBlock"},
+               {{WithBaseSyncPrimitives(), TaskPriority::USER_BLOCKING},
+                "TaskScheduler.TaskLatencyMicroseconds.Test."
+                "UserBlockingTaskPriority_MayBlock"}};
 
   for (const auto& test : tests) {
     Task task(FROM_HERE, Bind(&DoNothing), test.traits, TimeDelta());

@@ -6,11 +6,11 @@
 
 #import <objc/runtime.h>
 
+#include <memory>
+
 #include "base/auto_reset.h"
 #import "base/ios/crb_protocol_observers.h"
 #include "base/mac/foundation_util.h"
-#import "base/mac/scoped_nsobject.h"
-#include "base/memory/ptr_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -18,7 +18,7 @@
 
 @interface CRWWebViewScrollViewProxy () {
   __weak UIScrollView* _scrollView;
-  base::scoped_nsobject<id> _observers;
+  id _observers;
   std::unique_ptr<UIScrollViewContentInsetAdjustmentBehavior>
       _pendingContentInsetAdjustmentBehavior API_AVAILABLE(ios(11.0));
 }
@@ -39,7 +39,7 @@
   self = [super init];
   if (self) {
     Protocol* protocol = @protocol(CRWWebViewScrollViewProxyObserver);
-    _observers.reset([CRBProtocolObservers observersWithProtocol:protocol]);
+    _observers = [CRBProtocolObservers observersWithProtocol:protocol];
   }
   return self;
 }
@@ -190,7 +190,7 @@
         setContentInsetAdjustmentBehavior:contentInsetAdjustmentBehavior];
   } else {
     _pendingContentInsetAdjustmentBehavior =
-        base::MakeUnique<UIScrollViewContentInsetAdjustmentBehavior>(
+        std::make_unique<UIScrollViewContentInsetAdjustmentBehavior>(
             contentInsetAdjustmentBehavior);
   }
 }

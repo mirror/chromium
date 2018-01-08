@@ -9,6 +9,7 @@ import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.PopupWindow.OnDismissListener;
 
+import org.chromium.base.Log;
 import org.chromium.chrome.browser.infobar.InfoBarContainer.InfoBarContainerObserver;
 import org.chromium.chrome.browser.infobar.InfoBarContainerLayout.Item;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
@@ -22,6 +23,8 @@ import org.chromium.components.feature_engagement.FeatureConstants;
  */
 class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAnimationListener,
                                    InfoBarContainerObserver {
+    private static final String TAG = "IPHInfoBar";
+
     /** Helper class to hold all relevant display parameters for an in-product help window. */
     public static class TrackerParameters {
         public TrackerParameters(
@@ -100,7 +103,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     @Override
     public void notifyAnimationFinished(int animationType) {}
 
-    // Calling {@link ViewAnchoredTextBubble#dismiss()} will invoke {@link #onDismiss} which will
+    // Calling {@link TextBubble#dismiss()} will invoke {@link #onDismiss} which will
     // set the value of {@link #mCurrentState} to null, which is what the assert checks. Since this
     // goes through the Android SDK, FindBugs does not see this as happening, so the FindBugs
     // warning for a field guaranteed to be non-null being checked for null equality needs to be
@@ -130,7 +133,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     @Override
     public void onAddInfoBar(InfoBarContainer container, InfoBar infoBar, boolean isFirst) {}
 
-    // Calling {@link ViewAnchoredTextBubble#dismiss()} will invoke {@link #onDismiss} which will
+    // Calling {@link TextBubble#dismiss()} will invoke {@link #onDismiss} which will
     // set the value of {@link #mCurrentState} to null, which is what the assert checks. Since this
     // goes through the Android SDK, FindBugs does not see this as happening, so the FindBugs
     // warning for a field guaranteed to be non-null being checked for null equality needs to be
@@ -153,8 +156,12 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     @Override
     public void onDismiss() {
         // Helper for crbug.com/786916 to catch why we are getting two dismiss calls in a row.
-        if (mCurrentState == null) throw new IllegalStateException(mLastDismissStack);
+        if (mCurrentState == null) {
+            Log.e(TAG, "Unexpected call to onDismiss.  Last stack:", mLastDismissStack);
+            throw new IllegalStateException("Second call to onDismiss(), no current state found.");
+        }
         mLastDismissStack = new Exception();
+
         assert mCurrentState != null;
         mDelegate.onPopupDismissed(mCurrentState);
         mCurrentState = null;

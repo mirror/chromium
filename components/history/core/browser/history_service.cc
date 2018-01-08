@@ -152,14 +152,14 @@ class HistoryService::BackendDelegate : public HistoryBackend::Delegate {
                               history_service_, changed_urls));
   }
 
-  void NotifyURLsDeleted(bool all_history,
+  void NotifyURLsDeleted(const DeletionTimeRange& time_range,
                          bool expired,
                          const URLRows& deleted_rows,
                          const std::set<GURL>& favicon_urls) override {
     service_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&HistoryService::NotifyURLsDeleted, history_service_,
-                   all_history, expired, deleted_rows, favicon_urls));
+                   time_range, expired, deleted_rows, favicon_urls));
   }
 
   void NotifyKeywordSearchTermUpdated(const URLRow& row,
@@ -306,6 +306,7 @@ void HistoryService::RemoveObserver(HistoryServiceObserver* observer) {
 }
 
 base::CancelableTaskTracker::TaskId HistoryService::ScheduleDBTask(
+    const base::Location& from_here,
     std::unique_ptr<HistoryDBTask> task,
     base::CancelableTaskTracker* tracker) {
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
@@ -317,7 +318,7 @@ base::CancelableTaskTracker::TaskId HistoryService::ScheduleDBTask(
   // the current message loop so that we can forward the call to the method
   // HistoryDBTask::DoneRunOnMainThread() in the correct thread.
   backend_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&HistoryBackend::ProcessDBTask, history_backend_,
+      from_here, base::Bind(&HistoryBackend::ProcessDBTask, history_backend_,
                             base::Passed(&task),
                             base::ThreadTaskRunnerHandle::Get(), is_canceled));
   return task_id;
@@ -526,6 +527,7 @@ base::CancelableTaskTracker::TaskId HistoryService::GetFaviconsForURL(
     const GURL& page_url,
     const favicon_base::IconTypeSet& icon_types,
     const std::vector<int>& desired_sizes,
+    bool fallback_to_host,
     const favicon_base::FaviconResultsCallback& callback,
     base::CancelableTaskTracker* tracker) {
   TRACE_EVENT0("browser", "HistoryService::GetFaviconsForURL");
@@ -536,7 +538,7 @@ base::CancelableTaskTracker::TaskId HistoryService::GetFaviconsForURL(
   return tracker->PostTaskAndReply(
       backend_task_runner_.get(), FROM_HERE,
       base::Bind(&HistoryBackend::GetFaviconsForURL, history_backend_, page_url,
-                 icon_types, desired_sizes, results),
+                 icon_types, desired_sizes, fallback_to_host, results),
       base::Bind(&RunWithFaviconResults, callback, base::Owned(results)));
 }
 
@@ -1163,11 +1165,12 @@ void HistoryService::NotifyURLsModified(const URLRows& changed_urls) {
     observer.OnURLsModified(this, changed_urls);
 }
 
-void HistoryService::NotifyURLsDeleted(bool all_history,
+void HistoryService::NotifyURLsDeleted(const DeletionTimeRange& time_range,
                                        bool expired,
                                        const URLRows& deleted_rows,
                                        const std::set<GURL>& favicon_urls) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(!time_range.IsAllTime() || deleted_rows.empty());
   if (!backend_task_runner_)
     return;
 
@@ -1180,7 +1183,7 @@ void HistoryService::NotifyURLsDeleted(bool all_history,
   // respectful of privacy and never tell the user something is gone when it
   // isn't. Therefore, we update the delete URLs after the fact.
   if (visit_delegate_) {
-    if (all_history) {
+    if (time_range.IsAllTime()) {
       visit_delegate_->DeleteAllURLs();
     } else {
       std::vector<GURL> urls;
@@ -1192,7 +1195,9 @@ void HistoryService::NotifyURLsDeleted(bool all_history,
   }
 
   for (HistoryServiceObserver& observer : observers_) {
-    observer.OnURLsDeleted(this, all_history, expired, deleted_rows,
+    observer.OnURLsDeleted(this, time_range.IsAllTime(), expired, deleted_rows,
+                           favicon_urls);
+    observer.OnURLsDeleted(this, time_range, expired, deleted_rows,
                            favicon_urls);
   }
 }

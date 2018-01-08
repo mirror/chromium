@@ -18,7 +18,8 @@ import java.io.OutputStream;
 import java.io.SequenceInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.LinkedList;
+import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -41,43 +42,38 @@ public final class CastCrashUploader {
     private static final String DUMP_FILE_REGEX = ".*\\.dmp\\d*";
 
     private final ScheduledExecutorService mExecutorService;
+    private final ElidedLogcatProvider mLogcatProvider;
     private final String mCrashDumpPath;
     private final String mCrashReportUploadUrl;
     private final String mUuid;
     private final String mApplicationFeedback;
+    private final Runnable mQueueAllCrashDumpUploadsRunnable = () -> queueAllCrashDumpUploads();
 
-    public CastCrashUploader(ScheduledExecutorService executorService, String crashDumpPath,
-            String uuid, String applicationFeedback, boolean uploadCrashToStaging) {
+    public CastCrashUploader(ScheduledExecutorService executorService,
+            ElidedLogcatProvider logcatProvider, String crashDumpPath, String uuid,
+            String applicationFeedback, boolean uploadCrashToStaging) {
         mExecutorService = executorService;
+        mLogcatProvider = logcatProvider;
         mCrashDumpPath = crashDumpPath;
         mUuid = uuid;
         mApplicationFeedback = applicationFeedback;
-
         mCrashReportUploadUrl = uploadCrashToStaging
                 ? "https://clients2.google.com/cr/staging_report"
                 : "https://clients2.google.com/cr/report";
     }
 
     /** Sets up a periodic uploader, that checks for new dumps to upload every 20 minutes */
+    @SuppressWarnings("FutureReturnValueIgnored")
     public void startPeriodicUpload() {
-        mExecutorService.scheduleWithFixedDelay(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        queueAllCrashDumpUploads(false);
-                    }
-                },
+        mExecutorService.scheduleWithFixedDelay(mQueueAllCrashDumpUploadsRunnable,
                 0, // Do first run immediately
                 20, // Run once every 20 minutes
                 TimeUnit.MINUTES);
     }
 
+    @SuppressWarnings("FutureReturnValueIgnored")
     public void uploadOnce() {
-        mExecutorService.schedule(new Runnable() {
-            public void run() {
-                queueAllCrashDumpUploads(false);
-            }
-        }, 0, TimeUnit.MINUTES);
+        mExecutorService.schedule(mQueueAllCrashDumpUploadsRunnable, 0, TimeUnit.MINUTES);
     }
 
     public void removeCrashDumps() {
@@ -96,51 +92,22 @@ public final class CastCrashUploader {
      * @param synchronous Whether or not this function should block on queued uploads
      * @param log Log to include, if any
      */
-    private void queueAllCrashDumpUploads(boolean synchronous) {
+    private void queueAllCrashDumpUploads() {
         if (mCrashDumpPath == null) return;
         Log.i(TAG, "Checking for crash dumps");
 
-        LinkedList<Future> tasks = new LinkedList<Future>();
-        File crashDumpDirectory = new File(mCrashDumpPath);
+        mLogcatProvider.getElidedLogcat((String logs) -> queueAllCrashDumpUploadsWithLogs(logs));
+    }
 
-        final String log = getLogs(crashDumpDirectory);
+    private void queueAllCrashDumpUploadsWithLogs(String logs) {
+        File crashDumpDirectory = new File(mCrashDumpPath);
 
         for (final File potentialDump : crashDumpDirectory.listFiles()) {
             String dumpName = potentialDump.getName();
             if (dumpName.matches(DUMP_FILE_REGEX)) {
-                tasks.add(mExecutorService.submit(new Runnable() {
-                    public void run() {
-                        uploadCrashDump(potentialDump, log);
-                    }
-                }));
+                mExecutorService.submit(() -> uploadCrashDump(potentialDump, logs));
             }
         }
-
-        // Wait on tasks, if necessary.
-        if (synchronous) {
-            for (Future task : tasks) {
-                // Wait on task. If thread received interrupt and should stop waiting, return.
-                if (!waitOnTask(task)) {
-                    return;
-                }
-            }
-        }
-    }
-
-    private String getLogs(File crashDumpDirectory) {
-        String log = null;
-        if (crashDumpDirectory.listFiles().length > 0) {
-            try {
-                Log.i(TAG, "Getting logcat");
-                log = LogcatExtractor.getElidedLogcat();
-                Log.d(TAG, "Log size" + log.length());
-                return log;
-
-            } catch (IOException | InterruptedException e) {
-                Log.e(TAG, "Getting logcat failed ", e);
-            }
-        }
-        return null;
     }
 
     /** Enqueues a background task to upload a single crash dump file. */
@@ -156,7 +123,7 @@ public final class CastCrashUploader {
             String dumpFirstLine = getFirstLine(dumpFileStream);
             String mimeBoundary = dumpFirstLine.substring(2);
 
-            if (log != null) {
+            if (!log.equals("")) {
                 Log.i(TAG, "Including log file");
                 StringBuilder logHeader = new StringBuilder();
                 logHeader.append(dumpFirstLine);
@@ -166,8 +133,8 @@ public final class CastCrashUploader {
                 logHeader.append("Content-Type: text/plain\n\n");
                 logHeader.append(log);
                 logHeader.append("\n");
-                InputStream logHeaderStream =
-                        new ByteArrayInputStream(logHeader.toString().getBytes());
+                InputStream logHeaderStream = new ByteArrayInputStream(
+                        logHeader.toString().getBytes(Charset.forName("UTF-8")));
                 // Upload: prepend the log file for uploading
                 uploadCrashDumpStream =
                         new SequenceInputStream(logHeaderStream, uploadCrashDumpStream);
@@ -183,7 +150,8 @@ public final class CastCrashUploader {
                 uuidBuilder.append(mUuid);
                 uuidBuilder.append("\n");
                 uploadCrashDumpStream = new SequenceInputStream(
-                        new ByteArrayInputStream(uuidBuilder.toString().getBytes()),
+                        new ByteArrayInputStream(
+                                uuidBuilder.toString().getBytes(Charset.forName("UTF-8"))),
                         uploadCrashDumpStream);
             } else {
                 Log.d(TAG, "No UUID");
@@ -199,8 +167,8 @@ public final class CastCrashUploader {
                 feedbackHeader.append("Content-Type: text/plain\n\n");
                 feedbackHeader.append(mApplicationFeedback);
                 feedbackHeader.append("\n");
-                InputStream feedbackHeaderStream =
-                        new ByteArrayInputStream(feedbackHeader.toString().getBytes());
+                InputStream feedbackHeaderStream = new ByteArrayInputStream(
+                        feedbackHeader.toString().getBytes(Charset.forName("UTF-8")));
                 // Upload: prepend the log file for uploading
                 uploadCrashDumpStream =
                         new SequenceInputStream(feedbackHeaderStream, uploadCrashDumpStream);
@@ -241,6 +209,8 @@ public final class CastCrashUploader {
             } catch (FileNotFoundException fnfe) {
                 // Android's HttpURLConnection implementation fires FNFE on some errors.
                 Log.e(TAG, "Failed response: " + connection.getResponseCode(), fnfe);
+            } catch (UnsupportedCharsetException e) {
+                Log.wtf(TAG, "UTF-8 not supported");
             } finally {
                 connection.disconnect();
                 dumpFileStream.close();
@@ -279,9 +249,12 @@ public final class CastCrashUploader {
      * @throws IOException
      */
     private String getFirstLine(InputStream inputStream) throws IOException {
-        try (InputStreamReader streamReader = new InputStreamReader(inputStream);
+        try (InputStreamReader streamReader = new InputStreamReader(inputStream, "UTF-8");
                 BufferedReader reader = new BufferedReader(streamReader)) {
             return reader.readLine();
+        } catch (UnsupportedCharsetException e) {
+            Log.wtf(TAG, "UTF-8 not supported");
+            return "";
         }
     }
 

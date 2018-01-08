@@ -33,7 +33,7 @@ ThreadControllerImpl::ThreadControllerImpl(
                                                  Sequence::WorkType::kDelayed);
 }
 
-ThreadControllerImpl::~ThreadControllerImpl() {}
+ThreadControllerImpl::~ThreadControllerImpl() = default;
 
 std::unique_ptr<ThreadControllerImpl> ThreadControllerImpl::Create(
     base::MessageLoop* message_loop,
@@ -68,11 +68,6 @@ void ThreadControllerImpl::CancelDelayedWork() {
   cancelable_delayed_do_work_closure_.Cancel();
 }
 
-void ThreadControllerImpl::PostNonNestableTask(const base::Location& from_here,
-                                               base::OnceClosure task) {
-  task_runner_->PostNonNestableTask(from_here, std::move(task));
-}
-
 bool ThreadControllerImpl::RunsTasksInCurrentSequence() {
   return task_runner_->RunsTasksInCurrentSequence();
 }
@@ -92,11 +87,6 @@ void ThreadControllerImpl::RestoreDefaultTaskRunner() {
   if (!message_loop_)
     return;
   message_loop_->SetTaskRunner(message_loop_task_runner_);
-}
-
-bool ThreadControllerImpl::IsNested() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  return base::RunLoop::IsNestedOnCurrentThread();
 }
 
 void ThreadControllerImpl::DoWork(Sequence::WorkType work_type) {

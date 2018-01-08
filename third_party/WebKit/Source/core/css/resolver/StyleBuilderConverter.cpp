@@ -359,7 +359,10 @@ double StyleBuilderConverter::ConvertValueToNumber(
     case CSSValueBrightness:
     case CSSValueContrast:
     case CSSValueOpacity: {
-      double amount = (filter->FunctionType() == CSSValueBrightness) ? 0 : 1;
+      double amount = (filter->FunctionType() == CSSValueBrightness ||
+                       filter->FunctionType() == CSSValueInvert)
+                          ? 0
+                          : 1;
       if (filter->length() == 1) {
         amount = value->GetDoubleValue();
         if (value->IsPercentage())
@@ -695,10 +698,10 @@ StyleSelfAlignmentData StyleBuilderConverter::ConvertSelfOrDefaultAlignmentData(
                CSSValueLast) {
       alignment_data.SetPosition(ItemPosition::kLastBaseline);
     } else {
-      alignment_data.SetPosition(
-          ToCSSIdentifierValue(pair.First()).ConvertTo<ItemPosition>());
       alignment_data.SetOverflow(
-          ToCSSIdentifierValue(pair.Second()).ConvertTo<OverflowAlignment>());
+          ToCSSIdentifierValue(pair.First()).ConvertTo<OverflowAlignment>());
+      alignment_data.SetPosition(
+          ToCSSIdentifierValue(pair.Second()).ConvertTo<ItemPosition>());
     }
   } else {
     alignment_data.SetPosition(
@@ -998,6 +1001,15 @@ float StyleBuilderConverter::ConvertBorderWidth(StyleResolverState& state,
                         defaultMaximumForClamp<float>());
 }
 
+GapLength StyleBuilderConverter::ConvertGapLength(StyleResolverState& state,
+                                                  const CSSValue& value) {
+  if (value.IsIdentifierValue() &&
+      ToCSSIdentifierValue(value).GetValueID() == CSSValueNormal)
+    return GapLength();
+
+  return GapLength(ConvertLength(state, value));
+}
+
 Length StyleBuilderConverter::ConvertLength(const StyleResolverState& state,
                                             const CSSValue& value) {
   return ToCSSPrimitiveValue(value).ConvertToLength(
@@ -1123,17 +1135,17 @@ StyleOffsetRotation StyleBuilderConverter::ConvertOffsetRotate(
 
 StyleOffsetRotation StyleBuilderConverter::ConvertOffsetRotate(
     const CSSValue& value) {
-  StyleOffsetRotation result(0, kOffsetRotationFixed);
+  StyleOffsetRotation result(0, OffsetRotationType::kFixed);
 
   const CSSValueList& list = ToCSSValueList(value);
   DCHECK(list.length() == 1 || list.length() == 2);
   for (const auto& item : list) {
     if (item->IsIdentifierValue() &&
         ToCSSIdentifierValue(*item).GetValueID() == CSSValueAuto) {
-      result.type = kOffsetRotationAuto;
+      result.type = OffsetRotationType::kAuto;
     } else if (item->IsIdentifierValue() &&
                ToCSSIdentifierValue(*item).GetValueID() == CSSValueReverse) {
-      result.type = kOffsetRotationAuto;
+      result.type = OffsetRotationType::kAuto;
       result.angle = clampTo<float>(result.angle + 180);
     } else {
       const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(*item);
@@ -1268,6 +1280,7 @@ ShadowData StyleBuilderConverter::ConvertShadow(
         switch (value_id) {
           case CSSValueInvalid:
             NOTREACHED();
+            FALLTHROUGH;
           case CSSValueInternalQuirkInherit:
           case CSSValueWebkitLink:
           case CSSValueWebkitActivelink:
@@ -1314,7 +1327,7 @@ ShapeValue* StyleBuilderConverter::ConvertShapeValue(StyleResolverState& state,
         state.GetStyleImage(CSSPropertyShapeOutside, value));
 
   scoped_refptr<BasicShape> shape;
-  CSSBoxType css_box = kBoxMissing;
+  CSSBoxType css_box = CSSBoxType::kMissing;
   const CSSValueList& value_list = ToCSSValueList(value);
   for (unsigned i = 0; i < value_list.length(); ++i) {
     const CSSValue& value = value_list.Item(i);
@@ -1328,7 +1341,7 @@ ShapeValue* StyleBuilderConverter::ConvertShapeValue(StyleResolverState& state,
   if (shape)
     return ShapeValue::CreateShapeValue(std::move(shape), css_box);
 
-  DCHECK_NE(css_box, kBoxMissing);
+  DCHECK_NE(css_box, CSSBoxType::kMissing);
   return ShapeValue::CreateBoxShapeValue(css_box);
 }
 

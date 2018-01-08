@@ -57,6 +57,7 @@
 #include "chrome/browser/permissions/permission_manager_factory.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/plugins/plugin_prefs.h"
+#include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
 #include "chrome/browser/policy/schema_registry_service.h"
@@ -104,7 +105,6 @@
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/metrics/metrics_service.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
-#include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -179,7 +179,6 @@
 #include "chrome/browser/supervised_user/supervised_user_settings_service_factory.h"
 #endif
 
-using base::Time;
 using base::TimeDelta;
 using bookmarks::BookmarkModel;
 using content::BrowserThread;
@@ -268,17 +267,6 @@ std::string ExitTypeToSessionTypePrefValue(Profile::ExitType type) {
   }
   NOTREACHED();
   return std::string();
-}
-
-PrefStore* CreateExtensionPrefStore(Profile* profile,
-                                    bool incognito_pref_store) {
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-  return new ExtensionPrefStore(
-      ExtensionPrefValueMapFactory::GetForBrowserContext(profile),
-      incognito_pref_store);
-#else
-  return NULL;
-#endif
 }
 
 }  // namespace
@@ -408,7 +396,7 @@ ProfileImpl::ProfileImpl(
       pref_registry_(new user_prefs::PrefRegistrySyncable),
       io_data_(this),
       last_session_exit_type_(EXIT_NORMAL),
-      start_time_(Time::Now()),
+      start_time_(base::Time::Now()),
       delegate_(delegate),
       predictor_(nullptr) {
   TRACE_EVENT0("browser,startup", "ProfileImpl::ctor")
@@ -1135,7 +1123,7 @@ bool ProfileImpl::IsSameProfile(Profile* profile) {
   return otr_profile && profile == otr_profile;
 }
 
-Time ProfileImpl::GetStartTime() const {
+base::Time ProfileImpl::GetStartTime() const {
   return start_time_;
 }
 

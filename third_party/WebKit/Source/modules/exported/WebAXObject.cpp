@@ -42,8 +42,7 @@
 #include "core/html_names.h"
 #include "core/input/KeyboardEventManager.h"
 #include "core/layout/LayoutObject.h"
-#include "core/layout/api/LayoutAPIShim.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
 #include "core/style/ComputedStyle.h"
 #include "modules/accessibility/AXObject.h"
@@ -69,7 +68,7 @@ class WebAXSparseAttributeClientAdapter : public AXSparseAttributeClient {
  public:
   WebAXSparseAttributeClientAdapter(WebAXSparseAttributeClient& attribute_map)
       : attribute_map_(attribute_map) {}
-  virtual ~WebAXSparseAttributeClientAdapter() {}
+  virtual ~WebAXSparseAttributeClientAdapter() = default;
 
  private:
   WebAXSparseAttributeClient& attribute_map_;
@@ -234,13 +233,6 @@ void WebAXObject::GetSparseAXAttributes(
   private_->GetSparseAXAttributes(adapter);
 }
 
-bool WebAXObject::CanSetSelectedAttribute() const {
-  if (IsDetached())
-    return false;
-
-  return private_->CanSetSelectedAttribute();
-}
-
 bool WebAXObject::IsAnchor() const {
   if (IsDetached())
     return false;
@@ -367,11 +359,11 @@ bool WebAXObject::IsRequired() const {
   return private_->IsRequired();
 }
 
-bool WebAXObject::IsSelected() const {
+WebAXSelectedState WebAXObject::IsSelected() const {
   if (IsDetached())
-    return false;
+    return kWebAXSelectedStateUndefined;
 
-  return private_->IsSelected();
+  return static_cast<WebAXSelectedState>(private_->IsSelected());
 }
 
 bool WebAXObject::IsSelectedOptionActive() const {
@@ -1046,8 +1038,11 @@ WebString WebAXObject::ComputedStyleDisplay() const {
   if (!computed_style)
     return WebString();
 
-  return WebString(
-      CSSIdentifierValue::Create(computed_style->Display())->CssText());
+  return WebString(CSSProperty::Get(CSSPropertyDisplay)
+                       .CSSValueFromComputedStyle(
+                           *computed_style, /* layout_object */ nullptr, node,
+                           /* allow_visited_style */ false)
+                       ->CssText());
 }
 
 bool WebAXObject::AccessibilityIsIgnored() const {
@@ -1505,9 +1500,7 @@ WebAXObject WebAXObject::FromWebDocument(const WebDocument& web_document) {
   const Document* document = web_document.ConstUnwrap<Document>();
   AXObjectCacheImpl* cache =
       ToAXObjectCacheImpl(document->GetOrCreateAXObjectCache());
-  return cache ? WebAXObject(cache->GetOrCreate(
-                     ToLayoutView(LayoutAPIShim::LayoutObjectFrom(
-                         document->GetLayoutViewItem()))))
+  return cache ? WebAXObject(cache->GetOrCreate(document->GetLayoutView()))
                : WebAXObject();
 }
 

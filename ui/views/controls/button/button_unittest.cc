@@ -247,6 +247,19 @@ TEST_F(ButtonTest, HoverStateOnVisibilityChange) {
 #endif  // !defined(OS_MACOSX) || defined(USE_AURA)
 }
 
+// Tests that the hover state is preserved during a view hierarchy update of a
+// button's child View.
+TEST_F(ButtonTest, HoverStatePreservedOnDescendantViewHierarchyChange) {
+  ui::test::EventGenerator generator(widget()->GetNativeWindow());
+  generator.MoveMouseTo(button()->GetBoundsInScreen().CenterPoint());
+
+  EXPECT_EQ(Button::STATE_HOVERED, button()->state());
+  Label* child = new Label(base::string16());
+  button()->AddChildView(child);
+  delete child;
+  EXPECT_EQ(Button::STATE_HOVERED, button()->state());
+}
+
 // Tests the different types of NotifyActions.
 TEST_F(ButtonTest, NotifyAction) {
   gfx::Point center(10, 10);
@@ -495,6 +508,50 @@ TEST_F(ButtonTest, InkDropAfterTryingToShowContextMenu) {
 
   EXPECT_TRUE(ink_drop->is_hovered());
   EXPECT_EQ(InkDropState::ACTION_PENDING, ink_drop->GetTargetInkDropState());
+}
+
+TEST_F(ButtonTest, HideInkDropHighlightWhenRemoved) {
+  views::View test_container;
+  test_container.set_owned_by_client();
+  TestInkDrop* ink_drop = new TestInkDrop();
+  CreateButtonWithInkDrop(base::WrapUnique(ink_drop), false);
+  // Mark the button as owned by client so we can remove it from widget()
+  // without it being deleted.
+  button()->set_owned_by_client();
+
+  // Make sure that the button ink drop is hidden after the button gets removed.
+  widget()->SetContentsView(&test_container);
+  test_container.AddChildView(button());
+  ui::test::EventGenerator generator(widget()->GetNativeWindow());
+  generator.MoveMouseToInHost(2, 2);
+  EXPECT_TRUE(ink_drop->is_hovered());
+  test_container.RemoveAllChildViews(false);
+  EXPECT_FALSE(ink_drop->is_hovered());
+
+  // Make sure hiding the ink drop happens even if the button is indirectly
+  // being removed.
+  views::View parent_test_container;
+  parent_test_container.set_owned_by_client();
+  parent_test_container.AddChildView(&test_container);
+  test_container.AddChildView(button());
+  widget()->SetContentsView(&parent_test_container);
+
+  // Trigger hovering and then remove from the indirect parent. This should
+  // propagate down to Button which should remove the highlight effect.
+  EXPECT_FALSE(ink_drop->is_hovered());
+  generator.MoveMouseToInHost(10, 10);
+  EXPECT_TRUE(ink_drop->is_hovered());
+  parent_test_container.RemoveAllChildViews(false);
+  EXPECT_FALSE(ink_drop->is_hovered());
+
+  // Remove references to and delete button() which cannot be removed by owned
+  // containers as it's permanently set as owned by client.
+  test_container.RemoveAllChildViews(false);
+  delete button();
+
+  // Set the widget contents view to a new View so widget() doesn't contain a
+  // stale reference to the test containers that are about to go out of scope.
+  widget()->SetContentsView(new View());
 }
 
 // Tests that when button is set to notify on release, dragging mouse out and

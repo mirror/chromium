@@ -108,6 +108,7 @@ if (is_mac || is_ios || is_linux) {
   enable_frame_pointers = current_cpu != "arm"
 } else if (is_android) {
   enable_frame_pointers =
+      enable_profiling ||
       # Ensure that stacks from arm64 crash dumps are usable (crbug.com/391706).
       current_cpu == "arm64" ||
       # For x86 Android, unwind tables are huge without frame pointers
@@ -158,7 +159,9 @@ declare_args() {
   use_lld = is_clang && !is_msan &&
             ((is_win && host_os != "win") || is_fuchsia ||
              (use_thin_lto && target_os != "chromeos") ||
-             (is_linux && current_cpu == "x64" && target_os != "chromeos"))
+             (is_linux && current_cpu == "x64" && target_os != "chromeos") ||
+             (is_android && (current_cpu != "arm" || arm_version >= 7) &&
+              current_cpu != "mipsel" && current_cpu != "mips64el"))
 }
 
 declare_args() {
@@ -166,8 +169,9 @@ declare_args() {
   use_gold =
       (!use_lld && !(is_chromecast && is_linux &&
                      (current_cpu == "arm" || current_cpu == "mipsel")) &&
-       (is_linux && (current_cpu == "x64" || current_cpu == "x86" ||
-                     current_cpu == "arm" || current_cpu == "mipsel"))) ||
+       (is_linux &&
+        (current_cpu == "x64" || current_cpu == "x86" || current_cpu == "arm" ||
+         current_cpu == "mipsel" || current_cpu == "mips64el"))) ||
       (is_android && (current_cpu == "x86" || current_cpu == "x64" ||
                       current_cpu == "arm" || current_cpu == "arm64"))
 }

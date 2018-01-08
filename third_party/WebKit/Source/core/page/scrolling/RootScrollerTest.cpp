@@ -14,7 +14,7 @@
 #include "core/geometry/DOMRect.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBox.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
@@ -49,10 +49,12 @@ namespace {
 class RootScrollerTest : public ::testing::Test,
                          public ::testing::WithParamInterface<bool>,
                          private ScopedRootLayerScrollingForTest,
+                         private ScopedImplicitRootScrollerForTest,
                          private ScopedSetRootScrollerForTest {
  public:
   RootScrollerTest()
       : ScopedRootLayerScrollingForTest(GetParam()),
+        ScopedImplicitRootScrollerForTest(false),
         ScopedSetRootScrollerForTest(true),
         base_url_("http://www.test.com/") {
     RegisterMockedHttpURLLoad("overflow-scrolling.html");
@@ -840,6 +842,61 @@ TEST_P(RootScrollerTest, RemoteMainFrame) {
   }
 }
 
+// Ensure a non-main local root doesn't interfere with the global root
+// scroller. This happens in this situation: Local <- Remote <- Local. This
+// tests the crash in https://crbug.com/800566.
+TEST_P(RootScrollerTest, NonMainLocalRootLifecycle) {
+  WebLocalFrameImpl* non_main_local_root = nullptr;
+
+  // Setup a Local <- Remote <- Local frame hierarchy.
+  {
+    Initialize();
+    WebURL base_url = URLTestHelpers::ToKURL("http://www.test.com/");
+    FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrameImpl(),
+                                     R"HTML(
+                                              <!DOCTYPE html>
+                                              <iframe></iframe>
+                                          )HTML",
+                                     base_url);
+    MainFrameView()->UpdateAllLifecyclePhases();
+
+    WebRemoteFrameImpl* remote_frame = FrameTestHelpers::CreateRemote();
+    WebLocalFrameImpl* child =
+        ToWebLocalFrameImpl(helper_.LocalMainFrame()->FirstChild());
+    child->Swap(remote_frame);
+    remote_frame->SetReplicatedOrigin(
+        WebSecurityOrigin(SecurityOrigin::CreateUnique()), false);
+
+    non_main_local_root = FrameTestHelpers::CreateLocalChild(*remote_frame);
+    ASSERT_EQ(non_main_local_root->LocalRoot(), non_main_local_root);
+    ASSERT_TRUE(non_main_local_root->Parent());
+  }
+
+  const TopDocumentRootScrollerController& global_controller =
+      MainFrame()->GetDocument()->GetPage()->GlobalRootScrollerController();
+
+  ASSERT_EQ(MainFrame()->GetDocument()->documentElement(),
+            global_controller.GlobalRootScroller());
+
+  GraphicsLayer* scroll_layer = global_controller.RootScrollerLayer();
+  GraphicsLayer* container_layer = global_controller.RootContainerLayer();
+
+  ASSERT_TRUE(scroll_layer);
+  ASSERT_TRUE(container_layer);
+
+  // Put the local main frame into Layout clean and have the non-main local
+  // root do a complete lifecycle update.
+  helper_.LocalMainFrame()->GetFrameView()->SetNeedsLayout();
+  helper_.LocalMainFrame()->GetFrameView()->UpdateLifecycleToLayoutClean();
+  non_main_local_root->GetFrameView()->UpdateAllLifecyclePhases();
+  helper_.LocalMainFrame()->GetFrameView()->UpdateAllLifecyclePhases();
+
+  EXPECT_EQ(MainFrame()->GetDocument()->documentElement(),
+            global_controller.GlobalRootScroller());
+  EXPECT_EQ(global_controller.RootScrollerLayer(), scroll_layer);
+  EXPECT_EQ(global_controller.RootContainerLayer(), container_layer);
+}
+
 // Tests that removing the root scroller element from the DOM resets the
 // effective root scroller without waiting for any lifecycle events.
 TEST_P(RootScrollerTest, RemoveRootScrollerFromDom) {
@@ -1177,9 +1234,12 @@ TEST_P(RootScrollerTest, ImmediateUpdateOfLayoutViewport) {
 
 class RootScrollerSimTest : public ::testing::WithParamInterface<bool>,
                             private ScopedRootLayerScrollingForTest,
+                            private ScopedImplicitRootScrollerForTest,
                             public SimTest {
  public:
-  RootScrollerSimTest() : ScopedRootLayerScrollingForTest(GetParam()) {}
+  RootScrollerSimTest()
+      : ScopedRootLayerScrollingForTest(GetParam()),
+        ScopedImplicitRootScrollerForTest(false) {}
 };
 
 INSTANTIATE_TEST_CASE_P(All, RootScrollerSimTest, ::testing::Bool());
@@ -1243,6 +1303,152 @@ TEST_P(RootScrollerSimTest, RootScrollerDoesntAffectVisualViewport) {
   EXPECT_EQ(120, frame->DomWindow()->visualViewport()->pageTop());
 }
 
+// Tests basic implicit root scroller mode with a <div>.
+TEST_P(RootScrollerSimTest, ImplicitRootScroller) {
+  ScopedSetRootScrollerForTest disable_root_scroller(false);
+  ScopedImplicitRootScrollerForTest enable_implicit(true);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+          <!DOCTYPE html>
+          <style>
+            ::-webkit-scrollbar {
+              width: 0px;
+              height: 0px;
+            }
+            body, html {
+              width: 100%;
+              height: 100%;
+              margin: 0px;
+            }
+            #spacer {
+              width: 1000px;
+              height: 1000px;
+            }
+            #container {
+              width: 100%;
+              height: 100%;
+            }
+          </style>
+          <div id="container">
+            <div id="spacer"></div>
+          </div>
+      )HTML");
+  Compositor().BeginFrame();
+
+  ASSERT_EQ(&GetDocument(),
+            GetDocument().GetRootScrollerController().EffectiveRootScroller());
+  Element* container = GetDocument().getElementById("container");
+
+  // overflow: auto and overflow: scroll should cause a valid element to be
+  // promoted to root scroller. Otherwise, they shouldn't, even if they're
+  // otherwise a valid root scroller element.
+  std::vector<std::tuple<String, String, Node*>> test_cases = {
+      {"overflow", "hidden", &GetDocument()},
+      {"overflow", "auto", container},
+      {"overflow", "scroll", container},
+      {"overflow", "visible", &GetDocument()},
+      // Overflow: hidden in one axis forces the other axis to auto so it should
+      // be promoted.
+      {"overflow-x", "hidden", container},
+      {"overflow-x", "auto", container},
+      {"overflow-x", "scroll", container},
+      {"overflow-x", "visible", &GetDocument()},
+      {"overflow-y", "hidden", container},
+      {"overflow-y", "auto", container},
+      {"overflow-y", "scroll", container},
+      {"overflow-y", "visible", &GetDocument()}};
+
+  for (auto test_case : test_cases) {
+    String& style = std::get<0>(test_case);
+    String& style_val = std::get<1>(test_case);
+    Node* expected_root_scroller = std::get<2>(test_case);
+
+    container->style()->setProperty(&GetDocument(), style, style_val, String(),
+                                    ASSERT_NO_EXCEPTION);
+    Compositor().BeginFrame();
+    ASSERT_EQ(
+        expected_root_scroller,
+        GetDocument().GetRootScrollerController().EffectiveRootScroller());
+    container->style()->setProperty(&GetDocument(), std::get<0>(test_case),
+                                    String(), String(), ASSERT_NO_EXCEPTION);
+    Compositor().BeginFrame();
+    ASSERT_EQ(
+        &GetDocument(),
+        GetDocument().GetRootScrollerController().EffectiveRootScroller());
+  }
+
+  // Now remove the overflowing element and rerun the tests. There should be no
+  // difference based on the fact that the scroller has overflow or not.
+  Element* spacer = GetDocument().getElementById("spacer");
+  spacer->remove();
+
+  for (auto test_case : test_cases) {
+    String& style = std::get<0>(test_case);
+    String& style_val = std::get<1>(test_case);
+    Node* expected_root_scroller = std::get<2>(test_case);
+
+    container->style()->setProperty(&GetDocument(), style, style_val, String(),
+                                    ASSERT_NO_EXCEPTION);
+    Compositor().BeginFrame();
+    ASSERT_EQ(
+        expected_root_scroller,
+        GetDocument().GetRootScrollerController().EffectiveRootScroller());
+    container->style()->setProperty(&GetDocument(), std::get<0>(test_case),
+                                    String(), String(), ASSERT_NO_EXCEPTION);
+    Compositor().BeginFrame();
+    ASSERT_EQ(
+        &GetDocument(),
+        GetDocument().GetRootScrollerController().EffectiveRootScroller());
+  }
+}
+
+// Tests implicit root scroller mode for iframes.
+TEST_P(RootScrollerSimTest, ImplicitRootScrollerIframe) {
+  ScopedSetRootScrollerForTest disable_root_scroller(false);
+  ScopedImplicitRootScrollerForTest enable_implicit(true);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+          <!DOCTYPE html>
+          <style>
+            ::-webkit-scrollbar {
+              width: 0px;
+              height: 0px;
+            }
+            body, html {
+              width: 100%;
+              height: 100%;
+              margin: 0px;
+            }
+            iframe {
+              width: 100%;
+              height: 100%;
+              border: 0;
+            }
+          </style>
+          <iframe id="container"
+                  srcdoc="<!DOCTYPE html><style>html {height: 300%;}</style>">
+          </iframe>
+      )HTML");
+  Compositor().BeginFrame();
+
+  Element* container = GetDocument().getElementById("container");
+  ASSERT_EQ(container,
+            GetDocument().GetRootScrollerController().EffectiveRootScroller());
+
+  container->style()->setProperty(&GetDocument(), "height", "95%", String(),
+                                  ASSERT_NO_EXCEPTION);
+  Compositor().BeginFrame();
+
+  ASSERT_EQ(&GetDocument(),
+            GetDocument().GetRootScrollerController().EffectiveRootScroller());
+}
+
 class RootScrollerHitTest : public RootScrollerTest {
  public:
   void CheckHitTestAtBottomOfScreen() {
@@ -1287,7 +1493,8 @@ INSTANTIATE_TEST_CASE_P(All, RootScrollerHitTest, ::testing::Bool());
 // Test that hit testing in the area revealed at the bottom of the screen
 // revealed by hiding the URL bar works properly when using a root scroller
 // when the target and scroller are in the same PaintLayer.
-TEST_P(RootScrollerHitTest, HitTestInAreaRevealedByURLBarSameLayer) {
+// TODO(chrishtr): fix this for root scrollers.
+TEST_P(RootScrollerHitTest, DISABLED_HitTestInAreaRevealedByURLBarSameLayer) {
   // Add a target at the bottom of the root scroller that's the size of the url
   // bar. We'll test that hiding the URL bar appropriately adjusts clipping so
   // that we can hit this target.

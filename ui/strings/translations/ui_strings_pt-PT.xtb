@@ -43,7 +43,6 @@
 <translation id="2803313416453193357">Abrir pasta</translation>
 <translation id="2824719307700604149">{YEARS,plural, =1{Há 1 ano}other{Há # anos}}</translation>
 <translation id="2931838996092594335">clicar</translation>
-<translation id="2983818520079887040">Definições...</translation>
 <translation id="3036649622769666520">Abrir ficheiros</translation>
 <translation id="3049748772180311791"><ph name="QUANTITY" /> MB</translation>
 <translation id="3087734570205094154">Parte inferior</translation>
@@ -65,7 +64,6 @@
 <translation id="4250229828105606438">Captura de ecrã</translation>
 <translation id="4266252015790371705">{MONTHS,plural, =1{Há 1 mês}other{Há # meses}}</translation>
 <translation id="4316910396681052118">TODAS AS APLICAÇÕES</translation>
-<translation id="4320177379694898372">Sem ligação à Internet</translation>
 <translation id="4588090240171750605">Deslocar-se para a direita</translation>
 <translation id="4724120544754982507">Centro de notificações, <ph name="UNREAD_NOTIFICATION_COUNT" /> notificações não lidas</translation>
 <translation id="4730374152663651037">UTILIZADAS FREQUENTEMENTE</translation>
@@ -105,6 +103,7 @@
 <translation id="6394627529324717982">Vírgula</translation>
 <translation id="6404817160109697034">{SECONDS,plural, =1{Há 1 seg}other{Há # seg}}</translation>
 <translation id="6483402905448010557">{SECONDS,plural, =1{Há 1 segundo}other{Há # segundos}}</translation>
+<translation id="654149438358937226">Bloquear todas as notificações</translation>
 <translation id="6567071839949112727">clicar no predecessor</translation>
 <translation id="6612467943526193239">Para sair da calibração, prima Esc.</translation>
 <translation id="6620110761915583480">Guardar ficheiro</translation>
@@ -131,6 +130,7 @@
 <translation id="7658239707568436148">Cancelar</translation>
 <translation id="7781829728241885113">Ontem</translation>
 <translation id="7814458197256864873">&amp;Copiar</translation>
+<translation id="7879499977785298635">Não bloquear</translation>
 <translation id="7907591526440419938">Abrir ficheiro</translation>
 <translation id="8106081041558092062">{HOURS,plural, =1{Há 1 hora}other{Há # horas}}</translation>
 <translation id="8131263257437993507">{SECONDS,plural, =1{Falta 1 s}other{Faltam # s}}</translation>
@@ -141,7 +141,6 @@
 <translation id="8328145009876646418">Margem esquerda</translation>
 <translation id="8331626408530291785">Deslocar-se para cima</translation>
 <translation id="8352146631962686268">{YEARS,plural, =1{1 ano}other{# anos}}</translation>
-<translation id="8371695176452482769">Falar agora</translation>
 <translation id="838869780401515933">verificar</translation>
 <translation id="8393700583063109961">Enviar mensagem</translation>
 <translation id="8394908167088220973">Reproduzir/interromper multimédia</translation>
@@ -150,6 +149,7 @@
 <translation id="8602707065186045623">Ficheiro <ph name="SAVEAS_EXTENSION_TYPE" /> (.<ph name="SAVEAS_EXTENSION_NAME" />)</translation>
 <translation id="8677655579646609597"><ph name="QUANTITY" /> KB/s</translation>
 <translation id="8725488761726303204">+<ph name="NUMBER" /></translation>
+<translation id="8730621377337864115">Concluído</translation>
 <translation id="8772073294905169192">{HOURS,plural, =1{1 h}other{# h}}</translation>
 <translation id="8806053966018712535">Pasta <ph name="FOLDER_NAME" /></translation>
 <translation id="883911313571074303">Anotar imagem</translation>

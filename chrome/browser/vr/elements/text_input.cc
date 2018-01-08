@@ -4,7 +4,8 @@
 
 #include "chrome/browser/vr/elements/text_input.h"
 
-#include "base/memory/ptr_util.h"
+#include <memory>
+
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/text.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
@@ -21,7 +22,7 @@ TextInput::TextInput(float font_height_meters,
                      OnInputEditedCallback input_edit_callback)
     : focus_changed_callback_(focus_changed_callback),
       input_edit_callback_(input_edit_callback) {
-  auto text = base::MakeUnique<Text>(font_height_meters);
+  auto text = std::make_unique<Text>(font_height_meters);
   text->SetType(kTypeTextInputHint);
   text->SetDrawPhase(kPhaseForeground);
   text->set_hit_testable(false);
@@ -29,12 +30,12 @@ TextInput::TextInput(float font_height_meters,
   text->set_x_anchoring(LEFT);
   text->set_x_centering(LEFT);
   text->SetSize(1, 1);
-  text->SetTextLayoutMode(TextLayoutMode::kSingleLineFixedWidth);
-  text->SetTextAlignment(UiTexture::kTextAlignmentLeft);
+  text->SetLayoutMode(TextLayoutMode::kSingleLineFixedWidth);
+  text->SetAlignment(UiTexture::kTextAlignmentLeft);
   hint_element_ = text.get();
   this->AddChild(std::move(text));
 
-  text = base::MakeUnique<Text>(font_height_meters);
+  text = std::make_unique<Text>(font_height_meters);
   text->SetType(kTypeTextInputText);
   text->SetDrawPhase(kPhaseForeground);
   text->set_hit_testable(true);
@@ -43,13 +44,13 @@ TextInput::TextInput(float font_height_meters,
   text->set_x_centering(LEFT);
   text->set_bubble_events(true);
   text->SetSize(1, 1);
-  text->SetTextLayoutMode(TextLayoutMode::kSingleLineFixedWidth);
-  text->SetTextAlignment(UiTexture::kTextAlignmentLeft);
+  text->SetLayoutMode(TextLayoutMode::kSingleLineFixedWidth);
+  text->SetAlignment(UiTexture::kTextAlignmentLeft);
   text->SetCursorEnabled(true);
   text_element_ = text.get();
   this->AddChild(std::move(text));
 
-  auto cursor = base::MakeUnique<Rect>();
+  auto cursor = std::make_unique<Rect>();
   cursor->SetVisible(false);
   cursor->SetType(kTypeTextInputCursor);
   cursor->SetDrawPhase(kPhaseForeground);
@@ -68,6 +69,18 @@ void TextInput::SetTextInputDelegate(TextInputDelegate* text_input_delegate) {
   delegate_ = text_input_delegate;
 }
 
+void TextInput::OnButtonDown(const gfx::PointF& position) {
+  // Reposition the cursor based on click position.
+  int cursor_position = text_element_->GetCursorPositionFromPoint(position);
+  TextInputInfo info(text_info_);
+  info.selection_start = cursor_position;
+  info.selection_end = cursor_position;
+  if (text_info_ != info) {
+    UpdateInput(info);
+    ResetCursorBlinkCycle();
+  }
+}
+
 void TextInput::OnButtonUp(const gfx::PointF& position) {
   RequestFocus();
 }
@@ -84,14 +97,14 @@ void TextInput::OnFocusChanged(bool focused) {
 }
 
 void TextInput::RequestFocus() {
-  if (!delegate_)
+  if (!delegate_ || focused_)
     return;
 
   delegate_->RequestFocus(id());
 }
 
 void TextInput::RequestUnfocus() {
-  if (!delegate_)
+  if (!delegate_ || !focused_)
     return;
 
   delegate_->RequestUnfocus(id());
@@ -124,6 +137,8 @@ void TextInput::SetHintColor(SkColor color) {
 void TextInput::UpdateInput(const TextInputInfo& info) {
   if (text_info_ == info)
     return;
+
+  DCHECK_EQ(info.selection_start, info.selection_end);
   text_info_ = info;
 
   if (delegate_ && focused_)
@@ -135,7 +150,7 @@ void TextInput::UpdateInput(const TextInputInfo& info) {
 }
 
 bool TextInput::OnBeginFrame(const base::TimeTicks& time,
-                             const gfx::Vector3dF& look_at) {
+                             const gfx::Transform& head_pose) {
   return SetCursorBlinkState(time);
 }
 
@@ -160,14 +175,18 @@ void TextInput::LayOutChildren() {
 }
 
 bool TextInput::SetCursorBlinkState(const base::TimeTicks& time) {
-  base::TimeDelta delta = time - base::TimeTicks();
+  base::TimeDelta delta = time - cursor_blink_start_ticks_;
   bool visible =
-      focused_ && delta.InMilliseconds() / kCursorBlinkHalfPeriodMs % 2;
+      focused_ && (delta.InMilliseconds() / kCursorBlinkHalfPeriodMs + 1) % 2;
   if (cursor_visible_ == visible)
     return false;
   cursor_visible_ = visible;
   cursor_element_->SetVisible(visible);
   return true;
+}
+
+void TextInput::ResetCursorBlinkCycle() {
+  cursor_blink_start_ticks_ = base::TimeTicks::Now();
 }
 
 }  // namespace vr

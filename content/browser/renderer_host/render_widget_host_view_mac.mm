@@ -380,8 +380,7 @@ namespace content {
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserCompositorMacClient, public:
 
-SkColor RenderWidgetHostViewMac::BrowserCompositorMacGetGutterColor(
-    SkColor color) const {
+SkColor RenderWidgetHostViewMac::BrowserCompositorMacGetGutterColor() const {
   // When making an element on the page fullscreen the element's background
   // may not match the page's, so use black as the gutter color to avoid
   // flashes of brighter colors during the transition.
@@ -389,7 +388,7 @@ SkColor RenderWidgetHostViewMac::BrowserCompositorMacGetGutterColor(
       render_widget_host_->delegate()->IsFullscreenForCurrentTab()) {
     return SK_ColorBLACK;
   }
-  return color;
+  return last_frame_root_background_color_;
 }
 
 void RenderWidgetHostViewMac::BrowserCompositorMacOnBeginFrame() {
@@ -398,6 +397,10 @@ void RenderWidgetHostViewMac::BrowserCompositorMacOnBeginFrame() {
 
 void RenderWidgetHostViewMac::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
+}
+
+void RenderWidgetHostViewMac::DidReceiveFirstFrameAfterNavigation() {
+  render_widget_host_->DidReceiveFirstFrameAfterNavigation();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -532,10 +535,6 @@ void RenderWidgetHostViewMac::SetDelegate(
 
 void RenderWidgetHostViewMac::SetAllowPauseForResizeOrRepaint(bool allow) {
   allow_pause_for_resize_or_repaint_ = allow;
-}
-
-viz::SurfaceId RenderWidgetHostViewMac::SurfaceIdForTesting() const {
-  return browser_compositor_->GetDelegatedFrameHost()->SurfaceIdForTesting();
 }
 
 ui::TextInputType RenderWidgetHostViewMac::GetTextInputType() {
@@ -746,7 +745,10 @@ void RenderWidgetHostViewMac::Show() {
   ui::LatencyInfo renderer_latency_info;
   renderer_latency_info.AddLatencyNumber(
       ui::TAB_SHOW_COMPONENT, render_widget_host_->GetLatencyComponentId(), 0);
+  renderer_latency_info.set_trace_id(++tab_show_sequence_);
   render_widget_host_->WasShown(renderer_latency_info);
+  TRACE_EVENT_ASYNC_BEGIN0("latency", "TabSwitching::Latency",
+                           tab_show_sequence_);
 
   // If there is not a frame being currently drawn, kick one, so that the below
   // pause will have a frame to wait on.
@@ -1087,16 +1089,15 @@ void RenderWidgetHostViewMac::SetTooltipText(
 }
 
 void RenderWidgetHostViewMac::OnSynchronizedDisplayPropertiesChanged() {
-  if (!render_widget_host_)
-    return;
+  browser_compositor_->OnNSViewWasResized();
+}
 
-  browser_compositor_->AllocateNewLocalSurfaceId();
-  browser_compositor_->WasResized();
+void RenderWidgetHostViewMac::DidNavigate() {
+  browser_compositor_->DidNavigate();
+}
 
-  if (render_widget_host_->auto_resize_enabled()) {
-    render_widget_host_->DidAllocateLocalSurfaceIdForAutoResize(
-        render_widget_host_->last_auto_resize_request_number());
-  }
+gfx::Size RenderWidgetHostViewMac::GetRequestedRendererSize() const {
+  return browser_compositor_->DelegatedFrameHostDesiredSizeInDIP();
 }
 
 bool RenderWidgetHostViewMac::SupportsSpeech() const {
@@ -1213,6 +1214,10 @@ void RenderWidgetHostViewMac::SetNeedsBeginFrames(bool needs_begin_frames) {
 
 void RenderWidgetHostViewMac::UpdateNeedsBeginFramesInternal() {
   browser_compositor_->SetNeedsBeginFrames(needs_begin_frames_);
+}
+
+void RenderWidgetHostViewMac::SetWantsAnimateOnlyBeginFrames() {
+  browser_compositor_->SetWantsAnimateOnlyBeginFrames();
 }
 
 void RenderWidgetHostViewMac::KillSelf() {
@@ -1440,8 +1445,10 @@ void RenderWidgetHostViewMac::SubmitCompositorFrame(
 
   page_at_minimum_scale_ =
       frame.metadata.page_scale_factor == frame.metadata.min_page_scale_factor;
-  browser_compositor_->SubmitCompositorFrame(local_surface_id,
-                                             std::move(frame));
+
+  browser_compositor_->GetDelegatedFrameHost()->SubmitCompositorFrame(
+      local_surface_id, std::move(frame), nullptr);
+
   UpdateDisplayVSyncParameters();
 }
 
@@ -1536,26 +1543,6 @@ viz::FrameSinkId RenderWidgetHostViewMac::GetFrameSinkId() {
   return browser_compositor_->GetDelegatedFrameHost()->GetFrameSinkId();
 }
 
-viz::FrameSinkId RenderWidgetHostViewMac::FrameSinkIdAtPoint(
-    viz::SurfaceHittestDelegate* delegate,
-    const gfx::PointF& point,
-    gfx::PointF* transformed_point) {
-  // The surface hittest happens in device pixels, so we need to convert the
-  // |point| from DIPs to pixels before hittesting.
-  float scale_factor = ui::GetScaleFactorForNativeView(cocoa_view_);
-  gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
-  viz::SurfaceId id =
-      browser_compositor_->GetDelegatedFrameHost()->SurfaceIdAtPoint(
-          delegate, point_in_pixels, transformed_point);
-  *transformed_point = gfx::ConvertPointToDIP(scale_factor, *transformed_point);
-
-  // It is possible that the renderer has not yet produced a surface, in which
-  // case we return our current namespace.
-  if (!id.is_valid())
-    return GetFrameSinkId();
-  return id.frame_sink_id();
-}
-
 bool RenderWidgetHostViewMac::ShouldRouteEvent(
     const WebInputEvent& event) const {
   // See also RenderWidgetHostViewAura::ShouldRouteEvent.
@@ -1612,6 +1599,10 @@ bool RenderWidgetHostViewMac::TransformPointToCoordSpaceForView(
 
 viz::FrameSinkId RenderWidgetHostViewMac::GetRootFrameSinkId() {
   return browser_compositor_->GetRootFrameSinkId();
+}
+
+viz::SurfaceId RenderWidgetHostViewMac::GetCurrentSurfaceId() const {
+  return browser_compositor_->GetDelegatedFrameHost()->GetCurrentSurfaceId();
 }
 
 bool RenderWidgetHostViewMac::Send(IPC::Message* message) {
@@ -1761,19 +1752,6 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   display::Screen* screen = display::Screen::GetScreen();
   if (display.id() != screen->GetDisplayNearestView(cocoa_view_).id())
     return;
-
-  if (changed_metrics & DisplayObserver::DISPLAY_METRIC_DEVICE_SCALE_FACTOR) {
-    RenderWidgetHostImpl* host =
-        RenderWidgetHostImpl::From(GetRenderWidgetHost());
-    if (host) {
-      if (host->auto_resize_enabled()) {
-        host->DidAllocateLocalSurfaceIdForAutoResize(
-            host->last_auto_resize_request_number());
-      }
-      host->WasResized();
-    }
-  }
-
   UpdateBackingStoreProperties();
 }
 
@@ -2876,8 +2854,12 @@ Class GetRenderWidgetHostViewCocoaClassForTesting() {
     renderWidgetHostView_->render_widget_host_->delegate()->SendScreenRects();
   else
     renderWidgetHostView_->render_widget_host_->SendScreenRects();
+
+  // RenderWidgetHostImpl will query BrowserCompositorMac for the dimensions
+  // to send to the renderer, so it is required that BrowserCompositorMac be
+  // updated first.
+  renderWidgetHostView_->browser_compositor_->OnNSViewWasResized();
   renderWidgetHostView_->render_widget_host_->WasResized();
-  renderWidgetHostView_->browser_compositor_->WasResized();
 
   // Wait for the frame that WasResize might have requested. If the view is
   // being made visible at a new size, then this call will have no effect

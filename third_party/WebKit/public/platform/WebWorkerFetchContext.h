@@ -12,10 +12,6 @@
 #include "public/platform/WebDocumentSubresourceFilter.h"
 #include "public/platform/WebURL.h"
 
-namespace base {
-class SingleThreadTaskRunner;
-}
-
 namespace blink {
 
 class WebURLLoaderFactory;
@@ -31,8 +27,7 @@ class WebWorkerFetchContext {
  public:
   virtual ~WebWorkerFetchContext() = default;
 
-  virtual void InitializeOnWorkerThread(
-      scoped_refptr<base::SingleThreadTaskRunner>) = 0;
+  virtual void InitializeOnWorkerThread() = 0;
 
   // Returns a new WebURLLoaderFactory which is associated with the worker
   // context. It can be called only once.
@@ -57,8 +52,8 @@ class WebWorkerFetchContext {
   virtual WebURL SiteForCookies() const = 0;
 
   // Reports the certificate error to the browser process.
-  virtual void DidRunContentWithCertificateErrors(const WebURL& url) {}
-  virtual void DidDisplayContentWithCertificateErrors(const WebURL& url) {}
+  virtual void DidRunContentWithCertificateErrors() {}
+  virtual void DidDisplayContentWithCertificateErrors() {}
 
   // Reports that the security origin has run active content from an insecure
   // source.

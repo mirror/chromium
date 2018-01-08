@@ -328,6 +328,7 @@ class CORE_EXPORT Node : public EventTarget {
   virtual bool IsCharacterDataNode() const { return false; }
   virtual bool IsFrameOwnerElement() const { return false; }
   virtual bool IsMediaRemotingInterstitial() const { return false; }
+  virtual bool IsPictureInPictureInterstitial() const { return false; }
 
   // Traverses the ancestors of this node and returns true if any of them are
   // either a MediaControlElement or MediaControls.
@@ -364,6 +365,7 @@ class CORE_EXPORT Node : public EventTarget {
   // This can happen when handling queued events (e.g. during execCommand())
   ShadowRoot* ContainingShadowRoot() const;
   ShadowRoot* YoungestShadowRoot() const;
+  bool IsInUserAgentShadowRoot() const;
 
   // Returns nullptr, a child of ShadowRoot, or a legacy shadow root.
   Node* NonBoundaryShadowTreeRootNode();
@@ -547,6 +549,11 @@ class CORE_EXPORT Node : public EventTarget {
   IntRect PixelSnappedBoundingBox() const {
     return PixelSnappedIntRect(BoundingBox());
   }
+
+  // BoundingBoxForScrollIntoView() is the node's scroll snap area.
+  // It is expanded from the BoundingBox() by scroll-margin.
+  // https://drafts.csswg.org/css-scroll-snap-1/#scroll-snap-area
+  LayoutRect BoundingBoxForScrollIntoView() const;
 
   unsigned NodeIndex() const;
 

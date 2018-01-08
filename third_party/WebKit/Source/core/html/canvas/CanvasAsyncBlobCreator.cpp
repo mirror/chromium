@@ -13,7 +13,7 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/WebTaskRunner.h"
-#include "platform/graphics/ImageBuffer.h"
+#include "platform/graphics/ImageDataBuffer.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/threading/BackgroundTaskRunner.h"
 #include "platform/wtf/Functional.h"
@@ -208,7 +208,7 @@ CanvasAsyncBlobCreator::CanvasAsyncBlobCreator(
   }
 }
 
-CanvasAsyncBlobCreator::~CanvasAsyncBlobCreator() {}
+CanvasAsyncBlobCreator::~CanvasAsyncBlobCreator() = default;
 
 void CanvasAsyncBlobCreator::Dispose() {
   // Eagerly let go of references to prevent retention of these
@@ -271,16 +271,6 @@ void CanvasAsyncBlobCreator::ScheduleAsyncBlobCreation(const double& quality) {
                   WrapPersistent(this), quality),
         kIdleTaskStartTimeoutDelayMs);
   }
-}
-
-SkImageInfo GetImageInfo(scoped_refptr<StaticBitmapImage> image) {
-  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
-  SkColorType color_type = kN32_SkColorType;
-  if (skia_image->colorSpace() && skia_image->colorSpace()->gammaIsLinear())
-    color_type = kRGBA_F16_SkColorType;
-  return SkImageInfo::Make(skia_image->width(), skia_image->height(),
-                           color_type, skia_image->alphaType(),
-                           skia_image->refColorSpace());
 }
 
 void CanvasAsyncBlobCreator::LoadStaticBitmapImage() {
@@ -390,11 +380,10 @@ void CanvasAsyncBlobCreator::ForceEncodeRowsOnCurrentThread() {
   if (IsMainThread()) {
     CreateBlobAndReturnResult();
   } else {
-    context_->GetTaskRunner(TaskType::kCanvasBlobSerialization)
-        ->PostTask(
-            FROM_HERE,
-            CrossThreadBind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
-                            WrapCrossThreadPersistent(this)));
+    PostCrossThreadTask(
+        *context_->GetTaskRunner(TaskType::kCanvasBlobSerialization), FROM_HERE,
+        CrossThreadBind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
+                        WrapCrossThreadPersistent(this)));
   }
 
   SignalAlternativeCodePathFinishedForTesting();
@@ -441,19 +430,19 @@ void CanvasAsyncBlobCreator::EncodeImageOnEncoderThread(double quality) {
   DCHECK(mime_type_ == kMimeTypeWebp);
 
   if (!EncodeImage(quality)) {
-    parent_frame_task_runner_->Get(TaskType::kCanvasBlobSerialization)
-        ->PostTask(
-            FROM_HERE,
-            CrossThreadBind(&CanvasAsyncBlobCreator::CreateNullAndReturnResult,
-                            WrapCrossThreadPersistent(this)));
+    PostCrossThreadTask(
+        *parent_frame_task_runner_->Get(TaskType::kCanvasBlobSerialization),
+        FROM_HERE,
+        CrossThreadBind(&CanvasAsyncBlobCreator::CreateNullAndReturnResult,
+                        WrapCrossThreadPersistent(this)));
     return;
   }
 
-  parent_frame_task_runner_->Get(TaskType::kCanvasBlobSerialization)
-      ->PostTask(
-          FROM_HERE,
-          CrossThreadBind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
-                          WrapCrossThreadPersistent(this)));
+  PostCrossThreadTask(
+      *parent_frame_task_runner_->Get(TaskType::kCanvasBlobSerialization),
+      FROM_HERE,
+      CrossThreadBind(&CanvasAsyncBlobCreator::CreateBlobAndReturnResult,
+                      WrapCrossThreadPersistent(this)));
 }
 
 bool CanvasAsyncBlobCreator::InitializeEncoder(double quality) {

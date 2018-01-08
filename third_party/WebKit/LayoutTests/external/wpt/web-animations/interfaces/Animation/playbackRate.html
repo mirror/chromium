@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset=utf-8>
 <title>Animation.playbackRate</title>
-<link rel="help" href="https://w3c.github.io/web-animations/#dom-animation-playbackrate">
+<link rel="help" href="https://drafts.csswg.org/web-animations/#dom-animation-playbackrate">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
 <script src="../../testcommon.js"></script>
@@ -14,16 +14,14 @@ function assert_playbackrate(animation,
                              previousAnimationCurrentTime,
                              previousTimelineCurrentTime,
                              description) {
-  const accuracy = 0.001; /* accuracy of DOMHighResTimeStamp */
   const animationCurrentTimeDifference =
     animation.currentTime - previousAnimationCurrentTime;
   const timelineCurrentTimeDifference =
     animation.timeline.currentTime - previousTimelineCurrentTime;
 
-  assert_approx_equals(animationCurrentTimeDifference,
-                       timelineCurrentTimeDifference * animation.playbackRate,
-                       accuracy,
-                       description);
+  assert_times_equal(animationCurrentTimeDifference,
+                     timelineCurrentTimeDifference * animation.playbackRate,
+                     description);
 }
 
 promise_test(t => {

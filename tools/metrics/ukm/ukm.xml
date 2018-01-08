@@ -379,10 +379,36 @@ be describing additional metrics about the same event.
       and punctuation.
     </summary>
   </metric>
+  <metric name="IsEntityEligible">
+    <summary>
+      Emits a 1 or 0 to indicate whether the IsEntity boolean ever had a chance
+      of being true or not.  When we're dealing with languages other than ones
+      where our simple entity-detection can work this signal is false.
+    </summary>
+  </metric>
+  <metric name="IsHttp">
+    <summary>
+      Emits a 1 or 0 to indicate whether the base page is HTTP (insecure).
+    </summary>
+  </metric>
+  <metric name="IsLanguageMismatch">
+    <summary>
+      Emits a 1 or 0 to indicate whether the language of the base page is a
+      mismatch from the list of languages the user knows, so they might want
+      translation.
+    </summary>
+  </metric>
   <metric name="IsLongWord">
     <summary>
       Emits a 1 or 0 to indicate whether the word tapped was considered long (at
       least 10 chars in length).
+    </summary>
+  </metric>
+  <metric name="IsSecondTapOverride">
+    <summary>
+      Emits a 1 or 0 to indicate whether the tap was an override of normal tap
+      suppression because it was considered a second tap on a word after the
+      first tap was suppressed.
     </summary>
   </metric>
   <metric name="IsShortWord">
@@ -395,6 +421,16 @@ be describing additional metrics about the same event.
     <summary>
       Emits a 1 or 0 to indicate whether the tap gesture was on the edge of a
       word, rather than in the middle 50% of the word.
+    </summary>
+  </metric>
+  <metric name="OutcomeRankerDidPredict">
+    <summary>
+      Emits a 1 or 0 to indicate whether Ranker was able to make a prediction.
+    </summary>
+  </metric>
+  <metric name="OutcomeRankerPrediction">
+    <summary>
+      Emits a 1 or 0 to indicate what Ranker's prediction was for this record.
     </summary>
   </metric>
   <metric name="OutcomeWasCardsDataShown">
@@ -451,9 +487,9 @@ be describing additional metrics about the same event.
       DPs.
     </summary>
   </metric>
-  <metric name="TapDuration">
+  <metric name="TapDurationMs">
     <summary>
-      The duration of the tap gesture expressed in milliseconds.
+      The duration of the tap gesture expressed as an integer in milliseconds.
     </summary>
   </metric>
   <metric name="WasScreenBottom">
@@ -510,12 +546,136 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="Download.Started">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Metrics taken when a download begins. It has one Download.Ended and none to
+    multiple Download.Interrupted/Download.Resumed events associated with it.
+  </summary>
+  <metric name="DownloadId">
+    <summary>
+      The id of the download that is used to associate separate events.
+    </summary>
+  </metric>
+  <metric name="DownloadSource">
+    <summary>
+      The source of the download, expressed as an enum defined in DownloadEntry.
+    </summary>
+  </metric>
+  <metric name="FileType">
+    <summary>
+      The type of file that is downloaded, expressed as an enum defined in
+      DownloadContentType.
+    </summary>
+  </metric>
+</event>
+
+<event name="Download.Completed">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Metrics taken when a download completes. Its parent event is
+    Download.Started.
+  </summary>
+  <metric name="DownloadId">
+    <summary>
+      The id of the download that is used to associate separate events.
+    </summary>
+  </metric>
+  <metric name="ResultingFileSize">
+    <summary>
+      The size of the file that is downloaded, expressed in kilobytes with
+      exponentially growing buckets.
+    </summary>
+  </metric>
+  <metric name="TimeSinceStart">
+    <summary>
+      The difference in the time between when the download finished and when it
+      began, expressed in miliseconds.
+    </summary>
+  </metric>
+</event>
+
+<event name="Download.Interrupted">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Metrics taken when a download is interrupted. Its parent event is
+    Download.Started.
+  </summary>
+  <metric name="ChangeInFileSize">
+    <summary>
+      The difference in the size of the file that is downloaded compared to the
+      initial reported size, expressed in kilobytes with exponentially growing
+      buckets.
+    </summary>
+  </metric>
+  <metric name="DownloadId">
+    <summary>
+      The id of the download that is used to associate separate events.
+    </summary>
+  </metric>
+  <metric name="Reason">
+    <summary>
+      The reason the download was interrupted, expressed as an enum defined in
+      DownloadInterruptReason.
+    </summary>
+  </metric>
+  <metric name="ResultingFileSize">
+    <summary>
+      The size of the file that is downloaded, expressed in kilobytes with
+      exponentially growing buckets.
+    </summary>
+  </metric>
+  <metric name="TimeSinceStart">
+    <summary>
+      The difference in the time between when the download interrupted and when
+      it began, expressed in miliseconds.
+    </summary>
+  </metric>
+</event>
+
+<event name="Download.Resumed">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Metrics taken when a download is resumed. Its parent event is
+    Download.Started.
+  </summary>
+  <metric name="DownloadId">
+    <summary>
+      The id of the download that is used to associate separate events.
+    </summary>
+  </metric>
+  <metric name="Mode">
+    <summary>
+      The mode by which the download was resumed, expressed as an enum defined
+      in ResumeMode.
+    </summary>
+  </metric>
+  <metric name="TimeSinceStart">
+    <summary>
+      The difference in the time between when the download resumed and when it
+      began, expressed in miliseconds.
+    </summary>
+  </metric>
+</event>
+
 <event name="Event.ScrollUpdate.Touch">
   <owner>nzolghadr@chromium.org</owner>
   <summary>
     Metrics related to a scroll action caused by the generated ScrollUpdate
     gesture event.
   </summary>
+  <metric name="IsMainThread">
+    <summary>
+      Whether the event is handled on the main thread or not.
+    </summary>
+  </metric>
+  <metric name="TimeToHandled">
+    <summary>
+      The time in microseconds between initial creation of a touch event and the
+      generated ScrollUpdate gesture event is handled on main/impl thread. If no
+      swap was induced by the ScrollUpdate gesture event, no recording is made.
+    </summary>
+  </metric>
   <metric name="TimeToScrollUpdateSwapBegin">
     <summary>
       The time in microseconds between the initial creation of a touch event and
@@ -532,6 +692,19 @@ be describing additional metrics about the same event.
     Metrics related to first scroll action caused by the generated ScrollUpdate
     gesture event.
   </summary>
+  <metric name="IsMainThread">
+    <summary>
+      Whether the event is handled on the main thread or not.
+    </summary>
+  </metric>
+  <metric name="TimeToHandled">
+    <summary>
+      The time in microseconds between initial creation of a touch event and the
+      first generated ScrollUpdate gesture event in a given scroll gesture event
+      sequence is handled on main/impl thread. If no swap was induced by the
+      ScrollUpdate gesture event, no recording is made.
+    </summary>
+  </metric>
   <metric name="TimeToScrollUpdateSwapBegin">
     <summary>
       The time in microseconds between initial creation of a touch event and the
@@ -550,6 +723,19 @@ be describing additional metrics about the same event.
     Metrics related to a scroll action caused by the generated ScrollUpdate
     gesture event.
   </summary>
+  <metric name="IsMainThread">
+    <summary>
+      Whether the event is handled on the main thread or not.
+    </summary>
+  </metric>
+  <metric name="TimeToHandled">
+    <summary>
+      The time in microseconds between initial creation of a wheel event and the
+      generated ScrollUpdate gesture event is handled on main/impl thread. If no
+      swap was induced by the ScrollUpdate gesture event, no recording is made.
+      The first GSU of every scrolling sequence is excluded from this metric.
+    </summary>
+  </metric>
   <metric name="TimeToScrollUpdateSwapBegin">
     <summary>
       The time in microseconds between the initial creation of a wheel event and
@@ -566,6 +752,19 @@ be describing additional metrics about the same event.
     Metrics related to first scroll action caused by the generated ScrollUpdate
     gesture event.
   </summary>
+  <metric name="IsMainThread">
+    <summary>
+      Whether the event is handled on the main thread or not.
+    </summary>
+  </metric>
+  <metric name="TimeToHandled">
+    <summary>
+      The time in microseconds between initial creation of a wheel event and the
+      first generated ScrollUpdate gesture event in a given scroll gesture event
+      sequence is handled on main/impl thread. If no swap was induced by the
+      ScrollBegin gesture event, no recording is made.
+    </summary>
+  </metric>
   <metric name="TimeToScrollUpdateSwapBegin">
     <summary>
       The time in microseconds between the initial creation of a wheel event and
@@ -664,6 +863,11 @@ be describing additional metrics about the same event.
       Whether the element had an audio track when autoplay was attempted.
     </summary>
   </metric>
+  <metric name="HighMediaEngagement">
+    <summary>
+      Whether the document has a high media engagement.
+    </summary>
+  </metric>
   <metric name="Muted">
     <summary>
       Whether the element was muted when autoplay was attempted.
@@ -679,6 +883,15 @@ be describing additional metrics about the same event.
       Whether a user gesture was required per autoplay rules at the time of
       attempt. By definition there is no user gesture on the stack when the
       attempt is registered.
+    </summary>
+  </metric>
+  <metric name="UserGestureStatus">
+    <summary>
+      Reflects the current status of user gesture/activation. This is a bit
+      field with the following values: - 0b0001 if there is a user gesture on
+      the stack; - 0b0010 if there was a user gesture on the page (ie. was
+      activated); - 0b0100 if there was a user gesture propogated after a
+      navigation.
     </summary>
   </metric>
   <metric name="VideoTrack">
@@ -829,6 +1042,13 @@ be describing additional metrics about the same event.
       other values indicate the playback ended in an error.
     </summary>
   </metric>
+  <metric name="IsEME">
+    <summary>
+      Boolean value indicating if this event is for an EME playback. Note: EME
+      can be attached anytime during the lifecycle of a WebMediaPlayerImpl, but
+      once attached can't be removed.
+    </summary>
+  </metric>
   <metric name="IsMSE">
     <summary>
       Boolean value indicating if this event is for an MSE playback. If false it
@@ -849,6 +1069,24 @@ be describing additional metrics about the same event.
       with Media.BasicPlayback events to understand a playback more deeply.
     </summary>
   </metric>
+  <metric name="TimeToFirstFrame">
+    <summary>
+      Time in milliseconds from when WebMediaPlayerImpl starts loading until the
+      first video frame has been shown.
+    </summary>
+  </metric>
+  <metric name="TimeToMetadata">
+    <summary>
+      Time in milliseconds from when WebMediaPlayerImpl starts loading until
+      metadata is known.
+    </summary>
+  </metric>
+  <metric name="TimeToPlayReady">
+    <summary>
+      Time in milliseconds from when WebMediaPlayerImpl starts loading until it
+      has buffered enough to start playback.
+    </summary>
+  </metric>
 </event>
 
 <event name="Media.BasicPlayback">
@@ -866,6 +1104,12 @@ be describing additional metrics about the same event.
     <summary>
       media::AudioCodec enum value. Can be kUnknownAudioCodec even with HasAudio
       is true because we don't always know the codec.
+    </summary>
+  </metric>
+  <metric name="AudioDecoderName">
+    <summary>
+      Enumeration of audio decoder names, zero if none or unknown (Cast, HLS,
+      etc). See WatchTimeRecorder::AudioDecoderName enum for expected values.
     </summary>
   </metric>
   <metric name="HasAudio">
@@ -930,6 +1174,12 @@ be describing additional metrics about the same event.
     <summary>
       media::VideoCodec enum value. Can be kUnknownVideoCodec even with HasVideo
       is true because we don't always know the codec.
+    </summary>
+  </metric>
+  <metric name="VideoDecoderName">
+    <summary>
+      Enumeration of video decoder names, zero if none or unknown (Cast, HLS,
+      etc). See WatchTimeRecorder::VideoDecoderName enum for expected values.
     </summary>
   </metric>
   <metric name="VideoNaturalHeight">
@@ -1246,6 +1496,15 @@ be describing additional metrics about the same event.
     <summary>
       Measures the time in milliseconds from navigation timing's navigation
       start to the time the load event is fired, for main frame documents.
+    </summary>
+  </metric>
+  <metric name="Experimental.NavigationToInteractive">
+    <summary>
+      Measures Time to Interactive, a metric based on main thread and network
+      heuristics to approximate the point in time when the page feels
+      interactive to the user. See https://goo.gl/TFw6xz for detailed
+      explanation. This histogram uses First Meaningful Paint as the lower bound
+      for quiescent windows. The unit of time is ms.
     </summary>
   </metric>
   <metric name="Experimental.PaintTiming.NavigationToFirstMeaningfulPaint">
@@ -1690,6 +1949,38 @@ be describing additional metrics about the same event.
   </summary>
 </event>
 
+<event name="SiteIsolation.XSD.Browser.Blocked">
+  <owner>creis@chromium.org</owner>
+  <owner>chrome-site-isolation@google.com</owner>
+  <summary>
+    Resource request response was blocked by the cross-site document blocking
+    logic in the browser process.
+  </summary>
+  <metric name="CanonicalMimeType">
+    <summary>
+      Classification of the Content-Type HTTP response header into one of the
+      blockable document flavours: html, xml, json, plain.
+    </summary>
+  </metric>
+  <metric name="ContentResourceType">
+    <summary>
+      content::ResourceType of the blocked resource (e.g. image / script / xhr /
+      etc.).
+    </summary>
+  </metric>
+  <metric name="HttpResponseCode">
+    <summary>
+      The HTTP response code (e.g. 200 or 404) associated with the blocked
+      resource request.
+    </summary>
+  </metric>
+  <metric name="NeededSniffing">
+    <summary>
+      Whether the HTTP response needed sniffing to confirm its MIME type.
+    </summary>
+  </metric>
+</event>
+
 <event name="SubresourceFilter" singular="True">
   <owner>bmcquade@chromium.org</owner>
   <owner>csharrison@chromium.org</owner>
@@ -1910,10 +2201,22 @@ be describing additional metrics about the same event.
     Collects information about a browser or app window to associate with the
     TabManager.TabMetrics entries for tabs in that window.
   </summary>
+  <metric name="IsActive">
+    <summary>
+      Whether the window is the active (frontmost) window.
+    </summary>
+  </metric>
   <metric name="ShowState">
     <summary>
       Enumeration of the window show state, such as fullscreen or minimized.
       Values are enumerated in metrics::WindowMetricsEvent::ShowState.
+    </summary>
+  </metric>
+  <metric name="TabCount">
+    <summary>
+      Number of tabs in the tab strip. Rounded down to the nearest exponential
+      bucket (with a bucket spacing factor of 1.5). Will be 1 for windows with
+      only one top-level WebContents, such as app windows.
     </summary>
   </metric>
   <metric name="Type">
@@ -2111,6 +2414,12 @@ be describing additional metrics about the same event.
       0, [5%, 10%) is mapped to 5 etc.
     </summary>
   </metric>
+  <metric name="DeviceManagement">
+    <summary>
+      An enum representing whether the device is managed, defined in
+      |chromeos::power::ml::UserActivityEvent::Features::ManagementType|.
+    </summary>
+  </metric>
   <metric name="DeviceMode">
     <summary>
       An enum representing the mode of the device, defined in
@@ -2121,6 +2430,13 @@ be describing additional metrics about the same event.
     <summary>
       An enum representing the type of the device, defined in
       |chromeos::power::ml::UserActivityEvent::Feature::DeviceType|
+    </summary>
+  </metric>
+  <metric name="EventLogDuration">
+    <summary>
+      Time taken in seconds from when we start logging the features to the
+      moment when the event type is known and we finish logging the complete
+      event.
     </summary>
   </metric>
   <metric name="EventReason">
@@ -2162,6 +2478,18 @@ be describing additional metrics about the same event.
       Duration of activity in seconds up to last activity.
     </summary>
   </metric>
+  <metric name="ScreenDimDelay">
+    <summary>
+      Delay after which the screen will be dimmed in seconds.
+    </summary>
+  </metric>
+  <metric name="ScreenDimToOffDelay">
+    <summary>
+      Delay after which the screen will be turned off in seconds, as measured
+      from screen is dimmed. If dim is diabled, it is the delay from the start
+      of inactivity.
+    </summary>
+  </metric>
   <metric name="TimeSinceLastKey">
     <summary>
       Time from last key event in seconds.
@@ -2184,6 +2512,28 @@ be describing additional metrics about the same event.
       The ID of the activity that happened while a page was open.
     </summary>
   </metric>
+  <metric name="IsActive">
+    <summary>
+      Boolean value representing whether this tab is selected in its containing
+      browser.
+    </summary>
+  </metric>
+  <metric name="IsBrowserFocused">
+    <summary>
+      Boolean value representing whether the containing browser is in focus.
+    </summary>
+  </metric>
+  <metric name="IsBrowserVisible">
+    <summary>
+      Boolean value representing whether the containing browser is visible.
+    </summary>
+  </metric>
+  <metric name="IsTopmostBrowser">
+    <summary>
+      Boolean value representing whether the containing browser is the topmost
+      one on the screen.
+    </summary>
+  </metric>
 </event>
 
 <event name="TabManager.TabMetrics">
@@ -2195,7 +2545,7 @@ be describing additional metrics about the same event.
   <metric name="ContentType">
     <summary>
       Enumeration for the MIME type of the page. Values are enumerated in
-      metrics::TabEvent::ContentType.
+      metrics::TabMetricsEvent::ContentType.
     </summary>
   </metric>
   <metric name="DefaultProtocolHandler">
@@ -2238,6 +2588,30 @@ be describing additional metrics about the same event.
       Number of mouse events that were sent to the page.
     </summary>
   </metric>
+  <metric name="NavigationEntryCount">
+    <summary>
+      Number of navigation entries in the tab's NavigationController.
+      Corresponds to the size of the tab's back/forward list.
+    </summary>
+  </metric>
+  <metric name="PageTransitionCoreType">
+    <summary>
+      Type of the page transition for this navigation. Uses the core values from
+      ui::PageTransition.
+    </summary>
+  </metric>
+  <metric name="PageTransitionFromAddressBar">
+    <summary>
+      True if the page transition came from interacting with the address bar,
+      such as by typing a URL or performing a search.
+    </summary>
+  </metric>
+  <metric name="PageTransitionIsRedirect">
+    <summary>
+      True if the page transition type is a redirect, in which case the
+      PageTransition type may not be accurate.
+    </summary>
+  </metric>
   <metric name="SequenceId">
     <summary>
       The sequence of this event in the current session. Incremented by 1 each
@@ -2265,6 +2639,85 @@ be describing additional metrics about the same event.
     <summary>
       WindowId of the WindowMetrics entry corresponding to the browser window
       containing this tab.
+    </summary>
+  </metric>
+</event>
+
+<event name="XR.WebXR" singular="True">
+  <owner>billorr@chromium.org</owner>
+  <metric name="DidRequestAvailableDevices">
+    <summary>
+      Boolean value that indicates that the API to enumerate devices was called.
+    </summary>
+  </metric>
+  <metric name="DidRequestPose">
+    <summary>
+      Boolean value that indicates that poses were requested.
+    </summary>
+  </metric>
+  <metric name="DidRequestPresentation">
+    <summary>
+      Boolean value that indicates that presentation was requested.
+    </summary>
+  </metric>
+  <metric name="ReturnedDevice">
+    <summary>
+      Boolean value that indicates that a device was returned by the API to
+      enumerate devices.
+    </summary>
+  </metric>
+  <metric name="ReturnedPresentationCapableDevice">
+    <summary>
+      Boolean value that indicates that a device was returned by the API to
+      enumerate devices, and that the device supports presentation.
+    </summary>
+  </metric>
+</event>
+
+<event name="XR.PageSession" singular="True">
+  <owner>offenwanger@chromium.org</owner>
+  <summary>
+    Records properties of page use in XR, including VR browsing and WebXR
+    presentation.
+  </summary>
+  <metric name="EnteredFullscreen">
+    <summary>
+      A boolean that is set to 1 if the user requested fullscreen while in XR on
+      some element on the page.
+    </summary>
+  </metric>
+  <metric name="TimeOnPage">
+    <summary>
+      The aproximate amount of time the user spends on a page in XR in seconds.
+      Times are reported accurately when low, for example, under a minute, and
+      get rounded to minutes and then hours as they get larger.
+    </summary>
+  </metric>
+</event>
+
+<event name="Blink.UpdateTime">
+  <owner>chrishtr@chromium.org</owner>
+  <summary>
+    Records various rendering performance metrics (in microseconds).
+  </summary>
+  <metric name="Compositing">
+    <summary>
+      Time taken by the compositing phase in microseconds.
+    </summary>
+  </metric>
+  <metric name="Paint">
+    <summary>
+      Time taken by the compositing phase in microseconds.
+    </summary>
+  </metric>
+  <metric name="PrePaint">
+    <summary>
+      Time taken by the pre-paint phase in microseconds.
+    </summary>
+  </metric>
+  <metric name="StyleAndLayout">
+    <summary>
+      Time taken by the style and layout phases in microseconds.
     </summary>
   </metric>
 </event>

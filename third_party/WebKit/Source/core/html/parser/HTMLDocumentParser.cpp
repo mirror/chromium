@@ -158,7 +158,7 @@ HTMLDocumentParser::HTMLDocumentParser(Document& document,
   DCHECK(!document.IsPrefetchOnly() || !ShouldUseThreading());
 }
 
-HTMLDocumentParser::~HTMLDocumentParser() {}
+HTMLDocumentParser::~HTMLDocumentParser() = default;
 
 void HTMLDocumentParser::Dispose() {
   // In Oilpan, HTMLDocumentParser can die together with Document, and detach()
@@ -180,6 +180,7 @@ void HTMLDocumentParser::Trace(blink::Visitor* visitor) {
 void HTMLDocumentParser::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(script_runner_);
+  ScriptableDocumentParser::TraceWrappers(visitor);
 }
 
 void HTMLDocumentParser::Detach() {

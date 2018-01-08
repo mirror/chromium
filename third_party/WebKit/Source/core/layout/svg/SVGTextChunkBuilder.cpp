@@ -33,6 +33,7 @@ float CalculateTextAnchorShift(const ComputedStyle& style, float length) {
   switch (style.SvgStyle().TextAnchor()) {
     default:
       NOTREACHED();
+      FALLTHROUGH;
     case TA_START:
       return is_ltr ? 0 : -length;
     case TA_MIDDLE:
@@ -47,6 +48,7 @@ bool NeedsTextAnchorAdjustment(const ComputedStyle& style) {
   switch (style.SvgStyle().TextAnchor()) {
     default:
       NOTREACHED();
+      FALLTHROUGH;
     case TA_START:
       return !is_ltr;
     case TA_MIDDLE:
@@ -109,7 +111,7 @@ void ChunkLengthAccumulator::ProcessRange(BoxListConstIterator box_start,
 
 }  // namespace
 
-SVGTextChunkBuilder::SVGTextChunkBuilder() {}
+SVGTextChunkBuilder::SVGTextChunkBuilder() = default;
 
 void SVGTextChunkBuilder::ProcessTextChunks(
     const Vector<SVGInlineTextBox*>& line_layout_boxes) {

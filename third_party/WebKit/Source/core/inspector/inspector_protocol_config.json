@@ -69,7 +69,7 @@
             },
             {
                 "domain": "Memory",
-                "include": ["getDOMCounters", "prepareForLeakDetection"],
+                "include": ["getDOMCounters", "prepareForLeakDetection", "startSampling", "stopSampling", "getSamplingProfile", "getAllTimeSamplingProfile"],
                 "async": ["prepareForLeakDetection"]
             },
             {
@@ -80,7 +80,7 @@
             {
                 "domain": "Page",
                 "exclude": ["getNavigationHistory", "navigateToHistoryEntry", "captureScreenshot", "screencastFrameAck", "handleJavaScriptDialog", "setColorPickerEnabled",
-                            "getAppManifest", "requestAppBanner", "setControlNavigations", "processNavigation", "printToPDF", "bringToFront", "setDownloadBehavior"],
+                            "getAppManifest", "requestAppBanner", "setControlNavigations", "processNavigation", "printToPDF", "bringToFront", "setDownloadBehavior", "navigate", "crash"],
                 "async": ["getResourceContent", "searchInResource"],
                 "exclude_events": ["screencastFrame", "screencastVisibilityChanged", "colorPicked", "interstitialShown", "interstitialHidden", "javascriptDialogOpening", "javascriptDialogClosed", "navigationRequested"]
             },

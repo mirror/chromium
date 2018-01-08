@@ -8,9 +8,12 @@
 #include <utility>
 #include <vector>
 
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/data_use_measurement/chrome_data_use_recorder.h"
+#include "chrome/browser/data_use_measurement/page_load_capping/chrome_page_load_capping_features.h"
+#include "chrome/browser/data_use_measurement/page_load_capping/page_load_observer.h"
 #include "components/data_use_measurement/content/content_url_request_classifier.h"
 #include "components/data_use_measurement/core/data_use_recorder.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
@@ -24,6 +27,9 @@
 #include "net/url_request/url_request.h"
 
 namespace data_use_measurement {
+
+const base::Feature kDisableAscriberIfDataSaverDisabled{
+    "DisableAscriberIfDataSaverDisabled", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // static
 const void* const ChromeDataUseAscriber::DataUseRecorderEntryAsUserData::
@@ -46,12 +52,24 @@ ChromeDataUseAscriber::MainRenderFrameEntry::~MainRenderFrameEntry() {}
 
 ChromeDataUseAscriber::ChromeDataUseAscriber() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (base::FeatureList::IsEnabled(
+          page_load_capping::features::kDetectingHeavyPages)) {
+    page_capping_observer_ =
+        std::make_unique<page_load_capping::PageLoadObserver>();
+    AddObserver(page_capping_observer_.get());
+  }
 }
 
 ChromeDataUseAscriber::~ChromeDataUseAscriber() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   DCHECK(main_render_frame_entry_map_.empty());
   DCHECK(subframe_to_mainframe_map_.empty());
+
+  if (page_capping_observer_) {
+    // Remove the |page_capping_observer_| before the ObserverList is deleted.
+    RemoveObserver(page_capping_observer_.get());
+  }
+
   // DCHECK(pending_navigation_data_use_map_.empty());
   // DCHECK(data_use_recorders_.empty());
 }
@@ -174,40 +192,56 @@ ChromeDataUseAscriber::GetOrCreateDataUseRecorderEntry(
   return entry;
 }
 
-void ChromeDataUseAscriber::OnUrlRequestCompleted(
-    const net::URLRequest& request,
-    bool started) {
+void ChromeDataUseAscriber::OnUrlRequestCompleted(net::URLRequest* request,
+                                                  bool started) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(request);
 
-  ChromeDataUseRecorder* recorder = GetDataUseRecorder(request);
-
-  if (!recorder)
+  if (IsDisabled())
     return;
-
-  for (auto& observer : observers_)
-    observer.OnPageResourceLoad(request, &recorder->data_use());
-
-  const content::ResourceRequestInfo* request_info =
-      content::ResourceRequestInfo::ForRequest(&request);
-  if (!request_info ||
-      request_info->GetResourceType() != content::RESOURCE_TYPE_MAIN_FRAME) {
-    return;
-  }
-
-  // If mainframe request was not successful, then NavigationHandle in
-  // DidFinishMainFrameNavigation will not have GlobalRequestID. So we erase the
-  // DataUseRecorderEntry here.
-  if (!request.status().is_success())
-    pending_navigation_data_use_map_.erase(recorder->main_frame_request_id());
-}
-
-void ChromeDataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   const DataUseRecorderEntry entry = GetDataUseRecorderEntry(request);
 
   if (entry == data_use_recorders_.end())
     return;
+
+  for (auto& observer : observers_)
+    observer.OnPageResourceLoad(*request, &entry->data_use());
+
+  OnUrlRequestCompletedOrDestroyed(request);
+}
+
+void ChromeDataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
+  OnUrlRequestCompletedOrDestroyed(request);
+}
+
+void ChromeDataUseAscriber::OnUrlRequestCompletedOrDestroyed(
+    net::URLRequest* request) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(request);
+
+  if (IsDisabled())
+    return;
+
+  DCHECK(request);
+
+  const DataUseRecorderEntry entry = GetDataUseRecorderEntry(request);
+
+  if (entry == data_use_recorders_.end())
+    return;
+
+  {
+    const content::ResourceRequestInfo* request_info =
+        content::ResourceRequestInfo::ForRequest(request);
+    if (request_info &&
+        request_info->GetResourceType() == content::RESOURCE_TYPE_MAIN_FRAME &&
+        !request->status().is_success()) {
+      // If mainframe request was not successful, then NavigationHandle in
+      // DidFinishMainFrameNavigation will not have GlobalRequestID. So we erase
+      // the DataUseRecorderEntry here.
+      pending_navigation_data_use_map_.erase(entry->main_frame_request_id());
+    }
+  }
 
   const auto main_frame_it =
       main_render_frame_entry_map_.find(entry->main_frame_id());
@@ -252,6 +286,8 @@ void ChromeDataUseAscriber::RenderFrameCreated(int render_process_id,
                                                int main_render_process_id,
                                                int main_render_frame_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (IsDisabled())
+    return;
 
   const auto render_frame =
       RenderFrameHostID(render_process_id, render_frame_id);
@@ -282,6 +318,9 @@ void ChromeDataUseAscriber::RenderFrameDeleted(int render_process_id,
                                                int main_render_frame_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
+  if (IsDisabled())
+    return;
+
   RenderFrameHostID key(render_process_id, render_frame_id);
 
   if (main_render_process_id == -1 && main_render_frame_id == -1) {
@@ -304,6 +343,8 @@ void ChromeDataUseAscriber::ReadyToCommitMainFrameNavigation(
     int render_process_id,
     int render_frame_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (IsDisabled())
+    return;
 
   main_render_frame_entry_map_
       .find(RenderFrameHostID(render_process_id, render_frame_id))
@@ -318,6 +359,8 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
     uint32_t page_transition,
     base::TimeTicks time) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (IsDisabled())
+    return;
 
   RenderFrameHostID main_frame(render_process_id, render_frame_id);
 
@@ -417,9 +460,6 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
     // subresource requests started and get asribed to |old_frame_entry|. Move
     // these requests that started after |time| but ascribed to the previous
     // page load to page load |entry|.
-    // TODO(rajendrant): This does not move completed requests. It is possible
-    // that requests could complete (more likely for cached requests) before
-    // this code is executed. crbug.com/738522
     std::vector<net::URLRequest*> pending_url_requests;
     old_frame_entry->GetPendingURLRequests(&pending_url_requests);
     for (net::URLRequest* request : pending_url_requests) {
@@ -508,6 +548,8 @@ void ChromeDataUseAscriber::WasShownOrHidden(int main_render_process_id,
                                              int main_render_frame_id,
                                              bool visible) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (IsDisabled())
+    return;
 
   auto main_frame_it = main_render_frame_entry_map_.find(
       RenderFrameHostID(main_render_process_id, main_render_frame_id));
@@ -523,6 +565,8 @@ void ChromeDataUseAscriber::RenderFrameHostChanged(int old_render_process_id,
                                                    int new_render_process_id,
                                                    int new_render_frame_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (IsDisabled())
+    return;
 
   auto old_frame_iter = main_render_frame_entry_map_.find(
       RenderFrameHostID(old_render_process_id, old_render_frame_id));
@@ -541,6 +585,20 @@ void ChromeDataUseAscriber::RenderFrameHostChanged(int old_render_process_id,
           content::GlobalRequestID();
     }
   }
+}
+
+bool ChromeDataUseAscriber::IsDisabled() const {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  // TODO(rajendrant): https://crbug.com/753559. Fix platform specific race
+  // conditions and re-enable.
+  return base::FeatureList::IsEnabled(kDisableAscriberIfDataSaverDisabled) &&
+         disable_ascriber_;
+}
+
+void ChromeDataUseAscriber::DisableAscriber() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  disable_ascriber_ = true;
 }
 
 }  // namespace data_use_measurement

@@ -7,8 +7,10 @@ import("//build/config/features.gni")
 import("//build/config/jumbo.gni")
 import("//build/config/linux/pangocairo/pangocairo.gni")
 import("//build/config/ui.gni")
+import("//content/public/common/zygote_features.gni")
 import("//gpu/vulkan/features.gni")
 import("//media/media_options.gni")
+import("//net/features.gni")
 import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
 import("//third_party/WebKit/public/public_features.gni")
@@ -77,12 +79,12 @@ jumbo_source_set("browser") {
     "//content/common:mojo_bindings",
     "//content/network:network_sources",
     "//content/public/common:common_sources",
+    "//content/public/common:zygote_features",
     "//crypto",
     "//device/bluetooth",
     "//device/gamepad",
     "//device/geolocation",
     "//device/geolocation/public/cpp",
-    "//device/geolocation/public/interfaces",
     "//device/screen_orientation/public/interfaces",
     "//device/u2f",
     "//device/vr:mojo_bindings",
@@ -97,7 +99,6 @@ jumbo_source_set("browser") {
     "//media",
     "//media:media_features",
     "//media/capture",
-    "//media/capture/mojo:image_capture",
     "//media/midi",
     "//media/midi:mojo",
     "//media/mojo:features",
@@ -106,6 +107,7 @@ jumbo_source_set("browser") {
     "//media/mojo/interfaces:constants",
     "//media/mojo/services",
     "//mojo/common",
+    "//mojo/common:values_struct_traits",
     "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
     "//mojo/public/js:resources",
@@ -141,6 +143,7 @@ jumbo_source_set("browser") {
     "//services/shape_detection:lib",
     "//services/shape_detection/public/interfaces",
     "//services/ui/public/cpp/gpu",
+    "//services/video_capture:lib",
     "//services/video_capture/public/cpp",
     "//services/video_capture/public/interfaces:constants",
     "//services/video_capture/public/uma",
@@ -167,7 +170,7 @@ jumbo_source_set("browser") {
     "//third_party/zlib/google:compression_utils",
     "//third_party/zlib/google:zip",
     "//ui/accessibility",
-    "//ui/accessibility:ax_gen",
+    "//ui/accessibility:ax_enums_mojo",
     "//ui/base",
     "//ui/base:ui_features",
     "//ui/base/ime",
@@ -411,6 +414,8 @@ jumbo_source_set("browser") {
     "background_fetch/background_fetch_request_info.cc",
     "background_fetch/background_fetch_request_info.h",
     "background_fetch/background_fetch_request_manager.h",
+    "background_fetch/background_fetch_scheduler.cc",
+    "background_fetch/background_fetch_scheduler.h",
     "background_fetch/background_fetch_service_impl.cc",
     "background_fetch/background_fetch_service_impl.h",
     "background_fetch/storage/cleanup_task.cc",
@@ -641,8 +646,6 @@ jumbo_source_set("browser") {
     "devtools/shared_worker_devtools_agent_host.h",
     "devtools/shared_worker_devtools_manager.cc",
     "devtools/shared_worker_devtools_manager.h",
-    "devtools/worker_devtools_agent_host.cc",
-    "devtools/worker_devtools_agent_host.h",
     "discardable_shared_memory_manager.cc",
     "dom_storage/dom_storage_area.cc",
     "dom_storage/dom_storage_area.h",
@@ -679,6 +682,7 @@ jumbo_source_set("browser") {
     "download/base_file.h",
     "download/base_file_posix.cc",
     "download/base_file_win.cc",
+    "download/download_content.h",
     "download/download_create_info.cc",
     "download/download_create_info.h",
     "download/download_destination_observer.h",
@@ -714,6 +718,8 @@ jumbo_source_set("browser") {
     "download/download_stats.h",
     "download/download_task_runner.cc",
     "download/download_task_runner.h",
+    "download/download_ukm_helper.cc",
+    "download/download_ukm_helper.h",
     "download/download_utils.cc",
     "download/download_utils.h",
     "download/download_worker.cc",
@@ -734,6 +740,7 @@ jumbo_source_set("browser") {
     "download/rate_estimator.h",
     "download/resource_downloader.cc",
     "download/resource_downloader.h",
+    "download/resume_mode.h",
     "download/save_file.cc",
     "download/save_file.h",
     "download/save_file_manager.cc",
@@ -956,8 +963,6 @@ jumbo_source_set("browser") {
     "keyboard_lock/keyboard_lock_service_impl.h",
     "leveldb_wrapper_impl.cc",
     "leveldb_wrapper_impl.h",
-    "loader/async_resource_handler.cc",
-    "loader/async_resource_handler.h",
     "loader/cross_site_document_resource_handler.cc",
     "loader/cross_site_document_resource_handler.h",
     "loader/detachable_resource_handler.cc",
@@ -1003,24 +1008,20 @@ jumbo_source_set("browser") {
     "loader/resource_loader.cc",
     "loader/resource_loader.h",
     "loader/resource_loader_delegate.h",
-    "loader/resource_message_delegate.cc",
-    "loader/resource_message_delegate.h",
     "loader/resource_message_filter.cc",
     "loader/resource_message_filter.h",
     "loader/resource_request_info_impl.cc",
     "loader/resource_request_info_impl.h",
     "loader/resource_requester_info.cc",
     "loader/resource_requester_info.h",
-    "loader/resource_scheduler.cc",
-    "loader/resource_scheduler.h",
     "loader/resource_scheduler_filter.cc",
     "loader/resource_scheduler_filter.h",
+    "loader/signed_exchange_handler.cc",
+    "loader/signed_exchange_handler.h",
     "loader/stream_resource_handler.cc",
     "loader/stream_resource_handler.h",
     "loader/stream_writer.cc",
     "loader/stream_writer.h",
-    "loader/sync_resource_handler.cc",
-    "loader/sync_resource_handler.h",
     "loader/temporary_file_stream.cc",
     "loader/temporary_file_stream.h",
     "loader/throttling_resource_handler.cc",
@@ -1033,6 +1034,10 @@ jumbo_source_set("browser") {
     "loader/url_loader_request_handler.h",
     "loader/wake_lock_resource_throttle.cc",
     "loader/wake_lock_resource_throttle.h",
+    "loader/web_package_loader.cc",
+    "loader/web_package_loader.h",
+    "loader/web_package_request_handler.cc",
+    "loader/web_package_request_handler.h",
     "loader_delegate_impl.cc",
     "loader_delegate_impl.h",
     "locks/lock_manager.cc",
@@ -1146,8 +1151,6 @@ jumbo_source_set("browser") {
     "net/network_quality_observer_impl.h",
     "net/quota_policy_cookie_store.cc",
     "net/quota_policy_cookie_store.h",
-    "net/reporting_service_proxy.cc",
-    "net/reporting_service_proxy.h",
     "net/view_blob_internals_job_factory.cc",
     "net/view_blob_internals_job_factory.h",
     "net/view_http_cache_job_factory.cc",
@@ -1244,6 +1247,8 @@ jumbo_source_set("browser") {
     "renderer_host/input/mouse_wheel_phase_handler.h",
     "renderer_host/input/mouse_wheel_rails_filter_mac.cc",
     "renderer_host/input/mouse_wheel_rails_filter_mac.h",
+    "renderer_host/input/one_shot_timeout_monitor.cc",
+    "renderer_host/input/one_shot_timeout_monitor.h",
     "renderer_host/input/passthrough_touch_event_queue.cc",
     "renderer_host/input/passthrough_touch_event_queue.h",
     "renderer_host/input/render_widget_host_latency_tracker.cc",
@@ -1295,7 +1300,6 @@ jumbo_source_set("browser") {
     "renderer_host/input/touch_emulator.cc",
     "renderer_host/input/touch_emulator.h",
     "renderer_host/input/touch_emulator_client.h",
-    "renderer_host/input/touch_event_queue.h",
     "renderer_host/input/touch_selection_controller_client_aura.cc",
     "renderer_host/input/touch_selection_controller_client_aura.h",
     "renderer_host/input/touch_selection_controller_client_child_frame.cc",
@@ -1320,8 +1324,6 @@ jumbo_source_set("browser") {
     "renderer_host/media/audio_input_renderer_host.h",
     "renderer_host/media/audio_input_stream_handle.cc",
     "renderer_host/media/audio_input_stream_handle.h",
-    "renderer_host/media/audio_input_sync_writer.cc",
-    "renderer_host/media/audio_input_sync_writer.h",
     "renderer_host/media/audio_output_authorization_handler.cc",
     "renderer_host/media/audio_output_authorization_handler.h",
     "renderer_host/media/audio_output_delegate_impl.cc",
@@ -1330,8 +1332,6 @@ jumbo_source_set("browser") {
     "renderer_host/media/audio_output_stream_observer_impl.h",
     "renderer_host/media/audio_renderer_host.cc",
     "renderer_host/media/audio_renderer_host.h",
-    "renderer_host/media/audio_sync_reader.cc",
-    "renderer_host/media/audio_sync_reader.h",
     "renderer_host/media/in_process_launched_video_capture_device.cc",
     "renderer_host/media/in_process_launched_video_capture_device.h",
     "renderer_host/media/in_process_video_capture_device_launcher.cc",
@@ -1429,6 +1429,8 @@ jumbo_source_set("browser") {
     "renderer_host/render_widget_host_view_mac_dictionary_helper.mm",
     "renderer_host/render_widget_host_view_mac_editcommand_helper.h",
     "renderer_host/render_widget_host_view_mac_editcommand_helper.mm",
+    "renderer_host/render_widget_targeter.cc",
+    "renderer_host/render_widget_targeter.h",
     "renderer_host/text_input_client_mac.h",
     "renderer_host/text_input_client_mac.mm",
     "renderer_host/text_input_client_message_filter.h",
@@ -1453,6 +1455,8 @@ jumbo_source_set("browser") {
     "sandbox_ipc_linux.h",
     "sandbox_parameters_mac.h",
     "sandbox_parameters_mac.mm",
+    "scoped_active_url.cc",
+    "scoped_active_url.h",
     "screen_orientation/screen_orientation_provider.cc",
     "screen_orientation/screen_orientation_provider.h",
     "service_manager/common_browser_interfaces.cc",
@@ -1566,8 +1570,6 @@ jumbo_source_set("browser") {
     "shared_worker/shared_worker_instance.h",
     "shared_worker/shared_worker_service_impl.cc",
     "shared_worker/shared_worker_service_impl.h",
-    "shared_worker/worker_storage_partition.cc",
-    "shared_worker/worker_storage_partition.h",
     "site_instance_impl.cc",
     "site_instance_impl.h",
     "site_isolation_policy.cc",
@@ -1585,6 +1587,8 @@ jumbo_source_set("browser") {
     "ssl/ssl_error_handler.h",
     "ssl/ssl_manager.cc",
     "ssl/ssl_manager.h",
+    "ssl_private_key_impl.cc",
+    "ssl_private_key_impl.h",
     "startup_task_runner.cc",
     "startup_task_runner.h",
     "storage_partition_impl.cc",
@@ -1660,13 +1664,6 @@ jumbo_source_set("browser") {
     "web_contents/web_drag_source_mac.mm",
     "web_contents/web_drag_utils_win.cc",
     "web_contents/web_drag_utils_win.h",
-    "webauth/cbor/cbor_binary.h",
-    "webauth/cbor/cbor_reader.cc",
-    "webauth/cbor/cbor_reader.h",
-    "webauth/cbor/cbor_values.cc",
-    "webauth/cbor/cbor_values.h",
-    "webauth/cbor/cbor_writer.cc",
-    "webauth/cbor/cbor_writer.h",
     "websockets/websocket_handshake_request_info_impl.cc",
     "websockets/websocket_handshake_request_info_impl.h",
     "websockets/websocket_impl.cc",
@@ -1698,7 +1695,6 @@ jumbo_source_set("browser") {
     "webui/web_ui_url_loader_factory.h",
     "zygote_host/zygote_communication_linux.cc",
     "zygote_host/zygote_communication_linux.h",
-    "zygote_host/zygote_handle_linux.cc",
     "zygote_host/zygote_host_impl_linux.cc",
     "zygote_host/zygote_host_impl_linux.h",
   ]
@@ -1808,8 +1804,8 @@ jumbo_source_set("browser") {
     ]
   }
 
-  # Desktop screen capture implementations, conditionally built depending on
-  # the available implementations for each platform.
+  # Desktop/Window/WebContents screen capture implementations, conditionally
+  # built depending on the available implementations for each platform.
   if (is_linux || is_mac || is_win) {
     defines += [ "ENABLE_SCREEN_CAPTURE=1" ]
     sources += [
@@ -1817,6 +1813,8 @@ jumbo_source_set("browser") {
       "media/capture/cursor_renderer.h",
       "media/capture/fake_webcontent_capture_machine.cc",
       "media/capture/fake_webcontent_capture_machine.h",
+      "media/capture/frame_sink_video_capture_device.cc",
+      "media/capture/frame_sink_video_capture_device.h",
       "media/capture/web_contents_video_capture_device.cc",
       "media/capture/web_contents_video_capture_device.h",
     ]
@@ -1835,7 +1833,10 @@ jumbo_source_set("browser") {
         "media/capture/cursor_renderer_mac.h",
         "media/capture/cursor_renderer_mac.mm",
       ]
-      deps += [ "//sandbox/mac:seatbelt" ]
+      deps += [
+        "//sandbox/mac:seatbelt",
+        "//sandbox/mac:seatbelt_extension",
+      ]
     }
     if (enable_webrtc) {
       sources += [
@@ -1979,6 +1980,8 @@ jumbo_source_set("browser") {
       "media/cdm_file_impl.h",
       "media/cdm_storage_impl.cc",
       "media/cdm_storage_impl.h",
+      "media/key_system_support_impl.cc",
+      "media/key_system_support_impl.h",
     ]
   }
 
@@ -2055,13 +2058,13 @@ jumbo_source_set("browser") {
       "android/java/java_type.h",
       "android/java/jni_helper.cc",
       "android/java/jni_helper.h",
+      "android/javascript_injector.cc",
+      "android/javascript_injector.h",
       "android/load_url_params.cc",
       "android/nfc_host.cc",
       "android/nfc_host.h",
       "android/overscroll_controller_android.cc",
       "android/overscroll_controller_android.h",
-      "android/popup_zoomer.cc",
-      "android/popup_zoomer.h",
       "android/render_widget_host_connector.cc",
       "android/render_widget_host_connector.h",
       "android/selection_popup_controller.cc",
@@ -2072,6 +2075,8 @@ jumbo_source_set("browser") {
       "android/synchronous_compositor_browser_filter.h",
       "android/synchronous_compositor_host.cc",
       "android/synchronous_compositor_host.h",
+      "android/tap_disambiguator.cc",
+      "android/tap_disambiguator.h",
       "android/tracing_controller_android.cc",
       "android/tracing_controller_android.h",
       "android/web_contents_observer_proxy.cc",
@@ -2124,6 +2129,7 @@ jumbo_source_set("browser") {
       "//media/capture/content/android",
       "//media/capture/video/android",
       "//ui/android",
+      "//ui/compositor",
     ]
     defines += [
       "APPCACHE_USE_SIMPLE_CACHE",
@@ -2162,28 +2168,10 @@ jumbo_source_set("browser") {
       "speech/speech_recognizer_impl.h",
 
       # Most webauth code is non-Android
-      "webauth/attestation_object.cc",
-      "webauth/attestation_object.h",
-      "webauth/attestation_statement.cc",
-      "webauth/attestation_statement.h",
-      "webauth/attested_credential_data.cc",
-      "webauth/attested_credential_data.h",
-      "webauth/authenticator_data.cc",
-      "webauth/authenticator_data.h",
       "webauth/authenticator_impl.cc",
       "webauth/authenticator_impl.h",
-      "webauth/authenticator_utils.cc",
-      "webauth/authenticator_utils.h",
       "webauth/collected_client_data.cc",
       "webauth/collected_client_data.h",
-      "webauth/ec_public_key.cc",
-      "webauth/ec_public_key.h",
-      "webauth/fido_attestation_statement.cc",
-      "webauth/fido_attestation_statement.h",
-      "webauth/public_key.cc",
-      "webauth/public_key.h",
-      "webauth/register_response_data.cc",
-      "webauth/register_response_data.h",
     ]
     deps += [ "//third_party/flac" ]
   }
@@ -2253,6 +2241,8 @@ jumbo_source_set("browser") {
     sources += [
       "compositor/browser_compositor_output_surface.cc",
       "compositor/browser_compositor_output_surface.h",
+      "compositor/external_begin_frame_controller_client_impl.cc",
+      "compositor/external_begin_frame_controller_client_impl.h",
       "compositor/gpu_browser_compositor_output_surface.cc",
       "compositor/gpu_browser_compositor_output_surface.h",
       "compositor/gpu_output_surface_mac.cc",
@@ -2325,6 +2315,17 @@ jumbo_source_set("browser") {
     sources += [
       "hyphenation/hyphenation_impl.cc",
       "hyphenation/hyphenation_impl.h",
+    ]
+  }
+
+  if (use_zygote_handle) {
+    sources += [ "zygote_host/zygote_handle_linux.cc" ]
+  }
+
+  if (enable_reporting) {
+    sources += [
+      "net/reporting_service_proxy.cc",
+      "net/reporting_service_proxy.h",
     ]
   }
 }

@@ -7,7 +7,8 @@ class PixelTestPage(object):
   from the old-style GPU tests.
   """
   def __init__(self, url, name, test_rect, revision,
-               tolerance=2, browser_args=None, expected_colors=None):
+               tolerance=2, browser_args=None, expected_colors=None,
+               gpu_process_disabled=False):
     super(PixelTestPage, self).__init__()
     self.url = url
     self.name = name
@@ -22,6 +23,10 @@ class PixelTestPage(object):
     # by contract with _CompareScreenshotSamples in
     # cloud_storage_integration_test_base.py.
     self.expected_colors = expected_colors
+    # Only a couple of tests run with the GPU process completely
+    # disabled. To prevent regressions, only allow the GPU information
+    # to be incomplete in these cases.
+    self.gpu_process_disabled = gpu_process_disabled
 
   def CopyWithNewBrowserArgsAndSuffix(self, browser_args, suffix):
     return PixelTestPage(
@@ -64,7 +69,7 @@ def DefaultPages(base_name):
       'pixel_css3d.html',
       base_name + '_CSS3DBlueBox',
       test_rect=[0, 0, 300, 300],
-      revision=17),
+      revision=18),
 
     PixelTestPage(
       'pixel_webgl_aa_alpha.html',
@@ -444,14 +449,14 @@ def ExperimentalCanvasFeaturesPages(base_name):
       'pixel_offscreenCanvas_transfer_after_style_resize.html',
       base_name + '_OffscreenCanvasTransferAfterStyleResize',
       test_rect=[0, 0, 350, 350],
-      revision=3,
+      revision=4,
       browser_args=browser_args),
 
     PixelTestPage(
       'pixel_offscreenCanvas_transfer_before_style_resize.html',
       base_name + '_OffscreenCanvasTransferBeforeStyleResize',
       test_rect=[0, 0, 350, 350],
-      revision=3,
+      revision=4,
       browser_args=browser_args),
 
     PixelTestPage(
@@ -625,15 +630,17 @@ def NoGpuProcessPages(base_name):
       'pixel_canvas2d.html',
       base_name + '_Canvas2DRedBox' + suffix,
       test_rect=[0, 0, 300, 300],
-      revision=1,
-      browser_args=browser_args),
+      revision=2,
+      browser_args=browser_args,
+      gpu_process_disabled=True),
 
     PixelTestPage(
       'pixel_css3d.html',
       base_name + '_CSS3DBlueBox' + suffix,
       test_rect=[0, 0, 300, 300],
-      revision=1,
-      browser_args=browser_args),
+      revision=2,
+      browser_args=browser_args,
+      gpu_process_disabled=True),
   ]
 
 # Pages that should be run with various macOS specific command line
@@ -696,7 +703,7 @@ def MacSpecificPages(base_name):
       'filter_effects.html',
       base_name + '_CSSFilterEffects_NoOverlays',
       test_rect=[0, 0, 300, 300],
-      revision=6,
+      revision=7,
       tolerance=10,
       browser_args=['--disable-mac-overlays']),
   ]
@@ -708,13 +715,13 @@ def DirectCompositionPages(base_name):
       'pixel_video_mp4.html',
       base_name + '_DirectComposition_Video_MP4',
       test_rect=[0, 0, 300, 300],
-      revision=5,
+      revision=6,
       browser_args=browser_args),
 
     PixelTestPage(
       'pixel_video_vp9.html',
       base_name + '_DirectComposition_Video_VP9',
       test_rect=[0, 0, 300, 300],
-      revision=6,
+      revision=7,
       browser_args=browser_args),
   ]

@@ -340,7 +340,7 @@ NodeRareData& Node::EnsureRareData() {
 
   DCHECK(data_.rare_data_);
   SetFlag(kHasRareDataFlag);
-  ScriptWrappableVisitor::WriteBarrier(RareData());
+  ScriptWrappableMarkingVisitor::WriteBarrier(RareData());
   return *RareData();
 }
 
@@ -700,6 +700,15 @@ LayoutRect Node::BoundingBox() const {
   return LayoutRect();
 }
 
+LayoutRect Node::BoundingBoxForScrollIntoView() const {
+  if (GetLayoutObject()) {
+    return LayoutRect(
+        GetLayoutObject()->AbsoluteBoundingBoxRectForScrollIntoView());
+  }
+
+  return LayoutRect();
+}
+
 #ifndef NDEBUG
 inline static ShadowRoot* OldestShadowRootFor(const Node* node) {
   if (!node->IsElementNode())
@@ -837,7 +846,11 @@ static ContainerNode* GetReattachParent(Node& node) {
   if (node.IsPseudoElement())
     return node.ParentOrShadowHostNode();
   if (node.IsChildOfV1ShadowHost()) {
-    if (HTMLSlotElement* slot = node.FinalDestinationSlot())
+    HTMLSlotElement* slot =
+        RuntimeEnabledFeatures::IncrementalShadowDOMEnabled()
+            ? node.AssignedSlot()
+            : node.FinalDestinationSlot();
+    if (slot)
       return slot;
   }
   if (node.IsInV0ShadowTree() || node.IsChildOfV0ShadowHost()) {
@@ -2226,8 +2239,16 @@ void Node::HandleLocalEvents(Event& event) {
 
   if (IsDisabledFormControl(this) && event.IsMouseEvent() &&
       !RuntimeEnabledFeatures::SendMouseEventsDisabledFormControlsEnabled()) {
-    UseCounter::Count(GetDocument(),
-                      WebFeature::kDispatchMouseEventOnDisabledFormControl);
+    if (HasEventListeners(event.type())) {
+      UseCounter::Count(GetDocument(),
+                        WebFeature::kDispatchMouseEventOnDisabledFormControl);
+      if (event.type() == EventTypeNames::mousedown ||
+          event.type() == EventTypeNames::mouseup) {
+        UseCounter::Count(
+            GetDocument(),
+            WebFeature::kDispatchMouseUpDownEventOnDisabledFormControl);
+      }
+    }
     return;
   }
 

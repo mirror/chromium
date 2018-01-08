@@ -4,16 +4,19 @@
 
 #include "components/previews/core/previews_logger.h"
 
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
+#include "base/command_line.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
+#include "base/test/scoped_command_line.h"
 #include "base/time/time.h"
 #include "components/previews/core/previews_black_list.h"
 #include "components/previews/core/previews_logger_observer.h"
+#include "components/previews/core/previews_switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace previews {
@@ -41,7 +44,7 @@ class TestPreviewsLoggerObserver : public PreviewsLoggerObserver {
   // PreviewsLoggerObserver:
   void OnNewMessageLogAdded(
       const PreviewsLogger::MessageLog& message) override {
-    message_ = base::MakeUnique<PreviewsLogger::MessageLog>(message);
+    message_ = std::make_unique<PreviewsLogger::MessageLog>(message);
     messages_.push_back(*message_);
   }
   void OnNewBlacklistedHost(const std::string& host, base::Time time) override {
@@ -114,7 +117,7 @@ class PreviewsLoggerTest : public testing::Test {
 
   ~PreviewsLoggerTest() override {}
 
-  void SetUp() override { logger_ = base::MakeUnique<PreviewsLogger>(); }
+  void SetUp() override { logger_ = std::make_unique<PreviewsLogger>(); }
 
   std::string LogPreviewDecisionAndGetReasonDescription(
       PreviewsEligibilityReason reason,
@@ -587,6 +590,22 @@ TEST_F(
   EXPECT_EQ(expected_description, actual_description);
 }
 
+TEST_F(PreviewsLoggerTest, LogPreviewDecisionDescriptionCommitted) {
+  std::string actual_description = LogPreviewDecisionAndGetReasonDescription(
+      PreviewsEligibilityReason::COMMITTED, true /* final_reason */);
+  std::string expected_description = "Committed";
+  EXPECT_EQ(expected_description, actual_description);
+}
+
+TEST_F(PreviewsLoggerTest,
+       LogPreviewDecisionDescriptionCacheControlNoTransform) {
+  std::string actual_description = LogPreviewDecisionAndGetReasonDescription(
+      PreviewsEligibilityReason::CACHE_CONTROL_NO_TRANSFORM,
+      true /* final_reason */);
+  std::string expected_description = "Cache-control no-transform received";
+  EXPECT_EQ(expected_description, actual_description);
+}
+
 TEST_F(PreviewsLoggerTest, NotifyObserversOfNewBlacklistedHost) {
   TestPreviewsLoggerObserver observers[3];
 
@@ -731,6 +750,31 @@ TEST_F(PreviewsLoggerTest, ObserverNotifiedOfBlacklistIgnoreStatusOnAdd) {
   TestPreviewsLoggerObserver observer;
   EXPECT_FALSE(observer.blacklist_ignored());
   logger_->AddAndNotifyObserver(&observer);
+  EXPECT_TRUE(observer.blacklist_ignored());
+}
+
+TEST_F(PreviewsLoggerTest,
+       ObserverNotifiedOfBlacklistIgnoreStatusDisabledViaFlag) {
+  ASSERT_FALSE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kIgnorePreviewsBlacklist));
+
+  TestPreviewsLoggerObserver observer;
+  PreviewsLogger logger;
+  logger.AddAndNotifyObserver(&observer);
+  EXPECT_FALSE(observer.blacklist_ignored());
+}
+
+TEST_F(PreviewsLoggerTest,
+       ObserverNotifiedOfBlacklistIgnoreStatusEnabledViaFlag) {
+  base::test::ScopedCommandLine scoped_command_line;
+  base::CommandLine* command_line = scoped_command_line.GetProcessCommandLine();
+  command_line->AppendSwitch(switches::kIgnorePreviewsBlacklist);
+  ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kIgnorePreviewsBlacklist));
+
+  TestPreviewsLoggerObserver observer;
+  PreviewsLogger logger;
+  logger.AddAndNotifyObserver(&observer);
   EXPECT_TRUE(observer.blacklist_ignored());
 }
 

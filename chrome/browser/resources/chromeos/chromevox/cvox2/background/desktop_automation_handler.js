@@ -198,6 +198,30 @@ DesktopAutomationHandler.prototype = {
   },
 
   /**
+   * Handles the result of a hit test.
+   * @param {!AutomationNode} node The hit result.
+   */
+  onHitTestResult: function(node) {
+    chrome.automation.getFocus(function(focus) {
+      if (!focus && !node)
+        return;
+
+      focus = node || focus;
+      var focusedRoot = AutomationUtil.getTopLevelRoot(focus);
+      var output = new Output();
+      if (focus != focusedRoot && focusedRoot)
+        output.format('$name', focusedRoot);
+
+      // Even though we usually don't output events from actions, hit test
+      // results should generate output.
+      var range = cursors.Range.fromNode(focus);
+      ChromeVoxState.instance.setCurrentRange(range);
+      output.withRichSpeechAndBraille(range, null, Output.EventType.NAVIGATE)
+          .go();
+    });
+  },
+
+  /**
    * @param {!AutomationEvent} evt
    */
   onHover: function(evt) {
@@ -238,7 +262,10 @@ DesktopAutomationHandler.prototype = {
     var node = evt.target;
     var range = cursors.Range.fromNode(node);
 
-    new Output().withSpeechAndBraille(range, null, evt.type).go();
+    new Output()
+        .withSpeechCategory(cvox.TtsCategory.LIVE)
+        .withSpeechAndBraille(range, null, evt.type)
+        .go();
   },
 
   onBlur: function(evt) {
@@ -319,6 +346,10 @@ DesktopAutomationHandler.prototype = {
    * @param {!AutomationEvent} evt
    */
   onLoadComplete: function(evt) {
+    // We are only interested in load completes on top level roots.
+    if (AutomationUtil.getTopLevelRoot(evt.target) != evt.target.root)
+      return;
+
     this.lastRootUrl_ = '';
     chrome.automation.getFocus(function(focus) {
       // In some situations, ancestor windows get focused before a descendant
@@ -332,7 +363,7 @@ DesktopAutomationHandler.prototype = {
 
       if (focusIsAncestor) {
         focus = evt.target;
-        Output.forceModeForNextSpeechUtterance(cvox.QueueMode.FLUSH);
+        Output.forceModeForNextSpeechUtterance(cvox.QueueMode.CATEGORY_FLUSH);
       }
 
       // Create text edit handler, if needed, now in order not to miss initial
@@ -430,7 +461,7 @@ DesktopAutomationHandler.prototype = {
 
       if (fromDesktop &&
           (!this.lastValueTarget_ || this.lastValueTarget_ !== t)) {
-        output.withQueueMode(cvox.QueueMode.FLUSH);
+        output.withQueueMode(cvox.QueueMode.CATEGORY_FLUSH);
         var range = cursors.Range.fromNode(t);
         output.withRichSpeechAndBraille(
             range, range, Output.EventType.NAVIGATE);
@@ -475,7 +506,7 @@ DesktopAutomationHandler.prototype = {
       var override = evt.target.role == RoleType.MENU_ITEM ||
           (evt.target.root == focus.root &&
            focus.root.role == RoleType.DESKTOP);
-      Output.forceModeForNextSpeechUtterance(cvox.QueueMode.FLUSH);
+      Output.forceModeForNextSpeechUtterance(cvox.QueueMode.CATEGORY_FLUSH);
       if (override || AutomationUtil.isDescendantOf(evt.target, focus))
         this.onEventDefault(evt);
     }.bind(this));
@@ -581,18 +612,18 @@ DesktopAutomationHandler.prototype = {
     url = url.substring(0, url.indexOf('#')) || url;
     var pos = cvox.ChromeVox.position[url];
     if (pos) {
-      focus = AutomationUtil.hitTest(focusedRoot, pos) || focus;
-      if (focus != focusedRoot)
-        o.format('$name', focusedRoot);
-    } else {
-      // This catches initial focus (i.e. on startup).
-      if (!curRoot && focus != focusedRoot)
-        o.format('$name', focusedRoot);
+      focusedRoot.hitTestWithReply(
+          pos.x, pos.y, this.onHitTestResult.bind(this));
+      return;
     }
+
+    // This catches initial focus (i.e. on startup).
+    if (!curRoot && focus != focusedRoot)
+      o.format('$name', focusedRoot);
 
     ChromeVoxState.instance.setCurrentRange(cursors.Range.fromNode(focus));
 
-    Output.forceModeForNextSpeechUtterance(cvox.QueueMode.FLUSH);
+    Output.forceModeForNextSpeechUtterance(cvox.QueueMode.CATEGORY_FLUSH);
     o.withRichSpeechAndBraille(
          ChromeVoxState.instance.currentRange, null, evt.type)
         .go();

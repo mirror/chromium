@@ -194,7 +194,7 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
       }
     }
     render_passes_in_frame[pass->id] = {RenderPassTextureSize(pass.get()),
-                                        RenderPassTextureHint(pass.get())};
+                                        pass->generate_mipmap};
   }
   UpdateRenderPassTextures(render_passes_in_draw_order, render_passes_in_frame);
 }
@@ -625,8 +625,8 @@ void DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
   enlarged_size.Enlarge(enlarge_pass_texture_amount_.width(),
                         enlarge_pass_texture_amount_.height());
 
-  AllocateRenderPassResourceIfNeeded(render_pass->id, enlarged_size,
-                                     RenderPassTextureHint(render_pass));
+  AllocateRenderPassResourceIfNeeded(
+      render_pass->id, {enlarged_size, render_pass->generate_mipmap});
 
   // TODO(crbug.com/582554): This change applies only when Vulkan is enabled and
   // it will be removed once SkiaRenderer has complete support for Vulkan.
@@ -657,20 +657,18 @@ gfx::Rect DirectRenderer::ComputeScissorRectForRenderPass(
   return render_pass->damage_rect;
 }
 
-// static
 gfx::Size DirectRenderer::RenderPassTextureSize(const RenderPass* render_pass) {
-  return render_pass->output_rect.size();
-}
-
-// static
-ResourceTextureHint DirectRenderer::RenderPassTextureHint(
-    const RenderPass* render_pass) {
-  // TODO(danakj): Pass these as 2 bools instead so subclasses don't have to
-  // worry about new hints being silently added to the field here.
-  ResourceTextureHint hint = ResourceTextureHint::kFramebuffer;
-  if (render_pass->generate_mipmap)
-    hint |= ResourceTextureHint::kMipmap;
-  return hint;
+  // Round the size of the render pass backings to a multiple of 64 pixels. This
+  // reduces memory fragmentation. https://crbug.com/146070. This also allows
+  // backings to be more easily reused during a resize operation.
+  int width = render_pass->output_rect.width();
+  int height = render_pass->output_rect.height();
+  if (!settings_->dont_round_texture_sizes_for_pixel_tests) {
+    int multiple = 64;
+    width = cc::MathUtil::CheckedRoundUp(width, multiple);
+    height = cc::MathUtil::CheckedRoundUp(height, multiple);
+  }
+  return gfx::Size(width, height);
 }
 
 void DirectRenderer::SetCurrentFrameForTesting(const DrawingFrame& frame) {

@@ -48,7 +48,7 @@ int totalPagesMeasuredCSSSampleId() {
 }
 
 // Make sure update_use_counter_css.py was run which updates histograms.xml.
-constexpr int kMaximumCSSSampleId = 589;
+constexpr int kMaximumCSSSampleId = 590;
 
 }  // namespace
 
@@ -1104,27 +1104,27 @@ int UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(
       return 571;
     case CSSPropertyScrollPaddingInlineEnd:
       return 572;
-    case CSSPropertyScrollSnapMargin:
+    case CSSPropertyScrollMargin:
       return 573;
-    case CSSPropertyScrollSnapMarginTop:
+    case CSSPropertyScrollMarginTop:
       return 574;
-    case CSSPropertyScrollSnapMarginRight:
+    case CSSPropertyScrollMarginRight:
       return 575;
-    case CSSPropertyScrollSnapMarginBottom:
+    case CSSPropertyScrollMarginBottom:
       return 576;
-    case CSSPropertyScrollSnapMarginLeft:
+    case CSSPropertyScrollMarginLeft:
       return 577;
-    case CSSPropertyScrollSnapMarginBlock:
+    case CSSPropertyScrollMarginBlock:
       return 578;
-    case CSSPropertyScrollSnapMarginBlockStart:
+    case CSSPropertyScrollMarginBlockStart:
       return 579;
-    case CSSPropertyScrollSnapMarginBlockEnd:
+    case CSSPropertyScrollMarginBlockEnd:
       return 580;
-    case CSSPropertyScrollSnapMarginInline:
+    case CSSPropertyScrollMarginInline:
       return 581;
-    case CSSPropertyScrollSnapMarginInlineStart:
+    case CSSPropertyScrollMarginInlineStart:
       return 582;
-    case CSSPropertyScrollSnapMarginInlineEnd:
+    case CSSPropertyScrollMarginInlineEnd:
       return 583;
     case CSSPropertyScrollSnapStop:
       return 584;
@@ -1138,12 +1138,13 @@ int UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(
       return 588;
     case CSSPropertyTextDecorationSkipInk:
       return 589;
+    case CSSPropertyScrollCustomization:
+      return 590;
     // 1. Add new features above this line (don't change the assigned numbers of
     // the existing items).
     // 2. Update kMaximumCSSSampleId with the new maximum value.
     // 3. Run the update_use_counter_css.py script in
     // chromium/src/tools/metrics/histograms to update the UMA histogram names.
-
     case CSSPropertyInvalid:
       NOTREACHED();
       return 0;

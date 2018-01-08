@@ -28,13 +28,13 @@
 #include "gpu/command_buffer/common/context_result.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/context_group.h"
-#include "gpu/command_buffer/service/gles2_cmd_decoder.h"
+#include "gpu/command_buffer/service/decoder_client.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 #include "gpu/command_buffer/service/service_transfer_cache.h"
 #include "gpu/config/gpu_feature_info.h"
-#include "gpu/gpu_export.h"
+#include "gpu/ipc/gl_in_process_context_export.h"
 #include "gpu/ipc/service/image_transport_surface_delegate.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/native_widget_types.h"
@@ -58,6 +58,8 @@ class Size;
 
 namespace gpu {
 
+struct ContextCreationAttribs;
+class MailboxManager;
 class ServiceDiscardableManager;
 class SyncPointClientState;
 class SyncPointOrderData;
@@ -65,9 +67,7 @@ class SyncPointManager;
 struct SwapBuffersCompleteParams;
 
 namespace gles2 {
-struct ContextCreationAttribHelper;
 class FramebufferCompletenessCache;
-class MailboxManager;
 class Outputter;
 class ProgramCache;
 class ShaderTranslatorCache;
@@ -82,11 +82,12 @@ class TransferBufferManager;
 // example GPU thread) when being run in single process mode.
 // However, the behavior for accessing one context (i.e. one instance of this
 // class) from different client threads is undefined.
-class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
-                                          public GpuControl,
-                                          public CommandBufferServiceClient,
-                                          public gles2::GLES2DecoderClient,
-                                          public ImageTransportSurfaceDelegate {
+class GL_IN_PROCESS_CONTEXT_EXPORT InProcessCommandBuffer
+    : public CommandBuffer,
+      public GpuControl,
+      public CommandBufferServiceClient,
+      public DecoderClient,
+      public ImageTransportSurfaceDelegate {
  public:
   class Service;
 
@@ -102,7 +103,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
       scoped_refptr<gl::GLSurface> surface,
       bool is_offscreen,
       SurfaceHandle window,
-      const gles2::ContextCreationAttribHelper& attribs,
+      const ContextCreationAttribs& attribs,
       InProcessCommandBuffer* share_group,
       GpuMemoryBufferManager* gpu_memory_buffer_manager,
       ImageFactory* image_factory,
@@ -152,7 +153,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   CommandBatchProcessedResult OnCommandBatchProcessed() override;
   void OnParseError() override;
 
-  // GLES2DecoderClient implementation:
+  // DecoderClient implementation:
   void OnConsoleMessage(int32_t id, const std::string& message) override;
   void CacheShader(const std::string& key, const std::string& shader) override;
   void OnFenceSyncRelease(uint64_t release) override;
@@ -210,15 +211,17 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   static void InitializeDefaultServiceForTesting(
       const GpuFeatureInfo& gpu_feature_info);
 
-  gpu::gles2::ContextGroup* ContextGroupForTesting() const {
-    return context_group_.get();
+  gpu::ServiceTransferCache* GetTransferCacheForTest() const {
+    return decoder_->GetTransferCacheForTest();
   }
+
+  static const int kGpuMemoryBufferClientId;
 
   // The serializer interface to the GPU service (i.e. thread).
   class Service {
    public:
     Service(const GpuPreferences& gpu_preferences,
-            gles2::MailboxManager* mailbox_manager,
+            MailboxManager* mailbox_manager,
             scoped_refptr<gl::GLShareGroup> share_group,
             const GpuFeatureInfo& gpu_feature_info);
 
@@ -241,14 +244,13 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     const GpuPreferences& gpu_preferences();
     const GpuFeatureInfo& gpu_feature_info() { return gpu_feature_info_; }
     scoped_refptr<gl::GLShareGroup> share_group();
-    gles2::MailboxManager* mailbox_manager() { return mailbox_manager_; }
+    MailboxManager* mailbox_manager() { return mailbox_manager_; }
     gles2::Outputter* outputter();
     gles2::ProgramCache* program_cache();
     gles2::ImageManager* image_manager() { return &image_manager_; }
     ServiceDiscardableManager* discardable_manager() {
       return &discardable_manager_;
     }
-    ServiceTransferCache* transfer_cache() { return &transfer_cache_; }
     gles2::ShaderTranslatorCache* shader_translator_cache() {
       return &shader_translator_cache_;
     }
@@ -259,8 +261,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
    protected:
     const GpuPreferences gpu_preferences_;
     const GpuFeatureInfo gpu_feature_info_;
-    std::unique_ptr<gles2::MailboxManager> owned_mailbox_manager_;
-    gles2::MailboxManager* mailbox_manager_ = nullptr;
+    std::unique_ptr<MailboxManager> owned_mailbox_manager_;
+    MailboxManager* mailbox_manager_ = nullptr;
     std::unique_ptr<gles2::Outputter> outputter_;
     scoped_refptr<gl::GLShareGroup> share_group_;
     std::unique_ptr<gles2::ProgramCache> program_cache_;
@@ -268,7 +270,6 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     GpuProcessActivityFlags activity_flags_;
     gles2::ImageManager image_manager_;
     ServiceDiscardableManager discardable_manager_;
-    ServiceTransferCache transfer_cache_;
     gles2::ShaderTranslatorCache shader_translator_cache_;
     gles2::FramebufferCompletenessCache framebuffer_completeness_cache_;
   };
@@ -277,18 +278,17 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   struct InitializeOnGpuThreadParams {
     bool is_offscreen;
     SurfaceHandle window;
-    const gles2::ContextCreationAttribHelper& attribs;
+    const ContextCreationAttribs& attribs;
     Capabilities* capabilities;  // Ouptut.
     InProcessCommandBuffer* context_group;
     ImageFactory* image_factory;
 
-    InitializeOnGpuThreadParams(
-        bool is_offscreen,
-        SurfaceHandle window,
-        const gles2::ContextCreationAttribHelper& attribs,
-        Capabilities* capabilities,
-        InProcessCommandBuffer* share_group,
-        ImageFactory* image_factory)
+    InitializeOnGpuThreadParams(bool is_offscreen,
+                                SurfaceHandle window,
+                                const ContextCreationAttribs& attribs,
+                                Capabilities* capabilities,
+                                InProcessCommandBuffer* share_group,
+                                ImageFactory* image_factory)
         : is_offscreen(is_offscreen),
           window(window),
           attribs(attribs),

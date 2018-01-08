@@ -44,8 +44,6 @@
 #include "cc/trees/swap_promise_manager.h"
 #include "cc/trees/target_property.h"
 #include "components/viz/common/resources/resource_format.h"
-#include "components/viz/common/surfaces/surface_reference_owner.h"
-#include "components/viz/common/surfaces/surface_sequence_generator.h"
 #include "services/metrics/public/cpp/ukm_source_id.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
@@ -69,8 +67,7 @@ class UkmRecorderFactory;
 struct RenderingStats;
 struct ScrollAndScaleSet;
 
-class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
-                                public MutatorHostClient {
+class CC_EXPORT LayerTreeHost : public MutatorHostClient {
  public:
   struct CC_EXPORT InitParams {
     LayerTreeHostClient* client = nullptr;
@@ -98,7 +95,7 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
       LayerTreeHostSingleThreadClient* single_thread_client,
       InitParams* params);
 
-  ~LayerTreeHost() override;
+  virtual ~LayerTreeHost();
 
   // Returns the process global unique identifier for this LayerTreeHost.
   int GetId() const;
@@ -117,10 +114,6 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   // Returns the settings used by this host.
   const LayerTreeSettings& GetSettings() const;
-
-  // Sets the client id used to generate the viz::SurfaceId that uniquely
-  // identifies the Surfaces produced by this compositor.
-  void SetFrameSinkId(const viz::FrameSinkId& frame_sink_id);
 
   // Sets the LayerTreeMutator interface used to directly mutate the compositor
   // state on the compositor thread. (Compositor-Worker)
@@ -229,7 +222,7 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   // Returns the id of the benchmark on success, 0 otherwise.
   int ScheduleMicroBenchmark(const std::string& benchmark_name,
                              std::unique_ptr<base::Value> value,
-                             const MicroBenchmark::DoneCallback& callback);
+                             MicroBenchmark::DoneCallback callback);
 
   // Returns true if the message was successfully delivered and handled.
   bool SendMessageToMicroBenchmark(int id, std::unique_ptr<base::Value> value);
@@ -428,7 +421,9 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   void BeginMainFrameNotExpectedSoon();
   void BeginMainFrameNotExpectedUntil(base::TimeTicks time);
   void AnimateLayers(base::TimeTicks monotonic_frame_begin_time);
-  void RequestMainFrameUpdate();
+  using VisualStateUpdate = LayerTreeHostClient::VisualStateUpdate;
+  void RequestMainFrameUpdate(
+      VisualStateUpdate requested_update = VisualStateUpdate::kAll);
   void FinishCommitOnImplThread(LayerTreeHostImpl* host_impl);
   void WillCommit();
   void CommitComplete();
@@ -478,9 +473,6 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   // rather than layer trees. This also implies that property trees
   // are always already built and so cc doesn't have to build them.
   bool IsUsingLayerLists() const;
-
-  // viz::SurfaceReferenceOwner implementation.
-  viz::SurfaceSequenceGenerator* GetSurfaceSequenceGenerator() override;
 
   // MutatorHostClient implementation.
   bool IsElementInList(ElementId element_id,
@@ -613,7 +605,6 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   TaskGraphRunner* task_graph_runner_;
 
-  viz::SurfaceSequenceGenerator surface_sequence_generator_;
   uint32_t num_consecutive_frames_without_slow_paths_ = 0;
 
   scoped_refptr<Layer> root_layer_;

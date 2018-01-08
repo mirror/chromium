@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/timer/elapsed_timer.h"
 #include "base/trace_event/trace_event.h"
@@ -39,14 +38,12 @@ namespace viz {
 
 Display::Display(
     SharedBitmapManager* bitmap_manager,
-    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     const RendererSettings& settings,
     const FrameSinkId& frame_sink_id,
     std::unique_ptr<OutputSurface> output_surface,
     std::unique_ptr<DisplayScheduler> scheduler,
     scoped_refptr<base::SingleThreadTaskRunner> current_task_runner)
     : bitmap_manager_(bitmap_manager),
-      gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
       settings_(settings),
       frame_sink_id_(frame_sink_id),
       output_surface_(std::move(output_surface)),
@@ -206,28 +203,27 @@ void Display::SetOutputIsSecure(bool secure) {
 }
 
 void Display::InitializeRenderer() {
-  resource_provider_ = base::MakeUnique<cc::DisplayResourceProvider>(
-      output_surface_->context_provider(), bitmap_manager_,
-      gpu_memory_buffer_manager_, settings_.resource_settings);
+  resource_provider_ = std::make_unique<cc::DisplayResourceProvider>(
+      output_surface_->context_provider(), bitmap_manager_);
 
   if (output_surface_->context_provider()) {
     if (!settings_.use_skia_renderer) {
-      renderer_ = base::MakeUnique<GLRenderer>(
+      renderer_ = std::make_unique<GLRenderer>(
           &settings_, output_surface_.get(), resource_provider_.get(),
           current_task_runner_);
     } else {
-      renderer_ = base::MakeUnique<SkiaRenderer>(
+      renderer_ = std::make_unique<SkiaRenderer>(
           &settings_, output_surface_.get(), resource_provider_.get());
     }
   } else if (output_surface_->vulkan_context_provider()) {
 #if BUILDFLAG(ENABLE_VULKAN)
-    renderer_ = base::MakeUnique<SkiaRenderer>(
+    renderer_ = std::make_unique<SkiaRenderer>(
         &settings_, output_surface_.get(), resource_provider_.get());
 #else
     NOTREACHED();
 #endif
   } else {
-    auto renderer = base::MakeUnique<SoftwareRenderer>(
+    auto renderer = std::make_unique<SoftwareRenderer>(
         &settings_, output_surface_.get(), resource_provider_.get());
     software_renderer_ = renderer.get();
     renderer_ = std::move(renderer);
@@ -297,9 +293,12 @@ bool Display::DrawAndSwap() {
                                      stored_latency_info_.end());
   stored_latency_info_.clear();
   bool have_copy_requests = false;
+  size_t total_quad_count = 0;
   for (const auto& pass : frame.render_pass_list) {
     have_copy_requests |= !pass->copy_requests.empty();
+    total_quad_count += pass->quad_list.size();
   }
+  UMA_HISTOGRAM_COUNTS_1000("Compositing.Display.Draw.Quads", total_quad_count);
 
   gfx::Size surface_size;
   bool have_damage = false;
@@ -648,19 +647,26 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
         continue;
       }
 
-      // If the |quad| is not shown on the screen, i.e., covered by the occluded
-      // region, then remove |quad| from the compositor frame.
       if (occlusion_in_quad_content_space.Contains(quad->visible_rect)) {
-        // Case 1: for simple transforms (scale or translation), the occlusion
-        // region is defined in the quad content space.
+        // Case 1: for simple transforms (scale or translation), define the
+        // occlusion region in the quad content space. If the |quad| is not
+        // shown on the screen, then remove |quad| from the compositor frame.
         quad = pass->quad_list.EraseAndInvalidateAllPointers(quad);
 
+      } else if (occlusion_in_quad_content_space.Intersects(
+                     quad->visible_rect)) {
+        // Case 2: for simple transforms, if the quad is partially shown on
+        // screen and the region formed by (occlusion region - visible_rect) is
+        // a rect, then update visible_rect to the resulting rect.
+        quad->visible_rect.Subtract(occlusion_in_quad_content_space);
+        ++quad;
       } else if (occlusion_in_quad_content_space.IsEmpty() &&
                  occlusion_in_target_space.Contains(
                      cc::MathUtil::MapEnclosingClippedRect(
                          transform, quad->visible_rect))) {
-        // Case 2: for non-simple transforms, the occlusion region is defined in
-        // the target space.
+        // Case 3: for non simple transforms, define the occlusion region in
+        // target space. If the |quad| is not shown on the screen, then remove
+        // |quad| from the compositor frame.
         quad = pass->quad_list.EraseAndInvalidateAllPointers(quad);
       } else {
         ++quad;

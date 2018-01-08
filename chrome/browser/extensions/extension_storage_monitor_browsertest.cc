@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -15,7 +16,6 @@
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_storage_monitor.h"
-#include "chrome/browser/extensions/test_extension_dir.h"
 #include "chrome/browser/notifications/notification_display_service_tester.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
@@ -29,8 +29,9 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/value_builder.h"
 #include "extensions/test/extension_test_message_listener.h"
+#include "extensions/test/test_extension_dir.h"
 #include "net/dns/mock_host_resolver.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 
 namespace extensions {
 
@@ -103,11 +104,6 @@ class ExtensionStorageMonitorTest : public ExtensionBrowserTest {
     InitStorageMonitor();
   }
 
-  void TearDownOnMainThread() override {
-    display_service_.reset();
-    ExtensionBrowserTest::TearDownOnMainThread();
-  }
-
   ExtensionStorageMonitor* monitor() {
     CHECK(storage_monitor_);
     return storage_monitor_;
@@ -133,7 +129,7 @@ class ExtensionStorageMonitorTest : public ExtensionBrowserTest {
   const Extension* CreateHostedApp(const std::string& name,
                                    GURL app_url,
                                    std::vector<std::string> permissions) {
-    auto dir = base::MakeUnique<TestExtensionDir>();
+    auto dir = std::make_unique<TestExtensionDir>();
 
     url::Replacements<char> clear_port;
     clear_port.ClearPort();
@@ -383,7 +379,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest,
 // Exercises the case where two hosted apps are same-origin but have non-
 // overlapping extents. Disabling one should not suppress storage monitoring for
 // the other.
-IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, TwoHostedAppsInSameOrigin) {
+// Disabled for flakiness. crbug.com/799022
+IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest,
+                       DISABLED_TwoHostedAppsInSameOrigin) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   GURL url1 = embedded_test_server()->GetURL(

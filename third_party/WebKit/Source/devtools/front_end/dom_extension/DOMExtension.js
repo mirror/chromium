@@ -287,7 +287,7 @@ Node.prototype.hasSelection = function() {
  * @return {!Window}
  */
 Node.prototype.window = function() {
-  return this.ownerDocument.defaultView;
+  return /** @type {!Window} */ (this.ownerDocument.defaultView);
 };
 
 Element.prototype.removeChildren = function() {
@@ -490,7 +490,7 @@ AnchorBox.prototype.equals = function(anchorBox) {
 };
 
 /**
- * @param {!Window=} targetWindow
+ * @param {?Window=} targetWindow
  * @return {!AnchorBox}
  */
 Element.prototype.boxInWindow = function(targetWindow) {
@@ -755,7 +755,7 @@ Document.prototype.deepElementFromPoint = function(x, y) {
   var node = null;
   while (container) {
     var innerNode = container.elementFromPoint(x, y);
-    if (!innerNode)
+    if (!innerNode || node === innerNode)
       break;
     node = innerNode;
     container = node.shadowRoot;

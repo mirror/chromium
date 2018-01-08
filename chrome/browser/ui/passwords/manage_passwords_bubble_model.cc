@@ -270,6 +270,7 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
     DisplayReason display_reason)
     : password_overridden_(false),
       delegate_(std::move(delegate)),
+      interaction_reported_(false),
       metrics_recorder_(delegate_->GetPasswordFormMetricsRecorder()) {
   origin_ = delegate_->GetOrigin();
   state_ = delegate_->GetState();
@@ -291,9 +292,13 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         interaction_stats.dismissal_count = stats->dismissal_count;
       }
     }
-    hide_eye_icon_ = delegate_->BubbleIsManualFallbackForSaving()
-                         ? pending_password_.form_has_autofilled_value
-                         : display_reason == USER_ACTION;
+    are_passwords_revealed_when_bubble_is_opened_ =
+        delegate_->ArePasswordsRevealedWhenBubbleIsOpened();
+    password_revealing_requires_reauth_ =
+        !are_passwords_revealed_when_bubble_is_opened_ &&
+        (delegate_->BubbleIsManualFallbackForSaving()
+             ? pending_password_.form_has_autofilled_value
+             : display_reason == USER_ACTION);
     enable_editing_ = delegate_->GetCredentialSource() !=
                       password_manager::metrics_util::CredentialSourceType::
                           kCredentialManagementAPI;
@@ -301,7 +306,7 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
     UpdatePendingStateTitle();
   } else if (state_ == password_manager::ui::CONFIRMATION_STATE) {
     title_ =
-        l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TITLE);
+        l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_CONFIRM_SAVED_TITLE);
   } else if (state_ == password_manager::ui::AUTO_SIGNIN_STATE) {
     pending_password_ = delegate_->GetPendingPassword();
   } else if (state_ == password_manager::ui::MANAGE_STATE) {
@@ -388,9 +393,16 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
 }
 
 ManagePasswordsBubbleModel::~ManagePasswordsBubbleModel() {
+  if (!interaction_reported_)
+    OnBubbleClosing();
+}
+
+void ManagePasswordsBubbleModel::OnBubbleClosing() {
   interaction_keeper_->ReportInteractions(this);
   if (delegate_)
     delegate_->OnBubbleHidden();
+  delegate_.reset();
+  interaction_reported_ = true;
 }
 
 void ManagePasswordsBubbleModel::OnNeverForThisSiteClicked() {
@@ -529,7 +541,8 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
           prefs, sync_service)) {
     interaction_keeper_->ReportInteractions(this);
     title_brand_link_range_ = gfx::Range();
-    title_ = l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE);
+    title_ =
+        l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_CONFIRM_SAVED_TITLE);
     state_ = password_manager::ui::CHROME_SIGN_IN_PROMO_STATE;
     int show_count = prefs->GetInteger(
         password_manager::prefs::kNumberSignInPasswordPromoShown);
@@ -560,6 +573,11 @@ void ManagePasswordsBubbleModel::SetClockForTesting(
   interaction_keeper_->SetClockForTesting(std::move(clock));
 }
 
+bool ManagePasswordsBubbleModel::RevealPasswords() {
+  return !password_revealing_requires_reauth_ ||
+         (delegate_ && delegate_->AuthenticateUser());
+}
+
 void ManagePasswordsBubbleModel::UpdatePendingStateTitle() {
   title_brand_link_range_ = gfx::Range();
   PasswordTitleType type =
@@ -575,7 +593,7 @@ void ManagePasswordsBubbleModel::UpdatePendingStateTitle() {
 
 void ManagePasswordsBubbleModel::UpdateManageStateTitle() {
   GetManagePasswordsDialogTitleText(GetWebContents()->GetVisibleURL(), origin_,
-                                    &title_);
+                                    !local_credentials_.empty(), &title_);
 }
 
 metrics_util::UpdatePasswordSubmissionEvent

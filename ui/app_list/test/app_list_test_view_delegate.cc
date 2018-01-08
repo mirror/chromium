@@ -23,12 +23,6 @@ AppListTestViewDelegate::AppListTestViewDelegate()
 
 AppListTestViewDelegate::~AppListTestViewDelegate() {}
 
-int AppListTestViewDelegate::GetStopSpeechRecognitionCountAndReset() {
-  int count = stop_speech_recognition_count_;
-  stop_speech_recognition_count_ = 0;
-  return count;
-}
-
 AppListModel* AppListTestViewDelegate::GetModel() {
   return model_.get();
 }
@@ -37,12 +31,7 @@ SearchModel* AppListTestViewDelegate::GetSearchModel() {
   return search_model_.get();
 }
 
-SpeechUIModel* AppListTestViewDelegate::GetSpeechUI() {
-  return &speech_ui_;
-}
-
 void AppListTestViewDelegate::OpenSearchResult(SearchResult* result,
-                                               bool auto_launch,
                                                int event_flags) {
   const SearchModel::SearchResults* results = search_model_->results();
   for (size_t i = 0; i < results->item_count(); ++i) {
@@ -54,29 +43,8 @@ void AppListTestViewDelegate::OpenSearchResult(SearchResult* result,
   ++open_search_result_count_;
 }
 
-base::TimeDelta AppListTestViewDelegate::GetAutoLaunchTimeout() {
-  return auto_launch_timeout_;
-}
-
-void AppListTestViewDelegate::AutoLaunchCanceled() {
-  auto_launch_timeout_ = base::TimeDelta();
-}
-
 void AppListTestViewDelegate::Dismiss() {
   ++dismiss_count_;
-}
-
-void AppListTestViewDelegate::StopSpeechRecognition() {
-  ++stop_speech_recognition_count_;
-}
-
-views::View* AppListTestViewDelegate::CreateStartPageWebView(
-    const gfx::Size& size) {
-  return NULL;
-}
-
-bool AppListTestViewDelegate::IsSpeechRecognitionEnabled() {
-  return false;
 }
 
 void AppListTestViewDelegate::ReplaceTestModel(int item_count) {
@@ -87,6 +55,25 @@ void AppListTestViewDelegate::ReplaceTestModel(int item_count) {
 
 void AppListTestViewDelegate::SetSearchEngineIsGoogle(bool is_google) {
   search_model_->SetSearchEngineIsGoogle(is_google);
+}
+
+void AppListTestViewDelegate::ActivateItem(const std::string& id,
+                                           int event_flags) {
+  app_list::AppListItem* item = model_->FindItem(id);
+  if (!item)
+    return;
+  DCHECK(!item->is_folder());
+  static_cast<AppListTestModel::AppListTestItem*>(item)->Activate(event_flags);
+}
+
+ui::MenuModel* AppListTestViewDelegate::GetContextMenuModel(
+    const std::string& id) {
+  app_list::AppListItem* item = model_->FindItem(id);
+  // TODO(stevenjb/jennyz): Implement this for folder items
+  if (!item || item->is_folder())
+    return nullptr;
+  return static_cast<AppListTestModel::AppListTestItem*>(item)
+      ->GetContextMenuModel();
 }
 
 }  // namespace test

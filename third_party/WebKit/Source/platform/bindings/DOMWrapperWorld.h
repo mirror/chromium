@@ -93,8 +93,10 @@ class PLATFORM_EXPORT DOMWrapperWorld : public RefCounted<DOMWrapperWorld> {
 
   static void AllWorldsInCurrentThread(
       Vector<scoped_refptr<DOMWrapperWorld>>& worlds);
-  static void MarkWrappersInAllWorlds(ScriptWrappable*,
-                                      const ScriptWrappableVisitor*);
+
+  // Traces wrappers corresponding to the ScriptWrappable in DOM data stores.
+  static void TraceWrappers(const ScriptWrappable*,
+                            const ScriptWrappableVisitor*);
 
   static DOMWrapperWorld& World(v8::Local<v8::Context> context) {
     return ScriptState::From(context)->World();
@@ -155,7 +157,7 @@ class PLATFORM_EXPORT DOMWrapperWorld : public RefCounted<DOMWrapperWorld> {
    public:
     DOMObjectHolderBase(v8::Isolate* isolate, v8::Local<v8::Value> wrapper)
         : wrapper_(isolate, wrapper), world_(nullptr) {}
-    virtual ~DOMObjectHolderBase() {}
+    virtual ~DOMObjectHolderBase() = default;
 
     DOMWrapperWorld* World() const { return world_; }
     void SetWorld(DOMWrapperWorld* world) { world_ = world; }

@@ -25,7 +25,7 @@
 #include "net/http/http_auth_scheme.h"
 #include "net/http/http_transaction_factory.h"
 #include "net/http/http_util.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
 #include "net/url_request/url_request_context.h"
@@ -72,7 +72,8 @@ HeadlessURLRequestContextGetter::HeadlessURLRequestContextGetter(
   // the URLRequestContextStorage on the IO thread in GetURLRequestContext().
   if (!proxy_config_) {
     proxy_config_service_ =
-        net::ProxyService::CreateSystemProxyConfigService(io_task_runner_);
+        net::ProxyResolutionService::CreateSystemProxyConfigService(
+            io_task_runner_);
   }
   base::AutoLock lock(lock_);
   headless_browser_context_->AddObserver(this);
@@ -87,6 +88,10 @@ HeadlessURLRequestContextGetter::~HeadlessURLRequestContextGetter() {
 net::URLRequestContext*
 HeadlessURLRequestContextGetter::GetURLRequestContext() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  if (shut_down_)
+    return nullptr;
+
   if (!url_request_context_) {
     net::URLRequestContextBuilder builder;
 
@@ -141,7 +146,8 @@ HeadlessURLRequestContextGetter::GetURLRequestContext() {
     builder.set_data_enabled(true);
     builder.set_file_enabled(true);
     if (proxy_config_) {
-      builder.set_proxy_service(net::ProxyService::CreateFixed(*proxy_config_));
+      builder.set_proxy_resolution_service(
+          net::ProxyResolutionService::CreateFixed(*proxy_config_));
     } else {
       builder.set_proxy_config_service(std::move(proxy_config_service_));
     }
@@ -213,6 +219,13 @@ net::HostResolver* HeadlessURLRequestContextGetter::host_resolver() const {
 void HeadlessURLRequestContextGetter::OnHeadlessBrowserContextDestruct() {
   base::AutoLock lock(lock_);
   headless_browser_context_ = nullptr;
+}
+
+void HeadlessURLRequestContextGetter::NotifyContextShuttingDown() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  shut_down_ = true;
+  net::URLRequestContextGetter::NotifyContextShuttingDown();
+  url_request_context_ = nullptr;  // deletes it
 }
 
 }  // namespace headless

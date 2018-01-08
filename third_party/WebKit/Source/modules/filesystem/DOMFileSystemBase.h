@@ -33,6 +33,7 @@
 
 #include "core/fileapi/FileError.h"
 #include "modules/ModulesExport.h"
+#include "modules/filesystem/FileSystemCallbacks.h"
 #include "modules/filesystem/FileSystemFlags.h"
 #include "platform/FileSystemType.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -42,21 +43,17 @@
 
 namespace blink {
 class WebFileSystem;
-}
+}  // namespace blink
 
 namespace blink {
 
 class DirectoryReaderBase;
-class EntriesCallback;
+class DirectoryReaderOnDidReadCallback;
 class EntryBase;
-class EntryCallback;
-class ErrorCallbackBase;
+class ExecutionContext;
 class File;
 class FileMetadata;
-class MetadataCallback;
-class ExecutionContext;
 class SecurityOrigin;
-class VoidCallback;
 
 // A common base class for DOMFileSystem and DOMFileSystemSync.
 class MODULES_EXPORT DOMFileSystemBase : public ScriptWrappable {
@@ -115,45 +112,47 @@ class MODULES_EXPORT DOMFileSystemBase : public ScriptWrappable {
   // Actual FileSystem API implementations. All the validity checks on virtual
   // paths are done at this level.
   void GetMetadata(const EntryBase*,
-                   MetadataCallback*,
+                   MetadataCallbacks::OnDidReadMetadataCallback*,
                    ErrorCallbackBase*,
                    SynchronousType = kAsynchronous);
   void Move(const EntryBase* source,
             EntryBase* parent,
             const String& name,
-            EntryCallback*,
+            EntryCallbacks::OnDidGetEntryCallback*,
             ErrorCallbackBase*,
             SynchronousType = kAsynchronous);
   void Copy(const EntryBase* source,
             EntryBase* parent,
             const String& name,
-            EntryCallback*,
+            EntryCallbacks::OnDidGetEntryCallback*,
             ErrorCallbackBase*,
             SynchronousType = kAsynchronous);
   void Remove(const EntryBase*,
-              VoidCallback*,
+              VoidCallbacks::OnDidSucceedCallback*,
               ErrorCallbackBase*,
               SynchronousType = kAsynchronous);
   void RemoveRecursively(const EntryBase*,
-                         VoidCallback*,
+                         VoidCallbacks::OnDidSucceedCallback*,
                          ErrorCallbackBase*,
                          SynchronousType = kAsynchronous);
-  void GetParent(const EntryBase*, EntryCallback*, ErrorCallbackBase*);
+  void GetParent(const EntryBase*,
+                 EntryCallbacks::OnDidGetEntryCallback*,
+                 ErrorCallbackBase*);
   void GetFile(const EntryBase*,
                const String& path,
                const FileSystemFlags&,
-               EntryCallback*,
+               EntryCallbacks::OnDidGetEntryCallback*,
                ErrorCallbackBase*,
                SynchronousType = kAsynchronous);
   void GetDirectory(const EntryBase*,
                     const String& path,
                     const FileSystemFlags&,
-                    EntryCallback*,
+                    EntryCallbacks::OnDidGetEntryCallback*,
                     ErrorCallbackBase*,
                     SynchronousType = kAsynchronous);
   int ReadDirectory(DirectoryReaderBase*,
                     const String& path,
-                    EntriesCallback*,
+                    DirectoryReaderOnDidReadCallback*,
                     ErrorCallbackBase*,
                     SynchronousType = kAsynchronous);
   bool WaitForAdditionalResult(int callbacks_id);

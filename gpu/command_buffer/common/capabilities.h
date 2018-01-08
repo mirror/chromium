@@ -6,8 +6,10 @@
 #define GPU_COMMAND_BUFFER_COMMON_CAPABILITIES_H_
 
 #include <stdint.h>
+#include <vector>
 
 #include "gpu/gpu_export.h"
+#include "ui/gfx/buffer_types.h"
 
 // From gl2.h. We want to avoid including gl headers because client-side and
 // service-side headers conflict.
@@ -46,6 +48,7 @@ struct GPU_EXPORT Capabilities {
 
   Capabilities();
   Capabilities(const Capabilities& other);
+  ~Capabilities();
 
   template <typename T>
   void VisitStagePrecisions(unsigned stage,
@@ -143,6 +146,8 @@ struct GPU_EXPORT Capabilities {
   bool color_buffer_half_float_rgba = false;
   bool image_ycbcr_422 = false;
   bool image_ycbcr_420v = false;
+  bool image_ycbcr_420v_disabled_for_video_frames = false;
+  bool image_xr30 = false;
   bool render_buffer_format_bgra8888 = false;
   bool occlusion_query = false;
   bool occlusion_query_boolean = false;
@@ -180,6 +185,8 @@ struct GPU_EXPORT Capabilities {
 
   int major_version = 2;
   int minor_version = 0;
+
+  std::vector<gfx::BufferUsageAndFormat> texture_target_exception_list;
 };
 
 }  // namespace gpu

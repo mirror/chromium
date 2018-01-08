@@ -4,6 +4,7 @@
 
 package org.chromium.content.browser;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -22,6 +23,8 @@ import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
 
 import org.chromium.base.TraceEvent;
+import org.chromium.content.browser.webcontents.WebContentsImpl;
+import org.chromium.content_public.browser.ImeAdapter;
 import org.chromium.ui.base.EventForwarder;
 
 /**
@@ -129,12 +132,14 @@ public class ContentView extends FrameLayout
 
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        return mContentViewCore.onCreateInputConnection(outAttrs);
+        if (getWebContents() == null) return null;
+        return ImeAdapter.fromWebContents(getWebContents()).onCreateInputConnection(outAttrs);
     }
 
     @Override
     public boolean onCheckIsTextEditor() {
-        return mContentViewCore.onCheckIsTextEditor();
+        if (getWebContents() == null) return false;
+        return ImeAdapter.fromWebContents(getWebContents()).onCheckIsTextEditor();
     }
 
     @Override
@@ -173,6 +178,7 @@ public class ContentView extends FrameLayout
         return getEventForwarder().onDragEvent(event, this);
     }
 
+    @SuppressLint("ClickableViewAccessibility") // TODO(crbug.com/799070): Fix this.
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return getEventForwarder().onTouchEvent(event);
@@ -193,6 +199,10 @@ public class ContentView extends FrameLayout
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
         return mContentViewCore.onGenericMotionEvent(event);
+    }
+
+    private WebContentsImpl getWebContents() {
+        return (WebContentsImpl) mContentViewCore.getWebContents();
     }
 
     private EventForwarder getEventForwarder() {
@@ -265,11 +275,6 @@ public class ContentView extends FrameLayout
     @Override
     public boolean awakenScrollBars(int startDelay, boolean invalidate) {
         return mContentViewCore.awakenScrollBars(startDelay, invalidate);
-    }
-
-    @Override
-    public boolean awakenScrollBars() {
-        return super.awakenScrollBars();
     }
 
     @Override

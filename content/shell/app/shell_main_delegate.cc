@@ -41,6 +41,7 @@
 #include "media/base/media_switches.h"
 #include "net/cookies/cookie_monster.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/cpp/network_switches.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
 #include "ui/base/ui_base_switches.h"
@@ -81,6 +82,10 @@
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
 #include "components/crash/content/app/breakpad_linux.h"
 #endif
+
+#if defined(OS_FUCHSIA)
+#include "base/base_paths_fuchsia.h"
+#endif  // OS_FUCHSIA
 
 namespace {
 
@@ -180,6 +185,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
       return true;
     }
 #endif
+    command_line.AppendSwitch(switches::kDisableResizeLock);
     command_line.AppendSwitch(cc::switches::kEnableGpuBenchmarking);
     command_line.AppendSwitch(switches::kEnableLogging);
     command_line.AppendSwitch(switches::kAllowFileAccessFromFiles);
@@ -190,7 +196,6 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
           switches::kUseGL,
           gl::GetGLImplementationName(gl::GetSoftwareGLImplementation()));
     }
-    command_line.AppendSwitch(switches::kSkipGpuDataLoading);
     command_line.AppendSwitchASCII(
         switches::kTouchEventFeatureDetection,
         switches::kTouchEventFeatureDetectionEnabled);
@@ -218,7 +223,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 
     command_line.AppendSwitch(switches::kEnablePreciseMemoryInfo);
 
-    command_line.AppendSwitchASCII(switches::kHostResolverRules,
+    command_line.AppendSwitchASCII(network::switches::kHostResolverRules,
                                    "MAP *.test 127.0.0.1");
 
     command_line.AppendSwitch(switches::kEnablePartialRaster);
@@ -360,17 +365,19 @@ void ShellMainDelegate::InitializeResourceBundle() {
                                                           pak_region);
   ui::ResourceBundle::GetSharedInstance().AddDataPackFromFileRegion(
       base::File(pak_fd), pak_region, ui::SCALE_FACTOR_100P);
-#else  // defined(OS_ANDROID)
-#if defined(OS_MACOSX)
-  base::FilePath pak_file = GetResourcesPakFilePath();
+#elif defined(OS_MACOSX)
+  ui::ResourceBundle::InitSharedInstanceWithPakPath(GetResourcesPakFilePath());
 #else
   base::FilePath pak_file;
+#if defined(OS_FUCHSIA)
+  bool r = PathService::Get(base::DIR_FUCHSIA_RESOURCES, &pak_file);
+#else
   bool r = PathService::Get(base::DIR_MODULE, &pak_file);
+#endif
   DCHECK(r);
   pak_file = pak_file.Append(FILE_PATH_LITERAL("content_shell.pak"));
-#endif  // defined(OS_MACOSX)
   ui::ResourceBundle::InitSharedInstanceWithPakPath(pak_file);
-#endif  // defined(OS_ANDROID)
+#endif
 }
 
 ContentBrowserClient* ShellMainDelegate::CreateContentBrowserClient() {

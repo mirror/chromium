@@ -82,50 +82,46 @@ class AudioWorkletGlobalScopeTest : public PageTestBase {
 
   void RunBasicTest(WorkerThread* thread) {
     WaitableEvent waitable_event;
-    thread->GetTaskRunner(TaskType::kInternalTest)
-        ->PostTask(
-            FROM_HERE,
-            CrossThreadBind(
-                &AudioWorkletGlobalScopeTest::RunBasicTestOnWorkletThread,
-                CrossThreadUnretained(this), CrossThreadUnretained(thread),
-                CrossThreadUnretained(&waitable_event)));
+    PostCrossThreadTask(
+        *thread->GetTaskRunner(TaskType::kInternalTest), FROM_HERE,
+        CrossThreadBind(
+            &AudioWorkletGlobalScopeTest::RunBasicTestOnWorkletThread,
+            CrossThreadUnretained(this), CrossThreadUnretained(thread),
+            CrossThreadUnretained(&waitable_event)));
     waitable_event.Wait();
   }
 
   void RunSimpleProcessTest(WorkerThread* thread) {
     WaitableEvent waitable_event;
-    thread->GetTaskRunner(TaskType::kInternalTest)
-        ->PostTask(FROM_HERE,
-                   CrossThreadBind(&AudioWorkletGlobalScopeTest::
-                                       RunSimpleProcessTestOnWorkletThread,
-                                   CrossThreadUnretained(this),
-                                   CrossThreadUnretained(thread),
-                                   CrossThreadUnretained(&waitable_event)));
+    PostCrossThreadTask(
+        *thread->GetTaskRunner(TaskType::kInternalTest), FROM_HERE,
+        CrossThreadBind(
+            &AudioWorkletGlobalScopeTest::RunSimpleProcessTestOnWorkletThread,
+            CrossThreadUnretained(this), CrossThreadUnretained(thread),
+            CrossThreadUnretained(&waitable_event)));
     waitable_event.Wait();
   }
 
   void RunParsingTest(WorkerThread* thread) {
     WaitableEvent waitable_event;
-    thread->GetTaskRunner(TaskType::kInternalTest)
-        ->PostTask(
-            FROM_HERE,
-            CrossThreadBind(
-                &AudioWorkletGlobalScopeTest::RunParsingTestOnWorkletThread,
-                CrossThreadUnretained(this), CrossThreadUnretained(thread),
-                CrossThreadUnretained(&waitable_event)));
+    PostCrossThreadTask(
+        *thread->GetTaskRunner(TaskType::kInternalTest), FROM_HERE,
+        CrossThreadBind(
+            &AudioWorkletGlobalScopeTest::RunParsingTestOnWorkletThread,
+            CrossThreadUnretained(this), CrossThreadUnretained(thread),
+            CrossThreadUnretained(&waitable_event)));
     waitable_event.Wait();
   }
 
   void RunParsingParameterDescriptorTest(WorkerThread* thread) {
     WaitableEvent waitable_event;
-    thread->GetTaskRunner(TaskType::kInternalTest)
-        ->PostTask(
-            FROM_HERE,
-            CrossThreadBind(
-                &AudioWorkletGlobalScopeTest::
-                    RunParsingParameterDescriptorTestOnWorkletThread,
-                CrossThreadUnretained(this), CrossThreadUnretained(thread),
-                CrossThreadUnretained(&waitable_event)));
+    PostCrossThreadTask(
+        *thread->GetTaskRunner(TaskType::kInternalTest), FROM_HERE,
+        CrossThreadBind(&AudioWorkletGlobalScopeTest::
+                            RunParsingParameterDescriptorTestOnWorkletThread,
+                        CrossThreadUnretained(this),
+                        CrossThreadUnretained(thread),
+                        CrossThreadUnretained(&waitable_event)));
     waitable_event.Wait();
   }
 
@@ -136,8 +132,9 @@ class AudioWorkletGlobalScopeTest : public PageTestBase {
     ScriptState* script_state =
         global_scope->ScriptController()->GetScriptState();
     EXPECT_TRUE(script_state);
+    KURL js_url("https://example.com/worklet.js");
     ScriptModule module = ScriptModule::Compile(
-        script_state->GetIsolate(), source_code, "worklet.js",
+        script_state->GetIsolate(), source_code, js_url, js_url,
         ScriptFetchOptions(), kSharableCrossOrigin,
         TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
     EXPECT_FALSE(module.IsNull());

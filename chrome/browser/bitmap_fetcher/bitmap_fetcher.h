@@ -11,10 +11,10 @@
 #include "base/macros.h"
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher_delegate.h"
 #include "chrome/browser/image_decoder.h"
-#include "content/public/common/resource_request.h"
 #include "content/public/common/simple_url_loader.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "net/url_request/url_request.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "url/gurl.h"
 
 class SkBitmap;
@@ -37,14 +37,14 @@ class BitmapFetcher : public ImageDecoder::ImageRequest {
   // |net::LOAD_NORMAL| is appropriate.  Init may be called more than once in
   // some cases.  If so, subsequent starts will be ignored.
   void Init(const std::string& referrer,
-            blink::WebReferrerPolicy referrer_policy,
+            net::URLRequest::ReferrerPolicy referrer_policy,
             int load_flags);
 
   // Start fetching the URL with the fetcher. The delegate is notified
   // asynchronously when done.  Start may be called more than once in some
   // cases.  If so, subsequent starts will be ignored since the operation is
   // already in progress.
-  void Start(content::mojom::URLLoaderFactory* loader_factory);
+  void Start(network::mojom::URLLoaderFactory* loader_factory);
 
   // Methods inherited from ImageDecoder::ImageRequest
 

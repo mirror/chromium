@@ -101,8 +101,12 @@ ProxyImpl::~ProxyImpl() {
   // Take away the LayerTreeFrameSink before destroying things so it doesn't
   // try to call into its client mid-shutdown.
   host_impl_->ReleaseLayerTreeFrameSink();
-  scheduler_ = nullptr;
+
+  // It is important to destroy LTHI before the Scheduler since it can make
+  // callbacks that access it during destruction cleanup.
   host_impl_ = nullptr;
+  scheduler_ = nullptr;
+
   // We need to explicitly shutdown the notifier to destroy any weakptrs it is
   // holding while still on the compositor thread. This also ensures any
   // callbacks holding a ProxyImpl pointer are cancelled.
@@ -258,10 +262,7 @@ NOINLINE void ProxyImpl::DumpForBeginMainFrameHang() {
   host_impl_->tile_manager()->ActivationStateAsValueInto(state.get());
   state->EndDictionary();
 
-  char stack_string[50000] = "";
-  base::debug::Alias(&stack_string);
-  strncpy(stack_string, state->ToString().c_str(), arraysize(stack_string) - 1);
-
+  DEBUG_ALIAS_FOR_CSTR(stack_string, state->ToString().c_str(), 50000);
   base::debug::DumpWithoutCrashing();
 }
 
@@ -511,9 +512,9 @@ void ProxyImpl::DidPresentCompositorFrameOnImplThread(
                                 refresh, flags));
 }
 
-void ProxyImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
+bool ProxyImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   DCHECK(IsImplThread());
-  host_impl_->WillBeginImplFrame(args);
+  return host_impl_->WillBeginImplFrame(args);
 }
 
 void ProxyImpl::DidFinishImplFrame() {
@@ -636,8 +637,7 @@ void ProxyImpl::ScheduledActionPrepareTiles() {
 void ProxyImpl::ScheduledActionInvalidateLayerTreeFrameSink() {
   TRACE_EVENT0("cc", "ProxyImpl::ScheduledActionInvalidateLayerTreeFrameSink");
   DCHECK(IsImplThread());
-  DCHECK(host_impl_->layer_tree_frame_sink());
-  host_impl_->layer_tree_frame_sink()->Invalidate();
+  host_impl_->InvalidateLayerTreeFrameSink();
 }
 
 void ProxyImpl::ScheduledActionPerformImplSideInvalidation() {
@@ -748,6 +748,12 @@ void ProxyImpl::SetURLForUkm(const GURL& url) {
   // interaction, it must be in progress when the navigation commits for this
   // case to occur.
   host_impl_->ukm_manager()->SetSourceURL(url);
+}
+
+void ProxyImpl::ClearHistoryOnNavigation() {
+  DCHECK(IsImplThread());
+  DCHECK(IsMainThreadBlocked());
+  scheduler_->ClearHistoryOnNavigation();
 }
 
 }  // namespace cc

@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.vr_shell;
 
+import static org.chromium.chrome.browser.vr_shell.VrTestFramework.NATIVE_URLS_OF_INTEREST;
 import static org.chromium.chrome.browser.vr_shell.VrTestFramework.PAGE_LOAD_TIMEOUT_S;
 import static org.chromium.chrome.browser.vr_shell.VrTestFramework.POLL_TIMEOUT_LONG_MS;
 import static org.chromium.chrome.browser.vr_shell.VrTestFramework.POLL_TIMEOUT_SHORT_MS;
@@ -21,6 +22,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.UrlConstants;
@@ -47,8 +49,7 @@ import java.util.concurrent.TimeoutException;
  * "VR Shell".
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG, "enable-webvr"})
+@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE, "enable-webvr"})
 @Restriction(RESTRICTION_TYPE_DEVICE_DAYDREAM)
 public class VrShellNavigationTest {
     // We explicitly instantiate a rule here instead of using parameterization since this class
@@ -178,6 +179,7 @@ public class VrShellNavigationTest {
      * Tests navigation from a fullscreened 2D to a WebVR page.
      */
     @Test
+    @DisabledTest(message = "crbug.com/804808")
     @MediumTest
     public void test2dFullscreenToWebVr()
             throws IllegalArgumentException, InterruptedException, TimeoutException {
@@ -226,6 +228,7 @@ public class VrShellNavigationTest {
      * Tests navigation from a presenting WebVR to a 2D page.
      */
     @Test
+    @DisabledTest(message = "crbug.com/804808")
     @MediumTest
     @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrPresentingTo2d()
@@ -243,6 +246,7 @@ public class VrShellNavigationTest {
      * Tests navigation from a presenting WebVR to a WebVR page.
      */
     @Test
+    @DisabledTest(message = "crbug.com/804808")
     @MediumTest
     @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrPresentingToWebVr()
@@ -260,6 +264,7 @@ public class VrShellNavigationTest {
      * Tests navigation from a fullscreened WebVR to a 2D page.
      */
     @Test
+    @DisabledTest(message = "crbug.com/804808")
     @MediumTest
     @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrFullscreenTo2d()
@@ -277,6 +282,7 @@ public class VrShellNavigationTest {
      * Tests navigation from a fullscreened WebVR to a WebVR page.
      */
     @Test
+    @DisabledTest(message = "crbug.com/804808")
     @MediumTest
     @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrFullscreenToWebVr()
@@ -358,10 +364,7 @@ public class VrShellNavigationTest {
     @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testNativeNavigationAndInteraction()
             throws IllegalArgumentException, InterruptedException {
-        String[] nativeUrls = {UrlConstants.NTP_URL, UrlConstants.BOOKMARKS_URL,
-                UrlConstants.DOWNLOADS_URL, UrlConstants.RECENT_TABS_URL,
-                UrlConstants.NATIVE_HISTORY_URL};
-        for (String url : nativeUrls) {
+        for (String url : NATIVE_URLS_OF_INTEREST) {
             mVrTestRule.loadUrl(TEST_PAGE_2D_URL, PAGE_LOAD_TIMEOUT_S);
             mVrTestRule.loadUrl(url, PAGE_LOAD_TIMEOUT_S);
             ClickUtils.mouseSingleClickView(InstrumentationRegistry.getInstrumentation(),

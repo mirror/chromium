@@ -211,7 +211,7 @@ ApplicationContextImpl::GetMetricsServicesManager() {
   if (!metrics_services_manager_) {
     metrics_services_manager_.reset(
         new metrics_services_manager::MetricsServicesManager(
-            base::MakeUnique<IOSChromeMetricsServicesManagerClient>(
+            std::make_unique<IOSChromeMetricsServicesManagerClient>(
                 GetLocalState())));
   }
   return metrics_services_manager_.get();
@@ -276,8 +276,7 @@ ApplicationContextImpl::GetComponentUpdateService() {
     // be registered and Start() needs to be called.
     component_updater_ = component_updater::ComponentUpdateServiceFactory(
         component_updater::MakeIOSComponentUpdaterConfigurator(
-            base::CommandLine::ForCurrentProcess(),
-            GetSystemURLRequestContext()));
+            base::CommandLine::ForCurrentProcess()));
   }
   return component_updater_.get();
 }

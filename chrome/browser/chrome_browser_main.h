@@ -59,12 +59,13 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // These are called in-order by content::BrowserMainLoop.
   // Each stage calls the same stages in any ChromeBrowserMainExtraParts added
   // with AddParts() from ChromeContentBrowserClient::CreateBrowserMainParts.
-  void PreEarlyInitialization() override;
+  int PreEarlyInitialization() override;
   void PostEarlyInitialization() override;
   void ToolkitInitialized() override;
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
   int PreCreateThreads() override;
+  void PostCreateThreads() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
   void PreMainMessageLoopRun() override;
@@ -95,8 +96,6 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
 
   Profile* profile() { return profile_; }
 
-  const PrefService* local_state() const { return local_state_; }
-
  private:
   // Sets up the field trials and related initialization. Call only after
   // about:flags have been converted to switches.
@@ -114,7 +113,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
 
   // Reads origin trial policy data from local state and configures command line
   // for child processes.
-  void SetupOriginTrialsCommandLine();
+  void SetupOriginTrialsCommandLine(PrefService* local_state);
 
   // Methods for Main Message Loop -------------------------------------------
 
@@ -149,9 +148,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Parts are deleted in the inverse order they are added.
   std::vector<ChromeBrowserMainExtraParts*> chrome_extra_parts_;
 
-  // A profiler that periodically samples stack traces. Used to sample startup
-  // behavior.
-  base::StackSamplingProfiler sampling_profiler_;
+  // A profiler that periodically samples stack traces on the UI thread.
+  base::StackSamplingProfiler ui_thread_sampling_profiler_;
 
   // Members initialized after / released before main_message_loop_ ------------
 
@@ -182,9 +180,6 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Initialized in |SetupFieldTrials()|.
   scoped_refptr<FieldTrialSynchronizer> field_trial_synchronizer_;
 
-  // Members initialized in PreMainMessageLoopRun, needed in
-  // PreMainMessageLoopRunThreadsCreated.
-  PrefService* local_state_;
   base::FilePath user_data_dir_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainParts);

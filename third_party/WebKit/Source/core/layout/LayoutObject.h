@@ -37,7 +37,6 @@
 #include "core/html_names.h"
 #include "core/layout/LayoutObjectChildList.h"
 #include "core/layout/MapCoordinatesFlags.h"
-#include "core/layout/ScrollAlignment.h"
 #include "core/layout/SubtreeLayoutScope.h"
 #include "core/layout/api/HitTestAction.h"
 #include "core/layout/api/SelectionState.h"
@@ -79,6 +78,7 @@ class PseudoStyleRequest;
 
 struct PaintInfo;
 struct PaintInvalidatorContext;
+struct WebScrollIntoViewParams;
 
 enum VisualRectFlags { kDefaultVisualRectFlags = 0, kEdgeInclusive = 1 };
 
@@ -292,13 +292,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   // Scrolling is a LayoutBox concept, however some code just cares about
   // recursively scrolling our enclosing ScrollableArea(s).
-  bool ScrollRectToVisible(
-      const LayoutRect&,
-      const ScrollAlignment& align_x = ScrollAlignment::kAlignCenterIfNeeded,
-      const ScrollAlignment& align_y = ScrollAlignment::kAlignCenterIfNeeded,
-      ScrollType = kProgrammaticScroll,
-      bool make_visible_in_visual_viewport = true,
-      ScrollBehavior = kScrollBehaviorAuto);
+  bool ScrollRectToVisible(const LayoutRect&, const WebScrollIntoViewParams&);
 
   // Convenience function for getting to the nearest enclosing box of a
   // LayoutObject.
@@ -882,8 +876,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   bool HasShapeOutside() const { return Style() && Style()->ShapeOutside(); }
 
-  inline bool PreservesNewline() const;
-
   // The pseudo element style can be cached or uncached.  Use the cached method
   // if the pseudo element doesn't respect any pseudo classes (and therefore
   // has no concept of changing state).
@@ -1010,10 +1002,18 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // (point 3 above).
   LayoutObject* Container(AncestorSkipInfo* = nullptr) const;
   // Finds the container as if this object is fixed-position.
-  LayoutBlock* ContainerForFixedPosition(AncestorSkipInfo* = nullptr) const;
+  LayoutBlock* ContainingBlockForFixedPosition(
+      AncestorSkipInfo* = nullptr) const;
   // Finds the containing block as if this object is absolute-position.
   LayoutBlock* ContainingBlockForAbsolutePosition(
       AncestorSkipInfo* = nullptr) const;
+
+  bool CanContainOutOfFlowPositionedElement(EPosition position) const {
+    DCHECK(position == EPosition::kAbsolute || position == EPosition::kFixed);
+    return (position == EPosition::kAbsolute &&
+            CanContainAbsolutePositionObjects()) ||
+           (position == EPosition::kFixed && CanContainFixedPositionObjects());
+  }
 
   virtual LayoutObject* HoverAncestor() const { return Parent(); }
 
@@ -1323,6 +1323,11 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   IntRect AbsoluteBoundingBoxRect(MapCoordinatesFlags = 0) const;
   // FIXME: This function should go away eventually
   IntRect AbsoluteBoundingBoxRectIgnoringTransforms() const;
+  // These two handles inline anchors without content as well.
+  LayoutRect AbsoluteBoundingBoxRectHandlingEmptyAnchor() const;
+  // This returns an IntRect expanded from
+  // AbsoluteBoundingBoxRectHandlingEmptyAnchor by ScrollMargin.
+  LayoutRect AbsoluteBoundingBoxRectForScrollIntoView() const;
 
   // Build an array of quads in absolute coords for line boxes
   virtual void AbsoluteQuads(Vector<FloatQuad>&,
@@ -1601,8 +1606,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
                                  TransformationMatrix&) const;
 
   bool CreatesGroup() const {
-    return IsTransparent() || HasMask() || HasFilterInducingProperty() ||
-           Style()->HasBlendMode();
+    return IsTransparent() || HasMask() || HasClipPath() ||
+           HasFilterInducingProperty() || Style()->HasBlendMode();
   }
 
   // Collects rectangles that the outline of this object would be drawing along
@@ -1739,6 +1744,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   // Returns the bounding box of the visual rects of all fragments.
   LayoutRect FragmentsVisualRectBoundingBox() const;
+
+  void SetNeedsOverflowRecalcAfterStyleChange();
 
   // Painters can use const methods only, except for these explicitly declared
   // methods.
@@ -2131,15 +2138,11 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   void CheckCounterChanges(const ComputedStyle* old_style,
                            const ComputedStyle* new_style);
 
-  void SetNeedsOverflowRecalcAfterStyleChange();
-
   // Walk up the parent chain and find the first scrolling block to disable
   // scroll anchoring on.
   void SetScrollAnchorDisablingStyleChangedOnAncestor();
 
-  // FIXME: This should be 'markContaingBoxChainForOverflowRecalc when we make
-  // LayoutBox recomputeOverflow-capable. crbug.com/437012 and crbug.com/434700.
-  inline void MarkAncestorsForOverflowRecalcIfNeeded();
+  inline void MarkContainerChainForOverflowRecalcIfNeeded();
 
   inline void MarkAncestorsForPaintInvalidation();
   inline void SetNeedsPaintOffsetAndVisualRectUpdate();
@@ -2147,6 +2150,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   inline void InvalidateContainerPreferredLogicalWidths();
 
   LayoutObject* ContainerForAbsolutePosition(AncestorSkipInfo* = nullptr) const;
+  LayoutObject* ContainerForFixedPosition(AncestorSkipInfo* = nullptr) const;
 
   const LayoutBoxModelObject* EnclosingCompositedContainer() const;
 
@@ -2158,6 +2162,13 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   void RemoveShapeImageClient(ShapeValue*);
   void RemoveCursorImageClient(const CursorList*);
+
+  // These are helper functions for AbsoluteBoudingBoxRectHandlingEmptyAnchor()
+  // and AbsoluteBoundingBoxRectForScrollIntoView().
+  enum class ExpandScrollMargin { kExpand, kIgnore };
+  LayoutRect AbsoluteBoundingBoxRectHelper(ExpandScrollMargin) const;
+  bool GetUpperLeftCorner(ExpandScrollMargin, FloatPoint&) const;
+  bool GetLowerRightCorner(ExpandScrollMargin, FloatPoint&) const;
 
 #if DCHECK_IS_ON()
   void CheckBlockPositionedObjectsNeedLayout();
@@ -2716,13 +2727,6 @@ inline void LayoutObject::SetNeedsPositionedMovementLayout() {
 #endif
   if (!already_needed_layout)
     MarkContainerChainForLayout();
-}
-
-inline bool LayoutObject::PreservesNewline() const {
-  if (IsSVGInlineText())
-    return false;
-
-  return Style()->PreserveNewline();
 }
 
 inline void LayoutObject::SetHasBoxDecorationBackground(bool b) {

@@ -11,8 +11,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/models/menu_model.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
-#include "ui/message_center/notification_types.h"
+#include "ui/message_center/public/cpp/notification.h"
+#include "ui/message_center/public/cpp/notification_types.h"
 #include "ui/message_center/ui_controller.h"
 
 namespace message_center {
@@ -92,16 +92,7 @@ TEST_F(NotificationMenuModelTest, ContextMenuTestWithMessageCenter) {
   message_center_->AddNotification(std::move(notification));
 
   AddNotification(id3);
-#if defined(OS_CHROMEOS)
-  EXPECT_EQ(2, model->GetItemCount());
-
-  // The second item is to open the settings.
-  EXPECT_TRUE(model->IsEnabledAt(0));
-  EXPECT_TRUE(model->IsEnabledAt(1));
-  model->ActivatedAt(1);
-#else
   EXPECT_EQ(1, model->GetItemCount());
-#endif
 
   // The first item is to disable notifications from the notifier id. It also
   // removes the notification.

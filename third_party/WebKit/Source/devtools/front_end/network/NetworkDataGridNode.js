@@ -410,35 +410,11 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
     var bRequest = b.requestOrFirstKnownChildRequest();
     if (!aRequest || !bRequest)
       return !aRequest ? -1 : 1;
-    var aInitiator = NetworkLog.networkLog.initiatorInfoForRequest(aRequest);
-    var bInitiator = NetworkLog.networkLog.initiatorInfoForRequest(bRequest);
-
-    if (aInitiator.type < bInitiator.type)
-      return -1;
-    if (aInitiator.type > bInitiator.type)
-      return 1;
-
-    if (typeof aInitiator.__source === 'undefined')
-      aInitiator.__source = Bindings.displayNameForURL(aInitiator.url);
-    if (typeof bInitiator.__source === 'undefined')
-      bInitiator.__source = Bindings.displayNameForURL(bInitiator.url);
-
-    if (aInitiator.__source < bInitiator.__source)
-      return -1;
-    if (aInitiator.__source > bInitiator.__source)
-      return 1;
-
-    if (aInitiator.lineNumber < bInitiator.lineNumber)
-      return -1;
-    if (aInitiator.lineNumber > bInitiator.lineNumber)
-      return 1;
-
-    if (aInitiator.columnNumber < bInitiator.columnNumber)
-      return -1;
-    if (aInitiator.columnNumber > bInitiator.columnNumber)
-      return 1;
-
-    return aRequest.indentityCompare(bRequest);
+    if (!a._initiatorCell || !b._initiatorCell)
+      return !a._initiatorCell ? -1 : 1;
+    var aText = a._linkifiedInitiatorAnchor ? a._linkifiedInitiatorAnchor.textContent : a._initiatorCell.title;
+    var bText = b._linkifiedInitiatorAnchor ? b._linkifiedInitiatorAnchor.textContent : b._initiatorCell.title;
+    return aText.localeCompare(bText);
   }
 
   /**
@@ -479,18 +455,17 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
    * @param {!Network.NetworkNode} b
    * @return {number}
    */
-  static InitialPriorityComparator(a, b) {
+  static PriorityComparator(a, b) {
     // TODO(allada) Handle this properly for group nodes.
     var aRequest = a.requestOrFirstKnownChildRequest();
     var bRequest = b.requestOrFirstKnownChildRequest();
     if (!aRequest || !bRequest)
       return !aRequest ? -1 : 1;
-    var priorityMap = NetworkPriorities.prioritySymbolToNumericMap();
-    var aPriority = aRequest.initialPriority();
-    var aScore = aPriority ? priorityMap.get(aPriority) : 0;
+    var aPriority = aRequest.priority();
+    var aScore = aPriority ? PerfUI.networkPriorityWeight(aPriority) : 0;
     aScore = aScore || 0;
-    var bPriority = aRequest.initialPriority();
-    var bScore = bPriority ? priorityMap.get(bPriority) : 0;
+    var bPriority = bRequest.priority();
+    var bScore = bPriority ? PerfUI.networkPriorityWeight(bPriority) : 0;
     bScore = bScore || 0;
 
     return aScore - bScore || aRequest.indentityCompare(bRequest);
@@ -755,8 +730,8 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
         this._setTextAndTitle(cell, this._arrayLength(this._request.responseCookies));
         break;
       case 'priority':
-        var priority = this._request.initialPriority();
-        this._setTextAndTitle(cell, priority ? NetworkPriorities.uiLabelForPriority(priority) : '');
+        var priority = this._request.priority();
+        this._setTextAndTitle(cell, priority ? PerfUI.uiLabelForNetworkPriority(priority) : '');
         break;
       case 'connectionid':
         this._setTextAndTitle(cell, this._request.connectionId);
@@ -948,9 +923,14 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
 
       case SDK.NetworkRequest.InitiatorType.Script:
         var networkManager = SDK.NetworkManager.forRequest(request);
-        this._linkifiedInitiatorAnchor = this.parentView().linkifier.linkifyScriptLocation(
-            networkManager ? networkManager.target() : null, initiator.scriptId, initiator.url, initiator.lineNumber,
-            initiator.columnNumber);
+        if (initiator.stack) {
+          this._linkifiedInitiatorAnchor = this.parentView().linkifier.linkifyStackTraceTopFrame(
+              networkManager ? networkManager.target() : null, initiator.stack);
+        } else {
+          this._linkifiedInitiatorAnchor = this.parentView().linkifier.linkifyScriptLocation(
+              networkManager ? networkManager.target() : null, initiator.scriptId, initiator.url, initiator.lineNumber,
+              initiator.columnNumber);
+        }
         this._linkifiedInitiatorAnchor.title = '';
         cell.appendChild(this._linkifiedInitiatorAnchor);
         this._appendSubtitle(cell, Common.UIString('Script'));

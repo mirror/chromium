@@ -45,6 +45,7 @@
 #include "extensions/common/permissions/api_permission.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "storage/browser/quota/quota_manager.h"
+#include "third_party/WebKit/common/quota/quota_types.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/text/bytes_formatting.h"
 
@@ -91,7 +92,7 @@ void AddExceptionsGrantedByHostedApps(content::BrowserContext* context,
         !(*extension)->permissions_data()->HasAPIPermission(permission))
       continue;
 
-    extensions::URLPatternSet web_extent = (*extension)->web_extent();
+    const extensions::URLPatternSet& web_extent = (*extension)->web_extent();
     // Add patterns from web extent.
     for (extensions::URLPatternSet::const_iterator pattern = web_extent.begin();
          pattern != web_extent.end(); ++pattern) {
@@ -213,7 +214,7 @@ void SiteSettingsHandler::OnJavascriptAllowed() {
                          base::Unretained(this)));
 
 #if defined(OS_CHROMEOS)
-  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(profile_->GetPrefs());
   pref_change_registrar_->Add(
       prefs::kEnableDRM,
@@ -241,14 +242,15 @@ void SiteSettingsHandler::OnGetUsageInfo(
       CallJavascriptFunction("settings.WebsiteUsagePrivateApi.returnUsageTotal",
                              base::Value(entry.host),
                              base::Value(ui::FormatBytes(entry.usage)),
-                             base::Value(entry.type));
+                             base::Value(static_cast<int>(entry.type)));
       return;
     }
   }
 }
 
-void SiteSettingsHandler::OnUsageInfoCleared(blink::QuotaStatusCode code) {
-  if (code == blink::QuotaStatusCode::kOk) {
+void SiteSettingsHandler::OnUsageInfoCleared(
+    blink::mojom::QuotaStatusCode code) {
+  if (code == blink::mojom::QuotaStatusCode::kOk) {
     CallJavascriptFunction("settings.WebsiteUsagePrivateApi.onUsageCleared",
                            base::Value(clearing_origin_));
   }
@@ -358,9 +360,9 @@ void SiteSettingsHandler::HandleClearUsage(
         = new StorageInfoFetcher(profile_);
     storage_info_fetcher->ClearStorage(
         url.host(),
-        static_cast<storage::StorageType>(static_cast<int>(storage_type)),
+        static_cast<blink::mojom::StorageType>(static_cast<int>(storage_type)),
         base::Bind(&SiteSettingsHandler::OnUsageInfoCleared,
-            base::Unretained(this)));
+                   base::Unretained(this)));
 
     // Also clear the *local* storage data.
     scoped_refptr<BrowsingDataLocalStorageHelper> local_storage_helper =
@@ -517,7 +519,7 @@ void SiteSettingsHandler::HandleGetOriginPermissions(
 
   // Note: Invalid URLs will just result in default settings being shown.
   const GURL origin_url(origin);
-  auto exceptions = base::MakeUnique<base::ListValue>();
+  auto exceptions = std::make_unique<base::ListValue>();
   for (size_t i = 0; i < types->GetSize(); ++i) {
     std::string type;
     types->GetString(i, &type);
@@ -535,7 +537,7 @@ void SiteSettingsHandler::HandleGetOriginPermissions(
     std::string content_setting_string =
         content_settings::ContentSettingToString(content_setting);
 
-    auto raw_site_exception = base::MakeUnique<base::DictionaryValue>();
+    auto raw_site_exception = std::make_unique<base::DictionaryValue>();
     raw_site_exception->SetString(site_settings::kEmbeddingOrigin, origin);
     raw_site_exception->SetBoolean(site_settings::kIncognito,
                                    profile_->IsOffTheRecord());

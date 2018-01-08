@@ -20,11 +20,23 @@ group("client") {
 group("gles2_cmd_helper") {
   if (is_component_build) {
     public_deps = [
-      "//gpu",
+      "//gpu:gles2",
     ]
   } else {
     public_deps = [
       ":gles2_cmd_helper_sources",
+    ]
+  }
+}
+
+group("raster") {
+  if (is_component_build) {
+    public_deps = [
+      "//gpu:raster",
+    ]
+  } else {
+    public_deps = [
+      ":raster_sources",
     ]
   }
 }
@@ -67,10 +79,6 @@ source_set("client_sources") {
     "//ui/gfx:memory_buffer",
     "//ui/gfx/geometry",
   ]
-
-  if (!is_nacl) {
-    deps += [ "//cc/paint" ]
-  }
 }
 
 source_set("gles2_cmd_helper_sources") {
@@ -81,12 +89,12 @@ source_set("gles2_cmd_helper_sources") {
     "gles2_cmd_helper_autogen.h",
   ]
 
-  configs += [ "//gpu:gpu_implementation" ]
+  configs += [ "//gpu:gpu_gles2_implementation" ]
 
   deps = [
-    ":client_sources",
+    ":client",
     "//base",
-    "//gpu/command_buffer/common:common_sources",
+    "//gpu/command_buffer/common",
     "//gpu/command_buffer/common:gles2_sources",
   ]
 }
@@ -173,18 +181,37 @@ component("gles2_implementation") {
 
   if (!is_nacl) {
     deps += [
-      ":raster_interface",
-      "//cc/paint",
       "//components/viz/common:resource_format",
       "//ui/gfx:color_space",
       "//ui/gfx/ipc/color",
     ]
-
-    sources += [
-      "raster_implementation_gles.cc",
-      "raster_implementation_gles.h",
-    ]
   }
+}
+
+source_set("raster_sources") {
+  # External code should depend on this via //gpu/raster above rather than
+  # depending on this directly or the component build will break.
+  visibility = [ "//gpu/*" ]
+  all_dependent_configs = [ "//third_party/khronos:khronos_headers" ]
+
+  configs += [ "//gpu:raster_implementation" ]
+  deps = [
+    ":client",
+    ":gles2_interface",
+    ":raster_interface",
+    "//base",
+    "//cc/paint",
+    "//components/viz/common:resource_format",
+    "//gpu/command_buffer/common",
+    "//gpu/command_buffer/common:gles2",
+    "//ui/gfx:color_space",
+    "//ui/gfx/geometry",
+    "//ui/gfx/ipc/color",
+  ]
+  sources = [
+    "raster_implementation_gles.cc",
+    "raster_implementation_gles.h",
+  ]
 }
 
 # Library emulates GLES2 using command_buffers.

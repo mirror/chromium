@@ -9,14 +9,11 @@
 #ifndef GEN_BLINK_CORE_CSS_PROPERTIES_{{property.namespace_group.upper()}}_{{property_classname}}_h
 #define GEN_BLINK_CORE_CSS_PROPERTIES_{{property.namespace_group.upper()}}_{{property_classname}}_h
 
-{% for include in property.includes %}
+{% for include in includes %}
 #include "{{include}}"
 {% endfor %}
 
 namespace blink {
-
-class CSSValue;
-
 namespace CSS{{property.namespace_group}} {
 
 {% if property.is_property %}
@@ -34,13 +31,16 @@ class {{property_classname}} final : public {{property.namespace_group}} {
  public:
   constexpr {{property_classname}}() : {{property.namespace_group}}() {}
   {% endif %}
-  CSSPropertyID PropertyID() const override { return {{property.property_id}}; }
   const char* GetPropertyName() const override { return "{{property.name}}\0"; }
   const WTF::AtomicString& GetPropertyNameAtomicString() const override {
     static const WTF::AtomicString& name = WTF::AtomicString("{{property.name}}\0");
     return name;
   }
   {% if property.alias_for == None %}
+  const WTF::String GetJSPropertyName() const override {
+    return WTF::String("{{property_classname[0].lower() + property_classname[1:]}}\0");
+  }
+  CSSPropertyID PropertyID() const override { return {{property.property_id}}; }
   {% for property_method in property.property_methods %}
   {{property_method.return_type}} {{property_method.name}}{{property_method.parameters}} const override;
   {% endfor %}
@@ -77,6 +77,17 @@ class {{property_classname}} final : public {{property.namespace_group}} {
   bool IsAffectedByAll() const override { return false; }
   {% endif %}
   {% if property.direction_aware_options %}
+  const CSSValue* CSSValueFromComputedStyleInternal(
+      const ComputedStyle& ,
+      const SVGComputedStyle&,
+      const LayoutObject*,
+      Node*,
+      bool allow_visited_style) const override {
+    // Directional properties are resolved by resolveDirectionAwareProperty()
+    // before calling CSSValueFromComputedStyleInternal.
+    NOTREACHED();
+    return nullptr;
+  }
     {% if property.direction_aware_options.logical_side == "width" %}
   const CSSProperty& ResolveDirectionAwareProperty(
       TextDirection direction,

@@ -33,7 +33,6 @@
 
 #include <memory>
 
-#include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
 #include "v8/include/v8.h"
@@ -50,7 +49,7 @@ class ScopedPersistent {
   WTF_MAKE_NONCOPYABLE(ScopedPersistent);
 
  public:
-  ScopedPersistent() {}
+  ScopedPersistent() = default;
 
   ScopedPersistent(v8::Isolate* isolate, v8::Local<T> handle)
       : handle_(isolate, handle) {}

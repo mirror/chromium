@@ -64,9 +64,8 @@
 #include "core/input/EventHandler.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutBox.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutEmbeddedContentItem.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
@@ -758,8 +757,8 @@ void WebPluginContainerImpl::HandleMouseEvent(MouseEvent* event) {
 
   // TODO(dtapuska): Move WebMouseEventBuilder into the anonymous namespace
   // in this class.
-  WebMouseEventBuilder transformed_event(
-      &parent, LayoutItem(element_->GetLayoutObject()), *event);
+  WebMouseEventBuilder transformed_event(&parent, element_->GetLayoutObject(),
+                                         *event);
   if (transformed_event.GetType() == WebInputEvent::kUndefined)
     return;
 
@@ -992,8 +991,8 @@ void WebPluginContainerImpl::HandleGestureEvent(GestureEvent* event) {
 }
 
 void WebPluginContainerImpl::SynthesizeMouseEventIfPossible(TouchEvent* event) {
-  WebMouseEventBuilder web_event(
-      &ParentFrameView(), LayoutItem(element_->GetLayoutObject()), *event);
+  WebMouseEventBuilder web_event(&ParentFrameView(),
+                                 element_->GetLayoutObject(), *event);
   if (web_event.GetType() == WebInputEvent::kUndefined)
     return;
 
@@ -1029,27 +1028,31 @@ void WebPluginContainerImpl::ComputeClipRectsForPlugin(
 
   LayoutBox* box = ToLayoutBox(owner_element->GetLayoutObject());
 
-  // Note: FrameRect() for this plugin is equal to contentBoxRect, mapped to the
-  // containing view space, and rounded off.
-  // See LayoutEmbeddedContent.cpp::updateGeometryInternal. To remove the lossy
-  // effect of rounding off, use contentBoxRect directly.
+  // Note: FrameRect() for this plugin is equal to contentBoxRect, mapped to
+  // the containing view space, and rounded off.  See
+  // LayoutEmbeddedContent::UpdateGeometry. To remove the lossy effect of
+  // rounding off, use contentBoxRect directly.
   LayoutRect unclipped_absolute_rect(box->ContentBoxRect());
   box->MapToVisualRectInAncestorSpace(root_view, unclipped_absolute_rect);
+  unclipped_absolute_rect =
+      box->View()->GetFrameView()->DocumentToAbsolute(unclipped_absolute_rect);
 
   // The frameRect is already in absolute space of the local frame to the
-  // plugin.
+  // plugin so map it up to the root frame.
   window_rect = frame_rect_;
-  // Map up to the root frame.
   LayoutRect layout_window_rect =
       LayoutRect(element_->GetDocument()
                      .View()
-                     ->GetLayoutViewItem()
-                     .LocalToAbsoluteQuad(FloatQuad(FloatRect(frame_rect_)),
-                                          kTraverseDocumentBoundaries)
+                     ->GetLayoutView()
+                     ->LocalToAbsoluteQuad(FloatQuad(FloatRect(frame_rect_)),
+                                           kTraverseDocumentBoundaries)
                      .BoundingBox());
+
   // Finally, adjust for scrolling of the root frame, which the above does not
-  // take into account.
-  layout_window_rect.MoveBy(-root_view->ViewRect().Location());
+  // take into account (until root-layer-scrolling ships at which point we can
+  // remove the AbsoluteToRootFrame).
+  layout_window_rect =
+      root_view->GetFrameView()->AbsoluteToRootFrame(layout_window_rect);
   window_rect = PixelSnappedIntRect(layout_window_rect);
 
   LayoutRect layout_clipped_local_rect = unclipped_absolute_rect;
@@ -1079,10 +1082,7 @@ void WebPluginContainerImpl::CalculateGeometry(IntRect& window_rect,
   // document().layoutView() can be null when we receive messages from the
   // plugins while we are destroying a frame.
   // FIXME: Can we just check m_element->document().isActive() ?
-  if (!element_->GetLayoutObject()
-           ->GetDocument()
-           .GetLayoutViewItem()
-           .IsNull()) {
+  if (element_->GetLayoutObject()->GetDocument().GetLayoutView()) {
     // Take our element and get the clip rect from the enclosing layer and
     // frame view.
     ComputeClipRectsForPlugin(element_, window_rect, clip_rect,

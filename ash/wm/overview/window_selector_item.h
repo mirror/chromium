@@ -44,7 +44,16 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
     // Resets the listener so that the listener can go out of scope.
     void ResetListener() { listener_ = nullptr; }
 
+   protected:
+    // views::ImageButton:
+    std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
+    std::unique_ptr<views::InkDropHighlight> CreateInkDropHighlight()
+        const override;
+    std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
+
    private:
+    int GetInkDropRadius() const;
+
     DISALLOW_COPY_AND_ASSIGN(OverviewCloseButton);
   };
 
@@ -112,6 +121,13 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   // Shows the cannot snap warning if currently in splitview, and the associated
   // window cannot be snapped.
   void UpdateCannotSnapWarningVisibility();
+
+  ScopedTransformOverviewWindow::GridWindowFillMode GetWindowDimensionsType()
+      const;
+
+  // Recalculates the window dimensions type of |transform_window_|. Called when
+  // |window_|'s bounds change.
+  void UpdateWindowDimensionsType();
 
   // Sets if the item is dimmed in the overview. Changing the value will also
   // change the visibility of the transform windows.

@@ -91,6 +91,9 @@ android_resources("chrome_java_resources") {
     "java/res",
     "//chrome/android/java/res_chromium",
   ]
+  if (enable_vr) {
+    resource_dirs += [ "//chrome/android/java/res_vr" ]
+  }
   deps = [
     ":chrome_strings_grd",
     "//chrome/app:java_strings_grd",
@@ -201,8 +204,8 @@ android_library("chrome_java") {
     "//components/crash/android:java",
     "//components/dom_distiller/content/browser/android:dom_distiller_content_java",
     "//components/dom_distiller/core/android:dom_distiller_core_java",
-    "//components/download/internal:internal_java",
-    "//components/download/public:public_java",
+    "//components/download/internal/background_service:internal_java",
+    "//components/download/public/background_service:public_java",
     "//components/feature_engagement:feature_engagement_java",
     "//components/gcm_driver/android:gcm_driver_java",
     "//components/gcm_driver/instance_id/android:instance_id_driver_java",
@@ -213,6 +216,7 @@ android_library("chrome_java") {
     "//components/ntp_tiles/android:ntp_tiles_java",
     "//components/offline_items_collection/core:core_java",
     "//components/payments/content/android:java",
+    "//components/payments/mojom:mojom_java",
     "//components/policy/android:policy_java",
     "//components/safe_browsing/android:safe_browsing_java",
     "//components/signin/core/browser/android:java",
@@ -286,11 +290,11 @@ android_library("chrome_java") {
     "//chrome:payments_journey_logger_enum_javagen",
     "//chrome:pref_enum_javagen",
     "//chrome:quick_action_category_enum_javagen",
-    "//chrome:sad_tab_event_enum_javagen",
     "//chrome:signin_metrics_enum_javagen",
     "//components/browsing_data/core:browsing_data_utils_java",
     "//components/browsing_data/core:clear_browsing_data_tab_java",
     "//components/favicon_base:favicon_base_enums_java",
+    "//components/dom_distiller/core:distiller_type_java",
     "//components/infobars/core:infobar_enums_java",
     "//components/ntp_snippets:ntp_snippets_java_enums_srcjar",
     "//components/ntp_tiles:ntp_tiles_enums_java",
@@ -301,10 +305,10 @@ android_library("chrome_java") {
     "//components/security_state/core:security_state_enums_java",
     "//components/signin/core/browser:investigated_scenario_java",
     "//components/supervised_user_error_page:enums_srcjar",
+    "//components/ui_metrics:ui_metrics_enums_java",
   ]
 
-  # Manifest used for linting (determining unused resources).
-  android_manifest = chrome_public_android_manifest
+  android_manifest_for_lint = chrome_public_android_manifest
 
   # From java_sources.gni.
   java_files = chrome_java_sources + [ app_hooks_impl ]
@@ -418,6 +422,7 @@ junit_binary("chrome_junit_tests") {
     "//components/minidump_uploader:minidump_uploader_java",
     "//components/offline_items_collection/core:core_java",
     "//components/payments/content/android:java",
+    "//components/payments/mojom:mojom_java",
     "//components/signin/core/browser/android:java",
     "//components/signin/core/browser/android:signin_java_test_support",
     "//components/sync:sync_java_test_support",
@@ -497,7 +502,6 @@ android_library("chrome_test_java") {
     "//chrome/android/third_party/widget_bottomsheet_base:widget_bottomsheet_base_java",
     "//chrome/android/webapk/libs/client:client_java",
     "//chrome/android/webapk/libs/common:common_java",
-    "//chrome/android/webapk/libs/runtime_library:webapk_service_aidl_java",
     "//chrome/test/android:chrome_java_test_support",
     "//components/autofill/android:autofill_java",
     "//components/background_task_scheduler:background_task_scheduler_java",
@@ -517,10 +521,11 @@ android_library("chrome_test_java") {
     "//components/navigation_interception/android:navigation_interception_java",
     "//components/offline_items_collection/core:core_java",
     "//components/payments/content/android:java",
+    "//components/payments/mojom:mojom_java",
     "//components/policy/android:policy_java",
     "//components/policy/android:policy_java_test_support",
+    "//components/safe_browsing/android:safe_browsing_java",
     "//components/signin/core/browser/android:java",
-    "//components/signin/core/browser/android:javatests",
     "//components/signin/core/browser/android:signin_java_test_support",
     "//components/sync:sync_java_test_support",
     "//components/sync/android:sync_java",
@@ -612,10 +617,13 @@ if (enable_vr) {
       "javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrTestRule.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/rules/WebappActivityVrTestRule.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/NfcSimUtils.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/util/TransitionUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/VrInfoBarUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/VrShellDelegateUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTestRuleUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/util/XrTransitionUtils.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/TestFramework.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/TestVrShellDelegate.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrFeedbackInfoBarTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrInstallUpdateInfoBarTest.java",
@@ -629,6 +637,9 @@ if (enable_vr) {
       "javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTabTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/WebXrInputTest.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/WebXrTransitionTest.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/XrTestFramework.java",
       "javatests/src/org/chromium/chrome/browser/webapps/TestFetchStorageCallback.java",
       "javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
     ]
@@ -654,6 +665,7 @@ if (enable_vr) {
       "//third_party/gvr-android-sdk:controller_test_api_java",
       "//third_party/gvr-android-sdk:gvr_common_java",
       "//third_party/junit",
+      "//third_party/ub-uiautomator:ub_uiautomator_java",
       "//ui/android:ui_java",
     ]
 
@@ -1009,7 +1021,7 @@ shared_library("chrome_sync_shell") {
     libs =
         [ "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a" ]
   }
-  if (use_lld) {
+  if (chromium_linker_supported && use_lld) {
     configs += [ "//build/config/android:lld_pack_relocations" ]
   }
 }

@@ -41,12 +41,6 @@
       ],
       "flattenInheritedTransform": false
     }
-  ],
-  "objectPaintInvalidations": [
-    {
-      "object": "LayoutImage (positioned) IMG id='img'",
-      "reason": "subtree"
-    }
   ]
 }
 

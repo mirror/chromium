@@ -139,7 +139,6 @@
     <dimen name="promo_dialog_illustration_margin">24dp</dimen>
     <dimen name="promo_dialog_illustration_width">150dp</dimen>
     <dimen name="promo_dialog_padding">16dp</dimen>
-    <dimen name="promo_dialog_max_width">600dp</dimen>
     <dimen name="promo_dialog_max_content_width">320dp</dimen>
     <dimen name="promo_dialog_min_scrollable_height">100dp</dimen>
     <dimen name="promo_dialog_title_text_size">23sp</dimen>
@@ -190,6 +189,12 @@
     <!-- Alert dialog -->
     <dimen name="dialog_padding_top">@dimen/abc_dialog_padding_top_material</dimen>
     <dimen name="dialog_padding_sides">@dimen/abc_dialog_padding_material</dimen>
+    <dimen name="dialog_max_width">600dp</dimen>
+
+    <!-- ModalDialogView dimensions -->
+    <dimen name="modal_dialog_control_padding_vertical">4dp</dimen>
+    <dimen name="modal_dialog_control_padding_horizontal">12dp</dimen>
+    <dimen name="tab_modal_scrim_vertical_margin">16dp</dimen>
 
     <!-- Tab Strip Dimensions -->
     <dimen name="tab_strip_height">0dp</dimen>
@@ -472,10 +477,9 @@
     <dimen name="separator_height">1dp</dimen>
 
     <!-- Modern List Item dimensions -->
-    <dimen name="list_item_min_height">60dp</dimen>
+    <dimen name="list_item_min_height">64dp</dimen>
     <dimen name="list_item_default_margin">16dp</dimen>
     <dimen name="list_item_subsection_margin">40dp</dimen>
-    <dimen name="list_item_top_bottom_padding">10dp</dimen>
     <dimen name="list_item_start_icon_right_margin">20dp</dimen>
     <dimen name="list_item_start_icon_width">36dp</dimen>
     <dimen name="list_item_start_icon_corner_radius">18dp</dimen>
@@ -504,8 +508,6 @@
     <dimen name="chrome_home_min_full_half_distance">160dp</dimen>
     <dimen name="chrome_home_progress_bar_height">4dp</dimen>
     <dimen name="chrome_home_incognito_ntp_bottom_margin">32dp</dimen>
-    <dimen name="chrome_home_promo_illustration_width">108dp</dimen>
-    <dimen name="chrome_home_promo_illustration_height">206dp</dimen>
 
     <!-- TextBubble dimensions -->
     <dimen name="text_bubble_margin">4dp</dimen>

@@ -39,7 +39,7 @@
 #include "core/workers/WorkerSettings.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/CachedMetadataHandler.h"
-#include "platform/wtf/ListHashSet.h"
+#include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
 
@@ -77,10 +77,6 @@ class CORE_EXPORT WorkerGlobalScope
   }
 
   // WorkerOrWorkletGlobalScope
-  void EvaluateClassicScript(
-      const KURL& script_url,
-      String source_code,
-      std::unique_ptr<Vector<char>> cached_meta_data) override;
   bool IsClosing() const final { return closing_; }
   void Dispose() override;
   WorkerThread* GetThread() const final { return thread_; }
@@ -125,6 +121,16 @@ class CORE_EXPORT WorkerGlobalScope
 
   // EventTarget
   ExecutionContext* GetExecutionContext() const final;
+
+  // Evaluates the given top-level classic script.
+  virtual void EvaluateClassicScript(
+      const KURL& script_url,
+      String source_code,
+      std::unique_ptr<Vector<char>> cached_meta_data);
+
+  // Imports the top-level module script for |module_url_record|.
+  void ImportModuleScript(const KURL& module_url_record,
+                          network::mojom::FetchCredentialsMode);
 
   double TimeOrigin() const { return time_origin_; }
   WorkerSettings* GetWorkerSettings() const { return worker_settings_.get(); }

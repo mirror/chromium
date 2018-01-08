@@ -23,6 +23,7 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/service_names.mojom.h"
+#include "content/public/network/network_service.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "net/net_features.h"
 
@@ -36,6 +37,8 @@ void DisableQuicOnIOThread(
     safe_browsing::SafeBrowsingService* safe_browsing_service) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
+    content::GetNetworkServiceImpl()->DisableQuic();
   io_thread->DisableQuic();
 
   // Safebrowsing isn't yet using the IOThread's NetworkService, so must be
@@ -48,7 +51,7 @@ void DisableQuicOnIOThread(
 base::LazyInstance<SystemNetworkContextManager>::Leaky
     g_system_network_context_manager = LAZY_INSTANCE_INITIALIZER;
 
-content::mojom::NetworkContext* SystemNetworkContextManager::GetContext() {
+network::mojom::NetworkContext* SystemNetworkContextManager::GetContext() {
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     // SetUp should already have been called.
     DCHECK(io_thread_network_context_);
@@ -57,7 +60,7 @@ content::mojom::NetworkContext* SystemNetworkContextManager::GetContext() {
 
   if (!network_service_network_context_ ||
       network_service_network_context_.encountered_error()) {
-    content::mojom::NetworkService* network_service =
+    network::mojom::NetworkService* network_service =
         content::GetNetworkService();
     if (!is_quic_allowed_)
       network_service->DisableQuic();
@@ -68,7 +71,7 @@ content::mojom::NetworkContext* SystemNetworkContextManager::GetContext() {
   return network_service_network_context_.get();
 }
 
-content::mojom::URLLoaderFactory*
+network::mojom::URLLoaderFactory*
 SystemNetworkContextManager::GetURLLoaderFactory() {
   if (!url_loader_factory_ || url_loader_factory_.encountered_error()) {
     GetContext()->CreateURLLoaderFactory(
@@ -78,8 +81,8 @@ SystemNetworkContextManager::GetURLLoaderFactory() {
 }
 
 void SystemNetworkContextManager::SetUp(
-    content::mojom::NetworkContextRequest* network_context_request,
-    content::mojom::NetworkContextParamsPtr* network_context_params,
+    network::mojom::NetworkContextRequest* network_context_request,
+    network::mojom::NetworkContextParamsPtr* network_context_params,
     bool* is_quic_allowed) {
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     *network_context_request = mojo::MakeRequest(&io_thread_network_context_);
@@ -111,7 +114,8 @@ void SystemNetworkContextManager::DisableQuic() {
   // Profiles will also have QUIC disabled (because both IOThread's
   // NetworkService and the network service, if enabled will disable QUIC).
 
-  content::GetNetworkService()->DisableQuic();
+  if (base::FeatureList::IsEnabled(features::kNetworkService))
+    content::GetNetworkService()->DisableQuic();
 
   IOThread* io_thread = g_browser_process->io_thread();
   // Nothing more to do if IOThread has already been shut down.
@@ -138,10 +142,10 @@ void SystemNetworkContextManager::FlushNetworkInterfaceForTesting() {
     url_loader_factory_.FlushForTesting();
 }
 
-content::mojom::NetworkContextParamsPtr
+network::mojom::NetworkContextParamsPtr
 SystemNetworkContextManager::CreateNetworkContextParams() {
   // TODO(mmenke): Set up parameters here (in memory cookie store, etc).
-  content::mojom::NetworkContextParamsPtr network_context_params =
+  network::mojom::NetworkContextParamsPtr network_context_params =
       CreateDefaultNetworkContextParams();
 
   network_context_params->context_name = std::string("system");

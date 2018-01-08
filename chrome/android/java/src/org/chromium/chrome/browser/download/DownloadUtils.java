@@ -25,9 +25,11 @@ import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.chrome.browser.download.ui.BackendProvider;
 import org.chromium.chrome.browser.download.ui.BackendProvider.DownloadDelegate;
 import org.chromium.chrome.browser.download.ui.DownloadFilter;
@@ -479,8 +481,8 @@ public class DownloadUtils {
             Uri contentUri = getUriForItem(file);
             String normalizedMimeType = Intent.normalizeMimeType(mimeType);
 
-            Intent intent =
-                    MediaViewerUtils.getMediaViewerIntent(fileUri, contentUri, normalizedMimeType);
+            Intent intent = MediaViewerUtils.getMediaViewerIntent(
+                    fileUri, contentUri, normalizedMimeType, true /* allowExternalAppHandlers */);
             IntentHandler.startActivityForTrustedIntent(intent);
             service.updateLastAccessTime(downloadGuid, isOffTheRecord);
             return true;
@@ -685,7 +687,10 @@ public class DownloadUtils {
                 entry != null && state == DownloadState.INTERRUPTED && entry.isAutoResumable;
 
         if (isDownloadPending) {
-            return context.getString(R.string.download_notification_pending);
+            // All pending, non-offline page downloads are by default waiting for network.
+            // The other pending reason (i.e. waiting for another download to complete) applies
+            // only to offline page requests because offline pages download one at a time.
+            return getPendingStatusString(PendingState.PENDING_NETWORK);
         } else if (isDownloadPaused(item)) {
             return context.getString(R.string.download_notification_paused);
         }
@@ -701,6 +706,35 @@ public class DownloadUtils {
         } else {
             // Count down the time or number of files.
             return getTimeOrFilesLeftString(context, progress, info.getTimeRemainingInMillis());
+        }
+    }
+
+    /**
+     * Determine the status string for a pending download.
+     *
+     * @param pendingState Reason download is pending.
+     * @return String representing the current download status.
+     */
+    public static String getPendingStatusString(PendingState pendingState) {
+        Context context = ContextUtils.getApplicationContext();
+        // When foreground service restarts and there is no connection to native, use the default
+        // pending status. The status will be replaced when connected to native.
+        if (BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                        .isStartupSuccessfullyCompleted()
+                && ChromeFeatureList.isEnabled(
+                           ChromeFeatureList.OFFLINE_PAGES_DESCRIPTIVE_PENDING_STATUS)) {
+            switch (pendingState) {
+                case PENDING_NETWORK:
+                    return context.getString(R.string.download_notification_pending_network);
+                case PENDING_ANOTHER_DOWNLOAD:
+                    return context.getString(
+                            R.string.download_notification_pending_another_download);
+                case PENDING_REASON_UNKNOWN: // Intentional fallthrough.
+                default:
+                    return context.getString(R.string.download_notification_pending);
+            }
+        } else {
+            return context.getString(R.string.download_notification_pending);
         }
     }
 

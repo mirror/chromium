@@ -4,12 +4,15 @@
 
 #include "ui/app_list/views/search_result_answer_card_view.h"
 
+#include <memory>
+#include <utility>
 #include <vector>
 
 #include "ash/app_list/model/search/search_result_observer.h"
 #include "ui/accessibility/ax_node.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_metrics.h"
 #include "ui/app_list/app_list_view_delegate.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/button/button.h"
@@ -17,13 +20,6 @@
 #include "ui/views/layout/fill_layout.h"
 
 namespace app_list {
-
-namespace {
-
-constexpr int kVerticalPadding = 11;
-constexpr int kHorizontalPadding = 16;
-
-}  // namespace
 
 // Container of the search answer view.
 class SearchResultAnswerCardView::SearchAnswerContainerView
@@ -34,10 +30,10 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
   explicit SearchAnswerContainerView(AppListViewDelegate* view_delegate)
       : Button(this), view_delegate_(view_delegate) {
     SetFocusBehavior(FocusBehavior::ALWAYS);
-    // Center the card horizontally in the container.
-    auto answer_container_layout = std::make_unique<views::BoxLayout>(
-        views::BoxLayout::kHorizontal,
-        gfx::Insets(kVerticalPadding, kHorizontalPadding));
+    // Center the card horizontally in the container. Padding is set on the
+    // server.
+    auto answer_container_layout =
+        std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal);
     answer_container_layout->set_main_axis_alignment(
         views::BoxLayout::MAIN_AXIS_ALIGNMENT_START);
     SetLayoutManager(std::move(answer_container_layout));
@@ -98,7 +94,7 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
 
   void OnFocus() override {
     SetSelected(true);
-    NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
+    NotifyAccessibilityEvent(ax::mojom::Event::kSelection, true);
     Button::OnFocus();
   }
 
@@ -114,15 +110,18 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
     // Default button role is atomic for ChromeVox, so assign a generic
     // container role to allow accessibility focus to get into this view.
-    node_data->role = ui::AX_ROLE_GENERIC_CONTAINER;
+    node_data->role = ax::mojom::Role::kGenericContainer;
     node_data->SetName(accessible_name());
   }
 
   // views::ButtonListener overrides:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
     DCHECK(sender == this);
-    if (search_result_)
-      view_delegate_->OpenSearchResult(search_result_, false, event.flags());
+    if (search_result_) {
+      RecordSearchResultOpenSource(search_result_, view_delegate_->GetModel(),
+                                   view_delegate_->GetSearchModel());
+      view_delegate_->OpenSearchResult(search_result_, event.flags());
+    }
   }
 
   // SearchResultObserver overrides:
@@ -187,7 +186,7 @@ int SearchResultAnswerCardView::DoUpdate() {
   set_container_score(have_result ? display_results.front()->relevance() : 0);
   if (title_changed && search_answer_container_view_->selected())
     search_answer_container_view_->NotifyAccessibilityEvent(
-        ui::AX_EVENT_SELECTION, true);
+        ax::mojom::Event::kSelection, true);
   return have_result ? 1 : 0;
 }
 
@@ -200,7 +199,7 @@ void SearchResultAnswerCardView::UpdateSelectedIndex(int old_selected,
   search_answer_container_view_->SetSelected(is_selected);
   if (is_selected)
     search_answer_container_view_->NotifyAccessibilityEvent(
-        ui::AX_EVENT_SELECTION, true);
+        ax::mojom::Event::kSelection, true);
 }
 
 bool SearchResultAnswerCardView::OnKeyPressed(const ui::KeyEvent& event) {

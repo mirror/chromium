@@ -10,8 +10,9 @@
 #include "core/events/MouseEvent.h"
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/HTMLCanvasElement.h"
+#include "core/html/canvas/HTMLCanvasElement.h"
 #include "core/input/EventHandler.h"
 #include "core/input/EventHandlingUtil.h"
 #include "core/input/MouseEventManager.h"
@@ -26,11 +27,18 @@ namespace blink {
 
 namespace {
 
+const float kMaxAdjustmentRadiusDips = 16.f;
+
 size_t ToPointerTypeIndex(WebPointerProperties::PointerType t) {
   return static_cast<size_t>(t);
 }
 bool HasPointerEventListener(const EventHandlerRegistry& registry) {
   return registry.HasEventHandlers(EventHandlerRegistry::kPointerEvent);
+}
+
+LayoutSize GetHitTestRectForAdjustment(const IntSize& touch_area) {
+  const LayoutSize kMaxSize(kMaxAdjustmentRadiusDips, kMaxAdjustmentRadiusDips);
+  return LayoutSize(touch_area).ShrunkTo(kMaxSize);
 }
 
 }  // namespace
@@ -244,7 +252,7 @@ void PointerEventManager::HandlePointerInterruption(
     canceled_pointer_events.push_back(
         pointer_event_factory_.CreatePointerCancelEvent(
             PointerEventFactory::kMouseId,
-            TimeTicks::FromSeconds(web_pointer_event.TimeStampSeconds())));
+            TimeTicksFromSeconds(web_pointer_event.TimeStampSeconds())));
   } else {
     // TODO(nzolghadr): Maybe canceling all the scroll capable pointers is not
     // the best strategy here. See the github issue for more details:
@@ -259,7 +267,7 @@ void PointerEventManager::HandlePointerInterruption(
         canceled_pointer_events.push_back(
             pointer_event_factory_.CreatePointerCancelEvent(
                 pointer_id,
-                TimeTicks::FromSeconds(web_pointer_event.TimeStampSeconds())));
+                TimeTicksFromSeconds(web_pointer_event.TimeStampSeconds())));
       }
 
       scroll_capable_pointers_canceled_ = true;
@@ -293,6 +301,51 @@ void PointerEventManager::HandlePointerInterruption(
 
     RemovePointer(pointer_event);
   }
+}
+
+bool PointerEventManager::ShouldAdjustPointerEvent(
+    const WebPointerEvent& pointer_event) const {
+  if (frame_->GetSettings() &&
+      !frame_->GetSettings()->GetTouchAdjustmentEnabled())
+    return false;
+
+  return RuntimeEnabledFeatures::UnifiedTouchAdjustmentEnabled() &&
+         pointer_event.pointer_type ==
+             WebPointerProperties::PointerType::kTouch &&
+         pointer_event.GetType() == WebInputEvent::kPointerDown &&
+         pointer_event_factory_.IsPrimary(pointer_event);
+}
+
+void PointerEventManager::AdjustTouchPointerEvent(
+    WebPointerEvent& pointer_event) {
+  DCHECK(pointer_event.pointer_type ==
+         WebPointerProperties::PointerType::kTouch);
+
+  LayoutSize padding = GetHitTestRectForAdjustment(
+      IntSize(pointer_event.width / 2, pointer_event.height / 2));
+
+  if (padding.IsEmpty())
+    return;
+
+  HitTestRequest::HitTestRequestType hit_type =
+      HitTestRequest::kTouchEvent | HitTestRequest::kReadOnly |
+      HitTestRequest::kActive | HitTestRequest::kListBased;
+  LayoutPoint hit_test_point = frame_->View()->RootFrameToContents(
+      LayoutPoint(pointer_event.PositionInWidget()));
+  HitTestResult hit_test_result =
+      frame_->GetEventHandler().HitTestResultAtPoint(hit_test_point, hit_type,
+                                                     padding);
+
+  Node* adjusted_node = nullptr;
+  IntPoint adjusted_point;
+  bool adjusted = frame_->GetEventHandler().BestClickableNodeForHitTestResult(
+      hit_test_result, adjusted_point, adjusted_node);
+
+  if (adjusted)
+    pointer_event.SetPositionInWidget(adjusted_point.X(), adjusted_point.Y());
+
+  frame_->GetEventHandler().CacheTouchAdjustmentResult(
+      pointer_event.unique_touch_event_id, pointer_event.PositionInWidget());
 }
 
 EventHandlingUtil::PointerEventTarget
@@ -435,8 +488,11 @@ WebInputEventResult PointerEventManager::HandlePointerEvent(
   // The rest of this function does not handle non-scrolling
   // (i.e. mouse like) events yet.
 
+  WebPointerEvent pointer_event = event.WebPointerEventInRootFrame();
+  if (ShouldAdjustPointerEvent(event))
+    AdjustTouchPointerEvent(pointer_event);
   EventHandlingUtil::PointerEventTarget pointer_event_target =
-      ComputePointerEventTarget(event.WebPointerEventInRootFrame());
+      ComputePointerEventTarget(pointer_event);
 
   // Any finger lifting is a user gesture only when it wasn't associated with a
   // scroll.

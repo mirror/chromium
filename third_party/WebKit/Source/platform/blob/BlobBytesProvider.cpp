@@ -84,8 +84,9 @@ class BlobBytesStreamer {
 // This keeps the process alive while blobs are being transferred.
 void IncreaseChildProcessRefCount() {
   if (!Platform::Current()->MainThread()->IsCurrentThread()) {
-    Platform::Current()->MainThread()->GetWebTaskRunner()->PostTask(
-        FROM_HERE, CrossThreadBind(&IncreaseChildProcessRefCount));
+    PostCrossThreadTask(*Platform::Current()->MainThread()->GetWebTaskRunner(),
+                        FROM_HERE,
+                        CrossThreadBind(&IncreaseChildProcessRefCount));
     return;
   }
   Platform::Current()->SuddenTerminationChanged(false);
@@ -94,8 +95,9 @@ void IncreaseChildProcessRefCount() {
 
 void DecreaseChildProcessRefCount() {
   if (!Platform::Current()->MainThread()->IsCurrentThread()) {
-    Platform::Current()->MainThread()->GetWebTaskRunner()->PostTask(
-        FROM_HERE, CrossThreadBind(&DecreaseChildProcessRefCount));
+    PostCrossThreadTask(*Platform::Current()->MainThread()->GetWebTaskRunner(),
+                        FROM_HERE,
+                        CrossThreadBind(&DecreaseChildProcessRefCount));
     return;
   }
   Platform::Current()->SuddenTerminationChanged(true);
@@ -104,9 +106,15 @@ void DecreaseChildProcessRefCount() {
 
 }  // namespace
 
-BlobBytesProvider::BlobBytesProvider(scoped_refptr<RawData> data) {
+constexpr size_t BlobBytesProvider::kMaxConsolidatedItemSizeInBytes;
+
+BlobBytesProvider::BlobBytesProvider() {
   IncreaseChildProcessRefCount();
-  data_.push_back(std::move(data));
+}
+
+BlobBytesProvider::BlobBytesProvider(scoped_refptr<RawData> data)
+    : BlobBytesProvider() {
+  AppendData(std::move(data));
 }
 
 BlobBytesProvider::~BlobBytesProvider() {
@@ -115,6 +123,14 @@ BlobBytesProvider::~BlobBytesProvider() {
 
 void BlobBytesProvider::AppendData(scoped_refptr<RawData> data) {
   data_.push_back(std::move(data));
+}
+
+void BlobBytesProvider::AppendData(base::span<const char> data) {
+  if (data_.IsEmpty() || data_.back()->length() + data.length() >
+                             kMaxConsolidatedItemSizeInBytes) {
+    data_.push_back(RawData::Create());
+  }
+  data_.back()->MutableData()->Append(data.data(), data.length());
 }
 
 void BlobBytesProvider::RequestAsReply(RequestAsReplyCallback callback) {

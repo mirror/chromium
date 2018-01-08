@@ -46,7 +46,7 @@ void SearchGeolocationDisclosureInfoBarDelegate::Create(
       InfoBarService::FromWebContents(web_contents);
   // Add the new delegate.
   infobar_service->AddInfoBar(
-      base::MakeUnique<SearchGeolocationDisclosureInfoBar>(
+      std::make_unique<SearchGeolocationDisclosureInfoBar>(
           base::WrapUnique(new SearchGeolocationDisclosureInfoBarDelegate(
               web_contents, search_url, search_engine_name))));
 }
@@ -60,7 +60,7 @@ bool SearchGeolocationDisclosureInfoBarDelegate::
     infobars::InfoBar* existing_infobar = infobar_service->infobar_at(i);
     if (existing_infobar->delegate()->GetIdentifier() ==
         infobars::InfoBarDelegate::
-            SEARCH_GEOLOCATION_DISCLOSURE_INFOBAR_DELEGATE) {
+            SEARCH_GEOLOCATION_DISCLOSURE_INFOBAR_DELEGATE_ANDROID) {
       return true;
     }
   }
@@ -99,14 +99,9 @@ void SearchGeolocationDisclosureInfoBarDelegate::InfoBarDismissed() {
   pref_service_->SetBoolean(prefs::kSearchGeolocationDisclosureDismissed, true);
 }
 
-infobars::InfoBarDelegate::Type
-SearchGeolocationDisclosureInfoBarDelegate::GetInfoBarType() const {
-  return PAGE_ACTION_TYPE;
-}
-
 infobars::InfoBarDelegate::InfoBarIdentifier
 SearchGeolocationDisclosureInfoBarDelegate::GetIdentifier() const {
-  return SEARCH_GEOLOCATION_DISCLOSURE_INFOBAR_DELEGATE;
+  return SEARCH_GEOLOCATION_DISCLOSURE_INFOBAR_DELEGATE_ANDROID;
 }
 
 int SearchGeolocationDisclosureInfoBarDelegate::GetIconId() const {

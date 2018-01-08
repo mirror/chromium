@@ -76,12 +76,15 @@ class CORE_EXPORT PointerEventFactory {
   // Otherwise it returns WebPointerProperties::PointerType::Unknown.
   WebPointerProperties::PointerType GetPointerType(int pointer_id) const;
 
+  // Returns whether a WebPoinerProperties is primary pointer.
+  bool IsPrimary(const WebPointerProperties&) const;
+
   static const int kMouseId;
 
  private:
   typedef WTF::UnsignedWithZeroKeyHashTraits<int> UnsignedHash;
   typedef struct IncomingId : public std::pair<int, int> {
-    IncomingId() {}
+    IncomingId() = default;
     IncomingId(WebPointerProperties::PointerType pointer_type, int raw_id)
         : std::pair<int, int>(static_cast<int>(pointer_type), raw_id) {}
     int PointerTypeInt() const { return first; }

@@ -77,7 +77,7 @@ IDBValueWrapper::IDBValueWrapper(
 
 // Explicit destructor in the .cpp file, to move the dependency on the
 // BlobDataHandle definition away from the header file.
-IDBValueWrapper::~IDBValueWrapper() {}
+IDBValueWrapper::~IDBValueWrapper() = default;
 
 void IDBValueWrapper::Clone(ScriptState* script_state, ScriptValue* clone) {
 #if DCHECK_IS_ON()
@@ -123,7 +123,6 @@ void IDBValueWrapper::DoneCloning() {
 #endif  // DCHECK_IS_ON()
 
   wire_data_ = serialized_value_->GetWireData();
-  DCHECK(wire_data_.Is8Bit());
   for (const auto& kvp : serialized_value_->BlobDataHandles())
     blob_handles_.push_back(std::move(kvp.value));
 }
@@ -143,15 +142,12 @@ bool IDBValueWrapper::WrapIfBiggerThan(unsigned max_bytes) {
 
   // TODO(pwnall): The MIME type should probably be an atomic string.
   String mime_type(kWrapMimeType);
-  // TODO(crbug.com/721516): Use WebBlobRegistry::CreateBuilder instead of
-  //                         Blob::Create to avoid a buffer copy.
   std::unique_ptr<BlobData> wrapper_blob_data = BlobData::Create();
   wrapper_blob_data->SetContentType(String(kWrapMimeType));
-  wrapper_blob_data->AppendBytes(wire_data_.Characters8(), wire_data_size);
+  wrapper_blob_data->AppendBytes(wire_data_.data(), wire_data_size);
   scoped_refptr<BlobDataHandle> wrapper_handle =
       BlobDataHandle::Create(std::move(wrapper_blob_data), wire_data_size);
-  blob_info_.emplace_back(wrapper_handle->Uuid(), wrapper_handle->GetType(),
-                          wire_data_size);
+  blob_info_.emplace_back(wrapper_handle);
   blob_handles_.push_back(std::move(wrapper_handle));
 
   wire_data_buffer_.clear();
@@ -162,9 +158,10 @@ bool IDBValueWrapper::WrapIfBiggerThan(unsigned max_bytes) {
   IDBValueWrapper::WriteVarInt(serialized_value_->BlobDataHandles().size(),
                                wire_data_buffer_);
 
-  wire_data_ = StringView(wire_data_buffer_.data(), wire_data_buffer_.size());
+  wire_data_ = base::make_span(
+      reinterpret_cast<const uint8_t*>(wire_data_buffer_.data()),
+      wire_data_buffer_.size());
   DCHECK(!wire_data_buffer_.IsEmpty());
-  DCHECK(wire_data_.Is8Bit());
   return true;
 }
 
@@ -177,16 +174,15 @@ scoped_refptr<SharedBuffer> IDBValueWrapper::TakeWireBytes() {
 
   if (wire_data_buffer_.IsEmpty()) {
     // The wire bytes are coming directly from the SSV's GetWireData() call.
-    DCHECK_EQ(wire_data_.Characters8(),
-              serialized_value_->GetWireData().Characters8());
+    DCHECK_EQ(wire_data_.data(), serialized_value_->GetWireData().data());
     DCHECK_EQ(wire_data_.length(), serialized_value_->GetWireData().length());
-    return SharedBuffer::Create(wire_data_.Characters8(),
+    return SharedBuffer::Create(wire_data_.data(),
                                 static_cast<size_t>(wire_data_.length()));
   }
 
   // The wire bytes are coming from wire_data_buffer_, so we can avoid a copy.
   DCHECK_EQ(wire_data_buffer_.data(),
-            reinterpret_cast<const char*>(wire_data_.Characters8()));
+            reinterpret_cast<const char*>(wire_data_.data()));
   DCHECK_EQ(wire_data_buffer_.size(), wire_data_.length());
   return SharedBuffer::AdoptVector(wire_data_buffer_);
 }
@@ -195,6 +191,7 @@ IDBValueUnwrapper::IDBValueUnwrapper() {
   Reset();
 }
 
+// static
 bool IDBValueUnwrapper::IsWrapped(IDBValue* value) {
   DCHECK(value);
 
@@ -207,6 +204,7 @@ bool IDBValueUnwrapper::IsWrapped(IDBValue* value) {
          header[2] == kReplaceWithBlob;
 }
 
+// static
 bool IDBValueUnwrapper::IsWrapped(
     const Vector<std::unique_ptr<IDBValue>>& values) {
   for (const auto& value : values) {
@@ -216,24 +214,15 @@ bool IDBValueUnwrapper::IsWrapped(
   return false;
 }
 
-std::unique_ptr<IDBValue> IDBValueUnwrapper::Unwrap(
-    std::unique_ptr<IDBValue> wrapped_value,
-    scoped_refptr<SharedBuffer>&& wrapper_blob_content) {
+// static
+void IDBValueUnwrapper::Unwrap(
+    scoped_refptr<SharedBuffer>&& wrapper_blob_content,
+    IDBValue* wrapped_value) {
   DCHECK(wrapped_value);
   DCHECK(wrapped_value->data_);
 
-  // Create an IDBValue with the same blob information, minus the last blob.
-  Vector<scoped_refptr<BlobDataHandle>> blob_data =
-      wrapped_value->TakeBlobData();
-  Vector<WebBlobInfo> blob_info = wrapped_value->TakeBlobInfo();
-  DCHECK_EQ(blob_data.size(), blob_info.size());
-  DCHECK_GT(blob_info.size(), 0U);
-  blob_data.pop_back();
-  blob_info.pop_back();
-
-  return IDBValue::Create(std::move(wrapper_blob_content), std::move(blob_data),
-                          std::move(blob_info), wrapped_value->PrimaryKey(),
-                          wrapped_value->KeyPath());
+  wrapped_value->SetData(wrapper_blob_content);
+  wrapped_value->TakeLastBlob();
 }
 
 bool IDBValueUnwrapper::Parse(IDBValue* value) {
@@ -252,11 +241,11 @@ bool IDBValueUnwrapper::Parse(IDBValue* value) {
   if (!ReadVarInt(blob_offset))
     return Reset();
 
-  size_t value_blob_count = value->blob_data_.size();
+  size_t value_blob_count = value->blob_info_.size();
   if (!value_blob_count || blob_offset != value_blob_count - 1)
     return Reset();
 
-  blob_handle_ = value->blob_data_.back();
+  blob_handle_ = value->blob_info_.back().GetBlobHandle();
   if (blob_handle_->size() != blob_size_)
     return Reset();
 

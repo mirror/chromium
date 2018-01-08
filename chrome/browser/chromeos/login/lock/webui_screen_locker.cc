@@ -12,7 +12,6 @@
 #include "base/values.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/chromeos/accessibility/accessibility_util.h"
 #include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
@@ -54,18 +53,6 @@ namespace {
 // URL which corresponds to the login WebUI.
 const char kLoginURL[] = "chrome://oobe/lock";
 
-// Disables virtual keyboard overscroll. Login UI will scroll user pods
-// into view on JS side when virtual keyboard is shown.
-void DisableKeyboardOverscroll() {
-  keyboard::SetKeyboardOverscrollOverride(
-      keyboard::KEYBOARD_OVERSCROLL_OVERRIDE_DISABLED);
-}
-
-void ResetKeyboardOverscrollOverride() {
-  keyboard::SetKeyboardOverscrollOverride(
-      keyboard::KEYBOARD_OVERSCROLL_OVERRIDE_NONE);
-}
-
 }  // namespace
 
 namespace chromeos {
@@ -85,7 +72,7 @@ void WebUIScreenLocker::RequestPreload() {
 // static
 bool WebUIScreenLocker::ShouldPreloadLockScreen() {
   // Only preload webui lock screen when it is used.
-  if (!ash::switches::IsUsingWebUiLock())
+  if (ash::switches::IsUsingViewsLock())
     return false;
 
   // Bail for mash because IdleDetector/UserActivityDetector does not work
@@ -114,7 +101,7 @@ bool WebUIScreenLocker::ShouldPreloadLockScreen() {
 
 // static
 std::unique_ptr<views::WebView> WebUIScreenLocker::DoPreload(Profile* profile) {
-  auto web_view = base::MakeUnique<views::WebView>(profile);
+  auto web_view = std::make_unique<views::WebView>(profile);
   web_view->set_owned_by_client();
   web_view->LoadInitialURL(GURL(kLoginURL));
   InitializeWebView(web_view.get(), l10n_util::GetStringUTF16(
@@ -150,8 +137,6 @@ WebUIScreenLocker::~WebUIScreenLocker() {
 
   ClearLockScreenAppFocusCyclerDelegate();
 
-  ResetKeyboardOverscrollOverride();
-
   RequestPreload();
 }
 
@@ -182,8 +167,6 @@ void WebUIScreenLocker::LockScreen() {
                                 login_display_.get());
 
   SetLockScreenAppFocusCyclerDelegate();
-
-  DisableKeyboardOverscroll();
 }
 
 void WebUIScreenLocker::SetPasswordInputEnabled(bool enabled) {
@@ -308,10 +291,6 @@ void WebUIScreenLocker::CancelPasswordChangedFlow() {
   NOTREACHED();
 }
 
-void WebUIScreenLocker::CompleteLogin(const UserContext& user_context) {
-  NOTREACHED();
-}
-
 base::string16 WebUIScreenLocker::GetConnectedNetworkName() {
   return network_state_helper_->GetCurrentNetworkName();
 }
@@ -334,10 +313,6 @@ void WebUIScreenLocker::MigrateUserData(const std::string& old_password) {
 
 void WebUIScreenLocker::OnSigninScreenReady() {
   VLOG(2) << "Lock screen signin screen is ready";
-}
-
-void WebUIScreenLocker::OnGaiaScreenReady() {
-  VLOG(2) << "Lock screen gaia screen is ready";
 }
 
 void WebUIScreenLocker::OnStartEnterpriseEnrollment() {
@@ -370,22 +345,8 @@ void WebUIScreenLocker::ResyncUserData() {
   NOTREACHED();
 }
 
-void WebUIScreenLocker::SetDisplayEmail(const std::string& email) {
-  NOTREACHED();
-}
-
-void WebUIScreenLocker::SetDisplayAndGivenName(const std::string& display_name,
-                                               const std::string& given_name) {
-  NOTREACHED();
-}
-
 void WebUIScreenLocker::Signout() {
   chromeos::ScreenLocker::default_screen_locker()->Signout();
-}
-
-bool WebUIScreenLocker::IsUserWhitelisted(const AccountId& account_id) {
-  NOTREACHED();
-  return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

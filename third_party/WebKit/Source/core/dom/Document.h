@@ -39,6 +39,7 @@
 #include "core/CoreExport.h"
 #include "core/animation/WorkletAnimationController.h"
 #include "core/dom/ContainerNode.h"
+#include "core/dom/CreateElementFlags.h"
 #include "core/dom/DocumentEncodingData.h"
 #include "core/dom/DocumentInit.h"
 #include "core/dom/DocumentLifecycle.h"
@@ -57,6 +58,7 @@
 #include "core/dom/TreeScope.h"
 #include "core/dom/UserActionElementSet.h"
 #include "core/dom/ViewportDescription.h"
+#include "core/editing/Forward.h"
 #include "core/frame/DOMTimerCoordinator.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/html/custom/V0CustomElement.h"
@@ -136,7 +138,6 @@ class IdleRequestOptions;
 class IntersectionObserverController;
 class LayoutPoint;
 class LayoutView;
-class LayoutViewItem;
 class LiveNodeListBase;
 class LocalDOMWindow;
 class Locale;
@@ -218,25 +219,6 @@ enum ShadowCascadeOrder {
   kShadowCascadeV1
 };
 
-enum CreateElementFlags {
-  kCreatedByParser = 1 << 0,
-  // Synchronous custom elements flag:
-  // https://dom.spec.whatwg.org/#concept-create-element
-  // TODO(kojii): Remove these flags, add an option not to queue upgrade, and
-  // let parser/DOM methods to upgrade synchronously when necessary.
-  kSynchronousCustomElements = 0 << 1,
-  kAsynchronousCustomElements = 1 << 1,
-
-  // Aliases by callers.
-  // Clone a node: https://dom.spec.whatwg.org/#concept-node-clone
-  kCreatedByCloneNode = kAsynchronousCustomElements,
-  kCreatedByImportNode = kCreatedByCloneNode,
-  // https://dom.spec.whatwg.org/#dom-document-createelement
-  kCreatedByCreateElement = kSynchronousCustomElements,
-  // https://html.spec.whatwg.org/#create-an-element-for-the-token
-  kCreatedByFragmentParser = kCreatedByParser | kAsynchronousCustomElements,
-};
-
 // Collect data about deferred loading of offscreen cross-origin documents. All
 // cross-origin documents log Created. Only those that would load log a reason.
 // We can then see the % of cross-origin documents that never have to load.
@@ -284,6 +266,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // https://dom.spec.whatwg.org/#dom-document-document
   static Document* Create(Document&);
   ~Document() override;
+  static Range* CreateRangeAdjustedToTreeScope(const TreeScope&,
+                                               const Position&);
 
   // Support JS introspection of frame policy (e.g. feature policy).
   Policy* policy();
@@ -428,6 +412,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   HTMLCollection* WindowNamedItems(const AtomicString& name);
   DocumentNameCollection* DocumentNamedItems(const AtomicString& name);
+  HTMLCollection* DocumentAllNamedItems(const AtomicString& name);
 
   // "defaultView" attribute defined in HTML spec.
   LocalDOMWindow* defaultView() const;
@@ -477,6 +462,13 @@ class CORE_EXPORT Document : public ContainerNode,
   StyleEngine& GetStyleEngine() {
     DCHECK(style_engine_.Get());
     return *style_engine_.Get();
+  }
+
+  bool GotoAnchorNeededAfterStylesheetsLoad() {
+    return goto_anchor_needed_after_stylesheets_load_;
+  }
+  void SetGotoAnchorNeededAfterStylesheetsLoad(bool b) {
+    goto_anchor_needed_after_stylesheets_load_ = b;
   }
 
   void ScheduleUseShadowTreeUpdate(SVGUseElement&);
@@ -572,7 +564,6 @@ class CORE_EXPORT Document : public ContainerNode,
   void GetLayoutObject() const = delete;
 
   LayoutView* GetLayoutView() const { return layout_view_; }
-  LayoutViewItem GetLayoutViewItem() const;
 
   Document& AXObjectCacheOwner() const;
   AXObjectCache* ExistingAXObjectCache() const;
@@ -1347,7 +1338,8 @@ class CORE_EXPORT Document : public ContainerNode,
 
   SnapCoordinator* GetSnapCoordinator();
 
-  void EnforceInsecureRequestPolicy(WebInsecureRequestPolicy);
+  void DidEnforceInsecureRequestPolicy();
+  void DidEnforceInsecureNavigationsSet();
 
   bool MayContainV0Shadow() const { return may_contain_v0_shadow_; }
 
@@ -1461,7 +1453,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   bool NeedsFullLayoutTreeUpdate() const;
 
-  void PropagateStyleToViewport();
+  void PropagateStyleToViewport(StyleRecalcChange);
 
   void UpdateUseShadowTreesIfNeeded();
   void EvaluateMediaQueryListIfNeeded();
@@ -1544,6 +1536,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // that any changes to the declared policy are relayed to the embedder through
   // the LocalFrameClient.
   void ApplyFeaturePolicy(const ParsedFeaturePolicy& declared_policy);
+
+  Element* CreateRawElement(const QualifiedName&, CreateElementFlags);
 
   DocumentLifecycle lifecycle_;
 
@@ -1635,6 +1629,7 @@ class CORE_EXPORT Document : public ContainerNode,
   DocumentReadyState ready_state_;
   ParsingState parsing_state_;
 
+  bool goto_anchor_needed_after_stylesheets_load_;
   bool is_dns_prefetch_enabled_;
   bool have_explicitly_disabled_dns_prefetch_;
   bool contains_validity_style_rules_;

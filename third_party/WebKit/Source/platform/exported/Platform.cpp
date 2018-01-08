@@ -104,15 +104,16 @@ static void MaxObservedSizeFunction(size_t size_in_mb) {
 
 static void CallOnMainThreadFunction(WTF::MainThreadFunction function,
                                      void* context) {
-  Platform::Current()->MainThread()->GetWebTaskRunner()->PostTask(
-      FROM_HERE, CrossThreadBind(function, CrossThreadUnretained(context)));
+  PostCrossThreadTask(
+      *Platform::Current()->MainThread()->GetWebTaskRunner(), FROM_HERE,
+      CrossThreadBind(function, CrossThreadUnretained(context)));
 }
 
 Platform::Platform() : main_thread_(nullptr) {
   WTF::Partitions::Initialize(MaxObservedSizeFunction);
 }
 
-Platform::~Platform() {}
+Platform::~Platform() = default;
 
 void Platform::Initialize(Platform* platform) {
   DCHECK(!g_platform);
@@ -162,7 +163,8 @@ void Platform::Initialize(Platform* platform) {
 
   // Pre-create the File thread so multiple threads can call FileTaskRunner() in
   // a non racy way later.
-  g_platform->file_thread_ = g_platform->CreateThread("File");
+  g_platform->file_thread_ =
+      g_platform->CreateThread(WebThreadCreationParams("File"));
 
   if (BlinkResourceCoordinatorBase::IsEnabled())
     RendererResourceCoordinator::Initialize();
@@ -219,7 +221,8 @@ std::unique_ptr<WebServiceWorkerCacheStorage> Platform::CreateCacheStorage(
   return nullptr;
 }
 
-std::unique_ptr<WebThread> Platform::CreateThread(const char* name) {
+std::unique_ptr<WebThread> Platform::CreateThread(
+    const WebThreadCreationParams& params) {
   return nullptr;
 }
 

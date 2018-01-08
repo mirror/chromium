@@ -40,8 +40,6 @@ class CORE_EXPORT LayoutEmbeddedContent : public LayoutReplaced {
 
   bool RequiresAcceleratedCompositing() const;
 
-  bool NeedsPreferredWidthsRecalculation() const final;
-
   bool NodeAtPoint(HitTestResult&,
                    const HitTestLocation& location_in_container,
                    const LayoutPoint& accumulated_offset,
@@ -54,7 +52,7 @@ class CORE_EXPORT LayoutEmbeddedContent : public LayoutReplaced {
   // with the current Node, if Node is HTMLFrameOwnerElement. This is different
   // to LayoutObject::GetFrameView which returns the LocalFrameView associated
   // with the root Document Frame.
-  LocalFrameView* ChildFrameView() const;
+  FrameView* ChildFrameView() const;
   WebPluginContainerImpl* Plugin() const;
   EmbeddedContentView* GetEmbeddedContentView() const;
 

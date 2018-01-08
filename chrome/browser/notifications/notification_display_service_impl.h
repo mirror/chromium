@@ -39,13 +39,14 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
   // notification. Consumers include, service workers, pages, extensions...
   //
   // TODO(peter): Remove this in favor of multiple targetted methods.
-  void ProcessNotificationOperation(NotificationCommon::Operation operation,
-                                    NotificationHandler::Type notification_type,
-                                    const GURL& origin,
-                                    const std::string& notification_id,
-                                    const base::Optional<int>& action_index,
-                                    const base::Optional<base::string16>& reply,
-                                    const base::Optional<bool>& by_user);
+  virtual void ProcessNotificationOperation(
+      NotificationCommon::Operation operation,
+      NotificationHandler::Type notification_type,
+      const GURL& origin,
+      const std::string& notification_id,
+      const base::Optional<int>& action_index,
+      const base::Optional<base::string16>& reply,
+      const base::Optional<bool>& by_user);
 
   // Registers an implementation object to handle notification operations
   // for |notification_type|.
@@ -68,6 +69,15 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
   void Close(NotificationHandler::Type notification_type,
              const std::string& notification_id) override;
   void GetDisplayed(const DisplayedNotificationsCallback& callback) override;
+
+  static void ProfileLoadedCallback(NotificationCommon::Operation operation,
+                                    NotificationHandler::Type notification_type,
+                                    const GURL& origin,
+                                    const std::string& notification_id,
+                                    const base::Optional<int>& action_index,
+                                    const base::Optional<base::string16>& reply,
+                                    const base::Optional<bool>& by_user,
+                                    Profile* profile);
 
  private:
   // Called when the NotificationPlatformBridge may have been initialized.

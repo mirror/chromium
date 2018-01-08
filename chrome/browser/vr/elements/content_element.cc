@@ -5,6 +5,7 @@
 #include "chrome/browser/vr/elements/content_element.h"
 
 #include "chrome/browser/vr/ui_element_renderer.h"
+#include "chrome/browser/vr/ui_scene_constants.h"
 #include "chrome/browser/vr/vr_gl_util.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -21,6 +22,16 @@ static constexpr float kContentBoundsPropagationThreshold = 0.2f;
 // distorted content much more quickly. Thus, have a smaller threshold here.
 static constexpr float kContentAspectRatioPropagationThreshold = 0.01f;
 
+gfx::Vector3dF GetNormalFromTransform(const gfx::Transform& transform) {
+  gfx::Vector3dF x_axis(1, 0, 0);
+  gfx::Vector3dF y_axis(0, 1, 0);
+  transform.TransformVector(&x_axis);
+  transform.TransformVector(&y_axis);
+  gfx::Vector3dF normal = CrossProduct(x_axis, y_axis);
+  normal.GetNormalized(&normal);
+  return normal;
+}
+
 }  // namespace
 
 ContentElement::ContentElement(
@@ -35,13 +46,19 @@ ContentElement::~ContentElement() = default;
 
 void ContentElement::Render(UiElementRenderer* renderer,
                             const CameraModel& model) const {
-  if (!texture_id_)
-    return;
   gfx::RectF copy_rect(0, 0, 1, 1);
-  renderer->DrawTexturedQuad(texture_id_, texture_location_,
-                             model.view_proj_matrix * world_space_transform(),
-                             copy_rect, computed_opacity(), size(),
-                             corner_radius());
+  if (texture_id_) {
+    renderer->DrawTexturedQuad(texture_id_, texture_location_,
+                               model.view_proj_matrix * world_space_transform(),
+                               copy_rect, computed_opacity(), size(),
+                               corner_radius());
+  }
+  if (overlay_texture_id_) {
+    renderer->DrawTexturedQuad(overlay_texture_id_, overlay_texture_location_,
+                               model.view_proj_matrix * world_space_transform(),
+                               copy_rect, computed_opacity(), size(),
+                               corner_radius());
+  }
 }
 
 void ContentElement::OnHoverEnter(const gfx::PointF& position) {
@@ -69,21 +86,25 @@ void ContentElement::OnFlingStart(
     const gfx::PointF& position) {
   delegate_->OnContentFlingStart(std::move(gesture), position);
 }
+
 void ContentElement::OnFlingCancel(
     std::unique_ptr<blink::WebGestureEvent> gesture,
     const gfx::PointF& position) {
   delegate_->OnContentFlingCancel(std::move(gesture), position);
 }
+
 void ContentElement::OnScrollBegin(
     std::unique_ptr<blink::WebGestureEvent> gesture,
     const gfx::PointF& position) {
   delegate_->OnContentScrollBegin(std::move(gesture), position);
 }
+
 void ContentElement::OnScrollUpdate(
     std::unique_ptr<blink::WebGestureEvent> gesture,
     const gfx::PointF& position) {
   delegate_->OnContentScrollUpdate(std::move(gesture), position);
 }
+
 void ContentElement::OnScrollEnd(
     std::unique_ptr<blink::WebGestureEvent> gesture,
     const gfx::PointF& position) {
@@ -99,12 +120,21 @@ void ContentElement::SetTextureLocation(
   texture_location_ = location;
 }
 
+void ContentElement::SetOverlayTextureId(unsigned int texture_id) {
+  overlay_texture_id_ = texture_id;
+}
+
+void ContentElement::SetOverlayTextureLocation(
+    UiElementRenderer::TextureLocation location) {
+  overlay_texture_location_ = location;
+}
+
 void ContentElement::SetProjectionMatrix(const gfx::Transform& matrix) {
   projection_matrix_ = matrix;
 }
 
 bool ContentElement::OnBeginFrame(const base::TimeTicks& time,
-                                  const gfx::Vector3dF& look_at) {
+                                  const gfx::Transform& head_pose) {
   // TODO(mthiesse): This projection matrix is always going to be a frame
   // behind when computing the content size. We'll need to address this somehow
   // when we allow content resizing, or we could end up triggering an extra
@@ -127,8 +157,13 @@ bool ContentElement::OnBeginFrame(const base::TimeTicks& time,
   // is animated. This approach only works with the current scene hierarchy and
   // set of animated properties.
   gfx::Transform target_transform = ComputeTargetWorldSpaceTransform();
+
+  gfx::Point3F target_center;
+  target_transform.TransformPoint(&target_center);
+  gfx::Vector3dF target_normal = GetNormalFromTransform(target_transform);
+  float distance = gfx::DotProduct(target_center - kOrigin, -target_normal);
   gfx::SizeF screen_size =
-      CalculateScreenSize(projection_matrix_, target_transform, target_size);
+      CalculateScreenSize(projection_matrix_, distance, target_size);
 
   float aspect_ratio = target_size.width() / target_size.height();
   gfx::SizeF screen_bounds;

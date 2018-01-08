@@ -75,6 +75,11 @@ void ChromePaymentRequestDelegate::ShowErrorMessage() {
     dialog_->ShowErrorMessage();
 }
 
+void ChromePaymentRequestDelegate::ShowProcessingSpinner() {
+  if (dialog_)
+    dialog_->ShowProcessingSpinner();
+}
+
 autofill::PersonalDataManager*
 ChromePaymentRequestDelegate::GetPersonalDataManager() {
   // Autofill uses the original profile's PersonalDataManager to make data
@@ -161,6 +166,15 @@ PaymentRequestDisplayManager*
 ChromePaymentRequestDelegate::GetDisplayManager() {
   return PaymentRequestDisplayManagerFactory::GetForBrowserContext(
       web_contents_->GetBrowserContext());
+}
+
+void ChromePaymentRequestDelegate::EmbedPaymentHandlerWindow(
+    const GURL& url,
+    PaymentHandlerOpenWindowCallback callback) {
+  if (dialog_)
+    dialog_->ShowPaymentHandlerScreen(url, std::move(callback));
+  else
+    std::move(callback).Run(false, 0, 0);
 }
 
 }  // namespace payments

@@ -101,6 +101,7 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
       viz::mojom::HitTestRegionListPtr hit_test_region_list) override;
   void ClearCompositorFrame() override {}
   void SetNeedsBeginFrames(bool needs_begin_frames) override {}
+  void SetWantsAnimateOnlyBeginFrames() override {}
 
   // RenderWidgetHostViewBase:
   void InitAsPopup(RenderWidgetHostView* parent_host_view,
@@ -119,6 +120,7 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
   void UnlockMouse() override;
   RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
   viz::FrameSinkId GetFrameSinkId() override;
+  viz::SurfaceId GetCurrentSurfaceId() const override;
 
   bool is_showing() const { return is_showing_; }
   bool is_occluded() const { return is_occluded_; }

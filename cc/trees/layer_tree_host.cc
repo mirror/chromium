@@ -226,10 +226,6 @@ const LayerTreeSettings& LayerTreeHost::GetSettings() const {
   return settings_;
 }
 
-void LayerTreeHost::SetFrameSinkId(const viz::FrameSinkId& frame_sink_id) {
-  surface_sequence_generator_.set_frame_sink_id(frame_sink_id);
-}
-
 void LayerTreeHost::QueueSwapPromise(
     std::unique_ptr<SwapPromise> swap_promise) {
   swap_promise_manager_.QueueSwapPromise(std::move(swap_promise));
@@ -241,10 +237,6 @@ void LayerTreeHost::QueueSwapPromise(
   // EarlyOut_NoUpdates).
   if (!inside_main_frame_)
     SetNeedsAnimate();
-}
-
-viz::SurfaceSequenceGenerator* LayerTreeHost::GetSurfaceSequenceGenerator() {
-  return &surface_sequence_generator_;
 }
 
 void LayerTreeHost::WillBeginMainFrame() {
@@ -279,8 +271,8 @@ const LayerTreeDebugState& LayerTreeHost::GetDebugState() const {
   return debug_state_;
 }
 
-void LayerTreeHost::RequestMainFrameUpdate() {
-  client_->UpdateLayerTreeHost();
+void LayerTreeHost::RequestMainFrameUpdate(VisualStateUpdate requested_update) {
+  client_->UpdateLayerTreeHost(requested_update);
 }
 
 // This function commits the LayerTreeHost to an impl tree. When modifying
@@ -340,8 +332,11 @@ void LayerTreeHost::FinishCommitOnImplThread(
   // Track the navigation state before pushing properties since it overwrites
   // the |content_source_id_| on the sync tree.
   bool did_navigate = content_source_id_ != sync_tree->content_source_id();
-  if (did_navigate)
+  if (did_navigate) {
+    TRACE_EVENT0("cc", "LayerTreeHost::DidNavigate");
+    proxy_->ClearHistoryOnNavigation();
     host_impl->ClearImageCacheOnNavigation();
+  }
 
   {
     TRACE_EVENT0("cc", "LayerTreeHostInProcess::PushProperties");
@@ -934,9 +929,9 @@ void LayerTreeHost::AnimateLayers(base::TimeTicks monotonic_time) {
 int LayerTreeHost::ScheduleMicroBenchmark(
     const std::string& benchmark_name,
     std::unique_ptr<base::Value> value,
-    const MicroBenchmark::DoneCallback& callback) {
-  return micro_benchmark_controller_.ScheduleRun(benchmark_name,
-                                                 std::move(value), callback);
+    MicroBenchmark::DoneCallback callback) {
+  return micro_benchmark_controller_.ScheduleRun(
+      benchmark_name, std::move(value), std::move(callback));
 }
 
 bool LayerTreeHost::SendMessageToMicroBenchmark(

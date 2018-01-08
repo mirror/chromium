@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "base/containers/adapters.h"
-#include "base/memory/ptr_util.h"
 #include "base/numerics/ranges.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -60,7 +59,7 @@ std::unique_ptr<UiElement> UiScene::RemoveUiElement(int element_id) {
 }
 
 bool UiScene::OnBeginFrame(const base::TimeTicks& current_time,
-                           const gfx::Vector3dF& look_at) {
+                           const gfx::Transform& head_pose) {
   bool scene_dirty = !initialized_scene_ || is_dirty_;
   initialized_scene_ = true;
   is_dirty_ = false;
@@ -82,7 +81,7 @@ bool UiScene::OnBeginFrame(const base::TimeTicks& current_time,
     // time-related "dirtiness" on the scene graph.
     for (auto& element : *root_element_) {
       element.set_update_phase(UiElement::kDirty);
-      if ((element.DoBeginFrame(current_time, look_at) ||
+      if ((element.DoBeginFrame(current_time, head_pose) ||
            element.updated_bindings_this_frame()) &&
           (element.IsVisible() || element.updated_visiblity_this_frame())) {
         scene_dirty = true;
@@ -171,50 +170,18 @@ UiElement* UiScene::GetUiElementByName(UiElementName name) const {
   return nullptr;
 }
 
-UiScene::Elements UiScene::GetVisible2dBrowsingElements() const {
-  return GetVisibleElements(
-      GetUiElementByName(k2dBrowsingRoot), [](UiElement* element) {
-        return element->draw_phase() == kPhaseForeground ||
-               element->draw_phase() == kPhaseFloorCeiling ||
-               element->draw_phase() == kPhaseBackground;
-      });
+UiScene::Elements UiScene::GetVisibleElementsToDraw() const {
+  return GetVisibleElements(GetUiElementByName(kRoot), [](UiElement* element) {
+    return element->draw_phase() == kPhaseForeground ||
+           element->draw_phase() == kPhaseBackground;
+  });
 }
 
-UiScene::Elements UiScene::GetVisible2dBrowsingOverlayElements() const {
-  return GetVisibleElements(
-      GetUiElementByName(k2dBrowsingRoot), [](UiElement* element) {
-        return element->draw_phase() == kPhaseOverlayBackground ||
-               element->draw_phase() == kPhaseOverlayForeground;
-      });
-}
-
-UiScene::Elements UiScene::GetVisibleSplashScreenElements() const {
-  return GetVisibleElements(
-      GetUiElementByName(kSplashScreenRoot), [](UiElement* element) {
-        return element->draw_phase() == kPhaseOverlayBackground ||
-               element->draw_phase() == kPhaseOverlayForeground;
-      });
-}
-
-UiScene::Elements UiScene::GetVisibleWebVrOverlayForegroundElements() const {
+UiScene::Elements UiScene::GetVisibleWebVrOverlayElementsToDraw() const {
   return GetVisibleElements(
       GetUiElementByName(kWebVrRoot), [](UiElement* element) {
         return element->draw_phase() == kPhaseOverlayForeground;
       });
-}
-
-UiScene::Elements UiScene::GetVisibleControllerElements() const {
-  return GetVisibleElements(GetUiElementByName(kControllerGroup),
-                            [](UiElement* element) {
-                              return element->draw_phase() == kPhaseForeground;
-                            });
-}
-
-UiScene::Elements UiScene::GetVisibleKeyboardElements() const {
-  return GetVisibleElements(GetUiElementByName(kKeyboard),
-                            [](UiElement* element) {
-                              return element->draw_phase() == kPhaseForeground;
-                            });
 }
 
 UiScene::Elements UiScene::GetPotentiallyVisibleElements() const {
@@ -227,7 +194,7 @@ UiScene::Elements UiScene::GetPotentiallyVisibleElements() const {
 }
 
 UiScene::UiScene() {
-  root_element_ = base::MakeUnique<UiElement>();
+  root_element_ = std::make_unique<UiElement>();
   root_element_->SetName(kRoot);
   root_element_->SetDrawPhase(kPhaseNone);
   root_element_->set_hit_testable(false);

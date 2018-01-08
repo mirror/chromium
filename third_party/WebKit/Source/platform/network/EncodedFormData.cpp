@@ -42,7 +42,7 @@ inline EncodedFormData::EncodedFormData(const EncodedFormData& data)
       identifier_(data.identifier_),
       contains_password_data_(data.contains_password_data_) {}
 
-EncodedFormData::~EncodedFormData() {}
+EncodedFormData::~EncodedFormData() = default;
 
 scoped_refptr<EncodedFormData> EncodedFormData::Create() {
   return base::AdoptRef(new EncodedFormData);
@@ -120,8 +120,8 @@ void EncodedFormData::AppendData(const void* data, size_t size) {
 }
 
 void EncodedFormData::AppendFile(const String& filename) {
-  elements_.push_back(FormDataElement(filename, 0, BlobDataItem::kToEndOfFile,
-                                      InvalidFileTime()));
+  elements_.push_back(
+      FormDataElement(filename, 0, BlobData::kToEndOfFile, InvalidFileTime()));
 }
 
 void EncodedFormData::AppendFileRange(const String& filename,

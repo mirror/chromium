@@ -91,21 +91,6 @@
           'cast_shell_apk',
         ],
       },
-      'Android Cronet ARMv6 Builder': {
-        'test_suites': {
-          'gtest_tests': 'cronet_gtests',
-        },
-        'swarming': {
-          'dimension_sets': [
-            {
-              'device_os': 'KTU84P',
-              'device_type': 'hammerhead',
-            },
-          ],
-        },
-        'os_type': 'android',
-        'skip_merge_script': True,
-      },
       'Android Cronet Builder (dbg)': {
         'test_suites': {
           'gtest_tests': 'cronet_gtests',
@@ -327,21 +312,6 @@
   {
     'name': 'chromium.android.fyi',
     'machines': {
-      'Android Cronet ARMv6 Builder': {
-        'test_suites': {
-          'gtest_tests': 'cronet_gtests',
-          'scripts': 'cronet_scripts',
-        },
-        'swarming': {
-          'dimension_sets': [
-            {
-              'device_os': 'KTU84P',
-              'device_type': 'hammerhead',
-            },
-          ],
-        },
-        'os_type': 'android',
-      },
       'Android Cronet Builder (dbg)': {
         'test_suites': {
           'gtest_tests': 'cronet_gtests',
@@ -573,7 +543,7 @@
     'machines': {
       'Linux ChromiumOS Builder': {
         'additional_compile_targets': [
-          'All',
+          'gn_all',
         ],
       },
       'Linux ChromiumOS Tests (dbg)(1)': {
@@ -598,7 +568,7 @@
       },
       'linux-chromeos-rel': {
         'additional_compile_targets': [
-          'All',
+          'gn_all',
         ],
         'test_suites': {
           'gtest_tests': 'linux_chromeos_rel_gtests',
@@ -942,7 +912,6 @@
           'gtest_tests': 'chromium_mac_fyi_gtests',
           'isolated_scripts': 'chromium_isolated_scripts',
         },
-        'use_swarming': False,
       },
       'Chromium Win 10 GCE Tests': {
         'test_suites': {
@@ -1118,12 +1087,27 @@
           'gtest_tests': 'goma_gtests',
         },
       },
+      'Mojo Android': {
+        'swarming': {
+          'dimension_sets': [
+            {
+              'device_os': 'MMB29Q',
+              'device_type': 'bullhead',
+            },
+          ],
+          'hard_timeout': 960,
+        },
+        'os_type': 'android',
+        'test_suites': {
+          'gtest_tests': 'mojo_android_gtests',
+        },
+      },
       'Mojo ChromiumOS': {
         'additional_compile_targets': [
           'mash:all',
         ],
         'test_suites': {
-          'gtest_tests': 'mojo_chromiumos_gtests',
+          'gtest_tests': 'mojo_chromiumos_fyi_gtests',
           'isolated_scripts': 'mojo_chromiumos_isolated_scripts',
         },
       },
@@ -1173,14 +1157,6 @@
           # TODO(kbr): it's weird that this has the most in common with the
           # clang testers' test suites.
           'gtest_tests': 'chromium_win_clang_gtests',
-        },
-      },
-      'Ozone Linux': {
-        'additional_compile_targets': [
-          'chrome',
-        ],
-        'test_suites': {
-          'gtest_tests': 'ozone_linux_gtests',
         },
       },
       'Site Isolation Android': {
@@ -1418,7 +1394,7 @@
       'Linux Tests': {
         'test_suites': {
           'gtest_tests': 'chromium_linux_gtests',
-          'isolated_scripts': 'chromium_linux_isolated_scripts',
+          'isolated_scripts': 'chromium_linux_rel_isolated_scripts',
           'scripts': 'chromium_linux_scripts',
         },
       },
@@ -1434,12 +1410,110 @@
           'isolated_scripts': 'chromium_linux_isolated_scripts',
         },
       },
+      'Ozone Linux': {
+        'additional_compile_targets': [
+          'chrome',
+        ],
+        'test_suites': {
+          'gtest_tests': 'ozone_linux_gtests',
+        },
+      },
     },
   },
   {
     'name': 'chromium.lkgr',
     'machines': {
+      'ASAN Debug': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'ASAN Debug (32-bit x86 with V8-ARM)': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
       'ASAN Release': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'ASAN Release (32-bit x86 with V8-ARM)': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'ASAN Release Media': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'ASAN Release Media (32-bit x86 with V8-ARM)': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'ChromiumOS ASAN Release': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'Mac ASan Debug': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'Mac ASan Release': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'Mac ASan Release Media': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'MSAN Release (no origins)': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'MSAN Release (chained origins)': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'TSAN Debug': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'TSAN Release': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'UBSan Release': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'UBSan vptr Release': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'Win ASan Release': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'Win ASan Release Media': {
+        'additional_compile_targets': [
+          'chromium_builder_asan',
+        ],
+      },
+      'Win SyzyASAN LKGR': {
         'additional_compile_targets': [
           'chromium_builder_asan',
         ],
@@ -1494,6 +1568,10 @@
         'test_suites': {
           'gtest_tests': 'chromium_memory_linux_asan_gtests',
         },
+        'args': [
+          '--test-launcher-batch-limit=1',
+          '--test-launcher-print-test-stdio=always',
+        ],
       },
       'Linux ASan Tests (sandboxed)': {
         'test_suites': {
@@ -1628,6 +1706,20 @@
   {
     'name': 'chromium.webkit',
     'machines': {
+      'Dummy WebKit Mac10.13': {
+        'test_suites': {
+          'isolated_scripts': 'chromium_webkit_isolated_scripts',
+        },
+        'swarming': {
+          'dimension_sets': [
+            {
+              'gpu': '8086:0a2e',
+              'hidpi': '0',
+              'os': 'Mac-10.13',
+            },
+          ],
+        },
+      },
       'WebKit Linux Trusty': {
         'test_suites': {
           'isolated_scripts': 'chromium_webkit_isolated_scripts',
@@ -1937,5 +2029,30 @@
   {
     'name': 'client.v8.branches',
     'machines': {},
+  },
+  {
+    'name': 'tryserver.webrtc',
+    'machines': {
+      'win_chromium_webrtc_compile_rel_ng': {
+        'additional_compile_targets': [
+          'all',
+        ],
+      },
+      'mac_chromium_webrtc_compile_rel_ng': {
+        'additional_compile_targets': [
+          'all',
+        ],
+      },
+      'linux_chromium_webrtc_compile_rel_ng': {
+        'additional_compile_targets': [
+          'all',
+        ],
+      },
+      'android_webrtc_compile_rel': {
+        'additional_compile_targets': [
+          'all',
+        ],
+      },
+    },
   },
 ]

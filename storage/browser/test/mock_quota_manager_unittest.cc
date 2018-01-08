@@ -18,8 +18,7 @@
 #include "storage/browser/test/mock_storage_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using storage::kStorageTypePersistent;
-using storage::kStorageTypeTemporary;
+using blink::mojom::StorageType;
 
 namespace content {
 
@@ -31,8 +30,8 @@ const GURL kOrigin1(kTestOrigin1);
 const GURL kOrigin2(kTestOrigin2);
 const GURL kOrigin3(kTestOrigin3);
 
-const StorageType kTemporary = kStorageTypeTemporary;
-const StorageType kPersistent = kStorageTypePersistent;
+const StorageType kTemporary = StorageType::kTemporary;
+const StorageType kPersistent = StorageType::kPersistent;
 
 const QuotaClient::ID kClientFile = QuotaClient::kFileSystem;
 const QuotaClient::ID kClientDB = QuotaClient::kIndexedDatabase;
@@ -78,9 +77,9 @@ class MockQuotaManagerTest : public testing::Test {
                    weak_factory_.GetWeakPtr()));
   }
 
-  void DeletedOriginData(blink::QuotaStatusCode status) {
+  void DeletedOriginData(blink::mojom::QuotaStatusCode status) {
     ++deletion_callback_count_;
-    EXPECT_EQ(blink::QuotaStatusCode::kOk, status);
+    EXPECT_EQ(blink::mojom::QuotaStatusCode::kOk, status);
   }
 
   int deletion_callback_count() const {

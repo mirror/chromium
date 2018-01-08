@@ -32,15 +32,15 @@ const char MediaEngagementScore::kHighScoreUpperThresholdParamName[] =
 
 namespace {
 
-const int kScoreMinVisitsParamDefault = 5;
-const double kHighScoreLowerThresholdParamDefault = 0.5;
-const double kHighScoreUpperThresholdParamDefault = 0.7;
+const int kScoreMinVisitsParamDefault = 20;
+const double kHighScoreLowerThresholdParamDefault = 0.2;
+const double kHighScoreUpperThresholdParamDefault = 0.3;
 
 std::unique_ptr<base::DictionaryValue> GetScoreDictForSettings(
     const HostContentSettingsMap* settings,
     const GURL& origin_url) {
   if (!settings)
-    return base::MakeUnique<base::DictionaryValue>();
+    return std::make_unique<base::DictionaryValue>();
 
   std::unique_ptr<base::DictionaryValue> value =
       base::DictionaryValue::From(settings->GetWebsiteSetting(
@@ -49,7 +49,7 @@ std::unique_ptr<base::DictionaryValue> GetScoreDictForSettings(
 
   if (value.get())
     return value;
-  return base::MakeUnique<base::DictionaryValue>();
+  return std::make_unique<base::DictionaryValue>();
 }
 
 }  // namespace

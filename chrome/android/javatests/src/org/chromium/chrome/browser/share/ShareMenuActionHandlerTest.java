@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Parcel;
 import android.support.test.filters.SmallTest;
-import android.util.Pair;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -35,8 +34,6 @@ import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
 
-import java.lang.annotation.Annotation;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -64,14 +61,6 @@ public class ShareMenuActionHandlerTest {
         // Invalid/empty URL:
         mockWebContents.renderFrameHost = mockRenderFrameHost;
         Assert.assertFalse(ShareMenuActionHandler.shouldFetchCanonicalUrl(mockTab));
-
-        // Insecure URL:
-        mockTab.url = "http://www.example.com";
-        Assert.assertFalse(ShareMenuActionHandler.shouldFetchCanonicalUrl(mockTab));
-
-        // Valid URL!
-        mockTab.url = "https://www.example.com";
-        Assert.assertTrue(ShareMenuActionHandler.shouldFetchCanonicalUrl(mockTab));
 
         // Disabled if showing error page.
         mockTab.isShowingErrorPage = true;
@@ -401,19 +390,14 @@ public class ShareMenuActionHandlerTest {
         public void setSize(int width, int height) {}
 
         @Override
-        public Map<String, Pair<Object, Class>> getJavascriptInterfaces() {
-            return null;
+        public int getWidth() {
+            return 0;
         }
 
         @Override
-        public void setAllowJavascriptInterfacesInspection(boolean allow) {}
-
-        @Override
-        public void addPossiblyUnsafeJavascriptInterface(
-                Object object, String name, Class<? extends Annotation> requiredAnnotation) {}
-
-        @Override
-        public void removeJavascriptInterface(String name) {}
+        public int getHeight() {
+            return 0;
+        }
     }
 
     private static class MockRenderFrameHost implements RenderFrameHost {

@@ -5,7 +5,6 @@
 #include "components/ntp_snippets/breaking_news/subscription_manager_impl.h"
 
 #include "base/bind.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/stringprintf.h"
 #include "components/ntp_snippets/breaking_news/breaking_news_metrics.h"
@@ -31,34 +30,6 @@ const char kAuthorizationRequestHeaderFormat[] = "Bearer %s";
 
 }  // namespace
 
-class SubscriptionManagerImpl::SigninObserver
-    : public SigninManagerBase::Observer {
- public:
-  SigninObserver(SigninManagerBase* signin_manager,
-                 const base::Closure& signin_status_changed_callback)
-      : signin_manager_(signin_manager),
-        signin_status_changed_callback_(signin_status_changed_callback) {
-    signin_manager_->AddObserver(this);
-  }
-
-  ~SigninObserver() override { signin_manager_->RemoveObserver(this); }
-
- private:
-  // SigninManagerBase::Observer implementation.
-  void GoogleSigninSucceeded(const std::string& account_id,
-                             const std::string& username) override {
-    signin_status_changed_callback_.Run();
-  }
-
-  void GoogleSignedOut(const std::string& account_id,
-                       const std::string& username) override {
-    signin_status_changed_callback_.Run();
-  }
-
-  SigninManagerBase* const signin_manager_;
-  base::Closure signin_status_changed_callback_;
-};
-
 SubscriptionManagerImpl::SubscriptionManagerImpl(
     scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
     PrefService* pref_service,
@@ -73,17 +44,17 @@ SubscriptionManagerImpl::SubscriptionManagerImpl(
       pref_service_(pref_service),
       variations_service_(variations_service),
       signin_manager_(signin_manager),
-      signin_observer_(base::MakeUnique<SigninObserver>(
-          signin_manager,
-          base::Bind(&SubscriptionManagerImpl::SigninStatusChanged,
-                     base::Unretained(this)))),
       access_token_service_(access_token_service),
       locale_(locale),
       api_key_(api_key),
       subscribe_url_(subscribe_url),
-      unsubscribe_url_(unsubscribe_url) {}
+      unsubscribe_url_(unsubscribe_url) {
+  signin_manager_->AddObserver(this);
+}
 
-SubscriptionManagerImpl::~SubscriptionManagerImpl() = default;
+SubscriptionManagerImpl::~SubscriptionManagerImpl() {
+  signin_manager_->RemoveObserver(this);
+}
 
 void SubscriptionManagerImpl::Subscribe(const std::string& subscription_token) {
   // If there is a request in flight, cancel it.
@@ -133,10 +104,12 @@ void SubscriptionManagerImpl::StartAccessTokenRequest(
   }
 
   OAuth2TokenService::ScopeSet scopes = {kContentSuggestionsApiScope};
-  access_token_fetcher_ = base::MakeUnique<PrimaryAccountAccessTokenFetcher>(
+  access_token_fetcher_ = std::make_unique<
+      identity::PrimaryAccountAccessTokenFetcher>(
       "ntp_snippets", signin_manager_, access_token_service_, scopes,
       base::BindOnce(&SubscriptionManagerImpl::AccessTokenFetchFinished,
-                     base::Unretained(this), subscription_token));
+                     base::Unretained(this), subscription_token),
+      identity::PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 }
 
 void SubscriptionManagerImpl::AccessTokenFetchFinished(
@@ -145,7 +118,7 @@ void SubscriptionManagerImpl::AccessTokenFetchFinished(
     const std::string& access_token) {
   // Delete the fetcher only after we leave this method (which is called from
   // the fetcher itself).
-  std::unique_ptr<PrimaryAccountAccessTokenFetcher>
+  std::unique_ptr<identity::PrimaryAccountAccessTokenFetcher>
       access_token_fetcher_deleter(std::move(access_token_fetcher_));
 
   if (error.state() != GoogleServiceAuthError::NONE) {
@@ -260,6 +233,17 @@ void SubscriptionManagerImpl::DidUnsubscribe(const std::string& new_token,
       // TODO(mamir): Handle failure.
       break;
   }
+}
+
+void SubscriptionManagerImpl::GoogleSigninSucceeded(
+    const std::string& account_id,
+    const std::string& username) {
+  SigninStatusChanged();
+}
+
+void SubscriptionManagerImpl::GoogleSignedOut(const std::string& account_id,
+                                              const std::string& username) {
+  SigninStatusChanged();
 }
 
 void SubscriptionManagerImpl::SigninStatusChanged() {

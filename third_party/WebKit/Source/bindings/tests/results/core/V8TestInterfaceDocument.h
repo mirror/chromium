@@ -16,7 +16,7 @@
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8Document.h"
-#include "bindings/core/v8/string_or_trusted_url.h"
+#include "bindings/core/v8/usv_string_or_trusted_url.h"
 #include "bindings/tests/idls/core/TestInterfaceDocument.h"
 #include "core/CoreExport.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -37,12 +37,6 @@ class V8TestInterfaceDocument {
   }
   CORE_EXPORT static TestInterfaceDocument* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestInterfaceDocument>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestInterfaceDocument>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   // Callback functions
@@ -59,6 +53,7 @@ class V8TestInterfaceDocument {
 template <>
 struct NativeValueTraits<TestInterfaceDocument> : public NativeValueTraitsBase<TestInterfaceDocument> {
   CORE_EXPORT static TestInterfaceDocument* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static TestInterfaceDocument* NullValue() { return nullptr; }
 };
 
 template <>

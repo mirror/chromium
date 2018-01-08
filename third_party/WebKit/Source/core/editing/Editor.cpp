@@ -74,9 +74,9 @@
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLBodyElement.h"
-#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLHtmlElement.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/canvas/HTMLCanvasElement.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLTextAreaElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
@@ -89,15 +89,16 @@
 #include "core/loader/EmptyClients.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/page/DragData.h"
-#include "core/page/EditorClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/svg/SVGImageElement.h"
 #include "platform/KillRing.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/scroll/ScrollAlignment.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CharacterNames.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -149,25 +150,6 @@ bool IsInPasswordFieldWithUnrevealedPassword(const Position& position) {
   return false;
 }
 
-EphemeralRange ComputeRangeForTranspose(LocalFrame& frame) {
-  const VisibleSelection& selection =
-      frame.Selection().ComputeVisibleSelectionInDOMTree();
-  if (!selection.IsCaret())
-    return EphemeralRange();
-
-  // Make a selection that goes back one character and forward two characters.
-  const VisiblePosition& caret = selection.VisibleStart();
-  const VisiblePosition& next =
-      IsEndOfParagraph(caret) ? caret : NextPositionOf(caret);
-  const VisiblePosition& previous = PreviousPositionOf(next);
-  if (next.DeepEquivalent() == previous.DeepEquivalent())
-    return EphemeralRange();
-  const VisiblePosition& previous_of_previous = PreviousPositionOf(previous);
-  if (!InSameParagraph(next, previous_of_previous))
-    return EphemeralRange();
-  return MakeRange(previous_of_previous, next);
-}
-
 }  // anonymous namespace
 
 Editor::RevealSelectionScope::RevealSelectionScope(Editor* editor)
@@ -217,17 +199,6 @@ EditingBehavior Editor::Behavior() const {
   return EditingBehavior(GetFrame().GetSettings()->GetEditingBehaviorType());
 }
 
-static EditorClient& GetEmptyEditorClient() {
-  DEFINE_STATIC_LOCAL(EmptyEditorClient, client, ());
-  return client;
-}
-
-EditorClient& Editor::Client() const {
-  if (Page* page = GetFrame().GetPage())
-    return page->GetEditorClient();
-  return GetEmptyEditorClient();
-}
-
 static bool IsCaretAtStartOfWrappedLine(const FrameSelection& selection) {
   if (!selection.ComputeVisibleSelectionInDOMTree().IsCaret())
     return false;
@@ -235,8 +206,21 @@ static bool IsCaretAtStartOfWrappedLine(const FrameSelection& selection) {
     return false;
   const Position& position =
       selection.ComputeVisibleSelectionInDOMTree().Start();
-  return !InSameLine(PositionWithAffinity(position, TextAffinity::kUpstream),
-                     PositionWithAffinity(position, TextAffinity::kDownstream));
+  if (InSameLine(PositionWithAffinity(position, TextAffinity::kUpstream),
+                 PositionWithAffinity(position, TextAffinity::kDownstream)))
+    return false;
+
+  // Only when the previous character is a space to avoid undesired side
+  // effects. There are cases where a new line is desired even if the previous
+  // character is not a space, but typing another space will do.
+  Position prev =
+      PreviousPositionOf(position, PositionMoveType::kGraphemeCluster);
+  const Node* prev_node = prev.ComputeContainerNode();
+  if (!prev_node || !prev_node->IsTextNode())
+    return false;
+  int prev_offset = prev.ComputeOffsetInContainerNode();
+  UChar prev_char = ToText(prev_node)->data()[prev_offset];
+  return prev_char == kSpaceCharacter;
 }
 
 bool Editor::HandleTextEvent(TextEvent* event) {
@@ -583,8 +567,7 @@ static scoped_refptr<Image> ImageFromNode(const Node& node) {
 
   if (layout_object->IsCanvas()) {
     return ToHTMLCanvasElement(const_cast<Node&>(node))
-        .CopiedImage(kFrontBuffer, kPreferNoAcceleration,
-                     kSnapshotReasonCopyToClipboard);
+        .CopiedImage(kFrontBuffer, kPreferNoAcceleration);
   }
 
   if (layout_object->IsImage()) {
@@ -800,7 +783,7 @@ void Editor::RespondToChangedContents(const Position& position) {
   }
 
   GetSpellChecker().RespondToChangedContents();
-  Client().RespondToChangedContents();
+  frame_->Client()->DidChangeContents();
 }
 
 void Editor::RemoveFormattingAndStyle() {
@@ -814,10 +797,11 @@ void Editor::RegisterCommandGroup(CompositeEditCommand* command_group_wrapper) {
 }
 
 Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
-  Element* target = AssociatedElementOf(selection.Start());
+  Element* const target = AssociatedElementOf(selection.Start());
   if (!target)
-    target = GetFrame().GetDocument()->body();
-
+    return GetFrame().GetDocument()->body();
+  if (target->IsInUserAgentShadowRoot())
+    return target->OwnerShadowHost();
   return target;
 }
 
@@ -969,7 +953,10 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
-  ChangeSelectionAfterCommand(new_selection, SetSelectionOptions());
+  ChangeSelectionAfterCommand(
+      new_selection, SetSelectionOptions::Builder()
+                         .SetIsDirectional(cmd->SelectionIsDirectional())
+                         .Build());
 
   if (!cmd->PreservesTypingStyle())
     ClearTypingStyle();
@@ -985,6 +972,8 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
       undo_stack_->RegisterUndoStep(last_edit_command_->EnsureUndoStep());
     last_edit_command_->EnsureUndoStep()->SetEndingSelection(
         cmd->EnsureUndoStep()->EndingSelection());
+    last_edit_command_->GetUndoStep()->SetSelectionIsDirectional(
+        cmd->GetUndoStep()->SelectionIsDirectional());
     last_edit_command_->AppendCommandToUndoStep(cmd);
   } else {
     // Only register a new undo command if the command passed in is
@@ -1008,11 +997,12 @@ void Editor::UnappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->StartingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionOptions::Builder()
-                                  .SetShouldCloseTyping(true)
-                                  .SetShouldClearTypingStyle(true)
-                                  .Build());
+  ChangeSelectionAfterCommand(
+      new_selection, SetSelectionOptions::Builder()
+                         .SetShouldCloseTyping(true)
+                         .SetShouldClearTypingStyle(true)
+                         .SetIsDirectional(cmd->SelectionIsDirectional())
+                         .Build());
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterRedoStep(cmd);
@@ -1031,11 +1021,12 @@ void Editor::ReappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionOptions::Builder()
-                                  .SetShouldCloseTyping(true)
-                                  .SetShouldClearTypingStyle(true)
-                                  .Build());
+  ChangeSelectionAfterCommand(
+      new_selection, SetSelectionOptions::Builder()
+                         .SetShouldCloseTyping(true)
+                         .SetShouldClearTypingStyle(true)
+                         .SetIsDirectional(cmd->SelectionIsDirectional())
+                         .Build());
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterUndoStep(cmd);
@@ -1059,7 +1050,7 @@ Editor::Editor(LocalFrame& frame)
       default_paragraph_separator_(kEditorParagraphSeparatorIsDiv),
       overwrite_mode_enabled_(false) {}
 
-Editor::~Editor() {}
+Editor::~Editor() = default;
 
 void Editor::Clear() {
   should_style_with_css_ = false;
@@ -1429,68 +1420,6 @@ void Editor::RevealSelectionAfterEditingOperation(
   GetFrameSelection().RevealSelection(alignment, kDoNotRevealExtent);
 }
 
-// TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in
-// "EditorCommand.cpp"
-void Transpose(LocalFrame& frame) {
-  Editor& editor = frame.GetEditor();
-  if (!editor.CanEdit())
-    return;
-
-  Document* const document = frame.GetDocument();
-
-  // TODO(editing-dev): The use of UpdateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  document->UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-  const EphemeralRange& range = ComputeRangeForTranspose(frame);
-  if (range.IsNull())
-    return;
-
-  // Transpose the two characters.
-  const String& text = PlainText(range);
-  if (text.length() != 2)
-    return;
-  const String& transposed = text.Right(1) + text.Left(1);
-
-  if (DispatchBeforeInputInsertText(
-          EventTargetNodeForDocument(document), transposed,
-          InputEvent::InputType::kInsertTranspose,
-          new StaticRangeVector(1, StaticRange::Create(range))) !=
-      DispatchEventResult::kNotCanceled)
-    return;
-
-  // 'beforeinput' event handler may destroy document->
-  if (frame.GetDocument() != document)
-    return;
-
-  // TODO(editing-dev): The use of UpdateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  document->UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-  // 'beforeinput' event handler may change selection, we need to re-calculate
-  // range.
-  const EphemeralRange& new_range = ComputeRangeForTranspose(frame);
-  if (new_range.IsNull())
-    return;
-
-  const String& new_text = PlainText(new_range);
-  if (new_text.length() != 2)
-    return;
-  const String& new_transposed = new_text.Right(1) + new_text.Left(1);
-
-  const SelectionInDOMTree& new_selection =
-      SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build();
-
-  // Select the two characters.
-  if (CreateVisibleSelection(new_selection) !=
-      frame.Selection().ComputeVisibleSelectionInDOMTree())
-    frame.Selection().SetSelection(new_selection);
-
-  // Insert the transposed characters.
-  editor.ReplaceSelectionWithText(new_transposed, false, false,
-                                  InputEvent::InputType::kInsertTranspose);
-}
-
 void Editor::AddToKillRing(const EphemeralRange& range) {
   if (should_start_new_kill_ring_sequence_)
     GetKillRing().StartNewSequence();
@@ -1510,14 +1439,15 @@ void Editor::ChangeSelectionAfterCommand(
   // See <rdar://problem/5729315> Some shouldChangeSelectedDOMRange contain
   // Ranges for selections that are no longer valid
   bool selection_did_not_change_dom_position =
-      new_selection == GetFrameSelection().GetSelectionInDOMTree();
+      new_selection == GetFrameSelection().GetSelectionInDOMTree() &&
+      options.IsDirectional() == GetFrameSelection().IsDirectional();
   const bool handle_visible =
-      GetFrameSelection().IsHandleVisible() &&
-      GetFrameSelection().GetSelectionInDOMTree().IsRange();
-  GetFrameSelection().SetSelection(new_selection,
-                                   SetSelectionOptions::Builder(options)
-                                       .SetShouldShowHandle(handle_visible)
-                                       .Build());
+      GetFrameSelection().IsHandleVisible() && new_selection.IsRange();
+  GetFrameSelection().SetSelection(
+      new_selection, SetSelectionOptions::Builder(options)
+                         .SetShouldShowHandle(handle_visible)
+                         .SetIsDirectional(options.IsDirectional())
+                         .Build());
 
   // Some editing operations change the selection visually without affecting its
   // position within the DOM. For example when you press return in the following
@@ -1526,12 +1456,12 @@ void Editor::ChangeSelectionAfterCommand(
   // WebCore inserts <div><br></div> *before* the current block, which correctly
   // moves the paragraph down but which doesn't change the caret's DOM position
   // (["hello", 0]). In these situations the above FrameSelection::setSelection
-  // call does not call EditorClient::respondToChangedSelection(), which, on the
+  // call does not call LocalFrameClient::DidChangeSelection(), which, on the
   // Mac, sends selection change notifications and starts a new kill ring
   // sequence, but we want to do these things (matches AppKit).
   if (selection_did_not_change_dom_position) {
-    Client().RespondToChangedSelection(
-        frame_, GetFrameSelection().GetSelectionInDOMTree().Type());
+    frame_->Client()->DidChangeSelection(
+        GetFrameSelection().GetSelectionInDOMTree().Type() != kRangeSelection);
   }
 }
 
@@ -1543,19 +1473,18 @@ IntRect Editor::FirstRectForRange(const EphemeralRange& range) const {
   LayoutUnit extra_width_to_end_of_line;
   DCHECK(range.IsNotNull());
 
-  IntRect start_caret_rect =
-      RenderedPosition(
-          CreateVisiblePosition(range.StartPosition()).DeepEquivalent(),
-          TextAffinity::kDownstream)
-          .AbsoluteRect(&extra_width_to_end_of_line);
+  const PositionWithAffinity start_position(
+      CreateVisiblePosition(range.StartPosition()).DeepEquivalent(),
+      TextAffinity::kDownstream);
+  const IntRect start_caret_rect = RenderedPosition::AbsoluteRect(
+      start_position, &extra_width_to_end_of_line);
   if (start_caret_rect.IsEmpty())
     return IntRect();
 
-  IntRect end_caret_rect =
-      RenderedPosition(
-          CreateVisiblePosition(range.EndPosition()).DeepEquivalent(),
-          TextAffinity::kUpstream)
-          .AbsoluteRect();
+  const PositionWithAffinity end_position(
+      CreateVisiblePosition(range.EndPosition()).DeepEquivalent(),
+      TextAffinity::kUpstream);
+  const IntRect end_caret_rect = RenderedPosition::AbsoluteRect(end_position);
   if (end_caret_rect.IsEmpty())
     return IntRect();
 
@@ -1573,6 +1502,34 @@ IntRect Editor::FirstRectForRange(const EphemeralRange& range) const {
       start_caret_rect.X(), start_caret_rect.Y(),
       (start_caret_rect.Width() + extra_width_to_end_of_line).ToInt(),
       start_caret_rect.Height());
+}
+
+EphemeralRange Editor::RangeForPoint(const IntPoint& frame_point) const {
+  const PositionWithAffinity position_with_affinity =
+      GetFrame().PositionForPoint(frame_point);
+  if (position_with_affinity.IsNull())
+    return EphemeralRange();
+
+  const VisiblePosition position =
+      CreateVisiblePosition(position_with_affinity);
+  const VisiblePosition previous = PreviousPositionOf(position);
+  if (previous.IsNotNull()) {
+    const EphemeralRange previous_character_range =
+        MakeRange(previous, position);
+    const IntRect rect = FirstRectForRange(previous_character_range);
+    if (rect.Contains(frame_point))
+      return EphemeralRange(previous_character_range);
+  }
+
+  const VisiblePosition next = NextPositionOf(position);
+  const EphemeralRange next_character_range = MakeRange(position, next);
+  if (next_character_range.IsNotNull()) {
+    const IntRect rect = FirstRectForRange(next_character_range);
+    if (rect.Contains(frame_point))
+      return EphemeralRange(next_character_range);
+  }
+
+  return EphemeralRange();
 }
 
 void Editor::ComputeAndSetTypingStyle(CSSPropertyValueSet* style,
@@ -1619,7 +1576,7 @@ bool Editor::FindString(const String& target, FindOptions options) {
   if (!result_range)
     return false;
 
-  GetFrameSelection().SetSelection(
+  GetFrameSelection().SetSelectionAndEndTyping(
       SelectionInDOMTree::Builder()
           .SetBaseAndExtent(EphemeralRange(result_range))
           .Build());
@@ -1638,8 +1595,9 @@ Range* Editor::FindStringAndScrollToVisible(const String& target,
   Node* first_node = next_match->FirstNode();
   first_node->GetLayoutObject()->ScrollRectToVisible(
       LayoutRect(next_match->BoundingBox()),
-      ScrollAlignment::kAlignCenterIfNeeded,
-      ScrollAlignment::kAlignCenterIfNeeded, kUserScroll);
+      WebScrollIntoViewParams(ScrollAlignment::kAlignCenterIfNeeded,
+                              ScrollAlignment::kAlignCenterIfNeeded,
+                              kUserScroll));
   first_node->GetDocument().SetSequentialFocusNavigationStartingPoint(
       first_node);
 
@@ -1778,8 +1736,8 @@ void Editor::SetMarkedTextMatchesAreHighlighted(bool flag) {
 
 void Editor::RespondToChangedSelection() {
   GetSpellChecker().RespondToChangedSelection();
-  Client().RespondToChangedSelection(
-      frame_, GetFrameSelection().GetSelectionInDOMTree().Type());
+  frame_->Client()->DidChangeSelection(
+      GetFrameSelection().GetSelectionInDOMTree().Type() != kRangeSelection);
   SetStartNewKillRingSequence(true);
 }
 
@@ -1793,6 +1751,7 @@ FrameSelection& Editor::GetFrameSelection() const {
 
 void Editor::SetMark() {
   mark_ = GetFrameSelection().ComputeVisibleSelectionInDOMTree();
+  mark_is_directional_ = GetFrameSelection().IsDirectional();
 }
 
 void Editor::ToggleOverwriteModeEnabled() {

@@ -18,17 +18,19 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/ScrollAlignment.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "core/timing/DOMWindowPerformance.h"
+#include "core/timing/Performance.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/heap/Handle.h"
 #include "public/platform/WebFloatRect.h"
+#include "public/platform/WebIntrinsicSizingInfo.h"
 #include "public/platform/WebRect.h"
-#include "public/platform/WebRemoteScrollProperties.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 #include "public/web/WebDocument.h"
 #include "public/web/WebFrameOwnerProperties.h"
 #include "public/web/WebPerformance.h"
@@ -38,29 +40,6 @@
 #include "v8/include/v8.h"
 
 namespace blink {
-namespace {
-using WebRemoteScrollAlignment = WebRemoteScrollProperties::Alignment;
-ScrollAlignment ToScrollAlignment(WebRemoteScrollAlignment alignment) {
-  switch (alignment) {
-    case WebRemoteScrollAlignment::kCenterIfNeeded:
-      return ScrollAlignment::kAlignCenterIfNeeded;
-    case WebRemoteScrollAlignment::kToEdgeIfNeeded:
-      return ScrollAlignment::kAlignToEdgeIfNeeded;
-    case WebRemoteScrollAlignment::kTopAlways:
-      return ScrollAlignment::kAlignTopAlways;
-    case WebRemoteScrollAlignment::kBottomAlways:
-      return ScrollAlignment::kAlignBottomAlways;
-    case WebRemoteScrollAlignment::kLeftAlways:
-      return ScrollAlignment::kAlignLeftAlways;
-    case WebRemoteScrollAlignment::kRightAlways:
-      return ScrollAlignment::kAlignRightAlways;
-    default:
-      NOTREACHED();
-      return ScrollAlignment::kAlignCenterIfNeeded;
-  }
-}
-
-}  // namespace
 
 WebRemoteFrame* WebRemoteFrame::Create(WebTreeScopeType scope,
                                        WebRemoteFrameClient* client) {
@@ -99,7 +78,7 @@ WebRemoteFrameImpl* WebRemoteFrameImpl::CreateMainFrame(
   return frame;
 }
 
-WebRemoteFrameImpl::~WebRemoteFrameImpl() {}
+WebRemoteFrameImpl::~WebRemoteFrameImpl() = default;
 
 void WebRemoteFrameImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(frame_client_);
@@ -288,7 +267,24 @@ void WebRemoteFrameImpl::SetReplicatedInsecureRequestPolicy(
   GetFrame()->GetSecurityContext()->SetInsecureRequestPolicy(policy);
 }
 
-void WebRemoteFrameImpl::DispatchLoadEventOnFrameOwner() {
+void WebRemoteFrameImpl::SetReplicatedInsecureNavigationsSet(
+    const std::vector<unsigned>& set) {
+  DCHECK(GetFrame());
+  GetFrame()->GetSecurityContext()->SetInsecureNavigationsSet(set);
+}
+
+void WebRemoteFrameImpl::ForwardResourceTimingToParent(
+    const WebResourceTimingInfo& info) {
+  DCHECK(Parent()->IsWebLocalFrame());
+  WebLocalFrameImpl* parent_frame =
+      ToWebLocalFrameImpl(Parent()->ToWebLocalFrame());
+  HTMLFrameOwnerElement* owner_element =
+      ToHTMLFrameOwnerElement(frame_->Owner());
+  DOMWindowPerformance::performance(*parent_frame->GetFrame()->DomWindow())
+      ->AddResourceTiming(info, owner_element->localName());
+}
+
+void WebRemoteFrameImpl::DispatchLoadEventForFrameOwner() {
   DCHECK(GetFrame()->Owner()->IsLocal());
   GetFrame()->Owner()->DispatchLoad();
 }
@@ -342,7 +338,7 @@ void WebRemoteFrameImpl::SetHasReceivedUserGesture() {
 
 void WebRemoteFrameImpl::ScrollRectToVisible(
     const WebRect& rect_to_scroll,
-    const WebRemoteScrollProperties& properties) {
+    const WebScrollIntoViewParams& params) {
   Element* owner_element = frame_->DeprecatedLocalOwner();
   LayoutObject* owner_object = owner_element->GetLayoutObject();
   if (!owner_object) {
@@ -362,11 +358,26 @@ void WebRemoteFrameImpl::ScrollRectToVisible(
                                 kUseTransforms | kTraverseDocumentBoundaries)
           .BoundingBox());
   owner_object->EnclosingBox()->ScrollRectToVisibleRecursive(
-      LayoutRect(new_rect_to_scroll), ToScrollAlignment(properties.align_x),
-      ToScrollAlignment(properties.align_y), properties.GetScrollType(),
-      properties.make_visible_in_visual_viewport,
-      properties.GetScrollBehavior(), properties.is_for_scroll_sequence);
+      LayoutRect(new_rect_to_scroll), params);
   scroll_sequencer->RunQueuedAnimations();
+}
+
+void WebRemoteFrameImpl::IntrinsicSizingInfoChanged(
+    const WebIntrinsicSizingInfo& web_sizing_info) {
+  FrameOwner* owner = GetFrame()->Owner();
+  // Only communication from HTMLPluginElement-owned subframes is allowed
+  // at present. This includes <embed> and <object> tags.
+  if (!owner || !owner->IsPlugin())
+    return;
+
+  IntrinsicSizingInfo sizing_info;
+  sizing_info.size = web_sizing_info.size;
+  sizing_info.aspect_ratio = web_sizing_info.aspect_ratio;
+  sizing_info.has_width = web_sizing_info.has_width;
+  sizing_info.has_height = web_sizing_info.has_height;
+  frame_->View()->SetIntrinsicSizeInfo(sizing_info);
+
+  owner->IntrinsicSizingInfoChanged();
 }
 
 void WebRemoteFrameImpl::SetHasReceivedUserGestureBeforeNavigation(bool value) {

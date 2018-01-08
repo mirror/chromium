@@ -54,6 +54,7 @@ class MediaControlOverlayEnclosureElement;
 class MediaControlOverlayPlayButtonElement;
 class MediaControlPanelElement;
 class MediaControlPanelEnclosureElement;
+class MediaControlPictureInPictureButtonElement;
 class MediaControlPlayButtonElement;
 class MediaControlRemainingTimeDisplayElement;
 class MediaControlTextTrackListElement;
@@ -62,6 +63,7 @@ class MediaControlToggleClosedCaptionsButtonElement;
 class MediaControlVolumeSliderElement;
 class MediaDownloadInProductHelpManager;
 class ShadowRoot;
+class TextTrack;
 
 // Default implementation of the core/ MediaControls interface used by
 // HTMLMediaElement.
@@ -113,6 +115,10 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   void ShowTextTrackAtIndex(unsigned);
   void DisableShowingTextTracks();
 
+  // Returns the label for the track when a valid track is passed in and "Off"
+  // when the parameter is null.
+  String GetTextTrackLabel(TextTrack*) const;
+
   // Methods related to the overflow menu.
   void ToggleOverflowMenu();
   bool OverflowMenuVisible();
@@ -160,6 +166,8 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   };
   ControlsState State() const;
 
+  void MaybeToggleControlsFromTap();
+
  private:
   // MediaControlsMediaEventListener is a component that is listening to events
   // and calling the appropriate callback on MediaControlsImpl. The object is
@@ -201,6 +209,7 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   void InitializeControls();
 
   void MakeOpaque();
+  void MakeOpaqueFromPointerEvent();
   void MakeTransparent();
   bool IsVisible() const;
 
@@ -290,6 +299,7 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   Member<MediaControlOverflowMenuListElement> overflow_list_;
   Member<MediaControlButtonPanelElement> media_button_panel_;
   Member<MediaControlLoadingPanelElement> loading_panel_;
+  Member<MediaControlPictureInPictureButtonElement> picture_in_picture_button_;
 
   Member<MediaControlCastButtonElement> cast_button_;
   Member<MediaControlFullscreenButtonElement> fullscreen_button_;
@@ -319,6 +329,8 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   IntSize size_;
 
   bool keep_showing_until_timer_fires_ : 1;
+
+  bool pointer_event_did_show_controls_ = false;
 
   Member<MediaDownloadInProductHelpManager> download_iph_manager_;
 };

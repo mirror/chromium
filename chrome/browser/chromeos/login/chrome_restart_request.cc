@@ -86,6 +86,7 @@ void DeriveCommandLine(const GURL& start_url,
     ::switches::kDisableAcceleratedJpegDecoding,
     ::switches::kDisableAcceleratedMjpegDecode,
     ::switches::kDisableAcceleratedVideoDecode,
+    ::switches::kDisableAcceleratedVideoEncode,
     ::switches::kDisableBlinkFeatures,
     ::switches::kDisableCastStreamingHWEncoding,
     ::switches::kDisableDistanceFieldText,
@@ -167,7 +168,6 @@ void DeriveCommandLine(const GURL& start_url,
     ::switches::kDisableWebRtcHWDecoding,
     ::switches::kDisableWebRtcHWEncoding,
 #endif
-    ::switches::kDisableVaapiAcceleratedVideoEncode,
     ::switches::kOzonePlatform,
     ash::switches::kAshEnableTabletMode,
     ash::switches::kAshForceEnableStylusTools,
@@ -185,6 +185,7 @@ void DeriveCommandLine(const GURL& start_url,
     // Please keep these in alphabetical order. Non-UI Compositor switches
     // here should also be added to
     // content/browser/renderer_host/render_process_host_impl.cc.
+    cc::switches::kCheckDamageEarly,
     cc::switches::kDisableCompositedAntialiasing,
     cc::switches::kDisableMainFrameBeforeActivation,
     cc::switches::kDisableThreadedAnimation,
@@ -358,6 +359,17 @@ void RestartChrome(const base::CommandLine& command_line) {
   restart_requested = true;
 
   if (!base::SysInfo::IsRunningOnChromeOS()) {
+    // Do nothing when running as test on bots or a dev box.
+    const base::CommandLine* current_command_line =
+        base::CommandLine::ForCurrentProcess();
+    const bool is_running_test =
+        current_command_line->HasSwitch(::switches::kTestName) ||
+        current_command_line->HasSwitch(::switches::kTestType);
+    if (is_running_test) {
+      DLOG(WARNING) << "Ignoring chrome restart for test.";
+      return;
+    }
+
     // Relaunch chrome without session manager on dev box.
     ReLaunch(command_line);
     return;

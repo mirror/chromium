@@ -193,7 +193,7 @@ message VideoDecoderConfig {
     PIXEL_FORMAT_I420 = 1;
     PIXEL_FORMAT_YV12 = 2;
     PIXEL_FORMAT_I422 = 3;
-    PIXEL_FORMAT_YV12A = 4;
+    PIXEL_FORMAT_I420A = 4;
     PIXEL_FORMAT_I444 = 5;
     PIXEL_FORMAT_NV12 = 6;
     PIXEL_FORMAT_NV21 = 7;
@@ -257,6 +257,8 @@ message PipelineStatistics {
   optional int64 audio_memory_usage = 5;
   optional int64 video_memory_usage = 6;
   optional int64 video_frame_duration_average_usec = 7;
+  optional string audio_decoder_name = 8;
+  optional string video_decoder_name = 9;
 };
 
 message CdmKeyInformation {

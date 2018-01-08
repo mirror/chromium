@@ -53,7 +53,7 @@ public class OfflineGroupHeaderView
         mCheckedIconForegroundColorList = DownloadUtils.getIconForegroundColorList(context);
         mIconBackgroundResId = R.drawable.list_item_icon_modern_bg;
 
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (FeatureUtilities.isChromeModernDesignEnabled()) {
             mIconForegroundColorList = ApiCompatibilityUtils.getColorStateList(
                     context.getResources(), R.color.dark_mode_tint);
         } else {
@@ -79,6 +79,7 @@ public class OfflineGroupHeaderView
 
     @Override
     public void setChecked(boolean checked) {
+        if (checked == isChecked()) return;
         super.setChecked(checked);
         updateCheckIcon(checked);
     }
@@ -105,6 +106,7 @@ public class OfflineGroupHeaderView
         mDescriptionTextView.setText(description);
         updateExpandIcon(header.isExpanded());
         setChecked(mSelectionDelegate.isHeaderSelected(header));
+        updateCheckIcon(isChecked());
     }
 
     private void updateExpandIcon(boolean expanded) {
@@ -116,7 +118,7 @@ public class OfflineGroupHeaderView
 
     private void updateCheckIcon(boolean checked) {
         if (checked) {
-            if (FeatureUtilities.isChromeHomeEnabled()) {
+            if (FeatureUtilities.isChromeModernDesignEnabled()) {
                 mIconImageView.setBackgroundResource(mIconBackgroundResId);
                 mIconImageView.getBackground().setLevel(
                         getResources().getInteger(R.integer.list_item_level_selected));
@@ -124,10 +126,11 @@ public class OfflineGroupHeaderView
                 mIconImageView.setBackgroundColor(mIconBackgroundColorSelected);
             }
 
-            mIconImageView.setImageResource(R.drawable.ic_check_googblue_24dp);
+            mIconImageView.setImageDrawable(mCheckDrawable);
             mIconImageView.setTint(mCheckedIconForegroundColorList);
+            mCheckDrawable.start();
         } else {
-            if (FeatureUtilities.isChromeHomeEnabled()) {
+            if (FeatureUtilities.isChromeModernDesignEnabled()) {
                 mIconImageView.setBackgroundResource(mIconBackgroundResId);
                 mIconImageView.getBackground().setLevel(
                         getResources().getInteger(R.integer.list_item_level_default));

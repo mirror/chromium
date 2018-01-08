@@ -5,16 +5,17 @@
 #include "platform/graphics/CanvasResourceProvider.h"
 
 #include "cc/paint/skia_paint_canvas.h"
+#include "cc/raster/playback_image_provider.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
+#include "platform/graphics/AcceleratedStaticBitmapImage.h"
 #include "platform/graphics/CanvasResource.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
 #include "platform/runtime_enabled_features.h"
 #include "skia/ext/texture_handle.h"
 #include "third_party/skia/include/core/SkColorSpaceXformCanvas.h"
-#include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -40,10 +41,17 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
                                std::move(context_provider_wrapper)),
         msaa_sample_count_(msaa_sample_count) {}
 
-  virtual ~CanvasResourceProvider_Texture() {}
+  virtual ~CanvasResourceProvider_Texture() = default;
 
   bool IsValid() const final { return GetSkSurface() && !IsGpuContextLost(); }
   bool IsAccelerated() const final { return true; }
+
+  GLuint GetBackingTextureHandleForOverwrite() override {
+    return skia::GrBackendObjectToGrGLTextureInfo(
+               GetSkSurface()->getTextureHandle(
+                   SkSurface::kDiscardWrite_TextureHandleAccess))
+        ->fID;
+  }
 
  protected:
   scoped_refptr<CanvasResource> ProduceFrame() override {
@@ -59,6 +67,14 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
             ->ContextProvider()
             ->GetCapabilities()
             .disable_2d_canvas_copy_on_write) {
+      // A readback operation may alter the texture parameters, which may affect
+      // the compositor's behavior. Therefore, we must trigger copy-on-write
+      // even though we are not technically writing to the texture, only to its
+      // parameters.
+      // If this issue with readback affecting state is ever fixed, then we'll
+      // have to do this instead of triggering a copy-on-write:
+      // static_cast<AcceleratedStaticBitmapImage*>(image.get())
+      //  ->RetainOriginalSkImageForCopyOnWrite();
       GetSkSurface()->notifyContentWillChange(
           SkSurface::kRetain_ContentChangeMode);
     }
@@ -117,7 +133,7 @@ class CanvasResourceProvider_Texture_GpuMemoryBuffer final
                                        color_params,
                                        std::move(context_provider_wrapper)) {}
 
-  virtual ~CanvasResourceProvider_Texture_GpuMemoryBuffer() {}
+  virtual ~CanvasResourceProvider_Texture_GpuMemoryBuffer() = default;
 
  protected:
   scoped_refptr<CanvasResource> CreateResource() final {
@@ -169,7 +185,7 @@ class CanvasResourceProvider_Bitmap final : public CanvasResourceProvider {
                                color_params,
                                nullptr /*context_provider_wrapper*/) {}
 
-  ~CanvasResourceProvider_Bitmap() {}
+  ~CanvasResourceProvider_Bitmap() = default;
 
   bool IsValid() const final { return GetSkSurface(); }
   bool IsAccelerated() const final { return false; }
@@ -218,11 +234,10 @@ constexpr ResourceType kAcceleratedCompositedFallbackList[] = {
 
 std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
     const IntSize& size,
-    unsigned msaa_sample_count,
-    const CanvasColorParams& colorParams,
     ResourceUsage usage,
-    base::WeakPtr<WebGraphicsContext3DProviderWrapper>
-        context_provider_wrapper) {
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
+    unsigned msaa_sample_count,
+    const CanvasColorParams& colorParams) {
   const ResourceType* resource_type_fallback_list = nullptr;
   size_t list_length = 0;
 
@@ -269,7 +284,10 @@ std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
         }
         break;
       case kTextureResourceType:
-        DCHECK(SharedGpuContext::IsGpuCompositingEnabled());
+        // TODO(xlai): Check gpu acclereration mode before using this Resource
+        // Type of CanvasResourceProvider and then Add
+        // "DCHECK(SharedGpuContext::IsGpuCompositingEnabled());" here.
+        // See crbug.com/802053.
         provider = std::make_unique<CanvasResourceProvider_Texture>(
             size, msaa_sample_count, colorParams, context_provider_wrapper);
         break;
@@ -294,7 +312,7 @@ CanvasResourceProvider::CanvasResourceProvider(
       size_(size),
       color_params_(color_params) {}
 
-CanvasResourceProvider::~CanvasResourceProvider() {}
+CanvasResourceProvider::~CanvasResourceProvider() = default;
 
 SkSurface* CanvasResourceProvider::GetSkSurface() const {
   if (!surface_) {
@@ -305,12 +323,20 @@ SkSurface* CanvasResourceProvider::GetSkSurface() const {
 
 PaintCanvas* CanvasResourceProvider::Canvas() {
   if (!canvas_) {
+    std::unique_ptr<cc::ImageProvider> image_provider;
+    if (ImageDecodeCache()) {
+      image_provider = std::make_unique<cc::PlaybackImageProvider>(
+          ImageDecodeCache(), ColorParams().GetStorageGfxColorSpace(),
+          cc::PlaybackImageProvider::Settings());
+    }
+
     if (ColorParams().NeedsSkColorSpaceXformCanvas()) {
       canvas_ = std::make_unique<cc::SkiaPaintCanvas>(
-          GetSkSurface()->getCanvas(), ColorParams().GetSkColorSpace());
+          GetSkSurface()->getCanvas(), ColorParams().GetSkColorSpace(),
+          std::move(image_provider));
     } else {
-      canvas_ =
-          std::make_unique<cc::SkiaPaintCanvas>(GetSkSurface()->getCanvas());
+      canvas_ = std::make_unique<cc::SkiaPaintCanvas>(
+          GetSkSurface()->getCanvas(), std::move(image_provider));
     }
   }
   return canvas_.get();
@@ -322,16 +348,8 @@ scoped_refptr<StaticBitmapImage> CanvasResourceProvider::Snapshot() {
   scoped_refptr<StaticBitmapImage> image = StaticBitmapImage::Create(
       GetSkSurface()->makeImageSnapshot(), ContextProviderWrapper());
   if (IsAccelerated()) {
-    // A readback operation may alter the texture parameters, which may affect
-    // the compositor's behavior. Therefore, we must trigger copy-on-write
-    // even though we are not technically writing to the texture, only to its
-    // parameters.
-    // If this issue with readback affecting state is ever fixed, then we'll
-    // have to do this instead of triggering a copy-on-write:
-    // static_cast<AcceleratedStaticBitmapImage*>(image.get())
-    //   ->RetainOriginalSkImageForCopyOnWrite();
-    GetSkSurface()->notifyContentWillChange(
-        SkSurface::kRetain_ContentChangeMode);
+    static_cast<AcceleratedStaticBitmapImage*>(image.get())
+        ->RetainOriginalSkImageForCopyOnWrite();
   }
   return image;
 }
@@ -382,6 +400,28 @@ bool CanvasResourceProvider::IsGpuContextLost() const {
   return !gl || gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR;
 }
 
+bool CanvasResourceProvider::WritePixels(const SkImageInfo& orig_info,
+                                         const void* pixels,
+                                         size_t row_bytes,
+                                         int x,
+                                         int y) {
+  DCHECK(IsValid());
+  return GetSkSurface()->getCanvas()->writePixels(orig_info, pixels, row_bytes,
+                                                  x, y);
+}
+
+void CanvasResourceProvider::Clear() {
+  // Clear the background transparent or opaque, as required. It would be nice
+  // if this wasn't required, but the canvas is currently filled with the magic
+  // transparency color. Can we have another way to manage this?
+  DCHECK(IsValid());
+  if (color_params_.GetOpacityMode() == kOpaque) {
+    Canvas()->clear(SK_ColorBLACK);
+  } else {
+    Canvas()->clear(SK_ColorTRANSPARENT);
+  }
+}
+
 void CanvasResourceProvider::ClearRecycledResources() {
   recycled_resources_.clear();
 }
@@ -400,6 +440,13 @@ scoped_refptr<CanvasResource> CanvasResourceProvider::CreateResource() {
   // Needs to be implemented in subclasses that use resource recycling.
   NOTREACHED();
   return nullptr;
+}
+
+cc::ImageDecodeCache* CanvasResourceProvider::ImageDecodeCache() {
+  // TODO(khushalsagar): Hook up a software cache.
+  if (!context_provider_wrapper_)
+    return nullptr;
+  return context_provider_wrapper_->ContextProvider()->ImageDecodeCache();
 }
 
 }  // namespace blink

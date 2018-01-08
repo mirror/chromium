@@ -28,18 +28,11 @@
 
 #include "core/dom/Element.h"
 #include "core/dom/ElementShadow.h"
+#include "core/dom/ng/flat_tree_traversal_ng.h"
 #include "core/html/HTMLShadowElement.h"
 #include "core/html/HTMLSlotElement.h"
 
 namespace blink {
-
-static inline ElementShadow* ShadowFor(const Node& node) {
-  return node.IsElementNode() ? ToElement(node).Shadow() : nullptr;
-}
-
-static inline bool CanBeDistributedToV0InsertionPoint(const Node& node) {
-  return node.IsInV0ShadowTree() || node.IsChildOfV0ShadowHost();
-}
 
 Node* FlatTreeTraversal::TraverseChild(const Node& node,
                                        TraversalDirection direction) {
@@ -129,19 +122,6 @@ Node* FlatTreeTraversal::TraverseSiblings(const Node& node,
       return TraverseSiblings(*slot, direction);
   }
 
-  if (!node.IsInV0ShadowTree())
-    return nullptr;
-
-  // For v0 older shadow tree
-  if (node.parentNode() && node.parentNode()->IsShadowRoot()) {
-    ShadowRoot* parent_shadow_root = ToShadowRoot(node.parentNode());
-    if (!parent_shadow_root->IsYoungest()) {
-      HTMLShadowElement* assigned_insertion_point =
-          parent_shadow_root->ShadowInsertionPointOfYoungerShadowRoot();
-      DCHECK(assigned_insertion_point);
-      return TraverseSiblings(*assigned_insertion_point, direction);
-    }
-  }
   return nullptr;
 }
 
@@ -230,9 +210,6 @@ ContainerNode* FlatTreeTraversal::TraverseParentOrHost(const Node& node) {
   if (!parent->IsShadowRoot())
     return parent;
   ShadowRoot* shadow_root = ToShadowRoot(parent);
-  DCHECK(!shadow_root->ShadowInsertionPointOfYoungerShadowRoot());
-  if (!shadow_root->IsYoungest())
-    return nullptr;
   return &shadow_root->host();
 }
 

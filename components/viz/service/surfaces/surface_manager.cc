@@ -14,10 +14,9 @@
 #include "base/containers/queue.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
-#include "components/viz/common/surfaces/stub_surface_reference_factory.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/service/surfaces/direct_surface_reference_factory.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_client.h"
 
@@ -28,11 +27,10 @@
 namespace viz {
 namespace {
 
-// Maximum bucket size for the UMA stat.
-constexpr int kUmaStatMax = 10;
+constexpr base::TimeDelta kExpireInterval = base::TimeDelta::FromSeconds(10);
 
-const char kUmaNumOldTemporaryReferences[] =
-    "Compositing.SurfaceManager.NumOldTemporaryReferences";
+const char kUmaRemovedTemporaryReference[] =
+    "Compositing.SurfaceManager.RemovedTemporaryReference";
 
 }  // namespace
 
@@ -44,32 +42,37 @@ SurfaceManager::TemporaryReferenceData::TemporaryReferenceData() = default;
 
 SurfaceManager::TemporaryReferenceData::~TemporaryReferenceData() = default;
 
-SurfaceManager::SurfaceManager(LifetimeType lifetime_type,
-                               uint32_t number_of_frames_to_activation_deadline)
-    : lifetime_type_(lifetime_type),
-      dependency_tracker_(this, number_of_frames_to_activation_deadline),
+SurfaceManager::SurfaceManager(uint32_t number_of_frames_to_activation_deadline)
+    : dependency_tracker_(this, number_of_frames_to_activation_deadline),
       root_surface_id_(FrameSinkId(0u, 0u),
                        LocalSurfaceId(1u, base::UnguessableToken::Create())),
       weak_factory_(this) {
   thread_checker_.DetachFromThread();
-  if (using_surface_references()) {
-    reference_factory_ = new StubSurfaceReferenceFactory();
-    temporary_reference_timer_.Start(
-        FROM_HERE, base::TimeDelta::FromSeconds(10), this,
-        &SurfaceManager::MarkOldTemporaryReference);
-    // TODO(kylechar): After collecting UMA stats on the number of old temporary
-    // references, we may want to turn the timer off when there are no temporary
-    // references to avoid waking the thread unnecessarily.
-  } else {
-    reference_factory_ =
-        new DirectSurfaceReferenceFactory(weak_factory_.GetWeakPtr());
-  }
+
+  // Android WebView doesn't have a task runner and doesn't need the timer.
+  if (base::SequencedTaskRunnerHandle::IsSet())
+    expire_timer_.emplace();
 }
 
 SurfaceManager::~SurfaceManager() {
+  // Garbage collect surfaces here to avoid calling back into
+  // SurfaceDependencyTracker as members of SurfaceManager are being
+  // destroyed.
+  temporary_references_.clear();
+  temporary_reference_ranges_.clear();
+  // Create a copy of the children set as RemoveSurfaceReferenceImpl below will
+  // mutate that set.
+  base::flat_set<SurfaceId> children(
+      GetSurfacesReferencedByParent(root_surface_id_));
+  for (const auto& child : children)
+    RemoveSurfaceReferenceImpl(root_surface_id_, child);
+
+  GarbageCollectSurfaces();
+
   // All SurfaceClients and their surfaces are supposed to be
   // destroyed before SurfaceManager.
-  DCHECK_EQ(surfaces_to_destroy_.size(), surface_map_.size());
+  DCHECK(surface_map_.empty());
+  DCHECK(surfaces_to_destroy_.empty());
 }
 
 #if DCHECK_IS_ON()
@@ -83,10 +86,6 @@ std::string SurfaceManager::SurfaceReferencesToString() {
   return str.str();
 }
 #endif
-
-void SurfaceManager::RequestSurfaceResolution(Surface* surface) {
-  dependency_tracker_.RequestSurfaceResolution(surface);
-}
 
 Surface* SurfaceManager::CreateSurface(
     base::WeakPtr<SurfaceClient> surface_client,
@@ -102,17 +101,16 @@ Surface* SurfaceManager::CreateSurface(
   auto it = surface_map_.find(surface_info.id());
   if (it == surface_map_.end()) {
     surface_map_[surface_info.id()] =
-        base::MakeUnique<Surface>(surface_info, this, surface_client,
+        std::make_unique<Surface>(surface_info, this, surface_client,
                                   begin_frame_source, needs_sync_tokens);
-    if (lifetime_type_ == LifetimeType::REFERENCES) {
-      // We can get into a situation where multiple CompositorFrames arrive for
-      // a FrameSink before the client can add any references for the frame.
-      // When the second frame with a new size arrives, the first will be
-      // destroyed in SurfaceFactory and then if there are no references it will
-      // be deleted during surface GC. A temporary reference, removed when a
-      // real reference is received, is added to prevent this from happening.
-      AddTemporaryReference(surface_info.id());
-    }
+    // We can get into a situation where multiple CompositorFrames arrive for a
+    // FrameSink before the client can add any references for the frame. When
+    // the second frame with a new size arrives, the first will be destroyed in
+    // SurfaceFactory and then if there are no references it will be deleted
+    // during surface GC. A temporary reference, removed when a real reference
+    // is received, is added to prevent this from happening.
+    AddTemporaryReference(surface_info.id());
+
     for (auto& observer : observer_list_)
       observer.OnSurfaceCreated(surface_info.id());
     return surface_map_[surface_info.id()].get();
@@ -126,7 +124,10 @@ Surface* SurfaceManager::CreateSurface(
 
   DCHECK(IsMarkedForDestruction(surface_info.id()));
   surfaces_to_destroy_.erase(surface_info.id());
+  SurfaceDiscarded(surface);
   surface->Reset(surface_client);
+  for (auto& observer : observer_list_)
+    observer.OnSurfaceCreated(surface_info.id());
   return surface;
 }
 
@@ -136,29 +137,6 @@ void SurfaceManager::DestroySurface(const SurfaceId& surface_id) {
   for (auto& observer : observer_list_)
     observer.OnSurfaceDestroyed(surface_id);
   surfaces_to_destroy_.insert(surface_id);
-}
-
-void SurfaceManager::SurfaceSubtreeDamaged(const SurfaceId& surface_id) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  for (auto& observer : observer_list_)
-    observer.OnSurfaceSubtreeDamaged(surface_id);
-}
-
-void SurfaceManager::RequireSequence(const SurfaceId& surface_id,
-                                     const SurfaceSequence& sequence) {
-  DCHECK_EQ(lifetime_type_, LifetimeType::SEQUENCES);
-  auto* surface = GetSurfaceForId(surface_id);
-  if (!surface) {
-    DLOG(ERROR) << "Attempting to require callback on nonexistent surface";
-    return;
-  }
-  surface->AddDestructionDependency(sequence);
-}
-
-void SurfaceManager::SatisfySequence(const SurfaceSequence& sequence) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK_EQ(lifetime_type_, LifetimeType::SEQUENCES);
-  satisfied_sequences_.insert(sequence);
 }
 
 void SurfaceManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id) {
@@ -178,20 +156,16 @@ void SurfaceManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
   }
 
   for (auto& surface_id : temp_refs_to_clear)
-    RemoveTemporaryReference(surface_id, false);
+    RemoveTemporaryReference(surface_id, RemovedReason::INVALIDATED);
 
   GarbageCollectSurfaces();
 }
 
 void SurfaceManager::SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
                                             const std::string& debug_label) {
-#if DCHECK_IS_ON()
   auto it = valid_frame_sink_labels_.find(frame_sink_id);
   DCHECK(it != valid_frame_sink_labels_.end());
   it->second = debug_label;
-#else
-  NOTREACHED();
-#endif
 }
 
 std::string SurfaceManager::GetFrameSinkDebugLabel(
@@ -225,7 +199,6 @@ void SurfaceManager::RemoveSurfaceReferences(
 void SurfaceManager::AssignTemporaryReference(const SurfaceId& surface_id,
                                               const FrameSinkId& owner) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK_EQ(lifetime_type_, LifetimeType::REFERENCES);
 
   if (!HasTemporaryReference(surface_id))
     return;
@@ -236,12 +209,10 @@ void SurfaceManager::AssignTemporaryReference(const SurfaceId& surface_id,
 void SurfaceManager::DropTemporaryReference(const SurfaceId& surface_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
-  if (lifetime_type_ != LifetimeType::REFERENCES ||
-      !HasTemporaryReference(surface_id)) {
+  if (!HasTemporaryReference(surface_id))
     return;
-  }
 
-  RemoveTemporaryReference(surface_id, false);
+  RemoveTemporaryReference(surface_id, RemovedReason::DROPPED);
 }
 
 void SurfaceManager::GarbageCollectSurfaces() {
@@ -249,9 +220,7 @@ void SurfaceManager::GarbageCollectSurfaces() {
   if (surfaces_to_destroy_.empty())
     return;
 
-  SurfaceIdSet reachable_surfaces = using_surface_references()
-                                        ? GetLiveSurfacesForReferences()
-                                        : GetLiveSurfacesForSequences();
+  SurfaceIdSet reachable_surfaces = GetLiveSurfacesForReferences();
 
   std::vector<SurfaceId> surfaces_to_delete;
 
@@ -288,8 +257,6 @@ const base::flat_set<SurfaceId>& SurfaceManager::GetSurfacesThatReferenceChild(
 }
 
 SurfaceManager::SurfaceIdSet SurfaceManager::GetLiveSurfacesForReferences() {
-  DCHECK(using_surface_references());
-
   SurfaceIdSet reachable_surfaces;
 
   // Walk down from the root and mark each SurfaceId we encounter as
@@ -326,52 +293,6 @@ SurfaceManager::SurfaceIdSet SurfaceManager::GetLiveSurfacesForReferences() {
   return reachable_surfaces;
 }
 
-SurfaceManager::SurfaceIdSet SurfaceManager::GetLiveSurfacesForSequences() {
-  DCHECK_EQ(lifetime_type_, LifetimeType::SEQUENCES);
-
-  // Simple mark and sweep GC.
-  // TODO(jbauman): Reduce the amount of work when nothing needs to be
-  // destroyed.
-  std::vector<SurfaceId> live_surfaces;
-  std::unordered_set<SurfaceId, SurfaceIdHash> live_surfaces_set;
-
-  // GC roots are surfaces that have not been destroyed, or have not had all
-  // their destruction dependencies satisfied.
-  for (auto& map_entry : surface_map_) {
-    const SurfaceId& surface_id = map_entry.first;
-    Surface* surface = map_entry.second.get();
-    surface->SatisfyDestructionDependencies(&satisfied_sequences_,
-                                            &valid_frame_sink_labels_);
-
-    if (!IsMarkedForDestruction(surface_id) ||
-        surface->GetDestructionDependencyCount() > 0) {
-      live_surfaces_set.insert(surface_id);
-      live_surfaces.push_back(surface_id);
-    }
-  }
-
-  // Mark all surfaces reachable from live surfaces by adding them to
-  // live_surfaces and live_surfaces_set.
-  for (size_t i = 0; i < live_surfaces.size(); i++) {
-    Surface* surf = surface_map_[live_surfaces[i]].get();
-    DCHECK(surf);
-
-    const auto& children = GetSurfacesReferencedByParent(surf->surface_id());
-    for (const SurfaceId& id : children) {
-      if (live_surfaces_set.count(id))
-        continue;
-
-      Surface* surf2 = GetSurfaceForId(id);
-      if (surf2) {
-        live_surfaces.push_back(id);
-        live_surfaces_set.insert(id);
-      }
-    }
-  }
-
-  return live_surfaces_set;
-}
-
 void SurfaceManager::AddSurfaceReferenceImpl(const SurfaceId& parent_id,
                                              const SurfaceId& child_id) {
   if (parent_id.frame_sink_id() == child_id.frame_sink_id()) {
@@ -391,7 +312,7 @@ void SurfaceManager::AddSurfaceReferenceImpl(const SurfaceId& parent_id,
   references_[child_id].parents.insert(parent_id);
 
   if (HasTemporaryReference(child_id))
-    RemoveTemporaryReference(child_id, true);
+    RemoveTemporaryReference(child_id, RemovedReason::EMBEDDED);
 }
 
 void SurfaceManager::RemoveSurfaceReferenceImpl(const SurfaceId& parent_id,
@@ -435,43 +356,64 @@ void SurfaceManager::AddTemporaryReference(const SurfaceId& surface_id) {
   temporary_references_[surface_id].owner = base::Optional<FrameSinkId>();
   temporary_reference_ranges_[surface_id.frame_sink_id()].push_back(
       surface_id.local_surface_id());
+
+  // Start timer to expire temporary references if it's not running.
+  if (expire_timer_ && !expire_timer_->IsRunning()) {
+    expire_timer_->Start(FROM_HERE, kExpireInterval, this,
+                         &SurfaceManager::ExpireOldTemporaryReferences);
+  }
 }
 
 void SurfaceManager::RemoveTemporaryReference(const SurfaceId& surface_id,
-                                              bool remove_range) {
+                                              RemovedReason reason) {
   DCHECK(HasTemporaryReference(surface_id));
 
   const FrameSinkId& frame_sink_id = surface_id.frame_sink_id();
   std::vector<LocalSurfaceId>& frame_sink_temp_refs =
       temporary_reference_ranges_[frame_sink_id];
 
+  // If the temporary reference to |surface_id| is being removed because it was
+  // embedded, then remove older temporary references with the same FrameSinkId.
+  const bool remove_older = (reason == RemovedReason::EMBEDDED);
+
   // Find the iterator to the range tracking entry for |surface_id|. Use that
-  // iterator and |remove_range| to find the right begin and end iterators for
+  // iterator and |remove_older| to find the right begin and end iterators for
   // the temporary references we want to remove.
   auto surface_id_iter =
       std::find(frame_sink_temp_refs.begin(), frame_sink_temp_refs.end(),
                 surface_id.local_surface_id());
   auto begin_iter =
-      remove_range ? frame_sink_temp_refs.begin() : surface_id_iter;
+      remove_older ? frame_sink_temp_refs.begin() : surface_id_iter;
   auto end_iter = surface_id_iter + 1;
 
   // Remove temporary references and range tracking information.
-  for (auto iter = begin_iter; iter != end_iter; ++iter)
+  for (auto iter = begin_iter; iter != end_iter; ++iter) {
     temporary_references_.erase(SurfaceId(frame_sink_id, *iter));
+
+    // If removing more than the temporary reference to |surface_id| then the
+    // reason for removing others is because they are being skipped.
+    const bool was_skipped = (*iter != surface_id.local_surface_id());
+    UMA_HISTOGRAM_ENUMERATION(kUmaRemovedTemporaryReference,
+                              was_skipped ? RemovedReason::SKIPPED : reason,
+                              RemovedReason::COUNT);
+  }
   frame_sink_temp_refs.erase(begin_iter, end_iter);
 
   // If last temporary reference is removed for |frame_sink_id| then cleanup
   // range tracking map entry.
   if (frame_sink_temp_refs.empty())
     temporary_reference_ranges_.erase(frame_sink_id);
+
+  // Stop the timer if there are no temporary references that could expire.
+  if (temporary_references_.empty()) {
+    if (expire_timer_ && expire_timer_->IsRunning())
+      expire_timer_->Stop();
+  }
 }
 
 Surface* SurfaceManager::GetLatestInFlightSurface(
     const SurfaceId& primary_surface_id,
     const SurfaceId& fallback_surface_id) {
-  if (!using_surface_references())
-    return nullptr;
-
   // The fallback surface must exist before we begin looking for more recent
   // surfaces. This guarantees that the |parent| is allowed to embed the
   // |fallback_surface_id| and is not guessing surface IDs.
@@ -495,9 +437,12 @@ Surface* SurfaceManager::GetLatestInFlightSurface(
 
   const std::vector<LocalSurfaceId>& temp_surfaces = it->second;
   for (const LocalSurfaceId& local_surface_id : base::Reversed(temp_surfaces)) {
-    // The in-flight surface cannot be newer than the primary surface ID.
-    if (local_surface_id.parent_id() >
-        primary_surface_id.local_surface_id().parent_id()) {
+    // The in-flight surface must be older than the primary surface ID.
+    if (local_surface_id == primary_surface_id.local_surface_id() ||
+        local_surface_id.parent_sequence_number() >
+            primary_surface_id.local_surface_id().parent_sequence_number() ||
+        local_surface_id.child_sequence_number() >
+            primary_surface_id.local_surface_id().child_sequence_number()) {
       continue;
     }
 
@@ -517,11 +462,9 @@ Surface* SurfaceManager::GetLatestInFlightSurface(
   return fallback_surface;
 }
 
-void SurfaceManager::MarkOldTemporaryReference() {
-  if (temporary_references_.empty()) {
-    UMA_HISTOGRAM_EXACT_LINEAR(kUmaNumOldTemporaryReferences, 0, kUmaStatMax);
+void SurfaceManager::ExpireOldTemporaryReferences() {
+  if (temporary_references_.empty())
     return;
-  }
 
   std::vector<SurfaceId> temporary_references_to_delete;
   for (auto& map_entry : temporary_references_) {
@@ -539,14 +482,8 @@ void SurfaceManager::MarkOldTemporaryReference() {
     }
   }
 
-  // This number would ideally always be zero always but there is potential for
-  // a frame sink to get assigned a temporary reference and never use it.
-  UMA_HISTOGRAM_EXACT_LINEAR(kUmaNumOldTemporaryReferences,
-                             temporary_references_to_delete.size(),
-                             kUmaStatMax);
-
   for (auto& surface_id : temporary_references_to_delete)
-    RemoveTemporaryReference(surface_id, false);
+    RemoveTemporaryReference(surface_id, RemovedReason::EXPIRED);
 }
 
 Surface* SurfaceManager::GetSurfaceForId(const SurfaceId& surface_id) {

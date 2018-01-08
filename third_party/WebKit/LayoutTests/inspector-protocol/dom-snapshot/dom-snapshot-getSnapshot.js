@@ -10,16 +10,18 @@
   `);
 
   function stabilize(key, value) {
-    var unstableKeys = ['documentURL', 'baseURL', 'frameId', 'backendNodeId'];
+    var unstableKeys = ['documentURL', 'baseURL', 'frameId', 'backendNodeId', 'scriptId'];
     if (unstableKeys.indexOf(key) !== -1)
       return '<' + typeof(value) + '>';
     if (typeof value === 'string' && value.indexOf('/dom-snapshot/') !== -1)
       value = '<value>';
+    if (typeof value === 'string' && value.indexOf('file://') !== -1)
+      value = '<string>' + value.substr(value.indexOf("WebKit/"));
     return value;
   }
 
   var whitelist = ['transform', 'transform-origin', 'height', 'width', 'display', 'outline-color', 'color'];
-  var response = await dp.DOMSnapshot.getSnapshot({'computedStyleWhitelist': whitelist});
+  var response = await dp.DOMSnapshot.getSnapshot({'computedStyleWhitelist': whitelist, 'includeEventListeners': true});
   if (response.error)
     testRunner.log(response);
   else

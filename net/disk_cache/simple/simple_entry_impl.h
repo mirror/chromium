@@ -142,8 +142,8 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
 
   enum State {
     // The state immediately after construction, but before |synchronous_entry_|
-    // has been assigned. This is the state at construction, and is the only
-    // legal state to destruct an entry in.
+    // has been assigned. This is the state at construction, and is one of the
+    // two states (along with failure) one can destruct an entry in.
     STATE_UNINITIALIZED,
 
     // This entry is available for regular IO.
@@ -156,6 +156,19 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
     // A failure occurred in the current or previous operation. All operations
     // after that must fail, until we receive a Close().
     STATE_FAILURE,
+  };
+
+  enum DoomState {
+    // No attempt to doom the entry has been made.
+    DOOM_NONE,
+
+    // We have moved ourselves to |entries_pending_doom_| and have queued an
+    // operation to actually update the disk, but haven't completed it yet.
+    DOOM_QUEUED,
+
+    // The disk has been updated. This corresponds to the state where we
+    // are in neither |entries_pending_doom_| nor |active_entries_|.
+    DOOM_COMPLETED,
   };
 
   // Used in histograms, please only add entries at the end.
@@ -175,17 +188,21 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
   // not expect).
   void PostClientCallback(const CompletionCallback& callback, int result);
 
-  // Sets entry to STATE_UNINITIALIZED.
-  void MakeUninitialized();
+  // Clears entry state enough to prepare it for re-use. This will generally
+  // put it back into STATE_UNINITIALIZED, except if the entry is doomed and
+  // therefore disconnected from ownership of corresponding filename, in which
+  // case it will be put into STATE_FAILURE.
+  void ResetEntry();
 
   // Return this entry to a user of the API in |out_entry|. Increments the user
   // count.
   void ReturnEntryToCaller(Entry** out_entry);
 
-  // An error occured, and the SimpleSynchronousEntry should have Doomed
-  // us at this point. We need to remove |this| from the Backend and the
-  // index.
-  void MarkAsDoomed();
+  // Remove |this| from the Backend and the index, either because
+  // SimpleSynchronousEntry has detected an error or because we are about to
+  // be dooming it ourselves and want it to be tracked in
+  // |entries_pending_doom_| instead.
+  void MarkAsDoomed(DoomState doom_state);
 
   // Runs the next operation in the queue, if any and if there is no other
   // operation running at the moment.
@@ -368,7 +385,7 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
   // notify the backend when this entry not used by any callers.
   int open_count_;
 
-  bool doomed_;
+  DoomState doom_state_;
 
   enum {
     CREATE_NORMAL,

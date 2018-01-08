@@ -8,7 +8,6 @@
 #include <vector>
 
 #include "base/json/json_reader.h"
-#include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -16,11 +15,9 @@
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/remote/test_utils.h"
 #include "components/prefs/testing_pref_service.h"
-#include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
-#include "components/signin/core/browser/fake_signin_manager.h"
-#include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
+#include "services/identity/public/cpp/identity_test_environment.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -109,17 +106,17 @@ class ContextualSuggestionsFetcherTest : public testing::Test {
  public:
   ContextualSuggestionsFetcherTest()
       : fake_url_fetcher_factory_(new net::FakeURLFetcherFactory(nullptr)),
-        mock_task_runner_(new base::TestMockTimeTaskRunner()),
-        mock_task_runner_handle_(mock_task_runner_) {
+        mock_task_runner_(new base::TestMockTimeTaskRunner(
+            base::TestMockTimeTaskRunner::Type::kBoundToThread)) {
     scoped_refptr<net::TestURLRequestContextGetter> request_context_getter =
         new net::TestURLRequestContextGetter(mock_task_runner_.get());
-    fake_token_service_ = base::MakeUnique<FakeProfileOAuth2TokenService>(
-        base::MakeUnique<FakeOAuth2TokenServiceDelegate>(
-            request_context_getter.get()));
-    fetcher_ = base::MakeUnique<ContextualSuggestionsFetcherImpl>(
-        test_utils_.fake_signin_manager(), fake_token_service_.get(),
+    fetcher_ = std::make_unique<ContextualSuggestionsFetcherImpl>(
+        identity_test_env_.identity_manager(),
         std::move(request_context_getter), test_utils_.pref_service(),
-        base::Bind(&ParseJson));
+        base::BindRepeating(&ParseJson));
+  }
+
+  ~ContextualSuggestionsFetcherTest() override {
   }
 
   void FastForwardUntilNoTasksRemain() {
@@ -127,17 +124,8 @@ class ContextualSuggestionsFetcherTest : public testing::Test {
   }
 
   void InitializeFakeCredentials() {
-#if defined(OS_CHROMEOS)
-    test_utils_.fake_signin_manager()->SignIn(kTestEmail);
-#else
-    test_utils_.fake_signin_manager()->SignIn(kTestEmail, "user", "password");
-#endif
-    fake_token_service_->GetDelegate()->UpdateCredentials(kTestEmail, "token");
-  }
-
-  void IssueOAuth2Token() {
-    fake_token_service_->IssueAllTokensForAccount(kTestEmail, "access_token",
-                                                  base::Time::Max());
+    identity_test_env()->MakePrimaryAccountAvailable(kTestEmail, kTestEmail,
+                                                     "token");
   }
 
   void SetFakeResponse(const std::string& response_data,
@@ -159,13 +147,16 @@ class ContextualSuggestionsFetcherTest : public testing::Test {
     return mock_suggestions_available_callback_;
   }
 
+  identity::IdentityTestEnvironment* identity_test_env() {
+    return &identity_test_env_;
+  }
+
  private:
-  std::unique_ptr<FakeProfileOAuth2TokenService> fake_token_service_;
+  identity::IdentityTestEnvironment identity_test_env_;
   std::unique_ptr<net::FakeURLFetcherFactory> fake_url_fetcher_factory_;
   std::unique_ptr<ContextualSuggestionsFetcherImpl> fetcher_;
   MockSuggestionsAvailableCallback mock_suggestions_available_callback_;
   scoped_refptr<base::TestMockTimeTaskRunner> mock_task_runner_;
-  base::ThreadTaskRunnerHandle mock_task_runner_handle_;
   test::RemoteSuggestionsTestUtils test_utils_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSuggestionsFetcherTest);
@@ -197,7 +188,10 @@ TEST_F(ContextualSuggestionsFetcherTest, ShouldFetchSuggestion) {
   fetcher().FetchContextualSuggestions(
       GURL(kValidURL),
       ToSuggestionsAvailableCallback(&mock_suggestions_available_callback()));
-  IssueOAuth2Token();
+
+  identity_test_env()->WaitForAccessTokenRequestAndRespondWithToken(
+      "access_token", base::Time::Max());
+
   FastForwardUntilNoTasksRemain();
   EXPECT_THAT(fetcher().GetLastStatusForTesting(), Eq("OK"));
   EXPECT_THAT(fetcher().GetLastJsonForTesting(), Eq(kValidResponseData));
@@ -219,7 +213,10 @@ TEST_F(ContextualSuggestionsFetcherTest, ShouldFetchEmptySuggestionsList) {
   fetcher().FetchContextualSuggestions(
       GURL(kValidURL),
       ToSuggestionsAvailableCallback(&mock_suggestions_available_callback()));
-  IssueOAuth2Token();
+
+  identity_test_env()->WaitForAccessTokenRequestAndRespondWithToken(
+      "access_token", base::Time::Max());
+
   FastForwardUntilNoTasksRemain();
   EXPECT_THAT(fetcher().GetLastStatusForTesting(), Eq("OK"));
   EXPECT_THAT(fetcher().GetLastJsonForTesting(),
@@ -237,7 +234,10 @@ TEST_F(ContextualSuggestionsFetcherTest,
   fetcher().FetchContextualSuggestions(
       GURL(kValidURL),
       ToSuggestionsAvailableCallback(&mock_suggestions_available_callback()));
-  IssueOAuth2Token();
+
+  identity_test_env()->WaitForAccessTokenRequestAndRespondWithToken(
+      "access_token", base::Time::Max());
+
   FastForwardUntilNoTasksRemain();
 }
 
@@ -257,7 +257,10 @@ TEST_F(ContextualSuggestionsFetcherTest,
   fetcher().FetchContextualSuggestions(
       GURL(kValidURL),
       ToSuggestionsAvailableCallback(&mock_suggestions_available_callback()));
-  IssueOAuth2Token();
+
+  identity_test_env()->WaitForAccessTokenRequestAndRespondWithToken(
+      "access_token", base::Time::Max());
+
   FastForwardUntilNoTasksRemain();
   EXPECT_THAT(fetcher().GetLastStatusForTesting(),
               StartsWith("Received invalid JSON (error "));

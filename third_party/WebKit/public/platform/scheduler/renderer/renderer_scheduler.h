@@ -56,12 +56,11 @@ class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
   virtual scoped_refptr<base::SingleThreadTaskRunner>
   CompositorTaskRunner() = 0;
 
+  // Returns the input task runner.
+  virtual scoped_refptr<base::SingleThreadTaskRunner> InputTaskRunner() = 0;
+
   // Creates a WebThread implementation for the renderer main thread.
   virtual std::unique_ptr<WebThread> CreateMainThread() = 0;
-
-  // Returns the loading task runner.  This queue is intended for tasks related
-  // to resource dispatch, foreground HTML parsing, etc...
-  virtual scoped_refptr<base::SingleThreadTaskRunner> LoadingTaskRunner() = 0;
 
   // Returns a new RenderWidgetSchedulingState.  The signals from this will be
   // used to make scheduling decisions.

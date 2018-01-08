@@ -15,18 +15,24 @@
 
 namespace blink {
 
-PageTestBase::PageTestBase() {}
+PageTestBase::PageTestBase() = default;
 
-PageTestBase::~PageTestBase() {}
+PageTestBase::~PageTestBase() = default;
 
 void PageTestBase::SetUp() {
   DCHECK(!dummy_page_holder_) << "Page should be set up only once";
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
+
+  // Use no-quirks (ake "strict") mode by default.
+  GetDocument().SetCompatibilityMode(Document::kNoQuirksMode);
 }
 
 void PageTestBase::SetUp(IntSize size) {
   DCHECK(!dummy_page_holder_) << "Page should be set up only once";
   dummy_page_holder_ = DummyPageHolder::Create(size);
+
+  // Use no-quirks (ake "strict") mode by default.
+  GetDocument().SetCompatibilityMode(Document::kNoQuirksMode);
 }
 
 void PageTestBase::SetupPageWithClients(
@@ -36,6 +42,9 @@ void PageTestBase::SetupPageWithClients(
   DCHECK(!dummy_page_holder_) << "Page should be set up only once";
   dummy_page_holder_ = DummyPageHolder::Create(
       IntSize(800, 600), clients, local_frame_client, setting_overrider);
+
+  // Use no-quirks (ake "strict") mode by default.
+  GetDocument().SetCompatibilityMode(Document::kNoQuirksMode);
 }
 
 void PageTestBase::TearDown() {

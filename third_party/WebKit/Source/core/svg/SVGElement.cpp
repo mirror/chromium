@@ -49,7 +49,6 @@
 #include "core/svg/SVGGraphicsElement.h"
 #include "core/svg/SVGSVGElement.h"
 #include "core/svg/SVGTitleElement.h"
-#include "core/svg/SVGTreeScopeResources.h"
 #include "core/svg/SVGUseElement.h"
 #include "core/svg/properties/SVGProperty.h"
 #include "core/svg_names.h"
@@ -111,18 +110,9 @@ void SVGElement::WillRecalcStyle(StyleRecalcChange change) {
     SvgRareData()->SetNeedsOverrideComputedStyleUpdate();
 }
 
-void SVGElement::BuildPendingResourcesIfNeeded() {
-  if (!NeedsPendingResourceHandling() || !isConnected() || InUseShadowTree())
-    return;
-  GetTreeScope().EnsureSVGTreeScopedResources().NotifyResourceAvailable(
-      GetIdAttribute());
-}
-
 SVGElementRareData* SVGElement::EnsureSVGRareData() {
-  if (HasSVGRareData())
-    return SvgRareData();
-
-  svg_rare_data_ = new SVGElementRareData(this);
+  if (!svg_rare_data_)
+    svg_rare_data_ = new SVGElementRareData();
   return svg_rare_data_.Get();
 }
 
@@ -366,20 +356,14 @@ AffineTransform SVGElement::CalculateTransform(
     // http://dev.w3.org/csswg/css3-transforms/
     float zoom = style->EffectiveZoom();
     TransformationMatrix transform;
-    if (zoom != 1) {
+    if (zoom != 1)
       reference_box.Scale(zoom);
-      transform.Scale(1 / zoom);
-      style->ApplyTransform(
-          transform, reference_box, ComputedStyle::kIncludeTransformOrigin,
-          ComputedStyle::kIncludeMotionPath,
-          ComputedStyle::kIncludeIndependentTransformProperties);
-      transform.Scale(zoom);
-    } else {
-      style->ApplyTransform(
-          transform, reference_box, ComputedStyle::kIncludeTransformOrigin,
-          ComputedStyle::kIncludeMotionPath,
-          ComputedStyle::kIncludeIndependentTransformProperties);
-    }
+    style->ApplyTransform(
+        transform, reference_box, ComputedStyle::kIncludeTransformOrigin,
+        ComputedStyle::kIncludeMotionPath,
+        ComputedStyle::kIncludeIndependentTransformProperties);
+    if (zoom != 1)
+      transform.Zoom(1 / zoom);
     // Flatten any 3D transform.
     matrix = transform.ToAffineTransform();
   }
@@ -395,7 +379,6 @@ Node::InsertionNotificationRequest SVGElement::InsertedInto(
     ContainerNode* root_parent) {
   Element::InsertedInto(root_parent);
   UpdateRelativeLengthsInformation();
-  BuildPendingResourcesIfNeeded();
 
   const AtomicString& nonce_value = FastGetAttribute(nonceAttr);
   if (!nonce_value.IsEmpty()) {
@@ -405,7 +388,6 @@ Node::InsertionNotificationRequest SVGElement::InsertedInto(
       setAttribute(nonceAttr, g_empty_atom);
     }
   }
-
   return kInsertionDone;
 }
 
@@ -964,16 +946,6 @@ void SVGElement::AttributeChanged(const AttributeModificationParams& params) {
 
   if (params.name == HTMLNames::idAttr) {
     RebuildAllIncomingReferences();
-
-    LayoutObject* object = GetLayoutObject();
-    // Notify resources about id changes, this is important as we cache
-    // resources by id in SVGDocumentExtensions
-    if (object && object->IsSVGResourceContainer()) {
-      ToLayoutSVGResourceContainer(object)->IdChanged(params.old_value,
-                                                      params.new_value);
-    }
-    if (isConnected())
-      BuildPendingResourcesIfNeeded();
     InvalidateInstances();
     return;
   }
@@ -1290,6 +1262,35 @@ void SVGElement::AddReferenceTo(SVGElement* target_element) {
 
   EnsureSVGRareData()->OutgoingReferences().insert(target_element);
   target_element->EnsureSVGRareData()->IncomingReferences().insert(this);
+}
+
+void SVGElement::NotifyIncomingReferences(bool needs_layout) {
+  if (!HasSVGRareData())
+    return;
+
+  SVGElementSet& dependencies = SvgRareData()->IncomingReferences();
+  if (dependencies.IsEmpty())
+    return;
+
+  // We allow cycles in the reference graph in order to avoid expensive
+  // adjustments on changes, so we need to break possible cycles here.
+  // This strong reference is safe, as it is guaranteed that this set will be
+  // emptied at the end of recursion.
+  DEFINE_STATIC_LOCAL(SVGElementSet, invalidating_dependencies,
+                      (new SVGElementSet));
+
+  for (SVGElement* element : dependencies) {
+    if (LayoutObject* layout_object = element->GetLayoutObject()) {
+      if (UNLIKELY(!invalidating_dependencies.insert(element).is_new_entry)) {
+        // Reference cycle: we are in process of invalidating this dependant.
+        continue;
+      }
+
+      LayoutSVGResourceContainer::MarkForLayoutAndParentResourceInvalidation(
+          layout_object, needs_layout);
+      invalidating_dependencies.erase(element);
+    }
+  }
 }
 
 void SVGElement::RebuildAllIncomingReferences() {

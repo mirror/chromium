@@ -12,12 +12,14 @@
 #include "ui/message_center/message_center_export.h"
 #include "ui/message_center/views/message_view.h"
 #include "ui/views/controls/button/button.h"
+#include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/views/view_targeter_delegate.h"
 
 namespace views {
+class ImageButton;
 class Label;
 class LabelButton;
 class ProgressBar;
@@ -137,31 +139,74 @@ class NotificationButtonMD : public views::LabelButton {
 
 class NotificationInputDelegate {
  public:
+  virtual void SetNormalImageToReplyButton() = 0;
+  virtual void SetPlaceholderImageToReplyButton() = 0;
   virtual void OnNotificationInputSubmit(size_t index,
                                          const base::string16& text) = 0;
   virtual ~NotificationInputDelegate() = default;
 };
 
-class NotificationInputMD : public views::Textfield,
-                            public views::TextfieldController {
+class NotificationInputTextfieldMD : public views::Textfield,
+                                     public views::TextfieldController {
  public:
-  NotificationInputMD(NotificationInputDelegate* delegate);
-  ~NotificationInputMD() override;
+  NotificationInputTextfieldMD(NotificationInputDelegate* delegate);
+  ~NotificationInputTextfieldMD() override;
 
+  void CheckUpdateImage();
   bool HandleKeyEvent(views::Textfield* sender,
                       const ui::KeyEvent& key_event) override;
+  bool HandleMouseEvent(views::Textfield* sender,
+                        const ui::MouseEvent& mouse_event) override;
+  bool HandleGestureEvent(views::Textfield* sender,
+                          const ui::GestureEvent& gesture_event) override;
 
   void set_index(size_t index) { index_ = index; }
   void set_placeholder(const base::string16& placeholder);
 
+  size_t index() const { return index_; };
+
  private:
   NotificationInputDelegate* const delegate_;
+
+  bool is_empty_ = true;
 
   // |index_| is the notification action index that should be passed as the
   // argument of ClickOnNotificationButtonWithReply.
   size_t index_ = 0;
 
-  DISALLOW_COPY_AND_ASSIGN(NotificationInputMD);
+  DISALLOW_COPY_AND_ASSIGN(NotificationInputTextfieldMD);
+};
+
+class NotificationInputReplyButtonMD : public views::ImageButton {
+ public:
+  NotificationInputReplyButtonMD(views::ButtonListener* listener);
+  ~NotificationInputReplyButtonMD() override;
+
+  void SetNormalImage();
+  void SetPlaceholderImage();
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(NotificationInputReplyButtonMD);
+};
+
+class NotificationInputContainerMD : public views::View,
+                                     public views::ButtonListener {
+ public:
+  NotificationInputContainerMD(NotificationInputDelegate* delegate);
+  ~NotificationInputContainerMD() override;
+
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
+  NotificationInputTextfieldMD* textfield() const { return textfield_; };
+  NotificationInputReplyButtonMD* button() const { return button_; };
+
+ private:
+  NotificationInputDelegate* const delegate_;
+
+  NotificationInputTextfieldMD* const textfield_;
+  NotificationInputReplyButtonMD* const button_;
+
+  DISALLOW_COPY_AND_ASSIGN(NotificationInputContainerMD);
 };
 
 // View that displays all current types of notification (web, basic, image, and
@@ -200,6 +245,8 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   void OnSettingsButtonPressed() override;
 
   // Overridden from NotificationInputDelegate:
+  void SetNormalImageToReplyButton() override;
+  void SetPlaceholderImageToReplyButton() override;
   void OnNotificationInputSubmit(size_t index,
                                  const base::string16& text) override;
 
@@ -279,7 +326,7 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   views::ProgressBar* progress_bar_view_ = nullptr;
   CompactTitleMessageView* compact_title_message_view_ = nullptr;
   views::View* action_buttons_row_ = nullptr;
-  NotificationInputMD* inline_reply_ = nullptr;
+  NotificationInputContainerMD* inline_reply_ = nullptr;
 
   // Views for inline settings.
   views::RadioButton* block_all_button_ = nullptr;

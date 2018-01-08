@@ -63,6 +63,9 @@ class PixelExpectations(GpuTestExpectations):
     self.Fail('Pixel_CanvasUnacceleratedLowLatency2D',
         ['mac', 'linux', 'win', 'android', 'chromeos'], bug=788439)
 
+    # Rebaseline Pixel_CSS3DBlueBox
+    self.Fail('Pixel_CSS3DBlueBox', bug=796558)
+
     # Flaky for unknown reasons only on macOS. Not planning to investigate
     # further.
     self.Flaky('Pixel_ScissorTestWithPreserveDrawingBuffer', ['mac'],
@@ -96,3 +99,17 @@ class PixelExpectations(GpuTestExpectations):
     # Failing on NVIDIA Shield TV; not sure why yet.
     self.Fail('Pixel_WebGL_PremultipliedAlpha_False',
               ['android', 'nvidia'], bug=791733)
+
+    # Temporary supression to rebaseline Video tests on Windows with the
+    # passthrough command decoder
+    self.Fail('Pixel_Video_MP4', ['win', 'intel'], bug=602688)
+    self.Fail('Pixel_Video_VP9', ['win', 'intel'], bug=602688)
+    self.Fail('Pixel_DirectComposition_Video_VP9', ['win', 'intel'],
+        bug=602688)
+
+    # TODO(zmo): temporarily suppress these two tests until new
+    # reference images with new names are generated.
+    self.Fail('Pixel_Canvas2DRedBox_NoGpuProcess',
+              ['linux', 'mac', 'win'], bug=744658)
+    self.Fail('Pixel_CSS3DBlueBox_NoGpuProcess',
+              ['linux', 'mac', 'win'], bug=744658)

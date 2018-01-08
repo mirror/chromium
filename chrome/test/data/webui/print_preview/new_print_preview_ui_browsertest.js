@@ -93,6 +93,10 @@ TEST_F('PrintPreviewSettingsSectionsTest', 'Other', function() {
   this.runMochaTest(settings_sections_tests.TestNames.Other);
 });
 
+TEST_F('PrintPreviewSettingsSectionsTest', 'SetPages', function() {
+  this.runMochaTest(settings_sections_tests.TestNames.SetPages);
+});
+
 TEST_F('PrintPreviewSettingsSectionsTest', 'SetCopies', function() {
   this.runMochaTest(settings_sections_tests.TestNames.SetCopies);
 });
@@ -103,6 +107,26 @@ TEST_F('PrintPreviewSettingsSectionsTest', 'SetLayout', function() {
 
 TEST_F('PrintPreviewSettingsSectionsTest', 'SetColor', function() {
   this.runMochaTest(settings_sections_tests.TestNames.SetColor);
+});
+
+TEST_F('PrintPreviewSettingsSectionsTest', 'SetMediaSize', function() {
+  this.runMochaTest(settings_sections_tests.TestNames.SetMediaSize);
+});
+
+TEST_F('PrintPreviewSettingsSectionsTest', 'SetDpi', function() {
+  this.runMochaTest(settings_sections_tests.TestNames.SetDpi);
+});
+
+TEST_F('PrintPreviewSettingsSectionsTest', 'SetMargins', function() {
+  this.runMochaTest(settings_sections_tests.TestNames.SetMargins);
+});
+
+TEST_F('PrintPreviewSettingsSectionsTest', 'SetScaling', function() {
+  this.runMochaTest(settings_sections_tests.TestNames.SetScaling);
+});
+
+TEST_F('PrintPreviewSettingsSectionsTest', 'SetOther', function() {
+  this.runMochaTest(settings_sections_tests.TestNames.SetOther);
 });
 
 PrintPreviewRestoreStateTest = class extends NewPrintPreviewTest {
@@ -116,6 +140,7 @@ PrintPreviewRestoreStateTest = class extends NewPrintPreviewTest {
     return super.extraLibraries.concat([
       '../test_browser_proxy.js',
       'native_layer_stub.js',
+      'plugin_stub.js',
       'print_preview_test_utils.js',
       'restore_state_test.js',
     ]);
@@ -133,4 +158,32 @@ TEST_F('PrintPreviewRestoreStateTest', 'RestoreTrueValues', function() {
 
 TEST_F('PrintPreviewRestoreStateTest', 'RestoreFalseValues', function() {
   this.runMochaTest(restore_state_test.TestNames.RestoreFalseValues);
+});
+
+TEST_F('PrintPreviewRestoreStateTest', 'SaveValues', function() {
+  this.runMochaTest(restore_state_test.TestNames.SaveValues);
+});
+
+PrintPreviewModelTest = class extends NewPrintPreviewTest {
+  /** @override */
+  get browsePreload() {
+    return 'chrome://print/new/model.html';
+  }
+
+  /** @override */
+  get extraLibraries() {
+    return super.extraLibraries.concat([
+      '../settings/test_util.js',
+      'model_test.js',
+    ]);
+  }
+
+  /** @override */
+  get suiteName() {
+    return model_test.suiteName;
+  }
+};
+
+TEST_F('PrintPreviewModelTest', 'SetStickySettings', function() {
+  this.runMochaTest(model_test.TestNames.SetStickySettings);
 });

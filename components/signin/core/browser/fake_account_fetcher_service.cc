@@ -47,7 +47,13 @@ void FakeAccountFetcherService::StartFetchingChildInfo(
   // In tests, don't do actual network fetch.
 }
 
-void FakeAccountFetcherService::SendRefreshTokenAnnotationRequest(
-    const std::string& account_id) {
-  // In tests, don't do actual network fetch.
+TestImageDecoder::TestImageDecoder() = default;
+
+TestImageDecoder::~TestImageDecoder() = default;
+
+void TestImageDecoder::DecodeImage(
+    const std::string& image_data,
+    const gfx::Size& desired_image_frame_size,
+    const image_fetcher::ImageDecodedCallback& callback) {
+  callback.Run(gfx::Image());
 }

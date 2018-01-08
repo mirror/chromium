@@ -790,7 +790,7 @@
 
     {
       name: "progressBarCompletion",
-      initial: "ProgressBarCompletion::kLoadEvent",
+      initial: "ProgressBarCompletion::kResourcesBeforeDCL",
       type: "ProgressBarCompletion",
     },
 
@@ -871,6 +871,7 @@
     {
       name: "hideScrollbars",
       initial: false,
+      invalidate: "ViewportScrollbar",
     },
 
     // Spellchecking is enabled by default for elements that do not specify it explicitly
@@ -949,6 +950,11 @@
     {
       name: "navigatorPlatformOverride",
       type: "String",
+    },
+    {
+      name: "lowPriorityIframesThreshold",
+      initial: "WebEffectiveConnectionType::kTypeUnknown",
+      type: "WebEffectiveConnectionType",
     },
   ],
 }

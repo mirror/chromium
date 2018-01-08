@@ -26,6 +26,7 @@
 
 struct PrintMsg_Print_Params;
 struct PrintMsg_PrintPages_Params;
+struct PrintHostMsg_DidPrintContent_Params;
 struct PrintHostMsg_SetOptionsFromDocument_Params;
 
 // RenderViewTest-based tests crash on Android
@@ -98,10 +99,6 @@ class PrintRenderFrameHelper
     virtual blink::WebElement GetPdfElement(blink::WebLocalFrame* frame) = 0;
 
     virtual bool IsPrintPreviewEnabled() = 0;
-
-    // If true, the user can be asked to provide print settings.
-    // The default implementation returns |true|.
-    virtual bool IsAskPrintSettingsEnabled();
 
     // If false, window.print() won't do anything.
     // The default implementation returns |true|.
@@ -307,8 +304,9 @@ class PrintRenderFrameHelper
 
   // Helper methods -----------------------------------------------------------
 
-  bool CopyMetafileDataToSharedMem(const PdfMetafileSkia& metafile,
-                                   base::SharedMemoryHandle* shared_mem_handle);
+  bool CopyMetafileDataToReadOnlySharedMem(
+      const PdfMetafileSkia& metafile,
+      PrintHostMsg_DidPrintContent_Params* params);
 
   // Helper method to get page layout in points and fit to page if needed.
   static void ComputePageLayoutInPointsForCss(

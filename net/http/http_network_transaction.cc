@@ -28,6 +28,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/load_timing_info.h"
 #include "net/base/net_errors.h"
+#include "net/base/proxy_server.h"
 #include "net/base/upload_data_stream.h"
 #include "net/base/url_util.h"
 #include "net/cert/cert_status_flags.h"
@@ -53,7 +54,6 @@
 #include "net/http/transport_security_state.h"
 #include "net/http/url_security_manager.h"
 #include "net/log/net_log_event_type.h"
-#include "net/proxy/proxy_server.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/next_proto.h"
 #include "net/socket/socks_client_socket_pool.h"
@@ -86,6 +86,7 @@ HttpNetworkTransaction::HttpNetworkTransaction(RequestPriority priority,
       request_(NULL),
       priority_(priority),
       headers_valid_(false),
+      can_send_early_data_(false),
       request_headers_(),
       read_buf_len_(0),
       total_received_bytes_(0),
@@ -131,6 +132,10 @@ int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
   if (request_->load_flags & LOAD_DISABLE_CERT_REVOCATION_CHECKING) {
     server_ssl_config_.rev_checking_enabled = false;
     proxy_ssl_config_.rev_checking_enabled = false;
+  }
+
+  if (request_info->method != "POST") {
+    can_send_early_data_ = true;
   }
 
   if (request_->load_flags & LOAD_PREFETCH)
@@ -305,7 +310,8 @@ int HttpNetworkTransaction::Read(IOBuffer* buf, int buf_len,
     // also don't worry about this for an HTTPS Proxy, because the
     // communication with the proxy is secure.
     // See http://crbug.com/8473.
-    DCHECK(proxy_info_.is_http() || proxy_info_.is_https());
+    DCHECK(proxy_info_.is_http() || proxy_info_.is_https() ||
+           proxy_info_.is_quic());
     DCHECK_EQ(headers->response_code(), HTTP_PROXY_AUTHENTICATION_REQUIRED);
     LOG(WARNING) << "Blocked proxy response with status "
                  << headers->response_code() << " to CONNECT request for "
@@ -858,12 +864,10 @@ int HttpNetworkTransaction::DoCreateStream() {
     DCHECK(!enable_alternative_services_);
   if (ForWebSocketHandshake()) {
     stream_request_ =
-        session_->http_stream_factory_for_websocket()
-            ->RequestWebSocketHandshakeStream(
-                *request_, priority_, server_ssl_config_, proxy_ssl_config_,
-                this, websocket_handshake_stream_base_create_helper_,
-                enable_ip_based_pooling_, enable_alternative_services_,
-                net_log_);
+        session_->http_stream_factory()->RequestWebSocketHandshakeStream(
+            *request_, priority_, server_ssl_config_, proxy_ssl_config_, this,
+            websocket_handshake_stream_base_create_helper_,
+            enable_ip_based_pooling_, enable_alternative_services_, net_log_);
   } else {
     stream_request_ = session_->http_stream_factory()->RequestStream(
         *request_, priority_, server_ssl_config_, proxy_ssl_config_, this,
@@ -910,7 +914,8 @@ int HttpNetworkTransaction::DoInitStream() {
 
   stream_->GetRemoteEndpoint(&remote_endpoint_);
 
-  return stream_->InitializeStream(request_, priority_, net_log_, io_callback_);
+  return stream_->InitializeStream(request_, can_send_early_data_, priority_,
+                                   net_log_, io_callback_);
 }
 
 int HttpNetworkTransaction::DoInitStreamComplete(int result) {
@@ -1562,6 +1567,8 @@ int HttpNetworkTransaction::HandleIOError(int error) {
       break;
     case ERR_SPDY_PING_FAILED:
     case ERR_SPDY_SERVER_REFUSED_STREAM:
+    case ERR_SPDY_PUSHED_STREAM_NOT_AVAILABLE:
+    case ERR_SPDY_CLAIMED_PUSHED_STREAM_RESET_BY_SERVER:
     case ERR_QUIC_HANDSHAKE_FAILED:
       if (HasExceededMaxRetries())
         break;

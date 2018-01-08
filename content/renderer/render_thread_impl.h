@@ -40,11 +40,12 @@
 #include "content/common/renderer.mojom.h"
 #include "content/common/renderer_host.mojom.h"
 #include "content/common/storage_partition_service.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/renderer/render_thread.h"
+#include "content/public/renderer/url_loader_throttle_provider.h"
 #include "content/renderer/gpu/compositor_dependencies.h"
 #include "content/renderer/layout_test_dependencies.h"
-#include "content/renderer/media/audio_ipc_factory.h"
+#include "content/renderer/media/audio_input_ipc_factory.h"
+#include "content/renderer/media/audio_output_ipc_factory.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ipc/ipc_sync_channel.h"
 #include "media/media_features.h"
@@ -53,6 +54,7 @@
 #include "mojo/public/cpp/bindings/thread_safe_interface_ptr.h"
 #include "net/base/network_change_notifier.h"
 #include "net/nqe/effective_connection_type.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom.h"
@@ -127,15 +129,11 @@ namespace content {
 
 class AppCacheDispatcher;
 class AecDumpMessageFilter;
-class AudioInputMessageFilter;
 class AudioMessageFilter;
 class AudioRendererMixerManager;
-class BlobMessageFilter;
 class BrowserPluginManager;
 class CacheStorageDispatcher;
 class CategorizedWorkerPool;
-class ChildResourceMessageFilter;
-class CompositorForwardingMessageFilter;
 class DomStorageDispatcher;
 class FileSystemDispatcher;
 class FrameSwapMessageQueue;
@@ -147,11 +145,9 @@ class NotificationDispatcher;
 class P2PSocketDispatcher;
 class PeerConnectionDependencyFactory;
 class PeerConnectionTracker;
-class QuotaDispatcher;
 class RenderThreadObserver;
 class RendererBlinkPlatformImpl;
 class ResourceDispatcher;
-class ResourceDispatchThrottler;
 class ServiceWorkerMessageFilter;
 class VideoCaptureImplManager;
 
@@ -199,7 +195,8 @@ class CONTENT_EXPORT RenderThreadImpl
       RendererBlinkPlatformImpl* blink_platform_impl);
 
   // Returns the task runner for the main thread where the RenderThread lives.
-  static scoped_refptr<base::SingleThreadTaskRunner> GetMainTaskRunner();
+  static scoped_refptr<base::SingleThreadTaskRunner>
+  DeprecatedGetMainTaskRunner();
 
   ~RenderThreadImpl() override;
   void Shutdown() override;
@@ -257,7 +254,6 @@ class CONTENT_EXPORT RenderThreadImpl
   bool IsPartialRasterEnabled() override;
   bool IsGpuMemoryBufferCompositorResourcesEnabled() override;
   bool IsElasticOverscrollEnabled() override;
-  const viz::BufferUsageAndFormatList& GetTextureTargetExceptionList() override;
   scoped_refptr<base::SingleThreadTaskRunner>
   GetCompositorMainThreadTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner>
@@ -320,10 +316,6 @@ class CONTENT_EXPORT RenderThreadImpl
     return blink_platform_impl_.get();
   }
 
-  CompositorForwardingMessageFilter* compositor_message_filter() const {
-    return compositor_message_filter_.get();
-  }
-
   InputHandlerManager* input_handler_manager() const {
     return input_handler_manager_.get();
   }
@@ -341,10 +333,6 @@ class CONTENT_EXPORT RenderThreadImpl
     return dom_storage_dispatcher_.get();
   }
 
-  AudioInputMessageFilter* audio_input_message_filter() {
-    return audio_input_message_filter_.get();
-  }
-
   FileSystemDispatcher* file_system_dispatcher() const {
     return file_system_dispatcher_.get();
   }
@@ -353,12 +341,12 @@ class CONTENT_EXPORT RenderThreadImpl
     return midi_message_filter_.get();
   }
 
-  QuotaDispatcher* quota_dispatcher() const {
-    return quota_dispatcher_.get();
-  }
-
   ResourceDispatcher* resource_dispatcher() const {
     return resource_dispatcher_.get();
+  }
+
+  URLLoaderThrottleProvider* url_loader_throttle_provider() const {
+    return url_loader_throttle_provider_.get();
   }
 
 #if defined(OS_ANDROID)
@@ -542,6 +530,9 @@ class CONTENT_EXPORT RenderThreadImpl
 
   bool NeedsToRecordFirstActivePaint(int metric_type) const;
 
+  // Sets the current pipeline rendering color space.
+  void SetRenderingColorSpace(const gfx::ColorSpace& color_space);
+
  protected:
   RenderThreadImpl(
       const InProcessChildThreadParams& params,
@@ -584,6 +575,8 @@ class CONTENT_EXPORT RenderThreadImpl
   void OnGetAccessibilityTree();
 
   // mojom::Renderer:
+  void CreateEmbedderRendererService(
+      service_manager::mojom::ServiceRequest service_request) override;
   void CreateView(mojom::CreateViewParamsPtr params) override;
   void CreateFrame(mojom::CreateFrameParamsPtr params) override;
   void SetUpEmbeddedWorkerChannelForServiceWorker(
@@ -629,9 +622,6 @@ class CONTENT_EXPORT RenderThreadImpl
   void OnSyncMemoryPressure(
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);
 
-  std::unique_ptr<viz::BeginFrameSource> CreateExternalBeginFrameSource(
-      int routing_id);
-
   std::unique_ptr<viz::SyntheticBeginFrameSource>
   CreateSyntheticBeginFrameSource();
 
@@ -647,17 +637,13 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler_;
   std::unique_ptr<RendererBlinkPlatformImpl> blink_platform_impl_;
   std::unique_ptr<ResourceDispatcher> resource_dispatcher_;
-  std::unique_ptr<ResourceDispatchThrottler> resource_dispatch_throttler_;
   std::unique_ptr<CacheStorageDispatcher> main_thread_cache_storage_dispatcher_;
   std::unique_ptr<FileSystemDispatcher> file_system_dispatcher_;
-  std::unique_ptr<QuotaDispatcher> quota_dispatcher_;
+  std::unique_ptr<URLLoaderThrottleProvider> url_loader_throttle_provider_;
 
   // Used on the renderer and IPC threads.
-  scoped_refptr<BlobMessageFilter> blob_message_filter_;
-  scoped_refptr<AudioInputMessageFilter> audio_input_message_filter_;
   scoped_refptr<MidiMessageFilter> midi_message_filter_;
   scoped_refptr<ServiceWorkerMessageFilter> service_worker_message_filter_;
-  scoped_refptr<ChildResourceMessageFilter> resource_message_filter_;
 
   std::unique_ptr<BrowserPluginManager> browser_plugin_manager_;
 
@@ -678,10 +664,13 @@ class CONTENT_EXPORT RenderThreadImpl
   scoped_refptr<AecDumpMessageFilter> aec_dump_message_filter_;
 #endif
 
+  // Provides AudioInputIPC objects for audio input devices. Initialized in
+  // Init.
+  base::Optional<AudioInputIPCFactory> audio_input_ipc_factory_;
   // Provides AudioOutputIPC objects for audio output devices. It either uses
   // an AudioMessageFilter for this or provides MojoAudioOutputIPC objects.
   // Initialized in Init.
-  base::Optional<AudioIPCFactory> audio_ipc_factory_;
+  base::Optional<AudioOutputIPCFactory> audio_output_ipc_factory_;
 
   // Used on the render thread.
   std::unique_ptr<VideoCaptureImplManager> vc_manager_;
@@ -745,7 +734,6 @@ class CONTENT_EXPORT RenderThreadImpl
   base::CancelableCallback<void(const IPC::Message&)> main_input_callback_;
   scoped_refptr<IPC::MessageFilter> input_event_filter_;
   std::unique_ptr<InputHandlerManager> input_handler_manager_;
-  scoped_refptr<CompositorForwardingMessageFilter> compositor_message_filter_;
 
 #if defined(OS_ANDROID)
   scoped_refptr<SynchronousCompositorFilter> sync_compositor_message_filter_;
@@ -780,9 +768,11 @@ class CONTENT_EXPORT RenderThreadImpl
   bool is_gpu_memory_buffer_compositor_resources_enabled_;
   bool is_partial_raster_enabled_;
   bool is_elastic_overscroll_enabled_;
-  viz::BufferUsageAndFormatList texture_target_exception_list_;
   bool is_threaded_animation_enabled_;
   bool is_scroll_animator_enabled_;
+
+  // Target rendering ColorSpace.
+  gfx::ColorSpace rendering_color_space_;
 
   class PendingFrameCreate : public base::RefCounted<PendingFrameCreate> {
    public:

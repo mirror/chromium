@@ -125,6 +125,8 @@ class CORE_EXPORT HTMLFormControlElement : public LabelableElement,
   bool IsAutofilled() const { return is_autofilled_; }
   void SetAutofilled(bool = true);
 
+  const AtomicString& autocapitalize() const final;
+
   static const HTMLFormControlElement* EnclosingFormControlElement(const Node*);
 
   String NameForAutofill() const;
@@ -164,7 +166,7 @@ class CORE_EXPORT HTMLFormControlElement : public LabelableElement,
       InputDeviceCapabilities* source_capabilities) override;
   void WillCallDefaultEventHandler(const Event&) final;
 
-  void DidRecalcStyle() override;
+  void DidRecalcStyle(StyleRecalcChange) override;
 
   // This must be called any time the result of willValidate() has changed.
   void SetNeedsWillValidateCheck();
@@ -175,6 +177,7 @@ class CORE_EXPORT HTMLFormControlElement : public LabelableElement,
 
  private:
   bool IsFormControlElement() const final { return true; }
+  bool AlwaysCreateUserAgentShadowRoot() const override { return true; }
 
   int tabIndex() const override;
 

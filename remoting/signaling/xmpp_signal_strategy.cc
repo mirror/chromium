@@ -19,7 +19,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "jingle/glue/proxy_resolving_client_socket.h"
 #include "net/cert/cert_verifier.h"
 #include "net/cert/ct_policy_enforcer.h"
 #include "net/cert/multi_log_ct_verifier.h"
@@ -34,6 +33,8 @@
 #include "remoting/signaling/signaling_address.h"
 #include "remoting/signaling/xmpp_login_handler.h"
 #include "remoting/signaling/xmpp_stream_parser.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket_factory.h"
 #include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 // Use 50 seconds keep-alive interval, in case routers terminate
@@ -122,6 +123,8 @@ class XmppSignalStrategy::Core : public XmppLoginHandler::Delegate {
   XmppServerConfig xmpp_server_config_;
 
   // Used by the |socket_|.
+  std::unique_ptr<network::ProxyResolvingClientSocketFactory>
+      proxy_resolving_socket_factory_;
   std::unique_ptr<net::CertVerifier> cert_verifier_;
   std::unique_ptr<net::TransportSecurityState> transport_security_state_;
   std::unique_ptr<net::CTVerifier> cert_transparency_verifier_;
@@ -178,9 +181,16 @@ void XmppSignalStrategy::Core::Connect() {
   for (auto& observer : listeners_)
     observer.OnSignalStrategyStateChange(CONNECTING);
 
-  socket_.reset(new jingle_glue::ProxyResolvingClientSocket(
-      socket_factory_, request_context_getter_, net::SSLConfig(),
-      net::HostPortPair(xmpp_server_config_.host, xmpp_server_config_.port)));
+  if (!proxy_resolving_socket_factory_) {
+    proxy_resolving_socket_factory_ =
+        std::make_unique<network::ProxyResolvingClientSocketFactory>(
+            socket_factory_, request_context_getter_->GetURLRequestContext());
+  }
+  socket_ = proxy_resolving_socket_factory_->CreateSocket(
+      net::SSLConfig(),
+      GURL("https://" +
+           net::HostPortPair(xmpp_server_config_.host, xmpp_server_config_.port)
+               .ToString()));
 
   int result = socket_->Connect(base::Bind(
       &Core::OnSocketConnected, base::Unretained(this)));

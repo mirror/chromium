@@ -98,9 +98,11 @@ class CaretColor;
 class Color;
 class ColumnRuleColor;
 class FloodColor;
+class Fill;
 class LightingColor;
 class OutlineColor;
 class StopColor;
+class Stroke;
 class TextDecorationColor;
 class WebkitTapHighlightColor;
 class WebkitTextEmphasisColor;
@@ -121,7 +123,7 @@ class WebkitTextStrokeColor;
 // In addition to storing the computed value of every CSS property,
 // ComputedStyle also contains various internal style information. Examples
 // include cached_pseudo_styles_ (for storing pseudo element styles), unique_
-// (for style sharing) and has_simple_underline_ (cached indicator flag of
+// (for style caching) and has_simple_underline_ (cached indicator flag of
 // text-decoration). These are stored on ComputedStyle for two reasons:
 //
 //  1) They share the same lifetime as ComputedStyle, so it is convenient to
@@ -188,9 +190,11 @@ class ComputedStyle : public ComputedStyleBase,
   friend class CSSLonghand::Color;
   friend class CSSLonghand::ColumnRuleColor;
   friend class CSSLonghand::FloodColor;
+  friend class CSSLonghand::Fill;
   friend class CSSLonghand::LightingColor;
   friend class CSSLonghand::OutlineColor;
   friend class CSSLonghand::StopColor;
+  friend class CSSLonghand::Stroke;
   friend class CSSLonghand::TextDecorationColor;
   friend class CSSLonghand::WebkitTapHighlightColor;
   friend class CSSLonghand::WebkitTextEmphasisColor;
@@ -515,16 +519,6 @@ class ComputedStyle : public ComputedStyleBase,
     SetColumnCountInternal(ComputedStyleInitialValues::InitialColumnCount());
   }
 
-  // column-gap (aka -webkit-column-gap)
-  void SetColumnGap(float f) {
-    SetHasNormalColumnGapInternal(false);
-    SetColumnGapInternal(f);
-  }
-  void SetHasNormalColumnGap() {
-    SetHasNormalColumnGapInternal(true);
-    SetColumnGapInternal(0);
-  }
-
   // column-rule-color (aka -webkit-column-rule-color)
   void SetColumnRuleColor(const StyleColor& c) {
     if (ColumnRuleColor() != c) {
@@ -716,52 +710,50 @@ class ComputedStyle : public ComputedStyleBase,
       SetScrollPaddingBottom(v);
   }
 
-  // scroll-snap-margin-block-start
-  float ScrollSnapMarginBlockStart() const {
-    return IsHorizontalWritingMode() ? ScrollSnapMarginTop()
-                                     : ScrollSnapMarginLeft();
+  // scroll-margin-block-start
+  float ScrollMarginBlockStart() const {
+    return IsHorizontalWritingMode() ? ScrollMarginTop() : ScrollMarginLeft();
   }
-  void SetScrollSnapMarginBlockStart(float v) {
+  void SetScrollMarginBlockStart(float v) {
     if (IsHorizontalWritingMode())
-      SetScrollSnapMarginTop(v);
+      SetScrollMarginTop(v);
     else
-      SetScrollSnapMarginLeft(v);
+      SetScrollMarginLeft(v);
   }
 
-  // scroll-snap-margin-block-end
-  float ScrollSnapMarginBlockEnd() const {
-    return IsHorizontalWritingMode() ? ScrollSnapMarginBottom()
-                                     : ScrollSnapMarginRight();
+  // scroll-margin-block-end
+  float ScrollMarginBlockEnd() const {
+    return IsHorizontalWritingMode() ? ScrollMarginBottom()
+                                     : ScrollMarginRight();
   }
-  void SetScrollSnapMarginBlockEnd(float v) {
+  void SetScrollMarginBlockEnd(float v) {
     if (IsHorizontalWritingMode())
-      SetScrollSnapMarginBottom(v);
+      SetScrollMarginBottom(v);
     else
-      SetScrollSnapMarginRight(v);
+      SetScrollMarginRight(v);
   }
 
-  // scroll-snap-margin-inline-start
-  float ScrollSnapMarginInlineStart() const {
-    return IsHorizontalWritingMode() ? ScrollSnapMarginLeft()
-                                     : ScrollSnapMarginTop();
+  // scroll-margin-inline-start
+  float ScrollMarginInlineStart() const {
+    return IsHorizontalWritingMode() ? ScrollMarginLeft() : ScrollMarginTop();
   }
-  void SetScrollSnapMarginInlineStart(float v) {
+  void SetScrollMarginInlineStart(float v) {
     if (IsHorizontalWritingMode())
-      SetScrollSnapMarginLeft(v);
+      SetScrollMarginLeft(v);
     else
-      SetScrollSnapMarginTop(v);
+      SetScrollMarginTop(v);
   }
 
-  // scroll-snap-margin-inline-end
-  float ScrollSnapMarginInlineEnd() const {
-    return IsHorizontalWritingMode() ? ScrollSnapMarginRight()
-                                     : ScrollSnapMarginBottom();
+  // scroll-margin-inline-end
+  float ScrollMarginInlineEnd() const {
+    return IsHorizontalWritingMode() ? ScrollMarginRight()
+                                     : ScrollMarginBottom();
   }
-  void SetScrollSnapMarginInlineEnd(float v) {
+  void SetScrollMarginInlineEnd(float v) {
     if (IsHorizontalWritingMode())
-      SetScrollSnapMarginRight(v);
+      SetScrollMarginRight(v);
     else
-      SetScrollSnapMarginBottom(v);
+      SetScrollMarginBottom(v);
   }
 
   // shape-image-threshold (aka -webkit-shape-image-threshold)
@@ -876,6 +868,7 @@ class ComputedStyle : public ComputedStyleBase,
     SetTextEmphasisMarkInternal(mark);
   }
   const AtomicString& TextEmphasisMarkString() const;
+  LineLogicalSide GetTextEmphasisLineLogicalSide() const;
 
   // -webkit-text-emphasis-color (aka -epub-text-emphasis-color)
   void SetTextEmphasisColor(const StyleColor& color) {
@@ -1856,6 +1849,9 @@ class ComputedStyle : public ComputedStyleBase,
     return IsDisplayFlexibleBox(Display()) || IsDisplayGridBox(Display());
   }
   bool IsDisplayFlexibleBox() const { return IsDisplayFlexibleBox(Display()); }
+  bool IsDisplayLayoutCustomBox() const {
+    return IsDisplayLayoutCustomBox(Display());
+  }
 
   // Isolation utility functions.
   bool HasIsolation() const { return Isolation() != EIsolation::kAuto; }
@@ -2273,12 +2269,18 @@ class ComputedStyle : public ComputedStyleBase,
     return display == EDisplay::kGrid || display == EDisplay::kInlineGrid;
   }
 
+  static bool IsDisplayLayoutCustomBox(EDisplay display) {
+    return display == EDisplay::kLayoutCustom ||
+           display == EDisplay::kInlineLayoutCustom;
+  }
+
   static bool IsDisplayReplacedType(EDisplay display) {
     return display == EDisplay::kInlineBlock ||
            display == EDisplay::kWebkitInlineBox ||
            display == EDisplay::kInlineFlex ||
            display == EDisplay::kInlineTable ||
-           display == EDisplay::kInlineGrid;
+           display == EDisplay::kInlineGrid ||
+           display == EDisplay::kInlineLayoutCustom;
   }
 
   static bool IsDisplayInlineType(EDisplay display) {

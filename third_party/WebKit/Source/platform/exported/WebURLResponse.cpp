@@ -54,7 +54,7 @@ class URLResponseExtraDataContainer : public ResourceResponse::ExtraData {
     return base::AdoptRef(new URLResponseExtraDataContainer(extra_data));
   }
 
-  ~URLResponseExtraDataContainer() override {}
+  ~URLResponseExtraDataContainer() override = default;
 
   WebURLResponse::ExtraData* GetExtraData() const { return extra_data_.get(); }
 
@@ -71,7 +71,7 @@ class URLResponseExtraDataContainer : public ResourceResponse::ExtraData {
 // heap, which is otherwise disallowed by the DISALLOW_NEW_EXCEPT_PLACEMENT_NEW
 // annotation on ResourceResponse.
 struct WebURLResponse::ResourceResponseContainer {
-  ResourceResponseContainer() {}
+  ResourceResponseContainer() = default;
 
   explicit ResourceResponseContainer(const ResourceResponse& r)
       : resource_response(r) {}
@@ -79,7 +79,7 @@ struct WebURLResponse::ResourceResponseContainer {
   ResourceResponse resource_response;
 };
 
-WebURLResponse::~WebURLResponse() {}
+WebURLResponse::~WebURLResponse() = default;
 
 WebURLResponse::WebURLResponse()
     : owned_resource_response_(new ResourceResponseContainer()),
@@ -234,10 +234,6 @@ void WebURLResponse::SetHasMajorCertificateErrors(bool value) {
 
 void WebURLResponse::SetIsLegacySymantecCert(bool value) {
   resource_response_->SetIsLegacySymantecCert(value);
-}
-
-void WebURLResponse::SetCertValidityStart(base::Time expiration) {
-  resource_response_->SetCertValidityStart(expiration);
 }
 
 void WebURLResponse::SetSecurityStyle(WebSecurityStyle security_style) {

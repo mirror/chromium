@@ -46,9 +46,11 @@
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/LinkedHashSet.h"
 #include "platform/wtf/Vector.h"
+#include "public/platform/WebResourceTimingInfo.h"
 
 namespace blink {
 
+class DoubleOrPerformanceMarkOptions;
 class ExceptionState;
 class PerformanceObserver;
 class PerformanceTiming;
@@ -74,20 +76,20 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   virtual void UpdateLongTaskInstrumentation() {}
 
-  // Reduce the resolution to 5µs to prevent timing attacks. See:
+  // Reduce the resolution to prevent timing attacks. See:
   // http://www.w3.org/TR/hr-time-2/#privacy-security
   static double ClampTimeResolution(double time_seconds);
 
   static DOMHighResTimeStamp MonotonicTimeToDOMHighResTimeStamp(
-      double time_origin,
-      double monotonic_time,
+      TimeTicks time_origin,
+      TimeTicks monotonic_time,
       bool allow_negative_value);
 
   // Translate given platform monotonic time in seconds into a high resolution
   // DOMHighResTimeStamp in milliseconds. The result timestamp is relative to
   // document's time origin and has a time resolution that is safe for
   // exposing to web.
-  DOMHighResTimeStamp MonotonicTimeToDOMHighResTimeStamp(double) const;
+  DOMHighResTimeStamp MonotonicTimeToDOMHighResTimeStamp(TimeTicks) const;
   DOMHighResTimeStamp now() const;
 
   // High Resolution Time Level 3 timeOrigin.
@@ -95,7 +97,7 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   DOMHighResTimeStamp timeOrigin() const;
 
   // Internal getter method for the time origin value.
-  double GetTimeOrigin() const { return time_origin_; }
+  double GetTimeOrigin() const { return TimeTicksInSeconds(time_origin_); }
 
   PerformanceEntryVector getEntries();
   PerformanceEntryVector getEntriesByType(const String& entry_type);
@@ -108,23 +110,43 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   DEFINE_ATTRIBUTE_EVENT_LISTENER(resourcetimingbufferfull);
 
   void AddLongTaskTiming(
-      double start_time,
-      double end_time,
+      TimeTicks start_time,
+      TimeTicks end_time,
       const String& name,
       const String& culprit_frame_src,
       const String& culprit_frame_id,
       const String& culprit_frame_name,
       const SubTaskAttribution::EntriesVector& sub_task_attributions);
 
-  void AddResourceTiming(const ResourceTimingInfo&);
+  // Generates and add a performance entry for the given ResourceTimingInfo.
+  // |overridden_initiator_type| allows the initiator type to be overridden to
+  // the frame element name for the main resource.
+  void GenerateAndAddResourceTiming(
+      const ResourceTimingInfo&,
+      const AtomicString& overridden_initiator_type = g_null_atom);
+  // Generates timing info suitable for appending to the performance entries of
+  // a context with |origin|. This should be rarely used; most callsites should
+  // prefer the convenience method |GenerateAndAddResourceTiming()|.
+  static WebResourceTimingInfo GenerateResourceTiming(
+      const SecurityOrigin& destination_origin,
+      const ResourceTimingInfo&,
+      ExecutionContext& context_for_use_counter);
+  void AddResourceTiming(const WebResourceTimingInfo&,
+                         const AtomicString& initiator_type = g_null_atom);
 
   void NotifyNavigationTimingToObservers();
 
-  void AddFirstPaintTiming(double start_time);
+  void AddFirstPaintTiming(TimeTicks start_time);
 
-  void AddFirstContentfulPaintTiming(double start_time);
+  void AddFirstContentfulPaintTiming(TimeTicks start_time);
 
-  void mark(const String& mark_name, ExceptionState&);
+  void mark(ScriptState*, const String& mark_name, ExceptionState&);
+
+  void mark(ScriptState*,
+            const String& mark_name,
+            DoubleOrPerformanceMarkOptions& start_time_or_mark_options,
+            ExceptionState&);
+
   void clearMarks(const String& mark_name);
 
   void measure(const String& measure_name,
@@ -201,10 +223,10 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
                                      const AtomicString&,
                                      ExecutionContext*);
 
-  void AddPaintTiming(PerformancePaintTiming::PaintType, double start_time);
+  void AddPaintTiming(PerformancePaintTiming::PaintType, TimeTicks start_time);
 
  protected:
-  PerformanceBase(double time_origin, scoped_refptr<WebTaskRunner>);
+  PerformanceBase(TimeTicks time_origin, scoped_refptr<WebTaskRunner>);
 
   // Expect Performance to override this method,
   // WorkerPerformance doesn't have to override this.
@@ -232,7 +254,7 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   Member<PerformanceEntry> first_paint_timing_;
   Member<PerformanceEntry> first_contentful_paint_timing_;
 
-  double time_origin_;
+  TimeTicks time_origin_;
 
   PerformanceEntryTypeMask observer_filter_options_;
   HeapLinkedHashSet<TraceWrapperMember<PerformanceObserver>> observers_;

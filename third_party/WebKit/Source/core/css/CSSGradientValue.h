@@ -37,7 +37,6 @@ namespace blink {
 class Color;
 class Gradient;
 class Document;
-class LayoutObject;
 
 namespace cssvalue {
 
@@ -96,7 +95,7 @@ class CSSGradientValue : public CSSImageGeneratorValue {
   scoped_refptr<Image> GetImage(const ImageResourceObserver&,
                                 const Document&,
                                 const ComputedStyle&,
-                                const IntSize&);
+                                const FloatSize&);
 
   void AddStop(const CSSGradientColorStop& stop) {
     stops_.push_back(stop);
@@ -110,14 +109,14 @@ class CSSGradientValue : public CSSImageGeneratorValue {
   CSSGradientType GradientType() const { return gradient_type_; }
 
   bool IsFixedSize() const { return false; }
-  IntSize FixedSize(const Document&) const { return IntSize(); }
+  FloatSize FixedSize(const Document&) const { return FloatSize(); }
 
   bool IsPending() const { return false; }
   bool KnownToBeOpaque(const Document&, const ComputedStyle&) const;
 
   void LoadSubimages(const Document&) {}
 
-  void GetStopColors(Vector<Color>& stop_colors, const LayoutObject&) const;
+  Vector<Color> GetStopColors(const Document&, const ComputedStyle&) const;
 
   void TraceAfterDispatch(blink::Visitor*);
 
@@ -135,8 +134,9 @@ class CSSGradientValue : public CSSImageGeneratorValue {
 
   void AddStops(GradientDesc&,
                 const CSSToLengthConversionData&,
-                const LayoutObject&);
-  void AddDeprecatedStops(GradientDesc&, const LayoutObject&);
+                const Document&,
+                const ComputedStyle&);
+  void AddDeprecatedStops(GradientDesc&, const Document&, const ComputedStyle&);
 
   void AppendCSSTextForColorStops(StringBuilder&,
                                   bool requires_separator) const;
@@ -170,8 +170,9 @@ class CSSLinearGradientValue final : public CSSGradientValue {
 
   // Create the gradient for a given size.
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const IntSize&,
-                                         const LayoutObject&);
+                                         const FloatSize&,
+                                         const Document&,
+                                         const ComputedStyle&);
 
   bool Equals(const CSSLinearGradientValue&) const;
 
@@ -243,8 +244,9 @@ class CSSRadialGradientValue final : public CSSGradientValue {
 
   // Create the gradient for a given size.
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const IntSize&,
-                                         const LayoutObject&);
+                                         const FloatSize&,
+                                         const Document&,
+                                         const ComputedStyle&);
 
   bool Equals(const CSSRadialGradientValue&) const;
 
@@ -309,8 +311,9 @@ class CSSConicGradientValue final : public CSSGradientValue {
 
   // Create the gradient for a given size.
   scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const IntSize&,
-                                         const LayoutObject&);
+                                         const FloatSize&,
+                                         const Document&,
+                                         const ComputedStyle&);
 
   bool Equals(const CSSConicGradientValue&) const;
 

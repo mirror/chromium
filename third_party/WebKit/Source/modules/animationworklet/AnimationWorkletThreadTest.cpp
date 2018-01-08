@@ -30,7 +30,6 @@
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/text/TextPosition.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebURLRequest.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -40,7 +39,8 @@ namespace {
 class AnimationWorkletTestPlatform : public TestingPlatformSupport {
  public:
   AnimationWorkletTestPlatform()
-      : thread_(old_platform_->CreateThread("Compositor")) {}
+      : thread_(old_platform_->CreateThread(
+            WebThreadCreationParams("Compositor"))) {}
 
   WebThread* CompositorThread() const override { return thread_.get(); }
 
@@ -59,7 +59,7 @@ class TestAnimationWorkletProxyClient
   USING_GARBAGE_COLLECTED_MIXIN(TestAnimationWorkletProxyClient);
 
  public:
-  TestAnimationWorkletProxyClient() {}
+  TestAnimationWorkletProxyClient() = default;
   void SetGlobalScope(WorkletGlobalScope*) override {}
   void Dispose() override {}
 };
@@ -121,9 +121,10 @@ class AnimationWorkletThreadTest : public PageTestBase {
         thread->GlobalScope()->ScriptController()->GetScriptState();
     EXPECT_TRUE(script_state);
     ScriptState::Scope scope(script_state);
+    const KURL js_url("https://example.com/foo.js");
     ScriptModule module = ScriptModule::Compile(
-        script_state->GetIsolate(), "var counter = 0; ++counter;", "worklet.js",
-        ScriptFetchOptions(), kSharableCrossOrigin,
+        script_state->GetIsolate(), "var counter = 0; ++counter;", js_url,
+        js_url, ScriptFetchOptions(), kSharableCrossOrigin,
         TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
     EXPECT_FALSE(module.IsNull());
     ScriptValue exception = module.Instantiate(script_state);

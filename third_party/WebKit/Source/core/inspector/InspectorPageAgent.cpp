@@ -45,7 +45,6 @@
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/html/VoidCallback.h"
 #include "core/html/imports/HTMLImportLoader.h"
 #include "core/html/imports/HTMLImportsController.h"
 #include "core/html/parser/TextResourceDecoder.h"
@@ -72,7 +71,6 @@
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/Time.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/Base64.h"
@@ -88,7 +86,6 @@ static const char kPageAgentEnabled[] = "pageAgentEnabled";
 static const char kPageAgentScriptsToEvaluateOnLoad[] =
     "pageAgentScriptsToEvaluateOnLoad";
 static const char kScreencastEnabled[] = "screencastEnabled";
-static const char kAutoAttachToCreatedPages[] = "autoAttachToCreatedPages";
 static const char kLifecycleEventsEnabled[] = "lifecycleEventsEnabled";
 }
 
@@ -414,7 +411,8 @@ InspectorPageAgent::ResourceType InspectorPageAgent::ToResourceType(
       return InspectorPageAgent::kImageResource;
     case Resource::kFont:
       return InspectorPageAgent::kFontResource;
-    case Resource::kMedia:
+    case Resource::kAudio:
+    case Resource::kVideo:
       return InspectorPageAgent::kMediaResource;
     case Resource::kManifest:
       return InspectorPageAgent::kManifestResource;
@@ -526,11 +524,6 @@ Response InspectorPageAgent::removeScriptToEvaluateOnNewDocument(
   return removeScriptToEvaluateOnLoad(identifier);
 }
 
-Response InspectorPageAgent::setAutoAttachToCreatedPages(bool auto_attach) {
-  state_->setBoolean(PageAgentState::kAutoAttachToCreatedPages, auto_attach);
-  return Response::OK();
-}
-
 Response InspectorPageAgent::setLifecycleEventsEnabled(bool enabled) {
   state_->setBoolean(PageAgentState::kLifecycleEventsEnabled, enabled);
   if (!enabled)
@@ -543,33 +536,35 @@ Response InspectorPageAgent::setLifecycleEventsEnabled(bool enabled) {
       continue;
 
     DocumentLoadTiming& timing = loader->GetTiming();
-    double commit_timestamp = timing.ResponseEnd();
-    if (commit_timestamp) {
-      LifecycleEvent(frame, loader, "commit", commit_timestamp);
+    TimeTicks commit_timestamp = timing.ResponseEnd();
+    if (!commit_timestamp.is_null()) {
+      LifecycleEvent(frame, loader, "commit",
+                     TimeTicksInSeconds(commit_timestamp));
     }
 
-    double domcontentloaded_timestamp =
+    TimeTicks domcontentloaded_timestamp =
         document->GetTiming().DomContentLoadedEventEnd();
-    if (domcontentloaded_timestamp) {
+    if (!domcontentloaded_timestamp.is_null()) {
       LifecycleEvent(frame, loader, "DOMContentLoaded",
-                     domcontentloaded_timestamp);
+                     TimeTicksInSeconds(domcontentloaded_timestamp));
     }
 
-    double load_timestamp = timing.LoadEventEnd();
-    if (load_timestamp) {
-      LifecycleEvent(frame, loader, "load", load_timestamp);
+    TimeTicks load_timestamp = timing.LoadEventEnd();
+    if (!load_timestamp.is_null()) {
+      LifecycleEvent(frame, loader, "load", TimeTicksInSeconds(load_timestamp));
     }
 
     IdlenessDetector* idleness_detector = frame->GetIdlenessDetector();
-    double network_almost_idle_timestamp =
+    TimeTicks network_almost_idle_timestamp =
         idleness_detector->GetNetworkAlmostIdleTime();
-    if (network_almost_idle_timestamp) {
+    if (!network_almost_idle_timestamp.is_null()) {
       LifecycleEvent(frame, loader, "networkAlmostIdle",
-                     network_almost_idle_timestamp);
+                     TimeTicksInSeconds(network_almost_idle_timestamp));
     }
-    double network_idle_timestamp = idleness_detector->GetNetworkIdleTime();
-    if (network_idle_timestamp) {
-      LifecycleEvent(frame, loader, "networkIdle", network_idle_timestamp);
+    TimeTicks network_idle_timestamp = idleness_detector->GetNetworkIdleTime();
+    if (!network_idle_timestamp.is_null()) {
+      LifecycleEvent(frame, loader, "networkIdle",
+                     TimeTicksInSeconds(network_idle_timestamp));
     }
   }
 
@@ -591,19 +586,6 @@ Response InspectorPageAgent::reload(
                                         ? kFrameLoadTypeReloadBypassingCache
                                         : kFrameLoadTypeReload,
                                     ClientRedirectPolicy::kNotClientRedirect);
-  return Response::OK();
-}
-
-Response InspectorPageAgent::navigate(const String& url,
-                                      Maybe<String> referrer,
-                                      Maybe<String> transitionType,
-                                      String* out_frame_id,
-                                      Maybe<String>* out_loader_id,
-                                      Maybe<String>* errorText) {
-  LocalFrame* frame = inspected_frames_->Root();
-  *out_frame_id = IdentifiersFactory::FrameId(frame);
-  DocumentLoader* loader = frame->Loader().GetDocumentLoader();
-  *out_loader_id = IdentifiersFactory::LoaderId(loader);
   return Response::OK();
 }
 
@@ -926,13 +908,6 @@ void InspectorPageAgent::Did(const probe::RecalculateStyle&) {
 void InspectorPageAgent::PageLayoutInvalidated(bool resized) {
   if (enabled_ && client_)
     client_->PageLayoutInvalidated(resized);
-}
-
-void InspectorPageAgent::WindowCreated(LocalFrame* created) {
-  if (enabled_ && state_->booleanProperty(
-                      PageAgentState::kAutoAttachToCreatedPages, false)) {
-    client_->WaitForCreateWindow(this, created);
-  }
 }
 
 void InspectorPageAgent::WindowOpen(Document* document,

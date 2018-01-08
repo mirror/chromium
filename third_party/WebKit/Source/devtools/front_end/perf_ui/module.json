@@ -38,6 +38,7 @@
         "FilmStripView.js",
         "ChartViewport.js",
         "FlameChart.js",
+        "NetworkPriorities.js",
         "OverviewGrid.js",
         "PieChart.js",
         "TimelineGrid.js",
@@ -46,7 +47,6 @@
     "resources": [
         "chartViewport.css",
         "filmStripView.css",
-        "filmStripDialog.css",
         "flameChart.css",
         "overviewGrid.css",
         "pieChart.css",

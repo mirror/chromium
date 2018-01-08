@@ -83,6 +83,7 @@ using content::WebContents;
 
 namespace android_webview {
 namespace {
+static bool g_should_create_task_scheduler = true;
 
 // TODO(sgurun) move this to its own file.
 // This class filters out incoming aw_contents related IPC messages for the
@@ -226,7 +227,8 @@ AwContentBrowserClient::GetWebContentsViewDelegate(
 }
 
 void AwContentBrowserClient::RenderProcessWillLaunch(
-    content::RenderProcessHost* host) {
+    content::RenderProcessHost* host,
+    service_manager::mojom::ServiceRequest* service_request) {
   // Grant content: scheme access to the whole renderer process, since we impose
   // per-view access checks, and access is granted by default (see
   // AwSettings.mAllowContentUrlAccess).
@@ -572,7 +574,8 @@ void AwContentBrowserClient::ExposeInterfacesToRenderer(
 
 std::vector<std::unique_ptr<content::URLLoaderThrottle>>
 AwContentBrowserClient::CreateURLLoaderThrottles(
-    const base::Callback<content::WebContents*()>& wc_getter) {
+    const base::Callback<content::WebContents*()>& wc_getter,
+    content::NavigationUIData* navigation_ui_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
 
@@ -645,6 +648,15 @@ bool AwContentBrowserClient::ShouldOverrideUrlLoading(
   base::string16 url = base::UTF8ToUTF16(gurl.possibly_invalid_spec());
   return client_bridge->ShouldOverrideUrlLoading(url, has_user_gesture,
                                                  is_redirect, is_main_frame);
+}
+
+bool AwContentBrowserClient::ShouldCreateTaskScheduler() {
+  return g_should_create_task_scheduler;
+}
+
+// static
+void AwContentBrowserClient::DisableCreatingTaskScheduler() {
+  g_should_create_task_scheduler = false;
 }
 
 }  // namespace android_webview

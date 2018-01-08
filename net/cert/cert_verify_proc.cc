@@ -30,6 +30,7 @@
 #include "net/cert/internal/signature_algorithm.h"
 #include "net/cert/known_roots.h"
 #include "net/cert/ocsp_revocation_status.h"
+#include "net/cert/symantec_certs.h"
 #include "net/cert/x509_certificate.h"
 #include "net/cert/x509_util.h"
 #include "net/der/encode_values.h"
@@ -191,6 +192,30 @@ bool IsPastSHA1DeprecationDate(const X509Certificate& cert) {
   const base::Time kSHA1DeprecationDate =
       base::Time::FromInternalValue(INT64_C(13096080000000000));
   return start >= kSHA1DeprecationDate;
+}
+
+// See
+// https://security.googleblog.com/2017/09/chromes-plan-to-distrust-symantec.html
+// for more details.
+bool IsUntrustedSymantecCert(const X509Certificate& cert) {
+  const base::Time& start = cert.valid_start();
+  if (start.is_max() || start.is_null())
+    return true;
+  // Certificates issued on/after 2017-12-01 00:00:00 UTC are no longer
+  // trusted.
+  const base::Time kSymantecDeprecationDate =
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(1512086400);
+  if (start >= kSymantecDeprecationDate)
+    return true;
+
+  // Certificates issued prior to 2016-06-01 00:00:00 UTC are no longer
+  // trusted.
+  const base::Time kFirstAcceptedCertDate =
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(1464739200);
+  if (start < kFirstAcceptedCertDate)
+    return true;
+
+  return false;
 }
 
 void BestEffortCheckOCSP(const std::string& raw_response,
@@ -501,10 +526,7 @@ int CertVerifyProc::Verify(X509Certificate* cert,
     rv = MapCertStatusToNetError(verify_result->cert_status);
   }
 
-  bool allow_common_name_fallback =
-      !verify_result->is_issued_by_known_root &&
-      (flags & CertVerifier::VERIFY_ENABLE_COMMON_NAME_FALLBACK_LOCAL_ANCHORS);
-  if (!cert->VerifyNameMatch(hostname, allow_common_name_fallback)) {
+  if (!cert->VerifyNameMatch(hostname)) {
     verify_result->cert_status |= CERT_STATUS_COMMON_NAME_INVALID;
     rv = MapCertStatusToNetError(verify_result->cert_status);
   }
@@ -582,6 +604,17 @@ int CertVerifyProc::Verify(X509Certificate* cert,
       rv = MapCertStatusToNetError(verify_result->cert_status);
   }
 
+  // Distrust Symantec-issued certificates, as described at
+  // https://security.googleblog.com/2017/09/chromes-plan-to-distrust-symantec.html
+  if (!(flags & CertVerifier::VERIFY_DISABLE_SYMANTEC_ENFORCEMENT) &&
+      IsLegacySymantecCert(verify_result->public_key_hashes)) {
+    if (IsUntrustedSymantecCert(*verify_result->verified_cert)) {
+      verify_result->cert_status |= CERT_STATUS_AUTHORITY_INVALID;
+      if (rv == OK || IsCertificateError(rv))
+        rv = MapCertStatusToNetError(verify_result->cert_status);
+    }
+  }
+
   // Flag certificates from publicly-trusted CAs that are issued to intranet
   // hosts. While the CA/Browser Forum Baseline Requirements (v1.1) permit
   // these to be issued until 1 November 2015, they represent a real risk for
@@ -642,7 +675,7 @@ bool CertVerifyProc::IsPublicKeyBlacklisted(
 // Defines kBlacklistedSPKIs.
 #include "net/cert/cert_verify_proc_blacklist.inc"
   for (const auto& hash : public_key_hashes) {
-    if (hash.tag != HASH_VALUE_SHA256)
+    if (hash.tag() != HASH_VALUE_SHA256)
       continue;
     if (std::binary_search(std::begin(kBlacklistedSPKIs),
                            std::end(kBlacklistedSPKIs), hash,
@@ -799,7 +832,7 @@ bool CertVerifyProc::HasNameConstraintsViolation(
   for (unsigned i = 0; i < arraysize(kLimits); ++i) {
     for (HashValueVector::const_iterator j = public_key_hashes.begin();
          j != public_key_hashes.end(); ++j) {
-      if (j->tag == HASH_VALUE_SHA256 &&
+      if (j->tag() == HASH_VALUE_SHA256 &&
           memcmp(j->data(), kLimits[i].public_key, crypto::kSHA256Length) ==
               0) {
         if (dns_names.empty() && ip_addrs.empty()) {
@@ -838,27 +871,38 @@ bool CertVerifyProc::HasTooLongValidity(const X509Certificate& cert) {
   int month_diff = (exploded_expiry.year - exploded_start.year) * 12 +
                    (exploded_expiry.month - exploded_start.month);
 
+  base::TimeDelta days_diff = cert.valid_expiry() - cert.valid_start();
+
   // Add any remainder as a full month.
   if (exploded_expiry.day_of_month > exploded_start.day_of_month)
     ++month_diff;
 
+  // These dates are derived from the transitions noted in Section 1.2.2
+  // (Relevant Dates) of the Baseline Requirements.
   const base::Time time_2012_07_01 =
-      base::Time::FromInternalValue(12985574400000000);
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(1341100800);
   const base::Time time_2015_04_01 =
-      base::Time::FromInternalValue(13072320000000000);
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(1427846400);
+  const base::Time time_2018_03_01 =
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(1519862400);
   const base::Time time_2019_07_01 =
-      base::Time::FromInternalValue(13206412800000000);
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(1561939200);
 
   // For certificates issued before the BRs took effect.
   if (start < time_2012_07_01 && (month_diff > 120 || expiry > time_2019_07_01))
     return true;
 
-  // For certificates issued after 1 July 2012: 60 months.
+  // For certificates issued after the BR effective date of 1 July 2012: 60
+  // months.
   if (start >= time_2012_07_01 && month_diff > 60)
     return true;
 
   // For certificates issued after 1 April 2015: 39 months.
   if (start >= time_2015_04_01 && month_diff > 39)
+    return true;
+
+  // For certificates issued after 1 March 2018: 825 days.
+  if (start >= time_2018_03_01 && days_diff > base::TimeDelta::FromDays(825))
     return true;
 
   return false;

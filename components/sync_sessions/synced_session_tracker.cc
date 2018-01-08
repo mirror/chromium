@@ -140,8 +140,7 @@ SyncedSession* SyncedSessionTracker::GetSession(
   if (synced_session_map_.find(session_tag) != synced_session_map_.end())
     return synced_session_map_[session_tag].get();
 
-  std::unique_ptr<SyncedSession> synced_session =
-      std::make_unique<SyncedSession>();
+  auto synced_session = std::make_unique<SyncedSession>();
   DVLOG(1) << "Creating new session with tag " << session_tag << " at "
            << synced_session.get();
   synced_session->session_tag = session_tag;
@@ -296,7 +295,7 @@ void SyncedSessionTracker::PutTabInWindow(const std::string& session_tag,
     // TODO(zea): remove this once PutTabInWindow isn't crashing anymore.
     CHECK(tab) << " Unable to find tab " << tab_id
                << " within unmapped tabs or previously mapped windows."
-               << " crbug.com/639009";
+               << " https://crbug.com/639009";
   }
 
   tab->window_id.set_id(window_id);
@@ -316,7 +315,8 @@ void SyncedSessionTracker::OnTabNodeSeen(const std::string& session_tag,
 sessions::SessionTab* SyncedSessionTracker::GetTab(
     const std::string& session_tag,
     SessionID::id_type tab_id) {
-  CHECK_NE(TabNodePool::kInvalidTabNodeID, tab_id) << "crbug.com/673618";
+  CHECK_NE(TabNodePool::kInvalidTabNodeID, tab_id)
+      << "https://crbug.com/639009";
   sessions::SessionTab* tab_ptr = nullptr;
   auto iter = synced_tab_map_[session_tag].find(tab_id);
   if (iter != synced_tab_map_[session_tag].end()) {
@@ -334,8 +334,7 @@ sessions::SessionTab* SyncedSessionTracker::GetTab(
                << "'s seen tab " << tab_id << " at " << tab_ptr << " " << title;
     }
   } else {
-    std::unique_ptr<sessions::SessionTab> tab =
-        std::make_unique<sessions::SessionTab>();
+    auto tab = std::make_unique<sessions::SessionTab>();
     tab_ptr = tab.get();
     tab->tab_id.set_id(tab_id);
     synced_tab_map_[session_tag][tab_id] = tab_ptr;

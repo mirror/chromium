@@ -5,8 +5,8 @@
 #include "ash/message_center/message_center_controller.h"
 
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification_delegate.h"
-#include "ui/message_center/notifier_id.h"
+#include "ui/message_center/public/cpp/notification_delegate.h"
+#include "ui/message_center/public/cpp/notifier_id.h"
 
 using message_center::MessageCenter;
 using message_center::NotifierId;
@@ -50,7 +50,7 @@ class AshClientNotificationDelegate
 MessageCenterController::MessageCenterController()
     : fullscreen_notification_blocker_(MessageCenter::Get()),
       inactive_user_notification_blocker_(MessageCenter::Get()),
-      login_notification_blocker_(MessageCenter::Get()),
+      session_state_notification_blocker_(MessageCenter::Get()),
       binding_(this) {}
 
 MessageCenterController::~MessageCenterController() = default;
@@ -63,11 +63,6 @@ void MessageCenterController::BindRequest(
 void MessageCenterController::SetNotifierEnabled(const NotifierId& notifier_id,
                                                  bool enabled) {
   client_->SetNotifierEnabled(notifier_id, enabled);
-}
-
-void MessageCenterController::OnNotifierAdvancedSettingsRequested(
-    const NotifierId& notifier_id) {
-  client_->HandleNotifierAdvancedSettingsRequested(notifier_id);
 }
 
 void MessageCenterController::SetClient(

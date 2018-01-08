@@ -49,7 +49,7 @@ class StringOrTrustedHTML;
 class V0InsertionPoint;
 class WhitespaceAttacher;
 
-enum class ShadowRootType { kUserAgent, V0, kOpen, kClosed };
+enum class ShadowRootType { V0, kOpen, kClosed, kUserAgent };
 
 class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   DEFINE_WRAPPERTYPEINFO();
@@ -93,8 +93,10 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   }
   bool IsV1() const {
     return GetType() == ShadowRootType::kOpen ||
-           GetType() == ShadowRootType::kClosed;
+           GetType() == ShadowRootType::kClosed ||
+           GetType() == ShadowRootType::kUserAgent;
   }
+  bool IsUserAgent() const { return GetType() == ShadowRootType::kUserAgent; }
 
   void AttachLayoutTree(AttachContext&) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;
@@ -105,20 +107,17 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   void SetNeedsAssignmentRecalc();
 
   // For V0
-  ShadowRoot* YoungerShadowRoot() const;
-  ShadowRoot* OlderShadowRoot() const;
-  void SetYoungerShadowRoot(ShadowRoot&);
-  void SetOlderShadowRoot(ShadowRoot&);
-  bool IsYoungest() const { return !YoungerShadowRoot(); }
-  bool IsOldest() const { return !OlderShadowRoot(); }
+  ShadowRoot* YoungerShadowRoot() const { return nullptr; }
+  ShadowRoot* OlderShadowRoot() const { return nullptr; }
   bool ContainsShadowElements() const;
   bool ContainsContentElements() const;
   bool ContainsInsertionPoints() const {
     return ContainsShadowElements() || ContainsContentElements();
   }
   unsigned DescendantShadowElementCount() const;
-  HTMLShadowElement* ShadowInsertionPointOfYoungerShadowRoot() const;
-  void SetShadowInsertionPointOfYoungerShadowRoot(HTMLShadowElement*);
+  HTMLShadowElement* ShadowInsertionPointOfYoungerShadowRoot() const {
+    return nullptr;
+  }
   void DidAddInsertionPoint(V0InsertionPoint*);
   void DidRemoveInsertionPoint(V0InsertionPoint*);
   const HeapVector<Member<V0InsertionPoint>>& DescendantInsertionPoints();
@@ -191,11 +190,12 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   TraceWrapperMember<StyleSheetList> style_sheet_list_;
   Member<SlotAssignment> slot_assignment_;
   unsigned short child_shadow_root_count_;
-  unsigned short type_ : 2;
+  // TODO(kochi): Once kUserAgentTypeV0 is gone, shrink this to 2.
+  unsigned short type_ : 3;
   unsigned short registered_with_parent_shadow_root_ : 1;
   unsigned short descendant_insertion_points_is_valid_ : 1;
   unsigned short delegates_focus_ : 1;
-  unsigned short unused_ : 11;
+  unsigned short unused_ : 10;
 };
 
 inline Element* ShadowRoot::ActiveElement() const {
@@ -207,6 +207,10 @@ inline ShadowRoot* Element::ShadowRootIfV1() const {
   if (root && root->IsV1())
     return root;
   return nullptr;
+}
+
+inline bool Node::IsInUserAgentShadowRoot() const {
+  return ContainingShadowRoot() && ContainingShadowRoot()->IsUserAgent();
 }
 
 DEFINE_NODE_TYPE_CASTS(ShadowRoot, IsShadowRoot());

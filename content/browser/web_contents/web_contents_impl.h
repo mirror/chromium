@@ -47,10 +47,10 @@
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/three_d_api_types.h"
-#include "device/geolocation/public/interfaces/geolocation_context.mojom.h"
 #include "net/base/load_states.h"
 #include "net/http/http_response_headers.h"
 #include "ppapi/features/features.h"
+#include "services/device/public/interfaces/geolocation_context.mojom.h"
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/WebKit/common/color_chooser/color_chooser.mojom.h"
@@ -310,7 +310,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   RenderFrameHostImpl* UnsafeFindFrameByFrameTreeNodeId(
       int frame_tree_node_id) override;
   void ForEachFrame(
-      const base::Callback<void(RenderFrameHost*)>& on_frame) override;
+      const base::RepeatingCallback<void(RenderFrameHost*)>& on_frame) override;
   std::vector<RenderFrameHost*> GetAllFrames() override;
   int SendToAllFrames(IPC::Message* message) override;
   RenderViewHostImpl* GetRenderViewHost() const override;
@@ -331,7 +331,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void UpdateTitleForEntry(NavigationEntry* entry,
                            const base::string16& title) override;
   SiteInstanceImpl* GetSiteInstance() const override;
-  SiteInstanceImpl* GetPendingSiteInstance() const override;
   bool IsLoading() const override;
   bool IsLoadingToDifferentDocument() const override;
   bool IsWaitingForResponse() const override;
@@ -357,7 +356,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void OnAudioStateChanged(bool is_audible) override;
   base::TimeTicks GetLastActiveTime() const override;
   void SetLastActiveTime(base::TimeTicks last_active_time) override;
-  base::TimeTicks GetLastHiddenTime() const override;
   void WasShown() override;
   void WasHidden() override;
   bool IsVisible() const override;
@@ -759,7 +757,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
       bool* proceed_to_fire_unload) override;
   void RenderProcessGoneFromRenderManager(
       RenderViewHost* render_view_host) override;
-  void UpdateRenderViewSizeForRenderManager() override;
+  void UpdateRenderViewSizeForRenderManager(bool is_main_frame) override;
   void CancelModalDialogsForRenderManager() override;
   void NotifySwappedFromRenderManager(RenderFrameHost* old_host,
                                       RenderFrameHost* new_host,
@@ -841,6 +839,11 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
 
   // Forces overscroll to be disabled (used by touch emulation).
   void SetForceDisableOverscrollContent(bool force_disable);
+
+  // Override the render view/widget size of the main frame, return whether the
+  // size changed.
+  bool SetDeviceEmulationSize(const gfx::Size& new_size);
+  void ClearDeviceEmulationSize();
 
   AudioStreamMonitor* audio_stream_monitor() {
     return &audio_stream_monitor_;
@@ -1086,10 +1089,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void OnDidRunInsecureContent(RenderFrameHostImpl* source,
                                const GURL& security_origin,
                                const GURL& target_url);
-  void OnDidDisplayContentWithCertificateErrors(RenderFrameHostImpl* source,
-                                                const GURL& url);
-  void OnDidRunContentWithCertificateErrors(RenderFrameHostImpl* source,
-                                            const GURL& url);
+  void OnDidDisplayContentWithCertificateErrors(RenderFrameHostImpl* source);
+  void OnDidRunContentWithCertificateErrors(RenderFrameHostImpl* source);
   void OnDocumentLoadedInFrame(RenderFrameHostImpl* source);
   void OnDidFinishLoad(RenderFrameHostImpl* source, const GURL& url);
   void OnGoToEntryAtOffset(RenderViewHostImpl* source, int offset);
@@ -1279,7 +1280,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void RemoveBrowserPluginEmbedder();
 
   // Helper function to invoke WebContentsDelegate::GetSizeForNewRenderView().
-  gfx::Size GetSizeForNewRenderView();
+  gfx::Size GetSizeForNewRenderView(bool is_main_frame);
 
   void OnFrameRemoved(RenderFrameHost* render_frame_host);
 
@@ -1497,10 +1498,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // the WebContents creation time.
   base::TimeTicks last_active_time_;
 
-  // The time that this WebContents was last made hidden. The initial value is
-  // zero.
-  base::TimeTicks last_hidden_time_;
-
   // See description above setter.
   bool closed_by_user_gesture_;
 
@@ -1521,6 +1518,11 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // Size set by a top-level frame with auto-resize enabled. This is needed by
   // out-of-process iframes for their visible viewport size.
   gfx::Size auto_resize_size_;
+
+  // When device emulation is enabled, override the size of current and newly
+  // created render views/widgets.
+  gfx::Size device_emulation_size_;
+  gfx::Size view_size_before_emulation_;
 
 #if defined(OS_ANDROID)
   // Date time chooser opened by this tab.

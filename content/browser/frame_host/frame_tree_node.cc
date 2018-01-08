@@ -156,6 +156,8 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
           name,
           unique_name,
           false /* should enforce strict mixed content checking */,
+          std::vector<uint32_t>()
+          /* hashes of hosts for insecure request upgrades */,
           false /* is a potentially trustworthy unique origin */,
           false /* has received a user gesture */,
           false /* has received a user gesture before nav */),
@@ -389,6 +391,16 @@ void FrameTreeNode::SetInsecureRequestPolicy(
   replication_state_.insecure_request_policy = policy;
 }
 
+void FrameTreeNode::SetInsecureNavigationsSet(
+    const std::vector<uint32_t>& insecure_navigations_set) {
+  DCHECK(std::is_sorted(insecure_navigations_set.begin(),
+                        insecure_navigations_set.end()));
+  if (insecure_navigations_set == replication_state_.insecure_navigations_set)
+    return;
+  render_manager_.OnEnforceInsecureNavigationsSet(insecure_navigations_set);
+  replication_state_.insecure_navigations_set = insecure_navigations_set;
+}
+
 void FrameTreeNode::SetPendingFramePolicy(blink::FramePolicy frame_policy) {
   pending_frame_policy_.sandbox_flags = frame_policy.sandbox_flags;
 
@@ -424,23 +436,16 @@ FrameTreeNode* FrameTreeNode::NextSibling() const {
 bool FrameTreeNode::IsLoading() const {
   RenderFrameHostImpl* current_frame_host =
       render_manager_.current_frame_host();
-  RenderFrameHostImpl* pending_frame_host =
-      render_manager_.pending_frame_host();
 
   DCHECK(current_frame_host);
 
-  if (IsBrowserSideNavigationEnabled()) {
-    if (navigation_request_)
-      return true;
+  if (navigation_request_)
+    return true;
 
-    RenderFrameHostImpl* speculative_frame_host =
-        render_manager_.speculative_frame_host();
-    if (speculative_frame_host && speculative_frame_host->is_loading())
-      return true;
-  } else {
-    if (pending_frame_host && pending_frame_host->is_loading())
-      return true;
-  }
+  RenderFrameHostImpl* speculative_frame_host =
+      render_manager_.speculative_frame_host();
+  if (speculative_frame_host && speculative_frame_host->is_loading())
+    return true;
   return current_frame_host->is_loading();
 }
 
@@ -458,6 +463,13 @@ bool FrameTreeNode::CommitPendingFramePolicy() {
         pending_frame_policy_.container_policy;
   UpdateActiveSandboxFlags(pending_frame_policy_.sandbox_flags);
   return did_change_flags || did_change_container_policy;
+}
+
+void FrameTreeNode::TransferNavigationRequestOwnership(
+    RenderFrameHostImpl* render_frame_host) {
+  RenderFrameDevToolsAgentHost::OnResetNavigationRequest(
+      navigation_request_.get());
+  render_frame_host->SetNavigationRequest(std::move(navigation_request_));
 }
 
 void FrameTreeNode::CreatedNavigationRequest(
@@ -630,22 +642,15 @@ void FrameTreeNode::BeforeUnloadCanceled() {
   DCHECK(current_frame_host);
   current_frame_host->ResetLoadingState();
 
-  if (IsBrowserSideNavigationEnabled()) {
-    RenderFrameHostImpl* speculative_frame_host =
-        render_manager_.speculative_frame_host();
-    if (speculative_frame_host)
-      speculative_frame_host->ResetLoadingState();
-    // Note: there is no need to set an error code on the NavigationHandle here
-    // as it has not been created yet. It is only created when the
-    // BeforeUnloadACK is received.
-    if (navigation_request_)
-      ResetNavigationRequest(false, true);
-  } else {
-    RenderFrameHostImpl* pending_frame_host =
-        render_manager_.pending_frame_host();
-    if (pending_frame_host)
-      pending_frame_host->ResetLoadingState();
-  }
+  RenderFrameHostImpl* speculative_frame_host =
+      render_manager_.speculative_frame_host();
+  if (speculative_frame_host)
+    speculative_frame_host->ResetLoadingState();
+  // Note: there is no need to set an error code on the NavigationHandle here
+  // as it has not been created yet. It is only created when the
+  // BeforeUnloadACK is received.
+  if (navigation_request_)
+    ResetNavigationRequest(false, true);
 }
 
 void FrameTreeNode::OnSetHasReceivedUserGesture() {

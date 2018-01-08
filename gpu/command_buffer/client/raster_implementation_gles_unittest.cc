@@ -12,6 +12,7 @@
 #include "cc/paint/display_item_list.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface_stub.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "gpu/command_buffer/common/mailbox.h"
@@ -21,6 +22,8 @@
 #include "ui/gfx/color_space.h"
 
 using testing::_;
+using testing::Gt;
+using testing::Le;
 using testing::Return;
 using testing::SetArgPointee;
 using testing::StrEq;
@@ -141,23 +144,82 @@ class RasterMockGLES2Interface : public gles2::GLES2InterfaceStub {
                     GLboolean can_use_lcd_text,
                     GLboolean use_distance_field_text,
                     GLint pixel_config));
-  MOCK_METHOD10(RasterCHROMIUM,
-                void(const cc::DisplayItemList* list,
-                     GLint translate_x,
-                     GLint translate_y,
-                     GLint clip_x,
-                     GLint clip_y,
-                     GLint clip_w,
-                     GLint clip_h,
-                     GLfloat post_translate_x,
-                     GLfloat post_translate_y,
-                     GLfloat post_scale));
+  MOCK_METHOD2(RasterCHROMIUM, void(GLsizeiptr size, const void* list));
+  MOCK_METHOD1(MapRasterCHROMIUM, void*(GLsizeiptr size));
+  MOCK_METHOD1(UnmapRasterCHROMIUM, void(GLsizeiptr written));
   MOCK_METHOD0(EndRasterCHROMIUM, void());
 
   MOCK_METHOD2(PixelStorei, void(GLenum pname, GLint param));
   MOCK_METHOD2(TraceBeginCHROMIUM,
                void(const char* category_name, const char* trace_name));
   MOCK_METHOD0(TraceEndCHROMIUM, void());
+};
+
+class ContextSupportStub : public ContextSupport {
+ public:
+  ~ContextSupportStub() override = default;
+
+  void FlushPendingWork() override {}
+  void SignalSyncToken(const SyncToken& sync_token,
+                       base::OnceClosure callback) override {}
+  bool IsSyncTokenSignaled(const SyncToken& sync_token) override {
+    return false;
+  }
+  void SignalQuery(uint32_t query, base::OnceClosure callback) override {}
+  void GetGpuFence(uint32_t gpu_fence_id,
+                   base::OnceCallback<void(std::unique_ptr<gfx::GpuFence>)>
+                       callback) override {}
+  void SetAggressivelyFreeResources(bool aggressively_free_resources) override {
+  }
+
+  void Swap() override {}
+  void SwapWithBounds(const std::vector<gfx::Rect>& rects) override {}
+  void PartialSwapBuffers(const gfx::Rect& sub_buffer) override {}
+  void CommitOverlayPlanes() override {}
+  void ScheduleOverlayPlane(int plane_z_order,
+                            gfx::OverlayTransform plane_transform,
+                            unsigned overlay_texture_id,
+                            const gfx::Rect& display_bounds,
+                            const gfx::RectF& uv_rect) override {}
+  uint64_t ShareGroupTracingGUID() const override { return 0; }
+  void SetErrorMessageCallback(
+      base::RepeatingCallback<void(const char*, int32_t)> callback) override {}
+  void SetSnapshotRequested() override {}
+  bool ThreadSafeShallowLockDiscardableTexture(uint32_t texture_id) override {
+    return true;
+  }
+  void CompleteLockDiscardableTexureOnContextThread(
+      uint32_t texture_id) override {}
+  bool ThreadsafeDiscardableTextureIsDeletedForTracing(
+      uint32_t texture_id) override {
+    return false;
+  }
+  void* MapTransferCacheEntry(size_t serialized_size) override {
+    mapped_transfer_cache_entry_.reset(new char[serialized_size]);
+    return mapped_transfer_cache_entry_.get();
+  }
+  void UnmapAndCreateTransferCacheEntry(uint32_t type, uint32_t id) override {
+    mapped_transfer_cache_entry_.reset();
+  }
+  bool ThreadsafeLockTransferCacheEntry(uint32_t type, uint32_t id) override {
+    return true;
+  }
+  void UnlockTransferCacheEntries(
+      const std::vector<std::pair<uint32_t, uint32_t>>& entries) override {}
+  void DeleteTransferCacheEntry(uint32_t type, uint32_t id) override {}
+  unsigned int GetTransferBufferFreeSize() const override { return 0; }
+
+ private:
+  std::unique_ptr<char[]> mapped_transfer_cache_entry_;
+};
+
+class ImageProviderStub : public cc::ImageProvider {
+ public:
+  ~ImageProviderStub() override {}
+  ScopedDecodedDrawImage GetDecodedDrawImage(
+      const cc::DrawImage& draw_image) override {
+    return ScopedDecodedDrawImage();
+  }
 };
 
 class RasterImplementationGLESTest : public testing::Test {
@@ -167,15 +229,17 @@ class RasterImplementationGLESTest : public testing::Test {
   void SetUp() override {
     gl_.reset(new RasterMockGLES2Interface());
 
-    ri_.reset(new RasterImplementationGLES(gl_.get(), gpu::Capabilities()));
+    ri_.reset(new RasterImplementationGLES(gl_.get(), &support_,
+                                           gpu::Capabilities()));
   }
 
   void TearDown() override {}
 
   void SetUpWithCapabilities(const gpu::Capabilities& capabilities) {
-    ri_.reset(new RasterImplementationGLES(gl_.get(), capabilities));
+    ri_.reset(new RasterImplementationGLES(gl_.get(), &support_, capabilities));
   }
 
+  ContextSupportStub support_;
   std::unique_ptr<RasterMockGLES2Interface> gl_;
   std::unique_ptr<RasterImplementationGLES> ri_;
 };
@@ -619,24 +683,25 @@ TEST_F(RasterImplementationGLESTest, BeginRasterCHROMIUM) {
 
 TEST_F(RasterImplementationGLESTest, RasterCHROMIUM) {
   scoped_refptr<cc::DisplayItemList> display_list = new cc::DisplayItemList;
-  const GLint translate_x = 1;
-  const GLint translate_y = 2;
-  const GLint clip_x = 3;
-  const GLint clip_y = 4;
-  const GLint clip_w = 5;
-  const GLint clip_h = 6;
-  const GLfloat post_translate_x = 7.0f;
-  const GLfloat post_translate_y = 8.0f;
+  display_list->StartPaint();
+  display_list->push<cc::DrawColorOp>(SK_ColorRED, SkBlendMode::kSrc);
+  display_list->EndPaintOfUnpaired(gfx::Rect(100, 100));
+  display_list->Finalize();
+
+  ImageProviderStub image_provider;
+  const gfx::Vector2d translate(1, 2);
+  const gfx::Rect playback_rect(3, 4, 5, 6);
+  const gfx::Vector2dF post_translate(7.0f, 8.0f);
   const GLfloat post_scale = 9.0f;
 
-  EXPECT_CALL(
-      *gl_, RasterCHROMIUM(display_list.get(), translate_x, translate_y, clip_x,
-                           clip_y, clip_w, clip_h, post_translate_x,
-                           post_translate_y, post_scale))
-      .Times(1);
-  ri_->RasterCHROMIUM(display_list.get(), translate_x, translate_y, clip_x,
-                      clip_y, clip_w, clip_h, post_translate_x,
-                      post_translate_y, post_scale);
+  constexpr const GLsizeiptr kBufferSize = 16 << 10;
+  char buffer[kBufferSize];
+
+  EXPECT_CALL(*gl_, MapRasterCHROMIUM(Le(kBufferSize)))
+      .WillOnce(Return(buffer));
+  EXPECT_CALL(*gl_, UnmapRasterCHROMIUM(Gt(0))).Times(1);
+  ri_->RasterCHROMIUM(display_list.get(), &image_provider, translate,
+                      playback_rect, post_translate, post_scale);
 }
 
 TEST_F(RasterImplementationGLESTest, EndRasterCHROMIUM) {

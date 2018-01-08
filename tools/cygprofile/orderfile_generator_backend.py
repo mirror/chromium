@@ -27,8 +27,10 @@ import tempfile
 import time
 
 import cygprofile_utils
+import patch_orderfile
 import process_profiles
 import profile_android_startup
+import symbol_extractor
 
 
 _SRC_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),
@@ -423,8 +425,6 @@ class OrderfileGenerator(object):
   _CYGLOG_TO_ORDERFILE_SCRIPT = os.path.join(
       constants.DIR_SOURCE_ROOT, 'tools', 'cygprofile',
       'cyglog_to_orderfile.py')
-  _PATCH_ORDERFILE_SCRIPT = os.path.join(
-      constants.DIR_SOURCE_ROOT, 'tools', 'cygprofile', 'patch_orderfile.py')
   _CHECK_ORDERFILE_SCRIPT = os.path.join(
       constants.DIR_SOURCE_ROOT, 'tools', 'cygprofile', 'check_orderfile.py')
   _BUILD_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(
@@ -434,8 +434,6 @@ class OrderfileGenerator(object):
       _CLANK_REPO, 'orderfiles', 'unpatched_orderfile.%s')
   _MERGED_CYGLOG_FILENAME = os.path.join(
       constants.GetOutDirectory(), 'merged_cyglog')
-  _TEMP_ORDERFILE_FILENAME = os.path.join(
-      constants.GetOutDirectory(), 'tmp_orderfile')
 
   _PATH_TO_ORDERFILE = os.path.join(_CLANK_REPO, 'orderfiles',
                                     'orderfile.%s.out')
@@ -486,6 +484,7 @@ class OrderfileGenerator(object):
                                                       options.branch,
                                                       options.netrc)
     assert os.path.isdir(constants.DIR_SOURCE_ROOT), 'No src directory found'
+    symbol_extractor.SetArchitecture(options.arch)
 
   def _RunCygprofileUnitTests(self):
     """Builds, deploys and runs cygprofile_unittests."""
@@ -540,14 +539,19 @@ class OrderfileGenerator(object):
       self._step_recorder.BeginStep('Process cyglog')
       if self._options.lightweight_instrumentation:
         assert os.path.exists(self._compiler.lib_chrome_so)
-        process_profiles.GetReachedSymbolsFromDumpsAndMaybeWriteOffsets(
-            files, self._compiler.lib_chrome_so, self._MERGED_CYGLOG_FILENAME)
+        offsets = process_profiles.GetReachedOffsetsFromDumpFiles(
+            files, self._compiler.lib_chrome_so)
+        if not offsets:
+          raise Exception('No profiler offsets found in {}'.format(
+                          '\n'.join(files)))
+        with open(self._MERGED_CYGLOG_FILENAME, 'w') as f:
+          f.write('\n'.join(map(str, offsets)))
       else:
         with open(self._MERGED_CYGLOG_FILENAME, 'w') as merged_cyglog:
           self._step_recorder.RunCommand([self._MERGE_TRACES_SCRIPT] + files,
                                          constants.DIR_SOURCE_ROOT,
                                          stdout=merged_cyglog)
-    except CommandError:
+    except Exception:
       for f in files:
         self._SaveForDebugging(f)
       raise
@@ -581,25 +585,9 @@ class OrderfileGenerator(object):
   def _PatchOrderfile(self):
     """Patches the orderfile using clean version of libchrome.so."""
     self._step_recorder.BeginStep('Patch Orderfile')
-    try:
-      tmp_out = open(self._TEMP_ORDERFILE_FILENAME, 'w')
-      self._step_recorder.RunCommand([self._PATCH_ORDERFILE_SCRIPT,
-                                      self._GetUnpatchedOrderfileFilename(),
-                                      self._compiler.lib_chrome_so,
-                                      '--target-arch=' + self._options.arch],
-                                     constants.DIR_SOURCE_ROOT, stdout=tmp_out)
-      tmp_out.close()
-
-      self._RemoveBlanks(self._TEMP_ORDERFILE_FILENAME,
-                         self._GetPathToOrderfile())
-    except CommandError:
-      self._SaveForDebugging(self._GetUnpatchedOrderfileFilename())
-      self._SaveForDebuggingWithOverwrite(self._compiler.lib_chrome_so)
-      raise
-    finally:
-      tmp_out.close()
-      if os.path.isfile(self._TEMP_ORDERFILE_FILENAME):
-        os.unlink(self._TEMP_ORDERFILE_FILENAME)
+    patch_orderfile.GeneratePatchedOrderfile(
+        self._GetUnpatchedOrderfileFilename(), self._compiler.lib_chrome_so,
+        self._GetPathToOrderfile())
 
   def _VerifySymbolOrder(self):
     self._step_recorder.BeginStep('Verify Symbol Order')
@@ -760,8 +748,9 @@ def CreateArgumentParser():
   """Creates and returns the argument parser."""
   parser = argparse.ArgumentParser()
   parser.add_argument(
-      '--lightweight-instrumentation', action='store_true', default=False,
-      help='Use the lightweight instrumentation path')
+      '--regular-instrumentation', action='store_false',
+      dest='lightweight_instrumentation',
+      help='Use the regular instrumentation path')
   parser.add_argument(
       '--buildbot', action='store_true',
       help='If true, the script expects to be run on a buildbot')

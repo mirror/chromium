@@ -42,15 +42,37 @@ PaintOpBufferSerializer::~PaintOpBufferSerializer() = default;
 void PaintOpBufferSerializer::Serialize(const PaintOpBuffer* buffer,
                                         const std::vector<size_t>* offsets,
                                         const Preamble& preamble) {
+  // Reset the canvas to the maximum extents of our playback rect, ensuring this
+  // rect will not reject images.
+  canvas_.resetCanvas(preamble.playback_rect.right(),
+                      preamble.playback_rect.bottom());
+  DCHECK(canvas_.getTotalMatrix().isIdentity());
+  static const int kInitialSaveCount = 1;
+  DCHECK_EQ(kInitialSaveCount, canvas_.getSaveCount());
+
+  // These SerializeOptions and PlaybackParams use the initial (identity) canvas
+  // matrix, as they are only used for serializing the preamble and the initial
+  // save / final restore. SerializeBuffer will create its own SerializeOptions
+  // and PlaybackParams based on the post-preamble canvas.
   PaintOp::SerializeOptions options(image_provider_, transfer_cache_, &canvas_,
                                     canvas_.getTotalMatrix());
   PlaybackParams params(image_provider_, canvas_.getTotalMatrix());
 
-  int save_count = canvas_.getSaveCount();
   Save(options, params);
   SerializePreamble(preamble, options, params);
   SerializeBuffer(buffer, offsets);
-  RestoreToCount(save_count, options, params);
+  RestoreToCount(kInitialSaveCount, options, params);
+}
+
+void PaintOpBufferSerializer::Serialize(const PaintOpBuffer* buffer) {
+  // Use half of the max int as the extent for the SkNoDrawCanvas.
+  static const int extent = std::numeric_limits<int>::max() >> 1;
+  // Reset the canvas to the maximum extents of our playback rect, ensuring this
+  // rect will not reject images.
+  canvas_.resetCanvas(extent, extent);
+  DCHECK(canvas_.getTotalMatrix().isIdentity());
+
+  SerializeBuffer(buffer, nullptr);
 }
 
 void PaintOpBufferSerializer::SerializePreamble(
@@ -64,9 +86,8 @@ void PaintOpBufferSerializer::SerializePreamble(
   }
 
   if (!preamble.playback_rect.IsEmpty()) {
-    ClipRectOp clip_op(
-        SkRect::MakeFromIRect(gfx::RectToSkIRect(preamble.playback_rect)),
-        SkClipOp::kIntersect, false);
+    ClipRectOp clip_op(gfx::RectFToSkRect(preamble.playback_rect),
+                       SkClipOp::kIntersect, false);
     SerializeOp(&clip_op, options, params);
   }
 
@@ -76,8 +97,9 @@ void PaintOpBufferSerializer::SerializePreamble(
     SerializeOp(&translate_op, options, params);
   }
 
-  if (preamble.post_scale != 1.f) {
-    ScaleOp scale_op(preamble.post_scale, preamble.post_scale);
+  if (preamble.post_scale.width() != 1.f ||
+      preamble.post_scale.height() != 1.f) {
+    ScaleOp scale_op(preamble.post_scale.width(), preamble.post_scale.height());
     SerializeOp(&scale_op, options, params);
   }
 }
@@ -85,6 +107,7 @@ void PaintOpBufferSerializer::SerializePreamble(
 void PaintOpBufferSerializer::SerializeBuffer(
     const PaintOpBuffer* buffer,
     const std::vector<size_t>* offsets) {
+  DCHECK(buffer);
   PaintOp::SerializeOptions options(image_provider_, transfer_cache_, &canvas_,
                                     canvas_.getTotalMatrix());
   PlaybackParams params(image_provider_, canvas_.getTotalMatrix());
@@ -127,9 +150,13 @@ bool PaintOpBufferSerializer::SerializeOpWithFlags(
     PaintOp::SerializeOptions* options,
     const PlaybackParams& params,
     uint8_t alpha) {
+  // We don't need the skia backing for decoded shaders during serialization,
+  // since those are created on the service side where the record is rasterized.
+  const bool create_skia_shaders = false;
+
   const ScopedRasterFlags scoped_flags(
       &flags_op->flags, options->image_provider,
-      options->canvas->getTotalMatrix(), alpha);
+      options->canvas->getTotalMatrix(), alpha, create_skia_shaders);
   const PaintFlags* flags_to_serialize = scoped_flags.flags();
   if (!flags_to_serialize)
     return true;

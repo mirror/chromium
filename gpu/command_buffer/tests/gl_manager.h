@@ -12,7 +12,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "gpu/command_buffer/client/gpu_control.h"
-#include "gpu/command_buffer/common/gles2_cmd_utils.h"
+#include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "gpu/command_buffer/service/feature_info.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
@@ -35,12 +35,12 @@ namespace gpu {
 
 class CommandBufferDirect;
 class ImageFactory;
+class MailboxManager;
 class SyncPointManager;
 class TransferBuffer;
 
 namespace gles2 {
 
-class MailboxManager;
 class GLES2CmdHelper;
 class GLES2Implementation;
 
@@ -66,7 +66,7 @@ class GLManager : private GpuControl {
     bool lose_context_when_out_of_memory = false;
     // Whether or not it's ok to lose the context.
     bool context_lost_allowed = false;
-    gles2::ContextType context_type = gles2::CONTEXT_TYPE_OPENGLES2;
+    ContextType context_type = CONTEXT_TYPE_OPENGLES2;
     // Force shader name hashing for all context types.
     bool force_shader_name_hashing = false;
     // Whether the buffer is multisampled.
@@ -113,7 +113,7 @@ class GLManager : private GpuControl {
     return decoder_.get();
   }
 
-  gles2::MailboxManager* mailbox_manager() const { return mailbox_manager_; }
+  MailboxManager* mailbox_manager() const { return mailbox_manager_; }
 
   gl::GLShareGroup* share_group() const { return share_group_.get(); }
 
@@ -171,7 +171,7 @@ class GLManager : private GpuControl {
   ServiceDiscardableManager discardable_manager_;
   std::unique_ptr<gles2::ShaderTranslatorCache> translator_cache_;
   gles2::FramebufferCompletenessCache completeness_cache_;
-  gles2::MailboxManager* mailbox_manager_ = nullptr;
+  MailboxManager* mailbox_manager_ = nullptr;
   scoped_refptr<gl::GLShareGroup> share_group_;
   std::unique_ptr<CommandBufferDirect> command_buffer_;
   std::unique_ptr<gles2::GLES2Decoder> decoder_;

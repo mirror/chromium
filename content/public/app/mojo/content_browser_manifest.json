@@ -9,8 +9,16 @@
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ],
+        "dwrite_font_proxy": [
+          "content::mojom::DWriteFontProxy"
+        ],
+        "field_trials": [
+          "content::mojom::FieldTrialRecorder"
+        ],
+        "font_cache": [
+          "content::mojom::FontCacheWin"
+        ],
         "gpu": [
-          "content::mojom::FieldTrialRecorder",
           "media::mojom::AndroidOverlayProvider"
         ],
         "plugin": [
@@ -29,34 +37,32 @@
           "blink::mojom::ReportingServiceProxy",
           "blink::mojom::WebDatabaseHost",
           "content::mojom::AppCacheBackend",
+          "content::mojom::ClipboardHost",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FileUtilitiesHost",
           "content::mojom::FrameSinkProvider",
           "content::mojom::MediaStreamDispatcherHost",
           "content::mojom::MemoryCoordinatorHandle",
           "content::mojom::PushMessaging",
-          "content::mojom::QuotaDispatcherHost",
           "content::mojom::RendererHost",
           "content::mojom::ReportingServiceProxy",
           "content::mojom::ServiceWorkerDispatcherHost",
           "content::mojom::StoragePartitionService",
-          "content::mojom::URLLoaderFactory",
-          "content::mojom::VideoCaptureHost",
           "content::mojom::WorkerURLLoaderFactoryProvider",
           "device::mojom::BatteryMonitor",
           "device::mojom::GamepadHapticsManager",
           "device::mojom::GamepadMonitor",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
+          "media::mojom::KeySystemSupport",
+          "media::mojom::VideoCaptureHost",
           "media::mojom::VideoDecodePerfHistory",
           "memory_coordinator::mojom::MemoryCoordinatorHandle",
           "metrics::mojom::SingleSampleMetricsProvider",
+          "network::mojom::URLLoaderFactory",
           "resource_coordinator::mojom::ProcessCoordinationUnit",
           "ui::mojom::Gpu",
           "viz::mojom::SharedBitmapAllocationNotifier",
           "viz::mojom::CompositingModeReporter"
-        ],
-        "geolocation_config": [
-          "device::mojom::GeolocationConfig"
         ],
         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
@@ -65,9 +71,6 @@
       "requires": {
         "*": [ "app" ],
         "cdm": [ "media:cdm" ],
-        "content_browser": [
-          "geolocation_config"
-        ],
         "content_gpu": [ "browser" ],
         "content_plugin": [ "browser" ],
         "content_renderer": [ "browser" ],
@@ -124,6 +127,7 @@
           "autofill::mojom::AutofillDriver",
           "autofill::mojom::PasswordManagerDriver",
           "blink::mojom::BackgroundFetchService",
+          "blink::mojom::BudgetService",
           "blink::mojom::ColorChooserFactory",
           "blink::mojom::DedicatedWorkerFactory",
           "blink::mojom::LockManager",
@@ -135,6 +139,7 @@
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "blink::mojom::PresentationService",
+          "blink::mojom::QuotaDispatcherHost",
           "blink::mojom::TextSuggestionHost",
           "blink::mojom::WebBluetoothService",
           "blink::mojom::WebSocket",
@@ -145,6 +150,7 @@
           // InputInjector is only exposed when gpu benchmarking is enabled.
           "content::mojom::InputInjector",
 
+          "content::mojom::RendererAudioInputStreamFactory",
           "content::mojom::RendererAudioOutputStreamFactory",
           "content::mojom::SharedWorkerConnector",
           "device::mojom::Geolocation",
@@ -153,10 +159,10 @@
           "device::mojom::UsbChooserService",
           "device::mojom::UsbDeviceManager",
           "device::mojom::VibrationManager",
+          "device::mojom::UsbDeviceManager",
+          "device::mojom::VRService",
           "device::mojom::VRService",
           "device::mojom::WakeLock",
-          "device::mojom::VRService",
-          "device::usb::DeviceManager",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "media::mojom::ImageCapture",
           "media::mojom::InterfaceFactory",
@@ -164,6 +170,7 @@
           "media::mojom::RemoterFactory",
           "media::mojom::Renderer",
           "network::mojom::RestrictedCookieManager",
+          "password_manager::mojom::CredentialManager",
           "payments::mojom::PaymentManager",
           "payments::mojom::PaymentRequest",
           "resource_coordinator::mojom::FrameCoordinationUnit",
@@ -181,9 +188,11 @@
     "navigation:dedicated_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::BudgetService",
           "blink::mojom::LockManager",
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
+          "blink::mojom::QuotaDispatcherHost",
           "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",
@@ -195,9 +204,11 @@
       "provides": {
         "renderer": [
           "blink::mojom::BackgroundFetchService",
+          "blink::mojom::BudgetService",
           "blink::mojom::LockManager",
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
+          "blink::mojom::QuotaDispatcherHost",
           "blink::mojom::WebSocket",
           "network::mojom::RestrictedCookieManager",
           "payments::mojom::PaymentManager",
@@ -210,9 +221,11 @@
     "navigation:shared_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::BudgetService",
           "blink::mojom::LockManager",
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
+          "blink::mojom::QuotaDispatcherHost",
           "blink::mojom::WebSocket",
           "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",

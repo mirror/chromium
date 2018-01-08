@@ -42,9 +42,7 @@
 #include "core/dom/events/Event.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
-#include "core/editing/EphemeralRange.h"
 #include "core/editing/FrameSelection.h"
-#include "core/editing/VisiblePosition.h"
 #include "core/editing/ime/InputMethodController.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
@@ -58,15 +56,16 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PerformanceMonitor.h"
 #include "core/frame/Settings.h"
+#include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/PluginDocument.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/inspector/InspectorTraceEvents.h"
 #include "core/layout/HitTestResult.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutEmbeddedContentItem.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/IdlenessDetector.h"
@@ -79,8 +78,6 @@
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "core/probe/CoreProbes.h"
 #include "core/svg/SVGDocumentExtensions.h"
-#include "core/timing/DOMWindowPerformance.h"
-#include "core/timing/Performance.h"
 #include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/ScriptForbiddenScope.h"
@@ -123,6 +120,24 @@ inline float ParentTextZoomFactor(LocalFrame* frame) {
   if (!parent || !parent->IsLocalFrame())
     return 1;
   return ToLocalFrame(parent)->TextZoomFactor();
+}
+
+bool ShouldUseClientLoFiForRequest(
+    const ResourceRequest& request,
+    WebURLRequest::PreviewsState frame_previews_state) {
+  if (request.GetPreviewsState() != WebURLRequest::kPreviewsUnspecified)
+    return request.GetPreviewsState() & WebURLRequest::kClientLoFiOn;
+
+  if (!(frame_previews_state & WebURLRequest::kClientLoFiOn))
+    return false;
+
+  // Even if this frame is using Server Lo-Fi, https:// images won't be
+  // handled by Server Lo-Fi since their requests won't be sent to the Data
+  // Saver proxy, so use Client Lo-Fi instead.
+  if (frame_previews_state & WebURLRequest::kServerLoFiOn)
+    return request.Url().ProtocolIs("https");
+
+  return true;
 }
 
 }  // namespace
@@ -194,7 +209,7 @@ void LocalFrame::CreateView(const IntSize& viewport_size,
     frame_view->SetParentVisible(true);
 
   // FIXME: Not clear what the right thing for OOPI is here.
-  if (!OwnerLayoutItem().IsNull()) {
+  if (OwnerLayoutObject()) {
     HTMLFrameOwnerElement* owner = DeprecatedLocalOwner();
     DCHECK(owner);
     // FIXME: OOPI might lead to us temporarily lying to a frame and telling it
@@ -220,6 +235,7 @@ void LocalFrame::Trace(blink::Visitor* visitor) {
   visitor->Trace(probe_sink_);
   visitor->Trace(performance_monitor_);
   visitor->Trace(idleness_detector_);
+  visitor->Trace(inspector_trace_events_);
   visitor->Trace(loader_);
   visitor->Trace(navigation_scheduler_);
   visitor->Trace(view_);
@@ -255,21 +271,15 @@ void LocalFrame::Reload(FrameLoadType load_type,
   if (client_redirect_policy == ClientRedirectPolicy::kNotClientRedirect) {
     if (!loader_.GetDocumentLoader()->GetHistoryItem())
       return;
-    DCHECK(GetDocument());
     FrameLoadRequest request = FrameLoadRequest(
-        GetDocument(), loader_.ResourceRequestForReload(
-                           load_type, NullURL(), client_redirect_policy));
+        nullptr, loader_.ResourceRequestForReload(load_type, NullURL(),
+                                                  client_redirect_policy));
     request.SetClientRedirect(client_redirect_policy);
     loader_.Load(request, load_type);
   } else {
     DCHECK_EQ(kFrameLoadTypeReload, load_type);
     navigation_scheduler_->ScheduleReload();
   }
-}
-
-void LocalFrame::AddResourceTiming(const ResourceTimingInfo& info) {
-  DCHECK(IsAttached());
-  DOMWindowPerformance::performance(*DomWindow())->AddResourceTiming(info);
 }
 
 void LocalFrame::Detach(FrameDetachType type) {
@@ -280,6 +290,8 @@ void LocalFrame::Detach(FrameDetachType type) {
   if (IsLocalRoot())
     performance_monitor_->Shutdown();
   idleness_detector_->Shutdown();
+  if (inspector_trace_events_)
+    probe_sink_->removeInspectorTraceEvents(inspector_trace_events_);
 
   PluginScriptForbiddenScope forbid_plugin_destructor_scripting;
   loader_.StopAllLoaders();
@@ -443,8 +455,19 @@ LayoutView* LocalFrame::ContentLayoutObject() const {
   return GetDocument() ? GetDocument()->GetLayoutView() : nullptr;
 }
 
-LayoutViewItem LocalFrame::ContentLayoutItem() const {
-  return LayoutViewItem(ContentLayoutObject());
+void LocalFrame::IntrinsicSizingInfoChanged(
+    const IntrinsicSizingInfo& sizing_info) {
+  if (!Owner())
+    return;
+  // Notify the owner. For remote frame owners, notify via
+  // an IPC to the parent renderer; otherwise notify directly.
+  if (Owner()->IsRemote()) {
+    WebLocalFrameImpl::FromFrame(this)
+        ->FrameWidget()
+        ->IntrinsicSizingInfoChanged(sizing_info);
+  } else {
+    Owner()->IntrinsicSizingInfoChanged();
+  }
 }
 
 void LocalFrame::DidChangeVisibilityState() {
@@ -563,10 +586,11 @@ bool LocalFrame::ShouldUsePrintingLayout() const {
 FloatSize LocalFrame::ResizePageRectsKeepingRatio(
     const FloatSize& original_size,
     const FloatSize& expected_size) const {
-  if (ContentLayoutItem().IsNull())
+  auto* layout_object = ContentLayoutObject();
+  if (!layout_object)
     return FloatSize();
 
-  bool is_horizontal = ContentLayoutItem().Style()->IsHorizontalWritingMode();
+  bool is_horizontal = layout_object->StyleRef().IsHorizontalWritingMode();
   float width = original_size.Width();
   float height = original_size.Height();
   if (!is_horizontal)
@@ -698,38 +722,11 @@ Document* LocalFrame::DocumentAtPoint(const LayoutPoint& point_in_root_frame) {
 
   LayoutPoint pt = View()->RootFrameToContents(point_in_root_frame);
 
-  if (ContentLayoutItem().IsNull())
+  if (!ContentLayoutObject())
     return nullptr;
   HitTestResult result = GetEventHandler().HitTestResultAtPoint(
       pt, HitTestRequest::kReadOnly | HitTestRequest::kActive);
   return result.InnerNode() ? &result.InnerNode()->GetDocument() : nullptr;
-}
-
-EphemeralRange LocalFrame::RangeForPoint(const IntPoint& frame_point) {
-  const PositionWithAffinity position_with_affinity =
-      PositionForPoint(frame_point);
-  if (position_with_affinity.IsNull())
-    return EphemeralRange();
-
-  VisiblePosition position = CreateVisiblePosition(position_with_affinity);
-  VisiblePosition previous = PreviousPositionOf(position);
-  if (previous.IsNotNull()) {
-    const EphemeralRange previous_character_range =
-        MakeRange(previous, position);
-    IntRect rect = GetEditor().FirstRectForRange(previous_character_range);
-    if (rect.Contains(frame_point))
-      return EphemeralRange(previous_character_range);
-  }
-
-  VisiblePosition next = NextPositionOf(position);
-  const EphemeralRange next_character_range = MakeRange(position, next);
-  if (next_character_range.IsNotNull()) {
-    IntRect rect = GetEditor().FirstRectForRange(next_character_range);
-    if (rect.Contains(frame_point))
-      return EphemeralRange(next_character_range);
-  }
-
-  return EphemeralRange();
 }
 
 bool LocalFrame::ShouldReuseDefaultView(const KURL& url) const {
@@ -746,14 +743,14 @@ void LocalFrame::RemoveSpellingMarkersUnderWords(const Vector<String>& words) {
 }
 
 String LocalFrame::GetLayerTreeAsTextForTesting(unsigned flags) const {
-  if (ContentLayoutItem().IsNull())
+  if (!ContentLayoutObject())
     return String();
 
   std::unique_ptr<JSONObject> layers;
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     layers = View()->CompositedLayersAsJSON(static_cast<LayerTreeFlags>(flags));
   } else {
-    layers = ContentLayoutItem().Compositor()->LayerTreeAsJSON(
+    layers = ContentLayoutObject()->Compositor()->LayerTreeAsJSON(
         static_cast<LayerTreeFlags>(flags));
   }
 
@@ -800,11 +797,12 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       page_zoom_factor_(ParentPageZoomFactor(this)),
       text_zoom_factor_(ParentTextZoomFactor(this)),
       in_view_source_mode_(false),
-      interface_registry_(interface_registry),
-      instrumentation_token_(client->GetInstrumentationToken()) {
+      interface_registry_(interface_registry) {
   if (IsLocalRoot()) {
     probe_sink_ = new CoreProbeSink();
     performance_monitor_ = new PerformanceMonitor(this);
+    inspector_trace_events_ = new InspectorTraceEvents();
+    probe_sink_->addInspectorTraceEvents(inspector_trace_events_);
   } else {
     // Inertness only needs to be updated if this frame might inherit the
     // inert state from a higher-level frame. If this is an OOPIF local root,
@@ -873,11 +871,14 @@ bool LocalFrame::CanNavigate(const Frame& target_frame,
     if (is_allowed_navigation)
       framebust_params |= kAllowedBit;
     framebust_histogram.Count(framebust_params);
-    if (has_user_gesture || is_allowed_navigation)
+    if (has_user_gesture || is_allowed_navigation ||
+        target_frame.GetSecurityContext()->GetSecurityOrigin()->CanAccess(
+            SecurityOrigin::Create(destination_url).get())) {
       return true;
+    }
     // Frame-busting used to be generally allowed in most situations, but may
     // now blocked if the document initiating the navigation has never received
-    // a user gesture.
+    // a user gesture and the navigation isn't same-origin with the target.
     if (!RuntimeEnabledFeatures::
             FramebustingNeedsSameOriginOrUserGestureEnabled()) {
       String target_frame_description =
@@ -1125,7 +1126,8 @@ void LocalFrame::MaybeAllowImagePlaceholder(FetchParameters& params) const {
   }
 
   if (Client() &&
-      Client()->ShouldUseClientLoFiForRequest(params.GetResourceRequest())) {
+      ShouldUseClientLoFiForRequest(params.GetResourceRequest(),
+                                    Client()->GetPreviewsStateForFrame())) {
     params.MutableResourceRequest().SetPreviewsState(
         params.GetResourceRequest().GetPreviewsState() |
         WebURLRequest::kClientLoFiOn);
@@ -1187,8 +1189,10 @@ void LocalFrame::ForceSynchronousDocumentInstall(
       });
   GetDocument()->Parser()->Finish();
 
-  // Upon loading of the page, log PageVisits in UseCounter.
-  if (GetPage())
+  // Upon loading of SVGIamges, log PageVisits in UseCounter.
+  // Do not track PageVisits for inspector, web page popups, and validation
+  // message overlays (the other callers of this method).
+  if (GetPage() && GetDocument()->IsSVGDocument())
     GetPage()->GetUseCounter().DidCommitLoad(this);
 }
 

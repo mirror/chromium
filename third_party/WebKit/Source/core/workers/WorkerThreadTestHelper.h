@@ -11,6 +11,7 @@
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "bindings/core/v8/V8GCController.h"
+#include "common/net/ip_address_space.mojom-blink.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -34,7 +35,6 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Time.h"
 #include "platform/wtf/Vector.h"
-#include "public/platform/WebAddressSpace.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "v8/include/v8.h"
 
@@ -65,7 +65,7 @@ class FakeWorkerGlobalScope : public WorkerGlobalScope {
                           thread,
                           CurrentTimeTicksInSeconds()) {}
 
-  ~FakeWorkerGlobalScope() override {}
+  ~FakeWorkerGlobalScope() override = default;
 
   // EventTarget
   const AtomicString& InterfaceName() const override {
@@ -80,10 +80,10 @@ class WorkerThreadForTest : public WorkerThread {
   WorkerThreadForTest(ThreadableLoadingContext* loading_context,
                       WorkerReportingProxy& mock_worker_reporting_proxy)
       : WorkerThread(loading_context, mock_worker_reporting_proxy),
-        worker_backing_thread_(
-            WorkerBackingThread::CreateForTest("Test thread")) {}
+        worker_backing_thread_(WorkerBackingThread::CreateForTest(
+            WebThreadCreationParams("Test thread"))) {}
 
-  ~WorkerThreadForTest() override {}
+  ~WorkerThreadForTest() override = default;
 
   WorkerBackingThread& GetWorkerBackingThread() override {
     return *worker_backing_thread_;
@@ -102,7 +102,7 @@ class WorkerThreadForTest : public WorkerThread {
 
     auto creation_params = std::make_unique<GlobalScopeCreationParams>(
         script_url, "fake user agent", headers.get(), kReferrerPolicyDefault,
-        security_origin, worker_clients, kWebAddressSpaceLocal, nullptr,
+        security_origin, worker_clients, mojom::IPAddressSpace::kLocal, nullptr,
         std::make_unique<WorkerSettings>(Settings::Create().get()),
         kV8CacheOptionsDefault);
 
@@ -129,6 +129,10 @@ class WorkerThreadForTest : public WorkerThread {
   }
 
  private:
+  scheduler::ThreadType GetThreadType() const override {
+    return scheduler::ThreadType::kUnspecifiedWorkerThread;
+  }
+
   std::unique_ptr<WorkerBackingThread> worker_backing_thread_;
 };
 

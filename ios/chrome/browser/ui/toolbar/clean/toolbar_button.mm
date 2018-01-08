@@ -10,10 +10,19 @@
 #error "This file requires ARC support."
 #endif
 
+@interface ToolbarButton ()
+// Constraints for the named layout guide.
+@property(nonatomic, strong)
+    NSArray<NSLayoutConstraint*>* namedGuideConstraints;
+@end
+
 @implementation ToolbarButton
 @synthesize visibilityMask = _visibilityMask;
+@synthesize guideName = _guideName;
+@synthesize constraintPriority = _constraintPriority;
 @synthesize hiddenInCurrentSizeClass = _hiddenInCurrentSizeClass;
 @synthesize hiddenInCurrentState = _hiddenInCurrentState;
+@synthesize namedGuideConstraints = _namedGuideConstraints;
 
 + (instancetype)toolbarButtonWithImageForNormalState:(UIImage*)normalImage
                             imageForHighlightedState:(UIImage*)highlightedImage
@@ -25,6 +34,7 @@
   [button setImage:highlightedImage forState:UIControlStateSelected];
   button.titleLabel.textAlignment = NSTextAlignmentCenter;
   button.translatesAutoresizingMaskIntoConstraints = NO;
+  button.constraintPriority = UILayoutPriorityRequired;
   return button;
 }
 
@@ -42,40 +52,51 @@
   }
 }
 
+#pragma mark - Property accessors
+
+- (void)setGuideName:(GuideName*)guideName {
+  _guideName = guideName;
+  [NSLayoutConstraint deactivateConstraints:self.namedGuideConstraints];
+  self.namedGuideConstraints = nil;
+}
+
 #pragma mark - Public Methods
 
 - (void)updateHiddenInCurrentSizeClass {
   BOOL newHiddenValue = YES;
-  if (!IsIPadIdiom()) {
-    if (self.visibilityMask &
-        ToolbarComponentVisibilityCompactWidthOnlyWhenEnabled) {
-      newHiddenValue = !self.enabled;
-    } else if (self.visibilityMask & ToolbarComponentVisibilityCompactWidth ||
-               self.visibilityMask & ToolbarComponentVisibilityIPhoneOnly) {
-      newHiddenValue = NO;
-    }
-  } else {
-    switch (self.traitCollection.horizontalSizeClass) {
-      case UIUserInterfaceSizeClassRegular:
-        newHiddenValue =
-            !(self.visibilityMask & ToolbarComponentVisibilityRegularWidth);
-        break;
-      case UIUserInterfaceSizeClassCompact:
-        // First check if the button should be visible only when it's enabled,
-        // if not, check if it should be visible in this case.
-        if (self.visibilityMask &
-            ToolbarComponentVisibilityCompactWidthOnlyWhenEnabled) {
-          newHiddenValue = !self.enabled;
-        } else if (self.visibilityMask &
-                   ToolbarComponentVisibilityCompactWidth) {
-          newHiddenValue = NO;
-        }
-        break;
-      case UIUserInterfaceSizeClassUnspecified:
-      default:
-        break;
-    }
+
+  BOOL isCompactWidth = self.traitCollection.horizontalSizeClass ==
+                        UIUserInterfaceSizeClassCompact;
+  BOOL isCompactHeight =
+      self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact;
+  BOOL isRegularWidth = self.traitCollection.horizontalSizeClass ==
+                        UIUserInterfaceSizeClassRegular;
+  BOOL isRegularHeight =
+      self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
+
+  if (isCompactWidth && isCompactHeight) {
+    newHiddenValue = !(self.visibilityMask &
+                       ToolbarComponentVisibilityCompactWidthCompactHeight);
+  } else if (isCompactWidth && isRegularHeight) {
+    newHiddenValue = !(self.visibilityMask &
+                       ToolbarComponentVisibilityCompactWidthRegularHeight);
+  } else if (isRegularWidth && isCompactHeight) {
+    newHiddenValue = !(self.visibilityMask &
+                       ToolbarComponentVisibilityRegularWidthCompactHeight);
+  } else if (isRegularWidth && isRegularHeight) {
+    newHiddenValue = !(self.visibilityMask &
+                       ToolbarComponentVisibilityRegularWidthRegularHeight);
   }
+
+  if (!IsIPadIdiom() &&
+      self.visibilityMask & ToolbarComponentVisibilityIPhoneOnly) {
+    newHiddenValue = NO;
+  }
+  if (newHiddenValue &&
+      self.visibilityMask & ToolbarComponentVisibilityOnlyWhenEnabled) {
+    newHiddenValue = !self.enabled;
+  }
+
   if (newHiddenValue != self.hiddenInCurrentSizeClass) {
     self.hiddenInCurrentSizeClass = newHiddenValue;
     [self setHiddenForCurrentStateAndSizeClass];
@@ -93,6 +114,30 @@
 // and hiddenInCurrentState properties, then updates its visibility accordingly.
 - (void)setHiddenForCurrentStateAndSizeClass {
   self.hidden = self.hiddenInCurrentState || self.hiddenInCurrentSizeClass;
+
+  if (!self.namedGuideConstraints && self.guideName) {
+    // The guide name can be set before the button is added to the view
+    // hierarchy. Checking here if the constraints are set to prevent it.
+    UILayoutGuide* guide = FindNamedGuide(_guideName, self);
+    if (!guide)
+      return;
+
+    self.namedGuideConstraints = @[
+      [guide.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+      [guide.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+      [guide.topAnchor constraintEqualToAnchor:self.topAnchor],
+      [guide.bottomAnchor constraintEqualToAnchor:self.bottomAnchor]
+    ];
+    for (NSLayoutConstraint* constraint in self.namedGuideConstraints) {
+      constraint.priority = self.constraintPriority;
+    }
+  }
+
+  if (self.hidden) {
+    [NSLayoutConstraint deactivateConstraints:self.namedGuideConstraints];
+  } else {
+    [NSLayoutConstraint activateConstraints:self.namedGuideConstraints];
+  }
 }
 
 @end

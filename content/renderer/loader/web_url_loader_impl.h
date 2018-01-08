@@ -12,11 +12,12 @@
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
 #include "content/common/frame.mojom.h"
-#include "content/public/common/resource_response.h"
-#include "content/public/common/url_loader.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/resource_response.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "third_party/WebKit/public/platform/WebURLLoader.h"
 #include "third_party/WebKit/public/platform/WebURLLoaderFactory.h"
 #include "url/gurl.h"
@@ -25,11 +26,13 @@ namespace base {
 class SingleThreadTaskRunner;
 }
 
+namespace network {
+struct ResourceResponseInfo;
+}
+
 namespace content {
 
-class ChildURLLoaderFactoryGetter;
 class ResourceDispatcher;
-struct ResourceResponseInfo;
 
 // PlzNavigate: Used to override parameters of the navigation request.
 struct CONTENT_EXPORT StreamOverrideParameters {
@@ -38,13 +41,11 @@ struct CONTENT_EXPORT StreamOverrideParameters {
   ~StreamOverrideParameters();
 
   GURL stream_url;
-  mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints;
-  ResourceResponseHead response;
+  network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints;
+  network::ResourceResponseHead response;
   std::vector<GURL> redirects;
-  std::vector<ResourceResponseInfo> redirect_responses;
+  std::vector<network::ResourceResponseInfo> redirect_responses;
   std::vector<net::RedirectInfo> redirect_infos;
-
-  int total_transferred = 0;
 
   // Called when this struct is deleted. Used to notify the browser that it can
   // release its associated StreamHandle.
@@ -55,9 +56,8 @@ struct CONTENT_EXPORT StreamOverrideParameters {
 class CONTENT_EXPORT WebURLLoaderFactoryImpl
     : public blink::WebURLLoaderFactory {
  public:
-  WebURLLoaderFactoryImpl(
-      base::WeakPtr<ResourceDispatcher> resource_dispatcher,
-      scoped_refptr<ChildURLLoaderFactoryGetter> loader_factory_getter);
+  WebURLLoaderFactoryImpl(base::WeakPtr<ResourceDispatcher> resource_dispatcher,
+                          scoped_refptr<SharedURLLoaderFactory> loader_factory);
   ~WebURLLoaderFactoryImpl() override;
 
   // Creates a test-only factory which can be used only for data URLs.
@@ -69,7 +69,7 @@ class CONTENT_EXPORT WebURLLoaderFactoryImpl
 
  private:
   base::WeakPtr<ResourceDispatcher> resource_dispatcher_;
-  scoped_refptr<ChildURLLoaderFactoryGetter> loader_factory_getter_;
+  scoped_refptr<SharedURLLoaderFactory> loader_factory_;
   DISALLOW_COPY_AND_ASSIGN(WebURLLoaderFactoryImpl);
 };
 
@@ -77,17 +77,17 @@ class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
  public:
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                   mojom::URLLoaderFactory* url_loader_factory);
+                   scoped_refptr<SharedURLLoaderFactory> url_loader_factory);
   // When non-null |keep_alive_handle| is specified, this loader prolongs
   // this render process's lifetime.
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                   mojom::URLLoaderFactory* url_loader_factory,
+                   scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
                    mojom::KeepAliveHandlePtr keep_alive_handle);
   ~WebURLLoaderImpl() override;
 
   static void PopulateURLResponse(const blink::WebURL& url,
-                                  const ResourceResponseInfo& info,
+                                  const network::ResourceResponseInfo& info,
                                   blink::WebURLResponse* response,
                                   bool report_security_info);
   // WebURLLoader methods:
@@ -106,6 +106,7 @@ class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
  private:
   class Context;
   class RequestPeerImpl;
+  class SinkPeer;
   scoped_refptr<Context> context_;
 
   DISALLOW_COPY_AND_ASSIGN(WebURLLoaderImpl);

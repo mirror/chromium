@@ -45,7 +45,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 
 namespace {
 
@@ -75,6 +75,7 @@ const char kCapabilityPersistence[] = "persistence";
 const char kCapabilitySound[] = "sound";
 
 // Button IDs.
+const char kCloseButtonId[] = "close";
 const char kDefaultButtonId[] = "default";
 const char kSettingsButtonId[] = "settings";
 
@@ -87,6 +88,13 @@ const int32_t kExpireTimeout = 25000;
 
 // The maximum amount of characters for displaying the full origin path.
 const size_t kMaxAllowedOriginLength = 28;
+
+// Notification urgency levels, as specified in the FDO notification spec.
+enum FdoUrgency {
+  URGENCY_LOW = 0,
+  URGENCY_NORMAL = 1,
+  URGENCY_CRITICAL = 2,
+};
 
 // The values in this enumeration correspond to those of the
 // Linux.NotificationPlatformBridge.InitializationStatus histogram, so
@@ -126,22 +134,18 @@ void EscapeUnsafeCharacters(std::string* message) {
 }
 
 int NotificationPriorityToFdoUrgency(int priority) {
-  enum FdoUrgency {
-    LOW = 0,
-    NORMAL = 1,
-    CRITICAL = 2,
-  };
   switch (priority) {
     case message_center::MIN_PRIORITY:
     case message_center::LOW_PRIORITY:
-      return LOW;
+      return URGENCY_LOW;
     case message_center::HIGH_PRIORITY:
     case message_center::MAX_PRIORITY:
-      return CRITICAL;
+      return URGENCY_CRITICAL;
     default:
       NOTREACHED();
+      FALLTHROUGH;
     case message_center::DEFAULT_PRIORITY:
-      return NORMAL;
+      return URGENCY_NORMAL;
   }
 }
 
@@ -168,24 +172,13 @@ gfx::Image ResizeImageToFdoMaxSize(const gfx::Image& image) {
           height)));
 }
 
-// Runs once the profile has been loaded in order to perform a given
-// |operation| on a notification.
-void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationHandler::Type notification_type,
-                           const GURL& origin,
-                           const std::string& notification_id,
-                           const base::Optional<int>& action_index,
-                           const base::Optional<base::string16>& reply,
-                           const base::Optional<bool>& by_user,
-                           Profile* profile) {
-  if (!profile)
-    return;
-
-  NotificationDisplayServiceImpl* display_service =
-      NotificationDisplayServiceImpl::GetForProfile(profile);
-  display_service->ProcessNotificationOperation(operation, notification_type,
-                                                origin, notification_id,
-                                                action_index, reply, by_user);
+bool ShouldAddCloseButton(const std::string& server_name) {
+  // Cinnamon doesn't add a close button on notifications.  With eg. calendar
+  // notifications, which are stay-on-screen, this can lead to a situation where
+  // the only way to dismiss a notification is to click on it, which would
+  // create an unwanted web navigation.  For this reason, manually add a close
+  // button. (https://crbug.com/804637)
+  return server_name == "cinnamon";
 }
 
 void ForwardNotificationOperationOnUiThread(
@@ -200,9 +193,9 @@ void ForwardNotificationOperationOnUiThread(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   g_browser_process->profile_manager()->LoadProfile(
       profile_id, is_incognito,
-      base::Bind(&ProfileLoadedCallback, operation, notification_type, origin,
-                 notification_id, action_index, base::nullopt /* reply */,
-                 by_user));
+      base::Bind(&NotificationDisplayServiceImpl::ProfileLoadedCallback,
+                 operation, notification_type, origin, notification_id,
+                 action_index, base::nullopt /* reply */, by_user));
 }
 
 class ResourceFile {
@@ -454,6 +447,17 @@ class NotificationPlatformBridgeLinuxImpl
         &NotificationPlatformBridgeLinuxImpl::SetBodyImagesSupported, this,
         base::ContainsKey(capabilities_, kCapabilityBodyImages)));
 
+    dbus::MethodCall get_server_information_call(kFreedesktopNotificationsName,
+                                                 "GetServerInformation");
+    std::unique_ptr<dbus::Response> server_information_response =
+        notification_proxy_->CallMethodAndBlock(
+            &get_server_information_call,
+            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT);
+    if (server_information_response) {
+      dbus::MessageReader reader(server_information_response.get());
+      reader.PopString(&server_name_);
+    }
+
     connected_signals_barrier_ = base::BarrierClosure(
         2, base::Bind(&NotificationPlatformBridgeLinuxImpl::
                           OnConnectionInitializationFinishedOnTaskRunner,
@@ -619,6 +623,11 @@ class NotificationPlatformBridgeLinuxImpl
         actions.push_back(
             l10n_util::GetStringUTF8(IDS_NOTIFICATION_BUTTON_SETTINGS));
       }
+      if (ShouldAddCloseButton(server_name_)) {
+        actions.push_back(kCloseButtonId);
+        actions.push_back(
+            l10n_util::GetStringUTF8(IDS_NOTIFICATION_BUTTON_CLOSE));
+      }
     }
     writer.AppendArrayOfStrings(actions);
 
@@ -627,8 +636,11 @@ class NotificationPlatformBridgeLinuxImpl
     dbus::MessageWriter urgency_writer(nullptr);
     hints_writer.OpenDictEntry(&urgency_writer);
     urgency_writer.AppendString("urgency");
-    urgency_writer.AppendVariantOfUint32(
-        NotificationPriorityToFdoUrgency(notification->priority()));
+    uint32_t urgency =
+        notification->never_timeout()
+            ? URGENCY_CRITICAL
+            : NotificationPriorityToFdoUrgency(notification->priority());
+    urgency_writer.AppendVariantOfUint32(urgency);
     hints_writer.CloseContainer(&urgency_writer);
 
     if (notification->silent()) {
@@ -786,6 +798,8 @@ class NotificationPlatformBridgeLinuxImpl
       ForwardNotificationOperation(data, NotificationCommon::SETTINGS,
                                    base::nullopt /* action_index */,
                                    base::nullopt /* by_user */);
+    } else if (action == kCloseButtonId) {
+      CloseOnTaskRunner(data->profile_id, data->notification_id);
     } else {
       size_t id;
       if (!base::StringToSizeT(action, &id))
@@ -938,6 +952,8 @@ class NotificationPlatformBridgeLinuxImpl
   dbus::ObjectProxy* notification_proxy_ = nullptr;
 
   std::unordered_set<std::string> capabilities_;
+
+  std::string server_name_;
 
   base::Closure connected_signals_barrier_;
 

@@ -9,7 +9,6 @@
 #include "cc/cc_export.h"
 #include "cc/layers/layer.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/common/surfaces/surface_reference_factory.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -19,29 +18,20 @@ namespace cc {
 // instance or client.
 class CC_EXPORT SurfaceLayer : public Layer {
  public:
-  static scoped_refptr<SurfaceLayer> Create(
-      scoped_refptr<viz::SurfaceReferenceFactory> ref_factory);
+  static scoped_refptr<SurfaceLayer> Create();
 
-  void SetPrimarySurfaceId(const viz::SurfaceId& surface_id);
+  void SetPrimarySurfaceId(const viz::SurfaceId& surface_id,
+                           base::Optional<uint32_t> deadline_in_frames);
   void SetFallbackSurfaceId(const viz::SurfaceId& surface_id);
 
   // When stretch_content_to_fill_bounds is true, the scale of the embedded
   // surface is ignored and the content will be stretched to fill the bounds.
   void SetStretchContentToFillBounds(bool stretch_content_to_fill_bounds);
 
-  // Specifies the |background_color| to use when a primary surface is
-  // specified, and a fallback surface is unavailable.
-  void SetDefaultBackgroundColor(SkColor background_color);
-
   // Layer overrides.
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
   void SetLayerTreeHost(LayerTreeHost* host) override;
   void PushPropertiesTo(LayerImpl* layer) override;
-
-  scoped_refptr<viz::SurfaceReferenceFactory> surface_reference_factory()
-      const {
-    return ref_factory_;
-  }
 
   const viz::SurfaceId& primary_surface_id() const {
     return primary_surface_id_;
@@ -52,21 +42,17 @@ class CC_EXPORT SurfaceLayer : public Layer {
   }
 
  protected:
-  explicit SurfaceLayer(
-      scoped_refptr<viz::SurfaceReferenceFactory> ref_factory);
+  SurfaceLayer();
   bool HasDrawableContent() const override;
 
  private:
   ~SurfaceLayer() override;
-  void RemoveReference(base::Closure reference_returner);
 
   viz::SurfaceId primary_surface_id_;
   viz::SurfaceId fallback_surface_id_;
-  base::Closure fallback_reference_returner_;
+  base::Optional<uint32_t> deadline_in_frames_;
 
-  scoped_refptr<viz::SurfaceReferenceFactory> ref_factory_;
   bool stretch_content_to_fill_bounds_ = false;
-  SkColor default_background_color_ = SK_ColorWHITE;
 
   DISALLOW_COPY_AND_ASSIGN(SurfaceLayer);
 };

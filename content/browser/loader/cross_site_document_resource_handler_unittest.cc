@@ -25,7 +25,6 @@
 #include "content/browser/loader/resource_controller.h"
 #include "content/browser/loader/test_resource_handler.h"
 #include "content/public/browser/resource_request_info.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/webplugininfo.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -35,6 +34,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -204,11 +204,11 @@ const TestScenario kScenarios[] = {
         -1,                                         // verdict_packet
     },
     {
-        "Allowed: Same-site JSON with parser breaker and HTML mime type",
+        "Allowed: Same-origin JSON with parser breaker and HTML mime type",
         __LINE__,
         "http://www.a.com/resource.html",       // target_url
         RESOURCE_TYPE_XHR,                      // resource_type
-        "http://a.com/",                        // initiator_origin
+        "http://www.a.com/",                    // initiator_origin
         OriginHeader::kOmit,                    // cors_request
         "text/html",                            // response_mime_type
         CROSS_SITE_DOCUMENT_MIME_TYPE_HTML,     // canonical_mime_type
@@ -219,9 +219,9 @@ const TestScenario kScenarios[] = {
         -1,  // verdict_packet
     },
     {
-        "Allowed: Same-site JSON with parser breaker and JSON mime type",
+        "Allowed: Same-origin JSON with parser breaker and JSON mime type",
         __LINE__,
-        "http://a.com/resource.html",           // target_url
+        "http://www.a.com/resource.html",       // target_url
         RESOURCE_TYPE_XHR,                      // resource_type
         "http://www.a.com/",                    // initiator_origin
         OriginHeader::kOmit,                    // cors_request
@@ -582,6 +582,36 @@ const TestScenario kScenarios[] = {
         Verdict::kAllow,                        // verdict
         0,                                      // verdict_packet
     },
+    {
+        "Allowed: Same-site XHR to a filesystem URI",
+        __LINE__,
+        "filesystem:http://www.a.com/file.html",    // target_url
+        RESOURCE_TYPE_XHR,                          // resource_type
+        "http://www.a.com/",                        // initiator_origin
+        OriginHeader::kOmit,                        // cors_request
+        "text/html",                                // response_mime_type
+        CROSS_SITE_DOCUMENT_MIME_TYPE_HTML,         // canonical_mime_type
+        false,                                      // include_no_sniff_header
+        AccessControlAllowOriginHeader::kOmit,      // cors_response
+        {"<html><head>this should sniff as HTML"},  // packets
+        Verdict::kAllow,                            // verdict
+        -1,                                         // verdict_packet
+    },
+    {
+        "Allowed: Same-site XHR to a blob URI",
+        __LINE__,
+        "blob:http://www.a.com/guid-goes-here",     // target_url
+        RESOURCE_TYPE_XHR,                          // resource_type
+        "http://www.a.com/",                        // initiator_origin
+        OriginHeader::kOmit,                        // cors_request
+        "text/html",                                // response_mime_type
+        CROSS_SITE_DOCUMENT_MIME_TYPE_HTML,         // canonical_mime_type
+        false,                                      // include_no_sniff_header
+        AccessControlAllowOriginHeader::kOmit,      // cors_response
+        {"<html><head>this should sniff as HTML"},  // packets
+        Verdict::kAllow,                            // verdict
+        -1,                                         // verdict_packet
+    },
 
     // Blocked responses (without sniffing):
     {
@@ -613,6 +643,38 @@ const TestScenario kScenarios[] = {
         {"Wouldn't sniff as HTML"},             // packets
         Verdict::kBlock,                        // verdict
         -1,                                     // verdict_packet
+    },
+    {
+        "Blocked: Cross-origin, same-site XHR to nosniff HTML without CORS",
+        __LINE__,
+        "https://foo.site.com/resource.html",       // target_url
+        RESOURCE_TYPE_XHR,                          // resource_type
+        "https://bar.site.com/",                    // initiator_origin
+        OriginHeader::kOmit,                        // cors_request
+        "text/html",                                // response_mime_type
+        CROSS_SITE_DOCUMENT_MIME_TYPE_HTML,         // canonical_mime_type
+        true,                                       // include_no_sniff_header
+        AccessControlAllowOriginHeader::kOmit,      // cors_response
+        {"<html><head>this should sniff as HTML"},  // packets
+        Verdict::kBlock,                            // verdict
+        -1,                                         // verdict_packet
+    },
+    {
+        "Blocked: Cross-origin XHR to HTML with wrong CORS (okay same-site)",
+        // Note that initiator_origin is cross-origin, but same-site in relation
+        // to the CORS response.
+        __LINE__,
+        "http://www.b.com/resource.html",    // target_url
+        RESOURCE_TYPE_XHR,                   // resource_type
+        "http://foo.example.com/",           // initiator_origin
+        OriginHeader::kInclude,              // cors_request
+        "text/html",                         // response_mime_type
+        CROSS_SITE_DOCUMENT_MIME_TYPE_HTML,  // canonical_mime_type
+        false,                               // include_no_sniff_header
+        AccessControlAllowOriginHeader::kAllowExampleDotCom,  // cors_response
+        {"<hTmL><head>this should sniff as HTML"},            // packets
+        Verdict::kBlock,                                      // verdict
+        0,                                                    // verdict_packet
     },
 
     {
@@ -879,6 +941,36 @@ const TestScenario kScenarios[] = {
         Verdict::kBlock,                                      // verdict
         0,                                                    // verdict_packet
     },
+    {
+        "Blocked: Cross-site XHR to a filesystem URI",
+        __LINE__,
+        "filesystem:http://www.b.com/file.html",    // target_url
+        RESOURCE_TYPE_XHR,                          // resource_type
+        "http://www.a.com/",                        // initiator_origin
+        OriginHeader::kOmit,                        // cors_request
+        "text/html",                                // response_mime_type
+        CROSS_SITE_DOCUMENT_MIME_TYPE_HTML,         // canonical_mime_type
+        false,                                      // include_no_sniff_header
+        AccessControlAllowOriginHeader::kOmit,      // cors_response
+        {"<html><head>this should sniff as HTML"},  // packets
+        Verdict::kBlock,                            // verdict
+        0,                                          // verdict_packet
+    },
+    {
+        "Blocked: Cross-site XHR to a blob URI",
+        __LINE__,
+        "blob:http://www.b.com/guid-goes-here",     // target_url
+        RESOURCE_TYPE_XHR,                          // resource_type
+        "http://www.a.com/",                        // initiator_origin
+        OriginHeader::kOmit,                        // cors_request
+        "text/html",                                // response_mime_type
+        CROSS_SITE_DOCUMENT_MIME_TYPE_HTML,         // canonical_mime_type
+        false,                                      // include_no_sniff_header
+        AccessControlAllowOriginHeader::kOmit,      // cors_response
+        {"<html><head>this should sniff as HTML"},  // packets
+        Verdict::kBlock,                            // verdict
+        0,                                          // verdict_packet
+    },
 };
 
 }  // namespace
@@ -939,13 +1031,13 @@ class CrossSiteDocumentResourceHandlerTest
   }
 
   // Returns a ResourceResponse that matches the TestScenario's parameters.
-  scoped_refptr<ResourceResponse> CreateResponse(
+  scoped_refptr<network::ResourceResponse> CreateResponse(
       const char* response_mime_type,
       bool include_no_sniff_header,
       AccessControlAllowOriginHeader cors_response,
       const char* initiator_origin) {
-    scoped_refptr<ResourceResponse> response =
-        base::MakeRefCounted<ResourceResponse>();
+    scoped_refptr<network::ResourceResponse> response =
+        base::MakeRefCounted<network::ResourceResponse>();
     response->head.mime_type = response_mime_type;
     scoped_refptr<net::HttpResponseHeaders> response_headers =
         base::MakeRefCounted<net::HttpResponseHeaders>("");
@@ -1045,7 +1137,7 @@ TEST_P(CrossSiteDocumentResourceHandlerTest, ResponseBlocking) {
             mock_loader_->OnWillStart(request_->url()));
 
   // Set up response based on scenario.
-  scoped_refptr<ResourceResponse> response = CreateResponse(
+  scoped_refptr<network::ResourceResponse> response = CreateResponse(
       scenario.response_mime_type, scenario.include_no_sniff_header,
       scenario.cors_response, scenario.initiator_origin);
 
@@ -1319,7 +1411,7 @@ TEST_P(CrossSiteDocumentResourceHandlerTest, OnWillReadDefer) {
             mock_loader_->OnWillStart(request_->url()));
 
   // Set up response based on scenario.
-  scoped_refptr<ResourceResponse> response = CreateResponse(
+  scoped_refptr<network::ResourceResponse> response = CreateResponse(
       scenario.response_mime_type, scenario.include_no_sniff_header,
       scenario.cors_response, scenario.initiator_origin);
 

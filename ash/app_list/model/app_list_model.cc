@@ -30,7 +30,7 @@ void AppListModel::RemoveObserver(AppListModelObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void AppListModel::SetStatus(Status status) {
+void AppListModel::SetStatus(ash::AppListModelStatus status) {
   if (status_ == status)
     return;
 
@@ -39,7 +39,7 @@ void AppListModel::SetStatus(Status status) {
     observer.OnAppListModelStatusChanged();
 }
 
-void AppListModel::SetState(State state) {
+void AppListModel::SetState(ash::AppListState state) {
   state_ = state;
 }
 
@@ -246,7 +246,7 @@ void AppListModel::DeleteItem(const std::string& id) {
       observer.OnAppListItemWillBeDeleted(item);
     top_level_item_list_->DeleteItem(id);
     for (auto& observer : observers_)
-      observer.OnAppListItemDeleted();
+      observer.OnAppListItemDeleted(id);
     return;
   }
   AppListFolderItem* folder = FindFolderItem(item->folder_id());
@@ -257,7 +257,7 @@ void AppListModel::DeleteItem(const std::string& id) {
     observer.OnAppListItemWillBeDeleted(item);
   child_item.reset();  // Deletes item.
   for (auto& observer : observers_)
-    observer.OnAppListItemDeleted();
+    observer.OnAppListItemDeleted(id);
 }
 
 void AppListModel::DeleteUninstalledItem(const std::string& id) {

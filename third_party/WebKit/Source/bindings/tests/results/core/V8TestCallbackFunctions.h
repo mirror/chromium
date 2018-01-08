@@ -35,12 +35,6 @@ class V8TestCallbackFunctions {
   }
   CORE_EXPORT static TestCallbackFunctions* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestCallbackFunctions>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestCallbackFunctions>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   // Callback functions
@@ -65,6 +59,7 @@ class V8TestCallbackFunctions {
 template <>
 struct NativeValueTraits<TestCallbackFunctions> : public NativeValueTraitsBase<TestCallbackFunctions> {
   CORE_EXPORT static TestCallbackFunctions* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static TestCallbackFunctions* NullValue() { return nullptr; }
 };
 
 template <>

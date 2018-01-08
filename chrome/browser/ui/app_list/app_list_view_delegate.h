@@ -17,8 +17,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_observer.h"
-#include "chrome/browser/ui/app_list/app_list_model_updater.h"
-#include "chrome/browser/ui/app_list/start_page_observer.h"
+#include "chrome/browser/ui/app_list/chrome_app_list_model_updater.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/search_engines/template_url_service_observer.h"
 #include "content/public/browser/notification_observer.h"
@@ -32,7 +31,6 @@
 namespace app_list {
 class SearchController;
 class SearchResourceManager;
-class SpeechUIModel;
 }
 
 namespace content {
@@ -44,7 +42,6 @@ class AppSyncUIStateWatcher;
 class Profile;
 
 class AppListViewDelegate : public app_list::AppListViewDelegate,
-                            public app_list::StartPageObserver,
                             public ash::mojom::WallpaperObserver,
                             public content::NotificationObserver,
                             public TemplateURLServiceObserver {
@@ -58,34 +55,24 @@ class AppListViewDelegate : public app_list::AppListViewDelegate,
   void SetProfile(Profile* profile);
   Profile* profile() { return profile_; }
 
-  // Invoked to start speech recognition based on a hotword trigger.
-  void StartSpeechRecognitionForHotword(
-      const scoped_refptr<content::SpeechRecognitionSessionPreamble>& preamble);
-
   // Gets the model updater.
-  app_list::AppListModelUpdater* GetModelUpdater();
+  AppListModelUpdater* GetModelUpdater();
 
   // Overridden from app_list::AppListViewDelegate:
   app_list::AppListModel* GetModel() override;
   app_list::SearchModel* GetSearchModel() override;
-  app_list::SpeechUIModel* GetSpeechUI() override;
-  void StartSearch() override;
+  void StartSearch(const base::string16& raw_query) override;
   void OpenSearchResult(app_list::SearchResult* result,
-                        bool auto_launch,
                         int event_flags) override;
   void InvokeSearchResultAction(app_list::SearchResult* result,
                                 int action_index,
                                 int event_flags) override;
-  base::TimeDelta GetAutoLaunchTimeout() override;
-  void AutoLaunchCanceled() override;
-  void ViewInitialized() override;
+  void ViewShown() override;
   void Dismiss() override;
   void ViewClosing() override;
-  void StartSpeechRecognition() override;
-  void StopSpeechRecognition() override;
-  views::View* CreateStartPageWebView(const gfx::Size& size) override;
-  bool IsSpeechRecognitionEnabled() override;
   void GetWallpaperProminentColors(std::vector<SkColor>* colors) override;
+  void ActivateItem(const std::string& id, int event_flags) override;
+  ui::MenuModel* GetContextMenuModel(const std::string& id) override;
   void AddObserver(app_list::AppListViewDelegateObserver* observer) override;
   void RemoveObserver(app_list::AppListViewDelegateObserver* observer) override;
 
@@ -98,12 +85,6 @@ class AppListViewDelegate : public app_list::AppListViewDelegate,
 
   // Updates the speech webview and start page for the current |profile_|.
   void SetUpSearchUI();
-
-  // Overridden from app_list::StartPageObserver:
-  void OnSpeechResult(const base::string16& result, bool is_final) override;
-  void OnSpeechSoundLevelChanged(int16_t level) override;
-  void OnSpeechRecognitionStateChanged(
-      app_list::SpeechRecognitionState new_state) override;
 
   // Overridden from ash::mojom::WallpaperObserver:
   void OnWallpaperColorsChanged(
@@ -126,15 +107,10 @@ class AppListViewDelegate : public app_list::AppListViewDelegate,
 
   // Unowned pointer to the model updater owned by AppListSyncableService.
   // Will change if |profile_| changes.
-  app_list::AppListModelUpdater* model_updater_;
+  ChromeAppListModelUpdater* model_updater_;
 
-  // Note: order ensures |search_resource_manager_| is destroyed before
-  // |speech_ui_|.
-  std::unique_ptr<app_list::SpeechUIModel> speech_ui_;
   std::unique_ptr<app_list::SearchResourceManager> search_resource_manager_;
   std::unique_ptr<app_list::SearchController> search_controller_;
-
-  base::TimeDelta auto_launch_timeout_;
 
   std::unique_ptr<AppSyncUIStateWatcher> app_sync_ui_state_watcher_;
 

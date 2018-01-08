@@ -19,6 +19,7 @@
 #include "base/time/time.h"
 #include "content/browser/download/download_destination_observer.h"
 #include "content/browser/download/download_request_handle.h"
+#include "content/browser/download/resume_mode.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_item.h"
@@ -273,6 +274,7 @@ class CONTENT_EXPORT DownloadItemImpl
   void SetLastAccessTime(base::Time last_access_time) override;
   void SetDisplayName(const base::FilePath& name) override;
   std::string DebugString(bool verbose) const override;
+  void SimulateErrorForTesting(DownloadInterruptReason reason) override;
 
   // All remaining public interfaces virtual to allow for DownloadItemImpl
   // mocks.
@@ -313,6 +315,8 @@ class CONTENT_EXPORT DownloadItemImpl
   // Called by SavePackage to display progress when the DownloadItem
   // should be considered complete.
   virtual void MarkAsComplete();
+
+  DownloadSource download_source() const { return download_source_; }
 
   // DownloadDestinationObserver
   void DestinationUpdate(
@@ -591,14 +595,6 @@ class CONTENT_EXPORT DownloadItemImpl
   // Notify observers that this item is being removed by the user.
   void NotifyRemoved();
 
-  enum ResumeMode {
-    RESUME_MODE_INVALID = 0,
-    RESUME_MODE_IMMEDIATE_CONTINUE,
-    RESUME_MODE_IMMEDIATE_RESTART,
-    RESUME_MODE_USER_CONTINUE,
-    RESUME_MODE_USER_RESTART
-  };
-
   // Determines the resume mode for an interrupted download. Requires
   // last_reason_ to be set, but doesn't require the download to be in
   // INTERRUPTED state.
@@ -750,6 +746,9 @@ class CONTENT_EXPORT DownloadItemImpl
   // Whether the download should fetch the response body for non successful HTTP
   // response.
   bool fetch_error_body_ = false;
+
+  // Source of the download, used in metrics.
+  DownloadSource download_source_ = DownloadSource::UNKNOWN;
 
   base::WeakPtrFactory<DownloadItemImpl> weak_ptr_factory_;
 

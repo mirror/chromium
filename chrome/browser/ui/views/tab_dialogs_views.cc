@@ -4,11 +4,12 @@
 
 #include "chrome/browser/ui/views/tab_dialogs_views.h"
 
-#include "base/memory/ptr_util.h"
+#include <memory>
+
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
 #include "chrome/browser/ui/views/hung_renderer_view.h"
-#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
+#include "chrome/browser/ui/views/passwords/password_bubble_view_base.h"
 #include "content/public/browser/web_contents.h"
 
 #if !defined(OS_CHROMEOS)
@@ -20,7 +21,7 @@ void TabDialogs::CreateForWebContents(content::WebContents* contents) {
   DCHECK(contents);
   if (!FromWebContents(contents)) {
     contents->SetUserData(UserDataKey(),
-                          base::MakeUnique<TabDialogsViews>(contents));
+                          std::make_unique<TabDialogsViews>(contents));
   }
 }
 
@@ -67,21 +68,21 @@ void TabDialogsViews::ShowProfileSigninConfirmation(
 }
 
 void TabDialogsViews::ShowManagePasswordsBubble(bool user_action) {
-  if (ManagePasswordsBubbleDelegateViewBase::manage_password_bubble()) {
+  if (PasswordBubbleViewBase::manage_password_bubble()) {
     // The bubble is currently shown for some other tab. We should close it now
     // and open for |web_contents_|.
-    ManagePasswordsBubbleView::CloseCurrentBubble();
+    PasswordBubbleViewBase::CloseCurrentBubble();
   }
-  ManagePasswordsBubbleView::ShowBubble(
+  PasswordBubbleViewBase::ShowBubble(
       web_contents_, user_action ? LocationBarBubbleDelegateView::USER_GESTURE
                                  : LocationBarBubbleDelegateView::AUTOMATIC);
 }
 
 void TabDialogsViews::HideManagePasswordsBubble() {
-  ManagePasswordsBubbleDelegateViewBase* bubble =
-      ManagePasswordsBubbleDelegateViewBase::manage_password_bubble();
+  PasswordBubbleViewBase* bubble =
+      PasswordBubbleViewBase::manage_password_bubble();
   if (!bubble)
     return;
   if (bubble->GetWebContents() == web_contents_)
-    ManagePasswordsBubbleView::CloseCurrentBubble();
+    PasswordBubbleViewBase::CloseCurrentBubble();
 }

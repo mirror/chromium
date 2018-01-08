@@ -5,7 +5,6 @@
 #include "chrome/browser/vr/elements/button.h"
 
 #include "base/bind.h"
-#include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/elements/invisible_hit_target.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -28,7 +27,7 @@ Button::Button(base::RepeatingCallback<void()> click_handler)
     : click_handler_(click_handler), hover_offset_(kDefaultHoverOffsetDMM) {
   set_hit_testable(false);
 
-  auto background = base::MakeUnique<Rect>();
+  auto background = std::make_unique<Rect>();
   background->SetType(kTypeButtonBackground);
   background->set_bubble_events(true);
   background->set_contributes_to_parent_bounds(false);
@@ -37,8 +36,9 @@ Button::Button(base::RepeatingCallback<void()> click_handler)
   background_ = background.get();
   AddChild(std::move(background));
 
-  auto hit_plane = base::MakeUnique<InvisibleHitTarget>();
+  auto hit_plane = std::make_unique<InvisibleHitTarget>();
   hit_plane->SetType(kTypeButtonHitTarget);
+  hit_plane->set_focusable(false);
   hit_plane->set_bubble_events(true);
   hit_plane->set_contributes_to_parent_bounds(false);
   hit_plane_ = hit_plane.get();
@@ -69,12 +69,12 @@ void Button::SetButtonColors(const ButtonColors& colors) {
 }
 
 void Button::HandleHoverEnter() {
-  hovered_ = true;
+  hovered_ = enabled_;
   OnStateUpdated();
 }
 
 void Button::HandleHoverMove(const gfx::PointF& position) {
-  hovered_ = hit_plane_->LocalHitTest(position);
+  hovered_ = hit_plane_->LocalHitTest(position) && enabled_;
   OnStateUpdated();
 }
 
@@ -84,7 +84,7 @@ void Button::HandleHoverLeave() {
 }
 
 void Button::HandleButtonDown() {
-  down_ = true;
+  down_ = enabled_;
   OnStateUpdated();
 }
 
@@ -97,6 +97,10 @@ void Button::HandleButtonUp() {
 
 void Button::OnStateUpdated() {
   pressed_ = hovered_ ? down_ : false;
+  background_->SetColor(colors_.GetBackgroundColor(hovered_, pressed_));
+
+  if (hover_offset_ == 0.0f)
+    return;
 
   if (hovered()) {
     background_->SetTranslate(0.0, 0.0, hover_offset_);
@@ -106,7 +110,6 @@ void Button::OnStateUpdated() {
     background_->SetTranslate(0.0, 0.0, 0.0);
     hit_plane_->SetScale(1.0f, 1.0f, 1.0f);
   }
-  background_->SetColor(colors_.GetBackgroundColor(hovered_, pressed_));
 }
 
 void Button::OnSetDrawPhase() {
@@ -122,6 +125,11 @@ void Button::OnSetName() {
 void Button::OnSetSize(const gfx::SizeF& size) {
   background_->SetSize(size.width(), size.height());
   hit_plane_->SetSize(size.width(), size.height());
+}
+
+void Button::OnSetCornerRadii(const CornerRadii& radii) {
+  background_->SetCornerRadii(radii);
+  hit_plane_->SetCornerRadii(radii);
 }
 
 void Button::NotifyClientSizeAnimated(const gfx::SizeF& size,

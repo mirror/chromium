@@ -9,10 +9,10 @@
 #include "core/css/cssom/CSSURLImageValue.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
-#include "core/html/ImageData.h"
-#include "core/html/TextMetrics.h"
+#include "core/html/canvas/HTMLCanvasElement.h"
+#include "core/html/canvas/ImageData.h"
+#include "core/html/canvas/TextMetrics.h"
 #include "core/html/media/HTMLVideoElement.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
@@ -48,7 +48,7 @@ BaseRenderingContext2D::BaseRenderingContext2D()
   state_stack_.push_back(CanvasRenderingContext2DState::Create());
 }
 
-BaseRenderingContext2D::~BaseRenderingContext2D() {}
+BaseRenderingContext2D::~BaseRenderingContext2D() = default;
 
 CanvasRenderingContext2DState& BaseRenderingContext2D::ModifiableState() {
   RealizeSaves();
@@ -1204,7 +1204,6 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
                                 ? kPreferAcceleration
                                 : kPreferNoAcceleration;
     image = image_source->GetSourceImageForCanvas(&source_image_status, hint,
-                                                  kSnapshotReasonDrawImage,
                                                   default_object_size);
     if (source_image_status == kUndecodableSourceImageStatus) {
       exception_state.ThrowDOMException(
@@ -1381,7 +1380,6 @@ CanvasPattern* BaseRenderingContext2D::createPattern(
   FloatSize default_object_size(Width(), Height());
   scoped_refptr<Image> image_for_rendering =
       image_source->GetSourceImageForCanvas(&status, kPreferNoAcceleration,
-                                            kSnapshotReasonCreatePattern,
                                             default_object_size);
 
   switch (status) {
@@ -1591,8 +1589,7 @@ ImageData* BaseRenderingContext2D::getImageData(
   WTF::ArrayBufferContents contents;
 
   const CanvasColorParams& color_params = ColorParams();
-  scoped_refptr<StaticBitmapImage> snapshot =
-      GetImage(kPreferNoAcceleration, kSnapshotReasonGetImageData);
+  scoped_refptr<StaticBitmapImage> snapshot = GetImage(kPreferNoAcceleration);
 
   if (!StaticBitmapImage::ConvertToArrayBufferContents(
           snapshot, contents, image_data_rect, color_params, IsAccelerated())) {

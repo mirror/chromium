@@ -43,7 +43,6 @@
 <translation id="2803313416453193357">Kausta avamine</translation>
 <translation id="2824719307700604149">{YEARS,plural, =1{1 aasta tagasi}other{# aastat tagasi}}</translation>
 <translation id="2931838996092594335">klõpsake</translation>
-<translation id="2983818520079887040">Seaded...</translation>
 <translation id="3036649622769666520">Failide avamine</translation>
 <translation id="3049748772180311791"><ph name="QUANTITY" /> MB</translation>
 <translation id="3087734570205094154">Alaserv</translation>
@@ -65,7 +64,6 @@
 <translation id="4250229828105606438">Ekraanipilt</translation>
 <translation id="4266252015790371705">{MONTHS,plural, =1{1 kuu tagasi}other{# kuud tagasi}}</translation>
 <translation id="4316910396681052118">KÕIK RAKENDUSED</translation>
-<translation id="4320177379694898372">Interneti-ühendus puudub</translation>
 <translation id="4588090240171750605">Keri paremale</translation>
 <translation id="4724120544754982507">Märguandekeskus, <ph name="UNREAD_NOTIFICATION_COUNT" /> lugemata märguannet</translation>
 <translation id="4730374152663651037">SAGELI KASUTATUD</translation>
@@ -105,6 +103,7 @@
 <translation id="6394627529324717982">Koma</translation>
 <translation id="6404817160109697034">{SECONDS,plural, =1{1 s tagasi}other{# s tagasi}}</translation>
 <translation id="6483402905448010557">{SECONDS,plural, =1{1 sekund tagasi}other{# sekundit tagasi}}</translation>
+<translation id="654149438358937226">Blokeeri kõik märguanded</translation>
 <translation id="6567071839949112727">kliki eellane</translation>
 <translation id="6612467943526193239">Kalibreerimisest väljumiseks vajutage paoklahvi Esc.</translation>
 <translation id="6620110761915583480">Faili salvestamine</translation>
@@ -118,7 +117,7 @@
 <translation id="6907759265145635167"><ph name="QUANTITY" /> PB/s</translation>
 <translation id="6917971086528278418">{YEARS,plural, =1{1 aasta jäänud}other{# aastat jäänud}}</translation>
 <translation id="6945221475159498467">Vali</translation>
-<translation id="6965382102122355670">Ok</translation>
+<translation id="6965382102122355670">OK</translation>
 <translation id="7052633198403197513">F1</translation>
 <translation id="7130207228079676353">KÕIGE TÕENÄOLISEMAD</translation>
 <translation id="7222373446505536781">F11</translation>
@@ -131,6 +130,7 @@
 <translation id="7658239707568436148">Tühista</translation>
 <translation id="7781829728241885113">Eile</translation>
 <translation id="7814458197256864873">&amp;Kopeeri</translation>
+<translation id="7879499977785298635">Ära blokeeri</translation>
 <translation id="7907591526440419938">Faili avamine</translation>
 <translation id="8106081041558092062">{HOURS,plural, =1{1 tund tagasi}other{# tundi tagasi}}</translation>
 <translation id="8131263257437993507">{SECONDS,plural, =1{1 s on jäänud}other{# s on jäänud}}</translation>
@@ -141,7 +141,6 @@
 <translation id="8328145009876646418">Vasak serv</translation>
 <translation id="8331626408530291785">Keri üles</translation>
 <translation id="8352146631962686268">{YEARS,plural, =1{1 aasta}other{# aastat}}</translation>
-<translation id="8371695176452482769">Alustage rääkimist</translation>
 <translation id="838869780401515933">mrgista</translation>
 <translation id="8393700583063109961">Saatke sõnum</translation>
 <translation id="8394908167088220973">Meediumi esitamine/peatamine</translation>
@@ -150,6 +149,7 @@
 <translation id="8602707065186045623"><ph name="SAVEAS_EXTENSION_TYPE" /> Fail (.<ph name="SAVEAS_EXTENSION_NAME" />)</translation>
 <translation id="8677655579646609597"><ph name="QUANTITY" /> kB/s</translation>
 <translation id="8725488761726303204">ja veel <ph name="NUMBER" /></translation>
+<translation id="8730621377337864115">Valmis</translation>
 <translation id="8772073294905169192">{HOURS,plural, =1{1h}other{#h}}</translation>
 <translation id="8806053966018712535">Kaust <ph name="FOLDER_NAME" /></translation>
 <translation id="883911313571074303">Lisa kujutisele märkused</translation>

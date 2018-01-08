@@ -36,22 +36,26 @@ class Button : public UiElement {
   UiElement* hit_plane() const { return hit_plane_; }
   void SetButtonColors(const ButtonColors& colors);
 
+  void set_enabled(bool enabled) { enabled_ = enabled; }
+
   // TODO(vollick): once all elements are scaled by a ScaledDepthAdjuster, we
   // will never have to change the button hover offset from the default and this
   // method and the associated field can be removed.
   void set_hover_offset(float hover_offset) { hover_offset_ = hover_offset; }
 
- protected:
   bool hovered() const { return hovered_; }
   bool down() const { return down_; }
   bool pressed() const { return pressed_; }
-  bool disabled() const { return disabled_; }
+  bool enabled() const { return enabled_; }
+
+ protected:
   const ButtonColors& colors() const { return colors_; }
   float hover_offset() const { return hover_offset_; }
 
   void OnSetDrawPhase() override;
   void OnSetName() override;
   void OnSetSize(const gfx::SizeF& size) override;
+  void OnSetCornerRadii(const CornerRadii& radii) override;
   void NotifyClientSizeAnimated(const gfx::SizeF& size,
                                 int target_property_id,
                                 cc::Animation* animation) override;
@@ -67,7 +71,7 @@ class Button : public UiElement {
   bool down_ = false;
   bool hovered_ = false;
   bool pressed_ = false;
-  bool disabled_ = false;
+  bool enabled_ = true;
   base::RepeatingCallback<void()> click_handler_;
   ButtonColors colors_;
   float hover_offset_;

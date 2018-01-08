@@ -186,9 +186,6 @@ class ContentSuggestionsService : public KeyedService,
   // meantime).
   void ReloadSuggestions();
 
-  // Must be called when Chrome Home is turned on or off.
-  void OnChromeHomeStatusChanged(bool is_chrome_home_enabled);
-
   // Observer accessors.
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
@@ -315,7 +312,7 @@ class ContentSuggestionsService : public KeyedService,
   // Fires the OnCategoryStatusChanged event for the given |category|.
   void NotifyCategoryStatusChanged(Category category);
 
-  void OnSignInStateChanged();
+  void OnSignInStateChanged(bool has_signed_in);
 
   // Re-enables a dismissed category, making querying its provider possible.
   void RestoreDismissedCategory(Category category);

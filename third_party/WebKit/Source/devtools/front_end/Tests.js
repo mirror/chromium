@@ -592,10 +592,6 @@
     deviceModeModel._applyTouch(true, true);
   };
 
-  TestSuite.prototype.enableAutoAttachToCreatedPages = function() {
-    Common.settingForTest('autoAttachToCreatedPages').set(true);
-  };
-
   TestSuite.prototype.waitForDebuggerPaused = function() {
     var debuggerModel = SDK.targetManager.mainTarget().model(SDK.DebuggerModel);
     if (debuggerModel.debuggerPausedDetails)
@@ -771,19 +767,26 @@
     function step1() {
       testPreset(
           MobileThrottling.networkPresets[2],
-          ['offline event: online = false', 'connection change event: type = none; downlinkMax = 0'], step2);
+          [
+            'offline event: online = false', 'connection change event: type = none; downlinkMax = 0; effectiveType = 4g'
+          ],
+          step2);
     }
 
     function step2() {
       testPreset(
           MobileThrottling.networkPresets[1],
-          ['online event: online = true', 'connection change event: type = cellular; downlinkMax = 0.390625'], step3);
+          [
+            'online event: online = true',
+            'connection change event: type = cellular; downlinkMax = 0.390625; effectiveType = 2g'
+          ],
+          step3);
     }
 
     function step3() {
       testPreset(
           MobileThrottling.networkPresets[0],
-          ['connection change event: type = cellular; downlinkMax = 1.4400000000000002'],
+          ['connection change event: type = cellular; downlinkMax = 1.4400000000000002; effectiveType = 3g'],
           test.releaseControl.bind(test));
     }
   };
@@ -906,11 +909,22 @@
   };
 
   TestSuite.prototype.testWindowInitializedOnNavigateBack = function() {
+    var test = this;
+    test.takeControl();
     var messages = ConsoleModel.consoleModel.messages();
-    this.assertEquals(1, messages.length);
-    var text = messages[0].messageText;
-    if (text.indexOf('Uncaught') !== -1)
-      this.fail(text);
+    if (messages.length === 1) {
+      checkMessages();
+    } else {
+      ConsoleModel.consoleModel.addEventListener(
+          ConsoleModel.ConsoleModel.Events.MessageAdded, checkMessages.bind(this), this);
+    }
+
+    function checkMessages() {
+      var messages = ConsoleModel.consoleModel.messages();
+      test.assertEquals(1, messages.length);
+      test.assertTrue(messages[0].messageText.indexOf('Uncaught') === -1);
+      test.releaseControl();
+    }
   };
 
   TestSuite.prototype.testConsoleContextNames = function() {
@@ -1092,6 +1106,15 @@
       throw 'Some expected events are not found: ' + Array.from(expectedEvents.keys()).join(',');
   };
 
+  TestSuite.prototype.testInspectedElementIs = async function(nodeName) {
+    this.takeControl();
+    await self.runtime.loadModulePromise('elements');
+    if (!Elements.ElementsPanel._firstInspectElementNodeNameForTest)
+      await new Promise(f => this.addSniffer(Elements.ElementsPanel, '_firstInspectElementCompletedForTest', f));
+    this.assertEquals(nodeName, Elements.ElementsPanel._firstInspectElementNodeNameForTest);
+    this.releaseControl();
+  };
+
   /**
    * Serializes array of uiSourceCodes to string.
    * @param {!Array.<!Workspace.UISourceCode>} uiSourceCodes
@@ -1202,7 +1225,7 @@
       if (SDK.targetManager.targets().length >= n)
         callback.call(null);
       else
-        this.addSniffer(SDK.TargetManager.prototype, 'addTarget', checkTargets.bind(this));
+        this.addSniffer(SDK.TargetManager.prototype, 'createTarget', checkTargets.bind(this));
     }
   };
 

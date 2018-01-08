@@ -6,16 +6,15 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/supports_user_data.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/drive/drive_integration_service.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
@@ -217,7 +216,7 @@ void DownloadHandler::SetDownloadParams(const base::FilePath& drive_path,
 
   if (util::IsUnderDriveMountPoint(drive_path)) {
     download->SetUserData(&kDrivePathKey,
-                          base::MakeUnique<DriveUserData>(drive_path));
+                          std::make_unique<DriveUserData>(drive_path));
     download->SetDisplayName(drive_path.BaseName());
   } else if (IsDriveDownload(download)) {
     // This may have been previously set if the default download folder is

@@ -803,7 +803,6 @@ void ForEachMatchingFormFieldCommon(
         // skipped.
         (IsAutofillableInputElement(input_element) ||
          IsTextAreaElement(*element)) &&
-        !element->Value().IsEmpty() &&
         !SanitizedFieldIsEmpty(element->Value().Utf16()) &&
         (!element->HasAttribute(kValue) ||
          element->GetAttribute(kValue) != element->Value()) &&
@@ -1150,7 +1149,7 @@ bool UnownedFormElementsAndFieldSetsToFormData(
     FormData* form,
     FormFieldData* field) {
   form->origin = GetCanonicalOriginForDocument(document);
-  if (document.GetFrame()) {
+  if (document.GetFrame() && document.GetFrame()->Top()) {
     form->main_frame_origin = document.GetFrame()->Top()->GetSecurityOrigin();
   } else {
     form->main_frame_origin = url::Origin();
@@ -1829,6 +1828,18 @@ void PreviewSuggestion(const base::string16& suggestion,
 
 base::string16 FindChildText(const WebNode& node) {
   return FindChildTextWithIgnoreList(node, std::set<WebNode>());
+}
+
+base::string16 FindChildTextWithIgnoreListForTesting(
+    const WebNode& node,
+    const std::set<WebNode>& divs_to_skip) {
+  return FindChildTextWithIgnoreList(node, divs_to_skip);
+}
+
+base::string16 InferLabelForElementForTesting(
+    const WebFormControlElement& element,
+    const std::vector<base::char16>& stop_words) {
+  return InferLabelForElement(element, stop_words);
 }
 
 }  // namespace form_util

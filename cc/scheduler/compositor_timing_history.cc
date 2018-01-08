@@ -981,4 +981,18 @@ void CompositorTimingHistory::SetTreePriority(TreePriority priority) {
   tree_priority_ = priority;
 }
 
+void CompositorTimingHistory::ClearHistoryOnNavigation() {
+  TRACE_EVENT0("cc", "CompositorTimingHistory::ClearHistoryOnNavigation");
+
+  begin_main_frame_queue_duration_history_.Clear();
+  begin_main_frame_queue_duration_critical_history_.Clear();
+  begin_main_frame_queue_duration_not_critical_history_.Clear();
+  begin_main_frame_start_to_ready_to_commit_duration_history_.Clear();
+  commit_duration_history_.Clear();
+  commit_to_ready_to_activate_duration_history_.Clear();
+  prepare_tiles_duration_history_.Clear();
+  activate_duration_history_.Clear();
+  draw_duration_history_.Clear();
+}
+
 }  // namespace cc

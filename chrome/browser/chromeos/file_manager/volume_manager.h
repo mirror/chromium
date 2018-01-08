@@ -18,6 +18,7 @@
 #include "base/observer_list.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/drive/drive_integration_service.h"
+#include "chrome/browser/chromeos/file_system_provider/icon_set.h"
 #include "chrome/browser/chromeos/file_system_provider/observer.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/service.h"
@@ -26,7 +27,8 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/storage_monitor/removable_storage_observer.h"
-#include "device/media_transfer_protocol/mtp_storage_info.pb.h"
+#include "device/media_transfer_protocol/media_transfer_protocol_manager.h"
+#include "device/media_transfer_protocol/public/interfaces/mtp_storage_info.mojom.h"
 
 class Profile;
 
@@ -140,6 +142,9 @@ class Volume : public base::SupportsWeakPtr<Volume> {
   bool configurable() const { return configurable_; }
   bool watchable() const { return watchable_; }
   const std::string& file_system_type() const { return file_system_type_; }
+  const chromeos::file_system_provider::IconSet& icon_set() const {
+    return icon_set_;
+  }
 
  private:
   Volume();
@@ -214,6 +219,9 @@ class Volume : public base::SupportsWeakPtr<Volume> {
   // Identifier for the file system type
   std::string file_system_type_;
 
+  // Volume icon set.
+  chromeos::file_system_provider::IconSet icon_set_;
+
   DISALLOW_COPY_AND_ASSIGN(Volume);
 };
 
@@ -230,10 +238,11 @@ class VolumeManager : public KeyedService,
                       public chromeos::file_system_provider::Observer,
                       public storage_monitor::RemovableStorageObserver {
  public:
-  // Returns MediaTransferProtocolManager. Used for injecting
-  // FakeMediaTransferProtocolManager for testing.
-  typedef base::Callback<const MtpStorageInfo*(const std::string&)>
-      GetMtpStorageInfoCallback;
+  // An alternate to MediaTransferProtocolManager::GetMtpStorage.
+  // Used for injecting fake MTP manager for testing in VolumeManagerTest.
+  using GetMtpStorageInfoCallback = base::RepeatingCallback<void(
+      const std::string&,
+      device::MediaTransferProtocolManager::GetStorageInfoCallback)>;
 
   VolumeManager(
       Profile* profile,
@@ -241,7 +250,7 @@ class VolumeManager : public KeyedService,
       chromeos::PowerManagerClient* power_manager_client,
       chromeos::disks::DiskMountManager* disk_mount_manager,
       chromeos::file_system_provider::Service* file_system_provider_service,
-      GetMtpStorageInfoCallback get_mtp_storage_info_callback);
+      const GetMtpStorageInfoCallback& get_mtp_storage_info_callback);
   ~VolumeManager() override;
 
   // Returns the instance corresponding to the |context|.
@@ -337,6 +346,9 @@ class VolumeManager : public KeyedService,
  private:
   void OnDiskMountManagerRefreshed(bool success);
   void OnStorageMonitorInitialized();
+  void DoAttachMtpStorage(
+      const storage_monitor::StorageInfo& info,
+      const device::mojom::MtpStorageInfo* mtp_storage_info);
   void DoMountEvent(chromeos::MountError error_code,
                     std::unique_ptr<Volume> volume);
   void DoUnmountEvent(chromeos::MountError error_code, const Volume& volume);

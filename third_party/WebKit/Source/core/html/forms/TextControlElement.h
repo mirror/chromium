@@ -102,11 +102,6 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
       TextFieldSelectionDirection = kSelectionHasNoDirection);
   SelectionInDOMTree Selection() const;
 
-  virtual bool SupportsAutocapitalize() const = 0;
-  virtual const AtomicString& DefaultAutocapitalize() const = 0;
-  const AtomicString& autocapitalize() const;
-  void setAutocapitalize(const AtomicString&);
-
   int maxLength() const;
   int minLength() const;
   void setMaxLength(int, ExceptionState&);
@@ -142,6 +137,10 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
   Node* CreatePlaceholderBreakElement() const;
 
   String DirectionForFormData() const;
+
+  // Set the value trimmed to the max length of the field and dispatch the input
+  // and change events.
+  void SetAutofillValue(const String& value);
 
   virtual void SetSuggestedValue(const String& value);
   const String& SuggestedValue() const;

@@ -36,13 +36,15 @@ class ContentElement : public UiElement {
   void OnScrollEnd(std::unique_ptr<blink::WebGestureEvent> gesture,
                    const gfx::PointF& position) override;
   bool OnBeginFrame(const base::TimeTicks& time,
-                    const gfx::Vector3dF& look_at) override;
+                    const gfx::Transform& head_pose) override;
 
   void Render(UiElementRenderer* renderer,
               const CameraModel& model) const final;
 
   void SetTextureId(unsigned int texture_id);
   void SetTextureLocation(UiElementRenderer::TextureLocation location);
+  void SetOverlayTextureId(unsigned int texture_id);
+  void SetOverlayTextureLocation(UiElementRenderer::TextureLocation location);
   void SetProjectionMatrix(const gfx::Transform& matrix);
 
  private:
@@ -50,6 +52,9 @@ class ContentElement : public UiElement {
   ScreenBoundsChangedCallback bounds_changed_callback_;
   unsigned int texture_id_ = 0;
   UiElementRenderer::TextureLocation texture_location_ =
+      UiElementRenderer::kTextureLocationExternal;
+  unsigned int overlay_texture_id_ = 0;
+  UiElementRenderer::TextureLocation overlay_texture_location_ =
       UiElementRenderer::kTextureLocationExternal;
   gfx::SizeF last_content_screen_bounds_;
   float last_content_aspect_ratio_ = 0.0f;

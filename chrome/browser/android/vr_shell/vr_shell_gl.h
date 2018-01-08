@@ -55,6 +55,7 @@ class BrowserUiInterface;
 class FPSMeter;
 class SlidingTimeDeltaAverage;
 class Ui;
+struct Assets;
 }  // namespace vr
 
 namespace vr_shell {
@@ -83,8 +84,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
             gvr_context* gvr_api,
             bool reprojected_rendering,
             bool daydream_support,
-            bool start_in_web_vr_mode,
-            bool assets_available);
+            bool start_in_web_vr_mode);
   ~VrShellGl() override;
 
   void Initialize();
@@ -103,11 +103,9 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void SetWebVrMode(bool enabled);
   void CreateOrResizeWebVRSurface(const gfx::Size& size);
-  void CreateContentSurface();
   void ContentBoundsChanged(int width, int height);
-  void ContentPhysicalBoundsChanged(int width, int height);
-  void UIBoundsChanged(int width, int height);
-  void UIPhysicalBoundsChanged(int width, int height);
+  void BufferBoundsChanged(const gfx::Size& content_buffer_size,
+                           const gfx::Size& overlay_buffer_size);
   base::WeakPtr<VrShellGl> GetWeakPtr();
 
   void SetControllerMesh(std::unique_ptr<vr::ControllerMesh> mesh);
@@ -115,14 +113,21 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void ConnectPresentingService(
       device::mojom::VRSubmitFrameClientPtrInfo submit_client_info,
       device::mojom::VRPresentationProviderRequest request,
-      device::mojom::VRDisplayInfoPtr display_info);
+      device::mojom::VRDisplayInfoPtr display_info,
+      device::mojom::VRRequestPresentOptionsPtr present_options);
 
   void set_is_exiting(bool exiting) { is_exiting_ = exiting; }
 
   void OnSwapContents(int new_content_id);
 
+  void OnAssetsLoaded(vr::AssetsLoadStatus status,
+                      std::unique_ptr<vr::Assets> assets,
+                      const base::Version& component_version);
+
  private:
   void GvrInit(gvr_context* gvr_api);
+  device::mojom::VRDisplayFrameTransportOptionsPtr
+  GetWebVrFrameTransportOptions();
   void InitializeRenderer();
   // Returns true if successfully resized.
   bool ResizeForWebVR(int16_t frame_index);
@@ -141,23 +146,27 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
-  void UpdateController(const gfx::Transform& head_pose,
+  void UpdateController(const vr::RenderInfo& render_info,
                         base::TimeTicks current_time);
 
   void SendImmediateExitRequestIfNecessary();
   void HandleControllerInput(const gfx::Point3F& laser_origin,
-                             const gfx::Vector3dF& head_direction,
+                             const vr::RenderInfo& render_info,
                              base::TimeTicks current_time);
   void HandleControllerAppButtonActivity(
       const gfx::Vector3dF& controller_direction);
 
   void OnContentFrameAvailable();
+  void OnContentOverlayFrameAvailable();
   void OnWebVRFrameAvailable();
   void ScheduleOrCancelWebVrFrameTimeout();
   void OnWebVrTimeoutImminent();
   void OnWebVrFrameTimedOut();
 
   base::TimeDelta GetPredictedFrameTime();
+  void AddWebVrRenderTimeEstimate(int16_t frame_index,
+                                  base::TimeTicks submit_start,
+                                  base::TimeTicks submit_done);
 
   void OnVSync(base::TimeTicks frame_time);
 
@@ -175,26 +184,25 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void ForceExitVr();
 
+  bool ShouldSkipVSync();
   void SendVSync(base::TimeTicks time, GetVSyncCallback callback);
 
   void ClosePresentationBindings();
 
-  void OnAssetsLoaded(vr::AssetsLoadStatus status,
-                      std::unique_ptr<SkBitmap> background_image,
-                      const base::Version& component_version);
-
   // samplerExternalOES texture data for WebVR content image.
   int webvr_texture_id_ = 0;
 
-  // Set from feature flag.
+  // Set from feature flags.
   bool webvr_vsync_align_;
 
   scoped_refptr<gl::GLSurface> surface_;
   scoped_refptr<gl::GLContext> context_;
   scoped_refptr<gl::SurfaceTexture> content_surface_texture_;
+  scoped_refptr<gl::SurfaceTexture> content_overlay_surface_texture_;
   scoped_refptr<gl::SurfaceTexture> webvr_surface_texture_;
 
   std::unique_ptr<gl::ScopedJavaSurface> content_surface_;
+  std::unique_ptr<gl::ScopedJavaSurface> content_overlay_surface_;
 
   std::unique_ptr<gvr::GvrApi> gvr_api_;
   std::unique_ptr<gvr::BufferViewportList> buffer_viewport_list_;
@@ -214,10 +222,19 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   gfx::Size render_size_default_;
   gfx::Size render_size_webvr_ui_;
 
+  // WebVR currently supports multiple render path choices, with runtime
+  // selection based on underlying support being available and feature flags.
+  // The webvr_use_* booleans choose among the implementations. Please don't
+  // check WebXrRenderPath or other feature flags in individual code paths
+  // directly to avoid inconsistent logic.
+  bool webvr_use_gpu_fence_ = false;
+
+  int webvr_unstuff_ratelimit_frames_ = 0;
+
   bool cardboard_ = false;
   gfx::Quaternion controller_quat_;
 
-  gfx::Size content_tex_physical_size_ = {0, 0};
+  gfx::Size content_tex_buffer_size_ = {0, 0};
   gfx::Size webvr_surface_size_ = {0, 0};
 
   std::vector<base::TimeTicks> webvr_time_pose_;
@@ -238,9 +255,18 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
+  // Attributes tracking WebVR rAF/VSync animation loop state. Blink schedules
+  // a callback using the GetVSync mojo call, and the callback is either passed
+  // to SendVSync immediately, or deferred until the next OnVSync call.
+  //
+  // pending_vsync_ is set to true in OnVSync if there is no current
+  // outstanding callback, and this means that a future GetVSync is permitted
+  // to execute SendVSync immediately. If it is false, GetVSync must store the
+  // pending callback in callback_ for later execution.
   base::TimeTicks pending_time_;
   bool pending_vsync_ = false;
   GetVSyncCallback callback_;
+
   mojo::Binding<device::mojom::VRPresentationProvider> binding_;
   device::mojom::VRSubmitFrameClientPtr submit_client_;
 
@@ -292,8 +318,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   gfx::Transform last_used_head_pose_;
 
   vr::ControllerModel controller_model_;
-
-  bool assets_available_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 

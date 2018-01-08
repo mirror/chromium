@@ -8,8 +8,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
+import android.os.Process;
 import android.os.StrictMode;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.system.Os;
 
 import org.chromium.base.BuildConfig;
@@ -314,9 +318,6 @@ public class LibraryLoader {
                         Log.w(TAG, "Forking a process to prefetch the native library failed.");
                     }
                 }
-                // As this runs in a background thread, it can be called before histograms are
-                // initialized. In this instance, histograms are dropped.
-                RecordHistogram.initialize();
                 if (prefetch) {
                     RecordHistogram.recordBooleanHistogram("LibraryLoader.PrefetchStatus", success);
                 }
@@ -332,7 +333,8 @@ public class LibraryLoader {
 
     // Helper for loadAlreadyLocked(). Load a native shared library with the Chromium linker.
     // Sets UMA flags depending on the results of loading.
-    private void loadLibrary(Linker linker, @Nullable String zipFilePath, String libFilePath) {
+    private void loadLibraryWithCustomLinker(
+            Linker linker, @Nullable String zipFilePath, String libFilePath) {
         if (linker.isUsingBrowserSharedRelros()) {
             // If the browser is set to attempt shared RELROs then we try first with shared
             // RELROs enabled, and if that fails then retry without.
@@ -355,10 +357,10 @@ public class LibraryLoader {
         }
     }
 
-    // Invoke either Linker.loadLibrary(...) or System.loadLibrary(...), triggering
-    // JNI_OnLoad in native code
+    // Invoke either Linker.loadLibrary(...), System.loadLibrary(...) or System.load(...),
+    // triggering JNI_OnLoad in native code.
     // TODO(crbug.com/635567): Fix this properly.
-    @SuppressLint("DefaultLocale")
+    @SuppressLint({"DefaultLocale", "NewApi", "UnsafeDynamicallyLoadedCode"})
     private void loadAlreadyLocked(Context appContext) throws ProcessInitException {
         try (TraceEvent te = TraceEvent.scoped("LibraryLoader.loadAlreadyLocked")) {
             if (!mLoaded) {
@@ -394,7 +396,7 @@ public class LibraryLoader {
 
                         try {
                             // Load the library using this Linker. May throw UnsatisfiedLinkError.
-                            loadLibrary(linker, zipFilePath, libFilePath);
+                            loadLibraryWithCustomLinker(linker, zipFilePath, libFilePath);
                         } catch (UnsatisfiedLinkError e) {
                             Log.e(TAG, "Unable to load library: " + library);
                             throw(e);
@@ -405,10 +407,24 @@ public class LibraryLoader {
                 } else {
                     setEnvForNative();
                     preloadAlreadyLocked(appContext);
+
+                    // If the libraries are located in the zip file, assert that the device API
+                    // level is M or higher. On devices lower than M, the libraries should
+                    // always be loaded by LegacyLinker.
+                    assert !Linker.isInZipFile() || Build.VERSION.SDK_INT >= VERSION_CODES.M;
+
                     // Load libraries using the system linker.
                     for (String library : NativeLibraries.LIBRARIES) {
                         try {
-                            System.loadLibrary(library);
+                            if (!Linker.isInZipFile()) {
+                                System.loadLibrary(library);
+                            } else {
+                                // Load directly from the APK.
+                                String zipFilePath = appContext.getApplicationInfo().sourceDir;
+                                String libraryName = makeLibraryPathInZipFile(library, zipFilePath);
+                                Log.i(TAG, "libraryName: " + libraryName);
+                                System.load(libraryName);
+                            }
                         } catch (UnsatisfiedLinkError e) {
                             Log.e(TAG, "Unable to load library: " + library);
                             throw(e);
@@ -428,6 +444,39 @@ public class LibraryLoader {
         } catch (UnsatisfiedLinkError e) {
             throw new ProcessInitException(LoaderErrors.LOADER_ERROR_NATIVE_LIBRARY_LOAD_FAILED, e);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @NonNull
+    private static String makeLibraryPathInZipFile(String library, String zipFilePath) {
+        assert Linker.isInZipFile();
+
+        // Determine whether the process is running in 32bit mode. The API is available starting
+        // from M, on L- there is no need to construct the full path inside the APK, so this
+        // path is omitted.
+        boolean is32BitProcess = !Process.is64Bit();
+
+        // Determine the ABI string that Android uses to find native libraries. Values are described
+        // in: https://developer.android.com/ndk/guides/abis.html
+        // The 'armeabi' is omitted here because it is not supported in Chrome/WebView, while Cronet
+        // and Cast load the native library via other paths.
+        String cpuAbi;
+        switch (NativeLibraries.sCpuFamily) {
+            case NativeLibraries.CPU_FAMILY_ARM:
+                cpuAbi = is32BitProcess ? "armeabi-v7a" : "arm64-v8a";
+                break;
+            case NativeLibraries.CPU_FAMILY_X86:
+                cpuAbi = is32BitProcess ? "x86" : "x86_64";
+                break;
+            case NativeLibraries.CPU_FAMILY_MIPS:
+                cpuAbi = is32BitProcess ? "mips" : "mips64";
+                break;
+            default:
+                throw new RuntimeException("Unknown CPU ABI for native libraries");
+        }
+
+        // Combine the above into the final path to the library in the APK.
+        return zipFilePath + "!/lib/" + cpuAbi + "/crazy." + System.mapLibraryName(library);
     }
 
     // The WebView requires the Command Line to be switched over before
@@ -491,7 +540,7 @@ public class LibraryLoader {
     // Record Chromium linker histogram state for the main browser process. Called from
     // onNativeInitializationComplete().
     private void recordBrowserProcessHistogram() {
-        if (Linker.getInstance().isUsed()) {
+        if (Linker.isUsed()) {
             nativeRecordChromiumAndroidLinkerBrowserHistogram(
                     mIsUsingBrowserSharedRelros,
                     mLoadAtFixedAddressFailed,
@@ -506,7 +555,7 @@ public class LibraryLoader {
     // Returns the device's status for loading a library directly from the APK file.
     // This method can only be called when the Chromium linker is used.
     private int getLibraryLoadFromApkStatus() {
-        assert Linker.getInstance().isUsed();
+        assert Linker.isUsed();
 
         if (mLibraryWasLoadedFromApk) {
             return LibraryLoadFromApkStatusCodes.SUCCESSFUL;
@@ -522,7 +571,7 @@ public class LibraryLoader {
     // RecordChromiumAndroidLinkerRendererHistogram() will record it correctly.
     public void registerRendererProcessHistogram(boolean requestedSharedRelro,
                                                  boolean loadAtFixedAddressFailed) {
-        if (Linker.getInstance().isUsed()) {
+        if (Linker.isUsed()) {
             nativeRegisterChromiumAndroidLinkerRendererHistogram(requestedSharedRelro,
                                                                  loadAtFixedAddressFailed,
                                                                  mLibraryLoadTimeMs);

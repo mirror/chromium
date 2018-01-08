@@ -685,6 +685,53 @@ TEST_F(WindowTreeTest, EventAck) {
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
 }
 
+TEST_F(WindowTreeTest, RemoveWindowFromParentWithQueuedEvent) {
+  TestWindowTreeClient* embed_client = nullptr;
+  WindowTree* tree = nullptr;
+  ServerWindow* window = nullptr;
+  EXPECT_NO_FATAL_FAILURE(SetupEventTargeting(&embed_client, &tree, &window));
+
+  window->SetBounds(gfx::Rect(0, 0, 100, 100));
+  window->set_is_activation_parent(true);
+  ClientWindowId w1_id;
+  ServerWindow* w1 =
+      NewWindowInTreeWithParent(tree, window, &w1_id, gfx::Rect(0, 0, 20, 20));
+  ASSERT_TRUE(w1);
+  ClientWindowId w2_id;
+  ServerWindow* w2 =
+      NewWindowInTreeWithParent(tree, window, &w2_id, gfx::Rect(25, 0, 20, 20));
+  ASSERT_TRUE(w2);
+
+  DispatchEventAndAckImmediately(CreateMouseMoveEvent(5, 5));
+
+  // This moves between |w1| and |w2|, which results in two events (move and
+  // enter).
+  DispatchEventWithoutAck(CreateMouseMoveEvent(27, 5));
+
+  // There should be an event in flight for the move.
+  EXPECT_TRUE(WindowTreeTestApi(tree).HasEventInFlight());
+
+  // Simulate the client taking too long.
+  WindowManagerStateTestApi wm_state_test_api(
+      wm_tree()->window_manager_state());
+  wm_state_test_api.OnEventAckTimeout(tree->id());
+
+  // There should be an event queued (for the enter).
+  EXPECT_EQ(1u, WindowTreeTestApi(tree).event_queue_size());
+
+  // Remove the window from the hierarchy, which should make it so the client
+  // doesn't get the queued event.
+  w2->parent()->Remove(w2);
+
+  // Ack the in flight event, which should trigger processing the queued event.
+  // Because |w2| was removed, the event should not be dispatched to the client
+  // and WindowManagerState should no longer be waiting (because there are no
+  // inflight events).
+  WindowTreeTestApi(tree).AckOldestEvent();
+  EXPECT_FALSE(WindowTreeTestApi(tree).HasEventInFlight());
+  EXPECT_EQ(nullptr, wm_state_test_api.tree_awaiting_input_ack());
+}
+
 // Establish client, call Embed() in WM, make sure to get FrameSinkId.
 TEST_F(WindowTreeTest, Embed) {
   const ClientWindowId embed_window_id =
@@ -1814,8 +1861,7 @@ TEST_F(WindowTreeManualDisplayTest, MoveDisplayRootToNewDisplay) {
   EXPECT_EQ(1u, WindowManagerStateTestApi(window_manager_state)
                     .window_manager_display_roots()
                     .size());
-  // The display itself is not destroyed when the root window is destroyed.
-  EXPECT_TRUE(window_server()->display_manager()->GetDisplayById(display1_id));
+  EXPECT_FALSE(window_server()->display_manager()->GetDisplayById(display1_id));
   EXPECT_TRUE(window_server()->display_manager()->GetDisplayById(display2_id));
 
   // Delete the root, which should delete the WindowManagerDisplayRoot.
@@ -1966,13 +2012,13 @@ TEST_F(WindowTreeManualDisplayTest,
       kDisplay2ScaleFactor,
       static_cast<TestPlatformDisplay*>(platform_display2)->cursor_scale());
 
-  // Delete the second display's root, no notification should be sent.
+  // Delete the second display, no notification should be sent.
   EXPECT_TRUE(window_manager_tree->DeleteWindow(display_root_id2));
   RunUntilIdle();
   EXPECT_TRUE(display_manager_observer.GetAndClearObserverCalls().empty());
-  EXPECT_TRUE(display_manager->GetDisplayById(display_id2));
+  EXPECT_FALSE(display_manager->GetDisplayById(display_id2));
 
-  // Set the config back to only the first, this deletes the display.
+  // Set the config back to only the first.
   displays.clear();
   displays.push_back(display1);
 
@@ -1984,7 +2030,6 @@ TEST_F(WindowTreeManualDisplayTest,
   EXPECT_EQ("OnDisplaysChanged " + std::to_string(display_id1) + " " +
                 std::to_string(display_id1),
             display_manager_observer.GetAndClearObserverCalls());
-  EXPECT_FALSE(display_manager->GetDisplayById(display_id2));
 
   // The display list should not have display2.
   display::DisplayList& display_list =

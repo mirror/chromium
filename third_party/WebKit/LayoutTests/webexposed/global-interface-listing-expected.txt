@@ -438,7 +438,6 @@ interface BackgroundFetchRegistration : EventTarget
     getter downloaded
     getter id
     getter onprogress
-    getter totalDownloadSize
     getter uploadTotal
     getter uploaded
     method abort
@@ -561,8 +560,10 @@ interface CDATASection : Text
     attribute @@toStringTag
     method constructor
 interface CSS
+    static getter layoutWorklet
     static getter paintWorklet
     static method Hz
+    static method Q
     static method ch
     static method cm
     static method deg
@@ -583,7 +584,6 @@ interface CSS
     static method percent
     static method pt
     static method px
-    static method q
     static method rad
     static method registerProperty
     static method rem
@@ -651,12 +651,10 @@ interface CSSMathMax : CSSMathValue
     attribute @@toStringTag
     getter values
     method constructor
-    setter values
 interface CSSMathMin : CSSMathValue
     attribute @@toStringTag
     getter values
     method constructor
-    setter values
 interface CSSMathNegate : CSSMathValue
     attribute @@toStringTag
     getter value
@@ -666,12 +664,10 @@ interface CSSMathProduct : CSSMathValue
     attribute @@toStringTag
     getter values
     method constructor
-    setter values
 interface CSSMathSum : CSSMathValue
     attribute @@toStringTag
     getter values
     method constructor
-    setter values
 interface CSSMathValue : CSSNumericValue
     attribute @@toStringTag
     getter operator
@@ -707,6 +703,7 @@ interface CSSNumericValue : CSSStyleValue
     method sub
     method to
     method toSum
+    method type
 interface CSSPageRule : CSSRule
     attribute @@toStringTag
     getter selectorText
@@ -798,6 +795,7 @@ interface CSSStyleDeclaration
     setter cssText
 interface CSSStyleRule : CSSRule
     attribute @@toStringTag
+    getter attributeStyleMap
     getter selectorText
     getter style
     method constructor
@@ -854,7 +852,6 @@ interface CSSURLImageValue : CSSImageValue
     method constructor
 interface CSSUnitValue : CSSNumericValue
     attribute @@toStringTag
-    getter type
     getter unit
     getter value
     method constructor
@@ -874,7 +871,6 @@ interface CSSVariableReferenceValue
     getter fallback
     getter variable
     method constructor
-    setter fallback
     setter variable
 interface CSSViewportRule : CSSRule
     attribute @@toStringTag
@@ -1051,6 +1047,20 @@ interface CompositionEvent : UIEvent
     getter data
     method constructor
     method initCompositionEvent
+interface ComputedAccessibleNode
+    attribute @@toStringTag
+    getter colCount
+    getter colIndex
+    getter colSpan
+    getter level
+    getter name
+    getter posInSet
+    getter role
+    getter rowCount
+    getter rowIndex
+    getter rowSpan
+    getter setSize
+    method constructor
 interface ConstantSourceNode : AudioScheduledSourceNode
     attribute @@toStringTag
     getter offset
@@ -2142,6 +2152,7 @@ interface HTMLAnchorElement : HTMLElement
     getter protocol
     getter referrerPolicy
     getter rel
+    getter relList
     getter rev
     getter search
     getter shape
@@ -2167,6 +2178,7 @@ interface HTMLAnchorElement : HTMLElement
     setter protocol
     setter referrerPolicy
     setter rel
+    setter relList
     setter rev
     setter search
     setter shape
@@ -2192,6 +2204,7 @@ interface HTMLAreaElement : HTMLElement
     getter protocol
     getter referrerPolicy
     getter rel
+    getter relList
     getter search
     getter shape
     getter target
@@ -2213,6 +2226,7 @@ interface HTMLAreaElement : HTMLElement
     setter protocol
     setter referrerPolicy
     setter rel
+    setter relList
     setter search
     setter shape
     setter target
@@ -2396,6 +2410,7 @@ interface HTMLDocument : Document
 interface HTMLElement : Element
     attribute @@toStringTag
     getter accessKey
+    getter autocapitalize
     getter contentEditable
     getter dataset
     getter dir
@@ -2497,6 +2512,7 @@ interface HTMLElement : Element
     method constructor
     method focus
     setter accessKey
+    setter autocapitalize
     setter contentEditable
     setter dir
     setter draggable
@@ -2853,7 +2869,6 @@ interface HTMLInputElement : HTMLElement
     getter accept
     getter align
     getter alt
-    getter autocapitalize
     getter autocomplete
     getter autofocus
     getter checked
@@ -2912,7 +2927,6 @@ interface HTMLInputElement : HTMLElement
     setter accept
     setter align
     setter alt
-    setter autocapitalize
     setter autocomplete
     setter autofocus
     setter checked
@@ -3239,7 +3253,6 @@ interface HTMLOptionsCollection : HTMLCollection
     method @@iterator
     method add
     method constructor
-    method namedItem
     method remove
     setter length
     setter selectedIndex
@@ -3328,6 +3341,7 @@ interface HTMLScriptElement : HTMLElement
     setter type
 interface HTMLSelectElement : HTMLElement
     attribute @@toStringTag
+    getter autocomplete
     getter autofocus
     getter disabled
     getter form
@@ -3354,6 +3368,7 @@ interface HTMLSelectElement : HTMLElement
     method remove
     method reportValidity
     method setCustomValidity
+    setter autocomplete
     setter autofocus
     setter disabled
     setter length
@@ -3370,6 +3385,7 @@ interface HTMLShadowElement : HTMLElement
 interface HTMLSlotElement : HTMLElement
     attribute @@toStringTag
     getter name
+    method assignedElements
     method assignedNodes
     method constructor
     setter name
@@ -3527,7 +3543,7 @@ interface HTMLTemplateElement : HTMLElement
     method constructor
 interface HTMLTextAreaElement : HTMLElement
     attribute @@toStringTag
-    getter autocapitalize
+    getter autocomplete
     getter autofocus
     getter cols
     getter defaultValue
@@ -3559,7 +3575,7 @@ interface HTMLTextAreaElement : HTMLElement
     method setCustomValidity
     method setRangeText
     method setSelectionRange
-    setter autocapitalize
+    setter autocomplete
     setter autofocus
     setter cols
     setter defaultValue
@@ -3888,7 +3904,6 @@ interface ImageCapture
     method getPhotoCapabilities
     method getPhotoSettings
     method grabFrame
-    method setOptions
     method takePhoto
 interface ImageData
     attribute @@toStringTag
@@ -3975,6 +3990,7 @@ interface LockManager
     attribute @@toStringTag
     method acquire
     method constructor
+    method query
 interface MIDIAccess : EventTarget
     attribute @@toStringTag
     getter inputs
@@ -4140,6 +4156,7 @@ interface MediaList
     method constructor
     method deleteMedium
     method item
+    method toString
     setter mediaText
 interface MediaMetadata
     attribute @@toStringTag
@@ -4502,7 +4519,6 @@ interface Navigator
     getter webkitPersistentStorage
     getter webkitTemporaryStorage
     getter xr
-    method cancelKeyboardLock
     method constructor
     method getBattery
     method getGamepads
@@ -4510,8 +4526,9 @@ interface Navigator
     method getUserMedia
     method getVRDisplays
     method javaEnabled
+    method keyboardLock
+    method keyboardUnlock
     method registerProtocolHandler
-    method requestKeyboardLock
     method requestMIDIAccess
     method requestMediaKeySystemAccess
     method sendBeacon
@@ -4954,6 +4971,7 @@ interface PerformanceObserver
     method constructor
     method disconnect
     method observe
+    method takeRecords
 interface PerformanceObserverEntryList
     attribute @@toStringTag
     method constructor
@@ -5287,6 +5305,7 @@ interface RTCRtpSender
     attribute @@toStringTag
     getter track
     method constructor
+    method replaceTrack
 interface RTCSessionDescription
     attribute @@toStringTag
     getter sdp
@@ -5389,6 +5408,7 @@ interface Request
     getter bodyUsed
     getter cache
     getter credentials
+    getter destination
     getter headers
     getter integrity
     getter keepalive
@@ -6672,11 +6692,6 @@ interface ShadowRoot : DocumentFragment
     method elementsFromPoint
     method getSelection
     setter innerHTML
-interface SharedArrayBuffer
-    attribute @@toStringTag
-    getter byteLength
-    method constructor
-    method slice
 interface SharedWorker : EventTarget
     attribute @@toStringTag
     getter onerror
@@ -6794,14 +6809,14 @@ interface StorageManager
     method estimate
     method persist
     method persisted
-interface StylePropertyMap : StylePropertyMapReadonly
+interface StylePropertyMap : StylePropertyMapReadOnly
     attribute @@toStringTag
     method append
     method constructor
     method delete
     method set
     method update
-interface StylePropertyMapReadonly
+interface StylePropertyMapReadOnly
     attribute @@toStringTag
     method @@iterator
     method constructor
@@ -7269,7 +7284,9 @@ interface VTTCue : TextTrackCue
     attribute @@toStringTag
     getter align
     getter line
+    getter lineAlign
     getter position
+    getter positionAlign
     getter region
     getter size
     getter snapToLines
@@ -7279,7 +7296,9 @@ interface VTTCue : TextTrackCue
     method getCueAsHTML
     setter align
     setter line
+    setter lineAlign
     setter position
+    setter positionAlign
     setter region
     setter size
     setter snapToLines
@@ -8898,7 +8917,6 @@ interface XRCoordinateSystem
     method getTransformTo
 interface XRDevice : EventTarget
     attribute @@toStringTag
-    getter deviceName
     getter external
     method constructor
     method requestSession
@@ -9154,7 +9172,6 @@ interface webkitURL
     setter search
     setter username
 [GLOBAL OBJECT]
-    attribute Atomics
     attribute GCController
     attribute accessibilityController
     attribute chrome
@@ -9345,6 +9362,7 @@ interface webkitURL
     method find
     method focus
     method gc
+    method getComputedAccessibleNode
     method getComputedStyle
     method getSelection
     method matchMedia

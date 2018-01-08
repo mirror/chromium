@@ -17,7 +17,7 @@ namespace blink {
 
 SnapCoordinator::SnapCoordinator() : snap_container_map_() {}
 
-SnapCoordinator::~SnapCoordinator() {}
+SnapCoordinator::~SnapCoordinator() = default;
 
 SnapCoordinator* SnapCoordinator::Create() {
   return new SnapCoordinator();
@@ -93,8 +93,8 @@ void SnapCoordinator::UpdateSnapContainerData(const LayoutBox& snap_container) {
     return;
   FloatPoint max_position = ScrollOffsetToPosition(
       scrollable_area->MaximumScrollOffset(), scrollable_area->ScrollOrigin());
-  snap_container_data.max_position =
-      gfx::ScrollOffset(max_position.X(), max_position.Y());
+  snap_container_data.set_max_position(
+      gfx::ScrollOffset(max_position.X(), max_position.Y()));
 
   if (SnapAreaSet* snap_areas = snap_container.SnapAreas()) {
     for (const LayoutBox* snap_area : *snap_areas) {
@@ -125,7 +125,7 @@ static float ClipInContainer(LayoutUnit unit, float max) {
 //    calculated snap_position can not be larger than this value.
 // area - The snap area rect relative to the snap container's boundary. Note
 //    that this rect is represented by the dotted box below, which is expanded
-//    by the scroll-snap-margin from the element's original boundary.
+//    by the scroll-margin from the element's original boundary.
 static float CalculateSnapPosition(SnapAlignment alignment,
                                    SnapAxis axis,
                                    const LayoutRect& container,
@@ -144,7 +144,7 @@ static float CalculateSnapPosition(SnapAlignment alignment,
       +  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  +
       +  \                 scroll-padding                    \  +
       +  \   . . . . . . . . . . . . . . . . . . . . . . .   \  +
-      +  \   .       .   scroll-snap-margin  .           .   \  +
+      +  \   .       .     scroll-margin     .           .   \  +
       +  \   .       .  |=================|  .           .   \  +
       +  \   .       .  |                 |  .           .   \  +
       +  \   .       .  |    snap_area    |  .           .   \  +
@@ -181,7 +181,7 @@ static float CalculateSnapPosition(SnapAlignment alignment,
       +  \   . . . . . . . . . . . . . . . . . . . . . . .   \  +
       +  \   .                                           .   \  +
       +  \   .       . . . . . . . . . . . . .           .   \  +
-      +  \   .       .   scroll-snap-margin  .           .   \  +
+      +  \   .       .      scroll-margin    .           .   \  +
       +  \   .       .  |=================|  .           .   \  +
       +  \   .       .  |    snap_area    |  .           .   \  +
       +  \* *.* * * *.* * * * * * * * * * * *.* * * * * * * * * * Center line
@@ -222,7 +222,7 @@ static float CalculateSnapPosition(SnapAlignment alignment,
       +  \   .                                           .   \  +
       +  \   .                                           .   \  +
       +  \   .       . . . . . . . . . . . . .           .   \  +
-      +  \   .       .   scroll-snap-margin  .           .   \  +
+      +  \   .       .      scroll-margin    .           .   \  +
       +  \   .       .  |=================|  .           .   \  +
       +  \   .       .  |                 |  .           .   \  +
       +  \   .       .  |    snap_area    |  .           .   \  +
@@ -275,22 +275,17 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   // scrollport. https://drafts.csswg.org/css-scroll-snap-1/#scroll-padding
   // Scrollport is the visual vieport of the scroll container (through which the
   // scrollable overflow region can be viewed) coincides with its padding box.
-  // https://drafts.csswg.org/css-scroll-snap-1/#scroll-padding
-  // So we use the size of the padding box here.
-  LayoutRect container(LayoutPoint(), snap_container.PaddingBoxRect().Size());
+  // https://drafts.csswg.org/css-overflow-3/#scrollport
+  // So we use the LayoutRect of the padding box here. The coordinate is based
+  // on the container's border box.
+  LayoutRect container(snap_container.PaddingBoxRect());
 
   // We assume that the snap_container is the snap_area's ancestor in layout
   // tree, as the snap_container is found by walking up the layout tree in
   // FindSnapContainer(). Under this assumption,
-  // snap_area.LocalToAncestorPoint(FloatPoint(0, 0), snap_container) returns
-  // the snap_area's position relative to its container. And the |area| below
-  // represents the snap_area rect in respect to the snap_container.
-  Element* container_element;
-  if (snap_container.GetNode()->IsElementNode())
-    container_element = ToElement(snap_container.GetNode());
-  else
-    container_element = nullptr;
-
+  // snap_area.LocalToAncestorQuad() returns the snap_area's position relative
+  // to its container's border box. And the |area| below represents the
+  // snap_area rect in respect to the snap_container.
   LayoutRect area(LayoutPoint(), LayoutSize(snap_area.OffsetWidth(),
                                             snap_area.OffsetHeight()));
   area = EnclosingLayoutRect(
@@ -324,8 +319,8 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
       MinimumValueForLength(container_style->ScrollPaddingLeft(),
                             container.Width()));
   LayoutRectOutsets area_margin(
-      area_style->ScrollSnapMarginTop(), area_style->ScrollSnapMarginRight(),
-      area_style->ScrollSnapMarginBottom(), area_style->ScrollSnapMarginLeft());
+      area_style->ScrollMarginTop(), area_style->ScrollMarginRight(),
+      area_style->ScrollMarginBottom(), area_style->ScrollMarginLeft());
   container.Contract(container_padding);
   area.Expand(area_margin);
 
@@ -352,41 +347,6 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   return snap_area_data;
 }
 
-FloatPoint SnapCoordinator::FindSnapPosition(const FloatPoint& current_position,
-                                             const SnapContainerData& data,
-                                             bool should_snap_on_x,
-                                             bool should_snap_on_y) {
-  float smallest_distance_x = std::numeric_limits<float>::max();
-  float smallest_distance_y = std::numeric_limits<float>::max();
-  FloatPoint snap_position = current_position;
-  for (SnapAreaData snap_area_data : data.snap_area_list) {
-    // TODO(sunyunjia): We should consider visiblity when choosing snap offset.
-    if (should_snap_on_x && (snap_area_data.snap_axis == SnapAxis::kX ||
-                             snap_area_data.snap_axis == SnapAxis::kBoth)) {
-      float offset = snap_area_data.snap_position.x();
-      if (offset == SnapAreaData::kInvalidScrollPosition)
-        continue;
-      float distance = std::abs(current_position.X() - offset);
-      if (distance < smallest_distance_x) {
-        smallest_distance_x = distance;
-        snap_position.SetX(offset);
-      }
-    }
-    if (should_snap_on_y && (snap_area_data.snap_axis == SnapAxis::kY ||
-                             snap_area_data.snap_axis == SnapAxis::kBoth)) {
-      float offset = snap_area_data.snap_position.y();
-      if (offset == SnapAreaData::kInvalidScrollPosition)
-        continue;
-      float distance = std::abs(current_position.Y() - offset);
-      if (distance < smallest_distance_y) {
-        smallest_distance_y = distance;
-        snap_position.SetY(offset);
-      }
-    }
-  }
-  return snap_position;
-}
-
 bool SnapCoordinator::GetSnapPosition(const LayoutBox& snap_container,
                                       bool did_scroll_x,
                                       bool did_scroll_y,
@@ -395,13 +355,9 @@ bool SnapCoordinator::GetSnapPosition(const LayoutBox& snap_container,
   if (iter == snap_container_map_.end())
     return false;
 
-  SnapContainerData data = iter->value;
-  if (!data.snap_area_list.size())
+  const SnapContainerData& data = iter->value;
+  if (!data.size())
     return false;
-
-  SnapAxis axis = data.scroll_snap_type.axis;
-  did_scroll_x &= (axis == SnapAxis::kX || axis == SnapAxis::kBoth);
-  did_scroll_y &= (axis == SnapAxis::kY || axis == SnapAxis::kBoth);
 
   ScrollableArea* scrollable_area = ScrollableAreaForSnapping(snap_container);
   if (!scrollable_area)
@@ -409,8 +365,11 @@ bool SnapCoordinator::GetSnapPosition(const LayoutBox& snap_container,
 
   FloatPoint current_position = scrollable_area->ScrollPosition();
 
-  *snap_position =
-      FindSnapPosition(current_position, data, did_scroll_x, did_scroll_y);
+  gfx::ScrollOffset position = data.FindSnapPosition(
+      gfx::ScrollOffset(current_position.X(), current_position.Y()),
+      did_scroll_x, did_scroll_y);
+  snap_position->SetX(position.x());
+  snap_position->SetY(position.y());
 
   return *snap_position != current_position;
 }
@@ -461,13 +420,13 @@ void SnapCoordinator::SnapContainerDidChange(LayoutBox& snap_container,
   // container or from existing areas in orphan pool.
 }
 
-SnapContainerData SnapCoordinator::EnsureSnapContainerData(
-    const LayoutBox& snap_container) {
+Optional<SnapContainerData> SnapCoordinator::GetSnapContainerData(
+    const LayoutBox& snap_container) const {
   auto iter = snap_container_map_.find(&snap_container);
   if (iter != snap_container_map_.end()) {
     return iter->value;
   }
-  return SnapContainerData();
+  return base::nullopt;
 }
 
 #ifndef NDEBUG

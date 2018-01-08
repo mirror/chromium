@@ -10,8 +10,6 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
-#include "base/metrics/statistics_recorder.h"
 #include "base/path_service.h"
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
@@ -47,11 +45,6 @@ class ComponentsTestSuite : public base::TestSuite {
     base::TestSuite::Initialize();
 
     mojo::edk::Init();
-
-    // Initialize the histograms subsystem, so that any histograms hit in tests
-    // are correctly registered with the statistics recorder and can be queried
-    // by tests.
-    base::StatisticsRecorder::Initialize();
 
 #if !defined(OS_IOS)
     gl::GLSurfaceTestSupport::InitializeOneOff();
@@ -130,10 +123,10 @@ class ComponentsUnitTestEventListener : public testing::EmptyTestEventListener {
 
 base::RunTestSuiteCallback GetLaunchCallback(int argc, char** argv) {
 #if !defined(OS_IOS)
-  auto test_suite = base::MakeUnique<content::UnitTestTestSuite>(
+  auto test_suite = std::make_unique<content::UnitTestTestSuite>(
       new ComponentsTestSuite(argc, argv));
 #else
-  auto test_suite = base::MakeUnique<ComponentsTestSuite>(argc, argv);
+  auto test_suite = std::make_unique<ComponentsTestSuite>(argc, argv);
 #endif
 
   // The listener will set up common test environment for all components unit

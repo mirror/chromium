@@ -46,10 +46,7 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   // Step 2. Set request's client to settings object. [spec text]
   //
   // Note: |element_document| corresponds to the settings object.
-  ScriptResource* resource =
-      ScriptResource::Fetch(params, element_document.Fetcher(), pending_script);
-  if (!resource)
-    return nullptr;
+  ScriptResource::Fetch(params, element_document.Fetcher(), pending_script);
   pending_script->CheckState();
   return pending_script;
 }
@@ -74,6 +71,8 @@ ClassicPendingScript::ClassicPendingScript(
     bool is_external)
     : PendingScript(element, starting_position),
       options_(options),
+      base_url_for_inline_script_(
+          is_external ? KURL() : element->GetDocument().BaseURL()),
       source_location_type_(source_location_type),
       is_external_(is_external),
       ready_state_(is_external ? kWaitingForResource : kReady),
@@ -146,6 +145,8 @@ void ClassicPendingScript::CancelStreaming() {
   streamer_->Cancel();
   streamer_ = nullptr;
   streamer_done_.Reset();
+  is_currently_streaming_ = false;
+  DCHECK(!IsCurrentlyStreaming());
 }
 
 void ClassicPendingScript::NotifyFinished(Resource* resource) {
@@ -235,7 +236,8 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
     ScriptSourceCode source_code(
         GetElement()->TextFromChildren(), source_location_type_,
         nullptr /* cache_handler */, document_url, StartingPosition());
-    return ClassicScript::Create(source_code, options_, kSharableCrossOrigin);
+    return ClassicScript::Create(source_code, base_url_for_inline_script_,
+                                 options_, kSharableCrossOrigin);
   }
 
   DCHECK(GetResource()->IsLoaded());
@@ -243,7 +245,11 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
   bool streamer_ready = (ready_state_ == kReady) && streamer_ &&
                         !streamer_->StreamingSuppressed();
   ScriptSourceCode source_code(streamer_ready ? streamer_ : nullptr, resource);
-  return ClassicScript::Create(source_code, options_,
+  // The base URL for external classic script is
+  // "the URL from which the script was obtained" [spec text]
+  // https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url
+  const KURL& base_url = source_code.Url();
+  return ClassicScript::Create(source_code, base_url, options_,
                                resource->CalculateAccessControlStatus());
 }
 
@@ -316,6 +322,13 @@ void ClassicPendingScript::AdvanceReadyState(ReadyState new_ready_state) {
   }
 
   // Streaming-related post conditions:
+
+  // To help diagnose crbug.com/78426, we'll temporarily add some DCHECKs
+  // that are a subset of the DCHECKs below:
+  if (IsCurrentlyStreaming()) {
+    DCHECK(streamer_);
+    DCHECK(!streamer_->IsFinished());
+  }
 
   // IsCurrentlyStreaming should match what streamer_ thinks.
   DCHECK_EQ(IsCurrentlyStreaming(), streamer_ && !streamer_->IsFinished());

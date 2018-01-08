@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/compiler_specific.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -29,7 +30,7 @@ namespace chromeos {
 //     --dest=org.chromium.ComponentUpdaterService
 //     /org/chromium/ComponentUpdaterService
 //     org.chromium.ComponentUpdaterService.LoadComponent
-//     "string:|component name|"
+//     "string:|component name|" "boolean:|mount|"
 //
 // % string "/run/imageloader/|component name|/|version|"
 //
@@ -48,12 +49,14 @@ class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
   // ComponentUpdaterServiceProvider.
   class Delegate {
    public:
+    using LoadCallback = base::OnceCallback<void(const base::FilePath&)>;
+
     Delegate() {}
     virtual ~Delegate() {}
 
-    virtual void LoadComponent(
-        const std::string& name,
-        base::OnceCallback<void(const std::string&)> load_callback) = 0;
+    virtual void LoadComponent(const std::string& name,
+                               bool mount,
+                               LoadCallback load_callback) = 0;
 
     virtual bool UnloadComponent(const std::string& name) = 0;
 
@@ -81,7 +84,7 @@ class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
   // Callback executed after component loading operation is done.
   void OnLoadComponent(dbus::MethodCall* method_call,
                        dbus::ExportedObject::ResponseSender response_sender,
-                       const std::string& result);
+                       const base::FilePath& result);
 
   // Called on UI thread in response to a D-Bus request.
   void UnloadComponent(dbus::MethodCall* method_call,

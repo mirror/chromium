@@ -11,7 +11,6 @@
 #include "base/trace_event/trace_event.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
-#include "gpu/command_buffer/client/gles2_lib.h"
 #include "gpu/command_buffer/client/gles2_trace_implementation.h"
 #include "gpu/command_buffer/client/gpu_switches.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
@@ -40,7 +39,7 @@ AwRenderThreadContextProvider::AwRenderThreadContextProvider(
   // the Android OS. The widget we pass here will be ignored since we're
   // providing the GLSurface to the context already.
   DCHECK(!surface->IsOffscreen());
-  gpu::gles2::ContextCreationAttribHelper attributes;
+  gpu::ContextCreationAttribs attributes;
   // The context is wrapping an already allocated surface, so we can't control
   // what buffers it has from these attributes. We do expect an alpha and
   // stencil buffer to exist for webview, as the display compositor requires

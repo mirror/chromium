@@ -13,7 +13,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "gpu/command_buffer/common/gles2_cmd_utils.h"
+#include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/shader_translator.h"
@@ -41,15 +41,14 @@ class MockGLES2Decoder : public GLES2Decoder {
                    Outputter* outputter);
   virtual ~MockGLES2Decoder();
 
-  base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
+  base::WeakPtr<DecoderContext> AsWeakPtr() override;
 
-  MOCK_METHOD5(
-      Initialize,
-      gpu::ContextResult(const scoped_refptr<gl::GLSurface>& surface,
-                         const scoped_refptr<gl::GLContext>& context,
-                         bool offscreen,
-                         const DisallowedFeatures& disallowed_features,
-                         const ContextCreationAttribHelper& attrib_helper));
+  MOCK_METHOD5(Initialize,
+               gpu::ContextResult(const scoped_refptr<gl::GLSurface>& surface,
+                                  const scoped_refptr<gl::GLContext>& context,
+                                  bool offscreen,
+                                  const DisallowedFeatures& disallowed_features,
+                                  const ContextCreationAttribs& attrib_helper));
   MOCK_METHOD1(Destroy, void(bool have_context));
   MOCK_METHOD1(SetSurface, void(const scoped_refptr<gl::GLSurface>& surface));
   MOCK_METHOD0(ReleaseSurface, void());
@@ -101,6 +100,7 @@ class MockGLES2Decoder : public GLES2Decoder {
       GetTransformFeedbackManager, gpu::gles2::TransformFeedbackManager*());
   MOCK_METHOD0(GetVertexArrayManager, gpu::gles2::VertexArrayManager*());
   MOCK_METHOD0(GetImageManagerForTest, gpu::gles2::ImageManager*());
+  MOCK_METHOD0(GetTransferCacheForTest, gpu::ServiceTransferCache*());
   MOCK_METHOD1(
       SetResizeCallback, void(const base::Callback<void(gfx::Size, float)>&));
   MOCK_METHOD1(SetIgnoreCachedStateForTest, void(bool ignore));

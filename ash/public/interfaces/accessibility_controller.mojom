@@ -42,6 +42,13 @@ enum AccessibilityAlert {
 interface AccessibilityController {
   // Sets the client interface.
   SetClient(AccessibilityControllerClient client);
+
+  // Starts or stops darkening the screen (e.g. to allow chrome a11y extensions
+  // to darken the screen).
+  SetDarkenScreen(bool darken);
+
+  // Called when braille display state is changed.
+  BrailleDisplayStateChanged(bool connected);
 };
 
 // Interface for ash to request accessibility service from its client (e.g.
@@ -65,4 +72,7 @@ interface AccessibilityControllerClient {
   // TODO(warx): replace string with enum once ax_enums.idl is converted to
   // mojom file.
   HandleAccessibilityGesture(string gesture);
+
+  // Start or stop dictation (type what you speak).
+  ToggleDictation();
 };

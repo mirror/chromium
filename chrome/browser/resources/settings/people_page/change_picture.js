@@ -60,7 +60,10 @@ Polymer({
      */
     cameraVideoModeEnabled_: {
       type: Boolean,
-      value: true,
+      value: function() {
+        return loadTimeData.getBoolean('changePictureVideoModeEnabled');
+      },
+      readOnly: true,
     },
   },
 
@@ -77,6 +80,9 @@ Polymer({
 
   /** @private {?CrPictureListElement} */
   pictureList_: null,
+
+  /** @private {boolean} */
+  oldImagePending_: false,
 
   /** @override */
   ready: function() {
@@ -141,6 +147,7 @@ Polymer({
    * @private
    */
   receiveOldImage_: function(imageInfo) {
+    this.oldImagePending_ = false;
     this.pictureList_.setOldImageUrl(imageInfo.url, imageInfo.index);
   },
 
@@ -180,9 +187,9 @@ Polymer({
         this.browserProxy_.selectProfileImage();
         break;
       case CrPicture.SelectionTypes.OLD:
-        var imageIndex = image.dataset.imageIndex;
+        const imageIndex = image.dataset.imageIndex;
         if (imageIndex !== undefined && imageIndex >= 0 && image.src)
-          this.browserProxy_.selectDefaultImage(image.src);
+          this.browserProxy_.selectDefaultImage(image.dataset.url);
         else
           this.browserProxy_.selectOldImage();
         break;
@@ -213,6 +220,7 @@ Polymer({
    * @private
    */
   onPhotoTaken_: function(event) {
+    this.oldImagePending_ = true;
     this.browserProxy_.photoTaken(event.detail.photoDataUrl);
     this.pictureList_.setOldImageUrl(event.detail.photoDataUrl);
     this.pictureList_.setFocus();
@@ -225,13 +233,16 @@ Polymer({
    * @private
    */
   onSwitchMode_: function(event) {
-    var videomode = event.detail;
+    const videomode = event.detail;
     announceAccessibleMessage(this.i18n(
         videomode ? 'videoModeAccessibleText' : 'photoModeAccessibleText'));
   },
 
   /** @private */
   onDiscardImage_: function() {
+    // Prevent image from being discarded if old image is pending.
+    if (this.oldImagePending_)
+      return;
     this.pictureList_.setOldImageUrl(CrPicture.kDefaultImageUrl);
     // Revert to profile image as we don't know what last used default image is.
     this.browserProxy_.selectProfileImage();
@@ -287,10 +298,10 @@ Polymer({
    * @private
    */
   getAuthorCredit_: function(selectedItem, defaultImages) {
-    var index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
+    const index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
     if (index === undefined || index < 0 || index >= defaultImages.length)
       return '';
-    var author = defaultImages[index].author;
+    const author = defaultImages[index].author;
     return author ? this.i18n('authorCreditText', author) : '';
   },
 
@@ -302,7 +313,7 @@ Polymer({
    * @private
    */
   getAuthorWebsite_: function(selectedItem, defaultImages) {
-    var index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
+    const index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
     if (index === undefined || index < 0 || index >= defaultImages.length)
       return '';
     return defaultImages[index].website || '';

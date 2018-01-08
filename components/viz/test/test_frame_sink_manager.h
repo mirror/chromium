@@ -26,18 +26,14 @@ class TestFrameSinkManagerImpl : public mojom::FrameSinkManager {
   void SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
                               const std::string& debug_label) override {}
   void CreateRootCompositorFrameSink(
-      const FrameSinkId& frame_sink_id,
-      gpu::SurfaceHandle surface_handle,
-      bool force_software_compositor,
-      const RendererSettings& renderer_settings,
-      mojom::CompositorFrameSinkAssociatedRequest request,
-      mojom::CompositorFrameSinkClientPtr client,
-      mojom::DisplayPrivateAssociatedRequest display_private_request,
-      mojom::DisplayClientPtr display_client) override {}
+      mojom::RootCompositorFrameSinkParamsPtr params) override {}
   void CreateCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
       mojom::CompositorFrameSinkRequest request,
       mojom::CompositorFrameSinkClientPtr client) override {}
+  void DestroyCompositorFrameSink(
+      const FrameSinkId& frame_sink_id,
+      DestroyCompositorFrameSinkCallback callback) override {}
   void RegisterFrameSinkHierarchy(
       const FrameSinkId& parent_frame_sink_id,
       const FrameSinkId& child_frame_sink_id) override {}
@@ -49,6 +45,8 @@ class TestFrameSinkManagerImpl : public mojom::FrameSinkManager {
   void DropTemporaryReference(const SurfaceId& surface_id) override {}
   void AddVideoDetectorObserver(
       mojom::VideoDetectorObserverPtr observer) override {}
+  void CreateVideoCapturer(
+      mojom::FrameSinkVideoCapturerRequest request) override {}
 
   mojo::Binding<mojom::FrameSinkManager> binding_;
   mojom::FrameSinkManagerClientPtr client_;

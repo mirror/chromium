@@ -10,8 +10,8 @@
 #include "base/run_loop.h"
 #include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
-#include "chrome/browser/media/router/mock_media_router.h"
-#include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
+#include "chrome/browser/media/router/test/media_router_mojo_test.h"
+#include "chrome/browser/media/router/test/mock_media_router.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -42,7 +42,7 @@ class MediaRouteControllerTest : public ::testing::Test {
     auto result = controller->InitMojoInterfaces();
     mock_media_controller_.Bind(std::move(result.first));
     mojo_media_status_observer_ = std::move(result.second);
-    observer_ = base::MakeUnique<MockMediaRouteControllerObserver>(
+    observer_ = std::make_unique<MockMediaRouteControllerObserver>(
         std::move(controller));
   }
 
@@ -61,7 +61,7 @@ class MediaRouteControllerTest : public ::testing::Test {
   // This must be called only after |observer_| is set.
   std::unique_ptr<StrictMock<MockMediaRouteControllerObserver>> CreateObserver()
       const {
-    return base::MakeUnique<StrictMock<MockMediaRouteControllerObserver>>(
+    return std::make_unique<StrictMock<MockMediaRouteControllerObserver>>(
         GetController());
   }
 

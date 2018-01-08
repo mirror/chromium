@@ -11,7 +11,6 @@
 
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -88,6 +87,12 @@ constexpr int kMaxBubbleWidth = 1000;
 
 bool UseHarmonyStyle() {
   return ui::MaterialDesignController::IsSecondaryUiMaterial();
+}
+
+SkColor GetRelatedTextColor() {
+  views::Label label;
+  return views::style::GetColor(label, views::style::CONTEXT_LABEL,
+                                views::style::STYLE_PRIMARY);
 }
 
 // Adds a ColumnSet on |layout| with a single View column and padding columns
@@ -193,6 +198,7 @@ std::unique_ptr<HoverButton> CreateMoreInfoButton(
   }
 
   button->set_id(click_target_id);
+  button->set_auto_compute_tooltip(false);
   button->SetTooltipText(tooltip_text);
   return button;
 }
@@ -204,7 +210,7 @@ std::unique_ptr<views::View> CreateSiteSettingsLink(
       l10n_util::GetStringUTF16(IDS_PAGE_INFO_SITE_SETTINGS_TOOLTIP);
   if (UseHarmonyStyle()) {
     return CreateMoreInfoButton(
-        listener, PageInfoUI::GetSiteSettingsIcon(),
+        listener, PageInfoUI::GetSiteSettingsIcon(GetRelatedTextColor()),
         IDS_PAGE_INFO_SITE_SETTINGS_LINK, base::string16(),
         PageInfoBubbleView::VIEW_ID_PAGE_INFO_LINK_OR_BUTTON_SITE_SETTINGS,
         tooltip);
@@ -713,7 +719,7 @@ void PageInfoBubbleView::SetCookieInfo(const CookieInfoList& cookie_info_list) {
         Profile::FromBrowserContext(web_contents()->GetBrowserContext())
             ->IsOffTheRecord();
     const gfx::ImageSkia icon =
-        PageInfoUI::GetPermissionIcon(info).AsImageSkia();
+        PageInfoUI::GetPermissionIcon(info, GetRelatedTextColor());
 
     const base::string16& tooltip =
         l10n_util::GetStringUTF16(IDS_PAGE_INFO_COOKIES_TOOLTIP);
@@ -751,11 +757,16 @@ void PageInfoBubbleView::SetCookieInfo(const CookieInfoList& cookie_info_list) {
 void PageInfoBubbleView::SetPermissionInfo(
     const PermissionInfoList& permission_info_list,
     ChosenObjectInfoList chosen_object_info_list) {
-  // When a permission is changed, PageInfo::OnSitePermissionChanged()
-  // calls this method with updated permissions. However, PermissionSelectorRow
-  // will have already updated its state, so it's already reflected in the UI.
-  // In addition, if a permission is set to the default setting, PageInfo
-  // removes it from |permission_info_list|, but the button should remain.
+  // This method is called when Page Info is constructed/displayed, then called
+  // again whenever permissions/chosen objects change while the bubble is still
+  // opened. Once Page Info is displaying a non-zero number of permissions, all
+  // future calls to this will return early, based on the assumption that
+  // permission rows won't need to be added or removed. Theoretically this
+  // assumption is incorrect and it is actually possible that the number of
+  // permission rows will need to change, but this should be an extremely rare
+  // case that can be recovered from by closing & reopening the bubble.
+  // TODO(patricialor): Investigate removing callsites to this method other than
+  // the constructor.
   if (permissions_view_->has_children())
     return;
 
@@ -780,8 +791,7 @@ void PageInfoBubbleView::SetPermissionInfo(
       layout_provider->GetInsetsMetric(views::INSETS_DIALOG).left();
   // A permissions row will have an icon, title, and combobox, with a padding
   // column on either side to match the dialog insets. Note the combobox can be
-  // variable widths depending on the text inside, so allow that column to
-  // expand.
+  // variable widths depending on the text inside.
   // *----------------------------------------------*
   // |++| Icon | Permission Title     | Combobox |++|
   // *----------------------------------------------*
@@ -793,12 +803,12 @@ void PageInfoBubbleView::SetPermissionInfo(
   permissions_set->AddPaddingColumn(
       kFixed, layout_provider->GetDistanceMetric(
                   views::DISTANCE_RELATED_LABEL_HORIZONTAL));
-  permissions_set->AddColumn(GridLayout::LEADING, GridLayout::CENTER, kFixed,
+  permissions_set->AddColumn(GridLayout::LEADING, GridLayout::CENTER, kStretchy,
                              GridLayout::USE_PREF, 0, 0);
   permissions_set->AddPaddingColumn(
-      1, layout_provider->GetDistanceMetric(
-             views::DISTANCE_RELATED_CONTROL_HORIZONTAL));
-  permissions_set->AddColumn(GridLayout::TRAILING, GridLayout::FILL, kStretchy,
+      kFixed, layout_provider->GetDistanceMetric(
+                  views::DISTANCE_RELATED_CONTROL_HORIZONTAL));
+  permissions_set->AddColumn(GridLayout::TRAILING, GridLayout::FILL, kFixed,
                              GridLayout::USE_PREF, 0, 0);
   permissions_set->AddPaddingColumn(kFixed, side_margin);
 
@@ -814,7 +824,7 @@ void PageInfoBubbleView::SetPermissionInfo(
 
   for (const auto& permission : permission_info_list) {
     std::unique_ptr<PermissionSelectorRow> selector =
-        base::MakeUnique<PermissionSelectorRow>(
+        std::make_unique<PermissionSelectorRow>(
             profile_,
             web_contents() ? web_contents()->GetVisibleURL()
                            : GURL::EmptyGURL(),
@@ -905,14 +915,15 @@ void PageInfoBubbleView::SetIdentityInfo(const IdentityInfo& identity_info) {
     }
 
     // Add the Certificate Section.
+    const gfx::ImageSkia icon =
+        PageInfoUI::GetCertificateIcon(GetRelatedTextColor());
     if (UseHarmonyStyle()) {
       const base::string16 secondary_text = l10n_util::GetStringUTF16(
           valid_identity ? IDS_PAGE_INFO_CERTIFICATE_VALID_PARENTHESIZED
                          : IDS_PAGE_INFO_CERTIFICATE_INVALID_PARENTHESIZED);
       site_settings_view_->AddChildView(
           CreateMoreInfoButton(
-              this, PageInfoUI::GetCertificateIcon(),
-              IDS_PAGE_INFO_CERTIFICATE_BUTTON_TEXT, secondary_text,
+              this, icon, IDS_PAGE_INFO_CERTIFICATE_BUTTON_TEXT, secondary_text,
               VIEW_ID_PAGE_INFO_LINK_OR_BUTTON_CERTIFICATE_VIEWER, tooltip)
               .release());
     } else {
@@ -921,9 +932,9 @@ void PageInfoBubbleView::SetIdentityInfo(const IdentityInfo& identity_info) {
                          : IDS_PAGE_INFO_CERTIFICATE_INVALID_LINK);
       views::Link* certificate_viewer_link = nullptr;
       site_settings_view_->AddChildView(CreateMoreInfoLinkSection(
-          this, PageInfoUI::GetCertificateIcon(), IDS_PAGE_INFO_CERTIFICATE,
-          link_title, VIEW_ID_PAGE_INFO_LINK_OR_BUTTON_CERTIFICATE_VIEWER,
-          tooltip, &certificate_viewer_link));
+          this, icon, IDS_PAGE_INFO_CERTIFICATE, link_title,
+          VIEW_ID_PAGE_INFO_LINK_OR_BUTTON_CERTIFICATE_VIEWER, tooltip,
+          &certificate_viewer_link));
     }
   }
 

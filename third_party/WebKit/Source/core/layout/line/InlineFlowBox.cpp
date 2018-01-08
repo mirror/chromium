@@ -98,49 +98,28 @@ inline bool InlineFlowBox::HasEmphasisMarkBefore(
       text_box->GetLineLayoutItem().StyleRef(IsFirstLineStyle());
   if (!text_box->GetEmphasisMarkPosition(style, emphasis_mark_position))
     return false;
-  if (IsHorizontal()) {
-    return emphasis_mark_position == TextEmphasisPosition::kOverRight ||
-           emphasis_mark_position == TextEmphasisPosition::kOverLeft;
-  }
-  if (style.IsFlippedLinesWritingMode()) {
-    return emphasis_mark_position == TextEmphasisPosition::kOverLeft ||
-           emphasis_mark_position == TextEmphasisPosition::kUnderLeft;
-  }
-  if (style.IsFlippedBlocksWritingMode()) {
-    return emphasis_mark_position == TextEmphasisPosition::kOverRight ||
-           emphasis_mark_position == TextEmphasisPosition::kUnderRight;
-  }
-  return false;
+  LineLogicalSide side = style.GetTextEmphasisLineLogicalSide();
+  if (IsHorizontal() || !style.IsFlippedLinesWritingMode())
+    return side == LineLogicalSide::kOver;
+  return side == LineLogicalSide::kUnder;
 }
 
 inline bool InlineFlowBox::HasEmphasisMarkOver(
     const InlineTextBox* text_box) const {
+  const auto& style =
+      text_box->GetLineLayoutItem().StyleRef(IsFirstLineStyle());
   TextEmphasisPosition emphasis_mark_position;
-  if (!text_box->GetEmphasisMarkPosition(
-          text_box->GetLineLayoutItem().StyleRef(IsFirstLineStyle()),
-          emphasis_mark_position))
-    return false;
-
-  return IsHorizontal()
-             ? emphasis_mark_position == TextEmphasisPosition::kOverRight ||
-                   emphasis_mark_position == TextEmphasisPosition::kOverLeft
-             : emphasis_mark_position == TextEmphasisPosition::kOverRight ||
-                   emphasis_mark_position == TextEmphasisPosition::kUnderRight;
+  return text_box->GetEmphasisMarkPosition(style, emphasis_mark_position) &&
+         style.GetTextEmphasisLineLogicalSide() == LineLogicalSide::kOver;
 }
 
 inline bool InlineFlowBox::HasEmphasisMarkUnder(
     const InlineTextBox* text_box) const {
+  const auto& style =
+      text_box->GetLineLayoutItem().StyleRef(IsFirstLineStyle());
   TextEmphasisPosition emphasis_mark_position;
-  if (!text_box->GetEmphasisMarkPosition(
-          text_box->GetLineLayoutItem().StyleRef(IsFirstLineStyle()),
-          emphasis_mark_position))
-    return false;
-
-  return IsHorizontal()
-             ? emphasis_mark_position == TextEmphasisPosition::kUnderRight ||
-                   emphasis_mark_position == TextEmphasisPosition::kUnderLeft
-             : emphasis_mark_position == TextEmphasisPosition::kOverLeft ||
-                   emphasis_mark_position == TextEmphasisPosition::kUnderLeft;
+  return text_box->GetEmphasisMarkPosition(style, emphasis_mark_position) &&
+         style.GetTextEmphasisLineLogicalSide() == LineLogicalSide::kUnder;
 }
 
 void InlineFlowBox::AddToLine(InlineBox* child) {
@@ -941,7 +920,7 @@ void InlineFlowBox::PlaceBoxesInBlockDirection(
 
 LayoutUnit InlineFlowBox::FarthestPositionForUnderline(
     LineLayoutItem decorating_box,
-    LineVerticalPositionType position_type,
+    FontVerticalPositionType position_type,
     FontBaseline baseline_type,
     LayoutUnit farthest) const {
   for (InlineBox* curr = FirstChild(); curr; curr = curr->NextOnLine()) {
@@ -1712,17 +1691,19 @@ const char* InlineFlowBox::BoxName() const {
 
 #ifndef NDEBUG
 
-void InlineFlowBox::ShowLineTreeAndMark(const InlineBox* marked_box1,
+void InlineFlowBox::DumpLineTreeAndMark(StringBuilder& string_builder,
+                                        const InlineBox* marked_box1,
                                         const char* marked_label1,
                                         const InlineBox* marked_box2,
                                         const char* marked_label2,
                                         const LayoutObject* obj,
                                         int depth) const {
-  InlineBox::ShowLineTreeAndMark(marked_box1, marked_label1, marked_box2,
-                                 marked_label2, obj, depth);
-  for (const InlineBox* box = FirstChild(); box; box = box->NextOnLine())
-    box->ShowLineTreeAndMark(marked_box1, marked_label1, marked_box2,
-                             marked_label2, obj, depth + 1);
+  InlineBox::DumpLineTreeAndMark(string_builder, marked_box1, marked_label1,
+                                 marked_box2, marked_label2, obj, depth);
+  for (const InlineBox* box = FirstChild(); box; box = box->NextOnLine()) {
+    box->DumpLineTreeAndMark(string_builder, marked_box1, marked_label1,
+                             marked_box2, marked_label2, obj, depth + 1);
+  }
 }
 
 #endif

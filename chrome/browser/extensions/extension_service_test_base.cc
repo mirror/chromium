@@ -15,6 +15,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/component_loader.h"
+#include "chrome/browser/extensions/crx_installer.h"
 #include "chrome/browser/extensions/extension_garbage_collector_factory.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/load_error_reporter.h"
@@ -30,8 +31,10 @@
 #include "components/sync_preferences/pref_service_mock_factory.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/pref_names.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/extensions/install_limiter.h"
@@ -90,6 +93,7 @@ ExtensionServiceTestBase::ExtensionServiceTestBase()
     return;
   }
   data_dir_ = test_data_dir.AppendASCII("extensions");
+  CrxInstaller::set_connector_for_test(test_data_decoder_service_.connector());
 }
 
 ExtensionServiceTestBase::~ExtensionServiceTestBase() {
@@ -190,7 +194,7 @@ void ExtensionServiceTestBase::
 
 size_t ExtensionServiceTestBase::GetPrefKeyCount() {
   const base::DictionaryValue* dict =
-      profile()->GetPrefs()->GetDictionary("extensions.settings");
+      profile()->GetPrefs()->GetDictionary(pref_names::kExtensions);
   if (!dict) {
     ADD_FAILURE();
     return 0;
@@ -212,7 +216,7 @@ testing::AssertionResult ExtensionServiceTestBase::ValidateBooleanPref(
 
   PrefService* prefs = profile()->GetPrefs();
   const base::DictionaryValue* dict =
-      prefs->GetDictionary("extensions.settings");
+      prefs->GetDictionary(pref_names::kExtensions);
   if (!dict) {
     return testing::AssertionFailure()
         << "extension.settings does not exist " << msg;
@@ -245,7 +249,7 @@ void ExtensionServiceTestBase::ValidateIntegerPref(
 
   PrefService* prefs = profile()->GetPrefs();
   const base::DictionaryValue* dict =
-      prefs->GetDictionary("extensions.settings");
+      prefs->GetDictionary(pref_names::kExtensions);
   ASSERT_TRUE(dict != NULL) << msg;
   const base::DictionaryValue* pref = NULL;
   ASSERT_TRUE(dict->GetDictionary(extension_id, &pref)) << msg;
@@ -264,7 +268,7 @@ void ExtensionServiceTestBase::ValidateStringPref(
                                        expected_val.c_str());
 
   const base::DictionaryValue* dict =
-      profile()->GetPrefs()->GetDictionary("extensions.settings");
+      profile()->GetPrefs()->GetDictionary(pref_names::kExtensions);
   ASSERT_TRUE(dict != NULL) << msg;
   const base::DictionaryValue* pref = NULL;
   std::string manifest_path = extension_id + ".manifest";

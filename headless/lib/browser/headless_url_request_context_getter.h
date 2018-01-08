@@ -15,8 +15,8 @@
 #include "base/single_thread_task_runner.h"
 #include "content/public/browser/browser_context.h"
 #include "headless/public/headless_browser.h"
-#include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_config_service.h"
+#include "net/proxy_resolution/proxy_config.h"
+#include "net/proxy_resolution/proxy_config_service.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_job_factory.h"
 
@@ -52,6 +52,8 @@ class HeadlessURLRequestContextGetter
   // HeadlessBrowserContext::Observer implementation:
   void OnHeadlessBrowserContextDestruct() override;
 
+  void NotifyContextShuttingDown();
+
  protected:
   ~HeadlessURLRequestContextGetter() override;
 
@@ -74,6 +76,8 @@ class HeadlessURLRequestContextGetter
 
   base::Lock lock_;  // Protects |headless_browser_context_|.
   HeadlessBrowserContextImpl* headless_browser_context_;  // Not owned.
+
+  bool shut_down_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessURLRequestContextGetter);
 };

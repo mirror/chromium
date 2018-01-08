@@ -8,7 +8,6 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/memory/ptr_util.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/assist_ranker/fake_ranker_model_loader.h"
@@ -36,13 +35,15 @@ const char kBoolFeature[] = "bool_feature";
 const char kIntFeature[] = "int_feature";
 const char kFloatFeature[] = "float_feature";
 const char kStringFeature[] = "string_feature";
+const char kStringListFeature[] = "string_list_feature";
 const char kFeatureNotWhitelisted[] = "not_whitelisted";
 
 const char kTestNavigationUrl[] = "https://foo.com";
 
 const base::flat_set<std::string> kFeatureWhitelist({kBoolFeature, kIntFeature,
                                                      kFloatFeature,
-                                                     kStringFeature});
+                                                     kStringFeature,
+                                                     kStringListFeature});
 
 const base::Feature kTestRankerQuery{"TestRankerQuery",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
@@ -81,8 +82,8 @@ RankerModelStatus FakePredictor::ValidateModel(const RankerModel& model) {
 std::unique_ptr<FakePredictor> FakePredictor::Create() {
   std::unique_ptr<FakePredictor> predictor(
       new FakePredictor(kTestPredictorConfig));
-  auto ranker_model = base::MakeUnique<RankerModel>();
-  auto fake_model_loader = base::MakeUnique<FakeRankerModelLoader>(
+  auto ranker_model = std::make_unique<RankerModel>();
+  auto fake_model_loader = std::make_unique<FakeRankerModelLoader>(
       base::BindRepeating(&FakePredictor::ValidateModel),
       base::BindRepeating(&FakePredictor::OnModelAvailable,
                           base::Unretained(predictor.get())),
@@ -151,6 +152,8 @@ TEST_F(BasePredictorTest, LogExampleToUkm) {
   features[kIntFeature].set_int32_value(42);
   features[kFloatFeature].set_float_value(42.0f);
   features[kStringFeature].set_string_value("42");
+  features[kStringListFeature].mutable_string_list()->add_string_value("42");
+
   // This feature will not be logged.
   features[kFeatureNotWhitelisted].set_bool_value(false);
 
@@ -161,12 +164,17 @@ TEST_F(BasePredictorTest, LogExampleToUkm) {
   std::vector<const ukm::mojom::UkmEntry*> entries =
       GetTestUkmRecorder()->GetEntriesByName(kTestLoggingName);
   EXPECT_EQ(1U, entries.size());
-  GetTestUkmRecorder()->ExpectEntryMetric(entries[0], kBoolFeature, 1);
-  GetTestUkmRecorder()->ExpectEntryMetric(entries[0], kIntFeature, 42);
-  // TODO(crbug.com/794187) Float and string features are not logged yet.
-  EXPECT_FALSE(GetTestUkmRecorder()->EntryHasMetric(entries[0], kFloatFeature));
-  EXPECT_FALSE(
-      GetTestUkmRecorder()->EntryHasMetric(entries[0], kStringFeature));
+  GetTestUkmRecorder()->ExpectEntryMetric(entries[0], kBoolFeature,
+                                          72057594037927937);
+  GetTestUkmRecorder()->ExpectEntryMetric(entries[0], kIntFeature,
+                                          216172782113783850);
+  GetTestUkmRecorder()->ExpectEntryMetric(entries[0], kFloatFeature,
+                                          144115189185773568);
+  GetTestUkmRecorder()->ExpectEntryMetric(entries[0], kStringFeature,
+                                          288230377208836903);
+  GetTestUkmRecorder()->ExpectEntryMetric(entries[0], kStringListFeature,
+                                          360287971246764839);
+
   EXPECT_FALSE(
       GetTestUkmRecorder()->EntryHasMetric(entries[0], kFeatureNotWhitelisted));
 }

@@ -56,6 +56,7 @@ class DocumentLoader;
 class Element;
 class ExceptionState;
 class FloatQuad;
+class HTMLFrameOwnerElement;
 class HTMLSlotElement;
 class V0InsertionPoint;
 class InspectedFrames;
@@ -70,7 +71,7 @@ class CORE_EXPORT InspectorDOMAgent final
     : public InspectorBaseAgent<protocol::DOM::Metainfo> {
  public:
   struct CORE_EXPORT DOMListener : public GarbageCollectedMixin {
-    virtual ~DOMListener() {}
+    virtual ~DOMListener() = default;
     virtual void DidAddDocument(Document*) = 0;
     virtual void DidRemoveDocument(Document*) = 0;
     virtual void DidRemoveDOMNode(Node*) = 0;
@@ -203,6 +204,9 @@ class CORE_EXPORT InspectorDOMAgent final
       protocol::Maybe<bool> pierce,
       std::unique_ptr<protocol::DOM::Node>*) override;
 
+  protocol::Response getFrameOwner(const String& frame_id,
+                                   int* node_id) override;
+
   bool Enabled() const;
   void ReleaseDanglingNodes();
 
@@ -226,6 +230,7 @@ class CORE_EXPORT InspectorDOMAgent final
   void DidPerformElementShadowDistribution(Element*);
   void DidPerformSlotDistribution(HTMLSlotElement*);
   void FrameDocumentUpdated(LocalFrame*);
+  void FrameOwnerContentUpdated(LocalFrame*, HTMLFrameOwnerElement*);
   void PseudoElementCreated(PseudoElement*);
   void PseudoElementDestroyed(PseudoElement*);
 
@@ -285,7 +290,7 @@ class CORE_EXPORT InspectorDOMAgent final
                                 int depth = 1,
                                 bool traverse_frames = false);
 
-  void InvalidateFrameOwnerElement(LocalFrame*);
+  void InvalidateFrameOwnerElement(HTMLFrameOwnerElement*);
 
   std::unique_ptr<protocol::DOM::Node> BuildObjectForNode(
       Node*,

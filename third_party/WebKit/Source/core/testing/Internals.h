@@ -110,6 +110,8 @@ class Internals final : public ScriptWrappable {
                                bool shrinks_layout);
   void setBrowserControlsShownRatio(float);
 
+  Node* effectiveRootScroller(Document*);
+
   ShadowRoot* createUserAgentShadowRoot(Element* host);
 
   ShadowRoot* shadowRoot(Element* host);
@@ -270,12 +272,6 @@ class Internals final : public ScriptWrappable {
                                                long height,
                                                Document*,
                                                ExceptionState&);
-  DOMRectReadOnly* bestZoomableAreaForTouchPoint(long x,
-                                                 long y,
-                                                 long width,
-                                                 long height,
-                                                 Document*,
-                                                 ExceptionState&);
 
   int lastSpellCheckRequestSequence(Document*, ExceptionState&);
   int lastSpellCheckProcessedSequence(Document*, ExceptionState&);
@@ -495,8 +491,6 @@ class Internals final : public ScriptWrappable {
 
   void setValueForUser(HTMLInputElement*, const String&);
 
-  String textSurroundingNode(Node*, int x, int y, unsigned long max_length);
-
   void setFocused(bool);
   void setInitialFocus(bool);
 
@@ -504,12 +498,10 @@ class Internals final : public ScriptWrappable {
 
   void setNetworkConnectionInfoOverride(bool,
                                         const String&,
+                                        const String&,
+                                        unsigned long http_rtt_msec,
                                         double downlink_max_mbps,
                                         ExceptionState&);
-  void setNetworkQualityInfoOverride(const String&,
-                                     unsigned long transport_rtt_msec,
-                                     double downlink_throughput_mbps,
-                                     ExceptionState&);
   void setSaveDataEnabled(bool);
 
   void clearNetworkConnectionInfoOverride();
@@ -587,6 +579,9 @@ class Internals final : public ScriptWrappable {
 
   // Intentional crash.
   void crash();
+
+  // Exposed for testing of inspector overlay.
+  String evaluateInInspectorOverlay(const String& script);
 
   // Overrides if the device is low-end (low on memory).
   void setIsLowEndDevice(bool);

@@ -17,7 +17,6 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
@@ -456,7 +455,7 @@ class FakePrinterProviderAPI : public PrinterProviderAPI {
 
 std::unique_ptr<KeyedService> BuildTestingPrinterProviderAPI(
     content::BrowserContext* context) {
-  return base::MakeUnique<FakePrinterProviderAPI>();
+  return std::make_unique<FakePrinterProviderAPI>();
 }
 
 }  // namespace
@@ -470,9 +469,9 @@ class ExtensionPrinterHandlerTest : public testing::Test {
     extensions::PrinterProviderAPIFactory::GetInstance()->SetTestingFactory(
         env_.profile(), &BuildTestingPrinterProviderAPI);
     extension_printer_handler_ =
-        base::MakeUnique<ExtensionPrinterHandler>(env_.profile());
+        std::make_unique<ExtensionPrinterHandler>(env_.profile());
 
-    auto pwg_raster_converter = base::MakeUnique<FakePwgRasterConverter>();
+    auto pwg_raster_converter = std::make_unique<FakePwgRasterConverter>();
     pwg_raster_converter_ = pwg_raster_converter.get();
     extension_printer_handler_->SetPwgRasterConverterForTesting(
         std::move(pwg_raster_converter));
@@ -802,10 +801,12 @@ TEST_F(ExtensionPrinterHandlerTest, Print_Pwg) {
   EXPECT_FALSE(pwg_raster_converter_->bitmap_settings().reverse_page_order);
   EXPECT_TRUE(pwg_raster_converter_->bitmap_settings().use_color);
 
-  EXPECT_EQ(printing::kDefaultPdfDpi,
+  EXPECT_EQ(gfx::Size(printing::kDefaultPdfDpi, printing::kDefaultPdfDpi),
             pwg_raster_converter_->conversion_settings().dpi);
   EXPECT_TRUE(pwg_raster_converter_->conversion_settings().autorotate);
-  EXPECT_EQ("0,0 208x416",  // vertically_oriented_size  * dpi / points_per_inch
+  // size = vertically_oriented_size * vertical_dpi / points_per_inch x
+  //        horizontally_oriented_size * horizontal_dpi / points_per_inch
+  EXPECT_EQ("0,0 208x416",
             pwg_raster_converter_->conversion_settings().area.ToString());
 
   const PrinterProviderPrintJob* print_job = fake_api->GetNextPendingPrintJob();
@@ -856,10 +857,12 @@ TEST_F(ExtensionPrinterHandlerTest, Print_Pwg_NonDefaultSettings) {
   EXPECT_TRUE(pwg_raster_converter_->bitmap_settings().reverse_page_order);
   EXPECT_TRUE(pwg_raster_converter_->bitmap_settings().use_color);
 
-  EXPECT_EQ(200,  // max(vertical_dpi, horizontal_dpi)
+  EXPECT_EQ(gfx::Size(200, 100),
             pwg_raster_converter_->conversion_settings().dpi);
   EXPECT_TRUE(pwg_raster_converter_->conversion_settings().autorotate);
-  EXPECT_EQ("0,0 138x277",  // vertically_oriented_size  * dpi / points_per_inch
+  // size = vertically_oriented_size * vertical_dpi / points_per_inch x
+  //        horizontally_oriented_size * horizontal_dpi / points_per_inch
+  EXPECT_EQ("0,0 138x138",
             pwg_raster_converter_->conversion_settings().area.ToString());
 
   const PrinterProviderPrintJob* print_job = fake_api->GetNextPendingPrintJob();

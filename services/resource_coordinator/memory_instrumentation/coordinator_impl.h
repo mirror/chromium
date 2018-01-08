@@ -36,7 +36,9 @@ namespace memory_instrumentation {
 // - Provides global (i.e. for all processes) memory snapshots on demand.
 //   Global snapshots are obtained by requesting in-process snapshots from each
 //   registered client and aggregating them.
-class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
+class CoordinatorImpl : public Coordinator,
+                        public mojom::Coordinator,
+                        public mojom::HeapProfilerHelper {
  public:
   // The getter of the unique instance.
   static CoordinatorImpl* GetInstance();
@@ -48,17 +50,28 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
       mojom::CoordinatorRequest,
       const service_manager::BindSourceInfo& source_info) override;
 
+  void BindHeapProfilerHelperRequest(
+      mojom::HeapProfilerHelperRequest request,
+      const service_manager::BindSourceInfo& source_info);
+
   // mojom::Coordinator implementation.
   void RegisterClientProcess(mojom::ClientProcessPtr,
                              mojom::ProcessType) override;
   void UnregisterClientProcess(mojom::ClientProcess*);
-  void RequestGlobalMemoryDump(base::trace_event::MemoryDumpType,
-                               base::trace_event::MemoryDumpLevelOfDetail,
-                               const RequestGlobalMemoryDumpCallback&) override;
+  void RequestGlobalMemoryDump(
+      base::trace_event::MemoryDumpType,
+      base::trace_event::MemoryDumpLevelOfDetail,
+      const std::vector<std::string>& allocator_dump_names,
+      const RequestGlobalMemoryDumpCallback&) override;
+  void RequestGlobalMemoryDumpForPid(
+      base::ProcessId,
+      const RequestGlobalMemoryDumpForPidCallback&) override;
   void RequestGlobalMemoryDumpAndAppendToTrace(
       base::trace_event::MemoryDumpType,
       base::trace_event::MemoryDumpLevelOfDetail,
       const RequestGlobalMemoryDumpAndAppendToTraceCallback&) override;
+
+  // mojom::HeapProfilerHelper implementation.
   void GetVmRegionsForHeapProfiler(
       const GetVmRegionsForHeapProfilerCallback&) override;
 
@@ -102,7 +115,8 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
       std::unique_ptr<base::trace_event::ProcessMemoryDump> chrome_memory_dump);
 
   // Callback of RequestOSMemoryDump.
-  void OnOSMemoryDumpResponse(mojom::ClientProcess*,
+  void OnOSMemoryDumpResponse(uint64_t dump_guid,
+                              mojom::ClientProcess*,
                               bool success,
                               OSMemDumpMap);
 
@@ -128,6 +142,11 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   // There may be extant callbacks in |queued_memory_dump_requests_|. The
   // bindings_ must be closed before destroying the un-run callbacks.
   mojo::BindingSet<mojom::Coordinator, service_manager::Identity> bindings_;
+
+  // There may be extant callbacks in |queued_memory_dump_requests_|. The
+  // bindings_ must be closed before destroying the un-run callbacks.
+  mojo::BindingSet<mojom::HeapProfilerHelper, service_manager::Identity>
+      bindings_heap_profiler_helper_;
 
   // Maintains a map of service_manager::Identity -> pid for registered clients.
   std::unique_ptr<ProcessMap> process_map_;

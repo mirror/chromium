@@ -533,13 +533,12 @@ TEST_F(QuicSentPacketManagerTest, AckAckAndUpdateRtt) {
 
 TEST_F(QuicSentPacketManagerTest, Rtt) {
   QuicPacketNumber packet_number = 1;
-  QuicTime::Delta expected_rtt = QuicTime::Delta::FromMilliseconds(15);
+  QuicTime::Delta expected_rtt = QuicTime::Delta::FromMilliseconds(20);
   SendDataPacket(packet_number);
-  clock_.AdvanceTime(QuicTime::Delta::FromMilliseconds(20));
+  clock_.AdvanceTime(expected_rtt);
 
   ExpectAck(packet_number);
   QuicAckFrame ack_frame = InitAckFrame(packet_number);
-  ack_frame.ack_delay_time = QuicTime::Delta::FromMilliseconds(5);
   manager_.OnIncomingAck(ack_frame, clock_.Now());
   EXPECT_EQ(expected_rtt, manager_.GetRttStats()->latest_rtt());
 }
@@ -1469,6 +1468,33 @@ TEST_F(QuicSentPacketManagerTest, NegotiateNoTLPFromOptionsAtClient) {
   EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));
   manager_.SetFromConfig(client_config);
   EXPECT_EQ(0u, QuicSentPacketManagerPeer::GetMaxTailLossProbes(&manager_));
+}
+
+TEST_F(QuicSentPacketManagerTest, Negotiate1TLPFromOptionsAtServer) {
+  SetQuicReloadableFlag(quic_one_tlp, true);
+  QuicConfig config;
+  QuicTagVector options;
+
+  options.push_back(k1TLP);
+  QuicConfigPeer::SetReceivedConnectionOptions(&config, options);
+  EXPECT_CALL(*network_change_visitor_, OnCongestionChange());
+  EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));
+  manager_.SetFromConfig(config);
+  EXPECT_EQ(1u, QuicSentPacketManagerPeer::GetMaxTailLossProbes(&manager_));
+}
+
+TEST_F(QuicSentPacketManagerTest, Negotiate1TLPFromOptionsAtClient) {
+  SetQuicReloadableFlag(quic_one_tlp, true);
+  QuicConfig client_config;
+  QuicTagVector options;
+
+  options.push_back(k1TLP);
+  QuicSentPacketManagerPeer::SetPerspective(&manager_, Perspective::IS_CLIENT);
+  client_config.SetConnectionOptionsToSend(options);
+  EXPECT_CALL(*network_change_visitor_, OnCongestionChange());
+  EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));
+  manager_.SetFromConfig(client_config);
+  EXPECT_EQ(1u, QuicSentPacketManagerPeer::GetMaxTailLossProbes(&manager_));
 }
 
 TEST_F(QuicSentPacketManagerTest, NegotiateTLPRttFromOptionsAtServer) {

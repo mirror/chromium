@@ -203,6 +203,11 @@ class CONTENT_EXPORT FrameTreeNode {
   // update.
   void SetInsecureRequestPolicy(blink::WebInsecureRequestPolicy policy);
 
+  // Sets the current set of insecure urls to upgrade, and notifies proxies
+  // about the update.
+  void SetInsecureNavigationsSet(
+      const std::vector<uint32_t>& insecure_navigations_set);
+
   // Returns the latest frame policy (sandbox flags and container policy) for
   // this frame. This includes flags inherited from parent frames and the latest
   // flags from the <iframe> element hosting this frame. The returned policies
@@ -280,6 +285,12 @@ class CONTENT_EXPORT FrameTreeNode {
   double loading_progress() const { return loading_progress_; }
 
   NavigationRequest* navigation_request() { return navigation_request_.get(); }
+
+  // Transfers the ownership of the NavigationRequest to |render_frame_host|.
+  // From ReadyToCommit to DidCommit, the NavigationRequest is owned by the
+  // RenderFrameHost that is committing the navigation.
+  void TransferNavigationRequestOwnership(
+      RenderFrameHostImpl* render_frame_host);
 
   // PlzNavigate
   // Takes ownership of |navigation_request| and makes it the current

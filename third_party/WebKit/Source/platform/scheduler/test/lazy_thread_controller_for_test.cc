@@ -20,7 +20,7 @@ LazyThreadControllerForTest::LazyThreadControllerForTest()
     task_runner_ = message_loop_->task_runner();
 }
 
-LazyThreadControllerForTest::~LazyThreadControllerForTest() {}
+LazyThreadControllerForTest::~LazyThreadControllerForTest() = default;
 
 void LazyThreadControllerForTest::EnsureMessageLoop() {
   if (message_loop_)
@@ -88,11 +88,6 @@ void LazyThreadControllerForTest::RemoveNestingObserver(
   base::RunLoop::RemoveNestingObserverOnCurrentThread(observer);
 }
 
-bool LazyThreadControllerForTest::IsNested() {
-  EnsureMessageLoop();
-  return ThreadControllerImpl::IsNested();
-}
-
 bool LazyThreadControllerForTest::RunsTasksInCurrentSequence() {
   return thread_ref_ == base::PlatformThread::CurrentRef();
 }
@@ -110,13 +105,6 @@ void LazyThreadControllerForTest::ScheduleDelayedWork(base::TimeDelta delay) {
 void LazyThreadControllerForTest::CancelDelayedWork() {
   EnsureMessageLoop();
   ThreadControllerImpl::CancelDelayedWork();
-}
-
-void LazyThreadControllerForTest::PostNonNestableTask(
-    const base::Location& from_here,
-    base::OnceClosure task) {
-  EnsureMessageLoop();
-  ThreadControllerImpl::PostNonNestableTask(from_here, std::move(task));
 }
 
 void LazyThreadControllerForTest::SetDefaultTaskRunner(

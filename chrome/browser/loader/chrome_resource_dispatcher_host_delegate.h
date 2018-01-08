@@ -76,11 +76,11 @@ class ChromeResourceDispatcherHostDelegate
                        std::unique_ptr<content::StreamInfo> stream) override;
   void OnResponseStarted(net::URLRequest* request,
                          content::ResourceContext* resource_context,
-                         content::ResourceResponse* response) override;
+                         network::ResourceResponse* response) override;
   void OnRequestRedirected(const GURL& redirect_url,
                            net::URLRequest* request,
                            content::ResourceContext* resource_context,
-                           content::ResourceResponse* response) override;
+                           network::ResourceResponse* response) override;
   void RequestComplete(net::URLRequest* url_request) override;
   // Returns a bitmask of potentially several Previews optimizations at the
   // start of a navigation.
@@ -90,8 +90,6 @@ class ChromeResourceDispatcherHostDelegate
       content::PreviewsState previews_to_allow) override;
   content::NavigationData* GetNavigationData(
       net::URLRequest* request) const override;
-  std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
-      content::ResourceContext* resource_context) override;
 
   // Called on the UI thread. Allows switching out the
   // ExternalProtocolHandler::Delegate for testing code.

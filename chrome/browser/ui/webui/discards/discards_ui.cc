@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/webui/discards/discards_ui.h"
 
-#include "base/memory/ptr_util.h"
+#include <utility>
+#include <vector>
+
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
@@ -23,14 +25,10 @@
 
 namespace {
 
-namespace {
-
 resource_coordinator::DiscardReason GetDiscardReason(bool urgent) {
   return urgent ? resource_coordinator::DiscardReason::kUrgent
                 : resource_coordinator::DiscardReason::kProactive;
 }
-
-}  // namespace
 
 class DiscardsDetailsProviderImpl : public mojom::DiscardsDetailsProvider {
  public:
@@ -62,10 +60,7 @@ class DiscardsDetailsProviderImpl : public mojom::DiscardsDetailsProvider {
       // showing the chrome://favicon default in that case.
       info->favicon_url = tab.favicon_url;
       info->title = base::UTF16ToUTF8(tab.title);
-      info->is_app = tab.is_app;
-      info->is_internal = tab.is_internal_page;
       info->is_media = tab.is_media;
-      info->is_pinned = tab.is_pinned;
       info->is_discarded = tab.is_discarded;
       info->discard_count = tab.discard_count;
       info->utility_rank = rank++;
@@ -132,5 +127,6 @@ DiscardsUI::DiscardsUI(content::WebUI* web_ui)
 DiscardsUI::~DiscardsUI() {}
 
 void DiscardsUI::BindUIHandler(mojom::DiscardsDetailsProviderRequest request) {
-  ui_handler_.reset(new DiscardsDetailsProviderImpl(std::move(request)));
+  ui_handler_ =
+      std::make_unique<DiscardsDetailsProviderImpl>(std::move(request));
 }

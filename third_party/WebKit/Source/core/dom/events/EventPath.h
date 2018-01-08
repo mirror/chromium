@@ -80,6 +80,7 @@ class CORE_EXPORT EventPath final
   void AdjustForTouchEvent(const TouchEvent&);
 
   bool DisabledFormControlExistsInPath() const;
+  bool HasEventListenersInPath(const AtomicString& event_type) const;
 
   NodeEventContext& TopNodeEventContext();
 
@@ -92,16 +93,12 @@ class CORE_EXPORT EventPath final
   }
 
  private:
-  EventPath();
+  EventPath() = delete;
 
   void Initialize();
   void CalculatePath();
   void CalculateAdjustedTargets();
   void CalculateTreeOrderAndSetNearestAncestorClosedTree();
-
-  bool ShouldStopEventPath(EventTarget& current_target,
-                           EventTarget& current_related_target,
-                           const Node& target);
 
   void Shrink(size_t new_size) {
     DCHECK(!window_event_context_);
@@ -110,7 +107,8 @@ class CORE_EXPORT EventPath final
 
   void RetargetRelatedTarget(const Node& related_target_node);
 
-  void ShrinkForRelatedTarget(const Node& target);
+  void ShrinkForRelatedTarget(const Node& event_target_node,
+                              const Node& event_related_target_node);
 
   void AdjustTouchList(const TouchList*,
                        HeapVector<Member<TouchList>> adjusted_touch_list,

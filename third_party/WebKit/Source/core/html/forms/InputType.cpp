@@ -139,7 +139,7 @@ const AtomicString& InputType::NormalizeTypeName(
   return it == FactoryMap()->end() ? InputTypeNames::text : it->key;
 }
 
-InputType::~InputType() {}
+InputType::~InputType() = default;
 
 void InputType::Trace(blink::Visitor* visitor) {
   visitor->Trace(element_);
@@ -640,15 +640,6 @@ bool InputType::HasLegalLinkAttribute(const QualifiedName&) const {
 
 const QualifiedName& InputType::SubResourceAttributeName() const {
   return QualifiedName::Null();
-}
-
-bool InputType::SupportsAutocapitalize() const {
-  return false;
-}
-
-const AtomicString& InputType::DefaultAutocapitalize() const {
-  DEFINE_STATIC_LOCAL(const AtomicString, none, ("none"));
-  return none;
 }
 
 void InputType::CopyNonAttributeProperties(const HTMLInputElement&) {}

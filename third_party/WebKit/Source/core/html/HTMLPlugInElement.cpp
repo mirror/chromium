@@ -34,15 +34,15 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLImageLoader.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/PluginDocument.h"
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutEmbeddedContent.h"
+#include "core/layout/LayoutEmbeddedObject.h"
 #include "core/layout/LayoutImage.h"
-#include "core/layout/api/LayoutEmbeddedItem.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
@@ -196,8 +196,8 @@ void HTMLPlugInElement::AttachLayoutTree(AttachContext& context) {
     if (!image_loader_)
       image_loader_ = HTMLImageLoader::Create(this);
     image_loader_->UpdateFromElement();
-  } else if (NeedsPluginUpdate() && !GetLayoutEmbeddedItem().IsNull() &&
-             !GetLayoutEmbeddedItem().ShowsUnavailablePluginIndicator() &&
+  } else if (NeedsPluginUpdate() && GetLayoutEmbeddedObject() &&
+             !GetLayoutEmbeddedObject()->ShowsUnavailablePluginIndicator() &&
              GetObjectContentType() != ObjectContentType::kPlugin &&
              !is_delaying_load_event_) {
     is_delaying_load_event_ = true;
@@ -207,6 +207,13 @@ void HTMLPlugInElement::AttachLayoutTree(AttachContext& context) {
   LayoutObject* layout_object = GetLayoutObject();
   if (layout_object && !layout_object->IsFloatingOrOutOfFlowPositioned())
     context.previous_in_flow = layout_object;
+}
+
+void HTMLPlugInElement::IntrinsicSizingInfoChanged() {
+  if (auto* layout_object = GetLayoutObject()) {
+    layout_object->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
+        LayoutInvalidationReason::kUnknown);
+  }
 }
 
 void HTMLPlugInElement::UpdatePlugin() {
@@ -424,8 +431,7 @@ void HTMLPlugInElement::DefaultEventHandler(Event* event) {
   if (!r || !r->IsLayoutEmbeddedContent())
     return;
   if (r->IsEmbeddedObject()) {
-    if (LayoutEmbeddedItem(ToLayoutEmbeddedObject(r))
-            .ShowsUnavailablePluginIndicator())
+    if (ToLayoutEmbeddedObject(r)->ShowsUnavailablePluginIndicator())
       return;
   }
   WebPluginContainerImpl* plugin = OwnedPlugin();
@@ -474,12 +480,12 @@ void HTMLPlugInElement::DisconnectContentFrame() {
   SetPersistedPlugin(nullptr);
 }
 
-bool HTMLPlugInElement::LayoutObjectIsFocusable() const {
+bool HTMLPlugInElement::IsFocusableStyle() const {
   if (HTMLFrameOwnerElement::SupportsFocus() &&
-      HTMLFrameOwnerElement::LayoutObjectIsFocusable())
+      HTMLFrameOwnerElement::IsFocusableStyle())
     return true;
 
-  if (UseFallbackContent() || !HTMLFrameOwnerElement::LayoutObjectIsFocusable())
+  if (UseFallbackContent() || !HTMLFrameOwnerElement::IsFocusableStyle())
     return false;
   return plugin_is_available_;
 }
@@ -527,12 +533,12 @@ bool HTMLPlugInElement::IsImageType() {
   return Image::SupportsType(service_type_);
 }
 
-LayoutEmbeddedItem HTMLPlugInElement::GetLayoutEmbeddedItem() const {
+LayoutEmbeddedObject* HTMLPlugInElement::GetLayoutEmbeddedObject() const {
   // HTMLObjectElement and HTMLEmbedElement may return arbitrary layoutObjects
   // when using fallback content.
   if (!GetLayoutObject() || !GetLayoutObject()->IsEmbeddedObject())
-    return LayoutEmbeddedItem(nullptr);
-  return LayoutEmbeddedItem(ToLayoutEmbeddedObject(GetLayoutObject()));
+    return nullptr;
+  return ToLayoutEmbeddedObject(GetLayoutObject());
 }
 
 // We don't use m_url, as it may not be the final URL that the object loads,
@@ -570,9 +576,9 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
   if (!frame->Loader().AllowPlugins(kAboutToInstantiatePlugin))
     return false;
 
-  LayoutEmbeddedItem layout_item = GetLayoutEmbeddedItem();
+  auto* layout_object = GetLayoutEmbeddedObject();
   // FIXME: This code should not depend on layoutObject!
-  if ((layout_item.IsNull() && require_layout_object) || use_fallback)
+  if ((!layout_object && require_layout_object) || use_fallback)
     return false;
 
   VLOG(1) << this << " Plugin URL: " << url_;
@@ -591,17 +597,17 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
         frame->Client()->CreatePlugin(*this, url, param_names, param_values,
                                       mime_type, load_manually, policy);
     if (!plugin) {
-      if (!layout_item.IsNull() &&
-          !layout_item.ShowsUnavailablePluginIndicator()) {
+      if (layout_object && !layout_object->ShowsUnavailablePluginIndicator()) {
         plugin_is_available_ = false;
-        layout_item.SetPluginAvailability(LayoutEmbeddedObject::kPluginMissing);
+        layout_object->SetPluginAvailability(
+            LayoutEmbeddedObject::kPluginMissing);
       }
       return false;
     }
 
-    if (!layout_item.IsNull()) {
+    if (layout_object) {
       SetEmbeddedContentView(plugin);
-      layout_item.GetFrameView()->AddPlugin(plugin);
+      layout_object->GetFrameView()->AddPlugin(plugin);
     } else {
       SetPersistedPlugin(plugin);
     }
@@ -648,9 +654,9 @@ bool HTMLPlugInElement::AllowedToLoadObject(const KURL& url,
   if (!GetDocument().GetContentSecurityPolicy()->AllowObjectFromSource(url) ||
       !GetDocument().GetContentSecurityPolicy()->AllowPluginTypeForDocument(
           GetDocument(), mime_type, declared_mime_type, url)) {
-    if (LayoutEmbeddedItem layout_item = GetLayoutEmbeddedItem()) {
+    if (auto* layout_object = GetLayoutEmbeddedObject()) {
       plugin_is_available_ = false;
-      layout_item.SetPluginAvailability(
+      layout_object->SetPluginAvailability(
           LayoutEmbeddedObject::kPluginBlockedByContentSecurityPolicy);
     }
     return false;
@@ -679,7 +685,8 @@ bool HTMLPlugInElement::AllowedToLoadPlugin(const KURL& url,
 }
 
 void HTMLPlugInElement::DidAddUserAgentShadowRoot(ShadowRoot&) {
-  UserAgentShadowRoot()->AppendChild(HTMLContentElement::Create(GetDocument()));
+  UserAgentShadowRoot()->AppendChild(
+      HTMLSlotElement::CreateUserAgentDefaultSlot(GetDocument()));
 }
 
 bool HTMLPlugInElement::HasFallbackContent() const {

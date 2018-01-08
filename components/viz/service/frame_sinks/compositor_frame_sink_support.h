@@ -80,27 +80,31 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   // mojom::CompositorFrameSink implementation.
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
+  void SetWantsAnimateOnlyBeginFrames() override;
   void DidNotProduceFrame(const BeginFrameAck& ack) override;
-  void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
-                             CompositorFrame frame,
-                             mojom::HitTestRegionListPtr hit_test_region_list,
-                             uint64_t submit_time) override;
+  void SubmitCompositorFrame(
+      const LocalSurfaceId& local_surface_id,
+      CompositorFrame frame,
+      mojom::HitTestRegionListPtr hit_test_region_list = nullptr,
+      uint64_t submit_time = 0) override;
 
   void EvictCurrentSurface();
 
   // Submits a new CompositorFrame to |local_surface_id|. If |local_surface_id|
   // hasn't been submitted to before then a new Surface will be created for it.
-  // Returns false if |frame| was rejected due to invalid data.
-  // TODO(kylechar): Merge the two SubmitCompositorFrame() methods.
-  bool SubmitCompositorFrame(
-      const LocalSurfaceId& local_surface_id,
-      CompositorFrame frame,
-      mojom::HitTestRegionListPtr hit_test_region_list = nullptr);
+  // Sets |success| to false if |frame| was rejected due to invalid data.
+  // SubmitCompositorFrame() that is inherited from mojom::CompositorFrameSink
+  // calls this one and DCHECK's |success|. Callers should prefer to call the
+  // other one unless they really want to check the value of |success|.
+  void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
+                             CompositorFrame frame,
+                             mojom::HitTestRegionListPtr hit_test_region_list,
+                             bool* success);
 
   // CapturableFrameSink implementation.
   void AttachCaptureClient(CapturableFrameSink::Client* client) override;
   void DetachCaptureClient(CapturableFrameSink::Client* client) override;
-  gfx::Size GetSurfaceSize() override;
+  gfx::Size GetActiveFrameSize() override;
   void RequestCopyOfSurface(
       std::unique_ptr<CopyOutputRequest> request) override;
 
@@ -130,6 +134,7 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   void OnBeginFrame(const BeginFrameArgs& args) override;
   const BeginFrameArgs& LastUsedBeginFrameArgs() const override;
   void OnBeginFrameSourcePausedChanged(bool paused) override;
+  bool WantsAnimateOnlyBeginFrames() const override;
 
   void UpdateNeedsBeginFramesInternal();
   Surface* CreateSurface(const SurfaceInfo& surface_info);
@@ -169,6 +174,8 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   // Whether or not a frame observer has been added.
   bool added_frame_observer_ = false;
+
+  bool wants_animate_only_begin_frames_ = false;
 
   const bool is_root_;
   const bool needs_sync_tokens_;

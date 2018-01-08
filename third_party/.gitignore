@@ -6,6 +6,7 @@
 /adobe/flash/binaries
 /adobe/flash/symbols
 /amd/
+/android_ndk/
 /android_protobuf/src
 /android_support_test_runner/lib/
 /android_system_sdk/*.jar
@@ -79,6 +80,7 @@
 /gvr-android-sdk/src
 /gvr-android-sdk/test-apks/daydream_home/*.apk
 /gvr-android-sdk/test-apks/vr_services/*.apk
+/gvr-android-sdk/test-apks/vr_keyboard/*.apk
 /gperf
 /guava/lib/
 /hamcrest/lib/
@@ -146,6 +148,7 @@
 /pdfsqueeze
 /pdfium
 /pefile
+/perfetto
 /perl
 /ppapi
 /psyco_win32

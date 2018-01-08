@@ -419,8 +419,8 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
                        v8_context](base::StringPiece accessor_name) {
     v8::Local<v8::String> api_name =
         gin::StringToSymbol(isolate, accessor_name);
-    v8::Maybe<bool> success = chrome->SetAccessor(
-        v8_context, api_name, &BindingAccessor, nullptr, api_name);
+    v8::Maybe<bool> success = chrome->SetLazyDataProperty(
+        v8_context, api_name, &BindingAccessor, api_name);
     return success.IsJust() && success.FromJust();
   };
 
@@ -434,7 +434,7 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
     case Feature::SERVICE_WORKER_CONTEXT:
       DCHECK(ExtensionsClient::Get()
                  ->ExtensionAPIEnabledInExtensionServiceWorkers());
-    // Intentional fallthrough.
+      FALLTHROUGH;
     case Feature::BLESSED_EXTENSION_CONTEXT:
     case Feature::LOCK_SCREEN_EXTENSION_CONTEXT:
     case Feature::UNBLESSED_EXTENSION_CONTEXT:

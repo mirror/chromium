@@ -20,11 +20,11 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 #include "net/base/host_port_pair.h"
+#include "net/base/proxy_server.h"
 #include "net/base/url_util.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
-#include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_server.h"
+#include "net/proxy_resolution/proxy_info.h"
 
 namespace data_reduction_proxy {
 
@@ -70,7 +70,7 @@ void OnResolveProxyHandler(
   DCHECK(proxy_config.is_valid() || !data_saver_proxy_used);
 
   if (data_reduction_proxy_config.enabled_by_user_and_reachable() &&
-      url.SchemeIs(url::kHttpScheme) && !net::IsLocalhost(url.host_piece()) &&
+      url.SchemeIs(url::kHttpScheme) && !net::IsLocalhost(url) &&
       !params::IsIncludedInHoldbackFieldTrial()) {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.ConfigService.HTTPRequests",
@@ -90,7 +90,6 @@ DataReductionProxyDelegate::DataReductionProxyDelegate(
       configurator_(configurator),
       event_creator_(event_creator),
       bypass_stats_(bypass_stats),
-      alternative_proxies_broken_(false),
       tick_clock_(base::DefaultTickClock::GetInstance()),
       first_data_saver_request_recorded_(false),
       io_data_(nullptr),
@@ -145,16 +144,46 @@ void DataReductionProxyDelegate::OnResolveProxy(
                      }),
       proxies_for_http.end());
 
+  base::Optional<std::pair<bool /* is_secure_proxy */, bool /*is_core_proxy */>>
+      warmup_proxy = config_->GetInFlightWarmupProxyDetails();
+
+  bool is_warmup_url = warmup_proxy &&
+                       url.host() == params::GetWarmupURL().host() &&
+                       url.path() == params::GetWarmupURL().path();
+
+  if (is_warmup_url) {
+    // This is a request to fetch the warmup (aka probe) URL.
+    // |is_secure_proxy| and |is_core_proxy| indicate the properties of the
+    // proxy that is being currently probed.
+    bool is_secure_proxy = warmup_proxy->first;
+    bool is_core_proxy = warmup_proxy->second;
+    // Remove the proxies with properties that do not match the properties of
+    // the proxy that is being probed.
+    proxies_for_http.erase(
+        std::remove_if(proxies_for_http.begin(), proxies_for_http.end(),
+                       [is_secure_proxy,
+                        is_core_proxy](const DataReductionProxyServer& proxy) {
+                         return proxy.IsSecureProxy() != is_secure_proxy ||
+                                proxy.IsCoreProxy() != is_core_proxy;
+                       }),
+        proxies_for_http.end());
+  }
+
+  // If the proxy is disabled due to warmup URL fetch failing in the past,
+  // then enable it temporarily. This ensures that |configurator_| includes
+  // this proxy type when generating the |proxy_config|.
   net::ProxyConfig proxy_config = configurator_->CreateProxyConfig(
-      config_->GetNetworkPropertiesManager(), proxies_for_http);
+      is_warmup_url, config_->GetNetworkPropertiesManager(), proxies_for_http);
 
   OnResolveProxyHandler(url, method, proxy_config, proxy_retry_info, *config_,
                         io_data_, result);
 
   if (!result->is_empty()) {
     net::ProxyServer alternative_proxy_server;
-    GetAlternativeProxy(url, result->proxy_server(), &alternative_proxy_server);
-    result->SetAlternativeProxy(alternative_proxy_server);
+    if (GetAlternativeProxy(url, result->proxy_server(), proxy_retry_info,
+                            &alternative_proxy_server)) {
+      result->SetAlternativeProxy(alternative_proxy_server);
+    }
   }
 
   if (!first_data_saver_request_recorded_ && !result->is_empty() &&
@@ -164,13 +193,6 @@ void DataReductionProxyDelegate::OnResolveProxy(
         tick_clock_->NowTicks() - last_network_change_time_);
     first_data_saver_request_recorded_ = true;
   }
-}
-
-void DataReductionProxyDelegate::OnTunnelConnectCompleted(
-    const net::HostPortPair& endpoint,
-    const net::HostPortPair& proxy_server,
-    int net_error) {
-  DCHECK(thread_checker_.CalledOnValidThread());
 }
 
 void DataReductionProxyDelegate::OnFallback(const net::ProxyServer& bad_proxy,
@@ -186,26 +208,6 @@ void DataReductionProxyDelegate::OnFallback(const net::ProxyServer& bad_proxy,
     bypass_stats_->OnProxyFallback(bad_proxy, net_error);
 }
 
-void DataReductionProxyDelegate::OnBeforeTunnelRequest(
-    const net::HostPortPair& proxy_server,
-    net::HttpRequestHeaders* extra_headers) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-}
-
-bool DataReductionProxyDelegate::IsTrustedSpdyProxy(
-    const net::ProxyServer& proxy_server) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  return proxy_server.is_valid() && proxy_server.is_https() && config_ &&
-         config_->IsDataReductionProxy(proxy_server, nullptr);
-}
-
-void DataReductionProxyDelegate::OnTunnelHeadersReceived(
-    const net::HostPortPair& origin,
-    const net::HostPortPair& proxy_server,
-    const net::HttpResponseHeaders& response_headers) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-}
-
 void DataReductionProxyDelegate::SetTickClockForTesting(
     base::TickClock* tick_clock) {
   tick_clock_ = tick_clock;
@@ -214,59 +216,49 @@ void DataReductionProxyDelegate::SetTickClockForTesting(
   last_network_change_time_ = tick_clock_->NowTicks();
 }
 
-void DataReductionProxyDelegate::GetAlternativeProxy(
+bool DataReductionProxyDelegate::GetAlternativeProxy(
     const GURL& url,
     const net::ProxyServer& resolved_proxy_server,
+    const net::ProxyRetryInfoMap& proxy_retry_info,
     net::ProxyServer* alternative_proxy_server) const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(!alternative_proxy_server->is_valid());
 
   if (!url.is_valid() || !url.SchemeIsHTTPOrHTTPS() ||
       url.SchemeIsCryptographic()) {
-    return;
+    return false;
   }
 
   if (!params::IsIncludedInQuicFieldTrial()) {
     RecordQuicProxyStatus(QUIC_PROXY_DISABLED_VIA_FIELD_TRIAL);
-    return;
+    return false;
   }
 
   if (!resolved_proxy_server.is_valid() || !resolved_proxy_server.is_https())
-    return;
+    return false;
 
   if (!config_ ||
       !config_->IsDataReductionProxy(resolved_proxy_server, nullptr)) {
-    return;
-  }
-
-  if (alternative_proxies_broken_) {
-    RecordQuicProxyStatus(QUIC_PROXY_STATUS_MARKED_AS_BROKEN);
-    return;
+    return false;
   }
 
   if (!SupportsQUIC(resolved_proxy_server)) {
     RecordQuicProxyStatus(QUIC_PROXY_NOT_SUPPORTED);
-    return;
+    return false;
   }
 
-  *alternative_proxy_server = net::ProxyServer(
-      net::ProxyServer::SCHEME_QUIC, resolved_proxy_server.host_port_pair());
-  DCHECK(alternative_proxy_server->is_valid());
-  RecordQuicProxyStatus(QUIC_PROXY_STATUS_AVAILABLE);
-  return;
-}
+  net::ProxyInfo alternative_proxy_info;
+  alternative_proxy_info.UseProxyServer(net::ProxyServer(
+      net::ProxyServer::SCHEME_QUIC, resolved_proxy_server.host_port_pair()));
+  alternative_proxy_info.DeprioritizeBadProxies(proxy_retry_info);
 
-void DataReductionProxyDelegate::OnAlternativeProxyBroken(
-    const net::ProxyServer& alternative_proxy_server) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  // TODO(tbansal): Reset this on connection change events.
-  // Currently, DataReductionProxyDelegate does not maintain a list of broken
-  // proxies. If one alternative proxy is broken, use of all alternative proxies
-  // is disabled because it is likely that other QUIC proxies would be
-  // broken   too.
-  alternative_proxies_broken_ = true;
-  UMA_HISTOGRAM_COUNTS_100("DataReductionProxy.Quic.OnAlternativeProxyBroken",
-                           1);
+  if (alternative_proxy_info.is_empty()) {
+    RecordQuicProxyStatus(QUIC_PROXY_STATUS_MARKED_AS_BROKEN);
+    return false;
+  }
+
+  RecordQuicProxyStatus(QUIC_PROXY_STATUS_AVAILABLE);
+  *alternative_proxy_server = alternative_proxy_info.proxy_server();
+  return true;
 }
 
 bool DataReductionProxyDelegate::SupportsQUIC(

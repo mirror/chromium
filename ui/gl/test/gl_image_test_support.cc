@@ -6,8 +6,8 @@
 
 #include <vector>
 
+#include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/half_float.h"
-#include "ui/gl/gl_implementation.h"
 #include "ui/gl/init/gl_factory.h"
 #include "ui/gl/test/gl_surface_test_support.h"
 
@@ -19,10 +19,12 @@
 namespace gl {
 
 // static
-void GLImageTestSupport::InitializeGL() {
+void GLImageTestSupport::InitializeGL(
+    base::Optional<GLImplementation> prefered_impl) {
 #if defined(USE_OZONE)
   ui::OzonePlatform::InitParams params;
   params.single_process = true;
+  params.using_mojo = true;
   ui::OzonePlatform::InitializeForGPU(params);
 #endif
 
@@ -30,7 +32,10 @@ void GLImageTestSupport::InitializeGL() {
       init::GetAllowedGLImplementations();
   DCHECK(!allowed_impls.empty());
 
-  GLImplementation impl = allowed_impls[0];
+  GLImplementation impl = prefered_impl ? *prefered_impl : allowed_impls[0];
+  DCHECK(std::find(allowed_impls.begin(), allowed_impls.end(), impl) !=
+         allowed_impls.end());
+
   GLSurfaceTestSupport::InitializeOneOffImplementation(impl, true);
 #if defined(USE_OZONE)
   // Make sure all the tasks posted to the current task runner by the
@@ -215,7 +220,7 @@ void GLImageTestSupport::SetBufferDataToColor(int width,
     case gfx::BufferFormat::ETC1:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::UYVY_422:
-      NOTREACHED();
+      NOTREACHED() << gfx::BufferFormatToString(format);
       return;
   }
   NOTREACHED();

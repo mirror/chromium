@@ -51,11 +51,9 @@ DatabaseManager& DatabaseManager::Manager() {
   return *g_database_manager;
 }
 
-DatabaseManager::DatabaseManager()
-{
-}
+DatabaseManager::DatabaseManager() = default;
 
-DatabaseManager::~DatabaseManager() {}
+DatabaseManager::~DatabaseManager() = default;
 
 DatabaseContext* DatabaseManager::ExistingDatabaseContextFor(
     ExecutionContext* context) {
@@ -146,11 +144,10 @@ Database* DatabaseManager::OpenDatabaseInternal(
   DatabaseContext* backend_context = DatabaseContextFor(context)->Backend();
   if (DatabaseTracker::Tracker().CanEstablishDatabase(
           backend_context, name, display_name, estimated_size, error)) {
-    Database* backend =
-        new Database(backend_context, name, expected_version, display_name,
-                     estimated_size, creation_callback);
+    Database* backend = new Database(backend_context, name, expected_version,
+                                     display_name, estimated_size);
     if (backend->OpenAndVerifyVersion(set_version_in_new_database, error,
-                                      error_message))
+                                      error_message, creation_callback))
       return backend;
   }
 

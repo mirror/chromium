@@ -432,12 +432,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
 
       // "Fetch a classic script given url, settings object, options, CORS
       // setting, and encoding." [spec text]
-      if (!FetchClassicScript(url, element_document, options, encoding)) {
-        // TODO(hiroshige): Make this asynchronous. Currently we fire the error
-        // event synchronously to keep the existing behavior.
-        DispatchErrorEvent();
-        return false;
-      }
+      FetchClassicScript(url, element_document, options, encoding);
     } else {
       // - "module":
 
@@ -508,11 +503,12 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
         //     source text, settings, base URL, cryptographic nonce,
         //     parser state, and module script credentials mode."
         // TODO(kouhei,hiroshige): Update spec refs to use ScriptFetchOptions.
+        const KURL& source_url = element_document.Url();
         Modulator* modulator = Modulator::From(
             ToScriptStateForMainWorld(context_document->GetFrame()));
         ModuleScript* module_script = ModuleScript::Create(
-            element_->TextFromChildren(), modulator, base_url, options,
-            kSharableCrossOrigin, position);
+            element_->TextFromChildren(), modulator, source_url, base_url,
+            options, kSharableCrossOrigin, position);
 
         // 2. "If this returns null, set the script's script to null and abort
         //     these substeps; the script is ready."
@@ -684,7 +680,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
 }
 
 // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-classic-script
-bool ScriptLoader::FetchClassicScript(const KURL& url,
+void ScriptLoader::FetchClassicScript(const KURL& url,
                                       Document& element_document,
                                       const ScriptFetchOptions& options,
                                       const WTF::TextEncoding& encoding) {
@@ -695,14 +691,8 @@ bool ScriptLoader::FetchClassicScript(const KURL& url,
 
   ClassicPendingScript* pending_script = ClassicPendingScript::Fetch(
       url, element_document, options, encoding, element_, defer);
-
-  if (!pending_script)
-    return false;
-
   prepared_pending_script_ = pending_script;
   resource_keep_alive_ = pending_script->GetResource();
-
-  return true;
 }
 
 void ScriptLoader::FetchModuleScriptTree(const KURL& url,

@@ -13,6 +13,7 @@
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 
 class AppListControllerDelegate;
+class ChromeAppListItem;
 class Profile;
 
 // This abstract class populates and maintains the given |model| with
@@ -28,7 +29,7 @@ class AppListModelBuilder {
   // |service| is the owner of this instance.
   void Initialize(app_list::AppListSyncableService* service,
                   Profile* profile,
-                  app_list::AppListModelUpdater* model_updater);
+                  AppListModelUpdater* model_updater);
 
  protected:
   // Builds the model with the current profile.
@@ -40,7 +41,7 @@ class AppListModelBuilder {
 
   AppListControllerDelegate* controller() { return controller_; }
 
-  app_list::AppListModelUpdater* model_updater() { return model_updater_; }
+  AppListModelUpdater* model_updater() { return model_updater_; }
 
   // Inserts an app based on app ordinal prefs.
   void InsertApp(std::unique_ptr<ChromeAppListItem> app);
@@ -61,7 +62,7 @@ class AppListModelBuilder {
   Profile* profile_ = nullptr;
 
   // Unowned pointer to an app list model updater.
-  app_list::AppListModelUpdater* model_updater_ = nullptr;
+  AppListModelUpdater* model_updater_ = nullptr;
 
   // Unowned pointer to the app list controller.
   AppListControllerDelegate* controller_;

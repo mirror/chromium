@@ -816,7 +816,6 @@ interface HTMLInputElement : HTMLElement {
   [CEReactions] attribute DOMString formTarget;
   [CEReactions] attribute unsigned long height;
   attribute boolean indeterminate;
-  [CEReactions] attribute DOMString inputMode;
   readonly attribute HTMLElement? list;
   [CEReactions] attribute DOMString max;
   [CEReactions] attribute long maxLength;
@@ -960,7 +959,6 @@ interface HTMLTextAreaElement : HTMLElement {
   [CEReactions] attribute DOMString dirName;
   [CEReactions] attribute boolean disabled;
   readonly attribute HTMLFormElement? form;
-  [CEReactions] attribute DOMString inputMode;
   [CEReactions] attribute long maxLength;
   [CEReactions] attribute long minLength;
   [CEReactions] attribute DOMString name;
@@ -1135,7 +1133,7 @@ dictionary AssignedNodesOptions {
   boolean flatten = false;
 };
 
-typedef (CanvasRenderingContext2D or WebGLRenderingContext) RenderingContext;
+typedef (CanvasRenderingContext2D or ImageBitmapRenderingContext or WebGLRenderingContext) RenderingContext;
 
 [Exposed=Window,
  HTMLConstructor]
@@ -1332,7 +1330,6 @@ interface mixin CanvasPath {
   void quadraticCurveTo(unrestricted double cpx, unrestricted double cpy, unrestricted double x, unrestricted double y);
   void bezierCurveTo(unrestricted double cp1x, unrestricted double cp1y, unrestricted double cp2x, unrestricted double cp2y, unrestricted double x, unrestricted double y);
   void arcTo(unrestricted double x1, unrestricted double y1, unrestricted double x2, unrestricted double y2, unrestricted double radius);
-  void arcTo(unrestricted double x1, unrestricted double y1, unrestricted double x2, unrestricted double y2, unrestricted double radiusX, unrestricted double radiusY, unrestricted double rotation);
   void rect(unrestricted double x, unrestricted double y, unrestricted double w, unrestricted double h);
   void arc(unrestricted double x, unrestricted double y, unrestricted double radius, unrestricted double startAngle, unrestricted double endAngle, optional boolean anticlockwise = false);
   void ellipse(unrestricted double x, unrestricted double y, unrestricted double radiusX, unrestricted double radiusY, unrestricted double rotation, unrestricted double startAngle, unrestricted double endAngle, optional boolean anticlockwise = false);
@@ -1379,10 +1376,7 @@ interface ImageData {
   readonly attribute Uint8ClampedArray data;
 };
 
-[Constructor,
- Constructor(Path2D path),
- Constructor(sequence<Path2D> paths, optional CanvasFillRule fillRule = "nonzero"),
- Constructor(DOMString d),
+[Constructor(optional (Path2D or DOMString) path),
  Exposed=(Window,Worker)]
 interface Path2D {
   void addPath(Path2D path, optional DOMMatrix2DInit transform);
@@ -1455,6 +1449,7 @@ dictionary ElementDefinitionOptions {
 interface mixin ElementContentEditable {
   [CEReactions] attribute DOMString contentEditable;
   readonly attribute boolean isContentEditable;
+  [CEReactions] attribute DOMString inputMode;
 };
 
 [Exposed=Window,

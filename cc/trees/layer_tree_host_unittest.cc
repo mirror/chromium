@@ -117,7 +117,8 @@ class LayerTreeHostTestSetNeedsCommitInsideLayout : public LayerTreeHostTest {
  protected:
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
-  void UpdateLayerTreeHost() override {
+  void UpdateLayerTreeHost(
+      LayerTreeHostClient::VisualStateUpdate requested_update) override {
     // This shouldn't cause a second commit to happen.
     layer_tree_host()->SetNeedsCommit();
   }
@@ -163,7 +164,8 @@ class LayerTreeHostTestFrameOrdering : public LayerTreeHostTest {
 
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
-  void UpdateLayerTreeHost() override {
+  void UpdateLayerTreeHost(
+      LayerTreeHostClient::VisualStateUpdate requested_update) override {
     EXPECT_TRUE(CheckStep(MAIN_LAYOUT, &main_));
   }
 
@@ -211,7 +213,8 @@ class LayerTreeHostTestSetNeedsUpdateInsideLayout : public LayerTreeHostTest {
  protected:
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
-  void UpdateLayerTreeHost() override {
+  void UpdateLayerTreeHost(
+      LayerTreeHostClient::VisualStateUpdate requested_update) override {
     // This shouldn't cause a second commit to happen.
     layer_tree_host()->SetNeedsUpdateLayers();
   }
@@ -1088,6 +1091,129 @@ class LayerTreeHostTestSurfaceDamage : public LayerTreeHostTest {
 };
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestSurfaceDamage);
+
+// When settings->check_damage_early is true, verify that invalidate is not
+// called when changes to a layer don't cause visible damage.
+class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->using_synchronous_renderer_compositor = true;
+    settings->check_damage_early = true;
+  }
+
+ protected:
+  void SetupTree() override {
+    root_ = Layer::Create();
+
+    layer_tree_host()->SetViewportSize(gfx::Size(10, 10));
+
+    layer_tree_host()->SetRootLayer(root_);
+
+    // Translate the root layer past the viewport.
+    gfx::Transform translation;
+    translation.Translate(100, 100);
+    root_->SetTransform(translation);
+
+    root_->SetBounds(gfx::Size(50, 50));
+
+    LayerTreeHostTest::SetupTree();
+  }
+
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  void DidCommit() override {
+    // This does not damage the frame because the root layer is outside the
+    // viewport.
+    if (layer_tree_host()->SourceFrameNumber() == 1)
+      root_->SetOpacity(0.9f);
+  }
+
+  DrawResult PrepareToDrawOnThread(LayerTreeHostImpl* impl,
+                                   LayerTreeHostImpl::FrameData* frame_data,
+                                   DrawResult draw_result) override {
+    PostSetNeedsCommitToMainThread();
+    return draw_result;
+  }
+
+  void CommitCompleteOnThread(LayerTreeHostImpl* impl) override {
+    switch (impl->active_tree()->source_frame_number()) {
+      // This gives us some assurance that invalidates happen before this call,
+      // so invalidating on frame 1 will cause a failure before the test ends.
+      case 0:
+        EXPECT_TRUE(first_frame_invalidate_before_commit_);
+        break;
+      case 1:
+        EndTest();
+    }
+  }
+
+  void DidInvalidateLayerTreeFrameSink(LayerTreeHostImpl* impl) override {
+    switch (impl->active_tree()->source_frame_number()) {
+      // Be sure that invalidates happen before commits, so the below failure
+      // works.
+      case 0:
+        first_frame_invalidate_before_commit_ = true;
+        break;
+      // This frame should not cause an invalidate, since there is no visible
+      // damage.
+      case 1:
+        ADD_FAILURE();
+    }
+  }
+
+  void AfterTest() override {}
+
+ private:
+  scoped_refptr<Layer> root_;
+  bool first_frame_invalidate_before_commit_ = false;
+};
+
+// This behavior is specific to Android WebView, which only uses
+// multi-threaded compositor.
+MULTI_THREAD_TEST_F(LayerTreeHostTestNoDamageCausesNoInvalidate);
+
+// Verify CanDraw() is false until first commit.
+class LayerTreeHostTestCantDrawBeforeCommit : public LayerTreeHostTest {
+ protected:
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  void ReadyToCommitOnThread(LayerTreeHostImpl* host_impl) override {
+    EXPECT_FALSE(host_impl->CanDraw());
+  }
+
+  void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
+    EXPECT_TRUE(host_impl->CanDraw());
+    EndTest();
+  }
+
+  void AfterTest() override {}
+};
+
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestCantDrawBeforeCommit);
+
+// Verify CanDraw() is false until first commit+activate.
+class LayerTreeHostTestCantDrawBeforeCommitActivate : public LayerTreeHostTest {
+ protected:
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
+
+  void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
+    EXPECT_FALSE(host_impl->CanDraw());
+  }
+
+  void WillActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
+    EXPECT_FALSE(host_impl->CanDraw());
+  }
+
+  void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
+    EXPECT_TRUE(host_impl->CanDraw());
+    EndTest();
+  }
+
+  void AfterTest() override {}
+};
+
+// Single thread mode commits directly to the active tree, so CanDraw()
+// is true by the time WillActivateTreeOnThread is called.
+MULTI_THREAD_TEST_F(LayerTreeHostTestCantDrawBeforeCommitActivate);
 
 // Verify damage status of property trees is preserved after commit.
 class LayerTreeHostTestPropertyTreesChangedSync : public LayerTreeHostTest {
@@ -3179,6 +3305,165 @@ class LayerTreeHostTestDeferCommitsInsideBeginMainFrameWithCommitAfter
 SINGLE_AND_MULTI_THREAD_TEST_F(
     LayerTreeHostTestDeferCommitsInsideBeginMainFrameWithCommitAfter);
 
+// This verifies that animate_only BeginFrames only run animation/layout
+// updates, i.e. abort commits after the animate stage and only request layer
+// tree updates for layout.
+//
+// The tests sends four Begin(Main)Frames in sequence: three animate_only
+// Begin(Main)Frames followed by a normal Begin(Main)Frame. The first three
+// should result in aborted commits, whereas the last one should complete the
+// previously aborted commits.
+//
+// Between BeginMainFrames 2 and 3, the client also requests a new commit
+// (SetNeedsCommit), but not between BeginMainFrames 1 and 2. In multi-threaded
+// mode, ProxyMain will run the animate pipeline stage only for BeginMainFrames
+// 1 and 3, as no new commit was requested between 1 and 2.
+//
+// The test uses the full-pipeline mode to ensure that each BeginFrame also
+// incurs a BeginMainFrame.
+class LayerTreeHostTestAnimateOnlyBeginFrames
+    : public LayerTreeHostTest,
+      public viz::ExternalBeginFrameSourceClient {
+ public:
+  LayerTreeHostTestAnimateOnlyBeginFrames()
+      : external_begin_frame_source_(this) {
+    UseBeginFrameSource(&external_begin_frame_source_);
+  }
+
+  void IssueBeginFrame(bool animate_only) {
+    ++begin_frame_count_;
+
+    last_begin_frame_time_ += viz::BeginFrameArgs::DefaultInterval();
+    uint64_t sequence_number = next_begin_frame_sequence_number_++;
+
+    auto args = viz::BeginFrameArgs::Create(
+        BEGINFRAME_FROM_HERE, viz::BeginFrameArgs::kManualSourceId,
+        sequence_number, last_begin_frame_time_,
+        last_begin_frame_time_ + viz::BeginFrameArgs::DefaultInterval(),
+        viz::BeginFrameArgs::DefaultInterval(), viz::BeginFrameArgs::NORMAL);
+    args.animate_only = animate_only;
+
+    external_begin_frame_source_.OnBeginFrame(args);
+  }
+
+  void PostIssueBeginFrame(bool animate_only) {
+    // Post a new task so that BeginFrame is not issued within same callstack.
+    ImplThreadTaskRunner()->PostTask(
+        FROM_HERE,
+        base::BindOnce(
+            &LayerTreeHostTestAnimateOnlyBeginFrames::IssueBeginFrame,
+            base::Unretained(this), animate_only));
+  }
+
+  // viz::ExternalBeginFrameSourceClient implementation:
+  void OnNeedsBeginFrames(bool needs_begin_frames) override {
+    if (needs_begin_frames) {
+      EXPECT_EQ(0, begin_frame_count_);
+      // Send a first animation_only BeginFrame.
+      PostIssueBeginFrame(true);
+    }
+  }
+
+  // LayerTreeHostTest implementation:
+  void BeginTest() override {
+    PostSetNeedsCommitToMainThread();
+    // OnNeedsBeginFrames(true) will be called during tree initialization.
+  }
+
+  void WillBeginMainFrame() override { ++will_begin_main_frame_count_; }
+
+  void DidSendBeginMainFrameOnThread(LayerTreeHostImpl* host_impl) override {
+    ++sent_begin_main_frame_count_;
+    EXPECT_EQ(begin_frame_count_, sent_begin_main_frame_count_);
+  }
+
+  void DidFinishImplFrameOnThread(LayerTreeHostImpl* host_impl) override {
+    if (begin_frame_count_ < 3) {
+      if (begin_frame_count_ == 2) {
+        // Request another commit before sending the third BeginMainFrame.
+        PostSetNeedsCommitToMainThread();
+      }
+
+      // Send another animation_only BeginFrame.
+      PostIssueBeginFrame(true);
+    } else if (begin_frame_count_ == 3) {
+      PostIssueBeginFrame(false);
+    }
+  }
+
+  void UpdateLayerTreeHost(
+      LayerTreeHostClient::VisualStateUpdate requested_update) override {
+    ++update_layer_tree_host_count_;
+
+    if (begin_frame_count_ < 4) {
+      // First three BeginFrames are animate_only, so only kPrePaint updates are
+      // requested.
+      EXPECT_EQ(LayerTreeHostClient::VisualStateUpdate::kPrePaint,
+                requested_update);
+    } else {
+      EXPECT_EQ(4, begin_frame_count_);
+      // Last BeginFrame is normal, so all updates are requested.
+      EXPECT_EQ(LayerTreeHostClient::VisualStateUpdate::kAll, requested_update);
+    }
+  }
+
+  void DidCommit() override {
+    ++commit_count_;
+
+    // Fourth BeginMainFrame should lead to commit.
+    EXPECT_EQ(4, begin_frame_count_);
+    EXPECT_EQ(4, sent_begin_main_frame_count_);
+
+    EndTest();
+  }
+
+  void ReadyToCommitOnThread(LayerTreeHostImpl* host_impl) override {
+    ++ready_to_commit_count_;
+  }
+
+  void AfterTest() override {
+    EXPECT_EQ(1, commit_count_);
+    EXPECT_EQ(4, begin_frame_count_);
+    EXPECT_EQ(4, sent_begin_main_frame_count_);
+
+    if (HasImplThread()) {
+      // ProxyMain aborts the second BeginMainFrame before running the animate
+      // pipeline stage, since no further updates were made since the first one.
+      // Thus, we expect not to be called for the second BeginMainFrame.
+      EXPECT_EQ(3, will_begin_main_frame_count_);
+      EXPECT_EQ(3, update_layer_tree_host_count_);
+    } else {
+      EXPECT_EQ(4, will_begin_main_frame_count_);
+      EXPECT_EQ(4, update_layer_tree_host_count_);
+    }
+
+    // The final commit should not have been aborted.
+    EXPECT_EQ(1, ready_to_commit_count_);
+  }
+
+ protected:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    // Use full-pipeline mode to make BeginFrame handling deterministic.
+    EXPECT_FALSE(settings->wait_for_all_pipeline_stages_before_draw);
+    settings->wait_for_all_pipeline_stages_before_draw = true;
+  }
+
+ private:
+  viz::ExternalBeginFrameSource external_begin_frame_source_;
+
+  base::TimeTicks last_begin_frame_time_ = base::TimeTicks::Now();
+  uint64_t next_begin_frame_sequence_number_ =
+      viz::BeginFrameArgs::kStartingFrameNumber;
+  int commit_count_ = 0;
+  int begin_frame_count_ = 0;
+  int sent_begin_main_frame_count_ = 0;
+  int will_begin_main_frame_count_ = 0;
+  int update_layer_tree_host_count_ = 0;
+  int ready_to_commit_count_ = 0;
+};
+
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestAnimateOnlyBeginFrames);
+
 class LayerTreeHostTestCompositeImmediatelyStateTransitions
     : public LayerTreeHostTest {
  public:
@@ -3566,10 +3851,6 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestNumFramesPending);
 class LayerTreeHostTestUIResource : public LayerTreeHostTest {
  public:
   LayerTreeHostTestUIResource() : num_ui_resources_(0) {}
-
-  void InitializeSettings(LayerTreeSettings* settings) override {
-    settings->resource_settings.texture_id_allocation_chunk_size = 1;
-  }
 
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
@@ -4927,7 +5208,8 @@ class TestSwapPromise : public SwapPromise {
     result_->did_activate_called = true;
   }
 
-  void WillSwap(viz::CompositorFrameMetadata* metadata) override {
+  void WillSwap(viz::CompositorFrameMetadata* compositor_frame_metadata,
+                RenderFrameMetadata* render_frame_metadata) override {
     base::AutoLock lock(result_->lock);
     EXPECT_FALSE(result_->did_swap_called);
     EXPECT_FALSE(result_->did_not_swap_called);
@@ -7664,7 +7946,6 @@ class GpuRasterizationSucceedsWithLargeImage : public LayerTreeHostTest {
     viz::ContextProvider* context_provider =
         host_impl->layer_tree_frame_sink()->context_provider();
     ASSERT_TRUE(context_provider);
-    viz::ContextProvider::ScopedContextLock context_lock(context_provider);
 
     GrContext* gr_context = context_provider->GrContext();
     ASSERT_TRUE(gr_context);

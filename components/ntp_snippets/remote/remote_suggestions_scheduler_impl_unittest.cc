@@ -12,7 +12,6 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
@@ -153,7 +152,7 @@ class MockRemoteSuggestionsProvider : public RemoteSuggestionsProvider {
   }
   MOCK_METHOD2(GetDismissedSuggestionsForDebugging,
                void(Category category, DismissedSuggestionsCallback* callback));
-  MOCK_METHOD0(OnSignInStateChanged, void());
+  MOCK_METHOD1(OnSignInStateChanged, void(bool));
 };
 
 class FakeOfflineNetworkChangeNotifier : public net::NetworkChangeNotifier {
@@ -191,12 +190,12 @@ class RemoteSuggestionsSchedulerImplTest : public ::testing::Test {
   }
 
   void ResetProvider() {
-    provider_ = base::MakeUnique<StrictMock<MockRemoteSuggestionsProvider>>(
+    provider_ = std::make_unique<StrictMock<MockRemoteSuggestionsProvider>>(
         /*observer=*/nullptr);
 
     test_clock_.SetNow(base::Time::Now());
 
-    scheduler_ = base::MakeUnique<RemoteSuggestionsSchedulerImpl>(
+    scheduler_ = std::make_unique<RemoteSuggestionsSchedulerImpl>(
         &persistent_scheduler_, &user_classifier_, utils_.pref_service(),
         &local_state_, &test_clock_, &debug_logger_);
     scheduler_->SetProvider(provider_.get());

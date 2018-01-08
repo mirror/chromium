@@ -5,6 +5,11 @@
     "args": ["--force-color-profile=srgb"]
   },
   {
+    "prefix": "custom-user-timing",
+    "base": "http/tests/performance-timing/custom-user-timing",
+    "args": ["--enable-blink-features=CustomUserTiming"]
+  },
+  {
     "prefix": "gpu",
     "base": "fast/canvas",
     "args": ["--enable-accelerated-2d-canvas",
@@ -125,7 +130,16 @@
   },
   {
     "prefix": "android",
-    "base": "fast/rootscroller",
+    "base": "rootscroller",
+    "args": ["--enable-features=OverlayScrollbar", "--enable-threaded-compositing",
+             "--enable-fixed-position-compositing", "--enable-prefer-compositing-to-lcd-text",
+             "--enable-composited-scrolling-for-frames", "--enable-gesture-tap-highlight", "--enable-pinch",
+             "--force-overlay-fullscreen-video", "--enable-overscroll-notifications",
+             "--enable-viewport", "--disable-canvas-aa", "--disable-composited-antialiasing"]
+  },
+  {
+    "prefix": "android",
+    "base": "url-bar",
     "args": ["--enable-features=OverlayScrollbar", "--enable-threaded-compositing",
              "--enable-fixed-position-compositing", "--enable-prefer-compositing-to-lcd-text",
              "--enable-composited-scrolling-for-frames", "--enable-gesture-tap-highlight", "--enable-pinch",
@@ -134,7 +148,7 @@
   },
   {
     "prefix": "media-gpu-accelerated",
-    "base": "http/tests/media/media-source",
+    "base": "external/wpt/media-source",
     "args": ["--use-gpu-in-tests"]
   },
   {
@@ -179,7 +193,7 @@
   },
   {
     "prefix": "rootlayerscrolls",
-    "base": "fast/rootscroller",
+    "base": "rootscroller",
     "args": ["--root-layer-scrolls"]
   },
   {
@@ -284,6 +298,24 @@
   {
     "prefix": "spv175",
     "base": "fast/multicol",
+    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "references_use_default_args": true
+  },
+  {
+    "prefix": "spv175",
+    "base": "fast/pagination",
+    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "references_use_default_args": true
+  },
+  {
+    "prefix": "spv175",
+    "base": "fragmentation",
+    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "references_use_default_args": true
+  },
+  {
+    "prefix": "spv175",
+    "base": "printing",
     "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
     "references_use_default_args": true
   },
@@ -462,6 +494,11 @@
     "args": ["--enable-blink-features=FeaturePolicy,FeaturePolicyExperimentalFeatures"]
   },
   {
+    "prefix": "feature-policy-experimental-features",
+    "base": "external/wpt/feature-policy/experimental-features",
+    "args": ["--enable-blink-features=FeaturePolicy,FeaturePolicyExperimentalFeatures"]
+  },
+  {
     "prefix": "mojo-localstorage",
     "base": "external/wpt/webstorage",
     "args": ["--disable-mojo-local-storage"]
@@ -542,34 +579,10 @@
     "args": ["--force-presentation-receiver-for-testing"]
   },
   {
-    "prefix": "mojo-blobs",
-    "base": "external/wpt/FileAPI",
-    "args": ["--disable-features=MojoBlobs"]
-  },
-  {
-    "prefix": "mojo-blobs",
-    "base": "external/wpt/IndexedDB",
-    "args": ["--disable-features=MojoBlobs"]
-  },
-  {
-    "prefix": "mojo-blobs",
-    "base": "external/wpt/fetch",
-    "args": ["--disable-features=MojoBlobs"]
-  },
-  {
-    "prefix": "mojo-blobs",
-    "base": "external/wpt/service-workers",
-    "args": ["--disable-features=MojoBlobs"]
-  },
-  {
-    "prefix": "mojo-blobs",
-    "base": "external/wpt/webmessaging",
-    "args": ["--disable-features=MojoBlobs"]
-  },
-  {
-    "prefix": "mojo-blobs",
-    "base": "fast/files",
-    "args": ["--disable-features=MojoBlobs"]
+    "prefix": "sharedarraybuffer",
+    "base": "external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
   },
   {
     "prefix": "longtask-v2",
@@ -597,8 +610,8 @@
     "args": ["--enable-features=ModuleScriptsImportMetaUrl"]
   },
   {
-    "prefix": "reporting",
-    "base": "external/wpt/content-security-policy/reporting",
+    "prefix": "reporting-api",
+    "base": "external/wpt/content-security-policy/reporting-api",
     "args": ["--enable-features=Reporting"]
   },
   {
@@ -622,6 +635,11 @@
     "args": ["--enable-blink-features=IncrementalShadowDOM"]
   },
   {
+    "prefix": "incremental-shadow-dom",
+    "base": "external/wpt/css/css-scoping",
+    "args": ["--enable-blink-features=IncrementalShadowDOM"]
+  },
+  {
     "prefix": "modern-media-controls",
     "base": "media/controls/modern",
     "args": ["--enable-features=UseModernMediaControls"]
@@ -630,5 +648,20 @@
     "prefix": "unified-autoplay",
     "base": "external/wpt/feature-policy",
     "args": ["--autoplay-policy=document-user-activation-required"]
+  },
+  {
+    "prefix": "htxg",
+    "base": "http/tests/loading/htxg/",
+    "args": ["--enable-features=SignedHTTPExchange"]
+  },
+  {
+    "prefix": "htxg-with-network-service",
+    "base": "http/tests/loading/htxg/",
+    "args": ["--enable-features=SignedHTTPExchange,NetworkService"]
+  },
+  {
+    "prefix": "sampling-heap-profiler",
+    "base": "inspector-protocol/memory",
+    "args": ["--sampling-heap-profiler"]
   }
 ]

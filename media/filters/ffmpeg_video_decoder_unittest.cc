@@ -44,7 +44,7 @@ using ::testing::StrictMock;
 
 namespace media {
 
-static const VideoPixelFormat kVideoFormat = PIXEL_FORMAT_YV12;
+static const VideoPixelFormat kVideoFormat = PIXEL_FORMAT_I420;
 static const gfx::Size kCodedSize(320, 240);
 static const gfx::Rect kVisibleRect(320, 240);
 static const gfx::Size kNaturalSize(320, 240);
@@ -136,6 +136,7 @@ class FFmpegVideoDecoderTest : public testing::Test {
           break;
         case DecodeStatus::ABORTED:
           NOTREACHED();
+          FALLTHROUGH;
         case DecodeStatus::DECODE_ERROR:
           DCHECK(output_frames_.empty());
           return status;

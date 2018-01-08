@@ -44,6 +44,7 @@ class TestPreviewsDecider : public PreviewsDecider {
         return previews::params::IsNoScriptPreviewsEnabled();
       case previews::PreviewsType::LITE_PAGE:
       case previews::PreviewsType::NONE:
+      case previews::PreviewsType::UNSPECIFIED:
       case previews::PreviewsType::LAST:
         break;
     }
@@ -87,6 +88,19 @@ class PreviewsContentUtilTest : public testing::Test {
   TestPreviewsDecider previews_decider_;
   net::TestURLRequestContext context_;
 };
+
+TEST_F(PreviewsContentUtilTest,
+       DetermineEnabledClientPreviewsStatePreviewsDisabled) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine("ClientLoFi" /* enable_features */,
+                                          "Previews" /* disable_features */);
+  EXPECT_EQ(content::PREVIEWS_UNSPECIFIED,
+            previews::DetermineEnabledClientPreviewsState(*CreateHttpsRequest(),
+                                                          previews_decider()));
+  EXPECT_EQ(content::PREVIEWS_UNSPECIFIED,
+            previews::DetermineEnabledClientPreviewsState(*CreateRequest(),
+                                                          previews_decider()));
+}
 
 TEST_F(PreviewsContentUtilTest, DetermineEnabledClientPreviewsStateClientLoFi) {
   base::test::ScopedFeatureList scoped_feature_list;
@@ -150,19 +164,34 @@ TEST_F(PreviewsContentUtilTest,
 }
 
 TEST_F(PreviewsContentUtilTest, GetMainFramePreviewsType) {
-  // Main frame preview cases:
+  // Simple cases:
   EXPECT_EQ(previews::PreviewsType::LITE_PAGE,
             previews::GetMainFramePreviewsType(content::SERVER_LITE_PAGE_ON));
+  EXPECT_EQ(previews::PreviewsType::LOFI,
+            previews::GetMainFramePreviewsType(content::SERVER_LOFI_ON));
   EXPECT_EQ(previews::PreviewsType::NOSCRIPT,
             previews::GetMainFramePreviewsType(content::NOSCRIPT_ON));
+  EXPECT_EQ(previews::PreviewsType::LOFI,
+            previews::GetMainFramePreviewsType(content::CLIENT_LOFI_ON));
 
   // NONE cases:
   EXPECT_EQ(previews::PreviewsType::NONE,
             previews::GetMainFramePreviewsType(content::PREVIEWS_UNSPECIFIED));
   EXPECT_EQ(previews::PreviewsType::NONE,
-            previews::GetMainFramePreviewsType(content::CLIENT_LOFI_ON));
-  EXPECT_EQ(previews::PreviewsType::NONE,
-            previews::GetMainFramePreviewsType(content::SERVER_LOFI_ON));
+            previews::GetMainFramePreviewsType(content::PREVIEWS_NO_TRANSFORM));
+
+  // Precedence cases:
+  EXPECT_EQ(previews::PreviewsType::LITE_PAGE,
+            previews::GetMainFramePreviewsType(
+                content::SERVER_LITE_PAGE_ON | content::SERVER_LOFI_ON |
+                content::NOSCRIPT_ON | content::CLIENT_LOFI_ON));
+  EXPECT_EQ(previews::PreviewsType::LOFI,
+            previews::GetMainFramePreviewsType(content::SERVER_LOFI_ON |
+                                               content::NOSCRIPT_ON |
+                                               content::CLIENT_LOFI_ON));
+  EXPECT_EQ(previews::PreviewsType::NOSCRIPT,
+            previews::GetMainFramePreviewsType(content::NOSCRIPT_ON |
+                                               content::CLIENT_LOFI_ON));
 }
 
 }  // namespace

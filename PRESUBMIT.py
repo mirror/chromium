@@ -41,7 +41,7 @@ _IMPLEMENTATION_EXTENSIONS = r'\.(cc|cpp|cxx|mm)$'
 _TEST_CODE_EXCLUDED_PATHS = (
     r'.*[\\\/](fake_|test_|mock_).+%s' % _IMPLEMENTATION_EXTENSIONS,
     r'.+_test_(base|support|util)%s' % _IMPLEMENTATION_EXTENSIONS,
-    r'.+_(api|browser|eg|perf|pixel|unit|ui)?test(_[a-z]+)?%s' %
+    r'.+_(api|browser|eg|int|perf|pixel|unit|ui)?test(_[a-z]+)?%s' %
         _IMPLEMENTATION_EXTENSIONS,
     r'.+profile_sync_service_harness%s' % _IMPLEMENTATION_EXTENSIONS,
     r'.*[\\\/](test|tool(s)?)[\\\/].*',
@@ -425,7 +425,7 @@ _BANNED_CPP_FUNCTIONS = (
       r'std::regex',
       (
         'Using std::regex adds unnecessary binary size to Chrome. Please use',
-        're2::RE2 instead (crbug/755321)',
+        're2::RE2 instead (crbug.com/755321)',
       ),
       True,
       (),
@@ -443,7 +443,7 @@ _BANNED_CPP_FUNCTIONS = (
       r'/\bbase::Bind\(',
       (
           'Please consider using base::Bind{Once,Repeating} instead '
-          'of base::Bind. (crbug/714018)',
+          'of base::Bind. (crbug.com/714018)',
       ),
       False,
       (),
@@ -452,7 +452,7 @@ _BANNED_CPP_FUNCTIONS = (
       r'/\bbase::Callback<',
       (
           'Please consider using base::{Once,Repeating}Callback instead '
-          'of base::Callback. (crbug/714018)',
+          'of base::Callback. (crbug.com/714018)',
       ),
       False,
       (),
@@ -461,7 +461,7 @@ _BANNED_CPP_FUNCTIONS = (
       r'/\bbase::Closure\b',
       (
           'Please consider using base::{Once,Repeating}Closure instead '
-          'of base::Closure. (crbug/714018)',
+          'of base::Closure. (crbug.com/714018)',
       ),
       False,
       (),
@@ -491,6 +491,7 @@ _VALID_OS_MACROS = (
     # Please keep sorted.
     'OS_AIX',
     'OS_ANDROID',
+    'OS_ASMJS',
     'OS_BSD',
     'OS_CAT',       # For testing.
     'OS_CHROMEOS',
@@ -521,10 +522,18 @@ _ANDROID_SPECIFIC_PYDEPS_FILES = [
 
 
 _GENERIC_PYDEPS_FILES = [
+    'chrome/test/chromedriver/test/run_py_tests.pydeps',
 ]
 
 
 _ALL_PYDEPS_FILES = _ANDROID_SPECIFIC_PYDEPS_FILES + _GENERIC_PYDEPS_FILES
+
+
+# Bypass the AUTHORS check for these accounts.
+_KNOWN_ROBOTS = set(
+  '%s-chromium-autoroll@skia-buildbots.google.com.iam.gserviceaccount.com' % s
+  for s in ('angle', 'depot-tools', 'nacl', 'pdfium', 'skia', 'src-internal',
+            'webrtc'))
 
 
 def _CheckNoProductionCodeUsingTestOnlyFunctions(input_api, output_api):
@@ -1553,6 +1562,7 @@ def _GetOwnersFilesToCheckForIpcOwners(input_api):
       '*_param_traits*.*',
       # Mojo IPC:
       '*.mojom',
+      '*_mojom_traits*.*',
       '*_struct_traits*.*',
       '*_type_converter*.*',
       '*.typemap',
@@ -2081,12 +2091,13 @@ class PydepsChecker(object):
 
 def _CheckPydepsNeedsUpdating(input_api, output_api, checker_for_tests=None):
   """Checks if a .pydeps file needs to be regenerated."""
-  # This check is mainly for Android, and involves paths not only in the
-  # PRESUBMIT.py, but also in the .pydeps files. It doesn't work on Windows and
-  # Mac, so skip it on other platforms.
+  # This check is for Python dependency lists (.pydeps files), and involves
+  # paths not only in the PRESUBMIT.py, but also in the .pydeps files. It
+  # doesn't work on Windows and Mac, so skip it on other platforms.
   if input_api.platform != 'linux2':
     return []
-  # TODO(agrieve): Update when there's a better way to detect this: crbug/570091
+  # TODO(agrieve): Update when there's a better way to detect
+  # this: crbug.com/570091
   is_android = input_api.os_path.exists('third_party/android_tools')
   pydeps_files = _ALL_PYDEPS_FILES if is_android else _GENERIC_PYDEPS_FILES
   results = []
@@ -2480,8 +2491,12 @@ def _CommonChecks(input_api, output_api):
   results.extend(input_api.canned_checks.PanProjectChecks(
       input_api, output_api,
       excluded_paths=_EXCLUDED_PATHS))
-  results.extend(
-      input_api.canned_checks.CheckAuthorizedAuthor(input_api, output_api))
+
+  author = input_api.change.author_email
+  if author and author not in _KNOWN_ROBOTS:
+    results.extend(
+        input_api.canned_checks.CheckAuthorizedAuthor(input_api, output_api))
+
   results.extend(
       _CheckNoProductionCodeUsingTestOnlyFunctions(input_api, output_api))
   results.extend(_CheckNoIOStreamInHeaders(input_api, output_api))

@@ -372,7 +372,7 @@ class BasePage {
 
  public:
   BasePage(PageMemory*, BaseArena*);
-  virtual ~BasePage() {}
+  virtual ~BasePage() = default;
 
   void Link(BasePage** previous_next) {
     next_ = *previous_next;
@@ -870,6 +870,7 @@ class PLATFORM_EXPORT NormalPageArena final : public BaseArena {
   bool ExpandObject(HeapObjectHeader*, size_t);
   bool ShrinkObject(HeapObjectHeader*, size_t);
   void DecreasePromptlyFreedSize(size_t size) { promptly_freed_size_ -= size; }
+  size_t promptly_freed_size() const { return promptly_freed_size_; }
 
   bool IsObjectAllocatedAtAllocationPoint(HeapObjectHeader* header) {
     return header->PayloadEnd() == current_allocation_point_;
@@ -981,7 +982,7 @@ NO_SANITIZE_ADDRESS inline bool HeapObjectHeader::IsValidOrZapped() const {
 
 NO_SANITIZE_ADDRESS inline void HeapObjectHeader::CheckHeader() const {
 #if defined(ARCH_CPU_64_BITS)
-  DCHECK(IsValid());
+  CHECK(IsValid());
 #endif
 }
 
@@ -1034,14 +1035,14 @@ inline uint32_t GetRandomMagic() {
 #pragma warning(disable : 4319)
 #endif
 
-  const uintptr_t random1 = ~(RotateLeft16(reinterpret_cast<uintptr_t>(
+  static const uintptr_t random1 = ~(RotateLeft16(reinterpret_cast<uintptr_t>(
       base::trace_event::MemoryAllocatorDump::kNameSize)));
 
 #if defined(OS_WIN)
-  const uintptr_t random2 =
+  static const uintptr_t random2 =
       ~(RotateLeft16(reinterpret_cast<uintptr_t>(::ReadFile)));
 #elif defined(OS_POSIX)
-  const uintptr_t random2 =
+  static const uintptr_t random2 =
       ~(RotateLeft16(reinterpret_cast<uintptr_t>(::read)));
 #else
 #error OS not supported
@@ -1050,14 +1051,15 @@ inline uint32_t GetRandomMagic() {
 #if defined(ARCH_CPU_64_BITS)
   static_assert(sizeof(uintptr_t) == sizeof(uint64_t),
                 "uintptr_t is not uint64_t");
-  const uint32_t random = static_cast<uint32_t>(
+  static const uint32_t random = static_cast<uint32_t>(
       (random1 & 0x0FFFFULL) | ((random2 >> 32) & 0x0FFFF0000ULL));
 #elif defined(ARCH_CPU_32_BITS)
   // Although we don't use heap metadata canaries on 32-bit due to memory
   // pressure, keep this code around just in case we do, someday.
   static_assert(sizeof(uintptr_t) == sizeof(uint32_t),
                 "uintptr_t is not uint32_t");
-  const uint32_t random = (random1 & 0x0FFFFUL) | (random2 & 0xFFFF0000UL);
+  static const uint32_t random =
+      (random1 & 0x0FFFFUL) | (random2 & 0xFFFF0000UL);
 #else
 #error architecture not supported
 #endif

@@ -10,7 +10,6 @@
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/security_state/core/security_state_ui.h"
@@ -23,8 +22,9 @@
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_factory.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
 #import "ios/chrome/browser/ui/fullscreen/scoped_fullscreen_disabler.h"
-#include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
-#import "ios/chrome/browser/ui/omnibox/location_bar_view.h"
+#import "ios/chrome/browser/ui/location_bar/location_bar_url_loader.h"
+#import "ios/chrome/browser/ui/location_bar/location_bar_view.h"
+#import "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
 #import "ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.h"
@@ -149,7 +149,7 @@ LocationBarControllerImpl::LocationBarControllerImpl(
     ios::ChromeBrowserState* browser_state,
     id<LocationBarDelegate> delegate,
     id<BrowserCommands> dispatcher)
-    : edit_view_(base::MakeUnique<OmniboxViewIOS>(location_bar_view.textField,
+    : edit_view_(std::make_unique<OmniboxViewIOS>(location_bar_view.textField,
                                                   this,
                                                   this,
                                                   browser_state)),
@@ -170,7 +170,7 @@ LocationBarControllerImpl::~LocationBarControllerImpl() {}
 OmniboxPopupCoordinator* LocationBarControllerImpl::CreatePopupCoordinator(
     id<OmniboxPopupPositioner> positioner) {
   std::unique_ptr<OmniboxPopupViewIOS> popup_view =
-      base::MakeUnique<OmniboxPopupViewIOS>(edit_view_->model(),
+      std::make_unique<OmniboxPopupViewIOS>(edit_view_->model(),
                                             edit_view_.get());
 
   edit_view_->model()->set_popup_model(popup_view->model());
@@ -213,7 +213,7 @@ void LocationBarControllerImpl::OnAutocompleteAccept(
   if (gurl.is_valid()) {
     transition = ui::PageTransitionFromInt(
         transition | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
-    [delegate_ loadGURLFromLocationBar:gurl transition:transition];
+    [URLLoader_ loadGURLFromLocationBar:gurl transition:transition];
   }
 }
 
@@ -230,7 +230,6 @@ void LocationBarControllerImpl::OnChanged() {
       bool show_icon_for_state = security_state::ShouldAlwaysShowIcon(
           toolbarModel->GetSecurityLevel(false));
       bool page_has_downgraded_HTTPS =
-          experimental_flags::IsPageIconForDowngradedHTTPSEnabled() &&
           DoesCurrentPageHaveCertInfo(GetWebState());
       if (show_icon_for_state || page_has_downgraded_HTTPS || page_is_offline) {
         [location_bar_view_ setLeadingButtonHidden:NO];
@@ -310,7 +309,7 @@ void LocationBarControllerImpl::OnSetFocus() {
   // Disable fullscreen while focused so that the location bar cannot be scolled
   // offscreen.
   if (base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
-    fullscreen_disabler_ = base::MakeUnique<ScopedFullscreenDisabler>(
+    fullscreen_disabler_ = std::make_unique<ScopedFullscreenDisabler>(
         FullscreenControllerFactory::GetInstance()->GetForBrowserState(
             browser_state_));
   }
@@ -328,7 +327,7 @@ ToolbarModel* LocationBarControllerImpl::GetToolbarModel() {
 }
 
 web::WebState* LocationBarControllerImpl::GetWebState() {
-  return [delegate_ getWebState];
+  return [delegate_ webState];
 }
 
 void LocationBarControllerImpl::InstallLocationIcon() {

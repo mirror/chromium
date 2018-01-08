@@ -10,7 +10,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/simple_test_clock.h"
 #include "base/time/time.h"
-#include "components/download/public/test/test_download_service.h"
+#include "components/download/public/background_service/test/test_download_service.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/prefetch/prefetch_request_test_base.h"
 #include "components/offline_pages/core/prefetch/prefetch_server_urls.h"
@@ -44,12 +44,12 @@ class PrefetchDownloaderImplTest : public PrefetchRequestTestBase {
 
     prefetch_service_taco_.reset(new PrefetchServiceTestTaco);
 
-    auto downloader = base::MakeUnique<PrefetchDownloaderImpl>(
+    auto downloader = std::make_unique<PrefetchDownloaderImpl>(
         &download_service_, kTestChannel);
     downloader->SetClockForTesting(base::WrapUnique(clock_));
     download_service_.SetFailedDownload(kFailedDownloadId, false);
     download_service_.SetIsReady(true);
-    download_client_ = base::MakeUnique<TestDownloadClient>(downloader.get());
+    download_client_ = std::make_unique<TestDownloadClient>(downloader.get());
     download_service_.set_client(download_client_.get());
     prefetch_service_taco_->SetPrefetchDownloader(std::move(downloader));
     prefetch_service_taco_->CreatePrefetchService();

@@ -5,6 +5,7 @@
 #include "chrome/browser/safe_browsing/permission_reporter.h"
 
 #include <functional>
+#include <memory>
 
 #include "base/containers/queue.h"
 #include "base/hash.h"
@@ -68,9 +69,6 @@ PermissionReport::Action PermissionActionForReport(PermissionAction action) {
       return PermissionReport::IGNORED;
     case PermissionAction::REVOKED:
       return PermissionReport::REVOKED;
-    case PermissionAction::REENABLED:
-    case PermissionAction::REQUESTED:
-      return PermissionReport::ACTION_UNSPECIFIED;
     case PermissionAction::NUM:
       break;
   }
@@ -177,7 +175,7 @@ std::size_t PermissionAndOriginHash::operator()(
 
 PermissionReporter::PermissionReporter(net::URLRequestContext* request_context)
     : PermissionReporter(
-          base::MakeUnique<net::ReportSender>(request_context,
+          std::make_unique<net::ReportSender>(request_context,
                                               kTrafficAnnotation),
           base::WrapUnique(new base::DefaultClock)) {}
 
@@ -205,6 +203,8 @@ void PermissionReporter::SendReport(const PermissionReportInfo& report_info) {
 bool PermissionReporter::BuildReport(const PermissionReportInfo& report_info,
                                      std::string* output) {
   PermissionReport report;
+  // The origin is stored as a GURL, so ensure it's actually an origin.
+  DCHECK_EQ(report_info.origin, report_info.origin.GetOrigin());
   report.set_origin(report_info.origin.spec());
   report.set_permission(PermissionTypeForReport(report_info.permission));
   report.set_action(PermissionActionForReport(report_info.action));

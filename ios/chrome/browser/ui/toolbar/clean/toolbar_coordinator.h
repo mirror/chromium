@@ -8,15 +8,17 @@
 #import <UIKit/UIKit.h>
 
 #include "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_result_loading.h"
-#import "ios/chrome/browser/ui/toolbar/clean/omnibox_focuser.h"
+#import "ios/chrome/browser/ui/toolbar/public/fakebox_focuser.h"
+#import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h"
 #include "ios/public/provider/chrome/browser/voice/voice_search_controller_delegate.h"
 
 @protocol ActivityServicePositioner;
 @protocol ApplicationCommands;
-@protocol BubbleViewAnchorPointProvider;
 @protocol BrowserCommands;
+@protocol OmniboxFocuser;
 @class ToolbarButtonUpdater;
+@protocol ToolbarCommands;
 @protocol ToolbarCoordinatorDelegate;
 @protocol UrlLoader;
 class WebStateList;
@@ -28,7 +30,7 @@ class WebState;
 }
 
 // Coordinator to run a toolbar -- a UI element housing controls.
-@interface ToolbarCoordinator : NSObject<OmniboxFocuser,
+@interface ToolbarCoordinator : NSObject<FakeboxFocuser,
                                          QRScannerResultLoading,
                                          ToolsMenuPresentationProvider,
                                          VoiceSearchControllerDelegate>
@@ -36,12 +38,17 @@ class WebState;
 // Weak reference to ChromeBrowserState;
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 // The dispatcher for this view controller.
-@property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
+@property(nonatomic, weak)
+    id<ApplicationCommands, BrowserCommands, OmniboxFocuser, ToolbarCommands>
+        dispatcher;
 // The web state list this ToolbarCoordinator is handling.
 @property(nonatomic, assign) WebStateList* webStateList;
-// Delegate for this coordinator.
+// Delegate for this coordinator. Only used for plumbing to Location Bar
+// coordinator.
+// TODO(crbug.com/799446): Change this.
 @property(nonatomic, weak) id<ToolbarCoordinatorDelegate> delegate;
 // URL loader for the toolbar.
+// TODO(crbug.com/799446): Remove this.
 @property(nonatomic, weak) id<UrlLoader> URLLoader;
 // UIViewController managed by this coordinator.
 @property(nonatomic, strong, readonly) UIViewController* viewController;
@@ -50,18 +57,19 @@ class WebState;
 
 // Returns the ActivityServicePositioner for this toolbar.
 - (id<ActivityServicePositioner>)activityServicePositioner;
-// Returns the BubbleViewAnchorPointProvider for this toolbar.
-- (id<BubbleViewAnchorPointProvider>)bubbleAnchorPointProvider;
+
+// Returns the OmniboxFocuser for this toolbar.
+- (id<OmniboxFocuser>)omniboxFocuser;
 
 // Start this coordinator.
 - (void)start;
 // Stop this coordinator.
 - (void)stop;
 
-// TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
-// created.
-// Updates the visibility of the Omnibox text and Toolbar buttons.
-- (void)updateToolbarState;
+// Coordinates the location bar focusing/defocusing. For example, initiates
+// transition to the expanded location bar state of the view controller.
+- (void)transitionToLocationBarFocusedState:(BOOL)focused;
+
 // Updates the toolbar so it is in a state where a snapshot for |webState| can
 // be taken.
 - (void)updateToolbarForSideSwipeSnapshot:(web::WebState*)webState;
@@ -77,9 +85,6 @@ class WebState;
 - (void)setBackgroundToIncognitoNTPColorWithAlpha:(CGFloat)alpha;
 // Briefly animate the progress bar when a pre-rendered tab is displayed.
 - (void)showPrerenderingAnimation;
-// TODO(crbug.com/789583):Use named layout guide instead of frame.
-// Returns visible omnibox frame in Toolbar's superview coordinate system.
-- (CGRect)visibleOmniboxFrame;
 // Returns whether omnibox is a first responder.
 - (BOOL)isOmniboxFirstResponder;
 // Returns whether the omnibox popup is currently displayed.

@@ -273,6 +273,9 @@ COMMON_PREDEPS="dpkg (>= 1.14.0)"
 cd "${OUTPUTDIR}"
 
 case "$TARGETARCH" in
+  arm )
+    export ARCHITECTURE="armhf"
+    ;;
   ia32 )
     export ARCHITECTURE="i386"
     ;;
@@ -281,6 +284,9 @@ case "$TARGETARCH" in
     ;;
   mipsel )
     export ARCHITECTURE="mipsel"
+    ;;
+  mips64el )
+    export ARCHITECTURE="mips64el"
     ;;
   * )
     echo

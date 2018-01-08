@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /** @fileoverview Suite of tests for extension-manager unit tests. Unlike
- * extension_manager_tests.js, these tests are not interacting with the real
+ * extension_manager_test.js, these tests are not interacting with the real
  * chrome.developerPrivate API. */
 cr.define('extension_manager_tests', function() {
   /** @enum {string} */
@@ -15,6 +15,7 @@ cr.define('extension_manager_tests', function() {
     Uninstall: 'uninstall',
     UninstallFromDetails: 'uninstall while in details view',
     UpdateItemData: 'update item data',
+    KioskMode: 'kiosk mode',
   };
 
   var suiteName = 'ExtensionManagerUnitTest';
@@ -26,7 +27,15 @@ cr.define('extension_manager_tests', function() {
     /** @type {TestService} */
     let service;
 
+    /** @type {extensions.KioskBrowserProxy} */
+    let browserProxy;
+
     setup(function() {
+      if (cr.isChromeOS) {
+        browserProxy = new TestKioskBrowserProxy();
+        extensions.KioskBrowserProxyImpl.instance_ = browserProxy;
+      }
+
       PolymerTest.clearBody();
 
       service = new extensions.TestService();
@@ -163,6 +172,12 @@ cr.define('extension_manager_tests', function() {
 
       service.profileStateChangedTarget.callListeners({inDeveloperMode: false});
       expectFalse(manager.inDevMode);
+
+      service.profileStateChangedTarget.callListeners({canLoadUnpacked: true});
+      expectTrue(manager.canLoadUnpacked);
+
+      service.profileStateChangedTarget.callListeners({canLoadUnpacked: false});
+      expectFalse(manager.canLoadUnpacked);
     });
 
     test(assert(TestNames.Uninstall), function() {
@@ -275,6 +290,20 @@ cr.define('extension_manager_tests', function() {
       });
       expectEquals(ExtensionState.ENABLED, manager.extensions_[0].state);
     });
+
+    if (cr.isChromeOS) {
+      test(assert(TestNames.KioskMode), function() {
+        expectFalse(!!manager.$$('extensions-kiosk-dialog'));
+
+        return browserProxy.whenCalled('initializeKioskAppSettings')
+            .then(() => {
+              expectTrue(manager.$$('extensions-toolbar').kioskEnabled);
+              manager.$$('extensions-toolbar').fire('kiosk-tap');
+              Polymer.dom.flush();
+              expectTrue(!!manager.$$('extensions-kiosk-dialog'));
+            });
+      });
+    }
   });
 
   return {

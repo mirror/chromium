@@ -11,7 +11,8 @@ namespace cc {
 ScopedRasterFlags::ScopedRasterFlags(const PaintFlags* flags,
                                      ImageProvider* image_provider,
                                      const SkMatrix& ctm,
-                                     uint8_t alpha)
+                                     uint8_t alpha,
+                                     bool create_skia_shader)
     : original_flags_(flags) {
   if (flags->HasDiscardableImages() && image_provider) {
     DCHECK(flags->HasShader());
@@ -21,7 +22,7 @@ ScopedRasterFlags::ScopedRasterFlags(const PaintFlags* flags,
       DecodeImageShader(ctm);
     } else if (flags->getShader()->shader_type() ==
                PaintShader::Type::kPaintRecord) {
-      DecodeRecordShader(ctm);
+      DecodeRecordShader(ctm, create_skia_shader);
     } else {
       NOTREACHED();
     }
@@ -61,6 +62,18 @@ void ScopedRasterFlags::DecodeImageShader(const SkMatrix& ctm) {
   }
 
   const auto& decoded_image = decoded_draw_image.decoded_image();
+  // If this image is backed by a transfer cache entry id, then it's suitable
+  // for serialization. We don't need to do anything here, because the image
+  // provider (accessed via PaintOpWriter) will get the decode and serialize the
+  // transfer cache id.
+  // Note that if we replace this with the decoded paint image, the
+  // serialization will fail, because a transfer cache backed image cannot on
+  // its own construct an SkImage which is needed to create an underlying
+  // SkShader.
+  if (decoded_image.transfer_cache_entry_id()) {
+    DCHECK(!decoded_image.image());
+    return;
+  }
   DCHECK(decoded_image.image());
 
   bool need_scale = !decoded_image.is_scale_adjustment_identity();
@@ -81,7 +94,8 @@ void ScopedRasterFlags::DecodeImageShader(const SkMatrix& ctm) {
                              flags()->getShader()->ty(), &matrix));
 }
 
-void ScopedRasterFlags::DecodeRecordShader(const SkMatrix& ctm) {
+void ScopedRasterFlags::DecodeRecordShader(const SkMatrix& ctm,
+                                           bool create_skia_shader) {
   auto decoded_shader = flags()->getShader()->CreateDecodedPaintRecord(
       ctm, &*decode_stashing_image_provider_);
   if (!decoded_shader) {
@@ -89,6 +103,8 @@ void ScopedRasterFlags::DecodeRecordShader(const SkMatrix& ctm) {
     return;
   }
 
+  if (create_skia_shader)
+    decoded_shader->CreateSkShader(&*decode_stashing_image_provider_);
   MutableFlags()->setShader(std::move(decoded_shader));
 }
 

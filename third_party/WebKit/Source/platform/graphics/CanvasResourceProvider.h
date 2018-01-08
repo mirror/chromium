@@ -13,13 +13,13 @@
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/Vector.h"
 #include "third_party/khronos/GLES2/gl2.h"
+#include "third_party/skia/include/core/SkSurface.h"
 
 class GrContext;
 class SkCanvas;
-class SkSurface;
 
 namespace cc {
-
+class ImageDecodeCache;
 class PaintCanvas;
 }
 
@@ -65,10 +65,10 @@ class PLATFORM_EXPORT CanvasResourceProvider {
 
   static std::unique_ptr<CanvasResourceProvider> Create(
       const IntSize&,
-      unsigned msaa_sample_count,
-      const CanvasColorParams&,
       ResourceUsage,
-      base::WeakPtr<WebGraphicsContext3DProviderWrapper> = nullptr);
+      base::WeakPtr<WebGraphicsContext3DProviderWrapper> = nullptr,
+      unsigned msaa_sample_count = 0,
+      const CanvasColorParams& = CanvasColorParams());
 
   // Use this method for capturing a frame that is intended to be displayed via
   // the compositor. Cases that need to acquire a snaptshot that is not destined
@@ -89,6 +89,16 @@ class PLATFORM_EXPORT CanvasResourceProvider {
   void SetResourceRecyclingEnabled(bool);
   SkSurface* GetSkSurface() const;
   bool IsGpuContextLost() const;
+  bool WritePixels(const SkImageInfo& orig_info,
+                   const void* pixels,
+                   size_t row_bytes,
+                   int x,
+                   int y);
+  virtual GLuint GetBackingTextureHandleForOverwrite() {
+    NOTREACHED();
+    return 0;
+  }
+  void Clear();
   virtual ~CanvasResourceProvider();
 
  protected:
@@ -114,6 +124,7 @@ class PLATFORM_EXPORT CanvasResourceProvider {
  private:
   virtual sk_sp<SkSurface> CreateSkSurface() const = 0;
   virtual scoped_refptr<CanvasResource> CreateResource();
+  cc::ImageDecodeCache* ImageDecodeCache();
 
   base::WeakPtrFactory<CanvasResourceProvider> weak_ptr_factory_;
   base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;

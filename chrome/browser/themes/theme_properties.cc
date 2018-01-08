@@ -14,6 +14,10 @@
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/color_palette.h"
 
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
+
 namespace {
 
 // ----------------------------------------------------------------------------
@@ -214,6 +218,7 @@ color_utils::HSL ThemeProperties::GetDefaultTint(int id, bool incognito) {
       NOTREACHED() << "These values should be queried via their respective "
                       "non-incognito equivalents and an appropriate "
                       "|incognito| value.";
+      FALLTHROUGH;
     default:
       return {-1, -1, -1};
   }

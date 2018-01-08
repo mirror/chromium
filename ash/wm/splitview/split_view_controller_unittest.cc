@@ -6,7 +6,6 @@
 
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/display/screen_orientation_controller_test_api.h"
-#include "ash/public/cpp/ash_switches.h"
 #include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/system/overview/overview_button_tray.h"
@@ -20,7 +19,6 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
-#include "base/command_line.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/test/test_window_delegate.h"
@@ -39,8 +37,6 @@ class SplitViewControllerTest : public AshTestBase {
 
   // test::AshTestBase:
   void SetUp() override {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kAshEnableTabletSplitView);
     AshTestBase::SetUp();
     Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
   }
@@ -473,7 +469,7 @@ TEST_F(SplitViewControllerTest, SplitDividerWindowBounds) {
   gfx::Rect divider_bounds =
       split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
   const int screen_width =
-      ScreenUtil::GetDisplayWorkAreaBoundsInParent(window1.get()).width();
+      screen_util::GetDisplayWorkAreaBoundsInParent(window1.get()).width();
   EXPECT_NEAR(window1_width, window2_width, 1);
   EXPECT_EQ(screen_width,
             window1_width + divider_bounds.width() + window2_width);
@@ -811,8 +807,8 @@ TEST_F(SplitViewControllerTest, RotationTest) {
   EXPECT_EQ(bounds_window1.height(), bounds_divider.height());
   EXPECT_EQ(bounds_window1.height(), bounds_window2.height());
 
-  // Rotate the screen by 90 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_90,
+  // Rotate the screen by 270 degree.
+  test_api.SetDisplayRotation(display::Display::ROTATE_270,
                               display::Display::ROTATION_SOURCE_ACTIVE);
   EXPECT_EQ(test_api.GetCurrentOrientation(),
             blink::kWebScreenOrientationLockPortraitPrimary);
@@ -847,8 +843,8 @@ TEST_F(SplitViewControllerTest, RotationTest) {
   EXPECT_EQ(bounds_window1.height(), bounds_divider.height());
   EXPECT_EQ(bounds_window1.height(), bounds_window2.height());
 
-  // Rotate the screen by 270 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_270,
+  // Rotate the screen by 90 degree.
+  test_api.SetDisplayRotation(display::Display::ROTATE_90,
                               display::Display::ROTATION_SOURCE_ACTIVE);
   EXPECT_EQ(test_api.GetCurrentOrientation(),
             blink::kWebScreenOrientationLockPortraitSecondary);
@@ -957,8 +953,8 @@ TEST_F(SplitViewControllerTest, SnapWindowBoundsWithMinimumSizeTest) {
             window1->delegate()->GetMinimumSize().width());
   EndSplitView();
 
-  // Rotate the screen by 90 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_90,
+  // Rotate the screen by 270 degree.
+  test_api.SetDisplayRotation(display::Display::ROTATE_270,
                               display::Display::ROTATION_SOURCE_ACTIVE);
   EXPECT_EQ(test_api.GetCurrentOrientation(),
             blink::kWebScreenOrientationLockPortraitPrimary);
@@ -1010,8 +1006,8 @@ TEST_F(SplitViewControllerTest, SnapWindowBoundsWithMinimumSizeTest) {
             window1->delegate()->GetMinimumSize().width());
   EndSplitView();
 
-  // Rotate the screen by 270 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_270,
+  // Rotate the screen by 90 degree.
+  test_api.SetDisplayRotation(display::Display::ROTATE_90,
                               display::Display::ROTATION_SOURCE_ACTIVE);
   EXPECT_EQ(test_api.GetCurrentOrientation(),
             blink::kWebScreenOrientationLockPortraitSecondary);

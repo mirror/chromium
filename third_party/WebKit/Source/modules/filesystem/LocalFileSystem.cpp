@@ -60,7 +60,7 @@ class CallbackWrapper final
  public:
   CallbackWrapper(std::unique_ptr<AsyncFileSystemCallbacks> c)
       : callbacks_(std::move(c)) {}
-  virtual ~CallbackWrapper() {}
+  virtual ~CallbackWrapper() = default;
   std::unique_ptr<AsyncFileSystemCallbacks> Release() {
     return std::move(callbacks_);
   }
@@ -71,7 +71,7 @@ class CallbackWrapper final
   std::unique_ptr<AsyncFileSystemCallbacks> callbacks_;
 };
 
-LocalFileSystem::~LocalFileSystem() {}
+LocalFileSystem::~LocalFileSystem() = default;
 
 void LocalFileSystem::ResolveURL(
     ExecutionContext* context,
@@ -186,6 +186,12 @@ LocalFileSystem::LocalFileSystem(WorkerClients& worker_clients,
 void LocalFileSystem::Trace(blink::Visitor* visitor) {
   Supplement<LocalFrame>::Trace(visitor);
   Supplement<WorkerClients>::Trace(visitor);
+}
+
+void LocalFileSystem::TraceWrappers(
+    const ScriptWrappableVisitor* visitor) const {
+  Supplement<LocalFrame>::TraceWrappers(visitor);
+  Supplement<WorkerClients>::TraceWrappers(visitor);
 }
 
 const char* LocalFileSystem::SupplementName() {

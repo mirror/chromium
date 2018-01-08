@@ -12,11 +12,12 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/resource_response_info.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/http/http_response_headers.h"
+#include "services/network/public/cpp/resource_response_info.h"
 
 using base::StringPiece;
 
@@ -27,12 +28,16 @@ namespace {
 // MIME types
 const char kTextHtml[] = "text/html";
 const char kTextXml[] = "text/xml";
-const char kAppRssXml[] = "application/rss+xml";
 const char kAppXml[] = "application/xml";
 const char kAppJson[] = "application/json";
+const char kImageSvg[] = "image/svg+xml";
 const char kTextJson[] = "text/json";
 const char kTextXjson[] = "text/x-json";
 const char kTextPlain[] = "text/plain";
+
+// MIME type suffixes
+const char kJsonSuffix[] = "+json";
+const char kXmlSuffix[] = "+xml";
 
 void AdvancePastWhitespace(StringPiece* data) {
   size_t offset = data->find_first_not_of(" \t\r\n");
@@ -73,27 +78,68 @@ CrossSiteDocumentClassifier::Result MatchesSignature(
   return CrossSiteDocumentClassifier::kNo;
 }
 
+// Returns true if |mime_type == prefix| or if |mime_type| starts with
+// |prefix + '+'|.  Returns false otherwise.
+//
+// For example:
+// - MatchesMimeTypePrefix("application/json", "application/json") -> true
+// - MatchesMimeTypePrefix("application/json+foo", "application/json") -> true
+// - MatchesMimeTypePrefix("application/jsonp", "application/json") -> false
+// - MatchesMimeTypePrefix("application/foo", "application/json") -> false
+bool MatchesMimeTypePrefix(base::StringPiece mime_type,
+                           base::StringPiece prefix) {
+  constexpr auto kCaseInsensitive = base::CompareCase::INSENSITIVE_ASCII;
+  if (!base::StartsWith(mime_type, prefix, kCaseInsensitive))
+    return false;
+  DCHECK_GE(mime_type.length(), prefix.length());
+
+  if (mime_type.length() == prefix.length()) {
+    // Given StartsWith results above, the above condition is our O(1) check if
+    // |base::LowerCaseEqualsASCII(mime_type, prefix)|.
+    DCHECK(base::LowerCaseEqualsASCII(mime_type, prefix));
+    return true;
+  }
+
+  if (mime_type[prefix.length()] == '+') {
+    // Given StartsWith results above, the above condition is our O(1) check if
+    // |base::StartsWith(mime_type, prefix + '+', kCaseInsensitive)|.
+    DCHECK(base::StartsWith(mime_type, prefix.as_string() + '+',
+                            kCaseInsensitive));
+    return true;
+  }
+
+  return false;
+}
+
 }  // namespace
 
 CrossSiteDocumentMimeType CrossSiteDocumentClassifier::GetCanonicalMimeType(
-    const std::string& mime_type) {
-  if (base::LowerCaseEqualsASCII(mime_type, kTextHtml)) {
+    base::StringPiece mime_type) {
+  // Checking for image/svg+xml early ensures that it won't get classified as
+  // CROSS_SITE_DOCUMENT_MIME_TYPE_XML by the presence of the "+xml" suffix.
+  if (base::LowerCaseEqualsASCII(mime_type, kImageSvg))
+    return CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS;
+
+  if (base::LowerCaseEqualsASCII(mime_type, kTextHtml))
     return CROSS_SITE_DOCUMENT_MIME_TYPE_HTML;
-  }
 
-  if (base::LowerCaseEqualsASCII(mime_type, kTextPlain)) {
+  if (base::LowerCaseEqualsASCII(mime_type, kTextPlain))
     return CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN;
-  }
 
-  if (base::LowerCaseEqualsASCII(mime_type, kAppJson) ||
-      base::LowerCaseEqualsASCII(mime_type, kTextJson) ||
-      base::LowerCaseEqualsASCII(mime_type, kTextXjson)) {
+  // StartsWith rather than LowerCaseEqualsASCII is used to account both for
+  // mime types similar to 1) application/json and to 2)
+  // application/json+protobuf.
+  constexpr auto kCaseInsensitive = base::CompareCase::INSENSITIVE_ASCII;
+  if (MatchesMimeTypePrefix(mime_type, kAppJson) ||
+      MatchesMimeTypePrefix(mime_type, kTextJson) ||
+      MatchesMimeTypePrefix(mime_type, kTextXjson) ||
+      base::EndsWith(mime_type, kJsonSuffix, kCaseInsensitive)) {
     return CROSS_SITE_DOCUMENT_MIME_TYPE_JSON;
   }
 
-  if (base::LowerCaseEqualsASCII(mime_type, kTextXml) ||
-      base::LowerCaseEqualsASCII(mime_type, kAppRssXml) ||
-      base::LowerCaseEqualsASCII(mime_type, kAppXml)) {
+  if (MatchesMimeTypePrefix(mime_type, kAppXml) ||
+      MatchesMimeTypePrefix(mime_type, kTextXml) ||
+      base::EndsWith(mime_type, kXmlSuffix, kCaseInsensitive)) {
     return CROSS_SITE_DOCUMENT_MIME_TYPE_XML;
   }
 
@@ -107,28 +153,12 @@ bool CrossSiteDocumentClassifier::IsBlockableScheme(const GURL& url) {
   return url.SchemeIs(url::kHttpScheme) || url.SchemeIs(url::kHttpsScheme);
 }
 
-bool CrossSiteDocumentClassifier::IsSameSite(const url::Origin& frame_origin,
-                                             const GURL& response_url) {
-  if (frame_origin.unique() || !response_url.is_valid())
-    return false;
-
-  if (frame_origin.scheme() != response_url.scheme())
-    return false;
-
-  // SameDomainOrHost() extracts the effective domains (public suffix plus one)
-  // from the two URLs and compare them.
-  return net::registry_controlled_domains::SameDomainOrHost(
-      response_url, frame_origin,
-      net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
-}
-
 // We don't use Webkit's existing CORS policy implementation since
 // their policy works in terms of origins, not sites. For example,
 // when frame is sub.a.com and it is not allowed to access a document
 // with sub1.a.com. But under Site Isolation, it's allowed.
 bool CrossSiteDocumentClassifier::IsValidCorsHeaderSet(
     const url::Origin& frame_origin,
-    const GURL& website_origin,
     const std::string& access_control_origin) {
   // Many websites are sending back "\"*\"" instead of "*". This is
   // non-standard practice, and not supported by Chrome. Refer to
@@ -146,7 +176,8 @@ bool CrossSiteDocumentClassifier::IsValidCorsHeaderSet(
   if (access_control_origin == "*" || access_control_origin == "null")
     return true;
 
-  return IsSameSite(frame_origin, GURL(access_control_origin));
+  return frame_origin.IsSameOriginWith(
+      url::Origin::Create(GURL(access_control_origin)));
 }
 
 // This function is a slight modification of |net::SniffForHTML|.

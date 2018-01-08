@@ -60,7 +60,7 @@ void AnswerCardSearchProvider::NavigationContext::Clear() {
 
 AnswerCardSearchProvider::AnswerCardSearchProvider(
     Profile* profile,
-    app_list::AppListModelUpdater* model_updater,
+    AppListModelUpdater* model_updater,
     AppListControllerDelegate* list_controller,
     std::unique_ptr<AnswerCardContents> contents0,
     std::unique_ptr<AnswerCardContents> contents1)
@@ -78,14 +78,12 @@ AnswerCardSearchProvider::AnswerCardSearchProvider(
 AnswerCardSearchProvider::~AnswerCardSearchProvider() {
 }
 
-void AnswerCardSearchProvider::Start(bool is_voice_query,
-                                     const base::string16& query) {
+void AnswerCardSearchProvider::Start(const base::string16& query) {
   // Reset the state.
   current_request_url_ = GURL();
   server_request_start_time_ = answer_loaded_time_ = base::TimeTicks();
 
-  if (query.empty() || is_voice_query ||
-      !model_updater_->SearchEngineIsGoogle()) {
+  if (query.empty() || !model_updater_->SearchEngineIsGoogle()) {
     DeleteCurrentResult();
     return;
   }
@@ -202,7 +200,7 @@ void AnswerCardSearchProvider::UpdateResult() {
         GURL(current_context.result_url), AutocompleteInput(),
         template_url_service_, base::string16() /* keyword */);
 
-    results.emplace_back(base::MakeUnique<AnswerCardResult>(
+    results.emplace_back(std::make_unique<AnswerCardResult>(
         profile_, list_controller_, current_context.result_url,
         stripped_result_url.spec(),
         base::UTF8ToUTF16(current_context.result_title),

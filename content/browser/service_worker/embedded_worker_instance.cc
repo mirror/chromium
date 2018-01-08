@@ -46,11 +46,13 @@ const char kServiceWorkerTerminationCanceledMesage[] =
     "Service Worker termination by a timeout timer was canceled because "
     "DevTools is attached.";
 
-void NotifyWorkerReadyForInspectionOnUI(int worker_process_id,
-                                        int worker_route_id) {
+void NotifyWorkerReadyForInspectionOnUI(
+    int worker_process_id,
+    int worker_route_id,
+    blink::mojom::DevToolsAgentAssociatedPtrInfo devtools_agent_ptr_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ServiceWorkerDevToolsManager::GetInstance()->WorkerReadyForInspection(
-      worker_process_id, worker_route_id);
+      worker_process_id, worker_route_id, std::move(devtools_agent_ptr_info));
 }
 
 void NotifyWorkerDestroyedOnUI(int worker_process_id, int worker_route_id) {
@@ -129,14 +131,14 @@ void SetupOnUIThread(
   }
 
   // Register to DevTools and update params accordingly.
+  // TODO(dgozman): we can now remove this routing id and use something else
+  // as id when talking to ServiceWorkerDevToolsManager.
   const int routing_id = rph->GetNextRoutingID();
-  params->wait_for_debugger =
-      ServiceWorkerDevToolsManager::GetInstance()->WorkerCreated(
-          process_id, routing_id,
-          ServiceWorkerDevToolsManager::ServiceWorkerIdentifier(
-              context, weak_context, params->service_worker_version_id,
-              params->script_url, params->scope, params->devtools_worker_token),
-          params->is_installed);
+  ServiceWorkerDevToolsManager::GetInstance()->WorkerCreated(
+      process_id, routing_id, context, weak_context,
+      params->service_worker_version_id, params->script_url, params->scope,
+      params->is_installed, &params->devtools_worker_token,
+      &params->wait_for_debugger);
   params->worker_devtools_agent_route_id = routing_id;
   // Create DevToolsProxy here to ensure that the WorkerCreated() call is
   // balanced by DevToolsProxy's destructor calling WorkerDestroyed().
@@ -195,11 +197,13 @@ class EmbeddedWorkerInstance::DevToolsProxy {
                                            process_id_, agent_route_id_));
   }
 
-  void NotifyWorkerReadyForInspection() {
+  void NotifyWorkerReadyForInspection(
+      blink::mojom::DevToolsAgentAssociatedPtrInfo devtools_agent_ptr_info) {
     DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
-    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::BindOnce(NotifyWorkerReadyForInspectionOnUI,
-                                           process_id_, agent_route_id_));
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(NotifyWorkerReadyForInspectionOnUI, process_id_,
+                       agent_route_id_, std::move(devtools_agent_ptr_info)));
   }
 
   void NotifyWorkerVersionInstalled() {
@@ -472,15 +476,9 @@ EmbeddedWorkerInstance::~EmbeddedWorkerInstance() {
   process_handle_.reset();
 }
 
-void EmbeddedWorkerInstance::Start(
-    mojom::EmbeddedWorkerStartParamsPtr params,
-    ProviderInfoGetter provider_info_getter,
-    mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-    mojom::ControllerServiceWorkerRequest controller_request,
-    blink::mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
-    blink::mojom::ServiceWorkerHostAssociatedPtrInfo
-        service_worker_host_ptr_info,
-    StatusCallback callback) {
+void EmbeddedWorkerInstance::Start(mojom::EmbeddedWorkerStartParamsPtr params,
+                                   ProviderInfoGetter provider_info_getter,
+                                   StatusCallback callback) {
   restart_count_++;
   if (!context_) {
     std::move(callback).Run(SERVICE_WORKER_ERROR_ABORT);
@@ -505,18 +503,12 @@ void EmbeddedWorkerInstance::Start(
   params->embedded_worker_id = embedded_worker_id_;
   params->worker_devtools_agent_route_id = MSG_ROUTING_NONE;
   params->wait_for_debugger = false;
-  params->devtools_worker_token = devtools_worker_token_;
   params->v8_cache_options = GetV8CacheOptions();
 
   mojom::EmbeddedWorkerInstanceClientAssociatedRequest request =
       mojo::MakeRequest(&client_);
   client_.set_connection_error_handler(
       base::BindOnce(&EmbeddedWorkerInstance::Detach, base::Unretained(this)));
-  pending_dispatcher_request_ = std::move(dispatcher_request);
-  pending_controller_request_ = std::move(controller_request);
-  pending_installed_scripts_info_ = std::move(installed_scripts_info);
-  pending_service_worker_host_ptr_info_ =
-      std::move(service_worker_host_ptr_info);
   inflight_start_task_.reset(
       new StartTask(this, params->script_url, std::move(request)));
   inflight_start_task_->Start(std::move(params), std::move(callback));
@@ -597,7 +589,6 @@ EmbeddedWorkerInstance::EmbeddedWorkerInstance(
       thread_id_(kInvalidEmbeddedWorkerThreadId),
       instance_host_binding_(this),
       devtools_attached_(false),
-      devtools_worker_token_(base::UnguessableToken::Create()),
       network_accessed_for_script_(false),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -647,30 +638,21 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
     // Mojo doesn't consider it an error. See https://crbug.com/732729.
     return SERVICE_WORKER_ERROR_IPC_FAILED;
   }
-  DCHECK(pending_dispatcher_request_.is_pending());
-  DCHECK(pending_controller_request_.is_pending());
-  DCHECK(pending_service_worker_host_ptr_info_.is_valid());
-
+  DCHECK(params->dispatcher_request.is_pending());
+  DCHECK(params->controller_request.is_pending());
+  DCHECK(params->service_worker_host.is_valid());
   DCHECK(!instance_host_binding_.is_bound());
-  mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo host_ptr_info;
-  instance_host_binding_.Bind(mojo::MakeRequest(&host_ptr_info));
+  instance_host_binding_.Bind(mojo::MakeRequest(&params->instance_host));
 
   blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy_ptr_info;
   content_settings_ = std::make_unique<ServiceWorkerContentSettingsProxyImpl>(
       params->script_url, context_,
-      mojo::MakeRequest(&content_settings_proxy_ptr_info));
+      mojo::MakeRequest(&params->content_settings_proxy));
 
-  const bool is_script_streaming = !pending_installed_scripts_info_.is_null();
+  const bool is_script_streaming = !params->installed_scripts_info.is_null();
   inflight_start_task_->set_start_worker_sent_time(base::TimeTicks::Now());
-  mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info =
-      std::move(provider_info_getter_).Run(process_id());
-  client_->StartWorker(std::move(params),
-                       std::move(pending_dispatcher_request_),
-                       std::move(pending_controller_request_),
-                       std::move(pending_installed_scripts_info_),
-                       std::move(pending_service_worker_host_ptr_info_),
-                       std::move(host_ptr_info), std::move(provider_info),
-                       std::move(content_settings_proxy_ptr_info));
+  params->provider_info = std::move(provider_info_getter_).Run(process_id());
+  client_->StartWorker(std::move(params));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   OnStartWorkerMessageSent(is_script_streaming);
   return SERVICE_WORKER_OK;
@@ -709,12 +691,16 @@ void EmbeddedWorkerInstance::RequestTermination() {
 
   if (status() == EmbeddedWorkerStatus::STOPPING)
     return;
-  owner_version_->StopWorkerIfIdle();
+  owner_version_->StopWorkerIfIdle(true /* requested_from_renderer */);
 }
 
 void EmbeddedWorkerInstance::OnReadyForInspection() {
-  if (devtools_proxy_)
-    devtools_proxy_->NotifyWorkerReadyForInspection();
+  if (devtools_proxy_) {
+    blink::mojom::DevToolsAgentAssociatedPtrInfo devtools_agent_ptr_info;
+    client_->BindDevToolsAgent(mojo::MakeRequest(&devtools_agent_ptr_info));
+    devtools_proxy_->NotifyWorkerReadyForInspection(
+        std::move(devtools_agent_ptr_info));
+  }
 }
 
 void EmbeddedWorkerInstance::OnScriptReadStarted() {

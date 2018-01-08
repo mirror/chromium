@@ -29,13 +29,8 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/network_service.mojom.h"
-#include "content/public/common/resource_response.h"
-#include "content/public/common/resource_response_info.h"
 #include "content/public/common/simple_url_loader.h"
 #include "content/public/common/url_constants.h"
-#include "content/public/common/url_loader.mojom.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/simple_url_loader_test_helper.h"
 #include "content/public/test/test_url_loader_client.h"
@@ -49,6 +44,11 @@
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "services/network/public/cpp/resource_response.h"
+#include "services/network/public/cpp/resource_response_info.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
+#include "services/network/public/interfaces/url_loader.mojom.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -114,7 +114,7 @@ class NetworkContextConfigurationBrowserTest
             .c_str());
   }
 
-  content::mojom::URLLoaderFactory* loader_factory() const {
+  network::mojom::URLLoaderFactory* loader_factory() const {
     switch (GetParam().network_context_type) {
       case NetworkContextType::kSystem:
         return g_browser_process->system_network_context_manager()
@@ -133,7 +133,7 @@ class NetworkContextConfigurationBrowserTest
     return nullptr;
   }
 
-  content::mojom::NetworkContext* network_context() const {
+  network::mojom::NetworkContext* network_context() const {
     switch (GetParam().network_context_type) {
       case NetworkContextType::kSystem:
         return g_browser_process->system_network_context_manager()
@@ -211,8 +211,8 @@ class NetworkContextConfigurationBrowserTest
   // Sends a request and expects it to be handled by embedded_test_server()
   // acting as a proxy;
   void TestProxyConfigured() {
-    std::unique_ptr<content::ResourceRequest> request =
-        std::make_unique<content::ResourceRequest>();
+    std::unique_ptr<network::ResourceRequest> request =
+        std::make_unique<network::ResourceRequest>();
     // This URL should be directed to the test server because of the proxy.
     request->url = GURL("http://jabberwocky.test:1872/echo");
 
@@ -279,8 +279,8 @@ class NetworkContextConfigurationBrowserTest
 };
 
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, BasicRequest) {
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
+  std::unique_ptr<network::ResourceRequest> request =
+      std::make_unique<network::ResourceRequest>();
   request->url = embedded_test_server()->GetURL("/echo");
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
@@ -299,8 +299,8 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, BasicRequest) {
 }
 
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, DataURL) {
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
+  std::unique_ptr<network::ResourceRequest> request =
+      std::make_unique<network::ResourceRequest>();
   request->url = GURL("data:text/plain,foo");
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
@@ -329,8 +329,8 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, FileURL) {
   ASSERT_EQ(static_cast<int>(strlen(kFileContents)),
             base::WriteFile(file_path, kFileContents, strlen(kFileContents)));
 
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
+  std::unique_ptr<network::ResourceRequest> request =
+      std::make_unique<network::ResourceRequest>();
   request->url = net::FilePathToFileURL(file_path);
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
@@ -352,8 +352,8 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, FileURL) {
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, Cache) {
   // Make a request whose response should be cached.
   GURL request_url = embedded_test_server()->GetURL("/cachetime");
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
+  std::unique_ptr<network::ResourceRequest> request =
+      std::make_unique<network::ResourceRequest>();
   request->url = request_url;
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
@@ -372,8 +372,8 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, Cache) {
 
   // Make the request again, and make sure it's cached or not, according to
   // expectations. Reuse the content::ResourceRequest, but nothing else.
-  std::unique_ptr<content::ResourceRequest> request2 =
-      std::make_unique<content::ResourceRequest>();
+  std::unique_ptr<network::ResourceRequest> request2 =
+      std::make_unique<network::ResourceRequest>();
   request2->url = request_url;
   content::SimpleURLLoaderTestHelper simple_loader_helper2;
   std::unique_ptr<content::SimpleURLLoader> simple_loader2 =
@@ -413,8 +413,8 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, PRE_DiskCache) {
                             test_url.spec().length()));
 
   // Make a request whose response should be cached.
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
+  std::unique_ptr<network::ResourceRequest> request =
+      std::make_unique<network::ResourceRequest>();
   request->url = test_url;
   request->headers.SetHeader("foo", "foopity foo");
   content::SimpleURLLoaderTestHelper simple_loader_helper;
@@ -491,8 +491,8 @@ class NetworkContextConfigurationFixedPortBrowserTest
 // respected.
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationFixedPortBrowserTest,
                        TestingFixedPort) {
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
+  std::unique_ptr<network::ResourceRequest> request =
+      std::make_unique<network::ResourceRequest>();
   // This URL does not use the port the embedded test server is using. The
   // command line switch should make it result in the request being directed to
   // the test server anyways.
@@ -659,8 +659,8 @@ class NetworkContextConfigurationFtpPacBrowserTest
 };
 
 IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationFtpPacBrowserTest, FtpPac) {
-  std::unique_ptr<content::ResourceRequest> request =
-      std::make_unique<content::ResourceRequest>();
+  std::unique_ptr<network::ResourceRequest> request =
+      std::make_unique<network::ResourceRequest>();
   // This URL should be directed to the test server because of the proxy.
   request->url = GURL("http://jabberwocky.test:1872/echo");
 

@@ -37,6 +37,9 @@ const char kAshDisableSmoothScreenRotation[] =
 const char kAshDisableTabletAutohideTitlebars[] =
     "ash-disable-tablet-autohide-titlebars";
 
+// Disables the split view on tablet mode.
+const char kAshDisableTabletSplitView[] = "disable-tablet-splitview";
+
 // Disable the Touch Exploration Mode. Touch Exploration Mode will no longer be
 // turned on automatically when spoken feedback is enabled when this flag is
 // set.
@@ -52,6 +55,11 @@ const char kAshEnableV1AppBackButton[] = "ash-enable-v1-app-back-button";
 const char kAshEnableDisplayMoveWindowAccels[] =
     "ash-enable-display-move-window-accels";
 
+// Enables the docked (a.k.a. picture-in-picture) magnifier.
+// TODO(afakhry): Remove this once the feature is launched.
+// https://crbug.com/709824.
+const char kAshEnableDockedMagnifier[] = "ash-enable-docked-magnifier";
+
 // Enables keyboard shortcut viewer.
 // TODO(wutao): Remove this once the feature is launched. crbug.com/768932.
 const char kAshEnableKeyboardShortcutViewer[] =
@@ -61,6 +69,10 @@ const char kAshEnableKeyboardShortcutViewer[] =
 const char kAshEnableMagnifierKeyScroller[] =
     "ash-enable-magnifier-key-scroller";
 
+// Enables the new overview ui.
+// TODO(sammiequon): Remove this once the feature is launched. crbug.com/782330.
+const char kAshEnableNewOverviewUi[] = "ash-enable-new-overview-ui";
+
 // Enable the Night Light feature.
 const char kAshEnableNightLight[] = "ash-enable-night-light";
 
@@ -68,12 +80,14 @@ const char kAshEnableNightLight[] = "ash-enable-night-light";
 const char kAshEnablePaletteOnAllDisplays[] =
     "ash-enable-palette-on-all-displays";
 
+// Enables persistent window bounds in multi-displays scenario.
+// TODO(warx): Remove this once the feature is launched. crbug.com/805046.
+const char kAshEnablePersistentWindowBounds[] =
+    "ash-enable-persistent-window-bounds";
+
 // Enables the sidebar.
 const char kAshSidebarEnabled[] = "enable-ash-sidebar";
 const char kAshSidebarDisabled[] = "disable-ash-sidebar";
-
-// Enables the split view on tablet mode.
-const char kAshEnableTabletSplitView[] = "enable-tablet-splitview";
 
 // Enables the observation of accelerometer events to enter tablet
 // mode.  The flag is "enable-touchview" not "enable-tabletmode" as this
@@ -142,6 +156,10 @@ const char kForceClamshellPowerButton[] = "force-clamshell-power-button";
 // Whether this device has an internal stylus.
 const char kHasInternalStylus[] = "has-internal-stylus";
 
+// If true, a long press of the power button in tablet mode will show the power
+// button menu.
+const char kShowPowerButtonMenu[] = "show-power-button-menu";
+
 // Draws a circle at each touch point, similar to the Android OS developer
 // option "Show taps".
 const char kShowTaps[] = "show-taps";
@@ -185,8 +203,8 @@ bool IsUsingViewsLogin() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(kShowViewsLogin);
 }
 
-bool IsUsingWebUiLock() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(kShowWebUiLock);
+bool IsUsingViewsLock() {
+  return !base::CommandLine::ForCurrentProcess()->HasSwitch(kShowWebUiLock);
 }
 
 }  // namespace switches

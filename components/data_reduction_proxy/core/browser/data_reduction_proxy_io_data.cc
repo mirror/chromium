@@ -9,7 +9,6 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_protocol.h"
@@ -76,7 +75,7 @@ net::URLRequestContext*
 BasicHTTPURLRequestContextGetter::GetURLRequestContext() {
   if (!url_request_context_) {
     net::URLRequestContextBuilder builder;
-    builder.set_proxy_service(net::ProxyService::CreateDirect());
+    builder.set_proxy_resolution_service(net::ProxyResolutionService::CreateDirect());
     builder.SetSpdyAndQuicEnabled(false, false);
     url_request_context_ = builder.Build();
   }
@@ -125,7 +124,7 @@ DataReductionProxyIOData::DataReductionProxyIOData(
   DataReductionProxyMutableConfigValues* raw_mutable_config = nullptr;
   if (use_config_client) {
     std::unique_ptr<DataReductionProxyMutableConfigValues> mutable_config =
-        base::MakeUnique<DataReductionProxyMutableConfigValues>();
+        std::make_unique<DataReductionProxyMutableConfigValues>();
     raw_mutable_config = mutable_config.get();
     config_.reset(new DataReductionProxyConfig(
         io_task_runner, net_log, std::move(mutable_config), configurator_.get(),
@@ -251,7 +250,7 @@ void DataReductionProxyIOData::DeleteBrowsingHistory(const base::Time start,
 std::unique_ptr<net::URLRequestInterceptor>
 DataReductionProxyIOData::CreateInterceptor() {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
-  return base::MakeUnique<DataReductionProxyInterceptor>(
+  return std::make_unique<DataReductionProxyInterceptor>(
       config_.get(), config_client_.get(), bypass_stats_.get(),
       event_creator_.get());
 }
@@ -274,7 +273,7 @@ DataReductionProxyIOData::CreateNetworkDelegate(
 std::unique_ptr<DataReductionProxyDelegate>
 DataReductionProxyIOData::CreateProxyDelegate() const {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
-  return base::MakeUnique<DataReductionProxyDelegate>(
+  return std::make_unique<DataReductionProxyDelegate>(
       config_.get(), configurator_.get(), event_creator_.get(),
       bypass_stats_.get(), net_log_);
 }
@@ -283,7 +282,7 @@ DataReductionProxyIOData::CreateProxyDelegate() const {
 // Bug http://crbug/488190.
 void DataReductionProxyIOData::SetProxyPrefs(bool enabled, bool at_startup) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
-  DCHECK(url_request_context_getter_->GetURLRequestContext()->proxy_service());
+  DCHECK(url_request_context_getter_->GetURLRequestContext()->proxy_resolution_service());
   enabled_ = enabled;
   config_->SetProxyConfig(enabled, at_startup);
   if (config_client_) {
@@ -294,9 +293,9 @@ void DataReductionProxyIOData::SetProxyPrefs(bool enabled, bool at_startup) {
 
   // If Data Saver is disabled, reset data reduction proxy state.
   if (!enabled) {
-    net::ProxyService* proxy_service =
-        url_request_context_getter_->GetURLRequestContext()->proxy_service();
-    proxy_service->ClearBadProxiesCache();
+    net::ProxyResolutionService* proxy_resolution_service =
+        url_request_context_getter_->GetURLRequestContext()->proxy_resolution_service();
+    proxy_resolution_service->ClearBadProxiesCache();
     bypass_stats_->ClearRequestCounts();
     bypass_stats_->NotifyUnavailabilityIfChanged();
   }
@@ -420,6 +419,11 @@ void DataReductionProxyIOData::SetDataUseAscriber(
   DCHECK(data_use_ascriber);
   data_use_observer_.reset(
       new DataReductionProxyDataUseObserver(this, data_use_ascriber));
+
+  // Disable data use ascriber when data saver is not enabled.
+  if (!IsEnabled()) {
+    data_use_ascriber->DisableAscriber();
+  }
 }
 
 void DataReductionProxyIOData::SetPreviewsDecider(

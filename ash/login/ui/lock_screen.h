@@ -19,6 +19,7 @@ class Layer;
 
 namespace ash {
 
+class LockContentsView;
 class LockWindow;
 class LoginDataDispatcher;
 class TrayAction;
@@ -26,6 +27,18 @@ class TrayAction;
 class ASH_EXPORT LockScreen : public TrayActionObserver,
                               public SessionObserver {
  public:
+  // TestApi is used for tests to get internal implementation details.
+  class ASH_EXPORT TestApi {
+   public:
+    explicit TestApi(LockScreen* lock_screen);
+    ~TestApi();
+
+    LockContentsView* contents_view() const;
+
+   private:
+    LockScreen* const lock_screen_;
+  };
+
   // The UI that this instance is displaying.
   enum class ScreenType { kLogin, kLock };
 
@@ -39,6 +52,8 @@ class ASH_EXPORT LockScreen : public TrayActionObserver,
 
   // Check if the lock screen is currently shown.
   static bool IsShown();
+
+  LockWindow* window() { return window_; }
 
   // Destroys an existing lock screen instance.
   void Destroy();
@@ -65,6 +80,9 @@ class ASH_EXPORT LockScreen : public TrayActionObserver,
 
   // Unowned pointer to the window which hosts the lock screen.
   LockWindow* window_ = nullptr;
+
+  // Unowned pointer to the LockContentsView hosted in lock window.
+  LockContentsView* contents_view_ = nullptr;
 
   // The wallpaper bluriness before entering lock_screen.
   std::unordered_map<ui::Layer*, float> initial_blur_;

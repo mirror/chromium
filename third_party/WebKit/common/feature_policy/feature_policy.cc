@@ -40,7 +40,7 @@ ParsedFeaturePolicyDeclaration::ParsedFeaturePolicyDeclaration(
 ParsedFeaturePolicyDeclaration::ParsedFeaturePolicyDeclaration(
     const ParsedFeaturePolicyDeclaration& rhs) = default;
 
-ParsedFeaturePolicyDeclaration::~ParsedFeaturePolicyDeclaration() {}
+ParsedFeaturePolicyDeclaration::~ParsedFeaturePolicyDeclaration() = default;
 
 bool operator==(const ParsedFeaturePolicyDeclaration& lhs,
                 const ParsedFeaturePolicyDeclaration& rhs) {
@@ -183,7 +183,7 @@ FeaturePolicy::FeaturePolicy(url::Origin origin,
 FeaturePolicy::FeaturePolicy(url::Origin origin)
     : origin_(origin), feature_list_(GetDefaultFeatureList()) {}
 
-FeaturePolicy::~FeaturePolicy() {}
+FeaturePolicy::~FeaturePolicy() = default;
 
 // static
 std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromParentPolicy(
@@ -277,7 +277,9 @@ const FeaturePolicy::FeatureList& FeaturePolicy::GetDefaultFeatureList() {
                            {FeaturePolicyFeature::kGyroscope,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
                            {FeaturePolicyFeature::kMagnetometer,
-                            FeaturePolicy::FeatureDefault::EnableForSelf}}));
+                            FeaturePolicy::FeatureDefault::EnableForSelf},
+                           {FeaturePolicyFeature::kUnsizedMedia,
+                            FeaturePolicy::FeatureDefault::EnableForAll}}));
   return default_feature_list;
 }
 

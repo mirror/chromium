@@ -17,12 +17,7 @@ import sys
 # If this test starts failing, please set TEST_IS_ENABLED to "False" and file a
 # bug to get this reenabled, and cc the people listed in
 # //tools/traffic_annotation/OWNERS.
-
-# TODO(crbug.com/788035) - this test currently takes up to 20 minutes to
-# execute even on linux_chromium_rel_ng; we need to figure out how to make
-# it be much faster before enabling it anywhere in the CQ.
-# TEST_IS_ENABLED = sys.platform != 'win32'
-TEST_IS_ENABLED = False
+TEST_IS_ENABLED = sys.platform != 'win32'
 
 
 class NetworkTrafficAnnotationChecker():
@@ -117,7 +112,7 @@ class NetworkTrafficAnnotationChecker():
       file_paths = []
 
     args = [self.auditor_path, "--test-only", "--limit=%i" % limit,
-            "--build-path=" + self.build_path ] + file_paths
+            "--build-path=" + self.build_path, "--error-resilient"] + file_paths
 
     if sys.platform.startswith("win"):
       args.insert(0, sys.executable)
@@ -141,11 +136,15 @@ class NetworkTrafficAnnotationChecker():
     """Gets the list of modified files from git. Returns None if any error
     happens."""
 
-    # List of files is extracted the same way as the following test recipe:
-    # https://cs.chromium.org/chromium/tools/depot_tools/recipes/recipe_modules/
-    # tryserver/api.py?l=66
+    # List of files is extracted almost the same way as the following test
+    # recipe: https://cs.chromium.org/chromium/tools/depot_tools/recipes/
+    # recipe_modules/tryserver/api.py
+    # '--no-renames' switch is added so that if a file is renamed, both old and
+    # new name would be given. Old name is needed to discard its data in
+    # annotations.xml and new name is needed for updating the XML and checking
+    # its content for possible changes.
     args = ["git.bat"] if sys.platform == "win32" else ["git"]
-    args += ["diff", "--cached", "--name-only"]
+    args += ["diff", "--cached", "--name-only", "--no-renames"]
 
     original_path = os.getcwd()
 

@@ -5,7 +5,6 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
@@ -28,6 +27,7 @@
 #include "components/policy/policy_constants.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
 #include "content/public/test/browser_test.h"
@@ -75,7 +75,7 @@ bool IsQuicEnabled(
   return is_quic_enabled;
 }
 
-bool IsQuicEnabled(content::mojom::NetworkContext* network_context) {
+bool IsQuicEnabled(network::mojom::NetworkContext* network_context) {
   GURL url =
       GURL(std::string("https://") + grpc_support::kTestServerHost + ":" +
            base::NumberToString(grpc_support::GetQuicTestServerPort()) +
@@ -177,7 +177,7 @@ class QuicAllowedPolicyIsFalse: public QuicAllowedPolicyTestBase {
  protected:
   void GetQuicAllowedPolicy(PolicyMap* values) override {
     values->Set(key::kQuicAllowed, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_MACHINE,
-                POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(false),
+                POLICY_SOURCE_CLOUD, std::make_unique<base::Value>(false),
                 nullptr);
   }
 
@@ -199,7 +199,7 @@ class QuicAllowedPolicyIsTrue: public QuicAllowedPolicyTestBase {
  protected:
   void GetQuicAllowedPolicy(PolicyMap* values) override {
     values->Set(key::kQuicAllowed, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_MACHINE,
-                POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(true),
+                POLICY_SOURCE_CLOUD, std::make_unique<base::Value>(true),
                 nullptr);
   }
 
@@ -300,7 +300,7 @@ class QuicAllowedPolicyDynamicTest : public QuicTestBase {
                             bool value) {
     PolicyMap policy_map;
     policy_map.Set(key::kQuicAllowed, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-                   POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(value),
+                   POLICY_SOURCE_CLOUD, std::make_unique<base::Value>(value),
                    nullptr);
     provider->UpdateChromePolicy(policy_map);
     base::RunLoop().RunUntilIdle();
@@ -313,6 +313,12 @@ class QuicAllowedPolicyDynamicTest : public QuicTestBase {
     PolicyMap policy_map;
     provider->UpdateChromePolicy(policy_map);
     base::RunLoop().RunUntilIdle();
+
+    // To avoid any races between sending future requests and disabling QUIC in
+    // the network process, flush the NetworkService Mojo interface, which is
+    // the one that has the DisableQuic() method.
+    if (base::FeatureList::IsEnabled(features::kNetworkService))
+      content::FlushNetworkServiceInstanceForTesting();
   }
 
   // Returns the first Profile.

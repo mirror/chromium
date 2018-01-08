@@ -10,10 +10,13 @@
 #include "base/strings/stringprintf.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/resource_request.h"
-#include "content/public/common/resource_response.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/http/http_util.h"
+#include "services/network/public/cpp/loader_util.h"
+#include "services/network/public/cpp/resource_request.h"
+#include "services/network/public/cpp/resource_request_body.h"
+#include "services/network/public/cpp/resource_response.h"
+#include "ui/base/page_transition_types.h"
 
 namespace content {
 namespace {
@@ -41,18 +44,19 @@ class BlobCompleteCaller : public blink::mojom::BlobReaderClient {
 
 // static
 std::unique_ptr<ServiceWorkerFetchRequest>
-ServiceWorkerLoaderHelpers::CreateFetchRequest(const ResourceRequest& request) {
+ServiceWorkerLoaderHelpers::CreateFetchRequest(
+    const network::ResourceRequest& request) {
   auto new_request = std::make_unique<ServiceWorkerFetchRequest>();
   new_request->mode = request.fetch_request_mode;
-  new_request->is_main_resource_load =
-      ServiceWorkerUtils::IsMainResourceType(request.resource_type);
-  new_request->request_context_type = request.fetch_request_context_type;
+  new_request->is_main_resource_load = ServiceWorkerUtils::IsMainResourceType(
+      static_cast<ResourceType>(request.resource_type));
+  new_request->request_context_type =
+      static_cast<RequestContextType>(request.fetch_request_context_type);
   new_request->frame_type = request.fetch_frame_type;
   new_request->url = request.url;
   new_request->method = request.method;
   // |blob_uuid| and |blob_size| aren't used in MojoBlobs, so just clear them.
   // The caller is responsible for setting the MojoBlob field |blob| if needed.
-  DCHECK(features::IsMojoBlobsEnabled());
   new_request->blob_uuid.clear();
   new_request->blob_size = 0;
   new_request->credentials_mode = request.fetch_credentials_mode;
@@ -61,9 +65,11 @@ ServiceWorkerLoaderHelpers::CreateFetchRequest(const ResourceRequest& request) {
   new_request->redirect_mode = request.fetch_redirect_mode;
   new_request->keepalive = request.keepalive;
   new_request->is_reload = ui::PageTransitionCoreTypeIs(
-      request.transition_type, ui::PAGE_TRANSITION_RELOAD);
-  new_request->referrer =
-      Referrer(GURL(request.referrer), request.referrer_policy);
+      static_cast<ui::PageTransition>(request.transition_type),
+      ui::PAGE_TRANSITION_RELOAD);
+  new_request->referrer = Referrer(
+      GURL(request.referrer), Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
+                                  request.referrer_policy));
   new_request->fetch_type = ServiceWorkerFetchType::FETCH;
   return new_request;
 }
@@ -73,7 +79,7 @@ void ServiceWorkerLoaderHelpers::SaveResponseHeaders(
     const int status_code,
     const std::string& status_text,
     const ServiceWorkerHeaderMap& headers,
-    ResourceResponseHead* out_head) {
+    network::ResourceResponseHead* out_head) {
   // Build a string instead of using HttpResponseHeaders::AddHeader on
   // each header, since AddHeader has O(n^2) performance.
   std::string buf(base::StringPrintf("HTTP/1.1 %d %s\r\n", status_code,
@@ -88,6 +94,11 @@ void ServiceWorkerLoaderHelpers::SaveResponseHeaders(
 
   out_head->headers = new net::HttpResponseHeaders(
       net::HttpUtil::AssembleRawHeaders(buf.c_str(), buf.size()));
+
+  // Populate |out_head|'s MIME type with the value from the HTTP response
+  // headers. If there is none, set a default value.
+  // TODO(crbug.com/771118): Make the MIME sniffer work for SW controlled page
+  // loads, so we don't need to set a simple default value.
   if (out_head->mime_type.empty()) {
     std::string mime_type;
     out_head->headers->GetMimeType(&mime_type);
@@ -95,12 +106,20 @@ void ServiceWorkerLoaderHelpers::SaveResponseHeaders(
       mime_type = "text/plain";
     out_head->mime_type = mime_type;
   }
+
+  // Populate |out_head|'s charset with the value from the HTTP response
+  // headers.
+  if (out_head->charset.empty()) {
+    std::string charset;
+    if (out_head->headers->GetCharset(&charset))
+      out_head->charset = charset;
+  }
 }
 
 // static
 void ServiceWorkerLoaderHelpers::SaveResponseInfo(
     const ServiceWorkerResponse& response,
-    ResourceResponseHead* out_head) {
+    network::ResourceResponseHead* out_head) {
   out_head->was_fetched_via_service_worker = true;
   out_head->was_fallback_required_by_service_worker = false;
   out_head->url_list_via_service_worker = response.url_list;
@@ -114,18 +133,12 @@ void ServiceWorkerLoaderHelpers::SaveResponseInfo(
 // static
 base::Optional<net::RedirectInfo>
 ServiceWorkerLoaderHelpers::ComputeRedirectInfo(
-    const ResourceRequest& original_request,
-    const ResourceResponseHead& response_head,
+    const network::ResourceRequest& original_request,
+    const network::ResourceResponseHead& response_head,
     bool token_binding_negotiated) {
   std::string new_location;
   if (!response_head.headers->IsRedirect(&new_location))
     return base::nullopt;
-
-  std::string referrer_string;
-  net::URLRequest::ReferrerPolicy referrer_policy;
-  Referrer::ComputeReferrerInfo(
-      &referrer_string, &referrer_policy,
-      Referrer(original_request.referrer, original_request.referrer_policy));
 
   // If the request is a MAIN_FRAME request, the first-party URL gets
   // updated on redirects.
@@ -136,8 +149,9 @@ ServiceWorkerLoaderHelpers::ComputeRedirectInfo(
   return net::RedirectInfo::ComputeRedirectInfo(
       original_request.method, original_request.url,
       original_request.site_for_cookies, first_party_url_policy,
-      referrer_policy, referrer_string, response_head.headers.get(),
-      response_head.headers->response_code(),
+      original_request.referrer_policy,
+      network::ComputeReferrer(original_request.referrer),
+      response_head.headers.get(), response_head.headers->response_code(),
       original_request.url.Resolve(new_location), token_binding_negotiated);
 }
 
@@ -172,6 +186,48 @@ int ServiceWorkerLoaderHelpers::ReadBlobResponseBody(
   }
   *handle_out = std::move(data_pipe.consumer_handle);
   return net::OK;
+}
+
+// static
+scoped_refptr<network::ResourceRequestBody>
+ServiceWorkerLoaderHelpers::CloneResourceRequestBody(
+    const network::ResourceRequestBody* body) {
+  auto clone = base::MakeRefCounted<network::ResourceRequestBody>();
+
+  clone->set_identifier(body->identifier());
+  clone->set_contains_sensitive_info(body->contains_sensitive_info());
+  for (const network::DataElement& element : *body->elements()) {
+    switch (element.type()) {
+      case network::DataElement::TYPE_UNKNOWN:
+        NOTREACHED();
+        break;
+      case network::DataElement::TYPE_DATA_PIPE: {
+        network::mojom::DataPipeGetterPtrInfo clone_ptr_info;
+        element.data_pipe()->Clone(mojo::MakeRequest(&clone_ptr_info));
+        network::mojom::DataPipeGetterPtr clone_ptr(std::move(clone_ptr_info));
+        clone->AppendDataPipe(std::move(clone_ptr));
+        break;
+      }
+      case network::DataElement::TYPE_RAW_FILE:
+        clone->AppendRawFileRange(element.file().Duplicate(), element.path(),
+                                  element.offset(), element.length(),
+                                  element.expected_modification_time());
+        break;
+      case network::DataElement::TYPE_BLOB:
+        NOTREACHED() << "There should be no blob elements in NetworkService";
+        break;
+      case network::DataElement::TYPE_FILE:
+        clone->AppendFileRange(element.path(), element.offset(),
+                               element.length(),
+                               element.expected_modification_time());
+        break;
+      case network::DataElement::TYPE_BYTES:
+        clone->AppendBytes(element.bytes(), element.length());
+        break;
+    }
+  }
+
+  return clone;
 }
 
 }  // namespace content

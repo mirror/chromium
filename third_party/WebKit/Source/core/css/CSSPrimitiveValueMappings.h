@@ -47,6 +47,7 @@
 #include "platform/fonts/TextRenderingMode.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/TouchAction.h"
+#include "platform/scroll/ScrollCustomization.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/text/TextRun.h"
 #include "platform/text/WritingMode.h"
@@ -1511,22 +1512,50 @@ inline TouchAction CSSIdentifierValue::ConvertTo() const {
 }
 
 template <>
+inline ScrollCustomization::ScrollDirection CSSIdentifierValue::ConvertTo()
+    const {
+  switch (value_id_) {
+    case CSSValueNone:
+      return ScrollCustomization::kScrollDirectionNone;
+    case CSSValueAuto:
+      return ScrollCustomization::kScrollDirectionAuto;
+    case CSSValuePanLeft:
+      return ScrollCustomization::kScrollDirectionPanLeft;
+    case CSSValuePanRight:
+      return ScrollCustomization::kScrollDirectionPanRight;
+    case CSSValuePanX:
+      return ScrollCustomization::kScrollDirectionPanX;
+    case CSSValuePanUp:
+      return ScrollCustomization::kScrollDirectionPanUp;
+    case CSSValuePanDown:
+      return ScrollCustomization::kScrollDirectionPanDown;
+    case CSSValuePanY:
+      return ScrollCustomization::kScrollDirectionPanY;
+    default:
+      break;
+  }
+
+  NOTREACHED();
+  return ScrollCustomization::kScrollDirectionNone;
+}
+
+template <>
 inline CSSIdentifierValue::CSSIdentifierValue(CSSBoxType css_box)
     : CSSValue(kIdentifierClass) {
   switch (css_box) {
-    case kMarginBox:
+    case CSSBoxType::kMargin:
       value_id_ = CSSValueMarginBox;
       break;
-    case kBorderBox:
+    case CSSBoxType::kBorder:
       value_id_ = CSSValueBorderBox;
       break;
-    case kPaddingBox:
+    case CSSBoxType::kPadding:
       value_id_ = CSSValuePaddingBox;
       break;
-    case kContentBox:
+    case CSSBoxType::kContent:
       value_id_ = CSSValueContentBox;
       break;
-    case kBoxMissing:
+    case CSSBoxType::kMissing:
       // The missing box should convert to a null primitive value.
       NOTREACHED();
   }
@@ -1536,18 +1565,18 @@ template <>
 inline CSSBoxType CSSIdentifierValue::ConvertTo() const {
   switch (GetValueID()) {
     case CSSValueMarginBox:
-      return kMarginBox;
+      return CSSBoxType::kMargin;
     case CSSValueBorderBox:
-      return kBorderBox;
+      return CSSBoxType::kBorder;
     case CSSValuePaddingBox:
-      return kPaddingBox;
+      return CSSBoxType::kPadding;
     case CSSValueContentBox:
-      return kContentBox;
+      return CSSBoxType::kContent;
     default:
       break;
   }
   NOTREACHED();
-  return kContentBox;
+  return CSSBoxType::kContent;
 }
 
 template <>

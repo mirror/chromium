@@ -264,12 +264,6 @@ class ServiceWorkerVersionTest : public testing::Test {
         CreateReceiverOnCurrentThread(&status));
     base::RunLoop().RunUntilIdle();
     ASSERT_EQ(SERVICE_WORKER_OK, status);
-
-    // Simulate adding one process to the pattern.
-    helper_->SimulateAddProcessToPattern(pattern_,
-                                         helper_->mock_render_process_id());
-    ASSERT_TRUE(helper_->context()->process_manager()
-        ->PatternHasProcessToRun(pattern_));
   }
 
   virtual std::unique_ptr<MessageReceiver> GetMessageReceiver() {
@@ -287,10 +281,10 @@ class ServiceWorkerVersionTest : public testing::Test {
         SERVICE_WORKER_ERROR_MAX_VALUE;  // dummy value
 
     // Make sure worker is running.
-    version_->RunAfterStartWorker(event_type, base::Bind(&base::DoNothing),
+    version_->RunAfterStartWorker(event_type,
                                   CreateReceiverOnCurrentThread(&status));
     base::RunLoop().RunUntilIdle();
-    EXPECT_EQ(SERVICE_WORKER_ERROR_MAX_VALUE, status);
+    EXPECT_EQ(SERVICE_WORKER_OK, status);
     EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
     // Start request, as if an event is being dispatched.
@@ -302,7 +296,7 @@ class ServiceWorkerVersionTest : public testing::Test {
     EXPECT_TRUE(version_->FinishRequest(request_id, true /* was_handled */,
                                         base::Time::Now()));
     base::RunLoop().RunUntilIdle();
-    EXPECT_EQ(SERVICE_WORKER_ERROR_MAX_VALUE, status);
+    EXPECT_EQ(SERVICE_WORKER_OK, status);
   }
 
   void SetTickClockForTesting(base::SimpleTestTickClock* tick_clock) {
@@ -866,11 +860,9 @@ TEST_F(ServiceWorkerVersionTest, StaleUpdate_DoNotDeferTimer) {
   // Stale time is not deferred.
   version_->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::UNKNOWN,
-      base::BindOnce(&base::DoNothing),
       base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   version_->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::UNKNOWN,
-      base::BindOnce(&base::DoNothing),
       base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(stale_time, version_->stale_time_);
@@ -1055,7 +1047,7 @@ TEST_F(ServiceWorkerRequestTimeoutTest, RequestTimeout) {
   EXPECT_FALSE(version_->FinishRequest(request_id, true /* was_handled */,
                                        base::Time::Now()));
 
-  // Simulate the renderer aborting the pending event.
+  // Simulate the renderer aborting the inflight event.
   // This should not crash: https://crbug.com/676984.
   TakeExtendableMessageEventCallback().Run(
       blink::mojom::ServiceWorkerEventStatus::ABORTED, base::Time::Now());
@@ -1358,9 +1350,6 @@ TEST_F(ServiceWorkerVersionTest, RendererCrashDuringEvent) {
 
 TEST_F(ServiceWorkerFailToStartTest, FailingWorkerUsesNewRendererProcess) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
-
-  helper_->SimulateAddProcessToPattern(pattern_,
-                                       helper_->new_render_process_id());
   ServiceWorkerContextCore* context = helper_->context();
   int64_t id = version_->version_id();
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);

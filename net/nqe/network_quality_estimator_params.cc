@@ -13,6 +13,14 @@ namespace net {
 
 const char kForceEffectiveConnectionType[] = "force_effective_connection_type";
 const char kEffectiveConnectionTypeSlow2GOnCellular[] = "Slow-2G-On-Cellular";
+const base::TimeDelta
+    kHttpRttEffectiveConnectionTypeThresholds[EFFECTIVE_CONNECTION_TYPE_LAST] =
+        {base::TimeDelta::FromMilliseconds(0),
+         base::TimeDelta::FromMilliseconds(0),
+         base::TimeDelta::FromMilliseconds(2010),
+         base::TimeDelta::FromMilliseconds(1420),
+         base::TimeDelta::FromMilliseconds(272),
+         base::TimeDelta::FromMilliseconds(0)};
 
 namespace {
 
@@ -288,24 +296,35 @@ void ObtainConnectionThresholds(
   nqe::internal::NetworkQuality default_effective_connection_type_thresholds
       [EffectiveConnectionType::EFFECTIVE_CONNECTION_TYPE_LAST];
 
+  DCHECK_LT(base::TimeDelta(), kHttpRttEffectiveConnectionTypeThresholds
+                                   [EFFECTIVE_CONNECTION_TYPE_SLOW_2G]);
   default_effective_connection_type_thresholds
       [EFFECTIVE_CONNECTION_TYPE_SLOW_2G] = nqe::internal::NetworkQuality(
           // Set to the 66th percentile of 2G RTT observations on Android.
-          base::TimeDelta::FromMilliseconds(2010),
+          kHttpRttEffectiveConnectionTypeThresholds
+              [EFFECTIVE_CONNECTION_TYPE_SLOW_2G],
           base::TimeDelta::FromMilliseconds(1870),
           nqe::internal::INVALID_RTT_THROUGHPUT);
 
+  DCHECK_LT(
+      base::TimeDelta(),
+      kHttpRttEffectiveConnectionTypeThresholds[EFFECTIVE_CONNECTION_TYPE_2G]);
   default_effective_connection_type_thresholds[EFFECTIVE_CONNECTION_TYPE_2G] =
       nqe::internal::NetworkQuality(
           // Set to the 50th percentile of RTT observations on Android.
-          base::TimeDelta::FromMilliseconds(1420),
+          kHttpRttEffectiveConnectionTypeThresholds
+              [EFFECTIVE_CONNECTION_TYPE_2G],
           base::TimeDelta::FromMilliseconds(1280),
           nqe::internal::INVALID_RTT_THROUGHPUT);
 
+  DCHECK_LT(
+      base::TimeDelta(),
+      kHttpRttEffectiveConnectionTypeThresholds[EFFECTIVE_CONNECTION_TYPE_3G]);
   default_effective_connection_type_thresholds[EFFECTIVE_CONNECTION_TYPE_3G] =
       nqe::internal::NetworkQuality(
           // Set to the 50th percentile of 3G RTT observations on Android.
-          base::TimeDelta::FromMilliseconds(272),
+          kHttpRttEffectiveConnectionTypeThresholds
+              [EFFECTIVE_CONNECTION_TYPE_3G],
           base::TimeDelta::FromMilliseconds(204),
           nqe::internal::INVALID_RTT_THROUGHPUT);
 
@@ -415,7 +434,7 @@ NetworkQualityEstimatorParams::NetworkQualityEstimatorParams(
           GetDoubleValueForVariationParamWithDefaultValue(
               params_,
               "lower_bound_http_rtt_transport_rtt_multiplier",
-              -1)),
+              1.0)),
       upper_bound_http_rtt_transport_rtt_multiplier_(
           GetDoubleValueForVariationParamWithDefaultValue(
               params_,
@@ -588,12 +607,6 @@ int64_t NetworkQualityEstimatorParams::GetThroughputMinTransferSizeBits()
          1000;
 }
 
-// static
-const char* NetworkQualityEstimatorParams::GetNameForConnectionType(
-    NetworkChangeNotifier::ConnectionType connection_type) {
-  return GetNameForConnectionTypeInternal(connection_type);
-}
-
 const nqe::internal::NetworkQuality&
 NetworkQualityEstimatorParams::DefaultObservation(
     NetworkChangeNotifier::ConnectionType type) const {
@@ -619,25 +632,6 @@ NetworkQualityEstimatorParams::EffectiveConnectionTypeAlgorithm
 NetworkQualityEstimatorParams::GetEffectiveConnectionTypeAlgorithm() const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return effective_connection_type_algorithm_;
-}
-
-EffectiveConnectionType NetworkQualityEstimatorParams::GetDefaultECT(
-    NetworkChangeNotifier::ConnectionType connection_type) const {
-  switch (connection_type) {
-    case NetworkChangeNotifier::CONNECTION_UNKNOWN:
-    case NetworkChangeNotifier::CONNECTION_ETHERNET:
-    case NetworkChangeNotifier::CONNECTION_WIFI:
-    case NetworkChangeNotifier::CONNECTION_4G:
-    case NetworkChangeNotifier::CONNECTION_NONE:
-    case NetworkChangeNotifier::CONNECTION_BLUETOOTH:
-      return EFFECTIVE_CONNECTION_TYPE_4G;
-    case NetworkChangeNotifier::CONNECTION_2G:
-      return EFFECTIVE_CONNECTION_TYPE_2G;
-    case NetworkChangeNotifier::CONNECTION_3G:
-      return EFFECTIVE_CONNECTION_TYPE_3G;
-  }
-  NOTREACHED();
-  return EFFECTIVE_CONNECTION_TYPE_4G;
 }
 
 }  // namespace net

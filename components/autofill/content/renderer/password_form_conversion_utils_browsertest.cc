@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 #include <stddef.h>
+#include <memory>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -215,7 +215,7 @@ class MAYBE_PasswordFormConversionUtilsTest : public content::RenderViewTest {
       if (with_user_input) {
         const base::string16 element_value = input_element->Value().Utf16();
         user_input[control_elements[i]] =
-            std::make_pair(base::MakeUnique<base::string16>(element_value),
+            std::make_pair(std::make_unique<base::string16>(element_value),
                            FieldPropertiesFlags::USER_TYPED);
       }
     }
@@ -350,7 +350,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
        HTMLDetector_DeveloperGroupAttributes) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableHtmlBasedUsernameDetector);
+      password_manager::features::kHtmlBasedUsernameDetector);
 
   // Each test case consists of a set of parameters to be plugged into the
   // PasswordFormBuilder below, plus the corresponding expectations.
@@ -462,17 +462,17 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
               password_form->username_value);
     // Check that the username field was found by HTML detector.
     ASSERT_EQ(1u, username_detector_cache_.size());
-    ASSERT_FALSE(username_detector_cache_.begin()->second.IsNull());
+    ASSERT_FALSE(username_detector_cache_.begin()->second.empty());
     EXPECT_EQ(
         cases[i].expected_username_element,
-        username_detector_cache_.begin()->second.NameForAutofill().Utf8());
+        username_detector_cache_.begin()->second[0].NameForAutofill().Utf8());
   }
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetector_SeveralDetections) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableHtmlBasedUsernameDetector);
+      password_manager::features::kHtmlBasedUsernameDetector);
 
   // If word matches in more than 2 fields, we don't match on it.
   // We search for match with another word.
@@ -496,16 +496,17 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetector_SeveralDetections) {
   EXPECT_EQ(base::UTF8ToUTF16("johnsmith"), password_form->username_value);
   // Check that the username field was found by HTML detector.
   ASSERT_EQ(1u, username_detector_cache_.size());
-  ASSERT_FALSE(username_detector_cache_.begin()->second.IsNull());
-  EXPECT_EQ("loginid",
-            username_detector_cache_.begin()->second.NameForAutofill().Utf8());
+  ASSERT_EQ(1u, username_detector_cache_.begin()->second.size());
+  EXPECT_EQ(
+      "loginid",
+      username_detector_cache_.begin()->second[0].NameForAutofill().Utf8());
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
        HTMLDetector_UserGroupAttributes) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableHtmlBasedUsernameDetector);
+      password_manager::features::kHtmlBasedUsernameDetector);
 
   // Each test case consists of a set of parameters to be plugged into the
   // PasswordFormBuilder below, plus the corresponding expectations.
@@ -615,17 +616,17 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
               password_form->username_value);
     // Check that the username field was found by HTML detector.
     ASSERT_EQ(1u, username_detector_cache_.size());
-    ASSERT_FALSE(username_detector_cache_.begin()->second.IsNull());
+    ASSERT_FALSE(username_detector_cache_.begin()->second.empty());
     EXPECT_EQ(
         cases[i].expected_username_element,
-        username_detector_cache_.begin()->second.NameForAutofill().Utf8());
+        username_detector_cache_.begin()->second[0].NameForAutofill().Utf8());
   }
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableHtmlBasedUsernameDetector);
+      password_manager::features::kHtmlBasedUsernameDetector);
 
   PasswordFormBuilder builder(kTestFormActionURL);
   builder.AddTextField("unknown", "12345", nullptr);
@@ -635,17 +636,17 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   std::string html = builder.ProduceHTML();
   WebFormElement form;
   LoadWebFormFromHTML(html, &form, nullptr);
-  UsernameDetectorCache username_detector_cache;
+  UsernameDetectorCache detector_cache;
 
   // No signals from HTML attributes. The classifier found nothing and cached
   // it.
   base::HistogramTester histogram_tester;
-  std::unique_ptr<PasswordForm> password_form = CreatePasswordFormFromWebForm(
-      form, nullptr, nullptr, &username_detector_cache);
+  std::unique_ptr<PasswordForm> password_form =
+      CreatePasswordFormFromWebForm(form, nullptr, nullptr, &detector_cache);
   EXPECT_TRUE(password_form);
-  ASSERT_EQ(1u, username_detector_cache.size());
-  EXPECT_EQ(form, username_detector_cache.begin()->first);
-  EXPECT_EQ(blink::WebInputElement(), username_detector_cache.begin()->second);
+  ASSERT_EQ(1u, detector_cache.size());
+  EXPECT_EQ(form, detector_cache.begin()->first);
+  EXPECT_TRUE(detector_cache.begin()->second.empty());
   histogram_tester.ExpectUniqueSample("PasswordManager.UsernameDetectionMethod",
                                       UsernameDetectionMethod::BASE_HEURISTIC,
                                       1);
@@ -655,27 +656,26 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   WebVector<WebFormControlElement> control_elements;
   form.GetFormControlElements(control_elements);
   control_elements[0].SetAttribute("name", "id");
-  password_form = CreatePasswordFormFromWebForm(form, nullptr, nullptr,
-                                                &username_detector_cache);
+  password_form =
+      CreatePasswordFormFromWebForm(form, nullptr, nullptr, &detector_cache);
   EXPECT_TRUE(password_form);
-  ASSERT_EQ(1u, username_detector_cache.size());
-  EXPECT_EQ(form, username_detector_cache.begin()->first);
-  EXPECT_EQ(blink::WebInputElement(), username_detector_cache.begin()->second);
+  ASSERT_EQ(1u, detector_cache.size());
+  EXPECT_EQ(form, detector_cache.begin()->first);
+  EXPECT_TRUE(detector_cache.begin()->second.empty());
   histogram_tester.ExpectUniqueSample("PasswordManager.UsernameDetectionMethod",
                                       UsernameDetectionMethod::BASE_HEURISTIC,
                                       2);
 
   // Clear the cache. The classifier will find username field and cache it.
-  username_detector_cache.clear();
+  detector_cache.clear();
   ASSERT_EQ(4u, control_elements.size());
-  password_form = CreatePasswordFormFromWebForm(form, nullptr, nullptr,
-                                                &username_detector_cache);
+  password_form =
+      CreatePasswordFormFromWebForm(form, nullptr, nullptr, &detector_cache);
   EXPECT_TRUE(password_form);
-  ASSERT_EQ(1u, username_detector_cache.size());
-  EXPECT_EQ(form, username_detector_cache.begin()->first);
-  ASSERT_FALSE(username_detector_cache.begin()->second.IsNull());
-  EXPECT_EQ("id",
-            username_detector_cache.begin()->second.NameForAutofill().Utf8());
+  ASSERT_EQ(1u, detector_cache.size());
+  EXPECT_EQ(form, detector_cache.begin()->first);
+  ASSERT_EQ(1u, detector_cache.begin()->second.size());
+  EXPECT_EQ("id", detector_cache.begin()->second[0].NameForAutofill().Utf8());
   EXPECT_THAT(
       histogram_tester.GetAllSamples("PasswordManager.UsernameDetectionMethod"),
       testing::UnorderedElementsAre(
@@ -685,19 +685,63 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   // Change the attributes again ("username" is stronger signal than "login"),
   // but keep the cache. The classifier's output should be the same.
   control_elements[1].SetAttribute("name", "username");
-  password_form = CreatePasswordFormFromWebForm(form, nullptr, nullptr,
-                                                &username_detector_cache);
+  password_form =
+      CreatePasswordFormFromWebForm(form, nullptr, nullptr, &detector_cache);
   EXPECT_TRUE(password_form);
-  ASSERT_EQ(1u, username_detector_cache.size());
-  EXPECT_EQ(form, username_detector_cache.begin()->first);
-  ASSERT_FALSE(username_detector_cache.begin()->second.IsNull());
-  EXPECT_EQ("id",
-            username_detector_cache.begin()->second.NameForAutofill().Utf8());
+  ASSERT_EQ(1u, detector_cache.size());
+  EXPECT_EQ(form, detector_cache.begin()->first);
+  ASSERT_EQ(1u, detector_cache.begin()->second.size());
+  EXPECT_EQ("id", detector_cache.begin()->second[0].NameForAutofill().Utf8());
   EXPECT_THAT(
       histogram_tester.GetAllSamples("PasswordManager.UsernameDetectionMethod"),
       testing::UnorderedElementsAre(
           base::Bucket(UsernameDetectionMethod::BASE_HEURISTIC, 2),
           base::Bucket(UsernameDetectionMethod::HTML_BASED_CLASSIFIER, 2)));
+}
+
+TEST_F(MAYBE_PasswordFormConversionUtilsTest,
+       HTMLDetectorCache_SkipSomePredictions) {
+  // The cache of HTML based username detector may contain several predictions
+  // (in the order of decreasing reliability) for the given form, but the
+  // detector should consider only |possible_usernames| passed to
+  // GetUsernameFieldBasedOnHtmlAttributes. For example, if a field has no user
+  // input while others has, the field cannot be an username field.
+
+  PasswordFormBuilder builder(kTestFormActionURL);
+  builder.AddTextField("username", "12345", nullptr);
+  builder.AddTextField("email", "smith@google.com", nullptr);
+  builder.AddTextField("id", "12345", nullptr);
+  builder.AddPasswordField("password", "secret", nullptr);
+  builder.AddSubmitButton("submit");
+  std::string html = builder.ProduceHTML();
+  WebFormElement form;
+  LoadWebFormFromHTML(html, &form, nullptr);
+  WebVector<WebFormControlElement> control_elements;
+  form.GetFormControlElements(control_elements);
+  ASSERT_FALSE(control_elements.empty());
+
+  // Add predictions for "email" and "id" fields to the cache.
+  UsernameDetectorCache username_detector_cache;
+  username_detector_cache[control_elements[0].Form()] = {
+      *ToWebInputElement(&control_elements[1]),   // email
+      *ToWebInputElement(&control_elements[2])};  // id
+
+  // A user typed only into "id" and "password" fields. So, the prediction for
+  // "email" field should be ignored despite it is more reliable than prediction
+  // for "id" field.
+  FieldValueAndPropertiesMaskMap user_input;
+  user_input[control_elements[2]] = std::make_pair(  // id
+      std::make_unique<base::string16>(control_elements[2].Value().Utf16()),
+      FieldPropertiesFlags::USER_TYPED);
+  user_input[control_elements[3]] = std::make_pair(  // password
+      std::make_unique<base::string16>(control_elements[3].Value().Utf16()),
+      FieldPropertiesFlags::USER_TYPED);
+
+  std::unique_ptr<PasswordForm> password_form = CreatePasswordFormFromWebForm(
+      form, &user_input, nullptr, &username_detector_cache);
+
+  ASSERT_TRUE(password_form);
+  EXPECT_EQ(base::UTF8ToUTF16("id"), password_form->username_element);
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
@@ -1526,12 +1570,12 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, UserInput) {
   form.GetFormControlElements(control_elements);
   ASSERT_EQ("nonvisible_text", control_elements[0].NameForAutofill().Utf8());
   user_input[control_elements[0]] = std::make_pair(
-      base::MakeUnique<base::string16>(control_elements[0].Value().Utf16()),
+      std::make_unique<base::string16>(control_elements[0].Value().Utf16()),
       FieldPropertiesFlags::USER_TYPED);
   ASSERT_EQ("nonvisible_password",
             control_elements[2].NameForAutofill().Utf8());
   user_input[control_elements[2]] = std::make_pair(
-      base::MakeUnique<base::string16>(control_elements[2].Value().Utf16()),
+      std::make_unique<base::string16>(control_elements[2].Value().Utf16()),
       FieldPropertiesFlags::USER_TYPED);
 
   std::unique_ptr<PasswordForm> password_form =
@@ -1584,12 +1628,12 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
   ASSERT_EQ("password_with_user_input1",
             control_elements[9].NameForAutofill().Utf8());
   user_input[control_elements[9]] = std::make_pair(
-      base::MakeUnique<base::string16>(control_elements[9].Value().Utf16()),
+      std::make_unique<base::string16>(control_elements[9].Value().Utf16()),
       FieldPropertiesFlags::USER_TYPED);
   ASSERT_EQ("password_with_user_input2",
             control_elements[10].NameForAutofill().Utf8());
   user_input[control_elements[10]] = std::make_pair(
-      base::MakeUnique<base::string16>(control_elements[10].Value().Utf16()),
+      std::make_unique<base::string16>(control_elements[10].Value().Utf16()),
       FieldPropertiesFlags::USER_TYPED);
 
   std::unique_ptr<PasswordForm> password_form =
@@ -1642,12 +1686,12 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
   ASSERT_EQ("password_with_user_input1",
             control_elements[7].NameForAutofill().Utf8());
   user_input[control_elements[7]] = std::make_pair(
-      base::MakeUnique<base::string16>(control_elements[7].Value().Utf16()),
+      std::make_unique<base::string16>(control_elements[7].Value().Utf16()),
       FieldPropertiesFlags::USER_TYPED);
   ASSERT_EQ("password_with_user_input2",
             control_elements[9].NameForAutofill().Utf8());
   user_input[control_elements[9]] = std::make_pair(
-      base::MakeUnique<base::string16>(control_elements[9].Value().Utf16()),
+      std::make_unique<base::string16>(control_elements[9].Value().Utf16()),
       FieldPropertiesFlags::USER_TYPED);
 
   std::unique_ptr<PasswordForm> password_form =
@@ -1752,10 +1796,6 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest, SetOtherPossiblePasswords) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnablePasswordSelection);
-
   PasswordFormBuilder builder(kTestFormActionURL);
   builder.AddTextField("username1", "John", nullptr);
   builder.AddPasswordField("password1", "alpha1", nullptr);
@@ -1785,10 +1825,6 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, SetOtherPossiblePasswords) {
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
        AllPossiblePasswordsIncludeAutofilledValue) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnablePasswordSelection);
-
   for (bool autofilled_value_was_modified_by_user : {false, true}) {
     PasswordFormBuilder builder(kTestFormActionURL);
     builder.AddTextField("username1", "John", nullptr);
@@ -1807,11 +1843,11 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
     if (autofilled_value_was_modified_by_user)
       mask |= FieldPropertiesFlags::USER_TYPED;
     user_input[control_elements[1]] =
-        std::make_pair(base::MakeUnique<base::string16>(
+        std::make_pair(std::make_unique<base::string16>(
                            base::ASCIIToUTF16("autofilled_value")),
                        mask);
     user_input[control_elements[2]] = std::make_pair(
-        base::MakeUnique<base::string16>(base::ASCIIToUTF16("user_value")),
+        std::make_unique<base::string16>(base::ASCIIToUTF16("user_value")),
         FieldPropertiesFlags::USER_TYPED);
 
     std::unique_ptr<PasswordForm> password_form(
@@ -1966,6 +2002,42 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, UsernamePredictionFromServer) {
   histogram_tester.ExpectUniqueSample(
       "PasswordManager.UsernameDetectionMethod",
       UsernameDetectionMethod::SERVER_SIDE_PREDICTION, 1);
+}
+
+TEST_F(MAYBE_PasswordFormConversionUtilsTest,
+       UsernamePredictionFromServerToEmptyField) {
+  // Tests that if a form has user input and the username prediction by the
+  // server points to an empty field, then the prediction is ignored.
+  PasswordFormBuilder builder(kTestFormActionURL);
+  builder.AddTextField("empty-field", "", "");  // The prediction points here.
+  builder.AddTextField("full-name", "John A. Smith", nullptr);
+  builder.AddTextField("username", "JohnSmith", nullptr);
+  builder.AddPasswordField("password", "secret", nullptr);
+  builder.AddSubmitButton("submit");
+  std::string html = builder.ProduceHTML();
+
+  std::map<int, PasswordFormFieldPredictionType> predictions_positions;
+  predictions_positions[0] = PREDICTION_USERNAME;
+  FormsPredictionsMap predictions;
+  SetPredictions(html, &predictions, predictions_positions);
+
+  // The password field has user input.
+  WebFormElement form;
+  LoadWebFormFromHTML(html, &form, nullptr);
+  WebVector<WebFormControlElement> control_elements;
+  form.GetFormControlElements(control_elements);
+  FieldValueAndPropertiesMaskMap user_input;
+  WebInputElement* input_element = ToWebInputElement(&control_elements[3]);
+  const base::string16 element_value = input_element->Value().Utf16();
+  user_input[control_elements[3]] =
+      std::make_pair(std::make_unique<base::string16>(element_value),
+                     FieldPropertiesFlags::USER_TYPED);
+
+  std::unique_ptr<PasswordForm> password_form = CreatePasswordFormFromWebForm(
+      form, &user_input, &predictions, &username_detector_cache_);
+  ASSERT_TRUE(password_form);
+  EXPECT_EQ(base::UTF8ToUTF16("username"), password_form->username_element);
+  EXPECT_EQ(base::UTF8ToUTF16("JohnSmith"), password_form->username_value);
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
@@ -2342,7 +2414,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, ResetPasswordForm) {
   // without any text fields.
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableHtmlBasedUsernameDetector);
+      password_manager::features::kHtmlBasedUsernameDetector);
   PasswordFormBuilder builder(kTestFormActionURL);
   builder.AddPasswordField("password", "secret", nullptr);
   builder.AddSubmitButton("submit");

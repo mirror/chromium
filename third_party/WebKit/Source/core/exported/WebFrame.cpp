@@ -19,6 +19,7 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html_names.h"
 #include "core/page/Page.h"
+#include "core/probe/CoreProbes.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "public/web/WebElement.h"
@@ -105,6 +106,7 @@ bool WebFrame::Swap(WebFrame* frame) {
     DCHECK_EQ(owner, local_frame.Owner());
     if (owner) {
       owner->SetContentFrame(local_frame);
+
       if (owner->IsLocal()) {
         ToHTMLFrameOwnerElement(owner)->SetEmbeddedContentView(
             local_frame.View());
@@ -120,13 +122,24 @@ bool WebFrame::Swap(WebFrame* frame) {
     ToWebRemoteFrameImpl(frame)->InitializeCoreFrame(*page, owner, name);
   }
 
-  if (parent_ && old_frame->HasBeenActivated())
-    ToCoreFrame(*frame)->UpdateUserActivationInFrameTree();
+  Frame* new_frame = ToCoreFrame(*frame);
 
-  ToCoreFrame(*frame)->GetWindowProxyManager()->SetGlobalProxies(
-      global_proxies);
+  if (parent_ && old_frame->HasBeenActivated())
+    new_frame->UpdateUserActivationInFrameTree();
+
+  new_frame->GetWindowProxyManager()->SetGlobalProxies(global_proxies);
 
   parent_ = nullptr;
+
+  if (owner && owner->IsLocal()) {
+    if (new_frame && new_frame->IsLocalFrame()) {
+      probe::frameOwnerContentUpdated(ToLocalFrame(new_frame),
+                                      ToHTMLFrameOwnerElement(owner));
+    } else if (old_frame && old_frame->IsLocalFrame()) {
+      probe::frameOwnerContentUpdated(ToLocalFrame(old_frame),
+                                      ToHTMLFrameOwnerElement(owner));
+    }
+  }
 
   return true;
 }
@@ -153,6 +166,12 @@ void WebFrame::SetFrameOwnerPolicy(
 
 WebInsecureRequestPolicy WebFrame::GetInsecureRequestPolicy() const {
   return ToCoreFrame(*this)->GetSecurityContext()->GetInsecureRequestPolicy();
+}
+
+std::vector<unsigned> WebFrame::GetInsecureRequestToUpgrade() const {
+  SecurityContext::InsecureNavigationsSet* set =
+      ToCoreFrame(*this)->GetSecurityContext()->InsecureNavigationsToUpgrade();
+  return SecurityContext::SerializeInsecureNavigationSet(*set);
 }
 
 void WebFrame::SetFrameOwnerProperties(

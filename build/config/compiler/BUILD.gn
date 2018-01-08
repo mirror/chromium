@@ -104,9 +104,6 @@ declare_args() {
 
   # Path to an AFDO profile to use while building with clang, if any. Empty
   # implies none.
-  #
-  # Please note that you need to be very careful about changing your profile at
-  # the moment. See the `BUG(gbiv)` comment later in this file.
   clang_sample_profile_path = ""
 
   # Some configurations have default sample profiles. If this is true and
@@ -124,6 +121,26 @@ declare_args() {
 declare_args() {
   # C++11 may not be an option if Android test infrastructure is used.
   use_cxx11_on_android = use_cxx11
+}
+
+declare_args() {
+  # Set to true to use icf, Identical Code Folding.
+  #
+  # TODO(thakis): Remove `!is_android` below once NDK gold has been rolled
+  # with the fix for https://sourceware.org/bugzilla/show_bug.cgi?id=17704
+  # merged.  See also https://crbug.com/663886
+  #
+  # `linux_use_bundled_binutils` is to avoid breaking Linux distros which may
+  # still have a buggy gold.
+  #
+  # chromeos binutils has been patched with the fix, so always use icf there.
+  #
+  # The bug only affects x86 and x64, so we can still use ICF when targeting
+  # other architectures.
+  use_icf = is_posix && (use_gold || (use_lld && !is_nacl)) &&
+            !using_sanitizer && !(is_android && use_order_profiling) &&
+            ((!is_android && linux_use_bundled_binutils) || is_chromeos ||
+             !(current_cpu == "x86" || current_cpu == "x64"))
 }
 
 if (is_clang) {
@@ -179,6 +196,7 @@ config("compiler") {
   ldflags = []
   defines = []
   configs = []
+  inputs = []
 
   # System-specific flags. If your compiler flags apply to one of the
   # categories here, add it to the associated file to keep this shared config
@@ -219,12 +237,6 @@ config("compiler") {
     # AFDO to be split into its own config, so this isn't part of that config.
     #
     # Since we only profile the browser, skip it if we're building host tools.
-    #
-    # XXX(gbiv): There is currently *no* dependency between the profile we use
-    # and the compilations/links that we do. So, if the profile gets updated,
-    # the user has to manually clean build artifacts. CL:827560 should fix this
-    # by allowing us to specify `inputs` here, but until then, the only "good"
-    # workaround is changing your profile name each time you update the profile.
     if (is_clang && current_toolchain == default_toolchain) {
       _sample_path = ""
       if (clang_sample_profile_path != "") {
@@ -240,6 +252,7 @@ config("compiler") {
         if (clang_sample_profile_is_accurate) {
           cflags += [ "-fprofile-sample-accurate" ]
         }
+        inputs += [ _sample_path ]
       }
     }
 
@@ -264,16 +277,6 @@ config("compiler") {
         # Not available on aix.
         cflags += [ "-fstack-protector" ]
       }
-    }
-
-    # Linker warnings.
-    if (fatal_linker_warnings && !(is_chromeos && current_cpu == "arm") &&
-        !(is_android && use_order_profiling) && !is_mac && !is_ios &&
-        current_os != "aix") {
-      # TODO(jochen): Enable this on chromeos on arm. http://crbug.com/356580
-      # TODO(lizeb,pasko): Fix link errors when linking with order_profiling=1
-      # crbug.com/485542
-      ldflags += [ "-Wl,--fatal-warnings" ]
     }
   }
 
@@ -334,10 +337,12 @@ config("compiler") {
       ldflags += [ "-Wl,--build-id=sha1" ]
     }
 
-    defines += [ "_FILE_OFFSET_BITS=64" ]
-
     if (!is_android) {
       defines += [
+        # _FILE_OFFSET_BITS=64 should not be set on Android in order to maintain
+        # the behavior of the Android NDK from earlier versions.
+        # See https://android-developers.googleblog.com/2017/09/introducing-android-native-development.html
+        "_FILE_OFFSET_BITS=64",
         "_LARGEFILE_SOURCE",
         "_LARGEFILE64_SOURCE",
       ]
@@ -402,6 +407,12 @@ config("compiler") {
 
   if (is_posix && use_lld && !is_nacl) {
     ldflags += [ "-fuse-ld=lld" ]
+    if (current_cpu == "arm64") {
+      # Reduce the page size from 65536 in order to reduce binary size slightly
+      # by shrinking the alignment gap between segments. This also causes all
+      # segments to be mapped adjacently, which breakpad relies on.
+      ldflags += [ "-Wl,-z,max-page-size=4096" ]
+    }
   } else if (use_gold) {
     ldflags += [ "-fuse-ld=gold" ]
     if (!is_android) {
@@ -435,20 +446,8 @@ config("compiler") {
     ldflags += [ "-fuse-ld=bfd" ]
   }
 
-  if (is_posix && (use_gold || (use_lld && !is_nacl)) && !using_sanitizer &&
-      !(is_android && use_order_profiling)) {
-    # TODO(thakis): Remove `!is_android` below once NDK gold has been rolled
-    # with the fix for https://sourceware.org/bugzilla/show_bug.cgi?id=17704
-    # merged.  See also https://crbug.com/663886
-    # `linux_use_bundled_binutils` is to avoid breaking Linux distros which may
-    # still have a buggy gold.
-    # chromeos binutils has been patched with the fix, so always use icf there.
-    # The bug only affects x86 and x64, so we can still use ICF when targeting
-    # other architectures.
-    if ((!is_android && linux_use_bundled_binutils) || is_chromeos ||
-        !(current_cpu == "x86" || current_cpu == "x64")) {
-      ldflags += [ "-Wl,--icf=all" ]
-    }
+  if (use_icf) {
+    ldflags += [ "-Wl,--icf=all" ]
   }
 
   if (linux_use_bundled_binutils) {
@@ -492,7 +491,15 @@ config("compiler") {
   # Currently disabled for nacl since its toolchain lacks this flag (too old).
   # TODO(zforman): Once nacl's toolchain is updated, remove check.
   if (is_clang && is_linux && strip_absolute_paths_from_debug_symbols) {
-    absolute_path = rebase_path("//.")
+    # This is resolved to path like "$HOME/chromium/src/out/Release".
+    # If debug option is given, clang includes $cwd in debug info.
+    # In such build, this flag generates reproducible obj files
+    # even we use build directory like "out/feature_a" and "out/feature_b" if
+    # we build same files with same compile flag other than this.
+    # Other paths are already givne in relative, no need to normalize it by
+    # using -fdebug-prefix-map.
+    absolute_path = rebase_path(root_out_dir)
+
     cflags += [ "-fdebug-prefix-map=$absolute_path=." ]
   }
 
@@ -597,7 +604,7 @@ config("compiler") {
 
     # Disable optimization for now because they increase binary size by too
     # much.
-    if (use_lld && (is_android || is_linux)) {
+    if (use_lld && (is_android || (is_linux && !is_chromeos))) {
       ldflags += [ "-Wl,--lto-O0" ]
     }
 
@@ -633,6 +640,7 @@ config("compiler") {
 config("compiler_cpu_abi") {
   cflags = []
   ldflags = []
+  defines = []
 
   if (is_posix && !(is_mac || is_ios)) {
     # CPU architecture. We may or may not be doing a cross compile now, so for
@@ -689,18 +697,20 @@ config("compiler_cpu_abi") {
       }
 
       if (mips_arch_variant == "r6") {
+        cflags += [ "-mno-odd-spreg" ]
+        ldflags += [ "-mips32r6" ]
         if (is_clang) {
-          cflags += [ "-march=mips32r6" ]
+          cflags += [
+            "-march=mipsel",
+            "-mcpu=mips32r6",
+          ]
         } else {
           cflags += [
             "-mips32r6",
             "-Wa,-mips32r6",
           ]
           if (is_android) {
-            ldflags += [
-              "-mips32r6",
-              "-Wl,-melf32ltsmip",
-            ]
+            ldflags += [ "-Wl,-melf32ltsmip" ]
           }
         }
         if (mips_use_msa == true) {
@@ -710,18 +720,12 @@ config("compiler_cpu_abi") {
           ]
         }
       } else if (mips_arch_variant == "r2") {
+        ldflags += [ "-mips32r2" ]
         if (is_clang) {
-          if (is_android) {
-            cflags += [
-              "-march=mipsel",
-              "-mcpu=mips32r2",
-            ]
-          } else {
-            cflags += [
-              "-march=mipsel",
-              "-mcpu=mips32r2",
-            ]
-          }
+          cflags += [
+            "-march=mipsel",
+            "-mcpu=mips32r2",
+          ]
         } else {
           cflags += [
             "-mips32r2",
@@ -732,18 +736,12 @@ config("compiler_cpu_abi") {
           }
         }
       } else if (mips_arch_variant == "r1") {
+        ldflags += [ "-mips32" ]
         if (is_clang) {
-          if (is_android) {
-            cflags += [
-              "-march=mipsel",
-              "-mcpu=mips32",
-            ]
-          } else {
-            cflags += [
-              "-march=mipsel",
-              "-mcpu=mips32",
-            ]
-          }
+          cflags += [
+            "-march=mipsel",
+            "-mcpu=mips32",
+          ]
         } else {
           cflags += [
             "-mips32",
@@ -751,6 +749,7 @@ config("compiler_cpu_abi") {
           ]
         }
       } else if (mips_arch_variant == "loongson3") {
+        defines += [ "_MIPS_ARCH_LOONGSON" ]
         cflags += [
           "-march=loongson3a",
           "-mno-branch-likely",
@@ -851,12 +850,20 @@ config("compiler_cpu_abi") {
           ]
         }
       } else if (mips_arch_variant == "r2") {
-        cflags += [
-          "-mips64r2",
-          "-Wa,-mips64r2",
-        ]
         ldflags += [ "-mips64r2" ]
+        if (is_clang) {
+          cflags += [
+            "-march=mips64el",
+            "-mcpu=mips64r2",
+          ]
+        } else {
+          cflags += [
+            "-mips64r2",
+            "-Wa,-mips64r2",
+          ]
+        }
       } else if (mips_arch_variant == "loongson3") {
+        defines += [ "_MIPS_ARCH_LOONGSON" ]
         cflags += [
           "-march=loongson3a",
           "-mno-branch-likely",
@@ -1412,6 +1419,17 @@ config("chromium_code") {
     }
   }
 
+  # Warn on missing break statements at the end of switch cases.
+  # For intentional fallthrough, use FALLTHROUGH; from base/compiler_specific.h
+  if (is_clang) {
+    # TODO(thakis): Enable this once the codebase is ready,
+    # https://crbug.com/177475
+    # cflags_cc = [ "-Wimplicit-fallthrough" ]
+    if (is_mac || is_ios) {
+      # cflags_objcc += [ "-Wimplicit-fallthrough" ]
+    }
+  }
+
   configs = [ ":default_warnings" ]
 }
 
@@ -1580,7 +1598,6 @@ if (is_win) {
   common_optimize_on_cflags = [
     "/Ob2",  # Both explicit and auto inlining.
     "/Oy-",  # Disable omitting frame pointers, must be after /O2.
-    "/d2Zi+",  # Improve debugging of optimized code.
     "/Zc:inline",  # Remove unreferenced COMDAT (faster links).
   ]
   if (!is_asan) {
@@ -1604,7 +1621,9 @@ if (is_win) {
 
   if (is_official_build) {
     common_optimize_on_ldflags += [ "/OPT:REF" ]  # Remove unreferenced data.
-    if (!use_lld) {
+
+    # TODO(thakis): Remove is_clang here, https://crbug.com/598772
+    if (!use_lld && !is_clang) {
       common_optimize_on_ldflags += [
         # Set the number of LTCG code-gen threads to eight. The default is four.
         # This gives a 5-10% link speedup.
@@ -1987,6 +2006,8 @@ config("symbols") {
 }
 
 # Minimal symbols.
+# This config guarantees to hold symbol for stack trace which are shown to user
+# when crash happens in unittests running on buildbot.
 config("minimal_symbols") {
   if (is_win) {
     # Linker symbols for backtraces only.
@@ -1999,7 +2020,16 @@ config("minimal_symbols") {
       # TODO(thakis): Remove this again once dump_syms is fixed.
       cflags += [ "-gdwarf-3" ]
     }
-    cflags += [ "-g1" ]
+    if (is_linux && !using_sanitizer) {
+      # minimal_symbols needs to only produce valid stack traces, and -g0 does
+      # that, even though you might think it'd produce no symbols at all.
+      # Not using -g1 allows us to speed up link time and save disk space.
+      cflags += [ "-g0" ]
+    } else {
+      # If sanitizer detects some failure, symbolizer tries to show files and
+      # line number from debug symbols.
+      cflags += [ "-g1" ]
+    }
     ldflags = []
     if (is_android && is_clang) {
       # Android defaults to symbol_level=1 builds in production builds
@@ -2048,5 +2078,21 @@ if (is_ios || is_mac) {
     common_flags = [ "-fobjc-arc" ]
     cflags_objc = common_flags
     cflags_objcc = common_flags
+  }
+}
+
+# Default linker warnings.
+config("default_fatal_linker_warnings") {
+  ldflags = []
+
+  # Linker warnings.
+  if (!is_win && fatal_linker_warnings &&
+      !(is_chromeos && current_cpu == "arm") &&
+      !(is_android && use_order_profiling) && !is_mac && !is_ios &&
+      current_os != "aix") {
+    # TODO(jochen): Enable this on chromeos on arm. http://crbug.com/356580
+    # TODO(lizeb,pasko): Fix link errors when linking with order_profiling=1
+    # crbug.com/485542
+    ldflags += [ "-Wl,--fatal-warnings" ]
   }
 }

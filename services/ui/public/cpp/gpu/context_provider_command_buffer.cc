@@ -142,7 +142,7 @@ ContextProviderCommandBuffer::ContextProviderCommandBuffer(
     bool automatic_flushes,
     bool support_locking,
     const gpu::SharedMemoryLimits& memory_limits,
-    const gpu::gles2::ContextCreationAttribHelper& attributes,
+    const gpu::ContextCreationAttribs& attributes,
     ContextProviderCommandBuffer* shared_context_provider,
     command_buffer_metrics::ContextType type)
     : stream_id_(stream_id),
@@ -396,7 +396,7 @@ gpu::raster::RasterInterface* ContextProviderCommandBuffer::RasterInterface() {
     return nullptr;
 
   raster_impl_ = std::make_unique<gpu::raster::RasterImplementationGLES>(
-      gles2_impl_.get(), ContextCapabilities());
+      gles2_impl_.get(), gles2_impl_.get(), ContextCapabilities());
 
   return raster_impl_.get();
 }
@@ -462,7 +462,8 @@ void ContextProviderCommandBuffer::SetDefaultTaskRunner(
 }
 
 base::Lock* ContextProviderCommandBuffer::GetLock() {
-  DCHECK(support_locking_);
+  if (!support_locking_)
+    return nullptr;
   return &context_lock_;
 }
 

@@ -6,8 +6,8 @@
 
 #include "base/run_loop.h"
 #include "base/strings/string_split.h"
-#include "chrome/browser/notifications/message_center_notification_manager.h"
-#include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/notifications/notification_display_service_tester.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -22,9 +22,7 @@
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "ui/message_center/fake_ui_delegate.h"
-#include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 
 using testing::_;
 using testing::AtLeast;
@@ -43,17 +41,13 @@ class HatsNotificationControllerTest : public BrowserWithTestWindowTest {
   void SetUp() override {
     BrowserWithTestWindowTest::SetUp();
 
-    MessageCenterNotificationManager* manager =
-        static_cast<MessageCenterNotificationManager*>(
-            g_browser_process->notification_ui_manager());
-    manager->SetUiDelegateForTest(new message_center::FakeUiDelegate());
-
+    display_service_ =
+        std::make_unique<NotificationDisplayServiceTester>(profile());
     network_portal_detector::InitializeForTesting(
         &mock_network_portal_detector_);
   }
 
   void TearDown() override {
-    g_browser_process->notification_ui_manager()->StartShutdown();
     // The notifications may be deleted async.
     base::RunLoop loop;
     loop.RunUntilIdle();
@@ -89,6 +83,8 @@ class HatsNotificationControllerTest : public BrowserWithTestWindowTest {
 
   NiceMock<MockNetworkPortalDetector> mock_network_portal_detector_;
 
+  std::unique_ptr<NotificationDisplayServiceTester> display_service_;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(HatsNotificationControllerTest);
 };
@@ -115,10 +111,8 @@ TEST_F(HatsNotificationControllerTest, NewDevice_ShouldNotShowNotification) {
               RemoveObserver(hats_notification_controller.get()))
       .Times(1);
 
-  const message_center::Notification* notification =
-      g_browser_process->notification_ui_manager()->FindById(
-          HatsNotificationController::kNotificationId, profile());
-  EXPECT_FALSE(notification);
+  EXPECT_FALSE(display_service_->GetNotification(
+      HatsNotificationController::kNotificationId));
 }
 
 TEST_F(HatsNotificationControllerTest, OldDevice_ShouldShowNotification) {
@@ -138,10 +132,11 @@ TEST_F(HatsNotificationControllerTest, OldDevice_ShouldShowNotification) {
   hats_notification_controller->Initialize(false);
 
   // Finally check if notification was launched to confirm initialization.
-  const message_center::Notification* notification =
-      g_browser_process->notification_ui_manager()->FindById(
-          HatsNotificationController::kNotificationId, profile());
-  EXPECT_TRUE(notification != nullptr);
+  EXPECT_TRUE(display_service_->GetNotification(
+      HatsNotificationController::kNotificationId));
+  display_service_->RemoveNotification(
+      NotificationHandler::Type::TRANSIENT,
+      HatsNotificationController::kNotificationId, false);
 }
 
 TEST_F(HatsNotificationControllerTest, NoInternet_DoNotShowNotification) {
@@ -171,10 +166,8 @@ TEST_F(HatsNotificationControllerTest, NoInternet_DoNotShowNotification) {
   hats_notification_controller->OnPortalDetectionCompleted(&network_state,
                                                            online_state);
 
-  const message_center::Notification* notification =
-      g_browser_process->notification_ui_manager()->FindById(
-          HatsNotificationController::kNotificationId, profile());
-  EXPECT_FALSE(notification);
+  EXPECT_FALSE(display_service_->GetNotification(
+      HatsNotificationController::kNotificationId));
 }
 
 TEST_F(HatsNotificationControllerTest, DismissNotification_ShouldUpdatePref) {

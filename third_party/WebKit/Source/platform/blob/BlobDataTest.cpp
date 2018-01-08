@@ -11,7 +11,8 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "platform/UUID.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/blob/BlobBytesProvider.h"
+#include "platform/blob/testing/FakeBlobRegistry.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/FilePathConversion.h"
@@ -36,103 +37,6 @@ using mojom::blink::DataElementFilesystemURL;
 using mojom::blink::DataElementPtr;
 
 namespace {
-const size_t kMaxConsolidatedItemSizeInBytes = 15 * 1024;
-}
-
-TEST(BlobDataTest, Consolidation) {
-  BlobData data(BlobData::FileCompositionStatus::NO_UNKNOWN_SIZE_FILES);
-  const char* text1 = "abc";
-  const char* text2 = "def";
-  data.AppendBytes(text1, 3u);
-  data.AppendBytes(text2, 3u);
-  data.AppendText("ps1", false);
-  data.AppendText("ps2", false);
-
-  EXPECT_EQ(1u, data.items_.size());
-  EXPECT_EQ(12u, data.items_[0].data->length());
-  EXPECT_EQ(0, memcmp(data.items_[0].data->data(), "abcdefps1ps2", 12));
-
-  std::unique_ptr<char[]> large_data =
-      WrapArrayUnique(new char[kMaxConsolidatedItemSizeInBytes]);
-  data.AppendBytes(large_data.get(), kMaxConsolidatedItemSizeInBytes);
-
-  EXPECT_EQ(2u, data.items_.size());
-  EXPECT_EQ(12u, data.items_[0].data->length());
-  EXPECT_EQ(kMaxConsolidatedItemSizeInBytes, data.items_[1].data->length());
-}
-
-namespace {
-
-class MockBlob : public Blob {
- public:
-  explicit MockBlob(const String& uuid) : uuid_(uuid) {}
-
-  void Clone(BlobRequest request) override {
-    mojo::MakeStrongBinding(std::make_unique<MockBlob>(uuid_),
-                            std::move(request));
-  }
-
-  void ReadRange(uint64_t offset,
-                 uint64_t length,
-                 mojo::ScopedDataPipeProducerHandle,
-                 mojom::blink::BlobReaderClientPtr) override {
-    NOTREACHED();
-  }
-
-  void ReadAll(mojo::ScopedDataPipeProducerHandle,
-               mojom::blink::BlobReaderClientPtr) override {
-    NOTREACHED();
-  }
-
-  void GetInternalUUID(GetInternalUUIDCallback callback) override {
-    std::move(callback).Run(uuid_);
-  }
-
- private:
-  String uuid_;
-};
-
-class MockBlobRegistry : public BlobRegistry {
- public:
-  void Register(BlobRequest blob,
-                const String& uuid,
-                const String& content_type,
-                const String& content_disposition,
-                Vector<DataElementPtr> elements,
-                RegisterCallback callback) override {
-    registrations.push_back(Registration{
-        uuid, content_type, content_disposition, std::move(elements)});
-    mojo::MakeStrongBinding(std::make_unique<MockBlob>(uuid), std::move(blob));
-    std::move(callback).Run();
-  }
-
-  void GetBlobFromUUID(BlobRequest blob,
-                       const String& uuid,
-                       GetBlobFromUUIDCallback callback) override {
-    binding_requests.push_back(BindingRequest{uuid});
-    mojo::MakeStrongBinding(std::make_unique<MockBlob>(uuid), std::move(blob));
-    std::move(callback).Run();
-  }
-
-  void RegisterURL(BlobPtr blob,
-                   const KURL& url,
-                   RegisterURLCallback callback) override {
-    NOTREACHED();
-  }
-
-  struct Registration {
-    String uuid;
-    String content_type;
-    String content_disposition;
-    Vector<DataElementPtr> elements;
-  };
-  Vector<Registration> registrations;
-
-  struct BindingRequest {
-    String uuid;
-  };
-  Vector<BindingRequest> binding_requests;
-};
 
 struct ExpectedElement {
   DataElementPtr element;
@@ -181,8 +85,7 @@ struct ExpectedElement {
 
 class BlobDataHandleTest : public ::testing::Test {
  public:
-  BlobDataHandleTest()
-      : enable_mojo_blobs_(true), blob_registry_binding_(&mock_blob_registry_) {
+  BlobDataHandleTest() : blob_registry_binding_(&mock_blob_registry_) {
     blob_registry_binding_.Bind(MakeRequest(&blob_registry_ptr_));
     BlobDataHandle::SetBlobRegistryForTesting(blob_registry_ptr_.get());
   }
@@ -200,10 +103,12 @@ class BlobDataHandleTest : public ::testing::Test {
     for (size_t i = 0; i < large_test_data_.size(); ++i)
       large_test_data_[i] = i % 251;
 
-    ASSERT_LT(small_test_data_.size(), kMaxConsolidatedItemSizeInBytes);
+    ASSERT_LT(small_test_data_.size(),
+              BlobBytesProvider::kMaxConsolidatedItemSizeInBytes);
     ASSERT_LT(medium_test_data_.size(),
               DataElementBytes::kMaximumEmbeddedDataSize);
-    ASSERT_GT(medium_test_data_.size(), kMaxConsolidatedItemSizeInBytes);
+    ASSERT_GT(medium_test_data_.size(),
+              BlobBytesProvider::kMaxConsolidatedItemSizeInBytes);
     ASSERT_GT(large_test_data_.size(),
               DataElementBytes::kMaximumEmbeddedDataSize);
 
@@ -307,8 +212,7 @@ class BlobDataHandleTest : public ::testing::Test {
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  ScopedMojoBlobsForTest enable_mojo_blobs_;
-  MockBlobRegistry mock_blob_registry_;
+  FakeBlobRegistry mock_blob_registry_;
   BlobRegistryPtr blob_registry_ptr_;
   mojo::Binding<BlobRegistry> blob_registry_binding_;
 
@@ -402,7 +306,7 @@ TEST_F(BlobDataHandleTest, CreateFromMergedBytes) {
   std::unique_ptr<BlobData> data = BlobData::Create();
   data->AppendBytes(medium_test_data_.data(), medium_test_data_.size());
   data->AppendBytes(small_test_data_.data(), small_test_data_.size());
-  EXPECT_EQ(2u, data->Items().size());
+  EXPECT_EQ(1u, data->Elements().size());
 
   Vector<uint8_t> expected_data = medium_test_data_;
   expected_data.AppendVector(small_test_data_);
@@ -418,7 +322,7 @@ TEST_F(BlobDataHandleTest, CreateFromMergedLargeAndSmallBytes) {
   std::unique_ptr<BlobData> data = BlobData::Create();
   data->AppendBytes(large_test_data_.data(), large_test_data_.size());
   data->AppendBytes(small_test_data_.data(), small_test_data_.size());
-  EXPECT_EQ(2u, data->Items().size());
+  EXPECT_EQ(1u, data->Elements().size());
 
   Vector<uint8_t> expected_data = large_test_data_;
   expected_data.AppendVector(small_test_data_);
@@ -434,7 +338,7 @@ TEST_F(BlobDataHandleTest, CreateFromMergedSmallAndLargeBytes) {
   std::unique_ptr<BlobData> data = BlobData::Create();
   data->AppendBytes(small_test_data_.data(), small_test_data_.size());
   data->AppendBytes(large_test_data_.data(), large_test_data_.size());
-  EXPECT_EQ(2u, data->Items().size());
+  EXPECT_EQ(1u, data->Elements().size());
 
   Vector<uint8_t> expected_data = small_test_data_;
   expected_data.AppendVector(large_test_data_);

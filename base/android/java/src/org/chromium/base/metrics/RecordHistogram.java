@@ -268,6 +268,7 @@ public class RecordHistogram {
         // the native histograms API. Callers of these functions still pass longs because that's
         // the types returned by TimeUnit and System.currentTimeMillis() APIs, from which these
         // values come.
+        assert max == clampToInt(max);
         long result = nativeRecordCustomTimesHistogramMilliseconds(
                 name, key, clampToInt(duration), clampToInt(min), clampToInt(max), numBuckets);
         if (result != key) sCache.put(name, result);
@@ -292,14 +293,6 @@ public class RecordHistogram {
         return nativeGetHistogramTotalCountForTesting(name);
     }
 
-    /**
-     * Initializes the metrics system.
-     */
-    public static void initialize() {
-        if (sDisabledBy != null) return;
-        nativeInitialize();
-    }
-
     private static native long nativeRecordCustomTimesHistogramMilliseconds(
             String name, long key, int duration, int min, int max, int numBuckets);
 
@@ -314,5 +307,4 @@ public class RecordHistogram {
 
     private static native int nativeGetHistogramValueCountForTesting(String name, int sample);
     private static native int nativeGetHistogramTotalCountForTesting(String name);
-    private static native void nativeInitialize();
 }

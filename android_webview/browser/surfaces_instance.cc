@@ -53,8 +53,7 @@ SurfacesInstance::SurfacesInstance()
   // Webview does not own the surface so should not clear it.
   settings.should_clear_root_render_pass = false;
 
-  frame_sink_manager_ = std::make_unique<viz::FrameSinkManagerImpl>(
-      viz::SurfaceManager::LifetimeType::SEQUENCES);
+  frame_sink_manager_ = std::make_unique<viz::FrameSinkManagerImpl>();
   parent_local_surface_id_allocator_.reset(
       new viz::ParentLocalSurfaceIdAllocator());
 
@@ -74,8 +73,7 @@ SurfacesInstance::SurfacesInstance()
       begin_frame_source_.get(), nullptr /* current_task_runner */,
       output_surface_holder->capabilities().max_frames_pending);
   display_ = std::make_unique<viz::Display>(
-      nullptr /* shared_bitmap_manager */,
-      nullptr /* gpu_memory_buffer_manager */, settings, frame_sink_id_,
+      nullptr /* shared_bitmap_manager */, settings, frame_sink_id_,
       std::move(output_surface_holder), std::move(scheduler),
       nullptr /* current_task_runner */);
   display_->Initialize(this, frame_sink_manager_->surface_manager());
@@ -159,8 +157,7 @@ void SurfacesInstance::DrawAndSwap(const gfx::Size& viewport,
     device_scale_factor_ = device_scale_factor;
     display_->SetLocalSurfaceId(root_id_, device_scale_factor);
   }
-  bool result = support_->SubmitCompositorFrame(root_id_, std::move(frame));
-  DCHECK(result);
+  support_->SubmitCompositorFrame(root_id_, std::move(frame));
 
   display_->Resize(viewport);
   display_->DrawAndSwap();
@@ -204,8 +201,7 @@ void SurfacesInstance::SetSolidColorRootFrame() {
       viz::BeginFrameAck::CreateManualAckWithDamage();
   frame.metadata.referenced_surfaces = child_ids_;
   frame.metadata.device_scale_factor = device_scale_factor_;
-  bool result = support_->SubmitCompositorFrame(root_id_, std::move(frame));
-  DCHECK(result);
+  support_->SubmitCompositorFrame(root_id_, std::move(frame));
 }
 
 void SurfacesInstance::DidReceiveCompositorFrameAck(

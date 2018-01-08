@@ -26,11 +26,11 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log.h"
-#include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_resolver.h"
-#include "net/proxy/proxy_resolver_error_observer.h"
-#include "net/proxy/proxy_resolver_factory.h"
-#include "net/proxy/proxy_resolver_script_data.h"
+#include "net/proxy_resolution/pac_file_data.h"
+#include "net/proxy_resolution/proxy_info.h"
+#include "net/proxy_resolution/proxy_resolver.h"
+#include "net/proxy_resolution/proxy_resolver_error_observer.h"
+#include "net/proxy_resolution/proxy_resolver_factory.h"
 #include "net/test/event_waiter.h"
 #include "net/test/gtest_util.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
@@ -492,6 +492,14 @@ class MockHostResolver : public net::HostResolver {
   int ResolveFromCache(const RequestInfo& info,
                        net::AddressList* addresses,
                        const net::NetLogWithSource& source_net_log) override {
+    return net::ERR_DNS_CACHE_MISS;
+  }
+
+  int ResolveStaleFromCache(
+      const RequestInfo& info,
+      net::AddressList* addresses,
+      net::HostCache::EntryStaleness* stale_info,
+      const net::NetLogWithSource& source_net_log) override {
     return net::ERR_DNS_CACHE_MISS;
   }
 

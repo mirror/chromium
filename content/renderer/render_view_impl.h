@@ -23,7 +23,6 @@
 #include "base/timer/timer.h"
 #include "build/build_config.h"
 #include "cc/input/browser_controls_state.h"
-#include "components/viz/common/quads/shared_bitmap.h"
 #include "content/common/content_export.h"
 #include "content/common/frame_message_enums.h"
 #include "content/common/navigation_gesture.h"
@@ -108,7 +107,7 @@ class CreateViewParams;
 // project. New code should be added to RenderFrameImpl instead.
 //
 // For context, please see https://crbug.com/467770 and
-// http://www.chromium.org/developers/design-documents/site-isolation.
+// https://www.chromium.org/developers/design-documents/site-isolation.
 class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
                                       public blink::WebViewClient,
                                       public RenderWidgetOwnerDelegate,
@@ -374,6 +373,10 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
 
   void UpdateWebViewWithDeviceScaleFactor();
 
+  bool renderer_wide_named_frame_lookup() {
+    return renderer_wide_named_frame_lookup_;
+  }
+
  protected:
   // RenderWidget overrides:
   blink::WebWidget* GetWebWidget() const override;
@@ -513,6 +516,7 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
       const gfx::Size& min_size,
       const gfx::Size& max_size,
       const content::ScreenInfo& screen_info,
+      uint32_t content_source_id,
       const viz::LocalSurfaceId& local_surface_id);
   void OnEnumerateDirectoryResponse(int id,
                                     const std::vector<base::FilePath>& paths);
@@ -521,7 +525,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void OnPluginActionAt(const gfx::Point& location,
                         const blink::WebPluginAction& action);
   void OnMoveOrResizeStarted();
-  void OnReleaseDisambiguationPopupBitmap(const viz::SharedBitmapId& id);
   void OnResolveTapDisambiguation(double timestamp_seconds,
                                   gfx::Point tap_viewport_offset,
                                   bool is_long_press);
@@ -773,6 +776,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   std::map<int, blink::WebFileChooserCompletion*> enumeration_completions_;
   int enumeration_completion_id_;
 
+  base::Optional<float> device_scale_factor_for_testing_;
+
   // The SessionStorage namespace that we're assigned to has an ID, and that ID
   // is passed to us upon creation.  WebKit asks for this ID upon first use and
   // uses it whenever asking the browser process to allocate new storage areas.
@@ -786,12 +791,14 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   // constructors call the AddObservers method of RenderViewImpl.
   std::unique_ptr<StatsCollectionObserver> stats_collection_observer_;
 
-  std::map<viz::SharedBitmapId, std::unique_ptr<viz::SharedBitmap>>
-      disambiguation_bitmaps_;
-
   std::unique_ptr<IdleUserDetector> idle_user_detector_;
 
   blink::WebScopedVirtualTimePauser history_navigation_virtual_time_pauser_;
+
+  // Whether lookup of frames in the created RenderView (e.g. lookup via
+  // window.open or via <a target=...>) should be renderer-wide (i.e. going
+  // beyond the usual opener-relationship-based BrowsingInstance boundaries).
+  bool renderer_wide_named_frame_lookup_;
 
   // ---------------------------------------------------------------------------
   // ADDING NEW DATA? Please see if it fits appropriately in one of the above

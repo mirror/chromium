@@ -37,15 +37,16 @@ namespace prefs {
 class PersistentPrefStoreClient;
 }
 
-namespace ui {
-class Gpu;
-}
-
 namespace views {
 class ClipboardMus;
 }
 
+namespace viz {
+class HostFrameSinkManager;
+}
+
 namespace mojo {
+class ScopedAllowSyncCallForTesting;
 
 // In some processes, sync calls are disallowed. For example, in the browser
 // process we don't want any sync calls to child processes for performance,
@@ -74,15 +75,18 @@ class MOJO_CPP_BINDINGS_EXPORT SyncCallRestrictions {
   // DO NOT ADD ANY OTHER FRIEND STATEMENTS, talk to mojo/OWNERS first.
   // BEGIN ALLOWED USAGE.
   friend class content::BrowserTestBase;  // Test-only.
-  friend class ui::Gpu;  // http://crbug.com/620058
   // LevelDBMojoProxy makes same-process sync calls from the DB thread.
   friend class leveldb::LevelDBMojoProxy;
   // Pref service connection is sync at startup.
   friend class prefs::PersistentPrefStoreClient;
   // Incognito pref service instances are created synchronously.
   friend class sync_preferences::PrefServiceSyncable;
+  friend class mojo::ScopedAllowSyncCallForTesting;
   // For file open and save dialogs created synchronously.
   friend class ::ChromeSelectFileDialogFactory;
+  // For destroying the GL context/surface that draw to a platform window before
+  // the platform window is destroyed.
+  friend class viz::HostFrameSinkManager;
   // END ALLOWED USAGE.
 
   // BEGIN USAGE THAT NEEDS TO BE FIXED.
@@ -123,6 +127,17 @@ class MOJO_CPP_BINDINGS_EXPORT SyncCallRestrictions {
   };
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(SyncCallRestrictions);
+};
+
+class ScopedAllowSyncCallForTesting {
+ public:
+  ScopedAllowSyncCallForTesting() {}
+  ~ScopedAllowSyncCallForTesting() {}
+
+ private:
+  SyncCallRestrictions::ScopedAllowSyncCall scoped_allow_sync_call_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedAllowSyncCallForTesting);
 };
 
 }  // namespace mojo

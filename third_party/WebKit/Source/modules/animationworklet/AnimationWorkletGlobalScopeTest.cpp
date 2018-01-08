@@ -34,7 +34,7 @@ namespace blink {
 
 class AnimationWorkletGlobalScopeTest : public PageTestBase {
  public:
-  AnimationWorkletGlobalScopeTest() {}
+  AnimationWorkletGlobalScopeTest() = default;
 
   void SetUp() override {
     AnimationWorkletThread::CreateSharedBackingThreadForTest();
@@ -76,11 +76,11 @@ class AnimationWorkletGlobalScopeTest : public PageTestBase {
   void RunTestOnWorkletThread(TestCalback callback) {
     std::unique_ptr<WorkerThread> worklet = CreateAnimationWorkletThread();
     WaitableEvent waitable_event;
-    worklet->GetTaskRunner(TaskType::kInternalTest)
-        ->PostTask(FROM_HERE,
-                   CrossThreadBind(callback, CrossThreadUnretained(this),
-                                   CrossThreadUnretained(worklet.get()),
-                                   CrossThreadUnretained(&waitable_event)));
+    PostCrossThreadTask(
+        *worklet->GetTaskRunner(TaskType::kInternalTest), FROM_HERE,
+        CrossThreadBind(callback, CrossThreadUnretained(this),
+                        CrossThreadUnretained(worklet.get()),
+                        CrossThreadUnretained(&waitable_event)));
     waitable_event.Wait();
 
     worklet->Terminate();
@@ -264,8 +264,9 @@ class AnimationWorkletGlobalScopeTest : public PageTestBase {
     ScriptState* script_state =
         global_scope->ScriptController()->GetScriptState();
     EXPECT_TRUE(script_state);
+    const KURL js_url("https://example.com/worklet.js");
     ScriptModule module = ScriptModule::Compile(
-        script_state->GetIsolate(), source_code, "worklet.js",
+        script_state->GetIsolate(), source_code, js_url, js_url,
         ScriptFetchOptions(), kSharableCrossOrigin,
         TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
     EXPECT_FALSE(module.IsNull());

@@ -5,7 +5,6 @@
 #include "ash/system/power/power_button_test_base.h"
 
 #include "ash/public/cpp/ash_switches.h"
-#include "ash/public/cpp/config.h"
 #include "ash/session/session_controller.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
@@ -49,19 +48,15 @@ void PowerButtonTestBase::SetUp() {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kAshEnableTabletMode);
   }
+  if (show_power_button_menu_) {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kShowPowerButtonMenu);
+  }
   AshTestBase::SetUp();
 
   lock_state_controller_ = Shell::Get()->lock_state_controller();
   lock_state_test_api_ =
       std::make_unique<LockStateControllerTestApi>(lock_state_controller_);
-}
-
-void PowerButtonTestBase::TearDown() {
-  const Config config = Shell::GetAshConfig();
-  AshTestBase::TearDown();
-  // Mash/mus shuts down dbus after each test.
-  if (config == Config::CLASSIC)
-    chromeos::DBusThreadManager::Shutdown();
 }
 
 void PowerButtonTestBase::ResetPowerButtonController() {
@@ -161,6 +156,12 @@ void PowerButtonTestBase::UnlockScreen() {
 
 void PowerButtonTestBase::EnableTabletMode(bool enable) {
   Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(enable);
+}
+
+void PowerButtonTestBase::AdvanceClockToAvoidIgnoring() {
+  tick_clock_->Advance(
+      TabletPowerButtonController::kIgnoreRepeatedButtonUpDelay +
+      base::TimeDelta::FromMilliseconds(1));
 }
 
 }  // namespace ash

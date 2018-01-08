@@ -45,6 +45,101 @@
 namespace chromeos {
 namespace {
 
+// Holds a metadata_v2 reverse-index response
+struct ReverseIndexJSON {
+  // Canonical name of printer
+  std::string effective_make_and_model;
+
+  // Name of printer manufacturer
+  std::string manufacturer;
+
+  // Name of printer model
+  std::string model;
+
+  // Restrictions for this manufacturer
+  PpdProvider::Restrictions restrictions;
+};
+
+// Holds a metadata_v2 manufacturers response
+struct ManufacturersJSON {
+  // Name of printer manufacturer
+  std::string name;
+
+  // Key for lookup of this manutacturer's printers (JSON file)
+  std::string reference;
+
+  // Restrictions for this manufacturer
+  PpdProvider::Restrictions restrictions;
+};
+
+// Holds a metadata_v2 printers response
+struct PrintersJSON {
+  // Name of printer
+  std::string name;
+
+  // Canonical name of printer
+  std::string effective_make_and_model;
+
+  // Restrictions for this printer
+  PpdProvider::Restrictions restrictions;
+};
+
+// Holds a metadata_v2 ppd-index response
+struct PpdIndexJSON {
+  // Canonical name of printer
+  std::string effective_make_and_model;
+
+  // Ppd filename
+  std::string ppd_filename;
+};
+
+// A queued request to download printer information for a manufacturer.
+struct PrinterResolutionQueueEntry {
+  // Localized manufacturer name
+  std::string manufacturer;
+
+  // URL we are going to pull from.
+  GURL url;
+
+  // User callback on completion.
+  PpdProvider::ResolvePrintersCallback cb;
+};
+
+// A queued request to download reverse index information for a make and model
+struct ReverseIndexQueueEntry {
+  // Canonical Printer Name
+  std::string effective_make_and_model;
+
+  // URL we are going to pull from.
+  GURL url;
+
+  // User callback on completion.
+  PpdProvider::ReverseLookupCallback cb;
+};
+
+// Holds manufacturer to printers relation
+struct ManufacturerMetadata {
+  // Key used to look up the printer list on the server. This is initially
+  // populated.
+  std::string reference;
+
+  // Map from localized printer name to canonical-make-and-model string for
+  // the given printer. Populated on demand.
+  std::unique_ptr<std::unordered_map<std::string, PrintersJSON>> printers;
+};
+
+// Carried information for an inflight PPD resolution.
+struct PpdResolutionQueueEntry {
+  // Original reference being resolved.
+  Printer::PpdReference reference;
+
+  // If non-empty, the contents from the cache for this resolution.
+  std::string cached_contents;
+
+  // Callback to be invoked on completion.
+  PpdProvider::ResolvePpdCallback callback;
+};
+
 // Extract cupsFilter/cupsFilter2 filter names from a line from a ppd.
 
 // cupsFilter2 lines look like this:
@@ -136,23 +231,18 @@ bool PpdReferenceIsWellFormed(const Printer::PpdReference& reference) {
   if (!reference.effective_make_and_model.empty()) {
     ++filled_fields;
   }
+
+  // All effective-make-and-model strings should be lowercased, since v2.
+  // Since make-and-model strings could include non-Latin chars, only checking
+  // that it excludes all upper-case chars A-Z.
+  if (!std::all_of(reference.effective_make_and_model.begin(),
+                   reference.effective_make_and_model.end(),
+                   [](char c) -> bool { return !base::IsAsciiUpper(c); })) {
+    return false;
+  }
   // Should have exactly one non-empty field.
   return filled_fields == 1;
 }
-
-std::string PpdReferenceToCacheKey(const Printer::PpdReference& reference) {
-  DCHECK(PpdReferenceIsWellFormed(reference));
-  // The key prefixes here are arbitrary, but ensure we can't have an (unhashed)
-  // collision between keys generated from different PpdReference fields.
-  if (!reference.effective_make_and_model.empty()) {
-    return std::string("em:") + reference.effective_make_and_model;
-  } else {
-    return std::string("up:") + reference.user_supplied_ppd_url;
-  }
-}
-
-// Handles the result after PPD storage.
-void OnPpdStored() {}
 
 // Fetch the file pointed at by |url| and store it in |file_contents|.
 // Returns true if the fetch was successful.
@@ -172,51 +262,55 @@ bool FetchFile(const GURL& url, std::string* file_contents) {
   return base::ReadFileToString(path, file_contents);
 }
 
-struct ManufacturerMetadata {
-  // Key used to look up the printer list on the server.  This is initially
-  // populated.
-  std::string reference;
+// Constructs and returns a printers' restrictions parsed from |dict|.
+PpdProvider::Restrictions ComputeRestrictions(const base::Value& dict) {
+  DCHECK(dict.is_dict());
+  PpdProvider::Restrictions restrictions;
 
-  // Map from localized printer name to canonical-make-and-model string for
-  // the given printer.  Populated on demand.
-  std::unique_ptr<std::unordered_map<std::string, std::string>> printers;
-};
+  const base::Value* min_milestone =
+      dict.FindKeyOfType({"min_milestone"}, base::Value::Type::DOUBLE);
+  const base::Value* max_milestone =
+      dict.FindKeyOfType({"max_milestone"}, base::Value::Type::DOUBLE);
 
-// A queued request to download printer information for a manufacturer.
-struct PrinterResolutionQueueEntry {
-  // Localized manufacturer name
-  std::string manufacturer;
+  if (min_milestone) {
+    restrictions.min_milestone =
+        base::Version(base::NumberToString(min_milestone->GetDouble()));
+  }
+  if (max_milestone) {
+    restrictions.max_milestone =
+        base::Version(base::NumberToString(max_milestone->GetDouble()));
+  }
 
-  // URL we are going to pull from.
-  GURL url;
+  return restrictions;
+}
 
-  // User callback on completion.
-  PpdProvider::ResolvePrintersCallback cb;
-};
+// Returns true if this |printer| is restricted from the
+// |current_version|.
+bool IsPrinterRestricted(const PrintersJSON& printer,
+                         const base::Version& current_version) {
+  const PpdProvider::Restrictions& restrictions = printer.restrictions;
 
-// A queued request to download reverse index information for a make and model
-struct ReverseIndexQueueEntry {
-  // Canonical Printer Name
-  std::string effective_make_and_model;
+  if (restrictions.min_milestone != base::Version("0.0") &&
+      restrictions.min_milestone > current_version) {
+    return true;
+  }
 
-  // URL we are going to pull from.
-  GURL url;
+  if (restrictions.max_milestone != base::Version("0.0") &&
+      restrictions.max_milestone < current_version) {
+    return true;
+  }
 
-  // User callback on completion.
-  PpdProvider::ReverseLookupCallback cb;
-};
+  return false;
+}
 
-// The string fields from a metadata_v2 printers response
-struct ReverseIndexResponse {
-  // Canonical Printer Name
-  std::string effective_make_and_model;
-
-  // Name of printer manufacturer
-  std::string manufacturer;
-
-  // Name of printer model
-  std::string model;
-};
+// Modifies |printers| by removing any restricted printers excluded from the
+// current |version|, as judged by IsPrinterPermitted.
+void FilterRestrictedPpdReferences(const base::Version& version,
+                                   std::vector<PrintersJSON>* printers) {
+  base::EraseIf(*printers, [&version](const PrintersJSON& printer) {
+    return IsPrinterRestricted(printer, version);
+  });
+}
 
 class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
  public:
@@ -236,6 +330,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       const std::string& browser_locale,
       scoped_refptr<net::URLRequestContextGetter> url_context_getter,
       scoped_refptr<PpdCache> ppd_cache,
+      const base::Version& current_version,
       const PpdProvider::Options& options)
       : browser_locale_(browser_locale),
         url_context_getter_(url_context_getter),
@@ -243,6 +338,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
         disk_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
             {base::TaskPriority::USER_VISIBLE, base::MayBlock(),
              base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})),
+        version_(current_version),
         options_(options),
         weak_factory_(this) {}
 
@@ -254,18 +350,18 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   //
   // This means when a request comes in, we either queue it and start background
   // fetches if necessary, or we satisfy it immediately from memory.
-  void ResolveManufacturers(const ResolveManufacturersCallback& cb) override {
+  void ResolveManufacturers(ResolveManufacturersCallback cb) override {
     CHECK(base::SequencedTaskRunnerHandle::IsSet())
         << "ResolveManufacturers must be called from a SequencedTaskRunner"
            "context";
     if (cached_metadata_.get() != nullptr) {
       // We already have this in memory.
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE,
-          base::Bind(cb, PpdProvider::SUCCESS, GetManufacturerList()));
+          FROM_HERE, base::BindOnce(std::move(cb), PpdProvider::SUCCESS,
+                                    GetManufacturerList()));
       return;
     }
-    manufacturers_resolution_queue_.push_back(cb);
+    manufacturers_resolution_queue_.push_back(std::move(cb));
     MaybeStartFetch();
   }
 
@@ -274,27 +370,26 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   // started.
   bool MaybeStartNextPpdReferenceResolution() {
     while (!ppd_reference_resolution_queue_.empty()) {
-      const PrinterSearchData& next =
-          ppd_reference_resolution_queue_.front().first;
+      auto& next = ppd_reference_resolution_queue_.front();
       // Have we successfully resolved next yet?
       bool resolved_next = false;
-      if (!next.make_and_model.empty()) {
-        if (cached_ppd_index_.get() == nullptr) {
-          // Need to load the index before we can work on this resolution.
-          StartFetch(GetPpdIndexURL(), FT_PPD_INDEX);
-          return true;
-        }
+      if (!next.first.make_and_model.empty()) {
         // Check the index for each make-and-model guess.
-        for (const std::string& make_and_model : next.make_and_model) {
-          auto it = cached_ppd_index_->find(make_and_model);
-          if (it != cached_ppd_index_->end()) {
+        for (const std::string& make_and_model : next.first.make_and_model) {
+          // Check if we need to load its ppd_index
+          int ppd_index_shard = IndexShard(make_and_model);
+          if (!base::ContainsKey(cached_ppd_idxs_, ppd_index_shard)) {
+            StartFetch(GetPpdIndexURL(ppd_index_shard), FT_PPD_INDEX);
+            return true;
+          }
+          if (base::ContainsKey(cached_ppd_idxs_[ppd_index_shard],
+                                make_and_model)) {
             // Found a hit, satisfy this resolution.
             Printer::PpdReference ret;
             ret.effective_make_and_model = make_and_model;
             base::SequencedTaskRunnerHandle::Get()->PostTask(
-                FROM_HERE,
-                base::Bind(ppd_reference_resolution_queue_.front().second,
-                           PpdProvider::SUCCESS, ret));
+                FROM_HERE, base::BindOnce(std::move(next.second),
+                                          PpdProvider::SUCCESS, ret));
             ppd_reference_resolution_queue_.pop_front();
             resolved_next = true;
             break;
@@ -306,15 +401,15 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
         // guesses for the front entry, or they all missed.  Try USB ids
         // instead.  This entry will be completed when the usb fetch
         // returns.
-        if (next.usb_vendor_id && next.usb_product_id) {
-          StartFetch(GetUsbURL(next.usb_vendor_id), FT_USB_DEVICES);
+        if (next.first.usb_vendor_id && next.first.usb_product_id) {
+          StartFetch(GetUsbURL(next.first.usb_vendor_id), FT_USB_DEVICES);
           return true;
         }
         // We don't have anything else left to try.  NOT_FOUND it is.
         base::SequencedTaskRunnerHandle::Get()->PostTask(
             FROM_HERE,
-            base::Bind(ppd_reference_resolution_queue_.front().second,
-                       PpdProvider::NOT_FOUND, Printer::PpdReference()));
+            base::BindOnce(std::move(next.second), PpdProvider::NOT_FOUND,
+                           Printer::PpdReference()));
         ppd_reference_resolution_queue_.pop_front();
       }
     }
@@ -359,39 +454,42 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     }
     while (!ppd_resolution_queue_.empty()) {
       auto& next = ppd_resolution_queue_.front();
-      if (!next.first.user_supplied_ppd_url.empty()) {
-        DCHECK(next.first.effective_make_and_model.empty());
-        GURL url(next.first.user_supplied_ppd_url);
+      if (!next.reference.user_supplied_ppd_url.empty()) {
+        DCHECK(next.reference.effective_make_and_model.empty());
+        GURL url(next.reference.user_supplied_ppd_url);
         DCHECK(url.is_valid());
         StartFetch(url, FT_PPD);
         return;
       }
-      DCHECK(!next.first.effective_make_and_model.empty());
-      if (cached_ppd_index_.get() == nullptr) {
+      DCHECK(!next.reference.effective_make_and_model.empty());
+      int ppd_index_shard = IndexShard(next.reference.effective_make_and_model);
+      if (!base::ContainsKey(cached_ppd_idxs_, ppd_index_shard)) {
         // Have to have the ppd index before we can resolve by ppd server
         // key.
-        StartFetch(GetPpdIndexURL(), FT_PPD_INDEX);
+        StartFetch(GetPpdIndexURL(ppd_index_shard), FT_PPD_INDEX);
         return;
       }
       // Get the URL from the ppd index and start the fetch.
-      auto it = cached_ppd_index_->find(next.first.effective_make_and_model);
-      if (it != cached_ppd_index_->end()) {
+      auto& cached_ppd_index = cached_ppd_idxs_[ppd_index_shard];
+      auto it = cached_ppd_index.find(next.reference.effective_make_and_model);
+      if (it != cached_ppd_index.end()) {
         StartFetch(GetPpdURL(it->second), FT_PPD);
         return;
       }
       // This ppd reference isn't in the index.  That's not good. Fail
       // out the current resolution and go try to start the next
       // thing if there is one.
-      LOG(ERROR) << "PPD " << next.first.effective_make_and_model
+      LOG(ERROR) << "PPD " << next.reference.effective_make_and_model
                  << " not found in server index";
-      FinishPpdResolution(std::move(next.second), PpdProvider::INTERNAL_ERROR,
-                          std::string());
+
+      FinishPpdResolution(std::move(next.callback), {},
+                          PpdProvider::INTERNAL_ERROR);
       ppd_resolution_queue_.pop_front();
     }
   }
 
   void ResolvePrinters(const std::string& manufacturer,
-                       const ResolvePrintersCallback& cb) override {
+                       ResolvePrintersCallback cb) override {
     std::unordered_map<std::string, ManufacturerMetadata>::iterator it;
     if (cached_metadata_.get() == nullptr ||
         (it = cached_metadata_->find(manufacturer)) ==
@@ -400,68 +498,79 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       LOG(ERROR) << "Can't resolve printers for unknown manufacturer "
                  << manufacturer;
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE,
-          base::Bind(cb, PpdProvider::INTERNAL_ERROR, ResolvedPrintersList()));
+          FROM_HERE, base::BindOnce(std::move(cb), PpdProvider::INTERNAL_ERROR,
+                                    ResolvedPrintersList()));
       return;
     }
     if (it->second.printers.get() != nullptr) {
       // Satisfy from the cache.
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::Bind(cb, PpdProvider::SUCCESS,
-                                GetManufacturerPrinterList(it->second)));
+          FROM_HERE, base::BindOnce(std::move(cb), PpdProvider::SUCCESS,
+                                    GetManufacturerPrinterList(it->second)));
     } else {
       // We haven't resolved this manufacturer yet.
       PrinterResolutionQueueEntry entry;
       entry.manufacturer = manufacturer;
       entry.url = GetPrintersURL(it->second.reference);
-      entry.cb = cb;
-      printers_resolution_queue_.push_back(entry);
+      entry.cb = std::move(cb);
+      printers_resolution_queue_.push_back(std::move(entry));
       MaybeStartFetch();
     }
   }
 
   void ResolvePpdReference(const PrinterSearchData& search_data,
-                           const ResolvePpdReferenceCallback& cb) override {
-    ppd_reference_resolution_queue_.push_back({search_data, cb});
+                           ResolvePpdReferenceCallback cb) override {
+    // In v2 metadata, we work with lowercased effective_make_and_models.
+    PrinterSearchData lowercase_search_data(search_data);
+    for (auto& make_and_model : search_data.make_and_model) {
+      lowercase_search_data.make_and_model.push_back(
+          base::ToLowerASCII(make_and_model));
+    }
+
+    ppd_reference_resolution_queue_.push_back(
+        {lowercase_search_data, std::move(cb)});
     MaybeStartFetch();
   }
 
   void ResolvePpd(const Printer::PpdReference& reference,
                   ResolvePpdCallback cb) override {
-    // Do a sanity check here, so we can assumed |reference| is well-formed in
+    // In v2 metadata, we work with lowercased effective_make_and_models.
+    Printer::PpdReference lowercase_reference(reference);
+    lowercase_reference.effective_make_and_model =
+        base::ToLowerASCII(lowercase_reference.effective_make_and_model);
+
+    // Do a sanity check here, so we can assume |reference| is well-formed in
     // the rest of this class.
-    if (!PpdReferenceIsWellFormed(reference)) {
-      FinishPpdResolution(std::move(cb), PpdProvider::INTERNAL_ERROR,
-                          std::string());
+    if (!PpdReferenceIsWellFormed(lowercase_reference)) {
+      FinishPpdResolution(std::move(cb), {}, PpdProvider::INTERNAL_ERROR);
       return;
     }
+
     // First step, check the cache.  If the cache lookup fails, we'll (try to)
     // consult the server.
-    ppd_cache_->Find(
-        PpdReferenceToCacheKey(reference),
-        base::BindOnce(&PpdProviderImpl::ResolvePpdCacheLookupDone,
-                       weak_factory_.GetWeakPtr(), reference, std::move(cb)));
+    ppd_cache_->Find(PpdReferenceToCacheKey(lowercase_reference),
+                     base::BindOnce(&PpdProviderImpl::ResolvePpdCacheLookupDone,
+                                    weak_factory_.GetWeakPtr(),
+                                    lowercase_reference, std::move(cb)));
   }
 
   void ReverseLookup(const std::string& effective_make_and_model,
-                     const ReverseLookupCallback& cb) override {
+                     ReverseLookupCallback cb) override {
     if (effective_make_and_model.empty()) {
       LOG(WARNING) << "Cannot resolve an empty make and model";
-      PostReverseLookupFailure(PpdProvider::NOT_FOUND, cb);
+      PostReverseLookupFailure(PpdProvider::NOT_FOUND, std::move(cb));
       return;
     }
 
-    // In v2 metadata, all work will be done on a lowercase
-    // effective_make_and_model. We convert the string to lowercase here to
-    // maintain consistency across the file.
+    // In v2 metadata, we work with lowercased effective_make_and_models.
     std::string lowercase_effective_make_and_model =
         base::ToLowerASCII(effective_make_and_model);
 
     ReverseIndexQueueEntry entry;
     entry.effective_make_and_model = lowercase_effective_make_and_model;
     entry.url = GetReverseIndexURL(lowercase_effective_make_and_model);
-    entry.cb = cb;
-    reverse_index_resolution_queue_.push_back(entry);
+    entry.cb = std::move(cb);
+    reverse_index_resolution_queue_.push_back(std::move(entry));
     MaybeStartFetch();
   }
 
@@ -480,7 +589,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
         OnPrintersFetchComplete();
         break;
       case FT_PPD_INDEX:
-        OnPpdIndexFetchComplete();
+        OnPpdIndexFetchComplete(source->GetOriginalURL());
         break;
       case FT_PPD:
         OnPpdFetchComplete();
@@ -501,26 +610,40 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
  private:
   // Return the URL used to look up the supported locales list.
   GURL GetLocalesURL() {
-    return GURL(options_.ppd_server_root + "/metadata/locales.json");
+    return GURL(options_.ppd_server_root + "/metadata_v2/locales.json");
   }
 
   GURL GetUsbURL(int vendor_id) {
     DCHECK_GT(vendor_id, 0);
     DCHECK_LE(vendor_id, 0xffff);
 
-    return GURL(base::StringPrintf("%s/metadata/usb-%04x.json",
+    return GURL(base::StringPrintf("%s/metadata_v2/usb-%04x.json",
                                    options_.ppd_server_root.c_str(),
                                    vendor_id));
   }
 
-  // Return the URL used to get the index of ppd server key -> ppd.
-  GURL GetPpdIndexURL() {
-    return GURL(options_.ppd_server_root + "/metadata/index.json");
+  // Return the URL used to get the |ppd_index_shard| index.
+  GURL GetPpdIndexURL(int ppd_index_shard) {
+    return GURL(base::StringPrintf("%s/metadata_v2/index-%02d.json",
+                                   options_.ppd_server_root.c_str(),
+                                   ppd_index_shard));
+  }
+
+  // Return the ppd index shard number from its |url|.
+  int GetShardFromUrl(const GURL& url) {
+    auto url_str = url.spec();
+    if (url_str.empty()) {
+      return -1;
+    }
+
+    // Strip shard number from 2 digits following 'index'
+    int idx_pos = url_str.find_first_of("0123456789", url_str.find("index-"));
+    return std::stoi(url_str.substr(idx_pos, 2));
   }
 
   // Return the URL to get a localized manufacturers map.
   GURL GetManufacturersURL(const std::string& locale) {
-    return GURL(base::StringPrintf("%s/metadata/manufacturers-%s.json",
+    return GURL(base::StringPrintf("%s/metadata_v2/manufacturers-%s.json",
                                    options_.ppd_server_root.c_str(),
                                    locale.c_str()));
   }
@@ -528,7 +651,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   // Return the URL used to get a list of printers from the manufacturer |ref|.
   GURL GetPrintersURL(const std::string& ref) {
     return GURL(base::StringPrintf(
-        "%s/metadata/%s", options_.ppd_server_root.c_str(), ref.c_str()));
+        "%s/metadata_v2/%s", options_.ppd_server_root.c_str(), ref.c_str()));
   }
 
   // Return the URL used to get a ppd with the given filename.
@@ -566,9 +689,9 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       std::string* content_ptr = file_contents.get();
       base::PostTaskAndReplyWithResult(
           disk_task_runner_.get(), FROM_HERE,
-          base::Bind(&FetchFile, url, content_ptr),
-          base::Bind(&PpdProviderImpl::OnFileFetchComplete, this,
-                     base::Passed(&file_contents)));
+          base::BindOnce(&FetchFile, url, content_ptr),
+          base::BindOnce(&PpdProviderImpl::OnFileFetchComplete, this,
+                         base::Passed(&file_contents)));
     }
   }
 
@@ -580,18 +703,23 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     OnURLFetchComplete(nullptr);
   }
 
+  // Tidy up loose ends on an outstanding PPD resolution.
+  //
+  // If |ppd_contents| is non-empty, the request is resolved successfully
+  // using those contents.  Otherwise |error_code| and an empty ppd
+  // is given to |cb|.
   void FinishPpdResolution(ResolvePpdCallback cb,
-                           PpdProvider::CallbackResultCode result_code,
-                           const std::string& ppd_contents) {
-    if (result_code == PpdProvider::SUCCESS) {
+                           const std::string& ppd_contents,
+                           PpdProvider::CallbackResultCode error_code) {
+    if (!ppd_contents.empty()) {
       base::SequencedTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
           base::BindOnce(std::move(cb), PpdProvider::SUCCESS, ppd_contents,
                          ExtractFiltersFromPpd(ppd_contents)));
     } else {
-      // Just post the failure.
+      DCHECK_NE(error_code, PpdProvider::SUCCESS);
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::BindOnce(std::move(cb), result_code, std::string(),
+          FROM_HERE, base::BindOnce(std::move(cb), error_code, std::string(),
                                     std::vector<std::string>()));
     }
   }
@@ -602,12 +730,22 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   void ResolvePpdCacheLookupDone(const Printer::PpdReference& reference,
                                  ResolvePpdCallback cb,
                                  const PpdCache::FindResult& result) {
-    if (result.success) {
-      // Cache hit.
-      FinishPpdResolution(std::move(cb), PpdProvider::SUCCESS, result.contents);
+    // If all of the following are true, we use the cache result now:
+    //
+    // * It was a cache hit
+    // * The reference is not from a user-supplied ppd file
+    // * The cached data was fresh.
+    //
+    // In all other cases, we go through the full resolution flow (passing along
+    // the cached data, if we got any), even if we got something from the cache.
+    if (result.success && reference.user_supplied_ppd_url.empty() &&
+        result.age < options_.cache_staleness_age) {
+      DCHECK(!result.contents.empty());
+      FinishPpdResolution(std::move(cb), result.contents, PpdProvider::SUCCESS);
     } else {
-      // Cache miss.  Queue it to be satisfied by the fetcher queue.
-      ppd_resolution_queue_.push_back({reference, std::move(cb)});
+      // Save the cache result (if any), and queue up for resolution.
+      ppd_resolution_queue_.push_back(
+          {reference, result.contents, std::move(cb)});
       MaybeStartFetch();
     }
   }
@@ -668,9 +806,9 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   // calls.
   void OnManufacturersFetchComplete() {
     DCHECK_EQ(nullptr, cached_metadata_.get());
-    std::vector<std::pair<std::string, std::string>> contents;
+    std::vector<ManufacturersJSON> contents;
     PpdProvider::CallbackResultCode code =
-        ValidateAndParseJSONResponse(&contents);
+        ValidateAndParseManufacturersJSON(&contents);
     if (code != PpdProvider::SUCCESS) {
       LOG(ERROR) << "Failed manufacturer parsing";
       FailQueuedMetadataResolutions(code);
@@ -680,16 +818,15 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
         std::unordered_map<std::string, ManufacturerMetadata>>();
 
     for (const auto& entry : contents) {
-      ManufacturerMetadata value;
-      value.reference = entry.second;
-      (*cached_metadata_)[entry.first].reference = entry.second;
+      (*cached_metadata_)[entry.name].reference = entry.reference;
     }
 
     std::vector<std::string> manufacturer_list = GetManufacturerList();
     // Complete any queued manufacturer resolutions.
-    for (const auto& cb : manufacturers_resolution_queue_) {
+    for (auto& cb : manufacturers_resolution_queue_) {
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::Bind(cb, PpdProvider::SUCCESS, manufacturer_list));
+          FROM_HERE, base::BindOnce(std::move(cb), PpdProvider::SUCCESS,
+                                    manufacturer_list));
     }
     manufacturers_resolution_queue_.clear();
   }
@@ -700,13 +837,16 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   void OnPrintersFetchComplete() {
     CHECK(cached_metadata_.get() != nullptr);
     DCHECK(!printers_resolution_queue_.empty());
-    std::vector<std::pair<std::string, std::string>> contents;
+    std::vector<PrintersJSON> contents;
+
     PpdProvider::CallbackResultCode code =
-        ValidateAndParseJSONResponse(&contents);
+        ValidateAndParsePrintersJSON(&contents);
+
     if (code != PpdProvider::SUCCESS) {
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::Bind(printers_resolution_queue_.front().cb, code,
-                                ResolvedPrintersList()));
+          FROM_HERE,
+          base::BindOnce(std::move(printers_resolution_queue_.front().cb), code,
+                         ResolvedPrintersList()));
     } else {
       // This should be a list of lists of 2-element strings, where the first
       // element is the localized name of the printer and the second element
@@ -723,38 +863,40 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       auto& manufacturer_metadata = it->second;
       CHECK(manufacturer_metadata.printers.get() == nullptr);
       manufacturer_metadata.printers =
-          std::make_unique<std::unordered_map<std::string, std::string>>();
+          std::make_unique<std::unordered_map<std::string, PrintersJSON>>();
 
       for (const auto& entry : contents) {
-        manufacturer_metadata.printers->insert({entry.first, entry.second});
+        manufacturer_metadata.printers->insert({entry.name, entry});
       }
+
       base::SequencedTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
-          base::Bind(printers_resolution_queue_.front().cb,
-                     PpdProvider::SUCCESS,
-                     GetManufacturerPrinterList(manufacturer_metadata)));
+          base::BindOnce(std::move(printers_resolution_queue_.front().cb),
+                         PpdProvider::SUCCESS,
+                         GetManufacturerPrinterList(manufacturer_metadata)));
     }
     printers_resolution_queue_.pop_front();
   }
 
-  // Called when |fetcher_| should have just received the index mapping
+  // Called when |fetcher_| should have just received an index mapping
   // ppd server keys to ppd filenames.  Use this to populate
-  // |cached_ppd_index_|.
-  void OnPpdIndexFetchComplete() {
-    std::vector<std::pair<std::string, std::string>> contents;
+  // |cached_ppd_idxs_|.
+  void OnPpdIndexFetchComplete(const GURL& url) {
+    std::vector<PpdIndexJSON> contents;
     PpdProvider::CallbackResultCode code =
-        ValidateAndParseJSONResponse(&contents);
+        ValidateAndParsePpdIndexJSON(&contents);
     if (code != PpdProvider::SUCCESS) {
       FailQueuedServerPpdResolutions(code);
     } else {
-      cached_ppd_index_ =
-          std::make_unique<std::unordered_map<std::string, std::string>>();
-      // This should be a list of lists of 2-element strings, where the first
-      // element is the |effective_make_and_model| of the printer and the second
-      // element is the filename of the ppd in the ppds/ directory on the
-      // server.
+      int ppd_index_shard = GetShardFromUrl(url);
+      if (ppd_index_shard < 0) {
+        FailQueuedServerPpdResolutions(PpdProvider::INTERNAL_ERROR);
+        return;
+      }
+      auto& cached_ppd_index = cached_ppd_idxs_[ppd_index_shard];
       for (const auto& entry : contents) {
-        cached_ppd_index_->insert(entry);
+        cached_ppd_index.insert(
+            {entry.effective_make_and_model, entry.ppd_filename});
       }
     }
   }
@@ -765,19 +907,23 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   void OnPpdFetchComplete() {
     DCHECK(!ppd_resolution_queue_.empty());
     std::string contents;
-
+    auto& entry = ppd_resolution_queue_.front();
     if ((ValidateAndGetResponseAsString(&contents) != PpdProvider::SUCCESS)) {
-      FinishPpdResolution(std::move(ppd_resolution_queue_.front().second),
-                          PpdProvider::SERVER_ERROR, std::string());
+      FinishPpdResolution(std::move(entry.callback), entry.cached_contents,
+                          PpdProvider::SERVER_ERROR);
     } else if (contents.size() > kMaxPpdSizeBytes) {
-      FinishPpdResolution(std::move(ppd_resolution_queue_.front().second),
-                          PpdProvider::PPD_TOO_LARGE, std::string());
+      FinishPpdResolution(std::move(entry.callback), entry.cached_contents,
+                          PpdProvider::PPD_TOO_LARGE);
+    } else if (contents.empty()) {
+      FinishPpdResolution(std::move(entry.callback), entry.cached_contents,
+                          PpdProvider::INTERNAL_ERROR);
     } else {
+      // Success.  Cache it and return it to the user.
       ppd_cache_->Store(
-          PpdReferenceToCacheKey(ppd_resolution_queue_.front().first), contents,
-          base::Bind(&OnPpdStored));
-      FinishPpdResolution(std::move(ppd_resolution_queue_.front().second),
-                          PpdProvider::SUCCESS, contents);
+          PpdReferenceToCacheKey(ppd_resolution_queue_.front().reference),
+          contents);
+      FinishPpdResolution(std::move(entry.callback), contents,
+                          PpdProvider::SUCCESS);
     }
     ppd_resolution_queue_.pop_front();
   }
@@ -788,29 +934,27 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   // queue.
   void OnReverseIndexComplete() {
     DCHECK(!reverse_index_resolution_queue_.empty());
-    std::vector<ReverseIndexResponse> contents;
+    std::vector<ReverseIndexJSON> contents;
     PpdProvider::CallbackResultCode code =
         ValidateAndParseReverseIndexJSON(&contents);
-    const ReverseIndexQueueEntry& entry =
-        reverse_index_resolution_queue_.front();
+    auto& entry = reverse_index_resolution_queue_.front();
 
     if (code != PpdProvider::SUCCESS) {
       LOG(ERROR) << "Request Failed or failed reverse index parsing";
-      PostReverseLookupFailure(code, entry.cb);
+      PostReverseLookupFailure(code, std::move(entry.cb));
     } else {
-      auto found =
-          std::find_if(contents.begin(), contents.end(),
-                       [&entry](const ReverseIndexResponse& rir) -> bool {
-                         return rir.effective_make_and_model ==
-                                entry.effective_make_and_model;
-                       });
+      auto found = std::find_if(contents.begin(), contents.end(),
+                                [&entry](const ReverseIndexJSON& rij) -> bool {
+                                  return rij.effective_make_and_model ==
+                                         entry.effective_make_and_model;
+                                });
       if (found != contents.end()) {
         base::SequencedTaskRunnerHandle::Get()->PostTask(
-            FROM_HERE, base::Bind(entry.cb, PpdProvider::SUCCESS,
-                                  found->manufacturer, found->model));
+            FROM_HERE, base::BindOnce(std::move(entry.cb), PpdProvider::SUCCESS,
+                                      found->manufacturer, found->model));
       } else {
         LOG(ERROR) << "Failed to lookup printer in retrieved data response";
-        PostReverseLookupFailure(PpdProvider::NOT_FOUND, entry.cb);
+        PostReverseLookupFailure(PpdProvider::NOT_FOUND, std::move(entry.cb));
       }
     }
     reverse_index_resolution_queue_.pop_front();
@@ -869,43 +1013,50 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       ret.effective_make_and_model = contents;
     }
     base::SequencedTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(ppd_reference_resolution_queue_.front().second,
-                              result, ret));
+        FROM_HERE,
+        base::BindOnce(
+            std::move(ppd_reference_resolution_queue_.front().second), result,
+            ret));
     ppd_reference_resolution_queue_.pop_front();
   }
 
   // Something went wrong during metadata fetches.  Fail all queued metadata
   // resolutions with the given error code.
   void FailQueuedMetadataResolutions(PpdProvider::CallbackResultCode code) {
-    for (const auto& cb : manufacturers_resolution_queue_) {
+    for (auto& cb : manufacturers_resolution_queue_) {
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::Bind(cb, code, std::vector<std::string>()));
+          FROM_HERE,
+          base::BindOnce(std::move(cb), code, std::vector<std::string>()));
     }
     manufacturers_resolution_queue_.clear();
   }
 
-  // Fail all server-based ppd and ppd reference resolutions inflight, because
-  // we failed to grab the necessary index data from the server.  Note we leave
-  // any user-based ppd resolutions intact, as they don't depend on the data
-  // we're missing.
+  // Give up on all server-based ppd and ppd reference resolutions inflight,
+  // because we failed to grab the necessary index data from the server.
+  //
+  // User-based ppd resolutions, which depend on local files, are left in the
+  // queue.
+  //
+  // Other entries use cached data, if they found some, or failed outright.
   void FailQueuedServerPpdResolutions(PpdProvider::CallbackResultCode code) {
-    base::circular_deque<std::pair<Printer::PpdReference, ResolvePpdCallback>>
-        filtered_queue;
+    base::circular_deque<PpdResolutionQueueEntry> filtered_queue;
     for (auto& entry : ppd_resolution_queue_) {
-      if (!entry.first.user_supplied_ppd_url.empty()) {
+      if (!entry.reference.user_supplied_ppd_url.empty()) {
         filtered_queue.emplace_back(std::move(entry));
       } else {
-        FinishPpdResolution(std::move(entry.second), code, std::string());
+        FinishPpdResolution(std::move(entry.callback), entry.cached_contents,
+                            code);
       }
     }
     ppd_resolution_queue_ = std::move(filtered_queue);
 
-    // Everything in the ppdreference queue also depends on server information,
+    // Everything in the PpdReference queue also depends on server information,
     // so should also be failed.
     auto task_runner = base::SequencedTaskRunnerHandle::Get();
-    for (const auto& entry : ppd_reference_resolution_queue_) {
+    for (auto& cb : ppd_reference_resolution_queue_) {
       task_runner->PostTask(
-          FROM_HERE, base::Bind(entry.second, code, Printer::PpdReference()));
+          FROM_HERE,
+          base::BindOnce(std::move(cb.second), code, Printer::PpdReference()));
     }
     ppd_reference_resolution_queue_.clear();
   }
@@ -1021,49 +1172,13 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     return ret;
   }
 
-  // Many of our metadata fetches happens to be in the form of a JSON
-  // list-of-lists-of-2-strings.  So this just attempts to parse a JSON reply to
-  // |fetcher| into the passed contents vector.  A return code of SUCCESS means
-  // the JSON was formatted as expected and we've parsed it into |contents|.  On
-  // error the contents of |contents| cleared.
-  PpdProvider::CallbackResultCode ValidateAndParseJSONResponse(
-      std::vector<std::pair<std::string, std::string>>* contents) {
-    contents->clear();
-    std::string buffer;
-    auto tmp = ValidateAndGetResponseAsString(&buffer);
-    if (tmp != PpdProvider::SUCCESS) {
-      return tmp;
-    }
-    auto top_list = base::ListValue::From(base::JSONReader::Read(buffer));
-
-    if (top_list.get() == nullptr) {
-      // We got something malformed back.
-      return PpdProvider::INTERNAL_ERROR;
-    }
-    for (const auto& entry : *top_list) {
-      const base::ListValue* sub_list;
-      contents->push_back({});
-      if (!entry.GetAsList(&sub_list) || sub_list->GetSize() != 2 ||
-          !sub_list->GetString(0, &contents->back().first) ||
-          !sub_list->GetString(1, &contents->back().second)) {
-        contents->clear();
-        return PpdProvider::INTERNAL_ERROR;
-      }
-    }
-    return PpdProvider::SUCCESS;
-  }
-
-  // For the metadata fetches that happens to be in the form of a JSON
-  // list-of-lists-of-3-strings and a dictionary of metadata (the data from a
-  // reverse index json response will be in this format). This method
-  // attempts to parse a JSON reply to |fetcher| into the passed contents
-  // vector. A return code of SUCCESS means the JSON was formatted as expected
-  // and we've parsed it into |contents|. On error the contents of |contents| is
-  // cleared.
-  PpdProvider::CallbackResultCode ValidateAndParseReverseIndexJSON(
-      std::vector<ReverseIndexResponse>* contents) {
-    DCHECK(contents != nullptr);
-    contents->clear();
+  // Ensures that the fetched JSON is in the expected format, that is leading
+  // with exactly |num_strings| and followed by an optional dictionary. Returns
+  // PpdProvider::SUCCESS and saves JSON list in |top_list| if format is valid,
+  // returns PpdProvider::INTERNAL_ERROR otherwise.
+  PpdProvider::CallbackResultCode ParseAndValidateJSONFormat(
+      base::Value::ListStorage* top_list,
+      size_t num_strings) {
     std::string buffer;
 
     auto fetch_result = ValidateAndGetResponseAsString(&buffer);
@@ -1071,35 +1186,170 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       return fetch_result;
     }
 
-    auto top_list = base::ListValue::From(base::JSONReader::Read(buffer));
-    if (top_list.get() == nullptr) {
+    auto ret_list = base::ListValue::From(base::JSONReader::Read(buffer));
+    if (ret_list == nullptr) {
       return PpdProvider::INTERNAL_ERROR;
+    }
+    *top_list = std::move(ret_list->GetList());
+
+    for (const auto& entry : *top_list) {
+      if (!entry.is_list()) {
+        return PpdProvider::INTERNAL_ERROR;
+      }
+
+      // entry must start with |num_strings| strings
+      const base::Value::ListStorage& list = entry.GetList();
+      if (list.size() < num_strings) {
+        return PpdProvider::INTERNAL_ERROR;
+      }
+      for (size_t i = 0; i < num_strings; ++i) {
+        if (!list[i].is_string()) {
+          return PpdProvider::INTERNAL_ERROR;
+        }
+      }
+
+      // entry may optionally have a last arg that must be a dict
+      if (list.size() > num_strings && !list[num_strings].is_dict()) {
+        return PpdProvider::INTERNAL_ERROR;
+      }
+
+      // entry may not have more than |num_strings| strings and one dict
+      if (list.size() > num_strings + 1) {
+        return PpdProvider::INTERNAL_ERROR;
+      }
+    }
+
+    return PpdProvider::SUCCESS;
+  }
+
+  // Attempts to parse a ReverseIndexJSON reply to |fetcher| into the passed
+  // contents. Returns PpdProvider::SUCCESS on valid JSON formatting and filled
+  // |contents|, clears |contents| otherwise.
+  PpdProvider::CallbackResultCode ValidateAndParseReverseIndexJSON(
+      std::vector<ReverseIndexJSON>* contents) {
+    DCHECK(contents != nullptr);
+    contents->clear();
+
+    base::Value::ListStorage top_list;
+    auto ret = ParseAndValidateJSONFormat(&top_list, 3);
+    if (ret != PpdProvider::SUCCESS) {
+      LOG(ERROR) << "Failed to parse ReverseIndex metadata";
+      return ret;
     }
 
     // Fetched data should be in the form {[effective_make_and_model],
     // [manufacturer], [model], [dictionary of metadata]}
-    for (const auto& entry : *top_list) {
-      if (!entry.is_list()) {
-        LOG(WARNING) << "Retrieved data in unexpected format. Data should be "
-                        "in list format";
-        return PpdProvider::INTERNAL_ERROR;
-      }
-
+    for (const auto& entry : top_list) {
       const base::Value::ListStorage& list = entry.GetList();
 
-      if (list.size() < 3 || !list[0].is_string() || !list[1].is_string() ||
-          !list[2].is_string()) {
-        LOG(ERROR) << "Retrieved data in unexpected format. Expecting List of "
-                      "3 or more strings";
-        return PpdProvider::INTERNAL_ERROR;
+      ReverseIndexJSON rij_entry;
+      rij_entry.effective_make_and_model = list[0].GetString();
+      rij_entry.manufacturer = list[1].GetString();
+      rij_entry.model = list[2].GetString();
+
+      // Populate restrictions, if available
+      if (list.size() > 3) {
+        rij_entry.restrictions = ComputeRestrictions(list[3]);
       }
 
-      ReverseIndexResponse rir_entry;
-      rir_entry.effective_make_and_model = list[0].GetString();
-      rir_entry.manufacturer = list[1].GetString();
-      rir_entry.model = list[2].GetString();
+      contents->push_back(rij_entry);
+    }
+    return PpdProvider::SUCCESS;
+  }
 
-      contents->push_back(rir_entry);
+  // Attempts to parse a ManufacturersJSON reply to |fetcher| into the passed
+  // contents. Returns PpdProvider::SUCCESS on valid JSON formatting and filled
+  // |contents|, clears |contents| otherwise.
+  PpdProvider::CallbackResultCode ValidateAndParseManufacturersJSON(
+      std::vector<ManufacturersJSON>* contents) {
+    DCHECK(contents != NULL);
+    contents->clear();
+
+    base::Value::ListStorage top_list;
+    auto ret = ParseAndValidateJSONFormat(&top_list, 2);
+    if (ret != PpdProvider::SUCCESS) {
+      LOG(ERROR) << "Failed to process Manufacturers metadata";
+      return ret;
+    }
+
+    // Fetched data should be in form [[name], [canonical name],
+    // {restrictions}]
+    for (const auto& entry : top_list) {
+      const base::Value::ListStorage& list = entry.GetList();
+      ManufacturersJSON mj_entry;
+      mj_entry.name = list[0].GetString();
+      mj_entry.reference = list[1].GetString();
+
+      // Populate restrictions, if available
+      if (list.size() > 2) {
+        mj_entry.restrictions = ComputeRestrictions(list[2]);
+      }
+
+      contents->push_back(mj_entry);
+    }
+
+    return PpdProvider::SUCCESS;
+  }
+
+  // Attempts to parse a PrintersJSON reply to |fetcher| into the passed
+  // contents. Returns PpdProvider::SUCCESS on valid JSON formatting and filled
+  // |contents|, clears |contents| otherwise.
+  PpdProvider::CallbackResultCode ValidateAndParsePrintersJSON(
+      std::vector<PrintersJSON>* contents) {
+    DCHECK(contents != NULL);
+    contents->clear();
+
+    base::Value::ListStorage top_list;
+    auto ret = ParseAndValidateJSONFormat(&top_list, 2);
+    if (ret != PpdProvider::SUCCESS) {
+      LOG(ERROR) << "Failed to parse Printers metadata";
+      return ret;
+    }
+
+    // Fetched data should be in form [[name], [canonical name],
+    // {restrictions}]
+    for (const auto& entry : top_list) {
+      const base::Value::ListStorage& list = entry.GetList();
+      PrintersJSON pj_entry;
+      pj_entry.name = list[0].GetString();
+      pj_entry.effective_make_and_model = list[1].GetString();
+
+      // Populate restrictions, if available
+      if (list.size() > 2) {
+        pj_entry.restrictions = ComputeRestrictions(list[2]);
+      }
+
+      contents->push_back(pj_entry);
+    }
+
+    return PpdProvider::SUCCESS;
+  }
+
+  // Attempts to parse a PpdIndexJSON reply to |fetcher| into the passed
+  // contents. Returns PpdProvider::SUCCESS on valid JSON formatting and filled
+  // |contents|, clears |contents| otherwise.
+  PpdProvider::CallbackResultCode ValidateAndParsePpdIndexJSON(
+      std::vector<PpdIndexJSON>* contents) {
+    DCHECK(contents != nullptr);
+    contents->clear();
+
+    base::Value::ListStorage top_list;
+    auto ret = ParseAndValidateJSONFormat(&top_list, 2);
+    if (ret != PpdProvider::SUCCESS) {
+      LOG(ERROR) << "Failed to parse PpdIndex metadata";
+      return ret;
+    }
+
+    // Fetched data should be in the form {[effective_make_and_model],
+    // [manufacturer], [model], [dictionary of metadata]}
+    for (const auto& entry : top_list) {
+      const base::Value::ListStorage& list = entry.GetList();
+
+      PpdIndexJSON pij_entry;
+      pij_entry.effective_make_and_model = list[0].GetString();
+      pij_entry.ppd_filename = list[1].GetString();
+
+      contents->push_back(pij_entry);
     }
     return PpdProvider::SUCCESS;
   }
@@ -1123,26 +1373,33 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   ResolvedPrintersList GetManufacturerPrinterList(
       const ManufacturerMetadata& meta) const {
     CHECK(meta.printers.get() != nullptr);
-    ResolvedPrintersList ret;
-    ret.reserve(meta.printers->size());
+    std::vector<PrintersJSON> printers;
+    printers.reserve(meta.printers->size());
     for (const auto& entry : *meta.printers) {
-      Printer::PpdReference ppd_ref;
-      ppd_ref.effective_make_and_model = entry.second;
-      ret.push_back({entry.first, ppd_ref});
+      printers.push_back(entry.second);
     }
     // TODO(justincarlson) -- this should be a localization-aware sort.
-    sort(ret.begin(), ret.end(),
-         [](const std::pair<std::string, Printer::PpdReference>& a,
-            const std::pair<std::string, Printer::PpdReference>& b) -> bool {
-           return a.first < b.first;
+    sort(printers.begin(), printers.end(),
+         [](const PrintersJSON& a, const PrintersJSON& b) -> bool {
+           return a.name < b.name;
          });
+    FilterRestrictedPpdReferences(version_, &printers);
+
+    ResolvedPrintersList ret;
+    ret.reserve(printers.size());
+    for (const auto& printer : printers) {
+      Printer::PpdReference ppd_ref;
+      ppd_ref.effective_make_and_model = printer.effective_make_and_model;
+      ret.push_back({printer.name, ppd_ref});
+    }
     return ret;
   }
 
   void PostReverseLookupFailure(CallbackResultCode result,
-                                const ReverseLookupCallback& cb) {
+                                ReverseLookupCallback cb) {
     base::SequencedTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(cb, result, std::string(), std::string()));
+        FROM_HERE,
+        base::BindOnce(std::move(cb), result, std::string(), std::string()));
   }
 
   // The hash function to calculate the hash of canonical identifiers to the
@@ -1166,12 +1423,12 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   std::unique_ptr<std::unordered_map<std::string, ManufacturerMetadata>>
       cached_metadata_;
 
-  // Cached contents of the server index, which maps a
-  // PpdReference::effective_make_and_model to a url for the corresponding
-  // ppd.
-  // Null until we have fetched the index.
-  std::unique_ptr<std::unordered_map<std::string, std::string>>
-      cached_ppd_index_;
+  // Cached contents of the server indexs, which maps first a shard number to
+  // the corresponding index map of PpdReference::effective_make_and_models to a
+  // urls for the corresponding ppds. Starts as an empty map and filled lazily
+  // as we need to fill in more indexs.
+  std::unordered_map<int, std::unordered_map<std::string, std::string>>
+      cached_ppd_idxs_;
 
   // Queued ResolveManufacturers() calls.  We will simultaneously resolve
   // all queued requests, so no need for a deque here.
@@ -1181,8 +1438,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   base::circular_deque<PrinterResolutionQueueEntry> printers_resolution_queue_;
 
   // Queued ResolvePpd() requests.
-  base::circular_deque<std::pair<Printer::PpdReference, ResolvePpdCallback>>
-      ppd_resolution_queue_;
+  base::circular_deque<PpdResolutionQueueEntry> ppd_resolution_queue_;
 
   // Queued ResolvePpdReference() requests.
   base::circular_deque<
@@ -1220,6 +1476,9 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
   // Where to run disk operations.
   scoped_refptr<base::SequencedTaskRunner> disk_task_runner_;
 
+  // Current version used to filter restricted ppds
+  base::Version version_;
+
   // Construction-time options, immutable.
   const PpdProvider::Options options_;
 
@@ -1231,6 +1490,19 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
 
 }  // namespace
 
+// static
+std::string PpdProvider::PpdReferenceToCacheKey(
+    const Printer::PpdReference& reference) {
+  DCHECK(PpdReferenceIsWellFormed(reference));
+  // The key prefixes here are arbitrary, but ensure we can't have an (unhashed)
+  // collision between keys generated from different PpdReference fields.
+  if (!reference.effective_make_and_model.empty()) {
+    return std::string("em:") + reference.effective_make_and_model;
+  } else {
+    return std::string("up:") + reference.user_supplied_ppd_url;
+  }
+}
+
 PpdProvider::PrinterSearchData::PrinterSearchData() = default;
 PpdProvider::PrinterSearchData::PrinterSearchData(
     const PrinterSearchData& other) = default;
@@ -1241,8 +1513,9 @@ scoped_refptr<PpdProvider> PpdProvider::Create(
     const std::string& browser_locale,
     scoped_refptr<net::URLRequestContextGetter> url_context_getter,
     scoped_refptr<PpdCache> ppd_cache,
+    const base::Version& current_version,
     const PpdProvider::Options& options) {
   return scoped_refptr<PpdProvider>(new PpdProviderImpl(
-      browser_locale, url_context_getter, ppd_cache, options));
+      browser_locale, url_context_getter, ppd_cache, current_version, options));
 }
 }  // namespace chromeos

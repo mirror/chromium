@@ -473,7 +473,7 @@ QuicPacketCreator::SerializeVersionNegotiationPacket(
   return encrypted;
 }
 
-std::unique_ptr<QuicEncryptedPacket>
+OwningSerializedPacketPointer
 QuicPacketCreator::SerializeConnectivityProbingPacket() {
   QuicPacketHeader header;
   // FillPacketHeader increments packet_number_.
@@ -481,7 +481,7 @@ QuicPacketCreator::SerializeConnectivityProbingPacket() {
 
   std::unique_ptr<char[]> buffer(new char[kMaxPacketSize]);
   size_t length = framer_->BuildConnectivityProbingPacket(header, buffer.get(),
-                                                          max_packet_length_);
+                                                          max_plaintext_size_);
   DCHECK(length);
 
   const size_t encrypted_length = framer_->EncryptInPlace(
@@ -490,8 +490,14 @@ QuicPacketCreator::SerializeConnectivityProbingPacket() {
       kMaxPacketSize, buffer.get());
   DCHECK(encrypted_length);
 
-  return QuicMakeUnique<QuicEncryptedPacket>(buffer.release(), encrypted_length,
-                                             /*owns_buffer = */ true);
+  OwningSerializedPacketPointer serialize_packet(new SerializedPacket(
+      header.packet_number, header.packet_number_length, buffer.release(),
+      encrypted_length, /*has_ack=*/false, /*has_stop_waiting=*/false));
+
+  serialize_packet->encryption_level = packet_.encryption_level;
+  serialize_packet->transmission_type = NOT_RETRANSMISSION;
+
+  return serialize_packet;
 }
 
 // TODO(jri): Make this a public method of framer?

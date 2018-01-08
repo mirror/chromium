@@ -25,7 +25,6 @@ import org.chromium.chrome.browser.share.ShareHelper;
 import org.chromium.chrome.browser.share.ShareMenuActionHandler;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.ChromeFileProvider;
-import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 
@@ -36,10 +35,7 @@ import java.util.concurrent.ExecutionException;
  * Instrumentation tests for Share intents.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({
-        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG,
-})
+@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
 public class ShareIntentTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
@@ -125,7 +121,7 @@ public class ShareIntentTest {
     @Test
     @LargeTest
     @RetryOnFailure
-    public void testShareIntent() throws ExecutionException {
+    public void testShareIntent() throws ExecutionException, InterruptedException {
         MockChromeActivity mockActivity = ThreadUtils.runOnUiThreadBlocking(() -> {
             // Sets a test component as last shared and "shareDirectly" option is set so that
             // the share selector menu is not opened. The start activity is overriden, so the
@@ -140,11 +136,7 @@ public class ShareIntentTest {
         ThreadUtils.runOnUiThreadBlocking(() -> mockActivity.onShareMenuItemSelected(
                     true /* shareDirectly */, false /* isIncognito */));
 
-        try {
-            mockActivity.waitForFileCheck();
-        } catch (InterruptedException e) {
-            assert false : "Test thread was interrupted while trying to wait.";
-        }
+        mockActivity.waitForFileCheck();
 
         ShareHelper.setLastShareComponentName(new ComponentName("", ""), null);
     }

@@ -19,7 +19,6 @@
 #include "build/build_config.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 #include "content/common/content_export.h"
 #include "content/common/content_param_traits.h"
 #include "content/common/content_security_policy/csp_context.h"
@@ -27,10 +26,12 @@
 #include "content/common/download/mhtml_save_status.h"
 #include "content/common/features.h"
 #include "content/common/frame_message_enums.h"
+#include "content/common/frame_message_structs.h"
 #include "content/common/frame_owner_properties.h"
 #include "content/common/frame_replication_state.h"
 #include "content/common/navigation_gesture.h"
 #include "content/common/navigation_params.h"
+#include "content/common/resource_timing_info.h"
 #include "content/common/savable_subframe.h"
 #include "content/public/common/common_param_traits.h"
 #include "content/public/common/console_message_level.h"
@@ -45,7 +46,6 @@
 #include "content/public/common/previews_state.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/request_context_type.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/screen_info.h"
 #include "content/public/common/stop_find_action.h"
 #include "content/public/common/three_d_api_types.h"
@@ -58,7 +58,8 @@
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
-#include "third_party/WebKit/public/platform/WebRemoteScrollProperties.h"
+#include "third_party/WebKit/public/platform/WebIntrinsicSizingInfo.h"
+#include "third_party/WebKit/public/platform/WebScrollIntoViewParams.h"
 #include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
@@ -95,12 +96,13 @@ using FrameMsg_SerializeAsMHTML_FrameRoutingIdToContentIdMap =
 #define IPC_MESSAGE_EXPORT CONTENT_EXPORT
 
 #define IPC_MESSAGE_START FrameMsgStart
-IPC_ENUM_TRAITS_MAX_VALUE(blink::WebRemoteScrollProperties::Alignment,
-                          blink::WebRemoteScrollProperties::kLastAlignment)
-IPC_ENUM_TRAITS_MAX_VALUE(blink::WebRemoteScrollProperties::Type,
-                          blink::WebRemoteScrollProperties::kLastType)
-IPC_ENUM_TRAITS_MAX_VALUE(blink::WebRemoteScrollProperties::Behavior,
-                          blink::WebRemoteScrollProperties::kLastBehavior)
+IPC_ENUM_TRAITS_MAX_VALUE(
+    blink::WebScrollIntoViewParams::AlignmentBehavior,
+    blink::WebScrollIntoViewParams::kLastAlignmentBehavior)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebScrollIntoViewParams::Type,
+                          blink::WebScrollIntoViewParams::kLastType)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebScrollIntoViewParams::Behavior,
+                          blink::WebScrollIntoViewParams::kLastBehavior)
 IPC_ENUM_TRAITS_MIN_MAX_VALUE(content::JavaScriptDialogType,
                               content::JAVASCRIPT_DIALOG_TYPE_ALERT,
                               content::JAVASCRIPT_DIALOG_TYPE_PROMPT)
@@ -134,6 +136,18 @@ IPC_ENUM_TRAITS_MAX_VALUE(content::CSPDisposition,
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebTriggeringEventInfo,
                           blink::WebTriggeringEventInfo::kLast)
 
+IPC_STRUCT_TRAITS_BEGIN(blink::WebFloatSize)
+  IPC_STRUCT_TRAITS_MEMBER(width)
+  IPC_STRUCT_TRAITS_MEMBER(height)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(blink::WebIntrinsicSizingInfo)
+  IPC_STRUCT_TRAITS_MEMBER(size)
+  IPC_STRUCT_TRAITS_MEMBER(aspect_ratio)
+  IPC_STRUCT_TRAITS_MEMBER(has_width)
+  IPC_STRUCT_TRAITS_MEMBER(has_height)
+IPC_STRUCT_TRAITS_END()
+
 IPC_STRUCT_TRAITS_BEGIN(blink::WebFindOptions)
   IPC_STRUCT_TRAITS_MEMBER(forward)
   IPC_STRUCT_TRAITS_MEMBER(match_case)
@@ -141,7 +155,13 @@ IPC_STRUCT_TRAITS_BEGIN(blink::WebFindOptions)
   IPC_STRUCT_TRAITS_MEMBER(force)
 IPC_STRUCT_TRAITS_END()
 
-IPC_STRUCT_TRAITS_BEGIN(blink::WebRemoteScrollProperties)
+IPC_STRUCT_TRAITS_BEGIN(blink::WebScrollIntoViewParams::Alignment)
+  IPC_STRUCT_TRAITS_MEMBER(rect_visible)
+  IPC_STRUCT_TRAITS_MEMBER(rect_hidden)
+  IPC_STRUCT_TRAITS_MEMBER(rect_partial)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(blink::WebScrollIntoViewParams)
   IPC_STRUCT_TRAITS_MEMBER(align_x)
   IPC_STRUCT_TRAITS_MEMBER(align_y)
   IPC_STRUCT_TRAITS_MEMBER(type)
@@ -215,6 +235,50 @@ IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::PageImportanceSignals)
   IPC_STRUCT_TRAITS_MEMBER(had_form_interaction)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ResourceLoadTiming)
+  IPC_STRUCT_TRAITS_MEMBER(request_time)
+  IPC_STRUCT_TRAITS_MEMBER(proxy_start)
+  IPC_STRUCT_TRAITS_MEMBER(proxy_end)
+  IPC_STRUCT_TRAITS_MEMBER(dns_start)
+  IPC_STRUCT_TRAITS_MEMBER(dns_end)
+  IPC_STRUCT_TRAITS_MEMBER(connect_start)
+  IPC_STRUCT_TRAITS_MEMBER(connect_end)
+  IPC_STRUCT_TRAITS_MEMBER(worker_start)
+  IPC_STRUCT_TRAITS_MEMBER(worker_ready)
+  IPC_STRUCT_TRAITS_MEMBER(send_start)
+  IPC_STRUCT_TRAITS_MEMBER(send_end)
+  IPC_STRUCT_TRAITS_MEMBER(receive_headers_end)
+  IPC_STRUCT_TRAITS_MEMBER(ssl_start)
+  IPC_STRUCT_TRAITS_MEMBER(ssl_end)
+  IPC_STRUCT_TRAITS_MEMBER(push_start)
+  IPC_STRUCT_TRAITS_MEMBER(push_end)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ResourceTimingInfo)
+  IPC_STRUCT_TRAITS_MEMBER(name)
+  IPC_STRUCT_TRAITS_MEMBER(start_time)
+  IPC_STRUCT_TRAITS_MEMBER(initiator_type)
+  IPC_STRUCT_TRAITS_MEMBER(alpn_negotiated_protocol)
+  IPC_STRUCT_TRAITS_MEMBER(connection_info)
+  IPC_STRUCT_TRAITS_MEMBER(timing)
+  IPC_STRUCT_TRAITS_MEMBER(last_redirect_end_time)
+  IPC_STRUCT_TRAITS_MEMBER(finish_time)
+  IPC_STRUCT_TRAITS_MEMBER(transfer_size)
+  IPC_STRUCT_TRAITS_MEMBER(encoded_body_size)
+  IPC_STRUCT_TRAITS_MEMBER(decoded_body_size)
+  IPC_STRUCT_TRAITS_MEMBER(did_reuse_connection)
+  IPC_STRUCT_TRAITS_MEMBER(allow_timing_details)
+  IPC_STRUCT_TRAITS_MEMBER(allow_redirect_details)
+  IPC_STRUCT_TRAITS_MEMBER(allow_negative_values)
+  IPC_STRUCT_TRAITS_MEMBER(server_timing)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ServerTimingInfo)
+  IPC_STRUCT_TRAITS_MEMBER(name)
+  IPC_STRUCT_TRAITS_MEMBER(duration)
+  IPC_STRUCT_TRAITS_MEMBER(description)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_BEGIN(FrameHostMsg_DidFailProvisionalLoadWithError_Params)
@@ -334,6 +398,10 @@ IPC_STRUCT_BEGIN_WITH_PARENT(FrameHostMsg_DidCommitProvisionalLoad_Params,
   // The insecure request policy the document for the load is enforcing.
   IPC_STRUCT_MEMBER(blink::WebInsecureRequestPolicy, insecure_request_policy)
 
+  // The upgrade insecure navigations set the document for the load is
+  // enforcing.
+  IPC_STRUCT_MEMBER(std::vector<uint32_t>, insecure_navigations_set)
+
   // True if the document for the load is a unique origin that should be
   // considered potentially trustworthy.
   IPC_STRUCT_MEMBER(bool, has_potentially_trustworthy_unique_origin)
@@ -398,12 +466,8 @@ IPC_STRUCT_TRAITS_BEGIN(content::CommonNavigationParams)
   IPC_STRUCT_TRAITS_MEMBER(source_location)
   IPC_STRUCT_TRAITS_MEMBER(should_check_main_world_csp)
   IPC_STRUCT_TRAITS_MEMBER(has_user_gesture)
-IPC_STRUCT_TRAITS_END()
-
-IPC_STRUCT_TRAITS_BEGIN(content::StartNavigationParams)
-  IPC_STRUCT_TRAITS_MEMBER(extra_headers)
-  IPC_STRUCT_TRAITS_MEMBER(transferred_request_child_id)
-  IPC_STRUCT_TRAITS_MEMBER(transferred_request_request_id)
+  IPC_STRUCT_TRAITS_MEMBER(started_from_context_menu)
+  IPC_STRUCT_TRAITS_MEMBER(suggested_filename)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::NavigationTiming)
@@ -425,7 +489,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::RequestNavigationParams)
   IPC_STRUCT_TRAITS_MEMBER(nav_entry_id)
   IPC_STRUCT_TRAITS_MEMBER(is_history_navigation_in_new_child)
   IPC_STRUCT_TRAITS_MEMBER(subframe_unique_names)
-  IPC_STRUCT_TRAITS_MEMBER(has_committed_real_load)
   IPC_STRUCT_TRAITS_MEMBER(intended_as_new_entry)
   IPC_STRUCT_TRAITS_MEMBER(pending_history_list_offset)
   IPC_STRUCT_TRAITS_MEMBER(current_history_list_offset)
@@ -456,6 +519,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::FrameReplicationState)
   IPC_STRUCT_TRAITS_MEMBER(accumulated_csp_headers)
   IPC_STRUCT_TRAITS_MEMBER(scope)
   IPC_STRUCT_TRAITS_MEMBER(insecure_request_policy)
+  IPC_STRUCT_TRAITS_MEMBER(insecure_navigations_set)
   IPC_STRUCT_TRAITS_MEMBER(has_potentially_trustworthy_unique_origin)
   IPC_STRUCT_TRAITS_MEMBER(has_received_user_gesture_before_nav)
 IPC_STRUCT_TRAITS_END()
@@ -466,7 +530,7 @@ IPC_STRUCT_TRAITS_END()
 IPC_STRUCT_BEGIN(FrameHostMsg_OpenURL_Params)
   IPC_STRUCT_MEMBER(GURL, url)
   IPC_STRUCT_MEMBER(bool, uses_post)
-  IPC_STRUCT_MEMBER(scoped_refptr<content::ResourceRequestBody>,
+  IPC_STRUCT_MEMBER(scoped_refptr<network::ResourceRequestBody>,
                     resource_request_body)
   IPC_STRUCT_MEMBER(std::string, extra_headers)
   IPC_STRUCT_MEMBER(content::Referrer, referrer)
@@ -475,6 +539,7 @@ IPC_STRUCT_BEGIN(FrameHostMsg_OpenURL_Params)
   IPC_STRUCT_MEMBER(bool, user_gesture)
   IPC_STRUCT_MEMBER(bool, is_history_navigation_in_new_child)
   IPC_STRUCT_MEMBER(blink::WebTriggeringEventInfo, triggering_event_info)
+  IPC_STRUCT_MEMBER(base::Optional<std::string>, suggested_filename)
 IPC_STRUCT_END()
 
 IPC_STRUCT_BEGIN(FrameHostMsg_DownloadUrl_Params)
@@ -708,9 +773,13 @@ IPC_STRUCT_TRAITS_END()
 // -----------------------------------------------------------------------------
 // Messages sent from the browser to the renderer.
 
-IPC_MESSAGE_ROUTED2(FrameMsg_SetChildFrameSurface,
-                    viz::SurfaceInfo /* surface_info */,
-                    viz::SurfaceSequence /* sequence */)
+// Notifies the embedding frame that the intrinsic sizing info parameters
+// of a child frame have changed.
+IPC_MESSAGE_ROUTED1(FrameMsg_IntrinsicSizingInfoOfChildChanged,
+                    blink::WebIntrinsicSizingInfo)
+
+IPC_MESSAGE_ROUTED1(FrameMsg_SetChildFrameSurface,
+                    viz::SurfaceInfo /* surface_info */)
 
 // Notifies the embedding frame that the process rendering the child frame's
 // contents has terminated.
@@ -741,13 +810,6 @@ IPC_MESSAGE_ROUTED1(FrameMsg_VisualStateRequest, uint64_t /* id */)
 
 // Instructs the renderer to delete the RenderFrame.
 IPC_MESSAGE_ROUTED0(FrameMsg_Delete)
-
-// Tells the renderer to perform the specified navigation, interrupting any
-// existing navigation.
-IPC_MESSAGE_ROUTED3(FrameMsg_Navigate,
-                    content::CommonNavigationParams, /* common_params */
-                    content::StartNavigationParams,  /* start_params */
-                    content::RequestNavigationParams /* request_params */)
 
 // Instructs the renderer to invoke the frame's beforeunload event handler.
 // Expects the result to be returned via FrameHostMsg_BeforeUnload_ACK.
@@ -837,7 +899,13 @@ IPC_MESSAGE_ROUTED1(FrameMsg_TextSurroundingSelectionRequest,
 // Change the accessibility mode in the renderer process.
 IPC_MESSAGE_ROUTED1(FrameMsg_SetAccessibilityMode, ui::AXMode)
 
-// Dispatch a load event in the iframe element containing this frame.
+// Sent to a proxy to record the resource timing info for this frame in the
+// parent frame.
+IPC_MESSAGE_ROUTED1(FrameMsg_ForwardResourceTimingToParent,
+                    content::ResourceTimingInfo)
+
+// Sent to a proxy to dispatch a load event in the iframe element containing
+// this frame.
 IPC_MESSAGE_ROUTED0(FrameMsg_DispatchLoad)
 
 // Sent to a subframe to control whether to collapse its the frame owner element
@@ -871,6 +939,11 @@ IPC_MESSAGE_ROUTED0(FrameMsg_ResetContentSecurityPolicy)
 IPC_MESSAGE_ROUTED1(FrameMsg_EnforceInsecureRequestPolicy,
                     blink::WebInsecureRequestPolicy)
 
+// Update a proxy's replicated set for enforcement of insecure navigations.
+// Used when the frame's set is changed in another process.
+IPC_MESSAGE_ROUTED1(FrameMsg_EnforceInsecureNavigationsSet,
+                    std::vector<uint32_t> /* set */)
+
 // Update a proxy's replicated origin.  Used when the frame is navigated to a
 // new origin.
 IPC_MESSAGE_ROUTED2(FrameMsg_DidUpdateOrigin,
@@ -879,7 +952,8 @@ IPC_MESSAGE_ROUTED2(FrameMsg_DidUpdateOrigin,
 
 // Notifies RenderFrameProxy that its associated RenderWidgetHostView has
 // changed.
-IPC_MESSAGE_ROUTED1(FrameMsg_ViewChanged, viz::FrameSinkId /* frame_sink_id */)
+IPC_MESSAGE_ROUTED1(FrameMsg_ViewChanged,
+                    content::FrameMsg_ViewChanged_Params /* params */)
 
 // Notifies this frame or proxy that it is now focused.  This is used to
 // support cross-process focused frame changes.
@@ -1068,7 +1142,7 @@ IPC_MESSAGE_ROUTED1(FrameMsg_MixedContentFound,
 // Sent to the parent process of a cross-process frame to request scrolling.
 IPC_MESSAGE_ROUTED2(FrameMsg_ScrollRectToVisible,
                     gfx::Rect /* rect_to_scroll */,
-                    blink::WebRemoteScrollProperties /* properties */)
+                    blink::WebScrollIntoViewParams /* properties */)
 
 // -----------------------------------------------------------------------------
 // Messages sent from the renderer to the browser.
@@ -1384,16 +1458,6 @@ IPC_MESSAGE_CONTROL3(FrameHostMsg_PluginInstanceThrottleStateChange,
                      bool /* is_throttled */)
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 
-// Satisfies a Surface destruction dependency associated with |sequence|.
-IPC_MESSAGE_ROUTED1(FrameHostMsg_SatisfySequence,
-                    viz::SurfaceSequence /* sequence */)
-
-// Creates a destruction dependency for the Surface specified by the given
-// |surface_id|.
-IPC_MESSAGE_ROUTED2(FrameHostMsg_RequireSequence,
-                    viz::SurfaceId /* surface_id */,
-                    viz::SurfaceSequence /* sequence */)
-
 // Provides the result from handling BeforeUnload.  |proceed| matches the return
 // value of the frame's beforeunload handler: true if the user decided to
 // proceed with leaving the page.
@@ -1538,6 +1602,11 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_SuddenTerminationDisablerChanged,
                     bool /* present */,
                     blink::WebSuddenTerminationDisablerType /* disabler_type */)
 
+// Requests that the resource timing info be added to the performance entries of
+// a remote parent frame.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_ForwardResourceTimingToParent,
+                    content::ResourceTimingInfo)
+
 // Dispatch a load event for this frame in the iframe element of an
 // out-of-process parent frame.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_DispatchLoad)
@@ -1561,13 +1630,11 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_DidRunInsecureContent,
 
 // Sent when the renderer displays content that was loaded with
 // certificate errors.
-IPC_MESSAGE_ROUTED1(FrameHostMsg_DidDisplayContentWithCertificateErrors,
-                    GURL /* resource url */)
+IPC_MESSAGE_ROUTED0(FrameHostMsg_DidDisplayContentWithCertificateErrors)
 
 // Sent when the renderer runs content that was loaded with certificate
 // errors.
-IPC_MESSAGE_ROUTED1(FrameHostMsg_DidRunContentWithCertificateErrors,
-                    GURL /* resource url */)
+IPC_MESSAGE_ROUTED0(FrameHostMsg_DidRunContentWithCertificateErrors)
 
 // Response to FrameMsg_GetSavableResourceLinks.
 IPC_MESSAGE_ROUTED3(FrameHostMsg_SavableResourceLinksResponse,
@@ -1644,7 +1711,7 @@ IPC_MESSAGE_ROUTED3(FrameHostMsg_WebUISend,
 // Sent by a local root to request scrolling in its parent process.
 IPC_MESSAGE_ROUTED2(FrameHostMsg_ScrollRectToVisibleInParentFrame,
                     gfx::Rect /* rect_to_scroll */,
-                    blink::WebRemoteScrollProperties /* properties */)
+                    blink::WebScrollIntoViewParams /* properties */)
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 

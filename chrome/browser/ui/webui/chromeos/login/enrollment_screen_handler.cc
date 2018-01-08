@@ -11,7 +11,6 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -73,6 +72,7 @@ std::string EnrollmentModeToUIMode(policy::EnrollmentConfig::Mode mode) {
     case policy::EnrollmentConfig::MODE_SERVER_FORCED:
     case policy::EnrollmentConfig::MODE_ATTESTATION_LOCAL_FORCED:
     case policy::EnrollmentConfig::MODE_ATTESTATION_SERVER_FORCED:
+    case policy::EnrollmentConfig::MODE_ATTESTATION_MANUAL_FALLBACK:
       return kEnrollmentModeUIForced;
     case policy::EnrollmentConfig::MODE_RECOVERY:
       return kEnrollmentModeUIRecovery;
@@ -193,7 +193,7 @@ void EnrollmentScreenHandler::ShowLicenseTypeSelectionScreen(
 void EnrollmentScreenHandler::ShowAdJoin() {
   observe_network_failure_ = false;
   if (!authpolicy_login_helper_)
-    authpolicy_login_helper_ = base::MakeUnique<AuthPolicyLoginHelper>();
+    authpolicy_login_helper_ = std::make_unique<AuthPolicyLoginHelper>();
   ShowStep(kEnrollmentStepAdJoin);
 }
 
@@ -707,13 +707,16 @@ void EnrollmentScreenHandler::DoShow() {
   login::SigninPartitionManager* signin_partition_manager =
       login::SigninPartitionManager::Factory::GetForBrowserContext(
           Profile::FromWebUI(web_ui()));
-  signin_partition_manager->StartSigninSession(web_ui()->GetWebContents());
+  signin_partition_manager->StartSigninSession(
+      web_ui()->GetWebContents(),
+      base::BindOnce(&EnrollmentScreenHandler::DoShowWithPartition,
+                     weak_ptr_factory_.GetWeakPtr()));
+}
 
-  // Then leave it running forever.
+void EnrollmentScreenHandler::DoShowWithPartition(
+    const std::string& partition_name) {
   base::DictionaryValue screen_data;
-  screen_data.SetString(
-      "webviewPartitionName",
-      signin_partition_manager->GetCurrentStoragePartitionName());
+  screen_data.SetString("webviewPartitionName", partition_name);
   screen_data.SetString("gaiaUrl", GaiaUrls::GetInstance()->gaia_url().spec());
   screen_data.SetString("clientId",
                         GaiaUrls::GetInstance()->oauth2_chrome_client_id());

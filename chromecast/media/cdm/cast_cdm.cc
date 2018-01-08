@@ -4,11 +4,11 @@
 
 #include "chromecast/media/cdm/cast_cdm.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/location.h"
-#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromecast/media/base/decrypt_context_impl.h"
@@ -23,6 +23,8 @@
 namespace chromecast {
 namespace media {
 namespace {
+constexpr size_t kKeyStatusCount =
+    static_cast<size_t>(::media::CdmKeyInformation::KEY_STATUS_MAX) + 1;
 
 class CastCdmContextImpl : public CastCdmContext {
  public:
@@ -167,7 +169,7 @@ void CastCdm::OnSessionKeysChange(const std::string& session_id,
                                   ::media::CdmKeysInfo keys_info) {
   logging::LogMessage log_message(__FILE__, __LINE__, logging::LOG_INFO);
   log_message.stream() << "keystatuseschange ";
-  int status_count[::media::CdmKeyInformation::KEY_STATUS_MAX] = {0};
+  int status_count[kKeyStatusCount] = {0};
   for (const auto& key_info : keys_info) {
     status_count[key_info->status]++;
   }
@@ -197,7 +199,7 @@ void CastCdm::KeyIdAndKeyPairsToInfo(const ::media::KeyIdAndKeyPairs& keys,
                                      ::media::CdmKeysInfo* keys_info) {
   DCHECK(keys_info);
   for (const std::pair<std::string, std::string>& key : keys) {
-    keys_info->push_back(base::MakeUnique<::media::CdmKeyInformation>(
+    keys_info->push_back(std::make_unique<::media::CdmKeyInformation>(
         key.first, ::media::CdmKeyInformation::USABLE, 0));
   }
 }

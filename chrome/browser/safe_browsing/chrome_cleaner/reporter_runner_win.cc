@@ -40,7 +40,6 @@
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/common/pref_names.h"
-#include "components/chrome_cleaner/public/constants/constants.h"
 #include "components/component_updater/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/version_info/version_info.h"
@@ -823,6 +822,11 @@ class ReporterRunner {
         invocation_type_ ==
         SwReporterInvocationType::kUserInitiatedWithLogsAllowed);
 
+    finished_invocation.set_chrome_prompt(
+        IsUserInitiated(invocation_type_)
+            ? chrome_cleaner::ChromePromptValue::kUserInitiated
+            : chrome_cleaner::ChromePromptValue::kPrompted);
+
     invocations_.NotifySequenceDone(
         SwReporterInvocationResult::kCleanupToBeOffered);
     cleaner_controller->Scan(finished_invocation);
@@ -841,6 +845,7 @@ class ReporterRunner {
     UMAHistogramReporter uma(suffix);
     switch (invocation_type_) {
       case SwReporterInvocationType::kUnspecified:
+      case SwReporterInvocationType::kMax:
         NOTREACHED();
         return false;
 
@@ -895,7 +900,8 @@ class ReporterRunner {
       invocation->set_reporter_logs_upload_enabled(false);
     }
 
-    if (ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()) {
+    if (ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+            local_state)) {
       invocation->mutable_command_line().AppendSwitch(
           chrome_cleaner::kEnableCrashReportingSwitch);
     }
@@ -973,7 +979,8 @@ SwReporterInvocation::SwReporterInvocation(const SwReporterInvocation& other)
       supported_behaviours_(other.supported_behaviours_),
       suffix_(other.suffix_),
       reporter_logs_upload_enabled_(other.reporter_logs_upload_enabled_),
-      cleaner_logs_upload_enabled_(other.cleaner_logs_upload_enabled_) {}
+      cleaner_logs_upload_enabled_(other.cleaner_logs_upload_enabled_),
+      chrome_prompt_(other.chrome_prompt_) {}
 
 void SwReporterInvocation::operator=(const SwReporterInvocation& invocation) {
   command_line_ = invocation.command_line_;
@@ -981,6 +988,7 @@ void SwReporterInvocation::operator=(const SwReporterInvocation& invocation) {
   suffix_ = invocation.suffix_;
   reporter_logs_upload_enabled_ = invocation.reporter_logs_upload_enabled_;
   cleaner_logs_upload_enabled_ = invocation.cleaner_logs_upload_enabled_;
+  chrome_prompt_ = invocation.chrome_prompt_;
 }
 
 SwReporterInvocation& SwReporterInvocation::WithSuffix(
@@ -1000,7 +1008,8 @@ bool SwReporterInvocation::operator==(const SwReporterInvocation& other) const {
          supported_behaviours_ == other.supported_behaviours_ &&
          suffix_ == other.suffix_ &&
          reporter_logs_upload_enabled_ == other.reporter_logs_upload_enabled_ &&
-         cleaner_logs_upload_enabled_ == other.cleaner_logs_upload_enabled_;
+         cleaner_logs_upload_enabled_ == other.cleaner_logs_upload_enabled_ &&
+         chrome_prompt_ == other.chrome_prompt_;
 }
 
 const base::CommandLine& SwReporterInvocation::command_line() const {
@@ -1043,6 +1052,15 @@ void SwReporterInvocation::set_cleaner_logs_upload_enabled(
   cleaner_logs_upload_enabled_ = cleaner_logs_upload_enabled;
 }
 
+chrome_cleaner::ChromePromptValue SwReporterInvocation::chrome_prompt() const {
+  return chrome_prompt_;
+}
+
+void SwReporterInvocation::set_chrome_prompt(
+    chrome_cleaner::ChromePromptValue chrome_prompt) {
+  chrome_prompt_ = chrome_prompt;
+}
+
 SwReporterInvocationSequence::SwReporterInvocationSequence(
     const base::Version& version)
     : version_(version) {
@@ -1059,6 +1077,17 @@ SwReporterInvocationSequence::SwReporterInvocationSequence(
     : version_(std::move(invocations_sequence.version_)),
       container_(std::move(invocations_sequence.container_)),
       on_sequence_done_(std::move(invocations_sequence.on_sequence_done_)) {}
+
+SwReporterInvocationSequence::SwReporterInvocationSequence(
+    const SwReporterInvocationSequence& invocations_sequence)
+    : version_(invocations_sequence.version_),
+      container_(invocations_sequence.container_) {
+  // As in the regular constructor: notify the cleaner controller once this
+  // sequence completes.
+  on_sequence_done_ =
+      base::BindOnce(&ChromeCleanerController::OnReporterSequenceDone,
+                     base::Unretained(GetCleanerController()));
+}
 
 SwReporterInvocationSequence::~SwReporterInvocationSequence() = default;
 
@@ -1094,21 +1123,12 @@ SwReporterInvocationSequence::mutable_container() {
   return container_;
 }
 
-void RunSwReportersForTesting(SwReporterInvocationType invocation_type,
-                              SwReporterInvocationSequence&& invocations) {
+void MaybeStartSwReporter(SwReporterInvocationType invocation_type,
+                          SwReporterInvocationSequence&& invocations) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!invocations.container().empty());
 
   ReporterRunner::MaybeStartInvocations(invocation_type,
-                                        std::move(invocations));
-}
-
-void OnSwReporterReady(SwReporterInvocationSequence&& invocations) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!invocations.container().empty());
-
-  // TODO(crbug.com/776538): Handle user-initiated cleanups.
-  ReporterRunner::MaybeStartInvocations(SwReporterInvocationType::kPeriodicRun,
                                         std::move(invocations));
 }
 

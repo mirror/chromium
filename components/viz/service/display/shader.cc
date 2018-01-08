@@ -348,7 +348,7 @@ std::string VertexShader::GetShaderString() const {
         break;
       case TEX_COORD_TRANSFORM_TRANSLATED_VEC4:
         SRC("texCoord = texCoord + vec2(0.5);");
-      // Fall through...
+        FALLTHROUGH;
       case TEX_COORD_TRANSFORM_VEC4:
         if (use_uniform_arrays_) {
           HDR("uniform TexCoordPrecision vec4 vertexTexTransform[NUM_QUADS];");
@@ -472,6 +472,9 @@ void FragmentShader::Init(GLES2Interface* context,
   if (has_output_color_matrix_)
     uniforms.emplace_back("output_color_matrix");
 
+  if (has_tint_color_matrix_)
+    uniforms.emplace_back("tint_color_matrix");
+
   locations.resize(uniforms.size());
 
   GetProgramUniformLocations(context, program, uniforms.size(), uniforms.data(),
@@ -530,6 +533,9 @@ void FragmentShader::Init(GLES2Interface* context,
 
   if (has_output_color_matrix_)
     output_color_matrix_location_ = locations[index++];
+
+  if (has_tint_color_matrix_)
+    tint_color_matrix_location_ = locations[index++];
 
   DCHECK_EQ(index, locations.size());
 }
@@ -1022,6 +1028,13 @@ std::string FragmentShader::GetShaderSource() const {
     HDR("uniform mat4 output_color_matrix;");
     SRC("// Apply the output color matrix");
     SRC("texColor = output_color_matrix * texColor;");
+  }
+
+  // Tint the final color. Used for debugging composited content.
+  if (has_tint_color_matrix_) {
+    HDR("uniform mat4 tint_color_matrix;");
+    SRC("// Apply the tint color matrix");
+    SRC("texColor = tint_color_matrix * texColor;");
   }
 
   // Include header text for alpha.

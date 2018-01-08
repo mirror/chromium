@@ -11,7 +11,6 @@
 
 #include "base/callback.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -287,19 +286,6 @@ void PermissionContextBase::ResetPermission(const GURL& requesting_origin,
                                       CONTENT_SETTING_DEFAULT);
 }
 
-void PermissionContextBase::CancelPermissionRequest(
-    content::WebContents* web_contents,
-    const PermissionRequestID& id) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  auto it = pending_requests_.find(id.ToString());
-  if (it != pending_requests_.end() && web_contents != nullptr &&
-      PermissionRequestManager::FromWebContents(web_contents) != nullptr) {
-    PermissionRequestManager::FromWebContents(web_contents)
-        ->CancelRequest(it->second.get());
-  }
-}
-
 bool PermissionContextBase::IsPermissionKillSwitchOn() const {
   const std::string param = variations::GetVariationParamValue(
       kPermissionsKillSwitchFieldStudy,
@@ -334,11 +320,11 @@ void PermissionContextBase::DecidePermission(
     return;
 
   std::unique_ptr<PermissionRequest> request_ptr =
-      base::MakeUnique<PermissionRequestImpl>(
+      std::make_unique<PermissionRequestImpl>(
           requesting_origin, content_settings_type_, user_gesture,
           base::Bind(&PermissionContextBase::PermissionDecided,
                      weak_factory_.GetWeakPtr(), id, requesting_origin,
-                     embedding_origin, user_gesture, callback),
+                     embedding_origin, callback),
           base::Bind(&PermissionContextBase::CleanUpRequest,
                      weak_factory_.GetWeakPtr(), id));
   PermissionRequest* request = request_ptr.get();
@@ -355,39 +341,15 @@ void PermissionContextBase::PermissionDecided(
     const PermissionRequestID& id,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
-    bool user_gesture,
     const BrowserPermissionCallback& callback,
     ContentSetting content_setting) {
-  PermissionRequestGestureType gesture_type =
-      user_gesture ? PermissionRequestGestureType::GESTURE
-                   : PermissionRequestGestureType::NO_GESTURE;
-  PermissionEmbargoStatus embargo_status =
-      PermissionEmbargoStatus::NOT_EMBARGOED;
   DCHECK(content_setting == CONTENT_SETTING_ALLOW ||
          content_setting == CONTENT_SETTING_BLOCK ||
          content_setting == CONTENT_SETTING_DEFAULT);
-  bool persist = true;
-  if (content_setting == CONTENT_SETTING_ALLOW) {
-    PermissionUmaUtil::PermissionGranted(content_settings_type_, gesture_type,
-                                         requesting_origin, profile_);
-  } else if (content_setting == CONTENT_SETTING_BLOCK) {
-    PermissionUmaUtil::PermissionDenied(content_settings_type_, gesture_type,
-                                        requesting_origin, profile_);
-  } else {
-    PermissionUmaUtil::PermissionDismissed(content_settings_type_, gesture_type,
-                                           requesting_origin, profile_);
-
-    persist = false;
-    if (PermissionDecisionAutoBlocker::GetForProfile(profile_)
-            ->RecordDismissAndEmbargo(requesting_origin,
-                                      content_settings_type_)) {
-      embargo_status = PermissionEmbargoStatus::REPEATED_DISMISSALS;
-    }
-  }
-  PermissionUmaUtil::RecordEmbargoStatus(embargo_status);
-
   UserMadePermissionDecision(id, requesting_origin, embedding_origin,
                              content_setting);
+
+  bool persist = content_setting != CONTENT_SETTING_DEFAULT;
   NotifyPermissionSet(id, requesting_origin, embedding_origin, callback,
                       persist, content_setting);
 }

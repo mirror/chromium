@@ -19,8 +19,12 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "components/viz/common/features.h"
+#include "components/viz/common/surfaces/local_surface_id.h"
+#include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/compositor_frame_helpers.h"
+#include "components/viz/test/mock_compositor_frame_sink_client.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/input/legacy_input_router_impl.h"
 #include "content/browser/renderer_host/input/touch_emulator.h"
@@ -124,6 +128,7 @@ class MockInputRouter : public InputRouter {
   void BindHost(mojom::WidgetInputHandlerHostRequest request,
                 bool frame_handler) override {}
   void ProgressFling(base::TimeTicks time) override {}
+  void StopFling() override {}
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& message) override {
@@ -192,6 +197,15 @@ class MockRenderWidgetHost : public RenderWidgetHostImpl {
 
   WebInputEvent::Type acked_touch_event_type() const {
     return acked_touch_event_type_;
+  }
+
+  // Mocks out |renderer_compositor_frame_sink_| with a
+  // CompositorFrameSinkClientPtr bound to
+  // |mock_renderer_compositor_frame_sink|.
+  void SetMockRendererCompositorFrameSink(
+      viz::MockCompositorFrameSinkClient* mock_renderer_compositor_frame_sink) {
+    renderer_compositor_frame_sink_ =
+        mock_renderer_compositor_frame_sink->BindInterfacePtr();
   }
 
   void SetupForInputRouterTest() {
@@ -294,8 +308,11 @@ class TestView : public TestRenderWidgetHostView {
         bottom_controls_height_(0.f) {}
 
   // Sets the bounds returned by GetViewBounds.
-  void set_bounds(const gfx::Rect& bounds) {
+  void SetBounds(const gfx::Rect& bounds) override {
+    if (bounds_ == bounds)
+      return;
     bounds_ = bounds;
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
   }
 
   void set_top_controls_height(float top_controls_height) {
@@ -340,6 +357,10 @@ class TestView : public TestRenderWidgetHostView {
   float GetBottomControlsHeight() const override {
     return bottom_controls_height_;
   }
+  viz::LocalSurfaceId GetLocalSurfaceId() const override {
+    return local_surface_id_;
+  }
+
   void ProcessAckedTouchEvent(const TouchEventWithLatencyInfo& touch,
                               InputEventAckState ack_result) override {
     acked_event_ = touch.event;
@@ -379,6 +400,8 @@ class TestView : public TestRenderWidgetHostView {
   float top_controls_height_;
   float bottom_controls_height_;
   viz::BeginFrameAck last_did_not_produce_frame_ack_;
+  viz::LocalSurfaceId local_surface_id_;
+  viz::ParentLocalSurfaceIdAllocator local_surface_id_allocator_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestView);
@@ -895,14 +918,12 @@ class RenderWidgetHostAsyncWheelEventsEnabledMojoInputDisabledTest
                              kAsyncWheelEvents) {}
 };
 
-#if GTEST_HAS_PARAM_TEST
 // RenderWidgetHostWithSourceTest ----------------------------------------------
 
 // This is for tests that are to be run for all source devices.
 class RenderWidgetHostWithSourceTest
     : public RenderWidgetHostTest,
       public testing::WithParamInterface<WebGestureDevice> {};
-#endif  // GTEST_HAS_PARAM_TEST
 
 }  // namespace
 
@@ -911,7 +932,7 @@ class RenderWidgetHostWithSourceTest
 TEST_F(RenderWidgetHostTest, Resize) {
   // The initial bounds is the empty rect, so setting it to the same thing
   // shouldn't send the resize message.
-  view_->set_bounds(gfx::Rect());
+  view_->SetBounds(gfx::Rect());
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_FALSE(process_->sink().GetUniqueMessageMatching(ViewMsg_Resize::ID));
@@ -926,7 +947,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   // but should not expect ack for empty physical backing size.
   gfx::Rect original_size(0, 0, 100, 100);
   process_->sink().ClearMessages();
-  view_->set_bounds(original_size);
+  view_->SetBounds(original_size);
   view_->SetMockPhysicalBackingSize(gfx::Size());
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
@@ -952,7 +973,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   process_->sink().ClearMessages();
   gfx::Rect second_size(0, 0, 110, 110);
   EXPECT_FALSE(host_->resize_ack_pending_);
-  view_->set_bounds(second_size);
+  view_->SetBounds(second_size);
   host_->WasResized();
   EXPECT_TRUE(host_->resize_ack_pending_);
   params.flags = 0;
@@ -965,7 +986,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   // a resize ACK is pending.
   gfx::Rect third_size(0, 0, 120, 120);
   process_->sink().ClearMessages();
-  view_->set_bounds(third_size);
+  view_->SetBounds(third_size);
   host_->WasResized();
   EXPECT_TRUE(host_->resize_ack_pending_);
   EXPECT_EQ(second_size.size(), host_->old_resize_params_->new_size);
@@ -995,7 +1016,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   // expect a resize ack (since the renderer won't ack empty sizes). The message
   // should contain the new size (0x0) and not the previous one that we skipped
   process_->sink().ClearMessages();
-  view_->set_bounds(gfx::Rect());
+  view_->SetBounds(gfx::Rect());
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_EQ(gfx::Size(), host_->old_resize_params_->new_size);
@@ -1003,7 +1024,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
 
   // Send a rect that has no area but has either width or height set.
   process_->sink().ClearMessages();
-  view_->set_bounds(gfx::Rect(0, 0, 0, 30));
+  view_->SetBounds(gfx::Rect(0, 0, 0, 30));
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_EQ(gfx::Size(0, 30), host_->old_resize_params_->new_size);
@@ -1017,7 +1038,7 @@ TEST_F(RenderWidgetHostTest, Resize) {
   EXPECT_FALSE(process_->sink().GetFirstMessageMatching(ViewMsg_Resize::ID));
 
   // A different size should be sent again, however.
-  view_->set_bounds(gfx::Rect(0, 0, 0, 31));
+  view_->SetBounds(gfx::Rect(0, 0, 0, 31));
   host_->WasResized();
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_EQ(gfx::Size(0, 31), host_->old_resize_params_->new_size);
@@ -1075,7 +1096,7 @@ TEST_F(RenderWidgetHostTest, ResizeThenCrash) {
 
   // Setting the bounds to a "real" rect should send out the notification.
   gfx::Rect original_size(0, 0, 100, 100);
-  view_->set_bounds(original_size);
+  view_->SetBounds(original_size);
   host_->WasResized();
   EXPECT_TRUE(host_->resize_ack_pending_);
   EXPECT_EQ(original_size.size(), host_->old_resize_params_->new_size);
@@ -1709,18 +1730,32 @@ TEST_F(RenderWidgetHostTest, MultipleInputEvents) {
   EXPECT_TRUE(delegate_->unresponsive_timer_fired());
 }
 
-// Test that the rendering timeout for newly loaded content fires
-// when enough time passes without receiving a new compositor frame.
-TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
+// Test that the rendering timeout for newly loaded content fires when enough
+// time passes without receiving a new compositor frame. This test assumes
+// Surface Synchronization is off.
+TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
+  // If Surface Synchronization is on, we have a separate code path for
+  // cancelling new content rendering timeout that is tested separately.
+  if (features::IsSurfaceSynchronizationEnabled())
+    return;
+
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
+
+  // Mocking |renderer_compositor_frame_sink_| to prevent crashes in
+  // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources).
+  std::unique_ptr<viz::MockCompositorFrameSinkClient>
+      mock_compositor_frame_sink_client =
+          std::make_unique<viz::MockCompositorFrameSinkClient>();
+  host_->SetMockRendererCompositorFrameSink(
+      mock_compositor_frame_sink_client.get());
 
   host_->set_new_content_rendering_delay_for_testing(
       base::TimeDelta::FromMicroseconds(10));
 
   // Start the timer and immediately send a CompositorFrame with the
   // content_source_id of the new page. The timeout shouldn't fire.
-  host_->StartNewContentRenderingTimeout(5);
+  host_->DidNavigate(5);
   auto frame = viz::CompositorFrameBuilder()
                    .AddDefaultRenderPass()
                    .SetContentSourceId(5)
@@ -1736,7 +1771,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
 
   // Start the timer but receive frames only from the old page. The timer
   // should fire.
-  host_->StartNewContentRenderingTimeout(10);
+  host_->DidNavigate(10);
   frame = viz::CompositorFrameBuilder()
               .AddDefaultRenderPass()
               .SetContentSourceId(9)
@@ -1757,7 +1792,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
               .SetContentSourceId(7)
               .Build();
   host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr, 0);
-  host_->StartNewContentRenderingTimeout(7);
+  host_->DidNavigate(7);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1767,7 +1802,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
   host_->reset_new_content_rendering_timeout_fired();
 
   // Don't send any frames after the timer starts. The timer should fire.
-  host_->StartNewContentRenderingTimeout(20);
+  host_->DidNavigate(20);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1779,10 +1814,14 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
 // This tests that a compositor frame received with a stale content source ID
 // in its metadata is properly discarded.
 TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
+  // If Surface Synchronization is on, we don't keep track of content_source_id
+  // in CompositorFrameMetadata.
+  if (features::IsSurfaceSynchronizationEnabled())
+    return;
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
 
-  host_->StartNewContentRenderingTimeout(100);
+  host_->DidNavigate(100);
   host_->set_new_content_rendering_delay_for_testing(
       base::TimeDelta::FromMicroseconds(9999));
 
@@ -1793,6 +1832,15 @@ TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
                      .SetBeginFrameAck(viz::BeginFrameAck(0, 1, true))
                      .SetContentSourceId(99)
                      .Build();
+
+    // Mocking |renderer_compositor_frame_sink_| to prevent crashes in
+    // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources).
+    std::unique_ptr<viz::MockCompositorFrameSinkClient>
+        mock_compositor_frame_sink_client =
+            std::make_unique<viz::MockCompositorFrameSinkClient>();
+    host_->SetMockRendererCompositorFrameSink(
+        mock_compositor_frame_sink_client.get());
+
     host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr,
                                  0);
     EXPECT_FALSE(
@@ -1839,7 +1887,7 @@ TEST_F(RenderWidgetHostMojoInputDisabledTest, TouchEmulator) {
       TouchEmulator::Mode::kEmulatingTouchFromMouse,
       ui::GestureProviderConfigType::GENERIC_MOBILE);
   process_->sink().ClearMessages();
-  view_->set_bounds(gfx::Rect(0, 0, 400, 200));
+  view_->SetBounds(gfx::Rect(0, 0, 400, 200));
   view_->Show();
 
   SimulateMouseEvent(WebInputEvent::kMouseMove, 10, 10, 0, false);
@@ -1992,7 +2040,7 @@ TEST_F(RenderWidgetHostTest, TouchEmulator) {
       TouchEmulator::Mode::kEmulatingTouchFromMouse,
       ui::GestureProviderConfigType::GENERIC_MOBILE);
   process_->sink().ClearMessages();
-  view_->set_bounds(gfx::Rect(0, 0, 400, 200));
+  view_->SetBounds(gfx::Rect(0, 0, 400, 200));
   view_->Show();
 
   SimulateMouseEvent(WebInputEvent::kMouseMove, 10, 10, 0, false);
@@ -2593,7 +2641,7 @@ TEST_F(RenderWidgetHostTest, RendererExitedResetsIsHidden) {
 TEST_F(RenderWidgetHostTest, ResizeParams) {
   gfx::Rect bounds(0, 0, 100, 100);
   gfx::Size physical_backing_size(40, 50);
-  view_->set_bounds(bounds);
+  view_->SetBounds(bounds);
   view_->SetMockPhysicalBackingSize(physical_backing_size);
 
   ResizeParams resize_params;
@@ -2659,7 +2707,7 @@ class RenderWidgetHostInitialSizeTest : public RenderWidgetHostTest {
       : RenderWidgetHostTest(), initial_size_(200, 100) {}
 
   void ConfigureView(TestView* view) override {
-    view->set_bounds(gfx::Rect(initial_size_));
+    view->SetBounds(gfx::Rect(initial_size_));
   }
 
  protected:
@@ -2877,6 +2925,14 @@ TEST_F(RenderWidgetHostTest, FrameToken_RendererCrash) {
   std::vector<IPC::Message> messages3;
   messages1.push_back(ViewHostMsg_DidFirstVisuallyNonEmptyPaint(5));
   messages3.push_back(ViewHostMsg_DidFirstVisuallyNonEmptyPaint(6));
+
+  // Mocking |renderer_compositor_frame_sink_| to prevent crashes in
+  // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources).
+  std::unique_ptr<viz::MockCompositorFrameSinkClient>
+      mock_compositor_frame_sink_client =
+          std::make_unique<viz::MockCompositorFrameSinkClient>();
+  host_->SetMockRendererCompositorFrameSink(
+      mock_compositor_frame_sink_client.get());
 
   // If we don't do this, then RWHI destroys the view in RendererExited and
   // then a crash occurs when we attempt to destroy it again in TearDown().

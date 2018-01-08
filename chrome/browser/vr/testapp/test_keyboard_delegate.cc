@@ -4,7 +4,8 @@
 
 #include "chrome/browser/vr/testapp/test_keyboard_delegate.h"
 
-#include "base/memory/ptr_util.h"
+#include <memory>
+
 #include "base/strings/utf_string_conversion_utils.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/events/event.h"
@@ -20,7 +21,7 @@ constexpr gfx::Vector2dF kKeyboardTranslate = {0, -0.1};
 }  // namespace
 
 TestKeyboardDelegate::TestKeyboardDelegate()
-    : renderer_(base::MakeUnique<TestKeyboardRenderer>()) {}
+    : renderer_(std::make_unique<TestKeyboardRenderer>()) {}
 
 TestKeyboardDelegate::~TestKeyboardDelegate() {}
 
@@ -60,8 +61,16 @@ void TestKeyboardDelegate::Initialize(vr::SkiaSurfaceProvider* provider,
   renderer_->Initialize(provider, renderer);
 }
 
+void TestKeyboardDelegate::UpdateInput(const vr::TextInputInfo& info) {
+  if (input_info_ == info)
+    return;
+
+  input_info_ = info;
+  ui_interface_->OnInputEdited(input_info_);
+}
+
 bool TestKeyboardDelegate::HandleInput(ui::Event* e) {
-  DCHECK(keyboard_interface_);
+  DCHECK(ui_interface_);
   DCHECK(e->IsKeyEvent());
   if (!editing_)
     return false;
@@ -71,13 +80,13 @@ bool TestKeyboardDelegate::HandleInput(ui::Event* e) {
     case ui::VKEY_RETURN:
       input_info_.text.clear();
       input_info_.selection_start = input_info_.selection_end = 0;
-      keyboard_interface_->OnInputCommitted(input_info_);
+      ui_interface_->OnInputCommitted(input_info_);
       break;
     case ui::VKEY_BACK:
       input_info_.text.pop_back();
       input_info_.selection_start--;
       input_info_.selection_end--;
-      keyboard_interface_->OnInputEdited(input_info_);
+      ui_interface_->OnInputEdited(input_info_);
       break;
     default:
       std::string character;
@@ -85,7 +94,7 @@ bool TestKeyboardDelegate::HandleInput(ui::Event* e) {
       input_info_.text = input_info_.text.append(base::UTF8ToUTF16(character));
       input_info_.selection_start++;
       input_info_.selection_end++;
-      keyboard_interface_->OnInputEdited(input_info_);
+      ui_interface_->OnInputEdited(input_info_);
       break;
   }
   // We want to continue handling this keypress if the Ctrl key is down so

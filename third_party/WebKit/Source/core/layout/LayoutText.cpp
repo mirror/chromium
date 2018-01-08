@@ -45,7 +45,7 @@
 #include "core/layout/line/EllipsisBox.h"
 #include "core/layout/line/GlyphOverflow.h"
 #include "core/layout/line/InlineTextBox.h"
-#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
+#include "core/layout/ng/inline/ng_inline_fragment_traversal.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
@@ -393,29 +393,44 @@ static IntRect EllipsisRectForBox(InlineTextBox* box,
   return IntRect();
 }
 
+void LayoutText::AccumlateQuads(Vector<FloatQuad>& quads,
+                                const IntRect& ellipsis_rect,
+                                LocalOrAbsoluteOption local_or_absolute,
+                                MapCoordinatesFlags mode,
+                                const LayoutRect& passed_boundaries) const {
+  FloatRect boundaries(passed_boundaries);
+  if (!ellipsis_rect.IsEmpty()) {
+    if (Style()->IsHorizontalWritingMode())
+      boundaries.SetWidth(ellipsis_rect.MaxX() - boundaries.X());
+    else
+      boundaries.SetHeight(ellipsis_rect.MaxY() - boundaries.Y());
+  }
+  quads.push_back(local_or_absolute == kAbsoluteQuads
+                      ? LocalToAbsoluteQuad(boundaries, mode)
+                      : boundaries);
+}
+
 void LayoutText::Quads(Vector<FloatQuad>& quads,
                        ClippingOption option,
                        LocalOrAbsoluteOption local_or_absolute,
                        MapCoordinatesFlags mode) const {
-  for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
-    FloatRect boundaries(box->FrameRect());
-
-    // Shorten the width of this text box if it ends in an ellipsis.
-    // FIXME: ellipsisRectForBox should switch to return FloatRect soon with the
-    // subpixellayout branch.
-    IntRect ellipsis_rect = (option == kClipToEllipsis)
-                                ? EllipsisRectForBox(box, 0, TextLength())
-                                : IntRect();
-    if (!ellipsis_rect.IsEmpty()) {
-      if (Style()->IsHorizontalWritingMode())
-        boundaries.SetWidth(ellipsis_rect.MaxX() - boundaries.X());
-      else
-        boundaries.SetHeight(ellipsis_rect.MaxY() - boundaries.Y());
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragment()) {
+    const auto children =
+        NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, this);
+    for (const auto& child : children) {
+      // TODO(layout-dev): We should have NG version of |EllipsisRectForBox()|
+      AccumlateQuads(quads, IntRect(), local_or_absolute, mode,
+                     child.RectInContainerBox().ToLayoutRect());
     }
-    if (local_or_absolute == kAbsoluteQuads)
-      quads.push_back(LocalToAbsoluteQuad(boundaries, mode));
-    else
-      quads.push_back(boundaries);
+    return;
+  }
+  for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
+    const IntRect ellipsis_rect = (option == kClipToEllipsis)
+                                      ? EllipsisRectForBox(box, 0, TextLength())
+                                      : IntRect();
+    AccumlateQuads(quads, ellipsis_rect, local_or_absolute, mode,
+                   box->FrameRect());
   }
 }
 
@@ -1805,7 +1820,8 @@ LayoutRect LayoutText::LinesBoundingBox() const {
   if (const NGPhysicalBoxFragment* box_fragment =
           EnclosingBlockFlowFragment()) {
     NGPhysicalOffsetRect bounding_box;
-    NGInlineFragmentIterator children(*box_fragment, this);
+    auto children =
+        NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, this);
     for (const auto& child : children)
       bounding_box.Unite(child.RectInContainerBox());
     return bounding_box.ToLayoutRect();
@@ -2223,6 +2239,9 @@ scoped_refptr<AbstractInlineTextBox> LayoutText::FirstAbstractInlineTextBox() {
 
 void LayoutText::InvalidateDisplayItemClients(
     PaintInvalidationReason invalidation_reason) const {
+  // TODO(yoichio): Cover other PaintInvalidateionReasons.
+  DCHECK(invalidation_reason != PaintInvalidationReason::kSelection ||
+         !EnclosingNGBlockFlow());
   ObjectPaintInvalidator paint_invalidator(*this);
   paint_invalidator.InvalidateDisplayItemClient(*this, invalidation_reason);
 
@@ -2239,8 +2258,23 @@ void LayoutText::InvalidateDisplayItemClients(
 // the first run's x and y, but that would involve updating many test results.
 LayoutRect LayoutText::DebugRect() const {
   IntRect lines_box = EnclosingIntRect(LinesBoundingBox());
-  LayoutRect rect = LayoutRect(
-      IntRect(FirstRunX(), FirstRunY(), lines_box.Width(), lines_box.Height()));
+  FloatPoint first_run_offset;
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragment()) {
+    NGPhysicalOffsetRect bounding_box;
+    const auto fragments =
+        NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, this);
+    if (fragments.size()) {
+      const auto& child = fragments[0];
+      first_run_offset = {child.offset_to_container_box.left.ToFloat(),
+                          child.offset_to_container_box.top.ToFloat()};
+    }
+  } else {
+    first_run_offset = {FirstRunX(), FirstRunY()};
+  }
+  LayoutRect rect =
+      LayoutRect(IntRect(first_run_offset.X(), first_run_offset.Y(),
+                         lines_box.Width(), lines_box.Height()));
   LayoutBlock* block = ContainingBlock();
   if (block && HasTextBoxes())
     block->AdjustChildDebugRect(rect);

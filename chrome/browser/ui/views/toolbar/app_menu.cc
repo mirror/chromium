@@ -12,7 +12,6 @@
 
 #include "base/i18n/number_formatting.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
@@ -127,7 +126,7 @@ class FullscreenButton : public ImageButton {
 
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
     ImageButton::GetAccessibleNodeData(node_data);
-    node_data->role = ui::AX_ROLE_MENU_ITEM;
+    node_data->role = ax::mojom::Role::kMenuItem;
   }
 
  private:
@@ -193,6 +192,7 @@ class InMenuButtonBackground : public views::Background {
       case views::Button::STATE_HOVERED:
         // Hovered should be handled in DrawBackground.
         NOTREACHED();
+        FALLTHROUGH;
       default:
         return theme->GetSystemColor(
             ui::NativeTheme::kColorId_MenuBackgroundColor);
@@ -259,7 +259,7 @@ class InMenuButton : public LabelButton {
     SetFocusBehavior(FocusBehavior::ALWAYS);
     SetHorizontalAlignment(gfx::ALIGN_CENTER);
 
-    SetBackground(base::MakeUnique<InMenuButtonBackground>(type));
+    SetBackground(std::make_unique<InMenuButtonBackground>(type));
     SetBorder(
         views::CreateEmptyBorder(0, kHorizontalPadding, 0, kHorizontalPadding));
     label()->SetFontList(MenuConfig::instance().font_list);
@@ -268,7 +268,7 @@ class InMenuButton : public LabelButton {
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
     LabelButton::GetAccessibleNodeData(node_data);
     if (!role_is_button_)
-      node_data->role = ui::AX_ROLE_MENU_ITEM;
+      node_data->role = ax::mojom::Role::kMenuItem;
   }
 
   // views::LabelButton
@@ -501,7 +501,7 @@ class AppMenu::ZoomView : public AppMenuView {
     zoom_label_->SetAutoColorReadabilityEnabled(false);
     zoom_label_->SetHorizontalAlignment(gfx::ALIGN_RIGHT);
 
-    zoom_label_->SetBackground(base::MakeUnique<InMenuButtonBackground>(
+    zoom_label_->SetBackground(std::make_unique<InMenuButtonBackground>(
         InMenuButtonBackground::NO_BORDER));
 
     AddChildView(zoom_label_);
@@ -526,7 +526,7 @@ class AppMenu::ZoomView : public AppMenuView {
     fullscreen_button_->set_tag(fullscreen_index);
     fullscreen_button_->SetImageAlignment(
         ImageButton::ALIGN_CENTER, ImageButton::ALIGN_MIDDLE);
-    fullscreen_button_->SetBackground(base::MakeUnique<InMenuButtonBackground>(
+    fullscreen_button_->SetBackground(std::make_unique<InMenuButtonBackground>(
         InMenuButtonBackground::LEADING_BORDER));
     fullscreen_button_->SetAccessibleName(GetAccessibleNameForAppMenuItem(
         menu_model, fullscreen_index, IDS_ACCNAME_FULLSCREEN, true));
@@ -596,7 +596,7 @@ class AppMenu::ZoomView : public AppMenuView {
       SkColor fg_color = theme->GetSystemColor(
           ui::NativeTheme::kColorId_SelectedMenuItemForegroundColor);
       gfx::ImageSkia hovered_fullscreen_image(
-          base::MakeUnique<HoveredImageSource>(*full_screen_image, fg_color),
+          std::make_unique<HoveredImageSource>(*full_screen_image, fg_color),
           full_screen_image->size());
       fullscreen_button_->SetImage(
           ImageButton::STATE_HOVERED, &hovered_fullscreen_image);
@@ -639,7 +639,7 @@ class AppMenu::ZoomView : public AppMenuView {
                                     contents->GetMinimumZoomPercent());
     }
     zoom_label_->SetText(base::FormatPercent(zoom));
-    zoom_label_->NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
+    zoom_label_->NotifyAccessibilityEvent(ax::mojom::Event::kTextChanged, true);
     zoom_label_max_width_valid_ = false;
   }
 
@@ -1107,7 +1107,7 @@ void AppMenu::PopulateMenu(MenuItemView* parent, MenuModel* model) {
             new ExtensionToolbarMenuView(browser_, this, item));
         for (int i = 0; i < extension_toolbar->contents()->child_count(); ++i) {
           View* action_view = extension_toolbar->contents()->child_at(i);
-          action_view->SetBackground(base::MakeUnique<InMenuButtonBackground>(
+          action_view->SetBackground(std::make_unique<InMenuButtonBackground>(
               InMenuButtonBackground::ROUNDED_BUTTON));
         }
         extension_toolbar_ = extension_toolbar.get();

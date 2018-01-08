@@ -33,9 +33,7 @@ class IdleCanceledDelayedTaskSweeperTest : public ::testing::Test,
   IdleCanceledDelayedTaskSweeperTest()
       : mock_task_runner_(new cc::OrderedSimpleTaskRunner(&clock_, true)),
         scheduler_helper_(new MainThreadSchedulerHelper(
-            CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
-                                                          mock_task_runner_,
-                                                          &clock_),
+            CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_),
             nullptr)),
         idle_helper_(
             new IdleHelper(scheduler_helper_.get(),
@@ -52,7 +50,7 @@ class IdleCanceledDelayedTaskSweeperTest : public ::testing::Test,
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
-  ~IdleCanceledDelayedTaskSweeperTest() override {}
+  ~IdleCanceledDelayedTaskSweeperTest() override = default;
 
   void TearDown() override {
     // Check that all tests stop posting tasks.

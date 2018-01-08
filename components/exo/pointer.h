@@ -48,6 +48,8 @@ class Pointer : public SurfaceTreeHost,
   explicit Pointer(PointerDelegate* delegate);
   ~Pointer() override;
 
+  PointerDelegate* delegate() const { return delegate_; }
+
   // Set the pointer surface, i.e., the surface that contains the pointer image
   // (cursor). The |hotspot| argument defines the position of the pointer
   // surface relative to the pointer location. Its top-left corner is always at
@@ -78,6 +80,10 @@ class Pointer : public SurfaceTreeHost,
 
   // Overridden from ash::WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
+
+  void SetCursorType(gfx::NativeCursor cursor);
+
+  void SetVisible(bool visible);
 
  private:
   // Returns the effective target for |event|.
@@ -144,6 +150,8 @@ class Pointer : public SurfaceTreeHost,
   base::WeakPtrFactory<Pointer> cursor_capture_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Pointer);
+
+  bool cursor_visible_ = true;
 };
 
 }  // namespace exo

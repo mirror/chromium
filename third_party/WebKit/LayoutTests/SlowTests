@@ -30,7 +30,6 @@ crbug.com/24182 fast/overflow/lots-of-sibling-inline-boxes.html [ Slow ] # Parti
 crbug.com/24182 http/tests/accessibility/slow-document-load.html [ Slow ]
 crbug.com/24182 http/tests/cache/subresource-expiration-1.html [ Slow ]
 crbug.com/24182 http/tests/cache/subresource-expiration-2.html [ Slow ]
-crbug.com/24182 [ Release Win7 ] http/tests/media/media-source/mediasource-addsourcebuffer.html [ Slow ]
 crbug.com/24182 http/tests/misc/acid3.html [ Slow ]
 crbug.com/24182 http/tests/misc/object-embedding-svg-delayed-size-negotiation-2.htm [ Slow ]
 crbug.com/24182 http/tests/misc/uncacheable-script-repeated.html [ Slow ]
@@ -48,8 +47,8 @@ crbug.com/24182 jquery/event.html [ Slow ]
 crbug.com/24182 jquery/manipulation.html [ Slow ]
 crbug.com/24182 jquery/offset.html [ Slow ]
 crbug.com/24182 jquery/traversing.html [ Slow ]
-crbug.com/24182 media/track/track-cues-cuechange.html [ Slow ]
-crbug.com/24182 media/track/track-cues-enter-exit.html [ Slow ]
+crbug.com/24182 external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cues-cuechange.html [ Slow ]
+crbug.com/24182 external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cues-enter-exit.html [ Slow ]
 crbug.com/24182 media/controls/controls-cast-do-not-fade-out.html [ Slow ]
 crbug.com/24182 virtual/new-remote-playback-pipeline/media/controls/controls-cast-do-not-fade-out.html [ Slow ]
 crbug.com/24182 media/controls/controls-cast-overlay-slow-fade.html [ Slow ]
@@ -241,7 +240,8 @@ crbug.com/570656 [ Mac ] fast/text/unicode-fallback-font.html [ Slow ]
 
 crbug.com/658211 [ Win7 Debug ] fast/text/line-break-ascii.html [ Slow ]
 
-crbug.com/445194 fast/dom/shadow/focus-controller-recursion-crash.html [ Slow ]
+crbug.com/802029 fast/dom/shadow/focus-controller-recursion-crash.html [ Slow ]
+crbug.com/802029 virtual/incremental-shadow-dom/fast/dom/shadow/focus-controller-recursion-crash.html [ Slow ]
 crbug.com/697735 external/wpt/editing/run/backcolor.html [ Slow ]
 crbug.com/697735 external/wpt/editing/run/bold.html [ Slow ]
 crbug.com/697735 external/wpt/editing/run/createlink.html [ Slow ]
@@ -277,6 +277,7 @@ crbug.com/697735 external/wpt/editing/run/underline.html [ Slow ]
 crbug.com/697735 external/wpt/editing/run/unlink.html [ Slow ]
 crbug.com/584807 printing/webgl-oversized-printing.html [ Slow ]
 crbug.com/584807 virtual/threaded/printing/webgl-oversized-printing.html [ Slow ]
+crbug.com/584807 virtual/spv175/printing/webgl-oversized-printing.html [ Slow ]
 
 crbug.com/592183 external/wpt/webusb/usbDevice.https.html [ Slow ]
 
@@ -444,6 +445,8 @@ crbug.com/779956 [ Linux ] external/wpt/offscreen-canvas/drawing-images-to-the-c
 crbug.com/779956 [ Linux ] external/wpt/offscreen-canvas/drawing-images-to-the-canvas/2d.drawImage.zerosource.image.worker.html [ Slow ]
 crbug.com/779956 [ Linux ] external/wpt/offscreen-canvas/drawing-images-to-the-canvas/2d.drawImage.zerosource.worker.html [ Slow ]
 
+crbug.com/793771 virtual/modern-media-controls/media/controls/modern/scrubbing.html [ Slow ]
+
 # These tests need to do many iterations and so can't be fast.
 crbug.com/748418 http/tests/streams/chromium/deep-recursion-getwriter.html [ Slow ]
 crbug.com/748418 http/tests/streams/chromium/simple-queue-empty-node-push.html [ Slow ]
@@ -461,3 +464,13 @@ crbug.com/779965 external/wpt/beacon/headers/header-content-type.html [ Slow ]
 
 # This page loads slow in real browser, and can timeout in SPv2 layout test.
 crbug.com/779366 fast/shapes/crash-allocating-very-large-raster-shape.html [ Slow ]
+
+crbug.com/787971 external/wpt/WebCryptoAPI/wrapKey_unwrapKey/wrapKey_unwrapKey.https.worker.html [ Slow ]
+
+crbug.com/564109 http/tests/webfont/font-display-intervention.html [ Slow ]
+
+# This test has many test cases and each case requires a gesture scroll with pauses in between.
+crbug.com/765326 virtual/scroll_customization/fast/scroll-behavior/scroll-customization/scroll-customization-property.html [ Slow ]
+
+crbug.com/800359 external/wpt/mimesniff/mime-types/parsing.any.html [ Slow ]
+crbug.com/800359 external/wpt/mimesniff/mime-types/parsing.any.worker.html [ Slow ]

@@ -4,14 +4,16 @@
 
 #include "chrome/browser/extensions/pack_extension_job.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/sequenced_task_runner_handle.h"
-#include "chrome/browser/extensions/extension_creator.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/browser_thread.h"
+#include "extensions/browser/extension_creator.h"
 #include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/common/constants.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -51,10 +53,10 @@ void PackExtensionJob::Run(
     scoped_refptr<base::SequencedTaskRunner> async_reply_task_runner) {
   DCHECK_EQ(!!async_reply_task_runner, run_mode_ == RunMode::ASYNCHRONOUS)
       << "Provide task runner iff we are running in asynchronous mode.";
-  auto crx_file_out = base::MakeUnique<base::FilePath>(
+  auto crx_file_out = std::make_unique<base::FilePath>(
       root_directory_.AddExtension(kExtensionFileExtension));
 
-  auto key_file_out = base::MakeUnique<base::FilePath>();
+  auto key_file_out = std::make_unique<base::FilePath>();
   if (key_file_.empty())
     *key_file_out = root_directory_.AddExtension(kExtensionKeyFileExtension);
 

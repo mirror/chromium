@@ -11,6 +11,7 @@
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
+#include "ui/app_list/pagination_model.h"
 #include "ui/app_list/views/app_list_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/apps_container_view.h"
@@ -18,11 +19,14 @@
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/folder_background_view.h"
 #include "ui/app_list/views/folder_header_view.h"
+#include "ui/app_list/views/page_switcher.h"
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/events/event.h"
+#include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/views/background.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/view_model.h"
 #include "ui/views/view_model_utils.h"
@@ -31,18 +35,37 @@ namespace app_list {
 
 namespace {
 
-// The preferred width/height for AppListFolderView.
-constexpr int kAppsFolderPreferredWidth = 576;
-constexpr int kAppsFolderPreferredHeight = 504;
+constexpr int kFolderBackgroundCornerRadius = 4;
+constexpr int kItemGridsBottomPadding = 24;
+constexpr int kFolderPadding = 12;
 
 // Indexes of interesting views in ViewModel of AppListFolderView.
-const int kIndexFolderHeader = 0;
-const int kIndexChildItems = 1;
+constexpr int kIndexChildItems = 0;
+constexpr int kIndexFolderHeader = 1;
+constexpr int kIndexPageSwitcher = 2;
 
-// Threshold for the distance from the center of the item to the circle of the
-// folder container ink bubble, beyond which, the item is considered dragged
-// out of the folder boundary.
-const int kOutOfFolderContainerBubbleDelta = 30;
+// A background with rounded corner.
+class FolderBackground : public views::Background {
+ public:
+  FolderBackground(SkColor color, int corner_radius)
+      : color_(color), corner_radius_(corner_radius) {}
+  ~FolderBackground() override = default;
+
+ private:
+  // views::Background overrides:
+  void Paint(gfx::Canvas* canvas, views::View* view) const override {
+    gfx::Rect bounds = view->GetContentsBounds();
+    cc::PaintFlags flags;
+    flags.setAntiAlias(true);
+    flags.setColor(color_);
+    canvas->DrawRoundRect(bounds, corner_radius_, flags);
+  }
+
+  const SkColor color_;
+  const int corner_radius_;
+
+  DISALLOW_COPY_AND_ASSIGN(FolderBackground);
+};
 
 }  // namespace
 
@@ -55,22 +78,24 @@ AppListFolderView::AppListFolderView(AppsContainerView* container_view,
       view_model_(new views::ViewModel),
       model_(model),
       folder_item_(NULL),
-      hide_for_reparent_(false),
-      is_app_list_focus_enabled_(features::IsAppListFocusEnabled()) {
-  AddChildView(folder_header_view_);
-  view_model_->Add(folder_header_view_, kIndexFolderHeader);
-
+      hide_for_reparent_(false) {
   items_grid_view_ =
       new AppsGridView(app_list_main_view_->contents_view(), this);
-  items_grid_view_->SetLayout(
-      container_view->apps_grid_view()->cols(),
-      container_view->apps_grid_view()->rows_per_page());
   items_grid_view_->SetModel(model);
   AddChildView(items_grid_view_);
   view_model_->Add(items_grid_view_, kIndexChildItems);
 
+  AddChildView(folder_header_view_);
+  view_model_->Add(folder_header_view_, kIndexFolderHeader);
+
+  page_switcher_ = new PageSwitcher(items_grid_view_->pagination_model(),
+                                    false /* vertical */);
+  AddChildView(page_switcher_);
+  view_model_->Add(page_switcher_, kIndexPageSwitcher);
+
   SetPaintToLayer();
-  layer()->SetFillsBoundsOpaquely(false);
+  SetBackground(std::make_unique<FolderBackground>(
+      kCardBackgroundColor, kFolderBackgroundCornerRadius));
 
   model_->AddObserver(this);
 }
@@ -81,12 +106,16 @@ AppListFolderView::~AppListFolderView() {
   // This prevents the AppsGridView's destructor from calling the now-deleted
   // AppListFolderView's methods if a drag is in progress at the time.
   items_grid_view_->set_folder_delegate(nullptr);
+
+  // Make sure |page_switcher_| is deleted before |items_grid_view_| because
+  // |page_switcher_| uses the PaginationModel owned by |items_grid_view_|.
+  delete page_switcher_;
 }
 
 void AppListFolderView::SetAppListFolderItem(AppListFolderItem* folder) {
   accessible_name_ = ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
       IDS_APP_LIST_FOLDER_OPEN_FOLDER_ACCESSIBILE_NAME);
-  NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::kAlert, true);
 
   folder_item_ = folder;
   items_grid_view_->SetItemList(folder_item_->item_list());
@@ -100,14 +129,18 @@ void AppListFolderView::ScheduleShowHideAnimation(bool show,
   // Stop any previous animation.
   layer()->GetAnimator()->StopAnimating();
 
-  // Hide the top items temporarily if showing the view for opening the folder.
-  if (show)
+  if (show) {
+    // Hide the top items temporarily if showing the view for opening the
+    // folder.
     items_grid_view_->SetTopItemViewsVisible(false);
+
+    // Reset page if showing the view.
+    items_grid_view_->pagination_model()->SelectPage(0, false);
+  }
 
   // Set initial state.
   layer()->SetOpacity(show ? 0.0f : 1.0f);
   SetVisible(true);
-  UpdateFolderNameVisibility(true);
 
   ui::ScopedLayerAnimationSettings animation(layer()->GetAnimator());
   animation.SetTweenType(show ? kFolderFadeInTweenType
@@ -117,43 +150,19 @@ void AppListFolderView::ScheduleShowHideAnimation(bool show,
       show ? kFolderTransitionInDurationMs : kFolderTransitionOutDurationMs));
 
   layer()->SetOpacity(show ? 1.0f : 0.0f);
-  app_list_main_view_->search_box_view()->ShowBackOrGoogleIcon(show);
 }
 
 gfx::Size AppListFolderView::CalculatePreferredSize() const {
-  gfx::Size size(kAppsFolderPreferredWidth, kAppsFolderPreferredHeight);
+  gfx::Size size = items_grid_view_->GetTileGridSizeWithoutPadding();
+  size.Enlarge(0, kItemGridsBottomPadding +
+                      folder_header_view_->GetPreferredSize().height());
+  size.Enlarge(kFolderPadding * 2, kFolderPadding * 2);
   return size;
 }
 
 void AppListFolderView::Layout() {
   CalculateIdealBounds();
   views::ViewModelUtils::SetViewBoundsToIdealBounds(*view_model_);
-}
-
-bool AppListFolderView::OnKeyPressed(const ui::KeyEvent& event) {
-  if (is_app_list_focus_enabled_) {
-    // TODO(weidongg/766807) Remove this function when the flag is enabled by
-    // default.
-    return false;
-  }
-  // Process TAB if focus should go to header; otherwise, AppsGridView will do
-  // the right thing.
-  if (event.key_code() == ui::VKEY_TAB) {
-    if (items_grid_view_->has_selected_view() == event.IsShiftDown() &&
-        !folder_header_view_->HasTextFocus()) {
-      folder_header_view_->SetTextFocus();
-      items_grid_view_->ClearAnySelectedView();
-      return true;
-    } else {
-      GiveBackFocusToSearchBox();
-    }
-  }
-
-  // This will select an app in the list, so we need to relinquish focus.
-  if (event.key_code() == ui::VKEY_DOWN)
-    GiveBackFocusToSearchBox();
-
-  return items_grid_view_->OnKeyPressed(event);
 }
 
 void AppListFolderView::OnAppListItemWillBeDeleted(AppListItem* item) {
@@ -196,14 +205,30 @@ void AppListFolderView::CalculateIdealBounds() {
   if (rect.IsEmpty())
     return;
 
+  rect.Inset(kFolderPadding, kFolderPadding);
+
+  // Calculate bounds for items grid view.
+  gfx::Rect grid_frame(rect);
+  grid_frame.Inset(items_grid_view_->GetTilePadding());
+  grid_frame.set_height(items_grid_view_->GetPreferredSize().height());
+  view_model_->set_ideal_bounds(kIndexChildItems, grid_frame);
+
+  // Calculate bounds for folder header view..
   gfx::Rect header_frame(rect);
-  gfx::Size size = folder_header_view_->GetPreferredSize();
-  header_frame.set_height(size.height());
+  header_frame.set_y(grid_frame.bottom() +
+                     items_grid_view_->GetTilePadding().bottom() +
+                     kItemGridsBottomPadding);
+  header_frame.set_height(folder_header_view_->GetPreferredSize().height());
   view_model_->set_ideal_bounds(kIndexFolderHeader, header_frame);
 
-  gfx::Rect grid_frame(rect);
-  grid_frame.Subtract(header_frame);
-  view_model_->set_ideal_bounds(kIndexChildItems, grid_frame);
+  // Calculate bounds for page_switcher.
+  gfx::Rect page_switcher_frame(rect);
+  gfx::Size page_switcher_size = page_switcher_->GetPreferredSize();
+  page_switcher_frame.set_x(page_switcher_frame.right() -
+                            page_switcher_size.width());
+  page_switcher_frame.set_y(header_frame.y());
+  page_switcher_frame.set_size(page_switcher_size);
+  view_model_->set_ideal_bounds(kIndexPageSwitcher, page_switcher_frame);
 }
 
 void AppListFolderView::StartSetupDragInRootLevelAppsGridView(
@@ -238,36 +263,9 @@ gfx::Rect AppListFolderView::GetItemIconBoundsAt(int index) {
   return to_folder;
 }
 
-void AppListFolderView::UpdateFolderViewBackground(bool show_bubble) {
-  if (hide_for_reparent_)
-    return;
-
-  // Before showing the folder container inking bubble, hide the folder name.
-  if (show_bubble)
-    UpdateFolderNameVisibility(false);
-
-  container_view_->folder_background_view()->UpdateFolderContainerBubble(
-      show_bubble ? FolderBackgroundView::SHOW_BUBBLE
-                  : FolderBackgroundView::HIDE_BUBBLE);
-}
-
-void AppListFolderView::UpdateFolderNameVisibility(bool visible) {
-  folder_header_view_->UpdateFolderNameVisibility(visible);
-}
-
-void AppListFolderView::SetBackButtonLabel(bool folder) {
-  app_list_main_view_->search_box_view()->SetBackButtonLabel(folder);
-}
-
 bool AppListFolderView::IsPointOutsideOfFolderBoundary(
     const gfx::Point& point) {
-  if (!GetLocalBounds().Contains(point))
-    return true;
-
-  gfx::Point center = GetLocalBounds().CenterPoint();
-  float delta = (point - center).Length();
-  return delta >
-         kFolderBackgroundBubbleRadius + kOutOfFolderContainerBubbleDelta;
+  return !GetLocalBounds().Contains(point);
 }
 
 // When user drags a folder item out of the folder boundary ink bubble, the
@@ -319,7 +317,7 @@ void AppListFolderView::HideViewImmediately() {
 void AppListFolderView::CloseFolderPage() {
   accessible_name_ = ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
       IDS_APP_LIST_FOLDER_CLOSE_FOLDER_ACCESSIBILE_NAME);
-  NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::kAlert, true);
 
   GiveBackFocusToSearchBox();
   if (items_grid_view()->dragging())
@@ -337,7 +335,7 @@ void AppListFolderView::SetRootLevelDragViewVisible(bool visible) {
 }
 
 void AppListFolderView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_GENERIC_CONTAINER;
+  node_data->role = ax::mojom::Role::kGenericContainer;
   node_data->SetName(accessible_name_);
 }
 

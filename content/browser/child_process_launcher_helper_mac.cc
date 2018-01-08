@@ -21,7 +21,10 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "sandbox/mac/seatbelt_exec.h"
+#include "services/service_manager/sandbox/mac/cdm.sb.h"
 #include "services/service_manager/sandbox/mac/common_v2.sb.h"
+#include "services/service_manager/sandbox/mac/gpu_v2.sb.h"
+#include "services/service_manager/sandbox/mac/nacl_loader.sb.h"
 #include "services/service_manager/sandbox/mac/ppapi_v2.sb.h"
 #include "services/service_manager/sandbox/mac/renderer_v2.sb.h"
 #include "services/service_manager/sandbox/mac/utility.sb.h"
@@ -50,7 +53,7 @@ ChildProcessLauncherHelper::GetFilesToMap() {
       command_line());
 }
 
-void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
+bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
     const FileMappedForLaunch& files_to_register,
     base::LaunchOptions* options) {
   // Convert FD mapping to FileHandleMappingVector.
@@ -65,9 +68,26 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
   bool no_sandbox = command_line_->HasSwitch(switches::kNoSandbox) ||
                     service_manager::IsUnsandboxedSandboxType(sandbox_type);
 
-  bool v2_process = sandbox_type == service_manager::SANDBOX_TYPE_PPAPI ||
-                    sandbox_type == service_manager::SANDBOX_TYPE_RENDERER ||
-                    sandbox_type == service_manager::SANDBOX_TYPE_UTILITY;
+  // TODO(kerrnel): Delete this switch once the V2 sandbox is always enabled.
+  bool v2_process = false;
+  switch (sandbox_type) {
+    case service_manager::SANDBOX_TYPE_NO_SANDBOX:
+      break;
+    case service_manager::SANDBOX_TYPE_CDM:
+    case service_manager::SANDBOX_TYPE_PPAPI:
+    case service_manager::SANDBOX_TYPE_RENDERER:
+    case service_manager::SANDBOX_TYPE_UTILITY:
+    case service_manager::SANDBOX_TYPE_NACL_LOADER:
+    case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
+    case service_manager::SANDBOX_TYPE_PROFILING:
+      v2_process = true;
+      break;
+    default:
+      // This is a 'break' because the V2 sandbox is not enabled for all
+      // processes yet, and so there are sandbox types like NETWORK that
+      // should not be run under the V2 sandbox.
+      break;
+  }
 
   bool use_v2 =
       v2_process && base::FeatureList::IsEnabled(features::kMacV2Sandbox);
@@ -77,12 +97,29 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
     std::string profile =
         std::string(service_manager::kSeatbeltPolicyString_common_v2);
 
-    if (sandbox_type == service_manager::SANDBOX_TYPE_PPAPI) {
-      profile += service_manager::kSeatbeltPolicyString_ppapi_v2;
-    } else if (sandbox_type == service_manager::SANDBOX_TYPE_RENDERER) {
-      profile += service_manager::kSeatbeltPolicyString_renderer_v2;
-    } else if (sandbox_type == service_manager::SANDBOX_TYPE_UTILITY) {
-      profile += service_manager::kSeatbeltPolicyString_utility;
+    switch (sandbox_type) {
+      case service_manager::SANDBOX_TYPE_CDM:
+        profile += service_manager::kSeatbeltPolicyString_cdm;
+        break;
+      case service_manager::SANDBOX_TYPE_GPU:
+        profile += service_manager::kSeatbeltPolicyString_gpu_v2;
+        break;
+      case service_manager::SANDBOX_TYPE_NACL_LOADER:
+        profile += service_manager::kSeatbeltPolicyString_nacl_loader;
+        break;
+      case service_manager::SANDBOX_TYPE_PPAPI:
+        profile += service_manager::kSeatbeltPolicyString_ppapi_v2;
+        break;
+      case service_manager::SANDBOX_TYPE_RENDERER:
+        profile += service_manager::kSeatbeltPolicyString_renderer_v2;
+        break;
+      case service_manager::SANDBOX_TYPE_UTILITY:
+      case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
+      case service_manager::SANDBOX_TYPE_PROFILING:
+        profile += service_manager::kSeatbeltPolicyString_utility;
+        break;
+      default:
+        CHECK(false);
     }
 
     // Disable os logging to com.apple.diagnosticd which is a performance
@@ -92,15 +129,31 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
     seatbelt_exec_client_ = std::make_unique<sandbox::SeatbeltExecClient>();
     seatbelt_exec_client_->SetProfile(profile);
 
-    if (sandbox_type == service_manager::SANDBOX_TYPE_RENDERER ||
-        sandbox_type == service_manager::SANDBOX_TYPE_PPAPI) {
-      SetupCommonSandboxParameters(seatbelt_exec_client_.get());
-    } else if (sandbox_type == service_manager::SANDBOX_TYPE_UTILITY) {
-      SetupUtilitySandboxParameters(seatbelt_exec_client_.get(),
-                                    *command_line_.get());
+    switch (sandbox_type) {
+      case service_manager::SANDBOX_TYPE_CDM:
+        SetupCDMSandboxParameters(seatbelt_exec_client_.get());
+        break;
+      case service_manager::SANDBOX_TYPE_GPU:
+      case service_manager::SANDBOX_TYPE_NACL_LOADER:
+      case service_manager::SANDBOX_TYPE_PPAPI:
+      case service_manager::SANDBOX_TYPE_RENDERER:
+        SetupCommonSandboxParameters(seatbelt_exec_client_.get());
+        break;
+      case service_manager::SANDBOX_TYPE_UTILITY:
+      case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
+      case service_manager::SANDBOX_TYPE_PROFILING:
+        SetupUtilitySandboxParameters(seatbelt_exec_client_.get(),
+                                      *command_line_.get());
+        break;
+      default:
+        CHECK(false);
     }
 
     int pipe = seatbelt_exec_client_->SendProfileAndGetFD();
+    if (pipe < 0) {
+      LOG(ERROR) << "pipe for sending sandbox profile is an invalid FD";
+      return false;
+    }
 
     base::FilePath helper_executable;
     CHECK(PathService::Get(content::CHILD_PROCESS_EXE, &helper_executable));
@@ -126,6 +179,8 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
   // Make sure the MachBroker is running, and inform it to expect a check-in
   // from the new process.
   broker->EnsureRunning();
+
+  return true;
 }
 
 ChildProcessLauncherHelper::Process

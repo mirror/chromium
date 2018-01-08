@@ -7,7 +7,8 @@
 
 #include "net/base/net_export.h"
 #include "net/base/privacy_mode.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
+#include "net/socket/socket_tag.h"
 
 namespace net {
 
@@ -17,11 +18,8 @@ class NET_EXPORT_PRIVATE SpdySessionKey {
   SpdySessionKey();
   SpdySessionKey(const HostPortPair& host_port_pair,
                  const ProxyServer& proxy_server,
-                 PrivacyMode privacy_mode);
-
-  // Temporary hack for implicit copy constructor
-  SpdySessionKey(const HostPortProxyPair& host_port_proxy_pair,
-                 PrivacyMode privacy_mode);
+                 PrivacyMode privacy_mode,
+                 const SocketTag& socket_tag);
 
   SpdySessionKey(const SpdySessionKey& other);
 
@@ -49,13 +47,16 @@ class NET_EXPORT_PRIVATE SpdySessionKey {
     return privacy_mode_;
   }
 
+  const SocketTag& socket_tag() const { return socket_tag_; }
+
   // Returns the estimate of dynamically allocated memory in bytes.
   size_t EstimateMemoryUsage() const;
 
  private:
   HostPortProxyPair host_port_proxy_pair_;
   // If enabled, then session cannot be tracked by the server.
-  PrivacyMode privacy_mode_;
+  PrivacyMode privacy_mode_ = PRIVACY_MODE_DISABLED;
+  SocketTag socket_tag_;
 };
 
 }  // namespace net

@@ -33,7 +33,7 @@
 #include "chrome/browser/resource_coordinator/time.h"
 #include "chrome/browser/sessions/tab_loader.h"
 #include "chrome/browser/ui/tab_ui_helper.h"
-#include "chrome/browser/ui/tabs/tab_strip_model_impl.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/test_tab_strip_model_delegate.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
@@ -44,7 +44,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/web_contents_tester.h"
-#include "content/test/test_web_contents.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -139,10 +138,10 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
   }
 
   WebContents* CreateWebContents() {
-    content::TestWebContents* web_contents =
-        content::TestWebContents::Create(profile(), nullptr);
+    content::WebContents* web_contents = CreateTestWebContents();
     // Commit an URL to allow discarding.
-    web_contents->NavigateAndCommit(GURL("https://www.example.com"));
+    content::WebContentsTester::For(web_contents)
+        ->NavigateAndCommit(GURL("https://www.example.com"));
     return web_contents;
   }
 
@@ -243,8 +242,7 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
 
  protected:
   std::unique_ptr<NavigationHandle> CreateTabAndNavigation(const char* url) {
-    content::TestWebContents* web_contents =
-        content::TestWebContents::Create(profile(), nullptr);
+    content::WebContents* web_contents = CreateTestWebContents();
     TabUIHelper::CreateForWebContents(web_contents);
     return content::NavigationHandle::CreateNavigationHandleForTesting(
         GURL(url), web_contents->GetMainFrame());
@@ -414,7 +412,7 @@ TEST_F(TabManagerTest, IsInternalPage) {
 TEST_F(TabManagerTest, DiscardWebContentsAt) {
   // Create a tab strip in a visible and active window.
   TabStripDummyDelegate delegate;
-  TabStripModelImpl tabstrip(&delegate, profile());
+  TabStripModel tabstrip(&delegate, profile());
   tabstrip.AddObserver(tab_manager_);
 
   BrowserInfo browser_info;
@@ -479,7 +477,7 @@ TEST_F(TabManagerTest, ReloadDiscardedTabContextMenu) {
   // the web content instead and therefore should be handled by WebContentsData
   // (which observes the web content).
   TabStripDummyDelegate delegate;
-  TabStripModelImpl tabstrip(&delegate, profile());
+  TabStripModel tabstrip(&delegate, profile());
 
   // Create 2 tabs because the active tab cannot be discarded.
   tabstrip.AppendWebContents(CreateWebContents(), true);
@@ -507,7 +505,7 @@ TEST_F(TabManagerTest, ReloadDiscardedTabContextMenu) {
 // discarded.
 TEST_F(TabManagerTest, DiscardedTabKeepsLastActiveTime) {
   TabStripDummyDelegate delegate;
-  TabStripModelImpl tabstrip(&delegate, profile());
+  TabStripModel tabstrip(&delegate, profile());
   tabstrip.AddObserver(tab_manager_);
 
   tabstrip.AppendWebContents(CreateWebContents(), true);
@@ -538,7 +536,7 @@ TEST_F(TabManagerTest, DefaultTimeToPurgeInCorrectRange) {
 
 TEST_F(TabManagerTest, ShouldPurgeAtDefaultTime) {
   TabStripDummyDelegate delegate;
-  TabStripModelImpl tabstrip(&delegate, profile());
+  TabStripModel tabstrip(&delegate, profile());
   tabstrip.AddObserver(tab_manager_);
 
   WebContents* test_contents = CreateWebContents();
@@ -572,7 +570,7 @@ TEST_F(TabManagerTest, ShouldPurgeAtDefaultTime) {
 
 TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   TabStripDummyDelegate delegate;
-  TabStripModelImpl tabstrip(&delegate, profile());
+  TabStripModel tabstrip(&delegate, profile());
   tabstrip.AddObserver(tab_manager_);
 
   BrowserInfo browser_info;
@@ -621,11 +619,11 @@ TEST_F(TabManagerTest, GetUnsortedTabStatsIsInVisibleWindow) {
   WebContents* web_contents2b = CreateWebContents();
 
   // Create 2 TabStripModels.
-  TabStripModelImpl tab_strip1(&delegate, profile());
+  TabStripModel tab_strip1(&delegate, profile());
   tab_strip1.AppendWebContents(web_contents1a, true);
   tab_strip1.AppendWebContents(web_contents1b, false);
 
-  TabStripModelImpl tab_strip2(&delegate, profile());
+  TabStripModel tab_strip2(&delegate, profile());
   tab_strip2.AppendWebContents(web_contents2a, true);
   tab_strip2.AppendWebContents(web_contents2b, false);
 
@@ -680,11 +678,11 @@ TEST_F(TabManagerTest, MAYBE_DiscardTabWithNonVisibleTabs) {
   TabStripDummyDelegate delegate;
 
   // Create 2 TabStripModels.
-  TabStripModelImpl tab_strip1(&delegate, profile());
+  TabStripModel tab_strip1(&delegate, profile());
   tab_strip1.AppendWebContents(CreateWebContents(), true);
   tab_strip1.AppendWebContents(CreateWebContents(), false);
 
-  TabStripModelImpl tab_strip2(&delegate, profile());
+  TabStripModel tab_strip2(&delegate, profile());
   tab_strip2.AppendWebContents(CreateWebContents(), true);
   tab_strip2.AppendWebContents(CreateWebContents(), false);
 

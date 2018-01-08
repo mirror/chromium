@@ -24,6 +24,7 @@ class ArcAppItem : public ChromeAppListItem,
   static const char kItemType[];
 
   ArcAppItem(Profile* profile,
+             AppListModelUpdater* model_updater,
              const app_list::AppListSyncableService::SyncItem* sync_item,
              const std::string& id,
              const std::string& name);
@@ -31,7 +32,7 @@ class ArcAppItem : public ChromeAppListItem,
 
   void SetName(const std::string& name);
 
-  // AppListItem overrides:
+  // ChromeAppListItem overrides:
   void Activate(int event_flags) override;
   ui::MenuModel* GetContextMenuModel() override;
   const char* GetItemType() const override;

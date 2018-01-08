@@ -603,6 +603,9 @@ const char kDisplayTouchAssociations[] = "settings.display.touch_associations";
 // A list pref that stores the mirror info for each external display.
 const char kExternalDisplayMirrorInfo[] =
     "settings.display.external_display_mirror_info";
+// A dictionary pref that stores the mixed mirror mode parameters.
+const char kDisplayMixedMirrorModeParams[] =
+    "settings.display.mixed_mirror_mode_param";
 
 // A dictionary pref that specifies per-display layout/offset information.
 // Its key is the ID of the display and its value is a dictionary for the
@@ -1046,9 +1049,6 @@ const char kShowUpdatePromotionInfoBar[] =
 const char kUseCustomChromeFrame[] = "browser.custom_chrome_frame";
 #endif
 
-const char kBackShortcutBubbleShownCount[] =
-    "browser.back_shortcut_bubble_shown_count";
-
 #if BUILDFLAG(ENABLE_PLUGINS)
 // Which plugins have been whitelisted manually by the user.
 const char kContentSettingsPluginWhitelist[] =
@@ -1411,6 +1411,13 @@ const char kOpenPdfDownloadInSystemReader[] =
     "download.open_pdf_in_system_reader";
 #endif
 
+#if defined(OS_ANDROID)
+// Boolean which specifies whether we should ask the user if we should download
+// a file (true) or just download it automatically, specifically for Android.
+// This is set to true as the prompt is intially shown to all Android users.
+const char kPromptForDownloadAndroid[] = "download.prompt_for_download_android";
+#endif
+
 // String which specifies where to save html files to by default.
 const char kSaveFileDefaultDirectory[] = "savefile.default_directory";
 
@@ -1446,10 +1453,6 @@ const char kExcludedSchemes[] = "protocol_handler.excluded_schemes";
 // Integer that specifies the index of the tab the user was on when they
 // last visited the options window.
 const char kOptionsWindowLastTabIndex[] = "options_window.last_tab_index";
-
-// Integer that specifies if the first run bubble should be shown.
-// This preference is only registered by the first-run procedure.
-const char kShowFirstRunBubbleOption[] = "show-first-run-bubble-option";
 
 // String containing the last known intranet redirect URL, if any.  See
 // intranet_redirect_detector.h for more information.

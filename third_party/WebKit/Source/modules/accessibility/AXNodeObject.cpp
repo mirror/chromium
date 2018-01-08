@@ -347,6 +347,8 @@ AccessibilityRole AXNodeObject::NativeAccessibilityRoleIgnoringAria() const {
 
   if (IsHTMLSummaryElement(*GetNode())) {
     ContainerNode* parent = FlatTreeTraversal::Parent(*GetNode());
+    if (parent && IsHTMLSlotElement(parent))
+      parent = FlatTreeTraversal::Parent(*parent);
     if (parent && IsHTMLDetailsElement(parent))
       return kDisclosureTriangleRole;
     return kUnknownRole;
@@ -419,6 +421,9 @@ AccessibilityRole AXNodeObject::NativeAccessibilityRoleIgnoringAria() const {
 
   if (IsHTMLMeterElement(*GetNode()))
     return kMeterRole;
+
+  if (IsHTMLProgressElement(*GetNode()))
+    return kProgressIndicatorRole;
 
   if (IsHTMLOutputElement(*GetNode()))
     return kStatusRole;
@@ -784,7 +789,7 @@ bool AXNodeObject::ComputeIsEditableRoot() const {
     // Editable roots created by the user agent are handled by
     // |IsNativeTextControl| above.
     ShadowRoot* root = node->ContainingShadowRoot();
-    return !root || root->GetType() != ShadowRootType::kUserAgent;
+    return !root || !root->IsUserAgent();
   }
   return false;
 }
@@ -874,6 +879,7 @@ bool AXNodeObject::IsMultiSelectable() const {
                                         multiselectable)) {
         return multiselectable;
       }
+      break;
     }
     default:
       break;

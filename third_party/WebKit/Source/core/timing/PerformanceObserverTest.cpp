@@ -11,6 +11,7 @@
 #include "core/timing/PerformanceBase.h"
 #include "core/timing/PerformanceMark.h"
 #include "core/timing/PerformanceObserverInit.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/TaskType.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -19,10 +20,10 @@ namespace blink {
 class MockPerformanceBase : public PerformanceBase {
  public:
   explicit MockPerformanceBase(ScriptState* script_state)
-      : PerformanceBase(0,
+      : PerformanceBase(TimeTicks(),
                         ExecutionContext::From(script_state)
                             ->GetTaskRunner(TaskType::kPerformanceTimeline)) {}
-  ~MockPerformanceBase() {}
+  ~MockPerformanceBase() = default;
 
   ExecutionContext* GetExecutionContext() const override { return nullptr; }
 };
@@ -65,7 +66,9 @@ TEST_F(PerformanceObserverTest, Enqueue) {
   V8TestingScope scope;
   Initialize(scope.GetScriptState());
 
-  Persistent<PerformanceEntry> entry = PerformanceMark::Create("m", 1234);
+  ScriptValue empty_value;
+  Persistent<PerformanceEntry> entry =
+      PerformanceMark::Create(scope.GetScriptState(), "m", 1234, empty_value);
   EXPECT_EQ(0, NumPerformanceEntries());
 
   observer_->EnqueuePerformanceEntry(*entry);
@@ -76,7 +79,9 @@ TEST_F(PerformanceObserverTest, Deliver) {
   V8TestingScope scope;
   Initialize(scope.GetScriptState());
 
-  Persistent<PerformanceEntry> entry = PerformanceMark::Create("m", 1234);
+  ScriptValue empty_value;
+  Persistent<PerformanceEntry> entry =
+      PerformanceMark::Create(scope.GetScriptState(), "m", 1234, empty_value);
   EXPECT_EQ(0, NumPerformanceEntries());
 
   observer_->EnqueuePerformanceEntry(*entry);
@@ -90,7 +95,9 @@ TEST_F(PerformanceObserverTest, Disconnect) {
   V8TestingScope scope;
   Initialize(scope.GetScriptState());
 
-  Persistent<PerformanceEntry> entry = PerformanceMark::Create("m", 1234);
+  ScriptValue empty_value;
+  Persistent<PerformanceEntry> entry =
+      PerformanceMark::Create(scope.GetScriptState(), "m", 1234, empty_value);
   EXPECT_EQ(0, NumPerformanceEntries());
 
   observer_->EnqueuePerformanceEntry(*entry);

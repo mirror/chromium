@@ -284,6 +284,9 @@
     <message name="IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION" desc="In the settings tab, the description of an option to hold a key and click or drag a box with the mouse to speak any on-screen text out loud.">
       Press and hold Search, then click or drag to select content to be read aloud
     </message>
+    <message name="IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION_FLAGS" desc="In the settings tab, the description of an option to hold a key and click or drag a box with the mouse, or highlight a region and press a keystroke, to speak any on-screen text out loud.">
+      To read content aloud, press and hold Search, then click or drag to select content. Or highlight a region and use Search + S.
+    </message>
     <message name="IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_OPTIONS_LABEL" desc="In the settings tab, the label for the button that opens the Options page for the Select-to-Speak feature.">
       Open select-to-speak settings
     </message>
@@ -473,8 +476,8 @@
   <message name="IDS_SETTINGS_AUTOFILL" desc="Name for the autofill section and toggle.">
     Autofill settings
   </message>
-  <message name="IDS_SETTINGS_GOOGLE_PAYMENTS" desc="Label used to differentiate when an address or credit card entry comes from Google Payments. This should follow the casing of the 'Google Payments' brand.">
-    Google Payments
+  <message name="IDS_SETTINGS_GOOGLE_PAYMENTS" desc="Label used to differentiate when an address or credit card entry comes from Google Pay. This should follow the casing of the 'Google Pay' brand. 'Google Pay' should not be translated as it is the product name.">
+    Google Pay
   </message>
   <message name="IDS_SETTINGS_AUTOFILL_ADDRESSES_HEADING" desc="Title for the list of addresses that chrome has saved for use in filling in forms.">
     Addresses
@@ -557,9 +560,6 @@
   <message name="IDS_SETTINGS_PASSWORDS_DELETE_EXCEPTION" desc="The alt text for a button that deletes a site for which passwords would not be saved.">
     Delete this item
   </message>
-  <message name="IDS_SETTINGS_PASSWORD_DONE" desc="Label for a button that dismisses the password details dialog.">
-    Done
-  </message>
   <message name="IDS_SETTINGS_PASSWORD_REMOVE" desc="Label for a context menu item that removes the selected password." meaning="Remove selected password.">
     Remove
   </message>
@@ -615,7 +615,7 @@
     Export passwords
   </message>
   <message name="IDS_SETTINGS_PASSWORDS_EXPORT_DESCRIPTION" desc="Text shown to the user on the dialog for exporting passwords, before any passwords have been exported.">
-    Your passwords will be visible to anyone who can see the exported file. Do not share the file with anyone and delete it after importing it.
+    Your passwords will be visible to anyone who can see the exported file.
   </message>
   <message name="IDS_SETTINGS_PASSWORDS_EXPORT" desc="A button in the dialog for exporting passwords from Chrome. A password list will be written to a destination, which the user will be asked to choose after initiating this action.">
     Export passwords...
@@ -790,9 +790,6 @@
     <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_DELETE" desc="Label for delete button in certificate manager.">
       Delete
     </message>
-    <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_DONE" desc="Label for done button in certificate manager.">
-      Done
-    </message>
     <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_OTHERS" desc="Label for the others tab in certificate manager.">
       Others
     </message>
@@ -936,9 +933,6 @@
   </if>
 
   <!-- Clear Browsing Data -->
-  <message name="IDS_SETTINGS_CLEAR_FOLLOWING_ITEMS_FROM" desc="Label at the top of the client area of the dialog, preceding the period combo box">
-    Clear the following items from
-  </message>
   <message name="IDS_SETTINGS_CLEAR_PERIOD_TITLE" desc="Label of the dropdown that selects the time range for which browsing data will be deleted.">
     Time range
   </message>
@@ -947,6 +941,9 @@
   </message>
   <message name="IDS_SETTINGS_CLEAR_COOKIES_AND_SITE_DATA_SUMMARY_BASIC" desc="A summary for the 'Cookies and site data' option in the 'Clear Browsing Data' screen, explaining that deleting cookies and site data will sign the user out of most websites.">
     Signs you out of most sites.
+  </message>
+  <message name="IDS_SETTINGS_CLEAR_COOKIES_AND_SITE_DATA_MIRROR_SUMMARY_BASIC" desc="A summary for the 'Cookies and site data' option in the 'Clear Browsing Data' screen, explaining that deleting cookies and site data will sign the user out of most websites but your Google sign in will stay.">
+    Signs you out of most sites. You won't be signed out of your Google Account.
   </message>
   <message name="IDS_SETTINGS_CLEAR_BROWSING_HISTORY_SUMMARY" desc="A subtext for the basic tab explaining browsing history.">
     Clears history and autocompletions in the address bar.
@@ -981,21 +978,6 @@
   <message name="IDS_SETTINGS_CLEAR_MEDIA_LICENSES" desc="Checkbox for deleting media licenses (premium content, etc.)">
     Media licenses
   </message>
-  <message name="IDS_SETTINGS_CLEAR_DATA_HOUR" desc="deletion period combo box: hour. In English this finishes the sentence that starts with 'Obliterate the following items from'.">
-    the past hour
-  </message>
-  <message name="IDS_SETTINGS_CLEAR_DATA_DAY" desc="deletion period combo box: day. In English this finishes the sentence that starts with 'Obliterate the following items from'.">
-    the past day
-  </message>
-  <message name="IDS_SETTINGS_CLEAR_DATA_WEEK" desc="deletion period combo box: week. In English this finishes the sentence that starts with 'Obliterate the following items from'.">
-    the past week
-  </message>
-  <message name="IDS_SETTINGS_CLEAR_DATA_4WEEKS" desc="deletion period combo box: 4 weeks. In English this finishes the sentence that starts with 'Obliterate the following items from'.">
-    the last 4 weeks
-  </message>
-  <message name="IDS_SETTINGS_CLEAR_DATA_EVERYTHING" desc="deletion period combo box: everything. In English this finishes the sentence that starts with 'Delete the following items from'.">
-    the beginning of time
-  </message>
   <message name="IDS_SETTINGS_CLEAR_PERIOD_HOUR" desc="The option to delete browsing data from the last hour.">
     Last hour
   </message>
@@ -1010,12 +992,6 @@
   </message>
   <message name="IDS_SETTINGS_CLEAR_PERIOD_EVERYTHING" desc="The option to delete browsing data from the beginning of time.">
     All time
-  </message>
-  <message name="IDS_SETTINGS_CLEAR_DATA_SOME_STUFF_REMAINS" desc="A text shown at the bottom of the Clear Browsing Data dialog, informing the user that some data types will not be cleared.">
-    Some settings that may reflect browsing habits will not be cleared.
-  </message>
-  <message name="IDS_SETTINGS_CLEAR_DATA_CLEARS_SYNCED_DATA" desc="Information that data which is synced across user's devices will be deleted from all those devices.">
-    This clears synced data from all devices.
   </message>
   <message name="IDS_SETTINGS_IMPORTANT_SITES_SUBTITLE_COOKIES" desc="Subtitle for the important sites dialog.">
     This will clear cookies and site data for all sites, including
@@ -1098,9 +1074,6 @@
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_DETAILS_QUEUE" desc="Label for the CUPS printer queue in the manually add printer dialog.">
       Queue
     </message>
-    <message name="IDS_SETTINGS_PRINTING_CUPS_ADD_PRINTER_BUTTON_CANCEL" desc="Text for the button which cancels adding a CUPS printer.">
-      Cancel
-    </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_ADD_PRINTER_BUTTON_ADD" desc="Text for the button which allows the user to add a CUPS printer.">
       Add
     </message>
@@ -1162,25 +1135,25 @@
       Searching...
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_ERROR_MESSAGE" desc="The message shown when a new printer is not set up successfully.">
-      Error adding printer
+      Can&#x2019;t add printer. Restart your computer and try again.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_FATAL_ERROR_MESSAGE" desc="The message shown when a fatal error occurs while trying to add a new printer.">
-      Can't add printer. Restart and try again.
+      Can&#x2019;t add printer. Restart your computer and try again.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PRINTER_UNREACHABLE_MESSAGE" desc="The message shown when the printer that is to be added is unreachable for configuration.">
-      Can't connect printer. Check that the printer is turned on and is connected to your Chromebook by Wi-Fi or USB.
+      Can&#x2019;t connect to printer. Check that the printer is turned on and is connected to your Chromebook by Wi-Fi or USB.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_TOO_LARGE_MESSAGE" desc="The message shown when the PPD provided while trying to add new printer is too large.">
-      Can't load large PPD. Maximum size is 250kB.
+      Can&#x2019;t load large PPD. Maximum size is 250 kB.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_INVALID_PPD_MESSAGE" desc="The message shown when the PPD provided while trying to add a new printer is invalid.">
-      Provided PPD is invalid.
+      File is the wrong format. Check the PPD file and try again.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_NOT_FOUND" desc="The message shown when the PPD provided while trying to add a new printer cannot be found.">
-      Can't find PPD. Check that your Chromebook is online and try again.
+      Can&#x2019;t find PPD. Make sure your Chromebook is online and try again.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_UNRETRIEVABLE" desc="The message shown when the PPD provided while trying to add a new printer is unretrievable.">
-      Can't find PPD. Check that your Chromebook is online and try again.
+      Can&#x2019;t find PPD. Make sure your Chromebook is online and try again.
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_REQUIRE_INTERNET_MESSAGE" desc="The message shown when there is no internet access to set up a printer.">
       Connect to the internet to add a printer
@@ -1232,35 +1205,32 @@
     <message name="IDS_SETTINGS_TIME_ZONE_SUBPAGE_TITLE" desc="The title of the dialog that allows user to control different time zone settings.">
       Time zone
     </message>
+    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_SET_AUTOMATICALLY" desc="The name for the radio button that turns automatic time zone detection on.">
+      Set automatically
+    </message>
+    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_CHOOSE_FROM_LIST" desc="The name for the radio button that turns automatic time zone detection off, and allows user to select time zone from the list of all supported time zones.">
+      Choose from list
+    </message>
     <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_DISABLED" desc="Display name for the automatic time zone detection mode which disables automatic detection.">
       Automatic time zone detection is disabled
     </message>
     <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_IP_ONLY_DEFAULT" desc="Display name for the automatic time zone detection mode which enables time zone detection sending unprecise location to Google servers. Default means that this is the default time zone detection mode.">
-      Set automatically using your general location (default)
-    </message>
-    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_IP_ONLY_DESCRIPTION" desc="Display name for the automatic time zone detection mode which enables time zone detection by requesting user location from Google servers based on device IP address. Default means that this is the default time zone detection mode.">
-      Use your IP address to determine location
+      Use your IP address to determine location (default)
     </message>
     <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_SEND_WIFI_AP" desc="Display name for the automatic time zone detection mode which enables time zone detection sending list of visible WiFi Access Point names to Google servers.">
-      Set automatically using your WiFi network
-    </message>
-    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_SEND_WIFI_AP_DESCRIPTION" desc="Description for the automatic time zone detection mode which enables time zone detection sending list of visible WiFi Access Point names to Google servers.">
-      Use WiFi network to determine location
+      Use only Wi-Fi to determine location
     </message>
     <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_SEND_ALL_INFO" desc="Display name for the automatic time zone detection mode which enables time zone detection sending list of visible WiFi and Cellular Access Point names to Google servers.">
-      Set automatically using your accurate location
-    </message>
-    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_SEND_ALL_INFO_DESCRIPTION" desc="Description for the automatic time zone detection mode which enables time zone detection sending list of visible WiFi and Cellular Access Point names to Google servers.">
-      Use WiFi or cellular network to determine location
-    </message>
-    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_SELECT_YOUR_TIME_ZONE" desc="Option name in the list of automatic time zone detection modes that turns automatic detection off, and suggests user to select time zone from the displayed drop-down list.">
-      Choose from list
+      Use Wi-Fi or mobile networks to determine location
     </message>
     <message name="IDS_SETTINGS_TIME_ZONE" desc="Label for the picker which allows users to choose their time zone.">
-      Time zone:
+      Time zone
     </message>
     <message name="IDS_SETTINGS_TIME_ZONE_GEOLOCATION" desc="Label for the checkbox which enables setting the time zone automatically with the detected location of the device.">
       Set time zone automatically using your location
+    </message>
+    <message name="IDS_SETTINGS_SELECT_TIME_ZONE_RESOLVE_METHOD" desc="Label for the drop-down menu that allows user to select specific method to automatically resolve device time zone.">
+      Time zone detection method
     </message>
     <message name="IDS_SETTINGS_USE_24_HOUR_CLOCK" desc="Label for the checkbox which enables a 24-hour clock (as opposed to a 12-hour clock).">
       Use 24-hour clock
@@ -1409,9 +1379,6 @@
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_GOOGLE" desc="Settings > Internet > Network details: Label for setting Google name servers.">
       Google name servers
-    </message>
-    <message name="IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_LEARN_MORE" desc="Settings > Internet > Network details: Text for the learn more link for the Google name servers option.">
-      Learn more
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_PROXY_WPAD" desc="Settings > Internet > Network details: Web Proxy Auto Discovery (WPAD) label.">
       Web Proxy Auto Discovery URL:
@@ -2018,6 +1985,12 @@
   <message name="IDS_SETTINGS_ON_STARTUP_PAGE_TOOLTIP" desc="A tooltip to display for a page in the list of pages to open on startup">
     <ph name="PAGE_TITLE">$1<ex>Google</ex></ph> - <ph name="PAGE_URL">$2<ex>http://www.google.com/</ex></ph>
   </message>
+  <message name="IDS_SETTINGS_INVALID_URL" desc="Error message explaining that the URL being entered is invalid.">
+    Invalid URL
+  </message>
+  <message name="IDS_SETTINGS_URL_TOOL_LONG" desc="Error message asking that the user enter a shorter URL.">
+    Please enter a shorter URL
+  </message>
 
   <!-- Languages Page -->
   <if expr="chromeos">
@@ -2116,6 +2089,12 @@
     </message>
     <message name="IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_BUTTON" desc="Button next to the 'add word' text input used to add the word typed by the user to the custom spell check dictionary.">
       Add word
+    </message>
+    <message name="IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_DUPLICATE_ERROR" desc="Error message displayed to the user when the word is duplicated in the text input used to add a new word to the custom spell check dictionary.">
+      Already added
+    </message>
+    <message name="IDS_SETTINGS_LANGUAGES_ADD_DICTIONARY_WORD_LENGTH_ERROR" desc="Error message displayed to the user when the word is too long in the text input used to add a new word to the custom spell check dictionary.">
+      Cannot exceed 99 letters
     </message>
     <message name="IDS_SETTINGS_LANGUAGES_DICTIONARY_WORDS" desc="Header for the list of custom dictionary words used for spell check.">
       Custom words
@@ -2383,13 +2362,13 @@
     Clipboard
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_CLIPBOARD_ASK" desc="The ask label for clipboard access in site settings.">
-    Ask when a site wants to see text and images you copy to the clipboard
+    Ask when a site wants to see text and images copied to the clipboard
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_CLIPBOARD_ASK_RECOMMENDED" desc="The ask label for clipboard access in site settings (with the 'recommended' suffix).">
-    Ask when a site wants to see text and images you copy to the clipboard (recommended)
+    Ask when a site wants to see text and images copied to the clipboard (recommended)
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_CLIPBOARD_BLOCK" desc="The block label for clipboard access in site settings.">
-    Do not allow sites to see text and images you copy to the clipboard
+    Do not allow sites to see text and images copied to the clipboard
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_COOKIES" desc="Label for the cookies site settings.">
     Cookies
@@ -2461,6 +2440,9 @@
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_SOUND" desc="Label for the sound site settings.">
     Sound
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_SENSORS" desc="Label for the sensors permission in Site Settings. Sensors are motion and light sensors, specifically accelerometers, gyroscope, magnetometers, and ambient-light sensors">
+    Motion or Light Sensors
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_USB_DEVICES" desc="Label for the USB devices in site settings.">
     USB devices
@@ -2548,6 +2530,12 @@
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_SOUND_BLOCK" desc="The block label for sound in site settings.">
     Mute sites that play sound
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_SENSORS_ALLOW" desc="The allow label for sensors feature in site settings.">
+    Allow sites to use motion and light sensors
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_SENSORS_BLOCK" desc="The block label for sensors feature in site settings.">
+    Block sites from using motion and light sensors
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_AUTOMATIC_DOWNLOAD_ASK" desc="The allow label for automatic download in site settings.">
     Ask when a site tries to download files automatically after the first file
@@ -2699,9 +2687,6 @@
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_ADOBE_FLASH_SETTINGS" desc="The text for the link that points the user to the Adobe Flash Player Storage settings on the web">
     Adobe Flash Player Storage settings
-  </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_LEARN_MORE" desc="The text for the link to learn more about how managing exceptions work for Site Settings categories">
-    Learn more
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_HANDLER_IS_DEFAULT" desc="A label showing that a certain handler for a given protocol is the default.">
     Default
@@ -2972,12 +2957,6 @@
     <message name="IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_FINGER_IMMOBILE" desc="Warning text in the add fingerprint dialog to tell users they should move their finger slightly to capture different parts of the fingerprint.">
       Move slightly to capture a different part of the fingerprint
     </message>
-    <message name="IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_CANCEL_BUTTON" desc="Text on the button in the fingerprint setup dialog which allows users to cancel a current setup.">
-      Cancel
-    </message>
-    <message name="IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_DONE_BUTTON" desc="Text on the button in the fingerprint setup dialog which allows users to exit once a fingerprint has been setup.">
-      Done
-    </message>
     <message name="IDS_SETTINGS_PEOPLE_PASSWORD_PROMPT_TITLE" desc="Title of the password prompt dialog popup.">
       Confirm your password
     </message>
@@ -3043,6 +3022,12 @@
   <if expr="not chromeos">
     <message name="IDS_SETTINGS_PEOPLE_DOMAIN_MANAGED_PROFILE" desc="Provides the domain information for domain-managed accounts.">
       Managed by <ph name="DOMAIN">$1<ex>example.com</ex></ph>
+    </message>
+    <message name="IDS_SETTINGS_PEOPLE_SIGN_IN_PROMPT" desc="The text displayed to prompt users to sign in to chrome.">
+      Web browsing with Google smarts
+    </message>
+    <message name="IDS_SETTINGS_PEOPLE_SIGN_IN_PROMPT_SECONDARY" desc="The secondary text displayed to prompt users to sign in to chrome.">
+      Sync for a personalized browsing experience, across your devices
     </message>
     <message name="IDS_SETTINGS_SYNC_DISCONNECT_MANAGED_PROFILE_EXPLANATION" desc="The text to display in the 'Sign out of Chrome' dialog to stop syncing for managed profiles.">
       Because this account is managed by <ph name="DOMAIN">$1<ex>example.com</ex></ph>, your bookmarks, history, passwords, and other settings will be cleared from this device. However, your data will remain stored in your Google Account and can be managed on <ph name="BEGIN_LINK">&lt;a href="$2" target=&quot;_blank&quot;&gt;<ex>&lt;a href="$2" target=&quot;_blank&quot;&gt;</ex></ph>Google Dashboard<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>.
@@ -3114,7 +3099,7 @@
     Passwords
   </message>
   <message name="IDS_SETTINGS_ENABLE_PAYMENTS_INTEGRATION_CHECKBOX_LABEL" desc="Label for the checkbox that controls the Autofill/Payments integration feature.">
-    Credit cards and addresses using Google Payments.
+    Credit cards and addresses using Google Pay.
   </message>
   <message name="IDS_SETTINGS_OPEN_TABS_CHECKBOX_LABEL" desc="Label for the checkbox which enables or disables syncing open tabs between multiple browser instances.">
     Open Tabs
@@ -3357,9 +3342,6 @@
     <message name="IDS_SETTINGS_TRADITIONAL_SCROLL_LABEL" desc="In Device Settings, the text next to the radio button that enables traditional scrolling.">
       Traditional
     </message>
-    <message name="IDS_SETTINGS_NATURAL_SCROLL_LEARN_MORE" desc="In Device Settings, the text for the link next to the Australian (natural) scrolling option; opens a page to learn more about natural scrolling.">
-      Learn more
-    </message>
     <!-- Mouse -->
     <message name="IDS_SETTINGS_MOUSE_SPEED_LABEL" desc="In Device Settings, the text next to the slider that sets the speed (sensitivity) of the mouse.">
       Mouse speed
@@ -3548,6 +3530,9 @@
     </message>
     <message name="IDS_SETTINGS_DISPLAY_RESOLUTION_TEXT_NATIVE" desc="In Device Settings > Displays, the text describing the display's resolution when it is the native resolution.">
       <ph name="WIDTH">$1<ex>1600</ex></ph> x <ph name="HEIGHT">$2<ex>1200</ex></ph> (Native)
+    </message>
+    <message name="IDS_SETTINGS_DISPLAY_ZOOM_VALUE" desc="The currently selected display zoom percentage.">
+      <ph name="DISPLAY_ZOOM">$1<ex>120</ex>%</ph>
     </message>
     <message name="IDS_SETTINGS_DISPLAY_ORIENTATION" desc="In Device Settings > Displays, the label for the control for changing a display's orientation.">
       Orientation
@@ -3760,9 +3745,6 @@
         =1 {1 more}
         other {# more}}
     </message>
-    <message name="IDS_SETTINGS_RESET_CLEANUP_DONE_BUTTON_LABEL" desc="A button on the web page for Chrome Cleanup. Clicking this button causes the card on the settings page to be dismissed.">
-      Done
-    </message>
     <message name="IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_CLEANUP_ERROR" desc="Body of a generic error message that could appear during the cleanup of harmful software. Multiple causes for the error are possible.">
       An error occurred while Chrome was removing harmful software.
     </message>
@@ -3797,7 +3779,7 @@
       Restart computer
     </message>
     <message name="IDS_SETTINGS_RESET_CLEANUP_TITLE_DONE" desc="Message confirming that Chrome has removed harmful software. Exclamation point is nice in EN-US but is optional in your language; please use or omit as appropriate. The UI will also display a checkmark icon to indicate the operation is done. ">
-      Done!
+      Done! Harmful software removed.
     </message>
     <message name="IDS_SETTINGS_RESET_CLEANUP_TITLE_ERROR_CANT_REMOVE" desc="An error message, appearing on the Chrome Cleanup web page, that Chrome tried to clean up unwanted software, as requested by the user, but was unsuccessful. Omits subject, i.e. Chrome can't remove harmful software.">
       Can't remove harmful software
@@ -3832,11 +3814,17 @@
     <message name="IDS_SETTINGS_RESET_CLEANUP_TITLE_ERROR_SCANNING_FAILED" desc="Title of error message that could appear during the cleanup of harmful software.">
       Scanning failed
     </message>
-    <message name="IDS_SETTINGS_RESET_CLEANUP_TRY_AGAIN_BUTTON_LABEL" desc="Generic button that appears next to a message indicating that an operation failed during the cleanup of harmful software.">
+    <message name="IDS_SETTINGS_RESET_CLEANUP_TRY_AGAIN_BUTTON_LABEL" desc="Generic button that appears next to a message indicating that an operation failed during the cleanup of harmful software." meaning="Button referred to in the string 'Click Try Again, and accept the prompt on your computer', IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_PERMISSIONS_NEEDED">
       Try again
     </message>
     <message name="IDS_SETTINGS_RESET_CLEANUP_LOGS_PERMISSION_EXPLANATION" desc="Description for the 'Report details to Google' option. Subject, 'Details', is omitted. Although the plural subject would indicate usage of the plural verb, here, we use the plural form of the verb, 'includes', to avoid the impression that 'include' is an infinitive verb. 'Includes' is a present tense main verb. ">
       Includes information about harmful software, system settings, and processes on your computer.
+    </message>
+    <message name="IDS_SETTINGS_RESET_CLEANUP_TITLE_CLEANUP_UNAVAILABLE" desc="Title of error message that could appear before the cleanup of harmful software because Chrome failed to contact the server. This message will only appear on Windows desktop/laptop computers.">
+      Cleanup is currently unavailable
+    </message>
+    <message name="IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_CLEANUP_UNAVAILABLE" desc="Body of error message that could appear during the cleanup of harmful software. Imperative instruction to user. This message will only appear on Windows desktop/laptop computers.">
+      Please try again later
     </message>
   </if>
 </grit-part>

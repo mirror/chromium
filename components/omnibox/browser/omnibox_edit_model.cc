@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/auto_reset.h"
+#include "base/feature_list.h"
 #include "base/format_macros.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
@@ -28,6 +29,7 @@
 #include "components/omnibox/browser/omnibox_client.h"
 #include "components/omnibox/browser/omnibox_edit_controller.h"
 #include "components/omnibox/browser/omnibox_event_global_tracker.h"
+#include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_log.h"
 #include "components/omnibox/browser/omnibox_navigation_observer.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
@@ -37,6 +39,7 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_prepopulate_data.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/toolbar/toolbar_model.h"
 #include "components/url_formatter/url_fixer.h"
 #include "third_party/metrics_proto/omnibox_event.pb.h"
 #include "ui/gfx/image/image.h"
@@ -320,20 +323,32 @@ void OmniboxEditModel::AdjustTextForCopy(int sel_min,
   // We can't use CurrentTextIsURL() or GetDataForURLExport() because right now
   // the user is probably holding down control to cause the copy, which will
   // screw up our calculation of the desired_tld.
-  AutocompleteMatch match;
-  client_->GetAutocompleteClassifier()->Classify(
-      *text, is_keyword_selected(), true, ClassifyPage(), &match, nullptr);
-  if (AutocompleteMatch::IsSearchType(match.type))
+  AutocompleteMatch match_from_text;
+  client_->GetAutocompleteClassifier()->Classify(*text, is_keyword_selected(),
+                                                 true, ClassifyPage(),
+                                                 &match_from_text, nullptr);
+  if (AutocompleteMatch::IsSearchType(match_from_text.type))
     return;
-  *url = match.destination_url;
+  *url = match_from_text.destination_url;
 
   // Prefix the text with 'http://' if the text doesn't start with 'http://',
   // the text parses as a url with a scheme of http, the user selected the
   // entire host, and the user hasn't edited the host or manually removed the
   // scheme.
-  GURL perm_url(PermanentURL());
-  if (perm_url.SchemeIs(url::kHttpScheme) && url->SchemeIs(url::kHttpScheme) &&
-      perm_url.host_piece() == url->host_piece()) {
+  GURL reference_url = PermanentURL();
+  // If the popup is open, and the user is in input mode, and has a current
+  // match, use the destination URL as the reference URL instead.
+  if (PopupIsOpen() && user_input_in_progress_) {
+    AutocompleteMatch current_match = CurrentMatch(nullptr);
+    if (!AutocompleteMatch::IsSearchType(current_match.type) &&
+        current_match.destination_url.is_valid()) {
+      reference_url = current_match.destination_url;
+    }
+  }
+
+  if (reference_url.SchemeIs(url::kHttpScheme) &&
+      url->SchemeIs(url::kHttpScheme) &&
+      reference_url.host_piece() == url->host_piece()) {
     *write_url = true;
     base::string16 http = base::ASCIIToUTF16(url::kHttpScheme) +
         base::ASCIIToUTF16(url::kStandardSchemeSeparator);
@@ -395,9 +410,20 @@ void OmniboxEditModel::StartAutocomplete(bool has_selected_text,
   // of the form "<keyword> <query>", where our query is |user_text_|.
   // So we need to adjust the cursor position forward by the length of
   // any keyword added by MaybePrependKeyword() above.
-  if (is_keyword_selected())
-    cursor_position += input_text.length() - user_text_.length();
-
+  if (is_keyword_selected()) {
+    // If there is user text, the cursor is past the keyword and doesn't
+    // account for its size.  Add the keyword's size to the position passed
+    // to autocomplete.
+    if (!user_text_.empty()) {
+      cursor_position += input_text.length() - user_text_.length();
+    } else {
+      // Otherwise, cursor may point into keyword or otherwise not account
+      // for the keyword's size (depending on how this code is reached).
+      // Pass a cursor at end of input to autocomplete.  This is safe in all
+      // conditions.
+      cursor_position = input_text.length();
+    }
+  }
   input_ = AutocompleteInput(input_text, cursor_position, ClassifyPage(),
                              client_->GetSchemeClassifier());
   input_.set_current_url(client_->GetURL());
@@ -878,6 +904,12 @@ void OmniboxEditModel::OnSetFocus(bool control_down) {
   SetFocusState(OMNIBOX_FOCUS_VISIBLE, OMNIBOX_FOCUS_CHANGE_EXPLICIT);
   control_key_state_ = control_down ? DOWN_WITHOUT_CHANGE : UP;
 
+  if (base::FeatureList::IsEnabled(
+          omnibox::kUIExperimentHideSteadyStateUrlSchemeAndSubdomains)) {
+    // Show the full URL if the user focuses the Omnibox.
+    SetPermanentText(controller()->GetToolbarModel()->GetFormattedFullURL());
+  }
+
   // Try to get ZeroSuggest suggestions if a page is loaded and the user has
   // not been typing in the omnibox.  The |user_input_in_progress_| check is
   // used to detect the case where this function is called after right-clicking
@@ -912,6 +944,14 @@ void OmniboxEditModel::SetCaretVisibility(bool visible) {
 void OmniboxEditModel::OnWillKillFocus() {
   if (user_input_in_progress_ || !in_revert_)
     client_->OnInputStateChanged();
+
+  if (!user_input_in_progress_ &&
+      base::FeatureList::IsEnabled(
+          omnibox::kUIExperimentHideSteadyStateUrlSchemeAndSubdomains)) {
+    // If the user has not edited the input and is now leaving Omnibox focus,
+    // restore the elided URL as the permanent text.
+    RestoreState(controller()->GetURLForDisplay(), nullptr);
+  }
 }
 
 void OmniboxEditModel::OnKillFocus() {

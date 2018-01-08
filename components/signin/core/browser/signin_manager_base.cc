@@ -8,7 +8,6 @@
 #include <vector>
 
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -18,6 +17,7 @@
 #include "components/signin/core/browser/account_info.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/signin_client.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "components/signin/core/browser/signin_switches.h"
 #include "google_apis/gaia/gaia_auth_util.h"
@@ -28,9 +28,11 @@ using namespace signin_internals_util;
 
 SigninManagerBase::SigninManagerBase(
     SigninClient* client,
-    AccountTrackerService* account_tracker_service)
+    AccountTrackerService* account_tracker_service,
+    SigninErrorController* signin_error_controller)
     : client_(client),
       account_tracker_service_(account_tracker_service),
+      signin_error_controller_(signin_error_controller),
       initialized_(false),
       weak_pointer_factory_(this) {
   DCHECK(client_);
@@ -48,9 +50,6 @@ void SigninManagerBase::RegisterProfilePrefs(
                                std::string());
   registry->RegisterStringPref(prefs::kGoogleServicesLastUsername,
                                std::string());
-  registry->RegisterInt64Pref(
-      prefs::kGoogleServicesRefreshTokenAnnotateScheduledTime,
-      base::Time().ToInternalValue());
   registry->RegisterStringPref(prefs::kGoogleServicesSigninScopedDeviceId,
                                std::string());
   registry->RegisterStringPref(prefs::kGoogleServicesAccountId, std::string());
@@ -59,7 +58,7 @@ void SigninManagerBase::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kAutologinEnabled, true);
   registry->RegisterBooleanPref(prefs::kReverseAutologinEnabled, true);
   registry->RegisterListPref(prefs::kReverseAutologinRejectedEmailList,
-                             base::MakeUnique<base::ListValue>());
+                             std::make_unique<base::ListValue>());
   registry->RegisterBooleanPref(prefs::kSigninAllowed, true);
   registry->RegisterInt64Pref(prefs::kSignedInTime,
                               base::Time().ToInternalValue());
@@ -221,6 +220,15 @@ void SigninManagerBase::SetAuthenticatedAccountId(
   // Commit authenticated account info immediately so that it does not get lost
   // if Chrome crashes before the next commit interval.
   client_->GetPrefs()->CommitPendingWrite();
+
+  if (signin_error_controller_)
+    signin_error_controller_->SetPrimaryAccountID(authenticated_account_id_);
+}
+
+void SigninManagerBase::ClearAuthenticatedAccountId() {
+  authenticated_account_id_.clear();
+  if (signin_error_controller_)
+    signin_error_controller_->SetPrimaryAccountID(std::string());
 }
 
 bool SigninManagerBase::IsAuthenticated() const {

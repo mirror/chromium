@@ -59,10 +59,7 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
 
   // Registers a callback to be called when the promise would resolve (whether
   // successfully or not). Multiple callbacks may be registered.
-  // If |provider_host| is not NULL, its process will be regarded as a candidate
-  // process to run the worker.
-  void AddCallback(const RegistrationCallback& callback,
-                   ServiceWorkerProviderHost* provider_host);
+  void AddCallback(const RegistrationCallback& callback);
 
   // ServiceWorkerRegisterJobBase implementation:
   void Start() override;
@@ -121,7 +118,7 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   void OnStartWorkerFinished(ServiceWorkerStatusCode status);
   void OnStoreRegistrationComplete(ServiceWorkerStatusCode status);
   void InstallAndContinue();
-  void DispatchInstallEvent();
+  void DispatchInstallEvent(ServiceWorkerStatusCode start_worker_status);
   void OnInstallFinished(
       int request_id,
       blink::mojom::ServiceWorkerEventStatus event_status,
@@ -151,6 +148,7 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   RegistrationJobType job_type_;
   const GURL pattern_;
   GURL script_url_;
+  const blink::mojom::ServiceWorkerUpdateViaCache update_via_cache_;
   std::vector<RegistrationCallback> callbacks_;
   Phase phase_;
   Internal internal_;

@@ -57,11 +57,6 @@
 
 namespace blink {
 
-static inline bool PageIsBeingDismissed(Document* document) {
-  return document->PageDismissalEventBeingDispatched() !=
-         Document::kNoDismissal;
-}
-
 static ImageLoader::BypassMainWorldBehavior ShouldBypassMainWorldCSP(
     ImageLoader* loader) {
   DCHECK(loader);
@@ -151,7 +146,7 @@ ImageLoader::ImageLoader(Element* element)
   RESOURCE_LOADING_DVLOG(1) << "new ImageLoader " << this;
 }
 
-ImageLoader::~ImageLoader() {}
+ImageLoader::~ImageLoader() = default;
 
 void ImageLoader::Dispose() {
   RESOURCE_LOADING_DVLOG(1)
@@ -316,16 +311,12 @@ inline void ImageLoader::DispatchErrorEvent() {
   // In such cases we cancel the previous event (by overwriting
   // |pending_error_event_|) and then re-schedule a new error event here.
   // crbug.com/722500
-  pending_error_event_ =
-      GetElement()
-          ->GetDocument()
-          .GetTaskRunner(TaskType::kDOMManipulation)
-          ->PostCancellableTask(
-              FROM_HERE,
-              WTF::Bind(&ImageLoader::DispatchPendingErrorEvent,
-                        WrapPersistent(this),
-                        WTF::Passed(IncrementLoadEventDelayCount::Create(
-                            GetElement()->GetDocument()))));
+  pending_error_event_ = PostCancellableTask(
+      *GetElement()->GetDocument().GetTaskRunner(TaskType::kDOMManipulation),
+      FROM_HERE,
+      WTF::Bind(&ImageLoader::DispatchPendingErrorEvent, WrapPersistent(this),
+                WTF::Passed(IncrementLoadEventDelayCount::Create(
+                    GetElement()->GetDocument()))));
 }
 
 inline void ImageLoader::CrossSiteOrCSPViolationOccurred(
@@ -412,13 +403,7 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
     new_image_content = ImageResourceContent::Fetch(params, document.Fetcher());
-
-    if (!new_image_content && !PageIsBeingDismissed(&document)) {
-      CrossSiteOrCSPViolationOccurred(image_source_url);
-      DispatchErrorEvent();
-    } else {
-      ClearFailedLoadURL();
-    }
+    ClearFailedLoadURL();
   } else {
     if (!image_source_url.IsNull()) {
       // Fire an error event if the url string is not empty, but the KURL is.
@@ -644,9 +629,8 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
     pending_load_event_.Cancel();
 
     Optional<ResourceError> error = resource->GetResourceError();
-    if (error && error->IsAccessCheck()) {
+    if (error && error->IsAccessCheck())
       CrossSiteOrCSPViolationOccurred(AtomicString(error->FailingURL()));
-    }
 
     // The error event should not fire if the image data update is a result of
     // environment change.
@@ -657,16 +641,12 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
   }
 
   CHECK(!pending_load_event_.IsActive());
-  pending_load_event_ =
-      GetElement()
-          ->GetDocument()
-          .GetTaskRunner(TaskType::kDOMManipulation)
-          ->PostCancellableTask(
-              FROM_HERE,
-              WTF::Bind(&ImageLoader::DispatchPendingLoadEvent,
-                        WrapPersistent(this),
-                        WTF::Passed(IncrementLoadEventDelayCount::Create(
-                            GetElement()->GetDocument()))));
+  pending_load_event_ = PostCancellableTask(
+      *GetElement()->GetDocument().GetTaskRunner(TaskType::kDOMManipulation),
+      FROM_HERE,
+      WTF::Bind(&ImageLoader::DispatchPendingLoadEvent, WrapPersistent(this),
+                WTF::Passed(IncrementLoadEventDelayCount::Create(
+                    GetElement()->GetDocument()))));
 }
 
 LayoutImageResource* ImageLoader::GetLayoutImageResource() {
@@ -759,6 +739,8 @@ ScriptPromise ImageLoader::Decode(ScriptState* script_state,
                                       "The source image cannot be decoded.");
     return ScriptPromise();
   }
+
+  UseCounter::Count(GetElement()->GetDocument(), WebFeature::kImageDecodeAPI);
 
   auto* request =
       new DecodeRequest(this, ScriptPromiseResolver::Create(script_state));

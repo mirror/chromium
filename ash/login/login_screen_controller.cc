@@ -8,12 +8,16 @@
 #include "ash/login/ui/lock_screen.h"
 #include "ash/login/ui/login_data_dispatcher.h"
 #include "ash/public/cpp/ash_pref_names.h"
+#include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/system/status_area_widget.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "chromeos/login/auth/authpolicy_login_helper.h"
 #include "chromeos/login/auth/user_context.h"
+#include "components/password_manager/core/browser/hash_password_manager.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/session_manager_types.h"
@@ -28,6 +32,31 @@ std::string CalculateHash(const std::string& password,
   chromeos::Key key(password);
   key.Transform(key_type, salt);
   return key.GetSecret();
+}
+
+enum class SystemTrayVisibility {
+  kNone,     // Tray not visible anywhere.
+  kPrimary,  // Tray visible only on primary display.
+  kAll,      // Tray visible on all displays.
+};
+
+void SetSystemTrayVisibility(SystemTrayVisibility visibility) {
+  RootWindowController* primary_window_controller =
+      Shell::GetPrimaryRootWindowController();
+  for (RootWindowController* window_controller :
+       Shell::GetAllRootWindowControllers()) {
+    StatusAreaWidget* status_area = window_controller->GetStatusAreaWidget();
+    if (!status_area)
+      continue;
+    if (window_controller == primary_window_controller) {
+      status_area->SetSystemTrayVisibility(
+          visibility == SystemTrayVisibility::kPrimary ||
+          visibility == SystemTrayVisibility::kAll);
+    } else {
+      status_area->SetSystemTrayVisibility(visibility ==
+                                           SystemTrayVisibility::kAll);
+    }
+  }
 }
 
 }  // namespace
@@ -60,6 +89,7 @@ void LoginScreenController::SetClient(mojom::LoginScreenClientPtr client) {
 void LoginScreenController::ShowLockScreen(ShowLockScreenCallback on_shown) {
   ash::LockScreen::Show(ash::LockScreen::ScreenType::kLock);
   std::move(on_shown).Run(true);
+  SetSystemTrayVisibility(SystemTrayVisibility::kPrimary);
 }
 
 void LoginScreenController::ShowLoginScreen(ShowLoginScreenCallback on_shown) {
@@ -73,6 +103,7 @@ void LoginScreenController::ShowLoginScreen(ShowLoginScreenCallback on_shown) {
   // TODO(jdufault): rename ash::LockScreen to ash::LoginScreen.
   ash::LockScreen::Show(ash::LockScreen::ScreenType::kLogin);
   std::move(on_shown).Run(true);
+  SetSystemTrayVisibility(SystemTrayVisibility::kPrimary);
 }
 
 void LoginScreenController::ShowErrorMessage(int32_t login_attempts,
@@ -238,6 +269,12 @@ void LoginScreenController::CancelAddUser() {
   login_screen_client_->CancelAddUser();
 }
 
+void LoginScreenController::LoginAsGuest() {
+  if (!login_screen_client_)
+    return;
+  login_screen_client_->LoginAsGuest();
+}
+
 void LoginScreenController::OnMaxIncorrectPasswordAttempted(
     const AccountId& account_id) {
   if (!login_screen_client_)
@@ -276,6 +313,10 @@ void LoginScreenController::DoAuthenticateUser(const AccountId& account_id,
   std::string hashed_password = CalculateHash(
       password, system_salt, chromeos::Key::KEY_TYPE_SALTED_SHA256_TOP_HALF);
 
+  // Used for GAIA password reuse detection.
+  password_manager::SyncPasswordData sync_password_data(
+      base::UTF8ToUTF16(password), /*force_update=*/false);
+
   PrefService* prefs =
       Shell::Get()->session_controller()->GetLastActiveUserPrefService();
   if (is_pin && prefs) {
@@ -298,7 +339,7 @@ void LoginScreenController::DoAuthenticateUser(const AccountId& account_id,
       is_pin ? LoginMetricsRecorder::AuthMethod::kPin
              : LoginMetricsRecorder::AuthMethod::kPassword);
   login_screen_client_->AuthenticateUser(
-      account_id, hashed_password, is_pin,
+      account_id, hashed_password, sync_password_data, is_pin,
       base::BindOnce(&LoginScreenController::OnAuthenticateComplete,
                      weak_factory_.GetWeakPtr(), base::Passed(&callback)));
 }

@@ -70,13 +70,16 @@ import org.chromium.content.browser.SmartClipProvider;
 import org.chromium.content_public.browser.ChildProcessImportance;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
+import org.chromium.content_public.browser.ImeAdapter;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.JavaScriptCallback;
+import org.chromium.content_public.browser.JavascriptInjector;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.MessagePort;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.NavigationHistory;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_public.browser.navigation_controller.LoadURLType;
@@ -411,6 +414,8 @@ public class AwContents implements SmartClipProvider {
     // to move the holder of those internal objects to AwContents. Note that they are still
     // used by WebContents, and AwContents doesn't have to know what's inside the holder.
     private WebContentsInternals mWebContentsInternals;
+
+    private JavascriptInjector mJavascriptInjector;
 
     private static class WebContentsInternalsHolder implements WebContents.InternalsHolder {
         private final WeakReference<AwContents> mAwContentsRef;
@@ -873,24 +878,18 @@ public class AwContents implements SmartClipProvider {
             ViewAndroidDelegate viewDelegate, InternalAccessDelegate internalDispatcher,
             WebContents webContents, WindowAndroid windowAndroid) {
         contentViewCore.initialize(viewDelegate, internalDispatcher, webContents, windowAndroid);
-        contentViewCore.setActionModeCallback(
-                new AwActionModeCallback(mContext, this,
-                        contentViewCore.getActionModeCallbackHelper()));
+        SelectionPopupController controller = SelectionPopupController.fromWebContents(webContents);
+        controller.setActionModeCallback(
+                new AwActionModeCallback(mContext, this, controller.getActionModeCallbackHelper()));
         if (mAutofillProvider != null) {
-            contentViewCore.setNonSelectionActionModeCallback(
+            controller.setNonSelectionActionModeCallback(
                     new AutofillActionModeCallback(context, mAutofillProvider));
         }
-        contentViewCore.setSelectionClient(SelectionClient.createSmartSelectionClient(webContents));
+        controller.setSelectionClient(SelectionClient.createSmartSelectionClient(webContents));
 
         // Listen for dpad events from IMEs (e.g. Samsung Cursor Control) so we know to enable
         // spatial navigation mode to allow these events to move focus out of the WebView.
-        contentViewCore.addImeEventObserver(new ImeEventObserver() {
-            @Override
-            public void onImeEvent() {}
-
-            @Override
-            public void onNodeAttributeUpdated(boolean editable, boolean password) {}
-
+        ImeAdapter.fromWebContents(webContents).addEventObserver(new ImeEventObserver() {
             @Override
             public void onBeforeSendKeyEvent(KeyEvent event) {
                 if (AwContents.isDpadEvent(event)) {
@@ -1116,11 +1115,10 @@ public class AwContents implements SmartClipProvider {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setNewAwContentsPreO(newAwContentsPtr);
         } else {
-            // Move the TextClassifier to the new ContentViewCore.
-            TextClassifier textClassifier =
-                    mContentViewCore == null ? null : mContentViewCore.getCustomTextClassifier();
+            // Move the TextClassifier to the new WebContents.
+            TextClassifier textClassifier = mWebContents != null ? getTextClassifier() : null;
             setNewAwContentsPreO(newAwContentsPtr);
-            if (textClassifier != null) mContentViewCore.setTextClassifier(textClassifier);
+            if (textClassifier != null) setTextClassifier(textClassifier);
         }
     }
 
@@ -1132,6 +1130,7 @@ public class AwContents implements SmartClipProvider {
             mWebContents = null;
             mWebContentsInternals = null;
             mNavigationController = null;
+            mJavascriptInjector = null;
         }
 
         assert mNativeAwContents == 0 && mCleanupReference == null && mContentViewCore == null;
@@ -1225,7 +1224,7 @@ public class AwContents implements SmartClipProvider {
         Map<String, Pair<Object, Class>> javascriptInterfaces =
                 new HashMap<String, Pair<Object, Class>>();
         if (mContentViewCore != null) {
-            javascriptInterfaces.putAll(mWebContents.getJavascriptInterfaces());
+            javascriptInterfaces.putAll(getJavascriptInjector().getInterfaces());
         }
 
         setNewAwContents(popupNativeAwContents);
@@ -1251,9 +1250,16 @@ public class AwContents implements SmartClipProvider {
         for (Map.Entry<String, Pair<Object, Class>> entry : javascriptInterfaces.entrySet()) {
             @SuppressWarnings("unchecked")
             Class<? extends Annotation> requiredAnnotation = entry.getValue().second;
-            mWebContents.addPossiblyUnsafeJavascriptInterface(
+            getJavascriptInjector().addPossiblyUnsafeInterface(
                     entry.getValue().first, entry.getKey(), requiredAnnotation);
         }
+    }
+
+    private JavascriptInjector getJavascriptInjector() {
+        if (mJavascriptInjector == null) {
+            mJavascriptInjector = JavascriptInjector.fromWebContents(mWebContents);
+        }
+        return mJavascriptInjector;
     }
 
     @VisibleForTesting
@@ -1419,7 +1425,7 @@ public class AwContents implements SmartClipProvider {
      */
     public void disableJavascriptInterfacesInspection() {
         if (!isDestroyedOrNoOperation(WARN)) {
-            mWebContents.setAllowJavascriptInterfacesInspection(false);
+            getJavascriptInjector().setAllowInspection(false);
         }
     }
 
@@ -2142,7 +2148,7 @@ public class AwContents implements SmartClipProvider {
     }
 
     /**
-     * @see ContentViewCore#getNavigationHistory()
+     * @see NavigationController#getNavigationHistory()
      */
     public NavigationHistory getNavigationHistory() {
         return isDestroyedOrNoOperation(WARN) ? null : mNavigationController.getNavigationHistory();
@@ -2464,7 +2470,8 @@ public class AwContents implements SmartClipProvider {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (isDestroyedOrNoOperation(NO_WARN)) return;
         if (requestCode == PROCESS_TEXT_REQUEST_CODE) {
-            mContentViewCore.onReceivedProcessTextResult(resultCode, data);
+            SelectionPopupController.fromWebContents(mWebContents)
+                    .onReceivedProcessTextResult(resultCode, data);
         } else {
             Log.e(TAG, "Received activity result for an unknown request code %d", requestCode);
         }
@@ -2674,7 +2681,7 @@ public class AwContents implements SmartClipProvider {
     }
 
     /**
-     * @see WebContents#addPossiblyUnsafeJavascriptInterface(Object, String, Class)
+     * @see JavascriptInjector#addPossiblyUnsafeInterface(Object, String, Class)
      */
     @SuppressLint("NewApi")  // JavascriptInterface requires API level 17.
     public void addJavascriptInterface(Object object, String name) {
@@ -2685,17 +2692,17 @@ public class AwContents implements SmartClipProvider {
             requiredAnnotation = JavascriptInterface.class;
         }
 
-        mWebContents.addPossiblyUnsafeJavascriptInterface(object, name, requiredAnnotation);
+        getJavascriptInjector().addPossiblyUnsafeInterface(object, name, requiredAnnotation);
     }
 
     /**
      * @see android.webkit.WebView#removeJavascriptInterface(String)
      */
     public void removeJavascriptInterface(String interfaceName) {
-        if (TRACE) Log.i(TAG, "%s removeJavascriptInterface=%s", this, interfaceName);
+        if (TRACE) Log.i(TAG, "%s removeInterface=%s", this, interfaceName);
         if (isDestroyedOrNoOperation(WARN)) return;
 
-        mWebContents.removeJavascriptInterface(interfaceName);
+        getJavascriptInjector().removeInterface(interfaceName);
     }
 
     /**
@@ -2810,13 +2817,13 @@ public class AwContents implements SmartClipProvider {
     }
 
     public void setTextClassifier(TextClassifier textClassifier) {
-        assert mContentViewCore != null;
-        mContentViewCore.setTextClassifier(textClassifier);
+        assert mWebContents != null;
+        SelectionPopupController.fromWebContents(mWebContents).setTextClassifier(textClassifier);
     }
 
     public TextClassifier getTextClassifier() {
-        assert mContentViewCore != null;
-        return mContentViewCore.getTextClassifier();
+        assert mWebContents != null;
+        return SelectionPopupController.fromWebContents(mWebContents).getTextClassifier();
     }
 
     //--------------------------------------------------------------------------------------------
@@ -3302,8 +3309,9 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-            return isDestroyedOrNoOperation(NO_WARN) ? null
-                    : mContentViewCore.onCreateInputConnection(outAttrs);
+            return isDestroyedOrNoOperation(NO_WARN)
+                    ? null
+                    : ImeAdapter.fromWebContents(mWebContents).onCreateInputConnection(outAttrs);
         }
 
         @Override

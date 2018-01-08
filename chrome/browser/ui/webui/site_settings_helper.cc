@@ -8,7 +8,6 @@
 #include <string>
 
 #include "base/feature_list.h"
-#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/permissions/chooser_context_base.h"
@@ -75,6 +74,7 @@ const ContentSettingsTypeNameEntry kContentSettingsTypeGroupNames[] = {
     {CONTENT_SETTINGS_TYPE_ADS, "ads"},
     {CONTENT_SETTINGS_TYPE_SOUND, "sound"},
     {CONTENT_SETTINGS_TYPE_CLIPBOARD_READ, "clipboard"},
+    {CONTENT_SETTINGS_TYPE_SENSORS, "sensors"},
 
     // Add new content settings here if a corresponding Javascript string
     // representation for it is not required. Note some exceptions, such as
@@ -90,7 +90,6 @@ const ContentSettingsTypeNameEntry kContentSettingsTypeGroupNames[] = {
     {CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA, nullptr},
     {CONTENT_SETTINGS_TYPE_BLUETOOTH_GUARD, nullptr},
     {CONTENT_SETTINGS_TYPE_AUTOPLAY, nullptr},
-    {CONTENT_SETTINGS_TYPE_PROMPT_NO_DECISION_COUNT, nullptr},
     {CONTENT_SETTINGS_TYPE_IMPORTANT_SITE_INFO, nullptr},
     {CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA, nullptr},
     {CONTENT_SETTINGS_TYPE_ADS_DATA, nullptr},
@@ -98,7 +97,6 @@ const ContentSettingsTypeNameEntry kContentSettingsTypeGroupNames[] = {
     {CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION, nullptr},
     {CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT, nullptr},
     {CONTENT_SETTINGS_TYPE_CLIENT_HINTS, nullptr},
-    {CONTENT_SETTINGS_TYPE_SENSORS, nullptr},
     {CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS, nullptr},
     {CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE, nullptr},
 };
@@ -275,7 +273,7 @@ std::unique_ptr<base::DictionaryValue> GetExceptionForPage(
     const ContentSetting& setting,
     const std::string& provider_name,
     bool incognito) {
-  auto exception = base::MakeUnique<base::DictionaryValue>();
+  auto exception = std::make_unique<base::DictionaryValue>();
   exception->SetString(kOrigin, pattern.ToString());
   exception->SetString(kDisplayName, display_name);
   exception->SetString(kEmbeddingOrigin,

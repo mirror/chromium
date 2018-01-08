@@ -21,10 +21,9 @@ class MockScriptedIdleTaskControllerScheduler final : public WebScheduler {
  public:
   MockScriptedIdleTaskControllerScheduler(bool should_yield)
       : should_yield_(should_yield) {}
-  ~MockScriptedIdleTaskControllerScheduler() override {}
+  ~MockScriptedIdleTaskControllerScheduler() override = default;
 
   // WebScheduler implementation:
-  WebTaskRunner* LoadingTaskRunner() override { return nullptr; }
   WebTaskRunner* TimerTaskRunner() override { return nullptr; }
   WebTaskRunner* CompositorTaskRunner() override { return nullptr; }
   WebTaskRunner* V8TaskRunner() override { return nullptr; }
@@ -50,6 +49,10 @@ class MockScriptedIdleTaskControllerScheduler final : public WebScheduler {
   void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType) override {}
 
+  base::TimeTicks MonotonicallyIncreasingVirtualTime() const override {
+    return base::TimeTicks();
+  }
+
   void RunIdleTask() { std::move(idle_task_).Run(0); }
   bool HasIdleTask() const { return !!idle_task_; }
 
@@ -64,7 +67,7 @@ class MockScriptedIdleTaskControllerThread final : public WebThread {
  public:
   MockScriptedIdleTaskControllerThread(bool should_yield)
       : scheduler_(should_yield) {}
-  ~MockScriptedIdleTaskControllerThread() override {}
+  ~MockScriptedIdleTaskControllerThread() override = default;
   bool IsCurrentThread() const override { return true; }
   WebScheduler* Scheduler() const override { return &scheduler_; }
 
@@ -80,7 +83,7 @@ class MockScriptedIdleTaskControllerPlatform : public TestingPlatformSupport {
  public:
   MockScriptedIdleTaskControllerPlatform(bool should_yield)
       : thread_(should_yield) {}
-  ~MockScriptedIdleTaskControllerPlatform() override {}
+  ~MockScriptedIdleTaskControllerPlatform() override = default;
   WebThread* CurrentThread() override { return &thread_; }
 
   void RunIdleTask() { thread_.RunIdleTask(); }

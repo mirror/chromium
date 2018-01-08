@@ -7,6 +7,7 @@
 
 #include "ui/aura/window.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
+#include "ui/events/event.h"
 #include "ui/keyboard/container_behavior.h"
 #include "ui/keyboard/container_type.h"
 #include "ui/keyboard/keyboard_controller.h"
@@ -38,9 +39,10 @@ class KEYBOARD_EXPORT ContainerFullWidthBehavior : public ContainerBehavior {
   bool IsOverscrollAllowed() const override;
   bool IsDragHandle(const gfx::Vector2d& offset,
                     const gfx::Size& keyboard_size) const override;
-  void SavePosition(const gfx::Point& position) override;
-  void HandlePointerEvent(bool isMouseButtonPressed,
-                          const gfx::Vector2d& kb_offset) override;
+  void SavePosition(const gfx::Rect& keyboard_bounds,
+                    const gfx::Size& screen_size) override;
+  void HandlePointerEvent(const ui::LocatedEvent& event,
+                          const gfx::Rect& display_bounds) override;
   void SetCanonicalBounds(aura::Window* container,
                           const gfx::Rect& display_bounds) override;
   ContainerType GetType() const override;

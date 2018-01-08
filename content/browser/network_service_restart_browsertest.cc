@@ -4,28 +4,71 @@
 
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
+#include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/storage_partition_impl.h"
+#include "content/browser/url_loader_factory_getter.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/network_service.mojom.h"
+#include "content/public/common/content_switches.h"
+#include "content/public/common/simple_url_loader.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/simple_url_loader_test_helper.h"
 #include "content/shell/browser/shell.h"
+#include "net/dns/mock_host_resolver.h"
+#include "net/test/embedded_test_server/http_request.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
 
 namespace content {
 
 namespace {
 
-mojom::NetworkContextPtr CreateNetworkContext() {
-  mojom::NetworkContextPtr network_context;
-  mojom::NetworkContextParamsPtr context_params =
-      mojom::NetworkContextParams::New();
+network::mojom::NetworkContextPtr CreateNetworkContext() {
+  network::mojom::NetworkContextPtr network_context;
+  network::mojom::NetworkContextParamsPtr context_params =
+      network::mojom::NetworkContextParams::New();
   GetNetworkService()->CreateNetworkContext(mojo::MakeRequest(&network_context),
                                             std::move(context_params));
   return network_context;
+}
+
+int LoadBasicRequestOnIOThread(
+    URLLoaderFactoryGetter* url_loader_factory_getter,
+    const GURL& url) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto request = std::make_unique<network::ResourceRequest>();
+  request->url = url;
+
+  SimpleURLLoaderTestHelper simple_loader_helper;
+  // Wait for callback on UI thread to avoid nesting IO message loops.
+  simple_loader_helper.SetRunLoopQuitThread(BrowserThread::UI);
+
+  std::unique_ptr<content::SimpleURLLoader> simple_loader =
+      content::SimpleURLLoader::Create(std::move(request),
+                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+
+  // |URLLoaderFactoryGetter::GetNetworkFactory()| can only be accessed on IO
+  // thread.
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          [](content::SimpleURLLoader* loader,
+             URLLoaderFactoryGetter* factory_getter,
+             SimpleURLLoader::BodyAsStringCallback body_as_string_callback) {
+            loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+                factory_getter->GetNetworkFactory(),
+                std::move(body_as_string_callback));
+          },
+          base::Unretained(simple_loader.get()),
+          base::Unretained(url_loader_factory_getter),
+          simple_loader_helper.GetCallback()));
+
+  simple_loader_helper.WaitForCallback();
+  return simple_loader->NetError();
 }
 
 }  // namespace
@@ -36,13 +79,21 @@ class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
  public:
   NetworkServiceRestartBrowserTest() {
     scoped_feature_list_.InitAndEnableFeature(features::kNetworkService);
+  }
+
+  void SetUpOnMainThread() override {
     EXPECT_TRUE(embedded_test_server()->Start());
+    ContentBrowserTest::SetUpOnMainThread();
   }
 
   GURL GetTestURL() const {
     // Use '/echoheader' instead of '/echo' to avoid a disk_cache bug.
     // See https://crbug.com/792255.
     return embedded_test_server()->GetURL("/echoheader");
+  }
+
+  BrowserContext* browser_context() {
+    return shell()->web_contents()->GetBrowserContext();
   }
 
  private:
@@ -53,7 +104,7 @@ class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
 
 IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
                        NetworkServiceProcessRecovery) {
-  mojom::NetworkContextPtr network_context = CreateNetworkContext();
+  network::mojom::NetworkContextPtr network_context = CreateNetworkContext();
   EXPECT_EQ(net::OK, LoadBasicRequest(network_context.get(), GetTestURL()));
   EXPECT_TRUE(network_context.is_bound());
   EXPECT_FALSE(network_context.encountered_error());
@@ -72,7 +123,7 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
             LoadBasicRequest(network_context.get(), GetTestURL()));
 
   // NetworkService should restart automatically and return valid interface.
-  mojom::NetworkContextPtr network_context2 = CreateNetworkContext();
+  network::mojom::NetworkContextPtr network_context2 = CreateNetworkContext();
   EXPECT_EQ(net::OK, LoadBasicRequest(network_context2.get(), GetTestURL()));
   EXPECT_TRUE(network_context2.is_bound());
   EXPECT_FALSE(network_context2.encountered_error());
@@ -83,10 +134,10 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
 IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
                        StoragePartitionImplGetNetworkContext) {
   StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
-      BrowserContext::GetDefaultStoragePartition(
-          shell()->web_contents()->GetBrowserContext()));
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
 
-  mojom::NetworkContext* old_network_context = partition->GetNetworkContext();
+  network::mojom::NetworkContext* old_network_context =
+      partition->GetNetworkContext();
   EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context, GetTestURL()));
 
   // Crash the NetworkService process. Existing interfaces should receive error
@@ -100,6 +151,136 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
   EXPECT_NE(old_network_context, partition->GetNetworkContext());
   EXPECT_EQ(net::OK,
             LoadBasicRequest(partition->GetNetworkContext(), GetTestURL()));
+}
+
+// Make sure |URLLoaderFactoryGetter| returns valid interface after crash.
+IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
+                       URLLoaderFactoryGetterGetNetworkFactory) {
+  StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
+  scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter =
+      partition->url_loader_factory_getter();
+  EXPECT_EQ(net::OK, LoadBasicRequestOnIOThread(url_loader_factory_getter.get(),
+                                                GetTestURL()));
+  // Crash the NetworkService process. Existing interfaces should receive error
+  // notifications at some point.
+  SimulateNetworkServiceCrash();
+  // Flush the interface to make sure the error notification was received.
+  partition->FlushNetworkInterfaceForTesting();
+  url_loader_factory_getter->FlushNetworkInterfaceOnIOThreadForTesting();
+
+  // |url_loader_factory_getter| should be able to get a valid new pointer after
+  // crash.
+  EXPECT_EQ(net::OK, LoadBasicRequestOnIOThread(url_loader_factory_getter.get(),
+                                                GetTestURL()));
+}
+
+// Make sure basic navigation works after crash.
+IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
+                       NavigationURLLoaderBasic) {
+  StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
+
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html")));
+
+  // Crash the NetworkService process. Existing interfaces should receive error
+  // notifications at some point.
+  SimulateNetworkServiceCrash();
+  // Flush the interface to make sure the error notification was received.
+  partition->FlushNetworkInterfaceForTesting();
+  partition->url_loader_factory_getter()
+      ->FlushNetworkInterfaceOnIOThreadForTesting();
+
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title2.html")));
+}
+
+class NetworkServiceRestartDisableWebSecurityTest
+    : public NetworkServiceRestartBrowserTest {
+ public:
+  NetworkServiceRestartDisableWebSecurityTest() {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    // Simulate a compromised renderer, otherwise the cross-origin request is
+    // blocked.
+    command_line->AppendSwitch(switches::kDisableWebSecurity);
+    NetworkServiceRestartBrowserTest::SetUpCommandLine(command_line);
+  }
+
+  void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+    embedded_test_server()->RegisterRequestMonitor(base::BindRepeating(
+        &NetworkServiceRestartDisableWebSecurityTest::MonitorRequest,
+        base::Unretained(this)));
+    NetworkServiceRestartBrowserTest::SetUpOnMainThread();
+  }
+
+  RenderFrameHostImpl* main_frame() {
+    return static_cast<RenderFrameHostImpl*>(
+        shell()->web_contents()->GetMainFrame());
+  }
+
+  bool CheckCanLoadHttp(const std::string& relative_url) {
+    GURL test_url = embedded_test_server()->GetURL(relative_url);
+    std::string script(
+        "var xhr = new XMLHttpRequest();"
+        "xhr.open('GET', '");
+    script += test_url.spec() +
+              "', true);"
+              "xhr.onload = function (e) {"
+              "  if (xhr.readyState === 4) {"
+              "    window.domAutomationController.send(xhr.status === 200);"
+              "  }"
+              "};"
+              "xhr.onerror = function () {"
+              "  window.domAutomationController.send(false);"
+              "};"
+              "xhr.send(null)";
+    bool xhr_result = false;
+    // The JS call will fail if disallowed because the process will be killed.
+    bool execute_result =
+        ExecuteScriptAndExtractBool(shell(), script, &xhr_result);
+    return xhr_result && execute_result;
+  }
+
+  // Called by |embedded_test_server()|.
+  void MonitorRequest(const net::test_server::HttpRequest& request) {
+    last_request_relative_url_ = request.relative_url;
+  }
+
+  std::string last_request_relative_url() const {
+    return last_request_relative_url_;
+  }
+
+ private:
+  std::string last_request_relative_url_;
+
+  DISALLOW_COPY_AND_ASSIGN(NetworkServiceRestartDisableWebSecurityTest);
+};
+
+// Make sure basic XHR works after crash.
+IN_PROC_BROWSER_TEST_F(NetworkServiceRestartDisableWebSecurityTest, BasicXHR) {
+  StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
+
+  EXPECT_TRUE(NavigateToURL(
+      shell(), embedded_test_server()->GetURL("foo.com", "/echo")));
+  EXPECT_TRUE(CheckCanLoadHttp("/title1.html"));
+  EXPECT_EQ(last_request_relative_url(), "/title1.html");
+
+  // Crash the NetworkService process. Existing interfaces should receive error
+  // notifications at some point.
+  SimulateNetworkServiceCrash();
+  // Flush the interface to make sure the error notification was received.
+  partition->FlushNetworkInterfaceForTesting();
+  // Flush the interface to make sure the frame host has received error
+  // notification and the new URLLoaderFactoryBundle has been received by the
+  // frame.
+  main_frame()->FlushNetworkAndNavigationInterfacesForTesting();
+
+  EXPECT_TRUE(CheckCanLoadHttp("/title2.html"));
+  EXPECT_EQ(last_request_relative_url(), "/title2.html");
 }
 
 }  // namespace content

@@ -41,7 +41,6 @@
 #include "media/cast/cast_environment.h"
 #include "media/cast/cast_receiver.h"
 #include "media/cast/logging/logging_defines.h"
-#include "media/cast/net/udp_transport.h"
 #include "media/cast/test/utility/audio_utility.h"
 #include "media/cast/test/utility/barcode.h"
 #include "media/cast/test/utility/default_config.h"
@@ -563,7 +562,7 @@ int main(int argc, char** argv) {
 
   // Start up Chromium audio system.
   auto audio_manager = media::AudioManager::CreateForTesting(
-      base::MakeUnique<media::TestAudioThread>());
+      std::make_unique<media::TestAudioThread>());
   CHECK(media::AudioManager::Get());
 
   media::cast::FrameReceiverConfig audio_config =

@@ -6,6 +6,7 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_WEB_SCHEDULER_H_
 
 #include "base/location.h"
+#include "base/time/time.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebThread.h"
@@ -24,7 +25,7 @@ class PLATFORM_EXPORT WebScheduler {
  public:
   class PLATFORM_EXPORT InterventionReporter {
    public:
-    virtual ~InterventionReporter() {}
+    virtual ~InterventionReporter() = default;
 
     // The scheduler has performed an intervention, described by |message|,
     // which should be reported to the developer.
@@ -33,7 +34,7 @@ class PLATFORM_EXPORT WebScheduler {
 
   using RendererPauseHandle = scheduler::RendererScheduler::RendererPauseHandle;
 
-  virtual ~WebScheduler() {}
+  virtual ~WebScheduler() = default;
 
   // Called to prevent any more pending tasks from running. Must be called on
   // the associated WebThread.
@@ -68,9 +69,6 @@ class PLATFORM_EXPORT WebScheduler {
   virtual void PostNonNestableIdleTask(const base::Location&,
                                        WebThread::IdleTask) = 0;
 
-  // Returns a WebTaskRunner for loading tasks. Can be called from any thread.
-  virtual WebTaskRunner* LoadingTaskRunner() = 0;
-
   // Returns a WebTaskRunner for timer tasks. Can be called from any thread.
   virtual WebTaskRunner* TimerTaskRunner() = 0;
 
@@ -101,6 +99,10 @@ class PLATFORM_EXPORT WebScheduler {
   // Tells the scheduler that a navigation task is no longer pending.
   virtual void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType) = 0;
+
+  // Returns the current time recognized by the scheduler, which may perhaps
+  // be based on a real or virtual time domain. Used by Timer.
+  virtual base::TimeTicks MonotonicallyIncreasingVirtualTime() const = 0;
 
   // Test helpers.
 

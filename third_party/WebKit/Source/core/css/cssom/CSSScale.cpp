@@ -153,18 +153,30 @@ const DOMMatrix* CSSScale::AsMatrix(ExceptionState& exception_state) const {
     return nullptr;
   }
 
-  DOMMatrix* result = DOMMatrix::Create();
-  return result->scaleSelf(x->value(), y->value(), z->value());
+  DOMMatrix* matrix = DOMMatrix::Create();
+  if (is2D())
+    matrix->scaleSelf(x->value(), y->value());
+  else
+    matrix->scaleSelf(x->value(), y->value(), z->value());
+
+  return matrix;
 }
 
-const CSSFunctionValue* CSSScale::ToCSSValue(
-    SecureContextMode secure_context_mode) const {
+const CSSFunctionValue* CSSScale::ToCSSValue() const {
+  const CSSValue* x = x_->ToCSSValue();
+  const CSSValue* y = y_->ToCSSValue();
+  if (!x || !y)
+    return nullptr;
+
   CSSFunctionValue* result =
       CSSFunctionValue::Create(is2D() ? CSSValueScale : CSSValueScale3d);
-  result->Append(*x_->ToCSSValue(secure_context_mode));
-  result->Append(*y_->ToCSSValue(secure_context_mode));
+  result->Append(*x);
+  result->Append(*y);
   if (!is2D()) {
-    result->Append(*z_->ToCSSValue(secure_context_mode));
+    const CSSValue* z = z_->ToCSSValue();
+    if (!z)
+      return nullptr;
+    result->Append(*z);
   }
   return result;
 }

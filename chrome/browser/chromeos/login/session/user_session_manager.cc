@@ -71,6 +71,7 @@
 #include "chrome/browser/google/google_brand_chromeos.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/net/nss_context.h"
+#include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -99,6 +100,8 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/component_updater/component_updater_service.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
+#include "components/password_manager/core/browser/password_manager_metrics_util.h"
+#include "components/password_manager/core/browser/password_store.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -125,7 +128,6 @@
 #include "ui/base/ime/chromeos/input_method_descriptor.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/ime/chromeos/input_method_util.h"
-#include "ui/message_center/message_center.h"
 #include "url/gurl.h"
 
 #if BUILDFLAG(ENABLE_RLZ)
@@ -272,6 +274,9 @@ base::CommandLine CreatePerSessionCommandLine(Profile* profile) {
   flags_ui::PrefServiceFlagsStorage flags_storage_(profile->GetPrefs());
   about_flags::ConvertFlagsToSwitches(&flags_storage_, &user_flags,
                                       flags_ui::kAddSentinels);
+
+  UserSessionManager::MaybeAppendPolicySwitches(&user_flags);
+
   return user_flags;
 }
 
@@ -287,9 +292,20 @@ bool NeedRestartToApplyPerSessionFlags(
   if (user_manager::UserManager::Get()->IsLoggedInAsSupervisedUser())
     return false;
 
-  if (about_flags::AreSwitchesIdenticalToCurrentCommandLine(
-          user_flags, *base::CommandLine::ForCurrentProcess(),
-          out_command_line_difference)) {
+  // TODO: Remove this special handling for site isolation and isolate origins.
+  auto* current_command_line = base::CommandLine::ForCurrentProcess();
+  if (current_command_line->HasSwitch(::switches::kSitePerProcess) !=
+      user_flags.HasSwitch(::switches::kSitePerProcess)) {
+    out_command_line_difference->insert(::switches::kSitePerProcess);
+  }
+  if (current_command_line->GetSwitchValueASCII(::switches::kIsolateOrigins) !=
+      user_flags.GetSwitchValueASCII(::switches::kIsolateOrigins)) {
+    out_command_line_difference->insert(::switches::kIsolateOrigins);
+  }
+
+  if (out_command_line_difference->empty() &&
+      about_flags::AreSwitchesIdenticalToCurrentCommandLine(
+          user_flags, *current_command_line, out_command_line_difference)) {
     return false;
   }
 
@@ -387,6 +403,22 @@ void UserSessionManager::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kRLZBrand, std::string());
   registry->RegisterBooleanPref(prefs::kRLZDisabled, false);
   registry->RegisterBooleanPref(prefs::kCanShowOobeGoodiesPage, true);
+}
+
+// static
+void UserSessionManager::MaybeAppendPolicySwitches(
+    base::CommandLine* user_flags) {
+  // Inject site isolation and isolate origins command line switch from
+  // user policy.
+  auto* local_state = g_browser_process->local_state();
+  if (local_state->GetBoolean(prefs::kSitePerProcess)) {
+    user_flags->AppendSwitch(::switches::kSitePerProcess);
+  }
+  if (local_state->HasPrefPath(prefs::kIsolateOrigins)) {
+    user_flags->AppendSwitchASCII(
+        ::switches::kIsolateOrigins,
+        local_state->GetString(prefs::kIsolateOrigins));
+  }
 }
 
 UserSessionManager::UserSessionManager()
@@ -1008,6 +1040,30 @@ void UserSessionManager::StartCrosSession() {
   btl->AddLoginTimeMarker("StartSession-End", false);
 }
 
+void UserSessionManager::OnUserNetworkPolicyParsed(bool send_password) {
+  // Sanity check that we only send the password for enterprise users. See
+  // https://crbug.com/386606.
+  const bool is_enterprise_managed = g_browser_process->platform_part()
+                                         ->browser_policy_connector_chromeos()
+                                         ->IsEnterpriseManaged();
+  if (!is_enterprise_managed) {
+    LOG(WARNING) << "Attempting to save user password for non enterprise user.";
+    user_context_.GetMutablePasswordKey()->ClearSecret();
+    return;
+  }
+
+  if (send_password) {
+    if (user_context_.GetPasswordKey()->GetSecret().size() > 0) {
+      DBusThreadManager::Get()->GetSessionManagerClient()->SaveLoginPassword(
+          user_context_.GetPasswordKey()->GetSecret());
+    } else {
+      LOG(WARNING) << "Not saving password because password is empty.";
+    }
+  }
+
+  user_context_.GetMutablePasswordKey()->ClearSecret();
+}
+
 void UserSessionManager::PrepareProfile() {
   const bool is_demo_session =
       DemoAppLauncher::IsDemoAppSession(user_context_.GetAccountId());
@@ -1303,6 +1359,13 @@ void UserSessionManager::FinalizePrepareProfile(Profile* profile) {
   }
 
   UpdateEasyUnlockKeys(user_context_);
+
+  // Save sync password hash and salt to profile prefs if they are available.
+  // These will be used to detect Gaia password reuses.
+  if (user_context_.GetSyncPasswordData().has_value()) {
+    login::SaveSyncPasswordDataToProfile(user_context_, profile);
+  }
+
   user_context_.ClearSecrets();
   if (TokenHandlesEnabled()) {
     CreateTokenUtilIfMissing();
@@ -1787,7 +1850,7 @@ void UserSessionManager::CheckEolStatus(Profile* profile) {
   std::map<Profile*, std::unique_ptr<EolNotification>, ProfileCompare>::iterator
       iter = eol_notification_handler_.find(profile);
   if (iter == eol_notification_handler_.end()) {
-    auto eol_notification = base::MakeUnique<EolNotification>(profile);
+    auto eol_notification = std::make_unique<EolNotification>(profile);
     iter = eol_notification_handler_
                .insert(std::make_pair(profile, std::move(eol_notification)))
                .first;

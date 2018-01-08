@@ -10,7 +10,7 @@
 
 #include "ash/public/interfaces/ash_message_center_controller.mojom.h"
 #include "base/macros.h"
-#include "ui/message_center/notifier_id.h"
+#include "ui/message_center/public/cpp/notifier_id.h"
 
 class Profile;
 
@@ -42,11 +42,6 @@ class NotifierController {
   virtual void SetNotifierEnabled(Profile* profile,
                                   const message_center::NotifierId& notifier_id,
                                   bool enabled) = 0;
-
-  // Called when the advanced settings button has been clicked.
-  virtual void OnNotifierAdvancedSettingsRequested(
-      Profile* profile,
-      const message_center::NotifierId& notifier_id) {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(NotifierController);

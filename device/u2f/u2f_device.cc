@@ -12,15 +12,18 @@
 
 namespace device {
 
-U2fDevice::U2fDevice() : channel_id_(kBroadcastChannel), capabilities_(0) {}
+constexpr base::TimeDelta U2fDevice::kDeviceTimeout;
+
+U2fDevice::U2fDevice() = default;
 
 U2fDevice::~U2fDevice() = default;
 
 void U2fDevice::Register(const std::vector<uint8_t>& app_param,
                          const std::vector<uint8_t>& challenge_param,
+                         bool individual_attestation_ok,
                          MessageCallback callback) {
-  std::unique_ptr<U2fApduCommand> register_cmd =
-      U2fApduCommand::CreateRegister(app_param, challenge_param);
+  std::unique_ptr<U2fApduCommand> register_cmd = U2fApduCommand::CreateRegister(
+      app_param, challenge_param, individual_attestation_ok);
   if (!register_cmd) {
     std::move(callback).Run(U2fReturnCode::INVALID_PARAMS,
                             std::vector<uint8_t>());

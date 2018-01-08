@@ -134,6 +134,7 @@ extern const char kForceEnableMetricsReporting[];
 extern const char kForceFirstRun[];
 extern const char kForceFirstRunDialog[];
 extern const char kForceLocalNtp[];
+extern const char kForceStackedTabStripLayout[];
 extern const char kHomePage[];
 extern const char kIgnoreUrlFetcherCertRequests[];
 extern const char kIncognito[];
@@ -155,6 +156,11 @@ extern const char kMemlogModeGpu[];
 extern const char kMemlogModeManual[];
 extern const char kMemlogModeMinimal[];
 extern const char kMemlogModeRendererSampling[];
+extern const char kMemlogStackMode[];
+extern const char kMemlogStackModeMixed[];
+extern const char kMemlogStackModeNative[];
+extern const char kMemlogStackModeNativeWithThreadNames[];
+extern const char kMemlogStackModePseudo[];
 extern const char kMonitoringDestinationID[];
 extern const char kNetLogCaptureMode[];
 extern const char kNoDefaultBrowserCheck[];
@@ -239,8 +245,6 @@ extern const char kForceShowUpdateMenuItem[];
 extern const char kForceShowUpdateMenuItemCustomSummary[];
 extern const char kMarketUrlForTesting[];
 extern const char kProgressBarAnimation[];
-extern const char kTabManagementExperimentTypeDisabled[];
-extern const char kTabManagementExperimentTypeElderberry[];
 extern const char kWebApkServerUrl[];
 #endif  // defined(OS_ANDROID)
 

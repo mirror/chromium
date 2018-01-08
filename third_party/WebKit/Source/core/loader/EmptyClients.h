@@ -37,7 +37,6 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/RemoteFrameClient.h"
 #include "core/page/ChromeClient.h"
-#include "core/page/EditorClient.h"
 #include "core/page/Page.h"
 #include "platform/DragImage.h"
 #include "platform/WebFrameScheduler.h"
@@ -80,7 +79,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
  public:
   static EmptyChromeClient* Create() { return new EmptyChromeClient; }
 
-  ~EmptyChromeClient() override {}
+  ~EmptyChromeClient() override = default;
   void ChromeDestroyed() override {}
 
   WebViewImpl* GetWebView() const override { return nullptr; }
@@ -290,6 +289,8 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   void ProgressEstimateChanged(double) override {}
   void DidStopLoading() override {}
 
+  void ForwardResourceTimingToParent(const WebResourceTimingInfo&) override {}
+
   void DownloadURL(const ResourceRequest&,
                    const String& suggested_name) override {}
   void LoadErrorPage(int reason) override {}
@@ -313,8 +314,8 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   void DidRunInsecureContent(const SecurityOrigin*, const KURL&) override {}
   void DidDetectXSS(const KURL&, bool) override {}
   void DidDispatchPingLoader(const KURL&) override {}
-  void DidDisplayContentWithCertificateErrors(const KURL&) override {}
-  void DidRunContentWithCertificateErrors(const KURL&) override {}
+  void DidDisplayContentWithCertificateErrors() override {}
+  void DidRunContentWithCertificateErrors() override {}
   void SelectorMatchChanged(const Vector<String>&,
                             const Vector<String>&) override {}
   LocalFrame* CreateFrame(const AtomicString&, HTMLFrameOwnerElement*) override;
@@ -372,7 +373,12 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   }
 
   void AnnotatedRegionsChanged() override {}
-  String GetInstrumentationToken() override { return g_empty_string; };
+  String GetDevToolsFrameToken() const override { return g_empty_string; };
+  String evaluateInInspectorOverlayForTesting(const String& script) override {
+    return g_empty_string;
+  }
+
+  Frame* FindFrame(const AtomicString& name) const override;
 
  protected:
   EmptyLocalFrameClient() = default;
@@ -390,35 +396,13 @@ class EmptySpellCheckPanelHostClient : public WebSpellCheckPanelHostClient {
   USING_FAST_MALLOC(EmptySpellCheckPanelHostClient);
 
  public:
-  EmptySpellCheckPanelHostClient() {}
+  EmptySpellCheckPanelHostClient() = default;
 
   void ShowSpellingUI(bool) override {}
   bool IsShowingSpellingUI() override { return false; }
   void UpdateSpellingUIWithMisspelledWord(const WebString&) override {}
 
   DISALLOW_COPY_AND_ASSIGN(EmptySpellCheckPanelHostClient);
-};
-
-class EmptyEditorClient final : public EditorClient {
-  USING_FAST_MALLOC(EmptyEditorClient);
-
- public:
-  EmptyEditorClient() : EditorClient() {}
-  ~EmptyEditorClient() override {}
-
-  void RespondToChangedContents() override {}
-  void RespondToChangedSelection(LocalFrame*, SelectionType) override {}
-
-  bool CanCopyCut(LocalFrame*, bool default_value) const override {
-    return default_value;
-  }
-  bool CanPaste(LocalFrame*, bool default_value) const override {
-    return default_value;
-  }
-
-  bool HandleKeyboardEvent(LocalFrame*) override { return false; }
-
-  DISALLOW_COPY_AND_ASSIGN(EmptyEditorClient);
 };
 
 class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
@@ -452,6 +436,7 @@ class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
   Frame* NextSibling() const override { return nullptr; }
   Frame* FirstChild() const override { return nullptr; }
   void FrameFocused() const override {}
+  String GetDevToolsFrameToken() const override { return g_empty_string; };
 
   DISALLOW_COPY_AND_ASSIGN(EmptyRemoteFrameClient);
 };

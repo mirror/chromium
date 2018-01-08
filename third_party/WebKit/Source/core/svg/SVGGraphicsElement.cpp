@@ -42,7 +42,7 @@ SVGGraphicsElement::SVGGraphicsElement(const QualifiedName& tag_name,
   AddToPropertyMap(transform_);
 }
 
-SVGGraphicsElement::~SVGGraphicsElement() {}
+SVGGraphicsElement::~SVGGraphicsElement() = default;
 
 void SVGGraphicsElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(transform_);
@@ -105,7 +105,7 @@ void SVGGraphicsElement::CollectStyleForPresentationAttribute(
     MutableCSSPropertyValueSet* style) {
   if (name == SVGNames::transformAttr) {
     AddPropertyToPresentationAttributeStyle(
-        style, CSSPropertyTransform, transform_->CurrentValue()->CssValue());
+        style, CSSPropertyTransform, *transform_->CurrentValue()->CssValue());
     return;
   }
   SVGElement::CollectStyleForPresentationAttribute(name, value, style);

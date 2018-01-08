@@ -15,6 +15,10 @@ namespace angle {
 struct SystemInfo;
 }
 
+namespace base {
+class CommandLine;
+}
+
 namespace gpu {
 
 // Collects basic GPU info without creating a GL/DirectX context (and without
@@ -22,6 +26,12 @@ namespace gpu {
 // This is called at browser process startup time.
 // The subset each platform collects may be different.
 GPU_EXPORT CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info);
+
+// Similar to above, except it handles the case where the software renderer of
+// the platform is used.
+GPU_EXPORT CollectInfoResult
+CollectBasicGraphicsInfo(const base::CommandLine* command_line,
+                         GPUInfo* gpu_info);
 
 // Create a GL/DirectX context and collect related info.
 // This is called at GPU process startup time.
@@ -37,16 +47,6 @@ GPU_EXPORT CollectInfoResult CollectGraphicsInfoGL(GPUInfo* gpu_info);
 
 // Each platform stores the driver version on the GL_VERSION string differently
 GPU_EXPORT CollectInfoResult CollectDriverInfoGL(GPUInfo* gpu_info);
-
-// Merge GPUInfo from CollectContextGraphicsInfo into basic GPUInfo.
-// This is platform specific, depending on which info are collected at which
-// stage.
-GPU_EXPORT void MergeGPUInfo(GPUInfo* basic_gpu_info,
-                             const GPUInfo& context_gpu_info);
-
-// MergeGPUInfo() when GL driver is used.
-GPU_EXPORT void MergeGPUInfoGL(GPUInfo* basic_gpu_info,
-                               const GPUInfo& context_gpu_info);
 
 // If more than one GPUs are identified, and GL strings are available,
 // identify the active GPU based on GL strings.

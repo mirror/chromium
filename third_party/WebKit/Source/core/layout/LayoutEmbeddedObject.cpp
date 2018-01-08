@@ -46,7 +46,7 @@ LayoutEmbeddedObject::LayoutEmbeddedObject(Element* element)
   View()->GetFrameView()->SetIsVisuallyNonEmpty();
 }
 
-LayoutEmbeddedObject::~LayoutEmbeddedObject() {}
+LayoutEmbeddedObject::~LayoutEmbeddedObject() = default;
 
 PaintLayerType LayoutEmbeddedObject::LayerTypeRequired() const {
   // This can't just use LayoutEmbeddedContent::layerTypeRequired, because
@@ -153,10 +153,18 @@ CompositingReasons LayoutEmbeddedObject::AdditionalCompositingReasons() const {
   return CompositingReason::kNone;
 }
 
-LayoutReplaced* LayoutEmbeddedObject::EmbeddedReplacedContent() const {
-  if (LocalFrameView* frame_view = ChildFrameView())
-    return frame_view->EmbeddedReplacedContent();
-  return nullptr;
+bool LayoutEmbeddedObject::NeedsPreferredWidthsRecalculation() const {
+  if (LayoutEmbeddedContent::NeedsPreferredWidthsRecalculation())
+    return true;
+  FrameView* frame_view = ChildFrameView();
+  return frame_view && frame_view->HasIntrinsicSizingInfo();
+}
+
+bool LayoutEmbeddedObject::GetNestedIntrinsicSizingInfo(
+    IntrinsicSizingInfo& intrinsic_sizing_info) const {
+  if (FrameView* frame_view = ChildFrameView())
+    return frame_view->GetIntrinsicSizingInfo(intrinsic_sizing_info);
+  return false;
 }
 
 }  // namespace blink

@@ -36,7 +36,7 @@ class MockFetchContext : public FetchContext {
     return new MockFetchContext(load_policy);
   }
 
-  ~MockFetchContext() override {}
+  ~MockFetchContext() override = default;
 
   void SetLoadComplete(bool complete) { complete_ = complete; }
   long long GetTransferSize() const { return transfer_size_; }
@@ -101,7 +101,7 @@ class MockFetchContext : public FetchContext {
     return ResourceLoadScheduler::ThrottlingPolicy::kTight;
   }
 
-  WebFrameScheduler* GetFrameScheduler() override {
+  WebFrameScheduler* GetFrameScheduler() const override {
     return frame_scheduler_.get();
   }
 

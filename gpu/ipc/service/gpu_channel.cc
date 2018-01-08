@@ -77,7 +77,8 @@ struct GpuChannelMessage {
 // - forwards messages to child message filters
 // - posts control and out of order messages to the main thread
 // - forwards other messages to the scheduler
-class GPU_EXPORT GpuChannelMessageFilter : public IPC::MessageFilter {
+class GPU_IPC_SERVICE_EXPORT GpuChannelMessageFilter
+    : public IPC::MessageFilter {
  public:
   GpuChannelMessageFilter(
       GpuChannel* gpu_channel,
@@ -441,10 +442,10 @@ CommandBufferStub* GpuChannel::LookupCommandBuffer(int32_t route_id) {
 
 bool GpuChannel::HasActiveWebGLContext() const {
   for (auto& kv : stubs_) {
-    gles2::ContextType context_type =
+    ContextType context_type =
         kv.second->context_group()->feature_info()->context_type();
-    if (context_type == gles2::CONTEXT_TYPE_WEBGL1 ||
-        context_type == gles2::CONTEXT_TYPE_WEBGL2) {
+    if (context_type == CONTEXT_TYPE_WEBGL1 ||
+        context_type == CONTEXT_TYPE_WEBGL2) {
       return true;
     }
   }
@@ -541,7 +542,7 @@ void GpuChannel::HandleOutOfOrderMessage(const IPC::Message& msg) {
 const CommandBufferStub* GpuChannel::GetOneStub() const {
   for (const auto& kv : stubs_) {
     const CommandBufferStub* stub = kv.second.get();
-    if (stub->decoder() && !stub->decoder()->WasContextLost())
+    if (stub->decoder_context() && !stub->decoder_context()->WasContextLost())
       return stub;
   }
   return nullptr;
@@ -571,6 +572,7 @@ void GpuChannel::OnCreateCommandBuffer(
     return;
   }
 
+  int32_t stream_id = init_params.stream_id;
   int32_t share_group_id = init_params.share_group_id;
   CommandBufferStub* share_group = LookupCommandBuffer(share_group_id);
 
@@ -579,22 +581,13 @@ void GpuChannel::OnCreateCommandBuffer(
     return;
   }
 
-  int32_t stream_id = init_params.stream_id;
   if (share_group && stream_id != share_group->stream_id()) {
     LOG(ERROR) << "ContextResult::kFatalFailure: "
                   "stream id does not match share group stream id";
     return;
   }
 
-  SchedulingPriority stream_priority = init_params.stream_priority;
-  if (stream_priority <= SchedulingPriority::kHigh && !is_gpu_host_) {
-    LOG(ERROR)
-        << "ContextResult::kFatalFailure: "
-           "high priority stream not allowed on a non-privileged channel";
-    return;
-  }
-
-  if (share_group && !share_group->decoder()) {
+  if (share_group && !share_group->decoder_context()) {
     // This should catch test errors where we did not Initialize the
     // share_group's CommandBuffer.
     LOG(ERROR) << "ContextResult::kFatalFailure: "
@@ -602,7 +595,7 @@ void GpuChannel::OnCreateCommandBuffer(
     return;
   }
 
-  if (share_group && share_group->decoder()->WasContextLost()) {
+  if (share_group && share_group->decoder_context()->WasContextLost()) {
     // The caller should retry to get a context.
     LOG(ERROR) << "ContextResult::kTransientFailure: "
                   "shared context was already lost";
@@ -615,7 +608,7 @@ void GpuChannel::OnCreateCommandBuffer(
 
   SequenceId sequence_id = stream_sequences_[stream_id];
   if (sequence_id.is_null()) {
-    sequence_id = scheduler_->CreateSequence(stream_priority);
+    sequence_id = scheduler_->CreateSequence(init_params.stream_priority);
     stream_sequences_[stream_id] = sequence_id;
   }
 
@@ -646,7 +639,7 @@ void GpuChannel::OnCreateCommandBuffer(
   }
 
   *result = ContextResult::kSuccess;
-  *capabilities = stub->decoder()->GetCapabilities();
+  *capabilities = stub->decoder_context()->GetCapabilities();
   stubs_[route_id] = std::move(stub);
 }
 

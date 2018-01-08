@@ -36,12 +36,6 @@ class V8TestInheritedLegacyUnenumerableNamedProperties {
   }
   MODULES_EXPORT static TestInheritedLegacyUnenumerableNamedProperties* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   MODULES_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestInheritedLegacyUnenumerableNamedProperties>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestInheritedLegacyUnenumerableNamedProperties>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   // Callback functions
@@ -63,6 +57,7 @@ class V8TestInheritedLegacyUnenumerableNamedProperties {
 template <>
 struct NativeValueTraits<TestInheritedLegacyUnenumerableNamedProperties> : public NativeValueTraitsBase<TestInheritedLegacyUnenumerableNamedProperties> {
   MODULES_EXPORT static TestInheritedLegacyUnenumerableNamedProperties* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  MODULES_EXPORT static TestInheritedLegacyUnenumerableNamedProperties* NullValue() { return nullptr; }
 };
 
 template <>

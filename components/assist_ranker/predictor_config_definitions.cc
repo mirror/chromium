@@ -28,20 +28,35 @@ GetContextualSearchRankerUrlFeatureParam() {
   return kContextualSearchRankerUrl;
 }
 
-// This list needs to be kept in sync with tools/metrics/ukm/ukm.xml.
+// NOTE: This list needs to be kept in sync with tools/metrics/ukm/ukm.xml!
 // Only features within this list will be logged to UKM.
 // TODO(chrome-ranker-team) Deprecate the whitelist once it is available through
 // the UKM generated API.
 const base::flat_set<std::string>* GetContextualSearchFeatureWhitelist() {
   static auto* kContextualSearchFeatureWhitelist =
-      new base::flat_set<std::string>(
-          {"DidOptIn", "DurationAfterScrollMs", "IsEntity", "IsLongWord",
-           "IsShortWord", "IsWordEdge", "OutcomeWasCardsDataShown",
-           "OutcomeWasPanelOpened", "OutcomeWasQuickActionClicked",
-           "OutcomeWasQuickAnswerSeen", "Previous28DayCtrPercent",
-           "Previous28DayImpressionsCount", "PreviousWeekCtrPercent",
-           "PreviousWeekImpressionsCount", "ScreenTopDps", "TapDuration",
-           "WasScreenBottom"});
+      new base::flat_set<std::string>({"DidOptIn",
+                                       "DurationAfterScrollMs",
+                                       "IsEntity",
+                                       "IsEntityEligible",
+                                       "IsHttp",
+                                       "IsLanguageMismatch",
+                                       "IsLongWord",
+                                       "IsSecondTapOverride",
+                                       "IsShortWord",
+                                       "IsWordEdge",
+                                       "OutcomeRankerDidPredict",
+                                       "OutcomeRankerPrediction",
+                                       "OutcomeWasCardsDataShown",
+                                       "OutcomeWasPanelOpened",
+                                       "OutcomeWasQuickActionClicked",
+                                       "OutcomeWasQuickAnswerSeen",
+                                       "Previous28DayCtrPercent",
+                                       "Previous28DayImpressionsCount",
+                                       "PreviousWeekCtrPercent",
+                                       "PreviousWeekImpressionsCount",
+                                       "ScreenTopDps",
+                                       "TapDurationMs",
+                                       "WasScreenBottom"});
   return kContextualSearchFeatureWhitelist;
 }
 

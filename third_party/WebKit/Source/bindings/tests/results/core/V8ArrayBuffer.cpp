@@ -33,8 +33,6 @@ namespace blink {
 const WrapperTypeInfo V8ArrayBuffer::wrapperTypeInfo = {
     gin::kEmbedderBlink,
     nullptr,
-    V8ArrayBuffer::Trace,
-    V8ArrayBuffer::TraceWrappers,
     nullptr,
     "ArrayBuffer",
     nullptr,
@@ -94,7 +92,7 @@ TestArrayBuffer* V8ArrayBuffer::ToImpl(v8::Local<v8::Object> object) {
                                             v8Contents.ByteLength(),
                                             kind,
                                             WTF::ArrayBufferContents::FreeMemory);
-  WTF::ArrayBufferContents contents(std::move(data), v8Contents.ByteLength(), WTF::ArrayBufferContents::kNotShared);
+  WTF::ArrayBufferContents contents(std::move(data), WTF::ArrayBufferContents::kNotShared);
   TestArrayBuffer* buffer = TestArrayBuffer::Create(contents);
   v8::Local<v8::Object> associatedWrapper = buffer->AssociateWithWrapper(v8::Isolate::GetCurrent(), buffer->GetWrapperTypeInfo(), object);
   DCHECK(associatedWrapper == object);

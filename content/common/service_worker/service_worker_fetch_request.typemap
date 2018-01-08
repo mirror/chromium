@@ -5,7 +5,6 @@
 mojom =
     "//third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom"
 public_headers = [
-  "//content/common/service_worker/service_worker_client_info.h",
   "//content/common/service_worker/service_worker_types.h",
   "//content/public/common/request_context_type.h",
   "//content/public/common/service_worker_modes.h",
@@ -17,7 +16,6 @@ sources = [
   "//content/common/service_worker/service_worker_fetch_request_struct_traits.cc",
 ]
 type_mappings = [
-  "blink.mojom.FetchRedirectMode=::content::FetchRedirectMode",
   "blink.mojom.FetchAPIRequest=::content::ServiceWorkerFetchRequest",
   "blink.mojom.RequestContextType=::content::RequestContextType",
   "blink.mojom.ServiceWorkerFetchType=::content::ServiceWorkerFetchType",

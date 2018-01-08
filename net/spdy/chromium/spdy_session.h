@@ -85,7 +85,6 @@ const SpdyStreamId kLastStreamId = 0x7fffffff;
 
 struct LoadTimingInfo;
 class NetLog;
-class ProxyDelegate;
 class SpdyStream;
 class SSLInfo;
 class TransportSecurityState;
@@ -257,11 +256,11 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
               bool enable_sending_initial_data,
               bool enable_ping_based_connection_checking,
               bool support_ietf_format_quic_altsvc,
+              bool is_trusted_proxy,
               size_t session_max_recv_window_size,
               const SettingsMap& initial_settings,
               TimeFunc time_func,
               ServerPushDelegate* push_delegate,
-              ProxyDelegate* proxy_delegate,
               NetLog* net_log);
 
   ~SpdySession() override;
@@ -284,12 +283,22 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // reset).  Returns an error (not ERR_IO_PENDING) otherwise, and
   // resets |spdy_stream|.
   //
+  // If |pushed_stream_id != kNoPushedStreamFound|, then the pushed stream with
+  // pushed_stream_id is used.  An error is returned if that stream is not
+  // available.
+  //
+  // If |pushed_stream_id == kNoPushedStreamFound|, then any matching pushed
+  // stream that has not been claimed by another request can be used.  This can
+  // happen, for example, with http scheme pushed streams, or if the pushed
+  // stream was received from the server in the meanwhile.
+  //
   // If a stream was found and the stream is still open, the priority
   // of that stream is updated to match |priority|.
-  int GetPushStream(const GURL& url,
-                    RequestPriority priority,
-                    SpdyStream** spdy_stream,
-                    const NetLogWithSource& stream_net_log);
+  int GetPushedStream(const GURL& url,
+                      SpdyStreamId pushed_stream_id,
+                      RequestPriority priority,
+                      SpdyStream** spdy_stream,
+                      const NetLogWithSource& stream_net_log);
 
   // Called when the pushed stream should be cancelled. If the pushed stream is
   // not claimed and active, sends RST to the server to cancel the stream.
@@ -446,6 +455,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
     return !active_streams_.empty() || !created_streams_.empty();
   }
 
+  // True if the server supports WebSocket protocol.
+  bool support_websocket() const { return support_websocket_; }
+
   // Returns true if no stream in the session can send data due to
   // session flow control.
   bool IsSendStalled() const { return session_send_window_size_ == 0; }
@@ -477,8 +489,10 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   bool CloseOneIdleConnection() override;
 
   // Http2PushPromiseIndex::Delegate implementation:
-  bool ValidatePushedStream(const SpdySessionKey& key) const override;
-  void OnPushedStreamClaimed(const GURL& url, SpdyStreamId stream_id) override;
+  bool ValidatePushedStream(SpdyStreamId stream_id,
+                            const GURL& url,
+                            const HttpRequestInfo& request_info,
+                            const SpdySessionKey& key) const override;
   base::WeakPtr<SpdySession> GetWeakPtrToSession() override;
 
   // Dumps memory allocation stats to |stats|. Sets |*is_session_active| to
@@ -695,11 +709,6 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // that |stream| may hold the last reference to the session.
   void DeleteStream(std::unique_ptr<SpdyStream> stream, int status);
 
-  // Check if we have a pending pushed-stream for this url
-  // Returns the stream if found (and returns it from the pending
-  // list). Returns NULL otherwise.
-  SpdyStream* GetActivePushStream(const GURL& url);
-
   void RecordPingRTTHistogram(base::TimeDelta duration);
   void RecordHistograms();
   void RecordProtocolErrorHistogram(SpdyProtocolErrorDetails details);
@@ -723,9 +732,6 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // Called right before closing a (possibly-inactive) stream for a
   // reason other than being requested to by the stream.
   void LogAbandonedStream(SpdyStream* stream, Error status);
-
-  // Called when a pushed stream is claimed by a request.
-  void LogPushStreamClaimed(const GURL& url, SpdyStreamId stream_id);
 
   // Called right before closing an active stream for a reason other
   // than being requested to by the stream.
@@ -1039,6 +1045,15 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // If true, alt-svc headers advertising QUIC in IETF format will be supported.
   bool support_ietf_format_quic_altsvc_;
 
+  // If true, this session is being made to a trusted SPDY/HTTP2 proxy that is
+  // allowed to push cross-origin resources.
+  const bool is_trusted_proxy_;
+
+  // True if the server has advertised WebSocket support via
+  // SETTINGS_ENABLE_CONNECT_PROTOCOL, see
+  // https://tools.ietf.org/html/draft-ietf-httpbis-h2-websockets-00.
+  bool support_websocket_;
+
   // |connection_at_risk_of_loss_time_| is an optimization to avoid sending
   // wasteful preface pings (when we just got some data).
   //
@@ -1060,11 +1075,6 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // to build a new connection, and see if that completes before we (finally)
   // get a PING response (http://crbug.com/127812).
   base::TimeDelta hung_interval_;
-
-  // The |proxy_delegate_| verifies that a given proxy is a trusted SPDY proxy,
-  // which is allowed to push resources from origins that are different from
-  // those of their associated streams. May be nullptr.
-  ProxyDelegate* proxy_delegate_;
 
   TimeFunc time_func_;
 

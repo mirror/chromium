@@ -83,23 +83,6 @@ EventBindings::EventBindings(ScriptContext* context,
                              IPCMessageSender* ipc_message_sender)
     : ObjectBackedNativeHandler(context),
       ipc_message_sender_(ipc_message_sender) {
-  RouteFunction("AttachEvent", base::Bind(&EventBindings::AttachEventHandler,
-                                          base::Unretained(this)));
-  RouteFunction("DetachEvent", base::Bind(&EventBindings::DetachEventHandler,
-                                          base::Unretained(this)));
-  RouteFunction(
-      "AttachFilteredEvent",
-      base::Bind(&EventBindings::AttachFilteredEvent, base::Unretained(this)));
-  RouteFunction("DetachFilteredEvent",
-                base::Bind(&EventBindings::DetachFilteredEventHandler,
-                           base::Unretained(this)));
-  RouteFunction(
-      "AttachUnmanagedEvent",
-      base::Bind(&EventBindings::AttachUnmanagedEvent, base::Unretained(this)));
-  RouteFunction(
-      "DetachUnmanagedEvent",
-      base::Bind(&EventBindings::DetachUnmanagedEvent, base::Unretained(this)));
-
   // It's safe to use base::Unretained here because |context| will always
   // outlive us.
   context->AddInvalidationObserver(
@@ -107,6 +90,27 @@ EventBindings::EventBindings(ScriptContext* context,
 }
 
 EventBindings::~EventBindings() {}
+
+void EventBindings::AddRoutes() {
+  RouteHandlerFunction(
+      "AttachEvent",
+      base::Bind(&EventBindings::AttachEventHandler, base::Unretained(this)));
+  RouteHandlerFunction(
+      "DetachEvent",
+      base::Bind(&EventBindings::DetachEventHandler, base::Unretained(this)));
+  RouteHandlerFunction(
+      "AttachFilteredEvent",
+      base::Bind(&EventBindings::AttachFilteredEvent, base::Unretained(this)));
+  RouteHandlerFunction("DetachFilteredEvent",
+                       base::Bind(&EventBindings::DetachFilteredEventHandler,
+                                  base::Unretained(this)));
+  RouteHandlerFunction(
+      "AttachUnmanagedEvent",
+      base::Bind(&EventBindings::AttachUnmanagedEvent, base::Unretained(this)));
+  RouteHandlerFunction(
+      "DetachUnmanagedEvent",
+      base::Bind(&EventBindings::DetachUnmanagedEvent, base::Unretained(this)));
+}
 
 // static
 void EventBindings::DispatchEventInContext(
@@ -139,7 +143,8 @@ void EventBindings::AttachEventHandler(
   CHECK_EQ(2, args.Length());
   CHECK(args[0]->IsString());
   CHECK(args[1]->IsBoolean());
-  AttachEvent(*v8::String::Utf8Value(args[0]), args[1]->BooleanValue());
+  AttachEvent(*v8::String::Utf8Value(args.GetIsolate(), args[0]),
+              args[1]->BooleanValue());
 }
 
 void EventBindings::AttachEvent(const std::string& event_name,
@@ -180,7 +185,7 @@ void EventBindings::DetachEventHandler(
   CHECK(args[2]->IsBoolean());
   bool was_manual = args[1]->BooleanValue();
   bool supports_lazy_listeners = args[2]->BooleanValue();
-  DetachEvent(*v8::String::Utf8Value(args[0]),
+  DetachEvent(*v8::String::Utf8Value(args.GetIsolate(), args[0]),
               was_manual && supports_lazy_listeners);
 }
 
@@ -218,7 +223,7 @@ void EventBindings::AttachFilteredEvent(
   CHECK(args[1]->IsObject());
   CHECK(args[2]->IsBoolean());
 
-  std::string event_name = *v8::String::Utf8Value(args[0]);
+  std::string event_name = *v8::String::Utf8Value(args.GetIsolate(), args[0]);
   if (!context()->HasAccessOrThrowError(event_name))
     return;
 

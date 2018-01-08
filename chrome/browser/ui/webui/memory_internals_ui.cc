@@ -12,7 +12,6 @@
 
 #include "base/allocator/features.h"
 #include "base/bind.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/path_service.h"
 #include "base/process/process_handle.h"
@@ -62,11 +61,6 @@ std::string GetMessageString() {
     case ProfilingProcessHost::Mode::kGpu:
       return std::string("Memory logging is enabled for just the gpu process.");
 
-    case ProfilingProcessHost::Mode::kManual:
-      return std::string(
-          "Memory logging must be manually enabled for each process via "
-          "chrome://memory-internals.");
-
     case ProfilingProcessHost::Mode::kMinimal:
       return std::string(
           "Memory logging is enabled for the browser and GPU processes.");
@@ -77,14 +71,11 @@ std::string GetMessageString() {
           "processes. This UI is disabled.");
 
     case ProfilingProcessHost::Mode::kNone:
+    case ProfilingProcessHost::Mode::kManual:
     default:
-      return base::StringPrintf(
-          "Memory logging is not enabled. Start with --%s=%s"
-          " to log all processes, or --%s=%s to log only the browser and GPU "
-          "processes. "
-          "Other options available in chrome://flags",
-          switches::kMemlog, switches::kMemlogModeAll, switches::kMemlog,
-          switches::kMemlogModeMinimal);
+      return std::string(
+          "Memory logging must be manually enabled for each process via "
+          "chrome://memory-internals.");
   }
 #elif defined(ADDRESS_SANITIZER) || defined(SYZYASAN)
   return "Memory logging is not available in this build because a memory "
@@ -374,7 +365,7 @@ void MemoryInternalsDOMHandler::SaveTraceFinished(bool success) {
 MemoryInternalsUI::MemoryInternalsUI(content::WebUI* web_ui)
     : WebUIController(web_ui) {
   web_ui->AddMessageHandler(
-      base::MakeUnique<MemoryInternalsDOMHandler>(web_ui));
+      std::make_unique<MemoryInternalsDOMHandler>(web_ui));
 
   Profile* profile = Profile::FromWebUI(web_ui);
   content::WebUIDataSource::Add(profile, CreateMemoryInternalsUIHTMLSource());

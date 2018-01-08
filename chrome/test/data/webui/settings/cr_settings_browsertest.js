@@ -5,7 +5,7 @@
 /** @fileoverview Runs the Polymer Settings tests. */
 
 /** @const {string} Path to source root. */
-var ROOT_PATH = '../../../../../';
+const ROOT_PATH = '../../../../../';
 
 // Polymer BrowserTest fixture.
 GEN_INCLUDE(
@@ -1132,7 +1132,7 @@ TEST_F('CrSettingsBluetoothPageTest', 'All', function() {
 });
 
 /**
- * Test fixture for internet-page.
+ * Test fixture for settings-internet-page.
  * @constructor
  * @extends {CrSettingsBrowserTest}
  */
@@ -1155,6 +1155,33 @@ CrSettingsInternetPageTest.prototype = {
 };
 
 TEST_F('CrSettingsInternetPageTest', 'InternetPage', function() {
+  mocha.run();
+});
+
+/**
+ * Test fixture for settings-internet-detail-page.
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsInternetDetailPageTest() {}
+
+CrSettingsInternetDetailPageTest.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload: 'chrome://settings/internet_page/internet_detail_page.html',
+
+  /** @override */
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
+    ROOT_PATH + 'ui/webui/resources/js/assert.js',
+    '../fake_chrome_event.js',
+    '../chromeos/fake_networking_private.js',
+    'internet_detail_page_tests.js',
+  ]),
+};
+
+TEST_F('CrSettingsInternetDetailPageTest', 'InternetDetailPage', function() {
   mocha.run();
 });
 
@@ -1426,7 +1453,7 @@ TEST_F('CrSettingsRouteDynamicParametersTest', 'All', function() {
       assertEquals('a/b', settings.getQueryParameters().get('guid'));
       assertEquals('42', settings.getQueryParameters().get('foo'));
 
-      var params = new URLSearchParams();
+      const params = new URLSearchParams();
       params.set('bar', 'b=z');
       params.set('biz', '3');
       settings.navigateTo(settings.routes.SEARCH_ENGINES, params);

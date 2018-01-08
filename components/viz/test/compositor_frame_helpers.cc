@@ -106,6 +106,12 @@ CompositorFrameBuilder& CompositorFrameBuilder::SetActivationDependencies(
   return *this;
 }
 
+CompositorFrameBuilder& CompositorFrameBuilder::SetDeadline(
+    base::Optional<FrameDeadline> deadline) {
+  frame_->metadata.deadline = deadline;
+  return *this;
+}
+
 CompositorFrameBuilder& CompositorFrameBuilder::SetReferencedSurfaces(
     std::vector<SurfaceId> referenced_surfaces) {
   frame_->metadata.referenced_surfaces = std::move(referenced_surfaces);

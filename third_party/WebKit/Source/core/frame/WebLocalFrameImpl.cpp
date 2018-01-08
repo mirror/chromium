@@ -139,6 +139,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/PausableScriptExecutor.h"
+#include "core/frame/PausableTask.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameOwner.h"
 #include "core/frame/ScreenOrientationController.h"
@@ -162,9 +163,9 @@
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/HitTestResult.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutObject.h"
-#include "core/layout/api/LayoutEmbeddedContentItem.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
@@ -208,6 +209,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Time.h"
+#include "public/platform/InterfaceRegistry.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebDoubleSize.h"
 #include "public/platform/WebFloatPoint.h"
@@ -284,12 +286,12 @@ class ChromePrintContext : public PrintContext {
   float SpoolSinglePage(WebCanvas* canvas, int page_number) {
     DispatchEventsForPrintingOnAllFrames();
     if (!GetFrame()->GetDocument() ||
-        GetFrame()->GetDocument()->GetLayoutViewItem().IsNull())
+        !GetFrame()->GetDocument()->GetLayoutView())
       return 0;
 
     GetFrame()->View()->UpdateLifecyclePhasesForPrinting();
     if (!GetFrame()->GetDocument() ||
-        GetFrame()->GetDocument()->GetLayoutViewItem().IsNull())
+        !GetFrame()->GetDocument()->GetLayoutView())
       return 0;
 
     // The page rect gets scaled and translated, so specify the entire
@@ -308,12 +310,12 @@ class ChromePrintContext : public PrintContext {
       const FloatSize& page_size_in_pixels) {
     DispatchEventsForPrintingOnAllFrames();
     if (!GetFrame()->GetDocument() ||
-        GetFrame()->GetDocument()->GetLayoutViewItem().IsNull())
+        !GetFrame()->GetDocument()->GetLayoutView())
       return;
 
     GetFrame()->View()->UpdateLifecyclePhasesForPrinting();
     if (!GetFrame()->GetDocument() ||
-        GetFrame()->GetDocument()->GetLayoutViewItem().IsNull())
+        !GetFrame()->GetDocument()->GetLayoutView())
       return;
 
     ComputePageRects(page_size_in_pixels);
@@ -432,7 +434,7 @@ class ChromePluginPrintContext final : public ChromePrintContext {
         plugin_(plugin),
         print_params_(print_params) {}
 
-  ~ChromePluginPrintContext() override {}
+  ~ChromePluginPrintContext() override = default;
 
   virtual void Trace(blink::Visitor* visitor) {
     visitor->Trace(plugin_);
@@ -592,16 +594,17 @@ void WebLocalFrameImpl::SetScrollOffset(const WebSize& offset) {
   }
 }
 
-WebSize WebLocalFrameImpl::ContentsSize() const {
-  if (LocalFrameView* view = GetFrameView())
-    return view->ContentsSize();
-  return WebSize();
+WebSize WebLocalFrameImpl::DocumentSize() const {
+  if (!GetFrameView() || !GetFrameView()->GetLayoutView())
+    return WebSize();
+
+  return GetFrameView()->GetLayoutView()->DocumentRect().Size();
 }
 
 bool WebLocalFrameImpl::HasVisibleContent() const {
-  LayoutEmbeddedContentItem layout_item = GetFrame()->OwnerLayoutItem();
-  if (!layout_item.IsNull() &&
-      layout_item.Style()->Visibility() != EVisibility::kVisible) {
+  auto* layout_object = GetFrame()->OwnerLayoutObject();
+  if (layout_object &&
+      layout_object->StyleRef().Visibility() != EVisibility::kVisible) {
     return false;
   }
 
@@ -612,7 +615,7 @@ bool WebLocalFrameImpl::HasVisibleContent() const {
 
 WebRect WebLocalFrameImpl::VisibleContentRect() const {
   if (LocalFrameView* view = GetFrameView())
-    return view->VisibleContentRect();
+    return view->LayoutViewportScrollableArea()->VisibleContentRect();
   return WebRect();
 }
 
@@ -759,6 +762,13 @@ void WebLocalFrameImpl::RequestExecuteV8Function(
   PausableScriptExecutor::CreateAndRun(GetFrame(), ToIsolate(GetFrame()),
                                        context, function, receiver, argc, argv,
                                        callback);
+}
+
+void WebLocalFrameImpl::PostPausableTask(PausableTaskCallback callback) {
+  DCHECK(GetFrame());
+  Document* document = GetFrame()->GetDocument();
+  DCHECK(document);
+  PausableTask::Post(document, std::move(callback));
 }
 
 void WebLocalFrameImpl::ExecuteScriptInIsolatedWorld(
@@ -1003,14 +1013,8 @@ size_t WebLocalFrameImpl::CharacterIndexForPoint(
   LayoutPoint point = GetFrame()->View()->ViewportToContents(point_in_viewport);
   HitTestResult result = GetFrame()->GetEventHandler().HitTestResultAtPoint(
       point, HitTestRequest::kReadOnly | HitTestRequest::kActive);
-  const EphemeralRange range =
-      GetFrame()->RangeForPoint(result.RoundedPointInInnerNodeFrame());
-  if (range.IsNull())
-    return kNotFound;
-  Element* editable =
-      GetFrame()->Selection().RootEditableElementOrDocumentElement();
-  DCHECK(editable);
-  return PlainTextRange::Create(*editable, range).Start();
+  return GetFrame()->Selection().CharacterIndexForPoint(
+      result.RoundedPointInInnerNodeFrame());
 }
 
 bool WebLocalFrameImpl::ExecuteCommand(const WebString& name) {
@@ -1095,7 +1099,7 @@ bool WebLocalFrameImpl::IsSelectionAnchorFirst() const {
     return false;
   }
 
-  return selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsBaseFirst();
+  return selection.GetSelectionInDOMTree().IsBaseFirst();
 }
 
 void WebLocalFrameImpl::SetTextDirection(WebTextDirection direction) {
@@ -1303,8 +1307,9 @@ void WebLocalFrameImpl::MoveRangeSelection(
   if (granularity == WebFrame::kWordGranularity)
     blink_granularity = blink::TextGranularity::kWord;
   GetFrame()->Selection().MoveRangeSelection(
-      VisiblePositionForViewportPoint(base_in_viewport),
-      VisiblePositionForViewportPoint(extent_in_viewport), blink_granularity);
+      GetFrame()->View()->ViewportToContents(base_in_viewport),
+      GetFrame()->View()->ViewportToContents(extent_in_viewport),
+      blink_granularity);
 }
 
 void WebLocalFrameImpl::MoveCaretSelection(const WebPoint& point_in_viewport) {
@@ -1570,11 +1575,6 @@ WebRect WebLocalFrameImpl::GetSelectionBoundsRectForTesting() const {
              : WebRect();
 }
 
-void WebLocalFrameImpl::DetachAllDevToolsSessionsForTesting() {
-  if (dev_tools_agent_)
-    dev_tools_agent_->DetachAllSessionsForTesting();
-}
-
 WebString WebLocalFrameImpl::GetLayerTreeAsTextForTesting(
     bool show_debug_info) const {
   if (!GetFrame())
@@ -1758,6 +1758,12 @@ void WebLocalFrameImpl::InitializeCoreFrame(Page& page,
   if (!Parent() && !Opener() &&
       frame_->GetSettings()->GetShouldReuseGlobalForUnownedMainFrame()) {
     frame_->GetDocument()->GetMutableSecurityOrigin()->GrantUniversalAccess();
+  }
+
+  if (frame_->IsLocalRoot()) {
+    frame_->GetInterfaceRegistry()->AddAssociatedInterface(
+        WTF::BindRepeating(&WebLocalFrameImpl::BindDevToolsAgentRequest,
+                           WrapWeakPersistent(this)));
   }
 
   if (!owner) {
@@ -1961,32 +1967,12 @@ HitTestResult WebLocalFrameImpl::HitTestResultForVisualViewportPos(
   return result;
 }
 
-static void EnsureFrameLoaderHasCommitted(FrameLoader& frame_loader) {
-  // Internally, Blink uses CommittedMultipleRealLoads to track whether the
-  // next commit should create a new history item or not. Ensure we have
-  // reached that state.
-  if (frame_loader.StateMachine()->CommittedMultipleRealLoads())
-    return;
-  frame_loader.StateMachine()->AdvanceTo(
-      FrameLoaderStateMachine::kCommittedMultipleRealLoads);
-}
-
 void WebLocalFrameImpl::SetAutofillClient(WebAutofillClient* autofill_client) {
   autofill_client_ = autofill_client;
 }
 
 WebAutofillClient* WebLocalFrameImpl::AutofillClient() {
   return autofill_client_;
-}
-
-void WebLocalFrameImpl::SetDevToolsAgentClient(
-    WebDevToolsAgentClient* dev_tools_client) {
-  DCHECK(dev_tools_client);
-  dev_tools_agent_ = WebDevToolsAgentImpl::Create(this, dev_tools_client);
-}
-
-WebDevToolsAgent* WebLocalFrameImpl::DevToolsAgent() {
-  return dev_tools_agent_.Get();
 }
 
 WebLocalFrameImpl* WebLocalFrameImpl::LocalRoot() {
@@ -2093,7 +2079,8 @@ void WebLocalFrameImpl::LoadData(const WebData& data,
     // When replacing a failed back/forward provisional navigation with an error
     // page, retain the HistoryItem for the failed provisional navigation
     // and reuse it for the error page navigation.
-    if (provisional_document_loader->LoadType() == kFrameLoadTypeBackForward) {
+    if (provisional_document_loader->LoadType() == kFrameLoadTypeBackForward &&
+        provisional_document_loader->GetHistoryItem()) {
       history_item = provisional_document_loader->GetHistoryItem();
       web_frame_load_type = WebFrameLoadType::kBackForward;
     }
@@ -2186,7 +2173,9 @@ bool WebLocalFrameImpl::IsNavigationScheduledWithin(
 
 void WebLocalFrameImpl::SetCommittedFirstRealLoad() {
   DCHECK(GetFrame());
-  EnsureFrameLoaderHasCommitted(GetFrame()->Loader());
+  GetFrame()->Loader().StateMachine()->AdvanceTo(
+      FrameLoaderStateMachine::kCommittedMultipleRealLoads);
+  GetFrame()->DidSendResourceTimingInfoToParent();
 }
 
 void WebLocalFrameImpl::SetHasReceivedUserGesture() {
@@ -2542,6 +2531,10 @@ WebInputMethodController* WebLocalFrameImpl::GetInputMethodController() {
   return &input_method_controller_;
 }
 
+// TODO(editing-dev): We should move |CreateMarkupInRect()| to
+// "core/editing/serializers/Serialization.cpp".
+static String CreateMarkupInRect(LocalFrame*, const IntPoint&, const IntPoint&);
+
 void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,
                                              WebString& clip_text,
                                              WebString& clip_html) {
@@ -2551,27 +2544,36 @@ void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,
   WebPoint start_point(rect_in_viewport.x, rect_in_viewport.y);
   WebPoint end_point(rect_in_viewport.x + rect_in_viewport.width,
                      rect_in_viewport.y + rect_in_viewport.height);
+  clip_html = CreateMarkupInRect(
+      GetFrame(), GetFrame()->View()->ViewportToContents(start_point),
+      GetFrame()->View()->ViewportToContents(end_point));
+}
+
+// TODO(editing-dev): We should move |CreateMarkupInRect()| to
+// "core/editing/serializers/Serialization.cpp".
+static String CreateMarkupInRect(LocalFrame* frame,
+                                 const IntPoint& start_point,
+                                 const IntPoint& end_point) {
   VisiblePosition start_visible_position =
-      VisiblePositionForViewportPoint(start_point);
+      VisiblePositionForContentsPoint(start_point, frame);
   VisiblePosition end_visible_position =
-      VisiblePositionForViewportPoint(end_point);
+      VisiblePositionForContentsPoint(end_point, frame);
 
   Position start_position = start_visible_position.DeepEquivalent();
   Position end_position = end_visible_position.DeepEquivalent();
 
   // document() will return null if -webkit-user-select is set to none.
   if (!start_position.GetDocument() || !end_position.GetDocument())
-    return;
+    return String();
 
   if (start_position.CompareTo(end_position) <= 0) {
-    clip_html =
-        CreateMarkup(start_position, end_position, kAnnotateForInterchange,
-                     ConvertBlocksToInlines::kNotConvert, kResolveNonLocalURLs);
-  } else {
-    clip_html =
-        CreateMarkup(end_position, start_position, kAnnotateForInterchange,
-                     ConvertBlocksToInlines::kNotConvert, kResolveNonLocalURLs);
+    return CreateMarkup(start_position, end_position, kAnnotateForInterchange,
+                        ConvertBlocksToInlines::kNotConvert,
+                        kResolveNonLocalURLs);
   }
+  return CreateMarkup(end_position, start_position, kAnnotateForInterchange,
+                      ConvertBlocksToInlines::kNotConvert,
+                      kResolveNonLocalURLs);
 }
 
 void WebLocalFrameImpl::AdvanceFocusInForm(WebFocusType focus_type) {
@@ -2611,6 +2613,18 @@ Node* WebLocalFrameImpl::ContextMenuNodeInner() const {
       ->GetPage()
       ->GetContextMenuController()
       .ContextMenuNodeForFrame(GetFrame());
+}
+
+void WebLocalFrameImpl::SetDevToolsAgentImpl(WebDevToolsAgentImpl* agent) {
+  DCHECK(!dev_tools_agent_);
+  dev_tools_agent_ = agent;
+}
+
+void WebLocalFrameImpl::BindDevToolsAgentRequest(
+    mojom::blink::DevToolsAgentAssociatedRequest request) {
+  if (!dev_tools_agent_)
+    dev_tools_agent_ = WebDevToolsAgentImpl::CreateForFrame(this);
+  dev_tools_agent_->BindRequest(std::move(request));
 }
 
 }  // namespace blink

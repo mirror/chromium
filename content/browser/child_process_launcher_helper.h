@@ -14,6 +14,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/result_codes.h"
+#include "content/public/common/zygote_features.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
@@ -29,12 +30,12 @@
 #include "content/public/browser/posix_file_descriptor_info.h"
 #endif
 
-#if defined(OS_LINUX)
-#include "content/public/common/zygote_handle.h"
-#endif
-
 #if defined(OS_MACOSX)
 #include "sandbox/mac/seatbelt_exec.h"
+#endif
+
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#include "content/public/common/zygote_handle.h"
 #endif
 
 namespace base {
@@ -76,9 +77,9 @@ class ChildProcessLauncherHelper :
 
     base::Process process;
 
-#if defined(OS_LINUX)
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
     ZygoteHandle zygote = nullptr;
-#endif
+#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
   };
 
   ChildProcessLauncherHelper(
@@ -108,8 +109,11 @@ class ChildProcessLauncherHelper :
   // Platform specific.
   std::unique_ptr<FileMappedForLaunch> GetFilesToMap();
 
-  // Platform specific.
-  void BeforeLaunchOnLauncherThread(
+  // Platform specific, returns success or failure. If failure is returned,
+  // LaunchOnLauncherThread will not call LaunchProcessOnLauncherThread and
+  // AfterLaunchOnLauncherThread, and the launch_result will be reported as
+  // LAUNCH_RESULT_FAILURE.
+  bool BeforeLaunchOnLauncherThread(
       const FileMappedForLaunch& files_to_register,
       base::LaunchOptions* options);
 

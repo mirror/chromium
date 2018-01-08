@@ -27,16 +27,29 @@ namespace test {
 
 class QuicTestPacketMaker {
  public:
+  // |client_headers_include_h2_stream_dependency| affects the output of
+  // the MakeRequestHeaders...() methods. If its value is true, then request
+  // headers are constructed with the exclusive flag set to true and the parent
+  // stream id set to the |parent_stream_id| param of MakeRequestHeaders...().
+  // Otherwise, headers are constructed with the exclusive flag set to false and
+  // the parent stream ID set to 0 (ignoring the |parent_stream_id| param).
   QuicTestPacketMaker(QuicTransportVersion version,
                       QuicConnectionId connection_id,
                       MockClock* clock,
                       const std::string& host,
-                      Perspective perspective);
+                      Perspective perspective,
+                      bool client_headers_include_h2_stream_dependency);
   ~QuicTestPacketMaker();
 
   void set_hostname(const std::string& host);
   std::unique_ptr<QuicReceivedPacket> MakePingPacket(QuicPacketNumber num,
                                                      bool include_version);
+  std::unique_ptr<QuicReceivedPacket> MakeAckAndPingPacket(
+      QuicPacketNumber num,
+      bool include_version,
+      QuicPacketNumber largest_received,
+      QuicPacketNumber smallest_received,
+      QuicPacketNumber least_unacked);
   std::unique_ptr<QuicReceivedPacket> MakeRstPacket(
       QuicPacketNumber num,
       bool include_version,
@@ -79,7 +92,10 @@ class QuicTestPacketMaker {
       QuicErrorCode quic_error,
       const std::string& quic_error_details);
   std::unique_ptr<QuicReceivedPacket> MakeConnectionClosePacket(
-      QuicPacketNumber num);
+      QuicPacketNumber num,
+      bool include_version,
+      QuicErrorCode quic_error,
+      const std::string& quic_error_details);
   std::unique_ptr<QuicReceivedPacket> MakeGoAwayPacket(
       QuicPacketNumber num,
       QuicErrorCode error_code,
@@ -137,6 +153,7 @@ class QuicTestPacketMaker {
       bool fin,
       SpdyPriority priority,
       SpdyHeaderBlock headers,
+      QuicStreamId parent_stream_id,
       QuicStreamOffset* header_stream_offset,
       size_t* spdy_headers_frame_length,
       const std::vector<std::string>& data_writes);
@@ -150,6 +167,7 @@ class QuicTestPacketMaker {
       bool fin,
       SpdyPriority priority,
       SpdyHeaderBlock headers,
+      QuicStreamId parent_stream_id,
       size_t* spdy_headers_frame_length);
 
   std::unique_ptr<QuicReceivedPacket> MakeRequestHeadersPacket(
@@ -159,6 +177,7 @@ class QuicTestPacketMaker {
       bool fin,
       SpdyPriority priority,
       SpdyHeaderBlock headers,
+      QuicStreamId parent_stream_id,
       size_t* spdy_headers_frame_length,
       QuicStreamOffset* offset);
 
@@ -170,6 +189,7 @@ class QuicTestPacketMaker {
       bool fin,
       SpdyPriority priority,
       SpdyHeaderBlock headers,
+      QuicStreamId parent_stream_id,
       size_t* spdy_headers_frame_length,
       QuicStreamOffset* offset,
       std::string* stream_data);
@@ -183,6 +203,7 @@ class QuicTestPacketMaker {
                                              bool fin,
                                              SpdyPriority priority,
                                              SpdyHeaderBlock headers,
+                                             QuicStreamId parent_stream_id,
                                              QuicStreamOffset* offset);
 
   // If |spdy_headers_frame_length| is non-null, it will be set to the size of
@@ -242,6 +263,9 @@ class QuicTestPacketMaker {
   SpdyHeaderBlock GetRequestHeaders(const std::string& method,
                                     const std::string& scheme,
                                     const std::string& path);
+
+  SpdyHeaderBlock ConnectRequestHeaders(const std::string& host_port);
+
   SpdyHeaderBlock GetResponseHeaders(const std::string& status);
 
   SpdyHeaderBlock GetResponseHeaders(const std::string& status,
@@ -257,6 +281,12 @@ class QuicTestPacketMaker {
   void InitializeHeader(QuicPacketNumber packet_number,
                         bool should_include_version);
 
+  SpdySerializedFrame MakeSpdyHeadersFrame(QuicStreamId stream_id,
+                                           bool fin,
+                                           SpdyPriority priority,
+                                           SpdyHeaderBlock headers,
+                                           QuicStreamId parent_stream_id);
+
   QuicTransportVersion version_;
   QuicConnectionId connection_id_;
   MockClock* clock_;  // Owned by QuicStreamFactory.
@@ -266,6 +296,10 @@ class QuicTestPacketMaker {
   MockRandom random_generator_;
   QuicPacketHeader header_;
   Perspective perspective_;
+
+  // If true, generated request headers will include non-default HTTP2 stream
+  // dependency info.
+  bool client_headers_include_h2_stream_dependency_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicTestPacketMaker);
 };

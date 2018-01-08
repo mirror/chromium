@@ -147,8 +147,7 @@ void BaseAudioContext::Initialize() {
 
   FFTFrame::Initialize();
 
-  if (OriginTrials::audioWorkletEnabled(GetExecutionContext()) ||
-      RuntimeEnabledFeatures::AudioWorkletEnabled()) {
+  if (OriginTrials::audioWorkletEnabled(GetExecutionContext())) {
     audio_worklet_ = AudioWorklet::Create(this);
   }
 
@@ -862,9 +861,10 @@ void BaseAudioContext::PerformCleanupOnMainThread() {
 void BaseAudioContext::ScheduleMainThreadCleanup() {
   if (has_posted_cleanup_task_)
     return;
-  Platform::Current()->MainThread()->GetWebTaskRunner()->PostTask(
-      FROM_HERE, CrossThreadBind(&BaseAudioContext::PerformCleanupOnMainThread,
-                                 WrapCrossThreadPersistent(this)));
+  PostCrossThreadTask(
+      *Platform::Current()->MainThread()->GetWebTaskRunner(), FROM_HERE,
+      CrossThreadBind(&BaseAudioContext::PerformCleanupOnMainThread,
+                      WrapCrossThreadPersistent(this)));
   has_posted_cleanup_task_ = true;
 }
 
@@ -906,11 +906,30 @@ bool BaseAudioContext::IsAllowedToStart() const {
   if (!user_gesture_required_)
     return true;
 
-  ToDocument(GetExecutionContext())
-      ->AddConsoleMessage(ConsoleMessage::Create(
+  Document* document = ToDocument(GetExecutionContext());
+  DCHECK(document);
+
+  switch (GetAutoplayPolicy()) {
+    case AutoplayPolicy::Type::kNoUserGestureRequired:
+      NOTREACHED();
+      break;
+    case AutoplayPolicy::Type::kUserGestureRequired:
+    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
+      DCHECK(document->GetFrame() &&
+             document->GetFrame()->IsCrossOriginSubframe());
+      document->AddConsoleMessage(ConsoleMessage::Create(
           kJSMessageSource, kWarningMessageLevel,
-          "An AudioContext in a cross origin iframe must be created or resumed "
-          "from a user gesture to enable audio output."));
+          "An AudioContext in a cross origin iframe must be created or "
+          "resumed from a user gesture to enable audio output."));
+      break;
+    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
+      document->AddConsoleMessage(ConsoleMessage::Create(
+          kJSMessageSource, kWarningMessageLevel,
+          "An AudioContext must be created or resumed after the document "
+          "received a user gesture to enable audio playback."));
+      break;
+  }
+
   return false;
 }
 

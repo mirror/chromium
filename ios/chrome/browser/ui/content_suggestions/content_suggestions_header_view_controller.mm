@@ -18,7 +18,8 @@
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_header_constants.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_header_view.h"
-#import "ios/chrome/browser/ui/toolbar/clean/omnibox_focuser.h"
+#import "ios/chrome/browser/ui/toolbar/public/fakebox_focuser.h"
+#import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
@@ -179,10 +180,6 @@ const CGFloat kHintLabelSidePadding = 12;
   if (!self.headerView) {
     self.headerView = [[NewTabPageHeaderView alloc] init];
     [self addFakeOmnibox];
-
-    self.logoVendor.view.isAccessibilityElement = YES;
-    self.logoVendor.view.accessibilityLabel =
-        l10n_util::GetNSString(IDS_IOS_NEW_TAB_LOGO_ACCESSIBILITY_LABEL);
 
     [self.headerView addSubview:self.logoVendor.view];
     [self.headerView addSubview:self.fakeOmnibox];

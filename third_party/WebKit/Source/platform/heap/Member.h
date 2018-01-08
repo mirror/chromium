@@ -12,6 +12,11 @@
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/HashTraits.h"
 
+namespace WTF {
+template <typename P, typename Traits, typename Allocator>
+class ConstructTraits;
+}  // namespace WTF
+
 namespace blink {
 
 template <typename T>
@@ -102,6 +107,11 @@ class MemberBase {
   MemberBase& operator=(U* other) {
     raw_ = other;
     CheckPointer();
+    return *this;
+  }
+
+  MemberBase& operator=(WTF::HashTableDeletedValueType) {
+    raw_ = reinterpret_cast<T*>(-1);
     return *this;
   }
 
@@ -222,6 +232,12 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     return *this;
   }
 
+  Member& operator=(const Member& other) {
+    Parent::operator=(other);
+    WriteBarrier(this->raw_);
+    return *this;
+  }
+
   template <typename U>
   Member& operator=(const Member<U>& other) {
     Parent::operator=(other);
@@ -243,6 +259,11 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     return *this;
   }
 
+  Member& operator=(WTF::HashTableDeletedValueType x) {
+    Parent::operator=(x);
+    return *this;
+  }
+
   Member& operator=(std::nullptr_t) {
     Parent::operator=(nullptr);
     return *this;
@@ -251,7 +272,7 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
  protected:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
 #if BUILDFLAG(BLINK_HEAP_INCREMENTAL_MARKING)
-    if (value) {
+    if (LIKELY(value && !this->IsHashTableDeletedValue())) {
       // The following method for retrieving a page works as allocation of
       // mixins on large object pages is prohibited.
       BasePage* const page = PageFromObject(value);
@@ -262,6 +283,9 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     }
 #endif  // BUILDFLAG(BLINK_HEAP_INCREMENTAL_MARKING)
   }
+
+  template <typename P, typename Traits, typename Allocator>
+  friend class WTF::ConstructTraits;
 };
 
 // A checked version of Member<>, verifying that only same-thread references
@@ -572,6 +596,28 @@ template <typename T>
 struct IsTraceable<blink::TraceWrapperMember<T>> {
   STATIC_ONLY(IsTraceable);
   static const bool value = true;
+};
+
+template <typename T, typename Traits, typename Allocator>
+class ConstructTraits<blink::Member<T>, Traits, Allocator> {
+  STATIC_ONLY(ConstructTraits);
+
+ public:
+  template <typename... Args>
+  static blink::Member<T>* ConstructAndNotifyElement(void* location,
+                                                     Args&&... args) {
+    blink::Member<T>* object =
+        new (NotNull, location) blink::Member<T>(std::forward<Args>(args)...);
+    object->WriteBarrier(object->raw_);
+    return object;
+  }
+
+  static void NotifyNewElements(blink::Member<T>* array, size_t len) {
+    while (len-- > 0) {
+      array->WriteBarrier(array->raw_);
+      array++;
+    }
+  }
 };
 
 }  // namespace WTF

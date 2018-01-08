@@ -72,6 +72,7 @@ GLES2CommandBufferStub::GLES2CommandBufferStub(
                         sequence_id,
                         stream_id,
                         route_id),
+      gles2_decoder_(nullptr),
       weak_ptr_factory_(this) {}
 
 GLES2CommandBufferStub::~GLES2CommandBufferStub() {}
@@ -80,12 +81,6 @@ gpu::ContextResult GLES2CommandBufferStub::Initialize(
     CommandBufferStub* share_command_buffer_stub,
     const GPUCreateCommandBufferConfig& init_params,
     std::unique_ptr<base::SharedMemory> shared_state_shm) {
-#if defined(OS_FUCHSIA)
-  // TODO(crbug.com/707031): Implement this.
-  NOTIMPLEMENTED();
-  LOG(ERROR) << "ContextResult::kFatalFailure: no fuchsia support";
-  return gpu::ContextResult::kFatalFailure;
-#else
   TRACE_EVENT0("gpu", "GLES2CommandBufferStub::Initialize");
   FastSetActiveURL(active_url_, active_url_hash_, channel_);
 
@@ -166,8 +161,9 @@ gpu::ContextResult GLES2CommandBufferStub::Initialize(
 
   command_buffer_ = std::make_unique<CommandBufferService>(
       this, context_group_->transfer_buffer_manager());
-  decoder_.reset(gles2::GLES2Decoder::Create(
-      this, command_buffer_.get(), manager->outputter(), context_group_.get()));
+  gles2_decoder_ = gles2::GLES2Decoder::Create(
+      this, command_buffer_.get(), manager->outputter(), context_group_.get());
+  set_decoder_context(std::unique_ptr<DecoderContext>(gles2_decoder_));
 
   sync_point_client_state_ =
       channel_->sync_point_manager()->CreateSyncPointClientState(
@@ -211,14 +207,14 @@ gpu::ContextResult GLES2CommandBufferStub::Initialize(
     }
   } else {
     switch (init_params.attribs.color_space) {
-      case gles2::COLOR_SPACE_UNSPECIFIED:
+      case COLOR_SPACE_UNSPECIFIED:
         surface_format.SetColorSpace(
             gl::GLSurfaceFormat::COLOR_SPACE_UNSPECIFIED);
         break;
-      case gles2::COLOR_SPACE_SRGB:
+      case COLOR_SPACE_SRGB:
         surface_format.SetColorSpace(gl::GLSurfaceFormat::COLOR_SPACE_SRGB);
         break;
-      case gles2::COLOR_SPACE_DISPLAY_P3:
+      case COLOR_SPACE_DISPLAY_P3:
         surface_format.SetColorSpace(
             gl::GLSurfaceFormat::COLOR_SPACE_DISPLAY_P3);
         break;
@@ -284,7 +280,7 @@ gpu::ContextResult GLES2CommandBufferStub::Initialize(
            gl::GetGLImplementation() == gl::kGLImplementationMockGL ||
            gl::GetGLImplementation() == gl::kGLImplementationStubGL);
     context = base::MakeRefCounted<GLContextVirtual>(
-        share_group_.get(), context.get(), decoder_->AsWeakPtr());
+        share_group_.get(), context.get(), gles2_decoder_->AsWeakPtr());
     if (!context->Initialize(surface_.get(),
                              GenerateGLContextAttribs(init_params.attribs,
                                                       context_group_.get()))) {
@@ -320,7 +316,8 @@ gpu::ContextResult GLES2CommandBufferStub::Initialize(
   }
 
   if (!context->GetGLStateRestorer()) {
-    context->SetGLStateRestorer(new GLStateRestorerImpl(decoder_->AsWeakPtr()));
+    context->SetGLStateRestorer(
+        new GLStateRestorerImpl(gles2_decoder_->AsWeakPtr()));
   }
 
   if (!context_group_->has_program_cache() &&
@@ -329,16 +326,16 @@ gpu::ContextResult GLES2CommandBufferStub::Initialize(
   }
 
   // Initialize the decoder with either the view or pbuffer GLContext.
-  auto result = decoder_->Initialize(surface_, context, offscreen,
-                                     gpu::gles2::DisallowedFeatures(),
-                                     init_params.attribs);
+  auto result = gles2_decoder_->Initialize(surface_, context, offscreen,
+                                           gpu::gles2::DisallowedFeatures(),
+                                           init_params.attribs);
   if (result != gpu::ContextResult::kSuccess) {
     DLOG(ERROR) << "Failed to initialize decoder.";
     return result;
   }
 
   if (manager->gpu_preferences().enable_gpu_service_logging) {
-    decoder_->set_log_commands(true);
+    gles2_decoder_->set_log_commands(true);
   }
 
   const size_t kSharedStateSize = sizeof(CommandBufferSharedState);
@@ -372,7 +369,6 @@ gpu::ContextResult GLES2CommandBufferStub::Initialize(
   manager->delegate()->DidCreateContextSuccessfully();
   initialized_ = true;
   return gpu::ContextResult::kSuccess;
-#endif  // defined(OS_FUCHSIA)
 }
 
 #if defined(OS_WIN)
@@ -421,6 +417,21 @@ void GLES2CommandBufferStub::AddFilter(IPC::MessageFilter* message_filter) {
 
 int32_t GLES2CommandBufferStub::GetRouteID() const {
   return route_id_;
+}
+
+void GLES2CommandBufferStub::OnTakeFrontBuffer(const Mailbox& mailbox) {
+  TRACE_EVENT0("gpu", "CommandBufferStub::OnTakeFrontBuffer");
+  if (!gles2_decoder_) {
+    LOG(ERROR) << "Can't take front buffer before initialization.";
+    return;
+  }
+
+  gles2_decoder_->TakeFrontBuffer(mailbox);
+}
+
+void GLES2CommandBufferStub::OnReturnFrontBuffer(const Mailbox& mailbox,
+                                                 bool is_lost) {
+  gles2_decoder_->ReturnFrontBuffer(mailbox, is_lost);
 }
 
 }  // namespace gpu

@@ -110,27 +110,22 @@ function pushMessagesToTopOfLogsTable(pageId) {
 }
 
 /**
- * Helper method to expand all logs in the message-logs-table.
+ * Helper method to expand or collapse all logs in the message-logs-table.
+ *
+ * @param {boolean} expanding True for expand all log messages, and false to
+ * collapse all log messages.
  */
-function expandAllLogs() {
+function logExpansionHelper(expanding) {
   let rows = $('message-logs-table').rows;
   for (let i = 1; i < rows.length; i++) {
     if (rows[i].className.includes('expansion-row')) {
-      rows[i].className = rows[i].className.replace('hide', 'show');
-      rows[i - 1].querySelector('.arrow').className = 'arrow up';
-    }
-  }
-}
-
-/**
- * Helper method to collapse all logs in the message-logs-table.
- */
-function collapseAllLogs() {
-  let rows = $('message-logs-table').rows;
-  for (let i = 1; i < rows.length; i++) {
-    if (rows[i].className.includes('expansion-row')) {
-      rows[i].className = rows[i].className.replace('show', 'hide');
-      rows[i - 1].querySelector('.arrow').className = 'arrow down';
+      rows[i].className = expanding ?
+          rows[i].className.replace('hide', 'show') :
+          rows[i].className.replace('show', 'hide');
+      let arrowButton = rows[i - 1].querySelector('.arrow');
+      if (arrowButton) {
+        arrowButton.className = expanding ? 'arrow up' : 'arrow down';
+      }
     }
   }
 }
@@ -284,6 +279,23 @@ function changeTab() {
 }
 
 /**
+ * Helper function to check if all keywords, case insensitive, are in the given
+ * text.
+ *
+ * @param {string[]} keywords The collection of keywords.
+ * @param {string} text The given text to search.
+ * @return True iff all keywords present in the given text.
+ */
+function checkTextContainsKeywords(keywords, text) {
+  for (let i = 0; i < keywords.length; i++) {
+    if (!text.toUpperCase().includes(keywords[i].toUpperCase())) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
  * Initialize the navigation bar, and setup OnChange listeners for the tabs.
  */
 function setupTabControl() {
@@ -309,19 +321,21 @@ function setupTabControl() {
  */
 function setupLogSearch() {
   $('log-search-bar').addEventListener('keyup', () => {
-    let keyword = $('log-search-bar').value.toUpperCase();
+    let keys = $('log-search-bar').value.split(' ');
     let rows = $('message-logs-table').rows;
-    expandAllLogs();
+    logExpansionHelper(true /* expanding */);
 
     for (let i = 1; i < rows.length; i++) {
+      // Check the main row.
       rows[i].style.display =
-          rows[i].textContent.toUpperCase().includes(keyword) ? '' : 'none';
+          checkTextContainsKeywords(keys, rows[i].textContent) ? '' : 'none';
 
+      // Check expandable rows.
       let subtable = rows[i].querySelector('.expansion-logs-table');
       if (subtable) {
         for (let i = 0; i < subtable.rows.length; i++) {
           subtable.rows[i].style.display =
-              subtable.rows[i].textContent.toUpperCase().includes(keyword) ?
+              checkTextContainsKeywords(keys, subtable.rows[i].textContent) ?
               '' :
               'none';
         }
@@ -336,7 +350,7 @@ function setupLogSearch() {
 function setupExpandLogs() {
   // Expand all button.
   $('expand-log-button').addEventListener('click', () => {
-    expandAllLogs();
+    logExpansionHelper(true /* expanding */);
     $('collapse-log-button').style.display = '';
     $('expand-log-button').style.display = 'none';
   });
@@ -344,7 +358,7 @@ function setupExpandLogs() {
   // Collapse all button.
   $('collapse-log-button').style.display = 'none';
   $('collapse-log-button').addEventListener('click', () => {
-    collapseAllLogs();
+    logExpansionHelper(false /* expanding */);
     $('collapse-log-button').style.display = 'none';
     $('expand-log-button').style.display = '';
   });

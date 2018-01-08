@@ -463,8 +463,8 @@ class ListHashSetNode : public ListHashSetNodeBase<ValueArg> {
     if (WasAlreadyDestructed())
       return;
     NodeAllocator::TraceValue(visitor, this);
-    visitor->Mark(Next());
-    visitor->Mark(Prev());
+    visitor->Trace(Next());
+    visitor->Trace(Prev());
   }
 
   ListHashSetNode* Next() const {
@@ -514,7 +514,7 @@ class ListHashSetIterator {
       : iterator_(set, position) {}
 
  public:
-  ListHashSetIterator() {}
+  ListHashSetIterator() = default;
 
   // default copy, assignment and destructor are OK
 
@@ -574,7 +574,7 @@ class ListHashSetConstIterator {
       : set_(set), position_(position) {}
 
  public:
-  ListHashSetConstIterator() {}
+  ListHashSetConstIterator() = default;
 
   PointerType Get() const { return &position_->value_; }
   ReferenceType operator*() const { return *Get(); }
@@ -636,7 +636,7 @@ class ListHashSetReverseIterator {
       : iterator_(set, position) {}
 
  public:
-  ListHashSetReverseIterator() {}
+  ListHashSetReverseIterator() = default;
 
   // default copy, assignment and destructor are OK
 
@@ -696,7 +696,7 @@ class ListHashSetConstReverseIterator {
       : set_(set), position_(position) {}
 
  public:
-  ListHashSetConstReverseIterator() {}
+  ListHashSetConstReverseIterator() = default;
 
   PointerType Get() const { return &position_->value_; }
   ReferenceType operator*() const { return *Get(); }

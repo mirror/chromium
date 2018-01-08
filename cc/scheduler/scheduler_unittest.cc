@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/auto_reset.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -45,12 +46,7 @@ base::TimeDelta kFastDuration = base::TimeDelta::FromMilliseconds(1);
 class FakeSchedulerClient : public SchedulerClient,
                             public viz::FakeExternalBeginFrameSource::Client {
  public:
-  FakeSchedulerClient()
-      : inside_begin_impl_frame_(false),
-        automatic_ack_(true),
-        scheduler_(nullptr) {
-    Reset();
-  }
+  FakeSchedulerClient() { Reset(); }
 
   void Reset() {
     actions_.clear();
@@ -100,26 +96,38 @@ class FakeSchedulerClient : public SchedulerClient,
   void SetAutomaticSubmitCompositorFrameAck(bool automatic_ack) {
     automatic_ack_ = automatic_ack;
   }
+  void SetWillBeginImplFrameMightHaveDamage(bool might_have_damage) {
+    will_begin_impl_frame_might_have_damage_ = might_have_damage;
+  }
   // SchedulerClient implementation.
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
+  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
     EXPECT_FALSE(inside_begin_impl_frame_);
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     inside_begin_impl_frame_ = true;
     PushAction("WillBeginImplFrame");
     if (will_begin_impl_frame_requests_one_begin_impl_frame_)
       scheduler_->SetNeedsOneBeginImplFrame();
     if (will_begin_impl_frame_causes_redraw_)
       scheduler_->SetNeedsRedraw();
+    return will_begin_impl_frame_might_have_damage_;
   }
   void DidFinishImplFrame() override {
     EXPECT_TRUE(inside_begin_impl_frame_);
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     inside_begin_impl_frame_ = false;
   }
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     last_begin_frame_ack_ = ack;
   }
 
   void ScheduledActionSendBeginMainFrame(
       const viz::BeginFrameArgs& args) override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionSendBeginMainFrame");
     last_begin_main_frame_args_ = args;
   }
@@ -133,6 +141,8 @@ class FakeSchedulerClient : public SchedulerClient,
   }
 
   DrawResult ScheduledActionDrawIfPossible() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionDrawIfPossible");
     num_draws_++;
     DrawResult result =
@@ -149,39 +159,57 @@ class FakeSchedulerClient : public SchedulerClient,
     return result;
   }
   DrawResult ScheduledActionDrawForced() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionDrawForced");
     last_begin_frame_ack_ = scheduler_->CurrentBeginFrameAckForActiveTree();
     return DRAW_SUCCESS;
   }
   void ScheduledActionCommit() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionCommit");
     scheduler_->DidCommit();
   }
   void ScheduledActionActivateSyncTree() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionActivateSyncTree");
   }
   void ScheduledActionBeginLayerTreeFrameSinkCreation() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionBeginLayerTreeFrameSinkCreation");
   }
   void ScheduledActionPrepareTiles() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionPrepareTiles");
     scheduler_->WillPrepareTiles();
     scheduler_->DidPrepareTiles();
   }
   void ScheduledActionInvalidateLayerTreeFrameSink() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     actions_.push_back("ScheduledActionInvalidateLayerTreeFrameSink");
     states_.push_back(scheduler_->AsValue());
   }
   void ScheduledActionPerformImplSideInvalidation() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionPerformImplSideInvalidation");
   }
 
   void SendBeginMainFrameNotExpectedSoon() override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("SendBeginMainFrameNotExpectedSoon");
   }
 
   void ScheduledActionBeginMainFrameNotExpectedUntil(
       base::TimeTicks time) override {
+    EXPECT_FALSE(inside_action_);
+    base::AutoReset<bool> mark_inside(&inside_action_, true);
     PushAction("ScheduledActionBeginMainFrameNotExpectedUntil");
   }
 
@@ -224,12 +252,14 @@ class FakeSchedulerClient : public SchedulerClient,
     return inside_begin_impl_frame_ == state;
   }
 
-  bool inside_begin_impl_frame_;
+  bool inside_action_ = false;
+  bool inside_begin_impl_frame_ = false;
   bool will_begin_impl_frame_causes_redraw_;
   bool will_begin_impl_frame_requests_one_begin_impl_frame_;
   bool draw_will_happen_;
   bool swap_will_happen_if_draw_happens_;
-  bool automatic_ack_;
+  bool automatic_ack_ = true;
+  bool will_begin_impl_frame_might_have_damage_ = true;
   int num_draws_;
   viz::BeginFrameArgs last_begin_main_frame_args_;
   viz::BeginFrameAck last_begin_frame_ack_;
@@ -237,7 +267,7 @@ class FakeSchedulerClient : public SchedulerClient,
   std::vector<const char*> actions_;
   std::vector<std::unique_ptr<base::trace_event::ConvertableToTraceFormat>>
       states_;
-  TestScheduler* scheduler_;
+  TestScheduler* scheduler_ = nullptr;
 };
 
 enum BeginFrameSourceType {
@@ -1580,6 +1610,40 @@ TEST_F(SchedulerTest, MainFrameNotSkippedAfterCanDrawChanges) {
   EXPECT_TRUE(scheduler_->MainThreadMissedLastDeadline());
 }
 
+TEST_F(SchedulerTest, MainFrameNotSkippedWhenNoTimingHistory) {
+  SetUpScheduler(EXTERNAL_BFS);
+
+  // Use fast estimates so we think we can recover latency if needed.
+  fake_compositor_timing_history_->SetAllEstimatesTo(kFastDuration);
+
+  // Impl thread hits deadline before BeginMainFrame commits.
+  scheduler_->SetNeedsBeginMainFrame();
+  EXPECT_FALSE(scheduler_->MainThreadMissedLastDeadline());
+  EXPECT_SCOPED(AdvanceFrame());
+  EXPECT_ACTIONS("AddObserver(this)", "WillBeginImplFrame",
+                 "ScheduledActionSendBeginMainFrame");
+  EXPECT_FALSE(scheduler_->MainThreadMissedLastDeadline());
+  task_runner().RunTasksWhile(client_->InsideBeginImplFrame(true));
+  EXPECT_TRUE(scheduler_->MainThreadMissedLastDeadline());
+  scheduler_->NotifyBeginMainFrameStarted(now_src()->NowTicks());
+  EXPECT_TRUE(scheduler_->MainThreadMissedLastDeadline());
+
+  // Commit after the deadline.
+  client_->Reset();
+  scheduler_->NotifyReadyToCommit();
+  scheduler_->NotifyReadyToActivate();
+  EXPECT_ACTIONS("ScheduledActionCommit", "ScheduledActionActivateSyncTree");
+  EXPECT_TRUE(scheduler_->MainThreadMissedLastDeadline());
+
+  // Clear the timing history. Make sure we don't skip the main frame until we
+  // have history from at least one frame.
+  client_->Reset();
+  scheduler_->SetNeedsBeginMainFrame();
+  scheduler_->ClearHistoryOnNavigation();
+  EXPECT_SCOPED(AdvanceFrame());
+  EXPECT_ACTIONS("WillBeginImplFrame", "ScheduledActionSendBeginMainFrame");
+}
+
 void SchedulerTest::ImplFrameSkippedAfterLateAck(
     bool receive_ack_before_deadline) {
   // To get into a high latency state, this test disables automatic swap acks.
@@ -2895,6 +2959,30 @@ TEST_F(SchedulerTest, SetNeedsOneBeginImplFrame) {
   EXPECT_ACTIONS("RemoveObserver(this)");
 }
 
+TEST_F(SchedulerTest, AbortEarlyIfNoDamage) {
+  SetUpScheduler(EXTERNAL_BFS);
+
+  // WillBeginImplFrame will return false, so draws should never be scheduled
+  // and client_->num_draws() should stay at 0.
+  client_->SetWillBeginImplFrameMightHaveDamage(false);
+
+  scheduler_->SetNeedsRedraw();
+  EXPECT_EQ(0, client_->num_draws());
+  EXPECT_ACTIONS("AddObserver(this)");
+
+  EXPECT_SCOPED(AdvanceFrame());
+  task_runner().RunPendingTasks();  // Run posted deadline.
+  // Should not try to schedule a draw. (ScheduledActionDrawIfPossible should
+  // not appear.)
+  EXPECT_ACTIONS("AddObserver(this)", "WillBeginImplFrame");
+  EXPECT_EQ(0, client_->num_draws());
+
+  scheduler_->SetNeedsRedraw();
+  EXPECT_SCOPED(AdvanceFrame());
+  task_runner().RunPendingTasks();  // Run posted deadline.
+  EXPECT_EQ(0, client_->num_draws());
+}
+
 TEST_F(SchedulerTest, SynchronousCompositorCommitAndVerifyBeginFrameAcks) {
   scheduler_settings_.using_synchronous_renderer_compositor = true;
   SetUpScheduler(EXTERNAL_BFS);
@@ -3068,6 +3156,27 @@ TEST_F(SchedulerTest, SynchronousCompositorPrepareTilesOnDraw) {
   EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)");
   EXPECT_FALSE(scheduler_->begin_frames_expected());
   client_->Reset();
+}
+
+TEST_F(SchedulerTest, SetNeedsRedrawFromWillBeginImplFrame) {
+  client_ = std::make_unique<FakeSchedulerClient>();
+  CreateScheduler(EXTERNAL_BFS);
+
+  scheduler_->SetVisible(true);
+  scheduler_->SetCanDraw(true);
+  client_->SetWillBeginImplFrameCausesRedraw(true);
+
+  scheduler_->DidCreateAndInitializeLayerTreeFrameSink();
+  scheduler_->SetNeedsBeginMainFrame();
+
+  AdvanceFrame();
+  EXPECT_ACTIONS("ScheduledActionBeginLayerTreeFrameSinkCreation",
+                 "AddObserver(this)", "WillBeginImplFrame",
+                 "ScheduledActionSendBeginMainFrame");
+  EXPECT_TRUE(scheduler_->RedrawPending());
+  // WillBeginFrame calls Scheduler::SetNeedsRedraw, which could try to run
+  // another action. If none of the EXPECT_FALSE(inside_action_)s in
+  // FakeSchedulerClient fail, we know we didn't re-enter the scheduler.
 }
 
 TEST_F(SchedulerTest, SynchronousCompositorSendBeginMainFrameWhileIdle) {

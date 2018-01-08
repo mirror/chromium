@@ -250,6 +250,9 @@ export USR_BIN_SYMLINK_NAME="${PACKAGE}-${CHANNEL}"
 cd "${OUTPUTDIR}"
 
 case "$TARGETARCH" in
+  arm )
+    export ARCHITECTURE="armhf"
+    ;;
   ia32 )
     export ARCHITECTURE="i386"
     stage_install_rpm
@@ -260,6 +263,10 @@ case "$TARGETARCH" in
     ;;
   mipsel )
     export ARCHITECTURE="mipsel"
+    stage_install_rpm
+    ;;
+  mips64el )
+    export ARCHITECTURE="mips64el"
     stage_install_rpm
     ;;
   * )

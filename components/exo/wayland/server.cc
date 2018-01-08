@@ -9,10 +9,12 @@
 #include <gaming-input-unstable-v1-server-protocol.h>
 #include <gaming-input-unstable-v2-server-protocol.h>
 #include <grp.h>
+#include <input-timestamps-unstable-v1-server-protocol.h>
 #include <keyboard-configuration-unstable-v1-server-protocol.h>
 #include <keyboard-extension-unstable-v1-server-protocol.h>
 #include <linux/input.h>
 #include <pointer-gestures-unstable-v1-server-protocol.h>
+#include <pointer-unstable-v1-server-protocol.h>
 #include <presentation-time-server-protocol.h>
 #include <remote-shell-unstable-v1-server-protocol.h>
 #include <secure-output-unstable-v1-server-protocol.h>
@@ -30,6 +32,7 @@
 #include <cstdlib>
 #include <iterator>
 #include <map>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -39,6 +42,7 @@
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/public/interfaces/window_state_type.mojom.h"
 #include "ash/shell.h"
+#include "ash/wm/window_resizer.h"
 #include "base/bind.h"
 #include "base/cancelable_callback.h"
 #include "base/command_line.h"
@@ -193,6 +197,41 @@ uint32_t TimeTicksToMilliseconds(base::TimeTicks ticks) {
 uint32_t NowInMilliseconds() {
   return TimeTicksToMilliseconds(base::TimeTicks::Now());
 }
+
+class WaylandInputDelegate {
+ public:
+  class Observer {
+   public:
+    virtual void OnDelegateDestroying(WaylandInputDelegate* delegate) = 0;
+    virtual void OnSendTimestamp(base::TimeTicks time_stamp) = 0;
+
+   protected:
+    virtual ~Observer() = default;
+  };
+
+  void AddObserver(Observer* observer) { observers_.AddObserver(observer); }
+
+  void RemoveObserver(Observer* observer) {
+    observers_.RemoveObserver(observer);
+  }
+
+  void SendTimestamp(base::TimeTicks time_stamp) {
+    for (auto& observer : observers_)
+      observer.OnSendTimestamp(time_stamp);
+  }
+
+ protected:
+  WaylandInputDelegate() = default;
+  virtual ~WaylandInputDelegate() {
+    for (auto& observer : observers_)
+      observer.OnDelegateDestroying(this);
+  }
+
+ private:
+  base::ObserverList<Observer> observers_;
+
+  DISALLOW_COPY_AND_ASSIGN(WaylandInputDelegate);
+};
 
 uint32_t WaylandDataDeviceManagerDndAction(DndAction action) {
   switch (action) {
@@ -362,9 +401,12 @@ void surface_set_opaque_region(wl_client* client,
 void surface_set_input_region(wl_client* client,
                               wl_resource* resource,
                               wl_resource* region_resource) {
-  SkRegion region = region_resource ? *GetUserDataAs<SkRegion>(region_resource)
-                                    : SkRegion(SkIRect::MakeLargest());
-  GetUserDataAs<Surface>(resource)->SetInputRegion(cc::Region(region));
+  Surface* surface = GetUserDataAs<Surface>(resource);
+  if (region_resource) {
+    surface->SetInputRegion(
+        cc::Region(*GetUserDataAs<SkRegion>(region_resource)));
+  } else
+    surface->ResetInputRegion();
 }
 
 void surface_commit(wl_client* client, wl_resource* resource) {
@@ -1549,6 +1591,7 @@ class WaylandToplevel : public aura::WindowObserver {
       AddState(&states, ZXDG_TOPLEVEL_V6_STATE_ACTIVATED);
     zxdg_toplevel_v6_send_configure(resource_, size.width(), size.height(),
                                     &states);
+    wl_array_release(&states);
   }
 
   wl_resource* const resource_;
@@ -2030,7 +2073,8 @@ void remote_surface_set_window_type(wl_client* client,
 }
 
 void remote_surface_resize(wl_client* client, wl_resource* resource) {
-  GetUserDataAs<ShellSurface>(resource)->Resize(HTBORDER);
+  GetUserDataAs<ClientControlledShellSurface>(resource)
+      ->StartResize_DEPRECATED();
 }
 
 void remote_surface_set_resize_outset(wl_client* client,
@@ -2038,6 +2082,39 @@ void remote_surface_set_resize_outset(wl_client* client,
                                       int32_t outset) {
   GetUserDataAs<ClientControlledShellSurface>(resource)->SetResizeOutset(
       outset);
+}
+
+void remote_surface_start_move(wl_client* client,
+                               wl_resource* resource,
+                               int32_t x,
+                               int32_t y) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->StartMove(
+      gfx::Point(x, y));
+}
+
+void remote_surface_set_can_maximize(wl_client* client, wl_resource* resource) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetCanMaximize(true);
+}
+
+void remote_surface_unset_can_maximize(wl_client* client,
+                                       wl_resource* resource) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetCanMaximize(false);
+}
+
+void remote_surface_set_min_size(wl_client* client,
+                                 wl_resource* resource,
+                                 int32_t width,
+                                 int32_t height) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetMinimumSize(
+      gfx::Size(width, height));
+}
+
+void remote_surface_set_max_size(wl_client* client,
+                                 wl_resource* resource,
+                                 int32_t width,
+                                 int32_t height) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetMaximumSize(
+      gfx::Size(width, height));
 }
 
 const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
@@ -2068,7 +2145,12 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_set_orientation,
     remote_surface_set_window_type,
     remote_surface_resize,
-    remote_surface_set_resize_outset};
+    remote_surface_set_resize_outset,
+    remote_surface_start_move,
+    remote_surface_set_can_maximize,
+    remote_surface_unset_can_maximize,
+    remote_surface_set_min_size,
+    remote_surface_set_max_size};
 
 ////////////////////////////////////////////////////////////////////////////////
 // notification_surface_interface:
@@ -2331,6 +2413,70 @@ void HandleRemoteSurfaceStateChangedCallback(
   wl_client_flush(wl_resource_get_client(resource));
 }
 
+void HandleRemoteSurfaceBoundsChangedCallback(
+    wl_resource* resource,
+    ash::mojom::WindowStateType current_state_type,
+    int64_t display_id,
+    const gfx::Rect& bounds,
+    bool resize,
+    int bounds_change) {
+  zcr_remote_surface_v1_bounds_change_reason reason =
+      resize ? ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_RESIZE
+             : ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_MOVE;
+  if (bounds_change & ash::WindowResizer::kBoundsChange_Resizes) {
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG_RESIZE;
+  } else if (bounds_change & ash::WindowResizer::kBoundsChange_Repositions) {
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG_MOVE;
+  }
+  zcr_remote_surface_v1_send_bounds_changed(
+      resource, static_cast<uint32_t>(display_id >> 32),
+      static_cast<uint32_t>(display_id), bounds.x(), bounds.y(), bounds.width(),
+      bounds.height(), reason);
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
+uint32_t ResizeDirection(int component) {
+  switch (component) {
+    case HTCAPTION:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_NONE;
+    case HTTOP:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOP;
+    case HTTOPRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPRIGHT;
+    case HTRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_RIGHT;
+    case HTBOTTOMRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMRIGHT;
+    case HTBOTTOM:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOM;
+    case HTBOTTOMLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMLEFT;
+    case HTLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_LEFT;
+    case HTTOPLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPLEFT;
+    default:
+      LOG(ERROR) << "Unknown component:" << component;
+      break;
+  }
+  NOTREACHED();
+  return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_NONE;
+}
+
+void HandleRemoteSurfaceDragStartedCallback(wl_resource* resource,
+                                            int component) {
+  zcr_remote_surface_v1_send_drag_started(resource, ResizeDirection(component));
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
+void HandleRemoteSurfaceDragFinishedCallback(wl_resource* resource,
+                                             int x,
+                                             int y,
+                                             bool canceled) {
+  zcr_remote_surface_v1_send_drag_finished(resource, x, y, canceled ? 1 : 0);
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
 uint32_t HandleRemoteSurfaceConfigureCallback(
     wl_resource* resource,
     const gfx::Size& size,
@@ -2398,6 +2544,19 @@ void remote_shell_get_remote_surface(wl_client* client,
                             base::Unretained(remote_surface_resource)));
   }
 
+  if (wl_resource_get_version(remote_surface_resource) >= 10) {
+    shell_surface->set_client_controlled_move_resize(false);
+    shell_surface->set_bounds_changed_callback(
+        base::BindRepeating(&HandleRemoteSurfaceBoundsChangedCallback,
+                            base::Unretained(remote_surface_resource)));
+    shell_surface->set_drag_started_callback(
+        base::BindRepeating(&HandleRemoteSurfaceDragStartedCallback,
+                            base::Unretained(remote_surface_resource)));
+    shell_surface->set_drag_finished_callback(
+        base::BindRepeating(&HandleRemoteSurfaceDragFinishedCallback,
+                            base::Unretained(remote_surface_resource)));
+  }
+
   SetImplementation(remote_surface_resource, &remote_surface_implementation,
                     std::move(shell_surface));
 }
@@ -2435,7 +2594,7 @@ const struct zcr_remote_shell_v1_interface remote_shell_implementation = {
     remote_shell_destroy, remote_shell_get_remote_surface,
     remote_shell_get_notification_surface};
 
-const uint32_t remote_shell_version = 9;
+const uint32_t remote_shell_version = 10;
 
 void bind_remote_shell(wl_client* client,
                        void* data,
@@ -3008,7 +3167,8 @@ void bind_data_device_manager(wl_client* client,
 
 // Pointer delegate class that accepts events for surfaces owned by the same
 // client as a pointer resource.
-class WaylandPointerDelegate : public PointerDelegate {
+class WaylandPointerDelegate : public WaylandInputDelegate,
+                               public PointerDelegate {
  public:
   explicit WaylandPointerDelegate(wl_resource* pointer_resource)
       : pointer_resource_(pointer_resource) {}
@@ -3040,6 +3200,7 @@ class WaylandPointerDelegate : public PointerDelegate {
   }
   void OnPointerMotion(base::TimeTicks time_stamp,
                        const gfx::PointF& location) override {
+    SendTimestamp(time_stamp);
     wl_pointer_send_motion(
         pointer_resource_, TimeTicksToMilliseconds(time_stamp),
         wl_fixed_from_double(location.x()), wl_fixed_from_double(location.y()));
@@ -3060,6 +3221,7 @@ class WaylandPointerDelegate : public PointerDelegate {
     uint32_t serial = next_serial();
     for (auto button : buttons) {
       if (button_flags & button.flag) {
+        SendTimestamp(time_stamp);
         wl_pointer_send_button(
             pointer_resource_, serial, TimeTicksToMilliseconds(time_stamp),
             button.value, pressed ? WL_POINTER_BUTTON_STATE_PRESSED
@@ -3081,11 +3243,13 @@ class WaylandPointerDelegate : public PointerDelegate {
     }
 
     double x_value = offset.x() * kAxisStepDistance;
+    SendTimestamp(time_stamp);
     wl_pointer_send_axis(pointer_resource_, TimeTicksToMilliseconds(time_stamp),
                          WL_POINTER_AXIS_HORIZONTAL_SCROLL,
                          wl_fixed_from_double(-x_value));
 
     double y_value = offset.y() * kAxisStepDistance;
+    SendTimestamp(time_stamp);
     wl_pointer_send_axis(pointer_resource_, TimeTicksToMilliseconds(time_stamp),
                          WL_POINTER_AXIS_VERTICAL_SCROLL,
                          wl_fixed_from_double(-y_value));
@@ -3093,9 +3257,11 @@ class WaylandPointerDelegate : public PointerDelegate {
   void OnPointerScrollStop(base::TimeTicks time_stamp) override {
     if (wl_resource_get_version(pointer_resource_) >=
         WL_POINTER_AXIS_STOP_SINCE_VERSION) {
+      SendTimestamp(time_stamp);
       wl_pointer_send_axis_stop(pointer_resource_,
                                 TimeTicksToMilliseconds(time_stamp),
                                 WL_POINTER_AXIS_HORIZONTAL_SCROLL);
+      SendTimestamp(time_stamp);
       wl_pointer_send_axis_stop(pointer_resource_,
                                 TimeTicksToMilliseconds(time_stamp),
                                 WL_POINTER_AXIS_VERTICAL_SCROLL);
@@ -3144,7 +3310,6 @@ void pointer_release(wl_client* client, wl_resource* resource) {
 const struct wl_pointer_interface pointer_implementation = {pointer_set_cursor,
                                                             pointer_release};
 
-#if BUILDFLAG(USE_XKBCOMMON)
 
 ////////////////////////////////////////////////////////////////////////////////
 // wl_keyboard_interface:
@@ -3152,13 +3317,15 @@ const struct wl_pointer_interface pointer_implementation = {pointer_set_cursor,
 // Keyboard delegate class that accepts events for surfaces owned by the same
 // client as a keyboard resource.
 class WaylandKeyboardDelegate
-    : public KeyboardDelegate,
+    : public WaylandInputDelegate,
+      public KeyboardDelegate,
       public KeyboardObserver
 #if defined(OS_CHROMEOS)
     ,
       public chromeos::input_method::ImeKeyboard::Observer
 #endif
 {
+#if BUILDFLAG(USE_XKBCOMMON)
  public:
   explicit WaylandKeyboardDelegate(wl_resource* keyboard_resource)
       : keyboard_resource_(keyboard_resource),
@@ -3220,6 +3387,7 @@ class WaylandKeyboardDelegate
                          ui::DomCode key,
                          bool pressed) override {
     uint32_t serial = next_serial();
+    SendTimestamp(time_stamp);
     wl_keyboard_send_key(keyboard_resource_, serial,
                          TimeTicksToMilliseconds(time_stamp), DomCodeToKey(key),
                          pressed ? WL_KEYBOARD_KEY_STATE_PRESSED
@@ -3338,7 +3506,10 @@ class WaylandKeyboardDelegate
   std::unique_ptr<xkb_state, ui::XkbStateDeleter> xkb_state_;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandKeyboardDelegate);
+#endif
 };
+
+#if BUILDFLAG(USE_XKBCOMMON)
 
 void keyboard_release(wl_client* client, wl_resource* resource) {
   wl_resource_destroy(resource);
@@ -3353,7 +3524,7 @@ const struct wl_keyboard_interface keyboard_implementation = {keyboard_release};
 
 // Touch delegate class that accepts events for surfaces owned by the same
 // client as a touch resource.
-class WaylandTouchDelegate : public TouchDelegate {
+class WaylandTouchDelegate : public WaylandInputDelegate, public TouchDelegate {
  public:
   explicit WaylandTouchDelegate(wl_resource* touch_resource)
       : touch_resource_(touch_resource) {}
@@ -3373,18 +3544,21 @@ class WaylandTouchDelegate : public TouchDelegate {
                    const gfx::PointF& location) override {
     wl_resource* surface_resource = GetSurfaceResource(surface);
     DCHECK(surface_resource);
+    SendTimestamp(time_stamp);
     wl_touch_send_down(touch_resource_, next_serial(),
                        TimeTicksToMilliseconds(time_stamp), surface_resource,
                        id, wl_fixed_from_double(location.x()),
                        wl_fixed_from_double(location.y()));
   }
   void OnTouchUp(base::TimeTicks time_stamp, int id) override {
+    SendTimestamp(time_stamp);
     wl_touch_send_up(touch_resource_, next_serial(),
                      TimeTicksToMilliseconds(time_stamp), id);
   }
   void OnTouchMotion(base::TimeTicks time_stamp,
                      int id,
                      const gfx::PointF& location) override {
+    SendTimestamp(time_stamp);
     wl_touch_send_motion(touch_resource_, TimeTicksToMilliseconds(time_stamp),
                          id, wl_fixed_from_double(location.x()),
                          wl_fixed_from_double(location.y()));
@@ -4230,7 +4404,7 @@ void pointer_gestures_get_pinch_gesture(wl_client* client,
       client, &zwp_pointer_gesture_pinch_v1_interface, 1, id);
   SetImplementation(pointer_gesture_pinch_resource,
                     &pointer_gesture_pinch_implementation,
-                    base::MakeUnique<WaylandPointerGesturePinchDelegate>(
+                    std::make_unique<WaylandPointerGesturePinchDelegate>(
                         pointer_gesture_pinch_resource, pointer));
 }
 
@@ -4515,6 +4689,234 @@ void bind_keyboard_extension(wl_client* client,
                                  data, nullptr);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// input_timestamps_v1 interface:
+
+class WaylandInputTimestamps : public WaylandInputDelegate::Observer {
+ public:
+  WaylandInputTimestamps(wl_resource* resource, WaylandInputDelegate* delegate)
+      : resource_(resource), delegate_(delegate) {
+    delegate_->AddObserver(this);
+  }
+
+  ~WaylandInputTimestamps() override {
+    if (delegate_)
+      delegate_->RemoveObserver(this);
+  }
+
+  // Overridden from WaylandInputDelegate::Observer:
+  void OnDelegateDestroying(WaylandInputDelegate* delegate) override {
+    DCHECK(delegate_ == delegate);
+    delegate_ = nullptr;
+  }
+  void OnSendTimestamp(base::TimeTicks time_stamp) override {
+    timespec ts = (time_stamp - base::TimeTicks()).ToTimeSpec();
+
+    zwp_input_timestamps_v1_send_timestamp(
+        resource_, static_cast<uint64_t>(ts.tv_sec) >> 32,
+        ts.tv_sec & 0xffffffff, ts.tv_nsec);
+  }
+
+ private:
+  wl_resource* const resource_;
+  WaylandInputDelegate* delegate_;
+
+  DISALLOW_COPY_AND_ASSIGN(WaylandInputTimestamps);
+};
+
+void input_timestamps_destroy(struct wl_client* client,
+                              struct wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+const struct zwp_input_timestamps_v1_interface input_timestamps_implementation =
+    {input_timestamps_destroy};
+
+////////////////////////////////////////////////////////////////////////////////
+// input_timestamps_manager_v1 interface:
+
+void input_timestamps_manager_destroy(struct wl_client* client,
+                                      struct wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+template <typename T, typename D>
+void input_timestamps_manager_get_timestamps(wl_client* client,
+                                             wl_resource* resource,
+                                             uint32_t id,
+                                             wl_resource* input_resource) {
+  wl_resource* input_timestamps_resource =
+      wl_resource_create(client, &zwp_input_timestamps_v1_interface, 1, id);
+
+  auto input_timestamps = std::make_unique<WaylandInputTimestamps>(
+      input_timestamps_resource,
+      static_cast<WaylandInputDelegate*>(
+          static_cast<D*>(GetUserDataAs<T>(input_resource)->delegate())));
+
+  SetImplementation(input_timestamps_resource, &input_timestamps_implementation,
+                    std::move(input_timestamps));
+}
+
+const struct zwp_input_timestamps_manager_v1_interface
+    input_timestamps_manager_implementation = {
+        input_timestamps_manager_destroy,
+        input_timestamps_manager_get_timestamps<Keyboard,
+                                                WaylandKeyboardDelegate>,
+        input_timestamps_manager_get_timestamps<Pointer,
+                                                WaylandPointerDelegate>,
+        input_timestamps_manager_get_timestamps<Touch, WaylandTouchDelegate>};
+
+void bind_input_timestamps_manager(wl_client* client,
+                                   void* data,
+                                   uint32_t version,
+                                   uint32_t id) {
+  wl_resource* resource = wl_resource_create(
+      client, &zwp_input_timestamps_manager_v1_interface, 1, id);
+
+  wl_resource_set_implementation(
+      resource, &input_timestamps_manager_implementation, nullptr, nullptr);
+}
+
+////////////////////////////////////////////////////////////////////
+// Pointer blending
+class PointerBlending {
+ public:
+  PointerBlending(Pointer* pointer) : pointer_(pointer) {
+  }
+
+  ui::CursorType TranslateCursorType(int32_t type) {
+    ui::CursorType newType = ui::CursorType::kNull;
+    switch(type) {
+      case 1000/* TYPE_ARROW */:
+        newType = ui::CursorType::kPointer;
+        break;
+      case 1001/* TYPE_CONTEXT_MENU */:
+        newType = ui::CursorType::kContextMenu;
+        break;
+      case 1002/* TYPE_HAND */:
+        newType = ui::CursorType::kHand;
+        break;
+      case 1003/* TYPE_HELP */:
+        newType = ui::CursorType::kHelp;
+        break;
+      case 1004/* TYPE_WAIT */:
+        newType = ui::CursorType::kWait;
+        break;
+      case 1006/* TYPE_CELL */:
+        newType = ui::CursorType::kCell;
+        break;
+      case 1007/* TYPE_CROSSHAIR */:
+        newType = ui::CursorType::kCross;
+        break;
+      case 1008/* TYPE_TEXT */:
+        newType = ui::CursorType::kIBeam;
+        break;
+      case 1009/* TYPE_VERTICAL_TEXT */:
+        newType = ui::CursorType::kVerticalText;
+        break;
+      case 1010/* TYPE_ALIAS */:
+        newType = ui::CursorType::kAlias;
+        break;
+      case 1011/* TYPE_COPY */:
+        newType = ui::CursorType::kCopy;
+        break;
+      case 1012/* TYPE_NO_DROP */:
+        newType = ui::CursorType::kNoDrop;
+        break;
+      case 1013/* TYPE_ALL_SCROLL */:
+        newType = ui::CursorType::kMove;
+        break;
+      case 1014/* TYPE_HORIZONTAL_DOUBLE_ARROW */:
+        newType = ui::CursorType::kEastWestResize;
+        break;
+      case 1015/* TYPE_VERTICAL_DOUBLE_ARROW */:
+        newType = ui::CursorType::kNorthSouthResize;
+        break;
+      case 1016/* TYPE_TOP_RIGHT_DIAGONAL_DOUBLE_ARROW */:
+        newType = ui::CursorType::kNorthWestResize;
+        break;
+      case 1017/* TYPE_TOP_LEFT_DIAGONAL_DOUBLE_ARROW */:
+        newType = ui::CursorType::kNorthEastResize;
+        break;
+      case 1018/* TYPE_ZOOM_IN */:
+        newType = ui::CursorType::kZoomIn;
+        break;
+      case 1019/* TYPE_ZOOM_OUT */:
+        newType = ui::CursorType::kZoomOut;
+        break;
+      case 1020/* TYPE_GRAB */:
+        newType = ui::CursorType::kGrab;
+        break;
+      case 1021/* TYPE_GRABBING */:
+        newType = ui::CursorType::kGrabbing;
+        break;
+    }
+    return newType;
+  }
+
+  void SendCursorDetails(float alpha, int32_t type) {
+    if (pointer_) {
+      pointer_ -> SetCursorType(TranslateCursorType(type));
+      // When type equals -1, it is using the custom cursor. Therefore we should
+      // hide the chrome side's cursor.
+      pointer_ -> SetVisible(alpha == 1 && type != -1);
+    }
+  }
+
+ private:
+  Pointer* pointer_;
+
+  DISALLOW_COPY_AND_ASSIGN(PointerBlending);
+};
+
+void pointer_blending_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+void blending_send_cursor_details(wl_client* client,
+                        wl_resource* resource,
+                        wl_fixed_t alpha,
+                        int32_t type) {
+  GetUserDataAs<PointerBlending>(resource)->SendCursorDetails(wl_fixed_to_double(alpha), type);
+}
+
+const struct zwp_pointer_blending_v1_interface
+    pointer_blending_implementation = {pointer_blending_destroy, blending_send_cursor_details};
+
+////////////////////////////////////////////////////////////////////////////////
+// shaped_cursors_interface:
+
+void pointer_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+void pointer_get_blending(wl_client* client,
+                          wl_resource* resource,
+                          uint32_t id,
+                          wl_resource* pointer_resource) {
+  Pointer* pointer = GetUserDataAs<Pointer>(pointer_resource);
+
+  wl_resource* blending_resource =
+      wl_resource_create(client, &zwp_pointer_blending_v1_interface, 1, id);
+
+  SetImplementation(blending_resource, &pointer_blending_implementation,
+                    std::make_unique<PointerBlending>(pointer));
+
+}
+
+const struct zwp_shaped_cursors_v1_interface
+    zwp_pointer_implementation = {pointer_destroy, pointer_get_blending};
+
+void bind_zwp_pointer(wl_client* client,
+                  void* data,
+                  uint32_t version,
+                  uint32_t id) {
+  wl_resource* resource =
+      wl_resource_create(client, &zwp_shaped_cursors_v1_interface, 1, id);
+
+  wl_resource_set_implementation(resource, &zwp_pointer_implementation,
+                                 data, nullptr);
+}
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4569,6 +4971,11 @@ Server::Server(Display* display)
                    display_, bind_stylus_tools);
   wl_global_create(wl_display_.get(), &zcr_keyboard_extension_v1_interface, 1,
                    display_, bind_keyboard_extension);
+  wl_global_create(wl_display_.get(),
+                   &zwp_input_timestamps_manager_v1_interface, 1, display_,
+                   bind_input_timestamps_manager);
+  wl_global_create(wl_display_.get(), &zwp_shaped_cursors_v1_interface, 1,
+                   display_, bind_zwp_pointer);
 }
 
 Server::~Server() {}

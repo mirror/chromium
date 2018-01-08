@@ -116,6 +116,7 @@ inline unsigned CSSSelector::SpecificityForOneSelector() const {
         // FIXME: PseudoAny should base the specificity on the sub-selectors.
         // See http://lists.w3.org/Archives/Public/www-style/2010Sep/0530.html
         case kPseudoAny:
+        case kPseudoMatches:
         default:
           break;
       }
@@ -214,6 +215,7 @@ PseudoId CSSSelector::GetPseudoId(PseudoType type) {
     case kPseudoLink:
     case kPseudoVisited:
     case kPseudoAny:
+    case kPseudoMatches:
     case kPseudoAnyLink:
     case kPseudoWebkitAnyLink:
     case kPseudoAutofill:
@@ -386,6 +388,7 @@ const static NameToPseudoStruct kPseudoTypeWithArgumentsMap[] = {
     {"host", CSSSelector::kPseudoHost},
     {"host-context", CSSSelector::kPseudoHostContext},
     {"lang", CSSSelector::kPseudoLang},
+    {"matches", CSSSelector::kPseudoMatches},
     {"not", CSSSelector::kPseudoNot},
     {"nth-child", CSSSelector::kPseudoNthChild},
     {"nth-last-child", CSSSelector::kPseudoNthLastChild},
@@ -524,7 +527,7 @@ void CSSSelector::UpdatePseudoType(const AtomicString& value,
       // but should be PseudoElement like double colon.
       if (match_ == kPseudoClass)
         match_ = kPseudoElement;
-    // fallthrough
+      FALLTHROUGH;
     case kPseudoBackdrop:
     case kPseudoCue:
     case kPseudoPlaceholder:
@@ -559,7 +562,7 @@ void CSSSelector::UpdatePseudoType(const AtomicString& value,
         pseudo_type_ = kPseudoUnknown;
         break;
       }
-    // fallthrough
+      FALLTHROUGH;
     case kPseudoActive:
     case kPseudoAny:
     case kPseudoAnyLink:
@@ -596,6 +599,7 @@ void CSSSelector::UpdatePseudoType(const AtomicString& value,
     case kPseudoLastChild:
     case kPseudoLastOfType:
     case kPseudoLink:
+    case kPseudoMatches:
     case kPseudoNoButton:
     case kPseudoNot:
     case kPseudoNthChild:
@@ -734,6 +738,7 @@ const CSSSelector* CSSSelector::SerializeCompound(
         case kPseudoHost:
         case kPseudoHostContext:
         case kPseudoAny:
+        case kPseudoMatches:
           break;
         default:
           break;
@@ -831,6 +836,7 @@ String CSSSelector::SelectorText() const {
         break;
       case kSubSelector:
         NOTREACHED();
+        break;
       case kShadowPseudo:
       case kShadowSlot:
         result = builder.ToString() + result;
@@ -996,8 +1002,8 @@ bool CSSSelector::MatchesPseudoElement() const {
 }
 
 template <typename Functor>
-static bool ForEachTagHistory(const Functor& functor,
-                              const CSSSelector& selector) {
+static bool ForAnyInTagHistory(const Functor& functor,
+                               const CSSSelector& selector) {
   for (const CSSSelector* current = &selector; current;
        current = current->TagHistory()) {
     if (functor(*current))
@@ -1005,7 +1011,7 @@ static bool ForEachTagHistory(const Functor& functor,
     if (const CSSSelectorList* selector_list = current->SelectorList()) {
       for (const CSSSelector* sub_selector = selector_list->First();
            sub_selector; sub_selector = CSSSelectorList::Next(*sub_selector)) {
-        if (ForEachTagHistory(functor, *sub_selector))
+        if (ForAnyInTagHistory(functor, *sub_selector))
           return true;
       }
     }
@@ -1015,7 +1021,7 @@ static bool ForEachTagHistory(const Functor& functor,
 }
 
 bool CSSSelector::HasContentPseudo() const {
-  return ForEachTagHistory(
+  return ForAnyInTagHistory(
       [](const CSSSelector& selector) -> bool {
         return selector.RelationIsAffectedByPseudoContent();
       },
@@ -1023,7 +1029,7 @@ bool CSSSelector::HasContentPseudo() const {
 }
 
 bool CSSSelector::HasSlottedPseudo() const {
-  return ForEachTagHistory(
+  return ForAnyInTagHistory(
       [](const CSSSelector& selector) -> bool {
         return selector.GetPseudoType() == CSSSelector::kPseudoSlotted;
       },
@@ -1031,7 +1037,7 @@ bool CSSSelector::HasSlottedPseudo() const {
 }
 
 bool CSSSelector::HasDeepCombinatorOrShadowPseudo() const {
-  return ForEachTagHistory(
+  return ForAnyInTagHistory(
       [](const CSSSelector& selector) -> bool {
         return selector.Relation() == CSSSelector::kShadowDeep ||
                selector.Relation() == CSSSelector::kShadowPiercingDescendant ||
@@ -1041,7 +1047,7 @@ bool CSSSelector::HasDeepCombinatorOrShadowPseudo() const {
 }
 
 bool CSSSelector::NeedsUpdatedDistribution() const {
-  return ForEachTagHistory(
+  return ForAnyInTagHistory(
       [](const CSSSelector& selector) -> bool {
         return selector.RelationIsAffectedByPseudoContent() ||
                selector.GetPseudoType() == CSSSelector::kPseudoSlotted ||

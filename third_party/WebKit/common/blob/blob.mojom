@@ -4,6 +4,9 @@
 
 module blink.mojom;
 
+import "services/network/public/interfaces/http_request_headers.mojom";
+import "services/network/public/interfaces/url_loader.mojom";
+
 // Interface that can be implemented to be informed of certain information while
 // reading the data for a blob.
 interface BlobReaderClient {
@@ -39,9 +42,27 @@ interface Blob {
   ReadRange(uint64 offset, uint64 length, handle<data_pipe_producer> pipe,
             BlobReaderClient? client);
 
+  // Creates a URLLoader that returns the contents of this blob.
+  // A "Range" header can be passed in the optional |headers| to only read part
+  // of the blob.
+  CreateLoader(network.mojom.URLLoader& loader,
+               network.mojom.HttpRequestHeaders? headers,
+               network.mojom.URLLoaderClient client);
+
   // This method is an implementation detail of the blob system. You should not
   // ever need to call it directly.
   // This returns the internal UUID of the blob, used by the blob system to
   // identify the blob.
   GetInternalUUID() => (string uuid);
+};
+
+// Struct wrapping a Blob interface pointer.
+// TODO(mek): Once https://crbug.com/696107 is implemented all usage of this
+// struct can be replaced with a simple Blob interface pointer with handle
+// properties for the other attributes.
+struct SerializedBlob {
+  string uuid;
+  string content_type;
+  uint64 size;
+  Blob blob;
 };

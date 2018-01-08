@@ -11,33 +11,36 @@
 #include "net/url_request/redirect_info.h"
 #include "third_party/WebKit/common/blob/blob.mojom.h"
 
-namespace content {
-
+namespace network {
+class ResourceRequestBody;
 struct ResourceRequest;
 struct ResourceResponseHead;
+}
+
+namespace content {
 
 // Helper functions for service worker classes that use URLLoader
 //(e.g., ServiceWorkerURLLoaderJob and ServiceWorkerSubresourceLoader).
 class ServiceWorkerLoaderHelpers {
  public:
   static std::unique_ptr<ServiceWorkerFetchRequest> CreateFetchRequest(
-      const ResourceRequest& request);
+      const network::ResourceRequest& request);
 
   // Populates |out_head->headers| with the given |status_code|, |status_text|,
   // and |headers|.
   static void SaveResponseHeaders(const int status_code,
                                   const std::string& status_text,
                                   const ServiceWorkerHeaderMap& headers,
-                                  ResourceResponseHead* out_head);
+                                  network::ResourceResponseHead* out_head);
   // Populates |out_head| (except for headers) with given |response|.
   static void SaveResponseInfo(const ServiceWorkerResponse& response,
-                               ResourceResponseHead* out_head);
+                               network::ResourceResponseHead* out_head);
 
   // Returns a redirect info if |response_head| is an redirect response.
   // Otherwise returns base::nullopt.
   static base::Optional<net::RedirectInfo> ComputeRedirectInfo(
-      const ResourceRequest& original_request,
-      const ResourceResponseHead& response_head,
+      const network::ResourceRequest& original_request,
+      const network::ResourceResponseHead& response_head,
       bool token_binding_negotiated);
 
   // Reads |blob| using the range in |headers| (if any), writing into
@@ -49,6 +52,15 @@ class ServiceWorkerLoaderHelpers {
       const net::HttpRequestHeaders& headers,
       base::OnceCallback<void(int net_error)> on_blob_read_complete,
       mojo::ScopedDataPipeConsumerHandle* handle_out);
+
+  // Returns a new copy of the given body. This is useful for service worker
+  // with NetworkService because it sends the ResourceRequestBody over Mojo IPC,
+  // which moves out the DataPipeGetter elements in the Pickle code in
+  // resources_messages.cc. We can't change the Pickle code to call
+  // DataPipeGetter's Clone method because that code can run on different thread
+  // than the DataPipeGetter.
+  static scoped_refptr<network::ResourceRequestBody> CloneResourceRequestBody(
+      const network::ResourceRequestBody* body);
 };
 
 }  // namespace content

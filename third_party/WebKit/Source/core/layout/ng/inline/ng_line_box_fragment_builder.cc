@@ -4,11 +4,11 @@
 
 #include "core/layout/ng/inline/ng_line_box_fragment_builder.h"
 
+#include "core/layout/ng/exclusions/ng_exclusion_space.h"
 #include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
-#include "core/layout/ng/ng_exclusion_space.h"
 #include "core/layout/ng/ng_fragment.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_positioned_float.h"
@@ -23,7 +23,7 @@ NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(
     : NGContainerFragmentBuilder(style, writing_mode, TextDirection::kLtr),
       node_(node) {}
 
-NGLineBoxFragmentBuilder::~NGLineBoxFragmentBuilder() {}
+NGLineBoxFragmentBuilder::~NGLineBoxFragmentBuilder() = default;
 
 void NGLineBoxFragmentBuilder::Reset() {
   children_.clear();
@@ -141,8 +141,10 @@ scoped_refptr<NGLayoutResult> NGLineBoxFragmentBuilder::ToLineBoxFragment() {
       std::move(fragment), oof_positioned_descendants_, positioned_floats_,
       unpositioned_floats_, std::move(exclusion_space_), bfc_offset_,
       end_margin_strut_,
-      /* intrinsic_block_size */ LayoutUnit(), EBreakBetween::kAuto,
-      EBreakBetween::kAuto, NGLayoutResult::kSuccess));
+      /* intrinsic_block_size */ LayoutUnit(),
+      /* minimal_space_shortage */ LayoutUnit::Max(), EBreakBetween::kAuto,
+      EBreakBetween::kAuto, /* has_forced_break */ false, is_pushed_by_floats_,
+      NGLayoutResult::kSuccess));
 }
 
 }  // namespace blink

@@ -338,7 +338,7 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     case CSSSelector::kShadowDeepAsDescendant:
       Deprecation::CountDeprecation(context.element->GetDocument(),
                                     WebFeature::kCSSDeepCombinator);
-    // fall through
+      FALLTHROUGH;
     case CSSSelector::kDescendant:
       if (context.selector->RelationIsAffectedByPseudoContent()) {
         for (Element* element = context.element; element;
@@ -418,9 +418,9 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
       return kSelectorFailsAllSiblings;
 
     case CSSSelector::kShadowPseudo: {
-      if (!is_ua_rule_ &&
-          context.selector->GetPseudoType() == CSSSelector::kPseudoShadow &&
-          mode_ == kQueryingRules) {
+      DCHECK(mode_ == kQueryingRules ||
+             context.selector->GetPseudoType() != CSSSelector::kPseudoShadow);
+      if (context.selector->GetPseudoType() == CSSSelector::kPseudoShadow) {
         UseCounter::Count(context.element->GetDocument(),
                           WebFeature::kPseudoShadowInStaticProfile);
       }
@@ -439,17 +439,11 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     }
 
     case CSSSelector::kShadowDeep: {
-      if (!is_ua_rule_) {
-        if (mode_ == kQueryingRules) {
-          UseCounter::Count(context.element->GetDocument(),
-                            WebFeature::kDeepCombinatorInStaticProfile);
-        } else {
-          Deprecation::CountDeprecation(context.element->GetDocument(),
-                                        WebFeature::kCSSDeepCombinator);
-        }
-      }
+      DCHECK(mode_ == kQueryingRules);
+      UseCounter::Count(context.element->GetDocument(),
+                        WebFeature::kDeepCombinatorInStaticProfile);
       if (ShadowRoot* root = context.element->ContainingShadowRoot()) {
-        if (root->GetType() == ShadowRootType::kUserAgent)
+        if (root->IsUserAgent())
           return kSelectorFailsCompletely;
       }
 
@@ -510,6 +504,10 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     }
 
     case CSSSelector::kShadowSlot: {
+      if (IsHTMLSlotElement(context.element) &&
+          ToHTMLSlotElement(context.element)->SupportsAssignment()) {
+        return kSelectorFailsCompletely;
+      }
       const HTMLSlotElement* slot = FindSlotElementInScope(context);
       if (!slot)
         return kSelectorFailsCompletely;
@@ -884,6 +882,21 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     }
     case CSSSelector::kPseudoTarget:
       return element == element.GetDocument().CssTarget();
+    case CSSSelector::kPseudoMatches: {
+      if (!RuntimeEnabledFeatures::CSSMatchesEnabled())
+        return false;
+      UseCounter::Count(context.element->GetDocument(),
+                        WebFeature::kCSSSelectorPseudoMatches);
+      SelectorCheckingContext sub_context(context);
+      sub_context.is_sub_selector = true;
+      DCHECK(selector.SelectorList());
+      for (sub_context.selector = selector.SelectorList()->First();
+           sub_context.selector; sub_context.selector = CSSSelectorList::Next(
+                                     *sub_context.selector)) {
+        if (Match(sub_context))
+          return true;
+      }
+    } break;
     case CSSSelector::kPseudoAny: {
       SelectorCheckingContext sub_context(context);
       sub_context.is_sub_selector = true;
@@ -905,7 +918,7 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     case CSSSelector::kPseudoWebkitAnyLink:
       UseCounter::Count(context.element->GetDocument(),
                         WebFeature::kCSSSelectorPseudoWebkitAnyLink);
-    // Fall through
+      FALLTHROUGH;
     case CSSSelector::kPseudoLink:
       return element.IsLink();
     case CSSSelector::kPseudoVisited:
@@ -1086,7 +1099,7 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     case CSSSelector::kPseudoHostHasAppearance:
       DCHECK(is_ua_rule_);
       if (ShadowRoot* root = element.ContainingShadowRoot()) {
-        if (root->GetType() != ShadowRootType::kUserAgent)
+        if (!root->IsUserAgent())
           return false;
         const ComputedStyle* style = root->host().GetComputedStyle();
         return style && style->HasAppearance();
@@ -1137,20 +1150,20 @@ bool SelectorChecker::CheckPseudoElement(const SelectorCheckingContext& context,
     }
     case CSSSelector::kPseudoPlaceholder:
       if (ShadowRoot* root = element.ContainingShadowRoot()) {
-        return root->GetType() == ShadowRootType::kUserAgent &&
+        return root->IsUserAgent() &&
                element.ShadowPseudoId() == "-webkit-input-placeholder";
       }
       return false;
     case CSSSelector::kPseudoWebKitCustomElement: {
       if (ShadowRoot* root = element.ContainingShadowRoot())
-        return root->GetType() == ShadowRootType::kUserAgent &&
+        return root->IsUserAgent() &&
                element.ShadowPseudoId() == selector.Value();
       return false;
     }
     case CSSSelector::kPseudoBlinkInternalElement:
       DCHECK(is_ua_rule_);
       if (ShadowRoot* root = element.ContainingShadowRoot())
-        return root->GetType() == ShadowRootType::kUserAgent &&
+        return root->IsUserAgent() &&
                element.ShadowPseudoId() == selector.Value();
       return false;
     case CSSSelector::kPseudoSlotted: {

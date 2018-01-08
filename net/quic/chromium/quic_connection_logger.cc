@@ -108,7 +108,7 @@ std::unique_ptr<base::Value> NetLogQuicAckFrameCallback(
     NetLogCaptureMode /* capture_mode */) {
   auto dict = std::make_unique<base::DictionaryValue>();
   dict->SetString("largest_observed",
-                  base::NumberToString(frame->deprecated_largest_observed));
+                  base::NumberToString(frame->largest_acked));
   dict->SetString("delta_time_largest_observed_us",
                   base::Int64ToString(frame->ack_delay_time.ToMicroseconds()));
 
@@ -117,7 +117,7 @@ std::unique_ptr<base::Value> NetLogQuicAckFrameCallback(
     // V34 and above express acked packets, but only print
     // missing packets, because it's typically a shorter list.
     for (QuicPacketNumber packet = frame->packets.Min();
-         packet < frame->deprecated_largest_observed; ++packet) {
+         packet < frame->largest_acked; ++packet) {
       if (!frame->packets.Contains(packet)) {
         missing->AppendString(base::NumberToString(packet));
       }
@@ -245,7 +245,7 @@ std::unique_ptr<base::Value> NetLogQuicCertificateVerifiedCallback(
   // Only the subjects are logged so that we can investigate connection pooling.
   // More fields could be logged in the future.
   std::vector<std::string> dns_names;
-  cert->GetDNSNames(&dns_names);
+  cert->GetSubjectAltName(&dns_names, nullptr);
   auto dict = std::make_unique<base::DictionaryValue>();
   auto subjects = std::make_unique<base::ListValue>();
   for (auto& dns_name : dns_names) {

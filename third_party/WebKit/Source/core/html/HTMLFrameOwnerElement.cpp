@@ -31,11 +31,13 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/layout/LayoutEmbeddedContent.h"
-#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
+#include "core/page/scrolling/RootScrollerController.h"
+#include "core/timing/DOMWindowPerformance.h"
+#include "core/timing/Performance.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
@@ -78,8 +80,7 @@ HTMLFrameOwnerElement::HTMLFrameOwnerElement(const QualifiedName& tag_name,
     : HTMLElement(tag_name, document),
       content_frame_(nullptr),
       embedded_content_view_(nullptr),
-      sandbox_flags_(kSandboxNone),
-      did_load_non_empty_document_(false) {}
+      sandbox_flags_(kSandboxNone) {}
 
 LayoutEmbeddedContent* HTMLFrameOwnerElement::GetLayoutEmbeddedContent() const {
   // HTMLObjectElement and HTMLEmbedElement may return arbitrary layoutObjects
@@ -199,6 +200,13 @@ void HTMLFrameOwnerElement::FrameOwnerPropertiesChanged() {
   }
 }
 
+void HTMLFrameOwnerElement::AddResourceTiming(const ResourceTimingInfo& info) {
+  // Resource timing info should only be reported if the subframe is attached.
+  DCHECK(ContentFrame() && ContentFrame()->IsLocalFrame());
+  DOMWindowPerformance::performance(*GetDocument().domWindow())
+      ->GenerateAndAddResourceTiming(info, localName());
+}
+
 void HTMLFrameOwnerElement::DispatchLoad() {
   DispatchScopedEvent(Event::Create(EventTypeNames::load));
 }
@@ -244,9 +252,7 @@ void HTMLFrameOwnerElement::SetEmbeddedContentView(
 
   LayoutEmbeddedContent* layout_embedded_content =
       ToLayoutEmbeddedContent(GetLayoutObject());
-  LayoutEmbeddedContentItem layout_embedded_content_item =
-      LayoutEmbeddedContentItem(layout_embedded_content);
-  if (layout_embedded_content_item.IsNull())
+  if (!layout_embedded_content)
     return;
 
   if (embedded_content_view_) {
@@ -256,13 +262,14 @@ void HTMLFrameOwnerElement::SetEmbeddedContentView(
     if (doc) {
       CHECK_NE(doc->Lifecycle().GetState(), DocumentLifecycle::kStopping);
     }
-    layout_embedded_content_item.UpdateOnEmbeddedContentViewChange();
+    layout_embedded_content->UpdateOnEmbeddedContentViewChange();
 
-    DCHECK_EQ(GetDocument().View(),
-              layout_embedded_content_item.GetFrameView());
-    DCHECK(layout_embedded_content_item.GetFrameView());
+    DCHECK_EQ(GetDocument().View(), layout_embedded_content->GetFrameView());
+    DCHECK(layout_embedded_content->GetFrameView());
     embedded_content_view_->AttachToLayout();
   }
+
+  GetDocument().GetRootScrollerController().DidUpdateIFrameFrameView(*this);
 
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
     cache->ChildrenChanged(layout_embedded_content);

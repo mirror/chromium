@@ -47,6 +47,7 @@
 #include "storage/browser/quota/quota_manager_proxy.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "storage/common/storage_histograms.h"
+#include "third_party/WebKit/common/quota/quota_types.mojom.h"
 
 using blink::mojom::CacheStorageError;
 
@@ -343,23 +344,22 @@ int64_t CalculateResponsePaddingInternal(
 
 // The state needed to pass between CacheStorageCache::Put callbacks.
 struct CacheStorageCache::PutContext {
-  PutContext(
-      std::unique_ptr<ServiceWorkerFetchRequest> request,
-      std::unique_ptr<ServiceWorkerResponse> response,
-      std::unique_ptr<storage::BlobDataHandle> blob_data_handle,
-      std::unique_ptr<storage::BlobDataHandle> side_data_blob_data_handle,
-      CacheStorageCache::ErrorCallback callback)
+  PutContext(std::unique_ptr<ServiceWorkerFetchRequest> request,
+             std::unique_ptr<ServiceWorkerResponse> response,
+             blink::mojom::BlobPtr blob,
+             blink::mojom::BlobPtr side_data_blob,
+             CacheStorageCache::ErrorCallback callback)
       : request(std::move(request)),
         response(std::move(response)),
-        blob_data_handle(std::move(blob_data_handle)),
-        side_data_blob_data_handle(std::move(side_data_blob_data_handle)),
+        blob(std::move(blob)),
+        side_data_blob(std::move(side_data_blob)),
         callback(std::move(callback)) {}
 
   // Input parameters to the Put function.
   std::unique_ptr<ServiceWorkerFetchRequest> request;
   std::unique_ptr<ServiceWorkerResponse> response;
-  std::unique_ptr<storage::BlobDataHandle> blob_data_handle;
-  std::unique_ptr<storage::BlobDataHandle> side_data_blob_data_handle;
+  blink::mojom::BlobPtr blob;
+  blink::mojom::BlobPtr side_data_blob;
 
   CacheStorageCache::ErrorCallback callback;
   disk_cache::ScopedEntryPtr cache_entry;
@@ -511,7 +511,7 @@ void CacheStorageCache::WriteSideData(ErrorCallback callback,
   // can call Size, another scheduled operation.
   quota_manager_proxy_->GetUsageAndQuota(
       base::ThreadTaskRunnerHandle::Get().get(), origin_,
-      storage::kStorageTypeTemporary,
+      blink::mojom::StorageType::kTemporary,
       base::AdaptCallbackForRepeating(
           base::BindOnce(&CacheStorageCache::WriteSideDataDidGetQuota,
                          weak_ptr_factory_.GetWeakPtr(), std::move(callback),
@@ -559,7 +559,7 @@ void CacheStorageCache::BatchOperation(
     // than it's supposed to be.
     quota_manager_proxy_->GetUsageAndQuota(
         base::ThreadTaskRunnerHandle::Get().get(), origin_,
-        storage::kStorageTypeTemporary,
+        blink::mojom::StorageType::kTemporary,
         base::AdaptCallbackForRepeating(base::BindOnce(
             &CacheStorageCache::BatchDidGetUsageAndQuota,
             weak_ptr_factory_.GetWeakPtr(), operations, std::move(callback),
@@ -570,7 +570,7 @@ void CacheStorageCache::BatchOperation(
   BatchDidGetUsageAndQuota(
       operations, std::move(callback), std::move(bad_message_callback),
       0 /* space_required */, 0 /* side_data_size */,
-      blink::QuotaStatusCode::kOk, 0 /* usage */, 0 /* quota */);
+      blink::mojom::QuotaStatusCode::kOk, 0 /* usage */, 0 /* quota */);
 }
 
 void CacheStorageCache::BatchDidGetUsageAndQuota(
@@ -579,7 +579,7 @@ void CacheStorageCache::BatchDidGetUsageAndQuota(
     BadMessageCallback bad_message_callback,
     uint64_t space_required,
     uint64_t side_data_size,
-    blink::QuotaStatusCode status_code,
+    blink::mojom::QuotaStatusCode status_code,
     int64_t usage,
     int64_t quota) {
   base::CheckedNumeric<uint64_t> safe_space_required = space_required;
@@ -596,7 +596,7 @@ void CacheStorageCache::BatchDidGetUsageAndQuota(
         base::BindOnce(std::move(callback), CacheStorageError::kErrorStorage));
     return;
   }
-  if (status_code != blink::QuotaStatusCode::kOk ||
+  if (status_code != blink::mojom::QuotaStatusCode::kOk ||
       safe_space_required.ValueOrDie() > quota) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
@@ -760,6 +760,12 @@ CacheStorageCache::CacheStorageCache(
   DCHECK(!origin_.is_empty());
   DCHECK(quota_manager_proxy_.get());
   DCHECK(cache_padding_key_.get());
+
+  if (cache_size_ != CacheStorage::kSizeUnknown &&
+      cache_padding_ != CacheStorage::kSizeUnknown) {
+    // The size of this cache has already been reported to the QuotaManager.
+    last_reported_size_ = cache_size_ + cache_padding_;
+  }
 
   quota_manager_proxy_->NotifyOriginInUse(origin_);
 }
@@ -1089,10 +1095,11 @@ void CacheStorageCache::WriteSideDataDidGetQuota(
     base::Time expected_response_time,
     scoped_refptr<net::IOBuffer> buffer,
     int buf_len,
-    blink::QuotaStatusCode status_code,
+    blink::mojom::QuotaStatusCode status_code,
     int64_t usage,
     int64_t quota) {
-  if (status_code != blink::QuotaStatusCode::kOk || (buf_len > quota - usage)) {
+  if (status_code != blink::mojom::QuotaStatusCode::kOk ||
+      (buf_len > quota - usage)) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   CacheStorageError::kErrorQuotaExceeded));
@@ -1230,46 +1237,23 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
 
   std::unique_ptr<ServiceWorkerResponse> response =
       std::make_unique<ServiceWorkerResponse>(operation.response);
-  std::unique_ptr<storage::BlobDataHandle> blob_data_handle;
-  std::unique_ptr<storage::BlobDataHandle> side_data_blob_data_handle;
+  blink::mojom::BlobPtr blob;
+  blink::mojom::BlobPtr side_data_blob;
 
-  if (!response->blob_uuid.empty()) {
-    DCHECK_EQ(response->blob != nullptr, features::IsMojoBlobsEnabled());
-    if (!blob_storage_context_) {
-      std::move(callback).Run(CacheStorageError::kErrorStorage);
-      return;
-    }
-    blob_data_handle =
-        blob_storage_context_->GetBlobDataFromUUID(response->blob_uuid);
-    if (!blob_data_handle) {
-      std::move(callback).Run(CacheStorageError::kErrorStorage);
-      return;
-    }
-  }
-  if (!response->side_data_blob_uuid.empty()) {
-    DCHECK_EQ(response->side_data_blob != nullptr,
-              features::IsMojoBlobsEnabled());
-    if (!blob_storage_context_) {
-      std::move(callback).Run(CacheStorageError::kErrorStorage);
-      return;
-    }
-    side_data_blob_data_handle = blob_storage_context_->GetBlobDataFromUUID(
-        response->side_data_blob_uuid);
-    if (!side_data_blob_data_handle) {
-      std::move(callback).Run(CacheStorageError::kErrorStorage);
-      return;
-    }
-  }
+  if (response->blob)
+    blob = response->blob->Clone();
+  if (response->side_data_blob)
+    side_data_blob = response->side_data_blob->Clone();
 
   UMA_HISTOGRAM_ENUMERATION(
       "ServiceWorkerCache.Cache.AllWritesResponseType",
       operation.response.response_type,
       static_cast<int>(network::mojom::FetchResponseType::kLast) + 1);
 
-  std::unique_ptr<PutContext> put_context(new PutContext(
-      std::move(request), std::move(response), std::move(blob_data_handle),
-      std::move(side_data_blob_data_handle),
-      scheduler_->WrapCallbackToRunNext(std::move(callback))));
+  auto put_context = std::make_unique<PutContext>(
+      std::move(request), std::move(response), std::move(blob),
+      std::move(side_data_blob),
+      scheduler_->WrapCallbackToRunNext(std::move(callback)));
 
   scheduler_->ScheduleOperation(base::BindOnce(
       &CacheStorageCache::PutImpl, weak_ptr_factory_.GetWeakPtr(),
@@ -1440,11 +1424,10 @@ void CacheStorageCache::PutWriteBlobToCache(
   DCHECK(disk_cache_body_index == INDEX_RESPONSE_BODY ||
          disk_cache_body_index == INDEX_SIDE_DATA);
 
-  std::unique_ptr<storage::BlobDataHandle> blob_data_handle =
-      disk_cache_body_index == INDEX_RESPONSE_BODY
-          ? std::move(put_context->blob_data_handle)
-          : std::move(put_context->side_data_blob_data_handle);
-  DCHECK(blob_data_handle);
+  blink::mojom::BlobPtr blob = disk_cache_body_index == INDEX_RESPONSE_BODY
+                                   ? std::move(put_context->blob)
+                                   : std::move(put_context->side_data_blob);
+  DCHECK(blob);
 
   disk_cache::ScopedEntryPtr entry(std::move(put_context->cache_entry));
   put_context->cache_entry = nullptr;
@@ -1455,8 +1438,7 @@ void CacheStorageCache::PutWriteBlobToCache(
       active_blob_to_disk_cache_writers_.Add(std::move(blob_to_cache));
 
   blob_to_cache_raw->StreamBlobToCache(
-      std::move(entry), disk_cache_body_index, request_context_getter_.get(),
-      std::move(blob_data_handle),
+      std::move(entry), disk_cache_body_index, std::move(blob),
       base::BindOnce(&CacheStorageCache::PutDidWriteBlobToCache,
                      weak_ptr_factory_.GetWeakPtr(),
                      base::Passed(std::move(put_context)), blob_to_cache_key));
@@ -1478,7 +1460,7 @@ void CacheStorageCache::PutDidWriteBlobToCache(
     return;
   }
 
-  if (put_context->side_data_blob_data_handle) {
+  if (put_context->side_data_blob) {
     PutWriteBlobToCache(std::move(put_context), INDEX_SIDE_DATA);
     return;
   }
@@ -1565,7 +1547,7 @@ void CacheStorageCache::UpdateCacheSizeGotSize(
 
   quota_manager_proxy_->NotifyStorageModified(
       storage::QuotaClient::kServiceWorkerCache, origin_,
-      storage::kStorageTypeTemporary, size_delta);
+      blink::mojom::StorageType::kTemporary, size_delta);
 
   if (cache_storage_)
     cache_storage_->NotifyCacheContentChanged(cache_name_);
@@ -1858,22 +1840,20 @@ CacheStorageCache::PopulateResponseBody(disk_cache::ScopedEntryPtr entry,
   // Create a blob with the response body data.
   response->blob_size = entry->GetDataSize(INDEX_RESPONSE_BODY);
   response->blob_uuid = base::GenerateGUID();
-  storage::BlobDataBuilder blob_data(response->blob_uuid);
+  auto blob_data =
+      std::make_unique<storage::BlobDataBuilder>(response->blob_uuid);
 
   disk_cache::Entry* temp_entry = entry.get();
-  blob_data.AppendDiskCacheEntryWithSideData(
+  blob_data->AppendDiskCacheEntryWithSideData(
       new CacheStorageCacheDataHandle(CreateCacheHandle(), std::move(entry)),
       temp_entry, INDEX_RESPONSE_BODY, INDEX_SIDE_DATA);
-  auto result = blob_storage_context_->AddFinishedBlob(&blob_data);
+  auto result = blob_storage_context_->AddFinishedBlob(std::move(blob_data));
 
-  if (features::IsMojoBlobsEnabled()) {
-    blink::mojom::BlobPtr blob_ptr;
-    storage::BlobImpl::Create(
-        std::make_unique<storage::BlobDataHandle>(*result),
-        MakeRequest(&blob_ptr));
-    response->blob =
-        base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
-  }
+  blink::mojom::BlobPtr blob_ptr;
+  storage::BlobImpl::Create(std::make_unique<storage::BlobDataHandle>(*result),
+                            MakeRequest(&blob_ptr));
+  response->blob =
+      base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
 
   return result;
 }

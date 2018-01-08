@@ -9,6 +9,7 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/DevToolsEmulator.h"
+#include "core/layout/LayoutScrollbarPart.h"
 #include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintLayerScrollableArea.h"
@@ -22,6 +23,7 @@
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/WebFloatRect.h"
 #include "public/platform/WebThemeEngine.h"
+#include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
 #include "public/web/WebScriptSource.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -47,37 +49,34 @@ class ScrollbarsTest : public ::testing::WithParamInterface<bool>,
     WebMouseEvent event(
         WebInputEvent::kMouseMove, WebFloatPoint(x, y), WebFloatPoint(x, y),
         WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
-        CurrentTimeTicks().InSeconds());
+        CurrentTimeTicksInSeconds());
     event.SetFrameScale(1);
     EventHandler().HandleMouseMoveEvent(event, Vector<WebMouseEvent>());
   }
 
   void HandleMousePressEvent(int x, int y) {
-    WebMouseEvent event(WebInputEvent::kMouseDown, WebFloatPoint(x, y),
-                        WebFloatPoint(x, y),
-                        WebPointerProperties::Button::kLeft, 0,
-                        WebInputEvent::Modifiers::kLeftButtonDown,
-                        CurrentTimeTicks().InSeconds());
+    WebMouseEvent event(
+        WebInputEvent::kMouseDown, WebFloatPoint(x, y), WebFloatPoint(x, y),
+        WebPointerProperties::Button::kLeft, 0,
+        WebInputEvent::Modifiers::kLeftButtonDown, CurrentTimeTicksInSeconds());
     event.SetFrameScale(1);
     EventHandler().HandleMousePressEvent(event);
   }
 
   void HandleMouseReleaseEvent(int x, int y) {
-    WebMouseEvent event(WebInputEvent::kMouseUp, WebFloatPoint(x, y),
-                        WebFloatPoint(x, y),
-                        WebPointerProperties::Button::kLeft, 0,
-                        WebInputEvent::Modifiers::kLeftButtonDown,
-                        CurrentTimeTicks().InSeconds());
+    WebMouseEvent event(
+        WebInputEvent::kMouseUp, WebFloatPoint(x, y), WebFloatPoint(x, y),
+        WebPointerProperties::Button::kLeft, 0,
+        WebInputEvent::Modifiers::kLeftButtonDown, CurrentTimeTicksInSeconds());
     event.SetFrameScale(1);
     EventHandler().HandleMouseReleaseEvent(event);
   }
 
   void HandleMouseLeaveEvent() {
-    WebMouseEvent event(WebInputEvent::kMouseMove, WebFloatPoint(1, 1),
-                        WebFloatPoint(1, 1),
-                        WebPointerProperties::Button::kLeft, 0,
-                        WebInputEvent::Modifiers::kLeftButtonDown,
-                        CurrentTimeTicks().InSeconds());
+    WebMouseEvent event(
+        WebInputEvent::kMouseMove, WebFloatPoint(1, 1), WebFloatPoint(1, 1),
+        WebPointerProperties::Button::kLeft, 0,
+        WebInputEvent::Modifiers::kLeftButtonDown, CurrentTimeTicksInSeconds());
     event.SetFrameScale(1);
     EventHandler().HandleMouseLeaveEvent(event);
   }
@@ -117,16 +116,12 @@ class ScrollbarsTestWithVirtualTimer : public ScrollbarsTest {
   // a hard (virtual) time limit.
   void RunTasksForPeriod(double delay_ms) {
     TimeAdvance();
-    Platform::Current()
-        ->CurrentThread()
-        ->Scheduler()
-        ->LoadingTaskRunner()
-        ->PostDelayedTask(
-            FROM_HERE,
-            WTF::Bind(
-                &ScrollbarsTestWithVirtualTimer::StopVirtualTimeAndExitRunLoop,
-                WTF::Unretained(this)),
-            TimeDelta::FromMillisecondsD(delay_ms));
+    scheduler::GetSingleThreadTaskRunnerForTesting()->PostDelayedTask(
+        FROM_HERE,
+        WTF::Bind(
+            &ScrollbarsTestWithVirtualTimer::StopVirtualTimeAndExitRunLoop,
+            WTF::Unretained(this)),
+        TimeDelta::FromMillisecondsD(delay_ms));
     testing::EnterRunLoop();
   }
 };
@@ -419,7 +414,7 @@ TEST_P(ScrollbarsTest, scrollbarIsNotHandlingTouchpadScroll) {
   DCHECK(scrollable_area->VerticalScrollbar());
   WebGestureEvent scroll_begin(WebInputEvent::kGestureScrollBegin,
                                WebInputEvent::kNoModifiers,
-                               CurrentTimeTicks().InSeconds());
+                               CurrentTimeTicksInSeconds());
   scroll_begin.x = scroll_begin.global_x =
       scrollable->OffsetLeft() + scrollable->OffsetWidth() - 2;
   scroll_begin.y = scroll_begin.global_y = scrollable->OffsetTop();
@@ -976,104 +971,9 @@ TEST_P(ScrollbarsTest,
   Compositor().BeginFrame();
 }
 
-// Make sure native scrollbar can change by Emulator.
-// Disable on Android since Android always enable OverlayScrollbar.
-// TODO(https://crbug.com/795645): This test is failing on the ChromeOS bot.
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
-TEST_P(ScrollbarsTest, DISABLED_NativeScrollbarChangeToMobileByEmulator) {
-#else
-TEST_P(ScrollbarsTest, NativeScrollbarChangeToMobileByEmulator) {
-#endif
-  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
-  ScrollbarTheme::SetMockScrollbarsEnabled(false);
-  WebView().Resize(WebSize(200, 200));
-
-  SimRequest request("https://example.com/test.html", "text/html");
-  LoadURL("https://example.com/test.html");
-  request.Complete(R"HTML(
-    <!DOCTYPE html>
-    <style type='text/css'>
-    body {
-      height: 10000px;
-      margin: 0;
-    }
-    #d1 {
-      height: 200px;
-      width: 200px;
-      overflow: auto;
-    }
-    #d2 {
-      height: 2000px;
-    }
-    </style>
-    <div id='d1'>
-      <div id='d2'/>
-    </div>
-  )HTML");
-
-  Compositor().BeginFrame();
-
-  Document& document = GetDocument();
-
-  ScrollableArea* root_scrollable =
-      document.View()->LayoutViewportScrollableArea();
-
-  Element* div = document.getElementById("d1");
-
-  ScrollableArea* div_scrollable =
-      ToLayoutBox(div->GetLayoutObject())->GetScrollableArea();
-
-  VisualViewport& viewport = WebView().GetPage()->GetVisualViewport();
-
-  DCHECK(root_scrollable->VerticalScrollbar());
-  DCHECK(!root_scrollable->VerticalScrollbar()->IsCustomScrollbar());
-  DCHECK(!root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
-  DCHECK(!root_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
-
-  DCHECK(!viewport.LayerForHorizontalScrollbar()->Parent());
-
-  DCHECK(div_scrollable->VerticalScrollbar());
-  DCHECK(!div_scrollable->VerticalScrollbar()->IsCustomScrollbar());
-  DCHECK(!div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
-  DCHECK(!div_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
-
-  // Turn on mobile emulator.
-  WebDeviceEmulationParams params;
-  params.screen_position = WebDeviceEmulationParams::kMobile;
-  WebView().EnableDeviceEmulation(params);
-
-  // For root Scrollbar, mobile emulator will change them to page VisualViewport
-  // scrollbar layer.
-  EXPECT_TRUE(viewport.LayerForHorizontalScrollbar()->Parent());
-
-  // Ensure div scrollbar also change to mobile overlay theme.
-  EXPECT_TRUE(div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
-
-  ScrollbarThemeOverlay& theme =
-      (ScrollbarThemeOverlay&)div_scrollable->VerticalScrollbar()->GetTheme();
-  EXPECT_TRUE(theme.IsMobileTheme());
-
-  // Turn off mobile emulator.
-  WebView().DisableDeviceEmulation();
-
-  EXPECT_TRUE(root_scrollable->VerticalScrollbar());
-  EXPECT_FALSE(root_scrollable->VerticalScrollbar()->IsCustomScrollbar());
-  EXPECT_FALSE(root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
-  EXPECT_FALSE(root_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
-
-  DCHECK(!viewport.LayerForHorizontalScrollbar()->Parent());
-
-  EXPECT_TRUE(div_scrollable->VerticalScrollbar());
-  EXPECT_FALSE(div_scrollable->VerticalScrollbar()->IsCustomScrollbar());
-  EXPECT_FALSE(div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
-  EXPECT_FALSE(div_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
-}
-
 // Make sure root custom scrollbar can change by Emulator but div custom
 // scrollbar not.
 TEST_P(ScrollbarsTest, CustomScrollbarChangeToMobileByEmulator) {
-  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
-  ScrollbarTheme::SetMockScrollbarsEnabled(false);
   WebView().Resize(WebSize(200, 200));
 
   SimRequest request("https://example.com/test.html", "text/html");
@@ -1158,8 +1058,6 @@ TEST_P(ScrollbarsTest, CustomScrollbarChangeToMobileByEmulator) {
 
 // Ensure custom scrollbar recreate when style owner change,
 TEST_P(ScrollbarsTest, CustomScrollbarWhenStyleOwnerChange) {
-  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
-  ScrollbarTheme::SetMockScrollbarsEnabled(false);
   WebView().Resize(WebSize(200, 200));
 
   SimRequest request("https://example.com/test.html", "text/html");
@@ -1360,6 +1258,104 @@ class ScrollbarTestingPlatformSupport : public TestingPlatformSupport {
 
 // Test both overlay and non-overlay scrollbars.
 INSTANTIATE_TEST_CASE_P(All, ScrollbarAppearanceTest, ::testing::Bool());
+
+// Make sure native scrollbar can change by Emulator.
+// Disable on Android since Android always enable OverlayScrollbar.
+#if defined(OS_ANDROID)
+TEST_P(ScrollbarAppearanceTest,
+       DISABLED_NativeScrollbarChangeToMobileByEmulator) {
+#else
+TEST_P(ScrollbarAppearanceTest, NativeScrollbarChangeToMobileByEmulator) {
+#endif
+  ScopedTestingPlatformSupport<ScrollbarTestingPlatformSupport> platform;
+  bool use_overlay_scrollbar = GetParam();
+
+  WebView().Resize(WebSize(200, 200));
+
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+    <!DOCTYPE html>
+    <style type='text/css'>
+    body {
+      height: 10000px;
+      margin: 0;
+    }
+    #d1 {
+      height: 200px;
+      width: 200px;
+      overflow: auto;
+    }
+    #d2 {
+      height: 2000px;
+    }
+    </style>
+    <div id='d1'>
+      <div id='d2'/>
+    </div>
+  )HTML");
+
+  Compositor().BeginFrame();
+
+  Document& document = GetDocument();
+
+  ScrollableArea* root_scrollable =
+      document.View()->LayoutViewportScrollableArea();
+
+  Element* div = document.getElementById("d1");
+
+  ScrollableArea* div_scrollable =
+      ToLayoutBox(div->GetLayoutObject())->GetScrollableArea();
+
+  VisualViewport& viewport = WebView().GetPage()->GetVisualViewport();
+
+  DCHECK(root_scrollable->VerticalScrollbar());
+  DCHECK(!root_scrollable->VerticalScrollbar()->IsCustomScrollbar());
+  DCHECK_EQ(use_overlay_scrollbar,
+            root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+  DCHECK(!root_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
+
+  DCHECK(!viewport.LayerForHorizontalScrollbar()->Parent());
+
+  DCHECK(div_scrollable->VerticalScrollbar());
+  DCHECK(!div_scrollable->VerticalScrollbar()->IsCustomScrollbar());
+  DCHECK_EQ(use_overlay_scrollbar,
+            div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+  DCHECK(!div_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
+
+  // Turn on mobile emulator.
+  WebDeviceEmulationParams params;
+  params.screen_position = WebDeviceEmulationParams::kMobile;
+  WebView().EnableDeviceEmulation(params);
+
+  // For root Scrollbar, mobile emulator will change them to page VisualViewport
+  // scrollbar layer.
+  EXPECT_TRUE(viewport.LayerForHorizontalScrollbar()->Parent());
+
+  // Ensure div scrollbar also change to mobile overlay theme.
+  EXPECT_TRUE(div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+
+  ScrollbarThemeOverlay& theme =
+      (ScrollbarThemeOverlay&)div_scrollable->VerticalScrollbar()->GetTheme();
+  EXPECT_TRUE(theme.IsMobileTheme());
+
+  // Turn off mobile emulator.
+  WebView().DisableDeviceEmulation();
+
+  EXPECT_TRUE(root_scrollable->VerticalScrollbar());
+  EXPECT_FALSE(root_scrollable->VerticalScrollbar()->IsCustomScrollbar());
+  DCHECK_EQ(use_overlay_scrollbar,
+            root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+  EXPECT_FALSE(root_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
+
+  DCHECK(!viewport.LayerForHorizontalScrollbar()->Parent());
+
+  EXPECT_TRUE(div_scrollable->VerticalScrollbar());
+  EXPECT_FALSE(div_scrollable->VerticalScrollbar()->IsCustomScrollbar());
+  DCHECK_EQ(use_overlay_scrollbar,
+            div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+  EXPECT_FALSE(div_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
+}
 
 #if !defined(OS_MACOSX)
 // Ensure that the minimum length for a scrollbar thumb comes from the
@@ -1658,6 +1654,95 @@ TEST_P(ScrollbarsTest, TallAndWidePercentageBodyShouldHaveScrollbars) {
   auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
   EXPECT_TRUE(layout_viewport->VerticalScrollbar());
   EXPECT_TRUE(layout_viewport->HorizontalScrollbar());
+}
+
+class ScrollbarTrackMarginsTest : public ScrollbarsTest {
+ public:
+  void PrepareTest(const String& track_style) {
+    WebView().Resize(WebSize(200, 200));
+
+    SimRequest request("https://example.com/test.html", "text/html");
+    LoadURL("https://example.com/test.html");
+    request.Complete(R"HTML(
+      <!DOCTYPE html>
+        <style>
+        ::-webkit-scrollbar {
+          width: 10px;
+        })HTML" + track_style +
+                     R"HTML(
+        #d1 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          overflow-x:scroll;
+          overflow-y:scroll;
+        }
+      </style>
+      <div id='d1'/>
+    )HTML");
+
+    // No DCHECK failure. Issue 801123.
+    Compositor().BeginFrame();
+
+    Element* div = GetDocument().getElementById("d1");
+    ASSERT_TRUE(div);
+
+    ScrollableArea* div_scrollable =
+        ToLayoutBox(div->GetLayoutObject())->GetScrollableArea();
+
+    ASSERT_TRUE(div_scrollable->HorizontalScrollbar());
+    LayoutScrollbar* horizontal_scrollbar =
+        ToLayoutScrollbar(div_scrollable->HorizontalScrollbar());
+    horizontal_track_ = horizontal_scrollbar->GetPart(kTrackBGPart);
+    ASSERT_TRUE(horizontal_track_);
+
+    ASSERT_TRUE(div_scrollable->VerticalScrollbar());
+    LayoutScrollbar* vertical_scrollbar =
+        ToLayoutScrollbar(div_scrollable->VerticalScrollbar());
+    vertical_track_ = vertical_scrollbar->GetPart(kTrackBGPart);
+    ASSERT_TRUE(vertical_track_);
+  }
+
+  LayoutScrollbarPart* horizontal_track_ = nullptr;
+  LayoutScrollbarPart* vertical_track_ = nullptr;
+};
+
+INSTANTIATE_TEST_CASE_P(All, ScrollbarTrackMarginsTest, ::testing::Bool());
+
+TEST_P(ScrollbarTrackMarginsTest,
+       CustomScrollbarFractionalMarginsWillNotCauseDCHECKFailure) {
+  PrepareTest(R"CSS(
+    ::-webkit-scrollbar-track {
+      margin-left: 10.2px;
+      margin-top: 20.4px;
+      margin-right: 30.6px;
+      margin-bottom: 40.8px;
+    })CSS");
+
+  EXPECT_EQ(10, horizontal_track_->MarginLeft());
+  EXPECT_EQ(31, horizontal_track_->MarginRight());
+  EXPECT_EQ(20, vertical_track_->MarginTop());
+  EXPECT_EQ(41, vertical_track_->MarginBottom());
+}
+
+TEST_P(ScrollbarTrackMarginsTest,
+       CustomScrollbarScaledMarginsWillNotCauseDCHECKFailure) {
+  WebView().SetZoomFactorForDeviceScaleFactor(1.25f);
+
+  PrepareTest(R"CSS(
+    ::-webkit-scrollbar-track {
+      margin-left: 11px;
+      margin-top: 21px;
+      margin-right: 31px;
+      margin-bottom: 41px;
+    })CSS");
+
+  EXPECT_EQ(14, horizontal_track_->MarginLeft());
+  EXPECT_EQ(39, horizontal_track_->MarginRight());
+  EXPECT_EQ(26, vertical_track_->MarginTop());
+  EXPECT_EQ(51, vertical_track_->MarginBottom());
 }
 
 }  // namespace

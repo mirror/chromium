@@ -9,8 +9,10 @@
 
 #include "base/feature_list.h"
 #include "base/logging.h"
+#include "ios/chrome/app/tests_hook.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_private_base_feature.h"
+#import "ios/chrome/browser/ui/ui_feature_flags.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ui/base/device_form_factor.h"
 #include "ui/gfx/ios/uikit_util.h"
@@ -56,6 +58,12 @@ bool IsIPhoneX() {
           CGRectGetHeight([[UIScreen mainScreen] nativeBounds]) == 2436);
 }
 
+bool IsUIRefreshPhase1Enabled() {
+  if (tests_hook::ForceUIRefreshPhase1())
+    return true;
+  return base::FeatureList::IsEnabled(kUIRefreshPhase1);
+}
+
 bool IsSafeAreaCompatibleToolbarEnabled() {
   return (IsIPhoneX() &&
           base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) ||
@@ -80,7 +88,15 @@ CGFloat StatusBarHeight() {
   // Checking [UIApplication sharedApplication].statusBarFrame will return the
   // wrong offset when the application is started while in a phone call, so
   // simply return 20 here.
-  return 20;
+  if (!IsUIRefreshPhase1Enabled()) {
+    return 20;
+  }
+
+  // With the UI refresh, the location bar is hidden on landscape.
+  BOOL isCompactHeight = [UIApplication sharedApplication]
+                             .keyWindow.traitCollection.verticalSizeClass ==
+                         UIUserInterfaceSizeClassCompact;
+  return isCompactHeight ? 0 : 20;
 }
 
 CGFloat AlignValueToPixel(CGFloat value) {

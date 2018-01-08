@@ -32,7 +32,7 @@ class TestBookmarkAppHelper : public BookmarkAppHelper {
                         WebApplicationInfo web_app_info,
                         content::WebContents* contents,
                         base::Closure on_icons_downloaded_closure,
-                        WebAppInstallSource install_source)
+                        WebappInstallSource install_source)
       : BookmarkAppHelper(profile, web_app_info, contents, install_source),
         on_icons_downloaded_closure_(on_icons_downloaded_closure) {}
 
@@ -73,9 +73,9 @@ class BookmarkAppHelperTest : public DialogBrowserTest {
     if (info.title.empty())
       info.title = base::UTF8ToUTF16(info.app_url.spec());
 
-    bookmark_app_helper_ = base::MakeUnique<TestBookmarkAppHelper>(
+    bookmark_app_helper_ = std::make_unique<TestBookmarkAppHelper>(
         browser()->profile(), info, web_contents(), quit_closure_,
-        WebAppInstallSource::MENU);
+        WebappInstallSource::MENU_BROWSER_TAB);
     bookmark_app_helper_->Create(
         base::Bind(&BookmarkAppHelperTest::FinishCreateBookmarkApp,
                    base::Unretained(this)));

@@ -4,6 +4,7 @@
 
 #include "core/frame/csp/ContentSecurityPolicy.h"
 
+#include "common/net/ip_address_space.mojom-blink.h"
 #include "core/dom/Document.h"
 #include "core/frame/csp/CSPDirectiveList.h"
 #include "core/html/HTMLScriptElement.h"
@@ -16,7 +17,6 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -99,26 +99,26 @@ TEST_F(ContentSecurityPolicyTest, ParseInsecureRequestPolicy) {
 
 TEST_F(ContentSecurityPolicyTest, ParseEnforceTreatAsPublicAddressDisabled) {
   ScopedCorsRFC1918ForTest cors_rfc1918(false);
-  execution_context->SetAddressSpace(kWebAddressSpacePrivate);
-  EXPECT_EQ(kWebAddressSpacePrivate, execution_context->AddressSpace());
+  execution_context->SetAddressSpace(mojom::IPAddressSpace::kPrivate);
+  EXPECT_EQ(mojom::IPAddressSpace::kPrivate, execution_context->AddressSpace());
 
   csp->DidReceiveHeader("treat-as-public-address",
                         kContentSecurityPolicyHeaderTypeEnforce,
                         kContentSecurityPolicyHeaderSourceHTTP);
   csp->BindToExecutionContext(execution_context.Get());
-  EXPECT_EQ(kWebAddressSpacePrivate, execution_context->AddressSpace());
+  EXPECT_EQ(mojom::IPAddressSpace::kPrivate, execution_context->AddressSpace());
 }
 
 TEST_F(ContentSecurityPolicyTest, ParseEnforceTreatAsPublicAddressEnabled) {
   ScopedCorsRFC1918ForTest cors_rfc1918(true);
-  execution_context->SetAddressSpace(kWebAddressSpacePrivate);
-  EXPECT_EQ(kWebAddressSpacePrivate, execution_context->AddressSpace());
+  execution_context->SetAddressSpace(mojom::IPAddressSpace::kPrivate);
+  EXPECT_EQ(mojom::IPAddressSpace::kPrivate, execution_context->AddressSpace());
 
   csp->DidReceiveHeader("treat-as-public-address",
                         kContentSecurityPolicyHeaderTypeEnforce,
                         kContentSecurityPolicyHeaderSourceHTTP);
   csp->BindToExecutionContext(execution_context.Get());
-  EXPECT_EQ(kWebAddressSpacePublic, execution_context->AddressSpace());
+  EXPECT_EQ(mojom::IPAddressSpace::kPublic, execution_context->AddressSpace());
 }
 
 TEST_F(ContentSecurityPolicyTest, CopyStateFrom) {
@@ -201,6 +201,22 @@ TEST_F(ContentSecurityPolicyTest, IsFrameAncestorsEnforced) {
                         kContentSecurityPolicyHeaderTypeEnforce,
                         kContentSecurityPolicyHeaderSourceHTTP);
   EXPECT_TRUE(csp->IsFrameAncestorsEnforced());
+}
+
+TEST_F(ContentSecurityPolicyTest, IsActiveForConnectionsWithConnectSrc) {
+  EXPECT_FALSE(csp->IsActiveForConnections());
+  csp->DidReceiveHeader("connect-src 'none';",
+                        kContentSecurityPolicyHeaderTypeEnforce,
+                        kContentSecurityPolicyHeaderSourceHTTP);
+  EXPECT_TRUE(csp->IsActiveForConnections());
+}
+
+TEST_F(ContentSecurityPolicyTest, IsActiveForConnectionsWithDefaultSrc) {
+  EXPECT_FALSE(csp->IsActiveForConnections());
+  csp->DidReceiveHeader("default-src 'none';",
+                        kContentSecurityPolicyHeaderTypeEnforce,
+                        kContentSecurityPolicyHeaderSourceHTTP);
+  EXPECT_TRUE(csp->IsActiveForConnections());
 }
 
 // Tests that frame-ancestors directives are discarded from policies
@@ -1174,6 +1190,52 @@ TEST_F(ContentSecurityPolicyTest, BlobAllowedWhenBypassingCSP) {
 
   SchemeRegistry::RemoveURLSchemeRegisteredAsBypassingContentSecurityPolicy(
       "https");
+}
+
+TEST_F(ContentSecurityPolicyTest, CSPBypassDisabledWhenSchemeIsPrivileged) {
+  const KURL base;
+  execution_context = CreateExecutionContext();
+  execution_context->SetSecurityOrigin(secure_origin);
+  execution_context->SetURL(BlankURL());
+  csp->BindToExecutionContext(execution_context.Get());
+  csp->DidReceiveHeader("script-src http://example.com",
+                        kContentSecurityPolicyHeaderTypeEnforce,
+                        kContentSecurityPolicyHeaderSourceHTTP);
+
+  const KURL allowed_url("http://example.com/script.js");
+  const KURL http_url("http://not-example.com/script.js");
+  const KURL blob_url(base, "blob:http://not-example.com/uuid");
+  const KURL filesystem_url(base, "filesystem:http://not-example.com/file.js");
+
+  // The {Requests,Blob,Filesystem}AllowedWhenBypassingCSP tests have already
+  // ensured that RegisterURLSchemeAsBypassingContentSecurityPolicy works as
+  // expected.
+  //
+  // "http" is registered as bypassing CSP, but the context's scheme ("https")
+  // is marked as a privileged scheme, so the bypass rule should be ignored.
+  SchemeRegistry::RegisterURLSchemeAsBypassingContentSecurityPolicy("http");
+  SchemeRegistry::RegisterURLSchemeAsNotAllowingJavascriptURLs("https");
+
+  EXPECT_TRUE(csp->AllowScriptFromSource(
+      allowed_url, String(), IntegrityMetadataSet(), kNotParserInserted,
+      ResourceRequest::RedirectStatus::kNoRedirect,
+      SecurityViolationReportingPolicy::kSuppressReporting));
+  EXPECT_FALSE(csp->AllowScriptFromSource(
+      http_url, String(), IntegrityMetadataSet(), kNotParserInserted,
+      ResourceRequest::RedirectStatus::kNoRedirect,
+      SecurityViolationReportingPolicy::kSuppressReporting));
+  EXPECT_FALSE(csp->AllowScriptFromSource(
+      blob_url, String(), IntegrityMetadataSet(), kNotParserInserted,
+      ResourceRequest::RedirectStatus::kNoRedirect,
+      SecurityViolationReportingPolicy::kSuppressReporting));
+  EXPECT_FALSE(csp->AllowScriptFromSource(
+      filesystem_url, String(), IntegrityMetadataSet(), kNotParserInserted,
+      ResourceRequest::RedirectStatus::kNoRedirect,
+      SecurityViolationReportingPolicy::kSuppressReporting));
+
+  SchemeRegistry::RemoveURLSchemeRegisteredAsBypassingContentSecurityPolicy(
+      "http");
+  SchemeRegistry::RemoveURLSchemeAsNotAllowingJavascriptURLs("https");
 }
 
 TEST_F(ContentSecurityPolicyTest, IsValidCSPAttrTest) {

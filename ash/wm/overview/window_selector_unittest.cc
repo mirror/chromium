@@ -1825,11 +1825,14 @@ TEST_F(WindowSelectorTest, CancelOverviewOnTap) {
 // integers (using ceiled and floored values where appropriate), the
 // expectations are forgiving (use *_NEAR) within a single pixel.
 TEST_F(WindowSelectorTest, TransformedRectMaintainsAspect) {
+  std::unique_ptr<aura::Window> window(
+      CreateWindow(gfx::Rect(10, 10, 100, 100)));
+  ScopedTransformOverviewWindow transform_window(nullptr, window.get());
+
   gfx::Rect rect(50, 50, 200, 400);
   gfx::Rect bounds(100, 100, 50, 50);
   gfx::Rect transformed_rect =
-      ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+      transform_window.ShrinkRectToFitPreservingAspectRatio(rect, bounds, 0, 0);
   float scale = GetItemScale(rect, bounds, 0, 0);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
@@ -1837,43 +1840,41 @@ TEST_F(WindowSelectorTest, TransformedRectMaintainsAspect) {
   rect = gfx::Rect(50, 50, 400, 200);
   scale = GetItemScale(rect, bounds, 0, 0);
   transformed_rect =
-      ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+      transform_window.ShrinkRectToFitPreservingAspectRatio(rect, bounds, 0, 0);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
 
   rect = gfx::Rect(50, 50, 25, 25);
   scale = GetItemScale(rect, bounds, 0, 0);
   transformed_rect =
-      ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+      transform_window.ShrinkRectToFitPreservingAspectRatio(rect, bounds, 0, 0);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
 
   rect = gfx::Rect(50, 50, 25, 50);
   scale = GetItemScale(rect, bounds, 0, 0);
   transformed_rect =
-      ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+      transform_window.ShrinkRectToFitPreservingAspectRatio(rect, bounds, 0, 0);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
 
   rect = gfx::Rect(50, 50, 50, 25);
   scale = GetItemScale(rect, bounds, 0, 0);
   transformed_rect =
-      ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+      transform_window.ShrinkRectToFitPreservingAspectRatio(rect, bounds, 0, 0);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
 }
 
 // Tests that transformed Rect fits in target bounds and is vertically centered.
 TEST_F(WindowSelectorTest, TransformedRectIsCentered) {
+  std::unique_ptr<aura::Window> window(
+      CreateWindow(gfx::Rect(10, 10, 100, 100)));
+  ScopedTransformOverviewWindow transform_window(nullptr, window.get());
   gfx::Rect rect(50, 50, 200, 400);
   gfx::Rect bounds(100, 100, 50, 50);
   gfx::Rect transformed_rect =
-      ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+      transform_window.ShrinkRectToFitPreservingAspectRatio(rect, bounds, 0, 0);
   EXPECT_GE(transformed_rect.x(), bounds.x());
   EXPECT_LE(transformed_rect.right(), bounds.right());
   EXPECT_GE(transformed_rect.y(), bounds.y());
@@ -1887,14 +1888,17 @@ TEST_F(WindowSelectorTest, TransformedRectIsCentered) {
 // Tests that transformed Rect fits in target bounds and is vertically centered
 // when inset and header height are specified.
 TEST_F(WindowSelectorTest, TransformedRectIsCenteredWithInset) {
+  std::unique_ptr<aura::Window> window(
+      CreateWindow(gfx::Rect(10, 10, 100, 100)));
+  ScopedTransformOverviewWindow transform_window(nullptr, window.get());
   gfx::Rect rect(50, 50, 400, 200);
   gfx::Rect bounds(100, 100, 50, 50);
   const int inset = 20;
   const int header_height = 10;
   const float scale = GetItemScale(rect, bounds, inset, header_height);
   gfx::Rect transformed_rect =
-      ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, inset, header_height);
+      transform_window.ShrinkRectToFitPreservingAspectRatio(rect, bounds, inset,
+                                                            header_height);
   // The |rect| width does not fit and therefore it gets centered outside
   // |bounds| starting before |bounds.x()| and ending after |bounds.right()|.
   EXPECT_LE(transformed_rect.x(), bounds.x());
@@ -1908,6 +1912,91 @@ TEST_F(WindowSelectorTest, TransformedRectIsCenteredWithInset) {
   EXPECT_NEAR(
       transformed_rect.y() + (int)(scale * inset) - header_height - bounds.y(),
       bounds.bottom() - transformed_rect.bottom(), 1);
+}
+
+// Verify that a window which will be displayed like a letter box on the window
+// grid has the correct bounds.
+TEST_F(WindowSelectorTest, TransformingLetteredRect) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+
+  // Create a window whose width is more than twice the height.
+  const gfx::Rect original_bounds(10, 10, 300, 100);
+  const int scale = 3;
+  std::unique_ptr<aura::Window> window(CreateWindow(original_bounds));
+  ScopedTransformOverviewWindow transform_window(nullptr, window.get());
+  EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kLetterBoxed,
+            transform_window.type());
+
+  // Without any headers, the width should match the target, and the height
+  // should be such that the aspect ratio of |original_bounds| is maintained.
+  const gfx::Rect overview_bounds(0, 0, 100, 100);
+  gfx::Rect transformed_rect =
+      transform_window.ShrinkRectToFitPreservingAspectRatio(
+          original_bounds, overview_bounds, 0, 0);
+  EXPECT_EQ(overview_bounds.width(), transformed_rect.width());
+  EXPECT_NEAR(overview_bounds.height() / scale, transformed_rect.height(), 1);
+
+  // With headers, the width should still match the target. The height should
+  // still be such that the aspect ratio is maintained, but the original header
+  // which is hidden in overview needs to be accounted for.
+  const int original_header = 10;
+  const int overview_header = 20;
+  transformed_rect = transform_window.ShrinkRectToFitPreservingAspectRatio(
+      original_bounds, overview_bounds, original_header, overview_header);
+  EXPECT_EQ(overview_bounds.width(), transformed_rect.width());
+  EXPECT_NEAR((overview_bounds.height() - original_header) / scale,
+              transformed_rect.height() - original_header / scale, 1);
+  EXPECT_TRUE(overview_bounds.Contains(transformed_rect));
+
+  // Verify that for an extreme window, the transform window stores the
+  // original window selector bounds, minus the header.
+  gfx::Rect selector_bounds = overview_bounds;
+  selector_bounds.Inset(0, overview_header, 0, 0);
+  ASSERT_TRUE(transform_window.window_selector_bounds().has_value());
+  EXPECT_EQ(transform_window.window_selector_bounds().value(), selector_bounds);
+}
+
+// Verify that a window which will be displayed like a pillar box on the window
+// grid has the correct bounds.
+TEST_F(WindowSelectorTest, TransformingPillaredRect) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+
+  // Create a window whose height is more than twice the width.
+  const gfx::Rect original_bounds(10, 10, 100, 300);
+  const int scale = 3;
+  std::unique_ptr<aura::Window> window(CreateWindow(original_bounds));
+  ScopedTransformOverviewWindow transform_window(nullptr, window.get());
+  EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kPillarBoxed,
+            transform_window.type());
+
+  // Without any headers, the height should match the target, and the width
+  // should be such that the aspect ratio of |original_bounds| is maintained.
+  const gfx::Rect overview_bounds(0, 0, 100, 100);
+  gfx::Rect transformed_rect =
+      transform_window.ShrinkRectToFitPreservingAspectRatio(
+          original_bounds, overview_bounds, 0, 0);
+  EXPECT_EQ(overview_bounds.height(), transformed_rect.height());
+  EXPECT_NEAR(overview_bounds.width() / scale, transformed_rect.width(), 1);
+
+  // With headers, the height should not include the area reserved for the
+  // overview window title. It also needs to account for the original header
+  // which will become hidden in overview mode.
+  const int original_header = 10;
+  const int overview_header = 20;
+  transformed_rect = transform_window.ShrinkRectToFitPreservingAspectRatio(
+      original_bounds, overview_bounds, original_header, overview_header);
+  EXPECT_NEAR(overview_bounds.height() - overview_header,
+              transformed_rect.height() - original_header / scale, 1);
+  EXPECT_TRUE(overview_bounds.Contains(transformed_rect));
+
+  // Verify that for an extreme window, the transform window stores the
+  // original window selector bounds, minus the header.
+  gfx::Rect selector_bounds = overview_bounds;
+  selector_bounds.Inset(0, overview_header, 0, 0);
+  ASSERT_TRUE(transform_window.window_selector_bounds().has_value());
+  EXPECT_EQ(transform_window.window_selector_bounds().value(), selector_bounds);
 }
 
 // Start dragging a window and activate overview mode. This test should not
@@ -1925,6 +2014,113 @@ TEST_F(WindowSelectorTest, OverviewWhileDragging) {
   resizer->RevertDrag();
 }
 
+// Verify that the overview no windows indicator appears when entering overview
+// mode with no windows.
+TEST_F(WindowSelectorTest, OverviewNoWindowsIndicator) {
+  // Verify that entering overview mode without windows with the old ui is not
+  // possible.
+  ToggleOverview();
+  EXPECT_FALSE(window_selector());
+
+  // Verify that by entering overview mode without windows, the no items
+  // indicator appears.
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+  ToggleOverview();
+  ASSERT_TRUE(window_selector());
+  EXPECT_EQ(0u, GetWindowItemsForRoot(0).size());
+  EXPECT_TRUE(window_selector()
+                  ->grid_list_for_testing()[0]
+                  ->IsNoItemsIndicatorLabelVisibleForTesting());
+}
+
+// Verify that when opening overview mode with multiple displays, the no items
+// indicator appears on the grid(s) if it has no windows.
+TEST_F(WindowSelectorTest, OverviewNoWindowsIndicatorMultiDisplay) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+
+  // Create two windows, one each on the first two monitors.
+  UpdateDisplay("400x400,400x400,400x400");
+  aura::Window::Windows root_windows = Shell::GetAllRootWindows();
+  const gfx::Rect bounds1(0, 0, 100, 100);
+  const gfx::Rect bounds2(400, 0, 100, 100);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds1));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds2));
+  ASSERT_EQ(root_windows[0], window1->GetRootWindow());
+  ASSERT_EQ(root_windows[1], window2->GetRootWindow());
+
+  // Enter overview mode. Verify the no windows indicator is visible on the
+  // third display but not on the first two.
+  ToggleOverview();
+  ASSERT_TRUE(window_selector());
+  EXPECT_FALSE(window_selector()
+                   ->grid_list_for_testing()[0]
+                   ->IsNoItemsIndicatorLabelVisibleForTesting());
+  EXPECT_FALSE(window_selector()
+                   ->grid_list_for_testing()[1]
+                   ->IsNoItemsIndicatorLabelVisibleForTesting());
+  EXPECT_TRUE(window_selector()
+                  ->grid_list_for_testing()[2]
+                  ->IsNoItemsIndicatorLabelVisibleForTesting());
+}
+
+// Verify that pressing and releasing keys does not show the overview textbox
+// when there are no windows opened.
+TEST_F(WindowSelectorTest, TextfilterHiddenWhenNoWindows) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+  ToggleOverview();
+  ASSERT_TRUE(window_selector());
+
+  SendKey(ui::VKEY_J);
+  EXPECT_FALSE(showing_filter_widget());
+}
+
+// Tests the cases when very wide or tall windows enter overview mode.
+TEST_F(WindowSelectorTest, ExtremeWindowBounds) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+
+  // Add three windows which in overview mode will be considered wide, tall and
+  // normal. Window |wide|, with size (400, 160) will be resized to (200, 160)
+  // when the 400x200 is rotated to 200x400, and should be considered a normal
+  // overview window after display change.
+  UpdateDisplay("400x200");
+  std::unique_ptr<aura::Window> wide(CreateWindow(gfx::Rect(10, 10, 400, 160)));
+  std::unique_ptr<aura::Window> tall(CreateWindow(gfx::Rect(10, 10, 50, 200)));
+  std::unique_ptr<aura::Window> normal(
+      CreateWindow(gfx::Rect(10, 10, 200, 200)));
+
+  ToggleOverview();
+  WindowSelectorItem* wide_item = GetWindowItemForWindow(0, wide.get());
+  WindowSelectorItem* tall_item = GetWindowItemForWindow(0, tall.get());
+  WindowSelectorItem* normal_item = GetWindowItemForWindow(0, normal.get());
+
+  // Verify the window dimension type is as expected after entering overview
+  // mode.
+  EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kLetterBoxed,
+            wide_item->GetWindowDimensionsType());
+  EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kPillarBoxed,
+            tall_item->GetWindowDimensionsType());
+  EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kNormal,
+            normal_item->GetWindowDimensionsType());
+
+  display::Screen* screen = display::Screen::GetScreen();
+  const display::Display& display = screen->GetPrimaryDisplay();
+  display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_90,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  // Verify that |wide| has its window dimension type updated after the display
+  // change.
+  EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kNormal,
+            wide_item->GetWindowDimensionsType());
+  EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kPillarBoxed,
+            tall_item->GetWindowDimensionsType());
+  EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kNormal,
+            normal_item->GetWindowDimensionsType());
+}
+
 class SplitViewWindowSelectorTest : public WindowSelectorTest {
  public:
   SplitViewWindowSelectorTest() = default;
@@ -1940,8 +2136,6 @@ class SplitViewWindowSelectorTest : public WindowSelectorTest {
 
   void SetUp() override {
     WindowSelectorTest::SetUp();
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kAshEnableTabletSplitView);
     Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
   }
 
@@ -2089,14 +2283,15 @@ TEST_F(SplitViewWindowSelectorTest, DragOverviewWindowToSnap) {
             SplitViewController::LEFT_SNAPPED);
   EXPECT_EQ(split_view_controller()->left_window(), window1.get());
 
-  // Drag |window2| selector item to snap to left.
+  // Drag |window2| selector item to attempt to snap to left. Since there is
+  // already one left snapped window, we do not allow |window2| snap to left.
   WindowSelectorItem* selector_item2 =
       GetWindowItemForWindow(grid_index, window2.get());
   DragWindowTo(selector_item2, gfx::Point(0, 0));
 
   EXPECT_EQ(split_view_controller()->state(),
             SplitViewController::LEFT_SNAPPED);
-  EXPECT_EQ(split_view_controller()->left_window(), window2.get());
+  EXPECT_EQ(split_view_controller()->left_window(), window1.get());
 
   // Drag |window3| selector item to snap to right.
   WindowSelectorItem* selector_item3 =
@@ -2134,7 +2329,7 @@ TEST_F(SplitViewWindowSelectorTest, Dragging) {
   const int drag_offset_snap_region =
       OverviewWindowDragController::kMinimumDragOffsetAlreadyInSnapRegionDp;
   const int screen_width =
-      ScreenUtil::GetDisplayWorkAreaBoundsInParent(left_window.get()).width();
+      screen_util::GetDisplayWorkAreaBoundsInParent(left_window.get()).width();
   const int edge_inset = GetEdgeInset(screen_width);
   // The selector item has a margin which does not accept events. Inset any
   // event aimed at the selector items edge so events will reach it.
@@ -2326,7 +2521,7 @@ TEST_F(SplitViewWindowSelectorTest, PhantomWindowVisibility) {
   ASSERT_TRUE(window_selector_controller()->IsSelecting());
 
   const int screen_width =
-      ScreenUtil::GetDisplayWorkAreaBoundsInParent(window.get()).width();
+      screen_util::GetDisplayWorkAreaBoundsInParent(window.get()).width();
   const int edge_inset = GetEdgeInset(screen_width);
 
   // Verify the phantom window is visible when |selector_item|'s x is in the
@@ -2366,7 +2561,7 @@ TEST_F(SplitViewWindowSelectorTest, PhantomWindowVisibilityUnsnappableWindow) {
   ASSERT_TRUE(window_selector_controller()->IsSelecting());
 
   const int screen_width =
-      ScreenUtil::GetDisplayWorkAreaBoundsInParent(window.get()).width();
+      screen_util::GetDisplayWorkAreaBoundsInParent(window.get()).width();
 
   const int grid_index = 0;
   WindowSelectorItem* selector_item =
@@ -2393,7 +2588,7 @@ TEST_F(SplitViewWindowSelectorTest, SplitViewOverviewOverlayVisibility) {
   ASSERT_TRUE(window_selector_controller()->IsSelecting());
 
   const int screen_width =
-      ScreenUtil::GetDisplayWorkAreaBoundsInParent(window1.get()).width();
+      screen_util::GetDisplayWorkAreaBoundsInParent(window1.get()).width();
   const int edge_inset = GetEdgeInset(screen_width);
 
   // Verify that when are no snapped windows, the overlay is visible when a drag
@@ -2538,8 +2733,8 @@ TEST_F(SplitViewWindowSelectorTest, SplitViewRotationTest) {
   EXPECT_EQ(split_view_controller()->right_window(), window2.get());
   EndSplitView();
 
-  // Rotate the screen by 90 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_90,
+  // Rotate the screen by 270 degree.
+  test_api.SetDisplayRotation(display::Display::ROTATE_270,
                               display::Display::ROTATION_SOURCE_ACTIVE);
   EXPECT_EQ(test_api.GetCurrentOrientation(),
             blink::kWebScreenOrientationLockPortraitPrimary);
@@ -2588,8 +2783,8 @@ TEST_F(SplitViewWindowSelectorTest, SplitViewRotationTest) {
   EXPECT_EQ(split_view_controller()->left_window(), window2.get());
   EndSplitView();
 
-  // Rotate the screen by 270 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_270,
+  // Rotate the screen by 90 degree.
+  test_api.SetDisplayRotation(display::Display::ROTATE_90,
                               display::Display::ROTATION_SOURCE_ACTIVE);
   EXPECT_EQ(test_api.GetCurrentOrientation(),
             blink::kWebScreenOrientationLockPortraitSecondary);
@@ -2855,6 +3050,8 @@ TEST_F(SplitViewWindowSelectorTest, SnappedWindowBoundsTest) {
       CreateWindowWithMinimumSize(bounds, size));
   std::unique_ptr<aura::Window> window3(
       CreateWindowWithMinimumSize(bounds, size));
+  const int screen_width =
+      screen_util::GetDisplayWorkAreaBoundsInParent(window1.get()).width();
   ToggleOverview();
 
   // Drag |window1| selector item to snap to left.
@@ -2876,9 +3073,10 @@ TEST_F(SplitViewWindowSelectorTest, SnappedWindowBoundsTest) {
   // Test that split view mode is ended. Overview mode is still active.
   EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
   EXPECT_TRUE(Shell::Get()->window_selector_controller()->IsSelecting());
-  // Test that |window1| has been moved out of the work area and is invisible.
-  EXPECT_LE(window1->bounds().x(), -kMinimumBoundSize);
-  EXPECT_EQ(window1->bounds().width(), kMinimumBoundSize);
+  // Test that |window1| has the dimensions of a tablet mode maxed window, so
+  // that when it is placed back on the grid it will not look skinny.
+  EXPECT_LE(window1->bounds().x(), 0);
+  EXPECT_EQ(window1->bounds().width(), screen_width);
 
   // Drag |window2| selector item to snap to right.
   WindowSelectorItem* selector_item2 =
@@ -2903,9 +3101,57 @@ TEST_F(SplitViewWindowSelectorTest, SnappedWindowBoundsTest) {
   // Test that split view mode is ended. Overview mode is still active.
   EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
   EXPECT_TRUE(Shell::Get()->window_selector_controller()->IsSelecting());
-  // Test that |window2| has been moved out of the work area and is invisible.
-  EXPECT_GE(window2->bounds().x(), work_area_rect.x());
-  EXPECT_EQ(window2->bounds().width(), kMinimumBoundSize);
+  // Test that |window2| has the dimensions of a tablet mode maxed window, so
+  // that when it is placed back on the grid it will not look skinny.
+  EXPECT_GE(window2->bounds().x(), 0);
+  EXPECT_EQ(window2->bounds().width(), screen_width);
+}
+
+// Verify that if the split view divider is dragged all the way to the edge, the
+// window being dragged gets returned to the overview list, if overview mode is
+// still active.
+TEST_F(SplitViewWindowSelectorTest,
+       DividerDraggedToEdgeReturnsWindowToOverviewList) {
+  const gfx::Rect bounds(0, 0, 400, 400);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window3(CreateWindow(bounds));
+
+  ToggleOverview();
+  // Drag |window1| selector item to snap to left. There should be two items on
+  // the overview grid afterwards, |window2| and |window3|.
+  const int grid_index = 0;
+  WindowSelectorItem* selector_item1 =
+      GetWindowItemForWindow(grid_index, window1.get());
+  DragWindowTo(selector_item1, gfx::Point(0, 0));
+  EXPECT_EQ(SplitViewController::LEFT_SNAPPED,
+            split_view_controller()->state());
+  EXPECT_TRUE(IsSelecting());
+  EXPECT_TRUE(split_view_controller()->IsSplitViewModeActive());
+  ASSERT_TRUE(split_view_controller()->split_view_divider());
+  std::vector<aura::Window*> window_list =
+      window_selector_controller()->GetWindowsListInOverviewGridsForTesting();
+  EXPECT_EQ(2u, window_list.size());
+  EXPECT_TRUE(std::find(window_list.begin(), window_list.end(),
+                        window1.get()) == window_list.end());
+  EXPECT_TRUE(wm::IsActiveWindow(window1.get()));
+
+  // Drag the divider to the left edge.
+  const gfx::Rect divider_bounds =
+      GetSplitViewDividerBounds(/*is_dragging=*/false);
+  GetEventGenerator().set_current_location(divider_bounds.CenterPoint());
+  GetEventGenerator().DragMouseTo(0, 0);
+
+  // Verify that it is still in overview mode and that |window1| is returned to
+  // the overview list.
+  EXPECT_TRUE(IsSelecting());
+  EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
+  window_list =
+      window_selector_controller()->GetWindowsListInOverviewGridsForTesting();
+  EXPECT_EQ(3u, window_list.size());
+  EXPECT_TRUE(std::find(window_list.begin(), window_list.end(),
+                        window1.get()) != window_list.end());
+  EXPECT_FALSE(wm::IsActiveWindow(window1.get()));
 }
 
 }  // namespace ash

@@ -75,6 +75,8 @@ class PLATFORM_EXPORT FloatSize {
 
   float AspectRatio() const { return width_ / height_; }
 
+  float Area() const { return width_ * height_; }
+
   void Expand(float width, float height) {
     width_ += width;
     height_ += height;
@@ -101,6 +103,8 @@ class PLATFORM_EXPORT FloatSize {
     return FloatSize(width_ < other.width_ ? width_ : other.width_,
                      height_ < other.height_ ? height_ : other.height_);
   }
+
+  void ClampNegativeToZero() { *this = ExpandedTo(FloatSize()); }
 
   float DiagonalLength() const;
   float DiagonalLengthSquared() const {

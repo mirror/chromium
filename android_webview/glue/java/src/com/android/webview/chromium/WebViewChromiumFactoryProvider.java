@@ -5,6 +5,7 @@
 package com.android.webview.chromium;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
@@ -67,7 +68,7 @@ import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.library_loader.NativeLibraries;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.components.autofill.AutofillProvider;
-import org.chromium.content.browser.input.LGEmailActionModeWorkaround;
+import org.chromium.content.browser.selection.LGEmailActionModeWorkaround;
 import org.chromium.net.NetworkChangeNotifier;
 
 import java.io.File;
@@ -125,7 +126,9 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
     // Guards accees to the other members, and is notifyAll() signalled on the UI thread
     // when the chromium process has been started.
-    private final Object mLock = new Object();
+    // This member is not private only because the downstream subclass needs to access it,
+    // it shouldn't be accessed from anywhere else.
+    /* package */ final Object mLock = new Object();
 
     // Initialization guarded by mLock.
     private AwBrowserContext mBrowserContext;
@@ -175,6 +178,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         initialize(delegate);
     }
 
+    @TargetApi(Build.VERSION_CODES.N) // For getSystemService() and isUserUnlocked().
     private void initialize(WebViewDelegate webViewDelegate) {
         mWebViewDelegate = webViewDelegate;
         Context ctx = mWebViewDelegate.getApplication().getApplicationContext();
@@ -183,6 +187,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         try {
             checkStorageIsNotDeviceProtected(mWebViewDelegate.getApplication());
         } catch (IllegalArgumentException e) {
+            assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
             if (!ctx.getSystemService(UserManager.class).isUserUnlocked()) {
                 throw e;
             }
@@ -211,7 +216,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
         ThreadUtils.setWillOverrideUiThread();
         // Load chromium library.
-        AwBrowserProcess.loadLibrary();
+        AwBrowserProcess.loadLibrary(mWebViewDelegate.getDataDirectorySuffix());
 
         final PackageInfo packageInfo = WebViewFactory.getLoadedPackageInfo();
 
@@ -247,7 +252,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         // Now safe to use WebView data directory.
     }
 
-    static void checkStorageIsNotDeviceProtected(Context context) {
+    /* package */ static void checkStorageIsNotDeviceProtected(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context.isDeviceProtectedStorage()) {
             throw new IllegalArgumentException(
                     "WebView cannot be used with device protected storage");
@@ -316,7 +321,9 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                 applicationContext.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.O);
     }
 
-    private void ensureChromiumStartedLocked(boolean onMainThread) {
+    // This method is not private only because the downstream subclass needs to access it,
+    // it shouldn't be accessed from anywhere else.
+    /* package */ void ensureChromiumStartedLocked(boolean onMainThread) {
         assert Thread.holdsLock(mLock);
 
         if (mStarted) { // Early-out for the common case.

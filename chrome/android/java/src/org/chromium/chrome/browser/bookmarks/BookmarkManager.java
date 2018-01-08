@@ -90,6 +90,12 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
                 }
             }
             mSelectionDelegate.clearSelection();
+
+            // This is necessary as long as we rely on RecyclerView.ItemDecorations to apply padding
+            // at the bottom of the bookmarks list to avoid the bottom navigation menu. This ensures
+            // the item decorations are reapplied correctly when item indices change as the result
+            // of an item being deleted.
+            mAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -149,8 +155,8 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
         mToolbar = (BookmarkActionBar) mSelectableListLayout.initializeToolbar(
                 R.layout.bookmark_action_bar, mSelectionDelegate, 0, null, R.id.normal_menu_group,
                 R.id.selection_mode_menu_group,
-                FeatureUtilities.isChromeHomeEnabled() ? R.color.modern_toolbar_bg
-                                                       : R.color.modern_primary_color,
+                FeatureUtilities.isChromeModernDesignEnabled() ? R.color.modern_toolbar_bg
+                                                               : R.color.modern_primary_color,
                 null, true);
         mToolbar.initializeSearchView(
                 this, R.string.bookmark_action_bar_search, R.id.search_menu_id);

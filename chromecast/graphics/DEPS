@@ -3,10 +3,12 @@ include_rules = [
   "+ui/base",
   "+ui/base/ime",
   "+ui/display",
+  "+ui/events",
   "+ui/events/test",
   "+ui/gfx",
   "+ui/gl/test",
   "+ui/views",
+  "+ui/wm/core",
   "+ui/wm/public",
 ]
 

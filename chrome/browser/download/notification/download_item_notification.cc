@@ -25,6 +25,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/elide_url.h"
 #include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/browser_context.h"
@@ -43,9 +44,9 @@
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
+#include "ui/message_center/public/cpp/notification.h"
 
 using base::UserMetricsAction;
 
@@ -352,7 +353,6 @@ void DownloadItemNotification::UpdateNotificationData(bool display,
   notification_->set_title(GetTitle());
   notification_->set_message(GetSubStatusString());
   notification_->set_progress_status(GetStatusString());
-  notification_->set_use_image_as_icon(true);
 
   if (item_->IsDangerous()) {
     notification_->set_type(message_center::NOTIFICATION_TYPE_BASE_FORMAT);
@@ -644,7 +644,7 @@ base::string16 DownloadItemNotification::GetCommandLabel(
       id = IDS_DOWNLOAD_LINK_CANCEL;
       break;
     case DownloadCommands::LEARN_MORE_SCANNING:
-      id = IDS_DOWNLOAD_LINK_LEARN_MORE_SCANNING;
+      id = IDS_LEARN_MORE;
       break;
     case DownloadCommands::COPY_TO_CLIPBOARD:
       id = IDS_DOWNLOAD_NOTIFICATION_COPY_TO_CLIPBOARD;

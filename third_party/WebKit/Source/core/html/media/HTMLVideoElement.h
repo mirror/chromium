@@ -43,6 +43,7 @@ namespace blink {
 class ImageBitmapOptions;
 class MediaCustomControlsFullscreenDetector;
 class MediaRemotingInterstitial;
+class PictureInPictureInterstitial;
 
 class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
                                            public CanvasImageSource,
@@ -121,7 +122,6 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   // CanvasImageSource implementation
   scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
                                                AccelerationHint,
-                                               SnapshotReason,
                                                const FloatSize&) override;
   bool IsVideoElement() const override { return true; }
   bool WouldTaintOrigin(const SecurityOrigin*) const override;
@@ -147,7 +147,9 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   bool IsRemotingInterstitialVisible() const;
 
   void MediaRemotingStarted(const WebString& remote_device_friendly_name) final;
-  void MediaRemotingStopped() final;
+  void PictureInPictureStarted() final;
+  void PictureInPictureStopped() final;
+  void MediaRemotingStopped(WebLocalizedString::Name error_msg) final;
   WebMediaPlayer::DisplayType DisplayType() const final;
 
  private:
@@ -181,6 +183,7 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
       custom_controls_fullscreen_detector_;
 
   Member<MediaRemotingInterstitial> remoting_interstitial_;
+  Member<PictureInPictureInterstitial> picture_in_picture_interstitial_;
 
   AtomicString default_poster_url_;
 

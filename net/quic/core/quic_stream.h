@@ -29,7 +29,7 @@
 #include "net/quic/core/quic_stream_send_buffer.h"
 #include "net/quic/core/quic_stream_sequencer.h"
 #include "net/quic/core/quic_types.h"
-#include "net/quic/core/stream_notifier_interface.h"
+#include "net/quic/core/session_notifier_interface.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_mem_slice_span.h"
 #include "net/quic/platform/api/quic_reference_counted.h"
@@ -168,6 +168,10 @@ class QUIC_EXPORT_PRIVATE QuicStream {
   // Returns the version of QUIC being used for this stream.
   QuicTransportVersion transport_version() const;
 
+  // Returns the crypto handshake protocol that was used on this stream's
+  // connection.
+  HandshakeProtocol handshake_protocol() const;
+
   bool fin_received() const { return fin_received_; }
 
   // Sets the sequencer to consume all incoming data itself and not call
@@ -199,8 +203,9 @@ class QUIC_EXPORT_PRIVATE QuicStream {
                        QuicDataWriter* writer);
 
   // Called when data [offset, offset + data_length) is acked. |fin_acked|
-  // indicates whether the fin is acked.
-  virtual void OnStreamFrameAcked(QuicStreamOffset offset,
+  // indicates whether the fin is acked. Returns true if any new stream data
+  // (including fin) gets acked.
+  virtual bool OnStreamFrameAcked(QuicStreamOffset offset,
                                   QuicByteCount data_length,
                                   bool fin_acked,
                                   QuicTime::Delta ack_delay_time);
@@ -210,13 +215,6 @@ class QUIC_EXPORT_PRIVATE QuicStream {
   virtual void OnStreamFrameRetransmitted(QuicStreamOffset offset,
                                           QuicByteCount data_length,
                                           bool fin_retransmitted);
-
-  // Called when data [offset, offset + data_length) gets discarded because
-  // stream is cancelled. |fin_discarded| indicates whether the fin is
-  // discarded.
-  void OnStreamFrameDiscarded(QuicStreamOffset offset,
-                              QuicByteCount data_length,
-                              bool fin_discarded);
 
   // Called when data [offset, offset + data_length) is considered as lost.
   // |fin_lost| inidacates whether the fin is considered as lost.
@@ -402,10 +400,6 @@ class QUIC_EXPORT_PRIVATE QuicStream {
 
   // Latched value of FLAGS_quic_buffered_data_threshold.
   const QuicByteCount buffered_data_threshold_;
-
-  // Latched value of
-  // FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded.
-  const bool remove_on_stream_frame_discarded_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicStream);
 };

@@ -43,7 +43,7 @@
 #include "core/input/EventHandler.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutTreeAsText.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "platform/graphics/TouchAction.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -89,8 +89,6 @@ class TouchActionTrackingWebWidgetClient
   int action_set_count_;
   TouchAction action_;
 };
-
-const int kKfakeTouchId = 7;
 
 class TouchActionTest : public ::testing::Test {
  public:
@@ -224,8 +222,9 @@ IntRect WindowClipRect(const LocalFrameView& frame_view) {
   LayoutRect clip_rect(
       LayoutPoint(),
       LayoutSize(frame_view.VisibleContentSize(kExcludeScrollbars)));
-  frame_view.GetLayoutViewItem().MapToVisualRectInAncestorSpace(
-      &frame_view.GetLayoutView()->ContainerForPaintInvalidation(), clip_rect);
+  frame_view.GetLayoutView()->MapToVisualRectInAncestorSpace(
+      &frame_view.GetLayoutView()->ContainerForPaintInvalidation(), clip_rect,
+      0, kDefaultVisualRectFlags);
   return EnclosingIntRect(clip_rect);
 }
 
@@ -334,7 +333,7 @@ void TouchActionTest::RunTestOnTree(
                  .data();
 
       // Now send the touch event and check any touch action result.
-      SendTouchEvent(web_view, WebInputEvent::kTouchStart, window_point);
+      SendTouchEvent(web_view, WebInputEvent::kPointerDown, window_point);
 
       AtomicString expected_action = element->getAttribute("expected-action");
       if (expected_action == "auto") {
@@ -372,7 +371,7 @@ void TouchActionTest::RunTestOnTree(
 
       // Reset webview touch state.
       client.Reset();
-      SendTouchEvent(web_view, WebInputEvent::kTouchCancel, window_point);
+      SendTouchEvent(web_view, WebInputEvent::kPointerCancel, window_point);
       EXPECT_EQ(0, client.TouchActionSetCount());
     }
   }
@@ -380,27 +379,21 @@ void TouchActionTest::RunTestOnTree(
 void TouchActionTest::SendTouchEvent(WebView* web_view,
                                      WebInputEvent::Type type,
                                      IntPoint client_point) {
-  ASSERT_TRUE(type == WebInputEvent::kTouchStart ||
-              type == WebInputEvent::kTouchCancel);
+  ASSERT_TRUE(type == WebInputEvent::kPointerDown ||
+              type == WebInputEvent::kPointerCancel);
 
-  WebTouchEvent web_touch_event(type, WebInputEvent::kNoModifiers,
-                                WebInputEvent::kTimeStampForTesting);
-  if (type == WebInputEvent::kTouchCancel)
-    web_touch_event.dispatch_type = WebInputEvent::kEventNonBlocking;
-  web_touch_event.touches_length = 1;
-  web_touch_event.touches[0].state =
-      (type == WebInputEvent::kTouchStart ? WebTouchPoint::kStatePressed
-                                          : WebTouchPoint::kStateCancelled);
-  web_touch_event.touches[0].id = kKfakeTouchId;
-  web_touch_event.touches[0].SetPositionInScreen(client_point.X(),
-                                                 client_point.Y());
-  web_touch_event.touches[0].SetPositionInWidget(client_point.X(),
-                                                 client_point.Y());
-  web_touch_event.touches[0].radius_x = 10;
-  web_touch_event.touches[0].radius_y = 10;
-  web_touch_event.touches[0].force = 1.0;
+  WebPointerEvent event(
+      type,
+      WebPointerProperties(1, WebPointerProperties::PointerType::kTouch,
+                           WebPointerProperties::Button::kLeft,
+                           WebFloatPoint(client_point.X(), client_point.Y()),
+                           WebFloatPoint(client_point.X(), client_point.Y())),
+      10.0f, 10.0f);
+  if (type == WebInputEvent::kPointerCancel)
+    event.dispatch_type = WebInputEvent::kEventNonBlocking;
 
-  web_view->HandleInputEvent(WebCoalescedInputEvent(web_touch_event));
+  web_view->HandleInputEvent(WebCoalescedInputEvent(event));
+  web_view->DispatchBufferedTouchEvents();
   RunPendingTasks();
 }
 

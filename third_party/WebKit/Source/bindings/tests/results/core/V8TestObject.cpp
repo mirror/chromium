@@ -89,8 +89,6 @@ namespace blink {
 const WrapperTypeInfo V8TestObject::wrapperTypeInfo = {
     gin::kEmbedderBlink,
     V8TestObject::domTemplate,
-    V8TestObject::Trace,
-    V8TestObject::TraceWrappers,
     V8TestObject::InstallConditionalFeatures,
     "TestObject",
     nullptr,
@@ -5546,7 +5544,7 @@ static void voidMethodArrayOfDoubleOrDOMStringArgMethod(const v8::FunctionCallba
   TestObject* impl = V8TestObject::ToImpl(info.Holder());
 
   HeapVector<DoubleOrString> arg;
-  arg = ToImplArguments<HeapVector<DoubleOrString>>(info, 0, exceptionState);
+  arg = ToImplArguments<DoubleOrString>(info, 0, exceptionState);
   if (exceptionState.HadException())
     return;
 
@@ -5797,7 +5795,7 @@ static void promiseMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info)
   if (!arg3.Prepare(exceptionState))
     return;
 
-  variadic = ToImplArguments<Vector<String>>(info, 3, exceptionState);
+  variadic = ToImplArguments<IDLString>(info, 3, exceptionState);
   if (exceptionState.HadException())
     return;
 
@@ -6495,7 +6493,7 @@ static void voidMethodVariadicStringArgMethod(const v8::FunctionCallbackInfo<v8:
   TestObject* impl = V8TestObject::ToImpl(info.Holder());
 
   Vector<String> variadicStringArgs;
-  variadicStringArgs = ToImplArguments<Vector<String>>(info, 0, exceptionState);
+  variadicStringArgs = ToImplArguments<IDLString>(info, 0, exceptionState);
   if (exceptionState.HadException())
     return;
 
@@ -6518,7 +6516,7 @@ static void voidMethodStringArgVariadicStringArgMethod(const v8::FunctionCallbac
   if (!stringArg.Prepare())
     return;
 
-  variadicStringArgs = ToImplArguments<Vector<String>>(info, 1, exceptionState);
+  variadicStringArgs = ToImplArguments<IDLString>(info, 1, exceptionState);
   if (exceptionState.HadException())
     return;
 
@@ -7264,7 +7262,7 @@ static void overloadedMethodL1Method(const v8::FunctionCallbackInfo<v8::Value>& 
   if (exceptionState.HadException())
     return;
 
-  restArgs = ToImplArguments<Vector<ScriptValue>>(info, 1, exceptionState);
+  restArgs = ToImplArguments<ScriptValue>(info, 1, exceptionState);
   if (exceptionState.HadException())
     return;
 
@@ -7282,7 +7280,7 @@ static void overloadedMethodL2Method(const v8::FunctionCallbackInfo<v8::Value>& 
   if (!stringArg.Prepare())
     return;
 
-  restArgs = ToImplArguments<Vector<ScriptValue>>(info, 1, exceptionState);
+  restArgs = ToImplArguments<ScriptValue>(info, 1, exceptionState);
   if (exceptionState.HadException())
     return;
 
@@ -12587,9 +12585,7 @@ void V8TestObject::activityLoggingAccessForAllWorldsMethodMethodCallback(const v
   ScriptState* scriptState = ScriptState::ForRelevantRealm(info);
   V8PerContextData* contextData = scriptState->PerContextData();
   if (contextData && contextData->ActivityLogger()) {
-    ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kExecutionContext, "TestObject", "activityLoggingAccessForAllWorldsMethod");
-    Vector<v8::Local<v8::Value>> loggerArgs = ToImplArguments<Vector<v8::Local<v8::Value>>>(info, 0, exceptionState);
-    contextData->ActivityLogger()->LogMethod("TestObject.activityLoggingAccessForAllWorldsMethod", info.Length(), loggerArgs.data());
+    contextData->ActivityLogger()->LogMethod("TestObject.activityLoggingAccessForAllWorldsMethod", info);
   }
   TestObjectV8Internal::activityLoggingAccessForAllWorldsMethodMethod(info);
 }
@@ -12819,9 +12815,7 @@ void V8TestObject::activityLoggingForAllWorldsPerWorldBindingsVoidMethodMethodCa
   ScriptState* scriptState = ScriptState::ForRelevantRealm(info);
   V8PerContextData* contextData = scriptState->PerContextData();
   if (contextData && contextData->ActivityLogger()) {
-    ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kExecutionContext, "TestObject", "activityLoggingForAllWorldsPerWorldBindingsVoidMethod");
-    Vector<v8::Local<v8::Value>> loggerArgs = ToImplArguments<Vector<v8::Local<v8::Value>>>(info, 0, exceptionState);
-    contextData->ActivityLogger()->LogMethod("TestObject.activityLoggingForAllWorldsPerWorldBindingsVoidMethod", info.Length(), loggerArgs.data());
+    contextData->ActivityLogger()->LogMethod("TestObject.activityLoggingForAllWorldsPerWorldBindingsVoidMethod", info);
   }
   TestObjectV8Internal::activityLoggingForAllWorldsPerWorldBindingsVoidMethodMethod(info);
 }
@@ -12832,9 +12826,7 @@ void V8TestObject::activityLoggingForAllWorldsPerWorldBindingsVoidMethodMethodCa
   ScriptState* scriptState = ScriptState::ForRelevantRealm(info);
   V8PerContextData* contextData = scriptState->PerContextData();
   if (contextData && contextData->ActivityLogger()) {
-    ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kExecutionContext, "TestObject", "activityLoggingForAllWorldsPerWorldBindingsVoidMethod");
-    Vector<v8::Local<v8::Value>> loggerArgs = ToImplArguments<Vector<v8::Local<v8::Value>>>(info, 0, exceptionState);
-    contextData->ActivityLogger()->LogMethod("TestObject.activityLoggingForAllWorldsPerWorldBindingsVoidMethod", info.Length(), loggerArgs.data());
+    contextData->ActivityLogger()->LogMethod("TestObject.activityLoggingForAllWorldsPerWorldBindingsVoidMethod", info);
   }
   TestObjectV8Internal::activityLoggingForAllWorldsPerWorldBindingsVoidMethodMethodForMainWorld(info);
 }
@@ -12845,9 +12837,7 @@ void V8TestObject::activityLoggingForIsolatedWorldsPerWorldBindingsVoidMethodMet
   ScriptState* scriptState = ScriptState::ForRelevantRealm(info);
   V8PerContextData* contextData = scriptState->PerContextData();
   if (contextData && contextData->ActivityLogger()) {
-    ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kExecutionContext, "TestObject", "activityLoggingForIsolatedWorldsPerWorldBindingsVoidMethod");
-    Vector<v8::Local<v8::Value>> loggerArgs = ToImplArguments<Vector<v8::Local<v8::Value>>>(info, 0, exceptionState);
-    contextData->ActivityLogger()->LogMethod("TestObject.activityLoggingForIsolatedWorldsPerWorldBindingsVoidMethod", info.Length(), loggerArgs.data());
+    contextData->ActivityLogger()->LogMethod("TestObject.activityLoggingForIsolatedWorldsPerWorldBindingsVoidMethod", info);
   }
   TestObjectV8Internal::activityLoggingForIsolatedWorldsPerWorldBindingsVoidMethodMethod(info);
 }

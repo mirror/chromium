@@ -38,7 +38,9 @@ class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
   static void IdleStarted(v8::Isolate*);
   static void IdleFinished(v8::Isolate*);
 
-  void AsyncTaskScheduled(const String& task_name, void* task, bool recurring);
+  void AsyncTaskScheduled(const StringView& task_name,
+                          void* task,
+                          bool recurring);
   void AsyncTaskCanceled(void* task);
   void AllAsyncTasksCanceled();
   void AsyncTaskStarted(void* task);
@@ -51,7 +53,7 @@ class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
                                unsigned promise_rejection_id);
 
   v8_inspector::V8StackTraceId StoreCurrentStackTrace(
-      const String& description);
+      const StringView& description);
   void ExternalAsyncTaskStarted(const v8_inspector::V8StackTraceId& parent);
   void ExternalAsyncTaskFinished(const v8_inspector::V8StackTraceId& parent);
 

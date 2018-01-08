@@ -598,7 +598,7 @@ static void* OpenFunc(const char* uri) {
     FetchParameters params(ResourceRequest(url), options);
     Resource* resource =
         RawResource::FetchSynchronously(params, document->Fetcher());
-    if (resource && !resource->ErrorOccurred()) {
+    if (!resource->ErrorOccurred()) {
       data = resource->ResourceBuffer();
       final_url = resource->GetResponse().Url();
     }
@@ -790,8 +790,7 @@ XMLParserContext::~XMLParserContext() {
   xmlFreeParserCtxt(context_);
 }
 
-XMLDocumentParser::~XMLDocumentParser() {
-}
+XMLDocumentParser::~XMLDocumentParser() = default;
 
 void XMLDocumentParser::Trace(blink::Visitor* visitor) {
   visitor->Trace(current_node_);

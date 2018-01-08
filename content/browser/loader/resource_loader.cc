@@ -25,12 +25,12 @@
 #include "content/browser/service_worker/service_worker_response_info.h"
 #include "content/browser/ssl/ssl_client_auth_handler.h"
 #include "content/browser/ssl/ssl_manager.h"
-#include "content/common/loader_util.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_dispatcher_host_login_delegate.h"
+#include "content/public/common/appcache_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
@@ -43,6 +43,8 @@
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
+#include "services/network/public/cpp/loader_util.h"
+#include "services/network/public/cpp/resource_response.h"
 
 using base::TimeDelta;
 using base::TimeTicks;
@@ -53,7 +55,7 @@ namespace {
 void PopulateResourceResponse(
     ResourceRequestInfoImpl* info,
     net::URLRequest* request,
-    ResourceResponse* response,
+    network::ResourceResponse* response,
     const net::HttpRawRequestHeaders& raw_request_headers,
     const net::HttpResponseHeaders* raw_response_headers) {
   response->head.request_time = request->request_time();
@@ -71,11 +73,14 @@ void PopulateResourceResponse(
   response->head.socket_address = response_info.socket_address;
   const content::ResourceRequestInfo* request_info =
       content::ResourceRequestInfo::ForRequest(request);
-  if (request_info)
-    response->head.previews_state = request_info->GetPreviewsState();
+  if (request_info) {
+    response->head.previews_state =
+        static_cast<int>(request_info->GetPreviewsState());
+  }
   if (info->ShouldReportRawHeaders()) {
-    response->head.devtools_info =
-        BuildDevToolsInfo(*request, raw_request_headers, raw_response_headers);
+    response->head.raw_request_response_info =
+        network::BuildRawRequestResponseInfo(*request, raw_request_headers,
+                                             raw_response_headers);
   }
 
   response->head.effective_connection_type =
@@ -95,6 +100,7 @@ void PopulateResourceResponse(
       ServiceWorkerResponseInfo::ForRequest(request);
   if (service_worker_info)
     service_worker_info->GetExtraResponseInfo(&response->head);
+  response->head.appcache_id = kAppCacheNoCacheId;
   AppCacheInterceptor::GetExtraResponseInfo(
       request, &response->head.appcache_id,
       &response->head.appcache_manifest_url);
@@ -107,8 +113,6 @@ void PopulateResourceResponse(
         (!net::IsCertStatusError(response->head.cert_status) ||
          net::IsCertStatusMinorError(response->head.cert_status)) &&
         net::IsLegacySymantecCert(request->ssl_info().public_key_hashes);
-    response->head.cert_validity_start =
-        request->ssl_info().cert->valid_start();
     if (info->ShouldReportRawHeaders()) {
       // Only pass these members when the network panel of the DevTools is open,
       // i.e. ShouldReportRawHeaders() is set. These data are used to populate
@@ -218,7 +222,8 @@ class ResourceLoader::ScopedDeferral {
 
 ResourceLoader::ResourceLoader(std::unique_ptr<net::URLRequest> request,
                                std::unique_ptr<ResourceHandler> handler,
-                               ResourceLoaderDelegate* delegate)
+                               ResourceLoaderDelegate* delegate,
+                               ResourceContext* resource_context)
     : deferred_stage_(DEFERRED_NONE),
       request_(std::move(request)),
       handler_(std::move(handler)),
@@ -227,6 +232,7 @@ ResourceLoader::ResourceLoader(std::unique_ptr<net::URLRequest> request,
       times_cancelled_before_request_start_(0),
       started_request_(false),
       times_cancelled_after_request_start_(0),
+      resource_context_(resource_context),
       weak_ptr_factory_(this) {
   request_->set_delegate(this);
   handler_->SetDelegate(this);
@@ -343,7 +349,8 @@ void ResourceLoader::OnReceivedRedirect(net::URLRequest* unused,
     }
   }
 
-  scoped_refptr<ResourceResponse> response = new ResourceResponse();
+  scoped_refptr<network::ResourceResponse> response =
+      new network::ResourceResponse();
   PopulateResourceResponse(info, request_.get(), response.get(),
                            raw_request_headers_, raw_response_headers_.get());
   raw_request_headers_ = net::HttpRawRequestHeaders();
@@ -399,8 +406,14 @@ void ResourceLoader::OnCertificateRequested(
 
   DCHECK(!ssl_client_auth_handler_)
       << "OnCertificateRequested called with ssl_client_auth_handler pending";
+  ResourceRequestInfo::WebContentsGetter web_contents_getter =
+      ResourceRequestInfo::ForRequest(request_.get())
+          ->GetWebContentsGetterForRequest();
+
+  std::unique_ptr<net::ClientCertStore> client_cert_store =
+      GetContentClient()->browser()->CreateClientCertStore(resource_context_);
   ssl_client_auth_handler_.reset(new SSLClientAuthHandler(
-      delegate_->CreateClientCertStore(this), request_.get(), cert_info, this));
+      std::move(client_cert_store), web_contents_getter, cert_info, this));
   ssl_client_auth_handler_->SelectCertificate();
 }
 
@@ -648,7 +661,8 @@ void ResourceLoader::FollowDeferredRedirectInternal() {
 
 void ResourceLoader::CompleteResponseStarted() {
   ResourceRequestInfoImpl* info = GetRequestInfo();
-  scoped_refptr<ResourceResponse> response = new ResourceResponse();
+  scoped_refptr<network::ResourceResponse> response =
+      new network::ResourceResponse();
   PopulateResourceResponse(info, request_.get(), response.get(),
                            raw_request_headers_, raw_response_headers_.get());
   raw_request_headers_ = net::HttpRawRequestHeaders();

@@ -35,6 +35,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/input/EventHandler.h"
+#include "core/layout/LayoutView.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
 #include "core/paint/TransformRecorder.h"
@@ -56,9 +57,15 @@ void PageWidgetDelegate::Animate(Page& page,
   page.Animator().ServiceScriptedAnimations(monotonic_frame_begin_time);
 }
 
-void PageWidgetDelegate::UpdateAllLifecyclePhases(Page& page,
-                                                  LocalFrame& root) {
-  page.Animator().UpdateAllLifecyclePhases(root);
+void PageWidgetDelegate::UpdateLifecycle(
+    Page& page,
+    LocalFrame& root,
+    WebWidget::LifecycleUpdate requested_update) {
+  if (requested_update == WebWidget::LifecycleUpdate::kPrePaint) {
+    page.Animator().UpdateLifecycleToPrePaintClean(root);
+  } else {
+    page.Animator().UpdateAllLifecyclePhases(root);
+  }
 }
 
 static void PaintInternal(Page& page,
@@ -84,8 +91,9 @@ static void PaintInternal(Page& page,
 
     IntRect dirty_rect(rect);
     LocalFrameView* view = root.View();
-    view->UpdateAllLifecyclePhasesExceptPaint();
     if (view) {
+      DCHECK(view->GetLayoutView()->GetDocument().Lifecycle().GetState() ==
+             DocumentLifecycle::kPaintClean);
       ClipRecorder clip_recorder(paint_context, builder,
                                  DisplayItem::kPageWidgetDelegateClip,
                                  dirty_rect);
@@ -202,16 +210,25 @@ WebInputEventResult PageWidgetDelegate::HandleInputEvent(
       return handler.HandleGestureEvent(
           static_cast<const WebGestureEvent&>(event));
 
+    case WebInputEvent::kPointerDown:
+    case WebInputEvent::kPointerUp:
+    case WebInputEvent::kPointerMove:
+    case WebInputEvent::kPointerCancel:
+    case WebInputEvent::kPointerCausedUaAction:
+      if (!root || !root->View())
+        return WebInputEventResult::kNotHandled;
+      return handler.HandlePointerEvent(
+          *root, static_cast<const WebPointerEvent&>(event),
+          coalesced_event.GetCoalescedEventsPointers());
+
     case WebInputEvent::kTouchStart:
     case WebInputEvent::kTouchMove:
     case WebInputEvent::kTouchEnd:
     case WebInputEvent::kTouchCancel:
     case WebInputEvent::kTouchScrollStarted:
-      if (!root || !root->View())
-        return WebInputEventResult::kNotHandled;
-      return handler.HandleTouchEvent(
-          *root, static_cast<const WebTouchEvent&>(event),
-          coalesced_event.GetCoalescedEventsPointers());
+      NOTREACHED();
+      return WebInputEventResult::kNotHandled;
+
     case WebInputEvent::kGesturePinchBegin:
     case WebInputEvent::kGesturePinchEnd:
     case WebInputEvent::kGesturePinchUpdate:
@@ -267,15 +284,15 @@ WebInputEventResult PageWidgetEventHandler::HandleMouseWheel(
   return frame.GetEventHandler().HandleWheelEvent(transformed_event);
 }
 
-WebInputEventResult PageWidgetEventHandler::HandleTouchEvent(
+WebInputEventResult PageWidgetEventHandler::HandlePointerEvent(
     LocalFrame& main_frame,
-    const WebTouchEvent& event,
+    const WebPointerEvent& event,
     const std::vector<const WebInputEvent*>& coalesced_events) {
-  WebTouchEvent transformed_event =
-      TransformWebTouchEvent(main_frame.View(), event);
-  return main_frame.GetEventHandler().HandleTouchEvent(
+  WebPointerEvent transformed_event =
+      TransformWebPointerEvent(main_frame.View(), event);
+  return main_frame.GetEventHandler().HandlePointerEvent(
       transformed_event,
-      TransformWebTouchEventVector(main_frame.View(), coalesced_events));
+      TransformWebPointerEventVector(main_frame.View(), coalesced_events));
 }
 
 }  // namespace blink

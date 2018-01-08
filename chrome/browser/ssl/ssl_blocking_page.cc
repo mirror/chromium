@@ -4,12 +4,12 @@
 
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback_helpers.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
@@ -71,7 +71,7 @@ std::unique_ptr<ChromeMetricsHelper> CreateMetricsHelper(
     reporting_info.metric_prefix =
         overridable ? "ssl_overridable" : "ssl_nonoverridable";
   }
-  return base::MakeUnique<ChromeMetricsHelper>(
+  return std::make_unique<ChromeMetricsHelper>(
       web_contents, request_url, reporting_info,
       GetSamplingEventName(overridable, cert_error));
 }
@@ -90,6 +90,7 @@ SSLBlockingPage* SSLBlockingPage::Create(
     const GURL& request_url,
     int options_mask,
     const base::Time& time_triggered,
+    const GURL& support_url,
     std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
     bool is_superfish,
     const base::Callback<void(content::CertificateRequestResultType)>&
@@ -100,7 +101,7 @@ SSLBlockingPage* SSLBlockingPage::Create(
   metrics_helper.get()->StartRecordingCaptivePortalMetrics(overridable);
 
   return new SSLBlockingPage(web_contents, cert_error, ssl_info, request_url,
-                             options_mask, time_triggered,
+                             options_mask, time_triggered, support_url,
                              std::move(ssl_cert_reporter), overridable,
                              std::move(metrics_helper), is_superfish, callback);
 }
@@ -136,6 +137,7 @@ SSLBlockingPage::SSLBlockingPage(
     const GURL& request_url,
     int options_mask,
     const base::Time& time_triggered,
+    const GURL& support_url,
     std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
     bool overridable,
     std::unique_ptr<ChromeMetricsHelper> metrics_helper,
@@ -151,7 +153,7 @@ SSLBlockingPage::SSLBlockingPage(
           std::move(ssl_cert_reporter),
           overridable,
           time_triggered,
-          base::MakeUnique<SSLErrorControllerClient>(
+          std::make_unique<SSLErrorControllerClient>(
               web_contents,
               ssl_info,
               request_url,
@@ -163,18 +165,19 @@ SSLBlockingPage::SSLBlockingPage(
           (options_mask & SSLErrorUI::EXPIRED_BUT_PREVIOUSLY_ALLOWED) != 0),
       ssl_error_ui_(
           is_superfish
-              ? base::MakeUnique<security_interstitials::SuperfishErrorUI>(
+              ? std::make_unique<security_interstitials::SuperfishErrorUI>(
                     request_url,
                     cert_error,
                     ssl_info,
                     options_mask,
                     time_triggered,
                     controller())
-              : base::MakeUnique<SSLErrorUI>(request_url,
+              : std::make_unique<SSLErrorUI>(request_url,
                                              cert_error,
                                              ssl_info,
                                              options_mask,
                                              time_triggered,
+                                             support_url,
                                              controller())) {
   // Creating an interstitial without showing (e.g. from chrome://interstitials)
   // it leaks memory, so don't create it here.

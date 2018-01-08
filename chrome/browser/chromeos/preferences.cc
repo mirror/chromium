@@ -200,7 +200,7 @@ void Preferences::RegisterProfilePrefs(
                                 ash::kDefaultLargeCursorSize,
                                 PrefRegistry::PUBLIC);
   registry->RegisterBooleanPref(ash::prefs::kAccessibilitySpokenFeedbackEnabled,
-                                false);
+                                false, PrefRegistry::PUBLIC);
   registry->RegisterBooleanPref(
       ash::prefs::kAccessibilityHighContrastEnabled, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
@@ -214,7 +214,7 @@ void Preferences::RegisterProfilePrefs(
                                std::numeric_limits<double>::min());
   registry->RegisterBooleanPref(
       ash::prefs::kAccessibilityAutoclickEnabled, false,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
   registry->RegisterIntegerPref(
       ash::prefs::kAccessibilityAutoclickDelayMs,
       static_cast<int>(ash::AutoclickController::GetDefaultAutoclickDelay()

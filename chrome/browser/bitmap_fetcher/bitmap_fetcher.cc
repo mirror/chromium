@@ -21,12 +21,12 @@ BitmapFetcher::~BitmapFetcher() {
 }
 
 void BitmapFetcher::Init(const std::string& referrer,
-                         blink::WebReferrerPolicy referrer_policy,
+                         net::URLRequest::ReferrerPolicy referrer_policy,
                          int load_flags) {
   if (simple_loader_ != NULL)
     return;
 
-  auto resource_request = std::make_unique<content::ResourceRequest>();
+  auto resource_request = std::make_unique<network::ResourceRequest>();
   resource_request->url = url_;
   resource_request->referrer = GURL(referrer);
   resource_request->referrer_policy = referrer_policy;
@@ -35,7 +35,7 @@ void BitmapFetcher::Init(const std::string& referrer,
                                                     traffic_annotation_);
 }
 
-void BitmapFetcher::Start(content::mojom::URLLoaderFactory* loader_factory) {
+void BitmapFetcher::Start(network::mojom::URLLoaderFactory* loader_factory) {
   if (simple_loader_) {
     content::SimpleURLLoader::BodyAsStringCallback callback = base::BindOnce(
         &BitmapFetcher::OnSimpleLoaderComplete, base::Unretained(this));

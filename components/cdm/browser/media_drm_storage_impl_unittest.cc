@@ -10,7 +10,7 @@
 #include "base/unguessable_token.h"
 #include "components/prefs/testing_pref_service.h"
 #include "content/public/test/navigation_simulator.h"
-#include "content/test/test_render_frame_host.h"
+#include "content/public/test/test_renderer_host.h"
 #include "media/mojo/services/mojo_media_drm_storage.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -64,7 +64,7 @@ class MediaDrmStorageImplTest : public content::RenderViewHostTestHarness {
     media::mojom::MediaDrmStoragePtr media_drm_storage_ptr;
     auto request = mojo::MakeRequest(&media_drm_storage_ptr);
 
-    auto media_drm_storage = base::MakeUnique<media::MojoMediaDrmStorage>(
+    auto media_drm_storage = std::make_unique<media::MojoMediaDrmStorage>(
         std::move(media_drm_storage_ptr));
 
     content::RenderFrameHost* rfh = web_contents()->GetMainFrame();
@@ -104,7 +104,7 @@ class MediaDrmStorageImplTest : public content::RenderViewHostTestHarness {
                              const std::vector<uint8_t>& expected_key_set_id,
                              const std::string& expected_mime_type) {
     media_drm_storage_->LoadPersistentSession(
-        session_id, ExpectResult(base::MakeUnique<SessionData>(
+        session_id, ExpectResult(std::make_unique<SessionData>(
                         expected_key_set_id, expected_mime_type)));
   }
 

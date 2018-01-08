@@ -38,7 +38,8 @@ class CONTENT_EXPORT ServiceWorkerRegistration
     : public base::RefCounted<ServiceWorkerRegistration>,
       public ServiceWorkerVersion::Listener {
  public:
-  typedef base::Callback<void(ServiceWorkerStatusCode status)> StatusCallback;
+  using StatusCallback =
+      base::OnceCallback<void(ServiceWorkerStatusCode status)>;
 
   class CONTENT_EXPORT Listener {
    public:
@@ -64,6 +65,13 @@ class CONTENT_EXPORT ServiceWorkerRegistration
 
   int64_t id() const { return registration_id_; }
   const GURL& pattern() const { return pattern_; }
+  blink::mojom::ServiceWorkerUpdateViaCache update_via_cache() const {
+    return update_via_cache_;
+  }
+  void set_update_via_cache(
+      blink::mojom::ServiceWorkerUpdateViaCache update_via_cache) {
+    update_via_cache_ = update_via_cache;
+  }
 
   bool is_deleted() const { return is_deleted_; }
   void set_is_deleted(bool deleted) { is_deleted_ = deleted; }
@@ -145,7 +153,7 @@ class CONTENT_EXPORT ServiceWorkerRegistration
 
   // Restores this registration in storage and cancels the pending
   // [[ClearRegistration]] algorithm.
-  void AbortPendingClear(const StatusCallback& callback);
+  void AbortPendingClear(StatusCallback callback);
 
   // The time of the most recent update check.
   base::Time last_update_check() const { return last_update_check_; }
@@ -192,7 +200,8 @@ class CONTENT_EXPORT ServiceWorkerRegistration
   void ContinueActivation(
       scoped_refptr<ServiceWorkerVersion> activating_version);
   void DispatchActivateEvent(
-      scoped_refptr<ServiceWorkerVersion> activating_version);
+      scoped_refptr<ServiceWorkerVersion> activating_version,
+      ServiceWorkerStatusCode start_worker_status);
   void OnActivateEventFinished(
       scoped_refptr<ServiceWorkerVersion> activating_version,
       ServiceWorkerStatusCode status);
@@ -202,11 +211,12 @@ class CONTENT_EXPORT ServiceWorkerRegistration
   // This method corresponds to the [[ClearRegistration]] algorithm.
   void Clear();
 
-  void OnRestoreFinished(const StatusCallback& callback,
+  void OnRestoreFinished(StatusCallback callback,
                          scoped_refptr<ServiceWorkerVersion> version,
                          ServiceWorkerStatusCode status);
 
   const GURL pattern_;
+  blink::mojom::ServiceWorkerUpdateViaCache update_via_cache_;
   const int64_t registration_id_;
   bool is_deleted_;
   bool is_uninstalling_;

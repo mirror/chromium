@@ -4,6 +4,8 @@
 
 #include "core/inspector/InspectorDOMSnapshotAgent.h"
 
+#include "bindings/core/v8/ScriptEventListener.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/AttributeCollection.h"
@@ -16,6 +18,7 @@
 #include "core/dom/QualifiedName.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLLinkElement.h"
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/forms/HTMLInputElement.h"
@@ -25,6 +28,7 @@
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorDOMAgent.h"
+#include "core/inspector/InspectorDOMDebuggerAgent.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 #include "core/layout/line/InlineTextBox.h"
@@ -85,13 +89,16 @@ struct InspectorDOMSnapshotAgent::VectorStringHashTraits
 };
 
 InspectorDOMSnapshotAgent::InspectorDOMSnapshotAgent(
-    InspectedFrames* inspected_frames)
-    : inspected_frames_(inspected_frames) {}
+    InspectedFrames* inspected_frames,
+    InspectorDOMDebuggerAgent* dom_debugger_agent)
+    : inspected_frames_(inspected_frames),
+      dom_debugger_agent_(dom_debugger_agent) {}
 
-InspectorDOMSnapshotAgent::~InspectorDOMSnapshotAgent() {}
+InspectorDOMSnapshotAgent::~InspectorDOMSnapshotAgent() = default;
 
 Response InspectorDOMSnapshotAgent::getSnapshot(
     std::unique_ptr<protocol::Array<String>> style_whitelist,
+    protocol::Maybe<bool> get_dom_listeners,
     std::unique_ptr<protocol::Array<protocol::DOMSnapshot::DOMNode>>* dom_nodes,
     std::unique_ptr<protocol::Array<protocol::DOMSnapshot::LayoutTreeNode>>*
         layout_tree_nodes,
@@ -122,7 +129,7 @@ Response InspectorDOMSnapshotAgent::getSnapshot(
   }
 
   // Actual traversal.
-  VisitNode(document);
+  VisitNode(document, get_dom_listeners.fromMaybe(false));
 
   // Extract results from state and reset.
   *dom_nodes = std::move(dom_nodes_);
@@ -133,7 +140,8 @@ Response InspectorDOMSnapshotAgent::getSnapshot(
   return Response::OK();
 }
 
-int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
+int InspectorDOMSnapshotAgent::VisitNode(Node* node,
+                                         bool include_event_listeners) {
   if (node->IsDocumentNode()) {
     // Update layout tree before traversal of document so that we inspect a
     // current and consistent state of all trees.
@@ -172,6 +180,24 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
   if (node->WillRespondToMouseClickEvents())
     value->setIsClickable(true);
 
+  if (include_event_listeners && node->GetDocument().GetFrame()) {
+    ScriptState* script_state =
+        ToScriptStateForMainWorld(node->GetDocument().GetFrame());
+    if (script_state->ContextIsValid()) {
+      ScriptState::Scope scope(script_state);
+      v8::Local<v8::Context> context = script_state->GetContext();
+      V8EventListenerInfoList event_information;
+      InspectorDOMDebuggerAgent::CollectEventListeners(
+          script_state->GetIsolate(), node, v8::Local<v8::Value>(), node, true,
+          &event_information);
+      if (!event_information.IsEmpty()) {
+        value->setEventListeners(
+            dom_debugger_agent_->BuildObjectsForEventListeners(
+                event_information, context, v8_inspector::StringView()));
+      }
+    }
+  }
+
   if (node->IsElementNode()) {
     Element* element = ToElement(node);
     value->setAttributes(BuildArrayForElementAttributes(element));
@@ -186,7 +212,7 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
         value->setFrameId(IdentifiersFactory::FrameId(frame));
       }
       if (Document* doc = frame_owner->contentDocument()) {
-        value->setContentDocumentIndex(VisitNode(doc));
+        value->setContentDocumentIndex(VisitNode(doc, include_event_listeners));
       }
     }
 
@@ -200,12 +226,15 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
       if (link_element->IsImport() && link_element->import() &&
           InspectorDOMAgent::InnerParentNode(link_element->import()) ==
               link_element) {
-        value->setImportedDocumentIndex(VisitNode(link_element->import()));
+        value->setImportedDocumentIndex(
+            VisitNode(link_element->import(), include_event_listeners));
       }
     }
 
-    if (auto* template_element = ToHTMLTemplateElementOrNull(*element))
-      value->setTemplateContentIndex(VisitNode(template_element->content()));
+    if (auto* template_element = ToHTMLTemplateElementOrNull(*element)) {
+      value->setTemplateContentIndex(
+          VisitNode(template_element->content(), include_event_listeners));
+    }
 
     if (auto* textarea_element = ToHTMLTextAreaElementOrNull(*element))
       value->setTextValue(textarea_element->value());
@@ -228,8 +257,13 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
         value->setPseudoType(pseudo_type);
       }
     } else {
-      value->setPseudoElementIndexes(VisitPseudoElements(element));
+      value->setPseudoElementIndexes(
+          VisitPseudoElements(element, include_event_listeners));
     }
+
+    HTMLImageElement* image_element = ToHTMLImageElementOrNull(node);
+    if (image_element)
+      value->setCurrentSourceURL(image_element->currentSrc());
   } else if (node->IsDocumentNode()) {
     Document* document = ToDocument(node);
     value->setDocumentURL(InspectorDOMAgent::DocumentURLString(document));
@@ -245,14 +279,17 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
     value->setSystemId(doc_type->systemId());
   }
 
-  if (node->IsContainerNode())
-    value->setChildNodeIndexes(VisitContainerChildren(node));
-
+  if (node->IsContainerNode()) {
+    value->setChildNodeIndexes(
+        VisitContainerChildren(node, include_event_listeners));
+  }
   return index;
 }
 
 std::unique_ptr<protocol::Array<int>>
-InspectorDOMSnapshotAgent::VisitContainerChildren(Node* container) {
+InspectorDOMSnapshotAgent::VisitContainerChildren(
+    Node* container,
+    bool include_event_listeners) {
   auto children = protocol::Array<int>::create();
 
   if (!FlatTreeTraversal::HasChildren(*container))
@@ -260,7 +297,7 @@ InspectorDOMSnapshotAgent::VisitContainerChildren(Node* container) {
 
   Node* child = FlatTreeTraversal::FirstChild(*container);
   while (child) {
-    children->addItem(VisitNode(child));
+    children->addItem(VisitNode(child, include_event_listeners));
     child = FlatTreeTraversal::NextSibling(*child);
   }
 
@@ -268,7 +305,8 @@ InspectorDOMSnapshotAgent::VisitContainerChildren(Node* container) {
 }
 
 std::unique_ptr<protocol::Array<int>>
-InspectorDOMSnapshotAgent::VisitPseudoElements(Element* parent) {
+InspectorDOMSnapshotAgent::VisitPseudoElements(Element* parent,
+                                               bool include_event_listeners) {
   if (!parent->GetPseudoElement(kPseudoIdBefore) &&
       !parent->GetPseudoElement(kPseudoIdAfter)) {
     return nullptr;
@@ -277,12 +315,12 @@ InspectorDOMSnapshotAgent::VisitPseudoElements(Element* parent) {
   auto pseudo_elements = protocol::Array<int>::create();
 
   if (parent->GetPseudoElement(kPseudoIdBefore)) {
-    pseudo_elements->addItem(
-        VisitNode(parent->GetPseudoElement(kPseudoIdBefore)));
+    pseudo_elements->addItem(VisitNode(
+        parent->GetPseudoElement(kPseudoIdBefore), include_event_listeners));
   }
   if (parent->GetPseudoElement(kPseudoIdAfter)) {
-    pseudo_elements->addItem(
-        VisitNode(parent->GetPseudoElement(kPseudoIdAfter)));
+    pseudo_elements->addItem(VisitNode(parent->GetPseudoElement(kPseudoIdAfter),
+                                       include_event_listeners));
   }
 
   return pseudo_elements;
@@ -393,6 +431,7 @@ int InspectorDOMSnapshotAgent::GetStyleIndexForNode(Node* node) {
 
 void InspectorDOMSnapshotAgent::Trace(blink::Visitor* visitor) {
   visitor->Trace(inspected_frames_);
+  visitor->Trace(dom_debugger_agent_);
   InspectorBaseAgent::Trace(visitor);
 }
 

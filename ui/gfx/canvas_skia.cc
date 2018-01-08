@@ -43,7 +43,8 @@ void ElideTextAndAdjustRange(const FontList& font_list,
                              Range* range) {
   const base::char16 start_char =
       (range->IsValid() ? text->at(range->start()) : 0);
-  *text = ElideText(*text, font_list, width, ELIDE_TAIL);
+  *text =
+      ElideText(*text, font_list, width, ELIDE_TAIL, gfx::Typesetter::HARFBUZZ);
   if (!range->IsValid())
     return;
   if (range->start() >= text->length() ||
@@ -97,9 +98,11 @@ void UpdateRenderText(const Rect& rect,
 // static
 void Canvas::SizeStringFloat(const base::string16& text,
                              const FontList& font_list,
-                             float* width, float* height,
+                             float* width,
+                             float* height,
                              int line_height,
-                             int flags) {
+                             int flags,
+                             Typesetter typesetter) {
   DCHECK_GE(*width, 0);
   DCHECK_GE(*height, 0);
 
@@ -115,8 +118,7 @@ void Canvas::SizeStringFloat(const base::string16& text,
                        &strings);
     Rect rect(base::saturated_cast<int>(*width), INT_MAX);
 
-    // This needs to match the instance used in ElideRectangleText.
-    auto render_text = RenderText::CreateInstanceDeprecated();
+    auto render_text = RenderText::CreateFor(typesetter);
 
     UpdateRenderText(rect, base::string16(), font_list, flags, 0,
                      render_text.get());
@@ -135,10 +137,7 @@ void Canvas::SizeStringFloat(const base::string16& text,
     *width = w;
     *height = h;
   } else {
-    // This is mostly used by calls from GetStringWidth(), which doesn't have
-    // the required drawing context. TODO(tapted): Ensure Cocoa UI never calls
-    // this method and change the next line to CreateHarfBuzzInstance().
-    auto render_text = RenderText::CreateInstanceDeprecated();
+    auto render_text = RenderText::CreateFor(typesetter);
 
     Rect rect(base::saturated_cast<int>(*width),
               base::saturated_cast<int>(*height));
@@ -165,15 +164,10 @@ void Canvas::DrawStringRectWithFlags(const base::string16& text,
 
   Rect rect(text_bounds);
 
-  auto render_text = gfx::RenderText::CreateInstanceDeprecated();
+  // Since we're drawing into a canvas anyway, just use Harfbuzz on Mac.
+  auto render_text = gfx::RenderText::CreateHarfBuzzInstance();
 
   if (flags & MULTI_LINE) {
-#if defined(OS_MACOSX)
-    // Currently not supported on Mac. ElideRectangleText() is not yet aware
-    // that the typesetting below is not being done by CoreText.
-    // See http://crbug.com/791391.
-    NOTREACHED();
-#endif
     WordWrapBehavior wrap_behavior = IGNORE_LONG_WORDS;
     if (flags & CHARACTER_BREAK)
       wrap_behavior = WRAP_LONG_WORDS;

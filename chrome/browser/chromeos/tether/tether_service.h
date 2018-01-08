@@ -26,6 +26,7 @@ class Profile;
 namespace chromeos {
 class NetworkStateHandler;
 namespace tether {
+class GmsCoreNotificationsStateTracker;
 class GmsCoreNotificationsStateTrackerImpl;
 class NotificationPresenter;
 }  // namespace tether
@@ -40,6 +41,12 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }  // namespace user_prefs
 
+// Service providing access to the Instant Tethering component. Provides an
+// interface to start up the component as well as to retrieve metadata about
+// ongoing Tether connections.
+//
+// This service starts up when the user logs in (or recovers from a crash) and
+// is shut down when the user logs out.
 class TetherService : public KeyedService,
                       public chromeos::PowerManagerClient::Observer,
                       public chromeos::tether::TetherHostFetcher::Observer,
@@ -66,6 +73,9 @@ class TetherService : public KeyedService,
   // reach chromeos::NetworkStateHandler::TechnologyState::ENABLED are reached.
   // Should only be called once a user is logged in.
   virtual void StartTetherIfPossible();
+
+  virtual chromeos::tether::GmsCoreNotificationsStateTracker*
+  GetGmsCoreNotificationsStateTracker();
 
  protected:
   // KeyedService:
@@ -137,10 +147,12 @@ class TetherService : public KeyedService,
   // Reflects InstantTethering_TechnologyStateAndReason enum in enums.xml. Do
   // not rearrange.
   enum TetherFeatureState {
-    OTHER_OR_UNKNOWN = 0,
+    // Note: Value 0 was previously OTHER_OR_UNKNOWN, but this was a vague
+    // description.
+    SHUT_DOWN = 0,
     BLE_ADVERTISING_NOT_SUPPORTED = 1,
-    // Note: SCREEN_LOCKED is an obsolete value, and should not be used.
-    SCREEN_LOCKED = 2,
+    // Note: Value 2 was previously SCREEN_LOCKED, but this value is obsolete
+    // and should no longer be used.
     NO_AVAILABLE_HOSTS = 3,
     CELLULAR_DISABLED = 4,
     PROHIBITED = 5,
@@ -149,11 +161,13 @@ class TetherService : public KeyedService,
     ENABLED = 8,
     BLE_NOT_PRESENT = 9,
     WIFI_NOT_PRESENT = 10,
+    SUSPENDED = 11,
     TETHER_FEATURE_STATE_MAX
   };
 
   // For debug logs.
-  static std::string TetherFeatureStateToString(TetherFeatureState state);
+  static std::string TetherFeatureStateToString(
+      const TetherFeatureState& state);
 
   void OnBluetoothAdapterFetched(
       scoped_refptr<device::BluetoothAdapter> adapter);

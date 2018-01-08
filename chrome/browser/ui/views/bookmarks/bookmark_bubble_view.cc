@@ -7,6 +7,8 @@
 #include "base/metrics/user_metrics.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
+#include "build/buildflag.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -21,6 +23,8 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
+#include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -35,6 +39,11 @@
 #if defined(OS_WIN)
 #include "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.h"
 #include "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_footnote_view.h"
+#endif
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "chrome/browser/signin/account_consistency_mode_manager.h"
+#include "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h"
 #endif
 
 using base::UserMetricsAction;
@@ -101,15 +110,12 @@ BookmarkBubbleView::~BookmarkBubbleView() {
 
 // ui::DialogModel -------------------------------------------------------------
 
-int BookmarkBubbleView::GetDialogButtons() const {
-  // TODO(tapted): DialogClientView should manage the ios promo buttons too.
-  return is_showing_ios_promotion_
-             ? ui::DIALOG_BUTTON_NONE
-             : (ui::DIALOG_BUTTON_OK | ui::DIALOG_BUTTON_CANCEL);
-}
-
 base::string16 BookmarkBubbleView::GetDialogButtonLabel(
     ui::DialogButton button) const {
+#if defined(OS_WIN)
+  if (is_showing_ios_promotion_)
+    return ios_promo_view_->GetDialogButtonLabel(button);
+#endif
   return l10n_util::GetStringUTF16((button == ui::DIALOG_BUTTON_OK)
                                        ? IDS_DONE
                                        : IDS_BOOKMARK_BUBBLE_REMOVE_BOOKMARK);
@@ -139,11 +145,8 @@ bool BookmarkBubbleView::ShouldShowCloseButton() const {
 
 gfx::ImageSkia BookmarkBubbleView::GetWindowIcon() {
 #if defined(OS_WIN)
-  if (is_showing_ios_promotion_) {
-    return desktop_ios_promotion::GetPromoImage(
-        GetNativeTheme()->GetSystemColor(
-            ui::NativeTheme::kColorId_TextfieldDefaultColor));
-  }
+  if (is_showing_ios_promotion_)
+    return ios_promo_view_->GetWindowIcon();
 #endif
   return gfx::ImageSkia();
 }
@@ -193,13 +196,29 @@ views::View* BookmarkBubbleView::CreateFootnoteView() {
 
   base::RecordAction(UserMetricsAction("Signin_Impression_FromBookmarkBubble"));
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  if (AccountConsistencyModeManager::IsDiceEnabledForProfile(profile_)) {
+    footnote_view_ = new DiceBubbleSyncPromoView(
+        profile_, delegate_.get(), IDS_BOOKMARK_DICE_PROMO_SIGNIN_MESSAGE,
+        IDS_BOOKMARK_DICE_PROMO_SYNC_MESSAGE);
+  } else {
+    footnote_view_ =
+        new BubbleSyncPromoView(delegate_.get(), IDS_BOOKMARK_SYNC_PROMO_LINK,
+                                IDS_BOOKMARK_SYNC_PROMO_MESSAGE);
+  }
+#else
   footnote_view_ =
       new BubbleSyncPromoView(delegate_.get(), IDS_BOOKMARK_SYNC_PROMO_LINK,
                               IDS_BOOKMARK_SYNC_PROMO_MESSAGE);
+#endif
   return footnote_view_;
 }
 
 bool BookmarkBubbleView::Cancel() {
+#if defined(OS_WIN)
+  if (is_showing_ios_promotion_)
+    return ios_promo_view_->Cancel();
+#endif
   base::RecordAction(UserMetricsAction("BookmarkBubble_Unstar"));
   // Set this so we remove the bookmark after the window closes.
   remove_bookmark_ = true;
@@ -209,6 +228,8 @@ bool BookmarkBubbleView::Cancel() {
 
 bool BookmarkBubbleView::Accept() {
 #if defined(OS_WIN)
+  if (is_showing_ios_promotion_)
+    return ios_promo_view_->Accept();
   using desktop_ios_promotion::PromotionEntryPoint;
   if (desktop_ios_promotion::IsEligibleForIOSPromotion(
           profile_, PromotionEntryPoint::BOOKMARKS_BUBBLE)) {
@@ -290,7 +311,7 @@ void BookmarkBubbleView::Init() {
       l10n_util::GetStringUTF16(IDS_BOOKMARK_AX_BUBBLE_NAME_LABEL));
 
   BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile_);
-  auto parent_folder_model = base::MakeUnique<RecentlyUsedFoldersComboModel>(
+  auto parent_folder_model = std::make_unique<RecentlyUsedFoldersComboModel>(
       model, model->GetMostRecentlyAddedUserNodeForURL(url_));
 
   parent_combobox_ = AddComboboxRow(
@@ -312,7 +333,7 @@ BookmarkBubbleView::BookmarkBubbleView(
     Profile* profile,
     const GURL& url,
     bool newly_bookmarked)
-    : LocationBarBubbleDelegateView(anchor_view, nullptr),
+    : LocationBarBubbleDelegateView(anchor_view, gfx::Point(), nullptr),
       observer_(observer),
       delegate_(std::move(delegate)),
       profile_(profile),

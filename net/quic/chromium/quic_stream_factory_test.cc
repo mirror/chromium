@@ -102,19 +102,24 @@ const char kServer4Url[] = "https://images.example.org/";
 // and enable_connection_racting.
 struct TestParams {
   friend std::ostream& operator<<(std::ostream& os, const TestParams& p) {
-    os << "{ version: " << QuicVersionToString(p.version) << " }";
+    os << "{ version: " << QuicVersionToString(p.version)
+       << ", client_headers_include_h2_stream_dependency: "
+       << p.client_headers_include_h2_stream_dependency << " }";
     return os;
   }
 
   QuicTransportVersion version;
+  bool client_headers_include_h2_stream_dependency;
 };
 
 std::vector<TestParams> GetTestParams() {
   std::vector<TestParams> params;
   QuicTransportVersionVector all_supported_versions =
       AllSupportedTransportVersions();
-  for (const auto& version : all_supported_versions)
-    params.push_back(TestParams{version});
+  for (const auto& version : all_supported_versions) {
+    params.push_back(TestParams{version, false});
+    params.push_back(TestParams{version, true});
+  }
   return params;
 }
 
@@ -136,12 +141,15 @@ struct PoolingTestParams {
         os << "DIFFERENT";
         break;
     }
+    os << ", client_headers_include_h2_stream_dependency: "
+       << p.client_headers_include_h2_stream_dependency;
     os << " }";
     return os;
   }
 
   QuicTransportVersion version;
   DestinationType destination_type;
+  bool client_headers_include_h2_stream_dependency;
 };
 
 std::vector<PoolingTestParams> GetPoolingTestParams() {
@@ -149,9 +157,12 @@ std::vector<PoolingTestParams> GetPoolingTestParams() {
   QuicTransportVersionVector all_supported_versions =
       AllSupportedTransportVersions();
   for (const QuicTransportVersion version : all_supported_versions) {
-    params.push_back(PoolingTestParams{version, SAME_AS_FIRST});
-    params.push_back(PoolingTestParams{version, SAME_AS_SECOND});
-    params.push_back(PoolingTestParams{version, DIFFERENT});
+    params.push_back(PoolingTestParams{version, SAME_AS_FIRST, false});
+    params.push_back(PoolingTestParams{version, SAME_AS_FIRST, true});
+    params.push_back(PoolingTestParams{version, SAME_AS_SECOND, false});
+    params.push_back(PoolingTestParams{version, SAME_AS_SECOND, true});
+    params.push_back(PoolingTestParams{version, DIFFERENT, false});
+    params.push_back(PoolingTestParams{version, DIFFERENT, true});
   }
   return params;
 }
@@ -193,22 +204,27 @@ class TestConnectionMigrationSocketFactory : public MockClientSocketFactory {
 
 class QuicStreamFactoryTestBase {
  protected:
-  explicit QuicStreamFactoryTestBase(QuicTransportVersion version)
+  QuicStreamFactoryTestBase(QuicTransportVersion version,
+                            bool client_headers_include_h2_stream_dependency)
       : ssl_config_service_(new MockSSLConfigService),
         socket_factory_(new MockClientSocketFactory),
         random_generator_(0),
         runner_(new TestTaskRunner(&clock_)),
         version_(version),
+        client_headers_include_h2_stream_dependency_(
+            client_headers_include_h2_stream_dependency),
         client_maker_(version_,
                       0,
                       &clock_,
                       kDefaultServerHostName,
-                      Perspective::IS_CLIENT),
+                      Perspective::IS_CLIENT,
+                      client_headers_include_h2_stream_dependency_),
         server_maker_(version_,
                       0,
                       &clock_,
                       kDefaultServerHostName,
-                      Perspective::IS_SERVER),
+                      Perspective::IS_SERVER,
+                      false),
         cert_verifier_(std::make_unique<MockCertVerifier>()),
         channel_id_service_(
             new ChannelIDService(new DefaultChannelIDStore(nullptr))),
@@ -259,8 +275,9 @@ class QuicStreamFactoryTestBase {
         base::TimeDelta::FromSeconds(kMaxTimeOnNonDefaultNetworkSecs),
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         allow_server_migration_, race_cert_verification_, estimate_initial_rtt_,
-        connection_options_, client_connection_options_,
-        /*enable_token_binding*/ false));
+        client_headers_include_h2_stream_dependency_, connection_options_,
+        client_connection_options_, /*enable_token_binding*/ false,
+        /*enable_socket_recv_optimization*/ false));
   }
 
   void InitializeConnectionMigrationTest(
@@ -374,7 +391,8 @@ class QuicStreamFactoryTestBase {
 
   std::unique_ptr<QuicEncryptedPacket> ConstructClientConnectionClosePacket(
       QuicPacketNumber num) {
-    return client_maker_.MakeConnectionClosePacket(num);
+    return client_maker_.MakeConnectionClosePacket(
+        num, false, QUIC_CRYPTO_VERSION_NOT_SUPPORTED, "Time to panic!");
   }
 
   std::unique_ptr<QuicEncryptedPacket> ConstructClientRstPacket(
@@ -414,7 +432,7 @@ class QuicStreamFactoryTestBase {
     size_t spdy_headers_frame_len;
     return client_maker_.MakeRequestHeadersPacket(
         packet_number, stream_id, should_include_version, fin, priority,
-        std::move(headers), &spdy_headers_frame_len);
+        std::move(headers), 0, &spdy_headers_frame_len);
   }
 
   std::unique_ptr<QuicEncryptedPacket> ConstructGetRequestPacket(
@@ -430,7 +448,7 @@ class QuicStreamFactoryTestBase {
     size_t spdy_headers_frame_len;
     return client_maker_.MakeRequestHeadersPacket(
         packet_number, stream_id, should_include_version, fin, priority,
-        std::move(headers), &spdy_headers_frame_len, offset);
+        std::move(headers), 0, &spdy_headers_frame_len, offset);
   }
 
   std::unique_ptr<QuicEncryptedPacket> ConstructOkResponsePacket(
@@ -501,8 +519,9 @@ class QuicStreamFactoryTestBase {
     HttpRequestInfo request_info;
     request_info.method = "GET";
     request_info.url = GURL("https://www.example.org/");
-    EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
-                                           net_log_, CompletionCallback()));
+    EXPECT_EQ(OK,
+              stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
+                                       net_log_, CompletionCallback()));
     // Ensure that session is alive and active.
     QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
     EXPECT_TRUE(QuicStreamFactoryPeer::IsLiveSession(factory_.get(), session));
@@ -761,7 +780,8 @@ class QuicStreamFactoryTestBase {
   MockRandom random_generator_;
   MockClock clock_;
   scoped_refptr<TestTaskRunner> runner_;
-  QuicTransportVersion version_;
+  const QuicTransportVersion version_;
+  const bool client_headers_include_h2_stream_dependency_;
   QuicTestPacketMaker client_maker_;
   QuicTestPacketMaker server_maker_;
   HttpServerPropertiesImpl http_server_properties_;
@@ -805,10 +825,13 @@ class QuicStreamFactoryTestBase {
 class QuicStreamFactoryTest : public QuicStreamFactoryTestBase,
                               public ::testing::TestWithParam<TestParams> {
  protected:
-  QuicStreamFactoryTest() : QuicStreamFactoryTestBase(GetParam().version) {}
+  QuicStreamFactoryTest()
+      : QuicStreamFactoryTestBase(
+            GetParam().version,
+            GetParam().client_headers_include_h2_stream_dependency) {}
 };
 
-INSTANTIATE_TEST_CASE_P(Version,
+INSTANTIATE_TEST_CASE_P(VersionIncludeStreamDependencySequnece,
                         QuicStreamFactoryTest,
                         ::testing::ValuesIn(GetTestParams()));
 
@@ -1571,8 +1594,9 @@ TEST_P(QuicStreamFactoryTest, MaxOpenStream) {
     }
     std::unique_ptr<HttpStream> stream = CreateStream(&request);
     EXPECT_TRUE(stream);
-    EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
-                                           net_log_, CompletionCallback()));
+    EXPECT_EQ(OK,
+              stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
+                                       net_log_, CompletionCallback()));
     streams.push_back(std::move(stream));
   }
 
@@ -1584,8 +1608,8 @@ TEST_P(QuicStreamFactoryTest, MaxOpenStream) {
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   EXPECT_TRUE(stream);
   EXPECT_EQ(ERR_IO_PENDING,
-            stream->InitializeStream(&request_info, DEFAULT_PRIORITY, net_log_,
-                                     callback_.callback()));
+            stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
+                                     net_log_, callback_.callback()));
 
   // Close the first stream.
   streams.front()->Close(false);
@@ -1702,7 +1726,7 @@ TEST_P(QuicStreamFactoryTest, CloseAllSessions) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Close the session and verify that stream saw the error.
@@ -1886,7 +1910,7 @@ TEST_P(QuicStreamFactoryTest, OnIPAddressChanged) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   IPAddress last_address;
@@ -1941,7 +1965,7 @@ TEST_P(QuicStreamFactoryTest, OnIPAddressChangedWithConnectionMigration) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   IPAddress last_address;
@@ -2010,7 +2034,7 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2025,8 +2049,13 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
                                     callback_.callback()));
 
   // Do an async write to leave writer blocked.
-  if (async_write_before)
-    session->connection()->SendPing();
+  if (async_write_before) {
+    if (session->use_control_frame_manager()) {
+      session->SendPing();
+    } else {
+      session->connection()->SendPing();
+    }
+  }
 
   // Set up second socket data provider that is used after migration.
   // The response to the earlier request is read on this new socket.
@@ -2142,7 +2171,7 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2157,8 +2186,13 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
                                     callback_.callback()));
 
   // Do an async write to leave writer blocked.
-  if (async_write_before)
-    session->connection()->SendPing();
+  if (async_write_before) {
+    if (session->use_control_frame_manager()) {
+      session->SendPing();
+    } else {
+      session->connection()->SendPing();
+    }
+  }
 
   // Set up second socket data provider that is used after migration.
   // The response to the earlier request is read on this new socket.
@@ -2252,7 +2286,7 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnectedWithNetworkList(
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2312,7 +2346,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultNonMigratableStream) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2362,7 +2396,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultNonMigratableStreamV2) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2411,7 +2445,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultConnectionMigrationDisabled) {
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2465,7 +2499,7 @@ TEST_P(QuicStreamFactoryTest,
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2519,7 +2553,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkDisconnectedNonMigratableStream) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2567,7 +2601,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkDisconnectedNonMigratableStreamV2) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2615,7 +2649,7 @@ TEST_P(QuicStreamFactoryTest,
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2667,7 +2701,7 @@ TEST_P(QuicStreamFactoryTest,
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2884,7 +2918,7 @@ TEST_P(QuicStreamFactoryTest, NewNetworkConnectedAfterNoNetwork) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2991,7 +3025,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkChangeDisconnectedPauseBeforeConnected) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3130,8 +3164,9 @@ TEST_P(QuicStreamFactoryTest,
   HttpRequestInfo request_info1;
   request_info1.method = "GET";
   request_info1.url = url_;
-  EXPECT_EQ(OK, stream1->InitializeStream(&request_info1, DEFAULT_PRIORITY,
-                                          net_log_, CompletionCallback()));
+  EXPECT_EQ(OK,
+            stream1->InitializeStream(&request_info1, true, DEFAULT_PRIORITY,
+                                      net_log_, CompletionCallback()));
   HttpResponseInfo response1;
   HttpRequestHeaders request_headers1;
   EXPECT_EQ(OK, stream1->SendRequest(request_headers1, &response1,
@@ -3142,8 +3177,9 @@ TEST_P(QuicStreamFactoryTest,
   HttpRequestInfo request_info2;
   request_info2.method = "GET";
   request_info2.url = url_;
-  EXPECT_EQ(OK, stream2->InitializeStream(&request_info2, DEFAULT_PRIORITY,
-                                          net_log_, CompletionCallback()));
+  EXPECT_EQ(OK,
+            stream2->InitializeStream(&request_info2, true, DEFAULT_PRIORITY,
+                                      net_log_, CompletionCallback()));
   HttpResponseInfo response2;
   HttpRequestHeaders request_headers2;
   EXPECT_EQ(OK, stream2->SendRequest(request_headers2, &response2,
@@ -3212,7 +3248,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarly) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3339,7 +3375,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyWithAsyncWrites) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3458,7 +3494,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyNoNewNetwork) {
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3512,7 +3548,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyNonMigratableStream) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3564,7 +3600,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyConnectionMigrationDisabled) {
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3625,7 +3661,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteError(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3715,7 +3751,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNoNewNetwork(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3806,7 +3842,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNonMigratableStream(
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3870,7 +3906,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorMigrationDisabled(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3950,7 +3986,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnMultipleWriteErrors(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4031,7 +4067,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorWithNotificationQueued(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4130,7 +4166,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnNotificationWithWriteErrorQueued(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4230,7 +4266,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorPauseBeforeConnected(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4365,7 +4401,7 @@ void QuicStreamFactoryTestBase::
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4521,7 +4557,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyToBadSocket) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4585,7 +4621,7 @@ TEST_P(QuicStreamFactoryTest, ServerMigration) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4729,7 +4765,7 @@ TEST_P(QuicStreamFactoryTest, ServerMigrationIPv4ToIPv6Fails) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4780,7 +4816,7 @@ TEST_P(QuicStreamFactoryTest, OnSSLConfigChanged) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   ssl_config_service_->NotifySSLConfigChange();
@@ -4835,7 +4871,7 @@ TEST_P(QuicStreamFactoryTest, OnCertDBChanged) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Change the CA cert and verify that stream saw the event.
@@ -5015,7 +5051,7 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   EXPECT_TRUE(stream.get());
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   DVLOG(1)
@@ -5046,8 +5082,9 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
 
   std::unique_ptr<HttpStream> stream2 = CreateStream(&request2);
   EXPECT_TRUE(stream2.get());
-  EXPECT_EQ(OK, stream2->InitializeStream(&request_info, DEFAULT_PRIORITY,
-                                          net_log_, CompletionCallback()));
+  EXPECT_EQ(OK,
+            stream2->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
+                                      net_log_, CompletionCallback()));
   session2->connection()->CloseConnection(
       QUIC_NETWORK_IDLE_TIMEOUT, "test", ConnectionCloseBehavior::SILENT_CLOSE);
   // Need to spin the loop now to ensure that
@@ -5378,7 +5415,9 @@ class QuicStreamFactoryWithDestinationTest
       public ::testing::TestWithParam<PoolingTestParams> {
  protected:
   QuicStreamFactoryWithDestinationTest()
-      : QuicStreamFactoryTestBase(GetParam().version),
+      : QuicStreamFactoryTestBase(
+            GetParam().version,
+            GetParam().client_headers_include_h2_stream_dependency),
         destination_type_(GetParam().destination_type),
         hanging_read_(SYNCHRONOUS, ERR_IO_PENDING, 0) {}
 
@@ -5421,7 +5460,7 @@ class QuicStreamFactoryWithDestinationTest
       sequenced_socket_data_vector_;
 };
 
-INSTANTIATE_TEST_CASE_P(Version,
+INSTANTIATE_TEST_CASE_P(VersionIncludeStreamDependencySequnece,
                         QuicStreamFactoryWithDestinationTest,
                         ::testing::ValuesIn(GetPoolingTestParams()));
 
@@ -5444,8 +5483,8 @@ TEST_P(QuicStreamFactoryWithDestinationTest, InvalidCertificate) {
 
   scoped_refptr<X509Certificate> cert(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  ASSERT_FALSE(cert->VerifyNameMatch(origin1_.host(), false));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host(), false));
+  ASSERT_FALSE(cert->VerifyNameMatch(origin1_.host()));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host()));
 
   ProofVerifyDetailsChromium verify_details;
   verify_details.cert_verify_result.verified_cert = cert;
@@ -5479,9 +5518,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, SharedCertificate) {
 
   scoped_refptr<X509Certificate> cert(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin1_.host(), false));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host(), false));
-  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname, false));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin1_.host()));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host()));
+  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname));
 
   ProofVerifyDetailsChromium verify_details;
   verify_details.cert_verify_result.verified_cert = cert;
@@ -5544,9 +5583,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DifferentPrivacyMode) {
 
   scoped_refptr<X509Certificate> cert(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin1_.host(), false));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host(), false));
-  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname, false));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin1_.host()));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host()));
+  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname));
 
   ProofVerifyDetailsChromium verify_details1;
   verify_details1.cert_verify_result.verified_cert = cert;
@@ -5624,9 +5663,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DisjointCertificate) {
 
   scoped_refptr<X509Certificate> cert1(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  ASSERT_TRUE(cert1->VerifyNameMatch(origin1_.host(), false));
-  ASSERT_FALSE(cert1->VerifyNameMatch(origin2_.host(), false));
-  ASSERT_FALSE(cert1->VerifyNameMatch(kDifferentHostname, false));
+  ASSERT_TRUE(cert1->VerifyNameMatch(origin1_.host()));
+  ASSERT_FALSE(cert1->VerifyNameMatch(origin2_.host()));
+  ASSERT_FALSE(cert1->VerifyNameMatch(kDifferentHostname));
 
   ProofVerifyDetailsChromium verify_details1;
   verify_details1.cert_verify_result.verified_cert = cert1;
@@ -5635,8 +5674,8 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DisjointCertificate) {
 
   scoped_refptr<X509Certificate> cert2(
       ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem"));
-  ASSERT_TRUE(cert2->VerifyNameMatch(origin2_.host(), false));
-  ASSERT_FALSE(cert2->VerifyNameMatch(kDifferentHostname, false));
+  ASSERT_TRUE(cert2->VerifyNameMatch(origin2_.host()));
+  ASSERT_FALSE(cert2->VerifyNameMatch(kDifferentHostname));
 
   ProofVerifyDetailsChromium verify_details2;
   verify_details2.cert_verify_result.verified_cert = cert2;
@@ -5804,6 +5843,240 @@ TEST_P(QuicStreamFactoryTest, ConfigMaxTimeBeforeCryptoHandshake) {
             config->max_time_before_crypto_handshake());
   EXPECT_EQ(QuicTime::Delta::FromSeconds(13),
             config->max_idle_time_before_crypto_handshake());
+}
+
+// Verify ResultAfterHostResolutionCallback behavior when host resolution
+// succeeds asynchronously, then crypto handshake fails synchronously.
+TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackAsyncSync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  host_resolver_.set_ondemand_mode(true);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(SYNCHRONOUS, ERR_FAILED);
+  socket_data.AddWrite(SYNCHRONOUS, ERR_FAILED);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(ERR_IO_PENDING,
+            request.Request(host_port_pair_, version_, privacy_mode_,
+                            DEFAULT_PRIORITY,
+                            /*cert_verify_flags=*/0, url_, net_log_,
+                            &net_error_details_, callback_.callback()));
+
+  TestCompletionCallback host_resolution_callback;
+  EXPECT_TRUE(
+      request.WaitForHostResolution(host_resolution_callback.callback()));
+
+  // |host_resolver_| has not finished host resolution at this point, so
+  // |host_resolution_callback| should not have a result.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+
+  // Allow |host_resolver_| to finish host resolution.
+  // Since the request fails immediately after host resolution (getting
+  // ERR_FAILED from socket reads/writes), |host_resolution_callback| should be
+  // called with ERR_QUIC_PROTOCOL_ERROR since that's the next result in
+  // forming the connection.
+  host_resolver_.ResolveAllPending();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(host_resolution_callback.have_result());
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, host_resolution_callback.WaitForResult());
+
+  // Calling WaitForHostResolution() a second time should return
+  // false since host resolution has finished already.
+  EXPECT_FALSE(
+      request.WaitForHostResolution(host_resolution_callback.callback()));
+
+  EXPECT_TRUE(callback_.have_result());
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback_.WaitForResult());
+}
+
+// Verify ResultAfterHostResolutionCallback behavior when host resolution
+// succeeds asynchronously, then crypto handshake fails asynchronously.
+TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackAsyncAsync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  host_resolver_.set_ondemand_mode(true);
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::ZERO_RTT);
+  factory_->set_require_confirmation(true);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(ASYNC, ERR_IO_PENDING);  // Pause
+  socket_data.AddRead(ASYNC, ERR_FAILED);
+  socket_data.AddWrite(ASYNC, ERR_FAILED);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(ERR_IO_PENDING,
+            request.Request(host_port_pair_, version_, privacy_mode_,
+                            DEFAULT_PRIORITY,
+                            /*cert_verify_flags=*/0, url_, net_log_,
+                            &net_error_details_, callback_.callback()));
+
+  TestCompletionCallback host_resolution_callback;
+  EXPECT_TRUE(
+      request.WaitForHostResolution(host_resolution_callback.callback()));
+
+  // |host_resolver_| has not finished host resolution at this point, so
+  // |host_resolution_callback| should not have a result.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+
+  // Allow |host_resolver_| to finish host resolution. Since crypto handshake
+  // will hang after host resolution, |host_resolution_callback| should run with
+  // ERR_IO_PENDING since that's the next result in forming the connection.
+  host_resolver_.ResolveAllPending();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(host_resolution_callback.have_result());
+  EXPECT_EQ(ERR_IO_PENDING, host_resolution_callback.WaitForResult());
+
+  // Calling WaitForHostResolution() a second time should return
+  // false since host resolution has finished already.
+  EXPECT_FALSE(
+      request.WaitForHostResolution(host_resolution_callback.callback()));
+
+  EXPECT_FALSE(callback_.have_result());
+  socket_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(callback_.have_result());
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback_.WaitForResult());
+}
+
+// Verify ResultAfterHostResolutionCallback behavior when host resolution
+// succeeds synchronously, then crypto handshake fails synchronously.
+TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackSyncSync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  host_resolver_.set_synchronous_mode(true);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(SYNCHRONOUS, ERR_FAILED);
+  socket_data.AddWrite(SYNCHRONOUS, ERR_FAILED);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_QUIC_PROTOCOL_ERROR,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+
+  // WaitForHostResolution() should return false since host
+  // resolution has finished already.
+  TestCompletionCallback host_resolution_callback;
+  EXPECT_FALSE(
+      request.WaitForHostResolution(host_resolution_callback.callback()));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+  EXPECT_FALSE(callback_.have_result());
+}
+
+// Verify ResultAfterHostResolutionCallback behavior when host resolution
+// succeeds synchronously, then crypto handshake fails asynchronously.
+TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackSyncAsync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  // Host resolution will succeed synchronously, but Request() as a whole
+  // will fail asynchronously.
+  host_resolver_.set_synchronous_mode(true);
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::ZERO_RTT);
+  factory_->set_require_confirmation(true);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(ASYNC, ERR_IO_PENDING);  // Pause
+  socket_data.AddRead(ASYNC, ERR_FAILED);
+  socket_data.AddWrite(ASYNC, ERR_FAILED);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+
+  // WaitForHostResolution() should return false since host
+  // resolution has finished already.
+  TestCompletionCallback host_resolution_callback;
+  EXPECT_FALSE(
+      request.WaitForHostResolution(host_resolution_callback.callback()));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+
+  EXPECT_FALSE(callback_.have_result());
+  socket_data.GetSequencedSocketData()->Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(callback_.have_result());
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback_.WaitForResult());
+}
+
+// Verify ResultAfterHostResolutionCallback behavior when host resolution fails
+// synchronously.
+TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackFailSync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  // Host resolution will fail synchronously.
+  host_resolver_.rules()->AddSimulatedFailure(host_port_pair_.host());
+  host_resolver_.set_synchronous_mode(true);
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_NAME_NOT_RESOLVED,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+
+  // WaitForHostResolution() should return false since host
+  // resolution has failed already.
+  TestCompletionCallback host_resolution_callback;
+  EXPECT_FALSE(
+      request.WaitForHostResolution(host_resolution_callback.callback()));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+}
+
+// Verify ResultAfterHostResolutionCallback behavior when host resolution fails
+// asynchronously.
+TEST_P(QuicStreamFactoryTest, ResultAfterHostResolutionCallbackFailAsync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  host_resolver_.rules()->AddSimulatedFailure(host_port_pair_.host());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+
+  TestCompletionCallback host_resolution_callback;
+  EXPECT_TRUE(
+      request.WaitForHostResolution(host_resolution_callback.callback()));
+
+  // Allow |host_resolver_| to fail host resolution. |host_resolution_callback|
+  // Should run with ERR_NAME_NOT_RESOLVED since that's the error host
+  // resolution failed with.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(host_resolution_callback.have_result());
+  EXPECT_EQ(ERR_NAME_NOT_RESOLVED, host_resolution_callback.WaitForResult());
+
+  EXPECT_TRUE(callback_.have_result());
+  EXPECT_EQ(ERR_NAME_NOT_RESOLVED, callback_.WaitForResult());
 }
 
 }  // namespace test

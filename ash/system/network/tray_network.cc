@@ -12,7 +12,6 @@
 #include "ash/system/network/network_icon_animation_observer.h"
 #include "ash/system/network/network_list.h"
 #include "ash/system/network/tray_network_state_observer.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray/tray_constants.h"
@@ -29,7 +28,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image_skia_operations.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/link_listener.h"
@@ -47,6 +46,7 @@ namespace tray {
 namespace {
 
 constexpr char kWifiToggleNotificationId[] = "wifi-toggle";
+constexpr char kNotifierWifiToggle[] = "ash.wifi-toggle";
 
 // Returns the connected, non-virtual (aka VPN), network.
 const NetworkState* GetConnectedNetwork() {
@@ -64,7 +64,7 @@ std::unique_ptr<Notification> CreateNotification(bool wifi_enabled) {
       gfx::Image(network_icon::GetImageForWiFiEnabledState(wifi_enabled)),
       base::string16() /* display_source */, GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 system_notifier::kNotifierWifiToggle),
+                                 kNotifierWifiToggle),
       message_center::RichNotificationData(), nullptr));
   return notification;
 }
@@ -104,7 +104,7 @@ class NetworkTrayView : public TrayItemView,
   // views::View:
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
     node_data->SetName(connection_status_string_);
-    node_data->role = ui::AX_ROLE_BUTTON;
+    node_data->role = ax::mojom::Role::kButton;
   }
 
   // network_icon::AnimationObserver:
@@ -155,7 +155,7 @@ class NetworkTrayView : public TrayItemView,
     if (new_connection_status_string != connection_status_string_) {
       connection_status_string_ = new_connection_status_string;
       if (notify_a11y && !connection_status_string_.empty())
-        NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+        NotifyAccessibilityEvent(ax::mojom::Event::kAlert, true);
     }
   }
 

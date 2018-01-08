@@ -434,22 +434,6 @@ void ContentSuggestionsService::ReloadSuggestions() {
   }
 }
 
-void ContentSuggestionsService::OnChromeHomeStatusChanged(
-    bool is_chrome_home_enabled) {
-  debug_logger_->Log(
-      FROM_HERE, base::StringPrintf("Chrome Home enabled: %s",
-                                    is_chrome_home_enabled ? "true" : "false"));
-  if (is_chrome_home_enabled) {
-    // TODO(vitaliii): Make this code more general and do not hardcode specific
-    // categories.
-    DestroyCategoryAndItsProvider(
-        Category::FromKnownCategory(KnownCategories::BOOKMARKS));
-    DestroyCategoryAndItsProvider(
-        Category::FromKnownCategory(KnownCategories::DOWNLOADS));
-  }
-  // TODO(vitaliii): Recreate providers when Chrome Home is turned off.
-}
-
 bool ContentSuggestionsService::AreRemoteSuggestionsEnabled() const {
   return remote_suggestions_provider_ &&
          !remote_suggestions_provider_->IsDisabled();
@@ -526,12 +510,12 @@ void ContentSuggestionsService::OnSuggestionInvalidated(
 void ContentSuggestionsService::GoogleSigninSucceeded(
     const std::string& account_id,
     const std::string& username) {
-  OnSignInStateChanged();
+  OnSignInStateChanged(/*has_signed_in=*/true);
 }
 
 void ContentSuggestionsService::GoogleSignedOut(const std::string& account_id,
                                                 const std::string& username) {
-  OnSignInStateChanged();
+  OnSignInStateChanged(/*has_signed_in=*/false);
 }
 
 // history::HistoryServiceObserver implementation.
@@ -659,10 +643,10 @@ void ContentSuggestionsService::NotifyCategoryStatusChanged(Category category) {
   }
 }
 
-void ContentSuggestionsService::OnSignInStateChanged() {
+void ContentSuggestionsService::OnSignInStateChanged(bool has_signed_in) {
   // First notify the providers, so they can make the required changes.
   for (const auto& provider : providers_) {
-    provider->OnSignInStateChanged();
+    provider->OnSignInStateChanged(has_signed_in);
   }
 
   // Finally notify the observers so they refresh only after the backend is

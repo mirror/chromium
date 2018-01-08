@@ -13,8 +13,7 @@
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/frame/WebLocalFrameImpl.h"
-#include "core/layout/api/LayoutEmbeddedContentItem.h"
-#include "core/layout/api/LayoutItem.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -101,6 +100,13 @@ Frame* RemoteFrameClientImpl::FirstChild() const {
 void RemoteFrameClientImpl::FrameFocused() const {
   if (web_frame_->Client())
     web_frame_->Client()->FrameFocused();
+}
+
+String RemoteFrameClientImpl::GetDevToolsFrameToken() const {
+  if (web_frame_->Client()) {
+    return web_frame_->Client()->GetDevToolsFrameToken();
+  }
+  return g_empty_string;
 }
 
 void RemoteFrameClientImpl::Navigate(const ResourceRequest& request,

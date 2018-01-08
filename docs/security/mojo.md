@@ -345,6 +345,29 @@ for (size_t i = 0; i < request->element_size(); ++i) {
 ## C++ Best Practices
 
 
+### Use mojo::WrapCallbackWithDefaultInvokeIfNotRun And mojo::WrapCallbackWithDropHandler Sparingly
+
+Mojo provides several convenience helpers to automatically invoke a callback if
+the callback has not already been invoked in some other way when the callback is
+destroyed, e.g.:
+
+```c++
+  {
+    base::Callback<int> cb = mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+        base::Bind([](int) { ... }), -1);
+  }  // |cb| is automatically invoked with an argument of -1.
+```
+
+Unfortunately, the fact that this callback is guaranteed to always run is hidden
+from the type system and can propagate in surprising ways. Avoid using this
+construction unless there are no better alternatives. Uses of these helpers must
+be well-commented to describe why this behavior is required.
+
+Note that using this from the renderer is often unnecessary. Message pipes are
+often closed as part of a Document shutting down; since many Blink objects
+already inherit `blink::ContextLifecycleObserver`, it is usually more idiomatic
+to use this signal to perform any needed cleanup work.
+
 ### Use StructTraits
 
 Creating a typemap and defining a `StructTraits` specialization moves the
@@ -357,7 +380,7 @@ serialization and deserialization. 😄
 **_Good_**
 
 ```c++
-// In url_gurl_struct_traits.h:
+// In url_gurl_mojom_traits.h:
 template <>
 struct StructTraits<url::mojom::UrlDataView, GURL> {
   static base::StringPiece url(const GURL& r);
@@ -366,7 +389,7 @@ struct StructTraits<url::mojom::UrlDataView, GURL> {
   static bool Read(url::mojom::UrlDataView data, GURL* out);
 };
 
-// In url_gurl_struct_traits.cc:
+// In url_gurl_mojom_traits.cc:
 // Note that methods that aren't simple getters should be defined
 // out-of-line to avoid code bloat.
 base::StringPiece StructTraits<url::mojom::UrlDataView, GURL>::url(

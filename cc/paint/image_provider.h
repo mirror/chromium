@@ -32,7 +32,9 @@ class CC_PAINT_EXPORT ImageProvider {
     ScopedDecodedDrawImage(ScopedDecodedDrawImage&& other);
     ScopedDecodedDrawImage& operator=(ScopedDecodedDrawImage&& other);
 
-    operator bool() const { return image_.image(); }
+    operator bool() const {
+      return image_.image() || image_.transfer_cache_entry_id();
+    }
     const DecodedDrawImage& decoded_image() const { return image_; }
 
    private:
@@ -45,9 +47,6 @@ class CC_PAINT_EXPORT ImageProvider {
   };
 
   virtual ~ImageProvider() {}
-
-  virtual void BeginRaster() {}
-  virtual void EndRaster() {}
 
   // Returns the DecodedDrawImage to use for this PaintImage. If no image is
   // provided, the draw for this image will be skipped during raster.

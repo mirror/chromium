@@ -27,7 +27,11 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using testing::AllOf;
+using testing::ElementsAre;
+using testing::Eq;
 using testing::NotNull;
+using testing::Property;
 using testing::_;
 
 std::ostream& operator<<(std::ostream& os, const base::DictionaryValue& value) {
@@ -120,9 +124,15 @@ class MockFetcher : public URLFetcher {
     const base::Value* response_data_value = reply_dictionary->FindKey("data");
     ASSERT_THAT(response_data_value, NotNull());
     response_data_ = response_data_value->GetString();
+    const base::Value* total_received_bytes_value =
+        reply_dictionary->FindKey("total_received_bytes");
+    int total_received_bytes = 0;
+    if (total_received_bytes_value)
+      total_received_bytes = total_received_bytes_value->GetInt();
     result_listener->OnFetchComplete(
         GURL(final_url_value->GetString()), std::move(response_headers),
-        response_data_.c_str(), response_data_.size(), load_timing_info);
+        response_data_.c_str(), response_data_.size(), load_timing_info,
+        total_received_bytes);
   }
 
  private:
@@ -387,7 +397,8 @@ TEST_F(GenericURLRequestJobTest, BasicRequestContents) {
         "data": "Reply",
         "headers": {
           "Content-Type": "text/html; charset=UTF-8"
-        }
+        },
+        "total_received_bytes": 100
       })";
 
   std::unique_ptr<net::URLRequest> request(
@@ -399,6 +410,7 @@ TEST_F(GenericURLRequestJobTest, BasicRequestContents) {
   EXPECT_TRUE(request->Read(buffer.get(), kBufferSize, &bytes_read));
   EXPECT_EQ(5, bytes_read);
   EXPECT_EQ("Reply", std::string(buffer->data(), 5));
+  EXPECT_EQ(100, request->GetTotalReceivedBytes());
 
   net::LoadTimingInfo load_timing_info;
   request->GetLoadTimingInfo(&load_timing_info);
@@ -517,6 +529,27 @@ TEST_F(GenericURLRequestJobTest, RequestWithCookies) {
       })";
 
   EXPECT_THAT(fetch_request_, MatchesJson(expected_request_json));
+}
+
+TEST_F(GenericURLRequestJobTest, ResponseWithCookies) {
+  std::string reply = R"(
+      {
+        "url": "https://example.com",
+        "data": "Reply",
+        "headers": {
+          "Set-Cookie": "A=foobar; path=/; "
+        }
+      })";
+
+  std::unique_ptr<net::URLRequest> request(
+      CreateAndCompleteGetJob(GURL("https://example.com"), reply));
+
+  EXPECT_THAT(*cookie_store_.cookies(),
+              ElementsAre(AllOf(
+                  Property(&net::CanonicalCookie::Name, Eq("A")),
+                  Property(&net::CanonicalCookie::Value, Eq("foobar")),
+                  Property(&net::CanonicalCookie::Domain, Eq("example.com")),
+                  Property(&net::CanonicalCookie::Path, Eq("/")))));
 }
 
 TEST_F(GenericURLRequestJobTest, OnResourceLoadFailed) {

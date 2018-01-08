@@ -56,6 +56,8 @@ enum EffectiveConnectionType {
     void setBrowserControlsState(float top_height, float bottom_height, boolean shrinksLayout);
     void setBrowserControlsShownRatio(float ratio);
 
+    Node effectiveRootScroller(Document document);
+
     [RaisesException] DOMString shadowRootType(Node root);
     [RaisesException] boolean hasShadowInsertionPoint(Node root);
     [RaisesException] boolean hasContentElement(Node root);
@@ -148,7 +150,6 @@ enum EffectiveConnectionType {
     [RaisesException] Node touchNodeAdjustedToBestClickableNode(long x, long y, long width, long height, Document document);
     [RaisesException] DOMPoint touchPositionAdjustedToBestContextMenuNode(long x, long y, long width, long height, Document document);
     [RaisesException] Node touchNodeAdjustedToBestContextMenuNode(long x, long y, long width, long height, Document document);
-    [RaisesException] DOMRectReadOnly bestZoomableAreaForTouchPoint(long x, long y, long width, long height, Document document);
 
     [RaisesException] long lastSpellCheckRequestSequence(Document document);
     [RaisesException] long lastSpellCheckProcessedSequence(Document document);
@@ -321,16 +322,13 @@ enum EffectiveConnectionType {
 
     void setValueForUser(HTMLInputElement element, DOMString value);
 
-    DOMString textSurroundingNode(Node node, long x, long y, unsigned long maxLength);
-
     void setFocused(boolean focused);
     void setInitialFocus(boolean reverse);
 
     boolean ignoreLayoutWithPendingStylesheets(Document document);
 
     // These functions are for testing NetInfo. You must call clearNetworkConnectionInfoOverride() at the end.
-    [RaisesException] void setNetworkConnectionInfoOverride(boolean onLine, DOMString type, double downlinkMaxMbps);
-    [RaisesException] void setNetworkQualityInfoOverride(EffectiveConnectionType effective_type, unsigned long transport_rtt_msec, double downlink_throughput_mbps);
+    [RaisesException] void setNetworkConnectionInfoOverride(boolean onLine, DOMString type, EffectiveConnectionType effective_type, unsigned long http_rtt_msec, double downlink_max_mbps);
     void setSaveDataEnabled(boolean enabled);
     void clearNetworkConnectionInfoOverride();
 
@@ -399,6 +397,8 @@ enum EffectiveConnectionType {
 
     void crash();
 
+    DOMString evaluateInInspectorOverlay(DOMString script);
+    
     void setIsLowEndDevice(boolean isLowEndDevice);
     boolean isLowEndDevice();
 

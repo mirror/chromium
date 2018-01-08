@@ -26,8 +26,8 @@ struct StartUpgradeResult {
   StartUpgradeResult();
   explicit StartUpgradeResult(StartUpgradeStatus status);
   StartUpgradeResult(StartUpgradeStatus status,
-                     std::string digest,
-                     base::FilePath file_path);
+                     const std::string& digest,
+                     const base::FilePath& file_path);
 
   // Support for move semantics.
   StartUpgradeResult(StartUpgradeResult&& other) = default;
@@ -40,6 +40,21 @@ struct StartUpgradeResult {
 
 // Callback delivering results of starting the upgrade.
 typedef base::OnceCallback<void(StartUpgradeResult)> StartUpgradeCallback;
+
+// Enumeration of possible statuses of upgrade process completion.
+enum class CompleteUpgradeStatus {
+  SUCCESS,
+  DB_ERROR,
+  ITEM_MISSING,
+  DIGEST_VERIFICATION_FAILED,
+  TEMPORARY_FILE_MISSING,
+  TARGET_FILE_NAME_IN_USE,
+  RENAMING_FAILED,
+  DB_ERROR_POST_FILE_RENAME,
+};
+
+// Callback for completing the upgrade.
+typedef base::OnceCallback<void(CompleteUpgradeStatus)> CompleteUpgradeCallback;
 
 }  // namespace offline_pages
 

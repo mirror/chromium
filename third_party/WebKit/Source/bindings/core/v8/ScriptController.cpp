@@ -105,6 +105,7 @@ V8CacheOptions CacheOptions(const CachedMetadataHandler* cache_handler,
 v8::Local<v8::Value> ScriptController::ExecuteScriptAndReturnValue(
     v8::Local<v8::Context> context,
     const ScriptSourceCode& source,
+    const KURL& base_url,
     const ScriptFetchOptions& fetch_options,
     AccessControlStatus access_control_status) {
   TRACE_EVENT1(
@@ -125,17 +126,27 @@ v8::Local<v8::Value> ScriptController::ExecuteScriptAndReturnValue(
     v8::TryCatch try_catch(GetIsolate());
     try_catch.SetVerbose(true);
 
-    const ReferrerScriptInfo referrer_info(fetch_options.CredentialsMode(),
-                                           fetch_options.Nonce(),
-                                           fetch_options.ParserState());
+    // Omit storing base URL if it is same as source URL.
+    // Note: This improves chance of getting into a fast path in
+    //       ReferrerScriptInfo::ToV8HostDefinedOptions.
+    KURL stored_base_url = (base_url == source.Url()) ? KURL() : base_url;
+    const ReferrerScriptInfo referrer_info(stored_base_url, fetch_options);
 
     v8::Local<v8::Script> script;
 
+    v8::ScriptCompiler::CompileOptions compile_options;
+    V8ScriptRunner::ProduceCacheOptions produce_cache_options;
+    v8::ScriptCompiler::NoCacheReason no_cache_reason;
+    std::tie(compile_options, produce_cache_options, no_cache_reason) =
+        V8ScriptRunner::GetCompileOptions(v8_cache_options, source);
     if (!V8ScriptRunner::CompileScript(ScriptState::From(context), source,
-                                       access_control_status, v8_cache_options,
-                                       referrer_info)
+                                       access_control_status, compile_options,
+                                       no_cache_reason, referrer_info)
              .ToLocal(&script))
       return result;
+
+    V8ScriptRunner::ProduceCache(GetIsolate(), script, source,
+                                 produce_cache_options, compile_options);
 
     if (!V8ScriptRunner::RunCompiledScript(GetIsolate(), script,
                                            GetFrame()->GetDocument())
@@ -249,12 +260,15 @@ bool ScriptController::ExecuteScriptIfJavaScriptURL(const KURL& url,
   v8::HandleScope handle_scope(GetIsolate());
 
   // https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate
+  // Step 12.8 "Let base URL be settings object's API base URL." [spec text]
+  KURL base_url = owner_document->BaseURL();
+
   // Step 12.9 "Let script be result of creating a classic script given script
   // source, settings, base URL, and the default classic script fetch options."
   // [spec text]
   v8::Local<v8::Value> result = EvaluateScriptInMainWorld(
       ScriptSourceCode(script_source, ScriptSourceLocationType::kJavascriptUrl),
-      ScriptFetchOptions(), kNotSharableCrossOrigin,
+      base_url, ScriptFetchOptions(), kNotSharableCrossOrigin,
       kDoNotExecuteScriptWhenScriptsDisabled);
 
   // If executing script caused this frame to be removed from the page, we
@@ -286,29 +300,33 @@ void ScriptController::ExecuteScriptInMainWorld(
     ExecuteScriptPolicy policy) {
   v8::HandleScope handle_scope(GetIsolate());
   EvaluateScriptInMainWorld(ScriptSourceCode(script, source_location_type),
-                            ScriptFetchOptions(), kNotSharableCrossOrigin,
-                            policy);
+                            KURL(), ScriptFetchOptions(),
+                            kNotSharableCrossOrigin, policy);
 }
 
 void ScriptController::ExecuteScriptInMainWorld(
     const ScriptSourceCode& source_code,
+    const KURL& base_url,
     const ScriptFetchOptions& fetch_options,
     AccessControlStatus access_control_status) {
   v8::HandleScope handle_scope(GetIsolate());
-  EvaluateScriptInMainWorld(source_code, fetch_options, access_control_status,
+  EvaluateScriptInMainWorld(source_code, base_url, fetch_options,
+                            access_control_status,
                             kDoNotExecuteScriptWhenScriptsDisabled);
 }
 
 v8::Local<v8::Value> ScriptController::ExecuteScriptInMainWorldAndReturnValue(
     const ScriptSourceCode& source_code,
+    const KURL& base_url,
     const ScriptFetchOptions& fetch_options,
     ExecuteScriptPolicy policy) {
-  return EvaluateScriptInMainWorld(source_code, fetch_options,
+  return EvaluateScriptInMainWorld(source_code, base_url, fetch_options,
                                    kNotSharableCrossOrigin, policy);
 }
 
 v8::Local<v8::Value> ScriptController::EvaluateScriptInMainWorld(
     const ScriptSourceCode& source_code,
+    const KURL& base_url,
     const ScriptFetchOptions& fetch_options,
     AccessControlStatus access_control_status,
     ExecuteScriptPolicy policy) {
@@ -327,9 +345,9 @@ v8::Local<v8::Value> ScriptController::EvaluateScriptInMainWorld(
   if (GetFrame()->Loader().StateMachine()->IsDisplayingInitialEmptyDocument())
     GetFrame()->Loader().DidAccessInitialDocument();
 
-  v8::Local<v8::Value> object =
-      ExecuteScriptAndReturnValue(script_state->GetContext(), source_code,
-                                  fetch_options, access_control_status);
+  v8::Local<v8::Value> object = ExecuteScriptAndReturnValue(
+      script_state->GetContext(), source_code, base_url, fetch_options,
+      access_control_status);
 
   if (object.IsEmpty())
     return v8::Local<v8::Value>();

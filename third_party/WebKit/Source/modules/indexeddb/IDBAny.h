@@ -65,6 +65,9 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
     return new IDBAny(dom_string_list);
   }
   static IDBAny* Create(int64_t value) { return new IDBAny(value); }
+  static IDBAny* Create(std::unique_ptr<IDBKey> key) {
+    return new IDBAny(std::move(key));
+  }
   static IDBAny* Create(std::unique_ptr<IDBValue> value) {
     return new IDBAny(std::move(value));
   }
@@ -82,8 +85,6 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
     kIDBCursorType,
     kIDBCursorWithValueType,
     kIDBDatabaseType,
-    kIDBIndexType,
-    kIDBObjectStoreType,
     kIntegerType,
     kKeyType,
     kIDBValueType,
@@ -96,8 +97,6 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
   IDBCursor* IdbCursor() const;
   IDBCursorWithValue* IdbCursorWithValue() const;
   IDBDatabase* IdbDatabase() const;
-  IDBIndex* IdbIndex() const;
-  IDBObjectStore* IdbObjectStore() const;
   IDBValue* Value() const;
   const Vector<std::unique_ptr<IDBValue>>& Values() const;
   int64_t Integer() const;
@@ -108,9 +107,7 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
   explicit IDBAny(DOMStringList*);
   explicit IDBAny(IDBCursor*);
   explicit IDBAny(IDBDatabase*);
-  explicit IDBAny(IDBIndex*);
-  explicit IDBAny(IDBObjectStore*);
-  explicit IDBAny(IDBKey*);
+  explicit IDBAny(std::unique_ptr<IDBKey>);
   explicit IDBAny(Vector<std::unique_ptr<IDBValue>>);
   explicit IDBAny(std::unique_ptr<IDBValue>);
   explicit IDBAny(int64_t);
@@ -121,9 +118,7 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
   const Member<DOMStringList> dom_string_list_;
   const Member<IDBCursor> idb_cursor_;
   const Member<IDBDatabase> idb_database_;
-  const Member<IDBIndex> idb_index_;
-  const Member<IDBObjectStore> idb_object_store_;
-  const Member<IDBKey> idb_key_;
+  const std::unique_ptr<IDBKey> idb_key_;
   const std::unique_ptr<IDBValue> idb_value_;
   const Vector<std::unique_ptr<IDBValue>> idb_values_;
   const int64_t integer_ = 0;

@@ -83,7 +83,8 @@ class InlineFlowBox : public InlineBox {
 #endif
 
 #ifndef NDEBUG
-  void ShowLineTreeAndMark(const InlineBox* = nullptr,
+  void DumpLineTreeAndMark(StringBuilder&,
+                           const InlineBox* = nullptr,
                            const char* = nullptr,
                            const InlineBox* = nullptr,
                            const char* = nullptr,
@@ -401,7 +402,7 @@ class InlineFlowBox : public InlineBox {
   }
 
   LayoutUnit FarthestPositionForUnderline(LineLayoutItem decorating_box,
-                                          LineVerticalPositionType,
+                                          FontVerticalPositionType,
                                           FontBaseline,
                                           LayoutUnit current) const;
 

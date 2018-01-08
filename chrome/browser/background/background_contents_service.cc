@@ -24,7 +24,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/extension_service.h"
-#include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/notifications/notification_common.h"
+#include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
@@ -55,10 +56,10 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image.h"
-#include "ui/message_center/notification.h"
-#include "ui/message_center/notification_delegate.h"
-#include "ui/message_center/notification_types.h"
-#include "ui/message_center/notifier_id.h"
+#include "ui/message_center/public/cpp/notification.h"
+#include "ui/message_center/public/cpp/notification_delegate.h"
+#include "ui/message_center/public/cpp/notification_types.h"
+#include "ui/message_center/public/cpp/notifier_id.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/login/user_flow.h"
@@ -73,23 +74,17 @@ using extensions::UnloadedExtensionReason;
 
 namespace {
 
-const char kNotificationPrefix[] = "app.background.crashed.";
+const char kCrashedNotificationPrefix[] = "app.background.crashed.";
 const char kNotifierId[] = "app.background.crashed";
 bool g_disable_close_balloon_for_testing = false;
 
-void CloseBalloon(const std::string& balloon_id, ProfileID profile_id) {
-  g_browser_process->notification_ui_manager()->CancelById(balloon_id,
-                                                           profile_id);
-}
-
-// Closes the crash notification balloon for the app/extension with this id.
-void ScheduleCloseBalloon(const std::string& extension_id, Profile* profile) {
+void CloseBalloon(const std::string& extension_id, Profile* profile) {
   if (g_disable_close_balloon_for_testing)
     return;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&CloseBalloon, kNotificationPrefix + extension_id,
-                     NotificationUIManager::GetProfileID(profile)));
+
+  NotificationDisplayService::GetForProfile(profile)->Close(
+      NotificationHandler::Type::TRANSIENT,
+      kCrashedNotificationPrefix + extension_id);
 }
 
 // Delegate for the app/extension crash notification balloon. Restarts the
@@ -129,9 +124,7 @@ class CrashNotificationDelegate : public message_center::NotificationDelegate {
           ReloadExtension(copied_extension_id);
     }
 
-    // Closing the crash notification balloon for the app/extension here should
-    // be OK, but it causes a crash on Mac, see: http://crbug.com/78167
-    ScheduleCloseBalloon(copied_extension_id, profile_);
+    CloseBalloon(copied_extension_id, profile_);
   }
 
  private:
@@ -163,16 +156,17 @@ void NotificationImageReady(const std::string extension_name,
   // Origin URL must be different from the crashed extension to avoid the
   // conflict. NotificationSystemObserver will cancel all notifications from
   // the same origin when OnExtensionUnloaded() is called.
-  std::string id = kNotificationPrefix + extension_id;
+  std::string id = kCrashedNotificationPrefix + extension_id;
   message_center::Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, id, base::string16(), message,
       notification_icon, base::string16(), GURL("chrome://extension-crash"),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kNotifierId),
-      message_center::RichNotificationData(), delegate.get());
+      {}, delegate);
   notification.set_clickable(true);
 
-  g_browser_process->notification_ui_manager()->Add(notification, profile);
+  NotificationDisplayService::GetForProfile(profile)->Display(
+      NotificationHandler::Type::TRANSIENT, notification);
 }
 
 // Show a popup notification balloon with a crash message for a given app/
@@ -285,7 +279,7 @@ void BackgroundContentsService::
 std::string
 BackgroundContentsService::GetNotificationDelegateIdForExtensionForTesting(
     const std::string& extension_id) {
-  return kNotificationPrefix + extension_id;
+  return kCrashedNotificationPrefix + extension_id;
 }
 
 // static
@@ -478,7 +472,7 @@ void BackgroundContentsService::OnExtensionLoaded(
   }
 
   // Close the crash notification balloon for the app/extension, if any.
-  ScheduleCloseBalloon(extension->id(), profile);
+  CloseBalloon(extension->id(), profile);
   SendChangeNotification(profile);
 }
 
@@ -525,7 +519,7 @@ void BackgroundContentsService::OnExtensionUninstalled(
   // uninstalled/reloaded. We cannot do this from UNLOADED since a crashed
   // extension is unloaded immediately after the crash, not when user reloads or
   // uninstalls the extension.
-  ScheduleCloseBalloon(extension->id(), profile);
+  CloseBalloon(extension->id(), profile);
 }
 
 void BackgroundContentsService::RestartForceInstalledExtensionOnCrash(
@@ -788,7 +782,7 @@ void BackgroundContentsService::BackgroundContentsOpened(
   contents_map_[details->application_id].contents = details->contents;
   contents_map_[details->application_id].frame_name = details->frame_name;
 
-  ScheduleCloseBalloon(details->application_id, profile);
+  CloseBalloon(details->application_id, profile);
 }
 
 // Used by test code and debug checks to verify whether a given

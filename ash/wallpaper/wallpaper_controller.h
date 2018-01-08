@@ -36,10 +36,6 @@ namespace color_utils {
 struct ColorProfile;
 }  // namespace color_utils
 
-namespace user_manager {
-class UserImage;
-}  // namespace user_manager
-
 namespace wallpaper {
 class WallpaperColorCalculator;
 class WallpaperResizer;
@@ -55,8 +51,7 @@ class WallpaperControllerObserver;
 using CustomWallpaperElement = std::pair<base::FilePath, gfx::ImageSkia>;
 using CustomWallpaperMap = std::map<AccountId, CustomWallpaperElement>;
 
-using LoadedCallback =
-    base::Callback<void(std::unique_ptr<user_manager::UserImage>)>;
+using LoadedCallback = base::Callback<void(const gfx::ImageSkia& image)>;
 
 // Controls the desktop background wallpaper:
 //   - Sets a wallpaper image and layout;
@@ -99,6 +94,10 @@ class ASH_EXPORT WallpaperController
   static const char kOriginalWallpaperSubDir[];
   static const char kThumbnailWallpaperSubDir[];
 
+  // File path suffices of resized small or large wallpaper.
+  static const char kSmallWallpaperSuffix[];
+  static const char kLargeWallpaperSuffix[];
+
   // The width and height of small/large resolution wallpaper. When screen size
   // is smaller than |kSmallWallpaperMaxWidth| and |kSmallWallpaperMaxHeight|,
   // the small resolution wallpaper should be used. Otherwise, use the large
@@ -115,24 +114,6 @@ class ASH_EXPORT WallpaperController
   // The color of the wallpaper if no other wallpaper images are available.
   static const SkColor kDefaultWallpaperColor;
 
-  // This object is passed between several threads while wallpaper is being
-  // loaded. It will notify callback when last reference to it is removed
-  // (thus indicating that the last load action has finished).
-  class MovableOnDestroyCallback {
-   public:
-    explicit MovableOnDestroyCallback(const base::Closure& callback);
-
-    ~MovableOnDestroyCallback();
-
-   private:
-    base::Closure callback_;
-
-    DISALLOW_COPY_AND_ASSIGN(MovableOnDestroyCallback);
-  };
-
-  using MovableOnDestroyCallbackHolder =
-      std::unique_ptr<MovableOnDestroyCallback>;
-
   WallpaperController();
   ~WallpaperController() override;
 
@@ -146,6 +127,9 @@ class ASH_EXPORT WallpaperController
 
   // Returns the appropriate wallpaper resolution for all root windows.
   static WallpaperResolution GetAppropriateResolution();
+
+  // Returns wallpaper subdirectory name for current resolution.
+  static std::string GetCustomWallpaperSubdirForCurrentResolution();
 
   // Returns custom wallpaper path. Appends |sub_dir|, |wallpaper_files_id| and
   // |file_name| to custom wallpaper directory.
@@ -178,24 +162,25 @@ class ASH_EXPORT WallpaperController
                                      int preferred_height,
                                      gfx::ImageSkia* output_skia);
 
-  // TODO(crbug.com/776464): Move |DecodeWallpaperIfApplicable| and
-  // |ReadAndDecodeWallpaper| to a separate utility file.
-  // If |data_is_ready| is true, start decoding the image, which will run
-  // |callback| upon completion; if it's false, run |callback| immediately with
-  // an empty image.
-  // TODO(crbug.com/776464): Mash and some unit tests can't use this decoder
-  // because it depends on the Shell instance. Make it work after all the
-  // decoding code is moved to //ash.
-  static void DecodeWallpaperIfApplicable(LoadedCallback callback,
-                                          std::unique_ptr<std::string> data,
-                                          bool data_is_ready);
+  // TODO(crbug.com/776464): These utility functions for device policy wallpaper
+  // are temporary during the refactoring.
+  // Returns the file directory where the downloaded device wallpaper is saved.
+  static base::FilePath GetDeviceWallpaperDir();
 
-  // Reads image from |file_path| on disk, and calls
-  // |DecodeWallpaperIfApplicable| with the result of |ReadFileToString|.
-  static void ReadAndDecodeWallpaper(
-      LoadedCallback callback,
-      scoped_refptr<base::SequencedTaskRunner> task_runner,
-      const base::FilePath& file_path);
+  // Returns the full path for the downloaded device wallpaper.
+  static base::FilePath GetDeviceWallpaperFilePath();
+
+  // Gets |account_id|'s custom wallpaper at |wallpaper_path|. Falls back to the
+  // original custom wallpaper. When |show_wallpaper| is true, shows the
+  // wallpaper immediately. Must run on wallpaper sequenced worker thread.
+  static void SetWallpaperFromPath(
+      const AccountId& account_id,
+      const user_manager::UserType& user_type,
+      const wallpaper::WallpaperInfo& info,
+      const base::FilePath& wallpaper_path,
+      bool show_wallpaper,
+      const scoped_refptr<base::SingleThreadTaskRunner>& reply_task_runner,
+      base::WeakPtr<WallpaperController> weak_ptr);
 
   // Creates a 1x1 solid color image to be used as the backup default wallpaper.
   static gfx::ImageSkia CreateSolidColorWallpaper();
@@ -230,12 +215,21 @@ class ASH_EXPORT WallpaperController
   // Returns the prominent color based on |color_profile|.
   SkColor GetProminentColor(color_utils::ColorProfile color_profile) const;
 
-  // Provides current image on the wallpaper, or empty gfx::ImageSkia if there
-  // is no image, e.g. wallpaper is none.
+  // Returns current image on the wallpaper, or an empty image if there's no
+  // wallpaper.
   gfx::ImageSkia GetWallpaper() const;
+
+  // Returns the original image id of the wallpaper before resizing, or 0 if
+  // there's no wallpaper.
   uint32_t GetWallpaperOriginalImageId() const;
 
+  // Returns the layout of the current wallpaper, or an invalid value if there's
+  // no wallpaper.
   wallpaper::WallpaperLayout GetWallpaperLayout() const;
+
+  // Returns the type of the current wallpaper, or an invalid value if there's
+  // no wallpaper.
+  wallpaper::WallpaperType GetWallpaperType() const;
 
   // Sets the wallpaper and alerts observers of changes.
   void SetWallpaperImage(const gfx::ImageSkia& image,
@@ -247,17 +241,17 @@ class ASH_EXPORT WallpaperController
   // request; may be different from the active user.
   void SetDefaultWallpaperImpl(const AccountId& account_id,
                                const user_manager::UserType& user_type,
-                               bool show_wallpaper,
-                               MovableOnDestroyCallbackHolder on_finish);
+                               bool show_wallpaper);
 
-  // Implementation of |SetCustomizedDefaultWallpaper|. Sets
-  // |default_wallpaper_image_| either to |small_wallpaper_image| or
-  // |large_wallpaper_image| depending on |GetAppropriateResolution|.
-  void SetCustomizedDefaultWallpaperImpl(
+  // TODO(crbug.com/776464): Convert this to a mojo call to replace
+  // |SetCustomizedDefaultWallpaper|. If possible, send the paths together with
+  // |SetClientAndPaths|.
+  // Sets the paths of customized default wallpaper to be used wherever a
+  // default wallpaper is needed. Note: it doesn't change the default wallpaper
+  // for guest and child accounts.
+  void SetCustomizedDefaultWallpaperPaths(
       const base::FilePath& customized_default_wallpaper_file_small,
-      std::unique_ptr<gfx::ImageSkia> small_wallpaper_image,
-      const base::FilePath& customized_default_wallpaper_file_large,
-      std::unique_ptr<gfx::ImageSkia> large_wallpaper_image);
+      const base::FilePath& customized_default_wallpaper_file_large);
 
   // Creates an empty wallpaper. Some tests require a wallpaper widget is ready
   // when running. However, the wallpaper widgets are now created
@@ -281,6 +275,11 @@ class ASH_EXPORT WallpaperController
   // |locking| is true and remove it otherwise.
   void PrepareWallpaperForLockScreenChange(bool locking);
 
+  // Returns the location of the active user's wallpaper (either an URL or a
+  // file path). Returns an empty string if there's no active user, or the
+  // active user has not set a user wallpaper.
+  std::string GetActiveUserWallpaperLocation();
+
   // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
 
@@ -291,12 +290,18 @@ class ASH_EXPORT WallpaperController
   // SessionObserver:
   void OnSessionStateChanged(session_manager::SessionState state) override;
 
-  // Returns true if the specified wallpaper is already stored
-  // in |current_wallpaper_|.
-  // If |compare_layouts| is false, layout is ignored.
+  // Returns true if the specified wallpaper is already stored in
+  // |current_wallpaper_|. If |compare_layouts| is false, layout is ignored.
   bool WallpaperIsAlreadyLoaded(const gfx::ImageSkia& image,
                                 bool compare_layouts,
                                 wallpaper::WallpaperLayout layout) const;
+
+  // Reads image from |file_path| on disk, and calls |OnWallpaperDataRead|
+  // with the result of |ReadFileToString|.
+  void ReadAndDecodeWallpaper(
+      LoadedCallback callback,
+      scoped_refptr<base::SequencedTaskRunner> task_runner,
+      const base::FilePath& file_path);
 
   void set_wallpaper_reload_delay_for_test(int value) {
     wallpaper_reload_delay_ = value;
@@ -315,8 +320,7 @@ class ASH_EXPORT WallpaperController
   // Returns whether the current wallpaper is blurred.
   bool IsWallpaperBlurred() const { return is_wallpaper_blurred_; }
 
-  // TODO(crbug.com/776464): Make this private. WallpaperInfo should be an
-  // internal concept. In addition, change |is_persistent| to |is_ephemeral| to
+  // TODO(crbug.com/776464): Change |is_persistent| to |is_ephemeral| to
   // be consistent with |mojom::WallpaperUserInfo|.
   // Sets wallpaper info for |account_id| and saves it to local state if
   // |is_persistent| is true.
@@ -356,29 +360,16 @@ class ASH_EXPORT WallpaperController
   // Gets path of encoded wallpaper from cache. Returns true if success.
   bool GetPathFromCache(const AccountId& account_id, base::FilePath* path);
 
-  // TODO(crbug.com/776464): Remove this after WallpaperManager is removed.
-  // Returns the pointer of |current_user_wallpaper_info_|.
-  wallpaper::WallpaperInfo* GetCurrentUserWallpaperInfo();
-
-  // TODO(crbug.com/776464): Remove this after WallpaperManager is removed.
-  // Returns the pointer of |wallpaper_cache_map_|.
-  CustomWallpaperMap* GetWallpaperCacheMap();
-
-  int num_decode_request_for_testing() {
-    return num_decode_request_for_testing_;
-  }
-
   // mojom::WallpaperController overrides:
-  void SetClientAndPaths(
-      mojom::WallpaperControllerClientPtr client,
-      const base::FilePath& user_data_path,
-      const base::FilePath& chromeos_wallpapers_path,
-      const base::FilePath& chromeos_custom_wallpapers_path) override;
+  void Init(mojom::WallpaperControllerClientPtr client,
+            const base::FilePath& user_data_path,
+            const base::FilePath& chromeos_wallpapers_path,
+            const base::FilePath& chromeos_custom_wallpapers_path,
+            bool is_device_wallpaper_policy_enforced) override;
   void SetCustomWallpaper(mojom::WallpaperUserInfoPtr user_info,
                           const std::string& wallpaper_files_id,
                           const std::string& file_name,
                           wallpaper::WallpaperLayout layout,
-                          wallpaper::WallpaperType type,
                           const SkBitmap& image,
                           bool show_wallpaper) override;
   void SetOnlineWallpaper(mojom::WallpaperUserInfoPtr user_info,
@@ -393,11 +384,22 @@ class ASH_EXPORT WallpaperController
       const GURL& wallpaper_url,
       const base::FilePath& file_path,
       const base::FilePath& resized_directory) override;
+  void SetPolicyWallpaper(mojom::WallpaperUserInfoPtr user_info,
+                          const std::string& wallpaper_files_id,
+                          const std::string& data) override;
   void SetDeviceWallpaperPolicyEnforced(bool enforced) override;
+  void UpdateCustomWallpaperLayout(mojom::WallpaperUserInfoPtr user_info,
+                                   wallpaper::WallpaperLayout layout) override;
+  // TODO(crbug.com/776464): |ShowUserWallpaper| is incomplete until device
+  // policy wallpaper is migrated. Callers from chrome should use
+  // |WallpaperManager::ShowUserWallpaper| instead. Callers in ash can't use it
+  // for now.
   void ShowUserWallpaper(mojom::WallpaperUserInfoPtr user_info) override;
   void ShowSigninWallpaper() override;
   void RemoveUserWallpaper(mojom::WallpaperUserInfoPtr user_info,
                            const std::string& wallpaper_files_id) override;
+  void RemovePolicyWallpaper(mojom::WallpaperUserInfoPtr user_info,
+                             const std::string& wallpaper_files_id) override;
   void SetWallpaper(const SkBitmap& wallpaper,
                     const wallpaper::WallpaperInfo& wallpaper_info) override;
   void AddObserver(mojom::WallpaperObserverAssociatedPtrInfo observer) override;
@@ -428,6 +430,13 @@ class ASH_EXPORT WallpaperController
                            WallpaperMovementDuringUnlock);
   friend class WallpaperControllerTest;
 
+  // Cached default wallpaper image and file path. The file path can be used to
+  // check if the image is outdated (i.e. when there's a new default wallpaper).
+  struct CachedDefaultWallpaper {
+    gfx::ImageSkia image;
+    base::FilePath file_path;
+  };
+
   // Creates a WallpaperWidgetController for |root_window|.
   void InstallDesktopController(aura::Window* root_window);
 
@@ -441,10 +450,6 @@ class ASH_EXPORT WallpaperController
   // Returns the wallpaper container id for unlocked and locked states.
   int GetWallpaperContainerId(bool locked);
 
-  // Reload the wallpaper. |clear_cache| specifies whether to clear the
-  // wallpaper cache or not.
-  void UpdateWallpaper(bool clear_cache);
-
   // Removes |account_id|'s wallpaper info and color cache if it exists.
   void RemoveUserWallpaperInfo(const AccountId& account_id, bool is_persistent);
 
@@ -453,14 +458,20 @@ class ASH_EXPORT WallpaperController
   void RemoveUserWallpaperImpl(const AccountId& account_id,
                                const std::string& wallpaper_files_id);
 
-  // Sets default wallpaper to be the decoded image, and shows the wallpaper now
-  // if |show_wallpaper| is true.
-  void OnDefaultWallpaperDecoded(
-      const base::FilePath& path,
-      wallpaper::WallpaperLayout layout,
-      bool show_wallpaper,
-      MovableOnDestroyCallbackHolder on_finish,
-      std::unique_ptr<user_manager::UserImage> user_image);
+  // Decodes |account_id|'s wallpaper. Shows the decoded wallpaper if
+  // |show_wallpaper| is true.
+  void SetWallpaperFromInfo(const AccountId& account_id,
+                            const user_manager::UserType& user_type,
+                            const wallpaper::WallpaperInfo& info,
+                            bool show_wallpaper);
+
+  // Used as the callback of default wallpaper decoding. Sets default wallpaper
+  // to be the decoded image, and shows the wallpaper now if |show_wallpaper|
+  // is true.
+  void OnDefaultWallpaperDecoded(const base::FilePath& path,
+                                 wallpaper::WallpaperLayout layout,
+                                 bool show_wallpaper,
+                                 const gfx::ImageSkia& image);
 
   // Saves |image| to disk if |user_info->is_ephemeral| is false, or if it is a
   // policy wallpaper for public accounts. Shows the wallpaper immediately if
@@ -469,10 +480,37 @@ class ASH_EXPORT WallpaperController
   void SaveAndSetWallpaper(mojom::WallpaperUserInfoPtr user_info,
                            const std::string& wallpaper_files_id,
                            const std::string& file_name,
-                           const gfx::ImageSkia& image,
                            wallpaper::WallpaperType type,
                            wallpaper::WallpaperLayout layout,
+                           bool show_wallpaper,
+                           const gfx::ImageSkia& image);
+
+  // A wrapper of |ReadAndDecodeWallpaper| used in |SetWallpaperFromPath|.
+  void StartDecodeFromPath(const AccountId& account_id,
+                           const user_manager::UserType& user_type,
+                           const base::FilePath& wallpaper_path,
+                           const wallpaper::WallpaperInfo& info,
                            bool show_wallpaper);
+
+  // Used as the callback of wallpaper decoding. (Wallpapers of type DEFAULT
+  // and DEVICE should use their corresponding |*Decoded|, and all other types
+  // should use this.) Shows the wallpaper now if |show_wallpaper| is true.
+  // Otherwise, only update the cache.
+  void OnWallpaperDecoded(const AccountId& account_id,
+                          const user_manager::UserType& user_type,
+                          const base::FilePath& path,
+                          const wallpaper::WallpaperInfo& info,
+                          bool show_wallpaper,
+                          const gfx::ImageSkia& image);
+
+  // Reloads the current wallpaper. It may change the wallpaper size based on
+  // the current display's resolution. If |clear_cache| is true, all wallpaper
+  // cache should be cleared. This is required when the display's native
+  // resolution changes to a larger resolution (e.g. when hooked up a large
+  // external display) and we need to load a larger resolution wallpaper for the
+  // display. All the previous small resolution wallpaper cache should be
+  // cleared.
+  void ReloadWallpaper(bool clear_cache);
 
   // Sets |prominent_colors_| and notifies the observers if there is a change.
   void SetProminentColors(const std::vector<SkColor>& prominent_colors);
@@ -509,8 +547,7 @@ class ASH_EXPORT WallpaperController
   void SetDevicePolicyWallpaper();
 
   // Called when the device policy controlled wallpaper has been decoded.
-  void OnDevicePolicyWallpaperDecoded(
-      std::unique_ptr<user_manager::UserImage> device_wallpaper_image);
+  void OnDevicePolicyWallpaperDecoded(const gfx::ImageSkia& image);
 
   // When wallpaper resizes, we can check which displays will be affected. For
   // simplicity, we only lock the compositor for the internal display.
@@ -545,16 +582,18 @@ class ASH_EXPORT WallpaperController
   // Caches the color profiles that need to do wallpaper color extracting.
   const std::vector<color_utils::ColorProfile> color_profiles_;
 
-  // Cached current user wallpaper info. Note its location is used as a key for
-  // storing |prominent_colors_| in the wallpaper::kWallpaperColors pref. An
-  // empty string disables color caching.
-  wallpaper::WallpaperInfo current_user_wallpaper_info_;
+  // The wallpaper info for ephemeral users, which is not stored to local state.
+  // See |WallpaperUserInfo::is_ephemeral| for details.
+  std::map<AccountId, wallpaper::WallpaperInfo> ephemeral_users_wallpaper_info_;
+
+  // Cached user info of the current user.
+  mojom::WallpaperUserInfoPtr current_user_;
 
   // Cached wallpapers of users.
   CustomWallpaperMap wallpaper_cache_map_;
 
-  // Current decoded default image is stored in cache.
-  std::unique_ptr<user_manager::UserImage> default_wallpaper_image_;
+  // Cached default wallpaper.
+  CachedDefaultWallpaper cached_default_wallpaper_;
 
   // The paths of the customized default wallpapers, if they exist.
   base::FilePath customized_default_wallpaper_small_;
@@ -577,14 +616,17 @@ class ASH_EXPORT WallpaperController
 
   std::unique_ptr<ui::CompositorLock> compositor_lock_;
 
+  // If true, use a solid color wallpaper as if it is the decoded image.
+  bool bypass_decode_for_testing_ = false;
+
   // Tracks how many wallpapers have been set.
   int wallpaper_count_for_testing_ = 0;
 
-  // Tracks how many wallpaper decoding requests have been initiated.
-  int num_decode_request_for_testing_ = 0;
-
-  // Caches the file path of the current decoded wallpaper.
-  base::FilePath wallpaper_file_path_for_testing_;
+  // The file paths of decoding requests that have been initiated. Must be a
+  // list because more than one decoding requests may happen during a single
+  // 'set wallpaper' request. (e.g. when a custom wallpaper decoding fails, a
+  // default wallpaper decoding is initiated.)
+  std::vector<base::FilePath> decode_requests_for_testing_;
 
   base::WeakPtrFactory<WallpaperController> weak_factory_;
 

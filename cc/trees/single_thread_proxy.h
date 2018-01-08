@@ -62,6 +62,7 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
     // layout tests. This will still get called in the latter case, but we don't
     // need to record UKM in that case.
   }
+  void ClearHistoryOnNavigation() override;
 
   // Blink layout tests might call into this even though an unthreaded CC
   // doesn't have BrowserControls itself.
@@ -70,7 +71,7 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
                                   bool animate) override {}
 
   // SchedulerClient implementation
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override;
+  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override;
   void DidFinishImplFrame() override;
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
   void ScheduledActionSendBeginMainFrame(

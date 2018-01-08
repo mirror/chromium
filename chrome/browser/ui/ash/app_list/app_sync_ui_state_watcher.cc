@@ -7,9 +7,8 @@
 #include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/ash/app_sync_ui_state.h"
 
-AppSyncUIStateWatcher::AppSyncUIStateWatcher(
-    Profile* profile,
-    app_list::AppListModelUpdater* model_updater)
+AppSyncUIStateWatcher::AppSyncUIStateWatcher(Profile* profile,
+                                             AppListModelUpdater* model_updater)
     : app_sync_ui_state_(AppSyncUIState::Get(profile)),
       model_updater_(model_updater) {
   if (app_sync_ui_state_) {
@@ -25,7 +24,7 @@ AppSyncUIStateWatcher::~AppSyncUIStateWatcher() {
 
 void AppSyncUIStateWatcher::OnAppSyncUIStatusChanged() {
   if (app_sync_ui_state_->status() == AppSyncUIState::STATUS_SYNCING)
-    model_updater_->SetStatus(app_list::AppListModel::STATUS_SYNCING);
+    model_updater_->SetStatus(ash::AppListModelStatus::kStatusSyncing);
   else
-    model_updater_->SetStatus(app_list::AppListModel::STATUS_NORMAL);
+    model_updater_->SetStatus(ash::AppListModelStatus::kStatusNormal);
 }

@@ -669,6 +669,7 @@ interface PerformanceObserver
     method constructor
     method disconnect
     method observe
+    method takeRecords
 interface PerformanceObserverEntryList
     attribute @@toStringTag
     method constructor
@@ -692,8 +693,16 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter responseEnd
     getter responseStart
     getter secureConnectionStart
+    getter serverTiming
     getter transferSize
     getter workerStart
+    method constructor
+    method toJSON
+interface PerformanceServerTiming
+    attribute @@toStringTag
+    getter description
+    getter duration
+    getter name
     method constructor
     method toJSON
 interface PermissionStatus : EventTarget
@@ -756,6 +765,7 @@ interface Request
     getter bodyUsed
     getter cache
     getter credentials
+    getter destination
     getter headers
     getter integrity
     getter method
@@ -810,11 +820,6 @@ interface ServiceWorkerRegistration : EventTarget
     method unregister
     method update
     setter onupdatefound
-interface SharedArrayBuffer
-    attribute @@toStringTag
-    getter byteLength
-    method constructor
-    method slice
 interface StorageManager
     attribute @@toStringTag
     method constructor
@@ -978,6 +983,7 @@ interface WorkerNavigator
     getter appVersion
     getter budget
     getter connection
+    getter deviceMemory
     getter hardwareConcurrency
     getter onLine
     getter permissions
@@ -992,7 +998,6 @@ interface WritableStream
     method constructor
     method getWriter
 [GLOBAL OBJECT]
-    attribute Atomics
     attribute console
     attribute internals
     getter clients

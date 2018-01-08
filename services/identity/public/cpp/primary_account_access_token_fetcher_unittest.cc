@@ -36,7 +36,26 @@ using SigninManagerForTest = FakeSigninManagerBase;
 using SigninManagerForTest = FakeSigninManager;
 #endif  // OS_CHROMEOS
 
-class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
+namespace identity {
+
+namespace {
+void OnAccessTokenFetchComplete(base::OnceClosure done_closure,
+                                const GoogleServiceAuthError& expected_error,
+                                const std::string& expected_access_token,
+                                const GoogleServiceAuthError& error,
+                                const std::string& access_token) {
+  EXPECT_EQ(expected_error, error);
+  if (expected_error == GoogleServiceAuthError::AuthErrorNone())
+    EXPECT_EQ(expected_access_token, access_token);
+
+  std::move(done_closure).Run();
+}
+
+}  // namespace
+
+class PrimaryAccountAccessTokenFetcherTest
+    : public testing::Test,
+      public OAuth2TokenService::DiagnosticsObserver {
  public:
   using TestTokenCallback =
       StrictMock<MockCallback<PrimaryAccountAccessTokenFetcher::TokenCallback>>;
@@ -66,16 +85,20 @@ class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
         &signin_client_, &token_service_, account_tracker_.get(),
         /*cookie_manager_service=*/nullptr);
 #endif  // OS_CHROMEOS
+    token_service_.AddDiagnosticsObserver(this);
   }
 
-  ~PrimaryAccountAccessTokenFetcherTest() override {}
+  ~PrimaryAccountAccessTokenFetcherTest() override {
+    token_service_.RemoveDiagnosticsObserver(this);
+  }
 
   std::unique_ptr<PrimaryAccountAccessTokenFetcher> CreateFetcher(
-      PrimaryAccountAccessTokenFetcher::TokenCallback callback) {
+      PrimaryAccountAccessTokenFetcher::TokenCallback callback,
+      PrimaryAccountAccessTokenFetcher::Mode mode) {
     std::set<std::string> scopes{"scope"};
     return base::MakeUnique<PrimaryAccountAccessTokenFetcher>(
         "test_consumer", signin_manager_.get(), &token_service_, scopes,
-        std::move(callback));
+        std::move(callback), mode);
   }
 
   FakeProfileOAuth2TokenService* token_service() { return &token_service_; }
@@ -89,24 +112,72 @@ class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
 #endif  // OS_CHROMEOS
   }
 
+  void set_on_access_token_request_callback(base::OnceClosure callback) {
+    on_access_token_request_callback_ = std::move(callback);
+  }
+
  private:
+  // OAuth2TokenService::DiagnosticsObserver:
+  void OnAccessTokenRequested(
+      const std::string& account_id,
+      const std::string& consumer_id,
+      const OAuth2TokenService::ScopeSet& scopes) override {
+    if (on_access_token_request_callback_)
+      std::move(on_access_token_request_callback_).Run();
+  }
+
+  base::MessageLoop message_loop_;
   TestingPrefServiceSyncable pref_service_;
   TestSigninClient signin_client_;
   FakeProfileOAuth2TokenService token_service_;
 
   std::unique_ptr<AccountTrackerService> account_tracker_;
   std::unique_ptr<SigninManagerForTest> signin_manager_;
+  base::OnceClosure on_access_token_request_callback_;
 };
 
-TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldReturnAccessToken) {
+TEST_F(PrimaryAccountAccessTokenFetcherTest, OneShotShouldReturnAccessToken) {
   TestTokenCallback callback;
+
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
 
   SignIn("account");
   token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
 
   // Signed in and refresh token already exists, so this should result in a
   // request for an access token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(), PrimaryAccountAccessTokenFetcher::Mode::kImmediate);
+
+  run_loop.Run();
+
+  // Once the access token request is fulfilled, we should get called back with
+  // the access token.
+  EXPECT_CALL(callback,
+              Run(GoogleServiceAuthError::AuthErrorNone(), "access token"));
+  token_service()->IssueAllTokensForAccount(
+      "account", "access token",
+      base::Time::Now() + base::TimeDelta::FromHours(1));
+}
+
+TEST_F(PrimaryAccountAccessTokenFetcherTest,
+       WaitAndRetryShouldReturnAccessToken) {
+  TestTokenCallback callback;
+
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
+  SignIn("account");
+  token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
+
+  // Signed in and refresh token already exists, so this should result in a
+  // request for an access token.
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+
+  run_loop.Run();
 
   // Once the access token request is fulfilled, we should get called back with
   // the access token.
@@ -120,12 +191,18 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldReturnAccessToken) {
 TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldNotReplyIfDestroyed) {
   TestTokenCallback callback;
 
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   SignIn("account");
   token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
 
   // Signed in and refresh token already exists, so this should result in a
   // request for an access token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(), PrimaryAccountAccessTokenFetcher::Mode::kImmediate);
+
+  run_loop.Run();
 
   // Destroy the fetcher before the access token request is fulfilled.
   fetcher.reset();
@@ -136,12 +213,74 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldNotReplyIfDestroyed) {
       base::Time::Now() + base::TimeDelta::FromHours(1));
 }
 
-TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldNotReturnWhenSignedOut) {
+TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldNotRequestIfDestroyedEarly) {
+  TestTokenCallback callback;
+
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(
+      base::BindOnce([]() { EXPECT_TRUE(false); }));
+
+  SignIn("account");
+  token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
+
+  // Signed in and refresh token already exists, so this should result in
+  // posting a task to make a request for an access token.
+  auto fetcher = CreateFetcher(
+      callback.Get(), PrimaryAccountAccessTokenFetcher::Mode::kImmediate);
+
+  // Destroy the fetcher immediately.
+  fetcher.reset();
+
+  // No access token request should occur (i.e., the posted task should not
+  // actually execute).
+  run_loop.RunUntilIdle();
+
+  // Now fulfilling the access token request should have no effect.
+  token_service()->IssueAllTokensForAccount(
+      "account", "access token",
+      base::Time::Now() + base::TimeDelta::FromHours(1));
+}
+
+TEST_F(PrimaryAccountAccessTokenFetcherTest, OneShotCallsBackWhenSignedOut) {
+  base::RunLoop run_loop;
+
+  // Signed out -> we should get called back.
+  auto fetcher = CreateFetcher(
+      base::BindOnce(&OnAccessTokenFetchComplete, run_loop.QuitClosure(),
+                     GoogleServiceAuthError(
+                         GoogleServiceAuthError::State::USER_NOT_SIGNED_UP),
+                     ""),
+      PrimaryAccountAccessTokenFetcher::Mode::kImmediate);
+
+  run_loop.Run();
+}
+
+TEST_F(PrimaryAccountAccessTokenFetcherTest,
+       OneShotCallsBackWhenNoRefreshToken) {
+  base::RunLoop run_loop;
+
+  SignIn("account");
+
+  // Signed in, but there is no refresh token -> we should get called back.
+  auto fetcher = CreateFetcher(
+      base::BindOnce(&OnAccessTokenFetchComplete, run_loop.QuitClosure(),
+                     GoogleServiceAuthError(
+                         GoogleServiceAuthError::State::USER_NOT_SIGNED_UP),
+                     ""),
+      PrimaryAccountAccessTokenFetcher::Mode::kImmediate);
+
+  run_loop.Run();
+}
+
+TEST_F(PrimaryAccountAccessTokenFetcherTest,
+       WaitAndRetryNoCallbackWhenSignedOut) {
   TestTokenCallback callback;
 
   // Signed out -> the fetcher should wait for a sign-in which never happens
   // in this test, so we shouldn't get called back.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 }
 
 // Tests related to waiting for sign-in don't apply on ChromeOS (it doesn't have
@@ -149,13 +288,21 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldNotReturnWhenSignedOut) {
 #if !defined(OS_CHROMEOS)
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldWaitForSignIn) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   TestTokenCallback callback;
 
   // Not signed in, so this should wait for a sign-in to complete.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 
   SignIn("account");
+
   token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
+
+  run_loop.Run();
 
   // Once the access token request is fulfilled, we should get called back with
   // the access token.
@@ -167,16 +314,23 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldWaitForSignIn) {
 }
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldWaitForSignInInProgress) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   TestTokenCallback callback;
 
   signin_manager()->set_auth_in_progress("account");
 
   // A sign-in is currently in progress, so this should wait for the sign-in to
   // complete.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 
   SignIn("account");
   token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
+
+  run_loop.Run();
 
   // Once the access token request is fulfilled, we should get called back with
   // the access token.
@@ -194,7 +348,9 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldWaitForFailedSignIn) {
 
   // A sign-in is currently in progress, so this should wait for the sign-in to
   // complete.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 
   // The fetcher should detect the failed sign-in and call us with an empty
   // access token.
@@ -210,16 +366,23 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldWaitForFailedSignIn) {
 #endif  // !OS_CHROMEOS
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldWaitForRefreshToken) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   TestTokenCallback callback;
 
   SignIn("account");
 
   // Signed in, but there is no refresh token -> we should not get called back
   // (yet).
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 
   // Getting a refresh token should result in a request for an access token.
   token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
+
+  run_loop.Run();
 
   // Once the access token request is fulfilled, we should get called back with
   // the access token.
@@ -240,7 +403,9 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
   token_service()->GetDelegate()->UpdateCredentials("account 2", "refresh");
 
   // The fetcher should wait for the correct refresh token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 
   // A refresh token for yet another account shouldn't matter either.
   token_service()->GetDelegate()->UpdateCredentials("account 3", "refresh");
@@ -254,16 +419,13 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
   // Signed in, but there is no refresh token -> we should not get called back
   // (yet).
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
 
   // Getting a refresh token for some other account should have no effect.
   token_service()->GetDelegate()->UpdateCredentials("different account",
                                                     "refresh token");
-
-  // The OAuth2TokenService posts a task to the current thread when we try to
-  // get an access token for an account without a refresh token, so we need a
-  // MessageLoop in this test to not crash.
-  base::MessageLoop message_loop;
 
   // When all refresh tokens have been loaded by the token service, but the one
   // for our account wasn't among them, we should get called back with an empty
@@ -276,7 +438,38 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 }
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest,
-       ShouldRetryCanceledAccessTokenRequest) {
+       OneShotCanceledAccessTokenRequest) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
+  SignIn("account");
+  token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
+
+  base::RunLoop run_loop2;
+
+  // Signed in and refresh token already exists, so this should result in a
+  // request for an access token.
+  auto fetcher = CreateFetcher(
+      base::BindOnce(
+          &OnAccessTokenFetchComplete, run_loop2.QuitClosure(),
+          GoogleServiceAuthError(GoogleServiceAuthError::REQUEST_CANCELED), ""),
+      PrimaryAccountAccessTokenFetcher::Mode::kImmediate);
+
+  run_loop.Run();
+
+  // A canceled access token request should result in a callback.
+  token_service()->IssueErrorForAllPendingRequestsForAccount(
+      "account",
+      GoogleServiceAuthError(GoogleServiceAuthError::REQUEST_CANCELED));
+
+  run_loop2.Run();
+}
+
+TEST_F(PrimaryAccountAccessTokenFetcherTest,
+       WaitAndRetryCanceledAccessTokenRequest) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   TestTokenCallback callback;
 
   SignIn("account");
@@ -284,12 +477,22 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
   // Signed in and refresh token already exists, so this should result in a
   // request for an access token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+
+  run_loop.Run();
+
+  // Before cancelling the first request, set up to wait for the second request.
+  base::RunLoop run_loop2;
+  set_on_access_token_request_callback(run_loop2.QuitClosure());
 
   // A canceled access token request should get retried once.
   token_service()->IssueErrorForAllPendingRequestsForAccount(
       "account",
       GoogleServiceAuthError(GoogleServiceAuthError::REQUEST_CANCELED));
+
+  run_loop2.Run();
 
   // Once the access token request is fulfilled, we should get called back with
   // the access token.
@@ -302,6 +505,9 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest,
        ShouldRetryCanceledAccessTokenRequestOnlyOnce) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   TestTokenCallback callback;
 
   SignIn("account");
@@ -309,12 +515,22 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
   // Signed in and refresh token already exists, so this should result in a
   // request for an access token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+
+  run_loop.Run();
+
+  // Before cancelling the first request, set up to wait for the second request.
+  base::RunLoop run_loop2;
+  set_on_access_token_request_callback(run_loop2.QuitClosure());
 
   // A canceled access token request should get retried once.
   token_service()->IssueErrorForAllPendingRequestsForAccount(
       "account",
       GoogleServiceAuthError(GoogleServiceAuthError::REQUEST_CANCELED));
+
+  run_loop2.Run();
 
   // On the second failure, we should get called back with an empty access
   // token.
@@ -331,6 +547,9 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest,
        ShouldNotRetryCanceledAccessTokenRequestIfSignedOut) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   TestTokenCallback callback;
 
   SignIn("account");
@@ -338,7 +557,11 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
   // Signed in and refresh token already exists, so this should result in a
   // request for an access token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+
+  run_loop.Run();
 
   // Simulate the user signing out while the access token request is pending.
   // In this case, the pending request gets canceled, and the fetcher should
@@ -357,6 +580,9 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest,
        ShouldNotRetryCanceledAccessTokenRequestIfRefreshTokenRevoked) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   TestTokenCallback callback;
 
   SignIn("account");
@@ -364,7 +590,11 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
   // Signed in and refresh token already exists, so this should result in a
   // request for an access token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+
+  run_loop.Run();
 
   // Simulate the refresh token getting invalidated. In this case, pending
   // access token requests get canceled, and the fetcher should *not* retry.
@@ -380,6 +610,9 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest,
        ShouldNotRetryFailedAccessTokenRequest) {
+  base::RunLoop run_loop;
+  set_on_access_token_request_callback(run_loop.QuitClosure());
+
   TestTokenCallback callback;
 
   SignIn("account");
@@ -387,7 +620,11 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
 
   // Signed in and refresh token already exists, so this should result in a
   // request for an access token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(
+      callback.Get(),
+      PrimaryAccountAccessTokenFetcher::Mode::kWaitUntilAvailable);
+
+  run_loop.Run();
 
   // An access token failure other than "canceled" should not be retried; we
   // should immediately get called back with an empty access token.
@@ -399,3 +636,5 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
       "account",
       GoogleServiceAuthError(GoogleServiceAuthError::SERVICE_UNAVAILABLE));
 }
+
+}  // namespace identity

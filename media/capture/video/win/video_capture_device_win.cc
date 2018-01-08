@@ -18,6 +18,7 @@
 #include "base/win/scoped_variant.h"
 #include "media/base/timestamp_constants.h"
 #include "media/capture/video/blob_utils.h"
+#include "media/capture/video/win/video_capture_device_utils_win.h"
 
 using Microsoft::WRL::ComPtr;
 using base::win::ScopedCoMem;
@@ -525,7 +526,7 @@ void VideoCaptureDeviceWin::AllocateAndStart(
   // Get the windows capability from the capture device.
   // GetStreamCaps can return S_FALSE which we consider an error. Therefore the
   // FAILED macro can't be used.
-  hr = stream_config->GetStreamCaps(found_capability.stream_index,
+  hr = stream_config->GetStreamCaps(found_capability.media_type_index,
                                     media_type.Receive(), caps.get());
   if (hr != S_OK) {
     SetErrorState(FROM_HERE, "Failed to get capture device capabilities", hr);
@@ -847,7 +848,7 @@ void VideoCaptureDeviceWin::FrameReceived(const uint8_t* buffer,
   if (timestamp == kNoTimestamp)
     timestamp = base::TimeTicks::Now() - first_ref_time_;
 
-  client_->OnIncomingCapturedData(buffer, length, format, 0,
+  client_->OnIncomingCapturedData(buffer, length, format, GetCameraRotation(),
                                   base::TimeTicks::Now(), timestamp);
 
   while (!take_photo_callbacks_.empty()) {

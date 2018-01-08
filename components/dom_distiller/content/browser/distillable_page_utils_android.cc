@@ -19,40 +19,15 @@ using base::android::ScopedJavaGlobalRef;
 namespace dom_distiller {
 namespace android {
 namespace {
-void OnIsPageDistillableResult(const JavaRef<jobject>& callback,
-                               bool isDistillable) {
-  Java_DistillablePageUtils_callOnIsPageDistillableResult(
-      base::android::AttachCurrentThread(), callback, isDistillable);
-}
-
 void OnIsPageDistillableUpdate(const JavaRef<jobject>& callback,
                                bool isDistillable,
-                               bool isLast) {
+                               bool isLast,
+                               bool isMobileFriendly) {
   Java_DistillablePageUtils_callOnIsPageDistillableUpdate(
-      base::android::AttachCurrentThread(), callback, isDistillable, isLast);
+      base::android::AttachCurrentThread(), callback, isDistillable, isLast,
+      isMobileFriendly);
 }
 }  // namespace
-
-static void JNI_DistillablePageUtils_IsPageDistillable(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jobject>& webContents,
-    jboolean is_mobile_optimized,
-    const JavaParamRef<jobject>& callback) {
-  content::WebContents* web_contents(
-      content::WebContents::FromJavaWebContents(webContents));
-
-  if (!web_contents) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(OnIsPageDistillableResult,
-                   ScopedJavaGlobalRef<jobject>(env, callback), false));
-    return;
-  }
-  IsDistillablePage(web_contents, is_mobile_optimized,
-                    base::Bind(OnIsPageDistillableResult,
-                               ScopedJavaGlobalRef<jobject>(env, callback)));
-}
 
 static void JNI_DistillablePageUtils_SetDelegate(
     JNIEnv* env,

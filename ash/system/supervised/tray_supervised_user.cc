@@ -10,7 +10,6 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/label_tray_view.h"
 #include "ash/system/tray/tray_constants.h"
 #include "base/callback.h"
@@ -19,8 +18,8 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
-#include "ui/message_center/notification_delegate.h"
+#include "ui/message_center/public/cpp/notification.h"
+#include "ui/message_center/public/cpp/notification_delegate.h"
 
 using base::UTF8ToUTF16;
 using message_center::MessageCenter;
@@ -28,6 +27,8 @@ using message_center::Notification;
 
 namespace ash {
 namespace {
+
+const char kNotifierSupervisedUser[] = "ash.locally-managed-user";
 
 const gfx::VectorIcon& GetSupervisedUserIcon() {
   SessionController* session_controller = Shell::Get()->session_controller();
@@ -62,9 +63,16 @@ views::View* TraySupervisedUser::CreateDefaultView(LoginStatus status) {
   return tray_view;
 }
 
+void TraySupervisedUser::OnActiveUserSessionChanged(
+    const AccountId& account_id) {
+  OnUserSessionUpdated(account_id);
+}
+
+void TraySupervisedUser::OnUserSessionAdded(const AccountId& account_id) {
+  OnUserSessionUpdated(account_id);
+}
+
 void TraySupervisedUser::OnUserSessionUpdated(const AccountId& account_id) {
-  // NOTE: This doesn't use OnUserSessionAdded() because the custodian info
-  // isn't available until after the session starts.
   SessionController* session_controller = Shell::Get()->session_controller();
   if (!session_controller->IsUserSupervised())
     return;
@@ -100,7 +108,7 @@ void TraySupervisedUser::CreateOrUpdateNotification() {
           base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierSupervisedUser),
+              kNotifierSupervisedUser),
           message_center::RichNotificationData(), nullptr,
           kNotificationSupervisedIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);

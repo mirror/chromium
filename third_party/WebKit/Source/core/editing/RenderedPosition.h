@@ -39,11 +39,10 @@
 
 namespace blink {
 
-class GraphicsLayer;
-class LayoutPoint;
+class FrameSelection;
 class LayoutUnit;
 class LayoutObject;
-struct CompositedSelectionBound;
+struct CompositedSelection;
 
 class CORE_EXPORT RenderedPosition {
   STACK_ALLOCATED();
@@ -57,10 +56,8 @@ class CORE_EXPORT RenderedPosition {
   bool IsEquivalent(const RenderedPosition&) const;
 
   bool IsNull() const { return !layout_object_; }
-  // TODO(crbug.com/766448): Change return type to |const RootInlineBox*|.
-  RootInlineBox* RootBox() const {
-    return const_cast<RootInlineBox*>(inline_box_ ? &inline_box_->Root()
-                                                  : nullptr);
+  const RootInlineBox* RootBox() const {
+    return inline_box_ ? &inline_box_->Root() : nullptr;
   }
 
   unsigned char BidiLevelOnLeft() const;
@@ -87,14 +84,14 @@ class CORE_EXPORT RenderedPosition {
   Position PositionAtLeftBoundaryOfBiDiRun() const;
   Position PositionAtRightBoundaryOfBiDiRun() const;
 
-  IntRect AbsoluteRect(LayoutUnit* extra_width_to_end_of_line = nullptr) const;
+  // TODO(editing-dev): This function doesn't use RenderedPosition
+  // instance anymore. Consider moving.
+  static IntRect AbsoluteRect(const PositionWithAffinity&,
+                              LayoutUnit* extra_width_to_end_of_line = nullptr);
 
-  void PositionInGraphicsLayerBacking(CompositedSelectionBound&,
-                                      bool selection_start) const;
-
-  // Returns whether this position is not visible on the screen (because
-  // clipped out).
-  bool IsVisible(bool selection_start);
+  // TODO(editing-dev): This function doesn't use RenderedPosition
+  // instance anymore. Consider moving.
+  static CompositedSelection ComputeCompositedSelection(const FrameSelection&);
 
  private:
   bool operator==(const RenderedPosition&) const { return false; }
@@ -113,27 +110,12 @@ class CORE_EXPORT RenderedPosition {
   bool AtRightBoundaryOfBidiRun(ShouldMatchBidiLevel,
                                 unsigned char bidi_level_of_run) const;
 
-  void GetLocalSelectionEndpoints(bool selection_start,
-                                  LayoutPoint& edge_top_in_layer,
-                                  LayoutPoint& edge_bottom_in_layer,
-                                  bool& is_text_direction_rtl) const;
-
-  FloatPoint LocalToInvalidationBackingPoint(
-      const LayoutPoint& local_point,
-      GraphicsLayer** graphics_layer_backing) const;
-
-  static LayoutPoint GetSamplePointForVisibility(
-      const LayoutPoint& edge_top_in_layer,
-      const LayoutPoint& edge_bottom_in_layer);
-
   const LayoutObject* layout_object_;
   const InlineBox* inline_box_;
   int offset_;
 
   mutable Optional<const InlineBox*> prev_leaf_child_;
   mutable Optional<const InlineBox*> next_leaf_child_;
-
-  FRIEND_TEST_ALL_PREFIXES(RenderedPositionTest, GetSamplePointForVisibility);
 };
 
 inline RenderedPosition::RenderedPosition()

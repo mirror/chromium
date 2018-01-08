@@ -48,6 +48,15 @@ class FakeSensor : public device::mojom::Sensor {
     shared_buffer_handle_ = mojo::SharedBufferHandle::Create(
         sizeof(device::SensorReadingSharedBuffer) *
         static_cast<uint64_t>(device::mojom::SensorType::LAST));
+
+    if (!shared_buffer_handle_.is_valid())
+      return;
+
+    // Create read/write mapping now, to ensure it is kept writable
+    // after the region is sealed read-only on Android.
+    shared_buffer_mapping_ = shared_buffer_handle_->MapAtOffset(
+        device::mojom::SensorInitParams::kReadBufferSizeForTests,
+        GetBufferOffset());
   }
 
   ~FakeSensor() override = default;
@@ -104,16 +113,13 @@ class FakeSensor : public device::mojom::Sensor {
   void set_reading(device::SensorReading reading) { reading_ = reading; }
 
   void SensorReadingChanged() {
-    if (!shared_buffer_handle_.is_valid())
+    if (!shared_buffer_mapping_.get())
       return;
 
-    mojo::ScopedSharedBufferMapping shared_buffer =
-        shared_buffer_handle_->MapAtOffset(
-            device::mojom::SensorInitParams::kReadBufferSizeForTests,
-            GetBufferOffset());
-
     device::SensorReadingSharedBuffer* buffer =
-        static_cast<device::SensorReadingSharedBuffer*>(shared_buffer.get());
+        static_cast<device::SensorReadingSharedBuffer*>(
+            shared_buffer_mapping_.get());
+
     auto& seqlock = buffer->seqlock.value();
     seqlock.WriteBegin();
     buffer->reading = reading_;
@@ -127,6 +133,7 @@ class FakeSensor : public device::mojom::Sensor {
   device::mojom::SensorType sensor_type_;
   bool reading_notification_enabled_ = true;
   mojo::ScopedSharedBufferHandle shared_buffer_handle_;
+  mojo::ScopedSharedBufferMapping shared_buffer_mapping_;
   device::mojom::SensorClientPtr client_;
   device::SensorReading reading_;
 
@@ -242,9 +249,11 @@ class FakeSensorProvider : public device::mojom::SensorProvider {
 
       mojo::MakeStrongBinding(std::move(sensor),
                               mojo::MakeRequest(&init_params->sensor));
-      std::move(callback).Run(std::move(init_params));
+      std::move(callback).Run(device::mojom::SensorCreationResult::SUCCESS,
+                              std::move(init_params));
     } else {
-      std::move(callback).Run(nullptr);
+      std::move(callback).Run(
+          device::mojom::SensorCreationResult::ERROR_NOT_AVAILABLE, nullptr);
     }
   }
 
@@ -420,7 +429,7 @@ IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest, MotionNullTest) {
 
 // Disabled due to flakiness: https://crbug.com/783891
 IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
-                       DISABLED_MotionOnlySomeSensorsAreAvailableTest) {
+                       MotionOnlySomeSensorsAreAvailableTest) {
   // The test page registers an event handler for motion events and
   // expects to get an event with only the gyroscope and linear acceleration
   // sensor values, because no accelerometer values can be provided.
@@ -459,7 +468,30 @@ IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest, NullTestWithAlert) {
 }
 
 IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
-                       DeviceMotionCrossOriginIframeTest) {
+                       DeviceMotionCrossOriginIframeForbiddenTest) {
+  // Main frame is on a.com, iframe is on b.com.
+  GURL main_frame_url =
+      https_embedded_test_server_->GetURL("a.com", "/cross_origin_iframe.html");
+  GURL iframe_url = https_embedded_test_server_->GetURL(
+      "b.com", "/device_motion_test.html?failure_timeout=100");
+
+  // Wait for the main frame, subframe, and the #pass/#fail commits.
+  TestNavigationObserver navigation_observer(shell()->web_contents(), 3);
+
+  EXPECT_TRUE(NavigateToURL(shell(), main_frame_url));
+  EXPECT_TRUE(NavigateIframeToURL(shell()->web_contents(),
+                                  "cross_origin_iframe", iframe_url));
+
+  navigation_observer.Wait();
+
+  content::RenderFrameHost* iframe =
+      ChildFrameAt(shell()->web_contents()->GetMainFrame(), 0);
+  ASSERT_TRUE(iframe);
+  EXPECT_EQ("fail", iframe->GetLastCommittedURL().ref());
+}
+
+IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
+                       DeviceMotionCrossOriginIframeAllowedTest) {
   // Main frame is on a.com, iframe is on b.com.
   GURL main_frame_url =
       https_embedded_test_server_->GetURL("a.com", "/cross_origin_iframe.html");
@@ -470,6 +502,10 @@ IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
   TestNavigationObserver navigation_observer(shell()->web_contents(), 3);
 
   EXPECT_TRUE(NavigateToURL(shell(), main_frame_url));
+  // Now allow 'accelerometer' and 'gyroscope' policy features.
+  EXPECT_TRUE(ExecuteScript(shell(),
+                            "document.getElementById('cross_origin_iframe')."
+                            "allow='accelerometer; gyroscope'"));
   EXPECT_TRUE(NavigateIframeToURL(shell()->web_contents(),
                                   "cross_origin_iframe", iframe_url));
 
@@ -482,12 +518,12 @@ IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
-                       DeviceOrientationCrossOriginIframeTest) {
+                       DeviceOrientationCrossOriginIframeForbiddenTest) {
   // Main frame is on a.com, iframe is on b.com.
   GURL main_frame_url =
       https_embedded_test_server_->GetURL("a.com", "/cross_origin_iframe.html");
   GURL iframe_url = https_embedded_test_server_->GetURL(
-      "b.com", "/device_orientation_test.html");
+      "b.com", "/device_orientation_test.html?failure_timeout=100");
 
   // Wait for the main frame, subframe, and the #pass/#fail commits.
   TestNavigationObserver navigation_observer(shell()->web_contents(), 3);
@@ -501,7 +537,60 @@ IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
   content::RenderFrameHost* iframe =
       ChildFrameAt(shell()->web_contents()->GetMainFrame(), 0);
   ASSERT_TRUE(iframe);
+  EXPECT_EQ("fail", iframe->GetLastCommittedURL().ref());
+}
+
+IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
+                       DeviceOrientationCrossOriginIframeAllowedTest) {
+  // Main frame is on a.com, iframe is on b.com.
+  GURL main_frame_url =
+      https_embedded_test_server_->GetURL("a.com", "/cross_origin_iframe.html");
+  GURL iframe_url = https_embedded_test_server_->GetURL(
+      "b.com", "/device_orientation_test.html");
+
+  // Wait for the main frame, subframe, and the #pass/#fail commits.
+  TestNavigationObserver navigation_observer(shell()->web_contents(), 3);
+
+  EXPECT_TRUE(NavigateToURL(shell(), main_frame_url));
+  // Now allow 'accelerometer' and 'gyroscope' policy features.
+  EXPECT_TRUE(ExecuteScript(shell(),
+                            "document.getElementById('cross_origin_iframe')."
+                            "allow='accelerometer; gyroscope'"));
+  EXPECT_TRUE(NavigateIframeToURL(shell()->web_contents(),
+                                  "cross_origin_iframe", iframe_url));
+
+  navigation_observer.Wait();
+
+  content::RenderFrameHost* iframe =
+      ChildFrameAt(shell()->web_contents()->GetMainFrame(), 0);
+  ASSERT_TRUE(iframe);
   EXPECT_EQ("pass", iframe->GetLastCommittedURL().ref());
+}
+
+IN_PROC_BROWSER_TEST_F(DeviceSensorBrowserTest,
+                       DeviceOrientationFeaturePolicyWarning) {
+  // Main frame is on a.com, iframe is on b.com.
+  GURL main_frame_url =
+      https_embedded_test_server_->GetURL("a.com", "/cross_origin_iframe.html");
+  GURL iframe_url = https_embedded_test_server_->GetURL(
+      "b.com", "/device_orientation_absolute_test.html");
+
+  const char kWarningMessage[] =
+      "The deviceorientationabsolute events are blocked by "
+      "feature policy. See "
+      "https://github.com/WICG/feature-policy/blob/"
+      "gh-pages/features.md#sensor-features";
+
+  auto console_delegate = std::make_unique<ConsoleObserverDelegate>(
+      shell()->web_contents(), kWarningMessage);
+  shell()->web_contents()->SetDelegate(console_delegate.get());
+
+  EXPECT_TRUE(NavigateToURL(shell(), main_frame_url));
+  EXPECT_TRUE(NavigateIframeToURL(shell()->web_contents(),
+                                  "cross_origin_iframe", iframe_url));
+
+  console_delegate->Wait();
+  EXPECT_EQ(kWarningMessage, console_delegate->message());
 }
 
 }  //  namespace

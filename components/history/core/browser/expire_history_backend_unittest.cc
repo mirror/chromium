@@ -105,6 +105,11 @@ class ExpireHistoryTest : public testing::Test, public HistoryBackendNotifier {
   // |expired|, or manually deleted.
   void EnsureURLInfoGone(const URLRow& row, bool expired);
 
+  DeletionTimeRange GetLastDeletionTimeRange() {
+    EXPECT_FALSE(urls_deleted_notifications_.empty());
+    return std::get<0>(urls_deleted_notifications_.back());
+  }
+
   // Returns whether HistoryBackendNotifier::NotifyURLsModified was
   // called for |url|.
   bool ModifiedNotificationSent(const GURL& url);
@@ -143,7 +148,8 @@ class ExpireHistoryTest : public testing::Test, public HistoryBackendNotifier {
   typedef std::vector<URLRows> URLsModifiedNotificationList;
   URLsModifiedNotificationList urls_modified_notifications_;
 
-  typedef std::vector<std::pair<bool, URLRows>> URLsDeletedNotificationList;
+  typedef std::vector<std::tuple<DeletionTimeRange, bool, URLRows>>
+      URLsDeletedNotificationList;
   URLsDeletedNotificationList urls_deleted_notifications_;
 
  private:
@@ -201,11 +207,11 @@ class ExpireHistoryTest : public testing::Test, public HistoryBackendNotifier {
   void NotifyURLsModified(const URLRows& rows) override {
     urls_modified_notifications_.push_back(rows);
   }
-  void NotifyURLsDeleted(bool all_history,
+  void NotifyURLsDeleted(const DeletionTimeRange& time_range,
                          bool expired,
                          const URLRows& rows,
                          const std::set<GURL>& favicon_urls) override {
-    urls_deleted_notifications_.push_back(std::make_pair(expired, rows));
+    urls_deleted_notifications_.push_back(std::tie(time_range, expired, rows));
   }
 };
 
@@ -263,7 +269,6 @@ void ExpireHistoryTest::AddExampleData(URLID url_ids[3],
   gfx::Image thumbnail = CreateGoogleThumbnailForTest();
   ThumbnailScore score(0.25, true, true, PretendNow());
 
-  base::Time time;
   GURL gurl;
   top_sites_->SetPageThumbnail(url_row1.url(), thumbnail, score);
   top_sites_->SetPageThumbnail(url_row2.url(), thumbnail, score);
@@ -368,9 +373,9 @@ void ExpireHistoryTest::EnsureURLInfoGone(const URLRow& row, bool expired) {
   // EXPECT_FALSE(HasThumbnail(row.id()));
 
   bool found_delete_notification = false;
-  for (const auto& pair : urls_deleted_notifications_) {
-    EXPECT_EQ(expired, pair.first);
-    const history::URLRows& rows(pair.second);
+  for (const auto& tuple : urls_deleted_notifications_) {
+    EXPECT_EQ(expired, std::get<1>(tuple));
+    const history::URLRows& rows(std::get<2>(tuple));
     history::URLRows::const_iterator it_row = std::find_if(
         rows.begin(), rows.end(), history::URLRow::URLRowHasURL(row.url()));
     if (it_row != rows.end()) {
@@ -617,6 +622,8 @@ TEST_F(ExpireHistoryTest, FlushRecentURLsUnstarred) {
   // This should delete the last two visits.
   std::set<GURL> restrict_urls;
   expirer_.ExpireHistoryBetween(restrict_urls, visit_times[2], base::Time());
+  EXPECT_EQ(GetLastDeletionTimeRange().begin(), visit_times[2]);
+  EXPECT_EQ(GetLastDeletionTimeRange().end(), base::Time());
 
   // Verify that the middle URL had its last visit deleted only.
   visits.clear();
@@ -806,6 +813,7 @@ TEST_F(ExpireHistoryTest, FlushURLsForTimes) {
   times.push_back(visit_times[3]);
   times.push_back(visit_times[2]);
   expirer_.ExpireHistoryForTimes(times);
+  EXPECT_FALSE(GetLastDeletionTimeRange().IsValid());
 
   // Verify that the middle URL had its last visit deleted only.
   visits.clear();
@@ -1023,10 +1031,15 @@ TEST_F(ExpireHistoryTest, ExpireSomeOldHistory) {
   // Deleting a time range with no URLs should return false (nothing found).
   EXPECT_FALSE(expirer_.ExpireSomeOldHistory(
       visit_times[0] - base::TimeDelta::FromDays(100), reader, 1));
+  EXPECT_EQ(GetLastDeletionTimeRange().begin(), base::Time());
+  EXPECT_EQ(GetLastDeletionTimeRange().end(),
+            visit_times[0] - base::TimeDelta::FromDays(100));
 
   // Deleting a time range with not up the the max results should also return
   // false (there will only be one visit deleted in this range).
   EXPECT_FALSE(expirer_.ExpireSomeOldHistory(visit_times[0], reader, 2));
+  EXPECT_EQ(GetLastDeletionTimeRange().begin(), base::Time());
+  EXPECT_EQ(GetLastDeletionTimeRange().end(), visit_times[0]);
 
   // Deleting a time range with the max number of results should return true
   // (max deleted).
@@ -1063,8 +1076,8 @@ TEST_F(ExpireHistoryTest, ExpiringVisitsReader) {
   EXPECT_EQ(1U, visits.size());
 }
 
-// Test that ClearOldOnDemandFavicons() deletes favicons associated only to
-// unstarred page URLs.
+// Test that ClearOldOnDemandFaviconsIfPossible() deletes favicons associated
+// only to unstarred page URLs.
 TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteUnstarred) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(internal::kClearOldOnDemandFavicons);
@@ -1084,7 +1097,7 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteUnstarred) {
   GURL page_url("http://google.com/");
   ASSERT_NE(0, thumb_db_->AddIconMapping(page_url, icon_id));
 
-  expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold());
+  expirer_.ClearOldOnDemandFaviconsIfPossible(GetOldFaviconThreshold());
 
   // The icon gets deleted.
   EXPECT_FALSE(thumb_db_->GetIconMappingsForPageURL(page_url, nullptr));
@@ -1092,8 +1105,8 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteUnstarred) {
   EXPECT_FALSE(thumb_db_->GetFaviconBitmaps(icon_id, nullptr));
 }
 
-// Test that ClearOldOnDemandFavicons() deletes favicons associated to at least
-// one starred page URL.
+// Test that ClearOldOnDemandFaviconsIfPossible() deletes favicons associated to
+// at least one starred page URL.
 TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesNotDeleteStarred) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(internal::kClearOldOnDemandFavicons);
@@ -1116,7 +1129,7 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesNotDeleteStarred) {
   GURL page_url2("http://google.com/2");
   ASSERT_NE(0, thumb_db_->AddIconMapping(page_url2, icon_id));
 
-  expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold());
+  expirer_.ClearOldOnDemandFaviconsIfPossible(GetOldFaviconThreshold());
 
   // Nothing gets deleted.
   EXPECT_TRUE(thumb_db_->GetFaviconHeader(icon_id, nullptr, nullptr));
@@ -1131,15 +1144,15 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesNotDeleteStarred) {
   EXPECT_EQ(icon_id, icon_mapping[1].icon_id);
 }
 
-// Test that ClearOldOnDemandFavicons() has effect if the last clearing was long
-// time age (such as 2 days ago).
+// Test that ClearOldOnDemandFaviconsIfPossible() has effect if the last
+// clearing was long time age (such as 2 days ago).
 TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteAfterLongDelay) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(internal::kClearOldOnDemandFavicons);
 
   // Previous clearing (2 days ago).
-  expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold() -
-                                    base::TimeDelta::FromDays(2));
+  expirer_.ClearOldOnDemandFaviconsIfPossible(GetOldFaviconThreshold() -
+                                              base::TimeDelta::FromDays(2));
 
   // The blob does not encode any real bitmap, obviously.
   const unsigned char kBlob[] = "0";
@@ -1156,7 +1169,7 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteAfterLongDelay) {
   GURL page_url("http://google.com/");
   ASSERT_NE(0, thumb_db_->AddIconMapping(page_url, icon_id));
 
-  expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold());
+  expirer_.ClearOldOnDemandFaviconsIfPossible(GetOldFaviconThreshold());
 
   // The icon gets deleted.
   EXPECT_FALSE(thumb_db_->GetIconMappingsForPageURL(page_url, nullptr));
@@ -1164,16 +1177,16 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteAfterLongDelay) {
   EXPECT_FALSE(thumb_db_->GetFaviconBitmaps(icon_id, nullptr));
 }
 
-// Test that ClearOldOnDemandFavicons() deletes favicons associated to at least
-// one starred page URL.
+// Test that ClearOldOnDemandFaviconsIfPossible() deletes favicons associated to
+// at least one starred page URL.
 TEST_F(ExpireHistoryTest,
        ClearOldOnDemandFaviconsDoesNotDeleteAfterShortDelay) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(internal::kClearOldOnDemandFavicons);
 
   // Previous clearing (5 minutes ago).
-  expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold() -
-                                    base::TimeDelta::FromMinutes(5));
+  expirer_.ClearOldOnDemandFaviconsIfPossible(GetOldFaviconThreshold() -
+                                              base::TimeDelta::FromMinutes(5));
 
   // The blob does not encode any real bitmap, obviously.
   const unsigned char kBlob[] = "0";
@@ -1192,7 +1205,7 @@ TEST_F(ExpireHistoryTest,
   GURL page_url2("http://google.com/2");
   ASSERT_NE(0, thumb_db_->AddIconMapping(page_url2, icon_id));
 
-  expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold());
+  expirer_.ClearOldOnDemandFaviconsIfPossible(GetOldFaviconThreshold());
 
   // Nothing gets deleted.
   EXPECT_TRUE(thumb_db_->GetFaviconHeader(icon_id, nullptr, nullptr));
@@ -1237,6 +1250,49 @@ TEST_F(ExpireHistoryTest, DeleteVisitAndRedirects) {
 
   // Expiring visit_row2 should also expire visit_row1 which is its redirect
   // parent.
+  expirer_.ExpireVisits({visit_row2});
+
+  VisitRow v;
+  EXPECT_FALSE(main_db_->GetRowForVisit(visit_row1.visit_id, &v));
+  EXPECT_FALSE(main_db_->GetRowForVisit(visit_row2.visit_id, &v));
+  URLRow u;
+  EXPECT_FALSE(main_db_->GetURLRow(url1, &u));
+  EXPECT_FALSE(main_db_->GetURLRow(url2, &u));
+}
+
+// Test that loops in redirect parents are handled. See crbug.com/798234.
+TEST_F(ExpireHistoryTest, DeleteVisitAndRedirectsWithLoop) {
+  // Set up the example data.
+  base::Time now = PretendNow();
+  URLRow url_row1(GURL("http://google.com/1"));
+  url_row1.set_last_visit(now - base::TimeDelta::FromDays(1));
+  url_row1.set_visit_count(1);
+  URLID url1 = main_db_->AddURL(url_row1);
+
+  URLRow url_row2(GURL("http://www.google.com/1"));
+  url_row2.set_last_visit(now);
+  url_row2.set_visit_count(1);
+  URLID url2 = main_db_->AddURL(url_row2);
+
+  // Add a visit to "http://google.com/1" that is redirected to
+  // "http://www.google.com/1".
+  VisitRow visit_row1;
+  visit_row1.url_id = url1;
+  visit_row1.visit_time = now - base::TimeDelta::FromDays(1);
+  main_db_->AddVisit(&visit_row1, SOURCE_BROWSED);
+
+  VisitRow visit_row2;
+  visit_row2.url_id = url2;
+  visit_row2.visit_time = now;
+  visit_row2.referring_visit = visit_row1.visit_id;
+  main_db_->AddVisit(&visit_row2, SOURCE_BROWSED);
+
+  // Set the first visit to be redirect parented to the second visit.
+  visit_row1.referring_visit = visit_row2.visit_id;
+  main_db_->UpdateVisitRow(visit_row1);
+
+  // Expiring visit_row2 should also expire visit_row1 which is its redirect
+  // parent, without infinite looping.
   expirer_.ExpireVisits({visit_row2});
 
   VisitRow v;

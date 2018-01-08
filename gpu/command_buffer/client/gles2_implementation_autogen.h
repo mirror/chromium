@@ -1239,16 +1239,9 @@ void BeginRasterCHROMIUM(GLuint texture_id,
                          GLboolean use_distance_field_text,
                          GLint pixel_config) override;
 
-void RasterCHROMIUM(const cc::DisplayItemList* list,
-                    GLint translate_x,
-                    GLint translate_y,
-                    GLint clip_x,
-                    GLint clip_y,
-                    GLint clip_w,
-                    GLint clip_h,
-                    GLfloat post_translate_x,
-                    GLfloat post_translate_y,
-                    GLfloat post_scale) override;
+void* MapRasterCHROMIUM(GLsizeiptr size) override;
+
+void UnmapRasterCHROMIUM(GLsizeiptr written_size) override;
 
 void EndRasterCHROMIUM() override;
 

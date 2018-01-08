@@ -8,9 +8,9 @@
 #include <set>
 
 #include "base/macros.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 
 namespace content {
 class URLLoaderFactoryGetter;
@@ -22,6 +22,9 @@ class URLLoaderFactoryGetter;
 //     -at ResourceMessageFilter for non network-service code path
 //     -by sending renderer an intermediate URLLoaderFactory for network-service
 //      codepath, as that normally routes directly to the network process
+//     -http(s)://mock.failed.request/foo URLs internally, copying the behavior
+//      of net::URLRequestFailedJob
+//
 // Notes:
 //  -intercepting frame requests doesn't work yet for non network-service case
 //   (will work once http://crbug.com/747130 is fixed)
@@ -45,12 +48,12 @@ class URLLoaderInterceptor {
     // browser process).
     int process_id;
     // The following are the parameters to CreateLoaderAndStart.
-    mojom::URLLoaderRequest request;
+    network::mojom::URLLoaderRequest request;
     int32_t routing_id;
     int32_t request_id;
     uint32_t options;
-    ResourceRequest url_request;
-    mojom::URLLoaderClientPtr client;
+    network::ResourceRequest url_request;
+    network::mojom::URLLoaderClientPtr client;
     net::MutableNetworkTrafficAnnotationTag traffic_annotation;
   };
   // Function signature for intercept method.
@@ -66,7 +69,7 @@ class URLLoaderInterceptor {
   // Helper methods for use when intercepting.
   static void WriteResponse(const std::string& headers,
                             const std::string& body,
-                            mojom::URLLoaderClient* client);
+                            network::mojom::URLLoaderClient* client);
 
  private:
   class Interceptor;
@@ -75,9 +78,9 @@ class URLLoaderInterceptor {
 
   // Used to create a factory for subresources in the network service case.
   void CreateURLLoaderFactoryForSubresources(
-      mojom::URLLoaderFactoryRequest request,
+      network::mojom::URLLoaderFactoryRequest request,
       int process_id,
-      mojom::URLLoaderFactoryPtrInfo original_factory);
+      network::mojom::URLLoaderFactoryPtrInfo original_factory);
 
   // Callback on IO thread whenever a URLLoaderFactoryGetter::GetNetworkContext
   // is called on an object that doesn't have a test factory set up.

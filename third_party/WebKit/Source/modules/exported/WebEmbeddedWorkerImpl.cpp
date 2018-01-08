@@ -59,29 +59,26 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
-#include "public/platform/Platform.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/web/WebConsoleMessage.h"
-#include "public/web/WebDevToolsAgent.h"
 #include "public/web/WebSettings.h"
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
-#include "third_party/WebKit/common/service_worker/service_worker_installed_scripts_manager.mojom-blink.h"
 
 namespace blink {
 
-// static
 std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
     std::unique_ptr<WebServiceWorkerContextClient> client,
-    std::unique_ptr<WebServiceWorkerInstalledScriptsManagerParams>
-        installed_scripts_manager_params,
+    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
     mojo::ScopedMessagePipeHandle content_settings_handle,
     mojo::ScopedMessagePipeHandle interface_provider) {
   return std::make_unique<WebEmbeddedWorkerImpl>(
-      std::move(client), std::move(installed_scripts_manager_params),
+      std::move(client), std::move(installed_scripts_manager),
       std::make_unique<ServiceWorkerContentSettingsProxy>(
           // Chrome doesn't use interface versioning.
           mojom::blink::WorkerContentSettingsProxyPtrInfo(
@@ -91,25 +88,10 @@ std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
           service_manager::mojom::blink::InterfaceProvider::Version_));
 }
 
-// static
-std::unique_ptr<WebEmbeddedWorkerImpl> WebEmbeddedWorkerImpl::CreateForTesting(
-    std::unique_ptr<WebServiceWorkerContextClient> client,
-    std::unique_ptr<ServiceWorkerInstalledScriptsManager>
-        installed_scripts_manager) {
-  auto worker_impl = std::make_unique<WebEmbeddedWorkerImpl>(
-      std::move(client), nullptr /* installed_scripts_manager_params */,
-      std::make_unique<ServiceWorkerContentSettingsProxy>(
-          nullptr /* host_info */),
-      nullptr /* interface_provider_info */);
-  worker_impl->installed_scripts_manager_ =
-      std::move(installed_scripts_manager);
-  return worker_impl;
-}
-
 WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
     std::unique_ptr<WebServiceWorkerContextClient> client,
-    std::unique_ptr<WebServiceWorkerInstalledScriptsManagerParams>
-        installed_scripts_manager_params,
+    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
     std::unique_ptr<ServiceWorkerContentSettingsProxy> content_settings_client,
     service_manager::mojom::blink::InterfaceProviderPtrInfo
         interface_provider_info)
@@ -120,18 +102,10 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
       waiting_for_debugger_state_(kNotWaitingForDebugger),
       interface_provider_info_(std::move(interface_provider_info)) {
   if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
-      installed_scripts_manager_params) {
-    DCHECK(installed_scripts_manager_params->manager_request.is_valid());
-    DCHECK(installed_scripts_manager_params->manager_host_ptr.is_valid());
-    installed_scripts_manager_ = std::make_unique<
-        ServiceWorkerInstalledScriptsManager>(
-        std::move(installed_scripts_manager_params->installed_scripts_urls),
-        mojom::blink::ServiceWorkerInstalledScriptsManagerRequest(
-            std::move(installed_scripts_manager_params->manager_request)),
-        mojom::blink::ServiceWorkerInstalledScriptsManagerHostPtrInfo(
-            std::move(installed_scripts_manager_params->manager_host_ptr),
-            mojom::blink::ServiceWorkerInstalledScriptsManagerHost::Version_),
-        Platform::Current()->GetIOTaskRunner());
+      installed_scripts_manager) {
+    installed_scripts_manager_ =
+        std::make_unique<ServiceWorkerInstalledScriptsManager>(
+            std::move(installed_scripts_manager));
   }
 }
 
@@ -156,17 +130,17 @@ void WebEmbeddedWorkerImpl::StartWorkerContext(
   //
   // https://crbug.com/590714
   KURL script_url = worker_start_data_.script_url;
-  worker_start_data_.address_space = kWebAddressSpacePublic;
+  worker_start_data_.address_space = mojom::IPAddressSpace::kPublic;
   if (NetworkUtils::IsReservedIPAddress(script_url.Host()))
-    worker_start_data_.address_space = kWebAddressSpacePrivate;
+    worker_start_data_.address_space = mojom::IPAddressSpace::kPrivate;
   if (SecurityOrigin::Create(script_url)->IsLocalhost())
-    worker_start_data_.address_space = kWebAddressSpaceLocal;
+    worker_start_data_.address_space = mojom::IPAddressSpace::kLocal;
 
   if (data.pause_after_download_mode ==
       WebEmbeddedWorkerStartData::kPauseAfterDownload)
     pause_after_download_state_ = kDoPauseAfterDownload;
 
-  instrumentation_token_ = data.instrumentation_token;
+  devtools_frame_token_ = data.devtools_frame_token;
   shadow_page_ = std::make_unique<WorkerShadowPage>(this);
   WebSettings* settings = shadow_page_->GetSettings();
 
@@ -223,39 +197,6 @@ void WebEmbeddedWorkerImpl::ResumeAfterDownload() {
   StartWorkerThread();
 }
 
-void WebEmbeddedWorkerImpl::AttachDevTools(int session_id) {
-  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
-  if (devtools_agent)
-    devtools_agent->Attach(session_id);
-}
-
-void WebEmbeddedWorkerImpl::ReattachDevTools(int session_id,
-                                             const WebString& saved_state) {
-  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
-  if (devtools_agent)
-    devtools_agent->Reattach(session_id, saved_state);
-  ResumeStartup();
-}
-
-void WebEmbeddedWorkerImpl::DetachDevTools(int session_id) {
-  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
-  if (devtools_agent)
-    devtools_agent->Detach(session_id);
-}
-
-void WebEmbeddedWorkerImpl::DispatchDevToolsMessage(int session_id,
-                                                    int call_id,
-                                                    const WebString& method,
-                                                    const WebString& message) {
-  if (asked_to_terminate_)
-    return;
-  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
-  if (devtools_agent) {
-    devtools_agent->DispatchOnInspectorBackend(session_id, call_id, method,
-                                               message);
-  }
-}
-
 void WebEmbeddedWorkerImpl::AddMessageToConsole(
     const WebConsoleMessage& message) {
   MessageLevel web_core_message_level;
@@ -281,6 +222,12 @@ void WebEmbeddedWorkerImpl::AddMessageToConsole(
       kOtherMessageSource, web_core_message_level, message.text,
       SourceLocation::Create(message.url, message.line_number,
                              message.column_number, nullptr)));
+}
+
+void WebEmbeddedWorkerImpl::BindDevToolsAgent(
+    mojo::ScopedInterfaceEndpointHandle devtools_agent_request) {
+  shadow_page_->BindDevToolsAgent(mojom::blink::DevToolsAgentAssociatedRequest(
+      std::move(devtools_agent_request)));
 }
 
 void WebEmbeddedWorkerImpl::PostMessageToPageInspector(int session_id,
@@ -334,14 +281,6 @@ void WebEmbeddedWorkerImpl::OnShadowPageInitialized() {
   // invoked and |this| might have been deleted at this point.
 }
 
-void WebEmbeddedWorkerImpl::SendProtocolMessage(int session_id,
-                                                int call_id,
-                                                const WebString& message,
-                                                const WebString& state) {
-  worker_context_client_->SendDevToolsMessage(session_id, call_id, message,
-                                              state);
-}
-
 void WebEmbeddedWorkerImpl::ResumeStartup() {
   bool was_waiting = (waiting_for_debugger_state_ == kWaitingForDebugger);
   waiting_for_debugger_state_ = kNotWaitingForDebugger;
@@ -349,8 +288,8 @@ void WebEmbeddedWorkerImpl::ResumeStartup() {
     shadow_page_->Initialize(worker_start_data_.script_url);
 }
 
-const WebString& WebEmbeddedWorkerImpl::GetInstrumentationToken() {
-  return instrumentation_token_;
+const WebString& WebEmbeddedWorkerImpl::GetDevToolsFrameToken() {
+  return devtools_frame_token_;
 }
 
 void WebEmbeddedWorkerImpl::OnScriptLoaderFinished() {

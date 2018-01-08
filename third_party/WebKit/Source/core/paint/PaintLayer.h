@@ -270,11 +270,11 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
     return curr;
   }
 
-  const LayoutPoint& Location() const {
+  LayoutPoint Location() const {
 #if DCHECK_IS_ON()
     DCHECK(!needs_position_update_);
 #endif
-    return location_;
+    return LocationInternal();
   }
 
   // FIXME: size() should DCHECK(!needs_position_update_) as well, but that
@@ -291,7 +291,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
 
   // For LayoutTreeAsText
   LayoutRect RectIgnoringNeedsPositionUpdate() const {
-    return LayoutRect(location_, size_);
+    return LayoutRect(LocationInternal(), size_);
   }
 #if DCHECK_IS_ON()
   bool NeedsPositionUpdate() const { return needs_position_update_; }
@@ -552,7 +552,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   };
   void SetGroupedMapping(CompositedLayerMapping*, SetGroupMappingOptions);
 
-  bool MaskBlendingAppliedByCompositor() const;
+  bool MaskBlendingAppliedByCompositor(const PaintInfo&) const;
   bool HasCompositedClippingMask() const;
   bool NeedsCompositedScrolling() const {
     return scrollable_area_ && scrollable_area_->NeedsCompositedScrolling();
@@ -887,26 +887,11 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   LayoutRect PaintingExtent(const PaintLayer* root_layer,
                             const LayoutSize& sub_pixel_accumulation,
                             GlobalPaintFlags);
+
   void AppendSingleFragmentIgnoringPagination(
       PaintLayerFragments&,
       const PaintLayer* root_layer,
       const LayoutRect& dirty_rect,
-      ClipRectsCacheSlot,
-      GeometryMapperOption,
-      OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
-      ShouldRespectOverflowClipType = kRespectOverflowClip,
-      const LayoutPoint* offset_from_root = nullptr,
-      const LayoutSize& sub_pixel_accumulation = LayoutSize()) const;
-
-  // Use this method for callsites within paint, and |CollectFragments|
-  // otherwise. This is because non-paint use cases have not yet been
-  // migrated to use property trees.
-  void CollectFragmentsForPaint(
-      PaintLayerFragments&,
-      const PaintLayer* root_layer,
-      const LayoutRect& dirty_rect,
-      ClipRectsCacheSlot,
-      GeometryMapperOption,
       OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = nullptr,
@@ -916,13 +901,10 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       PaintLayerFragments&,
       const PaintLayer* root_layer,
       const LayoutRect& dirty_rect,
-      ClipRectsCacheSlot,
-      GeometryMapperOption,
       OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = nullptr,
-      const LayoutSize& sub_pixel_accumulation = LayoutSize(),
-      const LayoutRect* layer_bounding_box = nullptr) const;
+      const LayoutSize& sub_pixel_accumulation = LayoutSize()) const;
 
   LayoutPoint LayoutBoxLocation() const {
     return GetLayoutObject().IsBox() ? ToLayoutBox(GetLayoutObject()).Location()
@@ -1136,7 +1118,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       const HitTestLocation&,
       const HitTestingTransformState*,
       double* z_offset,
-      ClipRectsCacheSlot);
+      ShouldRespectOverflowClipType);
   bool HitTestClippedOutByClipPath(PaintLayer* root_layer,
                                    const HitTestLocation&) const;
 
@@ -1194,6 +1176,8 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       CalculateBoundsOptions) const;
 
   FloatRect FilterReferenceBox(const FilterOperations&, float zoom) const;
+
+  LayoutPoint LocationInternal() const;
 
   // Self-painting layer is an optimization where we avoid the heavy Layer
   // painting machinery for a Layer allocated only to handle the overflow clip

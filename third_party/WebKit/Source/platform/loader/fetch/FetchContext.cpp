@@ -36,8 +36,7 @@
 namespace blink {
 
 FetchContext& FetchContext::NullInstance() {
-  DEFINE_STATIC_LOCAL(FetchContext, instance, (new FetchContext));
-  return instance;
+  return *(new FetchContext);
 }
 
 FetchContext::FetchContext() : platform_probe_sink_(new PlatformProbeSink) {
@@ -93,7 +92,8 @@ void FetchContext::DispatchDidDownloadData(unsigned long, int, int) {}
 void FetchContext::DispatchDidFinishLoading(unsigned long,
                                             double,
                                             int64_t,
-                                            int64_t) {}
+                                            int64_t,
+                                            bool) {}
 
 void FetchContext::DispatchDidFail(unsigned long,
                                    const ResourceError&,

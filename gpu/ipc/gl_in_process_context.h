@@ -11,7 +11,7 @@
 #include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/single_thread_task_runner.h"
-#include "gpu/command_buffer/common/gles2_cmd_utils.h"
+#include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "gpu/ipc/gl_in_process_context_export.h"
 #include "gpu/ipc/in_process_command_buffer.h"
 #include "ui/gfx/native_widget_types.h"
@@ -21,6 +21,7 @@
 namespace gpu {
 struct GpuFeatureInfo;
 class InProcessCommandBuffer;
+class ServiceTransferCache;
 struct SharedMemoryLimits;
 
 namespace gles2 {
@@ -50,7 +51,7 @@ class GL_IN_PROCESS_CONTEXT_EXPORT GLInProcessContext {
       bool is_offscreen,
       SurfaceHandle window,
       GLInProcessContext* share_context,
-      const gpu::gles2::ContextCreationAttribHelper& attribs,
+      const gpu::ContextCreationAttribs& attribs,
       const SharedMemoryLimits& memory_limits,
       GpuMemoryBufferManager* gpu_memory_buffer_manager,
       ImageFactory* image_factory,
@@ -78,7 +79,7 @@ class GL_IN_PROCESS_CONTEXT_EXPORT GLInProcessContext {
       const gpu::InProcessCommandBuffer::PresentationCallback& callback) = 0;
 
   // Test only functions.
-  virtual gpu::gles2::ContextGroup* ContextGroupForTesting() const = 0;
+  virtual gpu::ServiceTransferCache* GetTransferCacheForTest() const = 0;
 };
 
 }  // namespace gpu

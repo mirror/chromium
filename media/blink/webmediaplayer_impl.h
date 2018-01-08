@@ -74,8 +74,8 @@ class GLES2Interface;
 }
 
 namespace media {
+class CdmContextRef;
 class ChunkDemuxer;
-class ContentDecryptionModule;
 class VideoDecodeStatsReporter;
 class MediaLog;
 class UrlIndex;
@@ -108,6 +108,15 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       std::unique_ptr<WebMediaPlayerParams> params);
   ~WebMediaPlayerImpl() override;
 
+  // Destroys |demuxer| and records a UMA for the time taken to destroy it.
+  // |task_runner| is the expected runner on which this method is called, and is
+  // used as a parameter to ensure a scheduled task bound to this method is run
+  // (to prevent uncontrolled |demuxer| destruction if |task_runner| has no
+  // other references before such task is executed.)
+  static void DemuxerDestructionHelper(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      std::unique_ptr<Demuxer> demuxer);
+
   // WebSurfaceLayerBridgeObserver implementation.
   void OnWebLayerUpdated() override;
   void RegisterContentsLayer(blink::WebLayer* web_layer) override;
@@ -123,6 +132,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void Seek(double seconds) override;
   void SetRate(double rate) override;
   void SetVolume(double volume) override;
+  void PictureInPicture() override;
   void SetSinkId(const blink::WebString& sink_id,
                  const blink::WebSecurityOrigin& security_origin,
                  blink::WebSetSinkIdCallbacks* web_callback) override;
@@ -247,7 +257,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // MediaObserverClient implementation.
   void SwitchToRemoteRenderer(
       const std::string& remote_device_friendly_name) override;
-  void SwitchToLocalRenderer() override;
+  void SwitchToLocalRenderer(
+      MediaObserverClient::ReasonToSwitchToLocal reason) override;
   void ActivateViewportIntersectionMonitoring(bool activate) override;
   void UpdateRemotePlaybackCompatibility(bool is_compatible) override;
 
@@ -308,6 +319,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void OnVideoNaturalSizeChange(const gfx::Size& size) override;
   void OnVideoOpacityChange(bool opaque) override;
   void OnVideoAverageKeyframeDistanceUpdate() override;
+  void OnAudioDecoderChange(const std::string& name) override;
+  void OnVideoDecoderChange(const std::string& name) override;
 
   // Actually seek. Avoids causing |should_notify_time_changed_| to be set when
   // |time_updated| is false.
@@ -523,6 +536,14 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // http://crbug.com/645998, and http://crbug.com/751823 for reasons why.
   base::TimeDelta GetCurrentTimeInternal() const;
 
+  // Called by the compositor the very first time a frame is received.
+  void OnFirstFrame(base::TimeTicks frame_time);
+
+  // Records timing metrics for three UMA metrics: #key.SRC, #key.MSE, and
+  // #key.EME. The SRC and MSE ones are mutually exclusive based on the presence
+  // of |chunk_demuxer_|, while the EME one is only recorded if |is_encrypted_|.
+  void RecordTimingUMA(const std::string& key, base::TimeDelta elapsed);
+
   blink::WebLocalFrame* frame_;
 
   // The playback state last reported to |delegate_|, to avoid setting duplicate
@@ -671,13 +692,13 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   std::unique_ptr<blink::WebContentDecryptionModuleResult> set_cdm_result_;
 
-  // If a CDM is attached keep a reference to it, so that it is not destroyed
-  // until after the pipeline is done with it.
-  scoped_refptr<ContentDecryptionModule> cdm_;
+  // If a CdmContext is attached keep a reference to the CdmContextRef, so that
+  // it is not destroyed until after the pipeline is done with it.
+  std::unique_ptr<CdmContextRef> cdm_context_ref_;
 
-  // Keep track of the CDM while it is in the process of attaching to the
-  // pipeline.
-  scoped_refptr<ContentDecryptionModule> pending_cdm_;
+  // Keep track of the CdmContextRef while it is in the process of attaching to
+  // the pipeline.
+  std::unique_ptr<CdmContextRef> pending_cdm_context_ref_;
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   WebMediaPlayerCast cast_impl_;
@@ -744,6 +765,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Monitors the watch time of the played content.
   std::unique_ptr<WatchTimeReporter> watch_time_reporter_;
   bool is_encrypted_;
+  std::string audio_decoder_name_;
+  std::string video_decoder_name_;
+
+  // The time at which DoLoad() is executed.
+  base::TimeTicks load_start_time_;
+  bool have_reported_time_to_play_ready_ = false;
 
   // Records pipeline statistics for describing media capabilities.
   std::unique_ptr<VideoDecodeStatsReporter> video_decode_stats_reporter_;
@@ -804,7 +831,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Whether the use of a surface layer instead of a video layer is enabled.
   bool surface_layer_for_video_enabled_ = false;
 
-  base::CancelableCallback<void(base::TimeTicks)> frame_time_report_cb_;
+  base::CancelableOnceCallback<void(base::TimeTicks)> frame_time_report_cb_;
 
   bool initial_video_height_recorded_ = false;
 

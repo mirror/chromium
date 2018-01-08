@@ -109,7 +109,7 @@ const size_t kMaxMessageChunkSize = IPC::Channel::kMaximumMessageSize / 4;
 
 void ShellDevToolsBindings::InspectElementAt(int x, int y) {
   if (agent_host_) {
-    agent_host_->InspectElement(this, x, y);
+    agent_host_->InspectElement(inspected_contents_->GetFocusedFrame(), x, y);
   } else {
     inspect_element_at_x_ = x;
     inspect_element_at_y_ = y;
@@ -160,8 +160,8 @@ void ShellDevToolsBindings::Attach() {
   agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
   agent_host_->AttachClient(this);
   if (inspect_element_at_x_ != -1) {
-    agent_host_->InspectElement(this, inspect_element_at_x_,
-                                inspect_element_at_y_);
+    agent_host_->InspectElement(inspected_contents_->GetFocusedFrame(),
+                                inspect_element_at_x_, inspect_element_at_y_);
     inspect_element_at_x_ = -1;
     inspect_element_at_y_ = -1;
   }
@@ -171,21 +171,6 @@ void ShellDevToolsBindings::WebContentsDestroyed() {
   if (agent_host_) {
     agent_host_->DetachClient(this);
     agent_host_ = nullptr;
-  }
-}
-
-void ShellDevToolsBindings::SetPreferences(const std::string& json) {
-  preferences_.Clear();
-  if (json.empty())
-    return;
-  base::DictionaryValue* dict = nullptr;
-  std::unique_ptr<base::Value> parsed = base::JSONReader::Read(json);
-  if (!parsed || !parsed->GetAsDictionary(&dict))
-    return;
-  for (base::DictionaryValue::Iterator it(*dict); !it.IsAtEnd(); it.Advance()) {
-    if (!it.value().is_string())
-      continue;
-    preferences_.SetWithoutPathExpansion(it.key(), it.value().CreateDeepCopy());
   }
 }
 

@@ -12,7 +12,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/histogram_tester.h"
@@ -515,7 +514,7 @@ class FaviconHandlerTest : public testing::Test {
       FaviconDriverObserver::NotificationIconType handler_type,
       const std::vector<FaviconURL>& candidates,
       const GURL& manifest_url = GURL()) {
-    auto handler = base::MakeUnique<FaviconHandler>(&favicon_service_,
+    auto handler = std::make_unique<FaviconHandler>(&favicon_service_,
                                                     &delegate_, handler_type);
     handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
     // The first RunUntilIdle() causes the FaviconService lookups be faster than
@@ -684,22 +683,6 @@ TEST_F(FaviconHandlerTest, DeleteFaviconMappingsDespitePrior404) {
   RunHandlerWithSimpleFaviconCandidates({kIconURL});
 }
 
-// Test that favicon mappings are not deleted if the feature is disabled.
-TEST_F(FaviconHandlerTest, DoDeleteFaviconMappingsIfFeatureDisabled) {
-  base::test::ScopedFeatureList override_features;
-  override_features.InitAndDisableFeature(kAllowDeletionOfFaviconMappings);
-
-  const GURL kIconURL("http://www.google.com/favicon");
-
-  favicon_service_.fake()->Store(kPageURL, kIconURL,
-                                 CreateRawBitmapResult(kIconURL));
-
-  EXPECT_CALL(favicon_service_, DeleteFaviconMappings(_, _)).Times(0);
-  EXPECT_CALL(delegate_, OnFaviconDeleted(_, _)).Times(0);
-
-  RunHandlerWithSimpleFaviconCandidates(URLVector());
-}
-
 // Test that favicon mappings are deleted for a page in history, when all icons
 // listed in the page return a 404.
 TEST_F(FaviconHandlerTest, DeleteFaviconMappingsDueTo404) {
@@ -753,7 +736,7 @@ TEST_F(FaviconHandlerTest, UpdateFaviconMappingsAndFetchWithMultipleURLs) {
                   base::flat_set<GURL>{kPageURL, kDifferentPageURL},
                   kIconURL16x16, _, _, _, _));
 
-  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+  std::unique_ptr<FaviconHandler> handler = std::make_unique<FaviconHandler>(
       &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
   handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
   base::RunLoop().RunUntilIdle();
@@ -781,7 +764,7 @@ TEST_F(FaviconHandlerTest, CloneFaviconMappingsForPageInHistory) {
                   kPageURL, favicon_base::IconTypeSet({kFavicon}),
                   base::flat_set<GURL>({kPageURL})));
 
-  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+  std::unique_ptr<FaviconHandler> handler = std::make_unique<FaviconHandler>(
       &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
   handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
   base::RunLoop().RunUntilIdle();
@@ -798,7 +781,7 @@ TEST_F(FaviconHandlerTest, CloneFaviconMappingsWithMultipleURLs) {
   favicon_service_.fake()->Store(kPageURLInHistory, kIconURL16x16,
                                  CreateRawBitmapResult(kIconURL16x16));
 
-  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+  std::unique_ptr<FaviconHandler> handler = std::make_unique<FaviconHandler>(
       &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
   handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
   base::RunLoop().RunUntilIdle();
@@ -821,7 +804,7 @@ TEST_F(FaviconHandlerTest, NotCloneFaviconMappingsInIncognito) {
 
   EXPECT_CALL(favicon_service_, CloneFaviconMappingsForPages(_, _, _)).Times(0);
 
-  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+  std::unique_ptr<FaviconHandler> handler = std::make_unique<FaviconHandler>(
       &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
   handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
   base::RunLoop().RunUntilIdle();
@@ -1540,6 +1523,27 @@ TEST_F(FaviconHandlerTest, TestSortFavicon) {
           kIconURLWithoutSize1, kIconURLWithoutSize2));
 }
 
+TEST_F(FaviconHandlerTest, TestSortTouchIconLargest) {
+  const GURL kIconURLWithoutSize("http://www.google.com/touchicon-nosize");
+  const GURL kIconURL144x144("http://www.google.com/touchicon144x144");
+  const GURL kIconURL192x192("http://www.google.com/touchicon192x192");
+
+  const std::vector<favicon::FaviconURL> kSourceIconURLs{
+      FaviconURL(kIconURLWithoutSize, kTouchIcon, kEmptySizes),
+      FaviconURL(kIconURL144x144, kTouchIcon,
+                 SizeVector(1U, gfx::Size(144, 144))),
+      FaviconURL(kIconURL192x192, kTouchIcon,
+                 SizeVector(1U, gfx::Size(192, 192))),
+  };
+
+  std::unique_ptr<FaviconHandler> handler = RunHandlerWithCandidates(
+      FaviconDriverObserver::TOUCH_LARGEST, kSourceIconURLs);
+
+  EXPECT_THAT(
+      handler->GetIconURLs(),
+      ElementsAre(kIconURL192x192, kIconURL144x144, kIconURLWithoutSize));
+}
+
 TEST_F(FaviconHandlerTest, TestDownloadLargestFavicon) {
   // Names represent the bitmap sizes per icon.
   const GURL kIconURL1024_512("http://www.google.com/a");
@@ -1650,7 +1654,7 @@ TEST_F(FaviconHandlerTest, SetFaviconsForLastPageUrlOnly) {
                                FaviconDriverObserver::NON_TOUCH_16_DIP,
                                kIconURL12x12, _, _));
 
-  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+  std::unique_ptr<FaviconHandler> handler = std::make_unique<FaviconHandler>(
       &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
   handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
   base::RunLoop().RunUntilIdle();
@@ -1678,7 +1682,7 @@ TEST_F(FaviconHandlerTest, SetFaviconsForMultipleUrlsWithinDocument) {
                                FaviconDriverObserver::NON_TOUCH_16_DIP,
                                kIconURL12x12, _, _));
 
-  std::unique_ptr<FaviconHandler> handler = base::MakeUnique<FaviconHandler>(
+  std::unique_ptr<FaviconHandler> handler = std::make_unique<FaviconHandler>(
       &favicon_service_, &delegate_, FaviconDriverObserver::NON_TOUCH_16_DIP);
   handler->FetchFavicon(kPageURL, /*is_same_document=*/false);
   base::RunLoop().RunUntilIdle();

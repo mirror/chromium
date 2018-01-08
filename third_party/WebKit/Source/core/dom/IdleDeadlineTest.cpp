@@ -15,11 +15,10 @@ namespace {
 
 class MockIdleDeadlineScheduler final : public WebScheduler {
  public:
-  MockIdleDeadlineScheduler() {}
-  ~MockIdleDeadlineScheduler() override {}
+  MockIdleDeadlineScheduler() = default;
+  ~MockIdleDeadlineScheduler() override = default;
 
   // WebScheduler implementation:
-  WebTaskRunner* LoadingTaskRunner() override { return nullptr; }
   WebTaskRunner* TimerTaskRunner() override { return nullptr; }
   WebTaskRunner* V8TaskRunner() override { return nullptr; }
   void Shutdown() override {}
@@ -42,14 +41,18 @@ class MockIdleDeadlineScheduler final : public WebScheduler {
   void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType) override {}
 
+  base::TimeTicks MonotonicallyIncreasingVirtualTime() const override {
+    return base::TimeTicks();
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(MockIdleDeadlineScheduler);
 };
 
 class MockIdleDeadlineThread final : public WebThread {
  public:
-  MockIdleDeadlineThread() {}
-  ~MockIdleDeadlineThread() override {}
+  MockIdleDeadlineThread() = default;
+  ~MockIdleDeadlineThread() override = default;
   bool IsCurrentThread() const override { return true; }
   WebScheduler* Scheduler() const override { return &scheduler_; }
 
@@ -60,8 +63,8 @@ class MockIdleDeadlineThread final : public WebThread {
 
 class MockIdleDeadlinePlatform : public TestingPlatformSupport {
  public:
-  MockIdleDeadlinePlatform() {}
-  ~MockIdleDeadlinePlatform() override {}
+  MockIdleDeadlinePlatform() = default;
+  ~MockIdleDeadlinePlatform() override = default;
   WebThread* CurrentThread() override { return &thread_; }
 
  private:
@@ -89,7 +92,7 @@ TEST_F(IdleDeadlineTest, deadlineInFuture) {
   IdleDeadline* deadline =
       IdleDeadline::Create(1.25, IdleDeadline::CallbackType::kCalledWhenIdle);
   // Note: the deadline is computed with reduced resolution.
-  EXPECT_FLOAT_EQ(249.995, deadline->timeRemaining());
+  EXPECT_FLOAT_EQ(250.0, deadline->timeRemaining());
 }
 
 TEST_F(IdleDeadlineTest, deadlineInPast) {

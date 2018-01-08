@@ -7,8 +7,10 @@
 
 #include <string>
 
+#include "base/optional.h"
 #include "chromeos/chromeos_export.h"
 #include "chromeos/login/auth/key.h"
+#include "components/password_manager/core/browser/hash_password_manager.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_type.h"
 
@@ -50,6 +52,8 @@ class CHROMEOS_EXPORT UserContext {
   const std::string& GetGaiaID() const;
   const Key* GetKey() const;
   Key* GetKey();
+  const Key* GetPasswordKey() const;
+  Key* GetMutablePasswordKey();
   const std::string& GetAuthCode() const;
   const std::string& GetRefreshToken() const;
   const std::string& GetAccessToken() const;
@@ -63,11 +67,14 @@ class CHROMEOS_EXPORT UserContext {
   const std::string& GetPublicSessionInputMethod() const;
   const std::string& GetDeviceId() const;
   const std::string& GetGAPSCookie() const;
+  const base::Optional<password_manager::SyncPasswordData>&
+  GetSyncPasswordData() const;
 
   bool HasCredentials() const;
 
   void SetAccountId(const AccountId& account_id);
   void SetKey(const Key& key);
+  void SetPasswordKey(const Key& key);
   void SetAuthCode(const std::string& auth_code);
   void SetRefreshToken(const std::string& refresh_token);
   void SetAccessToken(const std::string& access_token);
@@ -81,12 +88,15 @@ class CHROMEOS_EXPORT UserContext {
   void SetPublicSessionInputMethod(const std::string& input_method);
   void SetDeviceId(const std::string& device_id);
   void SetGAPSCookie(const std::string& gaps_cookie);
+  void SetSyncPasswordData(
+      const password_manager::SyncPasswordData& sync_password_data);
 
   void ClearSecrets();
 
  private:
   AccountId account_id_;
   Key key_;
+  Key password_key_;
   std::string auth_code_;
   std::string refresh_token_;
   std::string access_token_;  // OAuthLogin scoped access token.
@@ -100,6 +110,9 @@ class CHROMEOS_EXPORT UserContext {
   std::string public_session_input_method_;
   std::string device_id_;
   std::string gaps_cookie_;
+
+  // For password reuse detection use.
+  base::Optional<password_manager::SyncPasswordData> sync_password_data_;
 };
 
 }  // namespace chromeos

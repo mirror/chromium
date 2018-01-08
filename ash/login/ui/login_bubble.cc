@@ -78,7 +78,7 @@ class LoginErrorBubbleView : public LoginBaseBubbleView {
   // views::View:
   const char* GetClassName() const override { return "LoginErrorBubbleView"; }
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
-    node_data->role = ui::AX_ROLE_TOOLTIP;
+    node_data->role = ax::mojom::Role::kTooltip;
   }
 
  private:
@@ -123,7 +123,7 @@ class LoginTooltipView : public LoginBaseBubbleView {
 
   // LoginBaseBubbleView:
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
-    node_data->role = ui::AX_ROLE_TOOLTIP;
+    node_data->role = ax::mojom::Role::kTooltip;
   }
 
  private:
@@ -138,8 +138,10 @@ LoginBubble::LoginBubble() {
 
 LoginBubble::~LoginBubble() {
   Shell::Get()->RemovePreTargetHandler(this);
-  if (bubble_view_)
+  if (bubble_view_) {
     bubble_view_->GetWidget()->RemoveObserver(this);
+    CloseImmediately();
+  }
 }
 
 void LoginBubble::ShowErrorBubble(views::StyledLabel* label,
@@ -234,7 +236,7 @@ void LoginBubble::Show() {
   ScheduleAnimation(true /*visible*/);
 
   // Fire an alert so ChromeVox will read the contents of the bubble.
-  bubble_view_->NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+  bubble_view_->NotifyAccessibilityEvent(ax::mojom::Event::kAlert, true);
 }
 
 void LoginBubble::CloseImmediately() {

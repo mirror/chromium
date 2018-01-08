@@ -29,7 +29,6 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -56,9 +55,9 @@ import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController.ContentType;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
-import org.chromium.content.browser.BrowserStartupController;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.SelectionPopupController;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.BrowserControlsState;
 import org.chromium.ui.UiUtils;
 
@@ -111,6 +110,46 @@ public class BottomSheet
         int BACK_PRESS = 6;
         int TAP_SCRIM = 7;
         int NAVIGATION = 8;
+    }
+
+    /**
+     * A specialized FrameLayout that is capable of ignoring all user input based on the state of
+     * the bottom sheet.
+     */
+    public static class TouchRestrictingFrameLayout extends FrameLayout {
+        /** A handle to the bottom sheet. */
+        private BottomSheet mBottomSheet;
+
+        public TouchRestrictingFrameLayout(Context context, AttributeSet atts) {
+            super(context, atts);
+        }
+
+        /**
+         * @param sheet The bottom sheet.
+         */
+        public void setBottomSheet(BottomSheet sheet) {
+            mBottomSheet = sheet;
+        }
+
+        /**
+         * @return Whether touch is enabled.
+         */
+        private boolean isTouchDisabled() {
+            return mBottomSheet == null || mBottomSheet.isRunningContentSwapAnimation()
+                    || mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_SCROLLING;
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(MotionEvent event) {
+            if (isTouchDisabled()) return false;
+            return super.onInterceptTouchEvent(event);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            if (isTouchDisabled()) return false;
+            return super.onTouchEvent(event);
+        }
     }
 
     /**
@@ -216,7 +255,7 @@ public class BottomSheet
     private View mFindInPageView;
 
     /** A handle to the FrameLayout that holds the content of the bottom sheet. */
-    private FrameLayout mBottomSheetContentContainer;
+    private TouchRestrictingFrameLayout mBottomSheetContentContainer;
 
     /**
      * The last ratio sent to observers of onTransitionPeekToHalf(). This is used to ensure the
@@ -225,7 +264,7 @@ public class BottomSheet
     private float mLastPeekToHalfRatioSent;
 
     /** The FrameLayout used to hold the bottom sheet toolbar. */
-    private FrameLayout mToolbarHolder;
+    private TouchRestrictingFrameLayout mToolbarHolder;
 
     /**
      * The default toolbar view. This is shown when the current bottom sheet content doesn't have
@@ -391,8 +430,9 @@ public class BottomSheet
             startX = mVisibleViewportRect.left + (mContainerWidth - allowedSwipeWidth) / 2;
             endX = startX + allowedSwipeWidth;
         } else if (ChromeSwitches.CHROME_HOME_SWIPE_LOGIC_VELOCITY.equals(logicType)
-                || ChromeFeatureList.isEnabled(
-                           ChromeFeatureList.CHROME_HOME_SWIPE_VELOCITY_FEATURE)) {
+                || (ChromeFeatureList.isInitialized()
+                           && ChromeFeatureList.isEnabled(
+                                      ChromeFeatureList.CHROME_HOME_SWIPE_VELOCITY_FEATURE))) {
             if (mVelocityLogicBlockSwipe) return false;
 
             double dpPerMs = scrollDistanceDp / (double) timeDeltaMs;
@@ -445,17 +485,7 @@ public class BottomSheet
         addObserver(mMetrics);
 
         mGestureDetector = new BottomSheetSwipeDetector(context, this);
-
-        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
-                .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
-                    @Override
-                    public void onSuccess(boolean alreadyStarted) {
-                        mIsTouchEnabled = true;
-                    }
-
-                    @Override
-                    public void onFailure() {}
-                });
+        mIsTouchEnabled = true;
 
         // An observer for recording metrics.
         this.addObserver(new EmptyBottomSheetObserver() {
@@ -683,7 +713,9 @@ public class BottomSheet
 
         getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-        mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
+        mBottomSheetContentContainer =
+                (TouchRestrictingFrameLayout) findViewById(R.id.bottom_sheet_content);
+        mBottomSheetContentContainer.setBottomSheet(this);
         mBottomSheetContentContainer.setBackgroundColor(
                 ApiCompatibilityUtils.getColor(getResources(), R.color.modern_primary_color));
 
@@ -789,7 +821,9 @@ public class BottomSheet
             }
         });
 
-        mToolbarHolder = (FrameLayout) mControlContainer.findViewById(R.id.toolbar_holder);
+        mToolbarHolder =
+                (TouchRestrictingFrameLayout) mControlContainer.findViewById(R.id.toolbar_holder);
+        mToolbarHolder.setBottomSheet(this);
         mDefaultToolbarView = (BottomToolbarPhone) mControlContainer.findViewById(R.id.toolbar);
         mDefaultToolbarView.setActivity(mActivity);
 
@@ -1010,8 +1044,9 @@ public class BottomSheet
                 : mDefaultToolbarView;
         if (newToolbar != oldToolbar) {
             // For the toolbar transition, make sure we don't detach the default toolbar view.
-            animators.add(getViewTransitionAnimator(
-                    newToolbar, oldToolbar, mToolbarHolder, mDefaultToolbarView != oldToolbar));
+            Animator transitionAnimator = getViewTransitionAnimator(
+                    newToolbar, oldToolbar, mToolbarHolder, mDefaultToolbarView != oldToolbar);
+            if (transitionAnimator != null) animators.add(transitionAnimator);
         }
 
         // Add an animator for the content transition if needed.
@@ -1020,8 +1055,9 @@ public class BottomSheet
             if (oldContent != null) mBottomSheetContentContainer.removeView(oldContent);
         } else {
             View contentView = content.getContentView();
-            animators.add(getViewTransitionAnimator(
-                    contentView, oldContent, mBottomSheetContentContainer, true));
+            Animator transitionAnimator = getViewTransitionAnimator(
+                    contentView, oldContent, mBottomSheetContentContainer, true);
+            if (transitionAnimator != null) animators.add(transitionAnimator);
         }
 
         // Temporarily make the background of the toolbar holder a solid color so the transition
@@ -1079,9 +1115,11 @@ public class BottomSheet
      * before the new view is faded in. There is an option to detach the old view or not.
      * @param newView The new view to transition to.
      * @param oldView The old view to transition from.
+     * @param parent The parent for newView and oldView.
      * @param detachOldView Whether or not to detach the old view once faded out.
-     * @return An animator that runs the specified animation.
+     * @return An animator that runs the specified animation or null if no animation should be run.
      */
+    @Nullable
     private Animator getViewTransitionAnimator(final View newView, final View oldView,
             final ViewGroup parent, final boolean detachOldView) {
         if (newView == oldView) return null;
@@ -1091,6 +1129,21 @@ public class BottomSheet
 
         newView.setVisibility(View.VISIBLE);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                && !ValueAnimator.areAnimatorsEnabled()) {
+            if (oldView != null) {
+                // Post a runnable to remove the old view to prevent issues related to the keyboard
+                // showing while swapping contents. See https://crbug.com/799252.
+                post(() -> { swapViews(newView, oldView, parent, detachOldView); });
+            } else {
+                if (parent != newView.getParent()) parent.addView(newView);
+            }
+
+            newView.setAlpha(1);
+
+            return null;
+        }
+
         // Fade out the old view.
         if (oldView != null) {
             ValueAnimator fadeOutAnimator = ObjectAnimator.ofFloat(oldView, View.ALPHA, 0);
@@ -1098,12 +1151,7 @@ public class BottomSheet
             fadeOutAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (detachOldView && oldView.getParent() != null) {
-                        parent.removeView(oldView);
-                    } else {
-                        oldView.setVisibility(View.INVISIBLE);
-                    }
-                    if (parent != newView.getParent()) parent.addView(newView);
+                    swapViews(newView, oldView, parent, detachOldView);
                 }
             });
             animators.add(fadeOutAnimator);
@@ -1122,6 +1170,23 @@ public class BottomSheet
         animatorSet.playSequentially(animators);
 
         return animatorSet;
+    }
+
+    /**
+     * Removes the oldView (or sets it to invisible) and adds the new view to the specified parent.
+     * @param newView The new view to transition to.
+     * @param oldView The old view to transition from.
+     * @param parent The parent for newView and oldView.
+     * @param detachOldView Whether or not to detach the old view once faded out.
+     */
+    private void swapViews(final View newView, final View oldView, final ViewGroup parent,
+            final boolean detachOldView) {
+        if (detachOldView && oldView.getParent() != null) {
+            parent.removeView(oldView);
+        } else {
+            oldView.setVisibility(View.INVISIBLE);
+        }
+        if (parent != newView.getParent()) parent.addView(newView);
     }
 
     /**
@@ -1277,9 +1342,9 @@ public class BottomSheet
         Tab activeTab = getActiveTab();
         if (activeTab == null) return;
 
-        ContentViewCore contentViewCore = activeTab.getContentViewCore();
-        if (contentViewCore == null) return;
-        contentViewCore.clearSelection();
+        WebContents webContents = activeTab.getWebContents();
+        if (webContents == null) return;
+        SelectionPopupController.fromWebContents(webContents).clearSelection();
     }
 
     /**
@@ -1465,6 +1530,13 @@ public class BottomSheet
      */
     public boolean isRunningSettleAnimation() {
         return mSettleAnimator != null;
+    }
+
+    /**
+     * @return Whether a content swap animation is in progress.
+     */
+    public boolean isRunningContentSwapAnimation() {
+        return mContentSwapAnimatorSet != null && mContentSwapAnimatorSet.isRunning();
     }
 
     /**

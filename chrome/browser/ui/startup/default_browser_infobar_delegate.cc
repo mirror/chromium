@@ -54,11 +54,6 @@ void DefaultBrowserInfoBarDelegate::AllowExpiry() {
   should_expire_ = true;
 }
 
-infobars::InfoBarDelegate::Type DefaultBrowserInfoBarDelegate::GetInfoBarType()
-    const {
-  return PAGE_ACTION_TYPE;
-}
-
 infobars::InfoBarDelegate::InfoBarIdentifier
 DefaultBrowserInfoBarDelegate::GetIdentifier() const {
   return DEFAULT_BROWSER_INFOBAR_DELEGATE;
@@ -85,7 +80,7 @@ void DefaultBrowserInfoBarDelegate::InfoBarDismissed() {
 }
 
 base::string16 DefaultBrowserInfoBarDelegate::GetMessageText() const {
-  return l10n_util::GetStringUTF16(IDS_DEFAULT_BROWSER_INFOBAR_SHORT_TEXT);
+  return l10n_util::GetStringUTF16(IDS_DEFAULT_BROWSER_INFOBAR_TEXT);
 }
 
 int DefaultBrowserInfoBarDelegate::GetButtons() const {

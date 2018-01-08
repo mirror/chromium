@@ -5,7 +5,9 @@
 #include "core/css/cssom/CSSUnitValue.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/css/CSSCalculationValue.h"
 #include "core/css/CSSResolutionUnits.h"
+#include "core/css/cssom/CSSMathInvert.h"
 #include "core/css/cssom/CSSMathMax.h"
 #include "core/css/cssom/CSSMathMin.h"
 #include "core/css/cssom/CSSMathProduct.h"
@@ -78,10 +80,6 @@ String CSSUnitValue::unit() const {
   return CSSPrimitiveValue::UnitTypeToString(unit_);
 }
 
-String CSSUnitValue::type() const {
-  return StyleValueTypeToString(GetType());
-}
-
 CSSStyleValue::StyleValueType CSSUnitValue::GetType() const {
   if (unit_ == CSSPrimitiveValue::UnitType::kNumber)
     return StyleValueType::kNumberType;
@@ -101,10 +99,6 @@ CSSStyleValue::StyleValueType CSSUnitValue::GetType() const {
     return StyleValueType::kFlexType;
   NOTREACHED();
   return StyleValueType::kUnknownType;
-}
-
-const CSSValue* CSSUnitValue::ToCSSValue(SecureContextMode) const {
-  return CSSPrimitiveValue::Create(value_, unit_);
 }
 
 CSSUnitValue* CSSUnitValue::ConvertTo(
@@ -145,6 +139,25 @@ bool CSSUnitValue::Equals(const CSSNumericValue& other) const {
 
   const CSSUnitValue& other_unit_value = ToCSSUnitValue(other);
   return value_ == other_unit_value.value_ && unit_ == other_unit_value.unit_;
+}
+
+const CSSPrimitiveValue* CSSUnitValue::ToCSSValue() const {
+  return CSSPrimitiveValue::Create(value_, unit_);
+}
+
+CSSCalcExpressionNode* CSSUnitValue::ToCalcExpressionNode() const {
+  return CSSCalcValue::CreateExpressionNode(
+      CSSPrimitiveValue::Create(value_, unit_));
+}
+
+CSSNumericValue* CSSUnitValue::Negate() {
+  return CSSUnitValue::Create(-value_, unit_);
+}
+
+CSSNumericValue* CSSUnitValue::Invert() {
+  if (unit_ == CSSPrimitiveValue::UnitType::kNumber)
+    return CSSUnitValue::Create(1.0 / value_, unit_);
+  return CSSMathInvert::Create(this);
 }
 
 }  // namespace blink

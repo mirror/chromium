@@ -89,14 +89,14 @@ void NavigationURLLoaderImpl::ProceedWithResponse() {
 
 void NavigationURLLoaderImpl::NotifyRequestRedirected(
     const net::RedirectInfo& redirect_info,
-    const scoped_refptr<ResourceResponse>& response) {
+    const scoped_refptr<network::ResourceResponse>& response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   delegate_->OnRequestRedirected(redirect_info, response);
 }
 
 void NavigationURLLoaderImpl::NotifyResponseStarted(
-    const scoped_refptr<ResourceResponse>& response,
+    const scoped_refptr<network::ResourceResponse>& response,
     std::unique_ptr<StreamHandle> body,
     const net::SSLInfo& ssl_info,
     std::unique_ptr<NavigationData> navigation_data,
@@ -105,10 +105,10 @@ void NavigationURLLoaderImpl::NotifyResponseStarted(
     bool is_stream) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  delegate_->OnResponseStarted(response, mojom::URLLoaderClientEndpointsPtr(),
-                               std::move(body), ssl_info,
-                               std::move(navigation_data), request_id,
-                               is_download, is_stream, base::nullopt);
+  delegate_->OnResponseStarted(
+      response, network::mojom::URLLoaderClientEndpointsPtr(), std::move(body),
+      ssl_info, std::move(navigation_data), request_id, is_download, is_stream,
+      base::nullopt);
 }
 void NavigationURLLoaderImpl::NotifyRequestFailed(
     bool in_cache,

@@ -14,15 +14,14 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/debug/thread_heap_usage_tracker.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/test/sequenced_worker_pool_owner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/test/test_io_thread.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/sequenced_task_runner_handle.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager_test_utils.h"
@@ -136,11 +135,7 @@ class MockMemoryDumpProvider : public MemoryDumpProvider {
 
 class TestSequencedTaskRunner : public SequencedTaskRunner {
  public:
-  TestSequencedTaskRunner()
-      : worker_pool_(2 /* max_threads */, "Test Task Runner"),
-        token_(worker_pool_.pool()->GetSequenceToken()),
-        enabled_(true),
-        num_of_post_tasks_(0) {}
+  TestSequencedTaskRunner() = default;
 
   void set_enabled(bool value) { enabled_ = value; }
   unsigned no_of_post_tasks() const { return num_of_post_tasks_; }
@@ -157,23 +152,22 @@ class TestSequencedTaskRunner : public SequencedTaskRunner {
                        TimeDelta delay) override {
     num_of_post_tasks_++;
     if (enabled_) {
-      return worker_pool_.pool()->PostSequencedWorkerTask(token_, from_here,
-                                                          std::move(task));
+      return task_runner_->PostDelayedTask(from_here, std::move(task), delay);
     }
     return false;
   }
 
   bool RunsTasksInCurrentSequence() const override {
-    return worker_pool_.pool()->RunsTasksInCurrentSequence();
+    return task_runner_->RunsTasksInCurrentSequence();
   }
 
  private:
   ~TestSequencedTaskRunner() override = default;
 
-  SequencedWorkerPoolOwner worker_pool_;
-  const SequencedWorkerPool::SequenceToken token_;
-  bool enabled_;
-  unsigned num_of_post_tasks_;
+  const scoped_refptr<SequencedTaskRunner> task_runner_ =
+      CreateSequencedTaskRunnerWithTraits({});
+  bool enabled_ = true;
+  unsigned num_of_post_tasks_ = 0;
 };
 
 class TestingThreadHeapUsageTracker : public debug::ThreadHeapUsageTracker {
@@ -188,14 +182,14 @@ class MemoryDumpManagerTest : public testing::Test {
   MemoryDumpManagerTest() : testing::Test(), kDefaultOptions() {}
 
   void SetUp() override {
-    message_loop_.reset(new MessageLoop());
+    scoped_task_environment_ = std::make_unique<test::ScopedTaskEnvironment>();
     mdm_ = MemoryDumpManager::CreateInstanceForTesting();
     ASSERT_EQ(mdm_.get(), MemoryDumpManager::GetInstance());
   }
 
   void TearDown() override {
     mdm_.reset();
-    message_loop_.reset();
+    scoped_task_environment_.reset();
     TraceLog::DeleteForTesting();
   }
 
@@ -254,7 +248,7 @@ class MemoryDumpManagerTest : public testing::Test {
   std::unique_ptr<MemoryDumpManager> mdm_;
 
  private:
-  std::unique_ptr<MessageLoop> message_loop_;
+  std::unique_ptr<test::ScopedTaskEnvironment> scoped_task_environment_;
 
   // To tear down the singleton instance after each test.
   ShadowingAtExitManager at_exit_manager_;
@@ -527,16 +521,14 @@ TEST_F(MemoryDumpManagerTest, PostTaskForSequencedTaskRunner) {
   task_runner1->set_enabled(false);
   EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
                                         MemoryDumpLevelOfDetail::DETAILED));
-  // Tasks should be individually posted even if |mdps[1]| and |mdps[2]| belong
-  // to same task runner.
   EXPECT_EQ(1u, task_runner1->no_of_post_tasks());
-  EXPECT_EQ(2u, task_runner2->no_of_post_tasks());
+  EXPECT_EQ(1u, task_runner2->no_of_post_tasks());
 
   task_runner1->set_enabled(true);
   EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
                                         MemoryDumpLevelOfDetail::DETAILED));
   EXPECT_EQ(2u, task_runner1->no_of_post_tasks());
-  EXPECT_EQ(4u, task_runner2->no_of_post_tasks());
+  EXPECT_EQ(2u, task_runner2->no_of_post_tasks());
   DisableTracing();
 }
 
@@ -1024,6 +1016,68 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeededUnsupported) {
   mdm_->EnableHeapProfilingIfNeeded();
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
 #endif  //  BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+}
+
+// Mock MDP class that tests if the number of OnMemoryDump() calls are expected.
+// It is implemented without gmocks since EXPECT_CALL implementation is slow
+// when there are 1000s of instances, as required in
+// NoStackOverflowWithTooManyMDPs test.
+class SimpleMockMemoryDumpProvider : public MemoryDumpProvider {
+ public:
+  SimpleMockMemoryDumpProvider(int expected_num_dump_calls)
+      : expected_num_dump_calls_(expected_num_dump_calls), num_dump_calls_(0) {}
+
+  ~SimpleMockMemoryDumpProvider() override {
+    EXPECT_EQ(expected_num_dump_calls_, num_dump_calls_);
+  }
+
+  bool OnMemoryDump(const MemoryDumpArgs& args,
+                    ProcessMemoryDump* pmd) override {
+    ++num_dump_calls_;
+    return true;
+  }
+
+ private:
+  int expected_num_dump_calls_;
+  int num_dump_calls_;
+};
+
+TEST_F(MemoryDumpManagerTest, NoStackOverflowWithTooManyMDPs) {
+  InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
+  SetDumpProviderWhitelistForTesting(kTestMDPWhitelist);
+  SetDumpProviderSummaryWhitelistForTesting(kTestMDPWhitelistForSummary);
+
+  int kMDPCount = 1000;
+  std::vector<std::unique_ptr<SimpleMockMemoryDumpProvider>> mdps;
+  for (int i = 0; i < kMDPCount; ++i) {
+    mdps.push_back(std::make_unique<SimpleMockMemoryDumpProvider>(1));
+    RegisterDumpProvider(mdps.back().get(), nullptr);
+  }
+  for (int i = 0; i < kMDPCount; ++i) {
+    mdps.push_back(std::make_unique<SimpleMockMemoryDumpProvider>(2));
+    RegisterDumpProvider(mdps.back().get(), nullptr, kDefaultOptions,
+                         kBackgroundButNotSummaryWhitelistedMDPName);
+  }
+  for (int i = 0; i < kMDPCount; ++i) {
+    mdps.push_back(std::make_unique<SimpleMockMemoryDumpProvider>(3));
+    RegisterDumpProvider(mdps.back().get(), nullptr, kDefaultOptions,
+                         kWhitelistedMDPName);
+  }
+  std::unique_ptr<Thread> stopped_thread(new Thread("test thread"));
+  stopped_thread->Start();
+  for (int i = 0; i < kMDPCount; ++i) {
+    mdps.push_back(std::make_unique<SimpleMockMemoryDumpProvider>(0));
+    RegisterDumpProvider(mdps.back().get(), stopped_thread->task_runner(),
+                         kDefaultOptions, kWhitelistedMDPName);
+  }
+  stopped_thread->Stop();
+
+  EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
+                                        MemoryDumpLevelOfDetail::DETAILED));
+  EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
+                                        MemoryDumpLevelOfDetail::BACKGROUND));
+  EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::SUMMARY_ONLY,
+                                        MemoryDumpLevelOfDetail::BACKGROUND));
 }
 
 }  // namespace trace_event

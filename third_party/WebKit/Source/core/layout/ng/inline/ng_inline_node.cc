@@ -497,6 +497,15 @@ void NGInlineNode::PrepareLayoutIfNeeded() {
   DCHECK_EQ(data, MutableData());
 
   block_flow->ClearNeedsCollectInlines();
+
+#if DCHECK_IS_ON()
+  // ComputeOffsetMappingIfNeeded() runs some integrity checks as part of
+  // creating offset mapping. Run the check, and discard the result.
+  DCHECK(!data->offset_mapping_);
+  ComputeOffsetMappingIfNeeded();
+  DCHECK(data->offset_mapping_);
+  data->offset_mapping_.reset();
+#endif
 }
 
 const NGInlineNodeData& NGInlineNode::EnsureData() {
@@ -605,18 +614,67 @@ void NGInlineNode::ShapeText(const String& text_content,
   // Shape each item with the full context of the entire node.
   HarfBuzzShaper shaper(text_content.Characters16(), text_content.length());
   ShapeResultSpacing<String> spacing(text_content);
-  for (auto& item : *items) {
-    if (item.Type() != NGInlineItem::kText)
+  for (unsigned index = 0; index < items->size();) {
+    NGInlineItem& start_item = (*items)[index];
+    if (start_item.Type() != NGInlineItem::kText) {
+      index++;
       continue;
+    }
 
-    const Font& font = item.Style()->GetFont();
-    scoped_refptr<ShapeResult> shape_result = shaper.Shape(
-        &font, item.Direction(), item.StartOffset(), item.EndOffset());
+    const Font& font = start_item.Style()->GetFont();
+    TextDirection direction = start_item.Direction();
+    unsigned end_index = index + 1;
+    unsigned end_offset = start_item.EndOffset();
+    for (; end_index < items->size(); end_index++) {
+      const NGInlineItem& item = (*items)[end_index];
+      if (item.Type() == NGInlineItem::kText) {
+        // Shape adjacent items together if the font and direction matches to
+        // allow ligatures and kerning to apply.
+        // TODO(kojii): Figure out the exact conditions under which this
+        // behavior is desirable.
+        if (font != item.Style()->GetFont() || direction != item.Direction())
+          break;
+        end_offset = item.EndOffset();
+      } else if (item.Type() == NGInlineItem::kOpenTag ||
+                 item.Type() == NGInlineItem::kCloseTag ||
+                 item.Type() == NGInlineItem::kOutOfFlowPositioned) {
+        // These items are opaque to shaping.
+        // Opaque items cannot have text, such as Object Replacement Characters,
+        // since such characters can affect shaping.
+        DCHECK_EQ(0u, item.Length());
+      } else {
+        break;
+      }
+    }
 
+    scoped_refptr<ShapeResult> shape_result =
+        shaper.Shape(&font, direction, start_item.StartOffset(), end_offset);
     if (UNLIKELY(spacing.SetSpacing(font.GetFontDescription())))
       shape_result->ApplySpacing(spacing);
 
-    item.shape_result_ = std::move(shape_result);
+    // If the text is from one item, use the ShapeResult as is.
+    if (end_offset == start_item.EndOffset()) {
+      start_item.shape_result_ = std::move(shape_result);
+      index++;
+      continue;
+    }
+
+    // If the text is from multiple items, split the ShapeResult to
+    // corresponding items.
+    for (; index < end_index; index++) {
+      NGInlineItem& item = (*items)[index];
+      if (item.Type() != NGInlineItem::kText)
+        continue;
+
+      // We don't use SafeToBreak API here because this is not a line break.
+      // The ShapeResult is broken into multiple results, but they must look
+      // like they were not broken.
+      //
+      // When multiple code units shape to one glyph, such as ligatures, the
+      // item that has its first code unit keeps the glyph.
+      item.shape_result_ =
+          shape_result->SubRange(item.StartOffset(), item.EndOffset());
+    }
   }
 }
 
@@ -671,9 +729,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
       mode == NGLineBreakerMode::kMaxContent ? LayoutUnit::Max() : LayoutUnit();
 
   scoped_refptr<NGConstraintSpace> space =
-      NGConstraintSpaceBuilder(
-          writing_mode,
-          /* icb_size */ {NGSizeIndefinite, NGSizeIndefinite})
+      NGConstraintSpaceBuilder(writing_mode, node.InitialContainingBlockSize())
           .SetTextDirection(style.Direction())
           .SetAvailableSize({available_inline_size, NGSizeIndefinite})
           .ToConstraintSpace(writing_mode);
@@ -684,6 +740,8 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   scoped_refptr<NGInlineBreakToken> break_token;
   NGLineInfo line_info;
   NGExclusionSpace empty_exclusion_space;
+  NGLayoutOpportunity opportunity(NGBfcRect(
+      NGBfcOffset(), NGBfcOffset(available_inline_size, LayoutUnit::Max())));
   LayoutUnit result;
   while (!break_token || !break_token->IsFinished()) {
     unpositioned_floats.clear();
@@ -691,11 +749,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
     NGLineBreaker line_breaker(node, mode, *space, &positioned_floats,
                                &unpositioned_floats, &empty_exclusion_space, 0u,
                                break_token.get());
-    if (!line_breaker.NextLine(
-            NGLayoutOpportunity(
-                NGBfcOffset(),
-                NGLogicalSize({available_inline_size, NGSizeIndefinite})),
-            &line_info))
+    if (!line_breaker.NextLine(opportunity, &line_info))
       break;
 
     break_token = line_breaker.CreateBreakToken(nullptr);

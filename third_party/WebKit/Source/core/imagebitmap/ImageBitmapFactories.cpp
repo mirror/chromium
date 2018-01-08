@@ -39,9 +39,9 @@
 #include "core/fileapi/Blob.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
-#include "core/html/ImageData.h"
+#include "core/html/canvas/HTMLCanvasElement.h"
+#include "core/html/canvas/ImageData.h"
 #include "core/html/media/HTMLVideoElement.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/imagebitmap/ImageBitmapOptions.h"
@@ -264,6 +264,12 @@ void ImageBitmapFactories::Trace(blink::Visitor* visitor) {
   Supplement<WorkerGlobalScope>::Trace(visitor);
 }
 
+void ImageBitmapFactories::TraceWrappers(
+    const ScriptWrappableVisitor* visitor) const {
+  Supplement<LocalDOMWindow>::TraceWrappers(visitor);
+  Supplement<WorkerGlobalScope>::TraceWrappers(visitor);
+}
+
 void ImageBitmapFactories::ImageBitmapLoader::RejectPromise(
     ImageBitmapRejectionReason reason) {
   switch (reason) {
@@ -329,8 +335,8 @@ void ImageBitmapFactories::ImageBitmapLoader::DecodeImageOnDecoderThread(
   if (decoder) {
     frame = ImageBitmap::GetSkImageFromDecoder(std::move(decoder));
   }
-  task_runner->PostTask(
-      FROM_HERE,
+  PostCrossThreadTask(
+      *task_runner, FROM_HERE,
       CrossThreadBind(&ImageBitmapFactories::ImageBitmapLoader::
                           ResolvePromiseOnOriginalThread,
                       WrapCrossThreadPersistent(this), std::move(frame)));

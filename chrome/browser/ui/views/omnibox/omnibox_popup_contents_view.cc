@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h"
 
 #include <algorithm>
+#include <memory>
 
 #include "base/feature_list.h"
 #include "base/lazy_instance.h"
@@ -18,6 +19,7 @@
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_view.h"
 #include "third_party/skia/include/core/SkDrawLooper.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/theme_provider.h"
 #include "ui/compositor/clip_recorder.h"
 #include "ui/compositor/paint_recorder.h"
@@ -183,6 +185,7 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
     // No matches or the IME is showing a popup window which may overlap
     // the omnibox popup window.  Close any existing popup.
     if (popup_) {
+      NotifyAccessibilityEvent(ax::mojom::Event::kExpandedChanged, true);
       size_animation_.Stop();
 
       // NOTE: Do NOT use CloseNow() here, as we may be deep in a callstack
@@ -237,14 +240,14 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
   if (narrow_popup) {
     SkColor background_color = GetNativeTheme()->GetSystemColor(
         ui::NativeTheme::kColorId_ResultsTableNormalBackground);
-    auto border = base::MakeUnique<views::BubbleBorder>(
+    auto border = std::make_unique<views::BubbleBorder>(
         views::BubbleBorder::NONE, views::BubbleBorder::SMALL_SHADOW,
         background_color);
 
     // Outdent the popup to factor in the shadow size.
     new_target_bounds.Inset(-border->GetInsets());
 
-    SetBackground(base::MakeUnique<views::BubbleBackground>(border.get()));
+    SetBackground(std::make_unique<views::BubbleBackground>(border.get()));
     SetBorder(std::move(border));
   }
 
@@ -292,6 +295,12 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
       return;
     }
     popup_->ShowInactive();
+
+    // Popup is now expanded and first item will be selected.
+    NotifyAccessibilityEvent(ax::mojom::Event::kExpandedChanged, true);
+    if (result_view_at(0))
+      result_view_at(0)->NotifyAccessibilityEvent(ax::mojom::Event::kSelection,
+                                                  true);
   } else {
     // Animate the popup shrinking, but don't animate growing larger since that
     // would make the popup feel less responsive.
@@ -447,6 +456,17 @@ size_t OmniboxPopupContentsView::GetIndexForPoint(const gfx::Point& point) {
 
 OmniboxResultView* OmniboxPopupContentsView::result_view_at(size_t i) {
   return static_cast<OmniboxResultView*>(child_at(static_cast<int>(i)));
+}
+
+void OmniboxPopupContentsView::GetAccessibleNodeData(
+    ui::AXNodeData* node_data) {
+  node_data->role = ax::mojom::Role::kListBox;
+  if (IsOpen()) {
+    node_data->AddState(ax::mojom::State::kExpanded);
+  } else {
+    node_data->AddState(ax::mojom::State::kCollapsed);
+    node_data->AddState(ax::mojom::State::kInvisible);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

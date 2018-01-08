@@ -30,15 +30,16 @@
 #include "url/url_constants.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-#include "chrome/browser/extensions/test_extension_dir.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/common/extension.h"
 #include "extensions/test/background_page_watcher.h"
+#include "extensions/test/test_extension_dir.h"
 #endif
 
 namespace {
 
 using base::trace_event::MemoryDumpType;
+using memory_instrumentation::GlobalMemoryDump;
 using memory_instrumentation::mojom::ProcessType;
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -75,9 +76,8 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
  private:
   ~ProcessMemoryMetricsEmitterFake() override {}
 
-  void ReceivedMemoryDump(
-      bool success,
-      memory_instrumentation::mojom::GlobalMemoryDumpPtr ptr) override {
+  void ReceivedMemoryDump(bool success,
+                          std::unique_ptr<GlobalMemoryDump> ptr) override {
     EXPECT_TRUE(success);
     ProcessMemoryMetricsEmitter::ReceivedMemoryDump(success, std::move(ptr));
     finished_memory_dump_ = true;

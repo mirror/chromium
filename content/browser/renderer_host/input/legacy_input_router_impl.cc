@@ -17,7 +17,6 @@
 #include "content/browser/renderer_host/input/input_disposition_handler.h"
 #include "content/browser/renderer_host/input/input_router_client.h"
 #include "content/browser/renderer_host/input/passthrough_touch_event_queue.h"
-#include "content/browser/renderer_host/input/touch_event_queue.h"
 #include "content/browser/renderer_host/input/touchpad_tap_suppression_controller.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/edit_command.h"
@@ -210,6 +209,10 @@ void LegacyInputRouterImpl::BindHost(
 
 void LegacyInputRouterImpl::ProgressFling(base::TimeTicks current_time) {
   gesture_event_queue_.ProgressFling(current_time);
+}
+
+void LegacyInputRouterImpl::StopFling() {
+  gesture_event_queue_.StopFling();
 }
 
 bool LegacyInputRouterImpl::OnMessageReceived(const IPC::Message& message) {
@@ -485,10 +488,13 @@ void LegacyInputRouterImpl::OnHasTouchEventHandlers(bool has_handlers) {
 }
 
 void LegacyInputRouterImpl::OnSetTouchAction(cc::TouchAction touch_action) {
-  // Synthetic touchstart events should get filtered out in RenderWidget.
-  DCHECK(touch_event_queue_->IsPendingAckTouchStart());
   TRACE_EVENT1("input", "LegacyInputRouterImpl::OnSetTouchAction", "action",
                touch_action);
+
+  // It is possible we get a touch action for a touch start that is no longer
+  // in the queue. eg. Events that have fired the Touch ACK timeout.
+  if (!touch_event_queue_->IsPendingAckTouchStart())
+    return;
 
   touch_action_filter_.OnSetTouchAction(touch_action);
 

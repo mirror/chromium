@@ -173,6 +173,7 @@
 <translation id="5430931332414098647">Takojšnja povezava z internetom prek mobilnega telefona</translation>
 <translation id="5431825016875453137">OpenVPN/L2TP</translation>
 <translation id="544691375626129091">Vsi razpoložljivi uporabniki so že bili dodani tej seji.</translation>
+<translation id="5457599981699367932">Brskajte kot gost</translation>
 <translation id="553675580533261935">Odjava iz seje</translation>
 <translation id="5548285847212963613">Razširitev »<ph name="EXTENSION_NAME" />« lahko pomaga vzpostavi povezavo s tem omrežjem.</translation>
 <translation id="5571066253365925590">Bluetooth omogočen</translation>
@@ -183,6 +184,7 @@
 <translation id="5744083938413354016">Vlečenje z dotikom</translation>
 <translation id="5777841717266010279">Želite ustaviti skupno rabo zaslona?</translation>
 <translation id="57838592816432529">Izklopi zvok</translation>
+<translation id="5832805196449965646">Dodaj osebo</translation>
 <translation id="5860033963881614850">Izklopljeno</translation>
 <translation id="5895138241574237353">Znova zaženi</translation>
 <translation id="5901316534475909376">Shift + Esc</translation>
@@ -259,7 +261,7 @@ Uporabljajte to funkcijo samo z računi, ki jim zaupate.</translation>
 <translation id="7526573455193969409">Omrežje je morda nadzorovano</translation>
 <translation id="7536035074519304529">Naslov IP: <ph name="ADDRESS" /></translation>
 <translation id="7561014039265304140"><ph name="DISPLAY_NAME" /> ne podpira ločljivosti <ph name="SPECIFIED_RESOLUTION" />. Spremenjena je bila na <ph name="FALLBACK_RESOLUTION" /></translation>
-<translation id="7562368315689366235">Paleta znakov »emoji«</translation>
+<translation id="7562368315689366235">Paleta emodžijev</translation>
 <translation id="7569509451529460200">Omogočena sta braillova pisava in ChromeVox</translation>
 <translation id="7593891976182323525">Iskanje ali Shift</translation>
 <translation id="7645176681409127223"><ph name="USER_NAME" /> (lastnik)</translation>

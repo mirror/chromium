@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/optional.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -21,7 +22,6 @@
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/media_stream_request.h"
-#include "content/public/common/network_service.mojom.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/socket_permission_request.h"
 #include "content/public/common/window_container_type.mojom.h"
@@ -31,8 +31,10 @@
 #include "media/mojo/interfaces/remoting.mojom.h"
 #include "net/base/mime_util.h"
 #include "net/cookies/canonical_cookie.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/interfaces/service.mojom.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/quota/quota_manager.h"
@@ -84,6 +86,7 @@ struct BindSourceInfo;
 namespace net {
 class ClientCertIdentity;
 using ClientCertIdentityList = std::vector<std::unique_ptr<ClientCertIdentity>>;
+class ClientCertStore;
 class CookieOptions;
 class HttpRequestHeaders;
 class NetLog;
@@ -93,6 +96,12 @@ class URLRequest;
 class URLRequestContext;
 class URLRequestContextGetter;
 }  // namespace net
+
+namespace network {
+namespace mojom {
+class NetworkContext;
+}
+}  // namespace network
 
 namespace rappor {
 class RapporService;
@@ -148,10 +157,6 @@ struct MainFunctionParams;
 struct OpenURLParams;
 struct Referrer;
 struct WebPreferences;
-
-namespace mojom {
-class NetworkContext;
-}
 
 CONTENT_EXPORT void OverrideOnBindInterface(
     const service_manager::BindSourceInfo& remote_info,
@@ -209,19 +214,21 @@ class CONTENT_EXPORT ContentBrowserClient {
   // Notifies that a render process will be created. This is called before
   // the content layer adds its own BrowserMessageFilters, so that the
   // embedder's IPC filters have priority.
-  virtual void RenderProcessWillLaunch(RenderProcessHost* host) {}
+  //
+  // If the client provides a service request, the content layer will ask the
+  // corresponding embedder renderer-side component to bind it to an
+  // implementation at the appropriate moment during initialization.
+  virtual void RenderProcessWillLaunch(
+      RenderProcessHost* host,
+      service_manager::mojom::ServiceRequest* service_request) {}
 
   // Notifies that a BrowserChildProcessHost has been created.
   virtual void BrowserChildProcessHostCreated(BrowserChildProcessHost* host) {}
 
   // Get the effective URL for the given actual URL, to allow an embedder to
   // group different url schemes in the same SiteInstance.
-  // |is_isolated_origin| specifies whether |url| corresponds to an origin that
-  // requires process isolation.  Certain kinds of effective URLs should be
-  // ignored for such origins.
   virtual GURL GetEffectiveURL(BrowserContext* browser_context,
-                               const GURL& url,
-                               bool is_isolated_origin);
+                               const GURL& url);
 
   // Returns whether all instances of the specified effective URL should be
   // rendered by the same process, rather than using process-per-site-instance.
@@ -788,7 +795,22 @@ class CONTENT_EXPORT ContentBrowserClient {
       const std::string& name,
       mojo::ScopedMessagePipeHandle* handle) {}
 
-  using OutOfProcessServiceMap = std::map<std::string, base::string16>;
+  struct CONTENT_EXPORT OutOfProcessServiceInfo {
+    OutOfProcessServiceInfo();
+    OutOfProcessServiceInfo(const base::string16& process_name);
+    OutOfProcessServiceInfo(const base::string16& process_name,
+                            const std::string& process_group);
+    ~OutOfProcessServiceInfo();
+
+    // The display name of the service process launched for the service.
+    base::string16 process_name;
+
+    // If provided, a string which groups this service into a process shared
+    // by other services using the same string.
+    base::Optional<std::string> process_group;
+  };
+
+  using OutOfProcessServiceMap = std::map<std::string, OutOfProcessServiceInfo>;
 
   // Registers services to be loaded out of the browser process in an
   // utility process. The value of each map entry should be a process name,
@@ -923,13 +945,14 @@ class CONTENT_EXPORT ContentBrowserClient {
   // URL request. This is used only when --enable-network-service is in effect.
   // This is called on the IO thread.
   virtual std::vector<std::unique_ptr<URLLoaderThrottle>>
-  CreateURLLoaderThrottles(const base::Callback<WebContents*()>& wc_getter);
+  CreateURLLoaderThrottles(const base::Callback<WebContents*()>& wc_getter,
+                           NavigationUIData* navigation_ui_data);
 
   // Allows the embedder to register per-scheme URLLoaderFactory implementations
   // to handle navigation URL requests for schemes not handled by the Network
   // Service. Only called when the Network Service is enabled.
   using NonNetworkURLLoaderFactoryMap =
-      std::map<std::string, std::unique_ptr<mojom::URLLoaderFactory>>;
+      std::map<std::string, std::unique_ptr<network::mojom::URLLoaderFactory>>;
   virtual void RegisterNonNetworkNavigationURLLoaderFactories(
       RenderFrameHost* frame_host,
       NonNetworkURLLoaderFactoryMap* factories);
@@ -960,7 +983,7 @@ class CONTENT_EXPORT ContentBrowserClient {
   //
   // If |relative_partition_path| is the empty string, it means this needs to
   // create the default NetworkContext for the BrowserContext.
-  virtual mojom::NetworkContextPtr CreateNetworkContext(
+  virtual network::mojom::NetworkContextPtr CreateNetworkContext(
       BrowserContext* context,
       bool in_memory,
       const base::FilePath& relative_partition_path);
@@ -994,6 +1017,40 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual void CreateUsbChooserService(
       RenderFrameHost* render_frame_host,
       device::mojom::UsbChooserServiceRequest request);
+
+  // Attempt to open the Payment Handler window inside its corresponding
+  // PaymentRequest UI surface. Returns true if the ContentBrowserClient
+  // implementation supports this operation (desktop Chrome) or false otherwise.
+  // |callback| is invoked with true if the window opened successfully, false if
+  // the attempt failed. Both the render process and frame IDs are also passed
+  // to |callback|.
+  virtual bool ShowPaymentHandlerWindow(
+      content::BrowserContext* browser_context,
+      const GURL& url,
+      base::OnceCallback<void(bool /* success */,
+                              int /* render_process_id */,
+                              int /* render_frame_id */)> callback);
+
+  // Returns whether a base::TaskScheduler should be created when
+  // BrowserMainLoop starts.
+  // If false, a task scheduler has been created by the embedder, and browser
+  // main loop should skip creating a second one.
+  virtual bool ShouldCreateTaskScheduler();
+
+  // Returns true if the given Webauthn[1] RP ID[2] is permitted to receive
+  // individual attestation certificates. This a) triggers a signal to the
+  // security key that returning individual attestation certificates is
+  // permitted and b) skips any permission prompt for attestation.
+  //
+  // [1] https://www.w3.org/TR/webauthn/
+  // [2] https://www.w3.org/TR/webauthn/#relying-party-identifier
+  virtual bool ShouldPermitIndividualAttestationForWebauthnRPID(
+      content::BrowserContext* browser_context,
+      const std::string& rp_id);
+
+  // Get platform ClientCertStore. May return nullptr.
+  virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
+      ResourceContext* resource_context);
 };
 
 }  // namespace content

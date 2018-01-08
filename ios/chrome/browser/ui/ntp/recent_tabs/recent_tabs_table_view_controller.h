@@ -23,10 +23,13 @@ class ChromeBrowserState;
 
 // Key for saving collapsed session state in the UserDefaults.
 extern NSString* const kCollapsedSectionsKey;
+// Accessibility identifier for the main view.
+extern NSString* const kRecentTabsTableViewControllerAccessibilityIdentifier;
 
 @protocol RecentTabsTableViewControllerDelegate<NSObject>
-// Tells the delegate when the table view content scrolled or changed size.
-- (void)recentTabsTableViewContentMoved:(UITableView*)tableView;
+// Tells the delegate to refresh the session view.
+- (void)refreshSessionsViewRecentTabsTableViewController:
+    (RecentTabsTableViewController*)controller;
 @end
 
 // Controls the content of a UITableView.
@@ -69,9 +72,6 @@ extern NSString* const kCollapsedSectionsKey;
 // Sets the service used to populate the closed tab section. Can be used to nil
 // the service in case it is not available anymore.
 - (void)setTabRestoreService:(sessions::TabRestoreService*)tabRestoreService;
-
-// Sets whether scroll to top is enabled.
-- (void)setScrollsToTop:(BOOL)enabled;
 
 // Dismisses any outstanding modal user interface elements.
 - (void)dismissModals;

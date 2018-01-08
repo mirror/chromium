@@ -7,14 +7,12 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
-#include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
-#include "chrome/browser/media/router/mock_media_router.h"
-#include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
-#include "chrome/browser/media/router/test_helper.h"
+#include "chrome/browser/media/router/test/media_router_mojo_test.h"
+#include "chrome/browser/media/router/test/mock_media_router.h"
+#include "chrome/browser/media/router/test/test_helper.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.h"
 #include "chrome/common/media_router/media_route.h"
@@ -106,8 +104,6 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
-    EventPageRequestManagerFactory::GetInstance()->SetTestingFactory(
-        profile(), &MockEventPageRequestManager::Create);
     EXPECT_CALL(mock_router_, OnUserGesture()).Times(AnyNumber());
     EXPECT_CALL(mock_router_, GetCurrentRoutes())
         .Times(AnyNumber())
@@ -139,11 +135,11 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
     web_ui_contents_.reset(
         WebContents::Create(WebContents::CreateParams(profile)));
     web_ui_.set_web_contents(web_ui_contents_.get());
-    media_router_ui_ = base::MakeUnique<MediaRouterUI>(&web_ui_);
-    message_handler_ = base::MakeUnique<MockMediaRouterWebUIMessageHandler>(
+    media_router_ui_ = std::make_unique<MediaRouterUI>(&web_ui_);
+    message_handler_ = std::make_unique<MockMediaRouterWebUIMessageHandler>(
         media_router_ui_.get());
 
-    auto file_dialog = base::MakeUnique<MockMediaRouterFileDialog>();
+    auto file_dialog = std::make_unique<MockMediaRouterFileDialog>();
     mock_file_dialog_ = file_dialog.get();
 
     EXPECT_CALL(mock_router_, RegisterMediaSinksObserver(_))
@@ -524,7 +520,7 @@ TEST_F(MediaRouterUITest, GetExtensionNameExtensionPresent) {
   std::string id = "extensionid";
   GURL url = GURL("chrome-extension://" + id);
   std::unique_ptr<extensions::ExtensionRegistry> registry =
-      base::MakeUnique<extensions::ExtensionRegistry>(nullptr);
+      std::make_unique<extensions::ExtensionRegistry>(nullptr);
   scoped_refptr<extensions::Extension> app =
       extensions::ExtensionBuilder(
           "test app name", extensions::ExtensionBuilder::Type::PLATFORM_APP)
@@ -540,7 +536,7 @@ TEST_F(MediaRouterUITest, GetExtensionNameEmptyWhenNotInstalled) {
   std::string id = "extensionid";
   GURL url = GURL("chrome-extension://" + id);
   std::unique_ptr<extensions::ExtensionRegistry> registry =
-      base::MakeUnique<extensions::ExtensionRegistry>(nullptr);
+      std::make_unique<extensions::ExtensionRegistry>(nullptr);
 
   EXPECT_EQ("", MediaRouterUI::GetExtensionName(url, registry.get()));
 }
@@ -548,7 +544,7 @@ TEST_F(MediaRouterUITest, GetExtensionNameEmptyWhenNotInstalled) {
 TEST_F(MediaRouterUITest, GetExtensionNameEmptyWhenNotExtensionURL) {
   GURL url = GURL("https://www.google.com");
   std::unique_ptr<extensions::ExtensionRegistry> registry =
-      base::MakeUnique<extensions::ExtensionRegistry>(nullptr);
+      std::make_unique<extensions::ExtensionRegistry>(nullptr);
 
   EXPECT_EQ("", MediaRouterUI::GetExtensionName(url, registry.get()));
 }
@@ -558,7 +554,7 @@ TEST_F(MediaRouterUITest, NotFoundErrorOnCloseWithNoSinks) {
       content::PresentationErrorType::PRESENTATION_ERROR_NO_AVAILABLE_SCREENS,
       "No screens found.");
   PresentationRequestCallbacks request_callbacks(expected_error);
-  start_presentation_context_ = base::MakeUnique<StartPresentationContext>(
+  start_presentation_context_ = std::make_unique<StartPresentationContext>(
       presentation_request_,
       base::Bind(&PresentationRequestCallbacks::Success,
                  base::Unretained(&request_callbacks)),
@@ -575,7 +571,7 @@ TEST_F(MediaRouterUITest, NotFoundErrorOnCloseWithNoCompatibleSinks) {
       content::PresentationErrorType::PRESENTATION_ERROR_NO_AVAILABLE_SCREENS,
       "No screens found.");
   PresentationRequestCallbacks request_callbacks(expected_error);
-  start_presentation_context_ = base::MakeUnique<StartPresentationContext>(
+  start_presentation_context_ = std::make_unique<StartPresentationContext>(
       presentation_request_,
       base::Bind(&PresentationRequestCallbacks::Success,
                  base::Unretained(&request_callbacks)),
@@ -606,7 +602,7 @@ TEST_F(MediaRouterUITest, AbortErrorOnClose) {
           PRESENTATION_ERROR_PRESENTATION_REQUEST_CANCELLED,
       "Dialog closed.");
   PresentationRequestCallbacks request_callbacks(expected_error);
-  start_presentation_context_ = base::MakeUnique<StartPresentationContext>(
+  start_presentation_context_ = std::make_unique<StartPresentationContext>(
       presentation_request_,
       base::Bind(&PresentationRequestCallbacks::Success,
                  base::Unretained(&request_callbacks)),
@@ -753,7 +749,7 @@ TEST_F(MediaRouterUITest, SetsForcedCastModeWithPresentationURLs) {
       content::PresentationErrorType::PRESENTATION_ERROR_NO_AVAILABLE_SCREENS,
       "No screens found.");
   PresentationRequestCallbacks request_callbacks(expected_error);
-  start_presentation_context_ = base::MakeUnique<StartPresentationContext>(
+  start_presentation_context_ = std::make_unique<StartPresentationContext>(
       presentation_request_,
       base::Bind(&PresentationRequestCallbacks::Success,
                  base::Unretained(&request_callbacks)),
@@ -764,8 +760,8 @@ TEST_F(MediaRouterUITest, SetsForcedCastModeWithPresentationURLs) {
   web_ui_contents_.reset(
       WebContents::Create(WebContents::CreateParams(profile())));
   web_ui_.set_web_contents(web_ui_contents_.get());
-  media_router_ui_ = base::MakeUnique<MediaRouterUI>(&web_ui_);
-  message_handler_ = base::MakeUnique<MockMediaRouterWebUIMessageHandler>(
+  media_router_ui_ = std::make_unique<MediaRouterUI>(&web_ui_);
+  message_handler_ = std::make_unique<MockMediaRouterWebUIMessageHandler>(
       media_router_ui_.get());
   message_handler_->SetWebUIForTest(&web_ui_);
   EXPECT_CALL(mock_router_, RegisterMediaSinksObserver(_))

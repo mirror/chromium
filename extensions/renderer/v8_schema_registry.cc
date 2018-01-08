@@ -45,21 +45,24 @@ class SchemaRegistryNativeHandler : public ObjectBackedNativeHandler {
                               std::unique_ptr<ScriptContext> context)
       : ObjectBackedNativeHandler(context.get()),
         context_(std::move(context)),
-        registry_(registry) {
-    RouteFunction("GetSchema",
-                  base::Bind(&SchemaRegistryNativeHandler::GetSchema,
-                             base::Unretained(this)));
-    RouteFunction("GetObjectType",
-                  base::Bind(&SchemaRegistryNativeHandler::GetObjectType,
-                             base::Unretained(this)));
+        registry_(registry) {}
+
+  // ObjectBackedNativeHandler:
+  void AddRoutes() override {
+    RouteHandlerFunction("GetSchema",
+                         base::Bind(&SchemaRegistryNativeHandler::GetSchema,
+                                    base::Unretained(this)));
+    RouteHandlerFunction("GetObjectType",
+                         base::Bind(&SchemaRegistryNativeHandler::GetObjectType,
+                                    base::Unretained(this)));
   }
 
   ~SchemaRegistryNativeHandler() override { context_->Invalidate(); }
 
  private:
   void GetSchema(const v8::FunctionCallbackInfo<v8::Value>& args) {
-    args.GetReturnValue().Set(
-        registry_->GetSchema(*v8::String::Utf8Value(args[0])));
+    args.GetReturnValue().Set(registry_->GetSchema(
+        *v8::String::Utf8Value(args.GetIsolate(), args[0])));
   }
 
   void GetObjectType(const v8::FunctionCallbackInfo<v8::Value>& args) {

@@ -71,8 +71,9 @@ LayoutTestContentBrowserClient::GetLayoutTestNotificationManager() {
 }
 
 void LayoutTestContentBrowserClient::RenderProcessWillLaunch(
-    RenderProcessHost* host) {
-  ShellContentBrowserClient::RenderProcessWillLaunch(host);
+    RenderProcessHost* host,
+    service_manager::mojom::ServiceRequest* service_request) {
+  ShellContentBrowserClient::RenderProcessWillLaunch(host, service_request);
 
   StoragePartition* partition =
       BrowserContext::GetDefaultStoragePartition(browser_context());
@@ -104,7 +105,8 @@ void LayoutTestContentBrowserClient::ExposeInterfacesToRenderer(
 void LayoutTestContentBrowserClient::OverrideWebkitPrefs(
     RenderViewHost* render_view_host,
     WebPreferences* prefs) {
-  BlinkTestController::Get()->OverrideWebkitPrefs(prefs);
+  if (BlinkTestController::Get())
+    BlinkTestController::Get()->OverrideWebkitPrefs(prefs);
 }
 
 void LayoutTestContentBrowserClient::ResourceDispatcherHostCreated() {

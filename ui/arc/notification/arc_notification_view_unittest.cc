@@ -19,7 +19,7 @@
 #include "ui/events/event_utils.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 #include "ui/message_center/views/message_view_factory.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/button/image_button.h"
@@ -313,6 +313,7 @@ TEST_F(ArcNotificationViewTest, SlideOutPinned) {
       ui::ScopedAnimationDurationScaleMode::ZERO_DURATION);
 
   notification()->set_pinned(true);
+  notification_view()->SetIsNested();
   UpdateNotificationViews();
   std::string notification_id = notification()->id();
 

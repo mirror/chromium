@@ -4,9 +4,15 @@
 
 #include "base/optional.h"
 
+#include <memory>
 #include <set>
+#include <string>
+#include <vector>
 
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+using ::testing::ElementsAre;
 
 namespace base {
 
@@ -98,6 +104,72 @@ class NonTriviallyDestructible {
   ~NonTriviallyDestructible() {}
 };
 
+class DeletedDefaultConstructor {
+ public:
+  DeletedDefaultConstructor() = delete;
+  DeletedDefaultConstructor(int foo) : foo_(foo) {}
+
+  int foo() const { return foo_; }
+
+ private:
+  int foo_;
+};
+
+class DeletedCopy {
+ public:
+  explicit DeletedCopy(int foo) : foo_(foo) {}
+  DeletedCopy(const DeletedCopy&) = delete;
+  DeletedCopy(DeletedCopy&&) = default;
+
+  DeletedCopy& operator=(const DeletedCopy&) = delete;
+  DeletedCopy& operator=(DeletedCopy&&) = default;
+
+  int foo() const { return foo_; }
+
+ private:
+  int foo_;
+};
+
+class DeletedMove {
+ public:
+  explicit DeletedMove(int foo) : foo_(foo) {}
+  DeletedMove(const DeletedMove&) = default;
+  DeletedMove(DeletedMove&&) = delete;
+
+  DeletedMove& operator=(const DeletedMove&) = default;
+  DeletedMove& operator=(DeletedMove&&) = delete;
+
+  int foo() const { return foo_; }
+
+ private:
+  int foo_;
+};
+
+class NonTriviallyDestructibleDeletedCopyConstructor {
+ public:
+  explicit NonTriviallyDestructibleDeletedCopyConstructor(int foo)
+      : foo_(foo) {}
+  NonTriviallyDestructibleDeletedCopyConstructor(
+      const NonTriviallyDestructibleDeletedCopyConstructor&) = delete;
+  NonTriviallyDestructibleDeletedCopyConstructor(
+      NonTriviallyDestructibleDeletedCopyConstructor&&) = default;
+
+  ~NonTriviallyDestructibleDeletedCopyConstructor() {}
+
+  int foo() const { return foo_; }
+
+ private:
+  int foo_;
+};
+
+class DeleteNewOperators {
+ public:
+  void* operator new(size_t) = delete;
+  void* operator new(size_t, void*) = delete;
+  void* operator new[](size_t) = delete;
+  void* operator new[](size_t, void*) = delete;
+};
+
 }  // anonymous namespace
 
 static_assert(std::is_trivially_destructible<Optional<int>>::value,
@@ -126,8 +198,8 @@ TEST(OptionalTest, DefaultConstructor) {
 
 TEST(OptionalTest, CopyConstructor) {
   {
-    Optional<float> first(0.1f);
-    Optional<float> other(first);
+    constexpr Optional<float> first(0.1f);
+    constexpr Optional<float> other(first);
 
     EXPECT_TRUE(other);
     EXPECT_EQ(other.value(), 0.1f);
@@ -136,6 +208,15 @@ TEST(OptionalTest, CopyConstructor) {
 
   {
     Optional<std::string> first("foo");
+    Optional<std::string> other(first);
+
+    EXPECT_TRUE(other);
+    EXPECT_EQ(other.value(), "foo");
+    EXPECT_EQ(first, other);
+  }
+
+  {
+    const Optional<std::string> first("foo");
     Optional<std::string> other(first);
 
     EXPECT_TRUE(other);
@@ -182,35 +263,69 @@ TEST(OptionalTest, ValueConstructor) {
 
 TEST(OptionalTest, MoveConstructor) {
   {
-    Optional<float> first(0.1f);
-    Optional<float> second(std::move(first));
+    constexpr Optional<float> first(0.1f);
+    constexpr Optional<float> second(std::move(first));
 
-    EXPECT_TRUE(second);
+    EXPECT_TRUE(second.has_value());
     EXPECT_EQ(second.value(), 0.1f);
 
-    EXPECT_TRUE(first);
+    EXPECT_TRUE(first.has_value());
   }
 
   {
     Optional<std::string> first("foo");
     Optional<std::string> second(std::move(first));
 
-    EXPECT_TRUE(second);
+    EXPECT_TRUE(second.has_value());
     EXPECT_EQ("foo", second.value());
 
-    EXPECT_TRUE(first);
+    EXPECT_TRUE(first.has_value());
   }
 
   {
     Optional<TestObject> first(TestObject(3, 0.1));
     Optional<TestObject> second(std::move(first));
 
-    EXPECT_TRUE(!!second);
+    EXPECT_TRUE(second.has_value());
     EXPECT_EQ(TestObject::State::MOVE_CONSTRUCTED, second->state());
     EXPECT_TRUE(TestObject(3, 0.1) == second.value());
 
-    EXPECT_TRUE(!!first);
+    EXPECT_TRUE(first.has_value());
     EXPECT_EQ(TestObject::State::MOVED_FROM, first->state());
+  }
+
+  // Even if copy constructor is deleted, move constructor needs to work.
+  // Note that it couldn't be constexpr.
+  {
+    Optional<DeletedCopy> first(in_place, 42);
+    Optional<DeletedCopy> second(std::move(first));
+
+    EXPECT_TRUE(second.has_value());
+    EXPECT_EQ(42, second->foo());
+
+    EXPECT_TRUE(first.has_value());
+  }
+
+  {
+    Optional<DeletedMove> first(in_place, 42);
+    Optional<DeletedMove> second(std::move(first));
+
+    EXPECT_TRUE(second.has_value());
+    EXPECT_EQ(42, second->foo());
+
+    EXPECT_TRUE(first.has_value());
+  }
+
+  {
+    Optional<NonTriviallyDestructibleDeletedCopyConstructor> first(in_place,
+                                                                   42);
+    Optional<NonTriviallyDestructibleDeletedCopyConstructor> second(
+        std::move(first));
+
+    EXPECT_TRUE(second.has_value());
+    EXPECT_EQ(42, second->foo());
+
+    EXPECT_TRUE(first.has_value());
   }
 }
 
@@ -272,6 +387,22 @@ TEST(OptionalTest, ConstructorForwardArguments) {
     Optional<TestObject> a(base::in_place, 0, 0.1);
     EXPECT_TRUE(!!a);
     EXPECT_TRUE(TestObject(0, 0.1) == a.value());
+  }
+}
+
+TEST(OptionalTest, ConstructorForwardInitListAndArguments) {
+  {
+    Optional<std::vector<int>> opt(in_place, {3, 1});
+    EXPECT_TRUE(opt);
+    EXPECT_THAT(*opt, ElementsAre(3, 1));
+    EXPECT_EQ(2u, opt->size());
+  }
+
+  {
+    Optional<std::vector<int>> opt(in_place, {3, 1}, std::allocator<int>());
+    EXPECT_TRUE(opt);
+    EXPECT_THAT(*opt, ElementsAre(3, 1));
+    EXPECT_EQ(2u, opt->size());
   }
 }
 
@@ -362,6 +493,26 @@ TEST(OptionalTest, AssignObject) {
     EXPECT_TRUE(a.value() == TestObject(3, 0.1));
     EXPECT_TRUE(a == b);
   }
+
+  {
+    Optional<DeletedMove> a(in_place, 42);
+    Optional<DeletedMove> b;
+    b = a;
+
+    EXPECT_TRUE(!!a);
+    EXPECT_TRUE(!!b);
+    EXPECT_EQ(a->foo(), b->foo());
+  }
+
+  {
+    Optional<DeletedMove> a(in_place, 42);
+    Optional<DeletedMove> b(in_place, 1);
+    b = a;
+
+    EXPECT_TRUE(!!a);
+    EXPECT_TRUE(!!b);
+    EXPECT_EQ(a->foo(), b->foo());
+  }
 }
 
 TEST(OptionalTest, AssignObject_rvalue) {
@@ -409,6 +560,26 @@ TEST(OptionalTest, AssignObject_rvalue) {
 
     EXPECT_EQ(TestObject::State::MOVE_ASSIGNED, a->state());
     EXPECT_EQ(TestObject::State::MOVED_FROM, b->state());
+  }
+
+  {
+    Optional<DeletedMove> a(in_place, 42);
+    Optional<DeletedMove> b;
+    b = std::move(a);
+
+    EXPECT_TRUE(!!a);
+    EXPECT_TRUE(!!b);
+    EXPECT_EQ(42, b->foo());
+  }
+
+  {
+    Optional<DeletedMove> a(in_place, 42);
+    Optional<DeletedMove> b(in_place, 1);
+    b = std::move(a);
+
+    EXPECT_TRUE(!!a);
+    EXPECT_TRUE(!!b);
+    EXPECT_EQ(42, b->foo());
   }
 }
 
@@ -577,6 +748,24 @@ TEST(OptionalTest, Emplace) {
 
     EXPECT_TRUE(!!a);
     EXPECT_TRUE(TestObject(1, 0.2) == a.value());
+  }
+
+  {
+    Optional<std::vector<int>> a;
+    auto& ref = a.emplace({2, 3});
+    static_assert(std::is_same<std::vector<int>&, decltype(ref)>::value, "");
+    EXPECT_TRUE(a);
+    EXPECT_THAT(*a, ElementsAre(2, 3));
+    EXPECT_EQ(&ref, &*a);
+  }
+
+  {
+    Optional<std::vector<int>> a;
+    auto& ref = a.emplace({4, 5}, std::allocator<int>());
+    static_assert(std::is_same<std::vector<int>&, decltype(ref)>::value, "");
+    EXPECT_TRUE(a);
+    EXPECT_THAT(*a, ElementsAre(4, 5));
+    EXPECT_EQ(&ref, &*a);
   }
 }
 
@@ -1349,6 +1538,15 @@ TEST(OptionalTest, MakeOptional) {
     EXPECT_EQ(TestObject::State::MOVE_CONSTRUCTED,
               base::make_optional(std::move(value))->state());
   }
+
+  {
+    auto str1 = make_optional<std::string>({'1', '2', '3'});
+    EXPECT_EQ("123", *str1);
+
+    auto str2 =
+        make_optional<std::string>({'a', 'b', 'c'}, std::allocator<char>());
+    EXPECT_EQ("abc", *str2);
+  }
 }
 
 TEST(OptionalTest, NonMemberSwap_bothNoValue) {
@@ -1484,6 +1682,23 @@ TEST(OptionalTest, AssignFromRValue) {
   a = std::move(obj);
   EXPECT_TRUE(a.has_value());
   EXPECT_EQ(1, a->move_ctors_count());
+}
+
+TEST(OptionalTest, DontCallDefaultCtor) {
+  Optional<DeletedDefaultConstructor> a;
+  EXPECT_FALSE(a.has_value());
+
+  a = base::make_optional<DeletedDefaultConstructor>(42);
+  EXPECT_TRUE(a.has_value());
+  EXPECT_EQ(42, a->foo());
+}
+
+TEST(OptionalTest, DontCallNewMemberFunction) {
+  Optional<DeleteNewOperators> a;
+  EXPECT_FALSE(a.has_value());
+
+  a = DeleteNewOperators();
+  EXPECT_TRUE(a.has_value());
 }
 
 }  // namespace base

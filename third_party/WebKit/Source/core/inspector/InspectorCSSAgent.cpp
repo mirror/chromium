@@ -66,7 +66,6 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLHeadElement.h"
-#include "core/html/VoidCallback.h"
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorHistory.h"
@@ -77,7 +76,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutObjectInlines.h"
 #include "core/layout/LayoutText.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/line/InlineTextBox.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/page/Page.h"
@@ -155,7 +154,7 @@ HeapVector<Member<Element>> ElementsFromRect(LayoutRect rect,
   top_padding = bottom_padding = (rect.Height() / 2).ToUnsigned();
   HitTestResult result(request, center, top_padding, right_padding,
                        bottom_padding, left_padding);
-  document.GetFrame()->ContentLayoutItem().HitTest(result);
+  document.GetFrame()->ContentLayoutObject()->HitTest(result);
   HeapVector<Member<Element>> elements;
   Node* previous_node = nullptr;
   for (const auto hit_test_result_node : result.ListBasedTestResult()) {
@@ -178,14 +177,15 @@ void BlendWithColorsFromGradient(cssvalue::CSSGradientValue* gradient,
                                  bool& found_non_transparent_color,
                                  bool& found_opaque_color,
                                  const LayoutObject& layout_object) {
-  Vector<Color> stop_colors;
-  gradient->GetStopColors(stop_colors, layout_object);
+  const Document& document = layout_object.GetDocument();
+  const ComputedStyle& style = layout_object.StyleRef();
 
+  Vector<Color> stop_colors = gradient->GetStopColors(document, style);
   if (colors.IsEmpty()) {
     colors.AppendRange(stop_colors.begin(), stop_colors.end());
   } else {
     if (colors.size() > 1) {
-      // Gradient on gradient is too complicated, bail out
+      // Gradient on gradient is too complicated, bail out.
       colors.clear();
       return;
     }
@@ -198,9 +198,8 @@ void BlendWithColorsFromGradient(cssvalue::CSSGradientValue* gradient,
       colors.push_back(existing_color.Blend(stop_color));
     }
   }
-  found_opaque_color = found_opaque_color ||
-                       gradient->KnownToBeOpaque(layout_object.GetDocument(),
-                                                 layout_object.StyleRef());
+  found_opaque_color =
+      found_opaque_color || gradient->KnownToBeOpaque(document, style);
 }
 
 // Gets the colors from an image style, if one exists and it is a gradient.
@@ -662,7 +661,7 @@ InspectorCSSAgent::InspectorCSSAgent(
       resource_content_loader_client_id_(
           resource_content_loader->CreateClientId()) {}
 
-InspectorCSSAgent::~InspectorCSSAgent() {}
+InspectorCSSAgent::~InspectorCSSAgent() = default;
 
 void InspectorCSSAgent::Restore() {
   if (state_->booleanProperty(CSSAgentState::kCssAgentEnabled, false))

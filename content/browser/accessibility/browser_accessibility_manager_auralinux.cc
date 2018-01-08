@@ -6,6 +6,7 @@
 
 #include "content/browser/accessibility/browser_accessibility_auralinux.h"
 #include "content/common/accessibility_messages.h"
+#include "ui/accessibility/platform/ax_platform_node_auralinux.h"
 
 namespace content {
 
@@ -41,7 +42,7 @@ ui::AXTreeUpdate
     BrowserAccessibilityManagerAuraLinux::GetEmptyDocument() {
   ui::AXNodeData empty_document;
   empty_document.id = 0;
-  empty_document.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  empty_document.role = ax::mojom::Role::kRootWebArea;
   ui::AXTreeUpdate update;
   update.root_id = empty_document.id;
   update.nodes.push_back(empty_document);
@@ -51,11 +52,14 @@ ui::AXTreeUpdate
 void BrowserAccessibilityManagerAuraLinux::FireFocusEvent(
     BrowserAccessibility* node) {
   BrowserAccessibilityManager::FireFocusEvent(node);
-  // Need to implement.
+  if (node->IsNative()) {
+    ToBrowserAccessibilityAuraLinux(node)->GetNode()->NotifyAccessibilityEvent(
+        ax::mojom::Event::kFocus);
+  }
 }
 
 void BrowserAccessibilityManagerAuraLinux::FireBlinkEvent(
-    ui::AXEvent event_type,
+    ax::mojom::Event event_type,
     BrowserAccessibility* node) {
   BrowserAccessibilityManager::FireBlinkEvent(event_type, node);
   // Need to implement.

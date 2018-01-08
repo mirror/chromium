@@ -9,7 +9,6 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -53,6 +52,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/selection_model.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/border.h"
 #include "ui/views/button_drag_utils.h"
 #include "ui/views/controls/textfield/textfield.h"
@@ -186,7 +186,7 @@ void OmniboxViewViews::SaveStateToTab(content::WebContents* tab) {
   // NOTE: GetStateForTabSwitch() may affect GetSelectedRange(), so order is
   // important.
   OmniboxEditModel::State state = model()->GetStateForTabSwitch();
-  tab->SetUserData(OmniboxState::kKey, base::MakeUnique<OmniboxState>(
+  tab->SetUserData(OmniboxState::kKey, std::make_unique<OmniboxState>(
                                            state, GetSelectedRange(),
                                            saved_selection_for_focus_change_));
 }
@@ -195,9 +195,8 @@ void OmniboxViewViews::OnTabChanged(const content::WebContents* web_contents) {
   UpdateSecurityLevel();
   const OmniboxState* state = static_cast<OmniboxState*>(
       web_contents->GetUserData(&OmniboxState::kKey));
-  model()->RestoreState(
-      controller()->GetToolbarModel()->GetFormattedURL(nullptr),
-      state ? &state->model_state : NULL);
+  model()->RestoreState(controller()->GetURLForDisplay(),
+                        state ? &state->model_state : nullptr);
   if (state) {
     // This assumes that the omnibox has already been focused or blurred as
     // appropriate; otherwise, a subsequent OnFocus() or OnBlur() call could
@@ -218,8 +217,8 @@ void OmniboxViewViews::ResetTabState(content::WebContents* web_contents) {
 void OmniboxViewViews::Update() {
   const security_state::SecurityLevel old_security_level = security_level_;
   UpdateSecurityLevel();
-  if (model()->SetPermanentText(
-          controller()->GetToolbarModel()->GetFormattedURL(nullptr))) {
+
+  if (model()->SetPermanentText(controller()->GetURLForDisplay())) {
     RevertAll();
 
     // Only select all when we have focus.  If we don't have focus, selecting
@@ -736,16 +735,18 @@ bool OmniboxViewViews::SkipDefaultKeyEventProcessing(
 }
 
 void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_TEXT_FIELD;
+  node_data->role = ax::mojom::Role::kTextField;
   node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_LOCATION));
-  node_data->AddStringAttribute(ui::AX_ATTR_AUTO_COMPLETE, "both");
+  node_data->AddStringAttribute(ax::mojom::StringAttribute::kAutoComplete,
+                                "both");
 // Expose keyboard shortcut where it makes sense.
 #if defined(OS_MACOSX)
   // Use cloverleaf symbol for command key.
-  node_data->AddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS,
+  node_data->AddStringAttribute(ax::mojom::StringAttribute::kKeyShortcuts,
                                 base::WideToUTF8(L"\u2318L"));
 #else
-  node_data->AddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS, "Ctrl+L");
+  node_data->AddStringAttribute(ax::mojom::StringAttribute::kKeyShortcuts,
+                                "Ctrl+L");
 #endif
   if (friendly_suggestion_text_.empty()) {
     // While user edits text, use the exact text displayed in the omnibox.
@@ -762,6 +763,16 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   }
   node_data->html_attributes.push_back(std::make_pair("type", "url"));
 
+  // Establish a "CONTROLS" relationship between the omnibox and the
+  // the popup. This allows a screen reader to understand the relationship
+  // between the omnibox and the list of suggestions, and determine which
+  // suggestion is currently selected, even though focus remains here on
+  // the omnibox.
+  int32_t popup_view_id =
+      popup_view_->GetViewAccessibility().GetUniqueId().Get();
+  node_data->AddIntListAttribute(ax::mojom::IntListAttribute::kControlsIds,
+                                 {popup_view_id});
+
   base::string16::size_type entry_start;
   base::string16::size_type entry_end;
   // Selection information is saved separately when focus is moved off the
@@ -773,17 +784,16 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
     GetSelectionBounds(&entry_start, &entry_end);
   }
   node_data->AddIntAttribute(
-      ui::AX_ATTR_TEXT_SEL_START,
+      ax::mojom::IntAttribute::kTextSelStart,
       entry_start + friendly_suggestion_text_prefix_length_);
   node_data->AddIntAttribute(
-      ui::AX_ATTR_TEXT_SEL_END,
+      ax::mojom::IntAttribute::kTextSelEnd,
       entry_end + friendly_suggestion_text_prefix_length_);
 
   if (popup_window_mode_) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_READ_ONLY);
+    node_data->SetRestriction(ax::mojom::Restriction::kReadOnly);
   } else {
-    node_data->AddState(ui::AX_STATE_EDITABLE);
+    node_data->AddState(ax::mojom::State::kEditable);
   }
 }
 
@@ -792,10 +802,10 @@ bool OmniboxViewViews::HandleAccessibleAction(
   if (read_only())
     return Textfield::HandleAccessibleAction(action_data);
 
-  if (action_data.action == ui::AX_ACTION_SET_VALUE) {
+  if (action_data.action == ax::mojom::Action::kSetValue) {
     SetUserText(action_data.value, true);
     return true;
-  } else if (action_data.action == ui::AX_ACTION_REPLACE_SELECTED_TEXT) {
+  } else if (action_data.action == ax::mojom::Action::kReplaceSelectedText) {
     model()->SetInputInProgress(true);
     if (saved_selection_for_focus_change_.IsValid()) {
       SelectRange(saved_selection_for_focus_change_);
@@ -804,10 +814,10 @@ bool OmniboxViewViews::HandleAccessibleAction(
     InsertOrReplaceText(action_data.value);
     TextChanged();
     return true;
-  } else if (action_data.action == ui::AX_ACTION_SET_SELECTION) {
+  } else if (action_data.action == ax::mojom::Action::kSetSelection) {
     // Adjust for friendly text inserted at the start of the url.
     ui::AXActionData set_selection_action_data;
-    set_selection_action_data.action = ui::AX_ACTION_SET_SELECTION;
+    set_selection_action_data.action = ax::mojom::Action::kSetSelection;
     set_selection_action_data.anchor_node_id = action_data.anchor_node_id;
     set_selection_action_data.focus_offset =
         action_data.focus_offset - friendly_suggestion_text_prefix_length_;
@@ -821,8 +831,7 @@ bool OmniboxViewViews::HandleAccessibleAction(
 
 void OmniboxViewViews::OnFocus() {
   views::Textfield::OnFocus();
-  model()->SetPermanentText(
-      controller()->GetToolbarModel()->GetFormattedURL(nullptr));
+  model()->SetPermanentText(controller()->GetURLForDisplay());
   // TODO(oshima): Get control key state.
   model()->OnSetFocus(false);
   // Don't call controller()->OnSetFocus, this view has already acquired focus.
@@ -1141,30 +1150,26 @@ int OmniboxViewViews::OnDrop(const ui::OSExchangeData& data) {
   if (HasTextBeingDragged())
     return ui::DragDropTypes::DRAG_NONE;
 
+  base::string16 text;
   if (data.HasURL(ui::OSExchangeData::CONVERT_FILENAMES)) {
     GURL url;
     base::string16 title;
     if (data.GetURLAndTitle(
             ui::OSExchangeData::CONVERT_FILENAMES, &url, &title)) {
-      base::string16 text(
-          StripJavascriptSchemas(base::UTF8ToUTF16(url.spec())));
-      if (model()->CanPasteAndGo(text)) {
-        model()->PasteAndGo(text);
-        return ui::DragDropTypes::DRAG_COPY;
-      }
+      text = StripJavascriptSchemas(base::UTF8ToUTF16(url.spec()));
     }
-  } else if (data.HasString()) {
-    base::string16 text;
-    if (data.GetString(&text)) {
-      base::string16 collapsed_text(
-          StripJavascriptSchemas(base::CollapseWhitespace(text, true)));
-      if (model()->CanPasteAndGo(collapsed_text))
-        model()->PasteAndGo(collapsed_text);
-      return ui::DragDropTypes::DRAG_COPY;
-    }
+  } else if (data.HasString() && data.GetString(&text)) {
+    text = StripJavascriptSchemas(base::CollapseWhitespace(text, true));
   }
 
-  return ui::DragDropTypes::DRAG_NONE;
+  if (text.empty())
+    return ui::DragDropTypes::DRAG_NONE;
+
+  SetUserText(text);
+  if (!HasFocus())
+    RequestFocus();
+  SelectAll(false);
+  return ui::DragDropTypes::DRAG_COPY;
 }
 
 void OmniboxViewViews::UpdateContextMenu(ui::SimpleMenuModel* menu_contents) {

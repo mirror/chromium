@@ -13,6 +13,8 @@
 #include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_command_line.h"
 #include "base/test/scoped_feature_list.h"
@@ -32,9 +34,11 @@
 #include "components/previews/core/previews_features.h"
 #include "components/previews/core/previews_logger.h"
 #include "components/previews/core/previews_logger_observer.h"
+#include "components/previews/core/previews_switches.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/nqe/effective_connection_type.h"
+#include "net/nqe/network_quality_estimator_params.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -53,6 +57,8 @@ constexpr char kOfflineDesciption[] = "Offline Previews";
 
 // The HTML DOM ID used in Javascript.
 constexpr char kEctFlagHtmlId[] = "ect-flag";
+constexpr char kIgnorePreviewsBlacklistFlagHtmlId[] =
+    "ignore-previews-blacklist";
 constexpr char kNoScriptFlagHtmlId[] = "noscript-flag";
 constexpr char kOfflinePageFlagHtmlId[] = "offline-page-flag";
 
@@ -60,6 +66,8 @@ constexpr char kOfflinePageFlagHtmlId[] = "offline-page-flag";
 constexpr char kNoScriptFlagLink[] = "chrome://flags/#enable-noscript-previews";
 constexpr char kEctFlagLink[] =
     "chrome://flags/#force-effective-connection-type";
+constexpr char kIgnorePreviewsBlacklistLink[] =
+    "chrome://flags/#ignore-previews-blacklist";
 constexpr char kOfflinePageFlagLink[] =
     "chrome://flags/#enable-offline-previews";
 
@@ -114,7 +122,7 @@ class TestInterventionsInternalsPage
 
   // mojom::InterventionsInternalsPage:
   void LogNewMessage(mojom::MessageLogPtr message) override {
-    message_ = base::MakeUnique<mojom::MessageLogPtr>(std::move(message));
+    message_ = std::make_unique<mojom::MessageLogPtr>(std::move(message));
   }
   void OnBlacklistedHost(const std::string& host, int64_t time) override {
     host_blacklisted_ = host;
@@ -253,31 +261,31 @@ class InterventionsInternalsPageHandlerTest : public testing::Test {
   void SetUp() override {
     TestPreviewsIOData io_data;
     std::unique_ptr<TestPreviewsLogger> logger =
-        base::MakeUnique<TestPreviewsLogger>();
+        std::make_unique<TestPreviewsLogger>();
     logger_ = logger.get();
     previews_ui_service_ =
-        base::MakeUnique<TestPreviewsUIService>(&io_data, std::move(logger));
+        std::make_unique<TestPreviewsUIService>(&io_data, std::move(logger));
 
     ASSERT_TRUE(profile_manager_.SetUp());
     TestingProfile* test_profile =
         profile_manager_.CreateTestingProfile(chrome::kInitialProfile);
     ui_nqe_service_ =
-        base::MakeUnique<TestUINetworkQualityEstimatorService>(test_profile);
+        std::make_unique<TestUINetworkQualityEstimatorService>(test_profile);
 
     mojom::InterventionsInternalsPageHandlerPtr page_handler_ptr;
     handler_request_ = mojo::MakeRequest(&page_handler_ptr);
-    page_handler_ = base::MakeUnique<InterventionsInternalsPageHandler>(
+    page_handler_ = std::make_unique<InterventionsInternalsPageHandler>(
         std::move(handler_request_), previews_ui_service_.get(),
         ui_nqe_service_.get());
 
     mojom::InterventionsInternalsPagePtr page_ptr;
     page_request_ = mojo::MakeRequest(&page_ptr);
-    page_ = base::MakeUnique<TestInterventionsInternalsPage>(
+    page_ = std::make_unique<TestInterventionsInternalsPage>(
         std::move(page_request_));
 
     page_handler_->SetClientPage(std::move(page_ptr));
 
-    scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
+    scoped_feature_list_ = std::make_unique<base::test::ScopedFeatureList>();
   }
 
   void TearDown() override { profile_manager_.DeleteAllTestingProfiles(); }
@@ -417,7 +425,7 @@ TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsCount) {
   page_handler_->GetPreviewsFlagsDetails(
       base::BindOnce(&MockGetPreviewsFlagsCallback));
 
-  constexpr size_t expected = 3;
+  constexpr size_t expected = 4;
   EXPECT_EQ(expected, passed_in_flags.size());
 }
 
@@ -457,6 +465,58 @@ TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsForceEctValue) {
     EXPECT_EQ(expected_ect, ect_flag->second->value);
     EXPECT_EQ(kEctFlagLink, ect_flag->second->link);
   }
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsEctForceFieldtrialValue) {
+  base::FieldTrialList field_trial_list_(nullptr);
+  const std::string trial_name = "NetworkQualityEstimator";
+  const std::string group_name = "Enabled";
+  const std::string expected_ect = "Slow-2G";
+
+  std::map<std::string, std::string> params;
+  params[net::kForceEffectiveConnectionType] = expected_ect;
+  ASSERT_TRUE(base::AssociateFieldTrialParams(trial_name, group_name, params));
+  base::FieldTrialList::CreateFieldTrial(trial_name, group_name);
+
+  page_handler_->GetPreviewsFlagsDetails(
+      base::BindOnce(&MockGetPreviewsFlagsCallback));
+
+  auto ect_flag = passed_in_flags.find(kEctFlagHtmlId);
+  ASSERT_NE(passed_in_flags.end(), ect_flag);
+  EXPECT_EQ(flag_descriptions::kForceEffectiveConnectionTypeName,
+            ect_flag->second->description);
+  EXPECT_EQ("Fieldtrial forced " + expected_ect, ect_flag->second->value);
+  EXPECT_EQ(kEctFlagLink, ect_flag->second->link);
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest,
+       GetFlagsIgnorePreviewsBlacklistDisabledValue) {
+  // Disabled by default.
+  page_handler_->GetPreviewsFlagsDetails(
+      base::BindOnce(&MockGetPreviewsFlagsCallback));
+  auto ignore_previews_blacklist =
+      passed_in_flags.find(kIgnorePreviewsBlacklistFlagHtmlId);
+
+  ASSERT_NE(passed_in_flags.end(), ignore_previews_blacklist);
+  EXPECT_EQ(flag_descriptions::kIgnorePreviewsBlacklistName,
+            ignore_previews_blacklist->second->description);
+  EXPECT_EQ(kDisabledFlagValue, ignore_previews_blacklist->second->value);
+  EXPECT_EQ(kIgnorePreviewsBlacklistLink,
+            ignore_previews_blacklist->second->link);
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsNoScriptDisabledValue) {
+  page_handler_->GetPreviewsFlagsDetails(
+      base::BindOnce(&MockGetPreviewsFlagsCallback));
+  auto ignore_previews_blacklist =
+      passed_in_flags.find(kIgnorePreviewsBlacklistFlagHtmlId);
+
+  ASSERT_NE(passed_in_flags.end(), ignore_previews_blacklist);
+  EXPECT_EQ(flag_descriptions::kIgnorePreviewsBlacklistName,
+            ignore_previews_blacklist->second->description);
+  EXPECT_EQ(kDisabledFlagValue, ignore_previews_blacklist->second->value);
+  EXPECT_EQ(kIgnorePreviewsBlacklistLink,
+            ignore_previews_blacklist->second->link);
 }
 
 TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsNoScriptDefaultValue) {
@@ -661,6 +721,20 @@ TEST_F(InterventionsInternalsPageHandlerTest,
 
 TEST_F(InterventionsInternalsPageHandlerTest,
        IgnoreBlacklistReversedOnLastObserverRemovedCalled) {
+  ASSERT_FALSE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      previews::switches::kIgnorePreviewsBlacklist));
+  page_handler_->OnLastObserverRemove();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(page_->blacklist_ignored());
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest,
+       IgnoreBlacklistReversedOnLastObserverRemovedCalledIgnoreViaFlag) {
+  base::test::ScopedCommandLine scoped_command_line;
+  base::CommandLine* command_line = scoped_command_line.GetProcessCommandLine();
+  command_line->AppendSwitch(previews::switches::kIgnorePreviewsBlacklist);
+  ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      previews::switches::kIgnorePreviewsBlacklist));
   page_handler_->OnLastObserverRemove();
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(page_->blacklist_ignored());

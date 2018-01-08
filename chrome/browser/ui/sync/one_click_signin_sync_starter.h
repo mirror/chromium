@@ -168,9 +168,6 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
   // in-progress auth credentials currently stored in this object.
   void CreateNewSignedInProfile();
 
-  // Opens a browser window for new profile showing the sign-in page.
-  void CancelSigninAndStartNewSigninInNewProfile(Profile* new_profile);
-
   // Copies the sign-in credentials to |new_profile| and starts syncing in
   // |new_profile|.
   void CopyCredentialsToNewProfileAndFinishSignin(Profile* new_profile);

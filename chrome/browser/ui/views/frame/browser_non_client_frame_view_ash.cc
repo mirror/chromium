@@ -18,10 +18,12 @@
 #include "ash/shell.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
+#include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
@@ -87,6 +89,10 @@ BrowserNonClientFrameViewAsh::~BrowserNonClientFrameViewAsh() {
   if (TabletModeClient::Get())
     TabletModeClient::Get()->RemoveObserver(this);
   ash::Shell::Get()->RemoveShellObserver(this);
+  if (back_button_) {
+    browser_view()->browser()->command_controller()->RemoveCommandObserver(
+        this);
+  }
 }
 
 void BrowserNonClientFrameViewAsh::Init() {
@@ -106,7 +112,8 @@ void BrowserNonClientFrameViewAsh::Init() {
   if (browser->is_app() && IsV1AppBackButtonEnabled()) {
     back_button_ = new ash::FrameBackButton();
     AddChildView(back_button_);
-    // TODO(oshima): Update the back button state.
+    // TODO(oshima): Add Tooltip, accessibility name.
+    browser->command_controller()->AddCommandObserver(IDC_BACK, this);
   }
 
   frame_header_ = CreateFrameHeader();
@@ -316,7 +323,7 @@ const char* BrowserNonClientFrameViewAsh::GetClassName() const {
 
 void BrowserNonClientFrameViewAsh::GetAccessibleNodeData(
     ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_TITLE_BAR;
+  node_data->role = ax::mojom::Role::kTitleBar;
 }
 
 gfx::Size BrowserNonClientFrameViewAsh::GetMinimumSize() const {
@@ -337,11 +344,7 @@ gfx::Size BrowserNonClientFrameViewAsh::GetMinimumSize() const {
 
 void BrowserNonClientFrameViewAsh::ChildPreferredSizeChanged(
     views::View* child) {
-  // FrameCaptionButtonContainerView animates the visibility changes in
-  // UpdateSizeButtonVisibility(false). Due to this a new size is not available
-  // until the completion of the animation. Layout in response to the preferred
-  // size changes.
-  if (browser_view()->initialized() && (child == caption_button_container_)) {
+  if (browser_view()->initialized()) {
     InvalidateLayout();
     frame()->GetRootView()->Layout();
   }
@@ -351,6 +354,13 @@ void BrowserNonClientFrameViewAsh::ChildPreferredSizeChanged(
 // ash::ShellObserver:
 
 void BrowserNonClientFrameViewAsh::OnOverviewModeStarting() {
+  // Update the window icon so that overview mode can grab the icon from
+  // aura::client::kWindowIcon to display.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ash::switches::kAshEnableNewOverviewUi)) {
+    frame()->UpdateWindowIcon();
+  }
+
   frame()->GetNativeWindow()->SetProperty(aura::client::kTopViewColor,
                                           GetFrameColor());
   OnOverviewModeChanged(true);
@@ -416,6 +426,12 @@ bool BrowserNonClientFrameViewAsh::ShouldTabIconViewAnimate() const {
 gfx::ImageSkia BrowserNonClientFrameViewAsh::GetFaviconForTabIconView() {
   views::WidgetDelegate* delegate = frame()->widget_delegate();
   return delegate ? delegate->GetWindowIcon() : gfx::ImageSkia();
+}
+
+void BrowserNonClientFrameViewAsh::EnabledStateChangedForCommand(int id,
+                                                                 bool enabled) {
+  if (id == IDC_BACK && back_button_)
+    back_button_->SetEnabled(enabled);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -260,7 +260,7 @@ class CONTENT_EXPORT RenderWidget
   void DidReceiveCompositorFrameAck() override;
   bool IsClosing() const override;
   void RequestScheduleAnimation() override;
-  void UpdateVisualState() override;
+  void UpdateVisualState(VisualStateUpdate requested_update) override;
   void WillBeginCompositorFrame() override;
   std::unique_ptr<cc::SwapPromise> RequestCopyOfOutputForLayoutTest(
       std::unique_ptr<viz::CopyOutputRequest> request) override;
@@ -293,6 +293,8 @@ class CONTENT_EXPORT RenderWidget
 
   // blink::WebWidgetClient
   blink::WebLayerTreeView* InitializeLayerTreeView() override;
+  void IntrinsicSizingInfoChanged(
+      const blink::WebIntrinsicSizingInfo&) override;
   void DidMeaningfulLayout(blink::WebMeaningfulLayout layout_type) override;
   void DidChangeCursor(const blink::WebCursorInfo&) override;
   void AutoscrollStart(const blink::WebFloatPoint& point) override;
@@ -411,14 +413,14 @@ class CONTENT_EXPORT RenderWidget
   gfx::Point ConvertWindowPointToViewport(const gfx::Point& point);
 
   uint32_t GetContentSourceId();
-  void IncrementContentSourceId();
+  void DidNavigate();
 
   // MainThreadEventQueueClient overrides.
 
   // Requests a BeginMainFrame callback from the compositor.
   void SetNeedsMainFrame() override;
 
-  int GetWidgetRoutingIdAtPoint(const gfx::Point& point);
+  viz::FrameSinkId GetFrameSinkIdAtPoint(const gfx::Point& point);
 
   void HandleInputEvent(const blink::WebCoalescedInputEvent& input_event,
                         const ui::LatencyInfo& latency_info,
@@ -528,6 +530,7 @@ class CONTENT_EXPORT RenderWidget
   void SetLocalSurfaceIdForAutoResize(
       uint64_t sequence_number,
       const content::ScreenInfo& screen_info,
+      uint32_t content_source_id,
       const viz::LocalSurfaceId& local_surface_id);
 
   // RenderWidget IPC message handlers
@@ -544,6 +547,7 @@ class CONTENT_EXPORT RenderWidget
       const gfx::Size& min_size,
       const gfx::Size& max_size,
       const content::ScreenInfo& screen_info,
+      uint32_t content_source_id,
       const viz::LocalSurfaceId& local_surface_id);
   void OnEnableDeviceEmulation(const blink::WebDeviceEmulationParams& params);
   void OnDisableDeviceEmulation();
@@ -616,6 +620,7 @@ class CONTENT_EXPORT RenderWidget
   bool next_paint_is_resize_ack() const;
   void set_next_paint_is_resize_ack();
   void set_next_paint_is_repaint_ack();
+  void reset_next_paint_is_resize_ack();
 
   // QueueMessage implementation extracted into a static method for easy
   // testing.
@@ -849,6 +854,18 @@ class CONTENT_EXPORT RenderWidget
   bool has_added_input_handler_;
 
  private:
+  // TODO(ekaramad): This method should not be confused with its RenderView
+  // variant, GetWebFrameWidget(). Currently Cast and AndroidWebview's
+  // ContentRendererClients are the only users of the public variant. The public
+  // method will eventually be removed from RenderView and uses of the method
+  // will obtain WebFrameWidget from WebLocalFrame.
+  // Returns the WebFrameWidget associated with this RenderWidget if any.
+  // Returns nullptr if GetWebWidget() returns nullptr or returns a WebWidget
+  // that is not a WebFrameWidget. A WebFrameWidget only makes sense when there
+  // a local root associated with it. RenderWidgetFullscreenPepper and a swapped
+  // out RenderWidgets are amongst the cases where this method returns nullptr.
+  blink::WebFrameWidget* GetFrameWidget() const;
+
   // Applies/Removes the DevTools device emulation transformation to/from a
   // window rect.
   void ScreenRectToEmulatedIfNeeded(blink::WebRect* window_rect) const;

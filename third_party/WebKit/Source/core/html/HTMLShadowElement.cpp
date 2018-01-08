@@ -47,23 +47,7 @@ inline HTMLShadowElement::HTMLShadowElement(Document& document)
 
 DEFINE_NODE_FACTORY(HTMLShadowElement)
 
-HTMLShadowElement::~HTMLShadowElement() {}
-
-ShadowRoot* HTMLShadowElement::OlderShadowRoot() {
-  ShadowRoot* containing_root = ContainingShadowRoot();
-  if (!containing_root)
-    return nullptr;
-
-  UpdateDistribution();
-
-  ShadowRoot* older = containing_root->OlderShadowRoot();
-  if (!older || !older->IsOpenOrV0() ||
-      older->ShadowInsertionPointOfYoungerShadowRoot() != this)
-    return nullptr;
-
-  DCHECK(older->IsOpenOrV0());
-  return older;
-}
+HTMLShadowElement::~HTMLShadowElement() = default;
 
 Node::InsertionNotificationRequest HTMLShadowElement::InsertedInto(
     ContainerNode* insertion_point) {

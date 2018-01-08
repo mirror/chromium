@@ -16,12 +16,12 @@ import org.junit.Assert;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.test.ChromeActivityTestRule;
-import org.chromium.content.browser.test.util.ApplicationUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -80,7 +80,8 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
             if (fileName.equals(getTitleFromCursor(cursor))) {
                 if (expectedContents != null) {
                     FileInputStream stream = new FileInputStream(new File(fullPath));
-                    byte[] data = new byte[expectedContents.getBytes().length];
+                    byte[] data =
+                            new byte[ApiCompatibilityUtils.getBytesUtf8(expectedContents).length];
                     try {
                         Assert.assertEquals(stream.read(data), data.length);
                         String contents = new String(data);
@@ -210,7 +211,6 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
 
         cleanUpAllDownloads();
 
-        ApplicationUtils.waitForLibraryDependencies(InstrumentationRegistry.getInstrumentation());
         final Context context = InstrumentationRegistry.getTargetContext().getApplicationContext();
 
         ThreadUtils.runOnUiThreadBlocking(() -> {

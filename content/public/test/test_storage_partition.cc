@@ -22,13 +22,18 @@ TestStoragePartition::GetMediaURLRequestContext() {
   return media_url_request_context_getter_;
 }
 
-mojom::NetworkContext* TestStoragePartition::GetNetworkContext() {
+network::mojom::NetworkContext* TestStoragePartition::GetNetworkContext() {
   return network_context_;
 }
 
-mojom::URLLoaderFactory*
+network::mojom::URLLoaderFactory*
 TestStoragePartition::GetURLLoaderFactoryForBrowserProcess() {
   return url_loader_factory_for_browser_process_;
+}
+
+network::mojom::CookieManager*
+TestStoragePartition::GetCookieManagerForBrowserProcess() {
+  return cookie_manager_for_browser_process_;
 }
 
 storage::QuotaManager* TestStoragePartition::GetQuotaManager() {
@@ -57,6 +62,10 @@ IndexedDBContext* TestStoragePartition::GetIndexedDBContext() {
 
 ServiceWorkerContext* TestStoragePartition::GetServiceWorkerContext() {
   return service_worker_context_;
+}
+
+SharedWorkerService* TestStoragePartition::GetSharedWorkerService() {
+  return shared_worker_service_;
 }
 
 CacheStorageContext* TestStoragePartition::GetCacheStorageContext() {

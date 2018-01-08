@@ -26,6 +26,7 @@
 #include "build/build_config.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
+#include "content/browser/gpu/gpu_process_host.h"
 #include "content/grit/content_resources.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/gpu_data_manager_observer.h"
@@ -45,6 +46,7 @@
 #include "third_party/skia/include/core/SkMilestone.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/gfx/buffer_format_util.h"
 #include "ui/gl/gpu_switching_manager.h"
 
 #if defined(OS_WIN)
@@ -241,7 +243,7 @@ std::unique_ptr<base::DictionaryValue> GpuInfoAsDictionaryValue() {
 
   basic_info->Append(NewDescriptionValuePair(
       "GPU process crash count",
-      std::make_unique<base::Value>(gpu_info.process_crash_count)));
+      std::make_unique<base::Value>(GpuProcessHost::GetGpuCrashCount())));
 
   auto info = std::make_unique<base::DictionaryValue>();
 
@@ -261,51 +263,6 @@ std::unique_ptr<base::DictionaryValue> GpuInfoAsDictionaryValue() {
 
   info->Set("basic_info", std::move(basic_info));
   return info;
-}
-
-const char* BufferFormatToString(gfx::BufferFormat format) {
-  switch (format) {
-    case gfx::BufferFormat::ATC:
-      return "ATC";
-    case gfx::BufferFormat::ATCIA:
-      return "ATCIA";
-    case gfx::BufferFormat::DXT1:
-      return "DXT1";
-    case gfx::BufferFormat::DXT5:
-      return "DXT5";
-    case gfx::BufferFormat::ETC1:
-      return "ETC1";
-    case gfx::BufferFormat::R_8:
-      return "R_8";
-    case gfx::BufferFormat::R_16:
-      return "R_16";
-    case gfx::BufferFormat::RG_88:
-      return "RG_88";
-    case gfx::BufferFormat::BGR_565:
-      return "BGR_565";
-    case gfx::BufferFormat::RGBA_4444:
-      return "RGBA_4444";
-    case gfx::BufferFormat::RGBX_8888:
-      return "RGBX_8888";
-    case gfx::BufferFormat::RGBA_8888:
-      return "RGBA_8888";
-    case gfx::BufferFormat::BGRX_8888:
-      return "BGRX_8888";
-    case gfx::BufferFormat::BGRX_1010102:
-      return "BGRX_1010102";
-    case gfx::BufferFormat::BGRA_8888:
-      return "BGRA_8888";
-    case gfx::BufferFormat::RGBA_F16:
-      return "RGBA_F16";
-    case gfx::BufferFormat::YVU_420:
-      return "YVU_420";
-    case gfx::BufferFormat::YUV_420_BIPLANAR:
-      return "YUV_420_BIPLANAR";
-    case gfx::BufferFormat::UYVY_422:
-      return "UYVY_422";
-  }
-  NOTREACHED();
-  return nullptr;
 }
 
 const char* BufferUsageToString(gfx::BufferUsage usage) {
@@ -365,7 +322,7 @@ std::unique_ptr<base::ListValue> GpuMemoryBufferInfo() {
       native_usage_support = base::StringPrintf("Software only");
 
     gpu_memory_buffer_info->Append(NewDescriptionValuePair(
-        BufferFormatToString(static_cast<gfx::BufferFormat>(format)),
+        gfx::BufferFormatToString(static_cast<gfx::BufferFormat>(format)),
         native_usage_support));
   }
   return gpu_memory_buffer_info;

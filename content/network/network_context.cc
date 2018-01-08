@@ -5,6 +5,7 @@
 #include "content/network/network_context.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/command_line.h"
 #include "base/logging.h"
@@ -25,14 +26,11 @@
 #include "content/network/http_server_properties_pref_delegate.h"
 #include "content/network/network_service_impl.h"
 #include "content/network/network_service_url_loader_factory.h"
-#include "content/network/proxy_config_service_mojo.h"
 #include "content/network/restricted_cookie_manager.h"
 #include "content/network/throttling/network_conditions.h"
 #include "content/network/throttling/throttling_controller.h"
 #include "content/network/throttling/throttling_network_transaction_factory.h"
 #include "content/network/url_loader.h"
-#include "content/public/common/content_client.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/network/ignore_errors_cert_verifier.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -45,24 +43,58 @@
 #include "net/http/http_server_properties.h"
 #include "net/http/http_server_properties_manager.h"
 #include "net/http/http_transaction_factory.h"
-#include "net/proxy/proxy_config.h"
+#include "net/proxy_resolution/proxy_config.h"
+#include "net/reporting/reporting_policy.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
+#include "services/network/proxy_config_service_mojo.h"
+#include "services/network/public/cpp/features.h"
+#include "services/network/public/cpp/network_switches.h"
+#include "services/network/udp_socket_factory.h"
 
 namespace content {
 
+namespace {
+
+net::CertVerifier* g_cert_verifier_for_testing = nullptr;
+
+// A CertVerifier that forwards all requests to |g_cert_verifier_for_testing|.
+// This is used to allow NetworkContexts to have their own
+// std::unique_ptr<net::CertVerifier> while forwarding calls to the shared
+// verifier.
+class WrappedTestingCertVerifier : public net::CertVerifier {
+ public:
+  ~WrappedTestingCertVerifier() override = default;
+
+  // CertVerifier implementation
+  int Verify(const RequestParams& params,
+             net::CRLSet* crl_set,
+             net::CertVerifyResult* verify_result,
+             const net::CompletionCallback& callback,
+             std::unique_ptr<Request>* out_req,
+             const net::NetLogWithSource& net_log) override {
+    verify_result->Reset();
+    if (!g_cert_verifier_for_testing)
+      return net::ERR_FAILED;
+    return g_cert_verifier_for_testing->Verify(params, crl_set, verify_result,
+                                               callback, out_req, net_log);
+  }
+};
+
+}  // namespace
+
 NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
-                               mojom::NetworkContextRequest request,
-                               mojom::NetworkContextParamsPtr params)
+                               network::mojom::NetworkContextRequest request,
+                               network::mojom::NetworkContextParamsPtr params)
     : network_service_(network_service),
       params_(std::move(params)),
       binding_(this, std::move(request)) {
   url_request_context_owner_ = MakeURLRequestContext(params_.get());
   url_request_context_ = url_request_context_owner_.url_request_context.get();
-  cookie_manager_ =
-      std::make_unique<CookieManager>(url_request_context_->cookie_store());
+  cookie_manager_ = std::make_unique<network::CookieManager>(
+      url_request_context_->cookie_store());
   network_service_->RegisterNetworkContext(this);
   binding_.set_connection_error_handler(base::BindOnce(
       &NetworkContext::OnConnectionError, base::Unretained(this)));
@@ -73,8 +105,8 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
 // corresponding options to be overwritten.
 NetworkContext::NetworkContext(
     NetworkServiceImpl* network_service,
-    mojom::NetworkContextRequest request,
-    mojom::NetworkContextParamsPtr params,
+    network::mojom::NetworkContextRequest request,
+    network::mojom::NetworkContextParamsPtr params,
     std::unique_ptr<URLRequestContextBuilderMojo> builder)
     : network_service_(network_service),
       params_(std::move(params)),
@@ -84,17 +116,17 @@ NetworkContext::NetworkContext(
       network_service->net_log());
   url_request_context_ = url_request_context_owner_.url_request_context.get();
   network_service_->RegisterNetworkContext(this);
-  cookie_manager_ =
-      std::make_unique<CookieManager>(url_request_context_->cookie_store());
+  cookie_manager_ = std::make_unique<network::CookieManager>(
+      url_request_context_->cookie_store());
 }
 
 NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
-                               mojom::NetworkContextRequest request,
+                               network::mojom::NetworkContextRequest request,
                                net::URLRequestContext* url_request_context)
     : network_service_(network_service),
       url_request_context_(url_request_context),
       binding_(this, std::move(request)),
-      cookie_manager_(std::make_unique<CookieManager>(
+      cookie_manager_(std::make_unique<network::CookieManager>(
           url_request_context->cookie_store())) {
   // May be nullptr in tests.
   if (network_service_)
@@ -116,7 +148,12 @@ NetworkContext::~NetworkContext() {
 
 std::unique_ptr<NetworkContext> NetworkContext::CreateForTesting() {
   return base::WrapUnique(
-      new NetworkContext(mojom::NetworkContextParams::New()));
+      new NetworkContext(network::mojom::NetworkContextParams::New()));
+}
+
+void NetworkContext::SetCertVerifierForTesting(
+    net::CertVerifier* cert_verifier) {
+  g_cert_verifier_for_testing = cert_verifier;
 }
 
 void NetworkContext::RegisterURLLoader(URLLoader* url_loader) {
@@ -130,15 +167,16 @@ void NetworkContext::DeregisterURLLoader(URLLoader* url_loader) {
 }
 
 void NetworkContext::CreateURLLoaderFactory(
-    mojom::URLLoaderFactoryRequest request,
+    network::mojom::URLLoaderFactoryRequest request,
     uint32_t process_id) {
   loader_factory_bindings_.AddBinding(
       std::make_unique<NetworkServiceURLLoaderFactory>(this, process_id),
       std::move(request));
 }
 
-void NetworkContext::HandleViewCacheRequest(const GURL& url,
-                                            mojom::URLLoaderClientPtr client) {
+void NetworkContext::HandleViewCacheRequest(
+    const GURL& url,
+    network::mojom::URLLoaderClientPtr client) {
   StartCacheURLLoader(url, url_request_context_, std::move(client));
 }
 
@@ -170,7 +208,7 @@ void NetworkContext::Cleanup() {
   delete this;
 }
 
-NetworkContext::NetworkContext(mojom::NetworkContextParamsPtr params)
+NetworkContext::NetworkContext(network::mojom::NetworkContextParamsPtr params)
     : network_service_(nullptr), params_(std::move(params)), binding_(this) {
   url_request_context_owner_ = MakeURLRequestContext(params_.get());
   url_request_context_ = url_request_context_owner_.url_request_context.get();
@@ -184,22 +222,23 @@ void NetworkContext::OnConnectionError() {
 }
 
 URLRequestContextOwner NetworkContext::MakeURLRequestContext(
-    mojom::NetworkContextParams* network_context_params) {
+    network::mojom::NetworkContextParams* network_context_params) {
   URLRequestContextBuilderMojo builder;
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
 
-  if (command_line->HasSwitch(switches::kHostResolverRules)) {
+  if (command_line->HasSwitch(network::switches::kHostResolverRules)) {
     std::unique_ptr<net::HostResolver> host_resolver(
         net::HostResolver::CreateDefaultResolver(nullptr));
     std::unique_ptr<net::MappedHostResolver> remapped_host_resolver(
         new net::MappedHostResolver(std::move(host_resolver)));
     remapped_host_resolver->SetRulesFromString(
-        command_line->GetSwitchValueASCII(switches::kHostResolverRules));
+        command_line->GetSwitchValueASCII(
+            network::switches::kHostResolverRules));
     builder.set_host_resolver(std::move(remapped_host_resolver));
   }
   builder.set_accept_language("en-us,en");
-  builder.set_user_agent(GetContentClient()->GetUserAgent());
+  builder.set_user_agent(network_context_params->user_agent);
 
   // The cookie configuration is in this method, which is only used by the
   // network process, and not ApplyContextParamsToBuilder which is used by the
@@ -247,11 +286,15 @@ URLRequestContextOwner NetworkContext::MakeURLRequestContext(
     DCHECK(!network_context_params->persist_session_cookies);
   }
 
-  std::unique_ptr<net::CertVerifier> cert_verifier =
-      net::CertVerifier::CreateDefault();
-  builder.SetCertVerifier(
-      content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
-          *command_line, nullptr, std::move(cert_verifier)));
+  if (g_cert_verifier_for_testing) {
+    builder.SetCertVerifier(std::make_unique<WrappedTestingCertVerifier>());
+  } else {
+    std::unique_ptr<net::CertVerifier> cert_verifier =
+        net::CertVerifier::CreateDefault();
+    builder.SetCertVerifier(
+        content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+            *command_line, nullptr, std::move(cert_verifier)));
+  }
 
   // |network_service_| may be nullptr in tests.
   return ApplyContextParamsToBuilder(
@@ -262,7 +305,7 @@ URLRequestContextOwner NetworkContext::MakeURLRequestContext(
 
 URLRequestContextOwner NetworkContext::ApplyContextParamsToBuilder(
     URLRequestContextBuilderMojo* builder,
-    mojom::NetworkContextParams* network_context_params,
+    network::mojom::NetworkContextParams* network_context_params,
     bool quic_disabled,
     net::NetLog* net_log) {
   URLRequestContextOwner url_request_owner;
@@ -301,10 +344,11 @@ URLRequestContextOwner NetworkContext::ApplyContextParamsToBuilder(
     network_context_params->initial_proxy_config =
         net::ProxyConfig::CreateDirect();
   }
-  builder->set_proxy_config_service(std::make_unique<ProxyConfigServiceMojo>(
-      std::move(network_context_params->proxy_config_client_request),
-      std::move(network_context_params->initial_proxy_config),
-      std::move(network_context_params->proxy_config_poller_client)));
+  builder->set_proxy_config_service(
+      std::make_unique<network::ProxyConfigServiceMojo>(
+          std::move(network_context_params->proxy_config_client_request),
+          std::move(network_context_params->initial_proxy_config),
+          std::move(network_context_params->proxy_config_poller_client)));
 
   if (network_context_params->http_server_properties_path) {
     scoped_refptr<JsonPrefStore> json_pref_store(new JsonPrefStore(
@@ -338,6 +382,16 @@ URLRequestContextOwner NetworkContext::ApplyContextParamsToBuilder(
 #else  // BUILDFLAG(DISABLE_FTP_SUPPORT)
   DCHECK(!network_context_params->enable_ftp_url_support);
 #endif
+
+#if BUILDFLAG(ENABLE_REPORTING)
+  if (base::FeatureList::IsEnabled(network::features::kReporting))
+    builder->set_reporting_policy(std::make_unique<net::ReportingPolicy>());
+  else
+    builder->set_reporting_policy(nullptr);
+
+  builder->set_network_error_logging_enabled(
+      base::FeatureList::IsEnabled(network::features::kNetworkErrorLogging));
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
   net::HttpNetworkSession::Params session_params;
   bool is_quic_force_disabled = false;
@@ -373,13 +427,13 @@ void NetworkContext::ClearNetworkingHistorySince(
   url_request_context_->transport_security_state()->DeleteAllDynamicDataSince(
       time);
 
-  url_request_context_->http_server_properties()->Clear();
-  std::move(completion_callback).Run();
+  url_request_context_->http_server_properties()->Clear(
+      std::move(completion_callback));
 }
 
 void NetworkContext::SetNetworkConditions(
     const std::string& profile_id,
-    mojom::NetworkConditionsPtr conditions) {
+    network::mojom::NetworkConditionsPtr conditions) {
   std::unique_ptr<NetworkConditions> network_conditions;
   if (conditions) {
     network_conditions.reset(new NetworkConditions(
@@ -388,6 +442,24 @@ void NetworkContext::SetNetworkConditions(
   }
   ThrottlingController::SetConditions(profile_id,
                                       std::move(network_conditions));
+}
+
+void NetworkContext::CreateUDPSocket(
+    network::mojom::UDPSocketRequest request,
+    network::mojom::UDPSocketReceiverPtr receiver) {
+  if (!udp_socket_factory_)
+    udp_socket_factory_ = std::make_unique<network::UDPSocketFactory>();
+  udp_socket_factory_->CreateUDPSocket(std::move(request), std::move(receiver));
+}
+
+void NetworkContext::AddHSTSForTesting(const std::string& host,
+                                       base::Time expiry,
+                                       bool include_subdomains,
+                                       AddHSTSForTestingCallback callback) {
+  net::TransportSecurityState* state =
+      url_request_context_->transport_security_state();
+  state->AddHSTS(host, expiry, include_subdomains);
+  std::move(callback).Run();
 }
 
 }  // namespace content

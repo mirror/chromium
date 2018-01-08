@@ -34,7 +34,7 @@ URLRequestContext::URLRequestContext()
       cert_verifier_(nullptr),
       channel_id_service_(nullptr),
       http_auth_handler_factory_(nullptr),
-      proxy_service_(nullptr),
+      proxy_resolution_service_(nullptr),
       network_delegate_(nullptr),
       http_server_properties_(nullptr),
       http_user_agent_settings_(nullptr),
@@ -50,10 +50,10 @@ URLRequestContext::URLRequestContext()
       reporting_service_(nullptr),
       network_error_logging_delegate_(nullptr),
 #endif  // BUILDFLAG(ENABLE_REPORTING)
+      url_requests_(std::make_unique<std::set<const URLRequest*>>()),
       enable_brotli_(false),
       check_cleartext_permitted_(false),
-      name_("unknown"),
-      largest_outstanding_requests_count_seen_(0) {
+      name_("unknown") {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       this, "URLRequestContext", base::ThreadTaskRunnerHandle::Get());
 }
@@ -72,7 +72,7 @@ void URLRequestContext::CopyFrom(const URLRequestContext* other) {
   set_cert_verifier(other->cert_verifier_);
   set_channel_id_service(other->channel_id_service_);
   set_http_auth_handler_factory(other->http_auth_handler_factory_);
-  set_proxy_service(other->proxy_service_);
+  set_proxy_resolution_service(other->proxy_resolution_service_);
   set_ssl_config_service(other->ssl_config_service_.get());
   set_network_delegate(other->network_delegate_);
   set_http_server_properties(other->http_server_properties_);
@@ -135,32 +135,14 @@ void URLRequestContext::set_cookie_store(CookieStore* cookie_store) {
   cookie_store_ = cookie_store;
 }
 
-void URLRequestContext::InsertURLRequest(const URLRequest* request) const {
-  url_requests_.insert(request);
-  if (url_requests_.size() > largest_outstanding_requests_count_seen_) {
-    largest_outstanding_requests_count_seen_ = url_requests_.size();
-    UMA_HISTOGRAM_COUNTS_1M("Net.URLRequestContext.OutstandingRequests",
-                            largest_outstanding_requests_count_seen_);
-    base::UmaHistogramSparse("Net.URLRequestContext.OutstandingRequests.Type",
-                             request->traffic_annotation().unique_id_hash_code);
-  }
-}
-
-void URLRequestContext::RemoveURLRequest(const URLRequest* request) const {
-  DCHECK_EQ(1u, url_requests_.count(request));
-  url_requests_.erase(request);
-}
-
 void URLRequestContext::AssertNoURLRequests() const {
-  int num_requests = url_requests_.size();
+  int num_requests = url_requests_->size();
   if (num_requests != 0) {
     // We're leaking URLRequests :( Dump the URL of the first one and record how
     // many we leaked so we have an idea of how bad it is.
-    char url_buf[128];
-    const URLRequest* request = *url_requests_.begin();
-    base::strlcpy(url_buf, request->url().spec().c_str(), arraysize(url_buf));
+    const URLRequest* request = *url_requests_->begin();
     int load_flags = request->load_flags();
-    base::debug::Alias(url_buf);
+    DEBUG_ALIAS_FOR_GURL(url_buf, request->url());
     base::debug::Alias(&num_requests);
     base::debug::Alias(&load_flags);
     CHECK(false) << "Leaked " << num_requests << " URLRequest(s). First URL: "
@@ -180,7 +162,7 @@ bool URLRequestContext::OnMemoryDump(
       pmd->CreateAllocatorDump(dump_name);
   dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameObjectCount,
                   base::trace_event::MemoryAllocatorDump::kUnitsObjects,
-                  url_requests_.size());
+                  url_requests_->size());
   HttpTransactionFactory* transaction_factory = http_transaction_factory();
   if (transaction_factory) {
     HttpNetworkSession* network_session = transaction_factory->GetSession();

@@ -33,23 +33,13 @@
 
 #if defined(OS_WIN)
 #include "base/win/scoped_handle.h"
+#include "base/win/windows_types.h"
 #endif
 
 namespace base {
 
-#if defined(OS_WIN)
-struct IoCounters : public IO_COUNTERS {
-};
-#elif defined(OS_POSIX)
-struct IoCounters {
-  uint64_t ReadOperationCount;
-  uint64_t WriteOperationCount;
-  uint64_t OtherOperationCount;
-  uint64_t ReadTransferCount;
-  uint64_t WriteTransferCount;
-  uint64_t OtherTransferCount;
-};
-#endif
+// Full declaration is in process_metrics_iocounters.h.
+struct IoCounters;
 
 // Working Set (resident) memory usage broken down by
 //

@@ -35,12 +35,6 @@ class V8TestAttributeGetters {
   }
   CORE_EXPORT static TestAttributeGetters* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestAttributeGetters>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestAttributeGetters>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   // Callback functions
@@ -60,6 +54,7 @@ class V8TestAttributeGetters {
 template <>
 struct NativeValueTraits<TestAttributeGetters> : public NativeValueTraitsBase<TestAttributeGetters> {
   CORE_EXPORT static TestAttributeGetters* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static TestAttributeGetters* NullValue() { return nullptr; }
 };
 
 template <>

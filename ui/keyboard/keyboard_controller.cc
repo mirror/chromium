@@ -475,7 +475,8 @@ void KeyboardController::OnTextInputStateChanged(
   TRACE_EVENT0("vk", "OnTextInputStateChanged");
 
   bool focused =
-      client && (client->GetTextInputType() != ui::TEXT_INPUT_TYPE_NONE);
+      client && (client->GetTextInputType() != ui::TEXT_INPUT_TYPE_NONE &&
+                 client->GetTextInputMode() != ui::TEXT_INPUT_MODE_NONE);
   bool should_hide = !focused && container_behavior_->TextBlurHidesKeyboard();
 
   if (should_hide) {
@@ -735,9 +736,9 @@ bool KeyboardController::IsOverscrollAllowed() const {
   return container_behavior_->IsOverscrollAllowed();
 }
 
-void KeyboardController::HandlePointerEvent(bool isMouseButtonPressed,
-                                            const gfx::Vector2d& kb_offset) {
-  container_behavior_->HandlePointerEvent(isMouseButtonPressed, kb_offset);
+void KeyboardController::HandlePointerEvent(const ui::LocatedEvent& event) {
+  container_behavior_->HandlePointerEvent(
+      event, container_->GetRootWindow()->bounds());
 }
 
 void KeyboardController::SetContainerType(const ContainerType type) {

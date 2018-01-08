@@ -65,6 +65,8 @@
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
+#include "chrome/browser/ui/ash/test_wallpaper_controller.h"
+#include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -1162,8 +1164,12 @@ class MultiProfileMultiBrowserShelfLayoutChromeLauncherControllerTest
     user_manager_enabler_ = std::make_unique<user_manager::ScopedUserManager>(
         std::make_unique<chromeos::FakeChromeUserManager>());
 
-    // Initialize the WallpaperManager singleton.
+    // Initialize the WallpaperManager singleton and WallpaperControllerClient.
     chromeos::WallpaperManager::Initialize();
+    wallpaper_controller_client_ =
+        std::make_unique<WallpaperControllerClient>();
+    wallpaper_controller_client_->InitForTesting(
+        test_wallpaper_controller_.CreateInterfacePtr());
 
     // Initialize the rest.
     ChromeLauncherControllerTest::SetUp();
@@ -1180,6 +1186,7 @@ class MultiProfileMultiBrowserShelfLayoutChromeLauncherControllerTest
     ChromeLauncherControllerTest::TearDown();
     user_manager_enabler_.reset();
     chromeos::WallpaperManager::Shutdown();
+    wallpaper_controller_client_.reset();
 
     // A Task is leaked if we don't destroy everything, then run the message
     // loop.
@@ -1268,6 +1275,10 @@ class MultiProfileMultiBrowserShelfLayoutChromeLauncherControllerTest
   }
 
   std::unique_ptr<user_manager::ScopedUserManager> user_manager_enabler_;
+
+  std::unique_ptr<WallpaperControllerClient> wallpaper_controller_client_;
+
+  TestWallpaperController test_wallpaper_controller_;
 
   ProfileToNameMap created_profiles_;
 
@@ -2179,7 +2190,7 @@ TEST_P(ChromeLauncherControllerWithArcTest, OverrideAppItemController) {
   // Scenario 1: Create OptIn, Play Store. Destroy OptIn, Play Store.
   {
     std::unique_ptr<V2App> play_store_optin =
-        base::MakeUnique<V2App>(profile(), arc_support_host_.get(),
+        std::make_unique<V2App>(profile(), arc_support_host_.get(),
                                 extensions::AppWindow::WINDOW_TYPE_DEFAULT);
     EXPECT_TRUE(launcher_controller_->GetItem(play_store_shelf_id));
 
@@ -2199,7 +2210,7 @@ TEST_P(ChromeLauncherControllerWithArcTest, OverrideAppItemController) {
   // Scenario 2: Create OptIn, Play Store. Destroy Play Store, OptIn.
   {
     std::unique_ptr<V2App> play_store_optin =
-        base::MakeUnique<V2App>(profile(), arc_support_host_.get(),
+        std::make_unique<V2App>(profile(), arc_support_host_.get(),
                                 extensions::AppWindow::WINDOW_TYPE_DEFAULT);
     EXPECT_TRUE(launcher_controller_->GetItem(play_store_shelf_id));
 
@@ -2224,7 +2235,7 @@ TEST_P(ChromeLauncherControllerWithArcTest, OverrideAppItemController) {
     EXPECT_TRUE(launcher_controller_->GetItem(play_store_shelf_id));
 
     std::unique_ptr<V2App> play_store_optin =
-        base::MakeUnique<V2App>(profile(), arc_support_host_.get(),
+        std::make_unique<V2App>(profile(), arc_support_host_.get(),
                                 extensions::AppWindow::WINDOW_TYPE_DEFAULT);
     EXPECT_TRUE(launcher_controller_->GetItem(play_store_shelf_id));
 
@@ -2244,7 +2255,7 @@ TEST_P(ChromeLauncherControllerWithArcTest, OverrideAppItemController) {
     EXPECT_TRUE(launcher_controller_->GetItem(play_store_shelf_id));
 
     std::unique_ptr<V2App> play_store_optin =
-        base::MakeUnique<V2App>(profile(), arc_support_host_.get(),
+        std::make_unique<V2App>(profile(), arc_support_host_.get(),
                                 extensions::AppWindow::WINDOW_TYPE_DEFAULT);
     EXPECT_TRUE(launcher_controller_->GetItem(play_store_shelf_id));
 
@@ -3934,11 +3945,11 @@ class ChromeLauncherControllerOrientationTest
     EXPECT_EQ(display::Display::ROTATE_0,
               display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
-    // Create a arc window with PORTRAIT orientation locks the screen to 90.
+    // Create a arc window with PORTRAIT orientation locks the screen to 270.
     window_portrait_ = CreateArcWindow(window_app_id_portrait_);
     NotifyOnTaskCreated(appinfo_portrait_, task_id_portrait_);
     EXPECT_TRUE(controller->rotation_locked());
-    EXPECT_EQ(display::Display::ROTATE_90,
+    EXPECT_EQ(display::Display::ROTATE_270,
               display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
     // Create a arc window with LANDSCAPE orientation locks the screen to 0.
@@ -4055,7 +4066,7 @@ TEST_P(ChromeLauncherControllerOrientationTest,
 
   EnableTabletMode(true);
   EXPECT_TRUE(controller->rotation_locked());
-  EXPECT_EQ(display::Display::ROTATE_90,
+  EXPECT_EQ(display::Display::ROTATE_270,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
   std::string app_id2("org.chromium.arc.2");
@@ -4067,7 +4078,7 @@ TEST_P(ChromeLauncherControllerOrientationTest,
   NotifyOnTaskCreated(appinfo2, task_id2);
   NotifyOnTaskOrientationLockRequested(task_id2, OrientationLock::LANDSCAPE);
   EXPECT_TRUE(controller->rotation_locked());
-  EXPECT_EQ(display::Display::ROTATE_90,
+  EXPECT_EQ(display::Display::ROTATE_270,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
   // The screen will be locked when the window is created.
@@ -4096,10 +4107,10 @@ TEST_P(ChromeLauncherControllerOrientationTest, ArcOrientationLock) {
   EXPECT_EQ(display::Display::ROTATE_0,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
-  // Activating a window with PORTRAIT orientation locks the screen to 90.
+  // Activating a window with PORTRAIT orientation locks the screen to 270.
   window_portrait_->Activate();
   EXPECT_TRUE(controller->rotation_locked());
-  EXPECT_EQ(display::Display::ROTATE_90,
+  EXPECT_EQ(display::Display::ROTATE_270,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
   // Disable Tablet mode, and make sure the screen is unlocked.
@@ -4108,15 +4119,15 @@ TEST_P(ChromeLauncherControllerOrientationTest, ArcOrientationLock) {
   EXPECT_EQ(display::Display::ROTATE_0,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
-  // Re-enable Tablet mode, and make sure the screen is locked to 90.
+  // Re-enable Tablet mode, and make sure the screen is locked to 270.
   EnableTabletMode(true);
   EXPECT_TRUE(controller->rotation_locked());
-  EXPECT_EQ(display::Display::ROTATE_90,
+  EXPECT_EQ(display::Display::ROTATE_270,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
   window_portrait_->Activate();
   EXPECT_TRUE(controller->rotation_locked());
-  EXPECT_EQ(display::Display::ROTATE_90,
+  EXPECT_EQ(display::Display::ROTATE_270,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
   window_landscape_->Activate();
@@ -4134,14 +4145,14 @@ TEST_P(ChromeLauncherControllerOrientationTest, ArcOrientationLock) {
   NotifyOnTaskOrientationLockRequested(task_id_landscape_,
                                        OrientationLock::PORTRAIT);
   EXPECT_TRUE(controller->rotation_locked());
-  EXPECT_EQ(display::Display::ROTATE_90,
+  EXPECT_EQ(display::Display::ROTATE_270,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
   // Non active window won't change the lock.
   NotifyOnTaskOrientationLockRequested(task_id_none_,
                                        OrientationLock::LANDSCAPE);
   EXPECT_TRUE(controller->rotation_locked());
-  EXPECT_EQ(display::Display::ROTATE_90,
+  EXPECT_EQ(display::Display::ROTATE_270,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
   // But activating it will change the locked orinetation.
@@ -4166,7 +4177,7 @@ TEST_P(ChromeLauncherControllerOrientationTest, ArcOrientationLock) {
   // enabled.
   EnableTabletMode(true);
   EXPECT_TRUE(controller->rotation_locked());
-  EXPECT_EQ(display::Display::ROTATE_90,
+  EXPECT_EQ(display::Display::ROTATE_270,
             display::Screen::GetScreen()->GetPrimaryDisplay().rotation());
 
   // Manually unlock first.

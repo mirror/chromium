@@ -4,8 +4,11 @@
 
 #include "storage/browser/blob/blob_impl.h"
 
+#include <memory>
 #include <utility>
+
 #include "storage/browser/blob/blob_data_handle.h"
+#include "storage/browser/blob/blob_url_loader.h"
 #include "storage/browser/blob/mojo_blob_reader.h"
 
 namespace storage {
@@ -58,14 +61,25 @@ void BlobImpl::ReadRange(uint64_t offset,
                          blink::mojom::BlobReaderClientPtr client) {
   MojoBlobReader::Create(
       handle_.get(), net::HttpByteRange::Bounded(offset, offset + length - 1),
-      base::MakeUnique<ReaderDelegate>(std::move(handle), std::move(client)));
+      std::make_unique<ReaderDelegate>(std::move(handle), std::move(client)));
 }
 
 void BlobImpl::ReadAll(mojo::ScopedDataPipeProducerHandle handle,
                        blink::mojom::BlobReaderClientPtr client) {
   MojoBlobReader::Create(
       handle_.get(), net::HttpByteRange(),
-      base::MakeUnique<ReaderDelegate>(std::move(handle), std::move(client)));
+      std::make_unique<ReaderDelegate>(std::move(handle), std::move(client)));
+}
+
+void BlobImpl::CreateLoader(
+    network::mojom::URLLoaderRequest loader,
+    const base::Optional<net::HttpRequestHeaders>& headers,
+    network::mojom::URLLoaderClientPtr client) {
+  network::ResourceRequest request;
+  if (headers)
+    request.headers = *headers;
+  BlobURLLoader::CreateAndStart(std::move(loader), request, std::move(client),
+                                std::make_unique<BlobDataHandle>(*handle_));
 }
 
 void BlobImpl::GetInternalUUID(GetInternalUUIDCallback callback) {

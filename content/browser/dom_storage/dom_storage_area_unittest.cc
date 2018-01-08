@@ -14,7 +14,6 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -241,8 +240,8 @@ TEST_P(DOMStorageAreaParamTest, ShallowCopyWithBacking) {
   base::ScopedTempDir temp_dir;
   const std::string kNamespaceId = "id1";
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  scoped_refptr<SessionStorageDatabase> db =
-      new SessionStorageDatabase(temp_dir.GetPath());
+  scoped_refptr<SessionStorageDatabase> db = new SessionStorageDatabase(
+      temp_dir.GetPath(), base::ThreadTaskRunnerHandle::Get());
   scoped_refptr<DOMStorageArea> area(new DOMStorageArea(
       1, kNamespaceId, nullptr, kOrigin, db.get(),
       new MockDOMStorageTaskRunner(base::ThreadTaskRunnerHandle::Get().get())));

@@ -54,9 +54,9 @@ class StyleFetchedImage final : public StyleImage,
   bool CanRender() const override;
   bool IsLoaded() const override;
   bool ErrorOccurred() const override;
-  LayoutSize ImageSize(const Document&,
-                       float multiplier,
-                       const LayoutSize& default_object_size) const override;
+  FloatSize ImageSize(const Document&,
+                      float multiplier,
+                      const LayoutSize& default_object_size) const override;
   bool ImageHasRelativeSize() const override;
   bool UsesImageContainerSize() const override;
   void AddClient(ImageResourceObserver*) override;
@@ -66,7 +66,7 @@ class StyleFetchedImage final : public StyleImage,
   scoped_refptr<Image> GetImage(const ImageResourceObserver&,
                                 const Document&,
                                 const ComputedStyle&,
-                                const IntSize& container_size) const override;
+                                const FloatSize& target_size) const override;
   bool KnownToBeOpaque(const Document&, const ComputedStyle&) const override;
   ImageResourceContent* CachedImage() const override;
 

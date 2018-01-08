@@ -6,7 +6,6 @@
 
 #include <stdint.h>
 
-#include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -23,15 +22,15 @@
 #include "content/public/browser/browser_thread.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/chromeos/resources/grit/ui_chromeos_resources.h"
-#include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
-#include "ui/message_center/notification_types.h"
-#include "ui/message_center/notifier_id.h"
+#include "ui/message_center/public/cpp/notification.h"
+#include "ui/message_center/public/cpp/notification_types.h"
+#include "ui/message_center/public/cpp/notifier_id.h"
 
 namespace {
 
 const char kLowDiskId[] = "low_disk";
 const char kStoragePage[] = "storage";
+const char kNotifierLowDisk[] = "ash.disk";
 const uint64_t kNotificationThreshold = 1 << 30;          // 1GB
 const uint64_t kNotificationSevereThreshold = 512 << 20;  // 512MB
 constexpr base::TimeDelta kNotificationInterval =
@@ -100,8 +99,7 @@ LowDiskNotification::CreateNotification(Severity severity) {
   optional_fields.buttons.push_back(storage_settings);
 
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      ash::system_notifier::kNotifierDisk);
+      message_center::NotifierId::SYSTEM_COMPONENT, kNotifierLowDisk);
 
   auto on_click = base::BindRepeating([](base::Optional<int> button_index) {
     if (button_index) {

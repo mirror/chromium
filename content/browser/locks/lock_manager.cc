@@ -5,11 +5,17 @@
 #include "content/browser/locks/lock_manager.h"
 
 #include <algorithm>
+#include <memory>
+#include <unordered_set>
 #include <utility>
+#include <vector>
 
+#include "base/guid.h"
 #include "base/stl_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+
+using blink::mojom::LockMode;
 
 namespace content {
 
@@ -25,7 +31,7 @@ class LockHandleImpl final : public blink::mojom::LockHandle {
                                             int64_t lock_id) {
     blink::mojom::LockHandlePtr ptr;
     mojo::MakeStrongBinding(
-        base::MakeUnique<LockHandleImpl>(std::move(context), origin, lock_id),
+        std::make_unique<LockHandleImpl>(std::move(context), origin, lock_id),
         mojo::MakeRequest(&ptr));
     return ptr;
   }
@@ -56,15 +62,21 @@ class LockHandleImpl final : public blink::mojom::LockHandle {
 struct LockManager::Lock {
   Lock(const std::string& name,
        LockMode mode,
-       int64_t id,
+       int64_t lock_id,
+       const std::string& client_id,
        blink::mojom::LockRequestPtr request)
-      : name(name), mode(mode), id(id), request(std::move(request)) {}
+      : name(name),
+        mode(mode),
+        lock_id(lock_id),
+        client_id(client_id),
+        request(std::move(request)) {}
 
   ~Lock() = default;
 
   const std::string name;
   const LockMode mode;
-  const int64_t id;
+  const int64_t lock_id;
+  const std::string client_id;
   blink::mojom::LockRequestPtr request;
 };
 
@@ -72,27 +84,112 @@ LockManager::LockManager() : weak_ptr_factory_(this) {}
 
 LockManager::~LockManager() = default;
 
-LockManager::OriginState::OriginState() = default;
-LockManager::OriginState::~OriginState() = default;
+class LockManager::OriginState {
+ public:
+  OriginState() = default;
+  ~OriginState() = default;
 
-bool LockManager::OriginState::IsGrantable(const std::string& name,
-                                           LockMode mode) const {
-  if (mode == LockMode::EXCLUSIVE) {
-    return !shared.count(name) && !exclusive.count(name);
-  } else {
-    return !exclusive.count(name);
+  void AddRequest(int64_t lock_id,
+                  const std::string& name,
+                  LockMode mode,
+                  const std::string& client_id,
+                  blink::mojom::LockRequestPtr request) {
+    requested_.emplace(std::make_pair(
+        lock_id, std::make_unique<Lock>(name, mode, lock_id, client_id,
+                                        std::move(request))));
   }
-}
 
-void LockManager::OriginState::MergeLockState(const std::string& name,
-                                              LockMode mode) {
-  (mode == LockMode::SHARED ? shared : exclusive).insert(name);
-}
+  bool EraseLock(int64_t lock_id) {
+    return requested_.erase(lock_id) || held_.erase(lock_id);
+  }
+
+  bool IsEmpty() const { return requested_.empty() && held_.empty(); }
+
+  bool IsGrantable(const std::string& name, LockMode mode) const {
+    if (mode == LockMode::EXCLUSIVE) {
+      return !shared_.count(name) && !exclusive_.count(name);
+    } else {
+      return !exclusive_.count(name);
+    }
+  }
+
+  void ProcessRequests(LockManager* lock_manager, const url::Origin& origin) {
+    if (requested_.empty())
+      return;
+
+    shared_.clear();
+    exclusive_.clear();
+    for (const auto& id_lock_pair : held_) {
+      const auto& lock = id_lock_pair.second;
+      MergeLockState(lock->name, lock->mode);
+    }
+
+    for (auto it = requested_.begin(); it != requested_.end();) {
+      auto& lock = it->second;
+
+      bool granted = IsGrantable(lock->name, lock->mode);
+
+      MergeLockState(lock->name, lock->mode);
+
+      if (granted) {
+        std::unique_ptr<Lock> grantee = std::move(lock);
+        it = requested_.erase(it);
+        grantee->request->Granted(
+            LockHandleImpl::Create(lock_manager->weak_ptr_factory_.GetWeakPtr(),
+                                   origin, grantee->lock_id));
+        grantee->request = nullptr;
+        held_.insert(std::make_pair(grantee->lock_id, std::move(grantee)));
+      } else {
+        ++it;
+      }
+    }
+  }
+
+  std::vector<blink::mojom::LockInfoPtr> SnapshotRequested() const {
+    std::vector<blink::mojom::LockInfoPtr> out;
+    out.reserve(requested_.size());
+    for (const auto& id_lock_pair : requested_) {
+      const auto& lock = id_lock_pair.second;
+      out.emplace_back(base::in_place, lock->name, lock->mode, lock->client_id);
+    }
+    return out;
+  }
+
+  std::vector<blink::mojom::LockInfoPtr> SnapshotHeld() const {
+    std::vector<blink::mojom::LockInfoPtr> out;
+    out.reserve(held_.size());
+    for (const auto& id_lock_pair : held_) {
+      const auto& lock = id_lock_pair.second;
+      out.emplace_back(base::in_place, lock->name, lock->mode, lock->client_id);
+    }
+    return out;
+  }
+
+ private:
+  void MergeLockState(const std::string& name, LockMode mode) {
+    (mode == LockMode::SHARED ? shared_ : exclusive_).insert(name);
+  }
+
+  // These represent the actual state of locks in the origin.
+  std::map<int64_t, std::unique_ptr<Lock>> requested_;
+  std::map<int64_t, std::unique_ptr<Lock>> held_;
+
+  // These sets represent what is held or requested, so that "IsGrantable"
+  // tests are simple. These are cleared/rebuilt when the request queue
+  // is processed.
+  std::unordered_set<std::string> shared_;
+  std::unordered_set<std::string> exclusive_;
+};
 
 void LockManager::CreateService(blink::mojom::LockManagerRequest request,
                                 const url::Origin& origin) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  bindings_.AddBinding(this, std::move(request), origin);
+
+  // TODO(jsbell): This should reflect the 'environment id' from HTML,
+  // and be the same opaque string seen in Service Worker client ids.
+  const std::string client_id = base::GenerateGUID();
+
+  bindings_.AddBinding(this, std::move(request), {origin, client_id});
 }
 
 void LockManager::RequestLock(const std::string& name,
@@ -101,47 +198,55 @@ void LockManager::RequestLock(const std::string& name,
                               blink::mojom::LockRequestPtr request) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  const url::Origin& origin = bindings_.dispatch_context();
-  if (wait == WaitMode::NO_WAIT && !IsGrantable(origin, name, mode)) {
+  const auto& context = bindings_.dispatch_context();
+  if (wait == WaitMode::NO_WAIT && !IsGrantable(context.origin, name, mode)) {
     request->Failed();
     return;
   }
 
   int64_t lock_id = next_lock_id++;
-
-  request.set_connection_error_handler(base::BindOnce(
-      &LockManager::ReleaseLock, base::Unretained(this), origin, lock_id));
-
-  origins_[origin].requested.emplace(std::make_pair(
-      lock_id,
-      std::make_unique<Lock>(name, mode, lock_id, std::move(request))));
-
-  ProcessRequests(origin);
+  request.set_connection_error_handler(base::BindOnce(&LockManager::ReleaseLock,
+                                                      base::Unretained(this),
+                                                      context.origin, lock_id));
+  origins_[context.origin].AddRequest(lock_id, name, mode, context.client_id,
+                                      std::move(request));
+  ProcessRequests(context.origin);
 }
 
-void LockManager::ReleaseLock(const url::Origin& origin, int64_t id) {
+void LockManager::ReleaseLock(const url::Origin& origin, int64_t lock_id) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (!base::ContainsKey(origins_, origin))
     return;
   OriginState& state = origins_[origin];
 
-  bool dirty = state.requested.erase(id) || state.held.erase(id);
+  bool dirty = state.EraseLock(lock_id);
 
-  if (state.requested.empty() && state.held.empty())
+  if (state.IsEmpty())
     origins_.erase(origin);
   else if (dirty)
     ProcessRequests(origin);
 }
 
+void LockManager::QueryState(QueryStateCallback callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  const url::Origin& origin = bindings_.dispatch_context().origin;
+  if (!base::ContainsKey(origins_, origin))
+    return;
+  OriginState& state = origins_[origin];
+
+  std::move(callback).Run(state.SnapshotRequested(), state.SnapshotHeld());
+}
+
 bool LockManager::IsGrantable(const url::Origin& origin,
                               const std::string& name,
-                              LockMode mode) {
+                              LockMode mode) const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!base::ContainsKey(origins_, origin))
+  auto it = origins_.find(origin);
+  if (it == origins_.end())
     return true;
-
-  return origins_[origin].IsGrantable(name, mode);
+  return it->second.IsGrantable(name, mode);
 }
 
 void LockManager::ProcessRequests(const url::Origin& origin) {
@@ -150,37 +255,9 @@ void LockManager::ProcessRequests(const url::Origin& origin) {
     return;
 
   OriginState& state = origins_[origin];
-
-  if (state.requested.empty())
-    return;
-
-  state.shared.clear();
-  state.exclusive.clear();
-  for (const auto& id_lock_pair : state.held) {
-    const auto& lock = id_lock_pair.second;
-    state.MergeLockState(lock->name, lock->mode);
-  }
-
-  for (auto it = state.requested.begin(); it != state.requested.end();) {
-    auto& lock = it->second;
-
-    bool granted = state.IsGrantable(lock->name, lock->mode);
-
-    state.MergeLockState(lock->name, lock->mode);
-
-    if (granted) {
-      std::unique_ptr<Lock> grantee = std::move(lock);
-      it = state.requested.erase(it);
-      grantee->request->Granted(LockHandleImpl::Create(
-          weak_ptr_factory_.GetWeakPtr(), origin, grantee->id));
-      grantee->request = nullptr;
-      state.held.insert(std::make_pair(grantee->id, std::move(grantee)));
-    } else {
-      ++it;
-    }
-  }
-
-  DCHECK(!(state.requested.empty() && state.held.empty()));
+  DCHECK(!state.IsEmpty());
+  state.ProcessRequests(this, origin);
+  DCHECK(!state.IsEmpty());
 }
 
 }  // namespace content

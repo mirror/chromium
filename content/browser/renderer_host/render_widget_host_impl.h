@@ -19,6 +19,7 @@
 #include "base/containers/queue.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/shared_memory_handle.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/process/kill.h"
@@ -26,7 +27,6 @@
 #include "base/time/time.h"
 #include "base/timer/elapsed_timer.h"
 #include "build/build_config.h"
-#include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
@@ -51,6 +51,7 @@
 #include "ipc/ipc_listener.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "services/viz/public/interfaces/hit_test/input_target_client.mojom.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "ui/base/ime/text_input_mode.h"
 #include "ui/base/ime/text_input_type.h"
@@ -78,6 +79,7 @@ class WebMouseEvent;
 
 namespace cc {
 struct BeginFrameAck;
+class RenderFrameMetadata;
 }  // namespace cc
 
 namespace gfx {
@@ -355,11 +357,13 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // changed its state of ignoring input events.
   void ProcessIgnoreInputEventsChanged(bool ignore_input_events);
 
-  // Starts the rendering timeout, which will clear displayed graphics if
-  // a new compositor frame is not received before it expires. This also causes
-  // any new compositor frames received with content_source_id less than
-  // |next_source_id| to be discarded.
-  void StartNewContentRenderingTimeout(uint32_t next_source_id);
+  // Called after every cross-document navigation. If Surface Synchronizaton is
+  // on, we send a new LocalSurfaceId to RenderWidget to be used after
+  // navigation. If Surface Synchronization is off, we block CompositorFrames
+  // that have smaller content_source_id than |next_source_id|. In either case,
+  // we will clear the displayed graphics of the renderer after a certain
+  // timeout if it does not produce a new CompositorFrame after navigation.
+  void DidNavigate(uint32_t next_source_id);
 
   // Forwards the keyboard event with optional commands to the renderer. If
   // |key_event| is not forwarded for any reason, then |commands| are ignored.
@@ -547,6 +551,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // request to create a new RenderWidget.
   void SetInitialRenderSizeParams(const ResizeParams& resize_params);
 
+  // The RenderWidget was resized and whether the focused node should be
+  // scrolled into view.
+  void WasResized(bool scroll_focused_node_into_view);
+
   // Called when we receive a notification indicating that the renderer process
   // is gone. This will reset our state so that our state will be consistent if
   // a new renderer is created.
@@ -594,6 +602,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   // viz::mojom::CompositorFrameSink implementation.
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
+  void SetWantsAnimateOnlyBeginFrames() override;
   void SubmitCompositorFrame(
       const viz::LocalSurfaceId& local_surface_id,
       viz::CompositorFrame frame,
@@ -614,6 +623,13 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       mojom::WidgetInputHandlerHostRequest host_request);
   void SetWidget(mojom::WidgetPtr widget);
 
+  viz::mojom::InputTargetClient* input_target_client() {
+    return input_target_client_.get();
+  }
+
+  void SetInputTargetClient(
+      viz::mojom::InputTargetClientPtr input_target_client);
+
   // InputRouterImplClient overrides.
   mojom::WidgetInputHandler* GetWidgetInputHandler() override;
   void OnImeCompositionRangeChanged(
@@ -622,6 +638,14 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnImeCancelComposition() override;
 
   void ProgressFling(base::TimeTicks current_time);
+  void StopFling();
+
+  void DidReceiveFirstFrameAfterNavigation();
+
+  uint32_t current_content_source_id() { return current_content_source_id_; }
+
+  void SetScreenOrientationForTesting(uint16_t angle,
+                                      ScreenOrientationValues type);
 
  protected:
   // ---------------------------------------------------------------------------
@@ -674,6 +698,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest,
                            ShorterDelayHangMonitorTimeout);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, AutoResizeWithScale);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           AutoResizeWithBrowserInitiatedResize);
   FRIEND_TEST_ALL_PREFIXES(DevToolsManagerTest,
                            NoUnresponsiveDialogInInspectedContents);
   friend class MockRenderWidgetHost;
@@ -715,7 +741,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnUnlockMouse();
   void OnShowDisambiguationPopup(const gfx::Rect& rect_pixels,
                                  const gfx::Size& size,
-                                 const viz::SharedBitmapId& id);
+                                 base::SharedMemoryHandle handle);
   void OnSelectionBoundsChanged(
       const ViewHostMsg_SelectionBounds_Params& params);
   void OnSetNeedsBeginFrames(bool needs_begin_frames);
@@ -792,6 +818,12 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void DidAllocateSharedBitmap(
       uint32_t last_shared_bitmap_sequence_number) override;
   void SetupInputRouter();
+
+  void OnRenderFrameMetadata(const cc::RenderFrameMetadata& metadata);
+
+  bool SurfacePropertiesMismatch(
+      const RenderWidgetSurfaceProperties& first,
+      const RenderWidgetSurfaceProperties& second) const;
 
 #if defined(OS_MACOSX)
   device::mojom::WakeLock* GetWakeLock();
@@ -1011,6 +1043,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   viz::mojom::CompositorFrameSinkClientPtr renderer_compositor_frame_sink_;
 
   viz::CompositorFrameMetadata last_frame_metadata_;
+  cc::RenderFrameMetadata last_render_frame_metadata_;
 
   // Last non-zero frame token received from the renderer. Any swap messsages
   // having a token less than or equal to this value will be processed.
@@ -1040,6 +1073,12 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   mojom::WidgetInputHandlerAssociatedPtr associated_widget_input_handler_;
   mojom::WidgetInputHandlerPtr widget_input_handler_;
   std::unique_ptr<mojom::WidgetInputHandler> legacy_widget_input_handler_;
+  viz::mojom::InputTargetClientPtr input_target_client_;
+
+  base::Optional<uint16_t> screen_orientation_angle_for_testing_;
+  base::Optional<ScreenOrientationValues> screen_orientation_type_for_testing_;
+
+  bool next_resize_needs_resize_ack_ = false;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 

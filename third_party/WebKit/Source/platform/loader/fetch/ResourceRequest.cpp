@@ -27,12 +27,12 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 
 #include <memory>
+
 #include "platform/network/NetworkUtils.h"
 #include "platform/network/http_names.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebURLRequest.h"
 
 namespace blink {
@@ -69,7 +69,7 @@ ResourceRequest::ResourceRequest(const KURL& url)
       frame_type_(network::mojom::RequestContextFrameType::kNone),
       fetch_request_mode_(network::mojom::FetchRequestMode::kNoCORS),
       fetch_credentials_mode_(network::mojom::FetchCredentialsMode::kInclude),
-      fetch_redirect_mode_(WebURLRequest::kFetchRedirectModeFollow),
+      fetch_redirect_mode_(network::mojom::FetchRedirectMode::kFollow),
       referrer_policy_(kReferrerPolicyDefault),
       did_set_http_referrer_(false),
       check_for_browser_side_navigation_(true),
@@ -77,7 +77,6 @@ ResourceRequest::ResourceRequest(const KURL& url)
       is_external_request_(false),
       cors_preflight_policy_(
           network::mojom::CORSPreflightPolicy::kConsiderPreflight),
-      loading_ipc_type_(WebURLRequest::LoadingIPCType::kMojo),
       is_same_document_navigation_(false),
       input_perf_metric_report_policy_(
           InputToLoadPerfMetricReportPolicy::kNoReport),
@@ -119,9 +118,9 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   ui_start_time_ = data->ui_start_time_;
   is_external_request_ = data->is_external_request_;
   cors_preflight_policy_ = data->cors_preflight_policy_;
-  loading_ipc_type_ = data->loading_ipc_type_;
   input_perf_metric_report_policy_ = data->input_perf_metric_report_policy_;
   redirect_status_ = data->redirect_status_;
+  suggested_filename_ = data->suggested_filename_;
 }
 
 ResourceRequest::ResourceRequest(const ResourceRequest&) = default;
@@ -206,9 +205,9 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   data->ui_start_time_ = ui_start_time_;
   data->is_external_request_ = is_external_request_;
   data->cors_preflight_policy_ = cors_preflight_policy_;
-  data->loading_ipc_type_ = loading_ipc_type_;
   data->input_perf_metric_report_policy_ = input_perf_metric_report_policy_;
   data->redirect_status_ = redirect_status_;
+  data->suggested_filename_ = suggested_filename_;
   return data;
 }
 
@@ -378,13 +377,14 @@ void ResourceRequest::ClearHTTPHeaderField(const AtomicString& name) {
 }
 
 void ResourceRequest::SetExternalRequestStateFromRequestorAddressSpace(
-    WebAddressSpace requestor_space) {
-  static_assert(kWebAddressSpaceLocal < kWebAddressSpacePrivate,
+    mojom::IPAddressSpace requestor_space) {
+  static_assert(mojom::IPAddressSpace::kLocal < mojom::IPAddressSpace::kPrivate,
                 "Local is inside Private");
-  static_assert(kWebAddressSpaceLocal < kWebAddressSpacePublic,
+  static_assert(mojom::IPAddressSpace::kLocal < mojom::IPAddressSpace::kPublic,
                 "Local is inside Public");
-  static_assert(kWebAddressSpacePrivate < kWebAddressSpacePublic,
-                "Private is inside Public");
+  static_assert(
+      mojom::IPAddressSpace::kPrivate < mojom::IPAddressSpace::kPublic,
+      "Private is inside Public");
 
   // TODO(mkwst): This only checks explicit IP addresses. We'll have to move all
   // this up to //net and //content in order to have any real impact on gateway
@@ -394,11 +394,11 @@ void ResourceRequest::SetExternalRequestStateFromRequestorAddressSpace(
     return;
   }
 
-  WebAddressSpace target_space = kWebAddressSpacePublic;
+  mojom::IPAddressSpace target_space = mojom::IPAddressSpace::kPublic;
   if (NetworkUtils::IsReservedIPAddress(url_.Host()))
-    target_space = kWebAddressSpacePrivate;
+    target_space = mojom::IPAddressSpace::kPrivate;
   if (SecurityOrigin::Create(url_)->IsLocalhost())
-    target_space = kWebAddressSpaceLocal;
+    target_space = mojom::IPAddressSpace::kLocal;
 
   is_external_request_ = requestor_space > target_space;
 }

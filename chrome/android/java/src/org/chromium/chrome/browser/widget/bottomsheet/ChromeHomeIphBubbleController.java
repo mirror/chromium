@@ -13,6 +13,7 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
@@ -23,12 +24,15 @@ import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 import org.chromium.chrome.browser.widget.ViewHighlighter;
+import org.chromium.chrome.browser.widget.ViewRectProvider;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
-import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
 import org.chromium.components.feature_engagement.Tracker;
+import org.chromium.content.browser.BrowserStartupController;
+
+import java.util.ArrayDeque;
 
 /** A controller used to display various in-product help bubbles related to Chrome Home. */
 public class ChromeHomeIphBubbleController {
@@ -44,6 +48,9 @@ public class ChromeHomeIphBubbleController {
      */
     private static final String HELP_BUBBLE_TIMEOUT_PARAM_NAME = "x_iph-timeout-duration-ms";
 
+    /** Cache the events before native is initialized. */
+    private final ArrayDeque<Integer> mEvents = new ArrayDeque<>();
+
     private TextBubble mHelpBubble;
     private LayoutManagerChrome mLayoutManager;
     private BottomToolbarPhone mToolbar;
@@ -51,6 +58,8 @@ public class ChromeHomeIphBubbleController {
     private ChromeFullscreenManager mFullscreenManager;
     private BottomSheet mBottomSheet;
     private Context mContext;
+
+    private boolean mNativeInitialized;
 
     /**
      * Create a new ChromeHomeIphBubbleController.
@@ -67,20 +76,28 @@ public class ChromeHomeIphBubbleController {
         mControlContainer = controlContainer;
         mBottomSheet = bottomSheet;
 
+        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
+                    @Override
+                    public void onSuccess(boolean alreadyStarted) {
+                        mNativeInitialized = true;
+                        while (!mEvents.isEmpty()) {
+                            trackEvent(mEvents.poll());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {}
+                });
+
         mBottomSheet.addObserver(new EmptyBottomSheetObserver() {
             @Override
             public void onSheetOpened(@StateChangeReason int reason) {
                 dismissHelpBubble();
-
-                Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
-                tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED);
-
-                if (reason == StateChangeReason.SWIPE) {
-                    tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_SWIPE);
-                } else if (reason == StateChangeReason.EXPAND_BUTTON) {
-                    tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_BUTTON);
-                } else if (reason == StateChangeReason.OMNIBOX_FOCUS) {
-                    tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_OMNIBOX_FOCUS);
+                if (mNativeInitialized) {
+                    trackEvent(reason);
+                } else {
+                    mEvents.add(reason);
                 }
             }
 
@@ -110,6 +127,7 @@ public class ChromeHomeIphBubbleController {
      * This method must be called after the toolbar has had at least one layout pass.
      */
     public void showColdStartHelpBubble() {
+        if (!mNativeInitialized) return;
         // If FRE is not complete, the FRE screen is likely covering ChromeTabbedActivity so the
         // help bubble should not be shown.
         if (!FirstRunStatus.getFirstRunFlowComplete()) return;
@@ -200,16 +218,16 @@ public class ChromeHomeIphBubbleController {
         };
 
         if (showAtTopOfScreen) {
-            mHelpBubble =
-                    new TextBubble(mContext, topAnchorView, stringId, accessibilityStringId, false);
-            mHelpBubble.setAnchorRect(getTopAnchorRect(topAnchorView));
+            mHelpBubble = new TextBubble(mContext, topAnchorView, stringId, accessibilityStringId,
+                    false, getTopAnchorRect(topAnchorView));
             topAnchorView.addOnLayoutChangeListener(topAnchorLayoutChangeListener);
         } else {
-            mHelpBubble = new ViewAnchoredTextBubble(
-                    mContext, anchorView, stringId, accessibilityStringId);
+            ViewRectProvider rectProvider = new ViewRectProvider(anchorView);
             int inset = mContext.getResources().getDimensionPixelSize(
                     R.dimen.bottom_sheet_help_bubble_inset);
-            ((ViewAnchoredTextBubble) mHelpBubble).setInsetPx(0, inset, 0, inset);
+            rectProvider.setInsetPx(0, inset, 0, inset);
+            mHelpBubble = new TextBubble(
+                    mContext, anchorView, stringId, accessibilityStringId, rectProvider);
         }
 
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PERSISTENT_IPH)) {
@@ -278,5 +296,18 @@ public class ChromeHomeIphBubbleController {
         topAnchorView.getLocationInWindow(locationInWindow);
         int centerPoint = locationInWindow[0] + topAnchorView.getWidth() / 2;
         return new Rect(centerPoint, locationInWindow[1], centerPoint, locationInWindow[1]);
+    }
+
+    private void trackEvent(@StateChangeReason int reason) {
+        Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+        tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED);
+
+        if (reason == StateChangeReason.SWIPE) {
+            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_SWIPE);
+        } else if (reason == StateChangeReason.EXPAND_BUTTON) {
+            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_BUTTON);
+        } else if (reason == StateChangeReason.OMNIBOX_FOCUS) {
+            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_OMNIBOX_FOCUS);
+        }
     }
 }

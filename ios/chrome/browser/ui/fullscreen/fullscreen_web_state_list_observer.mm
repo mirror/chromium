@@ -6,7 +6,9 @@
 
 #include "base/logging.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_model.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_web_view_scroll_view_replacement_util.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
+#import "ios/web/public/web_state/web_state.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -15,10 +17,11 @@
 FullscreenWebStateListObserver::FullscreenWebStateListObserver(
     FullscreenController* controller,
     FullscreenModel* model,
-    WebStateList* web_state_list)
+    WebStateList* web_state_list,
+    FullscreenMediator* mediator)
     : model_(model),
       web_state_list_(web_state_list),
-      web_state_observer_(controller, model) {
+      web_state_observer_(controller, model, mediator) {
   DCHECK(model_);
   DCHECK(web_state_list_);
   web_state_list_->AddObserver(this);
@@ -45,6 +48,10 @@ void FullscreenWebStateListObserver::WebStateReplacedAt(
     // Reset the model if the active WebState is replaced.
     web_state_observer_.SetWebState(new_web_state);
     model_->ResetForNavigation();
+    if (new_web_state) {
+      UpdateFullscreenWebViewProxyForReplacedScrollView(
+          new_web_state->GetWebViewProxy(), model_);
+    }
   }
 }
 
@@ -53,6 +60,6 @@ void FullscreenWebStateListObserver::WebStateActivatedAt(
     web::WebState* old_web_state,
     web::WebState* new_web_state,
     int active_index,
-    bool user_action) {
+    int reason) {
   web_state_observer_.SetWebState(new_web_state);
 }

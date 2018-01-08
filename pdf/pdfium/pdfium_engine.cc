@@ -1405,6 +1405,7 @@ bool PDFiumEngine::HandleEvent(const pp::InputEvent& event) {
       // TODO(dsinclair): This should allow a little bit of movement (up to the
       // touch radii) to account for finger jiggle.
       KillTouchTimer(next_touch_timer_id_);
+      break;
     default:
       break;
   }
@@ -1557,7 +1558,8 @@ pp::Buffer_Dev PDFiumEngine::PrintPagesAsRasterPDF(
     double source_page_height = FPDF_GetPageHeight(pdf_page);
     source_page_sizes.push_back(
         std::make_pair(source_page_width, source_page_height));
-
+    // For computing size in pixels, use a square dpi since the source PDF page
+    // has square DPI.
     int width_in_pixels =
         ConvertUnit(source_page_width, kPointsPerInch, print_settings.dpi);
     int height_in_pixels =
@@ -2650,10 +2652,11 @@ pp::VarDictionary PDFiumEngine::TraverseBookmarks(FPDF_BOOKMARK bookmark,
     if (page_index < pages_.size() &&
         base::IsValueInRangeForNumericType<int32_t>(page_index)) {
       dict.Set(pp::Var("page"), pp::Var(static_cast<int32_t>(page_index)));
-      PDFiumPage::LinkTarget target;
-      pages_[page_index]->GetPageYTarget(dest, &target);
-      if (target.y_in_pixels)
-        dict.Set(pp::Var("y"), pp::Var(target.y_in_pixels.value()));
+
+      base::Optional<std::pair<float, float>> xy =
+          pages_[page_index]->GetPageXYTarget(dest);
+      if (xy)
+        dict.Set(pp::Var("y"), pp::Var(static_cast<int>(xy.value().second)));
     }
   } else {
     // Extract URI for bookmarks linking to an external page.
@@ -2705,6 +2708,12 @@ int PDFiumEngine::GetNamedDestinationPage(const std::string& destination) {
       dest = FPDFBookmark_GetDest(doc_, bookmark);
   }
   return dest ? FPDFDest_GetPageIndex(doc_, dest) : -1;
+}
+
+std::pair<int, int> PDFiumEngine::TransformPagePoint(
+    int page_index,
+    std::pair<int, int> page_xy) {
+  return pages_[page_index]->TransformPageToScreenXY(page_xy);
 }
 
 int PDFiumEngine::GetMostVisiblePage() {
@@ -3098,7 +3107,8 @@ void PDFiumEngine::LoadForm() {
     FPDF_LoadXFA(doc_);
 #endif
 
-    FPDF_SetFormFieldHighlightColor(form_, 0, kFormHighlightColor);
+    FPDF_SetFormFieldHighlightColor(form_, FPDF_FORMFIELD_UNKNOWN,
+                                    kFormHighlightColor);
     FPDF_SetFormFieldHighlightAlpha(form_, kFormHighlightAlpha);
   }
 }  // namespace chrome_pdf
@@ -3965,9 +3975,16 @@ bool PDFiumEngine::IsPointInEditableFormTextArea(FPDF_PAGE page,
                                                  double page_x,
                                                  double page_y,
                                                  int form_type) {
+#if defined(PDF_ENABLE_XFA)
+  if (IS_XFA_FORMFIELD(form_type))
+    return form_type == FPDF_FORMFIELD_XFA_TEXTFIELD ||
+           form_type == FPDF_FORMFIELD_XFA_COMBOBOX;
+#endif  // defined(PDF_ENABLE_XFA)
+
   FPDF_ANNOTATION annot =
       FPDFAnnot_GetFormFieldAtPoint(form_, page, page_x, page_y);
-  DCHECK(annot);
+  if (!annot)
+    return false;
 
   int flags = FPDFAnnot_GetFormFieldFlags(page, annot);
   bool is_editable_form_text_area =
@@ -4360,10 +4377,12 @@ base::LazyInstance<PDFiumEngineExports>::Leaky g_pdf_engine_exports =
 int CalculatePosition(FPDF_PAGE page,
                       const PDFiumEngineExports::RenderingSettings& settings,
                       pp::Rect* dest) {
-  int page_width = static_cast<int>(ConvertUnitDouble(
-      FPDF_GetPageWidth(page), kPointsPerInch, settings.dpi_x));
-  int page_height = static_cast<int>(ConvertUnitDouble(
-      FPDF_GetPageHeight(page), kPointsPerInch, settings.dpi_y));
+  // settings.bounds is in terms of the max DPI. Convert page sizes to match.
+  int dpi = std::max(settings.dpi_x, settings.dpi_y);
+  int page_width = static_cast<int>(
+      ConvertUnitDouble(FPDF_GetPageWidth(page), kPointsPerInch, dpi));
+  int page_height = static_cast<int>(
+      ConvertUnitDouble(FPDF_GetPageHeight(page), kPointsPerInch, dpi));
 
   // Start by assuming that we will draw exactly to the bounds rect
   // specified.
@@ -4410,9 +4429,16 @@ int CalculatePosition(FPDF_PAGE page,
     dest->set_height(page_height);
   }
 
+  // Scale the bounds to device units if DPI is rectangular.
+  if (settings.dpi_x != settings.dpi_y) {
+    dest->set_width(dest->width() * settings.dpi_x / dpi);
+    dest->set_height(dest->height() * settings.dpi_y / dpi);
+  }
+
   if (settings.center_in_bounds) {
-    pp::Point offset((settings.bounds.width() - dest->width()) / 2,
-                     (settings.bounds.height() - dest->height()) / 2);
+    pp::Point offset(
+        (settings.bounds.width() * settings.dpi_x / dpi - dest->width()) / 2,
+        (settings.bounds.height() * settings.dpi_y / dpi - dest->height()) / 2);
     dest->Offset(offset);
   }
   return rotate;

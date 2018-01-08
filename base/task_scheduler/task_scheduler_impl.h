@@ -50,12 +50,14 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
       TaskTracker;
 #endif
 
-  // |name| is used to label threads and histograms. |task_tracker| can be used
-  // for tests that need more execution control. By default, the production
-  // TaskTracker is used.
-  explicit TaskSchedulerImpl(StringPiece name,
-                             std::unique_ptr<TaskTrackerImpl> task_tracker =
-                                 std::make_unique<TaskTrackerImpl>());
+  // Creates a TaskSchedulerImpl with a production TaskTracker.
+  //|histogram_label| is used to label histograms, it must not be empty.
+  explicit TaskSchedulerImpl(StringPiece histogram_label);
+
+  // For testing only. Creates a TaskSchedulerImpl with a custom TaskTracker.
+  TaskSchedulerImpl(StringPiece histogram_label,
+                    std::unique_ptr<TaskTrackerImpl> task_tracker);
+
   ~TaskSchedulerImpl() override;
 
   // TaskScheduler:
@@ -81,6 +83,7 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
       const TaskTraits& traits) const override;
   void Shutdown() override;
   void FlushForTesting() override;
+  void FlushAsyncForTesting(OnceClosure flush_callback) override;
   void JoinForTesting() override;
 
  private:
@@ -92,7 +95,6 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
   // |all_tasks_user_blocking_| is set.
   TaskTraits SetUserBlockingPriorityIfNeeded(const TaskTraits& traits) const;
 
-  const std::string name_;
   Thread service_thread_;
   const std::unique_ptr<TaskTrackerImpl> task_tracker_;
   DelayedTaskManager delayed_task_manager_;

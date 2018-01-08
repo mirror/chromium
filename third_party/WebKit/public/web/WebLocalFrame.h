@@ -12,6 +12,7 @@
 #include "WebFrameLoadType.h"
 #include "WebHistoryItem.h"
 #include "WebImeTextSpan.h"
+#include "base/callback.h"
 #include "base/unguessable_token.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebFocusType.h"
@@ -34,8 +35,6 @@ class WebAutofillClient;
 class WebContentSettingsClient;
 class WebData;
 class WebDocumentLoader;
-class WebDevToolsAgent;
-class WebDevToolsAgentClient;
 class WebDocument;
 class WebDoubleSize;
 class WebDOMEvent;
@@ -133,8 +132,6 @@ class WebLocalFrame : public WebFrame {
 
   virtual void SetAutofillClient(WebAutofillClient*) = 0;
   virtual WebAutofillClient* AutofillClient() = 0;
-  virtual void SetDevToolsAgentClient(WebDevToolsAgentClient*) = 0;
-  virtual WebDevToolsAgent* DevToolsAgent() = 0;
   virtual void SetSharedWorkerRepositoryClient(
       WebSharedWorkerRepositoryClient*) = 0;
 
@@ -428,6 +425,22 @@ class WebLocalFrame : public WebFrame {
                                         int argc,
                                         v8::Local<v8::Value> argv[],
                                         WebScriptExecutionCallback*) = 0;
+
+  enum class PausableTaskResult {
+    // The context was invalid or destroyed.
+    kContextInvalidOrDestroyed,
+    // Script is not paused.
+    kReady,
+  };
+  using PausableTaskCallback = base::OnceCallback<void(PausableTaskResult)>;
+
+  // Queues a callback to run script when the context is not paused, e.g. for a
+  // modal JS dialog or window.print(). This callback can run immediately if the
+  // context is not paused. If the context is invalidated before becoming
+  // unpaused, the callback will be run with a kContextInvalidOrDestroyed value.
+  // This asserts that the context is valid at the time of this
+  // call.
+  virtual void PostPausableTask(PausableTaskCallback) = 0;
 
   enum ScriptExecutionType {
     // Execute script synchronously, unless the page is suspended.
@@ -772,8 +785,8 @@ class WebLocalFrame : public WebFrame {
   // If set to false, do not draw scrollbars on this frame's view.
   virtual void SetCanHaveScrollbars(bool) = 0;
 
-  // The size of the contents area.
-  virtual WebSize ContentsSize() const = 0;
+  // The size of the document in this frame.
+  virtual WebSize DocumentSize() const = 0;
 
   // Returns true if the contents (minus scrollbars) has non-zero area.
   virtual bool HasVisibleContent() const = 0;
@@ -845,11 +858,6 @@ class WebLocalFrame : public WebFrame {
   // not be transformed itself. If no selection is present, the rect will be
   // empty ((0,0), (0,0)).
   virtual WebRect GetSelectionBoundsRectForTesting() const = 0;
-
-  // Detaches all attached sessions.
-  // TODO(dgozman): this should be removed together with
-  // old inspector testing harness.
-  virtual void DetachAllDevToolsSessionsForTesting() = 0;
 
  protected:
   explicit WebLocalFrame(WebTreeScopeType scope) : WebFrame(scope) {}

@@ -5,8 +5,11 @@
 #ifndef UI_ACCESSIBILITY_PLATFORM_AX_PLATFORM_NODE_DELEGATE_H_
 #define UI_ACCESSIBILITY_PLATFORM_AX_PLATFORM_NODE_DELEGATE_H_
 
-#include "ui/accessibility/ax_enums.h"
+#include <set>
+
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/accessibility/ax_export.h"
+#include "ui/accessibility/platform/ax_unique_id.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -81,6 +84,22 @@ class AX_EXPORT AXPlatformNodeDelegate {
 
   virtual AXPlatformNode* GetFromNodeID(int32_t id) = 0;
 
+  // Given a node ID attribute (one where IsNodeIdIntAttribute is true),
+  // and a destination node ID, return a set of all source node IDs that
+  // have that relationship attribute between them and the destination.
+  virtual std::set<int32_t> GetReverseRelations(ax::mojom::IntAttribute attr,
+                                                int32_t dst_id) = 0;
+
+  // Given a node ID list attribute (one where
+  // IsNodeIdIntListAttribute is true), and a destination node ID,
+  // return a set of all source node IDs that have that relationship
+  // attribute between them and the destination.
+  virtual std::set<int32_t> GetReverseRelations(
+      ax::mojom::IntListAttribute attr,
+      int32_t dst_id) = 0;
+
+  virtual const AXUniqueId& GetUniqueId() const = 0;
+
   //
   // Events.
   //
@@ -93,7 +112,7 @@ class AX_EXPORT AXPlatformNodeDelegate {
   // Actions.
   //
 
-  // Perform an accessibility action, switching on the AXAction
+  // Perform an accessibility action, switching on the ax::mojom::Action
   // provided in |data|.
   virtual bool AccessibilityPerformAction(const AXActionData& data) = 0;
 

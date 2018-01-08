@@ -16,12 +16,11 @@
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "device/media_transfer_protocol/public/interfaces/mtp_file_entry.mojom.h"
+#include "device/media_transfer_protocol/public/interfaces/mtp_storage_info.mojom.h"
 
 #if !defined(OS_CHROMEOS)
 #error "Only used on ChromeOS"
 #endif
-
-class MtpStorageInfo;
 
 namespace device {
 
@@ -29,11 +28,22 @@ namespace device {
 // Other classes can add themselves as observers.
 class MediaTransferProtocolManager {
  public:
+  // A callback to handle the result of GetStorages().
+  // The argument is the returned vector of available MTP storage names.
+  using GetStoragesCallback =
+      base::OnceCallback<void(const std::vector<std::string>& storages)>;
+
+  // A callback to receive the result of GetStorageInfo().
+  // On success, the |storage_info| argument contains the storage metadata.
+  // Otherwise, |storage_info| is a nullptr.
+  using GetStorageInfoCallback =
+      base::OnceCallback<void(const mojom::MtpStorageInfo* storage_info)>;
+
   // A callback to handle the result of GetStorageInfoFromDevice.
   // The first argument is the returned storage info.
   // The second argument is true if there was an error.
   using GetStorageInfoFromDeviceCallback =
-      base::Callback<void(const MtpStorageInfo& storage_info,
+      base::Callback<void(const mojom::MtpStorageInfo& storage_info,
                           const bool error)>;
 
   // A callback to handle the result of OpenStorage.
@@ -102,13 +112,12 @@ class MediaTransferProtocolManager {
   // Removes an observer.
   virtual void RemoveObserver(Observer* observer) = 0;
 
-  // Returns a vector of available MTP storages.
-  virtual const std::vector<std::string> GetStorages() const = 0;
+  // Gets all available MTP storages and runs |callback|.
+  virtual void GetStorages(GetStoragesCallback callback) const = 0;
 
-  // On success, returns the metadata for |storage_name|.
-  // Otherwise returns NULL.
-  virtual const MtpStorageInfo* GetStorageInfo(
-      const std::string& storage_name) const = 0;
+  // Gets the metadata for |storage_name| and runs |callback| synchronously.
+  virtual void GetStorageInfo(const std::string& storage_name,
+                              GetStorageInfoCallback callback) const = 0;
 
   // Read the metadata of |storage_name| from device and runs |callback|.
   virtual void GetStorageInfoFromDevice(

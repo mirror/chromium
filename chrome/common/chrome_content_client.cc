@@ -49,6 +49,7 @@
 #include "gpu/config/gpu_info.h"
 #include "gpu/config/gpu_util.h"
 #include "media/base/media_switches.h"
+#include "media/base/video_codecs.h"
 #include "media/media_features.h"
 #include "net/http/http_util.h"
 #include "pdf/features.h"
@@ -129,7 +130,7 @@ content::PepperPluginInfo::PPP_ShutdownModuleFunc g_nacl_shutdown_module;
 #if defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
 bool IsWidevineAvailable(base::FilePath* adapter_path,
                          base::FilePath* cdm_path,
-                         std::vector<std::string>* codecs_supported,
+                         std::vector<media::VideoCodec>* codecs_supported,
                          bool* supports_persistent_license) {
   static enum {
     NOT_CHECKED,
@@ -150,10 +151,10 @@ bool IsWidevineAvailable(base::FilePath* adapter_path,
     if (widevine_cdm_file_check == FOUND) {
       // Add the supported codecs as if they came from the component manifest.
       // This list must match the CDM that is being bundled with Chrome.
-      codecs_supported->push_back(kCdmSupportedCodecVp8);
-      codecs_supported->push_back(kCdmSupportedCodecVp9);
+      codecs_supported->push_back(media::VideoCodec::kCodecVP8);
+      codecs_supported->push_back(media::VideoCodec::kCodecVP9);
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
-      codecs_supported->push_back(kCdmSupportedCodecAvc1);
+      codecs_supported->push_back(media::VideoCodec::kCodecH264);
 #endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
 
 // TODO(crbug.com/767941): Push persistent-license support info here once
@@ -229,9 +230,9 @@ void ComputeBuiltInPlugins(std::vector<content::PepperPluginInfo>* plugins) {
 #if defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
   base::FilePath adapter_path;
   base::FilePath cdm_path;
-  std::vector<std::string> codecs_supported;
+  std::vector<media::VideoCodec> video_codecs_supported;
   bool supports_persistent_license;
-  if (IsWidevineAvailable(&adapter_path, &cdm_path, &codecs_supported,
+  if (IsWidevineAvailable(&adapter_path, &cdm_path, &video_codecs_supported,
                           &supports_persistent_license)) {
     content::PepperPluginInfo info;
     info.is_out_of_process = true;
@@ -246,21 +247,6 @@ void ComputeBuiltInPlugins(std::vector<content::PepperPluginInfo>* plugins) {
     content::WebPluginMimeType mime_type(kWidevineCdmPluginMimeType,
                                          kWidevineCdmPluginExtension,
                                          kWidevineCdmPluginMimeTypeDescription);
-
-    // Put codec support string in additional param.
-    mime_type.additional_params.emplace_back(
-        base::ASCIIToUTF16(kCdmSupportedCodecsParamName),
-        base::ASCIIToUTF16(base::JoinString(
-            codecs_supported,
-            std::string(1, kCdmSupportedCodecsValueDelimiter))));
-
-    // Put persistent license support string in additional param.
-    mime_type.additional_params.emplace_back(
-        base::ASCIIToUTF16(kCdmPersistentLicenseSupportedParamName),
-        base::ASCIIToUTF16(supports_persistent_license
-                               ? kCdmFeatureSupported
-                               : kCdmFeatureNotSupported));
-
     info.mime_types.push_back(mime_type);
 
     plugins->push_back(info);
@@ -573,18 +559,19 @@ void ChromeContentClient::AddContentDecryptionModules(
 #if defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
     base::FilePath adapter_path;
     base::FilePath cdm_path;
-    std::vector<std::string> codecs_supported;
+    std::vector<media::VideoCodec> video_codecs_supported;
     bool supports_persistent_license;
-    if (IsWidevineAvailable(&adapter_path, &cdm_path, &codecs_supported,
+    if (IsWidevineAvailable(&adapter_path, &cdm_path, &video_codecs_supported,
                             &supports_persistent_license)) {
       // CdmInfo needs |path| to be the actual Widevine library,
       // not the adapter, so adjust as necessary. It will be in the
       // same directory as the installed adapter.
       const base::Version version(WIDEVINE_CDM_VERSION_STRING);
       DCHECK(version.IsValid());
+
       cdms->push_back(content::CdmInfo(
           kWidevineCdmDisplayName, kWidevineCdmGuid, version, cdm_path,
-          kWidevineCdmFileSystemId, codecs_supported,
+          kWidevineCdmFileSystemId, video_codecs_supported,
           supports_persistent_license, kWidevineKeySystem, false));
     }
 #endif  // defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
@@ -594,7 +581,7 @@ void ChromeContentClient::AddContentDecryptionModules(
     base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
     base::FilePath clear_key_cdm_path =
         command_line->GetSwitchValuePath(switches::kClearKeyCdmPathForTesting);
-    if (!clear_key_cdm_path.empty()) {
+    if (!clear_key_cdm_path.empty() && base::PathExists(clear_key_cdm_path)) {
       // TODO(crbug.com/764480): Remove these after we have a central place for
       // External Clear Key (ECK) related information.
       // Normal External Clear Key key system.

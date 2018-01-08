@@ -4,6 +4,8 @@
 
 #include "chrome/browser/safe_browsing/download_protection/check_client_download_request.h"
 
+#include <memory>
+
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
@@ -613,7 +615,7 @@ void CheckClientDownloadRequest::OnDmgAnalysisFinished(
 
   if (results.signature_blob.size() > 0) {
     disk_image_signature_ =
-        base::MakeUnique<std::vector<uint8_t>>(results.signature_blob);
+        std::make_unique<std::vector<uint8_t>>(results.signature_blob);
   }
 
   // Even if !results.success, some of the DMG may have been parsed.
@@ -873,12 +875,15 @@ void CheckClientDownloadRequest::SendRequest() {
       !referrer_chain_data->GetReferrerChain()->empty()) {
     request.mutable_referrer_chain()->Swap(
         referrer_chain_data->GetReferrerChain());
+    request.mutable_referrer_chain_options()->set_recent_navigations_to_collect(
+        referrer_chain_data->recent_navigations_to_collect());
     UMA_HISTOGRAM_COUNTS_100(
         "SafeBrowsing.ReferrerURLChainSize.DownloadAttribution",
-        request.referrer_chain().size());
-    if (type_ == ClientDownloadRequest::SAMPLED_UNSUPPORTED_FILE)
+        referrer_chain_data->referrer_chain_length());
+    if (type_ == ClientDownloadRequest::SAMPLED_UNSUPPORTED_FILE) {
       SafeBrowsingNavigationObserverManager::SanitizeReferrerChain(
           request.mutable_referrer_chain());
+    }
   }
 
 #if defined(OS_MACOSX)

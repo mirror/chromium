@@ -4,14 +4,16 @@
 
 #include "components/cronet/url_request_context_config.h"
 
+#include <memory>
+
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "net/cert/cert_verifier.h"
 #include "net/http/http_network_session.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_config_service_fixed.h"
+#include "net/proxy_resolution/proxy_config.h"
+#include "net/proxy_resolution/proxy_config_service_fixed.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -50,6 +52,7 @@ TEST(URLRequestContextConfigTest, TestExperimentalOptionParsing) {
       "\"race_cert_verification\":true,"
       "\"connection_options\":\"TIME,TBBR,REJ\"},"
       "\"AsyncDNS\":{\"enable\":true},"
+      "\"NetworkErrorLogging\":{\"enable\":true},"
       "\"UnknownOption\":{\"foo\":true},"
       "\"HostResolverRules\":{\"host_resolver_rules\":"
       "\"MAP * 127.0.0.1\"},"
@@ -103,6 +106,13 @@ TEST(URLRequestContextConfigTest, TestExperimentalOptionParsing) {
   // Check AsyncDNS resolver is enabled (not supported on iOS).
   EXPECT_TRUE(context->host_resolver()->GetDnsConfigAsValue());
 #endif  // defined(ENABLE_BUILT_IN_DNS)
+
+#if BUILDFLAG(ENABLE_REPORTING)
+  // Check Reporting and Network Error Logging are enabled (can be disabled at
+  // build time).
+  EXPECT_TRUE(context->reporting_service());
+  EXPECT_TRUE(context->network_error_logging_delegate());
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
   // Check IPv6 is disabled when on wifi.
   EXPECT_TRUE(context->host_resolver()->GetNoIPv6OnWifi());
@@ -366,7 +376,7 @@ TEST(URLURLRequestContextConfigTest, SetQuicConnectionOptions) {
   config.ConfigureURLRequestContextBuilder(&builder, &net_log);
   // Set a ProxyConfigService to avoid DCHECK failure when building.
   builder.set_proxy_config_service(
-      base::MakeUnique<net::ProxyConfigServiceFixed>(
+      std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateDirect()));
   std::unique_ptr<net::URLRequestContext> context(builder.Build());
   const net::HttpNetworkSession::Params* params =

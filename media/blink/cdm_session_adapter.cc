@@ -4,11 +4,11 @@
 
 #include "media/blink/cdm_session_adapter.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/stl_util.h"
@@ -20,6 +20,7 @@
 #include "media/base/key_systems.h"
 #include "media/blink/webcontentdecryptionmodule_impl.h"
 #include "media/blink/webcontentdecryptionmodulesession_impl.h"
+#include "media/cdm/cdm_context_ref_impl.h"
 #include "url/origin.h"
 
 namespace media {
@@ -79,7 +80,7 @@ void CdmSessionAdapter::GetStatusForPolicy(
 
 std::unique_ptr<WebContentDecryptionModuleSessionImpl>
 CdmSessionAdapter::CreateSession() {
-  return base::MakeUnique<WebContentDecryptionModuleSessionImpl>(this);
+  return std::make_unique<WebContentDecryptionModuleSessionImpl>(this);
 }
 
 bool CdmSessionAdapter::RegisterSession(
@@ -137,8 +138,15 @@ void CdmSessionAdapter::RemoveSession(
   cdm_->RemoveSession(session_id, std::move(promise));
 }
 
-scoped_refptr<ContentDecryptionModule> CdmSessionAdapter::GetCdm() {
-  return cdm_;
+std::unique_ptr<CdmContextRef> CdmSessionAdapter::GetCdmContextRef() {
+  DVLOG(2) << __func__;
+
+  if (!cdm_->GetCdmContext()) {
+    NOTREACHED() << "All CDMs should support CdmContext.";
+    return nullptr;
+  }
+
+  return std::make_unique<CdmContextRefImpl>(cdm_);
 }
 
 const std::string& CdmSessionAdapter::GetKeySystem() const {

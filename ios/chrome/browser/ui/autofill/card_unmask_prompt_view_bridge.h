@@ -5,7 +5,6 @@
 #ifndef IOS_CHROME_BROWSER_UI_AUTOFILL_CARD_UNMASK_PROMPT_VIEW_BRIDGE_H_
 #define IOS_CHROME_BROWSER_UI_AUTOFILL_CARD_UNMASK_PROMPT_VIEW_BRIDGE_H_
 
-#include "base/mac/scoped_nsobject.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_view.h"
@@ -14,6 +13,7 @@
 extern NSString* const kCardUnmaskPromptCollectionViewAccessibilityID;
 
 @class CardUnmaskPromptViewController;
+@class UIViewController;
 
 namespace autofill {
 
@@ -22,7 +22,10 @@ class CardUnmaskPromptController;
 // iOS implementation of the unmask prompt UI.
 class CardUnmaskPromptViewBridge : public CardUnmaskPromptView {
  public:
-  explicit CardUnmaskPromptViewBridge(CardUnmaskPromptController* controller);
+  // |base_view_controller| is a weak reference to the view controller used to
+  // present UI.
+  CardUnmaskPromptViewBridge(CardUnmaskPromptController* controller,
+                             UIViewController* base_view_controller);
   ~CardUnmaskPromptViewBridge() override;
 
   // CardUnmaskPromptView:
@@ -42,11 +45,14 @@ class CardUnmaskPromptViewBridge : public CardUnmaskPromptView {
   void DeleteSelf();
 
  protected:
-  base::scoped_nsobject<CardUnmaskPromptViewController> view_controller_;
+  CardUnmaskPromptViewController* view_controller_;
 
  private:
   // The controller |this| queries for logic and state.
   CardUnmaskPromptController* controller_;  // weak
+
+  // Weak reference to the view controller used to present UI.
+  __weak UIViewController* base_view_controller_;
 
   base::WeakPtrFactory<CardUnmaskPromptViewBridge> weak_ptr_factory_;
 

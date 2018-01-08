@@ -30,7 +30,8 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
   WTF_MAKE_NONCOPYABLE(WebThreadSupportingGC);
 
  public:
-  static std::unique_ptr<WebThreadSupportingGC> Create(const char* name);
+  static std::unique_ptr<WebThreadSupportingGC> Create(
+      const WebThreadCreationParams&);
   static std::unique_ptr<WebThreadSupportingGC> CreateForThread(WebThread*);
   ~WebThreadSupportingGC();
 
@@ -46,14 +47,15 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
   }
 
   void PostTask(const base::Location& location, CrossThreadClosure task) {
-    thread_->GetWebTaskRunner()->PostTask(location, std::move(task));
+    PostCrossThreadTask(*thread_->GetWebTaskRunner(), location,
+                        std::move(task));
   }
 
   void PostDelayedTask(const base::Location& location,
                        CrossThreadClosure task,
                        TimeDelta delay) {
-    thread_->GetWebTaskRunner()->PostDelayedTask(location, std::move(task),
-                                                 delay);
+    PostDelayedCrossThreadTask(*thread_->GetWebTaskRunner(), location,
+                               std::move(task), delay);
   }
 
   bool IsCurrentThread() const { return thread_->IsCurrentThread(); }
@@ -76,7 +78,7 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
   }
 
  private:
-  WebThreadSupportingGC(const char* name, WebThread*);
+  WebThreadSupportingGC(const WebThreadCreationParams&, WebThread*);
 
   std::unique_ptr<GCTaskRunner> gc_task_runner_;
 

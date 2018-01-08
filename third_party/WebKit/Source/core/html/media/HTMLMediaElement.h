@@ -310,6 +310,8 @@ class CORE_EXPORT HTMLMediaElement
   // Returns the "effective media volume" value as specified in the HTML5 spec.
   double EffectiveMediaVolume() const;
 
+  void pictureInPicture();
+
   // Predicates also used when dispatching wrapper creation (cf.
   // [SpecialWrapFor] IDL attribute usage.)
   virtual bool IsHTMLAudioElement() const { return false; }
@@ -357,6 +359,7 @@ class CORE_EXPORT HTMLMediaElement
 
   void ResetMediaPlayerAndMediaSource();
 
+  bool AlwaysCreateUserAgentShadowRoot() const final { return true; }
   bool AreAuthorShadowsAllowed() const final { return false; }
 
   bool SupportsFocus() const final;
@@ -364,7 +367,7 @@ class CORE_EXPORT HTMLMediaElement
   bool LayoutObjectIsNeeded(const ComputedStyle&) override;
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
   void DidNotifySubtreeInsertionsToDocument() override;
-  void DidRecalcStyle() final;
+  void DidRecalcStyle(StyleRecalcChange) final;
 
   bool CanStartSelection() const override { return false; }
 
@@ -677,7 +680,7 @@ class CORE_EXPORT HTMLMediaElement
     explicit AudioClientImpl(AudioSourceProviderClient* client)
         : client_(client) {}
 
-    ~AudioClientImpl() override {}
+    ~AudioClientImpl() override = default;
 
     // WebAudioSourceProviderClient
     void SetFormat(size_t number_of_channels, float sample_rate) override;
@@ -696,7 +699,7 @@ class CORE_EXPORT HTMLMediaElement
    public:
     AudioSourceProviderImpl() : web_audio_source_provider_(nullptr) {}
 
-    ~AudioSourceProviderImpl() override {}
+    ~AudioSourceProviderImpl() override = default;
 
     // Wraps the given WebAudioSourceProvider.
     void Wrap(WebAudioSourceProvider*);

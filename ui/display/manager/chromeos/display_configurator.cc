@@ -267,6 +267,12 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
       break;
     }
     case MULTIPLE_DISPLAY_STATE_DUAL_MIRROR: {
+      if (configurator_->mirroring_controller_->IsSoftwareMirroringEnforced()) {
+        LOG(WARNING) << "Ignoring request to enter hardware mirror mode "
+                        "because software mirroring is enforced";
+        return false;
+      }
+
       bool can_set_mirror_mode =
           configurator_->is_multi_mirroring_enabled_
               ? (states.size() > 1 &&
@@ -511,8 +517,8 @@ DisplayConfigurator::DisplayConfigurator()
       displays_suspended_(false),
       layout_manager_(new DisplayLayoutManagerImpl(this)),
       is_multi_mirroring_enabled_(
-          base::CommandLine::ForCurrentProcess()->HasSwitch(
-              ::switches::kEnableMultiMirroring)),
+          !base::CommandLine::ForCurrentProcess()->HasSwitch(
+              ::switches::kDisableMultiMirroring)),
       weak_ptr_factory_(this) {}
 
 DisplayConfigurator::~DisplayConfigurator() {

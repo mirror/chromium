@@ -13,6 +13,7 @@
 #include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
+#include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/websockets/websocket_manager.h"
@@ -87,7 +88,7 @@ void ForwardServiceRequest(const char* service_name,
   connector->BindInterface(service_name, std::move(request));
 }
 
-void GetRestrictedCookieManager(
+void GetRestrictedCookieManagerForWorker(
     network::mojom::RestrictedCookieManagerRequest request,
     RenderProcessHost* render_process_host,
     const url::Origin& origin) {
@@ -98,7 +99,7 @@ void GetRestrictedCookieManager(
 
   StoragePartition* storage_partition =
       render_process_host->GetStoragePartition();
-  mojom::NetworkContext* network_context =
+  network::mojom::NetworkContext* network_context =
       storage_partition->GetNetworkContext();
   uint32_t render_process_id = render_process_host->GetID();
   network_context->GetRestrictedCookieManager(
@@ -163,7 +164,9 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
   parameterized_binder_registry_.AddInterface(
       base::BindRepeating(&BackgroundFetchServiceImpl::Create));
   parameterized_binder_registry_.AddInterface(
-      base::BindRepeating(GetRestrictedCookieManager));
+      base::BindRepeating(GetRestrictedCookieManagerForWorker));
+  parameterized_binder_registry_.AddInterface(
+      base::BindRepeating(&QuotaDispatcherHost::CreateForWorker));
 }
 
 RendererInterfaceBinders& GetRendererInterfaceBinders() {

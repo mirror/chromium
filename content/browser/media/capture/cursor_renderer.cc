@@ -46,7 +46,6 @@ CursorRenderer::~CursorRenderer() {
 }
 
 base::WeakPtr<CursorRenderer> CursorRenderer::GetWeakPtr() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(ui_sequence_checker_);
   return weak_factory_.GetWeakPtr();
 }
 
@@ -284,6 +283,12 @@ void CursorRenderer::OnMouseHasGoneIdle() {
 CursorRendererUndoer::CursorRendererUndoer() = default;
 
 CursorRendererUndoer::~CursorRendererUndoer() = default;
+
+CursorRendererUndoer::CursorRendererUndoer(CursorRendererUndoer&& other) =
+    default;
+
+CursorRendererUndoer& CursorRendererUndoer::operator=(
+    CursorRendererUndoer&& other) = default;
 
 namespace {
 

@@ -13,13 +13,13 @@
 #include "base/run_loop.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_list.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
+#include "ui/message_center/public/cpp/notification.h"
 #include "ui/message_center/ui_controller.h"
 #include "ui/message_center/views/message_view.h"
 #include "ui/message_center/views/message_view_context_menu_controller.h"
@@ -53,12 +53,14 @@ MessagePopupCollection::MessagePopupCollection(
     PopupAlignmentDelegate* alignment_delegate)
     : message_center_(message_center),
       tray_(tray),
-      alignment_delegate_(alignment_delegate),
-      context_menu_controller_(new MessageViewContextMenuController()) {
+      alignment_delegate_(alignment_delegate) {
   DCHECK(message_center_);
   defer_timer_.reset(new base::OneShotTimer);
   message_center_->AddObserver(this);
   alignment_delegate_->set_collection(this);
+#if !defined(OS_CHROMEOS)
+  context_menu_controller_.reset(new MessageViewContextMenuController());
+#endif
 }
 
 MessagePopupCollection::~MessagePopupCollection() {
@@ -127,26 +129,6 @@ void MessagePopupCollection::UpdateWidgets() {
       alignment_delegate_->IsPrimaryDisplayForNotification();
 #endif
 
-  // Check if the popups contain a new notification.
-  bool has_new_toasts = false;
-  for (auto* popup : popups) {
-    if (!FindToast(popup->id())) {
-      has_new_toasts = true;
-      break;
-    }
-  }
-
-  // If a new notification is found, collapse all existing notifications
-  // beforehand.
-  if (has_new_toasts) {
-    for (auto* toast : toasts_) {
-      if (toast->message_view()->IsMouseHovered() ||
-          toast->message_view()->manually_expanded_or_collapsed())
-        continue;
-      toast->message_view()->SetExpanded(false);
-    }
-  }
-
   // Iterate in the reverse order to keep the oldest toasts on screen. Newer
   // items may be ignored if there are no room to place them.
   for (NotificationList::PopupNotifications::const_reverse_iterator iter =
@@ -168,18 +150,11 @@ void MessagePopupCollection::UpdateWidgets() {
     // Create top-level notification.
     MessageView* view = MessageViewFactory::Create(notification, true);
     observed_views_.Add(view);
-#if defined(OS_CHROMEOS)
-    // Disable pinned feature since this is a popup.
-    view->set_force_disable_pinned();
-#endif  // defined(OS_CHROMEOS)
     view->SetExpanded(true);
 
-    // TODO(yoshiki): Temporarily disable context menu on custom (arc)
-    // notifications. See crbug.com/750307 for detail.
-    if (notification.type() != NOTIFICATION_TYPE_CUSTOM &&
-        notification.should_show_settings_button()) {
-      view->set_context_menu_controller(context_menu_controller_.get());
-    }
+#if !defined(OS_CHROMEOS)
+    view->set_context_menu_controller(context_menu_controller_.get());
+#endif
 
     int view_height = ToastContentsView::GetToastSizeForView(view).height();
     int height_available =
@@ -219,7 +194,7 @@ void MessagePopupCollection::UpdateWidgets() {
 
     if (views::ViewsDelegate::GetInstance()) {
       views::ViewsDelegate::GetInstance()->NotifyAccessibilityEvent(
-          toast, ui::AX_EVENT_ALERT);
+          toast, ax::mojom::Event::kAlert);
     }
 
     message_center_->DisplayedNotification(

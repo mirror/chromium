@@ -77,7 +77,7 @@ class AppCacheHostTest : public testing::Test {
 
     void OnSetSubresourceFactory(
         int host_id,
-        mojom::URLLoaderFactoryPtr url_loader_factory) override {}
+        network::mojom::URLLoaderFactoryPtr url_loader_factory) override {}
 
     int last_host_id_;
     int64_t last_cache_id_;
@@ -95,18 +95,18 @@ class AppCacheHostTest : public testing::Test {
     void RegisterClient(storage::QuotaClient* client) override {}
     void NotifyStorageAccessed(storage::QuotaClient::ID client_id,
                                const GURL& origin,
-                               storage::StorageType type) override {}
+                               blink::mojom::StorageType type) override {}
     void NotifyStorageModified(storage::QuotaClient::ID client_id,
                                const GURL& origin,
-                               storage::StorageType type,
+                               blink::mojom::StorageType type,
                                int64_t delta) override {}
     void SetUsageCacheEnabled(storage::QuotaClient::ID client_id,
                               const GURL& origin,
-                              storage::StorageType type,
+                              blink::mojom::StorageType type,
                               bool enabled) override {}
     void GetUsageAndQuota(base::SequencedTaskRunner* original_task_runner,
                           const GURL& origin,
-                          storage::StorageType type,
+                          blink::mojom::StorageType type,
                           const UsageAndQuotaCallback& callback) override {}
 
     void NotifyOriginInUse(const GURL& origin) override { inuse_[origin] += 1; }

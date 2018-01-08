@@ -28,6 +28,9 @@ cr.define('extensions', function() {
 
       /** Whether the user has enabled the UI's developer mode. */
       inDevMode: Boolean,
+
+      /** Whether "allow in incognito" option should be shown. */
+      incognitoAvailable: Boolean,
     },
 
     observers: [
@@ -148,6 +151,14 @@ cr.define('extensions', function() {
           this.data.errorCollection.isEnabled;
     },
 
+    /**
+     * @return {boolean}
+     * @private
+     */
+    shouldShowIncognitoOption_: function() {
+      return this.data.incognitoAccess.isEnabled && this.incognitoAvailable;
+    },
+
     /** @private */
     onEnableChange_: function() {
       this.delegate.setItemEnabled(
@@ -207,7 +218,7 @@ cr.define('extensions', function() {
     },
 
     /** @private */
-    onDeveloperWebSiteTap_: function() {
+    onExtensionWebSiteTap_: function() {
       this.delegate.openUrl(this.data.manifestHomePageUrl);
     },
 

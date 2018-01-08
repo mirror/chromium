@@ -55,31 +55,36 @@ struct PrePaintTreeWalkContext {
   PaintLayer* ancestor_overflow_paint_layer;
 };
 
-void PrePaintTreeWalk::Walk(LocalFrameView& root_frame) {
-  DCHECK(root_frame.GetFrame().GetDocument()->Lifecycle().GetState() ==
+void PrePaintTreeWalk::Walk(LocalFrameView& root_frame_view) {
+  if (root_frame_view.ShouldThrottleRendering()) {
+    // Skip the throttled frame. Will update it when it becomes unthrottled.
+    return;
+  }
+
+  DCHECK(root_frame_view.GetFrame().GetDocument()->Lifecycle().GetState() ==
          DocumentLifecycle::kInPrePaint);
 
   PrePaintTreeWalkContext initial_context;
 
   // GeometryMapper depends on paint properties.
   bool needs_tree_builder_context_update =
-      NeedsTreeBuilderContextUpdate(root_frame, initial_context);
+      NeedsTreeBuilderContextUpdate(root_frame_view, initial_context);
   if (needs_tree_builder_context_update)
     GeometryMapper::ClearCache();
 
-  Walk(root_frame, initial_context);
+  Walk(root_frame_view, initial_context);
   paint_invalidator_.ProcessPendingDelayedPaintInvalidations();
 
 #if DCHECK_IS_ON()
   if (!needs_tree_builder_context_update)
     return;
-  if (VLOG_IS_ON(2) && root_frame.GetLayoutView()) {
-    LOG(ERROR) << "PrePaintTreeWalk::Walk(root_frame_view=" << &root_frame
+  if (VLOG_IS_ON(2) && root_frame_view.GetLayoutView()) {
+    LOG(ERROR) << "PrePaintTreeWalk::Walk(root_frame_view=" << &root_frame_view
                << ")\nPaintLayer tree:";
-    showLayerTree(root_frame.GetLayoutView()->Layer());
+    showLayerTree(root_frame_view.GetLayoutView()->Layer());
   }
   if (VLOG_IS_ON(1))
-    showAllPropertyTrees(root_frame);
+    showAllPropertyTrees(root_frame_view);
 #endif
 }
 
@@ -131,7 +136,7 @@ static void UpdateAuxiliaryObjectProperties(const LayoutObject& object,
   if (!object.HasLayer())
     return;
 
-  PaintLayer* paint_layer = object.EnclosingLayer();
+  PaintLayer* paint_layer = ToLayoutBoxModelObject(object).Layer();
   paint_layer->UpdateAncestorOverflowLayer(
       context.ancestor_overflow_paint_layer);
 
@@ -246,17 +251,18 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
   if (object.IsLayoutEmbeddedContent()) {
     const LayoutEmbeddedContent& layout_embedded_content =
         ToLayoutEmbeddedContent(object);
-    LocalFrameView* frame_view = layout_embedded_content.ChildFrameView();
-    if (frame_view) {
+    FrameView* frame_view = layout_embedded_content.ChildFrameView();
+    if (frame_view && frame_view->IsLocalFrameView()) {
+      LocalFrameView* local_frame_view = ToLocalFrameView(frame_view);
       if (context.tree_builder_context) {
         context.tree_builder_context->fragments[0].current.paint_offset +=
             layout_embedded_content.ReplacedContentRect().Location() -
-            frame_view->FrameRect().Location();
+            local_frame_view->FrameRect().Location();
         context.tree_builder_context->fragments[0].current.paint_offset =
             RoundedIntPoint(context.tree_builder_context->fragments[0]
                                 .current.paint_offset);
       }
-      Walk(*frame_view, context);
+      Walk(*local_frame_view, context);
     }
     // TODO(pdr): Investigate RemoteFrameView (crbug.com/579281).
   }

@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/extensions/extension_creator.h"
 #include "chrome/browser/extensions/extension_disabled_ui.h"
 #include "chrome/browser/extensions/extension_error_controller.h"
 #include "chrome/browser/extensions/extension_error_ui_default.h"
@@ -23,6 +24,7 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/pref_names.h"
 #include "content/public/test/test_utils.h"
+#include "extensions/browser/extension_creator.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
@@ -150,7 +152,7 @@ void GlobalErrorBubbleTest::ShowUi(const std::string& name) {
     base::FilePath crx_path = PackCRXInTempDir(
         &temp_dir, "update_from_webstore", "update_from_webstore.pem");
 
-    auto provider = base::MakeUnique<extensions::MockExternalProvider>(
+    auto provider = std::make_unique<extensions::MockExternalProvider>(
         extension_service, extensions::Manifest::EXTERNAL_PREF);
     extensions::MockExternalProvider* provider_ptr = provider.get();
     extension_service->AddProviderForTesting(std::move(provider));

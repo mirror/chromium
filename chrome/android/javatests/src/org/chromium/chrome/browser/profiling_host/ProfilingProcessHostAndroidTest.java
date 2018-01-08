@@ -22,8 +22,7 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
  * Test suite for out of process heap profiling.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
 public class ProfilingProcessHostAndroidTest {
     private static final String TAG = "ProfilingProcessHostAndroidTest";
     @Rule
@@ -37,9 +36,43 @@ public class ProfilingProcessHostAndroidTest {
 
     @Test
     @MediumTest
-    @CommandLineFlags.Add({"memlog=browser"})
+    @CommandLineFlags.Add({"memlog=browser", "memlog-stack-mode=native-include-thread-names"})
     public void testModeBrowser() throws Exception {
         TestAndroidShim profilingProcessHost = new TestAndroidShim();
-        Assert.assertTrue(profilingProcessHost.runTestForMode("browser"));
+        Assert.assertTrue(profilingProcessHost.runTestForMode(
+                "browser", false, "native-include-thread-names"));
+    }
+
+    @Test
+    @MediumTest
+    public void testModeBrowserDynamic() throws Exception {
+        TestAndroidShim profilingProcessHost = new TestAndroidShim();
+        Assert.assertTrue(profilingProcessHost.runTestForMode("browser", true, "native"));
+    }
+
+    @Test
+    @MediumTest
+    public void testModeBrowserDynamicPseudo() throws Exception {
+        TestAndroidShim profilingProcessHost = new TestAndroidShim();
+        Assert.assertTrue(profilingProcessHost.runTestForMode("browser", true, "pseudo"));
+    }
+
+    // Non-browser processes must be profiled with a command line flag, since
+    // otherwise, profiling will start after the relevant processes have been
+    // created, thus that process will be not be profiled.
+    @Test
+    @MediumTest
+    @CommandLineFlags.Add({"memlog=all-renderers", "memlog-stack-mode=pseudo"})
+    public void testModeRendererPseudo() throws Exception {
+        TestAndroidShim profilingProcessHost = new TestAndroidShim();
+        Assert.assertTrue(profilingProcessHost.runTestForMode("all-renderers", false, "pseudo"));
+    }
+
+    @Test
+    @MediumTest
+    @CommandLineFlags.Add({"memlog=gpu", "memlog-stack-mode=pseudo"})
+    public void testModeGpuPseudo() throws Exception {
+        TestAndroidShim profilingProcessHost = new TestAndroidShim();
+        Assert.assertTrue(profilingProcessHost.runTestForMode("gpu", false, "native"));
     }
 }

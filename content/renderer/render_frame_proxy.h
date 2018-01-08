@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "content/common/content_export.h"
+#include "content/common/frame_messages.h"
 #include "content/public/common/screen_info.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
@@ -26,12 +27,11 @@
 namespace blink {
 struct FramePolicy;
 struct WebRect;
-struct WebRemoteScrollProperties;
+struct WebScrollIntoViewParams;
 }
 
 namespace viz {
 class SurfaceInfo;
-struct SurfaceSequence;
 }
 
 namespace content {
@@ -43,6 +43,7 @@ class RenderWidget;
 struct ContentSecurityPolicyHeader;
 struct FrameOwnerProperties;
 struct FrameReplicationState;
+struct ResourceTimingInfo;
 
 #if defined(USE_AURA)
 class MusEmbeddedFrame;
@@ -162,6 +163,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
     return pending_resize_params_.sequence_number;
   }
 
+  const viz::FrameSinkId& frame_sink_id() const { return frame_sink_id_; }
+
   // blink::WebRemoteFrameClient implementation:
   void FrameDetached(DetachType type) override;
   void ForwardPostMessage(blink::WebLocalFrame* sourceFrame,
@@ -181,6 +184,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void AdvanceFocus(blink::WebFocusType type,
                     blink::WebLocalFrame* source) override;
   void FrameFocused() override;
+  blink::WebString GetDevToolsFrameToken() override;
 
   // IPC handlers
   void OnDidStartLoading();
@@ -194,8 +198,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   void ResendResizeParams();
 
-  void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
-                            const viz::SurfaceSequence& sequence);
+  void SetChildFrameSurface(const viz::SurfaceInfo& surface_info);
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& msg) override;
@@ -204,13 +207,17 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnDeleteProxy();
   void OnChildFrameProcessGone();
   void OnCompositorFrameSwapped(const IPC::Message& message);
-  void OnSetChildFrameSurface(const viz::SurfaceInfo& surface_info,
-                              const viz::SurfaceSequence& sequence);
+  // TODO(fsamuel): Rename OnFirstSurfaceActivation().
+  void OnSetChildFrameSurface(const viz::SurfaceInfo& surface_info);
+  void OnIntrinsicSizingInfoOfChildChanged(
+      blink::WebIntrinsicSizingInfo sizing_info);
   void OnUpdateOpener(int opener_routing_id);
-  void OnViewChanged(const viz::FrameSinkId& frame_sink_id);
+  void OnViewChanged(const FrameMsg_ViewChanged_Params& params);
   void OnDidStopLoading();
   void OnDidUpdateFramePolicy(const blink::FramePolicy& frame_policy);
   void OnDidSetActiveSandboxFlags(blink::WebSandboxFlags active_sandbox_flags);
+  void OnForwardResourceTimingToParent(
+      const ResourceTimingInfo& resource_timing);
   void OnDispatchLoad();
   void OnCollapse(bool collapsed);
   void OnDidUpdateName(const std::string& name, const std::string& unique_name);
@@ -218,6 +225,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
       const std::vector<ContentSecurityPolicyHeader>& header);
   void OnResetContentSecurityPolicy();
   void OnEnforceInsecureRequestPolicy(blink::WebInsecureRequestPolicy policy);
+  void OnEnforceInsecureNavigationsSet(const std::vector<uint32_t>& set);
   void OnSetFrameOwnerProperties(const FrameOwnerProperties& properties);
   void OnDidUpdateOrigin(const url::Origin& origin,
                          bool is_potentially_trustworthy_unique_origin);
@@ -225,9 +233,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnSetFocusedFrame();
   void OnWillEnterFullscreen();
   void OnSetHasReceivedUserGesture();
-  void OnScrollRectToVisible(
-      const gfx::Rect& rect_to_scroll,
-      const blink::WebRemoteScrollProperties& properties);
+  void OnScrollRectToVisible(const gfx::Rect& rect_to_scroll,
+                             const blink::WebScrollIntoViewParams& params);
   void OnResizeDueToAutoResize(uint64_t sequence_number);
   void OnSetHasReceivedUserGestureBeforeNavigation(bool value);
 
@@ -253,6 +260,11 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   RenderViewImpl* render_view_;
   RenderWidget* render_widget_;
+
+  // Contains string to be used as a frame id in the devtools protocol.
+  // It is derived from the content's devtools_frame_token, is
+  // defined by the browser and passed into Blink upon frame creation.
+  blink::WebString devtools_frame_token_;
 
   // TODO(fsamuel): We might want to unify this with content::ResizeParams.
   // TODO(fsamuel): Most RenderFrameProxys don't host viz::Surfaces and
@@ -284,6 +296,6 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   DISALLOW_COPY_AND_ASSIGN(RenderFrameProxy);
 };
 
-}  // namespace
+}  // namespace content
 
 #endif  // CONTENT_RENDERER_RENDER_FRAME_PROXY_H_

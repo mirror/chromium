@@ -13,12 +13,13 @@
 #include "core/frame/Frame.h"
 #include "core/frame/LocalFrame.h"
 #include "modules/permissions/PermissionUtils.h"
+#include "modules/quota/QuotaUtils.h"
 #include "modules/quota/StorageEstimate.h"
-#include "platform/StorageQuotaCallbacks.h"
+#include "mojo/public/cpp/bindings/callback_helpers.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebStorageQuotaError.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -31,36 +32,23 @@ namespace {
 const char kUniqueOriginErrorMessage[] =
     "The operation is not supported in this context.";
 
-class EstimateCallbacks final : public StorageQuotaCallbacks {
-  WTF_MAKE_NONCOPYABLE(EstimateCallbacks);
-
- public:
-  explicit EstimateCallbacks(ScriptPromiseResolver* resolver)
-      : resolver_(resolver) {}
-
-  ~EstimateCallbacks() override {}
-
-  void DidQueryStorageUsageAndQuota(
-      unsigned long long usage_in_bytes,
-      unsigned long long quota_in_bytes) override {
-    StorageEstimate estimate;
-    estimate.setUsage(usage_in_bytes);
-    estimate.setQuota(quota_in_bytes);
-    resolver_->Resolve(estimate);
+void QueryStorageUsageAndQuotaCallback(ScriptPromiseResolver* resolver,
+                                       mojom::QuotaStatusCode status_code,
+                                       int64_t usage_in_bytes,
+                                       int64_t quota_in_bytes) {
+  if (status_code != mojom::QuotaStatusCode::kOk) {
+    // TODO(sashab): Replace this with a switch statement, and remove the enum
+    // values from QuotaStatusCode.
+    resolver->Reject(
+        DOMException::Create(static_cast<ExceptionCode>(status_code)));
+    return;
   }
 
-  void DidFail(WebStorageQuotaError error) override {
-    resolver_->Reject(DOMException::Create(static_cast<ExceptionCode>(error)));
-  }
-
-  virtual void Trace(blink::Visitor* visitor) {
-    visitor->Trace(resolver_);
-    StorageQuotaCallbacks::Trace(visitor);
-  }
-
- private:
-  Member<ScriptPromiseResolver> resolver_;
-};
+  StorageEstimate estimate;
+  estimate.setUsage(usage_in_bytes);
+  estimate.setQuota(quota_in_bytes);
+  resolver->Resolve(estimate);
+}
 
 }  // namespace
 
@@ -123,9 +111,13 @@ ScriptPromise StorageManager::estimate(ScriptState* script_state) {
     return promise;
   }
 
-  Platform::Current()->QueryStorageUsageAndQuota(
-      WrapRefCounted(security_origin), kWebStorageQuotaTypeTemporary,
-      new EstimateCallbacks(resolver));
+  auto callback =
+      WTF::Bind(&QueryStorageUsageAndQuotaCallback, WrapPersistent(resolver));
+  GetQuotaHost(execution_context)
+      .QueryStorageUsageAndQuota(
+          WrapRefCounted(security_origin), mojom::StorageType::kTemporary,
+          mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+              std::move(callback), mojom::QuotaStatusCode::kErrorAbort, 0, 0));
   return promise;
 }
 
@@ -153,10 +145,21 @@ void StorageManager::PermissionRequestComplete(ScriptPromiseResolver* resolver,
   resolver->Resolve(status == PermissionStatus::GRANTED);
 }
 
-STATIC_ASSERT_ENUM(kWebStorageQuotaErrorNotSupported, kNotSupportedError);
-STATIC_ASSERT_ENUM(kWebStorageQuotaErrorInvalidModification,
+mojom::blink::QuotaDispatcherHost& StorageManager::GetQuotaHost(
+    ExecutionContext* execution_context) {
+  if (!quota_host_) {
+    ConnectToQuotaDispatcherHost(execution_context,
+                                 mojo::MakeRequest(&quota_host_));
+  }
+  return *quota_host_;
+}
+
+STATIC_ASSERT_ENUM(mojom::QuotaStatusCode::kErrorNotSupported,
+                   kNotSupportedError);
+STATIC_ASSERT_ENUM(mojom::QuotaStatusCode::kErrorInvalidModification,
                    kInvalidModificationError);
-STATIC_ASSERT_ENUM(kWebStorageQuotaErrorInvalidAccess, kInvalidAccessError);
-STATIC_ASSERT_ENUM(kWebStorageQuotaErrorAbort, kAbortError);
+STATIC_ASSERT_ENUM(mojom::QuotaStatusCode::kErrorInvalidAccess,
+                   kInvalidAccessError);
+STATIC_ASSERT_ENUM(mojom::QuotaStatusCode::kErrorAbort, kAbortError);
 
 }  // namespace blink

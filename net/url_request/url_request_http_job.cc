@@ -55,9 +55,9 @@
 #include "net/log/net_log_with_source.h"
 #include "net/net_features.h"
 #include "net/nqe/network_quality_estimator.h"
-#include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_retry_info.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_info.h"
+#include "net/proxy_resolution/proxy_retry_info.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "net/ssl/ssl_config_service.h"
@@ -409,7 +409,7 @@ void URLRequestHttpJob::NotifyBeforeSendHeadersCallback(
   if (network_delegate()) {
     network_delegate()->NotifyBeforeSendHeaders(
         request_, proxy_info,
-        request_->context()->proxy_service()->proxy_retry_info(),
+        request_->context()->proxy_resolution_service()->proxy_retry_info(),
         request_headers);
   }
 }
@@ -593,7 +593,7 @@ void URLRequestHttpJob::AddExtraHeaders() {
     bool advertise_brotli = false;
     if (request()->context()->enable_brotli()) {
       if (request()->url().SchemeIsCryptographic() ||
-          IsLocalhost(request()->url().HostNoBracketsPiece())) {
+          IsLocalhost(request()->url())) {
         advertise_brotli = true;
       }
     }
@@ -718,9 +718,9 @@ void URLRequestHttpJob::SaveCookiesAndNotifyHeadersComplete(int result) {
           request_->url(), cookie_line, base::Time::Now(), options);
       if (!cookie || !CanSetCookie(*cookie, &options))
         continue;
-      request_->context()->cookie_store()->SetCanonicalCookieAsync(
-          std::move(cookie), request_->url().SchemeIsCryptographic(),
-          !options.exclude_httponly(), net::CookieStore::SetCookiesCallback());
+      request_->context()->cookie_store()->SetCookieWithOptionsAsync(
+          request_->url(), cookie_line, options,
+          CookieStore::SetCookiesCallback());
     }
   }
 

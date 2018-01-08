@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/callback.h"
+#include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
@@ -15,11 +16,11 @@
 #include "chromeos/dbus/dbus_client.h"
 #include "chromeos/dbus/dbus_client_implementation_type.h"
 #include "chromeos/dbus/dbus_method_call_status.h"
+#include "chromeos/dbus/power_manager/policy.pb.h"
 #include "chromeos/dbus/power_manager/suspend.pb.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 namespace power_manager {
-class PowerManagementPolicy;
 class PowerSupplyProperties;
 class ScreenIdleState;
 }
@@ -67,6 +68,12 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
     // Called when screen-related inactivity timeouts are triggered or reset.
     virtual void ScreenIdleStateChanged(
         const power_manager::ScreenIdleState& proto) {}
+
+    // Called when powerd announces a change to the current inactivity delays.
+    // Some or all of these delays may be temporarily ignored due to e.g. wake
+    // locks or audio activity.
+    virtual void InactivityDelaysChanged(
+        const power_manager::PowerManagementPolicy::Delays& delays) {}
 
     // Called when peripheral device battery status is received.
     // |path| is the sysfs path for the battery of the peripheral device.
@@ -231,9 +238,16 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
   // running), |callback| will be called with nullopt.
   virtual void GetSwitchStates(DBusMethodCallback<SwitchStates> callback) = 0;
 
-  // Returns a callback that can be called by an observer to report
-  // readiness for suspend.  See Observer::SuspendImminent().
-  virtual base::Closure GetSuspendReadinessCallback() = 0;
+  // Gets the inactivity delays currently used by powerd. Some or all of these
+  // delays may be temporarily ignored due to e.g. wake locks or audio activity.
+  virtual void GetInactivityDelays(
+      DBusMethodCallback<power_manager::PowerManagementPolicy::Delays>
+          callback) = 0;
+
+  // Returns a callback that can be called by an observer to report readiness
+  // for suspend. See Observer::SuspendImminent().
+  virtual base::Closure GetSuspendReadinessCallback(
+      const base::Location& from_where) = 0;
 
   // Returns the number of callbacks returned by GetSuspendReadinessCallback()
   // for the current suspend attempt but not yet called. Used by tests.

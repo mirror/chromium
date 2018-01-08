@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 5287 tests; 5166 PASS, 121 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 5263 tests; 5152 PASS, 111 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS Test driver
 PASS Document interface: attribute domain
 PASS Document interface: attribute referrer
@@ -616,6 +616,7 @@ FAIL HTMLElement interface: attribute oncut assert_own_property: expected proper
 FAIL HTMLElement interface: attribute onpaste assert_own_property: expected property "onpaste" missing
 PASS HTMLElement interface: attribute contentEditable
 PASS HTMLElement interface: attribute isContentEditable
+PASS HTMLElement interface: attribute inputMode
 PASS HTMLElement must be primary interface of document.createElement("noscript")
 PASS Stringification of document.createElement("noscript")
 PASS HTMLElement interface: document.createElement("noscript") must inherit property "title" with the proper type
@@ -701,6 +702,7 @@ PASS HTMLElement interface: document.createElement("noscript") must inherit prop
 PASS HTMLElement interface: document.createElement("noscript") must inherit property "onpaste" with the proper type
 PASS HTMLElement interface: document.createElement("noscript") must inherit property "contentEditable" with the proper type
 PASS HTMLElement interface: document.createElement("noscript") must inherit property "isContentEditable" with the proper type
+PASS HTMLElement interface: document.createElement("noscript") must inherit property "inputMode" with the proper type
 PASS HTMLUnknownElement interface: existence and properties of interface object
 PASS HTMLUnknownElement interface object length
 PASS HTMLUnknownElement interface object name
@@ -993,7 +995,7 @@ PASS HTMLAnchorElement interface: attribute target
 PASS HTMLAnchorElement interface: attribute download
 PASS HTMLAnchorElement interface: attribute ping
 PASS HTMLAnchorElement interface: attribute rel
-FAIL HTMLAnchorElement interface: attribute relList assert_true: The prototype object must have a property "relList" expected true got false
+PASS HTMLAnchorElement interface: attribute relList
 PASS HTMLAnchorElement interface: attribute hreflang
 PASS HTMLAnchorElement interface: attribute type
 PASS HTMLAnchorElement interface: attribute text
@@ -1021,7 +1023,7 @@ PASS HTMLAnchorElement interface: document.createElement("a") must inherit prope
 PASS HTMLAnchorElement interface: document.createElement("a") must inherit property "download" with the proper type
 PASS HTMLAnchorElement interface: document.createElement("a") must inherit property "ping" with the proper type
 PASS HTMLAnchorElement interface: document.createElement("a") must inherit property "rel" with the proper type
-FAIL HTMLAnchorElement interface: document.createElement("a") must inherit property "relList" with the proper type assert_inherits: property "relList" not found in prototype chain
+PASS HTMLAnchorElement interface: document.createElement("a") must inherit property "relList" with the proper type
 PASS HTMLAnchorElement interface: document.createElement("a") must inherit property "hreflang" with the proper type
 PASS HTMLAnchorElement interface: document.createElement("a") must inherit property "type" with the proper type
 PASS HTMLAnchorElement interface: document.createElement("a") must inherit property "text" with the proper type
@@ -1753,7 +1755,7 @@ PASS HTMLAreaElement interface: attribute target
 PASS HTMLAreaElement interface: attribute download
 PASS HTMLAreaElement interface: attribute ping
 PASS HTMLAreaElement interface: attribute rel
-FAIL HTMLAreaElement interface: attribute relList assert_true: The prototype object must have a property "relList" expected true got false
+PASS HTMLAreaElement interface: attribute relList
 PASS HTMLAreaElement interface: attribute referrerPolicy
 PASS HTMLAreaElement interface: attribute noHref
 PASS HTMLAreaElement interface: attribute href
@@ -1777,7 +1779,7 @@ PASS HTMLAreaElement interface: document.createElement("area") must inherit prop
 PASS HTMLAreaElement interface: document.createElement("area") must inherit property "download" with the proper type
 PASS HTMLAreaElement interface: document.createElement("area") must inherit property "ping" with the proper type
 PASS HTMLAreaElement interface: document.createElement("area") must inherit property "rel" with the proper type
-FAIL HTMLAreaElement interface: document.createElement("area") must inherit property "relList" with the proper type assert_inherits: property "relList" not found in prototype chain
+PASS HTMLAreaElement interface: document.createElement("area") must inherit property "relList" with the proper type
 PASS HTMLAreaElement interface: document.createElement("area") must inherit property "referrerPolicy" with the proper type
 PASS HTMLAreaElement interface: document.createElement("area") must inherit property "noHref" with the proper type
 PASS HTMLAreaElement interface: document.createElement("area") must inherit property "href" with the proper type
@@ -2082,7 +2084,6 @@ PASS HTMLInputElement interface: attribute formNoValidate
 PASS HTMLInputElement interface: attribute formTarget
 PASS HTMLInputElement interface: attribute height
 PASS HTMLInputElement interface: attribute indeterminate
-FAIL HTMLInputElement interface: attribute inputMode assert_own_property: expected property "inputMode" missing
 PASS HTMLInputElement interface: attribute list
 PASS HTMLInputElement interface: attribute max
 PASS HTMLInputElement interface: attribute maxLength
@@ -2140,7 +2141,6 @@ PASS HTMLInputElement interface: document.createElement("input") must inherit pr
 PASS HTMLInputElement interface: document.createElement("input") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: document.createElement("input") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: document.createElement("input") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: document.createElement("input") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: document.createElement("input") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: document.createElement("input") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: document.createElement("input") must inherit property "maxLength" with the proper type
@@ -2204,7 +2204,6 @@ PASS HTMLInputElement interface: createInput("text") must inherit property "form
 PASS HTMLInputElement interface: createInput("text") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("text") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("text") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("text") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("text") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("text") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("text") must inherit property "maxLength" with the proper type
@@ -2268,7 +2267,6 @@ PASS HTMLInputElement interface: createInput("hidden") must inherit property "fo
 PASS HTMLInputElement interface: createInput("hidden") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("hidden") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("hidden") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("hidden") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("hidden") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("hidden") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("hidden") must inherit property "maxLength" with the proper type
@@ -2332,7 +2330,6 @@ PASS HTMLInputElement interface: createInput("search") must inherit property "fo
 PASS HTMLInputElement interface: createInput("search") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("search") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("search") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("search") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("search") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("search") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("search") must inherit property "maxLength" with the proper type
@@ -2396,7 +2393,6 @@ PASS HTMLInputElement interface: createInput("tel") must inherit property "formN
 PASS HTMLInputElement interface: createInput("tel") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("tel") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("tel") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("tel") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("tel") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("tel") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("tel") must inherit property "maxLength" with the proper type
@@ -2460,7 +2456,6 @@ PASS HTMLInputElement interface: createInput("url") must inherit property "formN
 PASS HTMLInputElement interface: createInput("url") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("url") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("url") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("url") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("url") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("url") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("url") must inherit property "maxLength" with the proper type
@@ -2524,7 +2519,6 @@ PASS HTMLInputElement interface: createInput("email") must inherit property "for
 PASS HTMLInputElement interface: createInput("email") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("email") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("email") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("email") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("email") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("email") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("email") must inherit property "maxLength" with the proper type
@@ -2588,7 +2582,6 @@ PASS HTMLInputElement interface: createInput("password") must inherit property "
 PASS HTMLInputElement interface: createInput("password") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("password") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("password") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("password") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("password") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("password") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("password") must inherit property "maxLength" with the proper type
@@ -2652,7 +2645,6 @@ PASS HTMLInputElement interface: createInput("date") must inherit property "form
 PASS HTMLInputElement interface: createInput("date") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("date") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("date") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("date") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("date") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("date") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("date") must inherit property "maxLength" with the proper type
@@ -2716,7 +2708,6 @@ PASS HTMLInputElement interface: createInput("month") must inherit property "for
 PASS HTMLInputElement interface: createInput("month") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("month") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("month") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("month") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("month") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("month") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("month") must inherit property "maxLength" with the proper type
@@ -2780,7 +2771,6 @@ PASS HTMLInputElement interface: createInput("week") must inherit property "form
 PASS HTMLInputElement interface: createInput("week") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("week") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("week") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("week") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("week") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("week") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("week") must inherit property "maxLength" with the proper type
@@ -2844,7 +2834,6 @@ PASS HTMLInputElement interface: createInput("time") must inherit property "form
 PASS HTMLInputElement interface: createInput("time") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("time") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("time") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("time") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("time") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("time") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("time") must inherit property "maxLength" with the proper type
@@ -2908,7 +2897,6 @@ PASS HTMLInputElement interface: createInput("datetime-local") must inherit prop
 PASS HTMLInputElement interface: createInput("datetime-local") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("datetime-local") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("datetime-local") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("datetime-local") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("datetime-local") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("datetime-local") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("datetime-local") must inherit property "maxLength" with the proper type
@@ -2972,7 +2960,6 @@ PASS HTMLInputElement interface: createInput("number") must inherit property "fo
 PASS HTMLInputElement interface: createInput("number") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("number") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("number") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("number") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("number") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("number") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("number") must inherit property "maxLength" with the proper type
@@ -3036,7 +3023,6 @@ PASS HTMLInputElement interface: createInput("range") must inherit property "for
 PASS HTMLInputElement interface: createInput("range") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("range") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("range") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("range") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("range") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("range") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("range") must inherit property "maxLength" with the proper type
@@ -3100,7 +3086,6 @@ PASS HTMLInputElement interface: createInput("color") must inherit property "for
 PASS HTMLInputElement interface: createInput("color") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("color") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("color") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("color") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("color") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("color") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("color") must inherit property "maxLength" with the proper type
@@ -3164,7 +3149,6 @@ PASS HTMLInputElement interface: createInput("checkbox") must inherit property "
 PASS HTMLInputElement interface: createInput("checkbox") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("checkbox") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("checkbox") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("checkbox") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("checkbox") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("checkbox") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("checkbox") must inherit property "maxLength" with the proper type
@@ -3228,7 +3212,6 @@ PASS HTMLInputElement interface: createInput("radio") must inherit property "for
 PASS HTMLInputElement interface: createInput("radio") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("radio") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("radio") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("radio") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("radio") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("radio") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("radio") must inherit property "maxLength" with the proper type
@@ -3292,7 +3275,6 @@ PASS HTMLInputElement interface: createInput("file") must inherit property "form
 PASS HTMLInputElement interface: createInput("file") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("file") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("file") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("file") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("file") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("file") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("file") must inherit property "maxLength" with the proper type
@@ -3356,7 +3338,6 @@ PASS HTMLInputElement interface: createInput("submit") must inherit property "fo
 PASS HTMLInputElement interface: createInput("submit") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("submit") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("submit") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("submit") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("submit") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("submit") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("submit") must inherit property "maxLength" with the proper type
@@ -3420,7 +3401,6 @@ PASS HTMLInputElement interface: createInput("image") must inherit property "for
 PASS HTMLInputElement interface: createInput("image") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("image") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("image") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("image") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("image") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("image") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("image") must inherit property "maxLength" with the proper type
@@ -3484,7 +3464,6 @@ PASS HTMLInputElement interface: createInput("reset") must inherit property "for
 PASS HTMLInputElement interface: createInput("reset") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("reset") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("reset") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("reset") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("reset") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("reset") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("reset") must inherit property "maxLength" with the proper type
@@ -3548,7 +3527,6 @@ PASS HTMLInputElement interface: createInput("button") must inherit property "fo
 PASS HTMLInputElement interface: createInput("button") must inherit property "formTarget" with the proper type
 PASS HTMLInputElement interface: createInput("button") must inherit property "height" with the proper type
 PASS HTMLInputElement interface: createInput("button") must inherit property "indeterminate" with the proper type
-PASS HTMLInputElement interface: createInput("button") must inherit property "inputMode" with the proper type
 PASS HTMLInputElement interface: createInput("button") must inherit property "list" with the proper type
 PASS HTMLInputElement interface: createInput("button") must inherit property "max" with the proper type
 PASS HTMLInputElement interface: createInput("button") must inherit property "maxLength" with the proper type
@@ -3765,7 +3743,6 @@ PASS HTMLTextAreaElement interface: attribute cols
 PASS HTMLTextAreaElement interface: attribute dirName
 PASS HTMLTextAreaElement interface: attribute disabled
 PASS HTMLTextAreaElement interface: attribute form
-FAIL HTMLTextAreaElement interface: attribute inputMode assert_own_property: expected property "inputMode" missing
 PASS HTMLTextAreaElement interface: attribute maxLength
 PASS HTMLTextAreaElement interface: attribute minLength
 PASS HTMLTextAreaElement interface: attribute name
@@ -3800,7 +3777,6 @@ PASS HTMLTextAreaElement interface: document.createElement("textarea") must inhe
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "dirName" with the proper type
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "disabled" with the proper type
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "form" with the proper type
-PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "inputMode" with the proper type
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "maxLength" with the proper type
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "minLength" with the proper type
 PASS HTMLTextAreaElement interface: document.createElement("textarea") must inherit property "name" with the proper type
@@ -4023,14 +3999,14 @@ PASS HTMLSlotElement interface: existence and properties of interface prototype 
 PASS HTMLSlotElement interface: existence and properties of interface prototype object's "constructor" property
 PASS HTMLSlotElement interface: attribute name
 PASS HTMLSlotElement interface: operation assignedNodes(AssignedNodesOptions)
-FAIL HTMLSlotElement interface: operation assignedElements(AssignedNodesOptions) assert_own_property: interface prototype object missing non-static operation expected property "assignedElements" missing
+PASS HTMLSlotElement interface: operation assignedElements(AssignedNodesOptions)
 PASS HTMLSlotElement must be primary interface of document.createElement("slot")
 PASS Stringification of document.createElement("slot")
 PASS HTMLSlotElement interface: document.createElement("slot") must inherit property "name" with the proper type
 PASS HTMLSlotElement interface: document.createElement("slot") must inherit property "assignedNodes(AssignedNodesOptions)" with the proper type
 PASS HTMLSlotElement interface: calling assignedNodes(AssignedNodesOptions) on document.createElement("slot") with too few arguments must throw TypeError
-FAIL HTMLSlotElement interface: document.createElement("slot") must inherit property "assignedElements(AssignedNodesOptions)" with the proper type assert_inherits: property "assignedElements" not found in prototype chain
-FAIL HTMLSlotElement interface: calling assignedElements(AssignedNodesOptions) on document.createElement("slot") with too few arguments must throw TypeError assert_inherits: property "assignedElements" not found in prototype chain
+PASS HTMLSlotElement interface: document.createElement("slot") must inherit property "assignedElements(AssignedNodesOptions)" with the proper type
+PASS HTMLSlotElement interface: calling assignedElements(AssignedNodesOptions) on document.createElement("slot") with too few arguments must throw TypeError
 PASS HTMLCanvasElement interface: existence and properties of interface object
 PASS HTMLCanvasElement interface object length
 PASS HTMLCanvasElement interface object name
@@ -4332,7 +4308,7 @@ PASS OffscreenCanvasRenderingContext2D interface object length
 PASS OffscreenCanvasRenderingContext2D interface object name
 PASS OffscreenCanvasRenderingContext2D interface: existence and properties of interface prototype object
 PASS OffscreenCanvasRenderingContext2D interface: existence and properties of interface prototype object's "constructor" property
-FAIL OffscreenCanvasRenderingContext2D interface: operation commit() assert_throws: calling operation with this = null didn't throw TypeError function "function () {
+FAIL OffscreenCanvasRenderingContext2D interface: operation commit() assert_throws: calling operation with this = null didn't throw TypeError function "function() {
             fn.apply(obj, args);
         }" did not throw
 PASS OffscreenCanvasRenderingContext2D interface: attribute canvas
@@ -4990,7 +4966,7 @@ PASS MessageEvent interface: attribute origin
 PASS MessageEvent interface: attribute lastEventId
 PASS MessageEvent interface: attribute source
 PASS MessageEvent interface: attribute ports
-FAIL MessageEvent interface: operation initMessageEvent(DOMString, boolean, boolean, any, USVString, DOMString, MessageEventSource, [object Object]) assert_equals: property has wrong .length expected 1 but got 0
+PASS MessageEvent interface: operation initMessageEvent(DOMString, boolean, boolean, any, USVString, DOMString, MessageEventSource, [object Object])
 PASS MessageEvent must be primary interface of new MessageEvent("message", { data: 5 })
 PASS Stringification of new MessageEvent("message", { data: 5 })
 PASS MessageEvent interface: new MessageEvent("message", { data: 5 }) must inherit property "data" with the proper type
@@ -4999,7 +4975,7 @@ PASS MessageEvent interface: new MessageEvent("message", { data: 5 }) must inher
 FAIL MessageEvent interface: new MessageEvent("message", { data: 5 }) must inherit property "source" with the proper type Unrecognized type WindowProxy
 PASS MessageEvent interface: new MessageEvent("message", { data: 5 }) must inherit property "ports" with the proper type
 PASS MessageEvent interface: new MessageEvent("message", { data: 5 }) must inherit property "initMessageEvent(DOMString, boolean, boolean, any, USVString, DOMString, MessageEventSource, [object Object])" with the proper type
-FAIL MessageEvent interface: calling initMessageEvent(DOMString, boolean, boolean, any, USVString, DOMString, MessageEventSource, [object Object]) on new MessageEvent("message", { data: 5 }) with too few arguments must throw TypeError assert_throws: Called with 0 arguments function "function () {
+FAIL MessageEvent interface: calling initMessageEvent(DOMString, boolean, boolean, any, USVString, DOMString, MessageEventSource, [object Object]) on new MessageEvent("message", { data: 5 }) with too few arguments must throw TypeError assert_throws: Called with 0 arguments function "function() {
             fn.apply(obj, args);
         }" did not throw
 PASS EventSource interface: existence and properties of interface object

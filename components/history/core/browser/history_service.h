@@ -18,6 +18,7 @@
 #include "base/callback_list.h"
 #include "base/containers/flat_set.h"
 #include "base/files/file_path.h"
+#include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -468,6 +469,7 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // Schedules a HistoryDBTask for running on the history backend thread. See
   // HistoryDBTask for details on what this does. Takes ownership of |task|.
   virtual base::CancelableTaskTracker::TaskId ScheduleDBTask(
+      const base::Location& from_here,
       std::unique_ptr<HistoryDBTask> task,
       base::CancelableTaskTracker* tracker);
 
@@ -615,7 +617,7 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // |expired| is set to true, if the URL deletion is due to expiration.
   // |deleted_rows| list of the deleted URLs.
   // |favicon_urls| list of favicon URLs that correspond to the deleted URLs.
-  void NotifyURLsDeleted(bool all_history,
+  void NotifyURLsDeleted(const DeletionTimeRange& time_range,
                          bool expired,
                          const URLRows& deleted_rows,
                          const std::set<GURL>& favicon_urls);
@@ -665,11 +667,17 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // |icon_types| is returned. The returned FaviconBitmapResults will have at
   // most one result for each entry in |desired_sizes|. If a favicon bitmap is
   // determined to be the best candidate for multiple |desired_sizes| there
-  // will be fewer results.
+  // will be fewer results. If |fallback_to_host| is true, the host of
+  // |page_url| will be used to search the favicon database if an exact match
+  // cannot be found. Generally, code showing an icon for a full/previously
+  // visited URL should set |fallback_to_host|=false. Otherwise, if only a host
+  // is available, and any icon matching the host is permissible, use
+  // |fallback_to_host|=true.
   base::CancelableTaskTracker::TaskId GetFaviconsForURL(
       const GURL& page_url,
       const favicon_base::IconTypeSet& icon_types,
       const std::vector<int>& desired_sizes,
+      bool fallback_to_host,
       const favicon_base::FaviconResultsCallback& callback,
       base::CancelableTaskTracker* tracker);
 

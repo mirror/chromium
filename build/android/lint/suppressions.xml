@@ -25,6 +25,8 @@ Still reading?
   <issue id="AllowBackup">
     <ignore path="AndroidManifest.xml"/>
   </issue>
+  <!-- TODO(crbug.com/804427): Remove this suppression or add rationale. -->
+  <issue id="AppCompatResource" severity="ignore"/>
   <!-- We use asserts in Chromium. See https://chromium.googlesource.com/chromium/src/+/master/styleguide/java/java.md#Asserts -->
   <issue id="Assert" severity="ignore"/>
   <issue id="AuthLeak" severity="Error">
@@ -44,6 +46,7 @@ Still reading?
   <issue id="ByteOrderMark" severity="Error">
     <ignore regexp="values-pt-rBR/android_chrome_strings.xml"/>
   </issue>
+  <issue id="ClickableViewAccessibility" severity="ignore"/>
   <issue id="CommitPrefEdits">
     <ignore regexp="third_party/cacheinvalidation/src/java/com/google/ipc/invalidation/ticl/android2/channel/AndroidChannelPreferences.java"/>
   </issue>
@@ -67,6 +70,12 @@ Still reading?
   <issue id="DrawAllocation">
     <ignore regexp="content/public/android/java/src/org/chromium/content/browser/ContentViewRenderView.java"/>
     <ignore regexp="content/public/android/java/src/org/chromium/content/browser/PopupZoomer.java"/>
+  </issue>
+  <!-- TODO(crbug.com/804432): Remove this and fix the offending xml files. -->
+  <issue id="EllipsizeMaxLines" severity="ignore"/>
+  <issue id="ExifInterface">
+    <!-- TODO(crbug.com/804438): Cannot update until android.media.ExifInterface supports file descriptors -->
+    <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/photo_picker/BitmapUtils.java"/>
   </issue>
   <issue id="ExportedContentProvider">
     <ignore path="AndroidManifest.xml"/>
@@ -117,6 +126,8 @@ Still reading?
   </issue>
   <issue id="IconDipSize">
     <ignore regexp="chromecast/internal"/>
+    <!-- These only need to be 1px for all densities. See: crbug.com/804449 -->
+    <ignore regexp="chrome/android/java/res/.*tab_strip_fade"/>
   </issue>
   <issue id="IconDuplicates" severity="Error">
     <ignore regexp="chromecast/internal"/>
@@ -124,16 +135,22 @@ Still reading?
   <issue id="IconDuplicatesConfig" severity="Error">
     <ignore regexp="chromecast/internal"/>
   </issue>
+  <issue id="IconLauncherFormat" severity="ignore">
+    <!-- TODO(crbug.com/739746): Remove after lint version has been updated. -->
+    <ignore regexp="remoting/android/java/res/mipmap-anydpi-v26/ic_launcher.xml"/>
+  </issue>
   <issue id="IconLauncherShape" severity="Error">
     <ignore regexp="chromecast/internal"/>
     <ignore regexp="chrome/android/webapk/shell_apk/res/mipmap-mdpi/ic_launcher_background.png"/>
   </issue>
   <issue id="IconLocation">
     <ignore regexp="chromecast/internal"/>
+    <!-- This is just for testing -->
+    <ignore regexp="chrome/test/chromedriver/test/webview_shell/java/res/drawable/icon.png"/>
+    <!-- Memconsumer is only for tooling -->
+    <ignore regexp="tools/android/memconsumer/java/res/drawable/"/>
     <!-- It is OK for content_shell_apk to have missing assets. -->
     <ignore regexp="content/shell/android/java/res/"/>
-    <!-- Suppression for chrome/test/chromedriver/test/webview_shell/java/res/drawable/icon.png -->
-    <ignore regexp="res/drawable/icon.png"/>
   </issue>
   <issue id="IconMissingDensityFolder">
     <!-- see crbug.com/542435 -->
@@ -162,9 +179,12 @@ Still reading?
   <issue id="InvalidPackage" severity="Error">
     <ignore regexp="espresso/espresso_core_java.interface.jar"/>
   </issue>
+  <issue id="InvalidVectorPath" severity="ignore"/>
   <issue id="LabelFor" severity="Error">
     <ignore regexp="android_webview/tools/system_webview_shell/apk/res/layout/activity_webview_browser.xml"/>
   </issue>
+  <!-- TODO(crbug.com/804453): Remove this after fixing. -->
+  <issue id="KeyboardInaccessibleWidget" severity="ignore"/>
   <issue id="LintError" severity="Error"/>
   <issue id="LogConditional" severity="ignore"/>
   <issue id="LongLogTag" severity="ignore"/>
@@ -202,6 +222,10 @@ Still reading?
     <ignore regexp="Call requires API level 19.*`java.lang.Throwable#addSuppressed`"/>
     <!-- We support default methods via desugar. -->
     <ignore regexp="Default method requires API level 24"/>
+    <!-- Seems like these work via desugar. -->
+    <ignore regexp="Static interface  method requires API level 24"/>
+    <!-- TODO(crbug.com/805479): Remove the following suppression and fix. -->
+    <ignore regexp="Call requires API level 18.*android.view.View#setClipBounds"/>
     <!-- Suppressions below this line need rationale :( -->
     <ignore regexp="Attribute `paddingStart` referenced here can result in a crash on some specific devices older than API 17"/>
     <ignore regexp="chrome/android/java/res/values-v17/styles.xml"/>
@@ -227,6 +251,8 @@ Still reading?
     <!-- TODO(crbug.com/635567): Fix this properly. -->
     <ignore regexp="sdk/extras/chromium/support/src/org/chromium/android/support/PackageManagerWrapper.java"/>
   </issue>
+  <!-- This warning just adds a lot of false positives. -->
+  <issue id="ObsoleteSdkInt" severity="ignore"/>
   <issue id="OldTargetApi">
     <ignore path="AndroidManifest.xml"/>
   </issue>
@@ -247,14 +273,16 @@ Still reading?
   </issue>
   <issue id="PackageManagerGetSignatures">
     <ignore regexp="chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java"/>
-    <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/customtabs/OriginVerifier.java"/>
+    <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/browserservices/OriginVerifier.java"/>
   </issue>
   <issue id="PluralsCandidate" severity="Error">
     <ignore regexp="chrome/android/chrome_strings_grd.resources.zip/values-en-rGB/android_chrome_strings.xml"/>
     <ignore regexp="chrome/android/chrome_strings_grd.resources.zip/values/android_chrome_strings.xml"/>
   </issue>
+  <issue id="PrivateApi" severity="ignore"/>
   <issue id="Recycle" severity="ignore"/>
   <issue id="Registered" severity="ignore"/>
+  <issue id="ResourceAsColor" severity="ignore"/>
   <issue id="ResourceType" severity="Error">
     <ignore regexp="/javatests/"/>
   </issue>
@@ -268,6 +296,10 @@ Still reading?
   <issue id="SignatureOrSystemPermissions" severity="ignore"/>
   <issue id="SpUsage" severity="Error">
     <ignore regexp="chromecast/internal"/>
+  </issue>
+  <issue id="StaticFieldLeak">
+    <!-- Nice to fix, but not necessary or performance critical. -->
+    <ignore regexp="This AsyncTask class should be static or leaks might occur"/>
   </issue>
   <issue id="StringFormatCount" severity="Error">
     <ignore regexp="chrome/android/chrome_strings_grd.resources.zip/values-cs/android_chrome_strings.xml"/>
@@ -308,15 +340,12 @@ Still reading?
   </issue>
   <!-- Our generated enums are allowed to have the same values. -->
   <issue id="UniqueConstants" severity="ignore"/>
-  <!-- Do not add new suppressions without very good rationale. -->
   <issue id="UnusedResources">
+    <!-- Do not add new suppressions without rationale. -->
     <!-- 3 raw resources are accessed by URL in various places -->
     <ignore regexp="PRODUCT_DIR/gen/remoting/android/.*/res/raw/credits.html"/>
     <ignore regexp="PRODUCT_DIR/gen/remoting/android/.*/res/raw/credits_css.css"/>
     <ignore regexp="PRODUCT_DIR/gen/remoting/android/.*/res/raw/credits_js.js"/>
-    <!-- 2 dimens override support library's res, will be changing soon -->
-    <ignore regexp="R.dimen.design_bottom_navigation_text_size"/>
-    <ignore regexp="R.dimen.design_bottom_navigation_active_text_size"/>
     <!-- 1 string test only, used in CronetSmokeTestCase dynamically -->
     <ignore regexp="R.string.TestSupportImplClass"/>
     <!-- 1 string used by Android's policies system, pulled from app directly -->
@@ -328,16 +357,17 @@ Still reading?
     <!-- 2 resources used by android webview glue layer, could be refactored -->
     <ignore regexp="android_webview/java/res/drawable-hdpi/ic_play_circle_outline_black_48dp.png"/>
     <ignore regexp="R.string.private_browsing_warning"/>
-    <!-- OMR1 SDK roll mystery. TODO(jbudorick): Remove this after rolling lint. -->
-    <ignore regexp="chrome/android/chrome_strings_grd.resources.zip/values/android_chrome_strings.xml"/>
-    <ignore regexp="chrome/android/java/res/layout/location_bar.xml"/>
-    <ignore regexp="chrome/android/java/res/values/colors.xml"/>
-    <ignore regexp="chrome/android/java/res/values/dimens.xml"/>
-    <ignore regexp="chrome/android/java/res/drawable-hdpi/ic_omnibox_magnifier.png"/>
-    <ignore regexp="chrome/android/java/res/drawable-hdpi/omnibox_https_invalid.png"/>
-    <ignore regexp="chrome/android/java/res/drawable-hdpi/omnibox_info.png"/>
-    <ignore regexp="clank/java/clank_strings_grd.resources.zip/values/android_internal_strings.xml"/>
-    <ignore regexp="tools/android/audio_focus_grabber/java/res/drawable-hdpi/notification_icon.png"/>
+    <!-- 2 resource sets used by clank widgets for each channel -->
+    <ignore regexp="The resource `R.string.bookmark_widget_title.*` appears to be unused"/>
+    <ignore regexp="The resource `R.string.search_widget_title.*` appears to be unused"/>
+    <!-- TODO(crbug.com/806060): Remove or add rationale. -->
+    <ignore regexp="ui/android/java/res/values/colors.xml"/>
+    <ignore regexp="ui/android/java/res/values/dimens.xml"/>
+    <ignore regexp="ui/android/java/res/values-v17/styles.xml"/>
+    <ignore regexp="chrome/android/java/res/anim/fullscreen_notification_in.xml"/>
+    <ignore regexp="chrome/android/java/res/values-v17/styles.xml"/>
+    <ignore regexp="chrome/android/java/res/values-v21/styles.xml"/>
+    <!-- Endnote: Please specify number of suppressions when adding more -->
   </issue>
   <issue id="UseCompoundDrawables">
     <!-- Upscaling 24dp to 48dp doesn't work as expected with a TextView compound drawable. -->
@@ -352,6 +382,7 @@ Still reading?
   <issue id="UsesMinSdkAttributes" severity="Error">
     <ignore regexp="AndroidManifest.xml"/>
   </issue>
+  <issue id="UseSparseArrays" severity="ignore"/>
   <issue id="ValidFragment" severity="Error">
     <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteDialogManager.java"/>
     <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/media/router/MediaRouteChooserDialogManager.java"/>
@@ -359,6 +390,7 @@ Still reading?
     <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/OtherFormsOfHistoryDialogFragment.java"/>
     <ignore regexp="media/capture/content/android/java/src/org/chromium/media/ScreenCapture.java"/>
   </issue>
+  <issue id="VectorPath" severity="ignore"/>
   <issue id="ViewConstructor" severity="ignore"/>
   <issue id="VisibleForTests" severity="Error">
     <ignore regexp="/javatests/"/>
@@ -372,11 +404,10 @@ Still reading?
   </issue>
   <issue id="WrongCall" severity="ignore"/>
   <issue id="WrongConstant">
+    <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java"/>
+    <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/instantapps/InstantAppsHandler.java"/>
     <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/SSLClientCertificateRequest.java"/>
     <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java"/>
-  </issue>
-  <issue id="IconLauncherFormat" severity="ignore">
-    <!-- TODO(crbug.com/739746): Remove after lint version has been updated. -->
-    <ignore regexp="remoting/android/java/res/mipmap-anydpi-v26/ic_launcher.xml"/>
+    <ignore regexp="third_party/android_data_chart/java/src/org/chromium/third_party/android/datausagechart/ChartDataUsageView.java"/>
   </issue>
 </lint>

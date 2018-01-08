@@ -51,6 +51,7 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/webthread_impl_for_worker_scheduler.h"
 #include "platform/scheduler/child/worker_global_scope_scheduler.h"
+#include "platform/scheduler/child/worker_scheduler.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
@@ -127,12 +128,23 @@ void WorkerThread::EvaluateClassicScript(
     const String& source_code,
     std::unique_ptr<Vector<char>> cached_meta_data,
     const v8_inspector::V8StackTraceId& stack_id) {
-  GetTaskRunner(TaskType::kUnthrottled)
-      ->PostTask(
-          FROM_HERE,
-          CrossThreadBind(&WorkerThread::EvaluateClassicScriptOnWorkerThread,
-                          CrossThreadUnretained(this), script_url, source_code,
-                          WTF::Passed(std::move(cached_meta_data)), stack_id));
+  DCHECK(IsMainThread());
+  PostCrossThreadTask(
+      *GetTaskRunner(TaskType::kUnthrottled), FROM_HERE,
+      CrossThreadBind(&WorkerThread::EvaluateClassicScriptOnWorkerThread,
+                      CrossThreadUnretained(this), script_url, source_code,
+                      WTF::Passed(std::move(cached_meta_data)), stack_id));
+}
+
+void WorkerThread::ImportModuleScript(
+    const KURL& script_url,
+    network::mojom::FetchCredentialsMode credentials_mode) {
+  DCHECK(IsMainThread());
+  PostCrossThreadTask(
+      *GetTaskRunner(TaskType::kUnthrottled), FROM_HERE,
+      CrossThreadBind(&WorkerThread::ImportModuleScriptOnWorkerThread,
+                      CrossThreadUnretained(this), script_url,
+                      credentials_mode));
 }
 
 void WorkerThread::Terminate() {
@@ -162,6 +174,13 @@ void WorkerThread::Terminate() {
                                  CrossThreadUnretained(this)));
 }
 
+void WorkerThread::TerminateForTesting() {
+  // Schedule a regular async worker thread termination task, and forcibly
+  // terminate the V8 script execution to ensure the task runs.
+  Terminate();
+  EnsureScriptExecutionTerminates(ExitCode::kSyncForciblyTerminated);
+}
+
 void WorkerThread::TerminateAllWorkersForTesting() {
   DCHECK(IsMainThread());
 
@@ -170,10 +189,7 @@ void WorkerThread::TerminateAllWorkersForTesting() {
   HashSet<WorkerThread*> threads = WorkerThreads();
 
   for (WorkerThread* thread : threads) {
-    // Schedule a regular async worker thread termination task, and forcibly
-    // terminate the V8 script execution to ensure the task runs.
-    thread->Terminate();
-    thread->EnsureScriptExecutionTerminates(ExitCode::kSyncForciblyTerminated);
+    thread->TerminateForTesting();
   }
 
   for (WorkerThread* thread : threads)
@@ -235,11 +251,10 @@ void WorkerThread::AppendDebuggerTask(CrossThreadClosure task) {
     if (GetIsolate() && thread_state_ != ThreadState::kReadyToShutdown)
       inspector_task_runner_->InterruptAndRunAllTasksDontWait(GetIsolate());
   }
-  GetTaskRunner(TaskType::kUnthrottled)
-      ->PostTask(FROM_HERE,
-                 CrossThreadBind(
-                     &WorkerThread::PerformDebuggerTaskDontWaitOnWorkerThread,
-                     CrossThreadUnretained(this)));
+  PostCrossThreadTask(
+      *GetTaskRunner(TaskType::kUnthrottled), FROM_HERE,
+      CrossThreadBind(&WorkerThread::PerformDebuggerTaskDontWaitOnWorkerThread,
+                      CrossThreadUnretained(this)));
 }
 
 void WorkerThread::StartRunningDebuggerTasksOnPauseOnWorkerThread() {
@@ -330,14 +345,11 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
 
 void WorkerThread::ScheduleToTerminateScriptExecution() {
   DCHECK(!forcible_termination_task_handle_.IsActive());
-  forcible_termination_task_handle_ =
-      parent_frame_task_runners_->Get(TaskType::kUnspecedTimer)
-          ->PostDelayedCancellableTask(
-              FROM_HERE,
-              WTF::Bind(&WorkerThread::EnsureScriptExecutionTerminates,
-                        WTF::Unretained(this),
-                        ExitCode::kAsyncForciblyTerminated),
-              forcible_termination_delay_);
+  forcible_termination_task_handle_ = PostDelayedCancellableTask(
+      *parent_frame_task_runners_->Get(TaskType::kUnspecedTimer), FROM_HERE,
+      WTF::Bind(&WorkerThread::EnsureScriptExecutionTerminates,
+                WTF::Unretained(this), ExitCode::kAsyncForciblyTerminated),
+      forcible_termination_delay_);
 }
 
 bool WorkerThread::ShouldTerminateScriptExecution(const MutexLocker& lock) {
@@ -387,6 +399,7 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
   global_scope_scheduler_ =
       std::make_unique<scheduler::WorkerGlobalScopeScheduler>(
           web_thread_for_worker.GetWorkerScheduler());
+  web_thread_for_worker.GetWorkerScheduler()->SetThreadType(GetThreadType());
   waitable_event->Signal();
 }
 
@@ -446,12 +459,22 @@ void WorkerThread::EvaluateClassicScriptOnWorkerThread(
     String source_code,
     std::unique_ptr<Vector<char>> cached_meta_data,
     const v8_inspector::V8StackTraceId& stack_id) {
-  DCHECK(GlobalScope()->IsWorkerGlobalScope());
   WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(GetIsolate());
   debugger->ExternalAsyncTaskStarted(stack_id);
-  GlobalScope()->EvaluateClassicScript(script_url, std::move(source_code),
-                                       std::move(cached_meta_data));
+  ToWorkerGlobalScope(GlobalScope())
+      ->EvaluateClassicScript(script_url, std::move(source_code),
+                              std::move(cached_meta_data));
   debugger->ExternalAsyncTaskFinished(stack_id);
+}
+
+void WorkerThread::ImportModuleScriptOnWorkerThread(
+    const KURL& script_url,
+    network::mojom::FetchCredentialsMode credentials_mode) {
+  // Worklets have a different code path to import module scripts.
+  // TODO(nhiroki): Consider excluding this code path from WorkerThread like
+  // Worklets.
+  ToWorkerGlobalScope(GlobalScope())
+      ->ImportModuleScript(script_url, credentials_mode);
 }
 
 void WorkerThread::PrepareForShutdownOnWorkerThread() {

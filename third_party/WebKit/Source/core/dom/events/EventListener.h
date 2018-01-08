@@ -43,7 +43,7 @@ class CORE_EXPORT EventListener
     kNativeEventListenerType,
   };
 
-  virtual ~EventListener() {}
+  virtual ~EventListener() = default;
   virtual bool operator==(const EventListener&) const = 0;
   virtual void handleEvent(ExecutionContext*, Event*) = 0;
   virtual const String& Code() const { return g_empty_string; }
@@ -56,7 +56,8 @@ class CORE_EXPORT EventListener
   ListenerType GetType() const { return type_; }
 
   virtual void Trace(blink::Visitor* visitor) {}
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {}
+  void TraceWrappers(const ScriptWrappableVisitor* visitor) const override {}
+  const char* NameInHeapSnapshot() const override { return "EventListener"; }
 
  protected:
   explicit EventListener(ListenerType type) : type_(type) {}

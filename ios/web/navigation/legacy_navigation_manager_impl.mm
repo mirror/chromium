@@ -40,7 +40,7 @@ void LegacyNavigationManagerImpl::SetBrowserState(BrowserState* browser_state) {
 
 void LegacyNavigationManagerImpl::SetSessionController(
     CRWSessionController* session_controller) {
-  session_controller_.reset(session_controller);
+  session_controller_ = session_controller;
   [session_controller_ setNavigationManager:this];
 }
 
@@ -298,25 +298,25 @@ NavigationItemImpl* LegacyNavigationManagerImpl::GetTransientItemImpl() const {
   return [session_controller_ transientItem];
 }
 
-void LegacyNavigationManagerImpl::FinishGoToIndex(int index) {
+void LegacyNavigationManagerImpl::FinishGoToIndex(
+    int index,
+    NavigationInitiationType type) {
   const ScopedNavigationItemImplList& items = [session_controller_ items];
   NavigationItem* to_item = items[index].get();
   NavigationItem* previous_item = [session_controller_ currentItem];
+
+  to_item->SetTransitionType(ui::PageTransitionFromInt(
+      to_item->GetTransitionType() | ui::PAGE_TRANSITION_FORWARD_BACK));
 
   bool same_document_navigation =
       [session_controller_ isSameDocumentNavigationBetweenItem:previous_item
                                                        andItem:to_item];
   if (same_document_navigation) {
     [session_controller_ goToItemAtIndex:index discardNonCommittedItems:YES];
-    delegate_->UpdateHtml5HistoryState();
+    delegate_->OnGoToIndexSameDocumentNavigation(type);
   } else {
     [session_controller_ discardNonCommittedItems];
     [session_controller_ setPendingItemIndex:index];
-
-    NavigationItemImpl* pending_item = [session_controller_ pendingItem];
-    pending_item->SetTransitionType(ui::PageTransitionFromInt(
-        pending_item->GetTransitionType() | ui::PAGE_TRANSITION_FORWARD_BACK));
-
     delegate_->LoadCurrentItem();
   }
 }

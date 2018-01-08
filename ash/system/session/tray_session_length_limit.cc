@@ -12,7 +12,6 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/label_tray_view.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_notifier.h"
@@ -23,11 +22,13 @@
 #include "ui/base/l10n/time_format.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 #include "ui/views/view.h"
 
 namespace ash {
 namespace {
+
+const char kNotifierSessionLengthTimeout[] = "ash.session-length-timeout";
 
 // If the remaining session time falls below this threshold, the user should be
 // informed that the session is about to expire.
@@ -167,7 +168,7 @@ void TraySessionLengthLimit::UpdateNotification() {
           base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierSessionLengthTimeout),
+              kNotifierSessionLengthTimeout),
           data, nullptr /* delegate */, kNotificationTimerIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);
   notification->SetSystemPriority();

@@ -17,6 +17,9 @@
 
 namespace blink {
 
+WebThreadCreationParams::WebThreadCreationParams(const char* name)
+    : name(name) {}
+
 #if defined(OS_WIN)
 static_assert(sizeof(blink::PlatformThreadId) >= sizeof(DWORD),
               "size of platform thread id is too small");
@@ -28,7 +31,7 @@ static_assert(sizeof(blink::PlatformThreadId) >= sizeof(pid_t),
 #endif
 
 scoped_refptr<base::SingleThreadTaskRunner>
-WebThread::GetSingleThreadTaskRunner() {
+WebThread::GetSingleThreadTaskRunner() const {
   return GetWebTaskRunner();
 }
 

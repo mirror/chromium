@@ -89,19 +89,32 @@ class WebWidget {
   // Called to run through the entire set of document lifecycle phases needed
   // to render a frame of the web widget. This MUST be called before Paint,
   // and it may result in calls to WebWidgetClient::didInvalidateRect.
-  virtual void UpdateAllLifecyclePhases() {}
+  virtual void UpdateAllLifecyclePhases() { UpdateLifecycle(); }
+
+  // Selectively runs all lifecycle phases or all phases excluding paint. The
+  // latter can be used to trigger side effects of updating layout and
+  // animations if painting is not required.
+  enum class LifecycleUpdate { kPrePaint, kAll };
+  virtual void UpdateLifecycle(
+      LifecycleUpdate requested_update = LifecycleUpdate::kAll) {}
 
   // Called to paint the rectangular region within the WebWidget
-  // onto the specified canvas at (viewPort.x,viewPort.y). You MUST call
-  // Layout before calling this method. It is okay to call paint
-  // multiple times once layout has been called, assuming no other
-  // changes are made to the WebWidget (e.g., once events are
-  // processed, it should be assumed that another call to layout is
-  // warranted before painting again).
+  // onto the specified canvas at (viewPort.x,viewPort.y).
+  //
+  // Before calling Paint(), you must call
+  // UpdateLifecycle(LifecycleUpdate::All): this method assumes the lifecycle is
+  // clean. It is okay to call paint multiple times once the lifecycle is
+  // updated, assuming no other changes are made to the WebWidget (e.g., once
+  // events are processed, it should be assumed that another call to
+  // UpdateLifecycle is warranted before painting again).
   virtual void Paint(WebCanvas*, const WebRect& view_port) {}
 
   // Similar to paint() but ignores compositing decisions, squashing all
   // contents of the WebWidget into the output given to the WebCanvas.
+  //
+  // Before calling PaintIgnoringCompositing(), you must call
+  // UpdateLifecycle(LifecycleUpdate::All): this method assumes the lifecycle is
+  // clean.
   virtual void PaintIgnoringCompositing(WebCanvas*, const WebRect&) {}
 
   // Run layout and paint of all pending document changes asynchronously.
@@ -127,6 +140,13 @@ class WebWidget {
 
   // Called to inform the WebWidget of an input event.
   virtual WebInputEventResult HandleInputEvent(const WebCoalescedInputEvent&) {
+    return WebInputEventResult::kNotHandled;
+  }
+
+  // Send any outstanding touch events. Touch events need to be grouped together
+  // and any changes since the last time a touch event is going to be sent in
+  // the new touch event.
+  virtual WebInputEventResult DispatchBufferedTouchEvents() {
     return WebInputEventResult::kNotHandled;
   }
 
@@ -214,7 +234,7 @@ class WebWidget {
   virtual void ShowContextMenu(WebMenuSourceType) {}
 
  protected:
-  ~WebWidget() {}
+  ~WebWidget() = default;
 };
 
 }  // namespace blink

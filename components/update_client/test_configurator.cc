@@ -36,8 +36,10 @@ TestConfigurator::TestConfigurator()
       ondemand_time_(0),
       enabled_cup_signing_(false),
       enabled_component_updates_(true),
-      connector_factory_(std::make_unique<patch::PatchService>()),
-      connector_(connector_factory_.CreateConnector()),
+      connector_factory_(
+          service_manager::TestConnectorFactory::CreateForUniqueService(
+              std::make_unique<patch::PatchService>())),
+      connector_(connector_factory_->CreateConnector()),
       context_(base::MakeRefCounted<net::TestURLRequestContextGetter>(
           base::ThreadTaskRunnerHandle::Get())) {}
 
@@ -107,8 +109,9 @@ std::string TestConfigurator::GetDownloadPreference() const {
   return download_preference_;
 }
 
-net::URLRequestContextGetter* TestConfigurator::RequestContext() const {
-  return context_.get();
+scoped_refptr<net::URLRequestContextGetter> TestConfigurator::RequestContext()
+    const {
+  return context_;
 }
 
 std::unique_ptr<service_manager::Connector>

@@ -30,7 +30,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/html/PublicURLManager.h"
+#include "core/fileapi/PublicURLManager.h"
 #include "core/url/URLSearchParams.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/wtf/AutoReset.h"
@@ -50,7 +50,7 @@ DOMURL::DOMURL(const String& url,
     exception_state.ThrowTypeError("Invalid URL");
 }
 
-DOMURL::~DOMURL() {}
+DOMURL::~DOMURL() = default;
 
 void DOMURL::Trace(blink::Visitor* visitor) {
   visitor->Trace(search_params_);
@@ -79,8 +79,7 @@ void DOMURL::setSearch(const String& value) {
 
 String DOMURL::CreatePublicURL(ExecutionContext* execution_context,
                                URLRegistrable* registrable) {
-  return execution_context->GetPublicURLManager().RegisterURL(execution_context,
-                                                              registrable);
+  return execution_context->GetPublicURLManager().RegisterURL(registrable);
 }
 
 URLSearchParams* DOMURL::searchParams() {

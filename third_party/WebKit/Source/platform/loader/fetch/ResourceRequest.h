@@ -37,13 +37,14 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/Referrer.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/RefCounted.h"
-#include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "services/network/public/interfaces/cors.mojom-blink.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
+#include "third_party/WebKit/common/net/ip_address_space.mojom-blink.h"
 
 namespace blink {
 
@@ -84,7 +85,7 @@ class PLATFORM_EXPORT ResourceRequest final {
 
   class ExtraData : public RefCounted<ExtraData> {
    public:
-    virtual ~ExtraData() {}
+    virtual ~ExtraData() = default;
   };
 
   ResourceRequest();
@@ -288,10 +289,10 @@ class PLATFORM_EXPORT ResourceRequest final {
     fetch_credentials_mode_ = mode;
   }
 
-  WebURLRequest::FetchRedirectMode GetFetchRedirectMode() const {
+  network::mojom::FetchRedirectMode GetFetchRedirectMode() const {
     return fetch_redirect_mode_;
   }
-  void SetFetchRedirectMode(WebURLRequest::FetchRedirectMode redirect) {
+  void SetFetchRedirectMode(network::mojom::FetchRedirectMode redirect) {
     fetch_redirect_mode_ = redirect;
   }
 
@@ -325,20 +326,13 @@ class PLATFORM_EXPORT ResourceRequest final {
 
   // https://wicg.github.io/cors-rfc1918/#external-request
   bool IsExternalRequest() const { return is_external_request_; }
-  void SetExternalRequestStateFromRequestorAddressSpace(WebAddressSpace);
+  void SetExternalRequestStateFromRequestorAddressSpace(mojom::IPAddressSpace);
 
   network::mojom::CORSPreflightPolicy CORSPreflightPolicy() const {
     return cors_preflight_policy_;
   }
   void SetCORSPreflightPolicy(network::mojom::CORSPreflightPolicy policy) {
     cors_preflight_policy_ = policy;
-  }
-
-  void OverrideLoadingIPCType(WebURLRequest::LoadingIPCType loading_ipc_type) {
-    loading_ipc_type_ = loading_ipc_type;
-  }
-  WebURLRequest::LoadingIPCType GetLoadingIPCType() const {
-    return loading_ipc_type_;
   }
 
   InputToLoadPerfMetricReportPolicy InputPerfMetricReportPolicy() const {
@@ -351,6 +345,13 @@ class PLATFORM_EXPORT ResourceRequest final {
 
   void SetRedirectStatus(RedirectStatus status) { redirect_status_ = status; }
   RedirectStatus GetRedirectStatus() const { return redirect_status_; }
+
+  void SetSuggestedFilename(const WTF::Optional<String>& suggested_filename) {
+    suggested_filename_ = suggested_filename;
+  }
+  const WTF::Optional<String>& GetSuggestedFilename() const {
+    return suggested_filename_;
+  }
 
   void SetNavigationStartTime(double);
   double NavigationStartTime() const { return navigation_start_; }
@@ -394,7 +395,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   network::mojom::RequestContextFrameType frame_type_;
   network::mojom::FetchRequestMode fetch_request_mode_;
   network::mojom::FetchCredentialsMode fetch_credentials_mode_;
-  WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
+  network::mojom::FetchRedirectMode fetch_redirect_mode_;
   String fetch_integrity_;
   ReferrerPolicy referrer_policy_;
   bool did_set_http_referrer_;
@@ -402,10 +403,10 @@ class PLATFORM_EXPORT ResourceRequest final {
   double ui_start_time_;
   bool is_external_request_;
   network::mojom::CORSPreflightPolicy cors_preflight_policy_;
-  WebURLRequest::LoadingIPCType loading_ipc_type_;
   bool is_same_document_navigation_;
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   RedirectStatus redirect_status_;
+  WTF::Optional<String> suggested_filename_;
 
   mutable CacheControlHeader cache_control_header_cache_;
 
@@ -427,7 +428,7 @@ struct CrossThreadResourceRequestData {
   USING_FAST_MALLOC(CrossThreadResourceRequestData);
 
  public:
-  CrossThreadResourceRequestData() {}
+  CrossThreadResourceRequestData() = default;
   KURL url_;
 
   mojom::FetchCacheMode cache_mode_;
@@ -455,7 +456,7 @@ struct CrossThreadResourceRequestData {
   network::mojom::RequestContextFrameType frame_type_;
   network::mojom::FetchRequestMode fetch_request_mode_;
   network::mojom::FetchCredentialsMode fetch_credentials_mode_;
-  WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
+  network::mojom::FetchRedirectMode fetch_redirect_mode_;
   String fetch_integrity_;
   WebURLRequest::PreviewsState previews_state_;
   ReferrerPolicy referrer_policy_;
@@ -464,9 +465,9 @@ struct CrossThreadResourceRequestData {
   double ui_start_time_;
   bool is_external_request_;
   network::mojom::CORSPreflightPolicy cors_preflight_policy_;
-  WebURLRequest::LoadingIPCType loading_ipc_type_;
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   ResourceRequest::RedirectStatus redirect_status_;
+  base::Optional<String> suggested_filename_;
 };
 
 }  // namespace blink

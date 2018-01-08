@@ -25,7 +25,7 @@ import sys
 import tempfile
 
 # TODO(agrieve): Move build_utils.WriteDepFile into a non-android directory.
-_REPOSITORY_ROOT = os.path.dirname(os.path.dirname(__file__))
+_REPOSITORY_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(os.path.join(_REPOSITORY_ROOT, 'build/android/gyp/util'))
 import build_utils
 
@@ -91,6 +91,9 @@ PRUNE_PATHS = set([
     # For testing only, presents on some bots.
     os.path.join('isolate_deps_dir'),
 
+    # Mock test data.
+    os.path.join('tools', 'binary_size', 'libsupersize', 'testdata'),
+
     # Overrides some WebRTC files, same license. Skip this one.
     os.path.join('third_party', 'webrtc_overrides'),
 ])
@@ -102,13 +105,13 @@ PRUNE_DIRS = (VCS_METADATA_DIRS +
                'layout_tests'))            # lots of subdirs
 
 ADDITIONAL_PATHS = (
-    os.path.join('breakpad'),
     os.path.join('chrome', 'common', 'extensions', 'docs', 'examples'),
     os.path.join('chrome', 'test', 'chromeos', 'autotest'),
     os.path.join('chrome', 'test', 'data'),
     os.path.join('native_client'),
     os.path.join('testing', 'gmock'),
     os.path.join('testing', 'gtest'),
+    os.path.join('third_party', 'boringssl', 'src', 'third_party', 'fiat'),
     os.path.join('tools', 'gyp'),
     os.path.join('tools', 'page_cycler', 'acid3'),
     os.path.join('url', 'third_party', 'mozilla'),
@@ -481,12 +484,17 @@ def GetThirdPartyDepsFromGNDepsOutput(gn_deps):
     Note that it always returns the direct sub-directory of third_party
     where README.chromium and LICENSE files are, so that it can be passed to
     ParseDir(). e.g.:
-        .../third_party/cld_3/src/src/BUILD.gn -> .../third_party/cld_3
+        third_party/cld_3/src/src/BUILD.gn -> third_party/cld_3
+
+    It returns relative paths from _REPOSITORY_ROOT, not absolute paths.
     """
     third_party_deps = set()
-    for build_dep in gn_deps.split():
-        m = re.search(r'^(.+/third_party/[^/]+)/(.+/)?BUILD\.gn$', build_dep)
-        if m and not os.path.join('build', 'secondary') in build_dep:
+    for absolute_build_dep in gn_deps.split():
+        relative_build_dep = os.path.relpath(
+            absolute_build_dep, _REPOSITORY_ROOT)
+        m = re.search(
+            r'^((.+/)?third_party/[^/]+)/(.+/)?BUILD\.gn$', relative_build_dep)
+        if m and not os.path.join('build', 'secondary') in relative_build_dep:
             third_party_deps.add(m.group(1))
     return third_party_deps
 
@@ -607,7 +615,7 @@ def GenerateCredits(
                 continue
         entries.append(MetadataToTemplateEntry(metadata, entry_template))
 
-    entries.sort(key=lambda entry: (entry['name'], entry['content']))
+    entries.sort(key=lambda entry: (entry['name'].lower(), entry['content']))
     for entry_id, entry in enumerate(entries):
         entry['content'] = entry['content'].replace('{{id}}', str(entry_id))
 

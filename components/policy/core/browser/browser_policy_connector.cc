@@ -108,16 +108,12 @@ BrowserPolicyConnector::~BrowserPolicyConnector() {
 void BrowserPolicyConnector::InitInternal(
     PrefService* local_state,
     std::unique_ptr<DeviceManagementService> device_management_service) {
-  DCHECK(!is_initialized());
-
   device_management_service_ = std::move(device_management_service);
 
   policy_statistics_collector_.reset(new policy::PolicyStatisticsCollector(
       base::Bind(&GetChromePolicyDetails), GetChromeSchema(),
       GetPolicyService(), local_state, base::ThreadTaskRunnerHandle::Get()));
   policy_statistics_collector_->Initialize();
-
-  InitPolicyProviders();
 }
 
 void BrowserPolicyConnector::Shutdown() {
@@ -167,6 +163,5 @@ void BrowserPolicyConnector::RegisterPrefs(PrefRegistrySimple* registry) {
       policy_prefs::kUserPolicyRefreshRate,
       CloudPolicyRefreshScheduler::kDefaultRefreshDelayMs);
 }
-
 
 }  // namespace policy

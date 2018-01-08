@@ -32,6 +32,8 @@ namespace {
 const char kTestSsid[] = "testSsid";
 const char kTestPassword[] = "testPassword";
 
+const size_t kMaxConnectionAttemptsPerDevice = 3;
+
 constexpr base::TimeDelta kConnectTetheringResponseTime =
     base::TimeDelta::FromSeconds(15);
 
@@ -200,7 +202,8 @@ class ConnectTetheringOperationTest : public testing::Test {
     uint32_t expected_response_timeout_seconds =
         setup_required
             ? ConnectTetheringOperation::kSetupRequiredResponseTimeoutSeconds
-            : MessageTransferOperation::kDefaultTimeoutSeconds;
+            : ConnectTetheringOperation::
+                  kSetupNotRequiredResponseTimeoutSeconds;
 
     EXPECT_EQ(expected_response_timeout_seconds,
               operation_->GetTimeoutSeconds());
@@ -275,21 +278,8 @@ TEST_F(ConnectTetheringOperationTest, TestCannotConnect) {
       .Times(0);
 
   // Simulate the device failing to connect.
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(), cryptauth::SecureChannel::Status::CONNECTING);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(),
-      cryptauth::SecureChannel::Status::DISCONNECTED);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(), cryptauth::SecureChannel::Status::CONNECTING);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(),
-      cryptauth::SecureChannel::Status::DISCONNECTED);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(), cryptauth::SecureChannel::Status::CONNECTING);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(),
-      cryptauth::SecureChannel::Status::DISCONNECTED);
+  fake_ble_connection_manager_->SimulateFailedConnectionAttempts(
+      test_device_.GetDeviceId(), kMaxConnectionAttemptsPerDevice);
 
   // The maximum number of connection failures has occurred.
   EXPECT_TRUE(test_observer_->has_received_failure());

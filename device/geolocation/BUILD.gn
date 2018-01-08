@@ -53,6 +53,7 @@ component("geolocation") {
     "wifi_data_provider_manager.h",
     "wifi_data_provider_win.cc",
     "wifi_data_provider_win.h",
+    "wifi_polling_policy.cc",
     "wifi_polling_policy.h",
   ]
 
@@ -65,7 +66,7 @@ component("geolocation") {
   ]
   public_deps = [
     "//device/geolocation/public/cpp",
-    "//device/geolocation/public/interfaces",
+    "//services/device/public/interfaces",
   ]
   if (is_android) {
     sources -= [
@@ -181,8 +182,8 @@ source_set("unittests") {
     "//base",
     "//base/third_party/dynamic_annotations",
     "//device/geolocation/public/cpp",
-    "//device/geolocation/public/interfaces",
     "//net:test_support",
+    "//services/device/public/interfaces",
     "//testing/gmock",
     "//testing/gtest",
   ]

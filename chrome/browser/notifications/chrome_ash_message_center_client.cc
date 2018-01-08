@@ -15,7 +15,7 @@
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "ui/message_center/notifier_id.h"
+#include "ui/message_center/public/cpp/notifier_id.h"
 
 using ash::mojom::NotifierUiDataPtr;
 using message_center::NotifierId;
@@ -137,12 +137,6 @@ void ChromeAshMessageCenterClient::SetNotifierEnabled(
     bool enabled) {
   sources_[notifier_id.type]->SetNotifierEnabled(GetProfileForNotifiers(),
                                                  notifier_id, enabled);
-}
-
-void ChromeAshMessageCenterClient::HandleNotifierAdvancedSettingsRequested(
-    const NotifierId& notifier_id) {
-  sources_[notifier_id.type]->OnNotifierAdvancedSettingsRequested(
-      GetProfileForNotifiers(), notifier_id);
 }
 
 void ChromeAshMessageCenterClient::GetNotifierList(

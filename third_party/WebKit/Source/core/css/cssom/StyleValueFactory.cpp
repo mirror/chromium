@@ -11,6 +11,7 @@
 #include "core/css/cssom/CSSKeywordValue.h"
 #include "core/css/cssom/CSSNumericValue.h"
 #include "core/css/cssom/CSSOMTypes.h"
+#include "core/css/cssom/CSSPositionValue.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "core/css/cssom/CSSStyleVariableReferenceValue.h"
 #include "core/css/cssom/CSSTransformValue.h"
@@ -31,6 +32,8 @@ CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
   switch (property_id) {
     case CSSPropertyTransform:
       return CSSTransformValue::FromCSSValue(value);
+    case CSSPropertyObjectPosition:
+      return CSSPositionValue::FromCSSValue(value);
     default:
       // TODO(meade): Implement other properties.
       break;
@@ -39,8 +42,7 @@ CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
 }
 
 CSSStyleValue* CreateStyleValue(const CSSValue& value) {
-  if (value.IsCSSWideKeyword() || value.IsIdentifierValue() ||
-      value.IsCustomIdentValue())
+  if (value.IsIdentifierValue() || value.IsCustomIdentValue())
     return CSSKeywordValue::FromCSSValue(value);
   if (value.IsPrimitiveValue())
     return CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value));
@@ -60,6 +62,9 @@ CSSStyleValue* CreateStyleValue(const CSSValue& value) {
 
 CSSStyleValue* CreateStyleValueWithProperty(CSSPropertyID property_id,
                                             const CSSValue& value) {
+  if (value.IsCSSWideKeyword())
+    return CSSKeywordValue::FromCSSValue(value);
+
   CSSStyleValue* style_value =
       CreateStyleValueWithPropertyInternal(property_id, value);
   if (style_value)
@@ -67,10 +72,11 @@ CSSStyleValue* CreateStyleValueWithProperty(CSSPropertyID property_id,
   return CreateStyleValue(value);
 }
 
-CSSStyleValueVector UnsupportedCSSValue(const CSSValue& value) {
+CSSStyleValueVector UnsupportedCSSValue(CSSPropertyID property_id,
+                                        const CSSValue& value) {
   CSSStyleValueVector style_value_vector;
   style_value_vector.push_back(
-      CSSUnsupportedStyleValue::Create(value.CssText()));
+      CSSUnsupportedStyleValue::Create(property_id, value));
   return style_value_vector;
 }
 
@@ -131,7 +137,7 @@ CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
   }
 
   if (!css_value.IsValueList()) {
-    return UnsupportedCSSValue(css_value);
+    return UnsupportedCSSValue(property_id, css_value);
   }
 
   // If it's a list, we can try it as a list valued property.
@@ -139,7 +145,7 @@ CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
   for (const CSSValue* inner_value : css_value_list) {
     style_value = CreateStyleValueWithProperty(property_id, *inner_value);
     if (!style_value)
-      return UnsupportedCSSValue(css_value);
+      return UnsupportedCSSValue(property_id, css_value);
     style_value_vector.push_back(style_value);
   }
   return style_value_vector;

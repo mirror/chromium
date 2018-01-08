@@ -20,7 +20,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
 #include "components/data_reduction_proxy/proto/client_config.pb.h"
 #include "components/variations/variations_associated_data.h"
-#include "net/proxy/proxy_server.h"
+#include "net/base/proxy_server.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -75,13 +75,6 @@ TEST_F(DataReductionProxyParamsTest, Flags) {
       switches::kDataReductionProxyFallback, "http://ovveride-2.com/");
   TestDataReductionProxyParams params;
   CheckValues(params, "http://ovveride-1.com/", "http://ovveride-2.com/");
-}
-
-TEST_F(DataReductionProxyParamsTest, AndroidOnePromoFieldTrial) {
-  EXPECT_TRUE(params::IsIncludedInAndroidOnePromoFieldTrialForTesting(
-      "google/sprout/sprout:4.4.4/KPW53/1379542:user/release-keys"));
-  EXPECT_FALSE(params::IsIncludedInAndroidOnePromoFieldTrialForTesting(
-      "google/hammerhead/hammerhead:5.0/LRX210/1570415:user/release-keys"));
 }
 
 TEST_F(DataReductionProxyParamsTest, IsClientConfigEnabled) {
@@ -251,7 +244,7 @@ TEST_F(DataReductionProxyParamsTest, QuicFieldTrial) {
       EXPECT_EQ(GURL("http://check.googlezip.net/generate_204"),
                 params::GetWarmupURL());
     }
-    EXPECT_TRUE(params::FetchWarmupURLEnabled());
+    EXPECT_TRUE(params::FetchWarmupProbeURLEnabled());
   }
 }
 

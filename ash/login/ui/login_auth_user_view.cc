@@ -9,13 +9,13 @@
 #include "ash/login/login_screen_controller.h"
 #include "ash/login/ui/layout_util.h"
 #include "ash/login/ui/lock_screen.h"
-#include "ash/login/ui/login_constants.h"
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_password_view.h"
 #include "ash/login/ui/login_pin_view.h"
 #include "ash/login/ui/login_user_view.h"
 #include "ash/login/ui/non_accessible_view.h"
 #include "ash/login/ui/pin_keyboard_animation.h"
+#include "ash/public/cpp/login_constants.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "base/strings/utf_string_conversions.h"
@@ -347,9 +347,13 @@ void LoginAuthUserView::OnAuthSubmit(const base::string16& password) {
 
 void LoginAuthUserView::OnAuthComplete(base::Optional<bool> auth_success) {
   password_view_->SetReadOnly(false);
-  password_view_->Clear();
-  if (auth_success.has_value())
-    on_auth_.Run(*auth_success);
+  if (auth_success.has_value()) {
+    // Clear the password if auth fails.
+    if (!auth_success.value())
+      password_view_->Clear();
+
+    on_auth_.Run(auth_success.value());
+  }
 }
 
 void LoginAuthUserView::OnUserViewTap() {

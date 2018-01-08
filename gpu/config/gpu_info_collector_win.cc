@@ -16,7 +16,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "base/command_line.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -34,8 +33,6 @@
 #include "base/threading/thread.h"
 #include "base/trace_event/trace_event.h"
 #include "base/win/scoped_com_initializer.h"
-#include "ui/gl/gl_implementation.h"
-#include "ui/gl/gl_surface_egl.h"
 
 namespace gpu {
 
@@ -235,18 +232,6 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
 
   DCHECK(gpu_info);
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kUseGL)) {
-    std::string requested_implementation_name =
-        base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-            switches::kUseGL);
-    if (requested_implementation_name ==
-        gl::kGLImplementationSwiftShaderForWebGLName) {
-      gpu_info->software_rendering = true;
-      gpu_info->context_info_state = kCollectInfoNonFatalFailure;
-      return kCollectInfoNonFatalFailure;
-    }
-  }
-
   CollectInfoResult result = CollectGraphicsInfoGL(gpu_info);
   if (result != kCollectInfoSuccess) {
     gpu_info->context_info_state = result;
@@ -281,6 +266,32 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
         base::StringPrintf("%d.%d",
                            pixel_shader_major_version,
                            pixel_shader_minor_version);
+
+    DCHECK(!gpu_info->vertex_shader_version.empty());
+    // Note: do not reorder, used by UMA_HISTOGRAM below
+    enum ShaderModel {
+      SHADER_MODEL_UNKNOWN,
+      SHADER_MODEL_2_0,
+      SHADER_MODEL_3_0,
+      SHADER_MODEL_4_0,
+      SHADER_MODEL_4_1,
+      SHADER_MODEL_5_0,
+      NUM_SHADER_MODELS
+    };
+    ShaderModel shader_model = SHADER_MODEL_UNKNOWN;
+    if (gpu_info->vertex_shader_version == "5.0") {
+      shader_model = SHADER_MODEL_5_0;
+    } else if (gpu_info->vertex_shader_version == "4.1") {
+      shader_model = SHADER_MODEL_4_1;
+    } else if (gpu_info->vertex_shader_version == "4.0") {
+      shader_model = SHADER_MODEL_4_0;
+    } else if (gpu_info->vertex_shader_version == "3.0") {
+      shader_model = SHADER_MODEL_3_0;
+    } else if (gpu_info->vertex_shader_version == "2.0") {
+      shader_model = SHADER_MODEL_2_0;
+    }
+    UMA_HISTOGRAM_ENUMERATION("GPU.D3DShaderModel", shader_model,
+                              NUM_SHADER_MODELS);
 
     // DirectX diagnostics are collected asynchronously because it takes a
     // couple of seconds.
@@ -347,61 +358,6 @@ CollectInfoResult CollectDriverInfoGL(GPUInfo* gpu_info) {
   bool parsed = RE2::PartialMatch(
       gpu_info->gl_version, "([\\d\\.]+)$", &gpu_info->driver_version);
   return parsed ? kCollectInfoSuccess : kCollectInfoNonFatalFailure;
-}
-
-void MergeGPUInfo(GPUInfo* basic_gpu_info,
-                  const GPUInfo& context_gpu_info) {
-  DCHECK(basic_gpu_info);
-
-  if (context_gpu_info.software_rendering) {
-    basic_gpu_info->software_rendering = true;
-    return;
-  }
-
-  // Track D3D Shader Model (if available)
-  const std::string& shader_version =
-      context_gpu_info.vertex_shader_version;
-
-  // Only gather if this is the first time we're seeing
-  // a non-empty shader version string.
-  if (!shader_version.empty() &&
-      basic_gpu_info->vertex_shader_version.empty()) {
-
-    // Note: do not reorder, used by UMA_HISTOGRAM below
-    enum ShaderModel {
-      SHADER_MODEL_UNKNOWN,
-      SHADER_MODEL_2_0,
-      SHADER_MODEL_3_0,
-      SHADER_MODEL_4_0,
-      SHADER_MODEL_4_1,
-      SHADER_MODEL_5_0,
-      NUM_SHADER_MODELS
-    };
-
-    ShaderModel shader_model = SHADER_MODEL_UNKNOWN;
-
-    if (shader_version == "5.0") {
-      shader_model = SHADER_MODEL_5_0;
-    } else if (shader_version == "4.1") {
-      shader_model = SHADER_MODEL_4_1;
-    } else if (shader_version == "4.0") {
-      shader_model = SHADER_MODEL_4_0;
-    } else if (shader_version == "3.0") {
-      shader_model = SHADER_MODEL_3_0;
-    } else if (shader_version == "2.0") {
-      shader_model = SHADER_MODEL_2_0;
-    }
-
-    UMA_HISTOGRAM_ENUMERATION("GPU.D3DShaderModel",
-                              shader_model,
-                              NUM_SHADER_MODELS);
-  }
-
-  MergeGPUInfoGL(basic_gpu_info, context_gpu_info);
-
-  basic_gpu_info->dx_diagnostics_info_state =
-      context_gpu_info.dx_diagnostics_info_state;
-  basic_gpu_info->dx_diagnostics = context_gpu_info.dx_diagnostics;
 }
 
 }  // namespace gpu

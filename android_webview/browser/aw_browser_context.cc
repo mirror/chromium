@@ -41,8 +41,8 @@
 #include "content/public/browser/ssl_host_state_delegate.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
-#include "net/proxy/proxy_config_service_android.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_config_service_android.h"
+#include "net/proxy_resolution/proxy_service.h"
 
 using base::FilePath;
 using content::BrowserThread;
@@ -65,6 +65,8 @@ const char kWebRestrictionsAuthority[] = "web_restrictions_authority";
 
 namespace {
 
+const base::FilePath::CharType kChannelIDFilename[] = "Origin Bound Certs";
+
 const void* const kDownloadManagerDelegateKey = &kDownloadManagerDelegateKey;
 
 // Shows notifications which correspond to PersistentPrefStore's reading errors.
@@ -75,7 +77,7 @@ AwBrowserContext* g_browser_context = NULL;
 
 std::unique_ptr<net::ProxyConfigService> CreateProxyConfigService() {
   std::unique_ptr<net::ProxyConfigService> config_service =
-      net::ProxyService::CreateSystemProxyConfigService(
+      net::ProxyResolutionService::CreateSystemProxyConfigService(
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 
   // TODO(csharrison) Architect the wrapper better so we don't need a cast for
@@ -140,9 +142,9 @@ void AwBrowserContext::PreMainMessageLoopRun(net::NetLog* net_log) {
 
   InitUserPrefService();
 
-  url_request_context_getter_ =
-      new AwURLRequestContextGetter(cache_path, CreateProxyConfigService(),
-                                    user_pref_service_.get(), net_log);
+  url_request_context_getter_ = new AwURLRequestContextGetter(
+      cache_path, context_storage_path_.Append(kChannelIDFilename),
+      CreateProxyConfigService(), user_pref_service_.get(), net_log);
 
   scoped_refptr<base::SequencedTaskRunner> db_task_runner =
       base::CreateSequencedTaskRunnerWithTraits(
@@ -219,12 +221,10 @@ void AwBrowserContext::InitUserPrefService() {
   pref_registry->RegisterBooleanPref(autofill::prefs::kAutofillEnabled, false);
   policy::URLBlacklistManager::RegisterProfilePrefs(pref_registry);
 
-  pref_registry->RegisterStringPref(prefs::kAuthServerWhitelist, std::string());
-  pref_registry->RegisterStringPref(prefs::kAuthAndroidNegotiateAccountType,
-                                    std::string());
   pref_registry->RegisterStringPref(prefs::kWebRestrictionsAuthority,
                                     std::string());
 
+  AwURLRequestContextGetter::RegisterPrefs(pref_registry);
   metrics::MetricsService::RegisterPrefs(pref_registry);
   safe_browsing::RegisterProfilePrefs(pref_registry);
 
@@ -233,6 +233,7 @@ void AwBrowserContext::InitUserPrefService() {
       base::MakeRefCounted<InMemoryPrefStore>());
   pref_service_factory.set_managed_prefs(
       base::MakeRefCounted<policy::ConfigurationPolicyPrefStore>(
+          browser_policy_connector_.get(),
           browser_policy_connector_->GetPolicyService(),
           browser_policy_connector_->GetHandlerList(),
           policy::POLICY_LEVEL_MANDATORY));

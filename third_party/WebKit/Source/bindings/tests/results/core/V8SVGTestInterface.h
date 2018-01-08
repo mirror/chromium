@@ -35,12 +35,6 @@ class V8SVGTestInterface {
   }
   CORE_EXPORT static SVGTestInterface* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<SVGTestInterface>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<SVGTestInterface>());
-  }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
 
   // Callback functions
@@ -57,6 +51,7 @@ class V8SVGTestInterface {
 template <>
 struct NativeValueTraits<SVGTestInterface> : public NativeValueTraitsBase<SVGTestInterface> {
   CORE_EXPORT static SVGTestInterface* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static SVGTestInterface* NullValue() { return nullptr; }
 };
 
 template <>

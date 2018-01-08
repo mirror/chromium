@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 
+#include "ash/accessibility/accessibility_controller.h"
 #include "ash/magnifier/magnification_controller.h"
 #include "ash/public/cpp/accessibility_types.h"
 #include "ash/public/cpp/ash_pref_names.h"
@@ -177,8 +178,10 @@ PrefService* GetPrefs() {
 // Simulates how UserSessionManager starts a user session by loading user
 // profile and marking session as started.
 void StartUserSession(const AccountId& account_id) {
-  ProfileHelper::GetProfileByUserIdHashForTest(
+  Profile* profile = ProfileHelper::GetProfileByUserIdHashForTest(
       user_manager::UserManager::Get()->FindUser(account_id)->username_hash());
+  ash::Shell::Get()->accessibility_controller()->SetPrefServiceForTest(
+      profile->GetPrefs());
 
   session_manager::SessionManager::Get()->SessionStarted();
 }
@@ -281,9 +284,13 @@ class AccessibilityManagerTest : public InProcessBrowserTest {
 
   void SetUpOnMainThread() override {
     // Sets the login-screen profile.
-    AccessibilityManager::Get()->SetProfileForTest(
-        ProfileHelper::GetSigninProfile());
+    Profile* profile = ProfileHelper::GetSigninProfile();
+    AccessibilityManager::Get()->SetProfileForTest(profile);
+    ash::Shell::Get()->accessibility_controller()->SetPrefServiceForTest(
+        profile->GetPrefs());
     default_autoclick_delay_ = GetAutoclickDelay();
+    // Spin the message loop to ensure the initial CheckBrailleState() is done.
+    base::RunLoop().RunUntilIdle();
   }
 
   void TearDownOnMainThread() override {
@@ -294,6 +301,7 @@ class AccessibilityManagerTest : public InProcessBrowserTest {
     braille_controller_.SetAvailable(available);
     braille_controller_.GetObserver()->OnBrailleDisplayStateChanged(
         *braille_controller_.GetDisplayState());
+    AccessibilityManager::Get()->FlushForTesting();
   }
 
   int default_autoclick_delay() const { return default_autoclick_delay_; }

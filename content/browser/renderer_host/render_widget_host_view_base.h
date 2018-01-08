@@ -296,10 +296,15 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // methods are invoked on the RenderWidgetHostView that should be able to
   // properly handle the event (i.e. it has focus for keyboard events, or has
   // been identified by hit testing mouse, touch or gesture events).
+  // |out_query_renderer| is set if there is low confidence in the hit test
+  // result which means that renderer process hit testing could potentially
+  // give a different result. In that case the returned FrameSinkId and
+  // transformed point should be ignored.
   virtual viz::FrameSinkId FrameSinkIdAtPoint(
       viz::SurfaceHittestDelegate* delegate,
       const gfx::PointF& point,
-      gfx::PointF* transformed_point);
+      gfx::PointF* transformed_point,
+      bool* out_query_renderer);
 
   virtual void PreProcessMouseEvent(const blink::WebMouseEvent& event) {}
   virtual void PreProcessTouchEvent(const blink::WebTouchEvent& event) {}
@@ -359,6 +364,10 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   // Obtains the root window FrameSinkId.
   virtual viz::FrameSinkId GetRootFrameSinkId();
+
+  // Returns the SurfaceId currently in use by the renderer to submit compositor
+  // frames.
+  virtual viz::SurfaceId GetCurrentSurfaceId() const = 0;
 
   //----------------------------------------------------------------------------
   // The following methods are related to IME.
@@ -498,8 +507,7 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   void OnChildFrameDestroyed(int routing_id);
 #endif
 
-  // Exposed for testing.
-  virtual viz::SurfaceId SurfaceIdForTesting() const;
+  virtual void DidNavigate() {}
 
  protected:
   // Interface class only, do not construct.

@@ -5,7 +5,7 @@
 #include "net/http/http_network_session.h"
 
 #include <inttypes.h>
-#include <memory>
+
 #include <utility>
 
 #include "base/atomic_sequence_num.h"
@@ -25,7 +25,7 @@
 #include "net/http/http_response_body_drainer.h"
 #include "net/http/http_stream_factory_impl.h"
 #include "net/http/url_security_manager.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/quic/chromium/quic_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_stream_factory.h"
 #include "net/quic/core/crypto/quic_random.h"
@@ -110,6 +110,7 @@ HttpNetworkSession::Params::Params()
       enable_quic(false),
       quic_max_packet_length(kDefaultMaxPacketSize),
       quic_max_server_configs_stored_in_properties(0u),
+      quic_enable_socket_recv_optimization(false),
       mark_quic_broken_when_network_blackholes(false),
       retry_without_alt_svc_on_quic_errors(false),
       support_ietf_format_quic_altsvc(false),
@@ -135,8 +136,10 @@ HttpNetworkSession::Params::Params()
       quic_force_hol_blocking(false),
       quic_race_cert_verification(false),
       quic_estimate_initial_rtt(false),
+      quic_headers_include_h2_stream_dependency(false),
       enable_token_binding(false),
-      http_09_on_non_default_ports_enabled(false) {
+      http_09_on_non_default_ports_enabled(false),
+      disable_idle_sockets_close_on_memory_pressure(false) {
   quic_supported_versions.push_back(QUIC_VERSION_39);
 }
 
@@ -152,7 +155,7 @@ HttpNetworkSession::Context::Context()
       transport_security_state(nullptr),
       cert_transparency_verifier(nullptr),
       ct_policy_enforcer(nullptr),
-      proxy_service(nullptr),
+      proxy_resolution_service(nullptr),
       ssl_config_service(nullptr),
       http_auth_handler_factory(nullptr),
       net_log(nullptr),
@@ -175,7 +178,7 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
       http_server_properties_(context.http_server_properties),
       cert_verifier_(context.cert_verifier),
       http_auth_handler_factory_(context.http_auth_handler_factory),
-      proxy_service_(context.proxy_service),
+      proxy_resolution_service_(context.proxy_resolution_service),
       ssl_config_service_(context.ssl_config_service),
       push_delegate_(nullptr),
       quic_stream_factory_(
@@ -215,9 +218,11 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
           params.quic_allow_server_migration,
           params.quic_race_cert_verification,
           params.quic_estimate_initial_rtt,
+          params.quic_headers_include_h2_stream_dependency,
           params.quic_connection_options,
           params.quic_client_connection_options,
-          params.enable_token_binding),
+          params.enable_token_binding,
+          params.quic_enable_socket_recv_optimization),
       spdy_session_pool_(context.host_resolver,
                          context.ssl_config_service,
                          context.http_server_properties,
@@ -227,14 +232,12 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
                          params.support_ietf_format_quic_altsvc,
                          params.spdy_session_max_recv_window_size,
                          AddDefaultHttp2Settings(params.http2_settings),
-                         params.time_func,
-                         context.proxy_delegate),
-      http_stream_factory_(new HttpStreamFactoryImpl(this, false)),
-      http_stream_factory_for_websocket_(new HttpStreamFactoryImpl(this, true)),
-      network_stream_throttler_(new NetworkThrottleManagerImpl()),
+                         params.time_func),
+      http_stream_factory_(std::make_unique<HttpStreamFactoryImpl>(this)),
+      network_stream_throttler_(std::make_unique<NetworkThrottleManagerImpl>()),
       params_(params),
       context_(context) {
-  DCHECK(proxy_service_);
+  DCHECK(proxy_resolution_service_);
   DCHECK(ssl_config_service_.get());
   CHECK(http_server_properties_);
 
@@ -254,8 +257,12 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
   http_server_properties_->SetMaxServerConfigsStoredInProperties(
       params.quic_max_server_configs_stored_in_properties);
 
-  memory_pressure_listener_.reset(new base::MemoryPressureListener(base::Bind(
-      &HttpNetworkSession::OnMemoryPressure, base::Unretained(this))));
+  if (!params_.disable_idle_sockets_close_on_memory_pressure) {
+    memory_pressure_listener_.reset(
+        new base::MemoryPressureListener(base::BindRepeating(
+            &HttpNetworkSession::OnMemoryPressure, base::Unretained(this))));
+  }
+
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 }
 
@@ -493,10 +500,13 @@ ClientSocketPoolManager* HttpNetworkSession::GetSocketPoolManager(
 
 void HttpNetworkSession::OnMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level) {
+  DCHECK(!params_.disable_idle_sockets_close_on_memory_pressure);
+
   switch (memory_pressure_level) {
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE:
-    case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
       break;
+
+    case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
       CloseIdleConnections();
       break;

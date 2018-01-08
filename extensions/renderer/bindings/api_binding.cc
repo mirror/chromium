@@ -62,9 +62,10 @@ std::string GetJSEnumEntryName(const std::string& original) {
   return result;
 }
 
-void CallbackHelper(const v8::FunctionCallbackInfo<v8::Value>& info) {
+void RunAPIBindingHandlerCallback(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
   gin::Arguments args(info);
-  if (!binding::IsContextValid(args.isolate()->GetCurrentContext()))
+  if (!binding::IsContextValidOrThrowError(args.isolate()->GetCurrentContext()))
     return;
 
   v8::Local<v8::External> external;
@@ -386,7 +387,7 @@ void APIBinding::InitializeTemplate(v8::Isolate* isolate) {
 
     object_template->Set(
         gin::StringToSymbol(isolate, key_value.first),
-        v8::FunctionTemplate::New(isolate, &CallbackHelper,
+        v8::FunctionTemplate::New(isolate, &RunAPIBindingHandlerCallback,
                                   v8::External::New(isolate, &method.callback),
                                   v8::Local<v8::Signature>(), 0,
                                   v8::ConstructorBehavior::kThrow));
@@ -507,7 +508,7 @@ void APIBinding::GetEventObject(
   v8::Isolate* isolate = info.GetIsolate();
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context = info.Holder()->CreationContext();
-  if (!binding::IsContextValid(context))
+  if (!binding::IsContextValidOrThrowError(context))
     return;
 
   CHECK(info.Data()->IsExternal());
@@ -608,7 +609,8 @@ void APIBinding::HandleCall(const std::string& name,
 
         return;  // Our work here is done.
       case APIBindingHooks::RequestResult::ARGUMENTS_UPDATED:
-        updated_args = true;  // Intentional fall-through.
+        updated_args = true;
+        FALLTHROUGH;
       case APIBindingHooks::RequestResult::NOT_HANDLED:
         break;  // Handle in the default manner.
     }

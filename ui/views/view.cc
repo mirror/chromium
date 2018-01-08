@@ -21,7 +21,7 @@
 #include "build/build_config.h"
 #include "third_party/skia/include/core/SkRect.h"
 #include "ui/accessibility/ax_action_data.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/ime/input_method.h"
@@ -46,7 +46,7 @@
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/transform.h"
 #include "ui/native_theme/native_theme.h"
-#include "ui/views/accessibility/native_view_accessibility.h"
+#include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/context_menu_controller.h"
@@ -467,7 +467,8 @@ void View::SetVisible(bool visible) {
     // Notify the parent.
     if (parent_) {
       parent_->ChildVisibilityChanged(this);
-      parent_->NotifyAccessibilityEvent(ui::AX_EVENT_CHILDREN_CHANGED, false);
+      parent_->NotifyAccessibilityEvent(ax::mojom::Event::kChildrenChanged,
+                                        false);
     }
 
     for (ViewObserver& observer : observers_)
@@ -631,16 +632,8 @@ LayoutManager* View::GetLayoutManager() const {
   return layout_manager_.get();
 }
 
-void View::SetLayoutManager(nullptr_t) {
+void View::SetLayoutManager(std::nullptr_t) {
   SetLayoutManagerImpl(nullptr);
-}
-
-void View::SetLayoutManager(LayoutManager* layout) {
-  // Some callers of this deprecated function may set the same layout manager
-  // twice, which used to be a no-op. Retain this behavior to avoid crashing.
-  if (layout == layout_manager_.get())
-    return;
-  SetLayoutManager(std::unique_ptr<LayoutManager>(layout));
 }
 
 // Attributes ------------------------------------------------------------------
@@ -1103,7 +1096,7 @@ void View::OnMouseEvent(ui::MouseEvent* event) {
         OnMouseMoved(*event);
         return;
       }
-      // FALL-THROUGH
+      FALLTHROUGH;
     case ui::ET_MOUSE_DRAGGED:
       if (ProcessMouseDragged(*event))
         event->SetHandled();
@@ -1120,7 +1113,7 @@ void View::OnMouseEvent(ui::MouseEvent* event) {
 
     case ui::ET_MOUSE_ENTERED:
       if (event->flags() & ui::EF_TOUCH_ACCESSIBILITY)
-        NotifyAccessibilityEvent(ui::AX_EVENT_HOVER, true);
+        NotifyAccessibilityEvent(ax::mojom::Event::kHover, true);
       OnMouseEntered(*event);
       break;
 
@@ -1408,15 +1401,21 @@ bool View::ExceededDragThreshold(const gfx::Vector2d& delta) {
 
 // Accessibility----------------------------------------------------------------
 
+ViewAccessibility& View::GetViewAccessibility() {
+  if (!view_accessibility_)
+    view_accessibility_ = ViewAccessibility::Create(this);
+  return *view_accessibility_;
+}
+
 bool View::HandleAccessibleAction(const ui::AXActionData& action_data) {
   switch (action_data.action) {
-    case ui::AX_ACTION_BLUR:
+    case ax::mojom::Action::kBlur:
       if (HasFocus()) {
         GetFocusManager()->ClearFocus();
         return true;
       }
       break;
-    case ui::AX_ACTION_DO_DEFAULT: {
+    case ax::mojom::Action::kDoDefault: {
       const gfx::Point center = GetLocalBounds().CenterPoint();
       OnMousePressed(ui::MouseEvent(
           ui::ET_MOUSE_PRESSED, center, center, ui::EventTimeForNow(),
@@ -1426,16 +1425,16 @@ bool View::HandleAccessibleAction(const ui::AXActionData& action_data) {
           ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON));
       return true;
     }
-    case ui::AX_ACTION_FOCUS:
+    case ax::mojom::Action::kFocus:
       if (IsAccessibilityFocusable()) {
         RequestFocus();
         return true;
       }
       break;
-    case ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE:
+    case ax::mojom::Action::kScrollToMakeVisible:
       ScrollRectToVisible(GetLocalBounds());
       return true;
-    case ui::AX_ACTION_SHOW_CONTEXT_MENU:
+    case ax::mojom::Action::kShowContextMenu:
       ShowContextMenu(GetBoundsInScreen().CenterPoint(),
                       ui::MENU_SOURCE_KEYBOARD);
       return true;
@@ -1448,30 +1447,21 @@ bool View::HandleAccessibleAction(const ui::AXActionData& action_data) {
 }
 
 gfx::NativeViewAccessible View::GetNativeViewAccessible() {
-  if (!native_view_accessibility_)
-    native_view_accessibility_ = NativeViewAccessibility::Create(this);
-  if (native_view_accessibility_)
-    return native_view_accessibility_->GetNativeObject();
-  return nullptr;
+  return GetViewAccessibility().GetNativeObject();
 }
 
-void View::NotifyAccessibilityEvent(
-    ui::AXEvent event_type,
-    bool send_native_event) {
+void View::NotifyAccessibilityEvent(ax::mojom::Event event_type,
+                                    bool send_native_event) {
   if (ViewsDelegate::GetInstance())
     ViewsDelegate::GetInstance()->NotifyAccessibilityEvent(this, event_type);
 
-  if (send_native_event && GetWidget()) {
-    if (!native_view_accessibility_)
-      native_view_accessibility_ = NativeViewAccessibility::Create(this);
-    if (native_view_accessibility_)
-      native_view_accessibility_->NotifyAccessibilityEvent(event_type);
-  }
+  if (send_native_event && GetWidget())
+    GetViewAccessibility().NotifyAccessibilityEvent(event_type);
 
   OnAccessibilityEvent(event_type);
 }
 
-void View::OnAccessibilityEvent(ui::AXEvent event_type) {}
+void View::OnAccessibilityEvent(ax::mojom::Event event_type) {}
 
 // Scrolling -------------------------------------------------------------------
 
@@ -1634,7 +1624,7 @@ void View::MoveLayerToParent(ui::Layer* parent_layer,
     SetLayerBounds(size(), local_offset_data);
   } else {
     internal::ScopedChildrenLock lock(this);
-    for (auto* child : children_)
+    for (auto* child : GetChildrenInZOrder())
       child->MoveLayerToParent(parent_layer, local_offset_data);
   }
 }
@@ -1802,7 +1792,7 @@ void View::OnFocus() {
   // TODO(beng): Investigate whether it's possible for us to move this to
   //             Focus().
   // Notify assistive technologies of the focus change.
-  NotifyAccessibilityEvent(ui::AX_EVENT_FOCUS, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::kFocus, true);
 }
 
 void View::OnBlur() {
@@ -2291,7 +2281,7 @@ void View::BoundsChanged(const gfx::Rect& previous_bounds) {
 
   OnBoundsChanged(previous_bounds);
   if (bounds_ != previous_bounds)
-    NotifyAccessibilityEvent(ui::AX_EVENT_LOCATION_CHANGED, false);
+    NotifyAccessibilityEvent(ax::mojom::Event::kLocationChanged, false);
 
   if (needs_layout_ || previous_bounds.size() != size()) {
     needs_layout_ = false;

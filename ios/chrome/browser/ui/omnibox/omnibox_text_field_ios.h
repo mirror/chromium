@@ -5,7 +5,7 @@
 #ifndef IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_TEXT_FIELD_IOS_H_
 #define IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_TEXT_FIELD_IOS_H_
 
-#import <UIKit/UIKit.h>
+#import "ios/chrome/browser/ui/omnibox/clipping_textfield.h"
 
 #include "base/strings/string16.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_delegate.h"
@@ -17,7 +17,7 @@ typedef enum {
 } OmniboxTextFieldFadeStyle;
 
 // UITextField subclass to allow for adjusting borders.
-@interface OmniboxTextFieldIOS : UITextField
+@interface OmniboxTextFieldIOS : ClippingTextField
 
 // Initialize the omnibox with the given frame, font, text color, and tint
 // color.
@@ -82,7 +82,8 @@ typedef enum {
 
 // New animations API, currently behind clean-toolbar flag.
 // They replace all animations above.
-- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator;
+- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator
+                completionAnimator:(UIViewPropertyAnimator*)completionAnimator;
 - (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator;
 
 // Initial touch on the Omnibox triggers a "pre-edit" state. The current

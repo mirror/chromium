@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "net/base/net_export.h"
+#include "net/http/http_request_info.h"
 #include "net/spdy/chromium/spdy_session_key.h"
 #include "net/spdy/core/spdy_protocol.h"
 #include "url/gurl.h"
@@ -25,7 +26,7 @@ class Http2PushPromiseIndexPeer;
 
 }  // namespace test
 
-// Value returned by FindSession() and FindStream() if no stream is found.
+// Value returned by ClaimPushedStream() and FindStream() if no stream is found.
 const SpdyStreamId kNoPushedStreamFound = 0;
 
 // This class manages unclaimed pushed streams (push promises) from the receipt
@@ -33,8 +34,7 @@ const SpdyStreamId kNoPushedStreamFound = 0;
 // Each SpdySessionPool owns one instance of this class.
 // SpdySession uses this class to register, unregister and query pushed streams.
 // HttpStreamFactoryImpl::Job uses this class to find a SpdySession with a
-// pushed stream matching the request, if such exists, which is only allowed for
-// requests with a cryptographic scheme.
+// pushed stream matching the request, if such exists.
 class NET_EXPORT Http2PushPromiseIndex {
  public:
   // Interface for validating pushed streams, signaling when a pushed stream is
@@ -44,13 +44,12 @@ class NET_EXPORT Http2PushPromiseIndex {
     Delegate() {}
     virtual ~Delegate() {}
 
-    // Return true if the pushed stream can be used for a request with |key|.
-    virtual bool ValidatePushedStream(const SpdySessionKey& key) const = 0;
-
-    // Called when a pushed stream is claimed.  Guaranateed to be called
-    // synchronously after ValidatePushedStream() is called and returns true.
-    virtual void OnPushedStreamClaimed(const GURL& url,
-                                       SpdyStreamId stream_id) = 0;
+    // Return true if a pushed stream with |url| can be used for a request with
+    // |key|.
+    virtual bool ValidatePushedStream(SpdyStreamId stream_id,
+                                      const GURL& url,
+                                      const HttpRequestInfo& request_info,
+                                      const SpdySessionKey& key) const = 0;
 
     // Generate weak pointer.  Guaranateed to be called synchronously after
     // ValidatePushedStream() is called and returns true.
@@ -88,13 +87,15 @@ class NET_EXPORT Http2PushPromiseIndex {
 
   // If there exists a session compatible with |key| that has an unclaimed push
   // stream for |url|, then sets |*session| and |*stream| to one such session
-  // and stream.  Makes no guarantee on which (session, stream_id) pair it
-  // returns if there are multiple matches.  Sets |*session| to nullptr and
-  // |*stream| to kNoPushedStreamFound if no such session exists.
-  void FindSession(const SpdySessionKey& key,
-                   const GURL& url,
-                   base::WeakPtr<SpdySession>* session,
-                   SpdyStreamId* stream_id) const;
+  // and stream, and removes entry from index.  Makes no guarantee on which
+  // (session, stream_id) pair is claimed if there are multiple matches.  Sets
+  // |*session| to nullptr and |*stream| to kNoPushedStreamFound if no such
+  // session exists.
+  void ClaimPushedStream(const SpdySessionKey& key,
+                         const GURL& url,
+                         const HttpRequestInfo& request_info,
+                         base::WeakPtr<SpdySession>* session,
+                         SpdyStreamId* stream_id);
 
   // Return the estimate of dynamically allocated memory in bytes.
   size_t EstimateMemoryUsage() const;

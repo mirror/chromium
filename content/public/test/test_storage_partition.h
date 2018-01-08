@@ -52,17 +52,25 @@ class TestStoragePartition : public StoragePartition {
   }
   net::URLRequestContextGetter* GetMediaURLRequestContext() override;
 
-  void set_network_context(mojom::NetworkContext* context) {
+  void set_network_context(network::mojom::NetworkContext* context) {
     network_context_ = context;
   }
-  mojom::NetworkContext* GetNetworkContext() override;
+  network::mojom::NetworkContext* GetNetworkContext() override;
 
   void set_url_loader_factory_for_browser_process(
-      mojom::URLLoaderFactory* url_loader_factory_for_browser_process) {
+      network::mojom::URLLoaderFactory*
+          url_loader_factory_for_browser_process) {
     url_loader_factory_for_browser_process_ =
         url_loader_factory_for_browser_process;
   }
-  mojom::URLLoaderFactory* GetURLLoaderFactoryForBrowserProcess() override;
+  network::mojom::URLLoaderFactory* GetURLLoaderFactoryForBrowserProcess()
+      override;
+
+  void set_cookie_manager_for_browser_process(
+      network::mojom::CookieManager* cookie_manager_for_browser_process) {
+    cookie_manager_for_browser_process_ = cookie_manager_for_browser_process;
+  }
+  network::mojom::CookieManager* GetCookieManagerForBrowserProcess() override;
 
   void set_quota_manager(storage::QuotaManager* manager) {
     quota_manager_ = manager;
@@ -98,6 +106,11 @@ class TestStoragePartition : public StoragePartition {
     service_worker_context_ = context;
   }
   ServiceWorkerContext* GetServiceWorkerContext() override;
+
+  void set_shared_worker_service(SharedWorkerService* service) {
+    shared_worker_service_ = service;
+  }
+  SharedWorkerService* GetSharedWorkerService() override;
 
   void set_cache_storage_context(CacheStorageContext* context) {
     cache_storage_context_ = context;
@@ -159,8 +172,10 @@ class TestStoragePartition : public StoragePartition {
   base::FilePath file_path_;
   net::URLRequestContextGetter* url_request_context_getter_ = nullptr;
   net::URLRequestContextGetter* media_url_request_context_getter_ = nullptr;
-  mojom::NetworkContext* network_context_ = nullptr;
-  mojom::URLLoaderFactory* url_loader_factory_for_browser_process_ = nullptr;
+  network::mojom::NetworkContext* network_context_ = nullptr;
+  network::mojom::URLLoaderFactory* url_loader_factory_for_browser_process_ =
+      nullptr;
+  network::mojom::CookieManager* cookie_manager_for_browser_process_ = nullptr;
   storage::QuotaManager* quota_manager_ = nullptr;
   AppCacheService* app_cache_service_ = nullptr;
   storage::FileSystemContext* file_system_context_ = nullptr;
@@ -168,6 +183,7 @@ class TestStoragePartition : public StoragePartition {
   DOMStorageContext* dom_storage_context_ = nullptr;
   IndexedDBContext* indexed_db_context_ = nullptr;
   ServiceWorkerContext* service_worker_context_ = nullptr;
+  SharedWorkerService* shared_worker_service_ = nullptr;
   CacheStorageContext* cache_storage_context_ = nullptr;
   PlatformNotificationContext* platform_notification_context_ = nullptr;
 #if !defined(OS_ANDROID)

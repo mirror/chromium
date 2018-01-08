@@ -37,7 +37,8 @@ public interface VrShell {
     /**
      * Sets whether we're presenting WebVR content or not.
      */
-    // TODO: Refactor needed. See crbug.com/735169.
+    // TODO(bshe): Refactor needed. See https://crbug.com/735169.
+    // TODO(mthiesse, https://crbug.com/803236): Remove this showToast parameter.
     void setWebVrModeEnabled(boolean enabled, boolean showToast);
 
     /**
@@ -69,12 +70,6 @@ public interface VrShell {
      * Requests to exit VR.
      */
     void requestToExitVr(@UiUnsupportedMode int reason);
-
-    /**
-     * Gives VrShell a chance to clean up any view-dependent state before removing
-     * VrShell from the view hierarchy.
-     */
-    void onBeforeWindowDetached();
 
     /**
      *  Triggers VrShell to navigate forward.

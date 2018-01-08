@@ -10,12 +10,11 @@
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
+#include "ui/message_center/public/cpp/notification.h"
 
 using message_center::MessageCenter;
 using message_center::Notification;
@@ -24,6 +23,7 @@ namespace ash {
 namespace {
 
 const char kScreenShareNotificationId[] = "chrome://screen/share";
+const char kNotifierScreenShare[] = "ash.screen-share";
 }
 
 ScreenShareTrayItem::ScreenShareTrayItem(SystemTray* system_tray)
@@ -64,7 +64,7 @@ void ScreenShareTrayItem::CreateOrUpdateNotification() {
           GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierScreenShare),
+              kNotifierScreenShare),
           data, new tray::ScreenNotificationDelegate(this),
           kNotificationScreenshareIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);

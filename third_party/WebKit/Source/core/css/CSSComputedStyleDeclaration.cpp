@@ -97,9 +97,9 @@ const CSSPropertyID kComputedPropertyArray[] = {
     CSSPropertyOverflowX, CSSPropertyOverflowY, CSSPropertyPaddingBottom,
     CSSPropertyPaddingLeft, CSSPropertyPaddingRight, CSSPropertyPaddingTop,
     CSSPropertyPointerEvents, CSSPropertyPosition, CSSPropertyResize,
-    CSSPropertyRight, CSSPropertyScrollBehavior, CSSPropertySpeak,
-    CSSPropertyTableLayout, CSSPropertyTabSize, CSSPropertyTextAlign,
-    CSSPropertyTextAlignLast, CSSPropertyTextDecoration,
+    CSSPropertyRight, CSSPropertyScrollBehavior, CSSPropertyScrollCustomization,
+    CSSPropertySpeak, CSSPropertyTableLayout, CSSPropertyTabSize,
+    CSSPropertyTextAlign, CSSPropertyTextAlignLast, CSSPropertyTextDecoration,
     CSSPropertyTextDecorationLine, CSSPropertyTextDecorationStyle,
     CSSPropertyTextDecorationColor, CSSPropertyTextDecorationSkipInk,
     CSSPropertyTextJustify, CSSPropertyTextUnderlinePosition,
@@ -357,8 +357,8 @@ const CSSValue* CSSComputedStyleDeclaration::GetPropertyCSSValue(
   if (!style)
     return nullptr;
 
-  const CSSValue* value = ComputedStyleCSSValueMapping::Get(
-      property_class, *style, layout_object, styled_node, allow_visited_style_);
+  const CSSValue* value = property_class.CSSValueFromComputedStyle(
+      *style, layout_object, styled_node, allow_visited_style_);
   if (value)
     return value;
 

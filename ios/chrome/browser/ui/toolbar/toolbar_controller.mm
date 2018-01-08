@@ -18,8 +18,10 @@
 #include "ios/chrome/browser/ui/bubble/bubble_util.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
-#import "ios/chrome/browser/ui/image_util.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_to_top_animator.h"
+#import "ios/chrome/browser/ui/image_util/image_util.h"
 #import "ios/chrome/browser/ui/reversed_animation.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
@@ -125,8 +127,10 @@ using ios::material::TimingFunction;
 @dynamic view;
 
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style
-                   dispatcher:
-                       (id<ApplicationCommands, BrowserCommands>)dispatcher {
+                   dispatcher:(id<ApplicationCommands,
+                                  BrowserCommands,
+                                  OmniboxFocuser,
+                                  ToolbarCommands>)dispatcher {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     style_ = style;
@@ -772,6 +776,17 @@ using ios::material::TimingFunction;
 
 - (void)finishFullscreenScrollWithAnimator:
     (FullscreenScrollEndAnimator*)animator {
+  [self addFullscreenAnimationsToAnimator:animator];
+}
+
+- (void)scrollFullscreenToTopWithAnimator:
+    (FullscreenScrollToTopAnimator*)animator {
+  [self addFullscreenAnimationsToAnimator:animator];
+}
+
+#pragma mark - FullscreenUIElement helpers
+
+- (void)addFullscreenAnimationsToAnimator:(FullscreenAnimator*)animator {
   CGFloat finalProgress = animator.finalProgress;
   [animator addAnimations:^() {
     [self updateForFullscreenProgress:finalProgress];

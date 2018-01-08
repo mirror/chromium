@@ -142,6 +142,11 @@ void OpaqueBrowserFrameView::OnMaximizedStateChanged() {
   MaybeRedrawFrameButtons();
 }
 
+void OpaqueBrowserFrameView::OnFullscreenStateChanged() {
+  // The top area height is 0 when the window is fullscreened.
+  MaybeRedrawFrameButtons();
+}
+
 gfx::Rect OpaqueBrowserFrameView::GetBoundsForTabStrip(
     views::View* tabstrip) const {
   if (!tabstrip)
@@ -288,7 +293,7 @@ void OpaqueBrowserFrameView::ActivationChanged(bool active) {
 // OpaqueBrowserFrameView, views::View overrides:
 
 void OpaqueBrowserFrameView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_TITLE_BAR;
+  node_data->role = ax::mojom::Role::kTitleBar;
 }
 
 void OpaqueBrowserFrameView::OnNativeThemeChanged(
@@ -435,6 +440,10 @@ int OpaqueBrowserFrameView::GetTopAreaHeight() const {
                  GetBoundsForTabStrip(browser_view()->tabstrip()).bottom());
   }
   return top_area_height;
+}
+
+bool OpaqueBrowserFrameView::UseCustomFrame() const {
+  return frame()->UseCustomFrame();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

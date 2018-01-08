@@ -6,10 +6,10 @@
 
 #include <algorithm>
 #include <map>
+#include <memory>
 
 #include "base/feature_list.h"
 #include "base/i18n/rtl.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
@@ -40,6 +40,7 @@
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
+#include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
@@ -49,7 +50,6 @@
 #include "chrome/browser/ui/views/location_bar/star_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_view.h"
-#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_icon_views.h"
 #include "chrome/browser/ui/views/translate/translate_bubble_view.h"
 #include "chrome/browser/ui/views/translate/translate_icon_view.h"
@@ -103,8 +103,6 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/ui/views/location_bar/intent_picker_view.h"
-#else
-#include "chrome/browser/ui/views/first_run_bubble.h"
 #endif
 
 #if defined(USE_AURA)
@@ -189,7 +187,7 @@ void LocationBarView::Init() {
 
   // Initialize the Omnibox view.
   omnibox_view_ = new OmniboxViewViews(
-      this, base::MakeUnique<ChromeOmniboxClient>(this, profile()),
+      this, std::make_unique<ChromeOmniboxClient>(this, profile()),
       command_updater(), is_popup_mode_, this, font_list);
   omnibox_view_->Init();
   AddChildView(omnibox_view_);
@@ -230,26 +228,31 @@ void LocationBarView::Init() {
     AddChildView(image_view);
   }
 
-  auto add_icon = [this](BubbleIconView* icon_view) -> void {
-    icon_view->Init();
-    icon_view->SetVisible(false);
-    AddChildView(icon_view);
-  };
-
-  add_icon(zoom_view_ = new ZoomView(delegate_));
-  add_icon(manage_passwords_icon_view_ =
-               new ManagePasswordsIconViews(command_updater()));
+  bubble_icons_.push_back(zoom_view_ = new ZoomView(delegate_));
+  bubble_icons_.push_back(manage_passwords_icon_view_ =
+                              new ManagePasswordsIconViews(command_updater()));
   if (browser_)
-    add_icon(save_credit_card_icon_view_ =
-                 new autofill::SaveCardIconView(command_updater(), browser_));
-  add_icon(translate_icon_view_ = new TranslateIconView(command_updater()));
+    bubble_icons_.push_back(
+        save_credit_card_icon_view_ =
+            new autofill::SaveCardIconView(command_updater(), browser_));
+  bubble_icons_.push_back(translate_icon_view_ =
+                              new TranslateIconView(command_updater()));
 #if defined(OS_CHROMEOS)
   if (browser_)
-    add_icon(intent_picker_view_ = new IntentPickerView(browser_));
+    bubble_icons_.push_back(intent_picker_view_ =
+                                new IntentPickerView(browser_));
 #endif
-  add_icon(find_bar_icon_ = new FindBarIcon());
+  bubble_icons_.push_back(find_bar_icon_ = new FindBarIcon());
   if (browser_)
-    add_icon(star_view_ = new StarView(command_updater(), browser_));
+    bubble_icons_.push_back(star_view_ =
+                                new StarView(command_updater(), browser_));
+
+  std::for_each(bubble_icons_.begin(), bubble_icons_.end(),
+                [this](BubbleIconView* icon_view) -> void {
+                  icon_view->Init();
+                  icon_view->SetVisible(false);
+                  AddChildView(icon_view);
+                });
 
   clear_all_button_ = views::CreateVectorImageButton(this);
   clear_all_button_->SetTooltipText(
@@ -424,7 +427,7 @@ bool LocationBarView::HasFocus() const {
 }
 
 void LocationBarView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_GROUP;
+  node_data->role = ax::mojom::Role::kGroup;
 }
 
 gfx::Size LocationBarView::CalculatePreferredSize() const {
@@ -618,7 +621,7 @@ void LocationBarView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
   } else {
     // This border color will be blended on top of the toolbar (which may use an
     // image in the case of themes).
-    SetBackground(base::MakeUnique<BackgroundWith1PxBorder>(
+    SetBackground(std::make_unique<BackgroundWith1PxBorder>(
         GetColor(BACKGROUND), GetBorderColor()));
   }
   SchedulePaint();
@@ -648,6 +651,22 @@ void LocationBarView::Update(const WebContents* contents) {
 
 void LocationBarView::ResetTabState(WebContents* contents) {
   omnibox_view_->ResetTabState(contents);
+}
+
+bool LocationBarView::ActivateFirstInactiveBubbleForAccessibility() {
+  auto result = std::find_if(
+      bubble_icons_.begin(), bubble_icons_.end(), [](BubbleIconView* view) {
+        if (!view || !view->visible() || !view->GetBubble())
+          return false;
+
+        views::Widget* widget = view->GetBubble()->GetWidget();
+        return widget && widget->IsVisible() && !widget->IsActive();
+      });
+
+  if (result != bubble_icons_.end())
+    (*result)->GetBubble()->GetWidget()->Show();
+
+  return result != bubble_icons_.end();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

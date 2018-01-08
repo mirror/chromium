@@ -218,12 +218,12 @@
 <translation id="5300589172476337783">Показать</translation>
 <translation id="5317780077021120954">Сохранить</translation>
 <translation id="5327248766486351172">Название</translation>
+<translation id="533632423981297619">Просмотреть ваши пароли смогут все, у кого есть доступ к файлу экспорта. Не показывайте его никому.</translation>
 <translation id="5388358297987318779">Открыть изображение</translation>
 <translation id="5409365236829784218">Нет приложений, поддерживающих файлы этого типа.</translation>
 <translation id="5433691172869980887">Имя пользователя скопировано</translation>
 <translation id="54401264925851789">Сведения о надежности страницы</translation>
 <translation id="5525269841082836315">Создание код. фразы</translation>
-<translation id="5531274207066050939">Google Payments</translation>
 <translation id="5548760955356983418">Функция Handoff позволит начать просмотр веб-сайта на одном устройстве и продолжить на другом. Открытый сайт появится на панели Dock вашего компьютера Mac.
 
 Функцию Handoff нужно включить не только в Chrome, но и в настройках устройства (см. раздел "Общие"). Все ваши устройства должны синхронизироваться с одним и тем же аккаунтом iCloud.</translation>
@@ -248,7 +248,6 @@
 <translation id="5911030830365207728">Google Переводчик</translation>
 <translation id="5916664084637901428">ВКЛ</translation>
 <translation id="5948291296578561264">Это позволяет вам сохранять фотографии в галерее.</translation>
-<translation id="5953603475187800576">Показывать адреса и кредитные карты из Google Payments</translation>
 <translation id="5955891643922670672">Просматривается в офлайн-режиме</translation>
 <translation id="5964480694698977962">Создать вкладку инкогнито.</translation>
 <translation id="5965679971710331625">Вы вошли в аккаунт</translation>
@@ -350,6 +349,7 @@
 <translation id="780301667611848630">Спасибо, не надо</translation>
 <translation id="7859704718976024901">История просмотра веб-страниц</translation>
 <translation id="7938254975914653459">FaceTime</translation>
+<translation id="7939128259257418052">Экспорт паролей...</translation>
 <translation id="7947953824732555851">Принять и войти</translation>
 <translation id="7961015016161918242">Нет</translation>
 <translation id="7971521879845308059">Блок. вспл. окна</translation>

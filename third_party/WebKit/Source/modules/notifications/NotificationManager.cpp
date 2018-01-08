@@ -15,6 +15,8 @@
 #include "platform/wtf/Functional.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "public/platform/modules/notifications/WebNotificationData.h"
+#include "public/platform/modules/notifications/notification.mojom-blink.h"
 #include "public/platform/modules/permissions/permission.mojom-blink.h"
 #include "public/platform/modules/permissions/permission_status.mojom-blink.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -46,7 +48,7 @@ const char* NotificationManager::SupplementName() {
 NotificationManager::NotificationManager(ExecutionContext& execution_context)
     : Supplement<ExecutionContext>(execution_context) {}
 
-NotificationManager::~NotificationManager() {}
+NotificationManager::~NotificationManager() = default;
 
 mojom::blink::PermissionStatus NotificationManager::GetPermissionStatus() {
   if (GetSupplementable()->IsContextDestroyed())
@@ -108,9 +110,12 @@ void NotificationManager::OnPermissionServiceConnectionError() {
 }
 
 void NotificationManager::DisplayNonPersistentNotification(
-    const String& title) {
-  // TODO(crbug.com/595685): Pass the rest of the notification properties here.
-  GetNotificationService()->DisplayNonPersistentNotification(title);
+    const WebNotificationData& notification_data,
+    std::unique_ptr<WebNotificationResources> notification_resources,
+    mojom::blink::NonPersistentNotificationListenerPtr event_listener) {
+  DCHECK(notification_resources);
+  GetNotificationService()->DisplayNonPersistentNotification(
+      notification_data, *notification_resources, std::move(event_listener));
 }
 
 const mojom::blink::NotificationServicePtr&

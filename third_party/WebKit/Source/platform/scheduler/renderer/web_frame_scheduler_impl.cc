@@ -56,6 +56,10 @@ const char* CrossOriginStateToString(bool is_cross_origin) {
   }
 }
 
+bool StopNonTimersInBackgroundEnabled() {
+  return RuntimeEnabledFeatures::StopNonTimersInBackgroundEnabled();
+}
+
 }  // namespace
 
 WebFrameSchedulerImpl::ActiveConnectionHandleImpl::ActiveConnectionHandleImpl(
@@ -83,26 +87,31 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
           true,
           "WebFrameScheduler.FrameVisible",
           this,
+          &tracing_controller_,
           VisibilityStateToString),
       page_visible_(
           true,
           "WebFrameScheduler.PageVisible",
           this,
+          &tracing_controller_,
           VisibilityStateToString),
       page_stopped_(
           false,
           "WebFrameScheduler.PageStopped",
           this,
+          &tracing_controller_,
           StoppedStateToString),
       frame_paused_(
           false,
           "WebFrameScheduler.FramePaused",
           this,
+          &tracing_controller_,
           PausedStateToString),
       cross_origin_(
           false,
           "WebFrameScheduler.Origin",
           this,
+          &tracing_controller_,
           CrossOriginStateToString),
       frame_type_(frame_type),
       active_connection_count_(0),
@@ -258,9 +267,12 @@ scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
     // Media events should not be deferred to ensure that media playback is
     // smooth.
     case TaskType::kMediaElementEvent:
+    case TaskType::kInternalIndexedDB:
+    case TaskType::kInternalMedia:
       return WebTaskRunnerImpl::Create(PausableTaskQueue(), type);
     case TaskType::kUnthrottled:
     case TaskType::kInternalTest:
+    case TaskType::kInternalWebCrypto:
       return WebTaskRunnerImpl::Create(UnpausableTaskQueue(), type);
     case TaskType::kCount:
       NOTREACHED();
@@ -288,7 +300,7 @@ scoped_refptr<TaskQueue> WebFrameSchedulerImpl::LoadingControlTaskQueue() {
   DCHECK(parent_web_view_scheduler_);
   if (!loading_control_task_queue_) {
     loading_control_task_queue_ = renderer_scheduler_->NewLoadingTaskQueue(
-        MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
+        MainThreadTaskQueue::QueueType::kFrameLoadingControl);
     loading_control_task_queue_->SetBlameContext(blame_context_);
     loading_control_task_queue_->SetFrameScheduler(this);
     loading_control_queue_enabled_voter_ =
@@ -338,6 +350,7 @@ scoped_refptr<TaskQueue> WebFrameSchedulerImpl::DeferrableTaskQueue() {
             MainThreadTaskQueue::QueueType::kFrameThrottleable)
             .SetShouldReportWhenExecutionBlocked(true)
             .SetCanBeDeferred(true)
+            .SetCanBeStopped(StopNonTimersInBackgroundEnabled())
             .SetCanBePaused(true));
     deferrable_task_queue_->SetBlameContext(blame_context_);
     deferrable_task_queue_->SetFrameScheduler(this);
@@ -355,6 +368,7 @@ scoped_refptr<TaskQueue> WebFrameSchedulerImpl::PausableTaskQueue() {
         MainThreadTaskQueue::QueueCreationParams(
             MainThreadTaskQueue::QueueType::kFramePausable)
             .SetShouldReportWhenExecutionBlocked(true)
+            .SetCanBeStopped(StopNonTimersInBackgroundEnabled())
             .SetCanBePaused(true));
     pausable_task_queue_->SetBlameContext(blame_context_);
     pausable_task_queue_->SetFrameScheduler(this);
@@ -507,7 +521,7 @@ void WebFrameSchedulerImpl::UpdateThrottlingState() {
 
 WebFrameScheduler::ThrottlingState
 WebFrameSchedulerImpl::CalculateThrottlingState() const {
-  if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled() &&
+  if (RuntimeEnabledFeatures::StopLoadingInBackgroundEnabled() &&
       page_stopped_) {
     DCHECK(!page_visible_);
     return WebFrameScheduler::ThrottlingState::kStopped;
@@ -553,14 +567,6 @@ base::WeakPtr<WebFrameSchedulerImpl> WebFrameSchedulerImpl::AsWeakPtr() {
 
 bool WebFrameSchedulerImpl::IsExemptFromBudgetBasedThrottling() const {
   return has_active_connection();
-}
-
-void WebFrameSchedulerImpl::OnTraceLogEnabled() {
-  frame_visible_.OnTraceLogEnabled();
-  page_visible_.OnTraceLogEnabled();
-  page_stopped_.OnTraceLogEnabled();
-  frame_paused_.OnTraceLogEnabled();
-  cross_origin_.OnTraceLogEnabled();
 }
 
 }  // namespace scheduler

@@ -64,8 +64,10 @@
 #include "core/paint/FirstMeaningfulPaintDetector.h"
 #include "core/probe/CoreProbes.h"
 #include "core/svg/graphics/SVGImageChromeClient.h"
+#include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "core/timing/PerformanceBase.h"
+#include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/V8DOMActivityLogger.h"
 #include "platform/exported/WrappedResourceRequest.h"
@@ -88,6 +90,7 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebApplicationCacheHost.h"
+#include "public/platform/WebEffectiveConnectionType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
@@ -185,21 +188,20 @@ bool IsClientHintsAllowed(const KURL& url) {
 
 struct FrameFetchContext::FrozenState final
     : GarbageCollectedFinalized<FrozenState> {
-  FrozenState(
-      ReferrerPolicy referrer_policy,
-      const String& outgoing_referrer,
-      const KURL& url,
-      scoped_refptr<const SecurityOrigin> security_origin,
-      scoped_refptr<const SecurityOrigin> parent_security_origin,
-      const Optional<WebAddressSpace>& address_space,
-      const ContentSecurityPolicy* content_security_policy,
-      KURL site_for_cookies,
-      scoped_refptr<const SecurityOrigin> requestor_origin,
-      const ClientHintsPreferences& client_hints_preferences,
-      float device_pixel_ratio,
-      const String& user_agent,
-      bool is_main_frame,
-      bool is_svg_image_chrome_client)
+  FrozenState(ReferrerPolicy referrer_policy,
+              const String& outgoing_referrer,
+              const KURL& url,
+              scoped_refptr<const SecurityOrigin> security_origin,
+              scoped_refptr<const SecurityOrigin> parent_security_origin,
+              const Optional<mojom::IPAddressSpace>& address_space,
+              const ContentSecurityPolicy* content_security_policy,
+              KURL site_for_cookies,
+              scoped_refptr<const SecurityOrigin> requestor_origin,
+              const ClientHintsPreferences& client_hints_preferences,
+              float device_pixel_ratio,
+              const String& user_agent,
+              bool is_main_frame,
+              bool is_svg_image_chrome_client)
       : referrer_policy(referrer_policy),
         outgoing_referrer(outgoing_referrer),
         url(url),
@@ -220,7 +222,7 @@ struct FrameFetchContext::FrozenState final
   const KURL url;
   const scoped_refptr<const SecurityOrigin> security_origin;
   const scoped_refptr<const SecurityOrigin> parent_security_origin;
-  const Optional<WebAddressSpace> address_space;
+  const Optional<mojom::IPAddressSpace> address_space;
   const Member<const ContentSecurityPolicy> content_security_policy;
   const KURL site_for_cookies;
   const scoped_refptr<const SecurityOrigin> requestor_origin;
@@ -304,7 +306,7 @@ scoped_refptr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
   return GetFrame()->GetTaskRunner(TaskType::kNetworking);
 }
 
-WebFrameScheduler* FrameFetchContext::GetFrameScheduler() {
+WebFrameScheduler* FrameFetchContext::GetFrameScheduler() const {
   if (IsDetached())
     return nullptr;
   return GetFrame()->FrameScheduler();
@@ -353,7 +355,16 @@ void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
   if (save_data_enabled_)
     request.SetHTTPHeaderField(HTTPNames::Save_Data, "on");
 
-  if (GetLocalFrameClient()->IsClientLoFiActiveForFrame()) {
+  if (GetLocalFrameClient()->GetPreviewsStateForFrame() &
+      WebURLRequest::kNoScriptOn) {
+    request.AddHTTPHeaderField(
+        "Intervention",
+        "<https://www.chromestatus.com/features/4775088607985664>; "
+        "level=\"warning\"");
+  }
+
+  if (GetLocalFrameClient()->GetPreviewsStateForFrame() &
+      WebURLRequest::kClientLoFiOn) {
     request.AddHTTPHeaderField(
         "Intervention",
         "<https://www.chromestatus.com/features/6072546726248448>; "
@@ -425,10 +436,11 @@ void FrameFetchContext::DispatchDidChangeResourcePriority(
     int intra_priority_value) {
   if (IsDetached())
     return;
-  TRACE_EVENT1(
-      "devtools.timeline", "ResourceChangePriority", "data",
-      InspectorChangeResourcePriorityEvent::Data(identifier, load_priority));
-  probe::didChangeResourcePriority(GetFrame(), identifier, load_priority);
+  TRACE_EVENT1("devtools.timeline", "ResourceChangePriority", "data",
+               InspectorChangeResourcePriorityEvent::Data(
+                   MasterDocumentLoader(), identifier, load_priority));
+  probe::didChangeResourcePriority(GetFrame(), MasterDocumentLoader(),
+                                   identifier, load_priority);
 }
 
 void FrameFetchContext::PrepareRequest(ResourceRequest& request,
@@ -500,7 +512,7 @@ void FrameFetchContext::DispatchDidReceiveResponse(
 
   if (response_type == ResourceResponseType::kFromMemoryCache) {
     // Note: probe::willSendRequest needs to precede before this probe method.
-    probe::markResourceAsCached(GetFrame(), identifier);
+    probe::markResourceAsCached(GetFrame(), MasterDocumentLoader(), identifier);
     if (response.IsNull())
       return;
   }
@@ -516,7 +528,10 @@ void FrameFetchContext::DispatchDidReceiveResponse(
                               ->Loader()
                               .GetProvisionalDocumentLoader()) {
     FrameClientHintsPreferencesContext hints_context(GetFrame());
-    if (IsClientHintsAllowed(response.Url())) {
+    if (!blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() ||
+        IsClientHintsAllowed(response.Url())) {
+      // If the persistent client hint feature is enabled, then client hints
+      // should be allowed only on secure URLs.
       document_loader_->GetClientHintsPreferences()
           .UpdateFromAcceptClientHintsHeader(
               response.HttpHeaderField(HTTPNames::Accept_CH), &hints_context);
@@ -536,8 +551,7 @@ void FrameFetchContext::DispatchDidReceiveResponse(
   }
 
   if (response.IsLegacySymantecCert()) {
-    GetLocalFrameClient()->ReportLegacySymantecCert(
-        response.Url(), response.CertValidityStart());
+    GetLocalFrameClient()->ReportLegacySymantecCert(response.Url());
   }
 
   GetFrame()->Loader().Progress().IncrementProgress(identifier, response);
@@ -565,7 +579,8 @@ void FrameFetchContext::DispatchDidReceiveEncodedData(unsigned long identifier,
                                                       int encoded_data_length) {
   if (IsDetached())
     return;
-  probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(), identifier,
+  probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(),
+                                     MasterDocumentLoader(), identifier,
                                      encoded_data_length);
 }
 
@@ -578,26 +593,31 @@ void FrameFetchContext::DispatchDidDownloadData(unsigned long identifier,
   GetFrame()->Loader().Progress().IncrementProgress(identifier, data_length);
   probe::didReceiveData(GetFrame()->GetDocument(), identifier,
                         MasterDocumentLoader(), nullptr, data_length);
-  probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(), identifier,
+  probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(),
+                                     MasterDocumentLoader(), identifier,
                                      encoded_data_length);
 }
 
-void FrameFetchContext::DispatchDidFinishLoading(unsigned long identifier,
-                                                 double finish_time,
-                                                 int64_t encoded_data_length,
-                                                 int64_t decoded_body_length) {
+void FrameFetchContext::DispatchDidFinishLoading(
+    unsigned long identifier,
+    double finish_time,
+    int64_t encoded_data_length,
+    int64_t decoded_body_length,
+    bool blocked_cross_site_document) {
   if (IsDetached())
     return;
 
   GetFrame()->Loader().Progress().CompleteProgress(identifier);
   probe::didFinishLoading(GetFrame()->GetDocument(), identifier,
                           MasterDocumentLoader(), finish_time,
-                          encoded_data_length, decoded_body_length);
+                          encoded_data_length, decoded_body_length,
+                          blocked_cross_site_document);
   if (document_) {
     InteractiveDetector* interactive_detector(
         InteractiveDetector::From(*document_));
     if (interactive_detector) {
-      interactive_detector->OnResourceLoadEnd(finish_time);
+      interactive_detector->OnResourceLoadEnd(
+          TimeTicksFromSeconds(finish_time));
     }
   }
 }
@@ -629,8 +649,10 @@ void FrameFetchContext::DispatchDidFail(unsigned long identifier,
   }
   // Notification to FrameConsole should come AFTER InspectorInstrumentation
   // call, DevTools front-end relies on this.
-  if (!is_internal_request)
-    GetFrame()->Console().DidFailLoading(identifier, error);
+  if (!is_internal_request) {
+    GetFrame()->Console().DidFailLoading(MasterDocumentLoader(), identifier,
+                                         error);
+  }
 }
 
 void FrameFetchContext::DispatchDidLoadResourceFromMemoryCache(
@@ -699,17 +721,24 @@ void FrameFetchContext::AddResourceTiming(const ResourceTimingInfo& info) {
   // Normally, |document_| is cleared on Document shutdown. However, Documents
   // for HTML imports will also not have a LocalFrame set: in that case, also
   // early return, as there is nothing to report the resource timing to.
-  if (!document_ || !document_->GetFrame())
+  if (!document_)
+    return;
+  LocalFrame* frame = document_->GetFrame();
+  if (!frame)
     return;
 
-  Frame* initiator_frame = info.IsMainResource()
-                               ? document_->GetFrame()->Tree().Parent()
-                               : document_->GetFrame();
-
-  if (!initiator_frame)
+  if (info.IsMainResource()) {
+    DCHECK(frame->Owner());
+    // Main resource timing information is reported through the owner to be
+    // passed to the parent frame, if appropriate.
+    frame->Owner()->AddResourceTiming(info);
+    frame->DidSendResourceTimingInfoToParent();
     return;
+  }
 
-  initiator_frame->AddResourceTiming(info);
+  // All other resources are reported to the corresponding Document.
+  DOMWindowPerformance::performance(*document_->domWindow())
+      ->GenerateAndAddResourceTiming(info);
 }
 
 bool FrameFetchContext::AllowImage(bool images_enabled, const KURL& url) const {
@@ -790,16 +819,16 @@ bool FrameFetchContext::UpdateTimingInfoForIFrameNavigation(
 
   // <iframe>s should report the initial navigation requested by the parent
   // document, but not subsequent navigations.
-  // FIXME: Resource timing is broken when the parent is a remote frame.
-  if (!GetFrame()->DeprecatedLocalOwner() ||
-      GetFrame()->DeprecatedLocalOwner()->LoadedNonEmptyDocument())
+  if (!GetFrame()->Owner())
     return false;
-  GetFrame()->DeprecatedLocalOwner()->DidLoadNonEmptyDocument();
+  // Note that this can be racy since this information is forwarded over IPC
+  // when crossing process boundaries.
+  if (!GetFrame()->should_send_resource_timing_info_to_parent())
+    return false;
   // Do not report iframe navigation that restored from history, since its
   // location may have been changed after initial navigation.
   if (MasterDocumentLoader()->LoadType() == kFrameLoadTypeInitialHistoryLoad)
     return false;
-  info->SetInitiatorType(GetFrame()->DeprecatedLocalOwner()->localName());
   return true;
 }
 
@@ -829,20 +858,23 @@ void FrameFetchContext::AddClientHintsIfNecessary(
     const ClientHintsPreferences& hints_preferences,
     const FetchParameters::ResourceWidth& resource_width,
     ResourceRequest& request) {
-  if (!IsClientHintsAllowed(request.Url()))
-    return;
-
   WebEnabledClientHints enabled_hints;
-  // Check if |url| is allowed to run JavaScript. If not, client hints are not
-  // attached to the requests that initiate on the render side.
-  if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() &&
-      GetContentSettingsClient() && AllowScriptFromSource(request.Url())) {
-    // TODO(tbansal): crbug.com/735518 This code path is not executed for main
-    // frame navigations when browser side navigation is enabled. For main
-    // frame requests with browser side navigation enabled, the client hints
-    // should be attached by the browser process.
-    GetContentSettingsClient()->GetAllowedClientHintsFromSource(request.Url(),
-                                                                &enabled_hints);
+  if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled()) {
+    // If the feature is enabled, then client hints are allowed only on secure
+    // URLs.
+    if (!IsClientHintsAllowed(request.Url()))
+      return;
+
+    // Check if |url| is allowed to run JavaScript. If not, client hints are not
+    // attached to the requests that initiate on the render side.
+    if (GetContentSettingsClient() && AllowScriptFromSource(request.Url())) {
+      // TODO(tbansal): crbug.com/735518 This code path is not executed for main
+      // frame navigations when browser side navigation is enabled. For main
+      // frame requests with browser side navigation enabled, the client hints
+      // should be attached by the browser process.
+      GetContentSettingsClient()->GetAllowedClientHintsFromSource(
+          request.Url(), &enabled_hints);
+    }
   }
 
   if (ShouldSendClientHint(mojom::WebClientHintsType::kDeviceMemory,
@@ -1072,7 +1104,7 @@ const SecurityOrigin* FrameFetchContext::GetParentSecurityOrigin() const {
   return parent->GetSecurityContext()->GetSecurityOrigin();
 }
 
-Optional<WebAddressSpace> FrameFetchContext::GetAddressSpace() const {
+Optional<mojom::IPAddressSpace> FrameFetchContext::GetAddressSpace() const {
   if (IsDetached())
     return frozen_state_->address_space;
   if (!document_)
@@ -1239,6 +1271,47 @@ void FrameFetchContext::Trace(blink::Visitor* visitor) {
 
 void FrameFetchContext::RecordDataUriWithOctothorpe() {
   UseCounter::Count(GetFrame(), WebFeature::kDataUriHasOctothorpe);
+}
+
+ResourceLoadPriority FrameFetchContext::ModifyPriorityForExperiments(
+    ResourceLoadPriority priority) const {
+  if (!GetSettings())
+    return priority;
+
+  WebEffectiveConnectionType max_effective_connection_type_threshold =
+      GetSettings()->GetLowPriorityIframesThreshold();
+
+  if (max_effective_connection_type_threshold <=
+      WebEffectiveConnectionType::kTypeOffline) {
+    return priority;
+  }
+
+  WebEffectiveConnectionType effective_connection_type =
+      GetNetworkStateNotifier().EffectiveType();
+
+  if (effective_connection_type <= WebEffectiveConnectionType::kTypeOffline) {
+    return priority;
+  }
+
+  if (effective_connection_type > max_effective_connection_type_threshold) {
+    // Network is not slow enough.
+    return priority;
+  }
+
+  if (GetFrame()->IsMainFrame()) {
+    DEFINE_STATIC_LOCAL(EnumerationHistogram, main_frame_priority_histogram,
+                        ("LowPriorityIframes.MainFrameRequestPriority",
+                         static_cast<int>(ResourceLoadPriority::kHighest) + 1));
+    main_frame_priority_histogram.Count(static_cast<int>(priority));
+    return priority;
+  }
+
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, iframe_priority_histogram,
+                      ("LowPriorityIframes.IframeRequestPriority",
+                       static_cast<int>(ResourceLoadPriority::kHighest) + 1));
+  iframe_priority_histogram.Count(static_cast<int>(priority));
+  // When enabled, the priority of all resources in subframe is dropped.
+  return ResourceLoadPriority::kLowest;
 }
 
 }  // namespace blink

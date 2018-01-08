@@ -11,16 +11,6 @@
 
 namespace flag_descriptions {
 
-const char kBookmarkNewEditPageName[] = "Bookmark New Edit Page";
-const char kBookmarkNewEditPageDescription[] =
-    "When enabled, the new bookmark edit page and folder picker will be used "
-    "in the new bookmark UI.";
-
-const char kBookmarkNewGenerationName[] = "Bookmark New Generation";
-const char kBookmarkNewGenerationDescription[] =
-    "When enabled, change to the new bookmark UI which will support bookmark "
-    "reordering, have reduced favicon size and improved navigation experience.";
-
 const char kBrowserTaskScheduler[] = "Task Scheduler";
 const char kBrowserTaskSchedulerDescription[] =
     "Enables redirection of some task posting APIs to the task scheduler.";
@@ -34,6 +24,11 @@ const char kCleanToolbarName[] = "Clean Toolbar";
 const char kCleanToolbarDescription[] =
     "When enabled, the Clean Toolbar will be used instead of "
     "WebToolbarController.";
+
+const char kClippingTextfieldName[] = "Clipping Textfield";
+const char kClippingTextfieldDescription[] =
+    "When enabled, the new URL clipping implementation compatible with iOS 11 "
+    "is used.";
 
 const char kContextualSearch[] = "Contextual Search";
 const char kContextualSearchDescription[] =
@@ -59,7 +54,12 @@ const char kInProductHelpDemoModeDescription[] =
 
 const char kMarkHttpAsName[] = "Mark non-secure origins as non-secure";
 const char kMarkHttpAsDescription[] = "Change the UI treatment for HTTP pages";
-const char kMarkHttpAsDangerous[] = "Always mark HTTP as actively dangerous";
+
+const char kMemexTabSwitcherName[] = "Enable the Memex prototype Tab Switcher.";
+const char kMemexTabSwitcherDescription[] =
+    "When enabled, the TabSwitcher button will navigate to the chrome memex "
+    "prototype site instead of triggering the native Tab Switcher. The native "
+    "TabSwitcher is accessible by long pressing the button";
 
 const char kNewFullscreenName[] = "Enable the new FullscreenController.";
 const char kNewFullscreenDescription[] =
@@ -127,6 +127,10 @@ const char kTabSwitcherPresentsBVCDescription[] =
     "When enabled, the tab switcher will present the BVC, so that when the "
     "BVC is visible, the tab switcher will remain in the VC hierarchy "
     "underneath it.";
+
+const char kUIRefreshPhase1Name[] = "UI Refresh Phase 1";
+const char kUIRefreshPhase1Description[] =
+    "When enabled, the first phase of the iOS UI refresh will be displayed.";
 
 const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
 const char kUseDdljsonApiDescription[] =

@@ -14,6 +14,7 @@
 
 namespace blink {
 
+class LockManager;
 class ScriptPromise;
 class ScriptPromiseResolver;
 class ScriptState;
@@ -25,8 +26,9 @@ class Lock final : public ScriptWrappable, public PausableObject {
  public:
   static Lock* Create(ScriptState*,
                       const String& name,
-                      mojom::blink::LockManager::LockMode,
-                      mojom::blink::LockHandlePtr);
+                      mojom::blink::LockMode,
+                      mojom::blink::LockHandlePtr,
+                      LockManager*);
 
   ~Lock() override;
 
@@ -44,24 +46,33 @@ class Lock final : public ScriptWrappable, public PausableObject {
   // the passed resolver is invoked with the promise's result.
   void HoldUntil(ScriptPromise, ScriptPromiseResolver*);
 
-  static mojom::blink::LockManager::LockMode StringToMode(const String&);
-  static String ModeToString(mojom::blink::LockManager::LockMode);
+  static mojom::blink::LockMode StringToMode(const String&);
+  static String ModeToString(mojom::blink::LockMode);
 
  private:
   class ThenFunction;
 
   Lock(ScriptState*,
        const String& name,
-       mojom::blink::LockManager::LockMode,
-       mojom::blink::LockHandlePtr);
+       mojom::blink::LockMode,
+       mojom::blink::LockHandlePtr,
+       LockManager*);
 
   void ReleaseIfHeld();
 
   Member<ScriptPromiseResolver> resolver_;
 
   const String name_;
-  const mojom::blink::LockManager::LockMode mode_;
+  const mojom::blink::LockMode mode_;
+
+  // An opaque handle; this one end of a mojo pipe. When this is closed,
+  // the lock is released by the back end.
   mojom::blink::LockHandlePtr handle_;
+
+  // LockManager::OnLockReleased() is called when this lock is released, to
+  // stop artificially keeping this instance alive. It is necessary in the
+  // case where the resolver's promise could potentially be GC'd.
+  Member<LockManager> manager_;
 };
 
 }  // namespace blink

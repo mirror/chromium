@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "media/blink/video_decode_stats_reporter.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
@@ -39,7 +41,7 @@ VideoDecoderConfig MakeVideoConfig(VideoCodec codec,
                                    gfx::Size natural_size) {
   gfx::Size coded_size = natural_size;
   gfx::Rect visible_rect(coded_size.width(), coded_size.height());
-  return VideoDecoderConfig(codec, profile, PIXEL_FORMAT_YV12, COLOR_SPACE_JPEG,
+  return VideoDecoderConfig(codec, profile, PIXEL_FORMAT_I420, COLOR_SPACE_JPEG,
                             VIDEO_ROTATION_0, coded_size, visible_rect,
                             natural_size, EmptyExtraData(), Unencrypted());
 }
@@ -167,7 +169,7 @@ class VideoDecodeStatsReporterTest : public ::testing::Test {
     mojom::VideoDecodeStatsRecorderPtr recorder_ptr;
     SetupRecordInterceptor(&recorder_ptr, &interceptor_);
 
-    reporter_ = base::MakeUnique<VideoDecodeStatsReporter>(
+    reporter_ = std::make_unique<VideoDecodeStatsReporter>(
         std::move(recorder_ptr),
         base::Bind(&VideoDecodeStatsReporterTest::GetPipelineStatsCB,
                    base::Unretained(this)),

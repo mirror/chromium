@@ -25,6 +25,7 @@
 #include "chrome/browser/chromeos/login/supervised/supervised_user_creation_screen.h"
 #include "chrome/browser/chromeos/login/ui/mock_login_display.h"
 #include "chrome/browser/chromeos/login/ui/mock_login_display_host.h"
+#include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
@@ -32,6 +33,7 @@
 #include "chrome/browser/chromeos/policy/device_policy_cros_browser_test.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/chromeos/login/supervised_user_creation_screen_handler.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -43,6 +45,7 @@
 #include "chromeos/login/auth/user_context.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "chromeos/settings/cros_settings_provider.h"
+#include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/policy/core/common/cloud/cloud_policy_core.h"
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
@@ -52,6 +55,7 @@
 #include "components/policy/proto/device_management_backend.pb.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "components/user_manager/scoped_user_manager.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "components/user_manager/user_type.h"
@@ -195,7 +199,7 @@ class ExistingUserControllerTest : public policy::DevicePolicyCrosBrowserTest {
   void RegisterUser(const std::string& user_id) {
     ListPrefUpdate users_pref(g_browser_process->local_state(),
                               "LoggedInUsers");
-    users_pref->AppendIfNotPresent(base::MakeUnique<base::Value>(user_id));
+    users_pref->AppendIfNotPresent(std::make_unique<base::Value>(user_id));
   }
 
   // ExistingUserController private member accessors.
@@ -435,9 +439,11 @@ class ExistingUserControllerPublicSessionTest
     test::UserSessionManagerTestApi session_manager_test_api(
         UserSessionManager::GetInstance());
     session_manager_test_api.InjectStubUserContext(user_context);
+    // There may be in-session oobe or an initial login screen created from
+    // --login-manager.
     EXPECT_CALL(*mock_login_display_host_,
                 StartWizard(OobeScreen::SCREEN_TERMS_OF_SERVICE))
-        .Times(0);
+        .Times(AnyNumber());
     EXPECT_CALL(*mock_login_display_, SetUIEnabled(false)).Times(AnyNumber());
     EXPECT_CALL(*mock_login_display_, SetUIEnabled(true)).Times(AnyNumber());
   }
@@ -837,6 +843,69 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerActiveDirectoryTest,
   user_context.SetKey(Key(kPassword));
   user_context.SetUserIDHash(gaia_account_id_.GetUserEmail());
   existing_user_controller()->CompleteLogin(user_context);
+}
+
+class ExistingUserControllerSavePasswordHashTest
+    : public ExistingUserControllerTest {
+ public:
+  ExistingUserControllerSavePasswordHashTest() = default;
+
+  void SetUpSessionManager() override {
+    InstallOwnerKey();
+    RefreshDevicePolicy();
+  }
+};
+
+// Tests that successful GAIA online login saves SyncPasswordData to user
+// profile prefs.
+IN_PROC_BROWSER_TEST_F(ExistingUserControllerSavePasswordHashTest,
+                       GaiaOnlineLoginSavesPasswordHashToPrefs) {
+  UserContext user_context(gaia_account_id_);
+  user_context.SetKey(Key(kPassword));
+  user_context.SetUserIDHash(gaia_account_id_.GetUserEmail());
+  content::WindowedNotificationObserver profile_prepared_observer(
+      chrome::NOTIFICATION_LOGIN_USER_PROFILE_PREPARED,
+      content::NotificationService::AllSources());
+  existing_user_controller()->CompleteLogin(user_context);
+
+  profile_prepared_observer.Wait();
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(&ClearNotifications));
+  content::RunAllPendingInMessageLoop();
+
+  // Verify password hash and salt are saved to prefs.
+  Profile* profile =
+      content::Details<Profile>(profile_prepared_observer.details()).ptr();
+  EXPECT_TRUE(profile->GetPrefs()->HasPrefPath(
+      password_manager::prefs::kSyncPasswordHash));
+  EXPECT_TRUE(profile->GetPrefs()->HasPrefPath(
+      password_manager::prefs::kSyncPasswordLengthAndHashSalt));
+}
+
+// Tests that successful offline login saves SyncPasswordData to user profile
+// prefs.
+IN_PROC_BROWSER_TEST_F(ExistingUserControllerSavePasswordHashTest,
+                       OfflineLoginSavesPasswordHashToPrefs) {
+  UserContext user_context(gaia_account_id_);
+  user_context.SetKey(Key(kPassword));
+  user_context.SetUserIDHash(gaia_account_id_.GetUserEmail());
+  content::WindowedNotificationObserver profile_prepared_observer(
+      chrome::NOTIFICATION_LOGIN_USER_PROFILE_PREPARED,
+      content::NotificationService::AllSources());
+  existing_user_controller()->Login(user_context, SigninSpecifics());
+
+  profile_prepared_observer.Wait();
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(&ClearNotifications));
+  content::RunAllPendingInMessageLoop();
+
+  // Verify password hash and salt are saved to prefs.
+  Profile* profile =
+      content::Details<Profile>(profile_prepared_observer.details()).ptr();
+  EXPECT_TRUE(profile->GetPrefs()->HasPrefPath(
+      password_manager::prefs::kSyncPasswordHash));
+  EXPECT_TRUE(profile->GetPrefs()->HasPrefPath(
+      password_manager::prefs::kSyncPasswordLengthAndHashSalt));
 }
 
 }  // namespace chromeos

@@ -10,7 +10,6 @@
 #include <memory>
 #include <vector>
 
-#import "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
 #import "ios/web/public/navigation_item_list.h"
@@ -88,7 +87,7 @@ class LegacyNavigationManagerImpl : public NavigationManagerImpl {
   NavigationItemImpl* GetLastCommittedItemImpl() const override;
   NavigationItemImpl* GetPendingItemImpl() const override;
   NavigationItemImpl* GetTransientItemImpl() const override;
-  void FinishGoToIndex(int index) override;
+  void FinishGoToIndex(int index, NavigationInitiationType type) override;
 
   // Returns true if the PageTransition for the underlying navigation item at
   // |index| has ui::PAGE_TRANSITION_IS_REDIRECT_MASK.
@@ -96,7 +95,7 @@ class LegacyNavigationManagerImpl : public NavigationManagerImpl {
 
   // CRWSessionController that backs this instance.
   // TODO(stuartmorgan): Fold CRWSessionController into this class.
-  base::scoped_nsobject<CRWSessionController> session_controller_;
+  CRWSessionController* session_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(LegacyNavigationManagerImpl);
 };

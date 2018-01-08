@@ -32,7 +32,10 @@
 #ifndef LocalFrameClientImpl_h
 #define LocalFrameClientImpl_h
 
+#include <memory>
+
 #include "base/memory/scoped_refptr.h"
+
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "platform/heap/Handle.h"
@@ -40,14 +43,12 @@
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebScopedVirtualTimePauser.h"
 
-#include <memory>
-
 namespace blink {
 
 class WebDevToolsAgentImpl;
 class WebLocalFrameImpl;
 class WebSpellCheckPanelHostClient;
-struct WebRemoteScrollProperties;
+struct WebScrollIntoViewParams;
 
 class LocalFrameClientImpl final : public LocalFrameClient {
  public:
@@ -127,6 +128,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DidStartLoading(LoadStartType) override;
   void DidStopLoading() override;
   void ProgressEstimateChanged(double progress_estimate) override;
+  void ForwardResourceTimingToParent(const WebResourceTimingInfo&) override;
   void DownloadURL(const ResourceRequest&,
                    const String& suggested_name) override;
   void LoadErrorPage(int reason) override;
@@ -138,9 +140,9 @@ class LocalFrameClientImpl final : public LocalFrameClient {
                              const KURL& insecure_url) override;
   void DidDetectXSS(const KURL&, bool did_block_entire_page) override;
   void DidDispatchPingLoader(const KURL&) override;
-  void DidDisplayContentWithCertificateErrors(const KURL&) override;
-  void DidRunContentWithCertificateErrors(const KURL&) override;
-  void ReportLegacySymantecCert(const KURL&, Time) override;
+  void DidDisplayContentWithCertificateErrors() override;
+  void DidRunContentWithCertificateErrors() override;
+  void ReportLegacySymantecCert(const KURL&) override;
   void DidChangePerformanceTiming() override;
   void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) override;
   void DidObserveNewFeatureUsage(mojom::WebFeature) override;
@@ -187,6 +189,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void FrameFocused() const override;
   void DidChangeName(const String&) override;
   void DidEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) override;
+  void DidEnforceInsecureNavigationsSet(const std::vector<unsigned>&) override;
   void DidChangeFramePolicy(Frame* child_frame,
                             SandboxFlags,
                             const ParsedFeaturePolicy&) override;
@@ -227,9 +230,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void SetEffectiveConnectionTypeForTesting(
       WebEffectiveConnectionType) override;
 
-  bool IsClientLoFiActiveForFrame() override;
-
-  bool ShouldUseClientLoFiForRequest(const ResourceRequest&) override;
+  WebURLRequest::PreviewsState GetPreviewsStateForFrame() const override;
 
   KURL OverrideFlashEmbedWithHTML(const KURL&) override;
 
@@ -253,13 +254,23 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void DidBlockFramebust(const KURL&) override;
 
-  String GetInstrumentationToken() override;
+  String GetDevToolsFrameToken() const override;
 
   void ScrollRectToVisibleInParentFrame(
       const WebRect&,
-      const WebRemoteScrollProperties&) override;
+      const WebScrollIntoViewParams&) override;
 
   void SetVirtualTimePauser(WebScopedVirtualTimePauser) override;
+
+  String evaluateInInspectorOverlayForTesting(const String& script) override;
+
+  bool HandleCurrentKeyboardEvent() override;
+
+  void DidChangeSelection(bool is_selection_empty) override;
+
+  void DidChangeContents() override;
+
+  Frame* FindFrame(const AtomicString& name) const override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);

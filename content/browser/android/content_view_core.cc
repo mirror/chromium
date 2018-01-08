@@ -31,7 +31,6 @@
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #include "content/browser/web_contents/web_contents_android.h"
 #include "content/browser/web_contents/web_contents_view_android.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/frame_messages.h"
 #include "content/common/input_messages.h"
 #include "content/common/view_messages.h"
@@ -46,6 +45,7 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/menu_item.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/public/common/user_agent.h"
 #include "jni/ContentViewCoreImpl_jni.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -221,8 +221,9 @@ ContentViewCore::~ContentViewCore() {
 void ContentViewCore::UpdateWindowAndroid(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj,
-    jlong window_android) {
-  auto* window = reinterpret_cast<ui::WindowAndroid*>(window_android);
+    const JavaParamRef<jobject>& jwindow_android) {
+  ui::WindowAndroid* window =
+      ui::WindowAndroid::FromJavaWindowAndroid(jwindow_android);
   auto* old_window = GetWindowAndroid();
   if (window == old_window)
     return;
@@ -849,7 +850,7 @@ jlong JNI_ContentViewCoreImpl_Init(
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jobject>& jweb_contents,
     const JavaParamRef<jobject>& jview_android_delegate,
-    jlong jwindow_android,
+    const JavaParamRef<jobject>& jwindow_android,
     jfloat dip_scale) {
   WebContentsImpl* web_contents = static_cast<WebContentsImpl*>(
       WebContents::FromJavaWebContents(jweb_contents));
@@ -859,7 +860,7 @@ jlong JNI_ContentViewCoreImpl_Init(
   view_android->SetDelegate(jview_android_delegate);
 
   ui::WindowAndroid* window_android =
-      reinterpret_cast<ui::WindowAndroid*>(jwindow_android);
+      ui::WindowAndroid::FromJavaWindowAndroid(jwindow_android);
   DCHECK(window_android);
   window_android->AddChild(view_android);
 

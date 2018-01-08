@@ -4,11 +4,12 @@
 
 #include "media/gpu/android/media_codec_video_decoder.h"
 
+#include <memory>
+
 #include "base/callback.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "media/base/android/media_codec_bridge_impl.h"
@@ -98,15 +99,13 @@ PendingDecode::~PendingDecode() = default;
 
 MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     const gpu::GpuPreferences& gpu_preferences,
-    VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
     DeviceInfo* device_info,
     AVDACodecAllocator* codec_allocator,
     std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
     AndroidOverlayMojoFactoryCB overlay_factory_cb,
     RequestOverlayInfoCB request_overlay_info_cb,
     std::unique_ptr<VideoFrameFactory> video_frame_factory)
-    : output_cb_(output_cb),
-      codec_allocator_(codec_allocator),
+    : codec_allocator_(codec_allocator),
       request_overlay_info_cb_(std::move(request_overlay_info_cb)),
       surface_chooser_helper_(
           std::move(surface_chooser),
@@ -178,6 +177,8 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
     return;
   }
   decoder_config_ = config;
+
+  output_cb_ = output_cb;
 
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
   if (config.codec() == kCodecH264)
@@ -393,7 +394,7 @@ void MediaCodecVideoDecoder::CreateCodec() {
   config->requires_secure_codec = requires_secure_codec_;
   // TODO(liberato): per android_util.h, remove JavaObjectPtr.
   config->media_crypto =
-      base::MakeUnique<base::android::ScopedJavaGlobalRef<jobject>>(
+      std::make_unique<base::android::ScopedJavaGlobalRef<jobject>>(
           media_crypto_);
   config->initial_expected_coded_size = decoder_config_.coded_size();
   config->surface_bundle = target_surface_bundle_;
@@ -414,7 +415,7 @@ void MediaCodecVideoDecoder::OnCodecConfigured(
     EnterTerminalState(State::kError);
     return;
   }
-  codec_ = base::MakeUnique<CodecWrapper>(
+  codec_ = std::make_unique<CodecWrapper>(
       CodecSurfacePair(std::move(codec), std::move(surface_bundle)),
       BindToCurrentLoop(base::Bind(&MediaCodecVideoDecoder::StartTimer,
                                    weak_factory_.GetWeakPtr())));
@@ -658,10 +659,9 @@ void MediaCodecVideoDecoder::RunEosDecodeCb(int reset_generation) {
 
 void MediaCodecVideoDecoder::ForwardVideoFrame(
     int reset_generation,
-    VideoFrameFactory::ReleaseMailboxCB release_cb,
     const scoped_refptr<VideoFrame>& frame) {
   if (reset_generation == reset_generation_)
-    output_cb_.Run(std::move(release_cb), frame);
+    output_cb_.Run(frame);
 }
 
 // Our Reset() provides a slightly stronger guarantee than VideoDecoder does.

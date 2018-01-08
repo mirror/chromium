@@ -60,6 +60,12 @@ viz_component("service") {
     "display/overlay_strategy_underlay_cast.h",
     "display/program_binding.cc",
     "display/program_binding.h",
+    "display/renderer_utils.cc",
+    "display/renderer_utils.h",
+    "display/scoped_gpu_memory_buffer_texture.cc",
+    "display/scoped_gpu_memory_buffer_texture.h",
+    "display/scoped_render_pass_texture.cc",
+    "display/scoped_render_pass_texture.h",
     "display/shader.cc",
     "display/shader.h",
     "display/skia_renderer.cc",
@@ -80,6 +86,8 @@ viz_component("service") {
     "display_embedder/compositing_mode_reporter_impl.h",
     "display_embedder/compositor_overlay_candidate_validator.h",
     "display_embedder/display_provider.h",
+    "display_embedder/external_begin_frame_controller_impl.cc",
+    "display_embedder/external_begin_frame_controller_impl.h",
     "display_embedder/gl_output_surface.cc",
     "display_embedder/gl_output_surface.h",
     "display_embedder/gl_output_surface_buffer_queue.cc",
@@ -116,7 +124,6 @@ viz_component("service") {
     "frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
     "frame_sinks/video_capture/frame_sink_video_capturer_impl.h",
     "frame_sinks/video_capture/frame_sink_video_capturer_manager.h",
-    "frame_sinks/video_capture/frame_sink_video_consumer.h",
     "frame_sinks/video_capture/in_flight_frame_delivery.cc",
     "frame_sinks/video_capture/in_flight_frame_delivery.h",
     "frame_sinks/video_capture/interprocess_frame_pool.cc",
@@ -130,8 +137,6 @@ viz_component("service") {
     "hit_test/hit_test_aggregator_delegate.h",
     "hit_test/hit_test_manager.cc",
     "hit_test/hit_test_manager.h",
-    "surfaces/direct_surface_reference_factory.cc",
-    "surfaces/direct_surface_reference_factory.h",
     "surfaces/surface.cc",
     "surfaces/surface.h",
     "surfaces/surface_client.h",
@@ -158,6 +163,7 @@ viz_component("service") {
     "//cc/paint",
     "//components/crash/core/common:crash_key",
     "//components/viz/common",
+    "//gpu/ipc:gl_in_process_context",
 
     # Note that dependency on //gpu/ipc/client is for GpuMemoryBufferImpl. This
     # dependency should not be in public_deps.
@@ -179,7 +185,6 @@ viz_component("service") {
     "//cc",
     "//cc/debug",
     "//gpu/command_buffer/client:gles2_interface",
-    "//gpu/ipc:command_buffer",
     "//services/viz/privileged/interfaces/compositing",
     "//services/viz/public/interfaces",
     "//ui/gfx",
@@ -305,6 +310,7 @@ viz_source_set("unit_tests") {
     "//gpu/command_buffer/client",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/ipc:gl_in_process_context",
+    "//gpu/ipc/service",
     "//media",
     "//media/capture:capture_lib",
     "//services/ui/public/interfaces",
@@ -315,6 +321,7 @@ viz_source_set("unit_tests") {
     "//third_party/libyuv",
     "//ui/display/types",
     "//ui/gfx:test_support",
+    "//ui/gl",
   ]
 
   if (use_ozone) {

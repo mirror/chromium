@@ -38,12 +38,11 @@ GuestViewImpl.prototype.attachImpl$ = function(
     return;
   }
 
-  // Callback wrapper function to store the contentWindow from the attachGuest()
-  // callback, handle potential attaching failure, register an automatic detach,
+  // Callback wrapper function to set the contentWindow following attachment,
   // and advance the queue.
-  var callbackWrapper = function(callback, contentWindow) {
+  var callbackWrapper = function(callback) {
+    var contentWindow = getIframeContentWindow(viewInstanceId);
     // Check if attaching failed.
-    contentWindow = getIframeContentWindow(viewInstanceId);
     if (!contentWindow) {
       this.state = GuestViewImpl.GuestState.GUEST_STATE_CREATED;
       this.internalInstanceId = 0;
@@ -120,11 +119,6 @@ GuestViewImpl.prototype.destroyImpl = function(callback) {
     // destroy() does nothing in this case.
     this.handleCallback(callback);
     return;
-  }
-
-  // If this guest is attached, then detach it first.
-  if (!!this.internalInstanceId) {
-    GuestViewInternalNatives.DetachGuest(this.internalInstanceId);
   }
 
   // Reset the state of the destroyed guest;

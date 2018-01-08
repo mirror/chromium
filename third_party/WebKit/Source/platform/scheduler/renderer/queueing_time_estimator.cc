@@ -109,8 +109,6 @@ const char* QueueingTimeEstimator::Calculator::GetReportingMessageFromQueueType(
   switch (queue_type) {
     case MainThreadTaskQueue::QueueType::kDefault:
       return TASK_QUEUE_PREFIX "Default";
-    case MainThreadTaskQueue::QueueType::kDefaultLoading:
-      return TASK_QUEUE_PREFIX "DefaultLoading";
     case MainThreadTaskQueue::QueueType::kUnthrottled:
       return TASK_QUEUE_PREFIX "Unthrottled";
     case MainThreadTaskQueue::QueueType::kFrameLoading:
@@ -125,7 +123,7 @@ const char* QueueingTimeEstimator::Calculator::GetReportingMessageFromQueueType(
     case MainThreadTaskQueue::QueueType::kDefaultTimer:
     case MainThreadTaskQueue::QueueType::kIdle:
     case MainThreadTaskQueue::QueueType::kTest:
-    case MainThreadTaskQueue::QueueType::kFrameLoading_kControl:
+    case MainThreadTaskQueue::QueueType::kFrameLoadingControl:
     case MainThreadTaskQueue::QueueType::kFrameDeferrable:
     case MainThreadTaskQueue::QueueType::kFrameUnpausable:
     case MainThreadTaskQueue::QueueType::kV8:
@@ -363,8 +361,8 @@ class RecordQueueingTimeClient : public QueueingTimeEstimator::Client {
 
   base::TimeDelta queueing_time() { return queueing_time_; }
 
-  RecordQueueingTimeClient() {}
-  ~RecordQueueingTimeClient() override {}
+  RecordQueueingTimeClient() = default;
+  ~RecordQueueingTimeClient() override = default;
 
  private:
   base::TimeDelta queueing_time_;

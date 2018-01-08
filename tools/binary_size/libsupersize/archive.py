@@ -20,6 +20,7 @@ import tempfile
 import zipfile
 
 import concurrent
+import demangle
 import describe
 import file_format
 import function_signature
@@ -71,22 +72,9 @@ def _StripLinkerAddedSymbolPrefixes(raw_symbols):
     elif full_name.startswith('rel.'):
       symbol.flags |= models.FLAG_REL
       symbol.full_name = full_name[4:]
-
-
-def _UnmangleRemainingSymbols(raw_symbols, tool_prefix):
-  """Uses c++filt to unmangle any symbols that need it."""
-  to_process = [s for s in raw_symbols if s.full_name.startswith('_Z')]
-  if not to_process:
-    return
-
-  logging.info('Unmangling %d names', len(to_process))
-  proc = subprocess.Popen([path_util.GetCppFiltPath(tool_prefix)],
-                          stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-  stdout = proc.communicate('\n'.join(s.full_name for s in to_process))[0]
-  assert proc.returncode == 0
-
-  for i, line in enumerate(stdout.splitlines()):
-    to_process[i].full_name = line
+    elif full_name.startswith('hot.'):
+      symbol.flags |= models.FLAG_HOT
+      symbol.full_name = full_name[4:]
 
 
 def _NormalizeNames(raw_symbols):
@@ -645,9 +633,9 @@ def _ParseElfInfo(map_path, elf_path, tool_prefix, output_directory,
 
   logging.info('Stripping linker prefixes from symbol names')
   _StripLinkerAddedSymbolPrefixes(raw_symbols)
-  # Map file for some reason doesn't unmangle all names.
-  # Unmangle prints its own log statement.
-  _UnmangleRemainingSymbols(raw_symbols, tool_prefix)
+  # Map file for some reason doesn't demangle all names.
+  # Demangle prints its own log statement.
+  demangle.DemangleRemainingSymbols(raw_symbols, tool_prefix)
 
   if elf_path:
     logging.info(
@@ -779,7 +767,7 @@ def _ParsePakSymbols(
 def _ParseApkElfSectionSize(section_sizes, metadata, apk_elf_result):
   if metadata:
     logging.debug('Extracting section sizes from .so within .apk')
-    apk_build_id, apk_section_sizes = apk_elf_result.get()
+    apk_build_id, apk_section_sizes, elf_overhead_size = apk_elf_result.get()
     assert apk_build_id == metadata[models.METADATA_ELF_BUILD_ID], (
         'BuildID from apk_elf_result did not match')
 
@@ -798,13 +786,16 @@ def _ParseApkElfSectionSize(section_sizes, metadata, apk_elf_result):
       else:
         apk_section_sizes['%s (unpacked)' % packed_section_name] = (
             section_sizes.get(packed_section_name))
-  return apk_section_sizes
+    return apk_section_sizes, elf_overhead_size
+  return section_sizes
 
 
 def _ParseApkOtherSymbols(section_sizes, apk_path):
   apk_symbols = []
+  zip_info_total = 0
   with zipfile.ZipFile(apk_path) as z:
     for zip_info in z.infolist():
+      zip_info_total += zip_info.compress_size
       # Skip shared library and pak files as they are already accounted for.
       if (zip_info.filename.endswith('.so')
           or zip_info.filename.endswith('.pak')):
@@ -812,6 +803,10 @@ def _ParseApkOtherSymbols(section_sizes, apk_path):
       apk_symbols.append(models.Symbol(
             models.SECTION_OTHER, zip_info.compress_size,
             full_name=zip_info.filename))
+  overhead_size = os.path.getsize(apk_path) - zip_info_total
+  apk_symbols.append(models.Symbol(
+        models.SECTION_OTHER, overhead_size,
+        full_name='APK zip overhead'))
   prev = section_sizes.setdefault(models.SECTION_OTHER, 0)
   section_sizes[models.SECTION_OTHER] = prev + sum(s.size for s in apk_symbols)
   return apk_symbols
@@ -847,6 +842,18 @@ def _FindPakSymbolsFromFiles(pak_files, pak_info_path, output_directory):
   return symbols_by_id
 
 
+def _CalculateElfOverhead(section_sizes, elf_path):
+  if elf_path:
+    section_sizes_total_without_bss = sum(
+        s for k, s in section_sizes.iteritems() if k != models.SECTION_BSS)
+    elf_overhead_size = (
+        os.path.getsize(elf_path) - section_sizes_total_without_bss)
+    assert elf_overhead_size >= 0, (
+        'Negative ELF overhead {}'.format(elf_overhead_size))
+    return elf_overhead_size
+  return 0
+
+
 def CreateSectionSizesAndSymbols(
       map_path=None, tool_prefix=None, output_directory=None, elf_path=None,
       apk_path=None, track_string_literals=True, metadata=None,
@@ -879,16 +886,25 @@ def CreateSectionSizesAndSymbols(
   section_sizes, raw_symbols = _ParseElfInfo(
       map_path, elf_path, tool_prefix, output_directory, track_string_literals,
       elf_object_paths)
+  elf_overhead_size = _CalculateElfOverhead(section_sizes, elf_path)
 
   pak_symbols_by_id = None
   if apk_path:
     pak_symbols_by_id = _FindPakSymbolsFromApk(apk_path, output_directory)
-    section_sizes = _ParseApkElfSectionSize(
+    section_sizes, elf_overhead_size = _ParseApkElfSectionSize(
         section_sizes, metadata, apk_elf_result)
     raw_symbols.extend(_ParseApkOtherSymbols(section_sizes, apk_path))
   elif pak_files and pak_info_file:
     pak_symbols_by_id = _FindPakSymbolsFromFiles(
         pak_files, pak_info_file, output_directory)
+
+  if elf_path:
+    elf_overhead_symbol = models.Symbol(
+        models.SECTION_OTHER, elf_overhead_size,
+        full_name='ELF file overhead')
+    prev = section_sizes.setdefault(models.SECTION_OTHER, 0)
+    section_sizes[models.SECTION_OTHER] = prev + elf_overhead_size
+    raw_symbols.append(elf_overhead_symbol)
 
   if pak_symbols_by_id:
     object_paths = (p for p in source_mapper.IterAllPaths() if p.endswith('.o'))
@@ -994,7 +1010,8 @@ def _ElfInfoFromApk(apk_path, apk_so_path, tool_prefix):
     f.flush()
     build_id = BuildIdFromElf(f.name, tool_prefix)
     section_sizes = _SectionSizesFromElf(f.name, tool_prefix)
-    return build_id, section_sizes
+    elf_overhead_size = _CalculateElfOverhead(section_sizes, f.name)
+    return build_id, section_sizes, elf_overhead_size
 
 
 def AddArguments(parser):

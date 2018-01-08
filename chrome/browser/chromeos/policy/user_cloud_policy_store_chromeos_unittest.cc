@@ -14,12 +14,10 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/scoped_task_environment.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/dbus/fake_cryptohome_client.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
@@ -192,7 +190,7 @@ class UserCloudPolicyStoreChromeOSTest : public testing::Test {
     if (previous_value) {
       previous_policy.Set(key::kHomepageLocation, POLICY_LEVEL_MANDATORY,
                           POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
-                          base::MakeUnique<base::Value>(previous_value),
+                          std::make_unique<base::Value>(previous_value),
                           nullptr);
     }
     EXPECT_TRUE(previous_policy.Equals(store_->policy_map()));

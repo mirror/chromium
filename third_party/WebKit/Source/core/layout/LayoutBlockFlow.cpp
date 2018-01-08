@@ -50,6 +50,7 @@
 #include "core/layout/line/InlineTextBox.h"
 #include "core/layout/line/LineWidth.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
+#include "core/layout/ng/ng_fragmentation_utils.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/layout/shapes/ShapeOutsideInfo.h"
@@ -262,7 +263,7 @@ LayoutBlockFlow::LayoutBlockFlow(ContainerNode* node) : LayoutBlock(node) {
   SetChildrenInline(true);
 }
 
-LayoutBlockFlow::~LayoutBlockFlow() {}
+LayoutBlockFlow::~LayoutBlockFlow() = default;
 
 LayoutBlockFlow* LayoutBlockFlow::CreateAnonymous(Document* document) {
   LayoutBlockFlow* layout_block_flow = RuntimeEnabledFeatures::LayoutNGEnabled()
@@ -1709,6 +1710,18 @@ LayoutUnit LayoutBlockFlow::AdjustedMarginBeforeForPagination(
   return std::min(effective_margin, remaining_space);
 }
 
+static LayoutBlockFlow* PreviousBlockFlowInFormattingContext(
+    const LayoutBox& child) {
+  LayoutObject* prev = child.PreviousSibling();
+  while (prev && (!prev->IsLayoutBlockFlow() ||
+                  ToLayoutBlockFlow(prev)->CreatesNewFormattingContext())) {
+    prev = prev->PreviousSibling();
+  }
+  if (prev)
+    return ToLayoutBlockFlow(prev);
+  return nullptr;
+}
+
 LayoutUnit LayoutBlockFlow::CollapseMargins(
     LayoutBox& child,
     BlockChildrenLayoutInfo& layout_info,
@@ -1896,18 +1909,16 @@ LayoutUnit LayoutBlockFlow::CollapseMargins(
   if (logical_top < before_collapse_logical_top) {
     LayoutUnit old_logical_height = LogicalHeight();
     SetLogicalHeight(logical_top);
+    LayoutBlockFlow* previous_block_flow =
+        PreviousBlockFlowInFormattingContext(child);
     while (previous_block_flow) {
       auto lowest_float = previous_block_flow->LogicalTop() +
                           previous_block_flow->LowestFloatLogicalBottom();
-      if (lowest_float > logical_top)
-        AddOverhangingFloats(previous_block_flow, false);
-      else
+      if (lowest_float <= logical_top)
         break;
-      LayoutObject* prev = previous_block_flow->PreviousSibling();
-      if (prev && prev->IsLayoutBlockFlow())
-        previous_block_flow = ToLayoutBlockFlow(prev);
-      else
-        previous_block_flow = nullptr;
+      AddOverhangingFloats(previous_block_flow, false);
+      previous_block_flow =
+          PreviousBlockFlowInFormattingContext(*previous_block_flow);
     }
     SetLogicalHeight(old_logical_height);
   }
@@ -2521,6 +2532,11 @@ void LayoutBlockFlow::SetCachedLayoutResult(const NGConstraintSpace&,
 
 void LayoutBlockFlow::SetPaintFragment(
     scoped_refptr<const NGPhysicalFragment>) {}
+
+Vector<NGPaintFragment*> LayoutBlockFlow::GetPaintFragments(
+    const LayoutObject&) const {
+  return Vector<NGPaintFragment*>();
+}
 
 void LayoutBlockFlow::ComputeOverflow(LayoutUnit old_client_after_edge,
                                       bool recompute_floats) {
@@ -4388,8 +4404,13 @@ bool LayoutBlockFlow::CreatesNewFormattingContext() const {
   // NGBlockNode cannot compute margin collapsing across NG/non-NG boundary.
   // Create a new formatting context for non-NG node to prevent margin
   // collapsing.
-  if (RuntimeEnabledFeatures::LayoutNGEnabled())
+  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    if (Node* node = GetNode()) {
+      if (node->IsElementNode() && ToElement(*node).ShouldForceLegacyLayout())
+        return true;
+    }
     return StyleRef().UserModify() != EUserModify::kReadOnly;
+  }
 
   return false;
 }
@@ -4768,11 +4789,14 @@ void LayoutBlockFlow::ShowLineTreeAndMark(const InlineBox* marked_box1,
                                           const InlineBox* marked_box2,
                                           const char* marked_label2,
                                           const LayoutObject* obj) const {
-  ShowLayoutObject();
+  StringBuilder string_blockflow;
+  DumpLayoutObject(string_blockflow);
   for (const RootInlineBox* root = FirstRootBox(); root;
-       root = root->NextRootBox())
-    root->ShowLineTreeAndMark(marked_box1, marked_label1, marked_box2,
-                              marked_label2, obj, 1);
+       root = root->NextRootBox()) {
+    root->DumpLineTreeAndMark(string_blockflow, marked_box1, marked_label1,
+                              marked_box2, marked_label2, obj, 1);
+  }
+  DLOG(INFO) << "\n" << string_blockflow.ToString().Utf8().data();
 }
 
 #endif

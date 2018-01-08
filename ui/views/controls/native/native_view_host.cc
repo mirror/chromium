@@ -7,7 +7,6 @@
 #include "base/logging.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/gfx/canvas.h"
-#include "ui/views/accessibility/native_view_accessibility.h"
 #include "ui/views/controls/native/native_view_host_wrapper.h"
 #include "ui/views/widget/widget.h"
 
@@ -186,7 +185,7 @@ const char* NativeViewHost::GetClassName() const {
 void NativeViewHost::OnFocus() {
   if (native_view_)
     native_wrapper_->SetFocus();
-  NotifyAccessibilityEvent(ui::AX_EVENT_FOCUS, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::kFocus, true);
 }
 
 gfx::NativeViewAccessible NativeViewHost::GetNativeViewAccessible() {

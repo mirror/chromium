@@ -55,7 +55,7 @@ LabelButton::LabelButton(ButtonListener* listener,
       style_(STYLE_TEXTBUTTON),
       border_is_themed_border_(true),
       image_label_spacing_(LayoutProvider::Get()->GetDistanceMetric(
-          DISTANCE_RELATED_CONTROL_HORIZONTAL)),
+          DISTANCE_RELATED_LABEL_HORIZONTAL)),
       horizontal_alignment_(gfx::ALIGN_LEFT) {
   SetAnimationDuration(kHoverAnimationDurationMs);
   SetTextInternal(text);
@@ -273,7 +273,15 @@ void LabelButton::Layout() {
       label_area.height());
 
   gfx::Point image_origin(child_area.origin());
-  image_origin.Offset(0, (child_area.height() - image_size.height()) / 2);
+  if (label_->multi_line()) {
+    // Right now this code currently only works for CheckBox and RadioButton
+    // descendants that have multi-line enabled for their label.
+    image_origin.Offset(
+        0, std::max(
+               0, (label_->font_list().GetHeight() - image_size.height()) / 2));
+  } else {
+    image_origin.Offset(0, (child_area.height() - image_size.height()) / 2);
+  }
   if (horizontal_alignment_ == gfx::ALIGN_CENTER) {
     const int spacing = (image_size.width() > 0 && label_size.width() > 0) ?
         image_label_spacing_ : 0;

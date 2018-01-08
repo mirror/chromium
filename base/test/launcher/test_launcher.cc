@@ -38,14 +38,14 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/gtest_util.h"
 #include "base/test/launcher/test_launcher_tracer.h"
 #include "base/test/launcher/test_results_tracker.h"
-#include "base/test/sequenced_worker_pool_owner.h"
 #include "base/test/test_switches.h"
 #include "base/test/test_timeouts.h"
-#include "base/threading/sequenced_worker_pool.h"
-#include "base/threading/thread.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -69,6 +69,7 @@
 // TODO(scottmg): For temporary code in OnOutputTimeout().
 #include <zircon/syscalls.h>
 #include <zircon/syscalls/object.h>
+#include "base/fuchsia/default_job.h"
 #endif
 
 namespace base {
@@ -122,6 +123,27 @@ std::map<ProcessHandle, CommandLine>* GetLiveProcesses() {
 TestLauncherTracer* GetTestLauncherTracer() {
   static auto* tracer = new TestLauncherTracer;
   return tracer;
+}
+
+// Creates and starts a TaskScheduler with |num_parallel_jobs| dedicated to
+// foreground blocking tasks (corresponds to the traits used to launch and wait
+// for child processes).
+void CreateAndStartTaskScheduler(int num_parallel_jobs) {
+  // These values are taken from TaskScheduler::StartWithDefaultParams(), which
+  // is not used directly to allow a custom number of threads in the foreground
+  // blocking pool.
+  constexpr int kMaxBackgroundThreads = 1;
+  constexpr int kMaxBackgroundBlockingThreads = 2;
+  const int max_foreground_threads =
+      std::max(1, base::SysInfo::NumberOfProcessors());
+  constexpr base::TimeDelta kSuggestedReclaimTime =
+      base::TimeDelta::FromSeconds(30);
+  base::TaskScheduler::Create("TestLauncher");
+  base::TaskScheduler::GetInstance()->Start(
+      {{kMaxBackgroundThreads, kSuggestedReclaimTime},
+       {kMaxBackgroundBlockingThreads, kSuggestedReclaimTime},
+       {max_foreground_threads, kSuggestedReclaimTime},
+       {num_parallel_jobs, kSuggestedReclaimTime}});
 }
 
 // TODO(fuchsia): Fuchsia does not have POSIX signals, but equivalent
@@ -261,7 +283,7 @@ int LaunchChildTestProcessWithOptions(const CommandLine& command_line,
   const bool kOnBot = getenv("CHROME_HEADLESS") != nullptr;
 #endif  // OS_FUCHSIA
 
-#if defined(OS_POSIX)
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
   // Make sure an option we rely on is present - see LaunchChildGTestProcess.
   DCHECK(options.new_process_group);
 #endif
@@ -295,7 +317,14 @@ int LaunchChildTestProcessWithOptions(const CommandLine& command_line,
 
     new_options.job_handle = job_handle.Get();
   }
-#endif  // defined(OS_WIN)
+#elif defined(OS_FUCHSIA)
+  DCHECK(!new_options.job_handle);
+
+  ScopedZxHandle job_handle;
+  zx_status_t result = zx_job_create(GetDefaultJob(), 0, job_handle.receive());
+  CHECK_EQ(ZX_OK, result) << "zx_job_create: " << zx_status_get_string(result);
+  new_options.job_handle = job_handle.get();
+#endif  // defined(OS_FUCHSIA)
 
 #if defined(OS_LINUX)
   // To prevent accidental privilege sharing to an untrusted child, processes
@@ -335,13 +364,14 @@ int LaunchChildTestProcessWithOptions(const CommandLine& command_line,
     if (!process.IsValid())
       return -1;
 
-    // TODO(rvargas) crbug.com/417532: Don't store process handles.
 #if defined(OS_FUCHSIA)  // TODO(scottmg): https://crbug.com/755282
     if (kOnBot) {
       LOG(ERROR) << base::StringPrintf("adding %x to live process list",
                                        process.Handle());
     }
 #endif  // OS_FUCHSIA
+
+    // TODO(rvargas) crbug.com/417532: Don't store process handles.
     GetLiveProcesses()->insert(std::make_pair(process.Handle(), command_line));
   }
 
@@ -349,7 +379,14 @@ int LaunchChildTestProcessWithOptions(const CommandLine& command_line,
     observer->OnLaunched(process.Handle(), process.Pid());
 
   int exit_code = 0;
-  if (!process.WaitForExitWithTimeout(timeout, &exit_code)) {
+  bool did_exit = false;
+
+  {
+    base::ScopedAllowBaseSyncPrimitivesForTesting allow_base_sync_primitives;
+    did_exit = process.WaitForExitWithTimeout(timeout, &exit_code);
+  }
+
+  if (!did_exit) {
     if (observer)
       observer->OnTimedOut(command_line);
 
@@ -361,6 +398,17 @@ int LaunchChildTestProcessWithOptions(const CommandLine& command_line,
       LOG(ERROR) << base::StringPrintf("about to process.Terminate() %x",
                                        process.Handle());
     }
+
+    // TODO(crbug.com/799268): Remove once we have debugged timed-out/hung
+    // test job processes.
+    LOG(ERROR) << "Dumping threads in process " << process.Pid();
+
+    CommandLine threads_cmdline(base::FilePath("/boot/bin/threads"));
+    threads_cmdline.AppendArg(IntToString(process.Pid()));
+
+    LaunchOptions threads_options;
+    threads_options.wait = true;
+    LaunchProcess(threads_cmdline, threads_options);
 #endif  // OS_FUCHSIA
     // Ensure that the process terminates.
     process.Terminate(-1, true);
@@ -372,18 +420,20 @@ int LaunchChildTestProcessWithOptions(const CommandLine& command_line,
     // to do that twice and trigger all kinds of log messages.
     AutoLock lock(*GetLiveProcessesLock());
 
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+    // TODO(scottmg): https://crbug.com/755282
+    if (kOnBot) {
+      LOG(ERROR) << base::StringPrintf("going to zx_task_kill(job) for %x",
+                                       process.Handle());
+    }
+
+    CHECK_EQ(zx_task_kill(job_handle.get()), ZX_OK);
+#elif defined(OS_POSIX)
     if (exit_code != 0) {
       // On POSIX, in case the test does not exit cleanly, either due to a crash
       // or due to it timing out, we need to clean up any child processes that
       // it might have created. On Windows, child processes are automatically
       // cleaned up using JobObjects.
-#if defined(OS_FUCHSIA)  // TODO(scottmg): https://crbug.com/755282
-      if (kOnBot) {
-        LOG(ERROR) << base::StringPrintf("going to KillProcessGroup() for %x",
-                                         process.Handle());
-      }
-#endif  // OS_FUCHSIA
       KillProcessGroup(process.Handle());
     }
 #endif
@@ -439,7 +489,6 @@ void DoLaunchChildTestProcess(
     }
   }
 #elif defined(OS_POSIX)
-  options.new_process_group = true;
   options.fds_to_remap = test_launch_options.fds_to_remap;
   if (redirect_stdio) {
     int output_file_fd = fileno(output_file.get());
@@ -450,6 +499,9 @@ void DoLaunchChildTestProcess(
         std::make_pair(output_file_fd, STDERR_FILENO));
   }
 
+#if !defined(OS_FUCHSIA)
+  options.new_process_group = true;
+#endif
 #if defined(OS_LINUX)
   options.kill_on_parent_death = true;
 #endif
@@ -521,7 +573,9 @@ TestLauncher::TestLauncher(TestLauncherDelegate* launcher_delegate,
                       &TestLauncher::OnOutputTimeout),
       parallel_jobs_(parallel_jobs) {}
 
-TestLauncher::~TestLauncher() = default;
+TestLauncher::~TestLauncher() {
+  base::TaskScheduler::GetInstance()->Shutdown();
+}
 
 bool TestLauncher::Run() {
   if (!Init())
@@ -583,8 +637,8 @@ void TestLauncher::LaunchChildGTestProcess(
   // JSON summary.
   bool redirect_stdio = (parallel_jobs_ > 1) || BotModeEnabled();
 
-  GetTaskRunner()->PostTask(
-      FROM_HERE,
+  PostTaskWithTraits(
+      FROM_HERE, {MayBlock(), TaskShutdownBehavior::BLOCK_SHUTDOWN},
       BindOnce(&DoLaunchChildTestProcess, new_command_line, timeout, options,
                redirect_stdio, RetainedRef(ThreadTaskRunnerHandle::Get()),
                base::Passed(std::move(observer))));
@@ -869,18 +923,8 @@ bool TestLauncher::Init() {
 
   fprintf(stdout, "Using %" PRIuS " parallel jobs.\n", parallel_jobs_);
   fflush(stdout);
-  if (parallel_jobs_ > 1U) {
-    // Allow usage of SequencedWorkerPool to launch test processes.
-    // TODO(fdoray): Remove this once the SequencedWorkerPool to TaskScheduler
-    // redirection experiment concludes https://crbug.com/622400.
-    SequencedWorkerPool::EnableForProcess();
 
-    worker_pool_owner_ = std::make_unique<SequencedWorkerPoolOwner>(
-        parallel_jobs_, "test_launcher");
-  } else {
-    worker_thread_ = std::make_unique<Thread>("test_launcher");
-    worker_thread_->Start();
-  }
+  CreateAndStartTaskScheduler(static_cast<int>(parallel_jobs_));
 
   std::vector<std::string> positive_file_filter;
   std::vector<std::string> positive_gtest_filter;
@@ -1232,17 +1276,6 @@ void TestLauncher::OnOutputTimeout() {
 
   // Arm the timer again - otherwise it would fire only once.
   watchdog_timer_.Reset();
-}
-
-scoped_refptr<TaskRunner> TestLauncher::GetTaskRunner() {
-  // One and only one of |worker_pool_owner_| or |worker_thread_| should be
-  // ready.
-  DCHECK_NE(!!worker_pool_owner_, !!worker_thread_);
-
-  if (worker_pool_owner_)
-    return worker_pool_owner_->pool();
-  DCHECK(worker_thread_->IsRunning());
-  return worker_thread_->task_runner();
 }
 
 size_t NumParallelJobs() {

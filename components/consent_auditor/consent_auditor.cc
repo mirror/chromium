@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "components/consent_auditor/pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -36,7 +35,7 @@ UserEventSpecifics::UserConsent::ConsentStatus ToProtoEnum(
       return UserEventSpecifics::UserConsent::GIVEN;
   }
   NOTREACHED();
-  return UserEventSpecifics::UserConsent::GIVEN;
+  return UserEventSpecifics::UserConsent::UNSPECIFIED;
 }
 
 }  // namespace
@@ -91,7 +90,7 @@ ConsentAuditor::ConstructUserConsent(
     const std::vector<int>& consent_grd_ids,
     const std::vector<std::string>& placeholder_replacements,
     ConsentStatus status) {
-  auto specifics = base::MakeUnique<sync_pb::UserEventSpecifics>();
+  auto specifics = std::make_unique<sync_pb::UserEventSpecifics>();
   specifics->set_event_time_usec(
       base::Time::Now().since_origin().InMicroseconds());
   auto* consent = specifics->mutable_user_consent();

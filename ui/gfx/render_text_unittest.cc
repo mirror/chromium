@@ -39,6 +39,7 @@
 #include "ui/gfx/range/range.h"
 #include "ui/gfx/range/range_f.h"
 #include "ui/gfx/render_text_harfbuzz.h"
+#include "ui/gfx/render_text_test_api.h"
 #include "ui/gfx/switches.h"
 #include "ui/gfx/text_utils.h"
 
@@ -58,77 +59,6 @@ using base::UTF8ToUTF16;
 using base::WideToUTF16;
 
 namespace gfx {
-namespace test {
-
-class RenderTextTestApi {
- public:
-  RenderTextTestApi(RenderText* render_text) : render_text_(render_text) {}
-
-  static cc::PaintFlags& GetRendererPaint(
-      internal::SkiaTextRenderer* renderer) {
-    return renderer->flags_;
-  }
-
-  // Callers should ensure that the associated RenderText object is a
-  // RenderTextHarfBuzz instance.
-  const internal::TextRunList* GetHarfBuzzRunList() const {
-    RenderTextHarfBuzz* render_text =
-        static_cast<RenderTextHarfBuzz*>(render_text_);
-    return render_text->GetRunList();
-  }
-
-  void DrawVisualText(internal::SkiaTextRenderer* renderer) {
-    render_text_->EnsureLayout();
-    render_text_->DrawVisualText(renderer);
-  }
-
-  const BreakList<SkColor>& colors() const { return render_text_->colors(); }
-
-  const BreakList<BaselineStyle>& baselines() const {
-    return render_text_->baselines();
-  }
-
-  const BreakList<Font::Weight>& weights() const {
-    return render_text_->weights();
-  }
-
-  const std::vector<BreakList<bool>>& styles() const {
-    return render_text_->styles();
-  }
-
-  const std::vector<internal::Line>& lines() const {
-    return render_text_->lines();
-  }
-
-  SelectionModel EdgeSelectionModel(VisualCursorDirection direction) {
-    return render_text_->EdgeSelectionModel(direction);
-  }
-
-  size_t TextIndexToDisplayIndex(size_t index) {
-    return render_text_->TextIndexToDisplayIndex(index);
-  }
-
-  size_t DisplayIndexToTextIndex(size_t index) {
-    return render_text_->DisplayIndexToTextIndex(index);
-  }
-
-  void EnsureLayout() { render_text_->EnsureLayout(); }
-
-  Vector2d GetAlignmentOffset(size_t line_number) {
-    return render_text_->GetAlignmentOffset(line_number);
-  }
-
-  int GetDisplayTextBaseline() {
-    return render_text_->GetDisplayTextBaseline();
-  }
-
- private:
-  RenderText* render_text_;
-
-  DISALLOW_COPY_AND_ASSIGN(RenderTextTestApi);
-};
-
-}  // namespace test
 
 namespace {
 
@@ -533,8 +463,7 @@ class RenderTextTest : public testing::Test,
 #endif
 
   Rect GetSubstringBoundsUnion(const Range& range) {
-    const std::vector<Rect> bounds =
-        render_text_->GetSubstringBoundsForTesting(range);
+    const std::vector<Rect> bounds = render_text_->GetSubstringBounds(range);
     return std::accumulate(bounds.begin(), bounds.end(), Rect(), UnionRects);
   }
 
@@ -616,7 +545,7 @@ class RenderTextHarfBuzzTest : public RenderTextTest {
 
  protected:
   void SetGlyphWidth(float test_width) {
-    GetRenderTextHarfBuzz()->set_glyph_width_for_test(test_width);
+    test_api()->SetGlyphWidth(test_width);
   }
 
   bool ShapeRunWithFont(const base::string16& text,
@@ -3616,6 +3545,14 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_SurrogatePairsOrCombiningChars) {
 // Test that Zero width characters have the correct line breaking behavior.
 TEST_P(RenderTextHarfBuzzTest, Multiline_ZeroWidthChars) {
   RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+#if defined(OS_MACOSX)
+  // Don't use Helvetica Neue on 10.10 - it has a buggy zero-width space that
+  // actually gets some width. See http://crbug.com/799333.
+  if (base::mac::IsOS10_10())
+    render_text->SetFontList(FontList("Arial, 12px"));
+#endif
+
   render_text->SetMultiline(true);
   render_text->SetWordWrapBehavior(WRAP_LONG_WORDS);
 
@@ -3631,8 +3568,9 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_ZeroWidthChars) {
   render_text->SetDisplayRect(Rect(0, 0, kTestWidth, 0));
   render_text->Draw(canvas());
 
-  ASSERT_EQ(3u, test_api()->lines().size());
-  for (size_t j = 0; j < test_api()->lines().size(); ++j) {
+  EXPECT_EQ(3u, test_api()->lines().size());
+  for (size_t j = 0;
+       j < std::min(arraysize(char_ranges), test_api()->lines().size()); ++j) {
     SCOPED_TRACE(base::StringPrintf("%" PRIuS "-th line", j));
     int segment_size = test_api()->lines()[j].segments.size();
     ASSERT_GT(segment_size, 0);
@@ -4047,7 +3985,11 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_OrphanedVariationSelector) {
 
 TEST_P(RenderTextHarfBuzzTest, HarfBuzz_AsciiVariationSelector) {
   RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
-
+#if defined(OS_MACOSX)
+  // Don't use a system font on macOS - asking for a variation selector on
+  // ASCII glyphs can tickle OS bugs. See http://crbug.com/785522.
+  render_text->SetFontList(FontList("Arial, 12px"));
+#endif
   // A variation selector doesn't have to appear with Emoji. It will probably
   // cause the typesetter to render tofu in this case, but it should not break
   // a text run.
@@ -4330,7 +4272,8 @@ TEST_P(RenderTextTest, TextDoesntClip) {
     }
     {
       SCOPED_TRACE("TextDoesntClip Left Side");
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS) || \
+    defined(ARCH_CPU_MIPS_FAMILY)
       // TODO(dschuyler): On Windows, Chrome OS, and Mac smoothing draws to the
       // left of text.  This appears to be a preexisting issue that wasn't
       // revealed by the prior unit tests.  RenderText currently only uses
@@ -4345,7 +4288,8 @@ TEST_P(RenderTextTest, TextDoesntClip) {
     }
     {
       SCOPED_TRACE("TextDoesntClip Right Side");
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS) || \
+    defined(ARCH_CPU_MIPS_FAMILY)
       // TODO(dschuyler): On Windows, Chrome OS, and Mac smoothing draws to the
       // right of text.  This appears to be a preexisting issue that wasn't
       // revealed by the prior unit tests.  RenderText currently only uses

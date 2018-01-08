@@ -37,10 +37,9 @@ CSSStyleValueVector ParseCSSStyleValue(
   const auto style_values = StyleValueFactory::FromString(
       property_id, value, CSSParserContext::Create(*execution_context));
   if (style_values.IsEmpty()) {
-    exception_state.ThrowDOMException(
-        kSyntaxError, "The value provided ('" + value +
-                          "') could not be parsed as a '" + property_name +
-                          "'.");
+    exception_state.ThrowTypeError("The value provided ('" + value +
+                                   "') could not be parsed as a '" +
+                                   property_name + "'.");
     return CSSStyleValueVector();
   }
 
@@ -74,13 +73,16 @@ Nullable<CSSStyleValueVector> CSSStyleValue::parseAll(
   return style_value_vector;
 }
 
-String CSSStyleValue::toString(
-    const ExecutionContext* execution_context) const {
-  const CSSValue* result =
-      ToCSSValue(execution_context->GetSecureContextMode());
-  // TODO(meade): Remove this once all the number and length types are
-  // rewritten.
-  return result ? result->CssText() : "";
+String CSSStyleValue::toString(ExceptionState& exception_state) const {
+  const CSSValue* result = ToCSSValue();
+  // TODO(crbug.com/803739): Remove this once all CSSStyleValues
+  // support toCSSValue().
+  if (!result) {
+    exception_state.ThrowTypeError(
+        "Some CSSMathValues can't be serialized yet. See crbug.com/803739");
+    return "";
+  }
+  return result->CssText();
 }
 
 String CSSStyleValue::StyleValueTypeToString(StyleValueType type) {

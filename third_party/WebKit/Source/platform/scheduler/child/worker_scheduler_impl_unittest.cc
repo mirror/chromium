@@ -92,15 +92,13 @@ class WorkerSchedulerImplTest : public ::testing::Test {
   WorkerSchedulerImplTest()
       : mock_task_runner_(new cc::OrderedSimpleTaskRunner(&clock_, true)),
         scheduler_(new WorkerSchedulerImplForTest(
-            CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
-                                                          mock_task_runner_,
-                                                          &clock_),
+            CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_),
             &clock_)),
         timeline_(nullptr) {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
-  ~WorkerSchedulerImplTest() override {}
+  ~WorkerSchedulerImplTest() override = default;
 
   void TearDown() override {
     // Check that all tests stop posting tasks.

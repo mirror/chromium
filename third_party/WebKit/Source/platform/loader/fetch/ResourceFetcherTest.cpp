@@ -188,7 +188,7 @@ TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
       fetcher->GetNavigationTimingInfo();
   ASSERT_TRUE(navigation_timing_info);
   long long encoded_data_length = 123;
-  resource->Loader()->DidFinishLoading(0.0, encoded_data_length, 0, 0);
+  resource->Loader()->DidFinishLoading(0.0, encoded_data_length, 0, 0, false);
   EXPECT_EQ(navigation_timing_info->TransferSize(), encoded_data_length);
 
   // When there are redirects.
@@ -759,7 +759,8 @@ TEST_F(ResourceFetcherTest, ContentIdURL) {
     FetchParameters fetch_params(resource_request);
     RawResource* resource = RawResource::FetchMainResource(
         fetch_params, fetcher, nullptr, SubstituteData());
-    EXPECT_NE(nullptr, resource);
+    ASSERT_NE(nullptr, resource);
+    EXPECT_FALSE(resource->ErrorOccurred());
   }
 
   // Subresource case.
@@ -769,7 +770,8 @@ TEST_F(ResourceFetcherTest, ContentIdURL) {
     FetchParameters fetch_params(resource_request);
     RawResource* resource =
         RawResource::FetchMedia(fetch_params, fetcher, nullptr);
-    EXPECT_NE(nullptr, resource);
+    ASSERT_NE(nullptr, resource);
+    EXPECT_FALSE(resource->ErrorOccurred());
   }
 }
 

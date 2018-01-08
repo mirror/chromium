@@ -30,7 +30,6 @@ import copy
 import logging
 
 from webkitpy.common.memoized import memoized
-from webkitpy.layout_tests.controllers.test_result_writer import baseline_name as get_baseline_name
 from webkitpy.layout_tests.models.testharness_results import is_all_pass_testharness_result
 
 _log = logging.getLogger(__name__)
@@ -66,16 +65,23 @@ class BaselineOptimizer(object):
         # non-virtual one and optimze the two independently. Finally, we treat
         # the virtual subtree specially to remove any duplication between the
         # two subtrees.
+
+        # For CLI compatibility, "suffix" is an extension without the leading
+        # dot. Yet we use dotted extension everywhere else in the codebase.
+        # TODO(robertma): Investigate changing the CLI.
         assert not suffix.startswith('.')
-        baseline_name = get_baseline_name(self._filesystem, test_name, suffix)
+        extension = '.' + suffix
+
+        baseline_name = self._default_port.output_filename(
+            test_name, self._default_port.BASELINE_SUFFIX, extension)
         non_virtual_baseline_name = self._virtual_base(baseline_name)
         succeeded = True
         if non_virtual_baseline_name:
             # The baseline belongs to a virtual suite.
             _log.debug('Optimizing virtual fallback path.')
-            self._patch_virtual_subtree(test_name, suffix, baseline_name)
+            self._patch_virtual_subtree(test_name, extension, baseline_name)
             succeeded &= self._optimize_subtree(baseline_name)
-            self._optimize_virtual_root(test_name, suffix, baseline_name)
+            self._optimize_virtual_root(test_name, extension, baseline_name)
         else:
             # The given baseline is already non-virtual.
             non_virtual_baseline_name = baseline_name
@@ -204,7 +210,7 @@ class BaselineOptimizer(object):
                 return port
         raise Exception('Failed to find port for primary baseline %s.' % baseline_dir)
 
-    def _walk_immediate_predecessors_of_virtual_root(self, test_name, suffix, baseline_name, worker_func):
+    def _walk_immediate_predecessors_of_virtual_root(self, test_name, extension, baseline_name, worker_func):
         """Maps a function onto each immediate predecessor of the virtual root.
 
         For each immediate predecessor, we call
@@ -215,23 +221,18 @@ class BaselineOptimizer(object):
         actual_test_name = self._virtual_base(test_name)
         assert actual_test_name, '%s is not a virtual test.' % test_name
 
-        # TODO(robertma): Suffixes expected by test_result_writer.baseline_name
-        # and port.expected_filename are inconsitent; the former does not
-        # expect the extension dot, while the latter does.
-        dotted_suffix = '.' + suffix
-
         for directory in self._directories_immediately_preceding_root():
             port = self._port_from_baseline_dir(directory)
             virtual_baseline = self._join_directory(directory, baseline_name)
             # return_default=False mandates expected_filename() to return None
             # instead of a non-existing generic path when nothing is found.
-            non_virtual_fallback = port.expected_filename(actual_test_name, dotted_suffix, return_default=False)
+            non_virtual_fallback = port.expected_filename(actual_test_name, extension, return_default=False)
             if not non_virtual_fallback:
                 # Unable to find a non-virtual fallback baseline, skipping.
                 continue
             worker_func(virtual_baseline, non_virtual_fallback)
 
-    def _patch_virtual_subtree(self, test_name, suffix, baseline_name):
+    def _patch_virtual_subtree(self, test_name, extension, baseline_name):
         # Ensure all immediate predecessors of the root have a baseline for this
         # virtual suite so that the virtual subtree can be treated completely
         # independently. If an immediate predecessor is missing a baseline, find
@@ -247,16 +248,16 @@ class BaselineOptimizer(object):
                 self._filesystem.maybe_make_directory(self._filesystem.split(virtual_baseline)[0])
                 self._filesystem.copyfile(non_virtual_fallback, virtual_baseline)
 
-        self._walk_immediate_predecessors_of_virtual_root(test_name, suffix, baseline_name, patcher)
+        self._walk_immediate_predecessors_of_virtual_root(test_name, extension, baseline_name, patcher)
 
-    def _optimize_virtual_root(self, test_name, suffix, baseline_name):
+    def _optimize_virtual_root(self, test_name, extension, baseline_name):
         virtual_root_baseline_path = self._filesystem.join(self._layout_tests_dir, baseline_name)
         if self._filesystem.exists(virtual_root_baseline_path):
             _log.debug('Virtual root baseline found. Checking if we can remove it.')
             self._try_to_remove_virtual_root(baseline_name, virtual_root_baseline_path)
         else:
             _log.debug('Virtual root baseline not found. Searching for virtual baselines redundant with non-virtual ones.')
-            self._unpatch_virtual_subtree(test_name, suffix, baseline_name)
+            self._unpatch_virtual_subtree(test_name, extension, baseline_name)
 
     def _try_to_remove_virtual_root(self, baseline_name, virtual_root_baseline_path):
         # See if all the successors of the virtual root (i.e. all non-virtual
@@ -266,8 +267,6 @@ class BaselineOptimizer(object):
 
         # Read the base (non-virtual) results.
         results_by_directory = self.read_results_by_directory(self._virtual_base(baseline_name))
-        # Since implicit_all_pass defaults to True, we can also optimize away
-        # redundant all-PASS testharness.js results at the virtual root.
         results_by_port_name = self._results_by_port_name(results_by_directory)
 
         for port_name in self._ports.keys():
@@ -279,7 +278,7 @@ class BaselineOptimizer(object):
         _log.debug('    Deleting (file system): ' + virtual_root_baseline_path)
         self._filesystem.remove(virtual_root_baseline_path)
 
-    def _unpatch_virtual_subtree(self, test_name, suffix, baseline_name):
+    def _unpatch_virtual_subtree(self, test_name, extension, baseline_name):
         # Check all immediate predecessors of the virtual root and delete those
         # duplicate with their non-virtual fallback, essentially undoing some
         # of the work done in _patch_virtual_subtree.
@@ -288,7 +287,7 @@ class BaselineOptimizer(object):
                     self._digest_result(virtual_baseline) == self._digest_result(non_virtual_fallback):
                 _log.debug('    Deleting (file system): %s (redundant with %s).', virtual_baseline, non_virtual_fallback)
                 self._filesystem.remove(virtual_baseline)
-        self._walk_immediate_predecessors_of_virtual_root(test_name, suffix, baseline_name, unpatcher)
+        self._walk_immediate_predecessors_of_virtual_root(test_name, extension, baseline_name, unpatcher)
 
     def _baseline_root(self):
         """Returns the name of the root (generic) baseline directory."""
@@ -322,18 +321,16 @@ class BaselineOptimizer(object):
         """Returns the absolute path to the baseline in the given directory."""
         return self._filesystem.join(self._parent_of_tests, directory, baseline_name)
 
-    def _results_by_port_name(self, results_by_directory, implicit_all_pass=True):
+    def _results_by_port_name(self, results_by_directory):
         """Transforms a by-directory result dict to by-port-name.
 
         The method mimicks the baseline search behaviour, i.e. results[port] is
-        the first baseline found on the baseline search path of the port.
+        the first baseline found on the baseline search path of the port. If no
+        baseline is found on the search path, the test is assumed to be an all-
+        PASS testharness.js test.
 
         Args:
             results_by_directory: A dictionary returned by read_results_by_directory().
-            implicit_all_pass: If True, ports with no baselines found will have
-                all-PASS testharness.js results, which matches the real-world
-                behaviour of run-webkit-tests for testharness.js tests.
-                Otherwise, such ports will not be found in the dict.
 
         Returns:
             A dictionary mapping port names to their baselines.
@@ -344,7 +341,7 @@ class BaselineOptimizer(object):
                 if directory in results_by_directory:
                     results_by_port_name[port_name] = results_by_directory[directory]
                     break
-            if port_name not in results_by_port_name and implicit_all_pass:
+            if port_name not in results_by_port_name:
                 results_by_port_name[port_name] = ALL_PASS
         return results_by_port_name
 
@@ -398,9 +395,7 @@ class BaselineOptimizer(object):
 
     def _find_optimal_result_placement(self, baseline_name):
         results_by_directory = self.read_results_by_directory(baseline_name)
-        # Set implicit_all_pass=False so that we won't get non-existent all-PASS
-        # testharness.js results, which would break _find_in_search_path.
-        results_by_port_name = self._results_by_port_name(results_by_directory, implicit_all_pass=False)
+        results_by_port_name = self._results_by_port_name(results_by_directory)
 
         new_results_by_directory = self._remove_redundant_results(
             results_by_directory, results_by_port_name)
@@ -458,7 +453,10 @@ class BaselineOptimizer(object):
         for index, directory in enumerate(search_path):
             if directory in results_by_directory and (results_by_directory[directory] == current_result):
                 return index, directory
-        assert False, 'result %s not found in search path %s, %s' % (current_result, search_path, results_by_directory)
+        assert current_result == ALL_PASS, (
+            'result %s not found in search path %s, %s' % (current_result, search_path, results_by_directory))
+        # Implicit all-PASS at the root.
+        return len(search_path) - 1, search_path[-1]
 
     def _remove_all_pass_testharness_result_at_root(self, baseline_name):
         """Removes the all-PASS testharness.js result at the non-virtual root."""

@@ -79,7 +79,8 @@ bool SessionsRecencyComparator(const SyncedSession* s1,
 }
 
 std::string TabNodeIdToTag(const std::string& machine_tag, int tab_node_id) {
-  CHECK_GT(tab_node_id, TabNodePool::kInvalidTabNodeID) << "crbug.com/673618";
+  CHECK_GT(tab_node_id, TabNodePool::kInvalidTabNodeID)
+      << "https://crbug.com/639009";
   return base::StringPrintf("%s %d", machine_tag.c_str(), tab_node_id);
 }
 
@@ -142,6 +143,11 @@ SyncedSession::DeviceType ProtoDeviceTypeToSyncedSessionDeviceType(
       return SyncedSession::TYPE_OTHER;
   }
   return SyncedSession::TYPE_OTHER;
+}
+
+bool IsWindowSyncable(const SyncedWindowDelegate& window_delegate) {
+  return window_delegate.ShouldSync() && window_delegate.GetTabCount() &&
+         window_delegate.HasWindow();
 }
 
 }  // namespace
@@ -251,7 +257,7 @@ syncer::SyncMergeResult SessionsSyncManager::MergeDataAndStartSyncing(
 #endif
 
   // Check if anything has changed on the local client side.
-  AssociateWindows(RELOAD_TABS, &new_changes);
+  AssociateWindows(RELOAD_TABS, ScanForTabbedWindow(), &new_changes);
   local_tab_pool_out_of_sync_ = false;
 
   merge_result.set_error(
@@ -263,6 +269,7 @@ syncer::SyncMergeResult SessionsSyncManager::MergeDataAndStartSyncing(
 
 void SessionsSyncManager::AssociateWindows(
     ReloadTabsOption option,
+    bool has_tabbed_window,
     syncer::SyncChangeList* change_output) {
   // Note that |current_session| is a pointer owned by |session_tracker_|.
   // |session_tracker_| will continue to update |current_session| under
@@ -280,18 +287,10 @@ void SessionsSyncManager::AssociateWindows(
   SyncedWindowDelegatesGetter::SyncedWindowDelegateMap windows =
       synced_window_delegates_getter()->GetSyncedWindowDelegates();
 
-  // On Android, it's possible to not have any tabbed windows if this is a cold
-  // start triggered for a custom tab. In that case, the previous session must
-  // be restored, otherwise it will be lost. On the other hand, if there is at
-  // least one tabbed window open, it's safe to overwrite the previous session
-  // entirely. See crbug.com/639009 for more info.
-  bool found_tabbed_window = false;
-  for (auto& window_iter_pair : windows) {
-    if (window_iter_pair.second->IsTypeTabbed())
-      found_tabbed_window = true;
-  }
-
-  if (found_tabbed_window) {
+  // Without native data, we need be careful not to obliterate any old
+  // information, while at the same time handling updated tab ids. See
+  // https://crbug.com/639009 for more info.
+  if (has_tabbed_window) {
     // Just reset the session tracking. No need to worry about the previous
     // session; the current tabbed windows are now the source of truth.
     session_tracker_.ResetSessionTracking(current_machine_tag());
@@ -326,6 +325,42 @@ void SessionsSyncManager::AssociateWindows(
     }
   }
 
+  // Each sync id should only ever be used once. Previously there existed a race
+  // condition which could cause them to be duplicated, see
+  // https://crbug.com/639009 for more information. This counts the number of
+  // times each id is used so that the second window/tab loop can act on every
+  // tab using duplicate ids. Lastly, it is important to note that this
+  // duplication scan is only checking the in-memory tab state. On Android, if
+  // we have no tabbed window, we may also have sync data with conflicting sync
+  // ids, but to keep this logic simple and less error prone, we do not attempt
+  // to do anything clever.
+  std::map<int, size_t> sync_id_count;
+  int duplicate_count = 0;
+  for (auto& window_iter_pair : windows) {
+    const SyncedWindowDelegate* window_delegate = window_iter_pair.second;
+    if (IsWindowSyncable(*window_delegate)) {
+      for (int j = 0; j < window_delegate->GetTabCount(); ++j) {
+        SyncedTabDelegate* synced_tab = window_delegate->GetTabAt(j);
+        if (synced_tab &&
+            synced_tab->GetSyncId() != TabNodePool::kInvalidTabNodeID) {
+          auto iter = sync_id_count.find(synced_tab->GetSyncId());
+          if (iter == sync_id_count.end()) {
+            sync_id_count.insert(iter,
+                                 std::make_pair(synced_tab->GetSyncId(), 1));
+          } else {
+            // If an id is used more than twice, this count will be a bit odd,
+            // but for our purposes, it will be sufficient.
+            duplicate_count++;
+            iter->second++;
+          }
+        }
+      }
+    }
+  }
+  if (duplicate_count > 0) {
+    UMA_HISTOGRAM_COUNTS_100("Sync.SesssionsDuplicateSyncId", duplicate_count);
+  }
+
   for (auto& window_iter_pair : windows) {
     const SyncedWindowDelegate* window_delegate = window_iter_pair.second;
     if (option == RELOAD_TABS) {
@@ -338,9 +373,7 @@ void SessionsSyncManager::AssociateWindows(
     // its possible for us to get a handle to a browser that is about to be
     // removed. If the tab count is 0 or the window is null, the browser is
     // about to be deleted, so we ignore it.
-    if (window_delegate->ShouldSync() && window_delegate->GetTabCount() &&
-        window_delegate->HasWindow()) {
-      sync_pb::SessionWindow window_s;
+    if (IsWindowSyncable(*window_delegate)) {
       SessionID::id_type window_id = window_delegate->GetSessionId();
       DVLOG(1) << "Associating window " << window_id << " with "
                << window_delegate->GetTabCount() << " tabs.";
@@ -354,6 +387,20 @@ void SessionsSyncManager::AssociateWindows(
         // if for some reason the tab id is invalid, skip it.
         if (!synced_tab || !ShouldSyncTabId(tab_id))
           continue;
+
+        if (synced_tab->GetSyncId() != TabNodePool::kInvalidTabNodeID) {
+          auto duplicate_iter = sync_id_count.find(synced_tab->GetSyncId());
+          DCHECK(duplicate_iter != sync_id_count.end());
+          if (duplicate_iter->second > 1) {
+            // Strip the id before processing it. This is going to mean it'll be
+            // treated the same as a new tab. If it's also a placeholder, we'll
+            // have no data about it, sync it cannot be synced until it is
+            // loaded. It is too difficult to try to guess which of the multiple
+            // tabs using the same id actually corresponds to the existing sync
+            // data.
+            synced_tab->SetSyncId(TabNodePool::kInvalidTabNodeID);
+          }
+        }
 
         // Placeholder tabs are those without WebContents, either because they
         // were never loaded into memory or they were evicted from memory
@@ -372,7 +419,7 @@ void SessionsSyncManager::AssociateWindows(
             DVLOG(1) << "Placeholder tab " << tab_id << " has no sync id.";
           }
         } else if (RELOAD_TABS == option) {
-          AssociateTab(synced_tab, change_output);
+          AssociateTab(synced_tab, has_tabbed_window, change_output);
         }
 
         // If the tab was syncable, it would have been added to the tracker
@@ -432,6 +479,7 @@ void SessionsSyncManager::AssociateWindows(
 }
 
 void SessionsSyncManager::AssociateTab(SyncedTabDelegate* const tab_delegate,
+                                       bool has_tabbed_window,
                                        syncer::SyncChangeList* change_output) {
   DCHECK(!tab_delegate->IsPlaceholderTab());
 
@@ -457,11 +505,20 @@ void SessionsSyncManager::AssociateTab(SyncedTabDelegate* const tab_delegate,
   if (session_tracker_.IsLocalTabNodeAssociated(tab_delegate->GetSyncId())) {
     tab_node_id = tab_delegate->GetSyncId();
     session_tracker_.ReassociateLocalTab(tab_node_id, tab_id);
-  } else {
+  } else if (has_tabbed_window) {
     existing_tab_node =
         session_tracker_.GetTabNodeFromLocalTabId(tab_id, &tab_node_id);
-    CHECK_NE(TabNodePool::kInvalidTabNodeID, tab_node_id) << "crbug.com/673618";
+    CHECK_NE(TabNodePool::kInvalidTabNodeID, tab_node_id)
+        << "https://crbug.com/639009";
     tab_delegate->SetSyncId(tab_node_id);
+  } else {
+    // Only allowed to allocate sync ids when we have native data, which is only
+    // true when we have a tabbed window. Without a sync id we cannot sync this
+    // data, the tracker cannot even really track it. So don't do any more work.
+    // This effectively breaks syncing custom tabs when the native browser isn't
+    // fully loaded. Ideally this is fixed by saving tab data and sync data
+    // atomically, see https://crbug.com/681921.
+    return;
   }
 
   sessions::SessionTab* session_tab =
@@ -604,13 +661,14 @@ void SessionsSyncManager::OnLocalTabModified(SyncedTabDelegate* modified_tab) {
     return;
   }
 
+  bool found_tabbed_window = ScanForTabbedWindow();
   syncer::SyncChangeList changes;
-  AssociateTab(modified_tab, &changes);
+  AssociateTab(modified_tab, found_tabbed_window, &changes);
   // Note, we always associate windows because it's possible a tab became
   // "interesting" by going to a valid URL, in which case it needs to be added
   // to the window's tab information. Similarly, if a tab became
   // "uninteresting", we remove it from the window's tab information.
-  AssociateWindows(DONT_RELOAD_TABS, &changes);
+  AssociateWindows(DONT_RELOAD_TABS, found_tabbed_window, &changes);
   sync_processor_->ProcessSyncChanges(FROM_HERE, changes);
 }
 
@@ -658,7 +716,7 @@ syncer::SyncDataList SessionsSyncManager::GetAllSyncData(
     for (auto& tab : win_iter.second->wrapped_window.tabs) {
       // TODO(zea): replace with with the correct tab node id once there's a
       // sync specific wrapper for SessionTab. This method is only used in
-      // tests though, so it's fine for now. crbug.com/662597
+      // tests though, so it's fine for now. https://crbug.com/662597
       int tab_node_id = 0;
       sync_pb::EntitySpecifics entity;
       entity.mutable_session()->CopyFrom(
@@ -801,7 +859,7 @@ bool SessionsSyncManager::InitFromSyncModel(
         // to that foreign data (like deletion through garbage collection) to
         // trigger a data type error because the tag looking mechanism fails. So
         // look for these and delete via remote SyncData, which uses a server id
-        // lookup mechanism instead, see crbug.com/604657.
+        // lookup mechanism instead, see https://crbug.com/604657.
         bad_foreign_hash_count++;
         new_changes->push_back(
             syncer::SyncChange(FROM_HERE, SyncChange::ACTION_DELETE, remote));
@@ -1398,6 +1456,26 @@ void SessionsSyncManager::CleanupNavigationTracking() {
                     return !base::ContainsKey(global_to_unique_, kv.second);
                   });
   }
+}
+
+bool SessionsSyncManager::ScanForTabbedWindow() {
+  for (auto& window_iter_pair :
+       synced_window_delegates_getter()->GetSyncedWindowDelegates()) {
+    if (window_iter_pair.second->IsTypeTabbed()) {
+      const SyncedWindowDelegate* window_delegate = window_iter_pair.second;
+      if (IsWindowSyncable(*window_delegate)) {
+        // When only custom tab windows are open, often we'll have a seemingly
+        // okay type tabbed window, but GetTabAt will return null for each
+        // index. This case is exactly what this method needs to protect
+        // against.
+        for (int j = 0; j < window_delegate->GetTabCount(); ++j) {
+          if (window_delegate->GetTabAt(j))
+            return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
 };  // namespace sync_sessions

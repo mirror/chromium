@@ -63,6 +63,7 @@ import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.content.browser.ScreenOrientationProvider;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
+import org.chromium.content_public.browser.NavigationEntry;
 import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.ui.base.PageTransition;
 
@@ -104,7 +105,7 @@ public class WebappActivity extends SingleTabActivity {
     private final WebappActionsNotificationManager mNotificationManager;
     private final WebappDirectoryManager mDirectoryManager;
 
-    protected WebappInfo mWebappInfo;
+    private WebappInfo mWebappInfo;
 
     private WebappSplashScreenController mSplashController;
 
@@ -149,10 +150,19 @@ public class WebappActivity extends SingleTabActivity {
         }
 
         @Override
+        @Nullable
         public String getCurrentUrl() {
             if (getActivityTab() == null) return null;
 
             return getActivityTab().getUrl();
+        }
+
+        @Override
+        @Nullable
+        public String getPendingUrl() {
+            NavigationEntry entry = getActivityTab().getWebContents().getNavigationController()
+                    .getPendingEntry();
+            return entry != null ? entry.getUrl() : null;
         }
 
         /**
@@ -560,7 +570,7 @@ public class WebappActivity extends SingleTabActivity {
      * @return Structure containing data about the webapp currently displayed.
      *         The return value should not be cached.
      */
-    WebappInfo getWebappInfo() {
+    public WebappInfo getWebappInfo() {
         return mWebappInfo;
     }
 

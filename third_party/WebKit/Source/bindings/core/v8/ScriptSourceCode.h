@@ -71,13 +71,13 @@ class CORE_EXPORT ScriptSourceCode final {
 
   const String& Source() const { return source_; }
   CachedMetadataHandler* CacheHandler() const { return cache_handler_; }
-  KURL Url() const;
+  const KURL& Url() const { return url_; }
   int StartLine() const { return start_position_.line_.OneBasedInt(); }
   const TextPosition& StartPosition() const { return start_position_; }
   ScriptSourceLocationType SourceLocationType() const {
     return source_location_type_;
   }
-  String SourceMapUrl() const;
+  const String& SourceMapUrl() const { return source_map_url_; }
 
   ScriptStreamer* Streamer() const { return streamer_; }
 
@@ -85,7 +85,14 @@ class CORE_EXPORT ScriptSourceCode final {
   const String source_;
   Member<CachedMetadataHandler> cache_handler_;
   Member<ScriptStreamer> streamer_;
+
+  // The URL of the source code, which is primarily intended for DevTools
+  // javascript debugger.
+  //
+  // Note that this can be different from the resulting script's base URL
+  // (#concept-script-base-url) for inline classic scripts.
   const KURL url_;
+
   const String source_map_url_;
   const TextPosition start_position_;
   const ScriptSourceLocationType source_location_type_;

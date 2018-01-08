@@ -51,16 +51,16 @@ const char* const kInvalidPolicies[] = {
     "vibrate https://bad;origin",
     "vibrate https:/bad,origin",
     "vibrate https://example.com, https://a.com",
-    "vibrate *, payment data://badorigin"};
+    "vibrate *, payment data://badorigin",
+    "vibrate ws://xn--fd\xbcwsw3taaaaaBaa333aBBBBBBJBBJBBBt"};
 
 }  // namespace
 
 class FeaturePolicyTest : public ::testing::Test {
  protected:
-  FeaturePolicyTest() {}
+  FeaturePolicyTest() = default;
 
-  ~FeaturePolicyTest() {
-  }
+  ~FeaturePolicyTest() = default;
 
   scoped_refptr<const SecurityOrigin> origin_a_ =
       SecurityOrigin::CreateFromString(ORIGIN_A);

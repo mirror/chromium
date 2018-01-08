@@ -11,7 +11,6 @@
 #include "base/lazy_instance.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/statistics_recorder.h"
 #include "base/rand_util.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
@@ -31,6 +30,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/result_codes.h"
+#include "content/public/gpu/content_gpu_client.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/config/gpu_driver_bug_list.h"
 #include "gpu/config/gpu_info_collector.h"
@@ -274,9 +274,6 @@ int GpuMain(const MainFunctionParams& parameters) {
 
   base::PlatformThread::SetName("CrGpuMain");
 
-  // Initializes StatisticsRecorder which tracks UMA histograms.
-  base::StatisticsRecorder::Initialize();
-
 #if defined(OS_ANDROID) || defined(OS_CHROMEOS)
   // Set thread priority before sandbox initialization.
   base::PlatformThread::SetCurrentThreadPriority(base::ThreadPriority::DISPLAY);
@@ -290,6 +287,7 @@ int GpuMain(const MainFunctionParams& parameters) {
 
   gpu_init->set_sandbox_helper(&sandbox_helper);
 
+  auto* client = GetContentClient()->gpu();
   // Gpu initialization may fail for various reasons, in which case we will need
   // to tear down this process. However, we can not do so safely until the IPC
   // channel is set up, because the detection of early return of a child process
@@ -299,7 +297,9 @@ int GpuMain(const MainFunctionParams& parameters) {
   // defer tearing down the GPU process until receiving the initialization
   // message from the browser (through mojom::VizMain::CreateGpuService()).
   const bool init_success = gpu_init->InitializeAndStartSandbox(
-      const_cast<base::CommandLine*>(&command_line), gpu_preferences);
+      const_cast<base::CommandLine*>(&command_line), gpu_preferences,
+      client ? client->GetGPUInfo() : nullptr,
+      client ? client->GetGpuFeatureInfo() : nullptr);
   const bool dead_on_arrival = !init_success;
 
   logging::SetLogMessageHandler(nullptr);
@@ -311,6 +311,10 @@ int GpuMain(const MainFunctionParams& parameters) {
 #endif
 
   GpuProcess gpu_process(io_thread_priority);
+
+  if (client)
+    client->PostIOThreadCreated(gpu_process.io_task_runner());
+
   GpuChildThread* child_thread = new GpuChildThread(
       std::move(gpu_init), std::move(deferred_messages.Get()));
   deferred_messages.Get().clear();
@@ -365,11 +369,8 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
       gpu_info && angle::IsAMD(gpu_info->active_gpu().vendor_id);
   sandbox_options.accelerated_video_decode_enabled =
       !gpu_prefs.disable_accelerated_video_decode;
-
-#if defined(OS_CHROMEOS)
-  sandbox_options.vaapi_accelerated_video_encode_enabled =
-      !gpu_prefs.disable_vaapi_accelerated_video_encode;
-#endif
+  sandbox_options.accelerated_video_encode_enabled =
+      !gpu_prefs.disable_accelerated_video_encode;
 
   bool res = service_manager::SandboxLinux::GetInstance()->InitializeSandbox(
       service_manager::SandboxTypeFromCommandLine(

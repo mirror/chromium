@@ -32,11 +32,13 @@
 #include "core/exported/LocalFrameClientImpl.h"
 
 #include <memory>
+#include <utility>
 
 #include "bindings/core/v8/ScriptController.h"
 #include "core/CoreInitializer.h"
 #include "core/dom/Document.h"
 #include "core/dom/UserGestureIndicator.h"
+#include "core/events/CurrentInputEvent.h"
 #include "core/events/MessageEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/events/UIEventWithKeyState.h"
@@ -79,6 +81,7 @@
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebMediaPlayerSource.h"
 #include "public/platform/WebRTCPeerConnectionHandler.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLError.h"
@@ -148,7 +151,7 @@ LocalFrameClientImpl* LocalFrameClientImpl::Create(WebLocalFrameImpl* frame) {
   return new LocalFrameClientImpl(frame);
 }
 
-LocalFrameClientImpl::~LocalFrameClientImpl() {}
+LocalFrameClientImpl::~LocalFrameClientImpl() = default;
 
 void LocalFrameClientImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(web_frame_);
@@ -477,7 +480,7 @@ void LocalFrameClientImpl::DispatchDidChangeThemeColor() {
 }
 
 static bool AllowCreatingBackgroundTabs() {
-  const WebInputEvent* input_event = WebViewImpl::CurrentInputEvent();
+  const WebInputEvent* input_event = CurrentInputEvent::Get();
   if (!input_event || (input_event->GetType() != WebInputEvent::kMouseUp &&
                        (input_event->GetType() != WebInputEvent::kRawKeyDown &&
                         input_event->GetType() != WebInputEvent::kKeyDown) &&
@@ -577,12 +580,6 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
           ? WebFrameClient::NavigationPolicyInfo::ArchiveStatus::Present
           : WebFrameClient::NavigationPolicyInfo::ArchiveStatus::Absent;
 
-  // Caching could be disabled for requests initiated by DevTools.
-  // TODO(ananta)
-  // We should extract the network cache state into a global component which
-  // can be queried here and wherever necessary.
-  navigation_info.is_cache_disabled =
-      DevToolsAgent() ? DevToolsAgent()->CacheDisabled() : false;
   if (form)
     navigation_info.form = WebFormElement(form);
 
@@ -631,6 +628,11 @@ void LocalFrameClientImpl::ProgressEstimateChanged(double progress_estimate) {
 void LocalFrameClientImpl::DidStopLoading() {
   if (web_frame_->Client())
     web_frame_->Client()->DidStopLoading();
+}
+
+void LocalFrameClientImpl::ForwardResourceTimingToParent(
+    const WebResourceTimingInfo& info) {
+  web_frame_->Client()->ForwardResourceTimingToParent(info);
 }
 
 void LocalFrameClientImpl::DownloadURL(const ResourceRequest& request,
@@ -695,19 +697,17 @@ void LocalFrameClientImpl::DidDispatchPingLoader(const KURL& url) {
     web_frame_->Client()->DidDispatchPingLoader(url);
 }
 
-void LocalFrameClientImpl::DidDisplayContentWithCertificateErrors(
-    const KURL& url) {
+void LocalFrameClientImpl::DidDisplayContentWithCertificateErrors() {
   if (web_frame_->Client())
-    web_frame_->Client()->DidDisplayContentWithCertificateErrors(url);
+    web_frame_->Client()->DidDisplayContentWithCertificateErrors();
 }
 
-void LocalFrameClientImpl::DidRunContentWithCertificateErrors(const KURL& url) {
+void LocalFrameClientImpl::DidRunContentWithCertificateErrors() {
   if (web_frame_->Client())
-    web_frame_->Client()->DidRunContentWithCertificateErrors(url);
+    web_frame_->Client()->DidRunContentWithCertificateErrors();
 }
 
-void LocalFrameClientImpl::ReportLegacySymantecCert(const KURL& url,
-                                                    Time cert_validity_start) {
+void LocalFrameClientImpl::ReportLegacySymantecCert(const KURL& url) {
   // To prevent log spam, only log the message once per hostname.
   if (certificate_warning_hosts_.Contains(url.Host()))
     return;
@@ -734,7 +734,7 @@ void LocalFrameClientImpl::ReportLegacySymantecCert(const KURL& url,
                          "https://g.co/chrome/symantecpkicerts for "
                          "more information."));
   } else if (!web_frame_->Client()->OverrideLegacySymantecCertConsoleMessage(
-                 url, cert_validity_start, &console_message)) {
+                 url, &console_message)) {
     console_message = WebString(
         String::Format("The SSL certificate used to load resources from %s"
                        " will be "
@@ -921,6 +921,13 @@ void LocalFrameClientImpl::DidEnforceInsecureRequestPolicy(
   web_frame_->Client()->DidEnforceInsecureRequestPolicy(policy);
 }
 
+void LocalFrameClientImpl::DidEnforceInsecureNavigationsSet(
+    const std::vector<unsigned>& set) {
+  if (!web_frame_->Client())
+    return;
+  web_frame_->Client()->DidEnforceInsecureNavigationsSet(set);
+}
+
 void LocalFrameClientImpl::DidChangeFramePolicy(
     Frame* child_frame,
     SandboxFlags flags,
@@ -1040,19 +1047,11 @@ void LocalFrameClientImpl::SetEffectiveConnectionTypeForTesting(
     return web_frame_->Client()->SetEffectiveConnectionTypeForTesting(type);
 }
 
-bool LocalFrameClientImpl::IsClientLoFiActiveForFrame() {
+WebURLRequest::PreviewsState LocalFrameClientImpl::GetPreviewsStateForFrame()
+    const {
   if (web_frame_->Client())
-    return web_frame_->Client()->IsClientLoFiActiveForFrame();
-  return false;
-}
-
-bool LocalFrameClientImpl::ShouldUseClientLoFiForRequest(
-    const ResourceRequest& request) {
-  if (web_frame_->Client()) {
-    return web_frame_->Client()->ShouldUseClientLoFiForRequest(
-        WrappedResourceRequest(request));
-  }
-  return false;
+    return web_frame_->Client()->GetPreviewsStateForFrame();
+  return WebURLRequest::kPreviewsUnspecified;
 }
 
 WebDevToolsAgentImpl* LocalFrameClientImpl::DevToolsAgent() {
@@ -1121,20 +1120,48 @@ void LocalFrameClientImpl::DidBlockFramebust(const KURL& url) {
   web_frame_->Client()->DidBlockFramebust(url);
 }
 
-String LocalFrameClientImpl::GetInstrumentationToken() {
-  return web_frame_->Client()->GetInstrumentationToken();
+String LocalFrameClientImpl::GetDevToolsFrameToken() const {
+  return web_frame_->Client()->GetDevToolsFrameToken();
 }
 
 void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
     const WebRect& rect_to_scroll,
-    const WebRemoteScrollProperties& properties) {
+    const WebScrollIntoViewParams& params) {
   web_frame_->Client()->ScrollRectToVisibleInParentFrame(rect_to_scroll,
-                                                         properties);
+                                                         params);
 }
 
 void LocalFrameClientImpl::SetVirtualTimePauser(
     WebScopedVirtualTimePauser virtual_time_pauser) {
   virtual_time_pauser_ = std::move(virtual_time_pauser);
+}
+
+String LocalFrameClientImpl::evaluateInInspectorOverlayForTesting(
+    const String& script) {
+  if (WebDevToolsAgentImpl* devtools = DevToolsAgent())
+    return devtools->EvaluateInOverlayForTesting(script);
+  return g_empty_string;
+}
+
+bool LocalFrameClientImpl::HandleCurrentKeyboardEvent() {
+  if (web_frame_->Client())
+    return web_frame_->Client()->HandleCurrentKeyboardEvent();
+  return false;
+}
+
+void LocalFrameClientImpl::DidChangeSelection(bool is_selection_empty) {
+  if (web_frame_->Client())
+    web_frame_->Client()->DidChangeSelection(is_selection_empty);
+}
+
+void LocalFrameClientImpl::DidChangeContents() {
+  if (web_frame_->Client())
+    web_frame_->Client()->DidChangeContents();
+}
+
+Frame* LocalFrameClientImpl::FindFrame(const AtomicString& name) const {
+  DCHECK(web_frame_->Client());
+  return ToCoreFrame(web_frame_->Client()->FindFrame(name));
 }
 
 }  // namespace blink

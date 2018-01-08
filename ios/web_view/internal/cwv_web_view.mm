@@ -8,11 +8,12 @@
 #include <utility>
 
 #include "base/mac/foundation_util.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #import "components/autofill/ios/browser/autofill_agent.h"
 #import "components/autofill/ios/browser/js_autofill_manager.h"
+#import "components/autofill/ios/browser/js_suggestion_manager.h"
 #include "google_apis/google_api_keys.h"
+#include "ios/web/public/load_committed_details.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/referrer.h"
 #include "ios/web/public/reload_type.h"
@@ -183,8 +184,8 @@ static NSString* gUserAgentProduct = nil;
 
   web::NavigationManager::WebLoadParams params(net::GURLWithNSURL(request.URL));
   params.transition_type = ui::PAGE_TRANSITION_TYPED;
-  params.extra_headers.reset([request.allHTTPHeaderFields copy]);
-  params.post_data.reset([request.HTTPBody copy]);
+  params.extra_headers = [request.allHTTPHeaderFields copy];
+  params.post_data = [request.HTTPBody copy];
   _webState->GetNavigationManager()->LoadURLWithParams(params);
   [self updateCurrentURLs];
 }
@@ -199,6 +200,18 @@ static NSString* gUserAgentProduct = nil;
   _UIDelegate = UIDelegate;
 
   _javaScriptDialogPresenter->SetUIDelegate(_UIDelegate);
+}
+
+#pragma mark - UIView
+
+- (void)willMoveToSuperview:(UIView*)newSuperview {
+  [super willMoveToSuperview:newSuperview];
+
+  if (newSuperview) {
+    _webState->WasShown();
+  } else {
+    _webState->WasHidden();
+  }
 }
 
 #pragma mark - CRWWebStateObserver
@@ -224,6 +237,11 @@ static NSString* gUserAgentProduct = nil;
 
 - (void)webState:(web::WebState*)webState
     didCommitNavigationWithDetails:(const web::LoadCommittedDetails&)details {
+  if (details.is_in_page) {
+    // Do not call webViewDidCommitNavigation: for fragment navigations.
+    return;
+  }
+
   if ([_navigationDelegate
           respondsToSelector:@selector(webViewDidCommitNavigation:)]) {
     [_navigationDelegate webViewDidCommitNavigation:self];
@@ -395,9 +413,14 @@ static NSString* gUserAgentProduct = nil;
       base::mac::ObjCCastStrict<JsAutofillManager>(
           [_webState->GetJSInjectionReceiver()
               instanceOfClass:[JsAutofillManager class]]);
+  JsSuggestionManager* JSSuggestionManager =
+      base::mac::ObjCCastStrict<JsSuggestionManager>(
+          [_webState->GetJSInjectionReceiver()
+              instanceOfClass:[JsSuggestionManager class]]);
   return [[CWVAutofillController alloc] initWithWebState:_webState.get()
                                            autofillAgent:autofillAgent
-                                       JSAutofillManager:JSAutofillManager];
+                                       JSAutofillManager:JSAutofillManager
+                                     JSSuggestionManager:JSSuggestionManager];
 }
 
 #pragma mark - Preserving and Restoring State
@@ -446,15 +469,15 @@ static NSString* gUserAgentProduct = nil;
   }
   _webState->AddObserver(_webStateObserver.get());
 
-  _webStateDelegate = base::MakeUnique<web::WebStateDelegateBridge>(self);
+  _webStateDelegate = std::make_unique<web::WebStateDelegateBridge>(self);
   _webState->SetDelegate(_webStateDelegate.get());
 
   _webStatePolicyDecider =
-      base::MakeUnique<ios_web_view::WebViewWebStatePolicyDecider>(
+      std::make_unique<ios_web_view::WebViewWebStatePolicyDecider>(
           _webState.get(), self);
 
   _javaScriptDialogPresenter =
-      base::MakeUnique<ios_web_view::WebViewJavaScriptDialogPresenter>(self,
+      std::make_unique<ios_web_view::WebViewJavaScriptDialogPresenter>(self,
                                                                        nullptr);
 
   _scrollView.proxy = _webState.get()->GetWebViewProxy().scrollViewProxy;

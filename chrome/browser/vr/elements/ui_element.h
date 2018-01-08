@@ -136,7 +136,7 @@ class UiElement : public cc::AnimationTarget {
 
   // Returns true if the element has been updated in any visible way.
   bool DoBeginFrame(const base::TimeTicks& time,
-                    const gfx::Vector3dF& head_direction);
+                    const gfx::Transform& head_pose);
 
   // Indicates whether the element should be tested for cursor input.
   bool IsHitTestable() const;
@@ -241,7 +241,8 @@ class UiElement : public cc::AnimationTarget {
   virtual void SetOpacity(float opacity);
 
   CornerRadii corner_radii() const { return corner_radii_; }
-  void set_corner_radii(const CornerRadii& radii) { corner_radii_ = radii; }
+  void SetCornerRadii(const CornerRadii& radii);
+  virtual void OnSetCornerRadii(const CornerRadii& radii);
 
   float corner_radius() const {
     DCHECK(corner_radii_.AllEqual());
@@ -250,7 +251,7 @@ class UiElement : public cc::AnimationTarget {
 
   // Syntax sugar for setting all corner radii to the same value.
   void set_corner_radius(float corner_radius) {
-    set_corner_radii(
+    SetCornerRadii(
         {corner_radius, corner_radius, corner_radius, corner_radius});
   }
 
@@ -261,21 +262,25 @@ class UiElement : public cc::AnimationTarget {
 
   LayoutAlignment x_anchoring() const { return x_anchoring_; }
   void set_x_anchoring(LayoutAlignment x_anchoring) {
+    DCHECK(x_anchoring == LEFT || x_anchoring == RIGHT || x_anchoring == NONE);
     x_anchoring_ = x_anchoring;
   }
 
   LayoutAlignment y_anchoring() const { return y_anchoring_; }
   void set_y_anchoring(LayoutAlignment y_anchoring) {
+    DCHECK(y_anchoring == TOP || y_anchoring == BOTTOM || y_anchoring == NONE);
     y_anchoring_ = y_anchoring;
   }
 
   LayoutAlignment x_centering() const { return x_centering_; }
   void set_x_centering(LayoutAlignment x_centering) {
+    DCHECK(x_centering == LEFT || x_centering == RIGHT || x_centering == NONE);
     x_centering_ = x_centering;
   }
 
   LayoutAlignment y_centering() const { return y_centering_; }
   void set_y_centering(LayoutAlignment y_centering) {
+    DCHECK(y_centering == TOP || y_centering == BOTTOM || y_centering == NONE);
     y_centering_ = y_centering;
   }
 
@@ -417,29 +422,36 @@ class UiElement : public cc::AnimationTarget {
 
   std::string DebugName() const;
 
+#ifndef NDEBUG
+
   // Writes a pretty-printed version of the UiElement subtree to |os|. The
   // vector of counts represents where each ancestor on the ancestor chain is
   // situated in its parent's list of children. This is used to determine
   // whether each ancestor is the last child (which affects the lines we draw in
   // the tree).
-  void DumpHierarchy(std::vector<size_t> counts, std::ostringstream* os) const;
+  // TODO(vollick): generalize the configuration of the dump to selectively turn
+  // off or on a variety of features.
+  void DumpHierarchy(std::vector<size_t> counts,
+                     std::ostringstream* os,
+                     bool include_bindings) const;
   virtual void DumpGeometry(std::ostringstream* os) const;
+#endif
+
+  // This is to be used only during the texture / size updated phase (i.e., to
+  // change your size based on your old size).
+  gfx::SizeF stale_size() const;
 
  protected:
   AnimationPlayer& animation_player() { return animation_player_; }
 
   base::TimeTicks last_frame_time() const { return last_frame_time_; }
 
-  // This is to be used only during the texture / size updated phase (i.e., to
-  // change your size based on your old size).
-  gfx::SizeF stale_size() const;
-
  private:
   virtual void OnUpdatedWorldSpaceTransform();
 
   // Returns true if the element has been updated in any visible way.
   virtual bool OnBeginFrame(const base::TimeTicks& time,
-                            const gfx::Vector3dF& look_at);
+                            const gfx::Transform& head_pose);
 
   // Valid IDs are non-negative.
   int id_ = -1;

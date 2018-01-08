@@ -296,6 +296,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void SetBackgroundColor(SkColor color) override;
   SkColor background_color() const override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
+  void SetWantsAnimateOnlyBeginFrames() override;
 
   // Implementation of RenderWidgetHostViewBase.
   void InitAsPopup(RenderWidgetHostView* parent_host_view,
@@ -310,6 +311,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
                          int error_code) override;
   void Destroy() override;
   void SetTooltipText(const base::string16& tooltip_text) override;
+  gfx::Size GetRequestedRendererSize() const override;
   bool IsSurfaceAvailableForCopy() const override;
   void CopyFromSurface(const gfx::Rect& src_rect,
                        const gfx::Size& output_size,
@@ -341,6 +343,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   bool HasAcceleratedSurface(const gfx::Size& desired_size) override;
   gfx::Rect GetBoundsInRootWindow() override;
   void OnSynchronizedDisplayPropertiesChanged() override;
+  void DidNavigate() override;
 
   bool LockMouse() override;
   void UnlockMouse() override;
@@ -355,9 +358,6 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
   viz::FrameSinkId GetFrameSinkId() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
-  viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate* delegate,
-                                      const gfx::PointF& point,
-                                      gfx::PointF* transformed_point) override;
   // Returns true when we can do SurfaceHitTesting for the event type.
   bool ShouldRouteEvent(const blink::WebInputEvent& event) const;
   // This method checks |event| to see if a GesturePinch event can be routed
@@ -376,6 +376,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
       RenderWidgetHostViewBase* target_view,
       gfx::PointF* transformed_point) override;
   viz::FrameSinkId GetRootFrameSinkId() override;
+  viz::SurfaceId GetCurrentSurfaceId() const override;
 
   // TextInputManager::Observer implementation.
   void OnUpdateTextInputStateCalled(TextInputManager* text_input_manager,
@@ -490,18 +491,16 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void PauseForPendingResizeOrRepaintsAndDraw();
 
   // BrowserCompositorMacClient implementation.
-  SkColor BrowserCompositorMacGetGutterColor(SkColor color) const override;
+  SkColor BrowserCompositorMacGetGutterColor() const override;
   void BrowserCompositorMacOnBeginFrame() override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
+  void DidReceiveFirstFrameAfterNavigation() override;
 
   // AcceleratedWidgetMacNSView implementation.
   NSView* AcceleratedWidgetGetNSView() const override;
   void AcceleratedWidgetGetVSyncParameters(
       base::TimeTicks* timebase, base::TimeDelta* interval) const override;
   void AcceleratedWidgetSwapCompleted() override;
-
-  // Exposed for testing.
-  viz::SurfaceId SurfaceIdForTesting() const override;
 
   void SetShowingContextMenu(bool showing) override;
 
@@ -614,6 +613,8 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   // applied until the swap completes (see comments in
   // AcceleratedWidgetSwapCompleted).
   SkColor last_frame_root_background_color_ = SK_ColorTRANSPARENT;
+
+  int tab_show_sequence_ = 0;
 
   std::unique_ptr<CursorManager> cursor_manager_;
 

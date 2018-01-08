@@ -20,7 +20,6 @@
             "title": "Enable Local Overrides",
             "settingName": "persistenceNetworkOverridesEnabled",
             "settingType": "boolean",
-            "storageType": "session",
             "defaultValue": false,
             "tags": "interception, override, network, rewrite, request",
             "options": [
@@ -48,13 +47,11 @@
         "IsolatedFileSystem.js",
         "IsolatedFileSystemManager.js",
         "FileSystemWorkspaceBinding.js",
-        "DefaultMapping.js",
         "Automapping.js",
         "NetworkPersistenceManager.js",
         "Persistence.js",
         "PersistenceActions.js",
         "PersistenceUtils.js",
-        "FileSystemMapping.js",
         "EditFileSystemView.js",
         "WorkspaceSettingsTab.js"
     ],

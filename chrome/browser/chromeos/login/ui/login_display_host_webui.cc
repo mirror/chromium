@@ -35,7 +35,6 @@
 #include "chrome/browser/chromeos/first_run/drive_first_run_controller.h"
 #include "chrome/browser/chromeos/first_run/first_run.h"
 #include "chrome/browser/chromeos/language_preferences.h"
-#include "chrome/browser/chromeos/login/arc_kiosk_controller.h"
 #include "chrome/browser/chromeos/login/existing_user_controller.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/login_wizard.h"
@@ -189,8 +188,11 @@ void ShowLoginWizardFinish(
   // Create the LoginDisplayHost. Use the views-based implementation only for
   // the sign-in screen.
   chromeos::LoginDisplayHost* display_host = nullptr;
-  if (ash::switches::IsUsingViewsLogin() &&
-      ShouldShowSigninScreen(first_screen)) {
+  if (chromeos::LoginDisplayHost::default_host()) {
+    // Tests may have already allocated an instance for us to use.
+    display_host = chromeos::LoginDisplayHost::default_host();
+  } else if (ash::switches::IsUsingViewsLogin() &&
+             ShouldShowSigninScreen(first_screen)) {
     display_host = new chromeos::LoginDisplayHostViews();
   } else {
     gfx::Rect screen_bounds(chromeos::CalculateScreenBounds(gfx::Size()));
@@ -416,7 +418,7 @@ class LoginDisplayHostWebUI::LoginWidgetDelegate
 
 LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
     : wallpaper_bounds_(wallpaper_bounds),
-      startup_sound_played_(StartupUtils::IsOobeCompleted()),
+      oobe_startup_sound_played_(StartupUtils::IsOobeCompleted()),
       animation_weak_ptr_factory_(this) {
   if (ash_util::IsRunningInMash()) {
     // Animation, and initializing hidden, are not currently supported for Mash.
@@ -445,29 +447,16 @@ LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
   registrar_.Add(this, chrome::NOTIFICATION_LOGIN_USER_CHANGED,
                  content::NotificationService::AllSources());
 
-  DCHECK(default_host() == nullptr);
-  default_host_ = this;
-
   keep_alive_.reset(
       new ScopedKeepAlive(KeepAliveOrigin::LOGIN_DISPLAY_HOST_WEBUI,
                           KeepAliveRestartOption::DISABLED));
 
-  bool is_registered = StartupUtils::IsDeviceRegistered();
   bool zero_delay_enabled = WizardController::IsZeroDelayEnabled();
   // Mash always runs login screen with zero delay
   if (ash_util::IsRunningInMash())
     zero_delay_enabled = true;
-  bool disable_boot_animation =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableBootAnimation);
 
-  waiting_for_wallpaper_load_ =
-      !zero_delay_enabled && (!is_registered || !disable_boot_animation);
-
-  // For slower hardware we have boot animation disabled so
-  // we'll be initializing WebUI hidden, waiting for user pods to load and then
-  // show WebUI at once.
-  waiting_for_user_pods_ = !zero_delay_enabled && !waiting_for_wallpaper_load_;
+  waiting_for_wallpaper_load_ = !zero_delay_enabled;
 
   // Initializing hidden is not supported in Mash
   if (!ash_util::IsRunningInMash()) {
@@ -500,8 +489,7 @@ LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
 
   // When we wait for WebUI to be initialized we wait for one of
   // these notifications.
-  if ((waiting_for_user_pods_ || waiting_for_wallpaper_load_) &&
-      initialize_webui_hidden_) {
+  if (waiting_for_wallpaper_load_ && initialize_webui_hidden_) {
     registrar_.Add(this, chrome::NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE,
                    content::NotificationService::AllSources());
     registrar_.Add(this, chrome::NOTIFICATION_LOGIN_NETWORK_ERROR_SHOWN,
@@ -510,7 +498,6 @@ LoginDisplayHostWebUI::LoginDisplayHostWebUI(const gfx::Rect& wallpaper_bounds)
   VLOG(1) << "Login WebUI >> "
           << "zero_delay: " << zero_delay_enabled
           << " wait_for_wp_load_: " << waiting_for_wallpaper_load_
-          << " wait_for_pods_: " << waiting_for_user_pods_
           << " init_webui_hidden_: " << initialize_webui_hidden_;
 
   media::SoundsManager* manager = media::SoundsManager::Get();
@@ -556,7 +543,6 @@ LoginDisplayHostWebUI::~LoginDisplayHostWebUI() {
 
   keep_alive_.reset();
 
-  default_host_ = nullptr;
   // TODO(tengs): This should be refactored. See crbug.com/314934.
   if (user_manager::UserManager::Get()->IsCurrentUserNew()) {
     // DriveOptInController will delete itself when finished.
@@ -628,7 +614,7 @@ void LoginDisplayHostWebUI::SetStatusAreaVisible(bool visible) {
 void LoginDisplayHostWebUI::StartWizard(OobeScreen first_screen) {
   DisableKeyboardOverscroll();
 
-  TryToPlayStartupSound();
+  TryToPlayOobeStartupSound();
 
   // Keep parameters to restore if renderer crashes.
   restore_path_ = RESTORE_WIZARD;
@@ -786,10 +772,7 @@ void LoginDisplayHostWebUI::OnStartAppLaunch() {
   login_view_->set_should_emit_login_prompt_visible(false);
 }
 
-void LoginDisplayHostWebUI::StartArcKiosk(const AccountId& account_id) {
-  VLOG(1) << "Login WebUI >> start ARC kiosk.";
-  SetStatusAreaVisible(false);
-
+void LoginDisplayHostWebUI::OnStartArcKiosk() {
   // Animation is not supported in Mash.
   if (!ash_util::IsRunningInMash())
     finalize_animation_type_ = ANIMATION_FADE_OUT;
@@ -799,11 +782,6 @@ void LoginDisplayHostWebUI::StartArcKiosk(const AccountId& account_id) {
   }
 
   login_view_->set_should_emit_login_prompt_visible(false);
-
-  arc_kiosk_controller_ =
-      base::MakeUnique<ArcKioskController>(this, GetOobeUI());
-
-  arc_kiosk_controller_->StartArcKiosk(account_id);
 }
 
 bool LoginDisplayHostWebUI::IsVoiceInteractionOobe() {
@@ -840,10 +818,7 @@ void LoginDisplayHostWebUI::Observe(
   if (chrome::NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE == type ||
       chrome::NOTIFICATION_LOGIN_NETWORK_ERROR_SHOWN == type) {
     VLOG(1) << "Login WebUI >> WEBUI_VISIBLE";
-    if (waiting_for_user_pods_ && initialize_webui_hidden_) {
-      waiting_for_user_pods_ = false;
-      ShowWebUI();
-    } else if (waiting_for_wallpaper_load_ && initialize_webui_hidden_) {
+    if (waiting_for_wallpaper_load_ && initialize_webui_hidden_) {
       // Reduce time till login UI is shown - show it as soon as possible.
       waiting_for_wallpaper_load_ = false;
       ShowWebUI();
@@ -928,7 +903,7 @@ void LoginDisplayHostWebUI::EmitLoginPromptVisibleCalled() {
 // LoginDisplayHostWebUI, chromeos::CrasAudioHandler::AudioObserver:
 
 void LoginDisplayHostWebUI::OnActiveOutputNodeChanged() {
-  TryToPlayStartupSound();
+  TryToPlayOobeStartupSound();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1145,8 +1120,7 @@ void LoginDisplayHostWebUI::InitLoginWindowAndView() {
   // If WebUI is initialized in hidden state, show it only if we're no
   // longer waiting for wallpaper animation/user images loading. Otherwise,
   // always show it.
-  if (!initialize_webui_hidden_ ||
-      (!waiting_for_wallpaper_load_ && !waiting_for_user_pods_)) {
+  if (!initialize_webui_hidden_ || !waiting_for_wallpaper_load_) {
     VLOG(1) << "Login WebUI >> show login wnd on create";
     login_window_->Show();
   } else {
@@ -1188,16 +1162,16 @@ void LoginDisplayHostWebUI::SetOobeProgressBarVisible(bool visible) {
   GetOobeUI()->ShowOobeUI(visible);
 }
 
-void LoginDisplayHostWebUI::TryToPlayStartupSound() {
+void LoginDisplayHostWebUI::TryToPlayOobeStartupSound() {
   if (is_voice_interaction_oobe_)
     return;
 
-  if (startup_sound_played_ || login_prompt_visible_time_.is_null() ||
+  if (oobe_startup_sound_played_ || login_prompt_visible_time_.is_null() ||
       !CrasAudioHandler::Get()->GetPrimaryActiveOutputNode()) {
     return;
   }
 
-  startup_sound_played_ = true;
+  oobe_startup_sound_played_ = true;
 
   // Don't try play startup sound if login prompt is already visible
   // for a long time or can't be played.
@@ -1214,7 +1188,7 @@ void LoginDisplayHostWebUI::OnLoginPromptVisible() {
   if (!login_prompt_visible_time_.is_null())
     return;
   login_prompt_visible_time_ = base::TimeTicks::Now();
-  TryToPlayStartupSound();
+  TryToPlayOobeStartupSound();
 }
 
 // static
@@ -1323,7 +1297,7 @@ void ShowLoginWizard(OobeScreen first_screen) {
       switch_locale.clear();
 
     std::unique_ptr<ShowLoginWizardSwitchLanguageCallbackData> data =
-        base::MakeUnique<ShowLoginWizardSwitchLanguageCallbackData>(
+        std::make_unique<ShowLoginWizardSwitchLanguageCallbackData>(
             first_screen, nullptr);
     TriggerShowLoginWizardFinish(switch_locale, std::move(data));
     return;

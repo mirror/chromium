@@ -37,9 +37,9 @@
 #include "core/frame/Settings.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLAreaElement.h"
-#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/canvas/HTMLCanvasElement.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLLabelElement.h"
 #include "core/html/forms/HTMLOptionElement.h"
@@ -268,6 +268,13 @@ AXObject* AXObjectCacheImpl::Get(AbstractInlineTextBox* inline_text_box) {
     return nullptr;
 
   return objects_.at(ax_id);
+}
+
+AXID AXObjectCacheImpl::GetAXID(Node* node) {
+  AXObject* ax_object = GetOrCreate(node);
+  if (!ax_object)
+    return 0;
+  return ax_object->AXObjectID();
 }
 
 AXObject* AXObjectCacheImpl::Get(AccessibleNode* accessible_node) {

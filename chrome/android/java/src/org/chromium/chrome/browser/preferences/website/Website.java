@@ -32,6 +32,7 @@ public class Website implements Serializable {
     private ContentSettingException mAutoplayExceptionInfo;
     private ContentSettingException mBackgroundSyncExceptionInfo;
     private CameraInfo mCameraInfo;
+    private ClipboardInfo mClipboardInfo;
     private ContentSettingException mCookieException;
     private GeolocationInfo mGeolocationInfo;
     private ContentSettingException mJavaScriptException;
@@ -215,6 +216,31 @@ public class Website implements Serializable {
     }
 
     /**
+     * Sets the ClipboardInfo object for this Website.
+     */
+    public void setClipboardInfo(ClipboardInfo info) {
+        mClipboardInfo = info;
+    }
+
+    public ClipboardInfo getClipboardInfo() {
+        return mClipboardInfo;
+    }
+
+    /**
+     * Returns what permission governs Clipboard access.
+     */
+    public ContentSetting getClipboardPermission() {
+        return mClipboardInfo != null ? mClipboardInfo.getContentSetting() : null;
+    }
+
+    /**
+     * Configure Clipboard permission access setting for this site.
+     */
+    public void setClipboardPermission(ContentSetting value) {
+        if (mClipboardInfo != null) mClipboardInfo.setContentSetting(value);
+    }
+
+    /**
      * Sets the Cookie exception info for this site.
      */
     public void setCookieException(ContentSettingException exception) {
@@ -309,9 +335,15 @@ public class Website implements Serializable {
      * Configure Sound permission access setting for this site.
      */
     public void setSoundPermission(ContentSetting value) {
+        // It is possible to set the permission without having an existing exception, because we
+        // always show the sound permission in Site Settings.
         if (mSoundException == null) {
-            return;
+            setSoundException(
+                    new ContentSettingException(ContentSettingsType.CONTENT_SETTINGS_TYPE_SOUND,
+                            getAddress().getHost(), value, ""));
         }
+        // We want this to be called even after calling setSoundException above because this will
+        // trigger the actual change on the PrefServiceBridge.
         mSoundException.setContentSetting(value);
         if (value == ContentSetting.BLOCK) {
             RecordUserAction.record("SoundContentSetting.MuteBy.SiteSettings");

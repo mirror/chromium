@@ -28,6 +28,7 @@ WebRtcMediaStreamAdapterMap::AdapterRef::AdapterRef(
     : map_(std::move(map)), type_(type), adapter_entry_(adapter_entry) {
   DCHECK(map_);
   DCHECK(adapter_entry_);
+  map_->lock_.AssertAcquired();
   ++adapter_entry_->ref_count;
 }
 
@@ -65,9 +66,10 @@ WebRtcMediaStreamAdapterMap::AdapterRef::Copy() const {
 
 WebRtcMediaStreamAdapterMap::WebRtcMediaStreamAdapterMap(
     PeerConnectionDependencyFactory* const factory,
+    scoped_refptr<base::SingleThreadTaskRunner> main_thread,
     scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map)
     : factory_(factory),
-      main_thread_(base::ThreadTaskRunnerHandle::Get()),
+      main_thread_(std::move(main_thread)),
       track_adapter_map_(std::move(track_adapter_map)) {
   DCHECK(factory_);
   DCHECK(main_thread_);
@@ -106,16 +108,28 @@ WebRtcMediaStreamAdapterMap::GetLocalStreamAdapter(
 std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>
 WebRtcMediaStreamAdapterMap::GetOrCreateLocalStreamAdapter(
     const blink::WebMediaStream& web_stream) {
-  DCHECK(main_thread_->BelongsToCurrentThread());
+  CHECK(main_thread_->BelongsToCurrentThread());
+  CHECK(!web_stream.IsNull());
   base::AutoLock scoped_lock(lock_);
   AdapterEntry* adapter_entry =
       local_stream_adapters_.FindByPrimary(web_stream.UniqueId());
   if (!adapter_entry) {
-    adapter_entry = local_stream_adapters_.Insert(
-        web_stream.UniqueId(),
-        WebRtcMediaStreamAdapter::CreateLocalStreamAdapter(
-            factory_, track_adapter_map_, web_stream));
-    DCHECK(adapter_entry->adapter->is_initialized());
+    std::unique_ptr<WebRtcMediaStreamAdapter> adapter;
+    {
+      // Make sure we don't hold the lock while calling out to
+      // CreateLocalStreamAdapter(). The reason is that constructing a local
+      // stream adapter, will synchronize with WebRTC's signaling thread and
+      // callbacks on the signaling thread might end up coming back to us
+      // and we might need the lock then.
+      base::AutoUnlock scoped_unlock(lock_);
+      adapter = WebRtcMediaStreamAdapter::CreateLocalStreamAdapter(
+          factory_, track_adapter_map_, web_stream);
+    }
+
+    adapter_entry = local_stream_adapters_.Insert(web_stream.UniqueId(),
+                                                  std::move(adapter));
+    CHECK(adapter_entry->adapter->is_initialized());
+    CHECK(adapter_entry->adapter->webrtc_stream());
     local_stream_adapters_.SetSecondaryKey(
         web_stream.UniqueId(), adapter_entry->adapter->webrtc_stream().get());
   }
@@ -155,16 +169,26 @@ WebRtcMediaStreamAdapterMap::GetRemoteStreamAdapter(
 std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>
 WebRtcMediaStreamAdapterMap::GetOrCreateRemoteStreamAdapter(
     scoped_refptr<webrtc::MediaStreamInterface> webrtc_stream) {
-  DCHECK(!main_thread_->BelongsToCurrentThread());
-  DCHECK(webrtc_stream);
+  CHECK(!main_thread_->BelongsToCurrentThread());
+  CHECK(webrtc_stream);
   base::AutoLock scoped_lock(lock_);
   AdapterEntry* adapter_entry =
       remote_stream_adapters_.FindByPrimary(webrtc_stream.get());
   if (!adapter_entry) {
-    adapter_entry = remote_stream_adapters_.Insert(
-        webrtc_stream.get(),
-        WebRtcMediaStreamAdapter::CreateRemoteStreamAdapter(
-            main_thread_, track_adapter_map_, webrtc_stream.get()));
+    // Make sure we don't hold the lock while calling out to
+    // CreateRemoteStreamAdapter(). The reason is that it might synchronize
+    // with other threads, possibly the main thread, where we might need to grab
+    // the lock (e.g. inside of GetOrCreateLocalStreamAdapter()).
+    std::unique_ptr<WebRtcMediaStreamAdapter> adapter;
+    {
+      base::AutoUnlock scoped_unlock(lock_);
+      adapter = WebRtcMediaStreamAdapter::CreateRemoteStreamAdapter(
+          main_thread_, track_adapter_map_, webrtc_stream.get());
+    }
+
+    adapter_entry =
+        remote_stream_adapters_.Insert(webrtc_stream.get(), std::move(adapter));
+
     // The new adapter is initialized in a post to the main thread. As soon as
     // it is initialized we map its |webrtc_stream| to the
     // |remote_stream_adapters_| entry as its secondary key. This ensures that
@@ -189,7 +213,9 @@ size_t WebRtcMediaStreamAdapterMap::GetRemoteStreamCount() const {
 
 void WebRtcMediaStreamAdapterMap::OnRemoteStreamAdapterInitialized(
     std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef> adapter_ref) {
-  DCHECK(adapter_ref->is_initialized());
+  CHECK(main_thread_->BelongsToCurrentThread());
+  CHECK(adapter_ref->is_initialized());
+  CHECK(!adapter_ref->adapter().web_stream().IsNull());
   {
     base::AutoLock scoped_lock(lock_);
     remote_stream_adapters_.SetSecondaryKey(

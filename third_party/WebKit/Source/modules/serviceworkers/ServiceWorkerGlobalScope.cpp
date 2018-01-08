@@ -41,6 +41,7 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/Event.h"
+#include "core/fetch/GlobalFetch.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/WorkerInspectorController.h"
 #include "core/inspector/WorkerThreadDebugger.h"
@@ -51,7 +52,6 @@
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "modules/EventTargetModules.h"
-#include "modules/fetch/GlobalFetch.h"
 #include "modules/serviceworkers/RespondWithObserver.h"
 #include "modules/serviceworkers/ServiceWorkerClients.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
@@ -99,7 +99,7 @@ ServiceWorkerGlobalScope::ServiceWorkerGlobalScope(
     double time_origin)
     : WorkerGlobalScope(std::move(creation_params), thread, time_origin) {}
 
-ServiceWorkerGlobalScope::~ServiceWorkerGlobalScope() {}
+ServiceWorkerGlobalScope::~ServiceWorkerGlobalScope() = default;
 
 void ServiceWorkerGlobalScope::EvaluateClassicScript(
     const KURL& script_url,

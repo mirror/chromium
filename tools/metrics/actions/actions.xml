@@ -973,6 +973,14 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="Accel_Toggle_Dictation">
+  <owner>dtseng@chromium.org</owner>
+  <description>
+    Metric recorded when the user starts or stops dictation using keyboard
+    shortcut.
+  </description>
+</action>
+
 <action name="Accel_Toggle_High_Contrast">
   <owner>dmazzoni@chromium.org</owner>
   <description>
@@ -1202,7 +1210,29 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="Android.BookmarkPage.RemoveItem">
+  <owner>huayinz@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <description>
+    User removed an item on the native Android bookmark page by clicking
+    &quot;delete&quot; from the &quot;more&quot; menu.
+  </description>
+</action>
+
+<action name="Android.BookmarkPage.SelectFromMenu">
+  <owner>huayinz@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <description>
+    User selected an item on the native Android bookmark page by clicking
+    &quot;select&quot; from the &quot;more&quot; menu.
+  </description>
+</action>
+
 <action name="Android.ChromeHome.AcceptedSurvey">
+  <obsolete>
+    Deprecated 1/2018. Replaced with the
+    Android.ChromeHome.Survey.InfoBarClosingState histogram.
+  </obsolete>
   <owner>danielpark@chromium.org</owner>
   <description>
     User clicked on the invite to take a survey in the survey infobar.
@@ -1210,6 +1240,10 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="Android.ChromeHome.ClickedSurveyInfoBarCloseButton">
+  <obsolete>
+    Deprecated 1/2018. Replaced with the
+    Android.ChromeHome.Survey.InfoBarClosingState histogram.
+  </obsolete>
   <owner>danielpark@chromium.org</owner>
   <description>
     User dismissed the survey infobar by tapping on its close button.
@@ -1391,6 +1425,11 @@ should be able to be added at any place in this file.
   <description>User showed the suggestions bottom sheet content.</description>
 </action>
 
+<action name="Android.ChromeHome.Survey.ShowSurveyInfoBar">
+  <owner>danielpark@chromium.org</owner>
+  <description>The survey infobar was displayed.</description>
+</action>
+
 <action name="Android.ContentDetectorActivated">
   <owner>twellington@chromium.org</owner>
   <description>
@@ -1441,6 +1480,15 @@ should be able to be added at any place in this file.
   <owner>ianwen@chromium.org</owner>
   <description>
     User opened the navigation drawer in Chrome's download manager.
+  </description>
+</action>
+
+<action name="Android.DownloadManager.RemoveItem">
+  <owner>huayinz@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <description>
+    User removed an item on the native Android download page by clicking
+    &quot;delete&quot; from the &quot;more&quot; menu.
   </description>
 </action>
 
@@ -1772,11 +1820,13 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="AppList_AutoLaunchCanceled">
+  <obsolete>Voice search in Launcher is not supported anymore.</obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
 
 <action name="AppList_AutoLaunched">
+  <obsolete>Voice search in Launcher is not supported anymore.</obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
@@ -1844,16 +1894,19 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="AppList_SearchedBySpeech">
+  <obsolete>App list doesn't have voice search anymore.</obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
 
 <action name="AppList_VoiceSearchCanceled">
+  <obsolete>App list doesn't have voice search anymore.</obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
 
 <action name="AppList_VoiceSearchStartedManually">
+  <obsolete>App list doesn't have voice search anymore.</obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
@@ -2597,6 +2650,9 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="BindingsMismatchTerminate_RVH_WebUI">
+  <obsolete>
+    Replaced in 1/2018 with bad_message::RVH_WEB_UI_BINDINGS_MISMATCH.
+  </obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
@@ -4994,7 +5050,18 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="FocusInactivePopupForAccessibility">
+  <owner>dtseng@chromium.org</owner>
+  <description>
+    Places focus on non-modal UI such as info bars, bubble widgets for
+    accessibility.
+  </description>
+</action>
+
 <action name="FocusInfobars">
+  <obsolete>
+    No longer used. Generalized/renamed to FocusInactivePopupForAccessibility.
+  </obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>
@@ -11544,6 +11611,15 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="MobileFreTOSLinkTapped">
+  <owner>justincohen@chromium.org</owner>
+  <description>
+    User tapped on the TOS link on the first run welcome view.  This metric is
+    only recorded if and after the TOS are accepted. This metric is specific to
+    iOS.
+  </description>
+</action>
+
 <action name="MobileGoToBackground">
   <owner>tedchoc@chromium.org</owner>
   <description>
@@ -15274,6 +15350,12 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="PageLoadInIncognito" not_user_triggered="true">
+  <owner>dullweber@chromium.org</owner>
+  <owner>msramek@chromium.org</owner>
+  <description>A page was loaded in incognito mode.</description>
+</action>
+
 <action name="PageLoadSRP" not_user_triggered="true">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
@@ -18708,6 +18790,9 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="Terminate_ProcessMismatch_CreateNewWidget">
+  <obsolete>
+    Replaced in 1/2018 with bad_message::WCI_NEW_WIDGET_PROCESS_MISMATCH.
+  </obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
 </action>

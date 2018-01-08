@@ -29,16 +29,17 @@ class FIFOClient {
   FIFOClient(PushPullFIFO* fifo, size_t bus_length, size_t jitter_range_ms)
       : fifo_(fifo),
         bus_(AudioBus::Create(fifo->NumberOfChannels(), bus_length)),
-        client_thread_(Platform::Current()->CreateThread("client thread")),
+        client_thread_(Platform::Current()->CreateThread(
+            WebThreadCreationParams("client thread"))),
         done_event_(std::make_unique<WaitableEvent>()),
         jitter_range_ms_(jitter_range_ms) {}
 
   WaitableEvent* Start(double duration_ms, double interval_ms) {
     duration_ms_ = duration_ms;
     interval_ms_ = interval_ms;
-    client_thread_->GetWebTaskRunner()->PostTask(
-        FROM_HERE, CrossThreadBind(&FIFOClient::RunTaskOnOwnThread,
-                                   CrossThreadUnretained(this)));
+    PostCrossThreadTask(*client_thread_->GetWebTaskRunner(), FROM_HERE,
+                        CrossThreadBind(&FIFOClient::RunTaskOnOwnThread,
+                                        CrossThreadUnretained(this)));
     return done_event_.get();
   }
 
@@ -57,8 +58,8 @@ class FIFOClient {
     ++counter_;
     RunTask();
     if (elapsed_ms_ < duration_ms_) {
-      client_thread_->GetWebTaskRunner()->PostDelayedTask(
-          FROM_HERE,
+      PostDelayedCrossThreadTask(
+          *client_thread_->GetWebTaskRunner(), FROM_HERE,
           CrossThreadBind(&FIFOClient::RunTaskOnOwnThread,
                           CrossThreadUnretained(this)),
           TimeDelta::FromMillisecondsD(interval_with_jitter));

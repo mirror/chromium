@@ -34,8 +34,6 @@ namespace blink {
 const WrapperTypeInfo V8TestInterfaceCheckSecurity::wrapperTypeInfo = {
     gin::kEmbedderBlink,
     V8TestInterfaceCheckSecurity::domTemplate,
-    V8TestInterfaceCheckSecurity::Trace,
-    V8TestInterfaceCheckSecurity::TraceWrappers,
     nullptr,
     "TestInterfaceCheckSecurity",
     nullptr,
@@ -313,7 +311,7 @@ static void TestInterfaceCheckSecurityOriginSafeMethodSetter(v8::Local<v8::Name>
   if (holder.IsEmpty())
     return;
   TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::ToImpl(holder);
-  v8::String::Utf8Value methodName(name);
+  v8::String::Utf8Value methodName(info.GetIsolate(), name);
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kSetterContext, "TestInterfaceCheckSecurity", *methodName);
   if (!BindingSecurity::ShouldAllowAccessTo(CurrentDOMWindow(info.GetIsolate()), impl, exceptionState)) {
     return;

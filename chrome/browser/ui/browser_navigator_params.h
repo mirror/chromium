@@ -9,12 +9,13 @@
 #include <vector>
 
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/common/referrer.h"
-#include "content/public/common/resource_request_body.h"
+#include "services/network/public/cpp/resource_request_body.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/gfx/geometry/rect.h"
@@ -90,7 +91,7 @@ struct NavigateParams {
   bool uses_post = false;
 
   // The post data when the navigation uses POST.
-  scoped_refptr<content::ResourceRequestBody> post_data;
+  scoped_refptr<network::ResourceRequestBody> post_data;
 
   // Extra headers to add to the request for this page.  Headers are
   // represented as "<name>: <value>" and separated by \r\n.  The entire string
@@ -245,8 +246,10 @@ struct NavigateParams {
   // an about:blank or a data url navigation.
   scoped_refptr<content::SiteInstance> source_site_instance;
 
-  // If non-default, provides a hint to GetIndexOfSingleton() where to start.
-  int tab_switch_hint = -1;
+  // If this event was triggered by an anchor element with a download
+  // attribute, |suggested_filename| will contain the (possibly empty) value of
+  // that attribute.
+  base::Optional<std::string> suggested_filename;
 
  private:
   NavigateParams();

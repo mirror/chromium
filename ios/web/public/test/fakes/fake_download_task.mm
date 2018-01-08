@@ -15,7 +15,7 @@ namespace web {
 
 FakeDownloadTask::FakeDownloadTask(const GURL& original_url,
                                    const std::string& mime_type)
-    : original_url_(original_url), mime_type_(mime_type) {}
+    : original_url_(original_url), mime_type_(mime_type), identifier_(@"") {}
 
 FakeDownloadTask::~FakeDownloadTask() = default;
 
@@ -26,6 +26,7 @@ DownloadTask::State FakeDownloadTask::GetState() const {
 void FakeDownloadTask::Start(
     std::unique_ptr<net::URLFetcherResponseWriter> writer) {
   writer_ = std::move(writer);
+  state_ = State::kInProgress;
   OnDownloadUpdated();
 }
 
@@ -62,6 +63,10 @@ int64_t FakeDownloadTask::GetTotalBytes() const {
   return total_bytes_;
 }
 
+int64_t FakeDownloadTask::GetReceivedBytes() const {
+  return received_bytes_;
+}
+
 int FakeDownloadTask::GetPercentComplete() const {
   return percent_complete_;
 }
@@ -72,6 +77,10 @@ std::string FakeDownloadTask::GetContentDisposition() const {
 
 std::string FakeDownloadTask::GetMimeType() const {
   return mime_type_;
+}
+
+ui::PageTransition FakeDownloadTask::GetTransitionType() const {
+  return page_transition_;
 }
 
 base::string16 FakeDownloadTask::GetSuggestedFilename() const {
@@ -105,6 +114,11 @@ void FakeDownloadTask::SetHttpCode(int http_code) {
 
 void FakeDownloadTask::SetTotalBytes(int64_t total_bytes) {
   total_bytes_ = total_bytes;
+  OnDownloadUpdated();
+}
+
+void FakeDownloadTask::SetReceivedBytes(int64_t received_bytes) {
+  received_bytes_ = received_bytes;
   OnDownloadUpdated();
 }
 

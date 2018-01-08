@@ -68,8 +68,8 @@
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
-#include "public/web/WebDevToolsAgent.h"
 #include "public/web/WebSettings.h"
+#include "public/web/devtools_agent.mojom-blink.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
 namespace blink {
@@ -77,7 +77,7 @@ namespace blink {
 WebSharedWorkerImpl::WebSharedWorkerImpl(WebSharedWorkerClient* client)
     : worker_inspector_proxy_(WorkerInspectorProxy::Create()),
       client_(client),
-      creation_address_space_(kWebAddressSpacePublic) {
+      creation_address_space_(mojom::IPAddressSpace::kPublic) {
   DCHECK(IsMainThread());
 }
 
@@ -142,14 +142,6 @@ void WebSharedWorkerImpl::OnShadowPageInitialized() {
   // invoked and |this| might have been deleted at this point.
 }
 
-void WebSharedWorkerImpl::SendProtocolMessage(int session_id,
-                                              int call_id,
-                                              const WebString& message,
-                                              const WebString& state) {
-  DCHECK(IsMainThread());
-  client_->SendDevToolsMessage(session_id, call_id, message, state);
-}
-
 void WebSharedWorkerImpl::ResumeStartup() {
   DCHECK(IsMainThread());
   bool is_paused_on_start = is_paused_on_start_;
@@ -160,8 +152,8 @@ void WebSharedWorkerImpl::ResumeStartup() {
   }
 }
 
-const WebString& WebSharedWorkerImpl::GetInstrumentationToken() {
-  return instrumentation_token_;
+const WebString& WebSharedWorkerImpl::GetDevToolsFrameToken() {
+  return devtools_frame_token_;
 }
 
 void WebSharedWorkerImpl::CountFeature(WebFeature feature) {
@@ -193,12 +185,11 @@ void WebSharedWorkerImpl::Connect(MessagePortChannel web_channel) {
   // The HTML spec requires to queue a connect event using the DOM manipulation
   // task source.
   // https://html.spec.whatwg.org/multipage/workers.html#shared-workers-and-the-sharedworker-interface
-  GetWorkerThread()
-      ->GetTaskRunner(TaskType::kDOMManipulation)
-      ->PostTask(FROM_HERE, CrossThreadBind(
-                                &WebSharedWorkerImpl::ConnectTaskOnWorkerThread,
-                                WTF::CrossThreadUnretained(this),
-                                WTF::Passed(std::move(web_channel))));
+  PostCrossThreadTask(
+      *GetWorkerThread()->GetTaskRunner(TaskType::kDOMManipulation), FROM_HERE,
+      CrossThreadBind(&WebSharedWorkerImpl::ConnectTaskOnWorkerThread,
+                      WTF::CrossThreadUnretained(this),
+                      WTF::Passed(std::move(web_channel))));
 }
 
 void WebSharedWorkerImpl::ConnectTaskOnWorkerThread(
@@ -219,8 +210,8 @@ void WebSharedWorkerImpl::StartWorkerContext(
     const WebString& name,
     const WebString& content_security_policy,
     WebContentSecurityPolicyType policy_type,
-    WebAddressSpace creation_address_space,
-    const WebString& instrumentation_token,
+    mojom::IPAddressSpace creation_address_space,
+    const WebString& devtools_frame_token,
     mojo::ScopedMessagePipeHandle content_settings_handle,
     mojo::ScopedMessagePipeHandle interface_provider) {
   DCHECK(IsMainThread());
@@ -232,7 +223,7 @@ void WebSharedWorkerImpl::StartWorkerContext(
       std::move(content_settings_handle), 0u);
   pending_interface_provider_.set_handle(std::move(interface_provider));
 
-  instrumentation_token_ = instrumentation_token;
+  devtools_frame_token_ = devtools_frame_token;
   shadow_page_ = std::make_unique<WorkerShadowPage>(this);
 
   // If we were asked to pause worker context on start and wait for debugger
@@ -359,37 +350,10 @@ void WebSharedWorkerImpl::PauseWorkerContextOnStart() {
   pause_worker_context_on_start_ = true;
 }
 
-void WebSharedWorkerImpl::AttachDevTools(int session_id) {
-  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
-  if (devtools_agent)
-    devtools_agent->Attach(session_id);
-}
-
-void WebSharedWorkerImpl::ReattachDevTools(int session_id,
-                                           const WebString& saved_state) {
-  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
-  if (devtools_agent)
-    devtools_agent->Reattach(session_id, saved_state);
-  ResumeStartup();
-}
-
-void WebSharedWorkerImpl::DetachDevTools(int session_id) {
-  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
-  if (devtools_agent)
-    devtools_agent->Detach(session_id);
-}
-
-void WebSharedWorkerImpl::DispatchDevToolsMessage(int session_id,
-                                                  int call_id,
-                                                  const WebString& method,
-                                                  const WebString& message) {
-  if (asked_to_terminate_)
-    return;
-  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
-  if (devtools_agent) {
-    devtools_agent->DispatchOnInspectorBackend(session_id, call_id, method,
-                                               message);
-  }
+void WebSharedWorkerImpl::BindDevToolsAgent(
+    mojo::ScopedInterfaceEndpointHandle devtools_agent_request) {
+  shadow_page_->BindDevToolsAgent(mojom::blink::DevToolsAgentAssociatedRequest(
+      std::move(devtools_agent_request)));
 }
 
 WebSharedWorker* WebSharedWorker::Create(WebSharedWorkerClient* client) {

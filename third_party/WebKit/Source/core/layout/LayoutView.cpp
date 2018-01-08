@@ -34,10 +34,8 @@
 #include "core/layout/LayoutCounter.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutGeometryMap.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/ViewFragmentationContext.h"
-#include "core/layout/api/LayoutAPIShim.h"
-#include "core/layout/api/LayoutEmbeddedContentItem.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
@@ -107,7 +105,7 @@ LayoutView::LayoutView(Document* document)
   SetPositionState(EPosition::kAbsolute);  // to 0,0 :)
 }
 
-LayoutView::~LayoutView() {}
+LayoutView::~LayoutView() = default;
 
 bool LayoutView::HitTest(HitTestResult& result) {
   // We have to recursively update layout/style here because otherwise, when the
@@ -118,7 +116,7 @@ bool LayoutView::HitTest(HitTestResult& result) {
   // Note that if an iframe has its render pipeline throttled, it will not
   // update layout here, and it will also not propagate the hit test into the
   // iframe's inner document.
-  GetFrameView()->UpdateLifecycleToCompositingCleanPlusScrolling();
+  GetFrameView()->UpdateLifecycleToPrePaintClean();
   HitTestLatencyRecorder hit_test_latency_recorder(
       result.GetHitTestRequest().AllowsChildFrameContent());
   return HitTestNoLifecycleUpdate(result);
@@ -189,9 +187,9 @@ bool LayoutView::HitTestNoLifecycleUpdate(HitTestResult& result) {
 
 void LayoutView::ClearHitTestCache() {
   hit_test_cache_->Clear();
-  LayoutEmbeddedContentItem frame_layout_item = GetFrame()->OwnerLayoutItem();
-  if (!frame_layout_item.IsNull())
-    frame_layout_item.View().ClearHitTestCache();
+  auto* object = GetFrame()->OwnerLayoutObject();
+  if (object)
+    object->View()->ClearHitTestCache();
 }
 
 void LayoutView::ComputeLogicalHeight(
@@ -364,9 +362,8 @@ void LayoutView::MapLocalToAncestor(const LayoutBoxModelObject* ancestor,
     return;
 
   if (mode & kTraverseDocumentBoundaries) {
-    LayoutEmbeddedContentItem parent_doc_layout_item =
-        GetFrame()->OwnerLayoutItem();
-    if (!parent_doc_layout_item.IsNull()) {
+    auto* parent_doc_layout_object = GetFrame()->OwnerLayoutObject();
+    if (parent_doc_layout_object) {
       if (!(mode & kInputIsInFrameCoordinates)) {
         transform_state.Move(
             LayoutSize(-GetFrame()->View()->GetScrollOffset()));
@@ -375,10 +372,10 @@ void LayoutView::MapLocalToAncestor(const LayoutBoxModelObject* ancestor,
         mode &= ~kInputIsInFrameCoordinates;
       }
 
-      transform_state.Move(parent_doc_layout_item.ContentBoxOffset());
+      transform_state.Move(parent_doc_layout_object->ContentBoxOffset());
 
-      parent_doc_layout_item.MapLocalToAncestor(ancestor, transform_state,
-                                                mode);
+      parent_doc_layout_object->MapLocalToAncestor(ancestor, transform_state,
+                                                   mode);
     } else {
       GetFrameView()->ApplyTransformForTopFrameSpace(transform_state);
     }
@@ -392,9 +389,7 @@ const LayoutObject* LayoutView::PushMappingToContainer(
   LayoutObject* container = nullptr;
 
   if (geometry_map.GetMapCoordinatesFlags() & kTraverseDocumentBoundaries) {
-    if (LayoutEmbeddedContent* parent_doc_layout_object =
-            ToLayoutEmbeddedContent(LayoutAPIShim::LayoutObjectFrom(
-                GetFrame()->OwnerLayoutItem()))) {
+    if (auto* parent_doc_layout_object = GetFrame()->OwnerLayoutObject()) {
       offset = -LayoutSize(frame_view_->GetScrollOffset());
       offset += parent_doc_layout_object->ContentBoxOffset();
       container = parent_doc_layout_object;
@@ -422,9 +417,7 @@ void LayoutView::MapAncestorToLocal(const LayoutBoxModelObject* ancestor,
                                     TransformState& transform_state,
                                     MapCoordinatesFlags mode) const {
   if (this != ancestor && (mode & kTraverseDocumentBoundaries)) {
-    if (LayoutEmbeddedContent* parent_doc_layout_object =
-            ToLayoutEmbeddedContent(LayoutAPIShim::LayoutObjectFrom(
-                GetFrame()->OwnerLayoutItem()))) {
+    if (auto* parent_doc_layout_object = GetFrame()->OwnerLayoutObject()) {
       // A LayoutView is a containing block for fixed-position elements, so
       // don't carry this state across frames.
       parent_doc_layout_object->MapAncestorToLocal(ancestor, transform_state,
@@ -934,6 +927,33 @@ bool LayoutView::PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const {
     return false;
 
   return LayoutBlockFlow::PaintedOutputOfObjectHasNoEffectRegardlessOfSize();
+}
+
+void LayoutView::StyleWillChange(StyleDifference diff,
+                                 const ComputedStyle& new_style) {
+  LayoutBlockFlow::StyleWillChange(diff, new_style);
+
+  // TODO(futhark@chromium.org): Ideally, StyleWillChange for LayoutBlockFlow
+  // should have been able to do the invalidation, but there is an early return
+  // in LayoutObject::StyleDidChange which returns if parent_ is nullptr.
+
+  if (const ComputedStyle* old_style = Style()) {
+    // TODO(futhark@chromium.org): Consider checking
+    // diff.NeedsFullPaintInvalidation() instead. That will currently lead to
+    // more invalidation rectangles. For instance for computed overflow changes
+    // that would otherwise be invalidated by root and body changes. Also zoom
+    // related changes will cause extra invalidation rectangles to be recorded
+    // in paint/invalidation layout tests.
+    if (!old_style->BackgroundVisuallyEqual(new_style)) {
+      // Paint invalidation of background propagated from root or body elements
+      // to viewport.
+      SetShouldDoFullPaintInvalidation();
+      if (old_style->HasEntirelyFixedBackground() !=
+          new_style.HasEntirelyFixedBackground()) {
+        Compositor()->SetNeedsUpdateFixedBackground();
+      }
+    }
+  }
 }
 
 void LayoutView::UpdateCounters() {

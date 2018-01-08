@@ -7,6 +7,8 @@
 #include "core/css/properties/CSSProperty.h"
 
 #include "core/StylePropertyShorthand.h"
+#include "core/style/ComputedStyle.h"
+#include "core/style/SVGComputedStyle.h"
 
 namespace blink {
 
@@ -74,27 +76,16 @@ const CSSProperty& CSSProperty::ResolveStartToPhysicalProperty(
   return *shorthand_properties[kBottomSide];
 }
 
-WTF::String CSSProperty::GetJSPropertyName() const {
-  char result[maxCSSPropertyNameLength + 1];
-  const char* cssPropertyName = GetPropertyName();
-  const char* propertyNamePointer = cssPropertyName;
-  if (!propertyNamePointer)
-    return g_empty_string;
-
-  char* resultPointer = result;
-  while (char character = *propertyNamePointer++) {
-    if (character == '-') {
-      char nextCharacter = *propertyNamePointer++;
-      if (!nextCharacter)
-        break;
-      character = (propertyNamePointer - 2 != cssPropertyName)
-                      ? ToASCIIUpper(nextCharacter)
-                      : nextCharacter;
-    }
-    *resultPointer++ = character;
-  }
-  *resultPointer = '\0';
-  return String(result);
+const CSSValue* CSSProperty::CSSValueFromComputedStyle(
+    const ComputedStyle& style,
+    const LayoutObject* layout_object,
+    Node* styled_node,
+    bool allow_visited_style) const {
+  const SVGComputedStyle& svg_style = style.SvgStyle();
+  const CSSProperty& resolved_property =
+      ResolveDirectionAwareProperty(style.Direction(), style.GetWritingMode());
+  return resolved_property.CSSValueFromComputedStyleInternal(
+      style, svg_style, layout_object, styled_node, allow_visited_style);
 }
 
 void CSSProperty::FilterEnabledCSSPropertiesIntoVector(

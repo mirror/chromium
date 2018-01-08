@@ -64,15 +64,15 @@ namespace blink {
 // static
 VibrationController::VibrationPattern
 VibrationController::SanitizeVibrationPattern(
-    const UnsignedLongOrUnsignedLongSequence& pattern) {
-  VibrationPattern sanitized;
+    const UnsignedLongOrUnsignedLongSequence& input) {
+  VibrationPattern pattern;
 
-  if (pattern.IsUnsignedLong())
-    sanitized.push_back(pattern.GetAsUnsignedLong());
-  else if (pattern.IsUnsignedLongSequence())
-    sanitized = pattern.GetAsUnsignedLongSequence();
+  if (input.IsUnsignedLong())
+    pattern.push_back(input.GetAsUnsignedLong());
+  else if (input.IsUnsignedLongSequence())
+    pattern = input.GetAsUnsignedLongSequence();
 
-  return sanitizeVibrationPatternInternal(sanitized);
+  return sanitizeVibrationPatternInternal(pattern);
 }
 
 VibrationController::VibrationController(LocalFrame& frame)
@@ -89,7 +89,7 @@ VibrationController::VibrationController(LocalFrame& frame)
       mojo::MakeRequest(&vibration_manager_));
 }
 
-VibrationController::~VibrationController() {}
+VibrationController::~VibrationController() = default;
 
 bool VibrationController::Vibrate(const VibrationPattern& pattern) {
   // Cancel clears the stored pattern and cancels any ongoing vibration.

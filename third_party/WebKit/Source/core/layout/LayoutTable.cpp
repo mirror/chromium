@@ -81,7 +81,7 @@ LayoutTable::LayoutTable(Element* element)
   effective_column_positions_.Fill(0, 1);
 }
 
-LayoutTable::~LayoutTable() {}
+LayoutTable::~LayoutTable() = default;
 
 void LayoutTable::StyleDidChange(StyleDifference diff,
                                  const ComputedStyle* old_style) {
@@ -171,7 +171,7 @@ void LayoutTable::AddChild(LayoutObject* child, LayoutObject* before_child) {
           wrap_in_anonymous_section = false;
           break;
         }
-      // Fall through.
+        FALLTHROUGH;
       case EDisplay::kTableRowGroup:
         ResetSectionPointerIfNotBefore(first_body_, before_child);
         if (!first_body_)
@@ -1379,7 +1379,7 @@ LayoutTableCell* LayoutTable::CellBelow(const LayoutTableCell& cell) const {
   RecalcSectionsIfNeeded();
 
   // Find the section and row to look in
-  unsigned r = cell.RowIndex() + cell.RowSpan() - 1;
+  unsigned r = cell.RowIndex() + cell.ResolvedRowSpan() - 1;
   LayoutTableSection* section = nullptr;
   unsigned r_below = 0;
   if (r < cell.Section()->NumRows() - 1) {

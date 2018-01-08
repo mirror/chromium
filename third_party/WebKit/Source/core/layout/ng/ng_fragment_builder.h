@@ -6,6 +6,7 @@
 #define NGFragmentBuilder_h
 
 #include "core/layout/ng/geometry/ng_border_edges.h"
+#include "core/layout/ng/geometry/ng_box_strut.h"
 #include "core/layout/ng/geometry/ng_physical_offset_rect.h"
 #include "core/layout/ng/geometry/ng_physical_rect.h"
 #include "core/layout/ng/inline/ng_baseline.h"
@@ -44,6 +45,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGContainerFragmentBuilder {
   NGLogicalSize Size() const final { return {inline_size_, block_size_}; }
 
   NGFragmentBuilder& SetIntrinsicBlockSize(LayoutUnit);
+  NGFragmentBuilder& SetPadding(const NGBoxStrut&);
 
   using NGContainerFragmentBuilder::AddChild;
 
@@ -51,16 +53,24 @@ class CORE_EXPORT NGFragmentBuilder final : public NGContainerFragmentBuilder {
   NGContainerFragmentBuilder& AddChild(scoped_refptr<NGPhysicalFragment>,
                                        const NGLogicalOffset&) final;
 
+  // Remove all children.
+  void RemoveChildren();
+
   // Add a break token for a child that doesn't yet have any fragments, because
   // its first fragment is to be produced in the next fragmentainer. This will
   // add a break token for the child, but no fragment.
   NGFragmentBuilder& AddBreakBeforeChild(NGLayoutInputNode child);
 
+  // Prepare for a break token before the specified line.
+  NGFragmentBuilder& AddBreakBeforeLine(int line_number);
+
   // Update if we have fragmented in this flow.
   NGFragmentBuilder& PropagateBreak(scoped_refptr<NGLayoutResult>);
   NGFragmentBuilder& PropagateBreak(scoped_refptr<NGPhysicalFragment>);
 
-  void AddOutOfFlowLegacyCandidate(NGBlockNode, const NGStaticPosition&);
+  void AddOutOfFlowLegacyCandidate(NGBlockNode,
+                                   const NGStaticPosition&,
+                                   LayoutObject* inline_container);
 
   // Set how much of the block size we've used so far for this box.
   NGFragmentBuilder& SetUsedBlockSize(LayoutUnit used_block_size) {
@@ -76,6 +86,22 @@ class CORE_EXPORT NGFragmentBuilder final : public NGContainerFragmentBuilder {
     return *this;
   }
 
+  NGFragmentBuilder& SetHasForcedBreak() {
+    has_forced_break_ = true;
+    minimal_space_shortage_ = LayoutUnit();
+    return *this;
+  }
+
+  // Report space shortage, i.e. how much more space would have been sufficient
+  // to prevent some piece of content from breaking. This information may be
+  // used by the column balancer to stretch columns.
+  NGFragmentBuilder& PropagateSpaceShortage(LayoutUnit space_shortage) {
+    DCHECK_GT(space_shortage, LayoutUnit());
+    if (minimal_space_shortage_ > space_shortage)
+      minimal_space_shortage_ = space_shortage;
+    return *this;
+  }
+
   void SetInitialBreakBefore(EBreakBetween break_before) {
     initial_break_before_ = break_before;
   }
@@ -88,6 +114,13 @@ class CORE_EXPORT NGFragmentBuilder final : public NGContainerFragmentBuilder {
   // break-before value, to determine how to deal with breaking between two
   // in-flow siblings.
   EBreakBetween JoinedBreakBetweenValue(EBreakBetween break_before) const;
+
+  // Return the number of line boxes laid out.
+  int LineCount() const { return inline_break_tokens_.size(); }
+
+  // Call when we're setting an undersirable break. It may be possible to avoid
+  // the break if we instead break at an earlier element.
+  void SetHasLastResortBreak() { has_last_resort_break_ = true; }
 
   // Offsets are not supposed to be set during fragment construction, so we
   // do not provide a setter here.
@@ -147,16 +180,22 @@ class CORE_EXPORT NGFragmentBuilder final : public NGContainerFragmentBuilder {
       HashMap<const LayoutObject*, FragmentPair>* inline_container_fragments,
       NGLogicalSize* container_size);
 
+  LayoutObject* GetLayoutObject() { return layout_object_; }
+
  private:
   NGLayoutInputNode node_;
   LayoutObject* layout_object_;
 
   LayoutUnit intrinsic_block_size_;
+  NGBoxStrut padding_;
 
   NGPhysicalFragment::NGBoxType box_type_;
   bool is_old_layout_root_;
   bool did_break_;
+  bool has_forced_break_ = false;
   LayoutUnit used_block_size_;
+
+  LayoutUnit minimal_space_shortage_ = LayoutUnit::Max();
 
   // The break-before value on the initial child we cannot honor. There's no
   // valid class A break point before a first child, only *between* siblings.
@@ -166,7 +205,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGContainerFragmentBuilder {
   EBreakBetween previous_break_after_ = EBreakBetween::kAuto;
 
   Vector<scoped_refptr<NGBreakToken>> child_break_tokens_;
-  scoped_refptr<NGBreakToken> last_inline_break_token_;
+  Vector<scoped_refptr<NGBreakToken>> inline_break_tokens_;
 
   Vector<NGBaseline> baselines_;
 

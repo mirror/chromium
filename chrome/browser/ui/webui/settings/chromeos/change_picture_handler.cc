@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/webui/settings/chromeos/change_picture_handler.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/base64.h"
@@ -301,7 +302,7 @@ void ChangePictureHandler::HandleSelectImage(const base::ListValue* args) {
     std::unique_ptr<user_manager::UserImage> user_image;
     if (previous_image_format_ == user_manager::UserImage::FORMAT_PNG &&
         previous_image_bytes_) {
-      user_image = base::MakeUnique<user_manager::UserImage>(
+      user_image = std::make_unique<user_manager::UserImage>(
           previous_image_, previous_image_bytes_, previous_image_format_);
       user_image->MarkAsSafe();
     } else {
@@ -316,17 +317,18 @@ void ChangePictureHandler::HandleSelectImage(const base::ListValue* args) {
     VLOG(1) << "Selected old user image";
   } else if (image_type == "default") {
     int image_index = user_manager::User::USER_IMAGE_INVALID;
-    if (!default_user_image::IsDefaultImageUrl(image_url, &image_index))
-      LOG(FATAL) << "Invalid image_url for default image type: " << image_url;
+    if (default_user_image::IsDefaultImageUrl(image_url, &image_index)) {
+      // One of the default user images.
+      user_image_manager->SaveUserDefaultImageIndex(image_index);
 
-    // One of the default user images.
-    user_image_manager->SaveUserDefaultImageIndex(image_index);
-
-    UMA_HISTOGRAM_EXACT_LINEAR(
-        "UserImage.ChangeChoice",
-        default_user_image::GetDefaultImageHistogramValue(image_index),
-        default_user_image::kHistogramImagesCount);
-    VLOG(1) << "Selected default user image: " << image_index;
+      UMA_HISTOGRAM_EXACT_LINEAR(
+          "UserImage.ChangeChoice",
+          default_user_image::GetDefaultImageHistogramValue(image_index),
+          default_user_image::kHistogramImagesCount);
+      VLOG(1) << "Selected default user image: " << image_index;
+    } else {
+      LOG(WARNING) << "Invalid image_url for default image type: " << image_url;
+    }
   } else if (image_type == "camera") {
     // Camera image is selected.
     if (user_photo_.isNull()) {
@@ -380,7 +382,7 @@ void ChangePictureHandler::SetImageFromCamera(
     const gfx::ImageSkia& photo,
     base::RefCountedBytes* photo_bytes) {
   std::unique_ptr<user_manager::UserImage> user_image =
-      base::MakeUnique<user_manager::UserImage>(
+      std::make_unique<user_manager::UserImage>(
           photo, photo_bytes, user_manager::UserImage::FORMAT_PNG);
   user_image->MarkAsSafe();
   ChromeUserManager::Get()

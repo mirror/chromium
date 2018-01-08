@@ -43,10 +43,9 @@ TestingPlatformSupportWithMockScheduler::
     : TestingPlatformSupport(config),
       mock_task_runner_(new cc::OrderedSimpleTaskRunner(&clock_, true)),
       scheduler_(new scheduler::RendererSchedulerImpl(
-          scheduler::CreateTaskQueueManagerWithUnownedClockForTest(
-              nullptr,
-              mock_task_runner_,
-              &clock_))),
+          scheduler::CreateTaskQueueManagerForTest(nullptr,
+                                                   mock_task_runner_,
+                                                   &clock_))),
       thread_(scheduler_->CreateMainThread()) {
   DCHECK(IsMainThread());
   // Set the work batch size to one so RunPendingTasks behaves as expected.
@@ -62,13 +61,14 @@ TestingPlatformSupportWithMockScheduler::
 }
 
 std::unique_ptr<WebThread>
-TestingPlatformSupportWithMockScheduler::CreateThread(const char* name) {
+TestingPlatformSupportWithMockScheduler::CreateThread(
+    const WebThreadCreationParams& params) {
   std::unique_ptr<scheduler::WebThreadBase> thread =
-      scheduler::WebThreadBase::CreateWorkerThread(name,
+      scheduler::WebThreadBase::CreateWorkerThread(params.name,
                                                    base::Thread::Options());
   thread->Init();
   WaitableEvent event;
-  thread->GetTaskRunner()->PostTask(
+  thread->GetSingleThreadTaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(PrepareCurrentThread, base::Unretained(&event),
                                 base::Unretained(thread.get())));
   event.Wait();

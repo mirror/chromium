@@ -43,7 +43,6 @@
 <translation id="2803313416453193357">Fungua folda</translation>
 <translation id="2824719307700604149">{YEARS,plural, =1{Mwaka 1 uliopita}other{Miaka # iliyopita}}</translation>
 <translation id="2931838996092594335">bofya</translation>
-<translation id="2983818520079887040">Mipangilio...</translation>
 <translation id="3036649622769666520">Fungua Mafaili</translation>
 <translation id="3049748772180311791">MB <ph name="QUANTITY" /></translation>
 <translation id="3087734570205094154">Chini</translation>
@@ -65,7 +64,6 @@
 <translation id="4250229828105606438">Picha ya skrini</translation>
 <translation id="4266252015790371705">{MONTHS,plural, =1{Mwezi 1 uliopita}other{Miezi # iliyopita}}</translation>
 <translation id="4316910396681052118">PROGRAMU ZOTE</translation>
-<translation id="4320177379694898372">Hakuna muunganisho wa intaneti</translation>
 <translation id="4588090240171750605">Sogeza Kulia</translation>
 <translation id="4724120544754982507">Kituo cha Arifa, arifa <ph name="UNREAD_NOTIFICATION_COUNT" /> ambazo hujasoma</translation>
 <translation id="4730374152663651037">ZINAZOTUMIKA SANA</translation>
@@ -105,6 +103,7 @@
 <translation id="6394627529324717982">Koma</translation>
 <translation id="6404817160109697034">{SECONDS,plural, =1{Sekunde 1 iliyopita}other{Sekunde # zilizopita}}</translation>
 <translation id="6483402905448010557">{SECONDS,plural, =1{Sekunde 1 iliyopita}other{Sekunde # zilizopita}}</translation>
+<translation id="654149438358937226">Zuia arifa zote</translation>
 <translation id="6567071839949112727">bofya kipengee</translation>
 <translation id="6612467943526193239">Ili kuacha kupima, bonyeza Esc.</translation>
 <translation id="6620110761915583480">Hifadhi Faili</translation>
@@ -131,6 +130,7 @@
 <translation id="7658239707568436148">Ghairi</translation>
 <translation id="7781829728241885113">Jana</translation>
 <translation id="7814458197256864873">&amp;Nakili</translation>
+<translation id="7879499977785298635">Usizuie</translation>
 <translation id="7907591526440419938">Fungua Faili</translation>
 <translation id="8106081041558092062">{HOURS,plural, =1{Saa 1 iliyopita}other{Saa # zilizopita}}</translation>
 <translation id="8131263257437993507">{SECONDS,plural, =1{Imesalia sekunde 1}other{Zimesalia sekunde #}}</translation>
@@ -141,7 +141,6 @@
 <translation id="8328145009876646418">Ncha ya Kushoto</translation>
 <translation id="8331626408530291785">Sogeza Juu</translation>
 <translation id="8352146631962686268">{YEARS,plural, =1{Mwaka 1}other{Miaka #}}</translation>
-<translation id="8371695176452482769">Ongea sasa</translation>
 <translation id="838869780401515933">chunguza</translation>
 <translation id="8393700583063109961">Tuma ujumbe</translation>
 <translation id="8394908167088220973">Cheza Media/Sitisha</translation>
@@ -150,6 +149,7 @@
 <translation id="8602707065186045623">Faili ya <ph name="SAVEAS_EXTENSION_TYPE" /> (.<ph name="SAVEAS_EXTENSION_NAME" />)</translation>
 <translation id="8677655579646609597"><ph name="QUANTITY" /> KB/s</translation>
 <translation id="8725488761726303204">+<ph name="NUMBER" /> zaidi</translation>
+<translation id="8730621377337864115">Nimemaliza</translation>
 <translation id="8772073294905169192">{HOURS,plural, =1{Saa 1}other{Saa #}}</translation>
 <translation id="8806053966018712535">Folda ya <ph name="FOLDER_NAME" /></translation>
 <translation id="883911313571074303">Eleza kuhusu picha</translation>

@@ -1,6 +1,11 @@
 # These tests currently fail when they run with --site-per-process.
 # See https://crbug.com/477150.
 
+# https://crbug.com/803672: Test expects cross-origin XHR to work!?
+# https://crbug.com/736308: Test also disabled in LayoutTests/TestExpectations
+crbug.com/803672 external/wpt/service-workers/service-worker/fetch-request-xhr.https.html [ Timeout ]
+crbug.com/803672 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-request-xhr.https.html [ Timeout ]
+
 # https://crbug.com/794631: Recent regression.
 crbug.com/794631 virtual/unified-autoplay/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute.https.sub.html [ Failure ]
 crbug.com/794631 virtual/unified-autoplay/external/wpt/feature-policy/autoplay-allowed-by-feature-policy.https.sub.html [ Failure ]
@@ -28,8 +33,8 @@ crbug.com/765779 http/tests/loading/bad-server-subframe.html [ Failure ]
 # https://crbug.com/393285: Text-autosizing doesn't support OOPIFs.
 # https://crbug.com/667551: Pixel dumps don't support OOPIFs.
 # Both of the bugs above need to be fixed, before enabling the tests below.
-crbug.com/393285 http/tests/text-autosizing/narrow-iframe.html [ Failure ]
-crbug.com/393285 http/tests/text-autosizing/wide-iframe.html [ Failure ]
+crbug.com/393285 http/tests/text-autosizing/narrow-iframe.html [ Failure Crash ]
+crbug.com/393285 http/tests/text-autosizing/wide-iframe.html [ Failure Crash ]
 
 # https://crbug.com/697111: assert failures in test added in r451938.
 crbug.com/697111 svg/dom/getScreenCTM-ancestor-transform.html [ Failure ]
@@ -68,7 +73,8 @@ crbug.com/585188 virtual/outofblink-cors/http/tests/xmlhttprequest/origin-whitel
 
 # https://crbug.com/601584 - No OOPIF support for UserGestureIndicator triggers
 #                            cross-origin-iframe.html layout test failure
-crbug.com/601584 http/tests/bluetooth/https/requestDevice/cross-origin-iframe.html [ Skip ]
+crbug.com/601584 external/wpt/http/tests/bluetooth/https/requestDevice/cross-origin-iframe.sub.https.html [ Skip ]
+crbug.com/601584 virtual/outofblink-cors/external/wpt/http/tests/bluetooth/https/requestDevice/cross-origin-iframe.sub.https.html [ Skip ]
 
 # https://crbug.com/606594 - UaF of delegate_ in WebFrameTestClient::willSendRequest
 # https://crbug.com/786510 - test tries to access cross-origin document body
@@ -76,12 +82,6 @@ crbug.com/606594 http/tests/local/serviceworker/fetch-request-body-file.html [ S
 
 # https://crbug.com/607991 - MockWebClipboardImpl not replicated across OOPIFs.
 crbug.com/607991 http/tests/misc/copy-resolves-urls.html [ Failure ]
-
-# https://crbug.com/608780 - window.performance doesn't work with OOPIFs
-crbug.com/608780 http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_cross_origin_redirect.html [ Failure ]
-crbug.com/608780 http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_cross_origin_redirect_with_timing_allow_origin.html [ Failure ]
-crbug.com/608780 http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_cross_origin_resource_request.html [ Failure ]
-crbug.com/608780 http/tests/w3c/webperf/submission/Intel/resource-timing/test_resource_timing_timing_allow_cross_origin_resource_request.html [ Failure ]
 
 # https://crbug.com/611232 - CSP checks from remote parent frame do not properly report violations
 crbug.com/611232 http/tests/security/contentSecurityPolicy/frame-src-child-frame-navigates-to-blocked-origin.html [ Timeout ]
@@ -139,7 +139,7 @@ Bug(none) external/wpt/html/browsers/origin/relaxing-the-same-origin-restriction
 # TODO(lukasza, alexmos): Triage these failures.
 Bug(none) external/wpt/FileAPI/url/multi-global-origin-serialization.sub.html [ Failure ]
 Bug(none) external/wpt/IndexedDB/interleaved-cursors.html [ Timeout ]
-Bug(none) external/wpt/XMLHttpRequest/xmlhttprequest-sync-default-feature-policy.sub.html [ Timeout ]
+Bug(none) external/wpt/xhr/xmlhttprequest-sync-default-feature-policy.sub.html [ Timeout ]
 Bug(none) external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-cross-none-block.html [ Timeout ]
 Bug(none) external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-cross-star-allow.html [ Timeout ]
 Bug(none) external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-same-star-allow.html [ Timeout ]
@@ -170,6 +170,8 @@ Bug(none) external/wpt/html/browsers/the-window-object/apis-for-creating-and-nav
 Bug(none) external/wpt/html/browsers/the-windowproxy-exotic-object/windowproxy-prototype-setting-same-origin-domain.sub.html [ Failure ]
 Bug(none) external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/window-domain-success.sub.html [ Timeout ]
 Bug(none) external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/window-similar-but-cross-origin-success.sub.html [ Timeout ]
+Bug(none) virtual/sharedarraybuffer/external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/window-domain-success.sub.html [ Timeout ]
+Bug(none) virtual/sharedarraybuffer/external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/window-similar-but-cross-origin-success.sub.html [ Timeout ]
 Bug(none) external/wpt/html/infrastructure/urls/resolving-urls/query-encoding/windows-1251.html [ Crash ]
 Bug(none) external/wpt/html/semantics/embedded-content/media-elements/error-codes/error.html [ Timeout ]
 Bug(none) external/wpt/html/semantics/embedded-content/media-elements/ready-states/autoplay.html [ Timeout ]
@@ -258,3 +260,14 @@ Bug(none) virtual/mojo-blobs/external/wpt/fetch/api/basic/keepalive.html [ Timeo
 Bug(none) virtual/mojo-blobs/external/wpt/webmessaging/event.origin.sub.htm [ Failure ]
 Bug(none) virtual/mojo-blobs/external/wpt/webmessaging/postMessage_asterisk_xorigin.sub.htm [ Failure ]
 Bug(none) virtual/outofblink-cors/external/wpt/fetch/api/basic/keepalive.html [ Timeout ]
+
+crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-cross-url-allow.html [ Pass Timeout ]
+crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-same-none-block.html [ Pass Timeout ]
+crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-same-url-allow.html [ Pass Timeout ]
+crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-cross-in-sandboxed-cross-url-block.html [ Pass Timeout ]
+crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-same-in-cross-star-allow.html [ Pass Timeout ]
+crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-nested-same-in-cross-url-allow.html [ Pass Timeout ]
+crbug.com/801992 external/wpt/content-security-policy/frame-ancestors/frame-ancestors-star-allow-crossorigin.html [ Pass Timeout ]
+crbug.com/801992 external/wpt/html/browsers/the-window-object/apis-for-creating-and-navigating-browsing-contexts-by-name/open-features-non-integer-width.html [ Crash ]
+crbug.com/801992 external/wpt/html/browsers/the-window-object/security-window/window-security.html [ Pass Timeout ]
+crbug.com/801992 http/tests/misc/iframe-script-modify-attr.html [ Pass Crash ]

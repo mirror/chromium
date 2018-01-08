@@ -259,6 +259,7 @@ std::unique_ptr<Volume> Volume::CreateForProvidedFileSystem(
   volume->configurable_ = file_system_info.configurable();
   volume->watchable_ = file_system_info.watchable();
   volume->volume_id_ = GenerateVolumeId(*volume);
+  volume->icon_set_ = file_system_info.icon_set();
   return volume;
 }
 
@@ -331,7 +332,7 @@ VolumeManager::VolumeManager(
     chromeos::PowerManagerClient* power_manager_client,
     chromeos::disks::DiskMountManager* disk_mount_manager,
     chromeos::file_system_provider::Service* file_system_provider_service,
-    GetMtpStorageInfoCallback get_mtp_storage_info_callback)
+    const GetMtpStorageInfoCallback& get_mtp_storage_info_callback)
     : profile_(profile),
       drive_integration_service_(drive_integration_service),
       disk_mount_manager_(disk_mount_manager),
@@ -865,21 +866,27 @@ void VolumeManager::OnRemovableStorageAttached(
   std::string storage_name;
   base::RemoveChars(info.location(), kRootPath, &storage_name);
   DCHECK(!storage_name.empty());
-
-  const MtpStorageInfo* mtp_storage_info;
   if (get_mtp_storage_info_callback_.is_null()) {
-    mtp_storage_info = storage_monitor::StorageMonitor::GetInstance()
-                           ->media_transfer_protocol_manager()
-                           ->GetStorageInfo(storage_name);
+    storage_monitor::StorageMonitor::GetInstance()
+        ->media_transfer_protocol_manager()
+        ->GetStorageInfo(storage_name,
+                         base::BindOnce(&VolumeManager::DoAttachMtpStorage,
+                                        weak_ptr_factory_.GetWeakPtr(), info));
   } else {
-    mtp_storage_info = get_mtp_storage_info_callback_.Run(storage_name);
+    get_mtp_storage_info_callback_.Run(
+        storage_name, base::BindOnce(&VolumeManager::DoAttachMtpStorage,
+                                     weak_ptr_factory_.GetWeakPtr(), info));
   }
+}
 
+void VolumeManager::DoAttachMtpStorage(
+    const storage_monitor::StorageInfo& info,
+    const device::mojom::MtpStorageInfo* mtp_storage_info) {
   if (!mtp_storage_info) {
-    // mtp_storage_info can be null. e.g. As OnRemovableStorageAttached is
-    // called asynchronously, there can be a race condition where the storage
-    // has been already removed in MediaTransferProtocolManager at the time when
-    // this method is called.
+    // |mtp_storage_info| can be null. e.g. As OnRemovableStorageAttached and
+    // DoAttachMtpStorage are called asynchronously, there can be a race
+    // condition where the storage has been already removed in
+    // MediaTransferProtocolManager at the time when this method is called.
     return;
   }
 
@@ -889,8 +896,8 @@ void VolumeManager::OnRemovableStorageAttached(
   const bool read_only =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kDisableMtpWriteSupport) ||
-      mtp_storage_info->access_capability() != kAccessCapabilityReadWrite ||
-      mtp_storage_info->filesystem_type() !=
+      mtp_storage_info->access_capability != kAccessCapabilityReadWrite ||
+      mtp_storage_info->filesystem_type !=
           kFilesystemTypeGenericHierarchical ||
       GetExternalStorageAccessMode(profile_) ==
           chromeos::MOUNT_ACCESS_MODE_READ_ONLY;

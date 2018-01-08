@@ -4,7 +4,6 @@
 
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h"
 
-#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -257,7 +256,8 @@ void CastMediaSinkServiceImpl::OnDiscoveryComplete() {
              << " [name]: " << sink_it.second.sink().name()
              << " [ip_endpoint]: "
              << sink_it.second.cast_data().ip_endpoint.ToString();
-    current_sinks_.insert(sink_it.second);
+    std::string sink_id = sink_it.second.sink().id();
+    current_sinks_.emplace(sink_id, sink_it.second);
   }
 
   MediaSinkServiceBase::OnDiscoveryComplete();
@@ -491,7 +491,7 @@ void CastMediaSinkServiceImpl::OnChannelErrorMayRetry(
   failure_count_map_[ip_endpoint] = std::min(failure_count, kMaxFailureCount);
 
   if (!backoff_entry)
-    backoff_entry = base::MakeUnique<net::BackoffEntry>(&backoff_policy_);
+    backoff_entry = std::make_unique<net::BackoffEntry>(&backoff_policy_);
 
   if (backoff_entry->failure_count() >= retry_params_.max_retry_attempts) {
     DVLOG(1) << "Fail to open channel after all retry attempts: "
@@ -605,8 +605,19 @@ void CastMediaSinkServiceImpl::AttemptConnection(
 }
 
 OnDialSinkAddedCallback CastMediaSinkServiceImpl::GetDialSinkAddedCallback() {
-  return base::BindRepeating(&CastMediaSinkServiceImpl::OnDialSinkAdded,
-                             GetWeakPtr());
+  return base::BindRepeating(
+      &CastMediaSinkServiceImpl::InvokeOnDialSinkAddedOnTaskRunner,
+      GetWeakPtr(), task_runner_);
+}
+
+// static
+void CastMediaSinkServiceImpl::InvokeOnDialSinkAddedOnTaskRunner(
+    const base::WeakPtr<CastMediaSinkServiceImpl>& impl,
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner,
+    const MediaSinkInternal& dial_sink) {
+  task_runner->PostTask(
+      FROM_HERE, base::BindOnce(&CastMediaSinkServiceImpl::OnDialSinkAdded,
+                                impl, dial_sink));
 }
 
 CastMediaSinkServiceImpl::RetryParams::RetryParams()

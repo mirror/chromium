@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_transmission_info.h"
-#include "net/quic/core/stream_notifier_interface.h"
+#include "net/quic/core/session_notifier_interface.h"
 #include "net/quic/platform/api/quic_export.h"
 
 namespace net {
@@ -42,9 +42,10 @@ class QUIC_EXPORT_PRIVATE QuicUnackedPacketMap {
   // Returns true if the packet |packet_number| is unacked.
   bool IsUnacked(QuicPacketNumber packet_number) const;
 
-  // Notifies stream_notifier that stream frames have been acked.
-  void NotifyStreamFramesAcked(const QuicTransmissionInfo& info,
-                               QuicTime::Delta ack_delay);
+  // Notifies session_notifier that frames have been acked. Returns true if any
+  // new data gets acked, returns false otherwise.
+  bool NotifyFramesAcked(const QuicTransmissionInfo& info,
+                         QuicTime::Delta ack_delay);
 
   // Marks |info| as no longer in flight.
   void RemoveFromInFlight(QuicTransmissionInfo* info);
@@ -55,12 +56,15 @@ class QUIC_EXPORT_PRIVATE QuicUnackedPacketMap {
   // No longer retransmit data for |stream_id|.
   void CancelRetransmissionsForStream(QuicStreamId stream_id);
 
-  // Returns true if the unacked packet |packet_number| has retransmittable
-  // frames.  This will return false if the packet has been acked, if a
-  // previous transmission of this packet was ACK'd, or if this packet has been
-  // retransmitted as with different packet number, or if the packet never
-  // had any retransmittable packets in the first place.
+  // Returns true if |packet_number| has retransmittable frames. This will
+  // return false if all frames of this packet are either non-retransmittable or
+  // have been acked.
   bool HasRetransmittableFrames(QuicPacketNumber packet_number) const;
+
+  // Returns true if |info| has retransmittable frames. This will return false
+  // if all frames of this packet are either non-retransmittable or have been
+  // acked.
+  bool HasRetransmittableFrames(const QuicTransmissionInfo& info) const;
 
   // Returns true if there are any unacked packets.
   bool HasUnackedPackets() const;
@@ -141,7 +145,7 @@ class QUIC_EXPORT_PRIVATE QuicUnackedPacketMap {
   // RTT measurement purposes.
   void RemoveObsoletePackets();
 
-  void SetStreamNotifier(StreamNotifierInterface* stream_notifier);
+  void SetSessionNotifier(SessionNotifierInterface* session_notifier);
 
  private:
   // Called when a packet is retransmitted with a new packet number.
@@ -191,9 +195,8 @@ class QUIC_EXPORT_PRIVATE QuicUnackedPacketMap {
   // Number of retransmittable crypto handshake packets.
   size_t pending_crypto_packet_count_;
 
-  // Receives notifications of stream frames being retransmitted or
-  // acknowledged.
-  StreamNotifierInterface* stream_notifier_;
+  // Receives notifications of frames being retransmitted or acknowledged.
+  SessionNotifierInterface* session_notifier_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicUnackedPacketMap);
 };

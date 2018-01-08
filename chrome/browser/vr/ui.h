@@ -9,6 +9,8 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/version.h"
+#include "chrome/browser/vr/assets_load_status.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
 #include "chrome/browser/vr/keyboard_ui_interface.h"
 #include "chrome/browser/vr/platform_controller.h"
@@ -25,6 +27,7 @@ class UiBrowserInterface;
 class UiInputManager;
 class UiRenderer;
 class UiScene;
+struct Assets;
 struct ControllerModel;
 struct Model;
 struct OmniboxSuggestions;
@@ -81,18 +84,34 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void SetScreenCaptureEnabled(bool enabled) override;
   void SetAudioCaptureEnabled(bool enabled) override;
   void SetBluetoothConnected(bool enabled) override;
-  void SetLocationAccess(bool enabled) override;
+  void SetLocationAccessEnabled(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
   void SetOmniboxSuggestions(
       std::unique_ptr<OmniboxSuggestions> suggestions) override;
+  void OnAssetsComponentReady() override;
+  void OnAssetsLoaded(AssetsLoadStatus status,
+                      std::unique_ptr<Assets> assets,
+                      const base::Version& component_version);
 
+  void OnAssetsLoading();
+  // TODO(ymalik): We expose this to stop sending VSync to the WebVR page until
+  // the splash screen has been visible for its minimum duration. The visibility
+  // logic currently lives in the UI, and it'd be much cleaner if the UI didn't
+  // have to worry about this, and if it were told to hide the splash screen
+  // like other WebVR phases (e.g. OnWebVrFrameAvailable below).
+  bool CanSendWebVrVSync();
   bool ShouldRenderWebVr();
-  void OnGlInitialized(unsigned int content_texture_id,
-                       UiElementRenderer::TextureLocation content_location,
-                       bool use_ganesh);
+
+  void OnGlInitialized(
+      unsigned int content_texture_id,
+      UiElementRenderer::TextureLocation content_location,
+      unsigned int content_overlay_texture_id,
+      UiElementRenderer::TextureLocation content_overlay_location,
+      bool use_ganesh);
+
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
       PlatformController::SwipeDirection direction);
@@ -107,12 +126,13 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void OnSwapContents(int new_content_id);
   void OnContentBoundsChanged(int width, int height);
   void OnPlatformControllerInitialized(PlatformController* controller);
+  void OnUiRequestedNavigation();
 
   Model* model_for_test() { return model_.get(); }
 
   void ReinitializeForTest(const UiInitialState& ui_initial_state);
 
-  void Dump();
+  void Dump(bool include_bindings);
 
   // Keyboard input related.
   void RequestFocus(int element_id);

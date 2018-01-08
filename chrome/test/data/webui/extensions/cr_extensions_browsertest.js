@@ -38,6 +38,7 @@ var CrExtensionsBrowserTest = class extends PolymerTest {
       '../../../../../ui/webui/resources/js/promise_resolver.js',
       '../../../../../ui/webui/resources/js/webui_resource_test.js',
       '../fake_chrome_event.js',
+      '../settings/test_util.js',
       '../test_browser_proxy.js',
       'test_service.js',
     ]);
@@ -122,9 +123,19 @@ TEST_F('CrExtensionsToolbarTest', 'Layout', function() {
   this.runMochaTest(extension_toolbar_tests.TestNames.Layout);
 });
 
+TEST_F('CrExtensionsToolbarTest', 'DevModeToggle', function() {
+  this.runMochaTest(extension_toolbar_tests.TestNames.DevModeToggle);
+});
+
 TEST_F('CrExtensionsToolbarTest', 'ClickHandlers', function() {
   this.runMochaTest(extension_toolbar_tests.TestNames.ClickHandlers);
 });
+
+GEN('#if defined(OS_CHROMEOS)');
+TEST_F('CrExtensionsToolbarTest', 'KioskMode', function() {
+  this.runMochaTest(extension_toolbar_tests.TestNames.KioskMode);
+});
+GEN('#endif');
 
 ////////////////////////////////////////////////////////////////////////////////
 // Extension Item Tests
@@ -312,6 +323,7 @@ var CrExtensionsManagerUnitTest = class extends CrExtensionsBrowserTest {
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
+      'test_kiosk_browser_proxy.js',
       'extension_manager_unit_test.js',
     ]);
   }
@@ -349,6 +361,12 @@ TEST_F('CrExtensionsManagerUnitTest', 'ToggleIncognito', function() {
 TEST_F('CrExtensionsManagerUnitTest', 'EnableAndDisable', function() {
   this.runMochaTest(extension_manager_tests.TestNames.EnableAndDisable);
 });
+
+GEN('#if defined(OS_CHROMEOS)');
+TEST_F('CrExtensionsManagerUnitTest', 'KioskMode', function() {
+  this.runMochaTest(extension_manager_tests.TestNames.KioskMode);
+});
+GEN('#endif');
 
 
 var CrExtensionsManagerTestWithMultipleExtensionTypesInstalled =
@@ -597,6 +615,10 @@ TEST_F('CrExtensionsCodeSectionTest', 'Layout', function() {
   this.runMochaTest(extension_code_section_tests.TestNames.Layout);
 });
 
+TEST_F('CrExtensionsCodeSectionTest', 'LongSource', function() {
+  this.runMochaTest(extension_code_section_tests.TestNames.LongSource);
+});
+
 ////////////////////////////////////////////////////////////////////////////////
 // Extension Navigation Helper Tests
 
@@ -679,7 +701,6 @@ var CrExtensionsToggleRowTest = class extends CrExtensionsBrowserTest {
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
-      '../settings/test_util.js',
       'toggle_row_test.js',
     ]);
   }
@@ -688,3 +709,53 @@ var CrExtensionsToggleRowTest = class extends CrExtensionsBrowserTest {
 TEST_F('CrExtensionsToggleRowTest', 'ToggleRowTest', function() {
   mocha.run();
 });
+
+////////////////////////////////////////////////////////////////////////////////
+// kiosk mode tests.
+
+GEN('#if defined(OS_CHROMEOS)');
+
+var CrExtensionsKioskModeTest = class extends CrExtensionsBrowserTest {
+  /** @override */
+  get browsePreload() {
+    return 'chrome://extensions/kiosk_dialog.html';
+  }
+
+  /** @override */
+  get extraLibraries() {
+    return super.extraLibraries.concat([
+      'test_kiosk_browser_proxy.js',
+      'extension_kiosk_mode_test.js',
+    ]);
+  }
+  /** @override */
+  get suiteName() {
+    return extension_kiosk_mode_tests.suiteName;
+  }
+};
+
+TEST_F('CrExtensionsKioskModeTest', 'AddButton', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.AddButton);
+});
+
+TEST_F('CrExtensionsKioskModeTest', 'Layout', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.Layout);
+});
+
+TEST_F('CrExtensionsKioskModeTest', 'AutoLaunch', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.AutoLaunch);
+});
+
+TEST_F('CrExtensionsKioskModeTest', 'Bailout', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.Bailout);
+});
+
+TEST_F('CrExtensionsKioskModeTest', 'Updated', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.Updated);
+});
+
+TEST_F('CrExtensionsKioskModeTest', 'AddError', function() {
+  this.runMochaTest(extension_kiosk_mode_tests.TestNames.AddError);
+});
+
+GEN('#endif');

@@ -36,12 +36,6 @@ class V8TestIntegerIndexedPrimaryGlobal {
   }
   CORE_EXPORT static TestIntegerIndexedPrimaryGlobal* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
-  static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestIntegerIndexedPrimaryGlobal>());
-  }
-  static void TraceWrappers(ScriptWrappableVisitor* visitor, ScriptWrappable* scriptWrappable) {
-    visitor->TraceWrappersFromGeneratedCode(scriptWrappable->ToImpl<TestIntegerIndexedPrimaryGlobal>());
-  }
   static void indexedPropertyGetterCustom(uint32_t, const v8::PropertyCallbackInfo<v8::Value>&);
   static void indexedPropertySetterCustom(uint32_t, v8::Local<v8::Value>, const v8::PropertyCallbackInfo<v8::Value>&);
   static void indexedPropertyDeleterCustom(uint32_t, const v8::PropertyCallbackInfo<v8::Boolean>&);
@@ -79,6 +73,7 @@ class V8TestIntegerIndexedPrimaryGlobal {
 template <>
 struct NativeValueTraits<TestIntegerIndexedPrimaryGlobal> : public NativeValueTraitsBase<TestIntegerIndexedPrimaryGlobal> {
   CORE_EXPORT static TestIntegerIndexedPrimaryGlobal* NativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+  CORE_EXPORT static TestIntegerIndexedPrimaryGlobal* NullValue() { return nullptr; }
 };
 
 template <>

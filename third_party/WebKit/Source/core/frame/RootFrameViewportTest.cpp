@@ -4,14 +4,17 @@
 
 #include "core/frame/RootFrameViewport.h"
 
-#include "core/layout/ScrollAlignment.h"
 #include "platform/geometry/DoubleRect.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/scheduler/child/web_scheduler.h"
+#include "platform/scroll/ScrollAlignment.h"
+#include "platform/scroll/ScrollTypes.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/scroll/ScrollbarThemeMock.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 #include "public/platform/WebThread.h"
+#include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -71,7 +74,7 @@ class ScrollableAreaStub : public GarbageCollectedFinalized<ScrollableAreaStub>,
   }
 
   scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final {
-    return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
+    return timer_task_runner_;
   }
 
   ScrollbarTheme& GetPageScrollbarTheme() const override {
@@ -87,7 +90,8 @@ class ScrollableAreaStub : public GarbageCollectedFinalized<ScrollableAreaStub>,
       : user_input_scrollable_x_(true),
         user_input_scrollable_y_(true),
         viewport_size_(viewport_size),
-        contents_size_(contents_size) {}
+        contents_size_(contents_size),
+        timer_task_runner_(blink::scheduler::CreateWebTaskRunnerForTesting()) {}
 
   CompositorElementId GetCompositorElementId() const override {
     return CompositorElementId();
@@ -129,6 +133,7 @@ class ScrollableAreaStub : public GarbageCollectedFinalized<ScrollableAreaStub>,
   ScrollOffset scroll_offset_;
   IntSize viewport_size_;
   IntSize contents_size_;
+  scoped_refptr<WebTaskRunner> timer_task_runner_;
 };
 
 class RootFrameViewStub : public ScrollableAreaStub {
@@ -187,7 +192,7 @@ class VisualViewportStub : public ScrollableAreaStub {
 
 class RootFrameViewportTest : public ::testing::Test {
  public:
-  RootFrameViewportTest() {}
+  RootFrameViewportTest() = default;
 
  protected:
   virtual void SetUp() {}
@@ -315,14 +320,20 @@ TEST_F(RootFrameViewportTest, ScrollIntoView) {
   // scaled.
   visual_viewport->SetViewportSize(IntSize(100, 100));
   root_frame_viewport->ScrollIntoView(
-      LayoutRect(100, 250, 50, 50), ScrollAlignment::kAlignToEdgeIfNeeded,
-      ScrollAlignment::kAlignToEdgeIfNeeded, false);
+      LayoutRect(100, 250, 50, 50),
+      WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
+                              ScrollAlignment::kAlignToEdgeIfNeeded,
+                              kProgrammaticScroll, true,
+                              kScrollBehaviorInstant));
   EXPECT_EQ(ScrollOffset(50, 150), layout_viewport->GetScrollOffset());
   EXPECT_EQ(ScrollOffset(0, 50), visual_viewport->GetScrollOffset());
 
   root_frame_viewport->ScrollIntoView(
-      LayoutRect(25, 75, 50, 50), ScrollAlignment::kAlignToEdgeIfNeeded,
-      ScrollAlignment::kAlignToEdgeIfNeeded, false);
+      LayoutRect(25, 75, 50, 50),
+      WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
+                              ScrollAlignment::kAlignToEdgeIfNeeded,
+                              kProgrammaticScroll, true,
+                              kScrollBehaviorInstant));
   EXPECT_EQ(ScrollOffset(25, 75), layout_viewport->GetScrollOffset());
   EXPECT_EQ(ScrollOffset(0, 0), visual_viewport->GetScrollOffset());
 
@@ -332,14 +343,20 @@ TEST_F(RootFrameViewportTest, ScrollIntoView) {
   root_frame_viewport->SetScrollOffset(ScrollOffset(), kProgrammaticScroll);
 
   root_frame_viewport->ScrollIntoView(
-      LayoutRect(50, 75, 50, 75), ScrollAlignment::kAlignToEdgeIfNeeded,
-      ScrollAlignment::kAlignToEdgeIfNeeded, false);
+      LayoutRect(50, 75, 50, 75),
+      WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
+                              ScrollAlignment::kAlignToEdgeIfNeeded,
+                              kProgrammaticScroll, true,
+                              kScrollBehaviorInstant));
   EXPECT_EQ(ScrollOffset(0, 0), layout_viewport->GetScrollOffset());
   EXPECT_EQ(ScrollOffset(50, 75), visual_viewport->GetScrollOffset());
 
   root_frame_viewport->ScrollIntoView(
-      LayoutRect(190, 290, 10, 10), ScrollAlignment::kAlignToEdgeIfNeeded,
-      ScrollAlignment::kAlignToEdgeIfNeeded, false);
+      LayoutRect(190, 290, 10, 10),
+      WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
+                              ScrollAlignment::kAlignToEdgeIfNeeded,
+                              kProgrammaticScroll, true,
+                              kScrollBehaviorInstant));
   EXPECT_EQ(ScrollOffset(100, 150), layout_viewport->GetScrollOffset());
   EXPECT_EQ(ScrollOffset(50, 75), visual_viewport->GetScrollOffset());
 
@@ -353,22 +370,27 @@ TEST_F(RootFrameViewportTest, ScrollIntoView) {
 
   root_frame_viewport->ScrollIntoView(
       LayoutRect(root_frame_viewport->VisibleContentRect(kExcludeScrollbars)),
-      ScrollAlignment::kAlignToEdgeIfNeeded,
-      ScrollAlignment::kAlignToEdgeIfNeeded, false);
+      WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
+                              ScrollAlignment::kAlignToEdgeIfNeeded,
+                              kProgrammaticScroll, true,
+                              kScrollBehaviorInstant));
   EXPECT_EQ(ScrollOffset(50, 50), layout_viewport->GetScrollOffset());
   EXPECT_EQ(ScrollOffset(0, 10), visual_viewport->GetScrollOffset());
 
   root_frame_viewport->ScrollIntoView(
       LayoutRect(root_frame_viewport->VisibleContentRect(kExcludeScrollbars)),
-      ScrollAlignment::kAlignCenterAlways, ScrollAlignment::kAlignCenterAlways,
-      false);
+      WebScrollIntoViewParams(ScrollAlignment::kAlignCenterAlways,
+                              ScrollAlignment::kAlignCenterAlways,
+                              kProgrammaticScroll, true,
+                              kScrollBehaviorInstant));
   EXPECT_EQ(ScrollOffset(50, 50), layout_viewport->GetScrollOffset());
   EXPECT_EQ(ScrollOffset(0, 10), visual_viewport->GetScrollOffset());
 
   root_frame_viewport->ScrollIntoView(
       LayoutRect(root_frame_viewport->VisibleContentRect(kExcludeScrollbars)),
-      ScrollAlignment::kAlignTopAlways, ScrollAlignment::kAlignTopAlways,
-      false);
+      WebScrollIntoViewParams(
+          ScrollAlignment::kAlignTopAlways, ScrollAlignment::kAlignTopAlways,
+          kProgrammaticScroll, true, kScrollBehaviorInstant));
   EXPECT_EQ(ScrollOffset(50, 50), layout_viewport->GetScrollOffset());
   EXPECT_EQ(ScrollOffset(0, 10), visual_viewport->GetScrollOffset());
 }

@@ -38,7 +38,6 @@
 #include "content/public/browser/blob_handle.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/request_context_type.h"
-#include "content/public/common/resource_request_body.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/test/mock_resource_context.h"
@@ -56,6 +55,7 @@
 #include "net/url_request/url_request_job_factory_impl.h"
 #include "net/url_request/url_request_test_job.h"
 #include "net/url_request/url_request_test_util.h"
+#include "services/network/public/cpp/resource_request_body.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "storage/browser/blob/blob_data_builder.h"
 #include "storage/browser/blob/blob_storage_context.h"
@@ -99,9 +99,6 @@ class MockProtocolHandler : public net::URLRequestJobFactory::ProtocolHandler {
   ~MockProtocolHandler() override = default;
 
   void set_resource_type(ResourceType type) { resource_type_ = type; }
-  void set_custom_timeout(base::Optional<base::TimeDelta> timeout) {
-    custom_timeout_ = timeout;
-  }
   void set_simulate_navigation_preload() {
     simulate_navigation_preload_ = true;
   }
@@ -123,11 +120,12 @@ class MockProtocolHandler : public net::URLRequestJobFactory::ProtocolHandler {
         blob_storage_context_, resource_context_,
         network::mojom::FetchRequestMode::kNoCORS,
         network::mojom::FetchCredentialsMode::kOmit,
-        FetchRedirectMode::FOLLOW_MODE, std::string() /* integrity */,
-        false /* keepalive */, resource_type_, REQUEST_CONTEXT_TYPE_HYPERLINK,
+        network::mojom::FetchRedirectMode::kFollow,
+        std::string() /* integrity */, false /* keepalive */, resource_type_,
+        REQUEST_CONTEXT_TYPE_HYPERLINK,
         network::mojom::RequestContextFrameType::kTopLevel,
-        scoped_refptr<ResourceRequestBody>(), ServiceWorkerFetchType::FETCH,
-        custom_timeout_, delegate_);
+        scoped_refptr<network::ResourceRequestBody>(),
+        ServiceWorkerFetchType::FETCH, delegate_);
     if (simulate_navigation_preload_) {
       job_->set_simulate_navigation_preload_for_test();
     }
@@ -144,7 +142,6 @@ class MockProtocolHandler : public net::URLRequestJobFactory::ProtocolHandler {
   ServiceWorkerURLRequestJob::Delegate* delegate_;
   ResourceType resource_type_;
   bool simulate_navigation_preload_;
-  base::Optional<base::TimeDelta> custom_timeout_;
 };
 
 // Returns a BlobProtocolHandler that uses |blob_storage_context|. Caller owns
@@ -341,7 +338,7 @@ class ServiceWorkerURLRequestJobTest
                       expected_response, expect_valid_ssl);
   }
 
-  bool HasWork() { return version_->HasWork(); }
+  bool HasWork() { return version_->HasWorkInBrowser(); }
 
   // Runs a request where the active worker starts a request in ACTIVATING state
   // and fails to reach ACTIVATED.
@@ -703,20 +700,6 @@ TEST_F(ServiceWorkerURLRequestJobTest,
       0);
 }
 
-TEST_F(ServiceWorkerURLRequestJobTest, CustomTimeout) {
-  SetUpWithHelper(std::make_unique<EmbeddedWorkerTestHelper>(base::FilePath()));
-
-  version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
-
-  // Set mock clock on version_ to check timeout behavior.
-  tick_clock_.SetNowTicks(base::TimeTicks::Now());
-  version_->SetTickClockForTesting(&tick_clock_);
-
-  protocol_handler_->set_custom_timeout(base::TimeDelta::FromSeconds(5));
-  TestRequest(200, "OK", std::string(), true /* expect_valid_ssl */);
-  EXPECT_EQ(base::TimeDelta::FromSeconds(5), version_->remaining_timeout());
-}
-
 class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {
  public:
   ProviderDeleteHelper() : EmbeddedWorkerTestHelper(base::FilePath()) {}
@@ -858,7 +841,7 @@ TEST_F(ServiceWorkerURLRequestJobTest, BlobResponse) {
     expected_response += kTestData;
   }
   std::unique_ptr<storage::BlobDataHandle> blob_handle =
-      blob_storage_context->context()->AddFinishedBlob(blob_data.get());
+      blob_storage_context->context()->AddFinishedBlob(std::move(blob_data));
   SetUpWithHelper(std::make_unique<BlobResponder>(blob_handle->uuid(),
                                                   expected_response.size()));
 
@@ -1449,10 +1432,10 @@ TEST_F(ServiceWorkerURLRequestJobTest, EarlyResponse) {
   EXPECT_FALSE(info->response_is_in_cache_storage());
   EXPECT_EQ(std::string(), info->response_cache_storage_cache_name());
 
-  EXPECT_TRUE(version_->HasWork());
+  EXPECT_TRUE(version_->HasWorkInBrowser());
   helper->FinishWaitUntil();
   base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(version_->HasWork());
+  EXPECT_FALSE(version_->HasWorkInBrowser());
 }
 
 // Test cancelling the URLRequest while the fetch event is in flight.
@@ -1477,12 +1460,12 @@ TEST_F(ServiceWorkerURLRequestJobTest, CancelRequest) {
   base::RunLoop().RunUntilIdle();
 
   // Respond to the fetch event.
-  EXPECT_TRUE(version_->HasWork());
+  EXPECT_TRUE(version_->HasWorkInBrowser());
   helper->Respond();
   base::RunLoop().RunUntilIdle();
 
   // The fetch event request should no longer be in-flight.
-  EXPECT_FALSE(version_->HasWork());
+  EXPECT_FALSE(version_->HasWorkInBrowser());
 }
 
 // TODO(kinuko): Add more tests with different response data and also for

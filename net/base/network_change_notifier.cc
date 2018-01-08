@@ -296,8 +296,7 @@ class NetworkChangeNotifier::HistogramWatcher : public ConnectionTypeObserver,
   // from the network thread.
   void NotifyDataReceived(const URLRequest& request, int bytes_read) {
     DCHECK(thread_checker_.CalledOnValidThread());
-    if (IsLocalhost(request.url().host()) ||
-        !request.url().SchemeIsHTTPOrHTTPS()) {
+    if (IsLocalhost(request.url()) || !request.url().SchemeIsHTTPOrHTTPS()) {
       return;
     }
 
@@ -497,6 +496,11 @@ NetworkChangeNotifier::~NetworkChangeNotifier() {
   network_change_calculator_.reset();
   DCHECK_EQ(this, g_network_change_notifier);
   g_network_change_notifier = NULL;
+}
+
+// static
+NetworkChangeNotifierFactory* NetworkChangeNotifier::GetFactory() {
+  return g_network_change_notifier_factory;
 }
 
 // static

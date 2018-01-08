@@ -48,6 +48,8 @@ class MutableProfileOAuth2TokenServiceDelegateTest
  public:
   MutableProfileOAuth2TokenServiceDelegateTest()
       : factory_(NULL),
+        signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT),
         access_token_success_count_(0),
         access_token_failure_count_(0),
         access_token_failure_(GoogleServiceAuthError::NONE),
@@ -309,7 +311,8 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
   EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_IN_PROGRESS,
             oauth2_service_delegate_->GetLoadCredentialsState());
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(OAuth2TokenServiceDelegate::LOAD_CREDENTIALS_FINISHED_WITH_SUCCESS,
+  EXPECT_EQ(OAuth2TokenServiceDelegate::
+                LOAD_CREDENTIALS_FINISHED_WITH_NO_TOKEN_FOR_PRIMARY_ACCOUNT,
             oauth2_service_delegate_->GetLoadCredentialsState());
   EXPECT_EQ(1, start_batch_changes_);
   EXPECT_EQ(1, end_batch_changes_);

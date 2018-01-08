@@ -332,8 +332,8 @@ void WaitForHistoryToProcessPendingTasks() {
     base::CancelableTaskTracker task_tracker;
     // Post a task that signals |done|. Since tasks run in posting order, all
     // previously posted tasks have run when |done| is signaled.
-    history_service->ScheduleDBTask(std::make_unique<SignalEventTask>(&done),
-                                    &task_tracker);
+    history_service->ScheduleDBTask(
+        FROM_HERE, std::make_unique<SignalEventTask>(&done), &task_tracker);
     done.Wait();
   }
   // Wait such that any notifications broadcast from one of the history threads
@@ -679,6 +679,7 @@ void CheckHasNoFavicon(int profile, const GURL& page_url) {
   favicon_base::FaviconRawBitmapResult bitmap_result;
   favicon_service->GetRawFaviconForPageURL(
       page_url, {favicon_base::IconType::kFavicon}, 0,
+      /*fallback_to_host=*/false,
       base::Bind(&OnGotFaviconData, run_loop.QuitClosure(), &bitmap_result),
       &task_tracker);
   run_loop.Run();

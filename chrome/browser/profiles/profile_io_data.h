@@ -28,15 +28,16 @@
 #include "components/prefs/pref_member.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_context.h"
-#include "content/public/common/network_service.mojom.h"
 #include "content/public/network/url_request_context_owner.h"
 #include "extensions/features/features.h"
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_network_session.h"
+#include "net/net_features.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_interceptor.h"
 #include "net/url_request/url_request_job_factory.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
 
 class ChromeHttpUserAgentSettings;
 class ChromeNetworkDelegate;
@@ -81,11 +82,15 @@ class ChannelIDService;
 class ClientCertStore;
 class CookieStore;
 class HttpTransactionFactory;
-class ReportingService;
 class ReportSender;
 class SSLConfigService;
 class URLRequestContextBuilder;
 class URLRequestJobFactoryImpl;
+
+#if BUILDFLAG(ENABLE_REPORTING)
+class NetworkErrorLoggingDelegate;
+class ReportingService;
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 }  // namespace net
 
 namespace policy {
@@ -298,8 +303,13 @@ class ProfileIOData {
     void SetHttpTransactionFactory(
         std::unique_ptr<net::HttpTransactionFactory> http_factory);
     void SetJobFactory(std::unique_ptr<net::URLRequestJobFactory> job_factory);
+#if BUILDFLAG(ENABLE_REPORTING)
     void SetReportingService(
         std::unique_ptr<net::ReportingService> reporting_service);
+    void SetNetworkErrorLoggingDelegate(
+        std::unique_ptr<net::NetworkErrorLoggingDelegate>
+            network_error_logging_delegate);
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
    private:
     ~AppRequestContext() override;
@@ -309,7 +319,11 @@ class ProfileIOData {
     std::unique_ptr<net::HttpNetworkSession> http_network_session_;
     std::unique_ptr<net::HttpTransactionFactory> http_factory_;
     std::unique_ptr<net::URLRequestJobFactory> job_factory_;
+#if BUILDFLAG(ENABLE_REPORTING)
     std::unique_ptr<net::ReportingService> reporting_service_;
+    std::unique_ptr<net::NetworkErrorLoggingDelegate>
+        network_error_logging_delegate_;
+#endif  // BUILDFLAG(ENABLE_REPORTING)
   };
 
   // Created on the UI thread, read on the IO thread during ProfileIOData lazy
@@ -323,8 +337,8 @@ class ProfileIOData {
 
     // Used to configure the main URLRequestContext through the IOThread's
     // in-process network service.
-    content::mojom::NetworkContextRequest main_network_context_request;
-    content::mojom::NetworkContextParamsPtr main_network_context_params;
+    network::mojom::NetworkContextRequest main_network_context_request;
+    network::mojom::NetworkContextParamsPtr main_network_context_params;
 
     scoped_refptr<content_settings::CookieSettings> cookie_settings;
     scoped_refptr<HostContentSettingsMap> host_content_settings_map;
@@ -594,7 +608,7 @@ class ProfileIOData {
 
   // When the network service is enabled, this holds on to a
   // content::NetworkContext class that owns |main_request_context_|.
-  mutable std::unique_ptr<content::mojom::NetworkContext> main_network_context_;
+  mutable std::unique_ptr<network::mojom::NetworkContext> main_network_context_;
   // When the network service is disabled, this owns |system_request_context|.
   mutable content::URLRequestContextOwner main_request_context_owner_;
   mutable net::URLRequestContext* main_request_context_;

@@ -15,7 +15,7 @@
 #include "core/input/EventHandlingUtil.h"
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutEmbeddedContent.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/OverscrollController.h"
@@ -24,6 +24,7 @@
 #include "core/page/scrolling/SnapCoordinator.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/Histogram.h"
+#include "platform/scroll/ScrollCustomization.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -131,8 +132,15 @@ void ScrollManager::RecomputeScrollChain(const Node& start_node,
           cur_element == document_element)
         break;
 
-      if (!CanPropagate(scroll_state, *cur_element))
+      if (!CanPropagate(scroll_state, *cur_element)) {
+        // We should add the first node with non-auto overscroll-behavior to
+        // the scroll chain regardlessly, as it's the only node we can latch to.
+        if (scroll_chain.empty() ||
+            scroll_chain.front() != (int)DOMNodeIds::IdForNode(cur_element)) {
+          scroll_chain.push_front(DOMNodeIds::IdForNode(cur_element));
+        }
         break;
+      }
     }
 
     cur_box = cur_box->ContainingBlock();
@@ -188,8 +196,8 @@ bool ScrollManager::LogicalScroll(ScrollDirection direction,
     node = mouse_press_node;
 
   if ((!node || !node->GetLayoutObject()) && frame_->View() &&
-      !frame_->View()->GetLayoutViewItem().IsNull())
-    node = frame_->View()->GetLayoutViewItem().GetNode();
+      frame_->View()->GetLayoutView())
+    node = frame_->View()->GetLayoutView()->GetNode();
 
   if (!node)
     return false;
@@ -245,6 +253,7 @@ void ScrollManager::CustomizedScroll(ScrollState& scroll_state) {
     frame_->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   DCHECK(!current_scroll_chain_.empty());
+
   scroll_state.SetScrollChain(current_scroll_chain_);
 
   scroll_state.distributeToScrollChainDescendant();
@@ -313,7 +322,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollBegin(
     const WebGestureEvent& gesture_event) {
   Document* document = frame_->GetDocument();
 
-  if (document->GetLayoutViewItem().IsNull())
+  if (!document->GetLayoutView())
     return WebInputEventResult::kNotHandled;
 
   // If there's no layoutObject on the node, send the event to the nearest
@@ -355,6 +364,8 @@ WebInputEventResult ScrollManager::HandleGestureScrollBegin(
                        current_scroll_chain_);
   if (current_scroll_chain_.empty())
     return WebInputEventResult::kNotHandled;
+
+  NotifyScrollPhaseBeginForCustomizedScroll(*scroll_state);
 
   CustomizedScroll(*scroll_state);
 
@@ -471,7 +482,11 @@ void ScrollManager::SnapAtGestureScrollEnd() {
     return;
   SnapCoordinator* snap_coordinator =
       frame_->GetDocument()->GetSnapCoordinator();
-  LayoutBox* layout_box = previous_gesture_scrolled_element_->GetLayoutBox();
+  Element* document_element = frame_->GetDocument()->documentElement();
+  LayoutBox* layout_box =
+      previous_gesture_scrolled_element_ == document_element
+          ? frame_->GetDocument()->GetLayoutView()
+          : previous_gesture_scrolled_element_->GetLayoutBox();
   if (!snap_coordinator || !layout_box || !layout_box->GetScrollableArea() ||
       (!did_scroll_x_for_scroll_gesture_ && !did_scroll_y_for_scroll_gesture_))
     return;
@@ -505,6 +520,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollEnd(
         ScrollState::Create(std::move(scroll_state_data));
     CustomizedScroll(*scroll_state);
     SnapAtGestureScrollEnd();
+    NotifyScrollPhaseEndForCustomizedScroll();
   }
 
   ClearGestureScrollState();
@@ -524,14 +540,16 @@ WebInputEventResult ScrollManager::PassScrollGestureEvent(
       !layout_object->IsLayoutEmbeddedContent())
     return WebInputEventResult::kNotHandled;
 
-  LocalFrameView* frame_view =
+  FrameView* frame_view =
       ToLayoutEmbeddedContent(layout_object)->ChildFrameView();
 
-  if (!frame_view)
+  if (!frame_view || !frame_view->IsLocalFrameView())
     return WebInputEventResult::kNotHandled;
 
-  return frame_view->GetFrame().GetEventHandler().HandleGestureScrollEvent(
-      gesture_event);
+  return ToLocalFrameView(frame_view)
+      ->GetFrame()
+      .GetEventHandler()
+      .HandleGestureScrollEvent(gesture_event);
 }
 
 bool ScrollManager::IsViewportScrollingElement(const Element& element) const {
@@ -558,7 +576,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollEvent(
 
   if (!event_target) {
     Document* document = frame_->GetDocument();
-    if (document->GetLayoutViewItem().IsNull())
+    if (!document->GetLayoutView())
       return WebInputEventResult::kNotHandled;
 
     LocalFrameView* view = frame_->View();
@@ -566,7 +584,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollEvent(
         FlooredIntPoint(gesture_event.PositionInRootFrame()));
     HitTestRequest request(HitTestRequest::kReadOnly);
     HitTestResult result(request, view_point);
-    document->GetLayoutViewItem().HitTest(result);
+    document->GetLayoutView()->HitTest(result);
 
     event_target = result.InnerNode();
 
@@ -731,6 +749,26 @@ WebGestureEvent ScrollManager::SynthesizeGestureScrollBegin(
   scroll_begin.data.scroll_begin.delta_hint_units =
       update_event.data.scroll_update.delta_units;
   return scroll_begin;
+}
+
+void ScrollManager::NotifyScrollPhaseBeginForCustomizedScroll(
+    const ScrollState& scroll_state) {
+  ScrollCustomization::ScrollDirection direction =
+      ScrollCustomization::GetScrollDirectionFromDeltas(
+          scroll_state.deltaXHint(), scroll_state.deltaYHint());
+  for (auto id : current_scroll_chain_) {
+    Node* node = DOMNodeIds::NodeForId(id);
+    if (node && node->IsElementNode())
+      ToElement(node)->WillBeginCustomizedScrollPhase(direction);
+  }
+}
+
+void ScrollManager::NotifyScrollPhaseEndForCustomizedScroll() {
+  for (auto id : current_scroll_chain_) {
+    Node* node = DOMNodeIds::NodeForId(id);
+    if (node && node->IsElementNode())
+      ToElement(node)->DidEndCustomizedScrollPhase();
+  }
 }
 
 }  // namespace blink

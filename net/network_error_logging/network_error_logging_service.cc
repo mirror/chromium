@@ -8,7 +8,6 @@
 #include <string>
 #include <utility>
 
-#include "base/feature_list.h"
 #include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -23,13 +22,6 @@
 #include "net/url_request/network_error_logging_delegate.h"
 #include "url/gurl.h"
 #include "url/origin.h"
-
-namespace features {
-
-const base::Feature kNetworkErrorLogging{"NetworkErrorLogging",
-                                         base::FEATURE_DISABLED_BY_DEFAULT};
-
-}  // namespace features
 
 namespace net {
 
@@ -127,9 +119,6 @@ const char NetworkErrorLoggingService::kTypeKey[] = "type";
 // static
 std::unique_ptr<NetworkErrorLoggingService>
 NetworkErrorLoggingService::Create() {
-  if (!base::FeatureList::IsEnabled(features::kNetworkErrorLogging))
-    return std::unique_ptr<NetworkErrorLoggingService>();
-
   // Would be MakeUnique, but the constructor is private so MakeUnique can't see
   // it.
   return base::WrapUnique(new NetworkErrorLoggingService());
@@ -195,6 +184,28 @@ void NetworkErrorLoggingService::OnNetworkError(const ErrorDetails& details) {
 
   reporting_service_->QueueReport(details.uri, policy->report_to, kReportType,
                                   CreateReportBody(type_string, details));
+}
+
+void NetworkErrorLoggingService::RemoveBrowsingData(
+    const base::RepeatingCallback<bool(const GURL&)>& origin_filter) {
+  if (origin_filter.is_null()) {
+    wildcard_policies_.clear();
+    policies_.clear();
+    return;
+  }
+
+  std::vector<url::Origin> origins_to_remove;
+
+  for (auto it = policies_.begin(); it != policies_.end(); ++it) {
+    if (origin_filter.Run(it->first.GetURL()))
+      origins_to_remove.push_back(it->first);
+  }
+
+  for (auto it = origins_to_remove.begin(); it != origins_to_remove.end();
+       ++it) {
+    MaybeRemoveWildcardPolicy(*it, &policies_[*it]);
+    policies_.erase(*it);
+  }
 }
 
 void NetworkErrorLoggingService::SetTickClockForTesting(
@@ -324,7 +335,7 @@ void NetworkErrorLoggingService::MaybeRemoveWildcardPolicy(
 std::unique_ptr<const base::Value> NetworkErrorLoggingService::CreateReportBody(
     const std::string& type,
     const NetworkErrorLoggingDelegate::ErrorDetails& details) const {
-  auto body = base::MakeUnique<base::DictionaryValue>();
+  auto body = std::make_unique<base::DictionaryValue>();
 
   body->SetString(kUriKey, details.uri.spec());
   body->SetString(kReferrerKey, details.referrer.spec());

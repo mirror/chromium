@@ -28,7 +28,7 @@ AcceleratedStaticBitmapImage::CreateFromSkImage(
     sk_sp<SkImage> image,
     base::WeakPtr<WebGraphicsContext3DProviderWrapper>&&
         context_provider_wrapper) {
-  DCHECK(image->isTextureBacked());
+  CHECK(image && image->isTextureBacked());
   return base::AdoptRef(new AcceleratedStaticBitmapImage(
       std::move(image), std::move(context_provider_wrapper)));
 }
@@ -50,6 +50,7 @@ AcceleratedStaticBitmapImage::AcceleratedStaticBitmapImage(
     sk_sp<SkImage> image,
     base::WeakPtr<WebGraphicsContext3DProviderWrapper>&&
         context_provider_wrapper) {
+  CHECK(image && image->isTextureBacked());
   texture_holder_ = WTF::WrapUnique(new SkiaTextureHolder(
       std::move(image), std::move(context_provider_wrapper)));
   thread_checker_.DetachFromThread();
@@ -101,8 +102,8 @@ AcceleratedStaticBitmapImage::~AcceleratedStaticBitmapImage() {
         base::WrapUnique(new gpu::SyncToken(texture_holder_->GetSyncToken()));
     if (original_skia_image_thread_id_ !=
         Platform::Current()->CurrentThread()->ThreadId()) {
-      original_skia_image_task_runner_->PostTask(
-          FROM_HERE,
+      PostCrossThreadTask(
+          *original_skia_image_task_runner_, FROM_HERE,
           CrossThreadBind(
               &DestroySkImageOnOriginalThread, std::move(original_skia_image_),
               std::move(original_skia_image_context_provider_wrapper_),
@@ -141,16 +142,17 @@ void AcceleratedStaticBitmapImage::UpdateSyncToken(gpu::SyncToken sync_token) {
   texture_holder_->UpdateSyncToken(sync_token);
 }
 
-void AcceleratedStaticBitmapImage::CopyToTexture(
-    WebGraphicsContext3DProvider* dest_provider,
+bool AcceleratedStaticBitmapImage::CopyToTexture(
+    gpu::gles2::GLES2Interface* dest_gl,
     GLenum dest_target,
     GLuint dest_texture_id,
-    bool flip_y,
+    bool unpack_premultiply_alpha,
+    bool unpack_flip_y,
     const IntPoint& dest_point,
     const IntRect& source_sub_rectangle) {
   CheckThread();
   if (!IsValid())
-    return;
+    return false;
   // |destProvider| may not be the same context as the one used for |m_image|,
   // so we use a mailbox to generate a texture id for |destProvider| to access.
 
@@ -159,7 +161,6 @@ void AcceleratedStaticBitmapImage::CopyToTexture(
   EnsureMailbox(kUnverifiedSyncToken, GL_NEAREST);
 
   // Get a texture id that |destProvider| knows about and copy from it.
-  gpu::gles2::GLES2Interface* dest_gl = dest_provider->ContextGL();
   dest_gl->WaitSyncTokenCHROMIUM(
       texture_holder_->GetSyncToken().GetConstData());
   GLuint source_texture_id = dest_gl->CreateAndConsumeTextureCHROMIUM(
@@ -167,11 +168,13 @@ void AcceleratedStaticBitmapImage::CopyToTexture(
   dest_gl->CopySubTextureCHROMIUM(
       source_texture_id, 0, dest_target, dest_texture_id, 0, dest_point.X(),
       dest_point.Y(), source_sub_rectangle.X(), source_sub_rectangle.Y(),
-      source_sub_rectangle.Width(), source_sub_rectangle.Height(), flip_y,
-      false, false);
+      source_sub_rectangle.Width(), source_sub_rectangle.Height(),
+      unpack_flip_y ? GL_FALSE : GL_TRUE, GL_FALSE,
+      unpack_premultiply_alpha ? GL_FALSE : GL_TRUE);
   // This drops the |destGL| context's reference on our |m_mailbox|, but it's
   // still held alive by our SkImage.
   dest_gl->DeleteTextures(1, &source_texture_id);
+  return true;
 }
 
 PaintImage AcceleratedStaticBitmapImage::PaintImageForCurrentFrame() {

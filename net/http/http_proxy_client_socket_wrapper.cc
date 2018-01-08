@@ -12,12 +12,12 @@
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/values.h"
-#include "net/base/proxy_delegate.h"
 #include "net/http/http_proxy_client_socket.h"
 #include "net/http/http_response_info.h"
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_source_type.h"
+#include "net/quic/chromium/quic_http_utils.h"
 #include "net/quic/chromium/quic_proxy_client_socket.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/socket_tag.h"
@@ -34,6 +34,7 @@ namespace net {
 HttpProxyClientSocketWrapper::HttpProxyClientSocketWrapper(
     const std::string& group_name,
     RequestPriority priority,
+    const SocketTag& socket_tag,
     ClientSocketPool::RespectLimits respect_limits,
     base::TimeDelta connect_timeout_duration,
     base::TimeDelta proxy_negotiation_timeout_duration,
@@ -48,12 +49,13 @@ HttpProxyClientSocketWrapper::HttpProxyClientSocketWrapper(
     HttpAuthHandlerFactory* http_auth_handler_factory,
     SpdySessionPool* spdy_session_pool,
     QuicStreamFactory* quic_stream_factory,
+    bool is_trusted_proxy,
     bool tunnel,
-    ProxyDelegate* proxy_delegate,
     const NetLogWithSource& net_log)
     : next_state_(STATE_NONE),
       group_name_(group_name),
       priority_(priority),
+      initial_socket_tag_(socket_tag),
       respect_limits_(respect_limits),
       connect_timeout_duration_(connect_timeout_duration),
       proxy_negotiation_timeout_duration_(proxy_negotiation_timeout_duration),
@@ -67,8 +69,8 @@ HttpProxyClientSocketWrapper::HttpProxyClientSocketWrapper(
       spdy_session_pool_(spdy_session_pool),
       has_restarted_(false),
       tunnel_(tunnel),
-      proxy_delegate_(proxy_delegate),
       using_spdy_(false),
+      is_trusted_proxy_(is_trusted_proxy),
       quic_stream_request_(quic_stream_factory),
       http_auth_controller_(
           tunnel ? new HttpAuthController(
@@ -188,7 +190,6 @@ int HttpProxyClientSocketWrapper::Connect(const CompletionCallback& callback) {
     connect_callback_ = callback;
   } else {
     connect_timer_.Stop();
-    NotifyProxyDelegateOfCompletion(rv);
   }
 
   return rv;
@@ -294,22 +295,16 @@ int64_t HttpProxyClientSocketWrapper::GetTotalReceivedBytes() const {
 }
 
 void HttpProxyClientSocketWrapper::ApplySocketTag(const SocketTag& tag) {
-  // TODO(pauljensen): Once SocketTag is plumbed through the socket pools
-  // this method can be implemented. Implementation details:
-  //  1. HttpProxyClientSocketWrapper will need to cache the tag because
-  //     transport_socket_ may not be set yet. The cached tag should be
-  //     cached in either transport_params_ or ssl_params_ so that it is
-  //     applied to future underlying sockets.
-  //  2. If transport_socket_ is set, the tag should be applied to it.
-  //  3. Tests may be easiest to write in
-  //     http_proxy_client_socket_pool_unittest.cc which has infrastructure
-  //     for testing non-QUIC proxies. Note that retagging is only possible
-  //     when proxying over HTTP/1.
-  //  4. Proxy auth isn't supported in Cronet, while socket tagging is only
-  //     presently supported in Cronet, so rather than implement auth restart
-  //     in this class, it may be easier to disallow auth restart when socket
-  //     tagging is used.
-  CHECK(tag == SocketTag());
+  // HttpProxyClientSocketPool only tags once connected, when transport_socket_
+  // is set. Socket tagging is not supported with tunneling. Socket tagging is
+  // also not supported with proxy auth so ApplySocketTag() won't be called with
+  // a specific (non-default) tag when transport_socket_ is cleared by
+  // RestartWithAuth().
+  if (tunnel_ || !transport_socket_) {
+    CHECK(tag == SocketTag());
+  } else {
+    transport_socket_->ApplySocketTag(tag);
+  }
 }
 
 int HttpProxyClientSocketWrapper::Read(IOBuffer* buf,
@@ -360,7 +355,6 @@ void HttpProxyClientSocketWrapper::OnIOComplete(int result) {
   int rv = DoLoop(result);
   if (rv != ERR_IO_PENDING) {
     connect_timer_.Stop();
-    NotifyProxyDelegateOfCompletion(rv);
     // May delete |this|.
     base::ResetAndReturn(&connect_callback_).Run(rv);
   }
@@ -450,7 +444,8 @@ int HttpProxyClientSocketWrapper::DoTransportConnect() {
   next_state_ = STATE_TCP_CONNECT_COMPLETE;
   transport_socket_handle_.reset(new ClientSocketHandle());
   return transport_socket_handle_->Init(
-      group_name_, transport_params_, priority_, respect_limits_,
+      group_name_, transport_params_, priority_, initial_socket_tag_,
+      respect_limits_,
       base::Bind(&HttpProxyClientSocketWrapper::OnIOComplete,
                  base::Unretained(this)),
       transport_pool_, net_log_);
@@ -478,7 +473,8 @@ int HttpProxyClientSocketWrapper::DoSSLConnect() {
     SpdySessionKey key(ssl_params_->GetDirectConnectionParams()
                            ->destination()
                            .host_port_pair(),
-                       ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
+                       ProxyServer::Direct(), PRIVACY_MODE_DISABLED,
+                       initial_socket_tag_);
     if (spdy_session_pool_->FindAvailableSession(
             key, /* enable_ip_based_pooling = */ true, net_log_)) {
       using_spdy_ = true;
@@ -489,7 +485,7 @@ int HttpProxyClientSocketWrapper::DoSSLConnect() {
   next_state_ = STATE_SSL_CONNECT_COMPLETE;
   transport_socket_handle_.reset(new ClientSocketHandle());
   return transport_socket_handle_->Init(
-      group_name_, ssl_params_, priority_, respect_limits_,
+      group_name_, ssl_params_, priority_, initial_socket_tag_, respect_limits_,
       base::Bind(&HttpProxyClientSocketWrapper::OnIOComplete,
                  base::Unretained(this)),
       ssl_pool_, net_log_);
@@ -572,8 +568,7 @@ int HttpProxyClientSocketWrapper::DoHttpProxyConnect() {
   // Add a HttpProxy connection on top of the tcp socket.
   transport_socket_.reset(new HttpProxyClientSocket(
       std::move(transport_socket_handle_), user_agent_, endpoint_,
-      GetDestination().host_port_pair(), http_auth_controller_.get(), tunnel_,
-      using_spdy_, negotiated_protocol_, proxy_delegate_,
+      http_auth_controller_.get(), tunnel_, using_spdy_, negotiated_protocol_,
       ssl_params_.get() != nullptr));
   return transport_socket_->Connect(base::Bind(
       &HttpProxyClientSocketWrapper::OnIOComplete, base::Unretained(this)));
@@ -592,7 +587,7 @@ int HttpProxyClientSocketWrapper::DoSpdyProxyCreateStream() {
   DCHECK(ssl_params_);
   SpdySessionKey key(
       ssl_params_->GetDirectConnectionParams()->destination().host_port_pair(),
-      ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
+      ProxyServer::Direct(), PRIVACY_MODE_DISABLED, initial_socket_tag_);
   base::WeakPtr<SpdySession> spdy_session =
       spdy_session_pool_->FindAvailableSession(
           key, /* enable_ip_based_pooling = */ true, net_log_);
@@ -606,7 +601,7 @@ int HttpProxyClientSocketWrapper::DoSpdyProxyCreateStream() {
   } else {
     // Create a session direct to the proxy itself
     spdy_session = spdy_session_pool_->CreateAvailableSessionFromSocket(
-        key, std::move(transport_socket_handle_), net_log_);
+        key, is_trusted_proxy_, std::move(transport_socket_handle_), net_log_);
     DCHECK(spdy_session);
   }
 
@@ -666,6 +661,10 @@ int HttpProxyClientSocketWrapper::DoQuicProxyCreateStreamComplete(int result) {
   next_state_ = STATE_HTTP_PROXY_CONNECT_COMPLETE;
   std::unique_ptr<QuicChromiumClientStream::Handle> quic_stream =
       quic_session_->ReleaseStream();
+
+  SpdyPriority spdy_priority = ConvertRequestPriorityToQuicPriority(priority_);
+  quic_stream->SetPriority(spdy_priority);
+
   transport_socket_.reset(new QuicProxyClientSocket(
       std::move(quic_stream), std::move(quic_session_), user_agent_, endpoint_,
       net_log_, http_auth_controller_.get()));
@@ -726,14 +725,6 @@ int HttpProxyClientSocketWrapper::DoRestartWithAuthComplete(int result) {
   return result;
 }
 
-void HttpProxyClientSocketWrapper::NotifyProxyDelegateOfCompletion(int result) {
-  if (!proxy_delegate_)
-    return;
-
-  const HostPortPair& proxy_server = GetDestination().host_port_pair();
-  proxy_delegate_->OnTunnelConnectCompleted(endpoint_, proxy_server, result);
-}
-
 void HttpProxyClientSocketWrapper::SetConnectTimer(base::TimeDelta delay) {
   connect_timer_.Stop();
   connect_timer_.Start(FROM_HERE, delay, this,
@@ -756,8 +747,6 @@ void HttpProxyClientSocketWrapper::ConnectTimeout() {
                                  base::TimeTicks::Now() - connect_start_time_);
     }
   }
-
-  NotifyProxyDelegateOfCompletion(ERR_CONNECTION_TIMED_OUT);
 
   CompletionCallback callback = connect_callback_;
   Disconnect();

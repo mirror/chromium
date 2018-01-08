@@ -20,6 +20,7 @@
 #include "ash/shell.h"
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/system/tray/system_tray.h"
 #include "base/command_line.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -105,7 +106,7 @@ ShelfWidget::DelegateView::DelegateView(ShelfWidget* shelf_widget)
       focus_cycler_(nullptr),
       opaque_background_(ui::LAYER_SOLID_COLOR) {
   DCHECK(shelf_widget_);
-  SetLayoutManager(new views::FillLayout());
+  SetLayoutManager(std::make_unique<views::FillLayout>());
   set_allow_deactivate_on_esc(true);
   opaque_background_.SetBounds(GetLocalBounds());
 }
@@ -117,11 +118,13 @@ bool ShelfWidget::IsUsingViewsShelf() {
   switch (Shell::Get()->session_controller()->GetSessionState()) {
     case session_manager::SessionState::ACTIVE:
       return true;
+    // See https://crbug.com/798869.
+    case session_manager::SessionState::OOBE:
+      return false;
     case session_manager::SessionState::LOCKED:
     case session_manager::SessionState::LOGIN_SECONDARY:
-      return !switches::IsUsingWebUiLock();
+      return switches::IsUsingViewsLock();
     case session_manager::SessionState::UNKNOWN:
-    case session_manager::SessionState::OOBE:
     case session_manager::SessionState::LOGIN_PRIMARY:
     case session_manager::SessionState::LOGGED_IN_NOT_ACTIVE:
       return switches::IsUsingViewsLogin();
@@ -264,7 +267,7 @@ void ShelfWidget::PostCreateShelf() {
 
   shelf_layout_manager_->LayoutShelf();
   shelf_layout_manager_->UpdateAutoHideState();
-  Show();
+  ShowIfHidden();
 }
 
 bool ShelfWidget::IsShowingAppList() const {
@@ -365,17 +368,20 @@ void ShelfWidget::WillDeleteShelfLayoutManager() {
 }
 
 void ShelfWidget::OnSessionStateChanged(session_manager::SessionState state) {
-  if (!IsUsingViewsShelf()) {
-    login_shelf_view_->SetVisible(false);
-    shelf_view_->SetVisible(false);
+  // Do not show shelf widget:
+  // * when views based shelf is disabled
+  // * in UNKNOWN state - it might be called before shelf was initialized
+  // * on secondary screens in states other than ACTIVE
+  bool using_views_shelf = IsUsingViewsShelf();
+  bool unknown_state = state == session_manager::SessionState::UNKNOWN;
+  bool hide_on_secondary_screen = shelf_->ShouldHideOnSecondaryDisplay(state);
+  if (!using_views_shelf || unknown_state || hide_on_secondary_screen) {
+    HideIfShown();
   } else {
     switch (state) {
       case session_manager::SessionState::ACTIVE:
         login_shelf_view_->SetVisible(false);
         shelf_view_->SetVisible(true);
-        // TODO(wzang): Combine with the codes specific to SessionState::ACTIVE
-        // in PostCreateShelf() when view-based shelf on login screen is
-        // supported.
         break;
       case session_manager::SessionState::LOCKED:
       case session_manager::SessionState::LOGIN_SECONDARY:
@@ -383,18 +389,31 @@ void ShelfWidget::OnSessionStateChanged(session_manager::SessionState state) {
         login_shelf_view_->SetVisible(true);
         break;
       case session_manager::SessionState::OOBE:
+        login_shelf_view_->SetVisible(true);
+        shelf_view_->SetVisible(false);
+        break;
       case session_manager::SessionState::LOGIN_PRIMARY:
       case session_manager::SessionState::LOGGED_IN_NOT_ACTIVE:
         login_shelf_view_->SetVisible(true);
         shelf_view_->SetVisible(false);
         break;
-      case session_manager::SessionState::UNKNOWN:
-        login_shelf_view_->SetVisible(false);
-        shelf_view_->SetVisible(false);
-        break;
+      default:
+        // session_manager::SessionState::UNKNOWN handled in if statement above.
+        NOTREACHED();
     }
+    ShowIfHidden();
   }
   login_shelf_view_->UpdateAfterSessionStateChange(state);
+}
+
+void ShelfWidget::HideIfShown() {
+  if (IsVisible())
+    Hide();
+}
+
+void ShelfWidget::ShowIfHidden() {
+  if (!IsVisible())
+    Show();
 }
 
 }  // namespace ash

@@ -53,14 +53,24 @@ AwBrowserMainParts::AwBrowserMainParts(AwContentBrowserClient* browser_client)
 AwBrowserMainParts::~AwBrowserMainParts() {
 }
 
-void AwBrowserMainParts::PreEarlyInitialization() {
-  net::NetworkChangeNotifier::SetFactory(new AwNetworkChangeNotifierFactory());
+int AwBrowserMainParts::PreEarlyInitialization() {
+  // Network change notifier factory must be singleton, only set factory
+  // instance while it is not been created.
+  // In most cases, this check is not necessary because SetFactory should be
+  // called only once, but both webview and native cronet calls this function,
+  // in case of building both webview and cronet to one app, it is required to
+  // avoid crashing the app.
+  if (!net::NetworkChangeNotifier::GetFactory()) {
+    net::NetworkChangeNotifier::SetFactory(
+        new AwNetworkChangeNotifierFactory());
+  }
 
   // Android WebView does not use default MessageLoop. It has its own
   // Android specific MessageLoop. Also see MainMessageLoopRun.
   DCHECK(!main_message_loop_.get());
   main_message_loop_.reset(new base::MessageLoopForUI);
   base::MessageLoopForUI::current()->Start();
+  return content::RESULT_CODE_NORMAL_EXIT;
 }
 
 int AwBrowserMainParts::PreCreateThreads() {

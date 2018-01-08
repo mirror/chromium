@@ -84,6 +84,15 @@ bool IsTabletModeEnabled() {
              ->tablet_mode_controller()
              ->IsTabletModeWindowManagerEnabled();
 }
+// The UMA histogram that logs the commands which are executed on non-app
+// context menus.
+constexpr char kNonAppContextMenuExecuteCommand[] =
+    "Apps.ContextMenuExecuteCommand.NotFromApp";
+
+// The UMA histogram that logs the commands which are executed on app context
+// menus.
+constexpr char kAppContextMenuExecuteCommand[] =
+    "Apps.ContextMenuExecuteCommand.FromApp";
 
 // A class to temporarily disable a given bounds animator.
 class BoundsAnimatorDisabler {
@@ -193,6 +202,13 @@ void ReflectItemStatus(const ShelfItem& item, ShelfButton* button) {
       button->ClearState(ShelfButton::STATE_RUNNING);
       button->AddState(ShelfButton::STATE_ATTENTION);
       break;
+  }
+
+  if (app_list::features::IsTouchableAppContextMenuEnabled()) {
+    if (item.has_notification)
+      button->AddState(ShelfButton::STATE_NOTIFICATION);
+    else
+      button->ClearState(ShelfButton::STATE_NOTIFICATION);
   }
 }
 
@@ -1579,7 +1595,7 @@ void ShelfView::OnPaint(gfx::Canvas* canvas) {
   // Draws a round rect around the back button and app list button. This will
   // just be a circle if the back button is hidden.
   const gfx::PointF circle_center(
-      GetAppListButton()->bounds().origin() +
+      GetMirroredRect(GetAppListButton()->bounds()).origin() +
       gfx::Vector2d(GetAppListButton()->GetCenterPoint().x(),
                     GetAppListButton()->GetCenterPoint().y()));
   if (GetBackButton()->layer()->opacity() <= 0.f) {
@@ -1588,10 +1604,10 @@ void ShelfView::OnPaint(gfx::Canvas* canvas) {
   }
 
   const gfx::PointF back_center(
-      GetBackButton()->bounds().x() + kShelfButtonSize / 2,
+      GetMirroredRect(GetBackButton()->bounds()).x() + kShelfButtonSize / 2,
       GetBackButton()->bounds().y() + kShelfButtonSize / 2);
   const gfx::RectF background_bounds(
-      back_center.x() - kAppListButtonRadius,
+      std::min(back_center.x(), circle_center.x()) - kAppListButtonRadius,
       back_center.y() - kAppListButtonRadius,
       std::abs(circle_center.x() - back_center.x()) + 2 * kAppListButtonRadius,
       2 * kAppListButtonRadius);
@@ -1604,7 +1620,7 @@ views::FocusTraversable* ShelfView::GetPaneFocusTraversable() {
 }
 
 void ShelfView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_TOOLBAR;
+  node_data->role = ax::mojom::Role::kToolbar;
   node_data->SetName(l10n_util::GetStringUTF8(IDS_ASH_SHELF_ACCESSIBLE_NAME));
 }
 
@@ -1809,11 +1825,15 @@ void ShelfView::AfterGetContextMenuItems(
     std::vector<mojom::MenuItemPtr> menu_items) {
   context_menu_id_ = shelf_id;
   const int64_t display_id = GetDisplayIdForView(this);
-  ShowMenu(std::make_unique<ShelfContextMenuModel>(
-               std::move(menu_items), model_->GetShelfItemDelegate(shelf_id),
-               display_id),
-           source, point, true /* context_menu */, source_type,
-           nullptr /* ink_drop */);
+  std::unique_ptr<ShelfContextMenuModel> menu_model =
+      std::make_unique<ShelfContextMenuModel>(
+          std::move(menu_items), model_->GetShelfItemDelegate(shelf_id),
+          display_id);
+  menu_model->set_histogram_name(ShelfItemForView(source)
+                                     ? kAppContextMenuExecuteCommand
+                                     : kNonAppContextMenuExecuteCommand);
+  ShowMenu(std::move(menu_model), source, point, true /* context_menu */,
+           source_type, nullptr /* ink_drop */);
 }
 
 void ShelfView::ShowContextMenuForView(views::View* source,
@@ -1827,7 +1847,7 @@ void ShelfView::ShowContextMenuForView(views::View* source,
     gfx::Rect shelf_bounds =
         is_overflow_mode()
             ? owner_overflow_bubble_->bubble_view()->GetBubbleBounds()
-            : ScreenUtil::GetDisplayBoundsWithShelf(shelf_window);
+            : screen_util::GetDisplayBoundsWithShelf(shelf_window);
 
     switch (shelf_->alignment()) {
       case SHELF_ALIGNMENT_BOTTOM:
@@ -1850,11 +1870,18 @@ void ShelfView::ShowContextMenuForView(views::View* source,
   const ShelfItem* item = ShelfItemForView(source);
   if (!item || !model_->GetShelfItemDelegate(item->id)) {
     context_menu_id_ = ShelfID();
-    ShowMenu(std::make_unique<ShelfContextMenuModel>(
-                 std::vector<mojom::MenuItemPtr>(), nullptr, display_id),
-             source, context_menu_point, true, source_type, nullptr);
+    std::unique_ptr<ShelfContextMenuModel> menu_model =
+        std::make_unique<ShelfContextMenuModel>(
+            std::vector<mojom::MenuItemPtr>(), nullptr, display_id);
+    menu_model->set_histogram_name(kNonAppContextMenuExecuteCommand);
+    ShowMenu(std::move(menu_model), source, context_menu_point, true,
+             source_type, nullptr);
     return;
   }
+
+  // Record the current time for the shelf button context menu user journey
+  // histogram.
+  shelf_button_context_menu_time_ = base::TimeTicks::Now();
 
   // Get any custom entries; show the context menu in AfterGetContextMenuItems.
   model_->GetShelfItemDelegate(item->id)->GetContextMenuItems(
@@ -1936,6 +1963,14 @@ void ShelfView::OnMenuClosed(views::InkDrop* ink_drop) {
 
   closing_event_time_ = launcher_menu_runner_->closing_event_time();
 
+  if (shelf_button_context_menu_time_ != base::TimeTicks()) {
+    // If the context menu came from a ShelfButton.
+    UMA_HISTOGRAM_TIMES(
+        "Apps.ContextMenuUserJourneyTime.ShelfButton",
+        base::TimeTicks::Now() - shelf_button_context_menu_time_);
+    shelf_button_context_menu_time_ = base::TimeTicks();
+  }
+
   if (ink_drop)
     ink_drop->AnimateToState(views::InkDropState::DEACTIVATED);
 
@@ -1950,16 +1985,18 @@ void ShelfView::OnBoundsAnimatorProgressed(views::BoundsAnimator* animator) {
   shelf_->NotifyShelfIconPositionsChanged();
   PreferredSizeChanged();
 
-  float opacity = 0.f;
-  const gfx::SlideAnimation* animation =
-      bounds_animator_->GetAnimationForView(GetBackButton());
-  if (animation)
-    opacity = static_cast<float>(animation->GetCurrentValue());
-  if (!IsTabletModeEnabled())
-    opacity = 1.f - opacity;
+  if (shelf_->is_tablet_mode_animation_running()) {
+    float opacity = 0.f;
+    const gfx::SlideAnimation* animation =
+        bounds_animator_->GetAnimationForView(GetBackButton());
+    if (animation)
+      opacity = static_cast<float>(animation->GetCurrentValue());
+    if (!IsTabletModeEnabled())
+      opacity = 1.f - opacity;
 
-  GetBackButton()->layer()->SetOpacity(opacity);
-  GetBackButton()->SetFocusBehavior(FocusBehavior::ALWAYS);
+    GetBackButton()->layer()->SetOpacity(opacity);
+    GetBackButton()->SetFocusBehavior(FocusBehavior::ALWAYS);
+  }
 }
 
 void ShelfView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {

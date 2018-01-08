@@ -16,6 +16,7 @@
 #include "components/font_service/public/interfaces/constants.mojom.h"
 #include "mash/quick_launch/public/interfaces/constants.mojom.h"
 #include "mash/quick_launch/quick_launch.h"
+#include "services/ui/common/image_cursors_set.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
 #include "services/ui/service.h"
 
@@ -32,10 +33,32 @@ void RegisterMashService(
   services->emplace(name, service_info);
 }
 
+// Runs on the UI service main thread.
 // NOTE: For --mus the UI service is created at the //chrome/browser layer,
 // not in //content. See ServiceManagerContext.
-std::unique_ptr<service_manager::Service> CreateUiService() {
-  return std::make_unique<ui::Service>();
+std::unique_ptr<service_manager::Service> CreateUiService(
+    const scoped_refptr<base::SingleThreadTaskRunner>& resource_runner,
+    base::WeakPtr<ui::ImageCursorsSet> image_cursors_set_weak_ptr) {
+  ui::Service::InitParams params;
+  params.running_standalone = false;
+  params.resource_runner = resource_runner;
+  params.image_cursors_set_weak_ptr = image_cursors_set_weak_ptr;
+  params.should_host_viz = true;
+  return std::make_unique<ui::Service>(params);
+}
+
+// Runs on the utility process main thread.
+void RegisterUiService(
+    content::ContentUtilityClient::StaticServiceMap* services,
+    ui::ImageCursorsSet* cursors) {
+  service_manager::EmbeddedServiceInfo service_info;
+  service_info.use_own_thread = true;
+  service_info.message_loop_type = base::MessageLoop::TYPE_UI;
+  service_info.thread_priority = base::ThreadPriority::DISPLAY;
+  service_info.factory =
+      base::BindRepeating(&CreateUiService, base::ThreadTaskRunnerHandle::Get(),
+                          cursors->GetWeakPtr());
+  services->emplace(ui::mojom::kServiceName, service_info);
 }
 
 std::unique_ptr<service_manager::Service> CreateAshService() {
@@ -62,9 +85,14 @@ std::unique_ptr<service_manager::Service> CreateFontService() {
 
 }  // namespace
 
-void RegisterOutOfProcessMashServices(
+MashServiceFactory::MashServiceFactory()
+    : cursors_(std::make_unique<ui::ImageCursorsSet>()) {}
+
+MashServiceFactory::~MashServiceFactory() = default;
+
+void MashServiceFactory::RegisterOutOfProcessServices(
     content::ContentUtilityClient::StaticServiceMap* services) {
-  RegisterMashService(services, ui::mojom::kServiceName, &CreateUiService);
+  RegisterUiService(services, cursors_.get());
   RegisterMashService(services, mash::quick_launch::mojom::kServiceName,
                       &CreateQuickLaunch);
   RegisterMashService(services, ash::mojom::kServiceName, &CreateAshService);

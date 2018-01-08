@@ -4,8 +4,9 @@
 
 #include "components/offline_pages/core/model/start_offline_page_upgrade_task.h"
 
+#include <memory>
+
 #include "base/files/scoped_temp_dir.h"
-#include "base/memory/ptr_util.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/model/offline_page_item_generator.h"
@@ -79,26 +80,27 @@ TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeSuccess) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   generator()->SetArchiveDirectory(temp_dir.GetPath());
 
-  OfflinePageItem page = generator()->CreateItemWithTempFile();
-  page.upgrade_attempt = 3;
-  page.digest = kTestDigest;
-  store_test_util()->InsertItem(page);
+  OfflinePageItem original_page = generator()->CreateItemWithTempFile();
+  original_page.upgrade_attempt = 3;
+  original_page.digest = kTestDigest;
+  store_test_util()->InsertItem(original_page);
 
-  auto task = base::MakeUnique<StartOfflinePageUpgradeTask>(
-      store(), page.offline_id, temp_dir.GetPath(), callback());
+  auto task = std::make_unique<StartOfflinePageUpgradeTask>(
+      store(), original_page.offline_id, temp_dir.GetPath(), callback());
   runner()->RunTask(std::move(task));
 
   EXPECT_EQ(StartUpgradeStatus::SUCCESS, last_result()->status);
   EXPECT_EQ(kTestDigest, last_result()->digest);
-  EXPECT_EQ(page.file_path, last_result()->file_path);
+  EXPECT_EQ(original_page.file_path, last_result()->file_path);
 
-  auto offline_page = store_test_util()->GetPageByOfflineId(page.offline_id);
-  ASSERT_TRUE(offline_page);
-  EXPECT_EQ(2, offline_page->upgrade_attempt);
+  auto upgraded_page =
+      store_test_util()->GetPageByOfflineId(original_page.offline_id);
+  ASSERT_TRUE(upgraded_page);
+  EXPECT_EQ(2, upgraded_page->upgrade_attempt);
 }
 
 TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeItemMissing) {
-  auto task = base::MakeUnique<StartOfflinePageUpgradeTask>(
+  auto task = std::make_unique<StartOfflinePageUpgradeTask>(
       store(), 42, base::FilePath(), callback());
   runner()->RunTask(std::move(task));
 
@@ -108,21 +110,22 @@ TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeItemMissing) {
 }
 
 TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeFileMissing) {
-  OfflinePageItem page = generator()->CreateItem();
-  page.upgrade_attempt = 3;
-  store_test_util()->InsertItem(page);
+  OfflinePageItem original_page = generator()->CreateItem();
+  original_page.upgrade_attempt = 3;
+  store_test_util()->InsertItem(original_page);
 
-  auto task = base::MakeUnique<StartOfflinePageUpgradeTask>(
-      store(), page.offline_id, base::FilePath(), callback());
+  auto task = std::make_unique<StartOfflinePageUpgradeTask>(
+      store(), original_page.offline_id, base::FilePath(), callback());
   runner()->RunTask(std::move(task));
 
   EXPECT_EQ(StartUpgradeStatus::FILE_MISSING, last_result()->status);
   EXPECT_TRUE(last_result()->digest.empty());
   EXPECT_TRUE(last_result()->file_path.empty());
 
-  auto offline_page = store_test_util()->GetPageByOfflineId(page.offline_id);
-  ASSERT_TRUE(offline_page);
-  EXPECT_EQ(3, offline_page->upgrade_attempt);
+  auto upgraded_page =
+      store_test_util()->GetPageByOfflineId(original_page.offline_id);
+  ASSERT_TRUE(upgraded_page);
+  EXPECT_EQ(original_page, *upgraded_page);
 }
 
 TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeNotEnoughSpace) {
@@ -130,21 +133,22 @@ TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeNotEnoughSpace) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   generator()->SetArchiveDirectory(temp_dir.GetPath());
 
-  OfflinePageItem page = generator()->CreateItemWithTempFile();
-  page.upgrade_attempt = 3;
-  store_test_util()->InsertItem(page);
+  OfflinePageItem original_page = generator()->CreateItemWithTempFile();
+  original_page.upgrade_attempt = 3;
+  store_test_util()->InsertItem(original_page);
 
-  auto task = base::MakeUnique<StartOfflinePageUpgradeTask>(
-      store(), page.offline_id, base::FilePath(), callback());
+  auto task = std::make_unique<StartOfflinePageUpgradeTask>(
+      store(), original_page.offline_id, base::FilePath(), callback());
   runner()->RunTask(std::move(task));
 
   EXPECT_EQ(StartUpgradeStatus::NOT_ENOUGH_STORAGE, last_result()->status);
   EXPECT_TRUE(last_result()->digest.empty());
   EXPECT_TRUE(last_result()->file_path.empty());
 
-  auto offline_page = store_test_util()->GetPageByOfflineId(page.offline_id);
-  ASSERT_TRUE(offline_page);
-  EXPECT_EQ(3, offline_page->upgrade_attempt);
+  auto upgraded_page =
+      store_test_util()->GetPageByOfflineId(original_page.offline_id);
+  ASSERT_TRUE(upgraded_page);
+  EXPECT_EQ(original_page, *upgraded_page);
 }
 
 }  // namespace offline_pages

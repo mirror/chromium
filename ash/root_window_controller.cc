@@ -165,7 +165,7 @@ void ReparentWindow(aura::Window* window, aura::Window* new_parent) {
 
   const bool update_bounds = state->IsNormalOrSnapped() || state->IsMinimized();
   gfx::Rect work_area_in_new_parent =
-      ScreenUtil::GetDisplayWorkAreaBoundsInParent(new_parent);
+      screen_util::GetDisplayWorkAreaBoundsInParent(new_parent);
 
   gfx::Rect local_bounds;
   if (update_bounds) {
@@ -701,9 +701,6 @@ void RootWindowController::Init(RootWindowType root_window_type) {
 
   InitLayoutManagers();
   InitTouchHuds();
-  // Initializing views shelf here will cause it being visible on login screen
-  // on secondary display once views based login is enabled. See
-  // https://crbug.com/796239.
   InitializeShelf();
 
   if (Shell::GetPrimaryRootWindowController()

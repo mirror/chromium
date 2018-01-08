@@ -45,8 +45,8 @@
 #include "core/dom/events/Event.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/Settings.h"
-#include "core/html/TextMetrics.h"
 #include "core/html/canvas/CanvasFontCache.h"
+#include "core/html/canvas/TextMetrics.h"
 #include "core/layout/HitTestCanvasResult.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutTheme.h"
@@ -62,12 +62,14 @@
 #include "platform/graphics/paint/PaintCanvas.h"
 #include "platform/graphics/paint/PaintFlags.h"
 #include "platform/graphics/skia/SkiaUtils.h"
+#include "platform/scroll/ScrollAlignment.h"
 #include "platform/text/BidiTextRun.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -140,7 +142,7 @@ void CanvasRenderingContext2D::SetCanvasGetContextResult(
   result.SetCanvasRenderingContext2D(this);
 }
 
-CanvasRenderingContext2D::~CanvasRenderingContext2D() {}
+CanvasRenderingContext2D::~CanvasRenderingContext2D() = default;
 
 void CanvasRenderingContext2D::ValidateStateStack() const {
 #if DCHECK_IS_ON()
@@ -364,11 +366,12 @@ void CanvasRenderingContext2D::ScrollPathIntoViewInternal(const Path& path) {
 
   renderer->ScrollRectToVisible(
       path_rect,
-      is_horizontal_writing_mode ? ScrollAlignment::kAlignToEdgeIfNeeded
-                                 : ScrollAlignment::kAlignLeftAlways,
-      !is_horizontal_writing_mode ? ScrollAlignment::kAlignToEdgeIfNeeded
-                                  : ScrollAlignment::kAlignTopAlways,
-      kProgrammaticScroll, false, kScrollBehaviorAuto);
+      WebScrollIntoViewParams(
+          is_horizontal_writing_mode ? ScrollAlignment::kAlignToEdgeIfNeeded
+                                     : ScrollAlignment::kAlignLeftAlways,
+          !is_horizontal_writing_mode ? ScrollAlignment::kAlignToEdgeIfNeeded
+                                      : ScrollAlignment::kAlignTopAlways,
+          kProgrammaticScroll, false, kScrollBehaviorAuto));
 }
 
 void CanvasRenderingContext2D::clearRect(double x,
@@ -589,7 +592,9 @@ void CanvasRenderingContext2D::ClearFilterReferences() {
 void CanvasRenderingContext2D::UpdateFilterReferences(
     const FilterOperations& filters) {
   ClearFilterReferences();
-  filters.AddClient(this);
+  filters.AddClient(
+      this,
+      canvas()->GetDocument().GetTaskRunner(TaskType::kUnspecedLoading).get());
   filter_operations_ = filters;
 }
 
@@ -627,11 +632,10 @@ bool CanvasRenderingContext2D::CanCreateCanvas2DBuffer() const {
 }
 
 scoped_refptr<StaticBitmapImage> blink::CanvasRenderingContext2D::GetImage(
-    AccelerationHint hint,
-    SnapshotReason reason) const {
+    AccelerationHint hint) const {
   if (!HasCanvas2DBuffer())
     return nullptr;
-  return canvas()->Canvas2DBuffer()->NewImageSnapshot(hint, reason);
+  return canvas()->Canvas2DBuffer()->NewImageSnapshot(hint);
 }
 
 bool CanvasRenderingContext2D::ParseColorOrCurrentColor(

@@ -27,6 +27,7 @@
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/frame_messages.h"
 #include "content/common/page_state_serialization.h"
 #include "content/public/browser/navigation_controller.h"
@@ -40,7 +41,9 @@
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/renderer_preferences.h"
+#include "content/public/common/screen_info.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
@@ -975,8 +978,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
                        ErrorPageReplacement) {
   NavigationController& controller = shell()->web_contents()->GetController();
-  GURL error_url(
-      net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_CONNECTION_RESET));
+  GURL error_url = embedded_test_server()->GetURL("/close-socket");
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&net::URLRequestFailedJob::AddUrlHandler));
@@ -1425,15 +1427,25 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, ReloadWithUrlAnchor) {
 
   std::string script =
       "domAutomationController.send(document.getElementById('div').scrollTop)";
-  int value = 0;
-  EXPECT_TRUE(ExecuteScriptAndExtractInt(shell(), script, &value));
-  EXPECT_EQ(100, value);
+  double value = 0;
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), script, &value));
+
+  double expected = 100;
+  if (IsUseZoomForDSFEnabled()) {
+    WebContentsView* view =
+        static_cast<WebContentsImpl*>(shell()->web_contents())->GetView();
+    ScreenInfo screen_info;
+    view->GetScreenInfo(&screen_info);
+    expected = floor(screen_info.device_scale_factor * expected) /
+               screen_info.device_scale_factor;
+  }
+  EXPECT_FLOAT_EQ(expected, value);
 
   // Reload.
   ReloadBlockUntilNavigationsComplete(shell(), 1);
 
-  EXPECT_TRUE(ExecuteScriptAndExtractInt(shell(), script, &value));
-  EXPECT_EQ(100, value);
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), script, &value));
+  EXPECT_FLOAT_EQ(expected, value);
 }
 
 // Verify that reloading a page with url anchor and scroll scrolls to correct
@@ -1451,24 +1463,39 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
       "domAutomationController.send(document.getElementById('div').scrollTop)";
   std::string get_window_scroll_y =
       "domAutomationController.send(window.scrollY)";
-  int div_scroll_top = 0;
-  int window_scroll_y = 0;
-  EXPECT_TRUE(
-      ExecuteScriptAndExtractInt(shell(), get_div_scroll_top, &div_scroll_top));
-  EXPECT_TRUE(ExecuteScriptAndExtractInt(shell(), get_window_scroll_y,
-                                         &window_scroll_y));
-  EXPECT_EQ(100, div_scroll_top);
-  EXPECT_EQ(10, window_scroll_y);
+  double div_scroll_top = 0;
+  double window_scroll_y = 0;
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), get_div_scroll_top,
+                                            &div_scroll_top));
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), get_window_scroll_y,
+                                            &window_scroll_y));
+
+  double expected_div_scroll_top = 100;
+  double expected_window_scroll_y = 10;
+  if (IsUseZoomForDSFEnabled()) {
+    WebContentsView* view =
+        static_cast<WebContentsImpl*>(shell()->web_contents())->GetView();
+    ScreenInfo screen_info;
+    view->GetScreenInfo(&screen_info);
+    expected_div_scroll_top =
+        floor(screen_info.device_scale_factor * expected_div_scroll_top) /
+        screen_info.device_scale_factor;
+    expected_window_scroll_y =
+        floor(screen_info.device_scale_factor * expected_window_scroll_y) /
+        screen_info.device_scale_factor;
+  }
+  EXPECT_FLOAT_EQ(expected_div_scroll_top, div_scroll_top);
+  EXPECT_FLOAT_EQ(expected_window_scroll_y, window_scroll_y);
 
   // Reload.
   ReloadBlockUntilNavigationsComplete(shell(), 1);
 
-  EXPECT_TRUE(
-      ExecuteScriptAndExtractInt(shell(), get_div_scroll_top, &div_scroll_top));
-  EXPECT_TRUE(ExecuteScriptAndExtractInt(shell(), get_window_scroll_y,
-                                         &window_scroll_y));
-  EXPECT_EQ(100, div_scroll_top);
-  EXPECT_EQ(10, window_scroll_y);
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), get_div_scroll_top,
+                                            &div_scroll_top));
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), get_window_scroll_y,
+                                            &window_scroll_y));
+  EXPECT_FLOAT_EQ(expected_div_scroll_top, div_scroll_top);
+  EXPECT_FLOAT_EQ(expected_window_scroll_y, window_scroll_y);
 }
 
 // Verify that empty GURL navigations are not classified as SAME_PAGE.
@@ -7182,7 +7209,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
                             ->GetFrameTree()
                             ->root();
-  EXPECT_FALSE(main_frame->navigation_handle());
+  EXPECT_FALSE(main_frame->GetNavigationHandle());
   EXPECT_FALSE(root->navigation_request());
 
   // Start navigating to the second page.
@@ -7194,7 +7221,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_TRUE(manager.WaitForRequestStart());
 
   // This should create a NavigationHandle.
-  NavigationHandleImpl* handle = main_frame->navigation_handle();
+  NavigationHandleImpl* handle = main_frame->GetNavigationHandle();
   NavigationRequest* request = root->navigation_request();
   if (IsBrowserSideNavigationEnabled()) {
     EXPECT_TRUE(request);
@@ -7222,8 +7249,8 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
     EXPECT_TRUE(root->navigation_request());
     EXPECT_EQ(request, root->navigation_request());
   } else {
-    EXPECT_TRUE(main_frame->navigation_handle());
-    EXPECT_EQ(handle, main_frame->navigation_handle());
+    EXPECT_TRUE(main_frame->GetNavigationHandle());
+    EXPECT_EQ(handle, main_frame->GetNavigationHandle());
   }
 
   // Let the navigation finish. It should commit successfully.
@@ -7903,6 +7930,25 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, HistoryBackInUnloadCancelsReload) {
 
   EXPECT_EQ("First part of the response... ...and the second part!",
             html_content);
+}
+
+// Data URLs can have a reference fragment like any other URLs. In this test,
+// there are two navigations with the same data URL, but with a different
+// reference. The second navigation must be classified as "same-document".
+IN_PROC_BROWSER_TEST_F(ContentBrowserTest, DataURLSameDocumentNavigation) {
+  GURL url_first("data:text/html,body#foo");
+  GURL url_second("data:text/html,body#bar");
+  EXPECT_TRUE(url_first.EqualsIgnoringRef(url_second));
+
+  EXPECT_TRUE(NavigateToURL(shell(), url_first));
+
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  FrameNavigateParamsCapturer capturer(root);
+  shell()->LoadURL(url_second);
+  capturer.Wait();
+  EXPECT_TRUE(capturer.is_same_document());
 }
 
 }  // namespace content

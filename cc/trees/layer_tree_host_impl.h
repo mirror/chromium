@@ -74,6 +74,7 @@ class PendingTreeDurationHistogramTimer;
 class PendingTreeRasterDurationHistogramTimer;
 class RasterTilePriorityQueue;
 class RasterBufferProvider;
+class RenderFrameMetadata;
 class RenderingStatsInstrumentation;
 class ResourcePool;
 class ScrollElasticityHelper;
@@ -193,7 +194,7 @@ class CC_EXPORT LayerTreeHostImpl
   void RequestUpdateForSynchronousInputHandler() override;
   void SetSynchronousInputHandlerRootScrollOffset(
       const gfx::ScrollOffset& root_offset) override;
-  void ScrollEnd(ScrollState* scroll_state) override;
+  void ScrollEnd(ScrollState* scroll_state, bool should_snap = false) override;
   InputHandler::ScrollStatus FlingScrollBegin() override;
 
   void MouseDown() override;
@@ -248,6 +249,8 @@ class CC_EXPORT LayerTreeHostImpl
     void AsValueInto(base::trace_event::TracedValue* value) const;
 
     std::vector<viz::SurfaceId> activation_dependencies;
+    base::Optional<uint32_t> deadline_in_frames;
+    bool use_default_lower_bound_deadline = false;
     std::vector<gfx::Rect> occluding_screen_space_rects;
     std::vector<gfx::Rect> non_occluding_screen_space_rects;
     viz::RenderPassList render_passes;
@@ -282,6 +285,7 @@ class CC_EXPORT LayerTreeHostImpl
   // add impl-side invalidations to it.
   // virtual for testing.
   virtual void InvalidateContentOnImplSide();
+  virtual void InvalidateLayerTreeFrameSink();
 
   void SetTreeLayerScrollOffsetMutated(ElementId element_id,
                                        LayerTreeImpl* tree,
@@ -452,7 +456,7 @@ class CC_EXPORT LayerTreeHostImpl
     return &image_animation_controller_.value();
   }
 
-  virtual void WillBeginImplFrame(const viz::BeginFrameArgs& args);
+  virtual bool WillBeginImplFrame(const viz::BeginFrameArgs& args);
   virtual void DidFinishImplFrame();
   void DidNotProduceFrame(const viz::BeginFrameAck& ack);
   void DidModifyTilePriorities();
@@ -573,6 +577,7 @@ class CC_EXPORT LayerTreeHostImpl
   void ScheduleMicroBenchmark(std::unique_ptr<MicroBenchmarkImpl> benchmark);
 
   viz::CompositorFrameMetadata MakeCompositorFrameMetadata();
+  RenderFrameMetadata MakeRenderFrameMetadata();
 
   // Viewport rectangle and clip in device space.  These rects are used to
   // prioritize raster and determine what is submitted in a CompositorFrame.
@@ -727,11 +732,10 @@ class CC_EXPORT LayerTreeHostImpl
 
   void UpdateTileManagerMemoryPolicy(const ManagedMemoryPolicy& policy);
 
-  // Returns true if the damage rect is non-empty. Takes as input whether or
-  // not the touch handle visibility has changed. This check includes damage
+  // Returns true if the damage rect is non-empty. This check includes damage
   // from the HUD. Should only be called when the active tree's draw properties
   // are valid and after updating the damage.
-  bool HasDamage(bool handle_visibility_changed) const;
+  bool HasDamage() const;
 
   // This function should only be called from PrepareToDraw, as DidDrawAllLayers
   // must be called if this helper function is called.  Returns DRAW_SUCCESS if
@@ -760,6 +764,12 @@ class CC_EXPORT LayerTreeHostImpl
   bool ScrollAnimationUpdateTarget(ScrollNode* scroll_node,
                                    const gfx::Vector2dF& scroll_delta,
                                    base::TimeDelta delayed_by);
+
+  void ScrollEndImpl(ScrollState* scroll_state);
+
+  // Creates an animation curve and returns true if we need to update the
+  // scroll position to a snap point. Otherwise returns false.
+  bool SnapAtScrollEnd();
 
   void SetContextVisibility(bool is_visible);
   void ImageDecodeFinished(int request_id, bool decode_succeeded);
@@ -854,6 +864,11 @@ class CC_EXPORT LayerTreeHostImpl
   DecodedImageTracker decoded_image_tracker_;
 
   gfx::Vector2dF accumulated_root_overscroll_;
+
+  // True iff some of the delta has been consumed for the current scroll
+  // sequence on the specific axis.
+  bool did_scroll_x_for_scroll_gesture_;
+  bool did_scroll_y_for_scroll_gesture_;
 
   bool pinch_gesture_active_;
   bool pinch_gesture_end_should_clear_scrolling_node_;

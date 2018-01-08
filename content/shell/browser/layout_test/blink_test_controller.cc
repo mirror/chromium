@@ -408,6 +408,14 @@ bool BlinkTestController::PrepareForLayoutTest(
       LoadDevToolsJSTest();
     else
       main_window_->LoadURL(test_url_);
+
+#if defined(OS_ANDROID)
+    // On Android, the browser main loop runs on the UI thread so the view
+    // hierarchy never gets to layout since the UI thread is blocked. This call
+    // simulates a layout and ensures our RenderWidget hierarchy gets correctly
+    // sized.
+    main_window_->SizeTo(initial_size_);
+#endif
   } else {
 #if defined(OS_MACOSX)
     // Shell::SizeTo is not implemented on all platforms.
@@ -470,8 +478,7 @@ void BlinkTestController::LoadDevToolsJSTest() {
   devtools_window_ = main_window_;
   Shell* secondary = SecondaryWindow();
   devtools_bindings_ = std::make_unique<LayoutTestDevToolsBindings>(
-      devtools_window_->web_contents(), secondary->web_contents(), "",
-      test_url_, true);
+      devtools_window_->web_contents(), secondary->web_contents(), test_url_);
 }
 
 bool BlinkTestController::ResetAfterLayoutTest() {
@@ -570,10 +577,6 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_TestFinished, OnTestFinished)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_NavigateSecondaryWindow,
                         OnNavigateSecondaryWindow)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_ShowDevTools, OnShowDevTools)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_EvaluateInDevTools,
-                        OnEvaluateInDevTools)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_CloseDevTools, OnCloseDevTools)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_GoToOffset, OnGoToOffset)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_Reload, OnReload)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_LoadURLForFrame, OnLoadURLForFrame)
@@ -772,7 +775,8 @@ void BlinkTestController::OnTestFinished() {
   test_phase_ = CLEAN_UP;
   if (!printer_->output_finished())
     printer_->PrintImageFooter();
-  main_window_->web_contents()->ExitFullscreen(/*will_cause_resize=*/false);
+  if (main_window_)
+    main_window_->web_contents()->ExitFullscreen(/*will_cause_resize=*/false);
   devtools_bindings_.reset();
   devtools_protocol_test_bindings_.reset();
 
@@ -787,7 +791,11 @@ void BlinkTestController::OnTestFinished() {
 }
 
 void BlinkTestController::OnAllServiceWorkersCleared() {
+  // TODO(nhiroki): Add a comment about the reason why we terminate all shared
+  // workers here.
   TerminateAllSharedWorkersForTesting(
+      BrowserContext::GetStoragePartition(
+          ShellContentBrowserClient::Get()->browser_context(), nullptr),
       base::BindOnce(&BlinkTestController::OnAllSharedWorkersDestroyed,
                      weak_factory_.GetWeakPtr()));
 }
@@ -795,6 +803,11 @@ void BlinkTestController::OnAllServiceWorkersCleared() {
 void BlinkTestController::OnAllSharedWorkersDestroyed() {
   if (main_window_) {
     RenderViewHost* rvh = main_window_->web_contents()->GetRenderViewHost();
+    rvh->Send(new ShellViewMsg_Reset(rvh->GetRoutingID()));
+  }
+  if (secondary_window_) {
+    RenderViewHost* rvh =
+        secondary_window_->web_contents()->GetRenderViewHost();
     rvh->Send(new ShellViewMsg_Reset(rvh->GetRoutingID()));
   }
 }
@@ -914,6 +927,13 @@ void BlinkTestController::OnDumpFrameLayoutResponse(int frame_tree_node_id,
   if (pending_layout_dumps_ > 0)
     return;
 
+  // If the main test window was destroyed while waiting for the responses, then
+  // there is nobody to receive the |stitched_layout_dump| and finish the test.
+  if (!web_contents()) {
+    OnTestFinished();
+    return;
+  }
+
   // Stitch the frame-specific results in the right order.
   std::string stitched_layout_dump;
   for (auto* render_frame_host : web_contents()->GetAllFrames()) {
@@ -966,26 +986,6 @@ void BlinkTestController::OnNavigateSecondaryWindow(const GURL& url) {
 void BlinkTestController::OnInspectSecondaryWindow() {
   if (devtools_bindings_)
     devtools_bindings_->Attach();
-}
-
-void BlinkTestController::OnShowDevTools(const std::string& settings,
-                                         const std::string& frontend_url) {
-  devtools_window_ = SecondaryWindow();
-  devtools_bindings_ = std::make_unique<LayoutTestDevToolsBindings>(
-      devtools_window_->web_contents(), main_window_->web_contents(), settings,
-      GURL(frontend_url), false);
-  devtools_window_->web_contents()->GetRenderViewHost()->GetWidget()->Focus();
-  devtools_window_->web_contents()->Focus();
-}
-
-void BlinkTestController::OnEvaluateInDevTools(
-    int call_id, const std::string& script) {
-  if (devtools_bindings_)
-    devtools_bindings_->EvaluateInFrontend(call_id, script);
-}
-
-void BlinkTestController::OnCloseDevTools() {
-  devtools_bindings_.reset();
 }
 
 void BlinkTestController::OnGoToOffset(int offset) {

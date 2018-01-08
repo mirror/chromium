@@ -76,7 +76,7 @@ class PageInfoBubbleViewTestApi {
       ui::AXNodeData data;
       view_->cookie_button_->GetAccessibleNodeData(&data);
       std::string name;
-      data.GetStringAttribute(ui::AX_ATTR_NAME, &name);
+      data.GetStringAttribute(ax::mojom::StringAttribute::kName, &name);
       return base::ASCIIToUTF16(name);
     }
     EXPECT_TRUE(view_->cookie_link_legacy_);
@@ -298,7 +298,7 @@ TEST_F(PageInfoBubbleViewTest, SetPermissionInfoWithUsbDevice) {
 
   ChosenObjectView* object_view = static_cast<ChosenObjectView*>(
       api_->permissions_view()->child_at(kExpectedChildren));
-  EXPECT_EQ(3, object_view->child_count());
+  EXPECT_EQ(4, object_view->child_count());
 
   const int kLabelIndex = 1;
   views::Label* label =

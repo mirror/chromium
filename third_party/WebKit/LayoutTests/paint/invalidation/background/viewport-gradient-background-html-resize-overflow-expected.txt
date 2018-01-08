@@ -9,7 +9,7 @@
         {
           "object": "LayoutView #document",
           "rect": [0, 0, 800, 600],
-          "reason": "style change"
+          "reason": "background"
         },
         {
           "object": "LayoutBlockFlow HTML",
@@ -22,7 +22,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutView #document",
-      "reason": "style change"
+      "reason": "background"
     },
     {
       "object": "LayoutBlockFlow HTML",

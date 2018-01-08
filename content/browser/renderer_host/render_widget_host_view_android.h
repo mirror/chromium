@@ -51,11 +51,11 @@ namespace content {
 class ContentViewCore;
 class ImeAdapterAndroid;
 class OverscrollControllerAndroid;
-class PopupZoomer;
 class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
 class SynchronousCompositorClient;
+class TapDisambiguator;
 class TextSuggestionHostAndroid;
 class TouchSelectionControllerClientManagerAndroid;
 class WebContentsAccessibilityAndroid;
@@ -170,20 +170,20 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       override;
   void OnDidNavigateMainFrameToNewPage() override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
+  void SetWantsAnimateOnlyBeginFrames() override;
   RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
   viz::FrameSinkId GetFrameSinkId() override;
-  viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate* delegate,
-                                      const gfx::PointF& point,
-                                      gfx::PointF* transformed_point) override;
   bool TransformPointToLocalCoordSpace(const gfx::PointF& point,
                                        const viz::SurfaceId& original_surface,
                                        gfx::PointF* transformed_point) override;
+  viz::SurfaceId GetCurrentSurfaceId() const override;
   bool TransformPointToCoordSpaceForView(
       const gfx::PointF& point,
       RenderWidgetHostViewBase* target_view,
       gfx::PointF* transformed_point) override;
   TouchSelectionControllerClientManager*
   GetTouchSelectionControllerClientManager() override;
+  viz::LocalSurfaceId GetLocalSurfaceId() const override;
 
   // ui::ViewClient implementation.
   bool OnTouchEvent(const ui::MotionEventAndroid& m) override;
@@ -240,6 +240,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void OnBeginFrame(const viz::BeginFrameArgs& args) override;
   const viz::BeginFrameArgs& LastUsedBeginFrameArgs() const override;
   void OnBeginFrameSourcePausedChanged(bool paused) override;
+  bool WantsAnimateOnlyBeginFrames() const override;
 
   // Non-virtual methods
   void SetContentViewCore(ContentViewCore* content_view_core);
@@ -256,8 +257,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void set_ime_adapter(ImeAdapterAndroid* ime_adapter) {
     ime_adapter_android_ = ime_adapter;
   }
-  void set_popup_zoomer(PopupZoomer* popup_zoomer) {
-    popup_zoomer_ = popup_zoomer;
+  void set_tap_disambiguator(TapDisambiguator* tap_disambiguator) {
+    tap_disambiguator_ = tap_disambiguator;
   }
   void set_selection_popup_controller(SelectionPopupController* controller) {
     selection_popup_controller_ = controller;
@@ -314,9 +315,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
                               RenderWidgetHostViewBase* updated_view) override;
 
   ImeAdapterAndroid* ime_adapter_for_testing() { return ime_adapter_android_; }
-
-  // Exposed for tests.
-  viz::SurfaceId SurfaceIdForTesting() const override;
 
   ui::TouchSelectionControllerClient*
   GetSelectionControllerClientManagerForTesting();
@@ -393,6 +391,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   viz::BeginFrameSource* begin_frame_source_;
   viz::BeginFrameArgs last_begin_frame_args_;
   bool begin_frame_paused_ = false;
+  bool wants_animate_only_begin_frames_ = false;
 
   // Indicates whether and for what reason a request for begin frames has been
   // issued. Used to control action dispatch at the next |OnBeginFrame()| call.
@@ -412,7 +411,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   ContentViewCore* content_view_core_;
 
   ImeAdapterAndroid* ime_adapter_android_;
-  PopupZoomer* popup_zoomer_;
+  TapDisambiguator* tap_disambiguator_;
   SelectionPopupController* selection_popup_controller_;
   TextSuggestionHostAndroid* text_suggestion_host_;
 

@@ -21,16 +21,17 @@
 namespace extensions {
 
 RuntimeCustomBindings::RuntimeCustomBindings(ScriptContext* context)
-    : ObjectBackedNativeHandler(context) {
-  RouteFunction(
+    : ObjectBackedNativeHandler(context) {}
+
+RuntimeCustomBindings::~RuntimeCustomBindings() {}
+
+void RuntimeCustomBindings::AddRoutes() {
+  RouteHandlerFunction(
       "GetManifest",
       base::Bind(&RuntimeCustomBindings::GetManifest, base::Unretained(this)));
-  RouteFunction("GetExtensionViews",
-                base::Bind(&RuntimeCustomBindings::GetExtensionViews,
-                           base::Unretained(this)));
-}
-
-RuntimeCustomBindings::~RuntimeCustomBindings() {
+  RouteHandlerFunction("GetExtensionViews",
+                       base::Bind(&RuntimeCustomBindings::GetExtensionViews,
+                                  base::Unretained(this)));
 }
 
 void RuntimeCustomBindings::GetManifest(
@@ -54,7 +55,7 @@ void RuntimeCustomBindings::GetExtensionViews(
   int tab_id = args[1]->Int32Value();
 
   std::string view_type_string =
-      base::ToUpperASCII(*v8::String::Utf8Value(args[2]));
+      base::ToUpperASCII(*v8::String::Utf8Value(args.GetIsolate(), args[2]));
   // |view_type| == VIEW_TYPE_INVALID means getting any type of
   // views.
   ViewType view_type = VIEW_TYPE_INVALID;

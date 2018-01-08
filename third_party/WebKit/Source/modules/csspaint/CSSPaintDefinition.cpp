@@ -54,9 +54,8 @@ CSSPaintDefinition::CSSPaintDefinition(
     const Vector<CSSSyntaxDescriptor>& input_argument_types,
     const PaintRenderingContext2DSettings& context_settings)
     : script_state_(script_state),
-      constructor_(script_state->GetIsolate(), this, constructor),
-      paint_(script_state->GetIsolate(), this, paint),
-      instance_(this),
+      constructor_(script_state->GetIsolate(), constructor),
+      paint_(script_state->GetIsolate(), paint),
       did_call_constructor_(false),
       context_settings_(context_settings) {
   native_invalidation_properties_ = native_invalidation_properties;
@@ -64,14 +63,12 @@ CSSPaintDefinition::CSSPaintDefinition(
   input_argument_types_ = input_argument_types;
 }
 
-CSSPaintDefinition::~CSSPaintDefinition() {}
+CSSPaintDefinition::~CSSPaintDefinition() = default;
 
 scoped_refptr<Image> CSSPaintDefinition::Paint(
     const ImageResourceObserver& client,
     const IntSize& container_size,
     const CSSStyleValueVector* paint_arguments) {
-  DCHECK(paint_arguments);
-
   // TODO: Break dependency on LayoutObject. Passing the Node should work.
   const LayoutObject& layout_object = static_cast<const LayoutObject&>(client);
 
@@ -99,16 +96,24 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
   PaintRenderingContext2D* rendering_context = PaintRenderingContext2D::Create(
       container_size, color_params, context_settings_, zoom);
   PaintSize* paint_size = PaintSize::Create(specified_size);
-  StylePropertyMapReadonly* style_map =
+  StylePropertyMapReadOnly* style_map =
       FilteredComputedStylePropertyMap::Create(layout_object.GetNode(),
                                                native_invalidation_properties_,
                                                custom_invalidation_properties_);
 
-  v8::Local<v8::Value> argv[] = {
-      ToV8(rendering_context, script_state_->GetContext()->Global(), isolate),
-      ToV8(paint_size, script_state_->GetContext()->Global(), isolate),
-      ToV8(style_map, script_state_->GetContext()->Global(), isolate),
-      ToV8(*paint_arguments, script_state_->GetContext()->Global(), isolate)};
+  Vector<v8::Local<v8::Value>, 4> argv;
+  if (paint_arguments) {
+    argv = {
+        ToV8(rendering_context, script_state_->GetContext()->Global(), isolate),
+        ToV8(paint_size, script_state_->GetContext()->Global(), isolate),
+        ToV8(style_map, script_state_->GetContext()->Global(), isolate),
+        ToV8(*paint_arguments, script_state_->GetContext()->Global(), isolate)};
+  } else {
+    argv = {
+        ToV8(rendering_context, script_state_->GetContext()->Global(), isolate),
+        ToV8(paint_size, script_state_->GetContext()->Global(), isolate),
+        ToV8(style_map, script_state_->GetContext()->Global(), isolate)};
+  }
 
   v8::Local<v8::Function> paint = paint_.NewLocal(isolate);
 
@@ -117,7 +122,7 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
 
   V8ScriptRunner::CallFunction(paint,
                                ExecutionContext::From(script_state_.get()),
-                               instance, WTF_ARRAY_LENGTH(argv), argv, isolate);
+                               instance, argv.size(), argv.data(), isolate);
 
   // The paint function may have produced an error, in which case produce an
   // invalid image.
@@ -126,7 +131,7 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
   }
 
   return PaintGeneratedImage::Create(rendering_context->GetRecord(),
-                                     container_size);
+                                     FloatSize(container_size));
 }
 
 void CSSPaintDefinition::MaybeCreatePaintInstance() {

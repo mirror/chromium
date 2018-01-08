@@ -15,6 +15,7 @@
 
 #include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -362,6 +363,9 @@ class TestWebGraphicsContext3D {
   void set_support_texture_storage_image(bool support) {
     test_capabilities_.texture_storage_image = support;
   }
+  void set_support_texture_npot(bool support) {
+    test_capabilities_.texture_npot = support;
+  }
 
   // When this context is lost, all contexts in its share group are also lost.
   void add_share_group_context(TestWebGraphicsContext3D* context3d) {
@@ -499,7 +503,7 @@ class TestWebGraphicsContext3D {
   gpu::SyncToken last_waited_sync_token_;
   int unpack_alignment_;
 
-  unsigned bound_buffer_;
+  base::flat_map<unsigned, unsigned> bound_buffer_;
   TextureTargets texture_targets_;
 
   scoped_refptr<Namespace> namespace_;

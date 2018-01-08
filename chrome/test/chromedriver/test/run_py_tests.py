@@ -79,6 +79,8 @@ _NEGATIVE_FILTER = [
     'MobileEmulationCapabilityTest.testClickElement',
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabs',
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabsImmediately',
+    # https://bugs.chromium.org/p/chromium/issues/detail?id=746266
+    'ChromeDriverSiteIsolation.testCanClickOOPIF',
 ]
 
 _VERSION_SPECIFIC_FILTER = {}
@@ -105,10 +107,6 @@ _VERSION_SPECIFIC_FILTER['63'] = [
     'ChromeDriverPageLoadTimeoutTest.testRefreshWithPageLoadTimeout',
 ]
 
-_VERSION_SPECIFIC_FILTER['62'] = [
-    # These tests are implemented to run on the latest versions of Chrome > 64
-    'HeadlessInvalidCertificateTest.*',
-]
 
 _OS_SPECIFIC_FILTER = {}
 _OS_SPECIFIC_FILTER['win'] = [
@@ -192,14 +190,20 @@ _ANDROID_NEGATIVE_FILTER['chrome'] = (
         'ChromeDriverTest.testCloseWindowUsingJavascript',
         # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2108
         'ChromeLoggingCapabilityTest.testPerformanceLogger',
+        # Android doesn't support headless mode
+        'HeadlessInvalidCertificateTest.*',
     ]
 )
 _ANDROID_NEGATIVE_FILTER['chrome_stable'] = (
-    _ANDROID_NEGATIVE_FILTER['chrome'])
+    _ANDROID_NEGATIVE_FILTER['chrome'] + [
+        # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2025
+        'ChromeDriverTest.testDoesntHangOnFragmentNavigation',
+    ]
+)
 _ANDROID_NEGATIVE_FILTER['chrome_beta'] = (
     _ANDROID_NEGATIVE_FILTER['chrome'] + [
-      # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2025
-      'ChromeDriverTest.testDoesntHangOnFragmentNavigation',
+        # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2025
+        'ChromeDriverTest.testDoesntHangOnFragmentNavigation',
     ]
 )
 _ANDROID_NEGATIVE_FILTER['chromium'] = (
@@ -1600,6 +1604,41 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
     self.assertEquals(1, self._driver.ExecuteScript('return 1;'))
 
 
+class ChromeDriverSiteIsolation(ChromeDriverBaseTestWithWebServer):
+  """Tests for ChromeDriver with the new Site Isolation Chrome feature.
+
+  This feature can be turned on using the --site-per-process flag.
+
+  In order to trick the test into thinking that we are on two separate origins,
+  the cross_domain_iframe.html code points to localhost instead of 127.0.0.1.
+
+  Note that Chrome does not allow "localhost" to be passed to --isolate-origins
+  for fixable technical reasons related to subdomain matching.
+  """
+
+  def setUp(self):
+    self._driver = self.CreateDriver(chrome_switches=['--site-per-process'])
+
+  def testCanClickOOPIF(self):
+    """Test that you can click into an Out of Process I-Frame (OOPIF).
+
+    Note that the Iframe will not be out-of-process if the correct
+    flags are not passed into Chrome.
+    """
+    self._driver.Load(self.GetHttpUrlForFile(
+        '/chromedriver/cross_domain_iframe.html'))
+    a_outer = self._driver.FindElement('tag name', 'a')
+    a_outer.Click()
+    frame_url = self._driver.ExecuteScript('return window.location.href')
+    self.assertTrue(frame_url.endswith('#one'))
+    frame = self._driver.FindElement('tag name', 'iframe')
+    self._driver.SwitchToFrame(frame)
+    a_inner = self._driver.FindElement('tag name', 'a')
+    a_inner.Click()
+    frame_url = self._driver.ExecuteScript('return window.location.href')
+    self.assertTrue(frame_url.endswith('#two'))
+
+
 class ChromeDriverPageLoadTimeoutTest(ChromeDriverBaseTestWithWebServer):
 
   class _RequestHandler(object):
@@ -2664,6 +2703,14 @@ if __name__ == '__main__':
       '', '--android-package',
       help=('Android package key. Possible values: ' +
             str(_ANDROID_NEGATIVE_FILTER.keys())))
+
+  parser.add_option(
+      '', '--isolated-script-test-output',
+      help='JSON output file used by swarming')
+  parser.add_option(
+      '', '--isolated-script-test-perf-output',
+      help='JSON perf output file used by swarming, ignored')
+
   options, args = parser.parse_args()
 
   options.chromedriver = util.GetAbsolutePathOfUserPath(options.chromedriver)
@@ -2715,4 +2762,32 @@ if __name__ == '__main__':
   ChromeDriverTest.GlobalTearDown()
   HeadlessInvalidCertificateTest.GlobalTearDown()
   MobileEmulationCapabilityTest.GlobalTearDown()
+
+  if options.isolated_script_test_output:
+    output = {
+        'interrupted': False,
+        'num_failures_by_type': { },
+        'path_delimiter': '.',
+        'seconds_since_epoch': time.time(),
+        'tests': { },
+        'version': 3,
+    }
+
+    for test in tests:
+      output['tests'][test.id()] = {
+          'expected': 'PASS',
+          'actual': 'PASS'
+      }
+
+    for failure in result.failures + result.errors:
+      output['tests'][failure[0].id()]['actual'] = 'FAIL'
+
+    num_fails = len(result.failures) + len(result.errors)
+    output['num_failures_by_type']['FAIL'] = num_fails
+    output['num_failures_by_type']['PASS'] = len(output['tests']) - num_fails
+
+    with open(options.isolated_script_test_output, 'w') as fp:
+      json.dump(output, fp)
+      fp.write('\n')
+
   sys.exit(len(result.failures) + len(result.errors))

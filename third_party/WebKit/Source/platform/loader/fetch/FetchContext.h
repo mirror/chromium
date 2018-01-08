@@ -88,7 +88,7 @@ class PLATFORM_EXPORT FetchContext
 
   static FetchContext& NullInstance();
 
-  virtual ~FetchContext() {}
+  virtual ~FetchContext() = default;
 
   virtual void Trace(blink::Visitor*);
 
@@ -151,7 +151,8 @@ class PLATFORM_EXPORT FetchContext
   virtual void DispatchDidFinishLoading(unsigned long identifier,
                                         double finish_time,
                                         int64_t encoded_data_length,
-                                        int64_t decoded_body_length);
+                                        int64_t decoded_body_length,
+                                        bool blocked_cross_site_document);
   virtual void DispatchDidFail(unsigned long identifier,
                                const ResourceError&,
                                int64_t encoded_data_length,
@@ -248,7 +249,7 @@ class PLATFORM_EXPORT FetchContext
 
   // Obtains WebFrameScheduler instance that is used in the attached frame.
   // May return nullptr if a frame is not attached or detached.
-  virtual WebFrameScheduler* GetFrameScheduler() { return nullptr; }
+  virtual WebFrameScheduler* GetFrameScheduler() const { return nullptr; }
 
   // Returns a task runner intended for loading tasks. Should work even in a
   // worker context, where WebFrameScheduler doesn't exist, but the returned
@@ -264,6 +265,13 @@ class PLATFORM_EXPORT FetchContext
   // with "keepalive" specified).
   // Returns a "detached" fetch context which can be null.
   virtual FetchContext* Detach() { return nullptr; }
+
+  // Returns the updated priority of the resource based on the experiments that
+  // may be currently enabled.
+  virtual ResourceLoadPriority ModifyPriorityForExperiments(
+      ResourceLoadPriority priority) const {
+    return priority;
+  }
 
  protected:
   FetchContext();

@@ -27,7 +27,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/presenter/app_list.h"
-#include "ui/app_list/speech_ui_model.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/rect.h"
@@ -129,8 +128,7 @@ class WindowTypeShelfItem : public app_list::AppListItem {
     }
   }
 
-  // AppListItem
-  void Activate(int event_flags) override { ActivateItem(type_, event_flags); }
+  void Activate(int event_flags) { ActivateItem(type_, event_flags); }
 
  private:
   Type type_;
@@ -229,10 +227,7 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
     return search_model_.get();
   }
 
-  app_list::SpeechUIModel* GetSpeechUI() override { return &speech_ui_; }
-
   void OpenSearchResult(app_list::SearchResult* result,
-                        bool auto_launch,
                         int event_flags) override {
     const ExampleSearchResult* example_result =
         static_cast<const ExampleSearchResult*>(result);
@@ -245,14 +240,9 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
     NOTIMPLEMENTED();
   }
 
-  base::TimeDelta GetAutoLaunchTimeout() override { return base::TimeDelta(); }
-
-  void AutoLaunchCanceled() override {}
-
-  void StartSearch() override {
+  void StartSearch(const base::string16& raw_query) override {
     base::string16 query;
-    base::TrimWhitespace(search_model_->search_box()->text(), base::TRIM_ALL,
-                         &query);
+    base::TrimWhitespace(raw_query, base::TRIM_ALL, &query);
     query = base::i18n::ToLower(query);
 
     search_model_->results()->DeleteAll();
@@ -273,7 +263,7 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
     }
   }
 
-  void ViewInitialized() override {
+  void ViewShown() override {
     // Nothing needs to be done.
   }
 
@@ -286,17 +276,20 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
     // Nothing needs to be done.
   }
 
-  void StartSpeechRecognition() override { NOTIMPLEMENTED(); }
-  void StopSpeechRecognition() override { NOTIMPLEMENTED(); }
-
-  views::View* CreateStartPageWebView(const gfx::Size& size) override {
-    return NULL;
-  }
-
-  bool IsSpeechRecognitionEnabled() override { return false; }
-
   void GetWallpaperProminentColors(std::vector<SkColor>* colors) override {
     NOTIMPLEMENTED();
+  }
+
+  void ActivateItem(const std::string& id, int event_flags) override {
+    WindowTypeShelfItem* item =
+        static_cast<WindowTypeShelfItem*>(model_->FindItem(id));
+    if (!item)
+      return;
+    item->Activate(event_flags);
+  }
+
+  ui::MenuModel* GetContextMenuModel(const std::string& id) override {
+    return nullptr;
   }
 
   void AddObserver(app_list::AppListViewDelegateObserver* observer) override {
@@ -310,7 +303,6 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
 
   std::unique_ptr<app_list::AppListModel> model_;
   std::unique_ptr<app_list::SearchModel> search_model_;
-  app_list::SpeechUIModel speech_ui_;
 
   DISALLOW_COPY_AND_ASSIGN(ExampleAppListViewDelegate);
 };

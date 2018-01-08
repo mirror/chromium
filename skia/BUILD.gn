@@ -330,9 +330,6 @@ component("skia") {
     ]
   }
 
-  # This and skia_opts are really the same conceptual target so share headers.
-  allow_circular_includes_from = [ ":skia_opts" ]
-
   if (current_cpu == "arm") {
     sources += [ "//third_party/skia/src/core/SkUtilsArm.cpp" ]
   }
@@ -479,6 +476,7 @@ component("skia") {
     "//base/third_party/dynamic_annotations",
     "//third_party/libpng",
     "//third_party/libwebp",
+    "//third_party/libwebp:libwebp_webp",
   ]
 
   if (!is_ios) {
@@ -506,6 +504,7 @@ component("skia") {
   if (skia_support_pdf) {
     deps += [
       "//third_party/sfntly",
+      "//third_party/sfntly:sfntly_chromium",
       "//third_party/zlib",
     ]
     sources += skia_pdf_sources
@@ -537,8 +536,10 @@ component("skia") {
 }
 
 # Separated out so it can be compiled with different flags for SSE.
+# Each of these opts targets is logically part of :skia, so we opt them out of check_includes.
 if (current_cpu == "arm64") {
   source_set("skia_opts_crc32") {
+    check_includes = false
     sources = skia_opts.crc32_sources
     cflags = [ "-march=armv8-a+crc" ]
     visibility = [ ":skia_opts" ]
@@ -552,6 +553,7 @@ if (current_cpu == "arm64") {
 }
 if (current_cpu == "x86" || current_cpu == "x64") {
   source_set("skia_opts_sse3") {
+    check_includes = false
     sources = skia_opts.ssse3_sources
     if (!is_win || is_clang) {
       cflags = [ "-mssse3" ]
@@ -568,6 +570,7 @@ if (current_cpu == "x86" || current_cpu == "x64") {
     ]
   }
   source_set("skia_opts_sse41") {
+    check_includes = false
     sources = skia_opts.sse41_sources
     if (!is_win || is_clang) {
       cflags = [ "-msse4.1" ]
@@ -584,6 +587,7 @@ if (current_cpu == "x86" || current_cpu == "x64") {
     ]
   }
   source_set("skia_opts_sse42") {
+    check_includes = false
     sources = skia_opts.sse42_sources
     if (!is_win || is_clang) {
       cflags = [ "-msse4.2" ]
@@ -600,6 +604,7 @@ if (current_cpu == "x86" || current_cpu == "x64") {
     ]
   }
   source_set("skia_opts_avx") {
+    check_includes = false
     sources = skia_opts.avx_sources
     if (!is_win) {
       cflags = [ "-mavx" ]
@@ -616,6 +621,8 @@ if (current_cpu == "x86" || current_cpu == "x64") {
     ]
   }
   source_set("skia_opts_hsw") {
+    check_includes = false
+
     # SyzyAsan doesn't support the AVX2 and F16C instructions.
     if (!is_syzyasan) {
       sources = skia_opts.hsw_sources
@@ -647,6 +654,7 @@ if (current_cpu == "x86" || current_cpu == "x64") {
 }
 
 source_set("skia_opts") {
+  check_includes = false
   cflags = []
   defines = []
 
@@ -729,7 +737,6 @@ test("skia_unittests") {
     "ext/platform_canvas_unittest.cc",
     "ext/recursive_gaussian_convolution_unittest.cc",
     "ext/skia_memory_dump_provider_unittest.cc",
-    "ext/skia_utils_base_unittest.cc",
     "ext/skia_utils_ios_unittest.mm",
     "ext/skia_utils_mac_unittest.mm",
   ]

@@ -13,9 +13,7 @@
 #include "ash/system/tray_accessibility.h"
 #include "base/callback.h"
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
-#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
@@ -23,7 +21,6 @@
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
 #include "chrome/browser/chromeos/login/test/oobe_base_test.h"
-#include "chrome/browser/extensions/api/braille_display_private/mock_braille_controller.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
@@ -42,15 +39,10 @@
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
-#include "ui/message_center/message_center.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/widget/widget.h"
 
-using extensions::api::braille_display_private::BrailleObserver;
-using extensions::api::braille_display_private::DisplayState;
-using extensions::api::braille_display_private::MockBrailleController;
-using message_center::MessageCenter;
 using testing::Return;
 using testing::_;
 using testing::WithParamInterface;
@@ -146,24 +138,20 @@ class TrayAccessibilityTest
     EXPECT_CALL(provider_, IsInitializationComplete(_))
         .WillRepeatedly(Return(true));
     policy::BrowserPolicyConnector::SetPolicyProviderForTesting(&provider_);
-    AccessibilityManager::SetBrailleControllerForTest(&braille_controller_);
-  }
-
-  void TearDownOnMainThread() override {
-    AccessibilityManager::SetBrailleControllerForTest(nullptr);
-    InProcessBrowserTest::TearDownOnMainThread();
   }
 
   void SetShowAccessibilityOptionsInSystemTrayMenu(bool value) {
     if (GetParam() == PREF_SERVICE) {
       PrefService* prefs = GetProfile()->GetPrefs();
       prefs->SetBoolean(ash::prefs::kShouldAlwaysShowAccessibilityMenu, value);
+      // Prefs are sent to ash asynchronously.
+      base::RunLoop().RunUntilIdle();
     } else if (GetParam() == POLICY) {
       policy::PolicyMap policy_map;
       policy_map.Set(policy::key::kShowAccessibilityOptionsInSystemTrayMenu,
                      policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                      policy::POLICY_SOURCE_CLOUD,
-                     base::MakeUnique<base::Value>(value), nullptr);
+                     std::make_unique<base::Value>(value), nullptr);
       provider_.UpdateChromePolicy(policy_map);
       base::RunLoop().RunUntilIdle();
     } else {
@@ -402,17 +390,10 @@ class TrayAccessibilityTest
            views::Button::STATE_NORMAL;
   }
 
-  void SetBrailleConnected(bool connected) {
-    braille_controller_.SetAvailable(connected);
-    braille_controller_.GetObserver()->OnBrailleDisplayStateChanged(
-        *braille_controller_.GetDisplayState());
-  }
-
   // Disable animations so that tray icons hide immediately.
   ui::ScopedAnimationDurationScaleMode disable_animations_;
 
   policy::MockConfigurationPolicyProvider provider_;
-  MockBrailleController braille_controller_;
 };
 
 using TrayAccessibilityLoginScreenTest = OobeBaseTest;
@@ -965,55 +946,6 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowMenuWithShowOnLoginScreen) {
 
   // Confirms that the menu remains visible.
   EXPECT_TRUE(CanCreateMenuItem());
-}
-
-IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowNotification) {
-  const base::string16 BRAILLE_CONNECTED =
-      base::ASCIIToUTF16("Braille display connected.");
-  const base::string16 CHROMEVOX_ENABLED_TITLE =
-      base::ASCIIToUTF16("ChromeVox enabled");
-  const base::string16 CHROMEVOX_ENABLED =
-      base::ASCIIToUTF16("Press Ctrl + Alt + Z to disable spoken feedback.");
-  const base::string16 BRAILLE_CONNECTED_AND_CHROMEVOX_ENABLED_TITLE =
-      base::ASCIIToUTF16("Braille and ChromeVox are enabled");
-
-  EXPECT_FALSE(AccessibilityManager::Get()->IsSpokenFeedbackEnabled());
-
-  // Enabling spoken feedback should show the notification.
-  EnableSpokenFeedback(true, ash::A11Y_NOTIFICATION_SHOW);
-  message_center::NotificationList::Notifications notifications =
-      MessageCenter::Get()->GetVisibleNotifications();
-  EXPECT_EQ(1u, notifications.size());
-  EXPECT_EQ(CHROMEVOX_ENABLED_TITLE, (*notifications.begin())->title());
-  EXPECT_EQ(CHROMEVOX_ENABLED, (*notifications.begin())->message());
-
-  // Connecting a braille display when spoken feedback is already enabled
-  // should only show the message about the braille display.
-  SetBrailleConnected(true);
-  notifications = MessageCenter::Get()->GetVisibleNotifications();
-  EXPECT_EQ(1u, notifications.size());
-  EXPECT_EQ(base::string16(), (*notifications.begin())->title());
-  EXPECT_EQ(BRAILLE_CONNECTED, (*notifications.begin())->message());
-
-  // Neither disconnecting a braille display, nor disabling spoken feedback
-  // should show any notification.
-  SetBrailleConnected(false);
-  EXPECT_TRUE(AccessibilityManager::Get()->IsSpokenFeedbackEnabled());
-  notifications = MessageCenter::Get()->GetVisibleNotifications();
-  EXPECT_EQ(0u, notifications.size());
-  EnableSpokenFeedback(false, ash::A11Y_NOTIFICATION_SHOW);
-  notifications = MessageCenter::Get()->GetVisibleNotifications();
-  EXPECT_EQ(0u, notifications.size());
-  EXPECT_FALSE(AccessibilityManager::Get()->IsSpokenFeedbackEnabled());
-
-  // Connecting a braille display should enable spoken feedback and show
-  // both messages.
-  SetBrailleConnected(true);
-  EXPECT_TRUE(AccessibilityManager::Get()->IsSpokenFeedbackEnabled());
-  notifications = MessageCenter::Get()->GetVisibleNotifications();
-  EXPECT_EQ(BRAILLE_CONNECTED_AND_CHROMEVOX_ENABLED_TITLE,
-            (*notifications.begin())->title());
-  EXPECT_EQ(CHROMEVOX_ENABLED, (*notifications.begin())->message());
 }
 
 IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, KeepMenuVisibilityOnLockScreen) {
@@ -1654,9 +1586,7 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, CheckMarksOnDetailMenu) {
   CloseDetailMenu();
 }
 
-// Flaky: https://crbug.com/787024
-IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest,
-                       DISABLED_CheckMenuVisibilityOnDetailMenu) {
+IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, CheckMenuVisibilityOnDetailMenu) {
   // Except help & settings, others should be kept the same
   // in LOGIN | NOT LOGIN | LOCKED. https://crbug.com/632107.
   EXPECT_TRUE(CreateDetailedMenu());

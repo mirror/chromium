@@ -218,12 +218,12 @@ Vos données sont chiffrées avec votre phrase secrète de synchronisation. Sais
 <translation id="5300589172476337783">Afficher</translation>
 <translation id="5317780077021120954">Enregistrer</translation>
 <translation id="5327248766486351172">Nom</translation>
+<translation id="533632423981297619">Toute personne ayant accès au fichier exporté pourra voir vos mots de passe. Veillez à ne jamais partager ce fichier avec des tiers.</translation>
 <translation id="5388358297987318779">Ouvrir l'image</translation>
 <translation id="5409365236829784218">Aucune application installée ne peut ouvrir ce fichier.</translation>
 <translation id="5433691172869980887">Nom d'utilisateur copié</translation>
 <translation id="54401264925851789">Informations sur la sécurité de cette page</translation>
 <translation id="5525269841082836315">Créer une phrase secrète</translation>
-<translation id="5531274207066050939">Google Payments</translation>
 <translation id="5548760955356983418">Avec Handoff, vous pouvez commencer à consulter un site Web sur cet appareil et poursuivre votre lecture facilement sur votre Mac. Le site Web actuellement ouvert apparaît alors dans le Dock.
 
 Handoff doit également être activé dans la section "Général" des paramètres, et vous devez utiliser le même compte iCloud sur vos appareils.</translation>
@@ -248,7 +248,6 @@ Handoff doit également être activé dans la section "Général" des paramètre
 <translation id="5911030830365207728">Google Traduction</translation>
 <translation id="5916664084637901428">Activé</translation>
 <translation id="5948291296578561264">Cela vous permet d'enregistrer des photos dans votre photothèque.</translation>
-<translation id="5953603475187800576">Afficher les adresses et les cartes de paiement figurant sur Google Payments</translation>
 <translation id="5955891643922670672">Affichage de la version hors connexion</translation>
 <translation id="5964480694698977962">Créer un onglet de navigation privée</translation>
 <translation id="5965679971710331625">Vous êtes connecté</translation>
@@ -350,6 +349,7 @@ Vos données ont été chiffrées avec votre phrase secrète de synchronisation 
 <translation id="780301667611848630">Non merci</translation>
 <translation id="7859704718976024901">Historique de navigation</translation>
 <translation id="7938254975914653459">FaceTime</translation>
+<translation id="7939128259257418052">Export mots de passe…</translation>
 <translation id="7947953824732555851">Accepter/Se connecter</translation>
 <translation id="7961015016161918242">Jamais</translation>
 <translation id="7971521879845308059">Bloquer les pop-ups</translation>

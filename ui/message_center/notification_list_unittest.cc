@@ -16,9 +16,9 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/fake_message_center.h"
 #include "ui/message_center/notification_blocker.h"
-#include "ui/message_center/notification_types.h"
-#include "ui/message_center/notifier_id.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
+#include "ui/message_center/public/cpp/notification_types.h"
+#include "ui/message_center/public/cpp/notifier_id.h"
 
 using base::UTF8ToUTF16;
 
@@ -182,6 +182,39 @@ TEST_F(NotificationListTest, UpdateNotification) {
   EXPECT_EQ(replaced, (*notifications.begin())->id());
   EXPECT_EQ(UTF8ToUTF16("newtitle"), (*notifications.begin())->title());
   EXPECT_EQ(UTF8ToUTF16("newbody"), (*notifications.begin())->message());
+}
+
+TEST_F(NotificationListTest, UpdateNotificationWithPriority) {
+  for (size_t quiet_mode = 0u; quiet_mode < 2u; ++quiet_mode) {
+    // Set Do Not Disturb mode.
+    notification_list()->SetQuietMode(static_cast<bool>(quiet_mode));
+
+    // Create notification with default priority.
+    std::string old_id;
+    auto old_notification = MakeNotification(&old_id);
+    old_notification->set_priority(DEFAULT_PRIORITY);
+    old_notification->set_shown_as_popup(true);
+    notification_list()->AddNotification(std::move(old_notification));
+    EXPECT_EQ(1u, notification_list()->NotificationCount(blockers()));
+
+    std::string new_id;
+    auto new_notification = MakeNotification(&new_id);
+    // Set higher priority than one of the previous notification and update.
+    new_notification->set_priority(HIGH_PRIORITY);
+    notification_list()->UpdateNotificationMessage(old_id,
+                                                   std::move(new_notification));
+    const NotificationList::Notifications notifications =
+        notification_list()->GetVisibleNotifications(blockers());
+    EXPECT_EQ(1u, notification_list()->NotificationCount(blockers()));
+    EXPECT_EQ(new_id, (*notifications.begin())->id());
+
+    // Normally, |shown_as_popup| should be reset in order to show the popup
+    // again.
+    // In quiet mode, |shown_as_popup| should not be reset , as popup should not
+    // be shown even though the priority is promoted.
+    EXPECT_EQ(static_cast<bool>(quiet_mode),
+              (*notifications.begin())->shown_as_popup());
+  }
 }
 
 TEST_F(NotificationListTest, GetNotificationsByNotifierId) {

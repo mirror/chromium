@@ -45,7 +45,8 @@ struct ContentAlignmentData {
   STACK_ALLOCATED();
 
  public:
-  ContentAlignmentData(){};
+  ContentAlignmentData() = default;
+  ;
   ContentAlignmentData(LayoutUnit position, LayoutUnit distribution)
       : position_offset(position), distribution_offset(distribution) {}
 
@@ -62,7 +63,7 @@ LayoutGrid::LayoutGrid(Element* element)
     UseCounter::Count(GetDocument(), WebFeature::kCSSGridLayout);
 }
 
-LayoutGrid::~LayoutGrid() {}
+LayoutGrid::~LayoutGrid() = default;
 
 LayoutGrid* LayoutGrid::CreateAnonymous(Document* document) {
   LayoutGrid* layout_grid = new LayoutGrid(nullptr);
@@ -461,8 +462,9 @@ LayoutUnit LayoutGrid::GuttersSize(const Grid& grid,
   // If the startLine is the start line of a collapsed track we need to go
   // backwards till we reach a non collapsed track. If we find a non collapsed
   // track we need to add that gap.
+  size_t non_empty_tracks_before_start_line = 0;
   if (start_line && grid.IsEmptyAutoRepeatTrack(direction, start_line)) {
-    size_t non_empty_tracks_before_start_line = start_line;
+    non_empty_tracks_before_start_line = start_line;
     auto begin = grid.AutoRepeatEmptyTracks(direction)->begin();
     for (auto it = begin; *it != start_line; ++it) {
       DCHECK(non_empty_tracks_before_start_line);
@@ -487,8 +489,17 @@ LayoutUnit LayoutGrid::GuttersSize(const Grid& grid,
       DCHECK(non_empty_tracks_after_end_line);
       --non_empty_tracks_after_end_line;
     }
-    if (non_empty_tracks_after_end_line)
-      gap_accumulator += gap;
+    if (non_empty_tracks_after_end_line) {
+      // We shouldn't count the gap twice if the span starts and ends
+      // in a collapsed track bewtween two non-empty tracks.
+      if (!non_empty_tracks_before_start_line)
+        gap_accumulator += gap;
+    } else if (non_empty_tracks_before_start_line) {
+      // We shouldn't count the gap if the the span starts and ends in
+      // a collapsed but there isn't non-empty tracks afterwards (it's
+      // at the end of the grid).
+      gap_accumulator -= gap;
+    }
   }
 
   return gap_accumulator;
@@ -1227,7 +1238,9 @@ void LayoutGrid::LayoutGridItems() {
     LayoutRect grid_area_rect(
         GridAreaLogicalPosition(area),
         LayoutSize(child_grid_area_width, child_grid_area_height));
-    if (!grid_area_rect.Contains(child->FrameRect()))
+    LayoutRect child_overflow_rect = child->FrameRect();
+    child_overflow_rect.SetSize(child->VisualOverflowRect().Size());
+    if (!grid_area_rect.Contains(child_overflow_rect))
       grid_items_overflowing_grid_area_.push_back(child);
   }
 }
@@ -1857,16 +1870,6 @@ GridAxisPosition LayoutGrid::ColumnAxisPositionForChild(
       // self-end is based on the child's block-flow direction. That's why we
       // need to check against the grid container's block-flow direction.
       return has_same_writing_mode ? kGridAxisEnd : kGridAxisStart;
-    case ItemPosition::kLeft:
-      // Aligns the alignment subject to be flush with the alignment container's
-      // 'line-left' edge. The alignment axis (column axis) is always orthogonal
-      // to the inline axis, hence this value behaves as 'start'.
-      return kGridAxisStart;
-    case ItemPosition::kRight:
-      // Aligns the alignment subject to be flush with the alignment container's
-      // 'line-right' edge. The alignment axis (column axis) is always
-      // orthogonal to the inline axis, hence this value behaves as 'start'.
-      return kGridAxisStart;
     case ItemPosition::kCenter:
       return kGridAxisCenter;
     // Only used in flex layout, otherwise equivalent to 'start'.
@@ -1888,6 +1891,8 @@ GridAxisPosition LayoutGrid::ColumnAxisPositionForChild(
       return kGridAxisStart;
     case ItemPosition::kAuto:
     case ItemPosition::kNormal:
+    case ItemPosition::kLeft:
+    case ItemPosition::kRight:
       break;
   }
 
@@ -2313,13 +2318,13 @@ ContentAlignmentData LayoutGrid::ComputeContentPositionAndDistributionOffset(
   bool is_row_axis = direction == kForColumns;
   switch (position) {
     case ContentPosition::kLeft:
-      // The align-content's axis is always orthogonal to the inline-axis.
-      return {LayoutUnit(), LayoutUnit()};
+      if (is_row_axis)
+        return {LayoutUnit(), LayoutUnit()};
+      break;
     case ContentPosition::kRight:
       if (is_row_axis)
         return {available_free_space, LayoutUnit()};
-      // The align-content's axis is always orthogonal to the inline-axis.
-      return {LayoutUnit(), LayoutUnit()};
+      break;
     case ContentPosition::kCenter:
       return {available_free_space / 2, LayoutUnit()};
     // Only used in flex layout, for other layout, it's equivalent to 'End'.

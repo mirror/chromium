@@ -26,7 +26,7 @@
 #include "build/build_config.h"
 #include "net/base/auth.h"
 #include "net/base/proxy_delegate.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "net/test/test_data_directory.h"
@@ -227,21 +227,7 @@ class TestProxyDelegateWithProxyInfo : public ProxyDelegate {
     resolved_proxy_info_.proxy_info = *result;
   }
 
-  void OnTunnelConnectCompleted(const HostPortPair& endpoint,
-                                const HostPortPair& proxy_server,
-                                int net_error) override {}
   void OnFallback(const ProxyServer& bad_proxy, int net_error) override {}
-  void OnBeforeTunnelRequest(const HostPortPair& proxy_server,
-                             HttpRequestHeaders* extra_headers) override {}
-  void OnTunnelHeadersReceived(
-      const HostPortPair& origin,
-      const HostPortPair& proxy_server,
-      const HttpResponseHeaders& response_headers) override {}
-  bool IsTrustedSpdyProxy(const net::ProxyServer& proxy_server) override {
-    return true;
-  }
-  void OnAlternativeProxyBroken(
-      const ProxyServer& alternative_proxy_server) override {}
 
  private:
   ResolvedProxyInfo resolved_proxy_info_;
@@ -315,10 +301,10 @@ TEST_F(WebSocketEndToEndTest, DISABLED_HttpsProxyUnauthedFails) {
   ASSERT_TRUE(ws_server.BlockUntilStarted());
   std::string proxy_config =
       "https=" + proxy_server.host_port_pair().ToString();
-  std::unique_ptr<ProxyService> proxy_service(
-      ProxyService::CreateFixed(proxy_config));
-  ASSERT_TRUE(proxy_service);
-  context_.set_proxy_service(proxy_service.get());
+  std::unique_ptr<ProxyResolutionService> proxy_resolution_service(
+      ProxyResolutionService::CreateFixed(proxy_config));
+  ASSERT_TRUE(proxy_resolution_service);
+  context_.set_proxy_resolution_service(proxy_resolution_service.get());
   EXPECT_FALSE(ConnectAndWait(ws_server.GetURL(kEchoServer)));
   EXPECT_EQ("Proxy authentication failed", event_interface_->failure_message());
 }
@@ -345,10 +331,10 @@ TEST_F(WebSocketEndToEndTest, MAYBE_HttpsWssProxyUnauthedFails) {
   ASSERT_TRUE(wss_server.BlockUntilStarted());
   std::string proxy_config =
       "https=" + proxy_server.host_port_pair().ToString();
-  std::unique_ptr<ProxyService> proxy_service(
-      ProxyService::CreateFixed(proxy_config));
-  ASSERT_TRUE(proxy_service);
-  context_.set_proxy_service(proxy_service.get());
+  std::unique_ptr<ProxyResolutionService> proxy_resolution_service(
+      ProxyResolutionService::CreateFixed(proxy_config));
+  ASSERT_TRUE(proxy_resolution_service);
+  context_.set_proxy_resolution_service(proxy_resolution_service.get());
   EXPECT_FALSE(ConnectAndWait(wss_server.GetURL(kEchoServer)));
   EXPECT_EQ("Proxy authentication failed", event_interface_->failure_message());
 }
@@ -367,9 +353,9 @@ TEST_F(WebSocketEndToEndTest, MAYBE_HttpsProxyUsed) {
   std::string proxy_config = "https=" +
                              proxy_server.host_port_pair().ToString() + ";" +
                              "http=" + proxy_server.host_port_pair().ToString();
-  std::unique_ptr<ProxyService> proxy_service(
-      ProxyService::CreateFixed(proxy_config));
-  context_.set_proxy_service(proxy_service.get());
+  std::unique_ptr<ProxyResolutionService> proxy_resolution_service(
+      ProxyResolutionService::CreateFixed(proxy_config));
+  context_.set_proxy_resolution_service(proxy_resolution_service.get());
   InitialiseContext();
 
   // The test server doesn't have an unauthenticated proxy mode. WebSockets

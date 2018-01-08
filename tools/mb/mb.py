@@ -711,6 +711,7 @@ class MetaBuildWrapper(object):
         return ret
 
     android = 'target_os="android"' in vals['gn_args']
+    fuchsia = 'target_os="fuchsia"' in vals['gn_args']
     for target in swarming_targets:
       if android:
         # Android targets may be either android_apk or executable. The former
@@ -720,6 +721,11 @@ class MetaBuildWrapper(object):
         runtime_deps_targets = [
             target + '.runtime_deps',
             'obj/%s.stamp.runtime_deps' % label.replace(':', '/')]
+      elif fuchsia:
+        # Only emit a runtime deps file for the group() target on Fuchsia.
+        label = isolate_map[target]['label']
+        runtime_deps_targets = [
+          'obj/%s.stamp.runtime_deps' % label.replace(':', '/')]
       elif (isolate_map[target]['type'] == 'script' or
             isolate_map[target].get('label_type') == 'group'):
         # For script targets, the build target is usually a group,
@@ -906,7 +912,10 @@ class MetaBuildWrapper(object):
     executable_suffix = '.exe' if self.platform == 'win32' else ''
 
     cmdline = []
-    extra_files = []
+    extra_files = [
+      '../../.vpython',
+      '../../testing/test_env.py',
+    ]
 
     if test_type == 'nontest':
       self.WriteFailureAndRaise('We should not be isolating %s.' % target,
@@ -914,17 +923,18 @@ class MetaBuildWrapper(object):
 
     if is_android and test_type != "script":
       cmdline = [
+          '../../testing/test_env.py',
           '../../build/android/test_wrapper/logdog_wrapper.py',
           '--target', target,
           '--logdog-bin-cmd', '../../bin/logdog_butler',
           '--store-tombstones']
     elif is_fuchsia and test_type != 'script':
-      cmdline = [os.path.join('bin', 'run_%s' % target)]
-    elif use_xvfb and test_type == 'windowed_test_launcher':
-      extra_files = [
+      cmdline = [
           '../../testing/test_env.py',
-          '../../testing/xvfb.py',
+          os.path.join('bin', 'run_%s' % target),
       ]
+    elif use_xvfb and test_type == 'windowed_test_launcher':
+      extra_files.append('../../testing/xvfb.py')
       cmdline = [
         '../../testing/xvfb.py',
         './' + str(executable) + executable_suffix,
@@ -936,9 +946,6 @@ class MetaBuildWrapper(object):
         '--cfi-diag=%d' % cfi_diag,
       ]
     elif test_type in ('windowed_test_launcher', 'console_test_launcher'):
-      extra_files = [
-          '../../testing/test_env.py'
-      ]
       cmdline = [
           '../../testing/test_env.py',
           './' + str(executable) + executable_suffix,
@@ -950,15 +957,11 @@ class MetaBuildWrapper(object):
           '--cfi-diag=%d' % cfi_diag,
       ]
     elif test_type == 'script':
-      extra_files = [
-          '../../testing/test_env.py'
-      ]
       cmdline = [
           '../../testing/test_env.py',
           '../../' + self.ToSrcRelPath(isolate_map[target]['script'])
       ]
     elif test_type in ('raw'):
-      extra_files = []
       cmdline = [
           './' + str(target) + executable_suffix,
       ]

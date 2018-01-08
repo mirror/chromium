@@ -322,7 +322,6 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
   scopedObserver_.reset();
   observerBridge_.reset();
 }
@@ -332,7 +331,7 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
 }
 
 - (CGFloat)headerHeight {
-  return [self.delegate headerHeight];
+  return [self.delegate headerHeightForLegacyFullscreen];
 }
 
 - (CGFloat)topContentInsetCausedByHeader {

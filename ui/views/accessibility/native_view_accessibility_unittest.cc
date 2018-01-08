@@ -44,11 +44,9 @@ class NativeViewAccessibilityTest : public ViewsTestBase {
 
     button_ = new TestButton();
     button_->SetSize(gfx::Size(20, 20));
-    button_accessibility_ = NativeViewAccessibility::Create(button_);
 
     label_ = new Label();
     button_->AddChildView(label_);
-    label_accessibility_ = NativeViewAccessibility::Create(label_);
 
     widget_->GetContentsView()->AddChildView(button_);
     widget_->Show();
@@ -62,42 +60,42 @@ class NativeViewAccessibilityTest : public ViewsTestBase {
 
   NativeViewAccessibilityBase* button_accessibility() {
     return static_cast<NativeViewAccessibilityBase*>(
-        button_accessibility_.get());
+        &button_->GetViewAccessibility());
   }
 
   NativeViewAccessibilityBase* label_accessibility() {
     return static_cast<NativeViewAccessibilityBase*>(
-        label_accessibility_.get());
+        &label_->GetViewAccessibility());
   }
 
   bool SetFocused(NativeViewAccessibilityBase* view_accessibility,
                   bool focused) {
     ui::AXActionData data;
-    data.action = focused ? ui::AX_ACTION_FOCUS : ui::AX_ACTION_BLUR;
+    data.action =
+        focused ? ax::mojom::Action::kFocus : ax::mojom::Action::kBlur;
     return view_accessibility->AccessibilityPerformAction(data);
   }
 
  protected:
   Widget* widget_;
   TestButton* button_;
-  std::unique_ptr<NativeViewAccessibility> button_accessibility_;
   Label* label_;
-  std::unique_ptr<NativeViewAccessibility> label_accessibility_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeViewAccessibilityTest);
 };
 
 TEST_F(NativeViewAccessibilityTest, RoleShouldMatch) {
-  EXPECT_EQ(ui::AX_ROLE_BUTTON, button_accessibility()->GetData().role);
+  EXPECT_EQ(ax::mojom::Role::kButton, button_accessibility()->GetData().role);
   // Since the label is a subview of |button_|, and the button is keyboard
   // focusable, the label is assumed to form part of the button and not have a
   // role of its own.
-  EXPECT_EQ(ui::AX_ROLE_IGNORED, label_accessibility()->GetData().role);
+  EXPECT_EQ(ax::mojom::Role::kIgnored, label_accessibility()->GetData().role);
   // This will happen for all potentially keyboard-focusable Views with
   // non-keyboard-focusable children, so if we make the button unfocusable, the
   // label will be allowed to have its own role again.
   button_->SetFocusBehavior(View::FocusBehavior::NEVER);
-  EXPECT_EQ(ui::AX_ROLE_STATIC_TEXT, label_accessibility()->GetData().role);
+  EXPECT_EQ(ax::mojom::Role::kStaticText,
+            label_accessibility()->GetData().role);
 }
 
 TEST_F(NativeViewAccessibilityTest, BoundsShouldMatch) {
@@ -115,7 +113,7 @@ TEST_F(NativeViewAccessibilityTest, LabelIsChildOfButton) {
   EXPECT_EQ(1, button_accessibility()->GetChildCount());
   EXPECT_EQ(button_->GetNativeViewAccessible(),
             label_accessibility()->GetParent());
-  EXPECT_EQ(ui::AX_ROLE_IGNORED, label_accessibility()->GetData().role);
+  EXPECT_EQ(ax::mojom::Role::kIgnored, label_accessibility()->GetData().role);
 
   // If |button_| is no longer focusable, |label_| should show up again.
   button_->SetFocusBehavior(View::FocusBehavior::NEVER);
@@ -124,21 +122,21 @@ TEST_F(NativeViewAccessibilityTest, LabelIsChildOfButton) {
             button_accessibility()->ChildAtIndex(0));
   EXPECT_EQ(button_->GetNativeViewAccessible(),
             label_accessibility()->GetParent());
-  EXPECT_NE(ui::AX_ROLE_IGNORED, label_accessibility()->GetData().role);
+  EXPECT_NE(ax::mojom::Role::kIgnored, label_accessibility()->GetData().role);
 }
 
-// Verify Views with invisible ancestors have AX_STATE_INVISIBLE.
+// Verify Views with invisible ancestors have ax::mojom::State::kInvisible.
 TEST_F(NativeViewAccessibilityTest, InvisibleViews) {
   EXPECT_TRUE(widget_->IsVisible());
   EXPECT_FALSE(
-      button_accessibility()->GetData().HasState(ui::AX_STATE_INVISIBLE));
+      button_accessibility()->GetData().HasState(ax::mojom::State::kInvisible));
   EXPECT_FALSE(
-      label_accessibility()->GetData().HasState(ui::AX_STATE_INVISIBLE));
+      label_accessibility()->GetData().HasState(ax::mojom::State::kInvisible));
   button_->SetVisible(false);
   EXPECT_TRUE(
-      button_accessibility()->GetData().HasState(ui::AX_STATE_INVISIBLE));
+      button_accessibility()->GetData().HasState(ax::mojom::State::kInvisible));
   EXPECT_TRUE(
-      label_accessibility()->GetData().HasState(ui::AX_STATE_INVISIBLE));
+      label_accessibility()->GetData().HasState(ax::mojom::State::kInvisible));
 }
 
 TEST_F(NativeViewAccessibilityTest, WritableFocus) {
@@ -182,7 +180,8 @@ class AxTestViewsDelegate : public TestViewsDelegate {
   AxTestViewsDelegate() {}
   ~AxTestViewsDelegate() override {}
 
-  void NotifyAccessibilityEvent(View* view, ui::AXEvent event_type) override {
+  void NotifyAccessibilityEvent(View* view,
+                                ax::mojom::Event event_type) override {
     AXAuraObjCache* ax = AXAuraObjCache::GetInstance();
     std::vector<AXAuraObjWrapper*> out_children;
     AXAuraObjWrapper* ax_obj = ax->GetOrCreate(view->GetWidget());

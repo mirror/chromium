@@ -98,11 +98,6 @@ class PermissionContextBase : public KeyedService {
   virtual void ResetPermission(const GURL& requesting_origin,
                                const GURL& embedding_origin);
 
-  // Withdraw an existing permission request, no op if the permission request
-  // was already cancelled by some other means.
-  virtual void CancelPermissionRequest(content::WebContents* web_contents,
-                                       const PermissionRequestID& id);
-
   // Whether the kill switch has been enabled for this permission.
   // public for permissions that do not use RequestPermission, like
   // camera and microphone, and for testing.
@@ -179,7 +174,6 @@ class PermissionContextBase : public KeyedService {
   void PermissionDecided(const PermissionRequestID& id,
                          const GURL& requesting_origin,
                          const GURL& embedding_origin,
-                         bool user_gesture,
                          const BrowserPermissionCallback& callback,
                          ContentSetting content_setting);
 

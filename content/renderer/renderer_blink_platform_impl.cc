@@ -54,8 +54,7 @@
 #include "content/renderer/gamepad_shared_memory_reader.h"
 #include "content/renderer/image_capture/image_capture_frame_grabber.h"
 #include "content/renderer/indexed_db/webidbfactory_impl.h"
-#include "content/renderer/loader/child_url_loader_factory_getter_impl.h"
-#include "content/renderer/loader/cors_url_loader_factory.h"
+#include "content/renderer/loader/child_url_loader_factory_bundle.h"
 #include "content/renderer/loader/resource_dispatcher.h"
 #include "content/renderer/loader/web_data_consumer_handle_impl.h"
 #include "content/renderer/loader/web_url_loader_impl.h"
@@ -71,7 +70,6 @@
 #include "content/renderer/notifications/notification_dispatcher.h"
 #include "content/renderer/notifications/notification_manager.h"
 #include "content/renderer/push_messaging/push_provider.h"
-#include "content/renderer/quota_dispatcher.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/storage_util.h"
 #include "content/renderer/web_database_observer_impl.h"
@@ -97,7 +95,6 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/database/database_identifier.h"
-#include "storage/common/quota/quota_types.h"
 #include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 #include "third_party/WebKit/public/platform/BlameContext.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
@@ -206,8 +203,8 @@ media::AudioParameters GetAudioHardwareParams() {
       .output_params();
 }
 
-mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
-  mojom::URLLoaderFactoryPtr blob_loader_factory;
+network::mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
+  network::mojom::URLLoaderFactoryPtr blob_loader_factory;
   RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
       mojo::MakeRequest(&blob_loader_factory));
   return blob_loader_factory;
@@ -294,9 +291,7 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     thread_safe_sender_ = RenderThreadImpl::current()->thread_safe_sender();
     shared_bitmap_manager_ =
         RenderThreadImpl::current()->shared_bitmap_manager();
-    blob_registry_.reset(new WebBlobRegistryImpl(
-        RenderThreadImpl::current()->GetIOTaskRunner().get(),
-        base::ThreadTaskRunnerHandle::Get(), thread_safe_sender_.get()));
+    blob_registry_.reset(new WebBlobRegistryImpl(thread_safe_sender_.get()));
     web_idb_factory_.reset(new WebIDBFactoryImpl(
         sync_message_filter_,
         RenderThreadImpl::current()->GetIOTaskRunner().get()));
@@ -346,7 +341,7 @@ RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactory() {
   }
   return std::make_unique<WebURLLoaderFactoryImpl>(
       RenderThreadImpl::current()->resource_dispatcher()->GetWeakPtr(),
-      CreateDefaultURLLoaderFactoryGetter());
+      CreateDefaultURLLoaderFactoryBundle());
 }
 
 std::unique_ptr<blink::WebDataConsumerHandle>
@@ -355,40 +350,30 @@ RendererBlinkPlatformImpl::CreateDataConsumerHandle(
   return std::make_unique<WebDataConsumerHandleImpl>(std::move(handle));
 }
 
-scoped_refptr<ChildURLLoaderFactoryGetter>
-RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryGetter() {
-  return base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
-      CreateNetworkURLLoaderFactory(),
+scoped_refptr<ChildURLLoaderFactoryBundle>
+RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryBundle() {
+  return base::MakeRefCounted<ChildURLLoaderFactoryBundle>(
+      base::BindOnce(&RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory,
+                     base::Unretained(this)),
       base::FeatureList::IsEnabled(features::kNetworkService)
           ? base::BindOnce(&GetBlobURLLoaderFactoryGetter)
-          : ChildURLLoaderFactoryGetterImpl::URLLoaderFactoryGetterCallback());
+          : ChildURLLoaderFactoryBundle::FactoryGetterCallback());
 }
 
-PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
+PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
 RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory() {
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   DCHECK(render_thread);
-  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory;
+  PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
+      url_loader_factory;
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    mojom::URLLoaderFactoryPtr factory_ptr;
+    network::mojom::URLLoaderFactoryPtr factory_ptr;
     connector_->BindInterface(mojom::kBrowserServiceName, &factory_ptr);
     url_loader_factory = std::move(factory_ptr);
   } else {
-    mojom::URLLoaderFactoryAssociatedPtr factory_ptr;
+    network::mojom::URLLoaderFactoryAssociatedPtr factory_ptr;
     render_thread->channel()->GetRemoteAssociatedInterface(&factory_ptr);
-    url_loader_factory = std::move(factory_ptr);
-  }
-
-  // Attach the CORS-enabled URLLoader for the network URLLoaderFactory. To
-  // avoid thread hops and prevent jank on the main thread from affecting
-  // requests from other threads this object should live on the IO thread.
-  if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS)) {
-    mojom::URLLoaderFactoryPtr factory_ptr;
-    RenderThreadImpl::current()->GetIOTaskRunner()->PostTask(
-        FROM_HERE, base::BindOnce(&CORSURLLoaderFactory::CreateAndBind,
-                                  url_loader_factory.PassInterface(),
-                                  mojo::MakeRequest(&factory_ptr)));
     url_loader_factory = std::move(factory_ptr);
   }
   return url_loader_factory;
@@ -1065,7 +1050,6 @@ static void Collect3DContextInformation(
       gl_info->reset_notification_strategy =
           gpu_info.gl_reset_notification_strategy;
       gl_info->sandboxed = gpu_info.sandboxed;
-      gl_info->process_crash_count = gpu_info.process_crash_count;
       gl_info->amd_switchable = gpu_info.amd_switchable;
       gl_info->optimus = gpu_info.optimus;
       break;
@@ -1124,7 +1108,7 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
   // antialiasing. But we do need those attributes for the "own
   // offscreen surface" optimization which supports directly drawing
   // to a custom surface backed frame buffer.
-  gpu::gles2::ContextCreationAttribHelper attributes;
+  gpu::ContextCreationAttribs attributes;
   attributes.alpha_size = web_attributes.support_alpha ? 8 : -1;
   attributes.depth_size = web_attributes.support_depth ? 24 : 0;
   attributes.stencil_size = web_attributes.support_stencil ? 8 : 0;
@@ -1134,6 +1118,7 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
       web_attributes.support_stencil || web_attributes.support_antialias;
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
+  attributes.enable_raster_interface = web_attributes.enable_raster_interface;
   // Prefer discrete GPU for WebGL.
   attributes.gpu_preference = gl::PreferDiscreteGpu;
 
@@ -1142,9 +1127,9 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
   DCHECK_GT(web_attributes.web_gl_version, 0u);
   DCHECK_LE(web_attributes.web_gl_version, 2u);
   if (web_attributes.web_gl_version == 2)
-    attributes.context_type = gpu::gles2::CONTEXT_TYPE_WEBGL2;
+    attributes.context_type = gpu::CONTEXT_TYPE_WEBGL2;
   else
-    attributes.context_type = gpu::gles2::CONTEXT_TYPE_WEBGL1;
+    attributes.context_type = gpu::CONTEXT_TYPE_WEBGL1;
 
   constexpr bool automatic_flushes = true;
   constexpr bool support_locking = false;
@@ -1362,18 +1347,6 @@ void RendererBlinkPlatformImpl::StopListening(
   if (!observer)
     return;
   observer->Stop();
-}
-
-//------------------------------------------------------------------------------
-
-void RendererBlinkPlatformImpl::QueryStorageUsageAndQuota(
-    const blink::WebSecurityOrigin& storage_partition,
-    blink::WebStorageQuotaType type,
-    blink::WebStorageQuotaCallbacks callbacks) {
-  QuotaDispatcher::ThreadSpecificInstance(default_task_runner_)
-      ->QueryStorageUsageAndQuota(
-          storage_partition, static_cast<storage::StorageType>(type),
-          QuotaDispatcher::CreateWebStorageQuotaCallbacksWrapper(callbacks));
 }
 
 //------------------------------------------------------------------------------

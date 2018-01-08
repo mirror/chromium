@@ -10,7 +10,7 @@
 #include "base/atomicops.h"
 #include "base/callback.h"
 #include "base/compiler_specific.h"
-#include "base/lazy_instance.h"
+#include "base/lazy_instance_helpers.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/scheduler_lock.h"
@@ -157,6 +157,12 @@ class BASE_EXPORT LazyTaskRunner {
 
   // Creates and returns a new TaskRunner.
   scoped_refptr<TaskRunnerType> Create();
+
+  // Creates a new TaskRunner via Create(), adds an explicit ref to it, and
+  // returns it raw. Used as an adapter for lazy instance helpers. Static and
+  // takes |this| as an explicit param to match the void* signature of
+  // GetOrCreateLazyPointer().
+  static TaskRunnerType* CreateRaw(void* void_self);
 
   // TaskTraits to create the TaskRunner.
   const TaskTraits traits_;

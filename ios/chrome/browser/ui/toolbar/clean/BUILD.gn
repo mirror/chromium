@@ -21,7 +21,6 @@ source_set("toolbar") {
     "//components/google/core/browser",
     "//components/search_engines",
     "//components/strings",
-    "//ios/chrome/browser",
     "//ios/chrome/browser/autocomplete",
     "//ios/chrome/browser/bookmarks",
     "//ios/chrome/browser/browser_state",
@@ -37,9 +36,10 @@ source_set("toolbar") {
     "//ios/chrome/browser/ui/fullscreen",
     "//ios/chrome/browser/ui/fullscreen:new_fullscreen",
     "//ios/chrome/browser/ui/history_popup/requirements",
+    "//ios/chrome/browser/ui/location_bar",
+    "//ios/chrome/browser/ui/ntp:util",
     "//ios/chrome/browser/ui/omnibox",
     "//ios/chrome/browser/ui/omnibox:omnibox_internal",
-    "//ios/chrome/browser/ui/omnibox/popup",
     "//ios/chrome/browser/ui/qr_scanner/requirements",
     "//ios/chrome/browser/ui/toolbar/keyboard_assist",
     "//ios/chrome/browser/ui/toolbar/public",
@@ -53,11 +53,12 @@ source_set("toolbar") {
     "//ios/third_party/material_components_ios",
     "//ios/web",
   ]
+
+  allow_circular_includes_from = [ "//ios/chrome/browser/ui/location_bar" ]
 }
 
 source_set("toolbar_ui") {
   sources = [
-    "omnibox_focuser.h",
     "toolbar_button_updater.h",
     "toolbar_button_updater.mm",
     "toolbar_consumer.h",
@@ -72,11 +73,11 @@ source_set("toolbar_ui") {
     "//ios/chrome/app/theme",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/activity_services/requirements",
-    "//ios/chrome/browser/ui/bubble",
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/fullscreen:new_fullscreen_ui",
     "//ios/chrome/browser/ui/history_popup/requirements",
     "//ios/chrome/browser/ui/toolbar/public",
+    "//ios/chrome/browser/ui/toolbar/public:toolbar_base_feature",
     "//ios/chrome/browser/ui/util",
     "//ios/chrome/browser/ui/voice",
     "//ios/chrome/common",
@@ -94,14 +95,19 @@ source_set("toolbar_components_ui") {
     "toolbar_button_factory.mm",
     "toolbar_button_tints.h",
     "toolbar_button_tints.mm",
+    "toolbar_button_visibility_configuration.h",
+    "toolbar_button_visibility_configuration.mm",
     "toolbar_component_options.h",
     "toolbar_configuration.h",
     "toolbar_configuration.mm",
     "toolbar_constants.h",
     "toolbar_constants.mm",
     "toolbar_style.h",
+    "toolbar_tab_grid_button.h",
+    "toolbar_tab_grid_button.mm",
     "toolbar_tools_menu_button.h",
     "toolbar_tools_menu_button.mm",
+    "toolbar_type.h",
   ]
   deps = [
     "//base",
@@ -109,10 +115,14 @@ source_set("toolbar_components_ui") {
     "//ios/chrome/app/strings",
     "//ios/chrome/app/theme",
     "//ios/chrome/browser/ui",
+    "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/toolbar:resource_macros",
     "//ios/chrome/browser/ui/toolbar/public",
+    "//ios/chrome/browser/ui/toolbar/public:toolbar_base_feature",
+    "//ios/chrome/browser/ui/util",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/images",
+    "//ios/third_party/material_components_ios",
     "//ui/base",
   ]
   libs = [ "UIKit.framework" ]

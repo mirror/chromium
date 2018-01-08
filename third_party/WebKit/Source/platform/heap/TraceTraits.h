@@ -18,6 +18,7 @@
 #include "platform/wtf/HashTable.h"
 #include "platform/wtf/LinkedHashSet.h"
 #include "platform/wtf/ListHashSet.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/TypeTraits.h"
 
 namespace blink {
@@ -114,7 +115,6 @@ class AdjustAndMarkTrait<T, false> {
     // API boundary, i.e., tell V8 that an object is alive. Actual marking
     // will be done in V8.
     visitor->DispatchTraceWrappers(self);
-    visitor->MarkWrappersInAllWorlds(self);
   }
 };
 
@@ -221,7 +221,6 @@ class TraceTrait {
  public:
   static void Trace(Visitor*, void* self);
 
-  static void MarkWrapperNoTracing(const ScriptWrappableVisitor*, const void*);
   static void TraceMarkedWrapper(const ScriptWrappableVisitor*, const void*);
   static HeapObjectHeader* GetHeapObjectHeader(const void*);
 
@@ -246,14 +245,6 @@ template <typename T>
 void TraceTrait<T>::Trace(Visitor* visitor, void* self) {
   static_assert(WTF::IsTraceable<T>::value, "T should not be traced");
   static_cast<T*>(self)->Trace(visitor);
-}
-
-template <typename T>
-void TraceTrait<T>::MarkWrapperNoTracing(const ScriptWrappableVisitor* visitor,
-                                         const void* t) {
-  const T* traceable = ToWrapperTracingType(t);
-  DCHECK(!GetHeapObjectHeader(traceable)->IsWrapperHeaderMarked());
-  visitor->MarkWrapperHeader(GetHeapObjectHeader(traceable));
 }
 
 template <typename T>
@@ -331,6 +322,23 @@ class TraceTrait<std::pair<T, U>> {
   static void Trace(VisitorDispatcher visitor, std::pair<T, U>* pair) {
     TraceIfEnabled<T, kFirstIsTraceable>::Trace(visitor, pair->first);
     TraceIfEnabled<U, kSecondIsTraceable>::Trace(visitor, pair->second);
+  }
+};
+
+// While using Optional<T> with garbage-collected types is generally disallowed
+// by the OptionalGarbageCollected check in blink_gc_plugin, garbage-collected
+// containers such as HeapVector are allowed and need to be traced.
+template <typename T>
+class TraceTrait<WTF::Optional<T>> {
+  STATIC_ONLY(TraceTrait);
+
+ public:
+  template <typename VisitorDispatcher>
+  static void Trace(VisitorDispatcher visitor, WTF::Optional<T>* optional) {
+    if (*optional != WTF::nullopt) {
+      TraceIfEnabled<T, WTF::IsTraceable<T>::value>::Trace(visitor,
+                                                           optional->value());
+    }
   }
 };
 

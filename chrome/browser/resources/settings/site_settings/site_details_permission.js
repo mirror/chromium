@@ -10,7 +10,7 @@
 Polymer({
   is: 'site-details-permission',
 
-  behaviors: [SiteSettingsBehavior, WebUIListenerBehavior, I18nBehavior],
+  behaviors: [SiteSettingsBehavior, WebUIListenerBehavior],
 
   properties: {
     /**
@@ -136,7 +136,7 @@ Polymer({
                // Set all permission info string arguments as null. This is OK
                // because there is no need to know what the information string
                // will be, just whether there is one or not.
-               null, null, null, null, null, null, null, null, null, null,
+               null, null, null, null, null, null, null, null, null, null, null,
                null) != '';
   },
 
@@ -210,6 +210,7 @@ Polymer({
    * @param {?string} policyAllowString
    * @param {?string} policyBlockString
    * @param {?string} policyAskString
+   * @param {?string} drmDisabledString
    * @return {?string} The permission information string to display in the HTML.
    * @private
    */
@@ -217,16 +218,16 @@ Polymer({
       source, category, setting, adsBlacklistString, adsBlockString,
       embargoString, insecureOriginString, killSwitchString,
       extensionAllowString, extensionBlockString, extensionAskString,
-      policyAllowString, policyBlockString, policyAskString) {
-
+      policyAllowString, policyBlockString, policyAskString,
+      drmDisabledString) {
     /** @type {Object<!settings.ContentSetting, ?string>} */
-    var extensionStrings = {};
+    const extensionStrings = {};
     extensionStrings[settings.ContentSetting.ALLOW] = extensionAllowString;
     extensionStrings[settings.ContentSetting.BLOCK] = extensionBlockString;
     extensionStrings[settings.ContentSetting.ASK] = extensionAskString;
 
     /** @type {Object<!settings.ContentSetting, ?string>} */
-    var policyStrings = {};
+    const policyStrings = {};
     policyStrings[settings.ContentSetting.ALLOW] = policyAllowString;
     policyStrings[settings.ContentSetting.BLOCK] = policyBlockString;
     policyStrings[settings.ContentSetting.ASK] = policyAskString;
@@ -247,10 +248,12 @@ Polymer({
       assert(
           settings.ContentSettingsTypes.PROTECTED_CONTENT == category,
           'The DRM disabled source only applies to Protected Content.');
-      return this.i18nAdvanced('siteSettingsSourceDrmDisabled', {
-        substitutions:
-            [settings.routes.SITE_SETTINGS_PROTECTED_CONTENT.getAbsolutePath()]
-      });
+      if (!drmDisabledString) {
+        return null;
+      }
+      return loadTimeData.sanitizeInnerHtml(loadTimeData.substituteString(
+          drmDisabledString,
+          settings.routes.SITE_SETTINGS_PROTECTED_CONTENT.getAbsolutePath()));
     } else if (source == settings.SiteSettingSource.EMBARGO) {
       assert(
           settings.ContentSetting.BLOCK == setting,

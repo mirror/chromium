@@ -32,7 +32,6 @@
 #include "core/layout/LayoutFlexibleBox.h"
 #include "core/layout/LayoutGeometryMap.h"
 #include "core/layout/LayoutInline.h"
-#include "core/layout/LayoutTableCell.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/ObjectPaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
@@ -347,8 +346,8 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
   // gets the same layout after changing position property, although no
   // re-raster (rect-based invalidation) is needed, display items should
   // still update their paint offset.
-  // For SPv2, invalidation for paint offset change is done during PrePaint.
-  if (old_style && !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+  // For SPv175, invalidation for paint offset change is done during PrePaint.
+  if (old_style && !RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     bool new_style_is_fixed_position =
         Style()->GetPosition() == EPosition::kFixed;
     bool old_style_is_fixed_position =
@@ -807,9 +806,7 @@ void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
   LayoutBlock* containing_block = ContainingBlock();
   // The location container for boxes is not always the containing block.
   LayoutObject* location_container =
-      IsLayoutInline() || IsTableCell()
-          ? Container()
-          : ToLayoutBox(this)->LocationContainer();
+      IsLayoutInline() ? Container() : ToLayoutBox(this)->LocationContainer();
   // Skip anonymous containing blocks.
   while (containing_block->IsAnonymous()) {
     containing_block = containing_block->ContainingBlock();
@@ -1122,10 +1119,11 @@ LayoutPoint LayoutBoxModelObject::AdjustedPositionRelativeTo(
     if (offset_parent_object->IsLayoutInline()) {
       const LayoutInline* inline_parent = ToLayoutInline(offset_parent_object);
 
-      if (IsBox() && Style()->GetPosition() == EPosition::kAbsolute &&
-          inline_parent->IsInFlowPositioned()) {
-        // Offset for absolute elements with inline parent is a special
-        // case in the CSS spec
+      if (IsBox() && IsOutOfFlowPositioned() &&
+          inline_parent->CanContainOutOfFlowPositionedElement(
+              Style()->GetPosition())) {
+        // Offset for out of flow positioned elements with inline containers is
+        // a special case in the CSS spec
         reference_point +=
             inline_parent->OffsetForInFlowPositionedInline(*ToLayoutBox(this));
       }
@@ -1315,12 +1313,12 @@ const LayoutObject* LayoutBoxModelObject::PushMappingToContainer(
     // There can't be a transform between container and ancestor_to_stop_at,
     // because transforms create containers, so it should be safe to just
     // subtract the delta between the container and ancestor_to_stop_at.
-    // But if ancestor_to_stop_at is a table section with a transform, we
-    // must apply the transform to the offset because the table section is
+    // But if ancestor_to_stop_at is a table section/row with a transform, we
+    // must apply the transform to the offset because the table part is
     // not the container (it is not a LayoutBlock).
     LayoutSize ancestor_offset =
         ancestor_to_stop_at->OffsetFromAncestorContainer(container);
-    if (ancestor_to_stop_at->IsTableSection() &&
+    if (ancestor_to_stop_at->IsTablePart() &&
         ancestor_to_stop_at->StyleRef().HasTransform() &&
         ancestor_to_stop_at->ShouldUseTransformFromContainer(container)) {
       TransformationMatrix t;

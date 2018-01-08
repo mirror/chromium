@@ -265,6 +265,46 @@ void RecordBandwidthMetric(const std::string& metric, int bandwidth) {
   base::UmaHistogramCustomCounts(metric, bandwidth, 1, 50 * 1000 * 1000, 50);
 }
 
+// Records a histogram with download source suffix.
+std::string CreateHistogramNameWithSuffix(const std::string& name,
+                                          DownloadSource download_source) {
+  std::string suffix;
+  switch (download_source) {
+    case DownloadSource::UNKNOWN:
+      suffix = "UnknownSource";
+      break;
+    case DownloadSource::NAVIGATION:
+      suffix = "Navigation";
+      break;
+    case DownloadSource::DRAG_AND_DROP:
+      suffix = "DragAndDrop";
+      break;
+    case DownloadSource::FROM_RENDERER:
+      suffix = "FromRenderer";
+      break;
+    case DownloadSource::EXTENSION_API:
+      suffix = "ExtensionAPI";
+      break;
+    case DownloadSource::EXTENSION_INSTALLER:
+      suffix = "ExtensionInstaller";
+      break;
+    case DownloadSource::INTERNAL_API:
+      suffix = "InternalAPI";
+      break;
+    case DownloadSource::WEB_CONTENTS_API:
+      suffix = "WebContentsAPI";
+      break;
+    case DownloadSource::OFFLINE_PAGE:
+      suffix = "OfflinePage";
+      break;
+    case DownloadSource::CONTEXT_MENU:
+      suffix = "ContextMenu";
+      break;
+  }
+
+  return name + "." + suffix;
+}
+
 }  // namespace
 
 void RecordDownloadCount(DownloadCountTypes type) {
@@ -272,15 +312,20 @@ void RecordDownloadCount(DownloadCountTypes type) {
       "Download.Counts", type, DOWNLOAD_COUNT_TYPES_LAST_ENTRY);
 }
 
-void RecordDownloadSource(DownloadTriggerSource source) {
-  UMA_HISTOGRAM_ENUMERATION(
-      "Download.Sources", source, DOWNLOAD_SOURCE_LAST_ENTRY);
+void RecordDownloadCountWithSource(DownloadCountTypes type,
+                                   DownloadSource download_source) {
+  RecordDownloadCount(type);
+
+  std::string name =
+      CreateHistogramNameWithSuffix("Download.Counts", download_source);
+  base::UmaHistogramEnumeration(name, type, DOWNLOAD_COUNT_TYPES_LAST_ENTRY);
 }
 
 void RecordDownloadCompleted(const base::TimeTicks& start,
                              int64_t download_len,
-                             bool is_parallelizable) {
-  RecordDownloadCount(COMPLETED_COUNT);
+                             bool is_parallelizable,
+                             DownloadSource download_source) {
+  RecordDownloadCountWithSource(COMPLETED_COUNT, download_source);
   UMA_HISTOGRAM_LONG_TIMES("Download.Time", (base::TimeTicks::Now() - start));
   int64_t max = 1024 * 1024 * 1024;  // One Terabyte.
   download_len /= 1024;  // In Kilobytes
@@ -299,8 +344,9 @@ void RecordDownloadInterrupted(DownloadInterruptReason reason,
                                int64_t received,
                                int64_t total,
                                bool is_parallelizable,
-                               bool is_parallel_download_enabled) {
-  RecordDownloadCount(INTERRUPTED_COUNT);
+                               bool is_parallel_download_enabled,
+                               DownloadSource download_source) {
+  RecordDownloadCountWithSource(INTERRUPTED_COUNT, download_source);
   if (is_parallelizable) {
     RecordParallelizableDownloadCount(INTERRUPTED_COUNT,
                                       is_parallel_download_enabled);
@@ -311,6 +357,13 @@ void RecordDownloadInterrupted(DownloadInterruptReason reason,
           kAllInterruptReasonCodes, arraysize(kAllInterruptReasonCodes));
   UMA_HISTOGRAM_CUSTOM_ENUMERATION("Download.InterruptedReason", reason,
                                    samples);
+
+  std::string name = CreateHistogramNameWithSuffix("Download.InterruptedReason",
+                                                   download_source);
+  base::HistogramBase* counter = base::CustomHistogram::FactoryGet(
+      name, samples, base::HistogramBase::kUmaTargetedHistogramFlag);
+  counter->Add(reason);
+
   if (is_parallel_download_enabled) {
     UMA_HISTOGRAM_CUSTOM_ENUMERATION(
         "Download.InterruptedReason.ParallelDownload", reason, samples);
@@ -347,7 +400,7 @@ void RecordDownloadInterrupted(DownloadInterruptReason reason,
           kMaxKb, kBuckets);
     }
     if (delta_bytes == 0) {
-      RecordDownloadCount(INTERRUPTED_AT_END_COUNT);
+      RecordDownloadCountWithSource(INTERRUPTED_AT_END_COUNT, download_source);
       UMA_HISTOGRAM_CUSTOM_ENUMERATION("Download.InterruptedAtEndReason",
                                        reason, samples);
 
@@ -471,79 +524,56 @@ int GetMimeTypeMatch(const std::string& mime_type_string,
   return 0;
 }
 
-// NOTE: Keep in sync with DownloadContentType in
-// tools/metrics/histograms/enums.xml.
-enum DownloadContent {
-  DOWNLOAD_CONTENT_UNRECOGNIZED = 0,
-  DOWNLOAD_CONTENT_TEXT = 1,
-  DOWNLOAD_CONTENT_IMAGE = 2,
-  DOWNLOAD_CONTENT_AUDIO = 3,
-  DOWNLOAD_CONTENT_VIDEO = 4,
-  DOWNLOAD_CONTENT_OCTET_STREAM = 5,
-  DOWNLOAD_CONTENT_PDF = 6,
-  DOWNLOAD_CONTENT_DOCUMENT = 7,
-  DOWNLOAD_CONTENT_SPREADSHEET = 8,
-  DOWNLOAD_CONTENT_PRESENTATION = 9,
-  DOWNLOAD_CONTENT_ARCHIVE = 10,
-  DOWNLOAD_CONTENT_EXECUTABLE = 11,
-  DOWNLOAD_CONTENT_DMG = 12,
-  DOWNLOAD_CONTENT_CRX = 13,
-  DOWNLOAD_CONTENT_WEB = 14,
-  DOWNLOAD_CONTENT_EBOOK = 15,
-  DOWNLOAD_CONTENT_FONT = 16,
-  DOWNLOAD_CONTENT_APK = 17,
-  DOWNLOAD_CONTENT_MAX = 18,
-};
-
-static std::map<std::string, int> getMimeTypeToDownloadContentMap() {
+static std::map<std::string, DownloadContent>
+getMimeTypeToDownloadContentMap() {
   return {
-      {"application/octet-stream", DOWNLOAD_CONTENT_OCTET_STREAM},
-      {"binary/octet-stream", DOWNLOAD_CONTENT_OCTET_STREAM},
-      {"application/pdf", DOWNLOAD_CONTENT_PDF},
-      {"application/msword", DOWNLOAD_CONTENT_DOCUMENT},
+      {"application/octet-stream", DownloadContent::OCTET_STREAM},
+      {"binary/octet-stream", DownloadContent::OCTET_STREAM},
+      {"application/pdf", DownloadContent::PDF},
+      {"application/msword", DownloadContent::DOCUMENT},
       {"application/"
        "vnd.openxmlformats-officedocument.wordprocessingml.document",
-       DOWNLOAD_CONTENT_DOCUMENT},
-      {"application/rtf", DOWNLOAD_CONTENT_DOCUMENT},
-      {"application/vnd.oasis.opendocument.text", DOWNLOAD_CONTENT_DOCUMENT},
-      {"application/vnd.google-apps.document", DOWNLOAD_CONTENT_DOCUMENT},
-      {"application/vnd.ms-excel", DOWNLOAD_CONTENT_SPREADSHEET},
+       DownloadContent::DOCUMENT},
+      {"application/rtf", DownloadContent::DOCUMENT},
+      {"application/vnd.oasis.opendocument.text", DownloadContent::DOCUMENT},
+      {"application/vnd.google-apps.document", DownloadContent::DOCUMENT},
+      {"application/vnd.ms-excel", DownloadContent::SPREADSHEET},
       {"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-       DOWNLOAD_CONTENT_SPREADSHEET},
+       DownloadContent::SPREADSHEET},
       {"application/vnd.oasis.opendocument.spreadsheet",
-       DOWNLOAD_CONTENT_SPREADSHEET},
-      {"application/vnd.google-apps.spreadsheet", DOWNLOAD_CONTENT_SPREADSHEET},
-      {"application/vns.ms-powerpoint", DOWNLOAD_CONTENT_PRESENTATION},
+       DownloadContent::SPREADSHEET},
+      {"application/vnd.google-apps.spreadsheet", DownloadContent::SPREADSHEET},
+      {"application/vns.ms-powerpoint", DownloadContent::PRESENTATION},
       {"application/"
        "vnd.openxmlformats-officedocument.presentationml.presentation",
-       DOWNLOAD_CONTENT_PRESENTATION},
+       DownloadContent::PRESENTATION},
       {"application/vnd.oasis.opendocument.presentation",
-       DOWNLOAD_CONTENT_PRESENTATION},
+       DownloadContent::PRESENTATION},
       {"application/vnd.google-apps.presentation",
-       DOWNLOAD_CONTENT_PRESENTATION},
-      {"application/zip", DOWNLOAD_CONTENT_ARCHIVE},
-      {"application/x-gzip", DOWNLOAD_CONTENT_ARCHIVE},
-      {"application/x-rar-compressed", DOWNLOAD_CONTENT_ARCHIVE},
-      {"application/x-tar", DOWNLOAD_CONTENT_ARCHIVE},
-      {"application/x-bzip", DOWNLOAD_CONTENT_ARCHIVE},
-      {"application/x-bzip2", DOWNLOAD_CONTENT_ARCHIVE},
-      {"application/x-7z-compressed", DOWNLOAD_CONTENT_ARCHIVE},
-      {"application/x-exe", DOWNLOAD_CONTENT_EXECUTABLE},
-      {"application/java-archive", DOWNLOAD_CONTENT_EXECUTABLE},
-      {"application/vnd.apple.installer+xml", DOWNLOAD_CONTENT_EXECUTABLE},
-      {"application/x-csh", DOWNLOAD_CONTENT_EXECUTABLE},
-      {"application/x-sh", DOWNLOAD_CONTENT_EXECUTABLE},
-      {"application/x-apple-diskimage", DOWNLOAD_CONTENT_DMG},
-      {"application/x-chrome-extension", DOWNLOAD_CONTENT_CRX},
-      {"application/xhtml+xml", DOWNLOAD_CONTENT_WEB},
-      {"application/xml", DOWNLOAD_CONTENT_WEB},
-      {"application/javascript", DOWNLOAD_CONTENT_WEB},
-      {"application/json", DOWNLOAD_CONTENT_WEB},
-      {"application/typescript", DOWNLOAD_CONTENT_WEB},
-      {"application/vnd.mozilla.xul+xml", DOWNLOAD_CONTENT_WEB},
-      {"application/vnd.amazon.ebook", DOWNLOAD_CONTENT_EBOOK},
-      {"application/epub+zip", DOWNLOAD_CONTENT_EBOOK},
-      {"application/vnd.android.package-archive", DOWNLOAD_CONTENT_APK}};
+       DownloadContent::PRESENTATION},
+      {"application/zip", DownloadContent::ARCHIVE},
+      {"application/x-gzip", DownloadContent::ARCHIVE},
+      {"application/x-rar-compressed", DownloadContent::ARCHIVE},
+      {"application/x-tar", DownloadContent::ARCHIVE},
+      {"application/x-bzip", DownloadContent::ARCHIVE},
+      {"application/x-bzip2", DownloadContent::ARCHIVE},
+      {"application/x-7z-compressed", DownloadContent::ARCHIVE},
+      {"application/x-exe", DownloadContent::EXECUTABLE},
+      {"application/java-archive", DownloadContent::EXECUTABLE},
+      {"application/vnd.apple.installer+xml", DownloadContent::EXECUTABLE},
+      {"application/x-csh", DownloadContent::EXECUTABLE},
+      {"application/x-sh", DownloadContent::EXECUTABLE},
+      {"application/x-apple-diskimage", DownloadContent::DMG},
+      {"application/x-chrome-extension", DownloadContent::CRX},
+      {"application/xhtml+xml", DownloadContent::WEB},
+      {"application/xml", DownloadContent::WEB},
+      {"application/javascript", DownloadContent::WEB},
+      {"application/json", DownloadContent::WEB},
+      {"application/typescript", DownloadContent::WEB},
+      {"application/vnd.mozilla.xul+xml", DownloadContent::WEB},
+      {"application/vnd.amazon.ebook", DownloadContent::EBOOK},
+      {"application/epub+zip", DownloadContent::EBOOK},
+      {"application/vnd.android.package-archive", DownloadContent::APK}};
 }
 
 // NOTE: Keep in sync with DownloadImageType in
@@ -678,48 +708,53 @@ void RecordDownloadVideoType(const std::string& mime_type_string) {
                             DOWNLOAD_VIDEO_MAX);
 }
 
+}  // namespace
+
 DownloadContent DownloadContentFromMimeType(const std::string& mime_type_string,
                                             bool record_content_subcategory) {
-  DownloadContent download_content = DownloadContent(
-      GetMimeTypeMatch(mime_type_string, getMimeTypeToDownloadContentMap()));
+  DownloadContent download_content = DownloadContent::UNRECOGNIZED;
+  for (const auto& entry : getMimeTypeToDownloadContentMap()) {
+    if (entry.first == mime_type_string) {
+      download_content = entry.second;
+    }
+  }
 
   // Do partial matches.
-  if (download_content == DOWNLOAD_CONTENT_UNRECOGNIZED) {
+  if (download_content == DownloadContent::UNRECOGNIZED) {
     if (base::StartsWith(mime_type_string, "text/",
                          base::CompareCase::SENSITIVE)) {
-      download_content = DOWNLOAD_CONTENT_TEXT;
+      download_content = DownloadContent::TEXT;
       if (record_content_subcategory)
         RecordDownloadTextType(mime_type_string);
     } else if (base::StartsWith(mime_type_string, "image/",
                                 base::CompareCase::SENSITIVE)) {
-      download_content = DOWNLOAD_CONTENT_IMAGE;
+      download_content = DownloadContent::IMAGE;
       if (record_content_subcategory)
         RecordDownloadImageType(mime_type_string);
     } else if (base::StartsWith(mime_type_string, "audio/",
                                 base::CompareCase::SENSITIVE)) {
-      download_content = DOWNLOAD_CONTENT_AUDIO;
+      download_content = DownloadContent::AUDIO;
       if (record_content_subcategory)
         RecordDownloadAudioType(mime_type_string);
     } else if (base::StartsWith(mime_type_string, "video/",
                                 base::CompareCase::SENSITIVE)) {
-      download_content = DOWNLOAD_CONTENT_VIDEO;
+      download_content = DownloadContent::VIDEO;
       if (record_content_subcategory)
         RecordDownloadVideoType(mime_type_string);
     } else if (base::StartsWith(mime_type_string, "font/",
                                 base::CompareCase::SENSITIVE)) {
-      download_content = DOWNLOAD_CONTENT_FONT;
+      download_content = DownloadContent::FONT;
     }
   }
 
   return download_content;
 }
 
-}  // namespace
-
 void RecordDownloadMimeType(const std::string& mime_type_string) {
-  UMA_HISTOGRAM_ENUMERATION("Download.Start.ContentType",
-                            DownloadContentFromMimeType(mime_type_string, true),
-                            DOWNLOAD_CONTENT_MAX);
+  DownloadContent download_content =
+      DownloadContentFromMimeType(mime_type_string, true);
+  UMA_HISTOGRAM_ENUMERATION("Download.Start.ContentType", download_content,
+                            DownloadContent::MAX);
 }
 
 void RecordDownloadMimeTypeForNormalProfile(
@@ -727,7 +762,7 @@ void RecordDownloadMimeTypeForNormalProfile(
   UMA_HISTOGRAM_ENUMERATION(
       "Download.Start.ContentType.NormalProfile",
       DownloadContentFromMimeType(mime_type_string, false),
-      DOWNLOAD_CONTENT_MAX);
+      DownloadContent::MAX);
 }
 
 void RecordDownloadContentDisposition(

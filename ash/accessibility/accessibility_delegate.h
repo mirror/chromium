@@ -8,7 +8,7 @@
 #include "ash/ash_export.h"
 #include "ash/public/cpp/accessibility_types.h"
 #include "base/time/time.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 
 namespace ash {
 
@@ -21,24 +21,11 @@ class ASH_EXPORT AccessibilityDelegate {
  public:
   virtual ~AccessibilityDelegate() {}
 
-  // Invoked to toggle spoken feedback for accessibility
-  virtual void ToggleSpokenFeedback(
-      AccessibilityNotificationVisibility notify) = 0;
-
-  // Returns true if spoken feedback is enabled.
-  virtual bool IsSpokenFeedbackEnabled() const = 0;
-
   // Invoked to enable the screen magnifier.
   virtual void SetMagnifierEnabled(bool enabled) = 0;
 
   // Returns true if the screen magnifier is enabled.
   virtual bool IsMagnifierEnabled() const = 0;
-
-  // Invoked to enable autoclick.
-  virtual void SetAutoclickEnabled(bool enabled) = 0;
-
-  // Returns if autoclick is enabled or not.
-  virtual bool IsAutoclickEnabled() const = 0;
 
   // Invoked to enable or disable the a11y on-screen keyboard.
   virtual void SetVirtualKeyboardEnabled(bool enabled) = 0;
@@ -90,9 +77,6 @@ class ASH_EXPORT AccessibilityDelegate {
 
   // Returns true when the accessibility menu should be shown.
   virtual bool ShouldShowAccessibilityMenu() const = 0;
-
-  // Returns true if a braille display is connected to the system.
-  virtual bool IsBrailleDisplayConnected() const = 0;
 
   // Cancel all current and queued speech immediately.
   virtual void SilenceSpokenFeedback() const = 0;

@@ -66,7 +66,7 @@ HTMLFormControlElement::HTMLFormControlElement(const QualifiedName& tag_name,
   SetHasCustomStyleCallbacks();
 }
 
-HTMLFormControlElement::~HTMLFormControlElement() {}
+HTMLFormControlElement::~HTMLFormControlElement() = default;
 
 void HTMLFormControlElement::Trace(blink::Visitor* visitor) {
   ListedElement::Trace(visitor);
@@ -237,6 +237,19 @@ void HTMLFormControlElement::SetAutofilled(bool autofilled) {
   PseudoStateChanged(CSSSelector::kPseudoAutofill);
 }
 
+const AtomicString& HTMLFormControlElement::autocapitalize() const {
+  if (!FastGetAttribute(autocapitalizeAttr).IsEmpty())
+    return HTMLElement::autocapitalize();
+
+  // If the form control itself does not have the autocapitalize attribute set,
+  // but the form owner is non-null and does have the autocapitalize attribute
+  // set, we inherit from the form owner.
+  if (HTMLFormElement* form = Form())
+    return form->autocapitalize();
+
+  return g_empty_atom;
+}
+
 static bool ShouldAutofocusOnAttach(const HTMLFormControlElement* element) {
   if (!element->IsAutofocusable())
     return false;
@@ -375,7 +388,7 @@ String HTMLFormControlElement::ResultForDialogSubmit() {
   return FastGetAttribute(valueAttr);
 }
 
-void HTMLFormControlElement::DidRecalcStyle() {
+void HTMLFormControlElement::DidRecalcStyle(StyleRecalcChange) {
   if (LayoutObject* layout_object = GetLayoutObject())
     layout_object->UpdateFromElement();
 }

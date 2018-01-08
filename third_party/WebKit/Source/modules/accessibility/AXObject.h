@@ -69,25 +69,6 @@ enum class AOMRelationListProperty;
 
 typedef unsigned AXID;
 
-enum AXObjectInclusion {
-  kIncludeObject,
-  kIgnoreObject,
-  kDefaultBehavior,
-};
-
-enum AccessibilityCheckedState {
-  kCheckedStateUndefined = 0,
-  kCheckedStateFalse,
-  kCheckedStateTrue,
-  kCheckedStateMixed
-};
-
-enum AccessibilityOptionalBool {
-  kOptionalBoolUndefined = 0,
-  kOptionalBoolTrue,
-  kOptionalBoolFalse
-};
-
 class AXSparseAttributeClient {
  public:
   virtual void AddBoolAttribute(AXBoolAttribute, bool) = 0;
@@ -95,40 +76,6 @@ class AXSparseAttributeClient {
   virtual void AddObjectAttribute(AXObjectAttribute, AXObject&) = 0;
   virtual void AddObjectVectorAttribute(AXObjectVectorAttribute,
                                         HeapVector<Member<AXObject>>&) = 0;
-};
-
-// The potential native HTML-based text (name, description or placeholder)
-// sources for an element.  See
-// http://rawgit.com/w3c/aria/master/html-aam/html-aam.html#accessible-name-and-description-calculation
-enum AXTextFromNativeHTML {
-  kAXTextFromNativeHTMLUninitialized = -1,
-  kAXTextFromNativeHTMLFigcaption,
-  kAXTextFromNativeHTMLLabel,
-  kAXTextFromNativeHTMLLabelFor,
-  kAXTextFromNativeHTMLLabelWrapped,
-  kAXTextFromNativeHTMLLegend,
-  kAXTextFromNativeHTMLTableCaption,
-  kAXTextFromNativeHTMLTitleElement,
-};
-
-enum AXIgnoredReason {
-  kAXActiveModalDialog,
-  kAXAncestorIsLeafNode,
-  kAXAriaHiddenElement,
-  kAXAriaHiddenSubtree,
-  kAXEmptyAlt,
-  kAXEmptyText,
-  kAXInertElement,
-  kAXInertSubtree,
-  kAXInheritsPresentation,
-  kAXLabelContainer,
-  kAXLabelFor,
-  kAXNotRendered,
-  kAXNotVisible,
-  kAXPresentationalRole,
-  kAXProbablyPresentational,
-  kAXStaticTextUsedAsNameFor,
-  kAXUninteresting
 };
 
 class IgnoredReason {
@@ -429,7 +376,9 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   virtual bool IsMultiSelectable() const { return false; }
   virtual bool IsOffScreen() const { return false; }
   virtual bool IsRequired() const { return false; }
-  virtual bool IsSelected() const { return false; }
+  virtual AccessibilitySelectedState IsSelected() const {
+    return kSelectedStateUndefined;
+  }
   virtual bool IsSelectedOptionActive() const { return false; }
   virtual bool IsVisible() const { return true; }
   virtual bool IsVisited() const { return false; }
@@ -437,7 +386,6 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   // Check whether certain properties can be modified.
   virtual bool CanSetFocusAttribute() const;
   bool CanSetValueAttribute() const;
-  virtual bool CanSetSelectedAttribute() const;
 
   // Whether objects are ignored, i.e. not included in the tree.
   bool AccessibilityIsIgnored();
@@ -863,6 +811,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
     return nullptr;
   }
 
+  virtual bool CanSetSelectedAttribute() const;
   const AXObject* InertRoot() const;
 
   // Returns true if the event was handled.

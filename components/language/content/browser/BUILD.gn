@@ -10,10 +10,10 @@ action("make_s2_language_locator") {
     "adminregionsdata.csv",
   ]
   inputs = [
-    "template/language_code_locator_helper.cc.tmpl",
+    "template/language_code_locator_helper.h.tmpl",
   ]
   outputs = [
-    "$target_gen_dir/language_code_locator_helper.cc",
+    "$target_gen_dir/language_code_locator_helper.h",
   ]
 
   args = [
@@ -45,7 +45,7 @@ static_library("browser") {
     ":language_code_locator",
     "//base",
     "//net",
-    "//services/device/public/interfaces:interfaces",
+    "//services/device/public/interfaces",
     "//services/service_manager/public/cpp",
   ]
 }
@@ -61,7 +61,7 @@ source_set("unit_tests") {
     ":language_code_locator",
     "//base",
     "//base/test:test_support",
-    "//services/device/public/interfaces:interfaces",
+    "//services/device/public/interfaces",
     "//services/service_manager/public/cpp",
     "//testing/gmock",
     "//testing/gtest",

@@ -28,6 +28,7 @@
 #include "net/quic/chromium/quic_test_packet_maker.h"
 #include "net/quic/chromium/test_task_runner.h"
 #include "net/quic/core/crypto/null_encrypter.h"
+#include "net/quic/core/tls_client_handshaker.h"
 #include "net/quic/test_tools/crypto_test_utils.h"
 #include "net/quic/test_tools/mock_clock.h"
 #include "net/quic/test_tools/mock_random.h"
@@ -75,7 +76,7 @@ const QuicStreamId kClientDataStreamId1 = kHeadersStreamId + 2;
 }  // namespace
 
 class QuicProxyClientSocketTest
-    : public ::testing::TestWithParam<QuicTransportVersion> {
+    : public ::testing::TestWithParam<std::tuple<QuicTransportVersion, bool>> {
  protected:
   static const bool kFin = true;
   static const bool kIncludeVersion = true;
@@ -104,19 +105,23 @@ class QuicProxyClientSocketTest
   }
 
   QuicProxyClientSocketTest()
-      : version_(GetParam()),
-        crypto_config_(crypto_test_utils::ProofVerifierForTesting()),
+      : version_(std::get<0>(GetParam())),
+        client_headers_include_h2_stream_dependency_(std::get<1>(GetParam())),
+        crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
+                       TlsClientHandshaker::CreateSslCtx()),
         connection_id_(2),
         client_maker_(version_,
                       connection_id_,
                       &clock_,
                       kProxyHost,
-                      Perspective::IS_CLIENT),
+                      Perspective::IS_CLIENT,
+                      client_headers_include_h2_stream_dependency_),
         server_maker_(version_,
                       connection_id_,
                       &clock_,
                       kProxyHost,
-                      Perspective::IS_SERVER),
+                      Perspective::IS_SERVER,
+                      false),
         random_generator_(0),
         header_stream_offset_(0),
         response_offset_(0),
@@ -172,7 +177,7 @@ class QuicProxyClientSocketTest
         helper_.get(), alarm_factory_.get(), writer, true /* owns_writer */,
         Perspective::IS_CLIENT,
         SupportedVersions(
-            net::ParsedQuicVersion(net::PROTOCOL_QUIC_CRYPTO, GetParam())));
+            net::ParsedQuicVersion(net::PROTOCOL_QUIC_CRYPTO, version_)));
     connection->set_visitor(&visitor_);
     QuicConnectionPeer::SetSendAlgorithm(connection, send_algorithm_);
 
@@ -202,8 +207,9 @@ class QuicProxyClientSocketTest
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         kQuicYieldAfterPacketsRead,
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
-        /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
-        "CONNECTION_UNKNOWN", dns_start, dns_end, &push_promise_index_, nullptr,
+        client_headers_include_h2_stream_dependency_, /*cert_verify_flags=*/0,
+        DefaultQuicConfig(), &crypto_config_, "CONNECTION_UNKNOWN", dns_start,
+        dns_end, &push_promise_index_, nullptr,
         base::ThreadTaskRunnerHandle::Get().get(),
         /*socket_performance_watcher=*/nullptr, net_log_.bound().net_log()));
 
@@ -287,8 +293,8 @@ class QuicProxyClientSocketTest
     PopulateConnectRequestIR(&block);
     return client_maker_.MakeRequestHeadersPacket(
         packet_number, kClientDataStreamId1, kIncludeVersion, !kFin,
-        ConvertRequestPriorityToQuicPriority(LOWEST), std::move(block), nullptr,
-        &header_stream_offset_);
+        ConvertRequestPriorityToQuicPriority(LOWEST), std::move(block), 0,
+        nullptr, &header_stream_offset_);
   }
 
   std::unique_ptr<QuicReceivedPacket> ConstructConnectAuthRequestPacket(
@@ -298,8 +304,8 @@ class QuicProxyClientSocketTest
     block["proxy-authorization"] = "Basic Zm9vOmJhcg==";
     return client_maker_.MakeRequestHeadersPacket(
         packet_number, kClientDataStreamId1, kIncludeVersion, !kFin,
-        ConvertRequestPriorityToQuicPriority(LOWEST), std::move(block), nullptr,
-        &header_stream_offset_);
+        ConvertRequestPriorityToQuicPriority(LOWEST), std::move(block), 0,
+        nullptr, &header_stream_offset_);
   }
 
   std::unique_ptr<QuicReceivedPacket> ConstructDataPacket(
@@ -443,9 +449,8 @@ class QuicProxyClientSocketTest
   void AssertSyncWriteSucceeds(const char* data, int len) {
     scoped_refptr<IOBufferWithSize> buf(new IOBufferWithSize(len));
     memcpy(buf->data(), data, len);
-    EXPECT_THAT(sock_->Write(buf.get(), buf->size(), CompletionCallback(),
-                             TRAFFIC_ANNOTATION_FOR_TESTS),
-                IsOk());
+    EXPECT_EQ(len, sock_->Write(buf.get(), buf->size(), CompletionCallback(),
+                                TRAFFIC_ANNOTATION_FOR_TESTS));
   }
 
   void AssertSyncReadEquals(const char* data, int len) {
@@ -484,7 +489,8 @@ class QuicProxyClientSocketTest
     ASSERT_EQ(SpdyString(data, len), SpdyString(read_buf_->data(), len));
   }
 
-  QuicTransportVersion version_;
+  const QuicTransportVersion version_;
+  const bool client_headers_include_h2_stream_dependency_;
 
   // order of destruction of these members matter
   MockClock clock_;
@@ -1111,7 +1117,7 @@ TEST_P(QuicProxyClientSocketTest, AsyncWriteAroundReads) {
   // asynchronous starting with the second time it's called while the UDP socket
   // is write-blocked. Therefore, at least two writes need to be called on
   // |sock_| to get an asynchronous one.
-  AssertWriteReturns(kMsg2, kLen2, OK);
+  AssertWriteReturns(kMsg2, kLen2, kLen2);
   AssertWriteReturns(kMsg2, kLen2, ERR_IO_PENDING);
 
   AssertAsyncReadEquals(kMsg3, kLen3);
@@ -1120,7 +1126,7 @@ TEST_P(QuicProxyClientSocketTest, AsyncWriteAroundReads) {
 
   // Now the write will complete
   ResumeAndRun();
-  EXPECT_EQ(OK, write_callback_.WaitForResult());
+  EXPECT_EQ(kLen2, write_callback_.WaitForResult());
 }
 
 // ----------- Reading/Writing on Closed socket
@@ -1267,7 +1273,7 @@ TEST_P(QuicProxyClientSocketTest, WritePendingOnClose) {
   // asynchronous starting with the second time it's called while the UDP socket
   // is write-blocked. Therefore, at least two writes need to be called on
   // |sock_| to get an asynchronous one.
-  AssertWriteReturns(kMsg1, kLen1, OK);
+  AssertWriteReturns(kMsg1, kLen1, kLen1);
 
   // This second write will be async. This is the pending write that's being
   // tested.
@@ -1296,7 +1302,7 @@ TEST_P(QuicProxyClientSocketTest, DisconnectWithWritePending) {
   // asynchronous starting with the second time it's called while the UDP socket
   // is write-blocked. Therefore, at least two writes need to be called on
   // |sock_| to get an asynchronous one.
-  AssertWriteReturns(kMsg1, kLen1, OK);
+  AssertWriteReturns(kMsg1, kLen1, kLen1);
 
   // This second write will be async. This is the pending write that's being
   // tested.
@@ -1370,7 +1376,7 @@ TEST_P(QuicProxyClientSocketTest, RstWithReadAndWritePending) {
   // asynchronous starting with the second time it's called while the UDP socket
   // is write-blocked. Therefore, at least two writes need to be called on
   // |sock_| to get an asynchronous one.
-  AssertWriteReturns(kMsg2, kLen2, OK);
+  AssertWriteReturns(kMsg2, kLen2, kLen2);
   AssertWriteReturns(kMsg2, kLen2, ERR_IO_PENDING);
 
   ResumeAndRun();
@@ -1490,7 +1496,7 @@ TEST_P(QuicProxyClientSocketTest, RstWithReadAndWritePendingDelete) {
   // asynchronous starting with the second time it's called while the UDP socket
   // is write-blocked. Therefore, at least two writes need to be called on
   // |sock_| to get an asynchronous one.
-  AssertWriteReturns(kMsg1, kLen1, OK);
+  AssertWriteReturns(kMsg1, kLen1, kLen1);
   AssertWriteReturns(kMsg1, kLen1, ERR_IO_PENDING);
 
   ResumeAndRun();
@@ -1501,9 +1507,11 @@ TEST_P(QuicProxyClientSocketTest, RstWithReadAndWritePendingDelete) {
   EXPECT_FALSE(write_callback_.have_result());
 }
 
-INSTANTIATE_TEST_CASE_P(Version,
-                        QuicProxyClientSocketTest,
-                        ::testing::ValuesIn(AllSupportedTransportVersions()));
+INSTANTIATE_TEST_CASE_P(
+    VersionIncludeStreamDependencySequnece,
+    QuicProxyClientSocketTest,
+    ::testing::Combine(::testing::ValuesIn(AllSupportedTransportVersions()),
+                       ::testing::Bool()));
 
 }  // namespace test
 }  // namespace net

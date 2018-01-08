@@ -37,7 +37,7 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
 #include "gpu/command_buffer/service/image_factory.h"
-#include "gpu/command_buffer/service/mailbox_manager.h"
+#include "gpu/command_buffer/service/mailbox_manager_factory.h"
 #include "gpu/command_buffer/service/memory_program_cache.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "gpu/command_buffer/service/query_manager.h"
@@ -137,9 +137,11 @@ scoped_refptr<InProcessCommandBuffer::Service> GetInitialService(
 
 }  // anonyous namespace
 
+const int InProcessCommandBuffer::kGpuMemoryBufferClientId = 1;
+
 InProcessCommandBuffer::Service::Service(
     const GpuPreferences& gpu_preferences,
-    gles2::MailboxManager* mailbox_manager,
+    MailboxManager* mailbox_manager,
     scoped_refptr<gl::GLShareGroup> share_group,
     const GpuFeatureInfo& gpu_feature_info)
     : gpu_preferences_(gpu_preferences),
@@ -149,7 +151,7 @@ InProcessCommandBuffer::Service::Service(
       shader_translator_cache_(gpu_preferences_) {
   if (!mailbox_manager_) {
     // TODO(piman): have embedders own the mailbox manager.
-    owned_mailbox_manager_ = gles2::MailboxManager::Create(gpu_preferences_);
+    owned_mailbox_manager_ = gles2::CreateMailboxManager(gpu_preferences_);
     mailbox_manager_ = owned_mailbox_manager_.get();
   }
 }
@@ -240,7 +242,7 @@ gpu::ContextResult InProcessCommandBuffer::Initialize(
     scoped_refptr<gl::GLSurface> surface,
     bool is_offscreen,
     SurfaceHandle window,
-    const gles2::ContextCreationAttribHelper& attribs,
+    const ContextCreationAttribs& attribs,
     InProcessCommandBuffer* share_group,
     GpuMemoryBufferManager* gpu_memory_buffer_manager,
     ImageFactory* image_factory,
@@ -814,12 +816,9 @@ void InProcessCommandBuffer::CreateImageOnGpuThread(
         return;
       }
 
-      // Note: this assumes that client ID is always 0.
-      const int kClientId = 0;
-
       scoped_refptr<gl::GLImage> image =
           image_factory_->CreateImageForGpuMemoryBuffer(
-              handle, size, format, internalformat, kClientId,
+              handle, size, format, internalformat, kGpuMemoryBufferClientId,
               kNullSurfaceHandle);
       if (!image.get()) {
         LOG(ERROR) << "Failed to create image for buffer.";
@@ -866,7 +865,7 @@ void InProcessCommandBuffer::CacheShader(const std::string& key,
 void InProcessCommandBuffer::OnFenceSyncRelease(uint64_t release) {
   SyncToken sync_token(GetNamespaceID(), GetCommandBufferID(), release);
 
-  gles2::MailboxManager* mailbox_manager =
+  MailboxManager* mailbox_manager =
       decoder_->GetContextGroup()->mailbox_manager();
   mailbox_manager->PushTextureUpdates(sync_token);
 
@@ -878,7 +877,7 @@ bool InProcessCommandBuffer::OnWaitSyncToken(const SyncToken& sync_token) {
   SyncPointManager* sync_point_manager = service_->sync_point_manager();
   DCHECK(sync_point_manager);
 
-  gles2::MailboxManager* mailbox_manager =
+  MailboxManager* mailbox_manager =
       decoder_->GetContextGroup()->mailbox_manager();
   DCHECK(mailbox_manager);
 
@@ -911,7 +910,7 @@ bool InProcessCommandBuffer::OnWaitSyncToken(const SyncToken& sync_token) {
 void InProcessCommandBuffer::OnWaitSyncTokenCompleted(
     const SyncToken& sync_token) {
   DCHECK(waiting_for_sync_point_);
-  gles2::MailboxManager* mailbox_manager =
+  MailboxManager* mailbox_manager =
       decoder_->GetContextGroup()->mailbox_manager();
   mailbox_manager->PullTextureUpdates(sync_token);
   waiting_for_sync_point_ = false;
@@ -1110,6 +1109,9 @@ void InProcessCommandBuffer::DidCreateAcceleratedSurfaceChildWindow(
   // In the browser process call ::SetParent() directly.
   if (!gpu_channel_manager_delegate_) {
     ::SetParent(child_window, parent_window);
+    // Move D3D window behind Chrome's window to avoid losing some messages.
+    ::SetWindowPos(child_window, HWND_BOTTOM, 0, 0, 0, 0,
+                   SWP_NOMOVE | SWP_NOSIZE);
     return;
   }
 

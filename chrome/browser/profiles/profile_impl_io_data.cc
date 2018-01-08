@@ -59,7 +59,6 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/storage_partition.h"
-#include "content/public/common/network_service.mojom.h"
 #include "extensions/browser/extension_protocols.h"
 #include "extensions/common/constants.h"
 #include "extensions/features/features.h"
@@ -69,18 +68,23 @@
 #include "net/http/http_network_session.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_server_properties_manager.h"
-#include "net/reporting/reporting_feature.h"
-#include "net/reporting/reporting_policy.h"
-#include "net/reporting/reporting_service.h"
+#include "net/net_features.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_intercepting_job_factory.h"
 #include "net/url_request/url_request_job_factory_impl.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
 #include "storage/browser/quota/special_storage_policy.h"
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
 #include "chrome/browser/offline_pages/offline_page_request_interceptor.h"
 #endif
+
+#if BUILDFLAG(ENABLE_REPORTING)
+#include "net/network_error_logging/network_error_logging_service.h"
+#include "net/reporting/reporting_policy.h"
+#include "net/reporting/reporting_service.h"
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace {
 
@@ -479,8 +483,6 @@ void ProfileImplIOData::InitializeInternal(
   SetUpJobFactoryDefaultsForBuilder(
       builder, std::move(request_interceptors),
       std::move(profile_params->protocol_handler_interceptor));
-
-  builder->set_reporting_policy(MaybeCreateReportingPolicy());
 }
 
 void ProfileImplIOData::OnMainRequestContextCreated(
@@ -578,7 +580,7 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
 
   // Build a new HttpNetworkSession that uses the new ChannelIDService.
   // TODO(mmenke):  It's weird to combine state from
-  // main_request_context_storage() objects and the argumet to this method,
+  // main_request_context_storage() objects and the argument to this method,
   // |main_context|.  Remove |main_context| as an argument, and just use
   // main_context() instead.
   net::HttpNetworkSession* network_session =
@@ -615,7 +617,19 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
           context->host_resolver()));
   context->SetJobFactory(std::move(top_job_factory));
 
-  context->SetReportingService(MaybeCreateReportingService(context));
+#if BUILDFLAG(ENABLE_REPORTING)
+  if (context->reporting_service()) {
+    context->SetReportingService(net::ReportingService::Create(
+        context->reporting_service()->GetPolicy(), context));
+  }
+
+  if (context->network_error_logging_delegate()) {
+    context->SetNetworkErrorLoggingDelegate(
+        net::NetworkErrorLoggingService::Create());
+    context->network_error_logging_delegate()->SetReportingService(
+        context->reporting_service());
+  }
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
   return context;
 }
@@ -703,23 +717,4 @@ ProfileImplIOData::AcquireIsolatedMediaRequestContext(
 
 chrome_browser_net::Predictor* ProfileImplIOData::GetPredictor() {
   return predictor_.get();
-}
-
-std::unique_ptr<net::ReportingService>
-ProfileImplIOData::MaybeCreateReportingService(
-    net::URLRequestContext* url_request_context) const {
-  std::unique_ptr<net::ReportingPolicy> reporting_policy(
-      MaybeCreateReportingPolicy());
-  if (!reporting_policy)
-    return std::unique_ptr<net::ReportingService>();
-
-  return net::ReportingService::Create(*reporting_policy, url_request_context);
-}
-
-std::unique_ptr<net::ReportingPolicy>
-ProfileImplIOData::MaybeCreateReportingPolicy() {
-  if (!base::FeatureList::IsEnabled(features::kReporting))
-    return std::unique_ptr<net::ReportingPolicy>();
-
-  return base::MakeUnique<net::ReportingPolicy>();
 }

@@ -49,8 +49,6 @@
 #include "WebPlatformEventType.h"
 #include "WebSize.h"
 #include "WebSpeechSynthesizer.h"
-#include "WebStorageQuotaCallbacks.h"
-#include "WebStorageQuotaType.h"
 #include "WebString.h"
 #include "WebURLError.h"
 #include "WebURLLoader.h"
@@ -136,6 +134,7 @@ struct WebFloatPoint;
 class WebTaskRunner;
 class WebThemeEngine;
 class WebThread;
+struct WebThreadCreationParams;
 class WebTrialTokenValidator;
 class WebURLLoaderMockFactory;
 class WebURLResponse;
@@ -406,7 +405,8 @@ class BLINK_PLATFORM_EXPORT Platform {
   // Threads -------------------------------------------------------
 
   // Creates an embedder-defined thread.
-  virtual std::unique_ptr<WebThread> CreateThread(const char* name);
+  virtual std::unique_ptr<WebThread> CreateThread(
+      const WebThreadCreationParams&);
 
   // Creates a WebAudio-specific thread with the elevated priority. Do NOT use
   // for any other purpose.
@@ -523,11 +523,13 @@ class BLINK_PLATFORM_EXPORT Platform {
     bool support_depth = false;
     bool support_antialias = false;
     bool support_stencil = false;
+
+    // Offscreen contexts created for WebGL should not need the RasterInterface.
+    bool enable_raster_interface = false;
   };
   struct GraphicsInfo {
     unsigned vendor_id = 0;
     unsigned device_id = 0;
-    unsigned process_crash_count = 0;
     unsigned reset_notification_strategy = 0;
     bool sandboxed = false;
     bool amd_switchable = false;
@@ -692,18 +694,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   // |dom_key| values are based on the value defined in
   // ui/events/keycodes/dom3/dom_key_data.h.
   virtual bool IsDomKeyForModifier(int dom_key) { return false; }
-
-  // Quota -----------------------------------------------------------
-
-  // Queries the storage partition's storage usage and quota information.
-  // WebStorageQuotaCallbacks::DidQueryStorageUsageAndQuota will be called
-  // with the current usage and quota information for the partition. When
-  // an error occurs WebStorageQuotaCallbacks::DidFail is called with an
-  // error code.
-  virtual void QueryStorageUsageAndQuota(
-      const WebSecurityOrigin& storage_partition,
-      WebStorageQuotaType,
-      WebStorageQuotaCallbacks) {}
 
   // WebDatabase --------------------------------------------------------
 

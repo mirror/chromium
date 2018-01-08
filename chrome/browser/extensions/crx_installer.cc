@@ -13,12 +13,10 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "base/version.h"
@@ -41,6 +39,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_dispatcher_host.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
@@ -63,6 +62,7 @@
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/common/user_script.h"
 #include "extensions/strings/grit/extensions_strings.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -99,6 +99,9 @@ scoped_refptr<CrxInstaller> CrxInstaller::Create(
     std::unique_ptr<ExtensionInstallPrompt> client) {
   return new CrxInstaller(frontend->AsWeakPtr(), std::move(client), NULL);
 }
+
+// static
+service_manager::Connector* CrxInstaller::connector_for_test_ = nullptr;
 
 // static
 scoped_refptr<CrxInstaller> CrxInstaller::Create(
@@ -186,8 +189,8 @@ void CrxInstaller::InstallCrxFile(const CRXFileInfo& source_file) {
   source_file_ = source_file.path;
 
   auto unpacker = base::MakeRefCounted<SandboxedUnpacker>(
-      install_source_, creation_flags_, install_directory_,
-      installer_task_runner_.get(), this);
+      GetConnector()->Clone(), install_source_, creation_flags_,
+      install_directory_, installer_task_runner_.get(), this);
 
   if (!installer_task_runner_->PostTask(
           FROM_HERE, base::BindOnce(&SandboxedUnpacker::StartWithCrx, unpacker,
@@ -208,8 +211,8 @@ void CrxInstaller::InstallUnpackedCrx(const std::string& extension_id,
   source_file_ = unpacked_dir;
 
   auto unpacker = base::MakeRefCounted<SandboxedUnpacker>(
-      install_source_, creation_flags_, install_directory_,
-      installer_task_runner_.get(), this);
+      GetConnector()->Clone(), install_source_, creation_flags_,
+      install_directory_, installer_task_runner_.get(), this);
 
   if (!installer_task_runner_->PostTask(
           FROM_HERE,
@@ -444,7 +447,7 @@ CrxInstallError CrxInstaller::AllowInstall(const Extension* extension) {
       // TODO(erikkay) Apply this rule for paid extensions and themes as well.
       if (ManifestURL::UpdatesFromGallery(extension)) {
         return CrxInstallError(l10n_util::GetStringFUTF16(
-            IDS_EXTENSION_DISALLOW_NON_DOWNLOADED_GALLERY_INSTALLS,
+            IDS_EXTENSION_INSTALL_GALLERY_ONLY,
             l10n_util::GetStringUTF16(IDS_EXTENSION_WEB_STORE_TITLE)));
       }
 
@@ -455,7 +458,7 @@ CrxInstallError CrxInstaller::AllowInstall(const Extension* extension) {
       pattern.SetHost(download_url_.host());
       pattern.SetMatchSubdomains(true);
 
-      URLPatternSet patterns = extension_->web_extent();
+      const URLPatternSet& patterns = extension_->web_extent();
       for (URLPatternSet::const_iterator i = patterns.begin();
            i != patterns.end(); ++i) {
         if (!pattern.MatchesHost(i->host())) {
@@ -584,12 +587,12 @@ void CrxInstaller::CheckInstall() {
   }
 
   // Run the policy, requirements and blacklist checks in parallel.
-  check_group_ = base::MakeUnique<PreloadCheckGroup>();
+  check_group_ = std::make_unique<PreloadCheckGroup>();
 
-  policy_check_ = base::MakeUnique<PolicyCheck>(profile_, extension());
-  requirements_check_ = base::MakeUnique<RequirementsChecker>(extension());
+  policy_check_ = std::make_unique<PolicyCheck>(profile_, extension());
+  requirements_check_ = std::make_unique<RequirementsChecker>(extension());
   blacklist_check_ =
-      base::MakeUnique<BlacklistCheck>(Blacklist::Get(profile_), extension_);
+      std::make_unique<BlacklistCheck>(Blacklist::Get(profile_), extension_);
 
   check_group_->AddCheck(policy_check_.get());
   check_group_->AddCheck(requirements_check_.get());
@@ -1022,9 +1025,16 @@ void CrxInstaller::ConfirmReEnable() {
             service->profile(), extension());
     client_->ShowDialog(base::Bind(&CrxInstaller::OnInstallPromptDone, this),
                         extension(), nullptr,
-                        base::MakeUnique<ExtensionInstallPrompt::Prompt>(type),
+                        std::make_unique<ExtensionInstallPrompt::Prompt>(type),
                         ExtensionInstallPrompt::GetDefaultShowDialogCallback());
   }
+}
+
+service_manager::Connector* CrxInstaller::GetConnector() const {
+  return connector_for_test_
+             ? connector_for_test_
+             : content::ServiceManagerConnection::GetForProcess()
+                   ->GetConnector();
 }
 
 }  // namespace extensions

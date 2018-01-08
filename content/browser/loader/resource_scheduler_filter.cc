@@ -5,8 +5,8 @@
 #include "content/browser/loader/resource_scheduler_filter.h"
 
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
-#include "content/browser/loader/resource_scheduler.h"
 #include "content/common/frame_messages.h"
+#include "content/network/resource_scheduler.h"
 #include "ipc/ipc_message_macros.h"
 
 namespace content {
@@ -36,13 +36,13 @@ void ResourceSchedulerFilter::OnDidCommitMainframeNavigation(
     int render_view_routing_id) {
   auto* scheduler = GetResourceSchedulerOrNullptr();
   if (scheduler)
-    scheduler->OnNavigate(render_process_id, render_view_routing_id);
+    scheduler->DeprecatedOnNavigate(render_process_id, render_view_routing_id);
 }
 
 void ResourceSchedulerFilter::OnWillInsertBody(int render_view_routing_id) {
   auto* scheduler = GetResourceSchedulerOrNullptr();
   if (scheduler)
-    scheduler->OnWillInsertBody(child_id_, render_view_routing_id);
+    scheduler->DeprecatedOnWillInsertBody(child_id_, render_view_routing_id);
 }
 
 }  // namespace content

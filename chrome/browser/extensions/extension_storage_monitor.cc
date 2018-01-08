@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/extension_storage_monitor.h"
 
 #include <map>
+#include <memory>
 #include <utility>
 
 #include "base/metrics/histogram_macros.h"
@@ -36,9 +37,10 @@
 #include "extensions/common/permissions/permissions_data.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/browser/quota/storage_observer.h"
+#include "third_party/WebKit/common/quota/quota_types.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/message_center/notification.h"
-#include "ui/message_center/notifier_id.h"
+#include "ui/message_center/public/cpp/notification.h"
+#include "ui/message_center/public/cpp/notifier_id.h"
 #include "ui/message_center/views/constants.h"
 
 using content::BrowserThread;
@@ -123,12 +125,12 @@ class SingleExtensionStorageObserver : public storage::StorageObserver {
         should_uma_(should_uma) {
     // We always observe persistent storage usage.
     storage::StorageObserver::MonitorParams params(
-        storage::kStorageTypePersistent, origin, rate, false);
+        blink::mojom::StorageType::kPersistent, origin, rate, false);
     quota_manager_->AddStorageObserver(this, params);
     if (should_uma) {
       // And if this is for uma, we also observe temporary storage usage.
-      MonitorParams temporary_params(storage::kStorageTypeTemporary, origin,
-                                     rate, false);
+      MonitorParams temporary_params(blink::mojom::StorageType::kTemporary,
+                                     origin, rate, false);
       quota_manager_->AddStorageObserver(this, temporary_params);
     }
   }
@@ -190,7 +192,7 @@ class ExtensionStorageMonitorIOHelper
     DCHECK(!FindObserver(extension_id));
 
     storage_observers_[extension_id] =
-        base::MakeUnique<SingleExtensionStorageObserver>(
+        std::make_unique<SingleExtensionStorageObserver>(
             this, extension_id, std::move(quota_manager), site_url.GetOrigin(),
             next_threshold, rate, should_uma);
   }
@@ -246,7 +248,7 @@ class ExtensionStorageMonitorIOHelper
 
 void SingleExtensionStorageObserver::OnStorageEvent(const Event& event) {
   if (should_uma_) {
-    if (event.filter.storage_type == storage::kStorageTypePersistent) {
+    if (event.filter.storage_type == blink::mojom::StorageType::kPersistent) {
       UMA_HISTOGRAM_MEMORY_KB(
           "Extensions.HostedAppUnlimitedStoragePersistentStorageUsage",
           event.usage);
@@ -588,7 +590,7 @@ void ExtensionStorageMonitor::SetNextStorageThreshold(
   extension_prefs_->UpdateExtensionPref(
       extension_id, kPrefNextStorageThreshold,
       next_threshold > 0
-          ? base::MakeUnique<base::Value>(base::Int64ToString(next_threshold))
+          ? std::make_unique<base::Value>(base::Int64ToString(next_threshold))
           : nullptr);
 }
 
@@ -624,7 +626,7 @@ void ExtensionStorageMonitor::SetStorageNotificationEnabled(
     bool enable_notifications) {
   extension_prefs_->UpdateExtensionPref(
       extension_id, kPrefDisableStorageNotifications,
-      enable_notifications ? nullptr : base::MakeUnique<base::Value>(true));
+      enable_notifications ? nullptr : std::make_unique<base::Value>(true));
 }
 
 }  // namespace extensions

@@ -422,6 +422,7 @@ void TestWindowTreeClient::OnWindowInputEvent(
     uint32_t event_id,
     uint32_t window,
     int64_t display_id,
+    uint32_t display_root_window,
     const gfx::PointF& event_location_in_screen_pixel_layout,
     std::unique_ptr<ui::Event> event,
     bool matches_pointer_watcher) {
@@ -726,8 +727,12 @@ void TestPlatformDisplay::Init(PlatformDisplayDelegate* delegate) {
 }
 void TestPlatformDisplay::SetViewportSize(const gfx::Size& size) {}
 void TestPlatformDisplay::SetTitle(const base::string16& title) {}
-void TestPlatformDisplay::SetCapture() {}
-void TestPlatformDisplay::ReleaseCapture() {}
+void TestPlatformDisplay::SetCapture() {
+  has_capture_ = true;
+}
+void TestPlatformDisplay::ReleaseCapture() {
+  has_capture_ = false;
+}
 void TestPlatformDisplay::SetCursor(const ui::CursorData& cursor) {
   *cursor_storage_ = cursor;
 }

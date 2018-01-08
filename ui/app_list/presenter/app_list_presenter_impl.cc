@@ -4,11 +4,14 @@
 
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 
+#include <utility>
+
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_switches.h"
+#include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/pagination_model.h"
 #include "ui/app_list/presenter/app_list_presenter_delegate_factory.h"
 #include "ui/app_list/views/app_list_view.h"
@@ -92,7 +95,7 @@ void AppListPresenterImpl::Show(int64_t display_id) {
     SetView(view);
   }
   presenter_delegate_->OnShown(display_id);
-  base::RecordAction(base::UserMetricsAction("Launcher_Show"));
+  presenter_delegate_->GetViewDelegate()->ViewShown();
 }
 
 void AppListPresenterImpl::Dismiss() {
@@ -183,7 +186,6 @@ void AppListPresenterImpl::SetView(AppListView* view) {
   view_ = view;
   views::Widget* widget = view_->GetWidget();
   widget->AddObserver(this);
-  widget->GetNativeView()->GetRootWindow()->AddObserver(this);
   aura::client::GetFocusClient(widget->GetNativeView())->AddObserver(this);
   view_->GetAppsPaginationModel()->AddObserver(this);
   view_->ShowWhenReady();
@@ -197,7 +199,6 @@ void AppListPresenterImpl::ResetView() {
   widget->RemoveObserver(this);
   GetLayer(widget)->GetAnimator()->RemoveObserver(this);
   presenter_delegate_.reset();
-  widget->GetNativeView()->GetRootWindow()->RemoveObserver(this);
   aura::client::GetFocusClient(widget->GetNativeView())->RemoveObserver(this);
 
   view_->GetAppsPaginationModel()->RemoveObserver(this);
@@ -260,17 +261,6 @@ void AppListPresenterImpl::OnWindowFocused(aura::Window* gained_focus,
       Dismiss();
     }
   }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// AppListPresenterImpl,  aura::WindowObserver implementation:
-void AppListPresenterImpl::OnWindowBoundsChanged(
-    aura::Window* root,
-    const gfx::Rect& old_bounds,
-    const gfx::Rect& new_bounds,
-    ui::PropertyChangeReason reason) {
-  if (presenter_delegate_)
-    presenter_delegate_->UpdateBounds();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -8,8 +8,8 @@
 #include "build/build_config.h"
 #include "content/network/network_context.h"
 #include "content/network/proxy_service_mojo.h"
-#include "net/proxy/proxy_config_service.h"
-#include "net/proxy/proxy_script_fetcher_impl.h"
+#include "net/proxy_resolution/pac_file_fetcher_impl.h"
+#include "net/proxy_resolution/proxy_config_service.h"
 
 namespace content {
 
@@ -30,14 +30,14 @@ void URLRequestContextBuilderMojo::SetMojoProxyResolverFactory(
 }
 
 URLRequestContextOwner URLRequestContextBuilderMojo::Create(
-    mojom::NetworkContextParams* params,
+    network::mojom::NetworkContextParams* params,
     bool quic_disabled,
     net::NetLog* net_log) {
   return NetworkContext::ApplyContextParamsToBuilder(this, params,
                                                      quic_disabled, net_log);
 }
 
-std::unique_ptr<net::ProxyService>
+std::unique_ptr<net::ProxyResolutionService>
 URLRequestContextBuilderMojo::CreateProxyService(
     std::unique_ptr<net::ProxyConfigService> proxy_config_service,
     net::URLRequestContext* url_request_context,

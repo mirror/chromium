@@ -11,8 +11,8 @@
 #include "net/http/http_stream_factory_impl_job.h"
 #include "net/http/http_stream_factory_impl_job_controller.h"
 #include "net/http/http_stream_factory_test_util.h"
-#include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_info.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -27,7 +27,7 @@ TEST_F(HttpStreamFactoryImplRequestTest, SetPriority) {
   SequencedSocketData data(nullptr, 0, nullptr, 0);
   data.set_connect_data(MockConnect(ASYNC, OK));
   auto ssl_data = std::make_unique<SSLSocketDataProvider>(ASYNC, OK);
-  SpdySessionDependencies session_deps(ProxyService::CreateDirect());
+  SpdySessionDependencies session_deps(ProxyResolutionService::CreateDirect());
   session_deps.socket_factory->AddSocketDataProvider(&data);
   session_deps.socket_factory->AddSSLSocketDataProvider(ssl_data.get());
 
@@ -42,6 +42,7 @@ TEST_F(HttpStreamFactoryImplRequestTest, SetPriority) {
   auto job_controller = std::make_unique<HttpStreamFactoryImpl::JobController>(
       factory, &request_delegate, session.get(), &job_factory, request_info,
       /* is_preconnect = */ false,
+      /* is_websocket = */ false,
       /* enable_ip_based_pooling = */ true,
       /* enable_alternative_services = */ true, SSLConfig(), SSLConfig());
   HttpStreamFactoryImpl::JobController* job_controller_raw_ptr =

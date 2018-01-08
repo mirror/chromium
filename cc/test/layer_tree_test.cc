@@ -33,7 +33,6 @@
 #include "cc/trees/proxy_main.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "components/ukm/test_ukm_recorder.h"
-#include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -51,7 +50,8 @@ class SynchronousLayerTreeFrameSink : public viz::TestLayerTreeFrameSink {
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       const viz::RendererSettings& renderer_settings,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-      double refresh_rate)
+      double refresh_rate,
+      viz::BeginFrameSource* begin_frame_source)
       : viz::TestLayerTreeFrameSink(std::move(compositor_context_provider),
                                     std::move(worker_context_provider),
                                     shared_bitmap_manager,
@@ -60,7 +60,8 @@ class SynchronousLayerTreeFrameSink : public viz::TestLayerTreeFrameSink {
                                     task_runner,
                                     false,
                                     false,
-                                    refresh_rate),
+                                    refresh_rate,
+                                    begin_frame_source),
         task_runner_(std::move(task_runner)),
         weak_factory_(this) {}
   ~SynchronousLayerTreeFrameSink() override = default;
@@ -217,9 +218,10 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
         this, raster_buffer_provider, resource_pool);
   }
 
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
-    LayerTreeHostImpl::WillBeginImplFrame(args);
+  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
+    bool has_damage = LayerTreeHostImpl::WillBeginImplFrame(args);
     test_hooks_->WillBeginImplFrameOnThread(this, args);
+    return has_damage;
   }
 
   void DidFinishImplFrame() override {
@@ -362,6 +364,11 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
     test_hooks_->DidInvalidateContentOnImplSide(this);
   }
 
+  void InvalidateLayerTreeFrameSink() override {
+    LayerTreeHostImpl::InvalidateLayerTreeFrameSink();
+    test_hooks_->DidInvalidateLayerTreeFrameSink(this);
+  }
+
   void RequestImplSideInvalidationForCheckerImagedTiles() override {
     test_hooks_->DidReceiveImplSideInvalidationRequest(this);
     if (block_impl_side_invalidation_) {
@@ -411,7 +418,9 @@ class LayerTreeHostClientForTesting : public LayerTreeHostClient,
     test_hooks_->BeginMainFrame(args);
   }
 
-  void UpdateLayerTreeHost() override { test_hooks_->UpdateLayerTreeHost(); }
+  void UpdateLayerTreeHost(VisualStateUpdate requested_update) override {
+    test_hooks_->UpdateLayerTreeHost(requested_update);
+  }
 
   void ApplyViewportDeltas(const gfx::Vector2dF& inner_delta,
                            const gfx::Vector2dF& outer_delta,
@@ -980,14 +989,14 @@ LayerTreeTest::CreateLayerTreeFrameSink(
     return std::make_unique<SynchronousLayerTreeFrameSink>(
         compositor_context_provider, std::move(worker_context_provider),
         shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
-        impl_task_runner_, refresh_rate);
+        impl_task_runner_, refresh_rate, begin_frame_source_);
   }
 
   return std::make_unique<viz::TestLayerTreeFrameSink>(
       compositor_context_provider, std::move(worker_context_provider),
       shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
       impl_task_runner_, synchronous_composite, disable_display_vsync,
-      refresh_rate);
+      refresh_rate, begin_frame_source_);
 }
 
 std::unique_ptr<viz::OutputSurface>

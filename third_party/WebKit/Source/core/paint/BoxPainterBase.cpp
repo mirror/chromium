@@ -293,10 +293,14 @@ FloatRoundedRect BoxPainterBase::BackgroundRoundedRectAdjustedForBleedAvoidance(
       }
     }
 
-    FloatRectOutsets insets(-fractional_inset * edges[kBSTop].Width(),
-                            -fractional_inset * edges[kBSRight].Width(),
-                            -fractional_inset * edges[kBSBottom].Width(),
-                            -fractional_inset * edges[kBSLeft].Width());
+    FloatRectOutsets insets(
+        -fractional_inset * edges[static_cast<unsigned>(BoxSide::kTop)].Width(),
+        -fractional_inset *
+            edges[static_cast<unsigned>(BoxSide::kRight)].Width(),
+        -fractional_inset *
+            edges[static_cast<unsigned>(BoxSide::kBottom)].Width(),
+        -fractional_inset *
+            edges[static_cast<unsigned>(BoxSide::kLeft)].Width());
 
     FloatRoundedRect background_rounded_rect = GetBackgroundRoundedRect(
         border_rect, include_logical_left_edge, include_logical_right_edge);
@@ -541,11 +545,11 @@ void BoxPainterBase::PaintFillLayer(const PaintInfo& paint_info,
                        scrolled_paint_rect);
     image = info.image->GetImage(
         geometry.ImageClient(), geometry.ImageDocument(), geometry.ImageStyle(),
-        FlooredIntSize(geometry.TileSize()));
+        FloatSize(geometry.TileSize()));
     interpolation_quality_context.emplace(
         context, geometry.ImageStyle().GetInterpolationQuality());
 
-    if (bg_layer.MaskSourceType() == kMaskLuminance)
+    if (bg_layer.MaskSourceType() == EMaskSourceType::kLuminance)
       context.SetColorFilter(kColorFilterLuminanceToAlpha);
 
     // If op != SkBlendMode::kSrcOver, a mask is being painted.
@@ -602,6 +606,40 @@ void BoxPainterBase::PaintFillLayer(const PaintInfo& paint_info,
 
   PaintFillLayerBackground(context, info, image.get(), composite_op, geometry,
                            scrolled_paint_rect);
+}
+
+void BoxPainterBase::PaintFillLayerTextFillBox(
+    GraphicsContext& context,
+    const BoxPainterBase::FillLayerInfo& info,
+    Image* image,
+    SkBlendMode composite_op,
+    const BackgroundImageGeometry& geometry,
+    const LayoutRect& rect,
+    const LayoutRect& scrolled_paint_rect) {
+  // First figure out how big the mask has to be. It should be no bigger
+  // than what we need to actually render, so we should intersect the dirty
+  // rect with the border box of the background.
+  IntRect mask_rect = PixelSnappedIntRect(rect);
+
+  // We draw the background into a separate layer, to be later masked with
+  // yet another layer holding the text content.
+  GraphicsContextStateSaver background_clip_state_saver(context, false);
+  background_clip_state_saver.Save();
+  context.Clip(mask_rect);
+  context.BeginLayer(1, composite_op);
+
+  PaintFillLayerBackground(context, info, image, SkBlendMode::kSrcOver,
+                           geometry, scrolled_paint_rect);
+
+  // Create the text mask layer and draw the text into the mask. We do this by
+  // painting using a special paint phase that signals to InlineTextBoxes that
+  // they should just add their contents to the clip.
+  context.BeginLayer(1, SkBlendMode::kDstIn);
+
+  PaintTextClipMask(context, mask_rect, scrolled_paint_rect.Location());
+
+  context.EndLayer();  // Text mask layer.
+  context.EndLayer();  // Background layer.
 }
 
 FloatRoundedRect BoxPainterBase::RoundedBorderRectForClip(

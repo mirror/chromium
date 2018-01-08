@@ -5,8 +5,11 @@
 #include "core/css/parser/CSSPropertyParser.h"
 
 #include "core/css/CSSColorValue.h"
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSValueList.h"
+#include "core/css/StyleSheetContents.h"
 #include "core/css/parser/CSSParser.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -310,6 +313,79 @@ TEST(CSSPropertyParserTest, IncompleteColor) {
       CSSPropertyBackgroundColor, "rgba(123 45",
       StrictCSSParserContext(SecureContextMode::kSecureContext));
   ASSERT_FALSE(value);
+}
+
+TEST(CSSPropertyParserTest, ClipPathEllipse) {
+  std::unique_ptr<DummyPageHolder> dummy_holder =
+      DummyPageHolder::Create(IntSize(500, 500));
+  Document* doc = &dummy_holder->GetDocument();
+  CSSParserContext* context = CSSParserContext::Create(
+      kHTMLStandardMode, SecureContextMode::kSecureContext,
+      CSSParserContext::kDynamicProfile, doc);
+
+  CSSParser::ParseSingleValue(CSSPropertyClipPath,
+                              "ellipse(1px 2px at invalid)", context);
+
+  EXPECT_FALSE(
+      UseCounter::IsCounted(*doc, WebFeature::kBasicShapeEllipseTwoRadius));
+  CSSParser::ParseSingleValue(CSSPropertyClipPath, "ellipse(1px 2px)", context);
+  EXPECT_TRUE(
+      UseCounter::IsCounted(*doc, WebFeature::kBasicShapeEllipseTwoRadius));
+
+  EXPECT_FALSE(
+      UseCounter::IsCounted(*doc, WebFeature::kBasicShapeEllipseOneRadius));
+  CSSParser::ParseSingleValue(CSSPropertyClipPath, "ellipse(1px)", context);
+  EXPECT_TRUE(
+      UseCounter::IsCounted(*doc, WebFeature::kBasicShapeEllipseOneRadius));
+
+  EXPECT_FALSE(
+      UseCounter::IsCounted(*doc, WebFeature::kBasicShapeEllipseNoRadius));
+  CSSParser::ParseSingleValue(CSSPropertyClipPath, "ellipse()", context);
+  EXPECT_TRUE(
+      UseCounter::IsCounted(*doc, WebFeature::kBasicShapeEllipseNoRadius));
+}
+
+TEST(CSSPropertyParserTest, ScrollCustomizationPropertySingleValue) {
+  RuntimeEnabledFeatures::SetScrollCustomizationEnabled(true);
+  const CSSValue* value = CSSParser::ParseSingleValue(
+      CSSPropertyScrollCustomization, "pan-down",
+      StrictCSSParserContext(SecureContextMode::kSecureContext));
+  DCHECK(value);
+  const CSSValueList* list = ToCSSValueList(value);
+  EXPECT_EQ(1U, list->length());
+  EXPECT_EQ(CSSValuePanDown, ToCSSIdentifierValue(list->Item(0U)).GetValueID());
+}
+
+TEST(CSSPropertyParserTest, ScrollCustomizationPropertyTwoValuesCombined) {
+  RuntimeEnabledFeatures::SetScrollCustomizationEnabled(true);
+  const CSSValue* value = CSSParser::ParseSingleValue(
+      CSSPropertyScrollCustomization, "pan-left pan-y",
+      StrictCSSParserContext(SecureContextMode::kSecureContext));
+  const CSSValueList* list = ToCSSValueList(value);
+  EXPECT_EQ(2U, list->length());
+  EXPECT_EQ(CSSValuePanLeft, ToCSSIdentifierValue(list->Item(0U)).GetValueID());
+  EXPECT_EQ(CSSValuePanY, ToCSSIdentifierValue(list->Item(1U)).GetValueID());
+}
+
+TEST(CSSPropertyParserTest, ScrollCustomizationPropertyInvalidEntries) {
+  // We expect exactly one property value per coordinate.
+  RuntimeEnabledFeatures::SetScrollCustomizationEnabled(true);
+  const CSSValue* value = CSSParser::ParseSingleValue(
+      CSSPropertyScrollCustomization, "pan-left pan-right",
+      StrictCSSParserContext(SecureContextMode::kSecureContext));
+  EXPECT_FALSE(value);
+  value = CSSParser::ParseSingleValue(
+      CSSPropertyScrollCustomization, "pan-up pan-down",
+      StrictCSSParserContext(SecureContextMode::kSecureContext));
+  EXPECT_FALSE(value);
+  value = CSSParser::ParseSingleValue(
+      CSSPropertyScrollCustomization, "pan-x pan-left",
+      StrictCSSParserContext(SecureContextMode::kSecureContext));
+  EXPECT_FALSE(value);
+  value = CSSParser::ParseSingleValue(
+      CSSPropertyScrollCustomization, "pan-x pan-x",
+      StrictCSSParserContext(SecureContextMode::kSecureContext));
+  EXPECT_FALSE(value);
 }
 
 }  // namespace blink

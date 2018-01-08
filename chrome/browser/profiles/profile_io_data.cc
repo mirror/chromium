@@ -80,7 +80,6 @@
 #include "content/public/browser/resource_context.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/proxy_config_traits.h"
 #include "content/public/network/ignore_errors_cert_verifier.h"
 #include "content/public/network/network_service.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
@@ -99,7 +98,6 @@
 #include "net/http/transport_security_persister.h"
 #include "net/net_features.h"
 #include "net/nqe/network_quality_estimator.h"
-#include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/client_cert_store.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -115,6 +113,7 @@
 #include "net/url_request/url_request_intercepting_job_factory.h"
 #include "net/url_request/url_request_interceptor.h"
 #include "net/url_request/url_request_job_factory_impl.h"
+#include "services/network/public/cpp/proxy_config_traits.h"
 #include "third_party/WebKit/public/public_features.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -123,13 +122,10 @@
 #include "extensions/browser/extension_throttle_manager.h"
 #include "extensions/browser/info_map.h"
 #include "extensions/common/constants.h"
-#endif
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 #if defined(OS_ANDROID)
 #include "content/public/browser/android/content_protocol_handler.h"
-#else
-#include "chrome/browser/ui/search/new_tab_page_interceptor_service.h"
-#include "chrome/browser/ui/search/new_tab_page_interceptor_service_factory.h"
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
@@ -163,15 +159,20 @@
 #if defined(USE_NSS_CERTS)
 #include "chrome/browser/ui/crypto_module_delegate_nss.h"
 #include "net/ssl/client_cert_store_nss.h"
-#endif
+#endif  // defined(USE_NSS_CERTS)
 
 #if defined(OS_WIN)
 #include "net/ssl/client_cert_store_win.h"
-#endif
+#endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)
 #include "net/ssl/client_cert_store_mac.h"
-#endif
+#endif  // defined(OS_MACOSX)
+
+#if BUILDFLAG(ENABLE_REPORTING)
+#include "net/reporting/reporting_service.h"
+#include "net/url_request/network_error_logging_delegate.h"
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 using content::BrowserContext;
 using content::BrowserThread;
@@ -453,15 +454,6 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   params->protocol_handler_interceptor =
       protocol_handler_registry->CreateJobInterceptorFactory();
 
-#if !defined(OS_ANDROID)
-  NewTabPageInterceptorService* new_tab_interceptor_service =
-      NewTabPageInterceptorServiceFactory::GetForProfile(profile);
-  if (new_tab_interceptor_service) {
-    params->new_tab_page_interceptor =
-        new_tab_interceptor_service->CreateInterceptor();
-  }
-#endif
-
 #if defined(OS_CHROMEOS)
   // Enable client certificates for the Chrome OS sign-in frame, if this feature
   // is not disabled by a flag.
@@ -634,14 +626,26 @@ void ProfileIOData::AppRequestContext::SetJobFactory(
   set_job_factory(job_factory_.get());
 }
 
+#if BUILDFLAG(ENABLE_REPORTING)
 void ProfileIOData::AppRequestContext::SetReportingService(
     std::unique_ptr<net::ReportingService> reporting_service) {
   reporting_service_ = std::move(reporting_service);
   set_reporting_service(reporting_service_.get());
 }
 
+void ProfileIOData::AppRequestContext::SetNetworkErrorLoggingDelegate(
+    std::unique_ptr<net::NetworkErrorLoggingDelegate>
+        network_error_logging_delegate) {
+  network_error_logging_delegate_ = std::move(network_error_logging_delegate);
+  set_network_error_logging_delegate(network_error_logging_delegate_.get());
+}
+#endif  // BUILDFLAG(ENABLE_REPORTING)
+
 ProfileIOData::AppRequestContext::~AppRequestContext() {
-  SetReportingService(std::unique_ptr<net::ReportingService>());
+#if BUILDFLAG(ENABLE_REPORTING)
+  SetNetworkErrorLoggingDelegate(nullptr);
+  SetReportingService(nullptr);
+#endif  // BUILDFLAG(ENABLE_REPORTING)
   AssertNoURLRequests();
 }
 

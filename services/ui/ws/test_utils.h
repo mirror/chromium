@@ -158,6 +158,8 @@ class WindowTreeTestApi {
   bool ProcessSwapDisplayRoots(int64_t display_id1, int64_t display_id2) {
     return tree_->ProcessSwapDisplayRoots(display_id1, display_id2);
   }
+  size_t event_queue_size() const { return tree_->event_queue_.size(); }
+  bool HasEventInFlight() const { return tree_->event_ack_id_ != 0u; }
 
  private:
   WindowTree* tree_;
@@ -540,6 +542,7 @@ class TestWindowTreeClient : public ui::mojom::WindowTreeClient {
       uint32_t event_id,
       uint32_t window,
       int64_t display_id,
+      uint32_t display_root_window,
       const gfx::PointF& event_location_in_screen_pixel_layout,
       std::unique_ptr<ui::Event> event,
       bool matches_pointer_watcher) override;
@@ -806,6 +809,8 @@ class TestPlatformDisplay : public PlatformDisplay {
 
   const display::ViewportMetrics& metrics() const { return metrics_; }
 
+  bool has_capture() const { return has_capture_; }
+
   // PlatformDisplay:
   void Init(PlatformDisplayDelegate* delegate) override;
   void SetViewportSize(const gfx::Size& size) override;
@@ -833,6 +838,7 @@ class TestPlatformDisplay : public PlatformDisplay {
       display::Display::Rotation::ROTATE_0;
   float cursor_scale_ = 1.0f;
   gfx::Rect confine_cursor_bounds_;
+  bool has_capture_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TestPlatformDisplay);
 };

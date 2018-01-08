@@ -11,6 +11,8 @@
 #include "base/metrics/histogram_functions.h"
 #include "base/threading/thread_restrictions.h"
 
+#include <windows.h>
+
 namespace base {
 
 // Make sure our Whence mappings match the system headers.
@@ -284,6 +286,7 @@ File::Error File::OSErrorToFileError(DWORD last_error) {
   switch (last_error) {
     case ERROR_SHARING_VIOLATION:
       return FILE_ERROR_IN_USE;
+    case ERROR_ALREADY_EXISTS:
     case ERROR_FILE_EXISTS:
       return FILE_ERROR_EXISTS;
     case ERROR_FILE_NOT_FOUND:

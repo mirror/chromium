@@ -62,7 +62,7 @@ void BubbleIconView::OnBubbleCreated(LocationBarBubbleDelegateView* bubble) {
 
 void BubbleIconView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   image_->GetAccessibleNodeData(node_data);
-  node_data->role = ui::AX_ROLE_BUTTON;
+  node_data->role = ax::mojom::Role::kButton;
 }
 
 bool BubbleIconView::GetTooltipText(const gfx::Point& p,
@@ -173,7 +173,7 @@ SkColor BubbleIconView::GetInkDropBaseColor() const {
 
 std::unique_ptr<views::InkDropRipple> BubbleIconView::CreateInkDropRipple()
     const {
-  return base::MakeUnique<views::FloodFillInkDropRipple>(
+  return std::make_unique<views::FloodFillInkDropRipple>(
       gfx::Size(kDefaultInkDropSize, kDefaultInkDropSize),
       GetInkDropCenterBasedOnLastEvent(), GetInkDropBaseColor(),
       ink_drop_visible_opacity());

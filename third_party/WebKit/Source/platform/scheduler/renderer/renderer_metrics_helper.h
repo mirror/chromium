@@ -9,6 +9,7 @@
 #include "base/optional.h"
 #include "base/time/time.h"
 #include "platform/PlatformExport.h"
+#include "platform/scheduler/child/metrics_helper.h"
 #include "platform/scheduler/renderer/frame_status.h"
 #include "platform/scheduler/renderer/main_thread_task_queue.h"
 #include "platform/scheduler/util/task_duration_metric_reporter.h"
@@ -42,7 +43,7 @@ enum class BackgroundedRendererTransition {
 
 // Helper class to take care of metrics on behalf of RendererScheduler.
 // This class should be used only on the main thread.
-class PLATFORM_EXPORT RendererMetricsHelper {
+class PLATFORM_EXPORT RendererMetricsHelper : public MetricsHelper {
  public:
   static void RecordBackgroundedTransition(
       BackgroundedRendererTransition transition);
@@ -55,7 +56,8 @@ class PLATFORM_EXPORT RendererMetricsHelper {
   void RecordTaskMetrics(MainThreadTaskQueue* queue,
                          const TaskQueue::Task& task,
                          base::TimeTicks start_time,
-                         base::TimeTicks end_time);
+                         base::TimeTicks end_time,
+                         base::Optional<base::TimeDelta> thread_time);
 
   void OnRendererForegrounded(base::TimeTicks now);
   void OnRendererBackgrounded(base::TimeTicks now);
@@ -114,8 +116,6 @@ class PLATFORM_EXPORT RendererMetricsHelper {
   using TaskDurationPerTaskTypeMetricReporter =
       TaskDurationMetricReporter<TaskType>;
   TaskDurationPerTaskTypeMetricReporter per_task_type_duration_reporter;
-
-  TaskDurationMetricReporter<ThreadType> main_thread_task_duration_reporter;
 
   MainThreadTaskLoadState main_thread_task_load_state;
 

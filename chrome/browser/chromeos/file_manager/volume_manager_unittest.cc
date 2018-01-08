@@ -27,7 +27,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/storage_monitor/storage_info.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "device/media_transfer_protocol/mtp_storage_info.pb.h"
 #include "extensions/browser/extension_registry.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -189,9 +188,10 @@ class VolumeManagerTest : public testing::Test {
     VolumeManager* volume_manager() const { return volume_manager_.get(); }
 
    private:
-    const MtpStorageInfo* GetFakeMtpStorageInfo(
-        const std::string& /*storage_name*/) {
-      return &fake_mtp_storage_info_;
+    void GetFakeMtpStorageInfo(
+        const std::string& storage_name,
+        device::MediaTransferProtocolManager::GetStorageInfoCallback callback) {
+      std::move(callback).Run(&fake_mtp_storage_info_);
     }
 
     std::unique_ptr<TestingProfile> profile_;
@@ -199,7 +199,7 @@ class VolumeManagerTest : public testing::Test {
     std::unique_ptr<chromeos::file_system_provider::Service>
         file_system_provider_service_;
     std::unique_ptr<VolumeManager> volume_manager_;
-    const MtpStorageInfo fake_mtp_storage_info_;
+    const device::mojom::MtpStorageInfo fake_mtp_storage_info_;
   };
 
   void SetUp() override {

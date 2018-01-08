@@ -18,7 +18,6 @@
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_process_manager.h"
@@ -80,16 +79,17 @@ void SkipWaitingWorkerOnIO(
   registration->ActivateWaitingVersionWhenReady();
 }
 
-void DidStartWorker(
+void DidStartActiveWorker(
     scoped_refptr<ServiceWorkerVersion> version,
-    ServiceWorkerContext::StartActiveWorkerCallback info_callback) {
+    ServiceWorkerContext::StartActiveWorkerCallback info_callback,
+    base::OnceClosure error_callback,
+    ServiceWorkerStatusCode start_worker_status) {
+  if (start_worker_status != SERVICE_WORKER_OK) {
+    std::move(error_callback).Run();
+    return;
+  }
   EmbeddedWorkerInstance* instance = version->embedded_worker();
   std::move(info_callback).Run(instance->process_id(), instance->thread_id());
-}
-
-void DidFailStartWorker(base::OnceClosure error_callback,
-                        ServiceWorkerStatusCode code) {
-  std::move(error_callback).Run();
 }
 
 void FoundReadyRegistrationForStartActiveWorker(
@@ -100,16 +100,16 @@ void FoundReadyRegistrationForStartActiveWorker(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (service_worker_status == SERVICE_WORKER_OK) {
     // Note: There might be a remote possibility that
-    // |service_worker_registration|'s active version might change between here
-    // and DidStartWorker, so bind |active_version| to RunAfterStartWorker.
+    // |service_worker_registration|'s active version might change
+    // between here and DidStartActiveWorker, so
+    // bind |active_version| to RunAfterStartWorker.
     scoped_refptr<ServiceWorkerVersion> active_version =
         service_worker_registration->active_version();
     DCHECK(active_version.get());
     active_version->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::EXTERNAL_REQUEST,
-        base::BindOnce(&DidStartWorker, active_version,
-                       std::move(info_callback)),
-        base::BindOnce(&DidFailStartWorker, std::move(failure_callback)));
+        base::BindOnce(&DidStartActiveWorker, active_version,
+                       std::move(info_callback), std::move(failure_callback)));
   } else {
     std::move(failure_callback).Run();
   }
@@ -281,7 +281,6 @@ void ServiceWorkerContextWrapper::RegisterServiceWorker(
       net::SimplifyUrlForRequest(options.scope), options.update_via_cache);
   context()->RegisterServiceWorker(
       net::SimplifyUrlForRequest(script_url), options_to_pass,
-      nullptr /* provider_host */,
       base::Bind(&FinishRegistrationOnIO, base::Passed(std::move(callback))));
 }
 

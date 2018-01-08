@@ -2,10 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 
-component("compositor") {
+jumbo_component("compositor") {
   sources = [
     "callback_layer_animation_observer.cc",
     "callback_layer_animation_observer.h",
@@ -150,9 +151,9 @@ static_library("test_support") {
     "//components/viz/host",
     "//components/viz/service",
     "//components/viz/test:test_support",
-    "//gpu/command_buffer/client:gles2_c_lib",
     "//gpu/command_buffer/client:gles2_implementation",
-    "//gpu/command_buffer/common:gles2_utils",
+    "//gpu/command_buffer/client:raster",
+    "//gpu/command_buffer/common",
     "//gpu/ipc:gl_in_process_context",
     "//gpu/skia_bindings",
     "//skia",

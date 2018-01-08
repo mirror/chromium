@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_H_
 #define CHROME_BROWSER_CHROMEOS_LOGIN_UI_LOGIN_DISPLAY_HOST_H_
 
+#include <memory>
 #include <string>
 
 #include "base/callback_forward.h"
@@ -19,6 +20,7 @@ class AccountId;
 
 namespace chromeos {
 
+class ArcKioskController;
 class AppLaunchController;
 class DemoAppLauncher;
 class LoginScreenContext;
@@ -102,7 +104,7 @@ class LoginDisplayHost {
   void StartDemoAppLaunch();
 
   // Starts ARC kiosk splash screen.
-  virtual void StartArcKiosk(const AccountId& account_id) = 0;
+  void StartArcKiosk(const AccountId& account_id);
 
   // Start voice interaction OOBE.
   virtual void StartVoiceInteractionOobe() = 0;
@@ -110,12 +112,36 @@ class LoginDisplayHost {
   // Returns whether current host is for voice interaction OOBE.
   virtual bool IsVoiceInteractionOobe() = 0;
 
- protected:
-  // Default LoginDisplayHost. Child class sets the reference.
-  static LoginDisplayHost* default_host_;
+  // Confirms sign in by provided credentials in |user_context|.
+  // Used for new user login via GAIA extension.
+  void CompleteLogin(const UserContext& user_context);
 
+  // Notify the backend controller when the GAIA UI is finished loading.
+  void OnGaiaScreenReady();
+
+  // Sets the displayed email for the next login attempt. If it succeeds,
+  // user's displayed email value will be updated to |email|.
+  void SetDisplayEmail(const std::string& email);
+
+  // Sets the displayed name and given name for the next login attempt. If it
+  // succeeds, user's displayed name and give name values will be updated to
+  // |display_name| and |given_name|.
+  void SetDisplayAndGivenName(const std::string& display_name,
+                              const std::string& given_name);
+
+  // Load wallpaper for given |account_id|.
+  void LoadWallpaper(const AccountId& account_id);
+
+  // Loads the default sign-in wallpaper.
+  void LoadSigninWallpaper();
+
+  // Returns true if user is allowed to log in by domain policy.
+  bool IsUserWhitelisted(const AccountId& account_id);
+
+ protected:
   virtual void OnStartSignInScreen(const LoginScreenContext& context) = 0;
   virtual void OnStartAppLaunch() = 0;
+  virtual void OnStartArcKiosk() = 0;
 
   // Deletes |auth_prewarmer_|.
   void OnAuthPrewarmDone();
@@ -129,7 +155,13 @@ class LoginDisplayHost {
   // Demo app launcher.
   std::unique_ptr<DemoAppLauncher> demo_app_launcher_;
 
+  // ARC kiosk controller.
+  std::unique_ptr<ArcKioskController> arc_kiosk_controller_;
+
  private:
+  // Global LoginDisplayHost instance.
+  static LoginDisplayHost* default_host_;
+
   base::WeakPtrFactory<LoginDisplayHost> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(LoginDisplayHost);

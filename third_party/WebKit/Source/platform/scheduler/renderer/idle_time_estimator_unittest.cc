@@ -37,14 +37,14 @@ class IdleTimeEstimatorTest : public ::testing::Test {
   IdleTimeEstimatorTest()
       : frame_length_(base::TimeDelta::FromMilliseconds(16)) {}
 
-  ~IdleTimeEstimatorTest() override {}
+  ~IdleTimeEstimatorTest() override = default;
 
   void SetUp() override {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
-    manager_ = CreateTaskQueueManagerWithUnownedClockForTest(
-        nullptr, mock_task_runner_, &clock_);
+    manager_ =
+        CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_);
     compositor_task_queue_ =
         manager_->CreateTaskQueue<TestTaskQueue>(TaskQueue::Spec("test_tq"));
     estimator_.reset(

@@ -19,7 +19,6 @@
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/resources/returned_resource.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 #include "components/viz/host/host_frame_sink_client.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
@@ -29,6 +28,7 @@
 #include "content/public/browser/touch_selection_controller_client_manager.h"
 #include "content/public/common/input_event_ack_state.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "third_party/WebKit/public/platform/WebIntrinsicSizingInfo.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -69,6 +69,10 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void SetFrameSinkId(const viz::FrameSinkId& frame_sink_id);
 #endif  // defined(USE_AURA)
 
+  bool OnMessageReceived(const IPC::Message& msg) override;
+
+  void OnIntrinsicSizingInfoChanged(blink::WebIntrinsicSizingInfo);
+
   // This functions registers single-use callbacks that want to be notified when
   // the next frame is swapped. The callback is triggered by
   // ProcessCompositorFrame, which is the appropriate time to request pixel
@@ -106,6 +110,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   gfx::Size GetPhysicalBackingSize() const override;
   bool IsMouseLocked() override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
+  void SetWantsAnimateOnlyBeginFrames() override;
 
   // RenderWidgetHostViewBase implementation.
   void InitAsPopup(RenderWidgetHostView* parent_host_view,
@@ -143,6 +148,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void PreProcessTouchEvent(const blink::WebTouchEvent& event) override;
   void ProcessGestureEvent(const blink::WebGestureEvent& event,
                            const ui::LatencyInfo& latency) override;
+  viz::SurfaceId GetCurrentSurfaceId() const override;
   gfx::PointF TransformPointToRootCoordSpaceF(
       const gfx::PointF& point) override;
   bool TransformPointToLocalCoordSpace(const gfx::PointF& point,
@@ -152,6 +158,11 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
       const gfx::PointF& point,
       RenderWidgetHostViewBase* target_view,
       gfx::PointF* transformed_point) override;
+  void DidNavigate() override;
+  gfx::PointF TransformRootPointToViewCoordSpace(
+      const gfx::PointF& point) override;
+  TouchSelectionControllerClientManager*
+  GetTouchSelectionControllerClientManager() override;
 
   bool IsRenderWidgetHostViewChildFrame() override;
 
@@ -195,8 +206,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
 
-  // Exposed for tests.
-  viz::SurfaceId SurfaceIdForTesting() const override;
   FrameConnectorDelegate* FrameConnectorForTesting() const {
     return frame_connector_;
   }
@@ -264,7 +273,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // Surface-related state.
   std::unique_ptr<viz::CompositorFrameSinkSupport> support_;
   viz::LocalSurfaceId last_received_local_surface_id_;
-  uint32_t next_surface_sequence_;
   gfx::Size current_surface_size_;
   float current_surface_scale_factor_;
   gfx::Rect last_screen_rect_;
@@ -285,8 +293,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
       HiddenOOPIFWillNotGenerateCompositorFramesAfterNavigation);
 
   virtual void SendSurfaceInfoToEmbedderImpl(
-      const viz::SurfaceInfo& surface_info,
-      const viz::SurfaceSequence& sequence);
+      const viz::SurfaceInfo& surface_info);
 
   void SubmitSurfaceCopyRequest(const gfx::Rect& src_subrect,
                                 const gfx::Size& dst_size,

@@ -370,7 +370,7 @@ void UpdateFieldValueAndPropertiesMaskMap(
     it->second.second |= added_flags;
   } else {
     (*field_value_and_properties_map)[element] = std::make_pair(
-        value ? base::MakeUnique<base::string16>(*value) : nullptr,
+        value ? std::make_unique<base::string16>(*value) : nullptr,
         added_flags);
   }
   // Reset USER_TYPED and AUTOFILLED flags if the value is empty.
@@ -399,6 +399,13 @@ void FindMatchesByUsername(const PasswordFormFillData& fill_data,
   } else {
     // Scan additional logins for a match.
     for (const auto& it : fill_data.additional_logins) {
+      if (!it.second.realm.empty()) {
+        // Non-empty realm means PSL match. Do not autofill PSL matched
+        // credentials. The reason for this is that PSL matched sites are
+        // different sites, so a password for a PSL matched site should be never
+        // filled without explicit user selection.
+        continue;
+      }
       if (DoUsernamesMatch(it.first, current_username, exact_username_match)) {
         *username = it.first;
         *password = it.second.password;
@@ -563,15 +570,15 @@ bool ShouldShowStandaloneManuallFallback(const blink::WebInputElement& element,
 }
 
 PasswordForm::SubmissionIndicatorEvent ToSubmissionIndicatorEvent(
-    FormTracker::Observer::SubmissionSource source) {
+    SubmissionSource source) {
   switch (source) {
-    case FormTracker::Observer::SubmissionSource::FRAME_DETACHED:
+    case SubmissionSource::FRAME_DETACHED:
       return PasswordForm::SubmissionIndicatorEvent::FRAME_DETACHED;
-    case FormTracker::Observer::SubmissionSource::SAME_DOCUMENT_NAVIGATION:
+    case SubmissionSource::SAME_DOCUMENT_NAVIGATION:
       return PasswordForm::SubmissionIndicatorEvent::SAME_DOCUMENT_NAVIGATION;
-    case FormTracker::Observer::SubmissionSource::XHR_SUCCEEDED:
+    case SubmissionSource::XHR_SUCCEEDED:
       return PasswordForm::SubmissionIndicatorEvent::XHR_SUCCEEDED;
-    case FormTracker::Observer::SubmissionSource::DOM_MUTATION_AFTER_XHR:
+    case SubmissionSource::DOM_MUTATION_AFTER_XHR:
       return PasswordForm::SubmissionIndicatorEvent::DOM_MUTATION_AFTER_XHR;
     default:
       return PasswordForm::SubmissionIndicatorEvent::NONE;
@@ -1710,7 +1717,7 @@ void PasswordAutofillAgent::ProvisionallySavePassword(
   provisionally_saved_form_.Set(std::move(password_form), form, element);
 
   if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnableManualSaving)) {
+          password_manager::features::kManualSaving)) {
     if (has_password) {
       GetPasswordManagerDriver()->ShowManualFallbackForSaving(
           provisionally_saved_form_.password_form());
@@ -1736,9 +1743,20 @@ bool PasswordAutofillAgent::FillUserNameAndPassword(
   if (!IsElementAutocompletable(*password_element))
     return false;
 
+  // |current_username| is the username for credentials that are going to be
+  // autofilled. It is selected according to the algorithm:
+  // 1. If the page already contain a non-empty value in |username_element|,
+  // this is adopted and not overridden.
+  // 2. Default username from |fill_data| if the username field is
+  // autocompletable.
+  // 3. Empty if username field doesn't exist or if username field is empty and
+  // not autocompletable (no username case).
   base::string16 current_username;
   if (!username_element->IsNull()) {
-    current_username = username_element->Value().Utf16();
+    if (!username_element->Value().IsEmpty())
+      current_username = username_element->Value().Utf16();
+    else if (IsElementAutocompletable(*username_element))
+      current_username = fill_data.username_field.value;
   }
 
   // username and password will contain the match found if any.
@@ -1751,9 +1769,6 @@ bool PasswordAutofillAgent::FillUserNameAndPassword(
   if (password.empty())
     return false;
 
-  // TODO(tkent): Check maxlength and pattern for both username and password
-  // fields.
-
   // Call OnFieldAutofilled before WebInputElement::SetAutofilled which may
   // cause frame closing.
   if (password_generation_agent_)
@@ -1762,9 +1777,12 @@ bool PasswordAutofillAgent::FillUserNameAndPassword(
   // Input matches the username, fill in required values.
   if (!username_element->IsNull() &&
       IsElementAutocompletable(*username_element)) {
-    // TODO(crbug.com/507714): Why not setSuggestedValue?
-    if (username_element->Value().Utf16() != username)
-      username_element->SetAutofillValue(blink::WebString::FromUTF16(username));
+    // Fill username only when it's not empty and not set by the page.
+    if (!username.empty() && username_element->Value().IsEmpty()) {
+      username_element->SetSuggestedValue(
+          blink::WebString::FromUTF16(username));
+      registration_callback.Run(username_element);
+    }
     UpdateFieldValueAndPropertiesMaskMap(*username_element, &username,
                                          FieldPropertiesFlags::AUTOFILLED,
                                          field_value_and_properties_map);
@@ -1821,40 +1839,6 @@ bool PasswordAutofillAgent::FillFormOnPasswordReceived(
   // If we can't modify the password, don't try to set the username
   if (!IsElementAutocompletable(password_element))
     return false;
-
-  bool form_contains_fillable_username_field =
-      FillDataContainsFillableUsername(fill_data);
-  bool ambiguous_or_empty_names =
-      DoesFormContainAmbiguousOrEmptyNames(fill_data);
-  base::string16 username_field_name;
-  if (form_contains_fillable_username_field)
-    username_field_name =
-        FieldName(fill_data.username_field, ambiguous_or_empty_names);
-
-  // If the form contains an autocompletable username field, try to set the
-  // username to the preferred name, but only if:
-  //   (a) The fill-on-account-select flag is not set, and
-  //   (b) The username element isn't prefilled
-  //
-  // If (a) is false, then just mark the username element as autofilled if the
-  // user is not in the "no highlighting" group and return so the fill step is
-  // skipped.
-  //
-  // If there is no autocompletable username field, and (a) is false, then the
-  // username element cannot be autofilled, but the user should still be able to
-  // select to fill the password element, so the password element must be marked
-  // as autofilled and the fill step should also be skipped if the user is not
-  // in the "no highlighting" group.
-  //
-  // In all other cases, do nothing.
-  bool form_has_fillable_username = !username_field_name.empty() &&
-                                    IsElementAutocompletable(username_element);
-
-  if (form_has_fillable_username && username_element.Value().IsEmpty()) {
-    // TODO(tkent): Check maxlength and pattern.
-    username_element.SetAutofillValue(
-        blink::WebString::FromUTF16(fill_data.username_field.value));
-  }
 
   bool exact_username_match =
       username_element.IsNull() || IsElementEditable(username_element);

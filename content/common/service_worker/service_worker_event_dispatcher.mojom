@@ -5,12 +5,14 @@
 module content.mojom;
 
 import "content/common/service_worker/service_worker_fetch_response_callback.mojom";
-import "content/public/common/url_loader.mojom";
 import "mojo/common/string16.mojom";
 import "mojo/common/time.mojom";
+import "services/network/public/interfaces/url_loader.mojom";
 import "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom";
 import "third_party/WebKit/public/platform/modules/payments/payment_app.mojom";
+import "third_party/WebKit/common/service_worker/service_worker_client.mojom";
 import "third_party/WebKit/common/service_worker/service_worker_event_status.mojom";
+import "third_party/WebKit/common/service_worker/service_worker_object.mojom";
 import "url/mojo/origin.mojom";
 import "url/mojo/url.mojom";
 
@@ -22,9 +24,6 @@ struct PushEventPayload;
 
 [Native]
 struct ServiceWorkerResponse;
-
-[Native]
-struct ExtendableMessageEventSource;
 
 // TODO(peter): Move this to Blink when ServiceWorkerResponse has a Mojo
 // counterpart.
@@ -40,16 +39,25 @@ enum BackgroundFetchState {
 };
 
 struct FetchEventPreloadHandle {
-  URLLoader url_loader;
-  URLLoaderClient& url_loader_client_request;
+  network.mojom.URLLoader url_loader;
+  network.mojom.URLLoaderClient& url_loader_client_request;
 };
 
 struct ExtendableMessageEvent {
   mojo.common.mojom.String16 message;
   url.mojom.Origin source_origin;
   array<handle<message_pipe>> message_ports;
-  ExtendableMessageEventSource source;
+  // Exactly one of |source_info_for_client| and
+  // |source_info_for_service_worker| should be non-null.
+  blink.mojom.ServiceWorkerClientInfo? source_info_for_client;
+  blink.mojom.ServiceWorkerObjectInfo? source_info_for_service_worker;
 };
+
+// The number of seconds for which a 'push' event should be allowed to run.
+// This is not in the spec but for Chromium specific internal timeouts. Each
+// event dispatched to service workers has 5 minutes timeout in the Chrome
+// implementation, but this makes the timeout for push events shorter.
+const int32 kPushEventTimeoutSeconds = 90;
 
 // An interface for dispatching events to a ServiceWorker. This interface is
 // implemented by ServiceWorkerContextClient that lives in the renderer-side
@@ -104,7 +112,7 @@ interface ServiceWorkerEventDispatcher {
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
   // S13nServiceWorker
-  DispatchFetchEvent(URLRequest request,
+  DispatchFetchEvent(network.mojom.URLRequest request,
                      FetchEventPreloadHandle? preload_handle,
                      ServiceWorkerFetchResponseCallback response_callback)
       => (blink.mojom.ServiceWorkerEventStatus status,
@@ -125,7 +133,12 @@ interface ServiceWorkerEventDispatcher {
           mojo.common.mojom.Time dispatch_event_time);
   // Arguments are passed to the event handler as parameters of SyncEvent.
   // Ref: https://wicg.github.io/BackgroundSync/spec/#sync-event
-  DispatchSyncEvent(string id, bool last_chance)
+  // S13nServiceWorker: |timeout| is the amount of time to allow this event to
+  // finish.
+  // Non-S13nServiceWorker: |timeout| is just ignored.
+  DispatchSyncEvent(string id,
+                    bool last_chance,
+                    mojo.common.mojom.TimeDelta timeout)
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
   DispatchAbortPaymentEvent(

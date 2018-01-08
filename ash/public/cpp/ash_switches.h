@@ -23,15 +23,18 @@ ASH_PUBLIC_EXPORT extern const char kAshDisableLoginDimAndBlur[];
 ASH_PUBLIC_EXPORT extern const char kAshDisableShelfModelSynchronization[];
 ASH_PUBLIC_EXPORT extern const char kAshDisableSmoothScreenRotation[];
 ASH_PUBLIC_EXPORT extern const char kAshDisableTabletAutohideTitlebars[];
+ASH_PUBLIC_EXPORT extern const char kAshDisableTabletSplitView[];
 ASH_PUBLIC_EXPORT extern const char kAshDisableTouchExplorationMode[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableV1AppBackButton[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableDisplayMoveWindowAccels[];
+ASH_PUBLIC_EXPORT extern const char kAshEnableDockedMagnifier[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableKeyboardShortcutViewer[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableMagnifierKeyScroller[];
+ASH_PUBLIC_EXPORT extern const char kAshEnableNewOverviewUi[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableNightLight[];
 ASH_PUBLIC_EXPORT extern const char kAshEnablePaletteOnAllDisplays[];
+ASH_PUBLIC_EXPORT extern const char kAshEnablePersistentWindowBounds[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableScaleSettingsTray[];
-ASH_PUBLIC_EXPORT extern const char kAshEnableTabletSplitView[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableTabletMode[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableWaylandServer[];
 ASH_PUBLIC_EXPORT extern const char kAshEnableMirroredScreen[];
@@ -58,6 +61,7 @@ ASH_PUBLIC_EXPORT extern const char kAshTouchHud[];
 ASH_PUBLIC_EXPORT extern const char kAuraLegacyPowerButton[];
 ASH_PUBLIC_EXPORT extern const char kForceClamshellPowerButton[];
 ASH_PUBLIC_EXPORT extern const char kHasInternalStylus[];
+ASH_PUBLIC_EXPORT extern const char kShowPowerButtonMenu[];
 ASH_PUBLIC_EXPORT extern const char kShowTaps[];
 ASH_PUBLIC_EXPORT extern const char kShowViewsLogin[];
 ASH_PUBLIC_EXPORT extern const char kShowWebUiLock[];
@@ -68,7 +72,7 @@ ASH_PUBLIC_EXPORT bool IsDisplayMoveWindowAccelsEnabled();
 ASH_PUBLIC_EXPORT bool IsNightLightEnabled();
 ASH_PUBLIC_EXPORT bool IsSidebarEnabled();
 ASH_PUBLIC_EXPORT bool IsUsingViewsLogin();
-ASH_PUBLIC_EXPORT bool IsUsingWebUiLock();
+ASH_PUBLIC_EXPORT bool IsUsingViewsLock();
 
 }  // namespace switches
 }  // namespace ash

@@ -55,6 +55,7 @@ class DOMTimerCoordinator;
 class ErrorEvent;
 class EventQueue;
 class EventTarget;
+class InterfaceInvalidator;
 class LocalDOMWindow;
 class PausableObject;
 class PublicURLManager;
@@ -97,6 +98,7 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   virtual bool IsServiceWorkerGlobalScope() const { return false; }
   virtual bool IsAnimationWorkletGlobalScope() const { return false; }
   virtual bool IsAudioWorkletGlobalScope() const { return false; }
+  virtual bool IsLayoutWorkletGlobalScope() const { return false; }
   virtual bool IsPaintWorkletGlobalScope() const { return false; }
   virtual bool IsThreadedWorkletGlobalScope() const { return false; }
   virtual bool IsJSExecutionForbidden() const { return false; }
@@ -204,6 +206,8 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   virtual scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) = 0;
 
+  InterfaceInvalidator* GetInterfaceInvalidator() { return invalidator_.get(); }
+
  protected:
   ExecutionContext();
   virtual ~ExecutionContext();
@@ -228,6 +232,9 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   int window_interaction_tokens_;
 
   ReferrerPolicy referrer_policy_;
+
+  std::unique_ptr<InterfaceInvalidator> invalidator_;
+
   DISALLOW_COPY_AND_ASSIGN(ExecutionContext);
 };
 

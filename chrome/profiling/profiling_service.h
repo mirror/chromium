@@ -45,9 +45,11 @@ class ProfilingService : public service_manager::Service,
                           mojom::ProfilingClientPtr client,
                           mojo::ScopedHandle memlog_pipe_sender,
                           mojo::ScopedHandle memlog_pipe_receiver,
-                          mojom::ProcessType process_type) override;
+                          mojom::ProcessType process_type,
+                          profiling::mojom::StackMode stack_mode) override;
   void DumpProcessesForTracing(
       bool keep_small_allocations,
+      bool strip_path_from_mapped_files,
       DumpProcessesForTracingCallback callback) override;
   void GetProfiledPids(GetProfiledPidsCallback callback) override;
 
@@ -63,6 +65,7 @@ class ProfilingService : public service_manager::Service,
 
   void OnGetVmRegionsCompleteForDumpProcessesForTracing(
       bool keep_small_allocations,
+      bool strip_path_from_mapped_files,
       mojom::ProfilingService::DumpProcessesForTracingCallback callback,
       bool success,
       memory_instrumentation::mojom::GlobalMemoryDumpPtr dump);
@@ -72,6 +75,7 @@ class ProfilingService : public service_manager::Service,
   service_manager::BinderRegistry registry_;
   mojo::BindingSet<mojom::ProfilingService> binding_set_;
 
+  memory_instrumentation::mojom::HeapProfilerHelperPtr helper_;
   MemlogConnectionManager connection_manager_;
 
   // Must be last.

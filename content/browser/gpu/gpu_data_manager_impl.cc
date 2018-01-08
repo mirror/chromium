@@ -20,59 +20,8 @@ GpuDataManagerImpl* GpuDataManagerImpl::GetInstance() {
 }
 
 void GpuDataManagerImpl::BlacklistWebGLForTesting() {
-  // Manually generate the following data instead of going through
-  // gpu/config/process_json.py because this is just one simple instance.
-  static const int kFeatureListForEntry0[1] = {
-      gpu::GPU_FEATURE_TYPE_ACCELERATED_WEBGL};
-  static const gpu::GpuControlList::Entry kEntry = {
-      1,  // id
-      "ExtensionWebstoreGetWebGLStatusTest.Blocked",
-      arraysize(kFeatureListForEntry0),  // features size
-      kFeatureListForEntry0,             // features
-      0,                                 // DisabledExtensions size
-      nullptr,                           // DisabledExtensions
-      0,                                 // CrBugs size
-      nullptr,                           // CrBugs
-      {
-          gpu::GpuControlList::kOsAny,  // os_type
-          {gpu::GpuControlList::kUnknown,
-           gpu::GpuControlList::kVersionStyleNumerical, nullptr,
-           nullptr},                                   // os_version
-          0x00,                                        // vendor_id
-          0,                                           // DeviceIDs size
-          nullptr,                                     // DeviceIDs
-          gpu::GpuControlList::kMultiGpuCategoryNone,  // multi_gpu_category
-          gpu::GpuControlList::kMultiGpuStyleNone,     // multi_gpu_style
-          nullptr,                                     // driver info
-          nullptr,                                     // GL strings
-          nullptr,                                     // machine model info
-          nullptr,                                     // more conditions
-      },
-      0,        // exceptions count
-      nullptr,  // exceptions
-  };
-  static const gpu::GpuControlListData kData(1, &kEntry);
-
-  gpu::GPUInfo gpu_info;
-
   base::AutoLock auto_lock(lock_);
-  private_->InitializeForTesting(kData, gpu_info);
-
-  gpu::GpuFeatureInfo gpu_feature_info;
-  for (int ii = 0; ii < gpu::NUMBER_OF_GPU_FEATURE_TYPES; ++ii) {
-    if (ii == static_cast<int>(gpu::GPU_FEATURE_TYPE_ACCELERATED_WEBGL))
-      gpu_feature_info.status_values[ii] = gpu::kGpuFeatureStatusBlacklisted;
-    else
-      gpu_feature_info.status_values[ii] = gpu::kGpuFeatureStatusEnabled;
-  }
-  private_->UpdateGpuFeatureInfo(gpu_feature_info);
-}
-
-void GpuDataManagerImpl::InitializeForTesting(
-    const gpu::GpuControlListData& gpu_blacklist_data,
-    const gpu::GPUInfo& gpu_info) {
-  base::AutoLock auto_lock(lock_);
-  private_->InitializeForTesting(gpu_blacklist_data, gpu_info);
+  private_->BlacklistWebGLForTesting();
 }
 
 gpu::GPUInfo GpuDataManagerImpl::GetGPUInfo() const {
@@ -95,11 +44,6 @@ bool GpuDataManagerImpl::IsEssentialGpuInfoAvailable() const {
   return private_->IsEssentialGpuInfoAvailable();
 }
 
-bool GpuDataManagerImpl::IsCompleteGpuInfoAvailable() const {
-  base::AutoLock auto_lock(lock_);
-  return private_->IsCompleteGpuInfoAvailable();
-}
-
 bool GpuDataManagerImpl::IsGpuFeatureInfoAvailable() const {
   base::AutoLock auto_lock(lock_);
   return private_->IsGpuFeatureInfoAvailable();
@@ -116,11 +60,6 @@ void GpuDataManagerImpl::RequestVideoMemoryUsageStatsUpdate(
         callback) const {
   base::AutoLock auto_lock(lock_);
   private_->RequestVideoMemoryUsageStatsUpdate(callback);
-}
-
-bool GpuDataManagerImpl::ShouldUseSwiftShader() const {
-  base::AutoLock auto_lock(lock_);
-  return private_->ShouldUseSwiftShader();
 }
 
 void GpuDataManagerImpl::AddObserver(
@@ -140,22 +79,19 @@ void GpuDataManagerImpl::UnblockDomainFrom3DAPIs(const GURL& url) {
   private_->UnblockDomainFrom3DAPIs(url);
 }
 
-void GpuDataManagerImpl::SetGLStrings(const std::string& gl_vendor,
-                                      const std::string& gl_renderer,
-                                      const std::string& gl_version) {
-  base::AutoLock auto_lock(lock_);
-  private_->SetGLStrings(gl_vendor, gl_renderer, gl_version);
-}
-
 void GpuDataManagerImpl::DisableHardwareAcceleration() {
   base::AutoLock auto_lock(lock_);
   private_->DisableHardwareAcceleration();
 }
 
+void GpuDataManagerImpl::DisableSwiftShader() {
+  base::AutoLock auto_lock(lock_);
+  private_->DisableSwiftShader();
+}
+
 bool GpuDataManagerImpl::HardwareAccelerationEnabled() const {
   base::AutoLock auto_lock(lock_);
-  return !private_->ShouldUseSwiftShader() &&
-         private_->GpuAccessAllowed(nullptr);
+  return private_->HardwareAccelerationEnabled();
 }
 
 void GpuDataManagerImpl::GetDisabledExtensions(
@@ -259,11 +195,6 @@ bool GpuDataManagerImpl::Are3DAPIsBlocked(const GURL& top_origin_url,
 void GpuDataManagerImpl::DisableDomainBlockingFor3DAPIsForTesting() {
   base::AutoLock auto_lock(lock_);
   private_->DisableDomainBlockingFor3DAPIsForTesting();
-}
-
-size_t GpuDataManagerImpl::GetBlacklistedFeatureCount() const {
-  base::AutoLock auto_lock(lock_);
-  return private_->GetBlacklistedFeatureCount();
 }
 
 bool GpuDataManagerImpl::UpdateActiveGpu(uint32_t vendor_id,

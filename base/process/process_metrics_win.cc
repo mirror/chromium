@@ -4,7 +4,8 @@
 
 #include "base/process/process_metrics.h"
 
-#include <windows.h>
+#include <windows.h>  // Must be in front of other Windows header files.
+
 #include <psapi.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -15,11 +16,8 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/process/memory.h"
+#include "base/process/process_metrics_iocounters.h"
 #include "base/sys_info.h"
-
-#if defined(OS_WIN)
-#include <windows.h>
-#endif
 
 namespace base {
 namespace {

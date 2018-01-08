@@ -9,10 +9,10 @@ callback UpdateFunction = CSSStyleValue (CSSStyleValue oldValue);
 [
     Exposed=(Window,PaintWorklet),
     RuntimeEnabled=CSSTypedOM
-] interface StylePropertyMap : StylePropertyMapReadonly {
+] interface StylePropertyMap : StylePropertyMapReadOnly {
     [RaisesException, CallWith=ExecutionContext] void append(DOMString property, (CSSStyleValue or DOMString)... values);
     [RaisesException, ImplementedAs=remove] void delete(DOMString property);
-    [RaisesException, CallWith=ExecutionContext] void set(DOMString property, (CSSStyleValue or DOMString)... values);
-    // FIXME(785132): This shouldn't need a ExecutionContext.
-    [RaisesException, CallWith=ExecutionContext] void update(DOMString property, UpdateFunction updateFunction);
+    // Putting Exposed=Window in the next line makes |set| not exposed to PaintWorklet.
+    [RaisesException, CallWith=ExecutionContext, Exposed=Window] void set(DOMString property, (CSSStyleValue or DOMString)... values);
+    [RaisesException] void update(DOMString property, UpdateFunction updateFunction);
 };

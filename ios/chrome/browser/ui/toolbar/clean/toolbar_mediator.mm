@@ -61,6 +61,8 @@
 
 - (void)updateConsumerForWebState:(web::WebState*)webState {
   [self updateNavigationBackAndForwardStateForWebState:webState];
+  [self updateShareMenuForWebState:webState];
+  [self updateBookmarksForWebState:webState];
 }
 
 - (void)disconnect {
@@ -92,6 +94,12 @@
 }
 
 - (void)webState:(web::WebState*)webState
+    didFinishNavigation:(web::NavigationContext*)navigation {
+  DCHECK_EQ(_webState, webState);
+  [self updateConsumer];
+}
+
+- (void)webState:(web::WebState*)webState
     didPruneNavigationItemsWithCount:(size_t)pruned_item_count {
   DCHECK_EQ(_webState, webState);
   [self updateConsumer];
@@ -111,6 +119,11 @@
     didChangeLoadingProgress:(double)progress {
   DCHECK_EQ(_webState, webState);
   [self.consumer setLoadingProgressFraction:progress];
+}
+
+- (void)webStateDidChangeVisibleSecurityState:(web::WebState*)webState {
+  DCHECK_EQ(_webState, webState);
+  [self updateConsumer];
 }
 
 - (void)webStateDestroyed:(web::WebState*)webState {
@@ -140,7 +153,7 @@
     didChangeActiveWebState:(web::WebState*)newWebState
                 oldWebState:(web::WebState*)oldWebState
                     atIndex:(int)atIndex
-                 userAction:(BOOL)userAction {
+                     reason:(int)reason {
   DCHECK_EQ(_webStateList, webStateList);
   self.webState = newWebState;
 }
@@ -224,8 +237,8 @@
   DCHECK(self.consumer);
   [self updateConsumerForWebState:self.webState];
   [self.consumer setLoadingState:self.webState->IsLoading()];
-  [self updateBookmarks];
-  [self updateShareMenu];
+  [self updateBookmarksForWebState:self.webState];
+  [self updateShareMenuForWebState:self.webState];
 }
 
 // Updates the consumer with the new forward and back states.
@@ -238,17 +251,17 @@
 }
 
 // Updates the bookmark state of the consumer.
-- (void)updateBookmarks {
+- (void)updateBookmarksForWebState:(web::WebState*)webState {
   if (self.webState) {
-    GURL URL = self.webState->GetVisibleURL();
+    GURL URL = webState->GetVisibleURL();
     [self.consumer setPageBookmarked:self.bookmarkModel &&
                                      self.bookmarkModel->IsBookmarked(URL)];
   }
 }
 
 // Uodates the Share Menu button of the consumer.
-- (void)updateShareMenu {
-  const GURL& URL = self.webState->GetLastCommittedURL();
+- (void)updateShareMenuForWebState:(web::WebState*)webState {
+  const GURL& URL = webState->GetLastCommittedURL();
   BOOL shareMenuEnabled =
       URL.is_valid() && !web::GetWebClient()->IsAppSpecificURL(URL);
   [self.consumer setShareMenuEnabled:shareMenuEnabled];
@@ -260,18 +273,18 @@
 // toolbar so the star highlight is kept in sync.
 - (void)bookmarkNodeChildrenChanged:
     (const bookmarks::BookmarkNode*)bookmarkNode {
-  [self updateBookmarks];
+  [self updateBookmarksForWebState:self.webState];
 }
 
 // If all bookmarks are removed, update the toolbar so the star highlight is
 // kept in sync.
 - (void)bookmarkModelRemovedAllNodes {
-  [self updateBookmarks];
+  [self updateBookmarksForWebState:self.webState];
 }
 
 // In case we are on a bookmarked page before the model is loaded.
 - (void)bookmarkModelLoaded {
-  [self updateBookmarks];
+  [self updateBookmarksForWebState:self.webState];
 }
 
 - (void)bookmarkNodeChanged:(const bookmarks::BookmarkNode*)bookmarkNode {

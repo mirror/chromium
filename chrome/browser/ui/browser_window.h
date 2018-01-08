@@ -160,14 +160,6 @@ class BrowserWindow : public ui::BaseWindow {
   // Returns true if the fullscreen bubble is visible.
   virtual bool IsFullscreenBubbleVisible() const = 0;
 
-  // Shows a notice teaching the user the new shortcut for going back or forward
-  // if the user has pressed the old shortcut more than once in three seconds
-  // and the bubble has been shown less than five times.
-  virtual void MaybeShowNewBackShortcutBubble(bool forward) = 0;
-
-  // Hides the new back shortcut bubble, if showing, by fading it out.
-  virtual void HideNewBackShortcutBubble() = 0;
-
   // Returns the size of WebContents in the browser. This may be called before
   // the TabStripModel has an active tab.
   virtual gfx::Size GetContentsSize() const = 0;
@@ -206,8 +198,8 @@ class BrowserWindow : public ui::BaseWindow {
   // Focuses the bookmarks toolbar (for accessibility).
   virtual void FocusBookmarksToolbar() = 0;
 
-  // Focuses an infobar, if shown (for accessibility).
-  virtual void FocusInfobars() = 0;
+  // Focuses a visible but inactive popup for accessibility.
+  virtual void FocusInactivePopupForAccessibility() = 0;
 
   // Moves keyboard focus to the next pane.
   virtual void RotatePaneFocus(bool forwards) = 0;

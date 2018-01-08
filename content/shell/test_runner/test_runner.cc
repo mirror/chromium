@@ -21,7 +21,6 @@
 #include "content/shell/test_runner/layout_and_paint_async_then.h"
 #include "content/shell/test_runner/layout_dump.h"
 #include "content/shell/test_runner/mock_content_settings_client.h"
-#include "content/shell/test_runner/mock_credential_manager_client.h"
 #include "content/shell/test_runner/mock_screen_orientation_client.h"
 #include "content/shell/test_runner/mock_web_document_subresource_filter.h"
 #include "content/shell/test_runner/mock_web_speech_recognizer.h"
@@ -42,7 +41,6 @@
 #include "gin/wrappable.h"
 #include "third_party/WebKit/public/platform/WebCanvas.h"
 #include "third_party/WebKit/public/platform/WebData.h"
-#include "third_party/WebKit/public/platform/WebPasswordCredential.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
@@ -123,7 +121,6 @@ class TestRunnerBindings : public gin::Wrappable<TestRunnerBindings> {
   void CapturePixelsAsyncThen(v8::Local<v8::Function> callback);
   void ClearAllDatabases();
   void ClearPrinting();
-  void CloseWebInspector();
   void CopyImageAtAndCapturePixelsAsyncThen(int x,
                                             int y,
                                             v8::Local<v8::Function> callback);
@@ -156,7 +153,6 @@ class TestRunnerBindings : public gin::Wrappable<TestRunnerBindings> {
   void DumpTitleChanges();
   void DumpUserGestureInFrameLoadCallbacks();
   void EnableUseZoomForDSF(v8::Local<v8::Function> callback);
-  void EvaluateInWebInspector(int call_id, const std::string& script);
   void EvaluateScriptInIsolatedWorld(int world_id, const std::string& script);
   void ExecCommand(gin::Arguments* args);
   void ForceNextDrawingBufferCreationToFail();
@@ -251,7 +247,6 @@ class TestRunnerBindings : public gin::Wrappable<TestRunnerBindings> {
   void SetWillSendRequestClearHeader(const std::string& header);
   void SetWindowIsKey(bool value);
   void SetXSSAuditorEnabled(bool enabled);
-  void ShowWebInspector(gin::Arguments* args);
   void NavigateSecondaryWindow(const std::string& url);
   void InspectSecondaryWindow();
   void SimulateWebNotificationClick(gin::Arguments* args);
@@ -260,19 +255,12 @@ class TestRunnerBindings : public gin::Wrappable<TestRunnerBindings> {
   void WaitForPolicyDelegate();
   void WaitUntilDone();
   void WaitUntilExternalURLLoad();
-  void SetMockCredentialManagerError(const std::string& error);
-  void SetMockCredentialManagerResponse(const std::string& id,
-                                        const std::string& name,
-                                        const std::string& avatar,
-                                        const std::string& password);
-  void ClearMockCredentialManagerResponse();
   bool CallShouldCloseOnWebView();
   bool DisableAutoResizeMode(int new_width, int new_height);
   bool EnableAutoResizeMode(int min_width,
                             int min_height,
                             int max_width,
                             int max_height);
-  std::string EvaluateInWebInspectorOverlay(const std::string& script);
   v8::Local<v8::Value> EvaluateScriptInIsolatedWorldAndReturnValue(
       int world_id,
       const std::string& script);
@@ -365,12 +353,6 @@ gin::ObjectTemplateBuilder TestRunnerBindings::GetObjectTemplateBuilder(
   return gin::Wrappable<TestRunnerBindings>::GetObjectTemplateBuilder(isolate)
       .SetMethod("abortModal", &TestRunnerBindings::NotImplemented)
       .SetMethod("addDisallowedURL", &TestRunnerBindings::NotImplemented)
-      .SetMethod("setMockCredentialManagerError",
-                 &TestRunnerBindings::SetMockCredentialManagerError)
-      .SetMethod("setMockCredentialManagerResponse",
-                 &TestRunnerBindings::SetMockCredentialManagerResponse)
-      .SetMethod("clearMockCredentialManagerResponse",
-                 &TestRunnerBindings::ClearMockCredentialManagerResponse)
       .SetMethod("addMockSpeechRecognitionResult",
                  &TestRunnerBindings::AddMockSpeechRecognitionResult)
       .SetMethod("addOriginAccessWhitelistEntry",
@@ -383,7 +365,6 @@ gin::ObjectTemplateBuilder TestRunnerBindings::GetObjectTemplateBuilder(
       .SetMethod("clearAllDatabases", &TestRunnerBindings::ClearAllDatabases)
       .SetMethod("clearBackForwardList", &TestRunnerBindings::NotImplemented)
       .SetMethod("clearPrinting", &TestRunnerBindings::ClearPrinting)
-      .SetMethod("closeWebInspector", &TestRunnerBindings::CloseWebInspector)
       .SetMethod("copyImageAtAndCapturePixelsAsyncThen",
                  &TestRunnerBindings::CopyImageAtAndCapturePixelsAsyncThen)
       .SetMethod("didAcquirePointerLock",
@@ -439,10 +420,6 @@ gin::ObjectTemplateBuilder TestRunnerBindings::GetObjectTemplateBuilder(
                  &TestRunnerBindings::EnableAutoResizeMode)
       .SetMethod("enableUseZoomForDSF",
                  &TestRunnerBindings::EnableUseZoomForDSF)
-      .SetMethod("evaluateInWebInspector",
-                 &TestRunnerBindings::EvaluateInWebInspector)
-      .SetMethod("evaluateInWebInspectorOverlay",
-                 &TestRunnerBindings::EvaluateInWebInspectorOverlay)
       .SetMethod("evaluateScriptInIsolatedWorld",
                  &TestRunnerBindings::EvaluateScriptInIsolatedWorld)
       .SetMethod(
@@ -600,7 +577,6 @@ gin::ObjectTemplateBuilder TestRunnerBindings::GetObjectTemplateBuilder(
       .SetMethod("setWindowIsKey", &TestRunnerBindings::SetWindowIsKey)
       .SetMethod("setXSSAuditorEnabled",
                  &TestRunnerBindings::SetXSSAuditorEnabled)
-      .SetMethod("showWebInspector", &TestRunnerBindings::ShowWebInspector)
       .SetMethod("navigateSecondaryWindow",
                  &TestRunnerBindings::NavigateSecondaryWindow)
       .SetMethod("inspectSecondaryWindow",
@@ -1256,16 +1232,6 @@ void TestRunnerBindings::DumpNavigationPolicy() {
     runner_->DumpNavigationPolicy();
 }
 
-void TestRunnerBindings::ShowWebInspector(gin::Arguments* args) {
-  if (runner_) {
-    std::string settings;
-    args->GetNext(&settings);
-    std::string frontend_url;
-    args->GetNext(&frontend_url);
-    runner_->ShowWebInspector(settings, frontend_url);
-  }
-}
-
 void TestRunnerBindings::NavigateSecondaryWindow(const std::string& url) {
   if (runner_)
     runner_->NavigateSecondaryWindow(GURL(url));
@@ -1276,29 +1242,10 @@ void TestRunnerBindings::InspectSecondaryWindow() {
     runner_->InspectSecondaryWindow();
 }
 
-void TestRunnerBindings::CloseWebInspector() {
-  if (runner_)
-    runner_->CloseWebInspector();
-}
-
 bool TestRunnerBindings::IsChooserShown() {
   if (runner_)
     return runner_->IsChooserShown();
   return false;
-}
-
-void TestRunnerBindings::EvaluateInWebInspector(int call_id,
-                                                const std::string& script) {
-  if (runner_)
-    runner_->EvaluateInWebInspector(call_id, script);
-}
-
-std::string TestRunnerBindings::EvaluateInWebInspectorOverlay(
-    const std::string& script) {
-  if (runner_)
-    return runner_->EvaluateInWebInspectorOverlay(script);
-
-  return std::string();
 }
 
 void TestRunnerBindings::ClearAllDatabases() {
@@ -1432,26 +1379,6 @@ void TestRunnerBindings::SetMockSpeechRecognitionError(
     const std::string& message) {
   if (runner_)
     runner_->SetMockSpeechRecognitionError(error, message);
-}
-
-void TestRunnerBindings::SetMockCredentialManagerResponse(
-    const std::string& id,
-    const std::string& name,
-    const std::string& avatar,
-    const std::string& password) {
-  if (runner_)
-    runner_->SetMockCredentialManagerResponse(id, name, avatar, password);
-}
-
-void TestRunnerBindings::ClearMockCredentialManagerResponse() {
-  if (runner_)
-    runner_->ClearMockCredentialManagerResponse();
-}
-
-void TestRunnerBindings::SetMockCredentialManagerError(
-    const std::string& error) {
-  if (runner_)
-    runner_->SetMockCredentialManagerError(error);
 }
 
 void TestRunnerBindings::AddWebPageOverlay() {
@@ -1634,7 +1561,6 @@ TestRunner::TestRunner(TestInterfaces* interfaces)
       main_view_(nullptr),
       mock_content_settings_client_(
           new MockContentSettingsClient(&layout_test_runtime_flags_)),
-      credential_manager_client_(new MockCredentialManagerClient),
       mock_screen_orientation_client_(new MockScreenOrientationClient),
       spellcheck_(new SpellCheckClient(this)),
       chooser_count_(0),
@@ -1905,10 +1831,6 @@ WebTextCheckClient* TestRunner::GetWebTextCheckClient() const {
   return spellcheck_.get();
 }
 
-void TestRunner::InitializeWebViewWithMocks(blink::WebView* web_view) {
-  web_view->SetCredentialManagerClient(credential_manager_client_.get());
-}
-
 bool TestRunner::shouldDumpSpellCheckCallbacks() const {
   return layout_test_runtime_flags_.dump_spell_check_callbacks();
 }
@@ -2016,11 +1938,6 @@ void TestRunner::SetV8CacheDisabled(bool disabled) {
   main_view_->GetSettings()->SetV8CacheOptions(
       disabled ? blink::WebSettings::kV8CacheOptionsNone
                : blink::WebSettings::kV8CacheOptionsDefault);
-}
-
-void TestRunner::ShowDevTools(const std::string& settings,
-                              const std::string& frontend_url) {
-  delegate_->ShowDevTools(settings, frontend_url);
 }
 
 void TestRunner::NavigateSecondaryWindow(const GURL& url) {
@@ -2637,13 +2554,9 @@ void TestRunner::SetUseMockTheme(bool use) {
   blink::SetMockThemeEnabledForTest(use);
 }
 
-void TestRunner::ShowWebInspector(const std::string& str,
-                                  const std::string& frontend_url) {
-  ShowDevTools(str, frontend_url);
-}
-
 void TestRunner::WaitUntilExternalURLLoad() {
   layout_test_runtime_flags_.set_wait_until_external_url_load(true);
+  layout_test_runtime_flags_.set_wait_until_done(true);
   OnLayoutTestRuntimeFlagsChanged();
 }
 
@@ -2685,22 +2598,8 @@ bool TestRunner::ShouldDumpJavaScriptDialogs() const {
   return layout_test_runtime_flags_.dump_javascript_dialogs();
 }
 
-void TestRunner::CloseWebInspector() {
-  delegate_->CloseDevTools();
-}
-
 bool TestRunner::IsChooserShown() {
   return 0 < chooser_count_;
-}
-
-void TestRunner::EvaluateInWebInspector(int call_id,
-                                        const std::string& script) {
-  delegate_->EvaluateInWebInspector(call_id, script);
-}
-
-std::string TestRunner::EvaluateInWebInspectorOverlay(
-    const std::string& script) {
-  return delegate_->EvaluateInWebInspectorOverlay(script);
 }
 
 void TestRunner::ClearAllDatabases() {
@@ -2776,23 +2675,6 @@ void TestRunner::SetMockSpeechRecognitionError(const std::string& error,
                                                const std::string& message) {
   getMockWebSpeechRecognizer()->SetError(WebString::FromUTF8(error),
                                          WebString::FromUTF8(message));
-}
-
-void TestRunner::SetMockCredentialManagerResponse(const std::string& id,
-                                                  const std::string& name,
-                                                  const std::string& avatar,
-                                                  const std::string& password) {
-  credential_manager_client_->SetResponse(new WebPasswordCredential(
-      WebString::FromUTF8(id), WebString::FromUTF8(password),
-      WebString::FromUTF8(name), WebURL(GURL(avatar))));
-}
-
-void TestRunner::ClearMockCredentialManagerResponse() {
-  credential_manager_client_->SetResponse(nullptr);
-}
-
-void TestRunner::SetMockCredentialManagerError(const std::string& error) {
-  credential_manager_client_->SetError(error);
 }
 
 void TestRunner::OnLayoutTestRuntimeFlagsChanged() {

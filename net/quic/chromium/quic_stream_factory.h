@@ -24,11 +24,11 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/net_export.h"
 #include "net/base/network_change_notifier.h"
+#include "net/base/proxy_server.h"
 #include "net/cert/cert_database.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_stream_factory.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_server.h"
 #include "net/quic/chromium/network_connection.h"
 #include "net/quic/chromium/quic_chromium_client_session.h"
 #include "net/quic/chromium/quic_clock_skew_detector.h"
@@ -82,9 +82,10 @@ enum QuicConnectionMigrationStatus {
   MIGRATION_STATUS_TOO_MANY_CHANGES,
   MIGRATION_STATUS_SUCCESS,
   MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
-  MIGRATION_STATUS_DISABLED,
+  MIGRATION_STATUS_NOT_ENABLED,
   MIGRATION_STATUS_NO_ALTERNATE_NETWORK,
   MIGRATION_STATUS_ON_PATH_DEGRADING_DISABLED,
+  MIGRATION_STATUS_DISABLED_BY_CONFIG,
   MIGRATION_STATUS_MAX
 };
 
@@ -119,6 +120,23 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
               NetErrorDetails* net_error_details,
               const CompletionCallback& callback);
 
+  // This function must be called after Request() returns ERR_IO_PENDING.
+  // Returns true if Request() requires host resolution and it hasn't completed
+  // yet. If true is returned, |callback| will run when host resolution
+  // completes. It will be called with the result after host resolution during
+  // the connection process. For example, if host resolution returns OK and then
+  // crypto handshake returns ERR_IO_PENDING, then |callback| will run with
+  // ERR_IO_PENDING.
+  bool WaitForHostResolution(const CompletionCallback& callback);
+
+  // Tells QuicStreamRequest it should expect OnHostResolutionComplete()
+  // to be called in the future.
+  void ExpectOnHostResolution();
+
+  // Will be called by the associated QuicStreamFactory::Job when host
+  // resolution completes asynchronously after Request().
+  void OnHostResolutionComplete(int rv);
+
   void OnRequestComplete(int rv);
 
   // Helper method that calls |factory_|'s GetTimeDelayForWaitingJob(). It
@@ -144,6 +162,12 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
   CompletionCallback callback_;
   NetErrorDetails* net_error_details_;  // Unowned.
   std::unique_ptr<QuicChromiumClientSession::Handle> session_;
+
+  // Set in Request(). If true, then OnHostResolutionComplete() is expected to
+  // be called in the future.
+  bool expect_on_host_resolution_;
+  // Callback passed to WaitForHostResolution().
+  CompletionCallback host_resolution_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicStreamRequest);
 };
@@ -217,9 +241,11 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
       bool allow_server_migration,
       bool race_cert_verification,
       bool estimate_initial_rtt,
+      bool headers_include_h2_stream_dependency,
       const QuicTagVector& connection_options,
       const QuicTagVector& client_connection_options,
-      bool enable_token_binding);
+      bool enable_token_binding,
+      bool enable_socket_recv_optimization);
   ~QuicStreamFactory() override;
 
   // Returns true if there is an existing session for |server_id| or if the
@@ -369,7 +395,9 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   typedef std::map<QuicServerId, std::unique_ptr<CertVerifierJob>>
       CertVerifierJobMap;
 
-  bool OnResolution(const QuicSessionKey& key, const AddressList& address_list);
+  bool HasMatchingIpSession(const QuicSessionKey& key,
+                            const AddressList& address_list);
+  void OnJobHostResolutionComplete(Job* job, int rv);
   void OnJobComplete(Job* job, int rv);
   void OnCertVerifyJobComplete(CertVerifierJob* job, int rv);
   bool HasActiveSession(const QuicServerId& server_id) const;
@@ -531,6 +559,10 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   // If true, estimate the initial RTT based on network type.
   bool estimate_initial_rtt;
 
+  // If true, client headers will include HTTP/2 stream dependency info
+  // derived from SpdyPriority.
+  bool headers_include_h2_stream_dependency_;
+
   // Local address of socket that was created in CreateSession.
   IPEndPoint local_address_;
   // True if we need to check HttpServerProperties if QUIC was supported last
@@ -546,6 +578,10 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   base::SequencedTaskRunner* task_runner_;
 
   const scoped_refptr<SSLConfigService> ssl_config_service_;
+
+  // If set to true, the stream factory will create UDP Sockets with
+  // experimental optimization enabled for receiving data.
+  bool enable_socket_recv_optimization_;
 
   base::WeakPtrFactory<QuicStreamFactory> weak_factory_;
 

@@ -5,8 +5,10 @@
 #ifndef CONTENT_COMMON_CROSS_SITE_DOCUMENT_CLASSIFIER_H_
 #define CONTENT_COMMON_CROSS_SITE_DOCUMENT_CLASSIFIER_H_
 
+#include <string>
+
 #include "base/macros.h"
-#include "base/strings/string_piece.h"
+#include "base/strings/string_piece_forward.h"
 #include "content/common/content_export.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -47,15 +49,11 @@ class CONTENT_EXPORT CrossSiteDocumentClassifier {
   // response. For example, this returns the same value for all text/xml mime
   // type families such as application/xml, application/rss+xml.
   static CrossSiteDocumentMimeType GetCanonicalMimeType(
-      const std::string& mime_type);
+      base::StringPiece mime_type);
 
   // Returns whether this scheme is a target of cross-site document
   // policy(XSDP). This returns true only for http://* and https://* urls.
   static bool IsBlockableScheme(const GURL& frame_origin);
-
-  // Returns whether the two urls belong to the same sites.
-  static bool IsSameSite(const url::Origin& frame_origin,
-                         const GURL& response_url);
 
   // Returns whether there's a valid CORS header for frame_origin.  This is
   // simliar to CrossOriginAccessControl::passesAccessControlCheck(), but we use
@@ -66,7 +64,6 @@ class CONTENT_EXPORT CrossSiteDocumentClassifier {
   // methods. Preflight requests don't matter here since they are not used to
   // decide whether to block a document or not on the client side.
   static bool IsValidCorsHeaderSet(const url::Origin& frame_origin,
-                                   const GURL& website_origin,
                                    const std::string& access_control_origin);
 
   static Result SniffForHTML(base::StringPiece data);

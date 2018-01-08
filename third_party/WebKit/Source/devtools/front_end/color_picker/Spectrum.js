@@ -507,7 +507,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
    */
   _resizeForSelectedPalette(force) {
     var palette = this._palettes.get(this._selectedColorPalette.get());
-    if (!palette && !force)
+    if (!palette)
       return;
     var numColors = palette.colors.length;
     if (palette === this._customPaletteSetting.get())
@@ -521,9 +521,9 @@ ColorPicker.Spectrum = class extends UI.VBox {
     var paletteTop = 236;
     if (this._contrastDetails && this._contrastDetails.visible()) {
       if (this._contrastDetails.expanded())
-        paletteTop += 84;
+        paletteTop += 78;
       else
-        paletteTop += 42;
+        paletteTop += 36;
     }
     this.element.style.height = (paletteTop + paletteMargin + (paletteColorHeight + paletteMargin) * rowsNeeded) + 'px';
     this.dispatchEventToListeners(ColorPicker.Spectrum.Events.SizeChanged);

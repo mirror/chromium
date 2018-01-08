@@ -170,7 +170,7 @@ enum ThreadableLoaderToTest {
 
 class ThreadableLoaderTestHelper {
  public:
-  virtual ~ThreadableLoaderTestHelper() {}
+  virtual ~ThreadableLoaderTestHelper() = default;
 
   virtual void CreateLoader(ThreadableLoaderClient*) = 0;
   virtual void StartLoader(const ResourceRequest&) = 0;
@@ -234,8 +234,7 @@ class WebWorkerFetchContextForTest : public WebWorkerFetchContext {
  public:
   WebWorkerFetchContextForTest(KURL site_for_cookies)
       : site_for_cookies_(site_for_cookies.Copy()) {}
-  void InitializeOnWorkerThread(
-      scoped_refptr<base::SingleThreadTaskRunner>) override {}
+  void InitializeOnWorkerThread() override {}
 
   std::unique_ptr<WebURLLoaderFactory> CreateURLLoaderFactory() override {
     return std::make_unique<WebURLLoaderFactoryWithMock>(
@@ -260,8 +259,8 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
   void CreateLoader(ThreadableLoaderClient* client) override {
     std::unique_ptr<WaitableEvent> completion_event =
         std::make_unique<WaitableEvent>();
-    worker_loading_task_runner_->PostTask(
-        FROM_HERE,
+    PostCrossThreadTask(
+        *worker_loading_task_runner_, FROM_HERE,
         CrossThreadBind(&WorkerThreadableLoaderTestHelper::WorkerCreateLoader,
                         CrossThreadUnretained(this),
                         CrossThreadUnretained(client),
@@ -272,11 +271,12 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
   void StartLoader(const ResourceRequest& request) override {
     std::unique_ptr<WaitableEvent> completion_event =
         std::make_unique<WaitableEvent>();
-    worker_loading_task_runner_->PostTask(
-        FROM_HERE, CrossThreadBind(
-                       &WorkerThreadableLoaderTestHelper::WorkerStartLoader,
-                       CrossThreadUnretained(this),
-                       CrossThreadUnretained(completion_event.get()), request));
+    PostCrossThreadTask(
+        *worker_loading_task_runner_, FROM_HERE,
+        CrossThreadBind(&WorkerThreadableLoaderTestHelper::WorkerStartLoader,
+                        CrossThreadUnretained(this),
+                        CrossThreadUnretained(completion_event.get()),
+                        request));
     completion_event->Wait();
   }
 
@@ -308,8 +308,8 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
 
     std::unique_ptr<WaitableEvent> completion_event =
         std::make_unique<WaitableEvent>();
-    worker_loading_task_runner_->PostTask(
-        FROM_HERE,
+    PostCrossThreadTask(
+        *worker_loading_task_runner_, FROM_HERE,
         CrossThreadBind(&WorkerThreadableLoaderTestHelper::WorkerCallCheckpoint,
                         CrossThreadUnretained(this),
                         CrossThreadUnretained(completion_event.get()), n));
@@ -335,26 +335,26 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
     worker_loading_task_runner_ =
         worker_thread_->GetTaskRunner(TaskType::kInternalTest);
 
-    worker_loading_task_runner_->PostTask(FROM_HERE,
-                                          CrossThreadBind(&SetUpMockURLs));
+    PostCrossThreadTask(*worker_loading_task_runner_, FROM_HERE,
+                        CrossThreadBind(&SetUpMockURLs));
     WaitForWorkerThreadSignal();
   }
 
   void OnServeRequests() override {
     testing::RunPendingTasks();
-    worker_loading_task_runner_->PostTask(
-        FROM_HERE, CrossThreadBind(&ServeAsynchronousRequests));
+    PostCrossThreadTask(*worker_loading_task_runner_, FROM_HERE,
+                        CrossThreadBind(&ServeAsynchronousRequests));
     WaitForWorkerThreadSignal();
   }
 
   void OnTearDown() override {
-    worker_loading_task_runner_->PostTask(
-        FROM_HERE,
+    PostCrossThreadTask(
+        *worker_loading_task_runner_, FROM_HERE,
         CrossThreadBind(&WorkerThreadableLoaderTestHelper::ClearLoader,
                         CrossThreadUnretained(this)));
     WaitForWorkerThreadSignal();
-    worker_loading_task_runner_->PostTask(
-        FROM_HERE, CrossThreadBind(&UnregisterAllURLsAndClearMemoryCache));
+    PostCrossThreadTask(*worker_loading_task_runner_, FROM_HERE,
+                        CrossThreadBind(&UnregisterAllURLsAndClearMemoryCache));
     WaitForWorkerThreadSignal();
 
     worker_thread_->Terminate();
@@ -410,8 +410,8 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
 
   void WaitForWorkerThreadSignal() {
     WaitableEvent event;
-    worker_loading_task_runner_->PostTask(
-        FROM_HERE,
+    PostCrossThreadTask(
+        *worker_loading_task_runner_, FROM_HERE,
         CrossThreadBind(&WaitableEvent::Signal, CrossThreadUnretained(&event)));
     event.Wait();
   }

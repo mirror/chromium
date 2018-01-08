@@ -8,10 +8,10 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
-#include "bindings/modules/v8/V8Response.h"
+#include "bindings/core/v8/V8Response.h"
 #include "core/dom/ExecutionContext.h"
-#include "modules/fetch/BodyStreamBuffer.h"
-#include "modules/fetch/FetchDataLoader.h"
+#include "core/fetch/BodyStreamBuffer.h"
+#include "core/fetch/FetchDataLoader.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/heap/Handle.h"
@@ -96,8 +96,16 @@ class FetchDataLoaderAsWasmModule final : public FetchDataLoader,
   // what they are.
   void AbortCompilation() {
     ScriptState::Scope scope(script_state_.get());
-    builder_.Abort(V8ThrowException::CreateTypeError(
-        script_state_->GetIsolate(), "Could not download wasm module"));
+    if (!ScriptForbiddenScope::IsScriptForbidden()) {
+      builder_.Abort(V8ThrowException::CreateTypeError(
+          script_state_->GetIsolate(), "Could not download wasm module"));
+    } else {
+      // We are not allowed to execute a script, which indicates that we should
+      // not reject the promise of the streaming compilation. By passing no
+      // abort reason, we indicate the V8 side that the promise should not get
+      // rejected.
+      builder_.Abort(v8::Local<v8::Value>());
+    }
   }
   Member<BytesConsumer> consumer_;
   Member<FetchDataLoader::Client> client_;

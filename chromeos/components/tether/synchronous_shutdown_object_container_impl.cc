@@ -15,6 +15,7 @@
 #include "chromeos/components/tether/host_scan_device_prioritizer_impl.h"
 #include "chromeos/components/tether/host_scan_scheduler_impl.h"
 #include "chromeos/components/tether/host_scanner.h"
+#include "chromeos/components/tether/hotspot_usage_duration_tracker.h"
 #include "chromeos/components/tether/keep_alive_scheduler.h"
 #include "chromeos/components/tether/master_host_scan_cache.h"
 #include "chromeos/components/tether/network_connection_handler_tether_delegate.h"
@@ -26,6 +27,7 @@
 #include "chromeos/components/tether/tether_disconnector_impl.h"
 #include "chromeos/components/tether/tether_host_response_recorder.h"
 #include "chromeos/components/tether/tether_network_disconnection_handler.h"
+#include "chromeos/components/tether/tether_session_completion_logger.h"
 #include "chromeos/components/tether/timer_factory.h"
 #include "chromeos/components/tether/wifi_hotspot_connector.h"
 
@@ -74,10 +76,10 @@ SynchronousShutdownObjectContainerImpl::Factory::BuildInstance(
     NetworkStateHandler* network_state_handler,
     NetworkConnect* network_connect,
     NetworkConnectionHandler* network_connection_handler) {
-  return std::make_unique<SynchronousShutdownObjectContainerImpl>(
+  return base::WrapUnique(new SynchronousShutdownObjectContainerImpl(
       asychronous_container, notification_presenter,
       gms_core_notifications_state_tracker, pref_service, network_state_handler,
-      network_connect, network_connection_handler);
+      network_connect, network_connection_handler));
 }
 
 SynchronousShutdownObjectContainerImpl::SynchronousShutdownObjectContainerImpl(
@@ -94,6 +96,8 @@ SynchronousShutdownObjectContainerImpl::SynchronousShutdownObjectContainerImpl(
           std::make_unique<TetherHostResponseRecorder>(pref_service)),
       device_id_tether_network_guid_map_(
           std::make_unique<DeviceIdTetherNetworkGuidMap>()),
+      tether_session_completion_logger_(
+          std::make_unique<TetherSessionCompletionLogger>()),
       host_scan_device_prioritizer_(
           std::make_unique<HostScanDevicePrioritizerImpl>(
               tether_host_response_recorder_.get())),
@@ -129,6 +133,9 @@ SynchronousShutdownObjectContainerImpl::SynchronousShutdownObjectContainerImpl(
           master_host_scan_cache_.get(),
           device_id_tether_network_guid_map_.get())),
       clock_(std::make_unique<base::DefaultClock>()),
+      hotspot_usage_duration_tracker_(
+          std::make_unique<HotspotUsageDurationTracker>(active_host_.get(),
+                                                        clock_.get())),
       host_scanner_(std::make_unique<HostScanner>(
           network_state_handler_,
           asychronous_container->tether_host_fetcher(),
@@ -157,19 +164,22 @@ SynchronousShutdownObjectContainerImpl::SynchronousShutdownObjectContainerImpl(
           notification_presenter,
           host_connection_metrics_logger_.get(),
           asychronous_container->disconnect_tethering_request_sender(),
-          asychronous_container->wifi_hotspot_disconnector())),
+          asychronous_container->wifi_hotspot_disconnector(),
+          clock_.get())),
       tether_disconnector_(std::make_unique<TetherDisconnectorImpl>(
           active_host_.get(),
           asychronous_container->wifi_hotspot_disconnector(),
           asychronous_container->disconnect_tethering_request_sender(),
           tether_connector_.get(),
-          device_id_tether_network_guid_map_.get())),
+          device_id_tether_network_guid_map_.get(),
+          tether_session_completion_logger_.get())),
       tether_network_disconnection_handler_(
           std::make_unique<TetherNetworkDisconnectionHandler>(
               active_host_.get(),
               network_state_handler_,
               asychronous_container->network_configuration_remover(),
-              asychronous_container->disconnect_tethering_request_sender())),
+              asychronous_container->disconnect_tethering_request_sender(),
+              tether_session_completion_logger_.get())),
       network_connection_handler_tether_delegate_(
           std::make_unique<NetworkConnectionHandlerTetherDelegate>(
               network_connection_handler,

@@ -8,13 +8,14 @@
 #import <UIKit/UIKit.h>
 
 #include "ios/chrome/browser/infobars/infobar_container_ios.h"
+#import "ios/chrome/browser/snapshots/snapshot_generator_delegate.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
-#import "ios/chrome/browser/tabs/tab_snapshotting_delegate.h"
 #import "ios/web/web_state/ui/crw_swipe_recognizer_provider.h"
 
 @class CardSideSwipeView;
 @class SideSwipeGestureRecognizer;
 @protocol SideSwipeToolbarInteracting;
+@protocol SideSwipeToolbarSnapshotProviding;
 @protocol TabStripHighlighting;
 
 // Notification sent when the user starts a side swipe (on tablet).
@@ -45,10 +46,9 @@ extern NSString* const kSideSwipeDidStopNotification;
 // Called when the horizontal stack view is done and should be removed.
 - (void)sideSwipeViewDismissAnimationDidEnd:(UIView*)sideSwipeView;
 // Returns the main content view.
-- (UIView*)contentView;
-// Makes |tab| the currently visible tab, displaying its view.  Calls
-// -selectedTabChanged on the toolbar only if |newSelection| is YES.
-- (void)displayTab:(Tab*)tab isNewSelection:(BOOL)newSelection;
+- (UIView*)sideSwipeContentView;
+// Makes |tab| the currently visible tab, displaying its view.
+- (void)sideSwipeRedisplayTab:(Tab*)tab;
 // Check the invariant of "toolbar in front of infobar container which
 // is in front of content area." This DCHECK happens if addSubview and/or
 // insertSubview messed up the view ordering earlier.
@@ -57,7 +57,7 @@ extern NSString* const kSideSwipeDidStopNotification;
 // search bar.
 - (void)updateAccessoryViewsForSideSwipeWithVisibility:(BOOL)visible;
 // Returns the height of the header view for the tab model's current tab.
-- (CGFloat)headerHeight;
+- (CGFloat)headerHeightForSideSwipe;
 // Returns |YES| if side swipe should be blocked from initiating, such as when
 // voice search is up, or if the tools menu is enabled.
 - (BOOL)preventSideSwipe;
@@ -73,9 +73,16 @@ extern NSString* const kSideSwipeDidStopNotification;
 
 @property(nonatomic, assign) BOOL inSwipe;
 @property(nonatomic, weak) id<SideSwipeControllerDelegate> swipeDelegate;
-@property(nonatomic, weak) id<SideSwipeToolbarInteracting>
-    toolbarInteractionHandler;
-@property(nonatomic, weak) id<TabSnapshottingDelegate> snapshotDelegate;
+// Handler for the interaction with the primary toolbar, including providing
+// snapshot.
+@property(nonatomic, weak)
+    id<SideSwipeToolbarInteracting, SideSwipeToolbarSnapshotProviding>
+        primaryToolbarInteractionHandler;
+// Provider for the bottom toolbar's snapshot.
+@property(nonatomic, weak) id<SideSwipeToolbarSnapshotProviding>
+    secondaryToolbarSnapshotProvider;
+
+@property(nonatomic, weak) id<SnapshotGeneratorDelegate> snapshotDelegate;
 @property(nonatomic, weak) id<TabStripHighlighting> tabStripDelegate;
 
 // Initializer.

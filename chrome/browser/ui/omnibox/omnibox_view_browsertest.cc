@@ -5,8 +5,9 @@
 #include <stddef.h>
 #include <stdio.h>
 
+#include <memory>
+
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/scoped_observer.h"
@@ -60,8 +61,6 @@
 
 using base::ASCIIToUTF16;
 using base::UTF16ToUTF8;
-using base::Time;
-using base::TimeDelta;
 using bookmarks::BookmarkModel;
 
 namespace {
@@ -272,11 +271,11 @@ class OmniboxViewTest : public InProcessBrowserTest,
     data.SetShortName(ASCIIToUTF16(kSearchShortName));
     data.SetKeyword(ASCIIToUTF16(kSearchKeyword));
     data.SetURL(kSearchURL);
-    TemplateURL* template_url = model->Add(base::MakeUnique<TemplateURL>(data));
+    TemplateURL* template_url = model->Add(std::make_unique<TemplateURL>(data));
     model->SetUserSelectedDefaultSearchProvider(template_url);
 
     data.SetKeyword(ASCIIToUTF16(kSearchKeyword2));
-    model->Add(base::MakeUnique<TemplateURL>(data));
+    model->Add(std::make_unique<TemplateURL>(data));
 
     // Remove built-in template urls, like google.com, bing.com etc., as they
     // may appear as autocomplete suggests and interfere with our tests.
@@ -289,7 +288,7 @@ class OmniboxViewTest : public InProcessBrowserTest,
     }
   }
 
-  void AddHistoryEntry(const TestHistoryEntry& entry, const Time& time) {
+  void AddHistoryEntry(const TestHistoryEntry& entry, const base::Time& time) {
     Profile* profile = browser()->profile();
     history::HistoryService* history_service =
         HistoryServiceFactory::GetForProfile(
@@ -327,7 +326,7 @@ class OmniboxViewTest : public InProcessBrowserTest,
     for (size_t i = 0; i < arraysize(kHistoryEntries); i++) {
       // Add everything in order of time. We don't want to have a time that
       // is "right now" or it will nondeterministically appear in the results.
-      Time t = Time::Now() - TimeDelta::FromHours(i + 1);
+      base::Time t = base::Time::Now() - base::TimeDelta::FromHours(i + 1);
       ASSERT_NO_FATAL_FAILURE(AddHistoryEntry(kHistoryEntries[i], t));
     }
   }
@@ -624,7 +623,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, MAYBE_DesiredTLDWithTemporaryText) {
   data.SetShortName(ASCIIToUTF16("abc"));
   data.SetKeyword(ASCIIToUTF16(kSearchText));
   data.SetURL("http://abc.com/");
-  template_url_service->Add(base::MakeUnique<TemplateURL>(data));
+  template_url_service->Add(std::make_unique<TemplateURL>(data));
 
   // Send "ab", so that an "abc" entry appears in the popup.
   const ui::KeyboardCode kSearchTextPrefixKeys[] = {
@@ -1099,8 +1098,8 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, MAYBE_AcceptKeywordBySpace) {
   };
 
   // Add a history entry to trigger inline autocomplete when typing "foo".
-  ASSERT_NO_FATAL_FAILURE(
-      AddHistoryEntry(kHistoryFoobar, Time::Now() - TimeDelta::FromHours(1)));
+  ASSERT_NO_FATAL_FAILURE(AddHistoryEntry(
+      kHistoryFoobar, base::Time::Now() - base::TimeDelta::FromHours(1)));
 
   // Type "fo" to trigger inline autocomplete.
   ASSERT_NO_FATAL_FAILURE(SendKeySequence(kSearchKeywordPrefixKeys));
@@ -1158,8 +1157,8 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, MAYBE_AcceptKeywordBySpace) {
 
   // Add a history entry to trigger HQP matching with text == keyword when
   // typing "fo te".
-  ASSERT_NO_FATAL_FAILURE(
-      AddHistoryEntry(kHistoryFoo, Time::Now() - TimeDelta::FromMinutes(10)));
+  ASSERT_NO_FATAL_FAILURE(AddHistoryEntry(
+      kHistoryFoo, base::Time::Now() - base::TimeDelta::FromMinutes(10)));
 
   ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_F, 0));
   ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_O, 0));
@@ -1195,7 +1194,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, NonSubstitutingKeywordTest) {
   data.SetKeyword(ASCIIToUTF16(kSearchText));
   data.SetURL("http://abc.com/{searchTerms}");
   TemplateURL* template_url =
-      template_url_service->Add(base::MakeUnique<TemplateURL>(data));
+      template_url_service->Add(std::make_unique<TemplateURL>(data));
 
   omnibox_view->SetUserText(base::string16());
 
@@ -1218,7 +1217,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, NonSubstitutingKeywordTest) {
   template_url_service->Remove(template_url);
   data.SetShortName(ASCIIToUTF16("abc"));
   data.SetURL("http://abc.com/");
-  template_url_service->Add(base::MakeUnique<TemplateURL>(data));
+  template_url_service->Add(std::make_unique<TemplateURL>(data));
 
   // We always allow exact matches for non-substituting keywords.
   ASSERT_NO_FATAL_FAILURE(SendKeySequence(kSearchTextKeys));
@@ -1444,8 +1443,8 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, MAYBE_TabTraverseResultsTest) {
   };
 
   // Add a history entry so "foo" gets multiple matches.
-  ASSERT_NO_FATAL_FAILURE(
-      AddHistoryEntry(kHistoryFoo, Time::Now() - TimeDelta::FromHours(1)));
+  ASSERT_NO_FATAL_FAILURE(AddHistoryEntry(
+      kHistoryFoo, base::Time::Now() - base::TimeDelta::FromHours(1)));
 
   // Load results.
   ASSERT_NO_FATAL_FAILURE(omnibox_view->SelectAll(false));

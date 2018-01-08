@@ -31,7 +31,7 @@
 class CommandUpdater;
 class LocationBarView;
 class OmniboxClient;
-class OmniboxPopupView;
+class OmniboxPopupContentsView;
 
 namespace content {
 class WebContents;
@@ -110,11 +110,19 @@ class OmniboxViewViews : public OmniboxView,
   void AddedToWidget() override;
   void RemovedFromWidget() override;
 
+ protected:
+  // For testing only.
+  OmniboxPopupContentsView* GetPopupContentsView() const {
+    return popup_view_.get();
+  }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(OmniboxViewViewsTest, CloseOmniboxPopupOnTextDrag);
   FRIEND_TEST_ALL_PREFIXES(OmniboxViewViewsTest, FriendlyAccessibleLabel);
+  FRIEND_TEST_ALL_PREFIXES(OmniboxViewViewsTest, AccessiblePopup);
   FRIEND_TEST_ALL_PREFIXES(OmniboxViewViewsTest, MaintainCursorAfterFocusCycle);
   FRIEND_TEST_ALL_PREFIXES(OmniboxViewViewsTest, OnBlur);
+  FRIEND_TEST_ALL_PREFIXES(OmniboxViewViewsTest, DoNotNavigateOnDrop);
 
   // Update the field with |text| and set the selection.
   void SetTextAndSelectedRange(const base::string16& text,
@@ -225,7 +233,7 @@ class OmniboxViewViews : public OmniboxView,
   // different presentation (smaller font size). This is used for popups.
   bool popup_window_mode_;
 
-  std::unique_ptr<OmniboxPopupView> popup_view_;
+  std::unique_ptr<OmniboxPopupContentsView> popup_view_;
 
   security_state::SecurityLevel security_level_;
 

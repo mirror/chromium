@@ -8,7 +8,6 @@
 #include <string>
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/timer/elapsed_timer.h"
@@ -129,6 +128,8 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
   source->AddLocalizedString("confirm", IDS_CONFIRM);
   source->AddLocalizedString("done", IDS_DONE);
   source->AddLocalizedString("ok", IDS_OK);
+  source->AddLocalizedString("controlledSettingPolicy",
+                             IDS_CONTROLLED_SETTING_POLICY);
 
   // Add extension-specific strings.
   source->AddLocalizedString("title",
@@ -144,13 +145,10 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
   source->AddLocalizedString("noExtensionsOrApps",
                              IDS_MD_EXTENSIONS_NO_INSTALLED_ITEMS);
   source->AddLocalizedString("noDescription", IDS_MD_EXTENSIONS_NO_DESCRIPTION);
-  // TODO(dschuyler): define "viewInStore" as IDS_MD_EXTENSIONS_VIEW_IN_STORE.
   source->AddLocalizedString("viewInStore",
-                             IDS_APPLICATION_INFO_WEB_STORE_LINK);
-  // TODO(dschuyler): define "developerWebsite" as
-  // IDS_MD_EXTENSIONS_DEVELOPER_WEBSITE.
-  source->AddLocalizedString("developerWebsite",
-                             IDS_APPLICATION_INFO_HOMEPAGE_LINK);
+                             IDS_MD_EXTENSIONS_ITEM_CHROME_WEB_STORE);
+  source->AddLocalizedString("extensionWebsite",
+                             IDS_MD_EXTENSIONS_ITEM_EXTENSION_WEBSITE);
   source->AddLocalizedString("noSearchResults", IDS_SEARCH_NO_RESULTS);
   source->AddLocalizedString("searchResults", IDS_SEARCH_RESULTS);
   source->AddLocalizedString("dropToInstall",
@@ -158,6 +156,10 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
   source->AddLocalizedString("errorsPageHeading",
                              IDS_MD_EXTENSIONS_ERROR_PAGE_HEADING);
   source->AddLocalizedString("clearAll", IDS_MD_EXTENSIONS_ERROR_CLEAR_ALL);
+  source->AddLocalizedString("clearEntry", IDS_MD_EXTENSIONS_A11Y_CLEAR_ENTRY);
+  source->AddLocalizedString("logLevel", IDS_EXTENSIONS_LOG_LEVEL_INFO);
+  source->AddLocalizedString("warnLevel", IDS_EXTENSIONS_LOG_LEVEL_WARN);
+  source->AddLocalizedString("errorLevel", IDS_EXTENSIONS_LOG_LEVEL_ERROR);
   source->AddLocalizedString("anonymousFunction",
                              IDS_MD_EXTENSIONS_ERROR_ANONYMOUS_FUNCTION);
   source->AddLocalizedString("errorContext", IDS_MD_EXTENSIONS_ERROR_CONTEXT);
@@ -165,6 +167,12 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_ERROR_CONTEXT_UNKNOWN);
   source->AddLocalizedString("openInDevtool",
                              IDS_MD_EXTENSIONS_ERROR_LAUNCH_DEVTOOLS);
+  source->AddString("errorLinesNotShownSingular",
+                    l10n_util::GetPluralStringFUTF16(
+                        IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN, 1));
+  source->AddString("errorLinesNotShownPlural",
+                    l10n_util::GetPluralStringFUTF16(
+                        IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN, 2));
   source->AddLocalizedString("stackTrace", IDS_MD_EXTENSIONS_ERROR_STACK_TRACE);
   // TODO(dpapad): Unify with Settings' IDS_SETTINGS_WEB_STORE.
   source->AddLocalizedString("openChromeWebStore",
@@ -245,7 +253,7 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
       l10n_util::GetStringFUTF16(
           IDS_EXTENSIONS_ADDED_WITHOUT_KNOWLEDGE,
           l10n_util::GetStringUTF16(IDS_EXTENSION_WEB_STORE_TITLE)));
-  source->AddLocalizedString("learnMore", IDS_MD_EXTENSIONS_LEARN_MORE);
+  source->AddLocalizedString("learnMore", IDS_LEARN_MORE);
   source->AddLocalizedString(
       "loadErrorCouldNotLoadManifest",
       IDS_MD_EXTENSIONS_LOAD_ERROR_COULD_NOT_LOAD_MANIFEST);
@@ -255,8 +263,6 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_LOAD_ERROR_FILE_LABEL);
   source->AddLocalizedString("loadErrorErrorLabel",
                              IDS_MD_EXTENSIONS_LOAD_ERROR_ERROR_LABEL);
-  source->AddLocalizedString("loadErrorCancel",
-                             IDS_MD_EXTENSIONS_LOAD_ERROR_CANCEL);
   source->AddLocalizedString("loadErrorRetry",
                              IDS_MD_EXTENSIONS_LOAD_ERROR_RETRY);
   source->AddLocalizedString("noErrorsToShow",
@@ -278,8 +284,6 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_PACK_DIALOG_KEY_FILE_LABEL);
   source->AddLocalizedString("packDialogContent",
                              IDS_EXTENSION_PACK_DIALOG_HEADING);
-  source->AddLocalizedString("packDialogCancel",
-                             IDS_MD_EXTENSIONS_PACK_DIALOG_CANCEL_BUTTON);
   source->AddLocalizedString("packDialogConfirm",
                              IDS_MD_EXTENSIONS_PACK_DIALOG_CONFIRM_BUTTON);
   source->AddLocalizedString("shortcutNotSet",
@@ -313,6 +317,8 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_TOOLBAR_UPDATE_NOW);
   source->AddLocalizedString("toolbarUpdateNowTooltip",
                              IDS_MD_EXTENSIONS_TOOLBAR_UPDATE_NOW_TOOLTIP);
+  source->AddLocalizedString("toolbarUpdateDone",
+                             IDS_MD_EXTENSIONS_TOOLBAR_UPDATE_DONE);
   source->AddLocalizedString(
       "updateRequiredByPolicy",
       IDS_MD_EXTENSIONS_DISABLED_UPDATE_REQUIRED_BY_POLICY);
@@ -418,7 +424,7 @@ ExtensionsUI::ExtensionsUI(content::WebUI* web_ui) : WebUIController(web_ui) {
 #endif
 
     auto install_extension_handler =
-        base::MakeUnique<InstallExtensionHandler>();
+        std::make_unique<InstallExtensionHandler>();
     InstallExtensionHandler* handler = install_extension_handler.get();
     web_ui->AddMessageHandler(std::move(install_extension_handler));
     handler->GetLocalizedValues(source);
@@ -426,29 +432,29 @@ ExtensionsUI::ExtensionsUI(content::WebUI* web_ui) : WebUIController(web_ui) {
     source = CreateExtensionsHTMLSource();
 
     auto extension_settings_handler =
-        base::MakeUnique<ExtensionSettingsHandler>();
+        std::make_unique<ExtensionSettingsHandler>();
     ExtensionSettingsHandler* settings_handler =
         extension_settings_handler.get();
     web_ui->AddMessageHandler(std::move(extension_settings_handler));
     settings_handler->GetLocalizedValues(source);
 
     auto extension_loader_handler =
-        base::MakeUnique<ExtensionLoaderHandler>(profile);
+        std::make_unique<ExtensionLoaderHandler>(profile);
     ExtensionLoaderHandler* loader_handler = extension_loader_handler.get();
     web_ui->AddMessageHandler(std::move(extension_loader_handler));
     loader_handler->GetLocalizedValues(source);
 
     auto install_extension_handler =
-        base::MakeUnique<InstallExtensionHandler>();
+        std::make_unique<InstallExtensionHandler>();
     InstallExtensionHandler* install_handler = install_extension_handler.get();
     web_ui->AddMessageHandler(std::move(install_extension_handler));
     install_handler->GetLocalizedValues(source);
 
-    web_ui->AddMessageHandler(base::MakeUnique<MetricsHandler>());
+    web_ui->AddMessageHandler(std::make_unique<MetricsHandler>());
   }
 
 #if defined(OS_CHROMEOS)
-  auto kiosk_app_handler = base::MakeUnique<chromeos::KioskAppsHandler>(
+  auto kiosk_app_handler = std::make_unique<chromeos::KioskAppsHandler>(
       chromeos::OwnerSettingsServiceChromeOSFactory::GetForBrowserContext(
           profile));
   chromeos::KioskAppsHandler* kiosk_handler = kiosk_app_handler.get();

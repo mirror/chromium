@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Browser;
+import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsCallback;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.customtabs.CustomTabsSessionToken;
@@ -85,6 +86,7 @@ import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.webapps.WebappInterceptNavigationDelegate;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.NavigationEntry;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.PageTransition;
 import org.chromium.ui.base.WindowAndroid;
@@ -493,8 +495,17 @@ public class CustomTabActivity extends ChromeActivity {
             }
 
             @Override
+            @Nullable
             public String getCurrentUrl() {
                 return getActivityTab() == null ? null : getActivityTab().getUrl();
+            }
+
+            @Override
+            @Nullable
+            public String getPendingUrl() {
+                NavigationEntry entry = getActivityTab().getWebContents().getNavigationController()
+                        .getPendingEntry();
+                return entry != null ? entry.getUrl() : null;
             }
         };
         recordClientPackageName();
@@ -1162,7 +1173,7 @@ public class CustomTabActivity extends ChromeActivity {
 
                 // Blink has rendered the page by this point, but we need to wait for the compositor
                 // frame swap to avoid flash of white content.
-                getCompositorViewHolder().getCompositorView().surfaceRedrawNeededAsync(null, () -> {
+                getCompositorViewHolder().getCompositorView().surfaceRedrawNeededAsync(() -> {
                     if (!tab.isInitialized() || isActivityDestroyed()) return;
                     tab.getView().setBackgroundResource(0);
                 });
@@ -1196,7 +1207,7 @@ public class CustomTabActivity extends ChromeActivity {
         customTabIntent.intent.setData(Uri.parse(url));
 
         Intent intent = LaunchIntentDispatcher.createCustomTabActivityIntent(
-                context, customTabIntent.intent, false);
+                context, customTabIntent.intent);
         intent.setPackage(context.getPackageName());
         intent.putExtra(CustomTabIntentDataProvider.EXTRA_UI_TYPE, CUSTOM_TABS_UI_TYPE_INFO_PAGE);
         intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());

@@ -27,20 +27,25 @@
 
 namespace blink {
 
-static inline SVGTreeScopeResources& SvgTreeScopeResourcesFromElement(
-    Element* element) {
-  DCHECK(element);
-  return element->GetTreeScope().EnsureSVGTreeScopedResources();
+namespace {
+
+SVGTreeScopeResources::Resource* ResourceForContainer(
+    const LayoutSVGResourceContainer& resource_container) {
+  const SVGElement& element = *resource_container.GetElement();
+  return element.GetTreeScope()
+      .EnsureSVGTreeScopedResources()
+      .ExistingResourceForId(element.GetIdAttribute());
 }
+
+}  // namespace
 
 LayoutSVGResourceContainer::LayoutSVGResourceContainer(SVGElement* node)
     : LayoutSVGHiddenContainer(node),
       is_in_layout_(false),
       invalidation_mask_(0),
-      registered_(false),
       is_invalidating_(false) {}
 
-LayoutSVGResourceContainer::~LayoutSVGResourceContainer() {}
+LayoutSVGResourceContainer::~LayoutSVGResourceContainer() = default;
 
 void LayoutSVGResourceContainer::UpdateLayout() {
   // FIXME: Investigate a way to detect and break resource layout dependency
@@ -68,43 +73,40 @@ void LayoutSVGResourceContainer::NotifyContentChanged() {
 
 void LayoutSVGResourceContainer::WillBeDestroyed() {
   LayoutSVGHiddenContainer::WillBeDestroyed();
-  SvgTreeScopeResourcesFromElement(GetElement())
-      .RemoveResource(GetElement()->GetIdAttribute(), this);
-  DCHECK(clients_.IsEmpty());
+  // The resource is being torn down. If we have any clients, move those to be
+  // pending on the resource (if one exists.)
+  if (SVGTreeScopeResources::Resource* resource = ResourceForContainer(*this))
+    MakeClientsPending(*resource);
 }
 
 void LayoutSVGResourceContainer::StyleDidChange(
     StyleDifference diff,
     const ComputedStyle* old_style) {
   LayoutSVGHiddenContainer::StyleDidChange(diff, old_style);
-  SvgTreeScopeResourcesFromElement(GetElement())
-      .UpdateResource(GetElement()->GetIdAttribute(), this);
+  // The resource has (read: may have) been attached. Notify any pending
+  // clients that they can now try to add themselves as clients to the
+  // resource.
+  if (SVGTreeScopeResources::Resource* resource = ResourceForContainer(*this)) {
+    if (resource->Target() == GetElement())
+      resource->NotifyResourceClients();
+  }
 }
 
-void LayoutSVGResourceContainer::DetachAllClients(const AtomicString& to_id) {
+void LayoutSVGResourceContainer::MakeClientsPending(
+    SVGTreeScopeResources::Resource& resource) {
   RemoveAllClientsFromCache();
 
   for (auto* client : clients_) {
-    // Unlink the resource from the client's SVGResources. (The actual
-    // removal will be signaled after processing all the clients.)
+    // Unlink the resource from the client's SVGResources.
     SVGResources* resources =
         SVGResourcesCache::CachedResourcesForLayoutObject(client);
     // Or else the client wouldn't be in the list in the first place.
     DCHECK(resources);
     resources->ResourceDestroyed(this);
 
-    // Add a pending resolution based on the id of the old resource.
-    Element* client_element = ToElement(client->GetNode());
-    SvgTreeScopeResourcesFromElement(client_element)
-        .AddPendingResource(to_id, *client_element);
+    resource.AddWatch(ToSVGElement(*client->GetNode()));
   }
   clients_.clear();
-}
-
-void LayoutSVGResourceContainer::IdChanged(const AtomicString& old_id,
-                                           const AtomicString& new_id) {
-  SvgTreeScopeResourcesFromElement(GetElement())
-      .UpdateResource(old_id, new_id, this);
 }
 
 void LayoutSVGResourceContainer::MarkAllClientsForInvalidation(
@@ -177,10 +179,11 @@ void LayoutSVGResourceContainer::AddClient(LayoutObject* client) {
   ClearInvalidationMask();
 }
 
-void LayoutSVGResourceContainer::RemoveClient(LayoutObject* client) {
+bool LayoutSVGResourceContainer::RemoveClient(LayoutObject* client) {
   DCHECK(client);
   RemoveClientFromCache(client, false);
   clients_.erase(client);
+  return clients_.IsEmpty();
 }
 
 void LayoutSVGResourceContainer::InvalidateCacheAndMarkForLayout(
@@ -208,31 +211,7 @@ static inline void RemoveFromCacheAndInvalidateDependencies(
   if (!object->GetNode() || !object->GetNode()->IsSVGElement())
     return;
 
-  SVGElementSet* dependencies =
-      ToSVGElement(object->GetNode())->SetOfIncomingReferences();
-  if (!dependencies)
-    return;
-
-  // We allow cycles in SVGDocumentExtensions reference sets in order to avoid
-  // expensive reference graph adjustments on changes, so we need to break
-  // possible cycles here.
-  // This strong reference is safe, as it is guaranteed that this set will be
-  // emptied at the end of recursion.
-  DEFINE_STATIC_LOCAL(SVGElementSet, invalidating_dependencies,
-                      (new SVGElementSet));
-
-  for (SVGElement* element : *dependencies) {
-    if (LayoutObject* layout_object = element->GetLayoutObject()) {
-      if (UNLIKELY(!invalidating_dependencies.insert(element).is_new_entry)) {
-        // Reference cycle: we are in process of invalidating this dependant.
-        continue;
-      }
-
-      LayoutSVGResourceContainer::MarkForLayoutAndParentResourceInvalidation(
-          layout_object, needs_layout);
-      invalidating_dependencies.erase(element);
-    }
-  }
+  ToSVGElement(object->GetNode())->NotifyIncomingReferences(needs_layout);
 }
 
 void LayoutSVGResourceContainer::MarkForLayoutAndParentResourceInvalidation(

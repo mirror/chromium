@@ -51,15 +51,13 @@
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutTableCell.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutAPIShim.h"
-#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/api/LineLayoutBlockFlow.h"
 #include "core/layout/api/LineLayoutBox.h"
 #include "core/layout/ng/geometry/ng_box_strut.h"
+#include "core/layout/ng/ng_fragmentation_utils.h"
 #include "core/layout/shapes/ShapeOutsideInfo.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
-#include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/SnapCoordinator.h"
@@ -75,7 +73,7 @@
 #include "platform/geometry/FloatRoundedRect.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebRect.h"
-#include "public/platform/WebRemoteScrollProperties.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -112,9 +110,9 @@ PaintLayerType LayoutBox::LayerTypeRequired() const {
   // hasAutoZIndex only returns true if the element is positioned or a flex-item
   // since position:static elements that are not flex-items get their z-index
   // coerced to auto.
-  if (IsPositioned() || CreatesGroup() || HasClipPath() ||
-      HasTransformRelatedProperty() || HasHiddenBackface() || HasReflection() ||
-      Style()->SpecifiesColumns() || Style()->IsStackingContext() ||
+  if (IsPositioned() || CreatesGroup() || HasTransformRelatedProperty() ||
+      HasHiddenBackface() || HasReflection() || Style()->SpecifiesColumns() ||
+      Style()->IsStackingContext() ||
       Style()->ShouldCompositeForCurrentAnimations() ||
       RootScrollerUtil::IsEffective(*this))
     return kNormalPaintLayer;
@@ -189,18 +187,6 @@ void LayoutBox::StyleWillChange(StyleDifference diff,
     LayoutFlowThread* flow_thread = FlowThreadContainingBlock();
     if (flow_thread && flow_thread != this)
       flow_thread->FlowThreadDescendantStyleWillChange(this, diff, new_style);
-
-    // The background of the root element or the body element could propagate up
-    // to the canvas. Just dirty the entire canvas when our style changes
-    // substantially.
-    if ((diff.NeedsFullPaintInvalidation() || diff.NeedsLayout()) &&
-        GetNode() && (IsDocumentElement() || IsHTMLBodyElement(*GetNode()))) {
-      View()->SetShouldDoFullPaintInvalidation();
-
-      if (old_style->HasEntirelyFixedBackground() !=
-          new_style.HasEntirelyFixedBackground())
-        View()->Compositor()->SetNeedsUpdateFixedBackground();
-    }
 
     // When a layout hint happens and an object's position style changes, we
     // have to do a layout to dirty the layout tree using the old position
@@ -292,7 +278,12 @@ void LayoutBox::StyleDidChange(StyleDifference diff,
 
   // Our opaqueness might have changed without triggering layout.
   if (diff.NeedsFullPaintInvalidation()) {
+    // Invalidate self.
+    InvalidateBackgroundObscurationStatus();
     LayoutObject* parent_to_invalidate = Parent();
+    // Also invalidate up to kBackgroundObscurationTestMaxDepth parents.
+    // This constant corresponds to a descendant walk of the same depth;
+    // see ComputeBackgroundIsKnownToBeObscured.
     for (unsigned i = 0;
          i < kBackgroundObscurationTestMaxDepth && parent_to_invalidate; ++i) {
       parent_to_invalidate->InvalidateBackgroundObscurationStatus();
@@ -654,13 +645,9 @@ static bool IsDisallowedAutoscroll(HTMLFrameOwnerElement* owner_element,
 
 void LayoutBox::ScrollRectToVisibleRecursive(
     const LayoutRect& rect,
-    const ScrollAlignment& align_x,
-    const ScrollAlignment& align_y,
-    ScrollType scroll_type,
-    bool make_visible_in_visual_viewport,
-    ScrollBehavior scroll_behavior,
-    bool is_for_scroll_sequence) {
-  DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
+    const WebScrollIntoViewParams& params) {
+  DCHECK(params.GetScrollType() == kProgrammaticScroll ||
+         params.GetScrollType() == kUserScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
 
@@ -680,24 +667,18 @@ void LayoutBox::ScrollRectToVisibleRecursive(
         !ContainingBlock()->Style()->LineClamp().IsNone();
   }
 
-  bool is_smooth = scroll_behavior == kScrollBehaviorSmooth ||
-                   (scroll_behavior == kScrollBehaviorAuto &&
-                    Style()->GetScrollBehavior() == kScrollBehaviorSmooth);
-
   if (!IsLayoutView() && HasOverflowClip() && !restricted_by_line_clamp) {
     // Don't scroll to reveal an overflow layer that is restricted by the
     // -webkit-line-clamp property. This will prevent us from revealing text
     // hidden by the slider in Safari RSS.
     // TODO(eae): We probably don't need this any more as we don't share any
     //            code with the Safari RSS reeder.
-    new_rect = GetScrollableArea()->ScrollIntoView(
-        rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
-        is_for_scroll_sequence);
+    new_rect = GetScrollableArea()->ScrollIntoView(rect_to_scroll, params);
   } else if (!parent_box && CanBeProgramaticallyScrolled()) {
     if (LocalFrameView* frame_view = GetFrameView()) {
       HTMLFrameOwnerElement* owner_element = GetDocument().LocalOwner();
       if (!IsDisallowedAutoscroll(owner_element, frame_view)) {
-        if (make_visible_in_visual_viewport) {
+        if (params.make_visible_in_visual_viewport) {
           // RootFrameViewport::ScrollIntoView expects a rect in layout
           // viewport content coordinates.
           if (IsLayoutView() && GetFrame()->IsMainFrame() &&
@@ -706,15 +687,13 @@ void LayoutBox::ScrollRectToVisibleRecursive(
                 LayoutSize(GetScrollableArea()->GetScrollOffset()));
           }
           rect_to_scroll = frame_view->GetScrollableArea()->ScrollIntoView(
-              rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
-              is_for_scroll_sequence);
+              rect_to_scroll, params);
         } else {
           rect_to_scroll =
               frame_view->LayoutViewportScrollableArea()->ScrollIntoView(
-                  rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
-                  is_for_scroll_sequence);
+                  rect_to_scroll, params);
         }
-        if (is_for_scroll_sequence)
+        if (params.is_for_scroll_sequence)
           rect_to_scroll.Move(PendingOffsetToScroll());
         if (owner_element && owner_element->GetLayoutObject()) {
           if (frame_view->SafeToPropagateScrollToParent()) {
@@ -736,29 +715,22 @@ void LayoutBox::ScrollRectToVisibleRecursive(
 
   // If we are fixed-position and stick to the viewport, it is useless to
   // scroll the parent.
-  if (Style()->GetPosition() == EPosition::kFixed &&
-      ContainerForFixedPosition() == View()) {
+  if (Style()->GetPosition() == EPosition::kFixed && Container() == View())
     return;
-  }
 
   if (GetFrame()
           ->GetPage()
           ->GetAutoscrollController()
-          .SelectionAutoscrollInProgress())
+          .SelectionAutoscrollInProgress()) {
     parent_box = EnclosingScrollableBox();
+  }
 
   if (parent_box) {
-    parent_box->ScrollRectToVisibleRecursive(
-        new_rect, align_x, align_y, scroll_type,
-        make_visible_in_visual_viewport, scroll_behavior,
-        is_for_scroll_sequence);
+    parent_box->ScrollRectToVisibleRecursive(new_rect, params);
   } else if (GetFrame()->IsLocalRoot() && !GetFrame()->IsMainFrame()) {
     LocalFrameView* frame_view = GetFrameView();
     if (frame_view && frame_view->SafeToPropagateScrollToParent()) {
-      frame_view->ScrollRectToVisibleInRemoteParent(
-          new_rect, align_x, align_y, scroll_type,
-          make_visible_in_visual_viewport, scroll_behavior,
-          is_for_scroll_sequence);
+      frame_view->ScrollRectToVisibleInRemoteParent(new_rect, params);
     }
   }
 }
@@ -1089,8 +1061,9 @@ void LayoutBox::Autoscroll(const IntPoint& position_in_root_frame) {
       frame_view->RootFrameToContents(position_in_root_frame);
   ScrollRectToVisibleRecursive(
       LayoutRect(position_in_content, LayoutSize(1, 1)),
-      ScrollAlignment::kAlignToEdgeIfNeeded,
-      ScrollAlignment::kAlignToEdgeIfNeeded, kUserScroll);
+      WebScrollIntoViewParams(ScrollAlignment::kAlignToEdgeIfNeeded,
+                              ScrollAlignment::kAlignToEdgeIfNeeded,
+                              kUserScroll));
 }
 
 // There are two kinds of layoutObject that can autoscroll.
@@ -1921,10 +1894,8 @@ void LayoutBox::SizeChanged() {
 bool LayoutBox::IntersectsVisibleViewport() const {
   LayoutRect rect = VisualOverflowRect();
   LayoutView* layout_view = View();
-  while (!layout_view->GetFrame()->OwnerLayoutItem().IsNull())
-    layout_view = LayoutAPIShim::LayoutObjectFrom(
-                      layout_view->GetFrame()->OwnerLayoutItem())
-                      ->View();
+  while (layout_view->GetFrame()->OwnerLayoutObject())
+    layout_view = layout_view->GetFrame()->OwnerLayoutObject()->View();
   MapToVisualRectInAncestorSpace(layout_view, rect);
   return rect.Intersects(LayoutRect(
       layout_view->GetFrameView()->GetScrollableArea()->VisibleContentRect()));
@@ -2214,9 +2185,10 @@ LayoutSize LayoutBox::OffsetFromContainer(const LayoutObject* o) const {
   if (o->HasOverflowClip())
     offset -= ToLayoutBox(o)->ScrolledContentOffset();
 
-  if (Style()->GetPosition() == EPosition::kAbsolute &&
-      o->IsInFlowPositioned() && o->IsLayoutInline())
+  if (IsOutOfFlowPositioned() && o->IsLayoutInline() &&
+      o->CanContainOutOfFlowPositionedElement(Style()->GetPosition())) {
     offset += ToLayoutInline(o)->OffsetForInFlowPositionedInline(*this);
+  }
 
   return offset;
 }
@@ -2270,7 +2242,8 @@ void LayoutBox::PositionLineBox(InlineBox* box) {
 void LayoutBox::MoveWithEdgeOfInlineContainerIfNecessary(bool is_horizontal) {
   DCHECK(IsOutOfFlowPositioned());
   DCHECK(Container()->IsLayoutInline());
-  DCHECK(Container()->IsInFlowPositioned());
+  DCHECK(Container()->CanContainOutOfFlowPositionedElement(
+      Style()->GetPosition()));
   // If this object is inside a relative positioned inline and its inline
   // position is an explicit offset from the edge of its container then it will
   // need to move if its inline container has changed width. We do not track if
@@ -2403,54 +2376,6 @@ EBreakInside LayoutBox::BreakInside() const {
   return EBreakInside::kAuto;
 }
 
-// At a class A break point [1], the break value with the highest precedence
-// wins. If the two values have the same precedence (e.g. "left" and "right"),
-// the value specified on a latter object wins.
-//
-// [1] https://drafts.csswg.org/css-break/#possible-breaks
-static inline int FragmentainerBreakPrecedence(EBreakBetween break_value) {
-  // "auto" has the lowest priority.
-  // "avoid*" values win over "auto".
-  // "avoid-page" wins over "avoid-column".
-  // "avoid" wins over "avoid-page".
-  // Forced break values win over "avoid".
-  // Any forced page break value wins over "column" forced break.
-  // More specific break values (left, right, recto, verso) wins over generic
-  // "page" values.
-
-  switch (break_value) {
-    default:
-      NOTREACHED();
-    // fall-through
-    case EBreakBetween::kAuto:
-      return 0;
-    case EBreakBetween::kAvoidColumn:
-      return 1;
-    case EBreakBetween::kAvoidPage:
-      return 2;
-    case EBreakBetween::kAvoid:
-      return 3;
-    case EBreakBetween::kColumn:
-      return 4;
-    case EBreakBetween::kPage:
-      return 5;
-    case EBreakBetween::kLeft:
-    case EBreakBetween::kRight:
-    case EBreakBetween::kRecto:
-    case EBreakBetween::kVerso:
-      return 6;
-  }
-}
-
-EBreakBetween LayoutBox::JoinFragmentainerBreakValues(
-    EBreakBetween first_value,
-    EBreakBetween second_value) {
-  if (FragmentainerBreakPrecedence(second_value) >=
-      FragmentainerBreakPrecedence(first_value))
-    return second_value;
-  return first_value;
-}
-
 EBreakBetween LayoutBox::ClassABreakPointValue(
     EBreakBetween previous_break_after_value) const {
   // First assert that we're at a class A break point.
@@ -2581,8 +2506,8 @@ bool LayoutBox::MapToVisualRectInAncestorSpaceInternal(
 
   const ComputedStyle& style_to_use = StyleRef();
   EPosition position = style_to_use.GetPosition();
-  if (position == EPosition::kAbsolute && container->IsInFlowPositioned() &&
-      container->IsLayoutInline()) {
+  if (IsOutOfFlowPositioned() && container->IsLayoutInline() &&
+      container->CanContainOutOfFlowPositionedElement(position)) {
     container_offset.Move(
         ToLayoutInline(container)->OffsetForInFlowPositionedInline(*this));
   } else if (style_to_use.HasInFlowPosition() && Layer()) {
@@ -3895,7 +3820,8 @@ LayoutUnit LayoutBox::ContainingBlockLogicalWidthForPositioned(
                     ToLayoutBox(containing_block)->ClientLogicalWidth());
 
   DCHECK(containing_block->IsLayoutInline());
-  DCHECK(containing_block->IsInFlowPositioned());
+  DCHECK(containing_block->CanContainOutOfFlowPositionedElement(
+      Style()->GetPosition()));
 
   const LayoutInline* flow = ToLayoutInline(containing_block);
   InlineFlowBox* first = flow->FirstLineBox();
@@ -3954,7 +3880,8 @@ LayoutUnit LayoutBox::ContainingBlockLogicalHeightForPositioned(
   }
 
   DCHECK(containing_block->IsLayoutInline());
-  DCHECK(containing_block->IsInFlowPositioned());
+  DCHECK(containing_block->CanContainOutOfFlowPositionedElement(
+      Style()->GetPosition()));
 
   const LayoutInline* flow = ToLayoutInline(containing_block);
   InlineFlowBox* first = flow->FirstLineBox();

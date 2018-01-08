@@ -146,8 +146,9 @@ def _GetSymbolsMapping(dry_run, file_mapping):
     symbols_mapping[os.path.basename(target)] = source
     symbols_mapping[target] = source
 
-    if dry_run:
-      print 'Symbols:', binary_name, '->', symbols_mapping[target]
+  if dry_run:
+    for target, path in symbols_mapping.iteritems():
+      print 'Symbols:', target, '->', path
 
   return symbols_mapping
 
@@ -286,13 +287,11 @@ def WriteAutorun(bin_name, child_args, summary_output, shutdown_machine,
     autorun_file.write('export CHROME_HEADLESS=1\n')
 
   if wait_for_network:
-    # Quietly block until `ping google.com` succeeds.
-    autorun_file.write("""echo "Waiting for network connectivity..."
-                       until ping -c 1 google.com >/dev/null 2>/dev/null
-                       do
-                       :
-                       done
-                       """)
+    # Quietly block until `ping -c 0 google.com` succeeds. With -c 0 ping
+    # resolves the domain name, but doesn't send any pings.
+    autorun_file.write("echo Waiting for network connectivity...\n" +
+                       "until ping -c 0 google.com >/dev/null 2>&1\n" +
+                       "do sleep 1; done\n")
 
   if summary_output:
     # Unfortunately, devmgr races with this autorun script. This delays long
@@ -614,7 +613,7 @@ def _HandleOutputFromProcess(process, symbols_mapping):
 
 
 def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
-               test_launcher_summary_output):
+               test_launcher_summary_output=None, forward_ssh_port=None):
   if not kernel_path:
     # TODO(wez): Parameterize this on the |target_cpu| from GN.
     kernel_path = os.path.join(_TargetCpuToSdkBinPath(bootfs_data.target_cpu),
@@ -627,6 +626,16 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
     kernel_args.append('zircon.autorun.system=/boot/bin/sh+/system/cr_autorun')
 
   if use_device:
+    if test_launcher_summary_output:
+      sys.stderr.write("--test-launcher-summary-output when running " +
+                       "on a device.\n")
+      return 1
+
+    if forward_ssh_port:
+      sys.stderr.write("--forward-ssh-port is not supported when running " +
+                       "on a device.\n")
+      return 1
+
     # Deploy the boot image to the device.
     bootserver_path = os.path.join(SDK_ROOT, 'tools', 'bootserver')
     bootserver_command = [bootserver_path, '-1', kernel_path,
@@ -648,11 +657,6 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
         '-initrd', bootfs_data.bootfs,
         '-smp', '4',
 
-        # Configure virtual network. It is used in the tests to connect to
-        # testserver running on the host.
-        '-netdev', 'user,id=net0,net=%s,dhcpstart=%s,host=%s' %
-            (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
-
         # Use stdio for the guest OS only; don't attach the QEMU interactive
         # monitor.
         '-serial', 'stdio',
@@ -670,18 +674,29 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
       qemu_command.extend([
           '-machine','virt',
           '-cpu', 'cortex-a53',
-          '-device', 'virtio-net-pci,netdev=net0,mac=' + GUEST_MAC_ADDRESS,
       ])
+      netdev_type = 'virtio-net-pci'
       if platform.machine() == 'aarch64':
         qemu_command.append('-enable-kvm')
     else:
       qemu_command.extend([
           '-machine', 'q35',
           '-cpu', 'host,migratable=no',
-          '-device', 'e1000,netdev=net0,mac=' + GUEST_MAC_ADDRESS,
       ])
+      netdev_type = 'e1000'
       if platform.machine() == 'x86_64':
         qemu_command.append('-enable-kvm')
+
+    # Configure virtual network. It is used in the tests to connect to
+    # testserver running on the host.
+    netdev_config = 'user,id=net0,net=%s,dhcpstart=%s,host=%s' % \
+            (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS)
+    if forward_ssh_port:
+      netdev_config += ",hostfwd=tcp::%s-:22" % forward_ssh_port
+    qemu_command.extend([
+      '-netdev', netdev_config,
+      '-device', '%s,netdev=net0,mac=%s' % (netdev_type, GUEST_MAC_ADDRESS),
+    ])
 
     if test_launcher_summary_output:
       # Make and mount a 100M minfs formatted image that is used to copy the

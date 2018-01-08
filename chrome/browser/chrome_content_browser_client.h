@@ -20,11 +20,11 @@
 #include "build/build_config.h"
 #include "chrome/browser/chrome_service.h"
 #include "content/public/browser/content_browser_client.h"
-#include "content/public/common/network_service.mojom.h"
 #include "content/public/common/resource_type.h"
 #include "extensions/features/features.h"
 #include "media/media_features.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 class ChromeContentBrowserClientParts;
@@ -99,11 +99,12 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       bool* in_memory) override;
   content::WebContentsViewDelegate* GetWebContentsViewDelegate(
       content::WebContents* web_contents) override;
+  void RenderProcessWillLaunch(
+      content::RenderProcessHost* host,
+      service_manager::mojom::ServiceRequest* service_request) override;
   bool AllowGpuLaunchRetryOnIOThread() override;
-  void RenderProcessWillLaunch(content::RenderProcessHost* host) override;
   GURL GetEffectiveURL(content::BrowserContext* browser_context,
-                       const GURL& url,
-                       bool is_isolated_origin) override;
+                       const GURL& url) override;
   bool ShouldUseProcessPerSite(content::BrowserContext* browser_context,
                                const GURL& effective_url) override;
   bool DoesSiteRequireDedicatedProcess(content::BrowserContext* browser_context,
@@ -322,10 +323,6 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       content::RenderFrameHost* render_frame_host,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle interface_pipe) override;
-  bool BindAssociatedInterfaceRequestFromFrame(
-      content::RenderFrameHost* render_frame_host,
-      const std::string& interface_name,
-      mojo::ScopedInterfaceEndpointHandle* handle) override;
   void BindInterfaceRequestFromWorker(
       content::RenderProcessHost* render_process_host,
       const url::Origin& origin,
@@ -363,7 +360,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   std::unique_ptr<content::MemoryCoordinatorDelegate>
   GetMemoryCoordinatorDelegate() override;
   ::rappor::RapporService* GetRapporService() override;
-  content::mojom::NetworkContextPtr CreateNetworkContext(
+  network::mojom::NetworkContextPtr CreateNetworkContext(
       content::BrowserContext* context,
       bool in_memory,
       const base::FilePath& relative_partition_path) override;
@@ -380,7 +377,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       const base::CommandLine& command_line) override;
   std::vector<std::unique_ptr<content::URLLoaderThrottle>>
   CreateURLLoaderThrottles(
-      const base::Callback<content::WebContents*()>& wc_getter) override;
+      const base::Callback<content::WebContents*()>& wc_getter,
+      content::NavigationUIData* navigation_ui_data) override;
   void RegisterNonNetworkNavigationURLLoaderFactories(
       content::RenderFrameHost* frame_host,
       NonNetworkURLLoaderFactoryMap* factories) override;
@@ -398,6 +396,16 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void CreateUsbChooserService(
       content::RenderFrameHost* render_frame_host,
       device::mojom::UsbChooserServiceRequest request) override;
+  bool ShowPaymentHandlerWindow(
+      content::BrowserContext* browser_context,
+      const GURL& url,
+      base::OnceCallback<void(bool, int, int)> callback) override;
+  bool ShouldPermitIndividualAttestationForWebauthnRPID(
+      content::BrowserContext* browser_context,
+      const std::string& rp_id) override;
+
+  std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
+      content::ResourceContext* resource_context) override;
 
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);

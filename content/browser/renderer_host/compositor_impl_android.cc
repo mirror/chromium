@@ -40,7 +40,6 @@
 #include "components/viz/common/gpu/vulkan_in_process_context_provider.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/frame_sink_id_allocator.h"
-#include "components/viz/common/switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
@@ -97,17 +96,9 @@ class SingleThreadTaskGraphRunner : public cc::SingleThreadTaskGraphRunner {
 
 struct CompositorDependencies {
   CompositorDependencies() : frame_sink_id_allocator(kDefaultClientId) {
-    // TODO(kylechar): Switch this back to kDisableSurfaceReferences.
-    auto surface_lifetime_type =
-        base::CommandLine::ForCurrentProcess()->HasSwitch(
-            "enable-surface-references")
-            ? viz::SurfaceManager::LifetimeType::REFERENCES
-            : viz::SurfaceManager::LifetimeType::SEQUENCES;
-
     // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
     // Gpu process, instead get the mojo pointer from the Gpu process.
-    frame_sink_manager_impl =
-        std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
+    frame_sink_manager_impl = std::make_unique<viz::FrameSinkManagerImpl>();
     surface_utils::ConnectWithLocalFrameSinkManager(
         &host_frame_sink_manager, frame_sink_manager_impl.get());
   }
@@ -172,7 +163,7 @@ gpu::SharedMemoryLimits GetCompositorContextSharedMemoryLimits(
   return limits;
 }
 
-gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
+gpu::ContextCreationAttribs GetCompositorContextAttributes(
     const gfx::ColorSpace& display_color_space,
     bool requires_alpha_channel) {
   // This is used for the browser compositor (offscreen) and for the display
@@ -181,7 +172,7 @@ gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
   // not need alpha, stencil, depth, antialiasing. The display compositor does
   // not use these things either, except for alpha when it has a transparent
   // background.
-  gpu::gles2::ContextCreationAttribHelper attributes;
+  gpu::ContextCreationAttribs attributes;
   attributes.alpha_size = -1;
   attributes.stencil_size = 0;
   attributes.depth_size = 0;
@@ -189,11 +180,11 @@ gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
   if (display_color_space == gfx::ColorSpace::CreateSRGB()) {
-    attributes.color_space = gpu::gles2::COLOR_SPACE_SRGB;
+    attributes.color_space = gpu::COLOR_SPACE_SRGB;
   } else if (display_color_space == gfx::ColorSpace::CreateDisplayP3D65()) {
-    attributes.color_space = gpu::gles2::COLOR_SPACE_DISPLAY_P3;
+    attributes.color_space = gpu::COLOR_SPACE_DISPLAY_P3;
   } else {
-    attributes.color_space = gpu::gles2::COLOR_SPACE_UNSPECIFIED;
+    attributes.color_space = gpu::COLOR_SPACE_UNSPECIFIED;
     DLOG(ERROR) << "Android color space is neither sRGB nor P3, output color "
                    "will be incorrect.";
   }
@@ -227,7 +218,7 @@ gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
 
 void CreateContextProviderAfterGpuChannelEstablished(
     gpu::SurfaceHandle handle,
-    gpu::gles2::ContextCreationAttribHelper attributes,
+    gpu::ContextCreationAttribs attributes,
     gpu::SharedMemoryLimits shared_memory_limits,
     Compositor::ContextProviderCallback callback,
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host) {
@@ -441,7 +432,7 @@ void Compositor::Initialize() {
 // static
 void Compositor::CreateContextProvider(
     gpu::SurfaceHandle handle,
-    gpu::gles2::ContextCreationAttribHelper attributes,
+    gpu::ContextCreationAttribs attributes,
     gpu::SharedMemoryLimits shared_memory_limits,
     ContextProviderCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -480,10 +471,10 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
       window_(NULL),
       surface_handle_(gpu::kNullSurfaceHandle),
       client_(client),
-      root_window_(root_window),
       needs_animate_(false),
       pending_frames_(0U),
       layer_tree_frame_sink_request_pending_(false),
+      lock_manager_(base::ThreadTaskRunnerHandle::Get(), this),
       weak_factory_(this) {
   GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
 #if DCHECK_IS_ON()
@@ -491,15 +482,8 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
                                                     "CompositorImpl");
 #endif
   DCHECK(client);
-  DCHECK(root_window);
-  DCHECK(root_window->GetLayer() == nullptr);
-  root_window->SetLayer(cc::Layer::Create());
-  readback_layer_tree_ = cc::Layer::Create();
-  readback_layer_tree_->SetHideLayerAndSubtree(true);
-  root_window->GetLayer()->AddChild(readback_layer_tree_);
-  root_window->AttachCompositor(this);
-  CreateLayerTreeHost();
-  resource_manager_.Init(host_->GetUIResourceManager());
+
+  SetRootWindow(root_window);
 
   // Listen to display density change events and update painted device scale
   // factor accordingly.
@@ -508,11 +492,15 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
 
 CompositorImpl::~CompositorImpl() {
   display::Screen::GetScreen()->RemoveObserver(this);
-  root_window_->DetachCompositor();
-  root_window_->SetLayer(nullptr);
+  DetachRootWindow();
   // Clean-up any surface references.
   SetSurface(NULL);
   GetHostFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
+}
+
+void CompositorImpl::DetachRootWindow() {
+  root_window_->DetachCompositor();
+  root_window_->SetLayer(nullptr);
 }
 
 bool CompositorImpl::IsForSubframe() {
@@ -527,14 +515,49 @@ ui::ResourceManager& CompositorImpl::GetResourceManager() {
   return resource_manager_;
 }
 
+void CompositorImpl::SetRootWindow(gfx::NativeWindow root_window) {
+  DCHECK(root_window);
+  DCHECK(!root_window->GetLayer());
+
+  // TODO(mthiesse): Right now we only support swapping the root window without
+  // a surface. If we want to support swapping with a surface we need to
+  // handle visibility, swapping begin frame sources, etc.
+  // These checks ensure we have no begin frame source, and that we don't need
+  // to register one on the new window.
+  DCHECK(!display_);
+  DCHECK(!window_);
+
+  scoped_refptr<cc::Layer> root_layer;
+  if (root_window_) {
+    root_layer = root_window_->GetLayer();
+    DetachRootWindow();
+  }
+
+  root_window_ = root_window;
+  root_window_->SetLayer(root_layer ? root_layer : cc::Layer::Create());
+  root_window_->GetLayer()->SetBounds(size_);
+  if (!readback_layer_tree_) {
+    readback_layer_tree_ = cc::Layer::Create();
+    readback_layer_tree_->SetHideLayerAndSubtree(true);
+  }
+  root_window->GetLayer()->AddChild(readback_layer_tree_);
+  root_window->AttachCompositor(this);
+  if (!host_) {
+    CreateLayerTreeHost();
+    resource_manager_.Init(host_->GetUIResourceManager());
+  }
+  host_->SetRootLayer(root_window_->GetLayer());
+  host_->SetPaintedDeviceScaleFactor(root_window_->GetDipScale());
+}
+
 void CompositorImpl::SetRootLayer(scoped_refptr<cc::Layer> root_layer) {
   if (subroot_layer_.get()) {
     subroot_layer_->RemoveFromParent();
-    subroot_layer_ = NULL;
+    subroot_layer_ = nullptr;
   }
   if (root_window_->GetLayer()) {
     subroot_layer_ = root_window_->GetLayer();
-    root_window_->GetLayer()->AddChild(root_layer);
+    subroot_layer_->AddChild(root_layer);
   }
 }
 
@@ -588,8 +611,6 @@ void CompositorImpl::CreateLayerTreeHost() {
   settings.initial_debug_state.show_fps_counter =
       command_line->HasSwitch(cc::switches::kUIShowFPSCounter);
   settings.single_thread_proxy_scheduler = true;
-  settings.resource_settings.texture_target_exception_list =
-      CreateBufferUsageAndFormatExceptionList();
 
   animation_host_ = cc::AnimationHost::CreateMainInstance();
 
@@ -601,11 +622,8 @@ void CompositorImpl::CreateLayerTreeHost() {
   params.mutator_host = animation_host_.get();
   host_ = cc::LayerTreeHost::CreateSingleThreaded(this, &params);
   DCHECK(!host_->IsVisible());
-  host_->SetRootLayer(root_window_->GetLayer());
-  host_->SetFrameSinkId(frame_sink_id_);
   host_->SetViewportSize(size_);
   host_->SetDeviceScaleFactor(1);
-  host_->SetPaintedDeviceScaleFactor(root_window_->GetDipScale());
 
   if (needs_animate_)
     host_->SetNeedsAnimate();
@@ -633,6 +651,7 @@ void CompositorImpl::SetVisible(bool visible) {
     display_.reset();
   } else {
     host_->SetVisible(true);
+    has_submitted_frame_since_became_visible_ = false;
     if (layer_tree_frame_sink_request_pending_)
       HandlePendingLayerTreeFrameSinkRequest();
   }
@@ -650,10 +669,6 @@ void CompositorImpl::SetWindowBounds(const gfx::Size& size) {
   root_window_->GetLayer()->SetBounds(size);
 }
 
-void CompositorImpl::SetDeferCommits(bool defer_commits) {
-  host_->SetDeferCommits(defer_commits);
-}
-
 void CompositorImpl::SetRequiresAlphaChannel(bool flag) {
   requires_alpha_channel_ = flag;
 }
@@ -665,7 +680,9 @@ void CompositorImpl::SetNeedsComposite() {
   host_->SetNeedsAnimate();
 }
 
-void CompositorImpl::UpdateLayerTreeHost() {
+void CompositorImpl::UpdateLayerTreeHost(VisualStateUpdate requested_update) {
+  if (requested_update == VisualStateUpdate::kPrePaint)
+    return;
   client_->UpdateLayerTreeHost();
   if (needs_animate_) {
     needs_animate_ = false;
@@ -832,9 +849,9 @@ void CompositorImpl::InitializeDisplay(
   const bool should_register_begin_frame_source = !display_;
 
   display_ = std::make_unique<viz::Display>(
-      viz::ServerSharedBitmapManager::current(), gpu_memory_buffer_manager,
-      renderer_settings, frame_sink_id_, std::move(display_output_surface),
-      std::move(scheduler), task_runner);
+      viz::ServerSharedBitmapManager::current(), renderer_settings,
+      frame_sink_id_, std::move(display_output_surface), std::move(scheduler),
+      task_runner);
 
   auto layer_tree_frame_sink =
       vulkan_context_provider
@@ -881,6 +898,7 @@ bool CompositorImpl::SupportsETC1NonPowerOfTwo() const {
 void CompositorImpl::DidSubmitCompositorFrame() {
   TRACE_EVENT0("compositor", "CompositorImpl::DidSubmitCompositorFrame");
   pending_frames_++;
+  has_submitted_frame_since_became_visible_ = true;
 }
 
 void CompositorImpl::DidReceiveCompositorFrameAck() {
@@ -961,6 +979,21 @@ void CompositorImpl::OnDisplayMetricsChanged(const display::Display& display,
 
 bool CompositorImpl::HavePendingReadbacks() {
   return !readback_layer_tree_->children().empty();
+}
+
+std::unique_ptr<ui::CompositorLock> CompositorImpl::GetCompositorLock(
+    ui::CompositorLockClient* client,
+    base::TimeDelta timeout) {
+  return lock_manager_.GetCompositorLock(client, timeout);
+}
+
+bool CompositorImpl::IsDrawingFirstVisibleFrame() const {
+  return !has_submitted_frame_since_became_visible_;
+}
+
+void CompositorImpl::OnCompositorLockStateChanged(bool locked) {
+  if (host_)
+    host_->SetDeferCommits(locked);
 }
 
 }  // namespace content

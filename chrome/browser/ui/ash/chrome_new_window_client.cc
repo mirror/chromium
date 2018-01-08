@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/ash/chrome_new_window_client.h"
 
 #include "ash/content/keyboard_overlay/keyboard_overlay_view.h"
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "base/macros.h"
 #include "chrome/browser/chromeos/file_manager/app_id.h"
@@ -14,7 +15,7 @@
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/sessions/tab_restore_service_factory.h"
-#include "chrome/browser/ui/ash/chrome_shell_delegate.h"
+#include "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_util.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -36,7 +37,7 @@
 
 namespace {
 
-ChromeNewWindowClient* g_instance = nullptr;
+ChromeNewWindowClient* g_chrome_new_window_client_instance = nullptr;
 
 void RestoreTabUsingProfile(Profile* profile) {
   sessions::TabRestoreService* service =
@@ -63,18 +64,18 @@ ChromeNewWindowClient::ChromeNewWindowClient() : binding_(this) {
   binding_.Bind(mojo::MakeRequest(&ptr_info));
   new_window_controller_->SetClient(std::move(ptr_info));
 
-  DCHECK(!g_instance);
-  g_instance = this;
+  DCHECK(!g_chrome_new_window_client_instance);
+  g_chrome_new_window_client_instance = this;
 }
 
 ChromeNewWindowClient::~ChromeNewWindowClient() {
-  DCHECK_EQ(g_instance, this);
-  g_instance = nullptr;
+  DCHECK_EQ(g_chrome_new_window_client_instance, this);
+  g_chrome_new_window_client_instance = nullptr;
 }
 
 // static
 ChromeNewWindowClient* ChromeNewWindowClient::Get() {
-  return g_instance;
+  return g_chrome_new_window_client_instance;
 }
 
 // TabRestoreHelper is used to restore a tab. In particular when the user
@@ -213,12 +214,25 @@ void ChromeNewWindowClient::RestoreTab() {
   }
 }
 
+// TODO(crbug.com/755448): Remove this when the new shortcut viewer is enabled.
 void ChromeNewWindowClient::ShowKeyboardOverlay() {
+  // TODO(wutao): It is only for cl reviewers to test the new shortcut viewer
+  // and will be removed when the new shortcut viewer is enabled.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ash::switches::kAshEnableKeyboardShortcutViewer)) {
+    keyboard_shortcut_viewer_util::ShowKeyboardShortcutViewer();
+    return;
+  }
+
   // TODO(mazda): Move the show logic to ash (http://crbug.com/124222).
   Profile* profile = ProfileManager::GetActiveUserProfile();
   std::string url(chrome::kChromeUIKeyboardOverlayURL);
   ash::KeyboardOverlayView::ShowDialog(profile, new ChromeWebContentsHandler,
                                        GURL(url));
+}
+
+void ChromeNewWindowClient::ShowKeyboardShortcutViewer() {
+  keyboard_shortcut_viewer_util::ShowKeyboardShortcutViewer();
 }
 
 void ChromeNewWindowClient::ShowTaskManager() {

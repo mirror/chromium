@@ -28,7 +28,6 @@
 #include "build/build_config.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_configurator.h"
 #include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
-#include "components/data_reduction_proxy/core/browser/warmup_url_fetcher.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_config_values.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_creator.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
@@ -40,9 +39,9 @@
 #include "net/base/load_flags.h"
 #include "net/base/network_change_notifier.h"
 #include "net/base/network_interfaces.h"
+#include "net/base/proxy_server.h"
 #include "net/log/net_log_source_type.h"
 #include "net/nqe/effective_connection_type.h"
-#include "net/proxy/proxy_server.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -159,7 +158,7 @@ void DataReductionProxyConfig::InitializeOnIOThread(
     NetworkPropertiesManager* manager) {
   DCHECK(thread_checker_.CalledOnValidThread());
   network_properties_manager_ = manager;
-  DCHECK(network_properties_manager_);
+  network_properties_manager_->ResetWarmupURLFetchMetrics();
 
   secure_proxy_checker_.reset(
       new SecureProxyChecker(basic_url_request_context_getter));
@@ -182,7 +181,10 @@ bool DataReductionProxyConfig::ShouldAddDefaultProxyBypassRules() const {
 void DataReductionProxyConfig::OnNewClientConfigFetched() {
   DCHECK(thread_checker_.CalledOnValidThread());
   ReloadConfig();
-  FetchWarmupURL();
+  // Call ResetWarmupURLFetchMetrics to reset the counts since the list of
+  // proxies may have changed.
+  network_properties_manager_->ResetWarmupURLFetchMetrics();
+  FetchWarmupProbeURL();
 }
 
 void DataReductionProxyConfig::ReloadConfig() {
@@ -272,7 +274,7 @@ bool DataReductionProxyConfig::IsBypassedByDataReductionProxyLocalRules(
     const net::ProxyConfig& data_reduction_proxy_config) const {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(request.context());
-  DCHECK(request.context()->proxy_service());
+  DCHECK(request.context()->proxy_resolution_service());
   net::ProxyInfo result;
   data_reduction_proxy_config.proxy_rules().Apply(
       request.url(), &result);
@@ -289,9 +291,9 @@ bool DataReductionProxyConfig::AreDataReductionProxiesBypassed(
     base::TimeDelta* min_retry_delay) const {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (request.context() != nullptr &&
-      request.context()->proxy_service() != nullptr) {
+      request.context()->proxy_resolution_service() != nullptr) {
     return AreProxiesBypassed(
-        request.context()->proxy_service()->proxy_retry_info(),
+        request.context()->proxy_resolution_service()->proxy_retry_info(),
         data_reduction_proxy_config.proxy_rules(),
         request.url().SchemeIsCryptographic(), min_retry_delay);
   }
@@ -304,8 +306,8 @@ bool DataReductionProxyConfig::AreProxiesBypassed(
     const net::ProxyConfig::ProxyRules& proxy_rules,
     bool is_https,
     base::TimeDelta* min_retry_delay) const {
-  // Data reduction proxy config is TYPE_PROXY_PER_SCHEME.
-  if (proxy_rules.type != net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME)
+  // Data reduction proxy config is Type::PROXY_LIST_PER_SCHEME.
+  if (proxy_rules.type != net::ProxyConfig::ProxyRules::Type::PROXY_LIST_PER_SCHEME)
     return false;
 
   if (is_https)
@@ -361,8 +363,8 @@ bool DataReductionProxyConfig::IsProxyBypassed(
 bool DataReductionProxyConfig::ContainsDataReductionProxy(
     const net::ProxyConfig::ProxyRules& proxy_rules) const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  // Data Reduction Proxy configurations are always TYPE_PROXY_PER_SCHEME.
-  if (proxy_rules.type != net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME)
+  // Data Reduction Proxy configurations are always Type::PROXY_LIST_PER_SCHEME.
+  if (proxy_rules.type != net::ProxyConfig::ProxyRules::Type::PROXY_LIST_PER_SCHEME)
     return false;
 
   const net::ProxyList* http_proxy_list =
@@ -394,7 +396,8 @@ void DataReductionProxyConfig::SetProxyConfig(bool enabled, bool at_startup) {
         base::Bind(&DataReductionProxyConfig::HandleSecureProxyCheckResponse,
                    base::Unretained(this)));
   }
-  FetchWarmupURL();
+  network_properties_manager_->ResetWarmupURLFetchMetrics();
+  FetchWarmupProbeURL();
 }
 
 void DataReductionProxyConfig::HandleCaptivePortal() {
@@ -423,14 +426,22 @@ void DataReductionProxyConfig::UpdateConfigForTesting(
     bool secure_proxies_allowed,
     bool insecure_proxies_allowed) {
   enabled_by_user_ = enabled;
+  network_properties_manager_->ResetWarmupURLFetchMetrics();
   network_properties_manager_->SetIsSecureProxyDisallowedByCarrier(
       !secure_proxies_allowed);
-  network_properties_manager_->SetHasWarmupURLProbeFailed(
-      false /* secure_proxy */, false /* is_core_proxy */,
-      !insecure_proxies_allowed);
-  network_properties_manager_->SetHasWarmupURLProbeFailed(
-      false /* secure_proxy */, true /* is_core_proxy */,
-      !insecure_proxies_allowed);
+  if (!insecure_proxies_allowed !=
+          network_properties_manager_->HasWarmupURLProbeFailed(
+              false /* secure_proxy */, false /* is_core_proxy */) ||
+      !insecure_proxies_allowed !=
+          network_properties_manager_->HasWarmupURLProbeFailed(
+              false /* secure_proxy */, true /* is_core_proxy */)) {
+    network_properties_manager_->SetHasWarmupURLProbeFailed(
+        false /* secure_proxy */, false /* is_core_proxy */,
+        !insecure_proxies_allowed);
+    network_properties_manager_->SetHasWarmupURLProbeFailed(
+        false /* secure_proxy */, true /* is_core_proxy */,
+        !insecure_proxies_allowed);
+  }
 }
 
 void DataReductionProxyConfig::SetNetworkPropertiesManagerForTesting(
@@ -438,54 +449,127 @@ void DataReductionProxyConfig::SetNetworkPropertiesManagerForTesting(
   network_properties_manager_ = manager;
 }
 
-void DataReductionProxyConfig::HandleWarmupFetcherResponse(
-    const net::ProxyServer& proxy_server,
-    bool success_response) {
+base::Optional<std::pair<bool /* is_secure_proxy */, bool /*is_core_proxy */>>
+DataReductionProxyConfig::GetProxyConnectionToProbe() const {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  // Check the proxy server used, or disable all data saver proxies?
-  if (!IsDataReductionProxy(proxy_server, nullptr)) {
-    // No need to do anything here.
+  const std::vector<DataReductionProxyServer>& proxies =
+      DataReductionProxyConfig::GetProxiesForHttp();
+
+  for (const auto proxy_server : proxies) {
+    // First find a proxy server that has never been probed before. Proxies that
+    // have been probed before successfully do not need to be probed. On the
+    // other hand, proxies that have been probed before unsuccessfully are
+    // already disabled, and so they need not be probed immediately.
+    bool is_secure_proxy = proxy_server.IsSecureProxy();
+    bool is_core_proxy = proxy_server.IsCoreProxy();
+    if (!network_properties_manager_->HasWarmupURLProbeFailed(is_secure_proxy,
+                                                              is_core_proxy) &&
+        network_properties_manager_->ShouldFetchWarmupProbeURL(is_secure_proxy,
+                                                               is_core_proxy)) {
+      return std::make_pair(is_secure_proxy, is_core_proxy);
+    }
+  }
+
+  for (const auto proxy_server : proxies) {
+    // Now find any proxy server that can be probed. This would return proxies
+    // that were probed before, the result was unsuccessful, but they have not
+    // yet hit the maximum probe retry limit.
+    bool is_secure_proxy = proxy_server.IsSecureProxy();
+    bool is_core_proxy = proxy_server.IsCoreProxy();
+    if (network_properties_manager_->ShouldFetchWarmupProbeURL(is_secure_proxy,
+                                                               is_core_proxy)) {
+      return std::make_pair(is_secure_proxy, is_core_proxy);
+    }
+  }
+
+  // No more proxies left to probe.
+  return base::nullopt;
+}
+
+void DataReductionProxyConfig::HandleWarmupFetcherResponse(
+    const net::ProxyServer& proxy_server,
+    WarmupURLFetcher::FetchResult success_response) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(IsFetchInFlight());
+
+  // If the probe times out, then proxy server information may not have been
+  // set by the URL fetcher.
+  bool timed_out_with_no_proxy_data =
+      (success_response == WarmupURLFetcher::FetchResult::kTimedOut &&
+       !proxy_server.is_valid());
+
+  // Check the proxy server used.
+  if (!timed_out_with_no_proxy_data &&
+      !IsDataReductionProxy(proxy_server, nullptr)) {
+    // No need to do anything here since the warmup fetch did not go through
+    // the data saver proxy.
     return;
   }
 
-  bool is_secure_drp_proxy = proxy_server.is_https() || proxy_server.is_quic();
-  bool is_core_proxy = IsDataReductionProxyServerCore(proxy_server);
-  if (is_secure_drp_proxy && is_core_proxy) {
+  bool is_secure_proxy = false;
+  bool is_core_proxy = false;
+
+  if (!timed_out_with_no_proxy_data) {
+    is_secure_proxy = proxy_server.is_https() || proxy_server.is_quic();
+    is_core_proxy = IsDataReductionProxyServerCore(proxy_server);
+    // The proxy server through which the warmup URL was fetched should match
+    // the proxy server for which the warmup URL is in-flight.
+    DCHECK(GetInFlightWarmupProxyDetails());
+    DCHECK_EQ(is_secure_proxy, GetInFlightWarmupProxyDetails()->first);
+    DCHECK_EQ(is_core_proxy, GetInFlightWarmupProxyDetails()->second);
+  } else {
+    // When the probe times out, the proxy information may not be set. Fill-in
+    // the missing data using the proxy that was being probed.
+    is_secure_proxy = warmup_url_fetch_in_flight_secure_proxy_;
+    is_core_proxy = warmup_url_fetch_in_flight_core_proxy_;
+  }
+
+  if (is_secure_proxy && is_core_proxy) {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
         "SecureProxy.Core",
-        success_response);
-  } else if (is_secure_drp_proxy && !is_core_proxy) {
+        success_response == WarmupURLFetcher::FetchResult::kSuccessful);
+  } else if (is_secure_proxy && !is_core_proxy) {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
         "SecureProxy.NonCore",
-        success_response);
-  } else if (!is_secure_drp_proxy && is_core_proxy) {
+        success_response == WarmupURLFetcher::FetchResult::kSuccessful);
+  } else if (!is_secure_proxy && is_core_proxy) {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
         "InsecureProxy.Core",
-        success_response);
+        success_response == WarmupURLFetcher::FetchResult::kSuccessful);
   } else {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
         "InsecureProxy.NonCore",
-        success_response);
+        success_response == WarmupURLFetcher::FetchResult::kSuccessful);
   }
 
   bool warmup_url_failed_past =
-      network_properties_manager_->HasWarmupURLProbeFailed(is_secure_drp_proxy,
+      network_properties_manager_->HasWarmupURLProbeFailed(is_secure_proxy,
                                                            is_core_proxy);
 
   network_properties_manager_->SetHasWarmupURLProbeFailed(
-      is_secure_drp_proxy, is_core_proxy,
-      !success_response /* warmup failed */);
+      is_secure_proxy, is_core_proxy,
+      success_response !=
+          WarmupURLFetcher::FetchResult::kSuccessful /* warmup failed */);
 
   if (warmup_url_failed_past !=
-      network_properties_manager_->HasWarmupURLProbeFailed(is_secure_drp_proxy,
+      network_properties_manager_->HasWarmupURLProbeFailed(is_secure_proxy,
                                                            is_core_proxy)) {
     ReloadConfig();
   }
+
+  // May probe other proxy types that have not been probed yet, or may retry
+  // probe of proxy types that has failed but the maximum probe limit has not
+  // been reached yet. This method may have been called by warmup URL fetcher.
+  // FetchWarmupProbeURL() may itself call warmup URL fetcher. Posting the call
+  // here avoids recursive calls to the warmup URL fetcher.
+  io_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&DataReductionProxyConfig::FetchWarmupProbeURL,
+                                weak_factory_.GetWeakPtr()));
 }
 
 void DataReductionProxyConfig::HandleSecureProxyCheckResponse(
@@ -549,7 +633,7 @@ void DataReductionProxyConfig::OnNetworkChanged(
 
   ReloadConfig();
 
-  FetchWarmupURL();
+  FetchWarmupProbeURL();
 
   if (enabled_by_user_) {
     HandleCaptivePortal();
@@ -603,7 +687,7 @@ void DataReductionProxyConfig::SecureProxyCheck(
   secure_proxy_checker_->CheckIfSecureProxyIsAllowed(fetcher_callback);
 }
 
-void DataReductionProxyConfig::FetchWarmupURL() {
+void DataReductionProxyConfig::FetchWarmupProbeURL() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (!enabled_by_user_) {
@@ -612,7 +696,7 @@ void DataReductionProxyConfig::FetchWarmupURL() {
     return;
   }
 
-  if (!params::FetchWarmupURLEnabled()) {
+  if (!params::FetchWarmupProbeURLEnabled()) {
     RecordWarmupURLFetchAttemptEvent(
         WarmupURLFetchAttemptEvent::kWarmupURLFetchingDisabled);
     return;
@@ -624,9 +708,32 @@ void DataReductionProxyConfig::FetchWarmupURL() {
     return;
   }
 
+  base::Optional<std::pair<bool /* is_secure_proxy */, bool /*is_core_proxy */>>
+      warmup_config = GetProxyConnectionToProbe();
+
+  if (!warmup_config)
+    return;
+
+  // Refetch the warmup URL when it has failed.
+  warmup_url_fetch_in_flight_secure_proxy_ = warmup_config->first;
+  warmup_url_fetch_in_flight_core_proxy_ = warmup_config->second;
+
+  size_t previous_attempt_counts = GetWarmupURLFetchAttemptCounts();
+
+  network_properties_manager_->OnWarmupFetchInitiated(
+      warmup_url_fetch_in_flight_secure_proxy_,
+      warmup_url_fetch_in_flight_core_proxy_);
+
   RecordWarmupURLFetchAttemptEvent(WarmupURLFetchAttemptEvent::kFetchInitiated);
 
-  warmup_url_fetcher_->FetchWarmupURL();
+  warmup_url_fetcher_->FetchWarmupURL(previous_attempt_counts);
+}
+
+size_t DataReductionProxyConfig::GetWarmupURLFetchAttemptCounts() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return network_properties_manager_->GetWarmupURLFetchAttemptCounts(
+      warmup_url_fetch_in_flight_secure_proxy_,
+      warmup_url_fetch_in_flight_core_proxy_);
 }
 
 bool DataReductionProxyConfig::enabled_by_user_and_reachable() const {
@@ -654,7 +761,8 @@ bool DataReductionProxyConfig::ShouldAcceptServerPreview(
   DCHECK((request.load_flags() & net::LOAD_MAIN_FRAME_DEPRECATED) != 0);
   DCHECK(!request.url().SchemeIsCryptographic());
 
-  if (!base::FeatureList::IsEnabled(
+  if (!previews::params::ArePreviewsAllowed() ||
+      !base::FeatureList::IsEnabled(
           features::kDataReductionProxyDecidesTransform)) {
     return false;
   }
@@ -681,7 +789,8 @@ base::TimeTicks DataReductionProxyConfig::GetTicksNow() const {
 net::ProxyConfig DataReductionProxyConfig::ProxyConfigIgnoringHoldback() const {
   if (!enabled_by_user_ || config_values_->proxies_for_http().empty())
     return net::ProxyConfig::CreateDirect();
-  return configurator_->CreateProxyConfig(*network_properties_manager_,
+  return configurator_->CreateProxyConfig(false /* probe_url_config */,
+                                          *network_properties_manager_,
                                           config_values_->proxies_for_http());
 }
 
@@ -747,6 +856,22 @@ const NetworkPropertiesManager&
 DataReductionProxyConfig::GetNetworkPropertiesManager() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   return *network_properties_manager_;
+}
+
+bool DataReductionProxyConfig::IsFetchInFlight() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return warmup_url_fetcher_->IsFetchInFlight();
+}
+
+base::Optional<std::pair<bool /* is_secure_proxy */, bool /*is_core_proxy */>>
+DataReductionProxyConfig::GetInFlightWarmupProxyDetails() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (!IsFetchInFlight())
+    return base::nullopt;
+
+  return std::make_pair(warmup_url_fetch_in_flight_secure_proxy_,
+                        warmup_url_fetch_in_flight_core_proxy_);
 }
 
 }  // namespace data_reduction_proxy

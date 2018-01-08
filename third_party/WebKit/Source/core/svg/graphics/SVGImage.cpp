@@ -56,7 +56,6 @@
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/GraphicsContext.h"
-#include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/ImageObserver.h"
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/CullRect.h"
@@ -218,7 +217,7 @@ FloatSize SVGImage::ConcreteObjectSize(
   if (!layout_object)
     return FloatSize();
 
-  LayoutReplaced::IntrinsicSizingInfo intrinsic_sizing_info;
+  IntrinsicSizingInfo intrinsic_sizing_info;
   layout_object->ComputeIntrinsicSizingInfo(intrinsic_sizing_info);
 
   // https://www.w3.org/TR/css3-images/#default-sizing

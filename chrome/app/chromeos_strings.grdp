@@ -1037,9 +1037,6 @@
   <message name="IDS_FILE_BROWSER_DRIVE_CANNOT_REACH" desc="Message informing the user that Google Drive can not be reached at this moment.">
     Google Drive cannot be reached at this time.
   </message>
-  <message name="IDS_FILE_BROWSER_DRIVE_LEARN_MORE" desc="In the Loading Google Drive page and in the Welcome to Google Drive banner, a text on the Learn More link.">
-    Learn more
-  </message>
   <message name="IDS_FILE_BROWSER_DRIVE_OUT_OF_SPACE_MESSAGE" desc="Message informing the user how to make more space available to save the selected file offline.">
     To save "<ph name="FILE_NAME">$1<ex>document.pdf</ex></ph>" offline you must free up an additional <ph name="TOTAL_FILE_SIZE">$2<ex>3.3 MB</ex></ph> of space:<ph name="MARKUP_1">&lt;br&gt;<ex>&lt;br&gt;</ex></ph>
     <ph name="MARKUP_2">&lt;ul&gt;&lt;li&gt;<ex>&lt;ul&gt;&lt;li&gt;</ex></ph>unpin files that you no longer need to access offline<ph name="MARKUP_3">&lt;/li&gt;<ex>>&lt;/li&gt;</ex></ph>
@@ -1519,7 +1516,7 @@
     Please wait...
   </message>
   <message name="IDS_ENTERPRISE_ENROLLMENT_WORKING_MESSAGE" desc="Message to show while enrollment is in progress">
-    Please wait...
+    Enrolling device...
   </message>
   <message name="IDS_NETWORK_SELECTION_TITLE" desc="Welcome title shown on network selection screen">
     Let's get started
@@ -1701,6 +1698,48 @@
   <message name="IDS_OOBE_EULA_ACCEPT_AND_CONTINUE_BUTTON_TEXT" desc="Label on a button on the Title of Terms of Service OOBE screen to accept EULA and continue.">
     Accept and continue
   </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SCREEN_TITLE" desc="The title of the dialog that welcomes the user on the first log in, and explains Chrome Sync and privacy options.">
+    You're signed in!
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SCREEN_CHROME_SYNC_NAME" desc="Title of the 'Chrome sync' section of the sync confirmation dialog that is displayed on the first user log in.">
+    Chrome sync
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SCREEN_CHROME_SYNC_DESCRIPTION" desc="The description of 'Chrome sync' section of the sync confirmation dialog that is displayed on the first user log in.">
+    Your bookmarks, history, passwords, and other settings will be synced to your Google Account so you can use them on all your devices.
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SCREEN_PERSONALIZE_GOOGLE_SERVICES_NAME" desc="Title of the personalize services section of the sync confirmation dialog that is displayed on the first user log in.">
+    Personalize Google services
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SCREEN_PERSONALIZE_GOOGLE_SERVICES_DESCRIPTION" desc="The description of the personalize services section of the sync confirmation dialog that is displayed on the first user log in.">
+    Google may use your browsing history to personalize Search, ads, and other Google services.
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SCREEN_SETTINGS_LINK" desc="A note at the end of the sync confirmation dialog that is displayed on the first user log in, suggesting that preferences may be changed in Settings. It also contains link to Settings page.">
+    Control how this works in <ph name="LINK_START">$1<ex>&gt;a&lt;</ex></ph>Settings<ph name="LINK_END">$2<ex>&gt;/a&lt;</ex></ph>.
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SETTINGS_TITLE" desc="The title of the dialog that is shown on the first user log in, and allows user to select Chrome Sync options.">
+    Sync settings
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SETTINGS_SUBTITLE" desc="The sub-title of the dialog that is shown on the first user log in, and allows user to select Chrome Sync options. It explains to the user what options can be changed here.">
+    Your bookmarks, history, passwords, and other settings will be synced to your Google Account so you can use them on all your devices. You can always change this later in your settings.
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SYNC_ALL_OPTION" desc="Label for toggle-button UI element that controls whether user settings are synced to user's Google Account.">
+    Sync everything
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SYNC_ALL_OPTION_ON" desc="A 'turned on' value for the 'Sync everything' toggle-button UI element that controls whether user settings are synced to user's Google Account.">
+    On
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SYNC_ALL_OPTION_OFF" desc="A 'turned off' value for the 'Sync everything' toggle-button UI element that controls whether user settings are synced to user's Google Account.">
+    Off
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_STATUS_SYNC_ALL_ON" desc="Status message on the Chrome Sync status dialog explaining 'sync is turned on' status.">
+    Personalization is on. You can change this at myaccount.google.com.
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_STATUS_SYNC_ALL_OFF" desc="Status message on the Chrome Sync status dialog explaining 'sync is turned off' status.">
+    Personalization is off. You can change this at myaccount.google.com.
+  </message>
+  <message name="IDS_LOGIN_SYNC_CONSENT_SAVE_AND_CONTINUE" desc="Label on the button of the Sync Settings dialog that closes the dialog and saves the changes.">
+    Save and continue
+  </message>
   <message name="IDS_DISABLED_ADD_USER_TOOLTIP" desc="Tooltip over disabled Add user button">
     The owner of this device has disabled new users from being added
   </message>
@@ -1856,9 +1895,6 @@
   </message>
   <message name="IDS_WHITELIST_ERROR_TRY_AGAIN_BUTTON" desc="The text of the try again button on the whitelist error UI.">
     Try again
-  </message>
-  <message name="IDS_WHITELIST_ERROR_LEARN_MORE_BUTTON" desc="The text of the learn more link on the whitelist error UI.">
-    Learn more
   </message>
   <message name="IDS_BROWSE_WITHOUT_SIGNING_IN_HTML" desc="Text shown on side of Google sign-in UI.">
     You may also skip signing in and <ph name="LINK_START">$1<ex>&gt;a&lt;</ex></ph>browse as Guest<ph name="LINK_END">$2<ex>&gt;/a&lt;</ex></ph>.
@@ -2211,6 +2247,12 @@
   </message>
   <message name="IDS_NETWORK_ACTIVATION_NEEDS_CONNECTION" desc="Message when attempting to activate a mobile network that requires a connection">
     Activation of '<ph name="name">$1<ex>Generic Wireless</ex></ph>' requires a network connection.
+  </message>
+  <message name="IDS_NETWORK_AUTOCONNECT_NOTIFICATION_TITLE" desc="Title used for the system notification shown when a network has been auto-connected (e.g., when an enterprise policy is applied which initiates a connection to a corporate network like Google-A).">
+    Switched network connection
+  </message>
+  <message name="IDS_NETWORK_AUTOCONNECT_NOTIFICATION_MESSAGE" desc="Message displayed in the system notification shown when a network has been auto-connected (e.g., when an enterprise policy is applied which initiates a connection to a corporate network like Google-A).">
+    Your connection has switched to a more secure network
   </message>
 
   <!-- Strings shown within Tether notifications -->
@@ -2871,9 +2913,6 @@
   </message>
 
   <!-- Keyboard overlay UI -->
-  <message name="IDS_KEYBOARD_OVERLAY_LEARN_MORE" desc="The text of the learn more link on the keyboard overlay.">
-    Learn more
-  </message>
   <message name="IDS_KEYBOARD_OVERLAY_TITLE" desc="The title of the keyboard overlay.">
     Keyboard Overlay
   </message>
@@ -3519,9 +3558,6 @@
   <message name="IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_WARNING" desc="Text shown in the public account user pod, warning the user about potential admin monitoring.">
     The device admin may monitor your browsing activity.
   </message>
-  <message name="IDS_LOGIN_PUBLIC_ACCOUNT_LEARN_MORE" desc="Link shown in the public account user pod, showing the user more information about the monitoring.">
-    Learn more
-  </message>
   <message name="IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_INFO" desc="Text shown in the warning dialog after user clicks on the learn more link, notifying the user of potential security and privacy implications of using the device">
     The device admin may monitor the following:
   </message>
@@ -3706,9 +3742,6 @@
   </message>
   <message name="IDS_EOL_NOTIFICATION_EOL" desc="Notification shown to inform the user that this device will no longer receive latest software updates.">
     This device will no longer receive the latest software updates. Please consider upgrading.
-  </message>
-  <message name="IDS_EOL_MORE_INFO_BUTTON" desc="A button label shown in the notification for eol status change to get more information.">
-    Learn more
   </message>
   <message name="IDS_EOL_DISMISS_BUTTON" desc="A button label shown in the notification for eol status change to dismiss the notification.">
     Don't remind me again
@@ -4425,17 +4458,11 @@
   <message name="IDS_ARC_PLAYSTORE_ICON_TITLE_BETA" desc="The Play Store icon title with the beta label in the launcher.">
     Play Store
   </message>
-  <message name="IDS_ARC_NOTIFICATION_TITLE" desc="Title of the first-run notification that enables Android apps.">
-    Google Play on your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph>
-  </message>
   <message name="IDS_ARC_NOTIFICATION_DISPLAY_SOURCE" desc="Context title of the first-run notification that enables Android apps.">
     Google Play
   </message>
   <message name="IDS_ARC_PLAYSTORE_SETTING_UP_TITLE" desc="The text tile which is shown when Play Store is initializing.">
     Setting up Google Play...
-  </message>
-  <message name="IDS_ARC_NOTIFICATION_MESSAGE" desc="Description message of the first-run notification that enables Android apps.">
-    Install apps and games from Google Play
   </message>
   <message name="IDS_ARC_OPEN_PLAY_STORE_NOTIFICATION_BUTTON" desc="Label for the button in the first-run notification that enables Android apps.">
     Open Play Store

@@ -6,8 +6,8 @@
 
 #include "ash/login/ui/hover_notifier.h"
 #include "ash/login/ui/login_button.h"
-#include "ash/login/ui/login_constants.h"
 #include "ash/login/ui/non_accessible_view.h"
+#include "ash/public/cpp/login_constants.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/user/button_from_view.h"
@@ -78,11 +78,27 @@ class NonAccessibleSeparator : public views::Separator {
   // views::Separator:
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
     views::Separator::GetAccessibleNodeData(node_data);
-    node_data->AddState(ui::AX_STATE_INVISIBLE);
+    node_data->AddState(ax::mojom::State::kInvisible);
   }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(NonAccessibleSeparator);
+};
+
+// A textfield that selects all text on focus.
+class LoginTextfield : public views::Textfield {
+ public:
+  LoginTextfield() {}
+  ~LoginTextfield() override {}
+
+  // views::Textfield:
+  void OnFocus() override {
+    views::Textfield::OnFocus();
+    SelectAll(false /*reverse*/);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(LoginTextfield);
 };
 
 // Set of resources for an easy unlock icon.
@@ -379,7 +395,7 @@ LoginPasswordView::LoginPasswordView() : ime_keyboard_observer_(this) {
 
   // Password textfield. We control the textfield size by sizing the parent
   // view, as the textfield will expand to fill it.
-  textfield_ = new views::Textfield();
+  textfield_ = new LoginTextfield();
   textfield_->set_controller(this);
   textfield_->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
   textfield_->SetTextColor(kTextColor);
@@ -435,6 +451,9 @@ LoginPasswordView::LoginPasswordView() : ime_keyboard_observer_(this) {
     ime_keyboard_observer_.Add(keyboard);
     OnCapsLockChanged(keyboard->CapsLockIsEnabled());
   }
+
+  // Make sure the UI start with the correct states.
+  UpdateUiState();
 }
 
 LoginPasswordView::~LoginPasswordView() = default;

@@ -32,13 +32,13 @@ class WorkerGlobalScopeSchedulerTest : public ::testing::Test {
   WorkerGlobalScopeSchedulerTest()
       : mock_task_runner_(new base::TestSimpleTaskRunner()),
         scheduler_(new WorkerSchedulerImpl(
-            CreateTaskQueueManagerWithUnownedClockForTest(nullptr,
-                                                          mock_task_runner_,
-                                                          &clock_))) {
+            CreateTaskQueueManagerForTest(nullptr,
+                                          mock_task_runner_,
+                                          &clock_))) {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
-  ~WorkerGlobalScopeSchedulerTest() override {}
+  ~WorkerGlobalScopeSchedulerTest() override = default;
 
   void SetUp() override {
     scheduler_->Init();

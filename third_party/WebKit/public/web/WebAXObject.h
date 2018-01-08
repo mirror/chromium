@@ -57,8 +57,8 @@ struct WebSize;
 
 class BLINK_EXPORT WebAXSparseAttributeClient {
  public:
-  WebAXSparseAttributeClient() {}
-  virtual ~WebAXSparseAttributeClient() {}
+  WebAXSparseAttributeClient() = default;
+  virtual ~WebAXSparseAttributeClient() = default;
 
   virtual void AddBoolAttribute(WebAXBoolAttribute, bool) = 0;
   virtual void AddStringAttribute(WebAXStringAttribute, const WebString&) = 0;
@@ -86,7 +86,7 @@ class WebAXObject {
  public:
   ~WebAXObject() { Reset(); }
 
-  WebAXObject() {}
+  WebAXObject() = default;
   WebAXObject(const WebAXObject& o) { Assign(o); }
   WebAXObject& operator=(const WebAXObject& o) {
     Assign(o);
@@ -146,7 +146,7 @@ class WebAXObject {
   BLINK_EXPORT bool IsOffScreen() const;
   BLINK_EXPORT bool IsPasswordField() const;
   BLINK_EXPORT bool IsRequired() const;
-  BLINK_EXPORT bool IsSelected() const;
+  BLINK_EXPORT WebAXSelectedState IsSelected() const;
   BLINK_EXPORT bool IsSelectedOptionActive() const;
   BLINK_EXPORT bool IsVisible() const;
   BLINK_EXPORT bool IsVisited() const;
@@ -156,7 +156,6 @@ class WebAXObject {
   BLINK_EXPORT bool CanPress() const;
   BLINK_EXPORT bool CanSetValueAttribute() const;
   BLINK_EXPORT bool CanSetFocusAttribute() const;
-  BLINK_EXPORT bool CanSetSelectedAttribute() const;
   BLINK_EXPORT unsigned GetColor() const;
   // Deprecated.
   BLINK_EXPORT void ColorValue(int& r, int& g, int& b) const;

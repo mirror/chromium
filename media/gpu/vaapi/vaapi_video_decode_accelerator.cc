@@ -349,7 +349,6 @@ VaapiVideoDecodeAccelerator::VaapiVideoDecodeAccelerator(
       finish_flush_pending_(false),
       awaiting_va_surfaces_recycle_(false),
       requested_num_pics_(0),
-      output_format_(gfx::BufferFormat::BGRX_8888),
       profile_(VIDEO_CODEC_PROFILE_UNKNOWN),
       make_context_current_cb_(make_context_current_cb),
       bind_image_cb_(bind_image_cb),
@@ -370,20 +369,6 @@ bool VaapiVideoDecodeAccelerator::Initialize(const Config& config,
   if (config.is_encrypted()) {
     NOTREACHED() << "Encrypted streams are not supported for this VDA";
     return false;
-  }
-
-  switch (config.output_mode) {
-    case Config::OutputMode::ALLOCATE:
-      output_format_ = vaapi_picture_factory_->GetBufferFormatForAllocateMode();
-      break;
-
-    case Config::OutputMode::IMPORT:
-      output_format_ = vaapi_picture_factory_->GetBufferFormatForImportMode();
-      break;
-
-    default:
-      NOTREACHED() << "Only ALLOCATE and IMPORT OutputModes are supported";
-      return false;
   }
 
   client_ptr_factory_.reset(new base::WeakPtrFactory<Client>(client));
@@ -494,7 +479,7 @@ void VaapiVideoDecodeAccelerator::QueueInputBuffer(
   if (bitstream_buffer.size() == 0) {
     DCHECK(!base::SharedMemory::IsHandleValid(bitstream_buffer.handle()));
     // Dummy buffer for flush.
-    auto flush_buffer = base::MakeUnique<InputBuffer>();
+    auto flush_buffer = std::make_unique<InputBuffer>();
     DCHECK(flush_buffer->IsFlushRequest());
     input_buffers_.push(std::move(flush_buffer));
   } else {
@@ -503,7 +488,7 @@ void VaapiVideoDecodeAccelerator::QueueInputBuffer(
     RETURN_AND_NOTIFY_ON_FAILURE(shm->Map(), "Failed to map input buffer",
                                  UNREADABLE_INPUT, );
 
-    auto input_buffer = base::MakeUnique<InputBuffer>(
+    auto input_buffer = std::make_unique<InputBuffer>(
         bitstream_buffer.id(), std::move(shm),
         BindToCurrentLoop(
             base::Bind(&Client::NotifyEndOfBitstreamBuffer, client_)));
@@ -727,7 +712,8 @@ void VaapiVideoDecodeAccelerator::TryFinishSurfaceSetChange() {
   VLOGF(2) << "Requesting " << requested_num_pics_
            << " pictures of size: " << requested_pic_size_.ToString();
 
-  VideoPixelFormat format = GfxBufferFormatToVideoPixelFormat(output_format_);
+  VideoPixelFormat format = GfxBufferFormatToVideoPixelFormat(
+      vaapi_picture_factory_->GetBufferFormat());
   task_runner_->PostTask(
       FROM_HERE, base::Bind(&Client::ProvidePictureBuffers, client_,
                             requested_num_pics_, format, 1, requested_pic_size_,
@@ -813,7 +799,7 @@ void VaapiVideoDecodeAccelerator::AssignPictureBuffers(
 
     if (output_mode_ == Config::OutputMode::ALLOCATE) {
       RETURN_AND_NOTIFY_ON_FAILURE(
-          picture->Allocate(output_format_),
+          picture->Allocate(vaapi_picture_factory_->GetBufferFormat()),
           "Failed to allocate memory for a VaapiPicture", PLATFORM_FAILURE, );
       output_buffers_.push(buffers[i].id());
     }
@@ -846,6 +832,7 @@ static void CloseGpuMemoryBufferHandle(
 
 void VaapiVideoDecodeAccelerator::ImportBufferForPicture(
     int32_t picture_buffer_id,
+    VideoPixelFormat pixel_format,
     const gfx::GpuMemoryBufferHandle& gpu_memory_buffer_handle) {
   VLOGF(2) << "Importing picture id: " << picture_buffer_id;
   DCHECK(task_runner_->BelongsToCurrentThread());
@@ -870,8 +857,9 @@ void VaapiVideoDecodeAccelerator::ImportBufferForPicture(
     return;
   }
 
-  if (!picture->ImportGpuMemoryBufferHandle(output_format_,
-                                            gpu_memory_buffer_handle)) {
+  if (!picture->ImportGpuMemoryBufferHandle(
+          VideoPixelFormatToGfxBufferFormat(pixel_format),
+          gpu_memory_buffer_handle)) {
     // ImportGpuMemoryBufferHandle will close the handles even on failure, so
     // we don't need to do this ourselves.
     VLOGF(1) << "Failed to import GpuMemoryBufferHandle";
@@ -1067,17 +1055,8 @@ void VaapiVideoDecodeAccelerator::Cleanup() {
   client_ptr_factory_.reset();
   weak_this_factory_.InvalidateWeakPtrs();
 
-  decoder_thread_task_runner_->DeleteSoon(FROM_HERE, decoder_.release());
-  if (h264_accelerator_) {
-    decoder_thread_task_runner_->DeleteSoon(FROM_HERE,
-                                            h264_accelerator_.release());
-  } else if (vp8_accelerator_) {
-    decoder_thread_task_runner_->DeleteSoon(FROM_HERE,
-                                            vp8_accelerator_.release());
-  } else if (vp9_accelerator_) {
-    decoder_thread_task_runner_->DeleteSoon(FROM_HERE,
-                                            vp9_accelerator_.release());
-  }
+  // TODO(mcasas): consider deleting |decoder_| and |*_accelerator_| on
+  // |decoder_thread_task_runner_|, https://crbug.com/789160.
 
   // Signal all potential waiters on the decoder_thread_, let them early-exit,
   // as we've just moved to the kDestroying state, and wait for all tasks
@@ -1166,7 +1145,8 @@ VaapiVideoDecodeAccelerator::VaapiH264Accelerator::VaapiH264Accelerator(
 }
 
 VaapiVideoDecodeAccelerator::VaapiH264Accelerator::~VaapiH264Accelerator() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // TODO(mcasas): consider enabling the checker, https://crbug.com/789160
+  // DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 scoped_refptr<H264Picture>
@@ -1508,7 +1488,8 @@ VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::VaapiVP8Accelerator(
 }
 
 VaapiVideoDecodeAccelerator::VaapiVP8Accelerator::~VaapiVP8Accelerator() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // TODO(mcasas): consider enabling the checker, https://crbug.com/789160
+  // DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 scoped_refptr<VP8Picture>
@@ -1744,7 +1725,8 @@ VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::VaapiVP9Accelerator(
 }
 
 VaapiVideoDecodeAccelerator::VaapiVP9Accelerator::~VaapiVP9Accelerator() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // TODO(mcasas): consider enabling the checker, https://crbug.com/789160
+  // CHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 scoped_refptr<VP9Picture>

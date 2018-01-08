@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
@@ -94,8 +93,8 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   WebPaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
 
-  web_payment_request.details.total = base::MakeUnique<PaymentItem>();
-  web_payment_request.details.total->amount.currency = "USD";
+  web_payment_request.details.total = std::make_unique<PaymentItem>();
+  web_payment_request.details.total->amount->currency = "USD";
   TestPaymentRequest payment_request1(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -105,7 +104,7 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   EXPECT_EQ(base::UTF8ToUTF16("$55.00"), currency_formatter->Format("55.00"));
   EXPECT_EQ("USD", currency_formatter->formatted_currency_code());
 
-  web_payment_request.details.total->amount.currency = "JPY";
+  web_payment_request.details.total->amount->currency = "JPY";
   TestPaymentRequest payment_request2(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -114,8 +113,8 @@ TEST_F(PaymentRequestTest, CreatesCurrencyFormatterCorrectly) {
   EXPECT_EQ(base::UTF8ToUTF16("¥55"), currency_formatter->Format("55.00"));
   EXPECT_EQ("JPY", currency_formatter->formatted_currency_code());
 
-  web_payment_request.details.total->amount.currency_system = "NOT_ISO4217";
-  web_payment_request.details.total->amount.currency = "USD";
+  web_payment_request.details.total->amount->currency_system = "NOT_ISO4217";
+  web_payment_request.details.total->amount->currency = "USD";
   TestPaymentRequest payment_request3(web_payment_request,
                                       chrome_browser_state_.get(), &web_state_,
                                       &personal_data_manager);
@@ -378,7 +377,7 @@ TEST_F(PaymentRequestTest, SelectedShippingOptions) {
   autofill::TestPersonalDataManager personal_data_manager;
 
   PaymentDetails details;
-  details.total = base::MakeUnique<PaymentItem>();
+  details.total = std::make_unique<PaymentItem>();
   std::vector<PaymentShippingOption> shipping_options;
   PaymentShippingOption option1;
   option1.id = "option:1";
@@ -414,9 +413,9 @@ TEST_F(PaymentRequestTest, UpdatePaymentDetailsNewTotal) {
   autofill::TestPersonalDataManager personal_data_manager;
 
   PaymentDetails details;
-  details.total = base::MakeUnique<PaymentItem>();
-  details.total->amount.value = "10.00";
-  details.total->amount.currency = "USD";
+  details.total = std::make_unique<PaymentItem>();
+  details.total->amount->value = "10.00";
+  details.total->amount->currency = "USD";
   web_payment_request.details = std::move(details);
 
   TestPaymentRequest payment_request(web_payment_request,
@@ -425,12 +424,12 @@ TEST_F(PaymentRequestTest, UpdatePaymentDetailsNewTotal) {
 
   // Simulate an update with a new total amount.
   PaymentDetails new_details;
-  new_details.total = base::MakeUnique<PaymentItem>();
-  new_details.total->amount.value = "20.00";
-  new_details.total->amount.currency = "CAD";
+  new_details.total = std::make_unique<PaymentItem>();
+  new_details.total->amount->value = "20.00";
+  new_details.total->amount->currency = "CAD";
   payment_request.UpdatePaymentDetails(std::move(new_details));
-  EXPECT_EQ("20.00", payment_request.payment_details().total->amount.value);
-  EXPECT_EQ("CAD", payment_request.payment_details().total->amount.currency);
+  EXPECT_EQ("20.00", payment_request.payment_details().total->amount->value);
+  EXPECT_EQ("CAD", payment_request.payment_details().total->amount->currency);
 }
 
 // Tests that updating the payment details with a PaymentDetails instance that
@@ -440,9 +439,9 @@ TEST_F(PaymentRequestTest, UpdatePaymentDetailsNoTotal) {
   autofill::TestPersonalDataManager personal_data_manager;
 
   PaymentDetails details;
-  details.total = base::MakeUnique<PaymentItem>();
-  details.total->amount.value = "10.00";
-  details.total->amount.currency = "USD";
+  details.total = std::make_unique<PaymentItem>();
+  details.total->amount->value = "10.00";
+  details.total->amount->currency = "USD";
   web_payment_request.details = std::move(details);
 
   TestPaymentRequest payment_request(web_payment_request,
@@ -452,8 +451,8 @@ TEST_F(PaymentRequestTest, UpdatePaymentDetailsNoTotal) {
   // Simulate an update with the total amount missing.
   PaymentDetails new_details;
   payment_request.UpdatePaymentDetails(std::move(new_details));
-  EXPECT_EQ("10.00", payment_request.payment_details().total->amount.value);
-  EXPECT_EQ("USD", payment_request.payment_details().total->amount.currency);
+  EXPECT_EQ("10.00", payment_request.payment_details().total->amount->value);
+  EXPECT_EQ("USD", payment_request.payment_details().total->amount->currency);
 }
 
 // Test that loading profiles when none are available works as expected.
@@ -885,14 +884,14 @@ TEST_F(PaymentRequestTest, PaymentDetailsModifier_BasicCard_NetworkMismatch) {
   PaymentDetailsModifier modifier;
   modifier.method_data.supported_methods.push_back("basic-card");
   modifier.method_data.supported_networks.push_back("amex");
-  modifier.total = base::MakeUnique<payments::PaymentItem>();
+  modifier.total = std::make_unique<payments::PaymentItem>();
   modifier.total->label = "Discounted Total";
-  modifier.total->amount.value = "0.99";
-  modifier.total->amount.currency = "USD";
+  modifier.total->amount->value = "0.99";
+  modifier.total->amount->currency = "USD";
   payments::PaymentItem additional_display_item;
   additional_display_item.label = "Amex discount";
-  additional_display_item.amount.value = "-0.01";
-  additional_display_item.amount.currency = "USD";
+  additional_display_item.amount->value = "-0.01";
+  additional_display_item.amount->currency = "USD";
   modifier.additional_display_items.push_back(additional_display_item);
   web_payment_request.details.modifiers.push_back(modifier);
 
@@ -904,7 +903,7 @@ TEST_F(PaymentRequestTest, PaymentDetailsModifier_BasicCard_NetworkMismatch) {
           payment_request.selected_payment_method());
   EXPECT_EQ("Total", payment_request.GetTotal(selected_payment_method).label);
   EXPECT_EQ("1.00",
-            payment_request.GetTotal(selected_payment_method).amount.value);
+            payment_request.GetTotal(selected_payment_method).amount->value);
   ASSERT_EQ(1U,
             payment_request.GetDisplayItems(selected_payment_method).size());
 }
@@ -923,14 +922,14 @@ TEST_F(PaymentRequestTest, PaymentDetailsModifier_BasicCard_NetworkMatch) {
   PaymentDetailsModifier modifier;
   modifier.method_data.supported_methods.push_back("basic-card");
   modifier.method_data.supported_networks.push_back("amex");
-  modifier.total = base::MakeUnique<payments::PaymentItem>();
+  modifier.total = std::make_unique<payments::PaymentItem>();
   modifier.total->label = "Discounted Total";
-  modifier.total->amount.value = "0.99";
-  modifier.total->amount.currency = "USD";
+  modifier.total->amount->value = "0.99";
+  modifier.total->amount->currency = "USD";
   payments::PaymentItem additional_display_item;
   additional_display_item.label = "Amex discount";
-  additional_display_item.amount.value = "-0.01";
-  additional_display_item.amount.currency = "USD";
+  additional_display_item.amount->value = "-0.01";
+  additional_display_item.amount->currency = "USD";
   modifier.additional_display_items.push_back(additional_display_item);
   web_payment_request.details.modifiers.push_back(modifier);
 
@@ -943,19 +942,17 @@ TEST_F(PaymentRequestTest, PaymentDetailsModifier_BasicCard_NetworkMatch) {
   EXPECT_EQ("Discounted Total",
             payment_request.GetTotal(selected_payment_method).label);
   EXPECT_EQ("0.99",
-            payment_request.GetTotal(selected_payment_method).amount.value);
+            payment_request.GetTotal(selected_payment_method).amount->value);
   ASSERT_EQ(2U,
             payment_request.GetDisplayItems(selected_payment_method).size());
   EXPECT_EQ("Subtotal",
             payment_request.GetDisplayItems(selected_payment_method)[0].label);
-  EXPECT_EQ(
-      "1.00",
-      payment_request.GetDisplayItems(selected_payment_method)[0].amount.value);
+  EXPECT_EQ("1.00", payment_request.GetDisplayItems(selected_payment_method)[0]
+                        .amount->value);
   EXPECT_EQ("Amex discount",
             payment_request.GetDisplayItems(selected_payment_method)[1].label);
-  EXPECT_EQ(
-      "-0.01",
-      payment_request.GetDisplayItems(selected_payment_method)[1].amount.value);
+  EXPECT_EQ("-0.01", payment_request.GetDisplayItems(selected_payment_method)[1]
+                         .amount->value);
 }
 
 // Tests that the modifier should not get applied when the card type is not
@@ -975,14 +972,14 @@ TEST_F(PaymentRequestTest, PaymentDetailsModifier_BasicCard_TypeMismatch) {
   modifier.method_data.supported_networks.push_back("amex");
   modifier.method_data.supported_types.insert(
       autofill::CreditCard::CARD_TYPE_CREDIT);
-  modifier.total = base::MakeUnique<payments::PaymentItem>();
+  modifier.total = std::make_unique<payments::PaymentItem>();
   modifier.total->label = "Discounted Total";
-  modifier.total->amount.value = "0.99";
-  modifier.total->amount.currency = "USD";
+  modifier.total->amount->value = "0.99";
+  modifier.total->amount->currency = "USD";
   payments::PaymentItem additional_display_item;
   additional_display_item.label = "Amex discount";
-  additional_display_item.amount.value = "-0.01";
-  additional_display_item.amount.currency = "USD";
+  additional_display_item.amount->value = "-0.01";
+  additional_display_item.amount->currency = "USD";
   modifier.additional_display_items.push_back(additional_display_item);
   web_payment_request.details.modifiers.push_back(modifier);
 
@@ -994,7 +991,7 @@ TEST_F(PaymentRequestTest, PaymentDetailsModifier_BasicCard_TypeMismatch) {
           payment_request.selected_payment_method());
   EXPECT_EQ("Total", payment_request.GetTotal(selected_payment_method).label);
   EXPECT_EQ("1.00",
-            payment_request.GetTotal(selected_payment_method).amount.value);
+            payment_request.GetTotal(selected_payment_method).amount->value);
   ASSERT_EQ(1U,
             payment_request.GetDisplayItems(selected_payment_method).size());
 }
@@ -1018,14 +1015,14 @@ TEST_F(PaymentRequestTest,
   modifier.method_data.supported_networks.push_back("amex");
   modifier.method_data.supported_types.insert(
       autofill::CreditCard::CARD_TYPE_CREDIT);
-  modifier.total = base::MakeUnique<payments::PaymentItem>();
+  modifier.total = std::make_unique<payments::PaymentItem>();
   modifier.total->label = "Discounted Total";
-  modifier.total->amount.value = "0.99";
-  modifier.total->amount.currency = "USD";
+  modifier.total->amount->value = "0.99";
+  modifier.total->amount->currency = "USD";
   payments::PaymentItem additional_display_item;
   additional_display_item.label = "Amex discount";
-  additional_display_item.amount.value = "-0.01";
-  additional_display_item.amount.currency = "USD";
+  additional_display_item.amount->value = "-0.01";
+  additional_display_item.amount->currency = "USD";
   modifier.additional_display_items.push_back(additional_display_item);
   web_payment_request.details.modifiers.push_back(modifier);
 
@@ -1038,19 +1035,17 @@ TEST_F(PaymentRequestTest,
   EXPECT_EQ("Discounted Total",
             payment_request.GetTotal(selected_payment_method).label);
   EXPECT_EQ("0.99",
-            payment_request.GetTotal(selected_payment_method).amount.value);
+            payment_request.GetTotal(selected_payment_method).amount->value);
   ASSERT_EQ(2U,
             payment_request.GetDisplayItems(selected_payment_method).size());
   EXPECT_EQ("Subtotal",
             payment_request.GetDisplayItems(selected_payment_method)[0].label);
-  EXPECT_EQ(
-      "1.00",
-      payment_request.GetDisplayItems(selected_payment_method)[0].amount.value);
+  EXPECT_EQ("1.00", payment_request.GetDisplayItems(selected_payment_method)[0]
+                        .amount->value);
   EXPECT_EQ("Amex discount",
             payment_request.GetDisplayItems(selected_payment_method)[1].label);
-  EXPECT_EQ(
-      "-0.01",
-      payment_request.GetDisplayItems(selected_payment_method)[1].amount.value);
+  EXPECT_EQ("-0.01", payment_request.GetDisplayItems(selected_payment_method)[1]
+                         .amount->value);
 }
 
 // Tests that payment_request_util::RequestContactInfo returns true if payer's

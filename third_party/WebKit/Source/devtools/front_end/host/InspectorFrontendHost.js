@@ -172,6 +172,14 @@ Host.InspectorFrontendHostStub = class {
 
   /**
    * @override
+   * @param {string} fileSystemPath
+   */
+  showItemInFolder(fileSystemPath) {
+    Common.console.error('Show item in folder is not enabled in hosted mode. Please inspect using chrome://inspect');
+  }
+
+  /**
+   * @override
    * @param {string} url
    * @param {string} content
    * @param {boolean} forceSaveAs
@@ -383,6 +391,19 @@ Host.InspectorFrontendHostStub = class {
 
   /**
    * @override
+   */
+  connectionReady() {
+  }
+
+  /**
+   * @override
+   * @param {boolean} value
+   */
+  setOpenNewWindowForPopups(value) {
+  }
+
+  /**
+   * @override
    * @param {!Adb.Config} config
    */
   setDevicesDiscoveryConfig(config) {
@@ -553,12 +574,4 @@ Host.isUnderTest = function(prefs) {
   if (prefs)
     return prefs['isUnderTest'] === 'true';
   return Common.settings && Common.settings.createSetting('isUnderTest', false).get();
-};
-
-/**
- * @return {boolean}
- */
-Host.isStartupTest = function() {
-  var test = Runtime.queryParam('test');
-  return !!(test && test.includes('/startup/'));
 };

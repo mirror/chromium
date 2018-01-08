@@ -18,13 +18,13 @@
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "ui/message_center/message_center_types.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_blocker.h"
 #include "ui/message_center/notification_list.h"
-#include "ui/message_center/notification_types.h"
 #include "ui/message_center/popup_timers_controller.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
+#include "ui/message_center/public/cpp/notification.h"
+#include "ui/message_center/public/cpp/notification_types.h"
 
 namespace message_center {
 
@@ -644,13 +644,13 @@ void MessageCenterImpl::PausePopupTimers() {
     popup_timers_controller_->PauseAll();
 }
 
-const base::string16& MessageCenterImpl::GetProductOSName() const {
-  return product_os_name_;
+const base::string16& MessageCenterImpl::GetSystemNotificationAppName() const {
+  return system_notification_app_name_;
 }
 
-void MessageCenterImpl::SetProductOSName(
-    const base::string16& product_os_name) {
-  product_os_name_ = product_os_name;
+void MessageCenterImpl::SetSystemNotificationAppName(
+    const base::string16& name) {
+  system_notification_app_name_ = name;
 }
 
 void MessageCenterImpl::DisableTimersForTest() {

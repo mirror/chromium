@@ -44,7 +44,7 @@ namespace {
 #include "net/http/transport_security_state_ct_policies.inc"
 
 #if BUILDFLAG(INCLUDE_TRANSPORT_SECURITY_STATE_PRELOAD_LIST)
-#include "net/http/transport_security_state_static.h"
+#include "net/http/transport_security_state_static.h"  // nogncheck
 // Points to the active transport security state source.
 const TransportSecurityStateSource* const kDefaultHSTSSource = &kHSTSSource;
 #else
@@ -142,7 +142,7 @@ bool GetHPKPReport(const HostPortPair& host_port_pair,
   for (const auto& hash_value : pkp_state.spki_hashes) {
     std::string known_pin;
 
-    switch (hash_value.tag) {
+    switch (hash_value.tag()) {
       case HASH_VALUE_SHA256:
         known_pin += "pin-sha256=";
         break;
@@ -900,6 +900,9 @@ TransportSecurityState::CheckCTRequirements(
   ExpectCTState state;
   if (is_issued_by_known_root && IsDynamicExpectCTEnabled() &&
       GetDynamicExpectCTState(hostname, &state)) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "Net.ExpectCTHeader.PolicyComplianceOnConnectionSetup",
+        policy_compliance, ct::CTPolicyCompliance::CT_POLICY_MAX);
     if (!complies && expect_ct_reporter_ && !state.report_uri.is_empty() &&
         report_status == ENABLE_EXPECT_CT_REPORTS) {
       MaybeNotifyExpectCTFailed(host_port_pair, state.report_uri, state.expiry,
@@ -946,9 +949,12 @@ TransportSecurityState::CheckCTRequirements(
 
   const base::Time epoch = base::Time::UnixEpoch();
   const CTRequiredPolicies& ct_required_policies = GetCTRequiredPolicies();
+
+  bool found = false;
   for (const auto& restricted_ca : ct_required_policies) {
-    if (epoch + restricted_ca.effective_date >
-        validated_certificate_chain->valid_start()) {
+    if (!restricted_ca.effective_date.is_zero() &&
+        (epoch + restricted_ca.effective_date >
+         validated_certificate_chain->valid_start())) {
       // The candidate cert is not subject to the CT policy, because it
       // was issued before the effective CT date.
       continue;
@@ -963,15 +969,21 @@ TransportSecurityState::CheckCTRequirements(
     // Found a match, indicating this certificate is potentially
     // restricted. Determine if any of the hashes are on the exclusion
     // list as exempt from the CT requirement.
-    if (IsAnySHA256HashInSortedArray(public_key_hashes,
+    if (restricted_ca.exceptions &&
+        IsAnySHA256HashInSortedArray(public_key_hashes,
                                      restricted_ca.exceptions,
                                      restricted_ca.exceptions_length)) {
       // Found an excluded sub-CA; CT is not required.
-      return default_response;
+      continue;
     }
-    // No exception found. This certificate must conform to the CT policy.
-    return complies ? CT_REQUIREMENTS_MET : CT_REQUIREMENTS_NOT_MET;
+
+    // No exception found. This certificate must conform to the CT policy. The
+    // compliance state is treated as additive - it must comply with all
+    // stated policies.
+    found = true;
   }
+  if (found)
+    return complies ? CT_REQUIREMENTS_MET : CT_REQUIREMENTS_NOT_MET;
 
   return default_response;
 }
@@ -1506,6 +1518,9 @@ void TransportSecurityState::ProcessExpectCTHeader(
   // public root or did not comply with CT policy.
   if (!ssl_info.is_issued_by_known_root)
     return;
+  UMA_HISTOGRAM_ENUMERATION(
+      "Net.ExpectCTHeader.PolicyComplianceOnHeaderProcessing",
+      ssl_info.ct_policy_compliance, ct::CTPolicyCompliance::CT_POLICY_MAX);
   if (ssl_info.ct_policy_compliance !=
       ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS) {
     // If an Expect-CT header is observed over a non-compliant connection, the

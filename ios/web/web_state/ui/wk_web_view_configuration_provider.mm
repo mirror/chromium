@@ -25,21 +25,31 @@ const char kWKWebViewConfigProviderKeyName[] = "wk_web_view_config_provider";
 
 // Returns an autoreleased instance of WKUserScript to be added to
 // configuration's userContentController.
-WKUserScript* InternalGetEarlyPageScriptForMainFrame(
+WKUserScript* InternalGetDocumentStartScriptForMainFrame(
     BrowserState* browser_state) {
   return [[WKUserScript alloc]
-        initWithSource:GetEarlyPageScriptForMainFrame(browser_state)
+        initWithSource:GetDocumentStartScriptForMainFrame(browser_state)
          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
       forMainFrameOnly:YES];
 }
 
 // Returns an autoreleased instance of WKUserScript to be added to
 // configuration's userContentController.
-WKUserScript* InternalGetEarlyPageScriptForAllFrames(
+WKUserScript* InternalGetDocumentStartScriptForAllFrames(
     BrowserState* browser_state) {
   return [[WKUserScript alloc]
-        initWithSource:GetEarlyPageScriptForAllFrames(browser_state)
+        initWithSource:GetDocumentStartScriptForAllFrames(browser_state)
          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
+      forMainFrameOnly:NO];
+}
+
+// Returns an autoreleased instance of WKUserScript to be added to
+// configuration's userContentController.
+WKUserScript* InternalGetDocumentEndScriptForAllFrames(
+    BrowserState* browser_state) {
+  return [[WKUserScript alloc]
+        initWithSource:GetDocumentEndScriptForAllFrames(browser_state)
+         injectionTime:WKUserScriptInjectionTimeAtDocumentEnd
       forMainFrameOnly:NO];
 }
 
@@ -70,7 +80,7 @@ WKWebViewConfiguration*
 WKWebViewConfigurationProvider::GetWebViewConfiguration() {
   DCHECK([NSThread isMainThread]);
   if (!configuration_) {
-    configuration_.reset([[WKWebViewConfiguration alloc] init]);
+    configuration_ = [[WKWebViewConfiguration alloc] init];
     if (browser_state_->IsOffTheRecord()) {
       [configuration_
           setWebsiteDataStore:[WKWebsiteDataStore nonPersistentDataStore]];
@@ -80,10 +90,16 @@ WKWebViewConfigurationProvider::GetWebViewConfiguration() {
     [configuration_ setAllowsInlineMediaPlayback:YES];
     // setJavaScriptCanOpenWindowsAutomatically is required to support popups.
     [[configuration_ preferences] setJavaScriptCanOpenWindowsAutomatically:YES];
+    // Main frame script depends upon scripts injected into all frames, so the
+    // "AllFrames" scripts must be injected first.
     [[configuration_ userContentController]
-        addUserScript:InternalGetEarlyPageScriptForMainFrame(browser_state_)];
+        addUserScript:InternalGetDocumentStartScriptForAllFrames(
+                          browser_state_)];
     [[configuration_ userContentController]
-        addUserScript:InternalGetEarlyPageScriptForAllFrames(browser_state_)];
+        addUserScript:InternalGetDocumentStartScriptForMainFrame(
+                          browser_state_)];
+    [[configuration_ userContentController]
+        addUserScript:InternalGetDocumentEndScriptForAllFrames(browser_state_)];
   }
   // Prevent callers from changing the internals of configuration.
   return [configuration_ copy];
@@ -95,16 +111,16 @@ WKWebViewConfigurationProvider::GetScriptMessageRouter() {
   if (!router_) {
     WKUserContentController* userContentController =
         [GetWebViewConfiguration() userContentController];
-    router_.reset([[CRWWKScriptMessageRouter alloc]
-        initWithUserContentController:userContentController]);
+    router_ = [[CRWWKScriptMessageRouter alloc]
+        initWithUserContentController:userContentController];
   }
   return router_;
 }
 
 void WKWebViewConfigurationProvider::Purge() {
   DCHECK([NSThread isMainThread]);
-  configuration_.reset();
-  router_.reset();
+  configuration_ = nil;
+  router_ = nil;
 }
 
 }  // namespace web

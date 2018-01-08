@@ -48,7 +48,6 @@ class MediaControls;
 class Page;
 class Settings;
 class ShadowRoot;
-class WebCredentialManagerClient;
 class WebFrameClient;
 class WebLayerTreeView;
 class WebMediaPlayer;
@@ -69,7 +68,7 @@ class CORE_EXPORT CoreInitializer {
     return *instance_;
   }
 
-  virtual ~CoreInitializer() {}
+  virtual ~CoreInitializer() = default;
 
   // Should be called by clients before trying to create Frames.
   virtual void Initialize();
@@ -110,10 +109,6 @@ class CORE_EXPORT CoreInitializer {
   virtual WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
       HTMLMediaElement&) const = 0;
 
-  virtual void ProvideCredentialManagerClient(
-      Page&,
-      WebCredentialManagerClient*) const = 0;
-
   virtual void ProvideModulesToPage(Page&, WebViewClient*) const = 0;
   virtual void ForceNextWebGLContextCreationToFail() const = 0;
 
@@ -121,7 +116,7 @@ class CORE_EXPORT CoreInitializer {
 
  protected:
   // CoreInitializer is only instantiated by subclass ModulesInitializer.
-  CoreInitializer() {}
+  CoreInitializer() = default;
 
  private:
   static CoreInitializer* instance_;

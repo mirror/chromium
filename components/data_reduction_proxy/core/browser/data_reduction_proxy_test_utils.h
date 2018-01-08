@@ -28,8 +28,8 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings_test_utils.h"
 #include "components/data_reduction_proxy/core/browser/data_store.h"
 #include "net/base/backoff_entry.h"
+#include "net/base/proxy_server.h"
 #include "net/log/test_net_log.h"
-#include "net/proxy/proxy_server.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
@@ -39,6 +39,7 @@ class TestingPrefServiceSimple;
 namespace net {
 class MockClientSocketFactory;
 class NetLog;
+class TestNetworkQualityEstimator;
 class URLRequestContext;
 class URLRequestContextStorage;
 }
@@ -187,6 +188,17 @@ class MockDataReductionProxyService : public DataReductionProxyService {
   ~MockDataReductionProxyService() override;
 
   MOCK_METHOD2(SetProxyPrefs, void(bool enabled, bool at_startup));
+  MOCK_METHOD5(
+      UpdateContentLengths,
+      void(int64_t data_used,
+           int64_t original_size,
+           bool data_reduction_proxy_enabled,
+           data_reduction_proxy::DataReductionProxyRequestType request_type,
+           const std::string& mime_type));
+  MOCK_METHOD3(UpdateDataUseForHost,
+               void(int64_t network_bytes,
+                    int64_t original_bytes,
+                    const std::string& host));
 };
 
 // Test version of |DataReductionProxyIOData|, which bypasses initialization in
@@ -498,6 +510,7 @@ class DataReductionProxyTestContext {
       std::unique_ptr<TestDataReductionProxyEventStorageDelegate>
           storage_delegate,
       std::unique_ptr<TestConfigStorer> config_storer,
+      std::unique_ptr<net::TestNetworkQualityEstimator> estimator,
       TestDataReductionProxyParams* params,
       unsigned int test_context_flags);
 
@@ -510,6 +523,7 @@ class DataReductionProxyTestContext {
   std::unique_ptr<TestingPrefServiceSimple> simple_pref_service_;
   std::unique_ptr<net::TestNetLog> net_log_;
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
+  std::unique_ptr<net::TestNetworkQualityEstimator> estimator_;
   // Non-owned pointer. Will be NULL if |this| was built without specifying a
   // |net::MockClientSocketFactory|.
   net::MockClientSocketFactory* mock_socket_factory_;

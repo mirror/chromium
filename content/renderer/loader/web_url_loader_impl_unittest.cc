@@ -19,8 +19,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/time.h"
+#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/resource_response_info.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
 #include "content/renderer/loader/request_extra_data.h"
@@ -35,6 +35,7 @@
 #include "net/test/cert_test_util.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/resource_response_info.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -63,40 +64,35 @@ const char kFtpDirListing[] =
 
 class TestResourceDispatcher : public ResourceDispatcher {
  public:
-  TestResourceDispatcher() :
-      ResourceDispatcher(nullptr, nullptr),
-      canceled_(false),
-      defers_loading_(false) {
-  }
+  TestResourceDispatcher() : canceled_(false), defers_loading_(false) {}
 
   ~TestResourceDispatcher() override {}
 
   // TestDispatcher implementation:
 
   void StartSync(
-      std::unique_ptr<ResourceRequest> request,
+      std::unique_ptr<network::ResourceRequest> request,
       int routing_id,
       const url::Origin& frame_origin,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       SyncLoadResponse* response,
-      blink::WebURLRequest::LoadingIPCType ipc_type,
-      mojom::URLLoaderFactory* url_loader_factory,
+      scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) override {
     *response = sync_load_response_;
   }
 
   int StartAsync(
-      std::unique_ptr<ResourceRequest> request,
+      std::unique_ptr<network::ResourceRequest> request,
       int routing_id,
       scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner,
       const url::Origin& frame_origin,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       bool is_sync,
       std::unique_ptr<RequestPeer> peer,
-      blink::WebURLRequest::LoadingIPCType ipc_type,
-      mojom::URLLoaderFactory* url_loader_factory,
+      scoped_refptr<SharedURLLoaderFactory> url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) override {
+      network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints)
+      override {
     EXPECT_FALSE(peer_);
     if (sync_load_response_.encoded_body_length != -1)
       EXPECT_TRUE(is_sync);
@@ -106,7 +102,9 @@ class TestResourceDispatcher : public ResourceDispatcher {
     return 1;
   }
 
-  void Cancel(int request_id) override {
+  void Cancel(
+      int request_id,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override {
     EXPECT_FALSE(canceled_);
     canceled_ = true;
   }
@@ -138,22 +136,24 @@ class TestResourceDispatcher : public ResourceDispatcher {
   DISALLOW_COPY_AND_ASSIGN(TestResourceDispatcher);
 };
 
-class FakeURLLoaderFactory final : public mojom::URLLoaderFactory {
+class FakeURLLoaderFactory final : public network::mojom::URLLoaderFactory {
  public:
   FakeURLLoaderFactory() = default;
   ~FakeURLLoaderFactory() override = default;
-  void CreateLoaderAndStart(mojom::URLLoaderRequest request,
+  void CreateLoaderAndStart(network::mojom::URLLoaderRequest request,
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
-                            const ResourceRequest& url_request,
-                            mojom::URLLoaderClientPtr client,
+                            const network::ResourceRequest& url_request,
+                            network::mojom::URLLoaderClientPtr client,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
     NOTREACHED();
   }
 
-  void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
+  void Clone(network::mojom::URLLoaderFactoryRequest request) override {
+    NOTREACHED();
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeURLLoaderFactory);
@@ -165,7 +165,8 @@ class TestWebURLLoaderClient : public blink::WebURLLoaderClient {
       : loader_(new WebURLLoaderImpl(
             dispatcher,
             blink::scheduler::GetSingleThreadTaskRunnerForTesting(),
-            &fake_url_loader_factory_)),
+            base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+                &fake_url_loader_factory_))),
         delete_on_receive_redirect_(false),
         delete_on_receive_response_(false),
         delete_on_receive_data_(false),
@@ -232,7 +233,8 @@ class TestWebURLLoaderClient : public blink::WebURLLoaderClient {
   void DidFinishLoading(double finishTime,
                         int64_t totalEncodedDataLength,
                         int64_t totalEncodedBodyLength,
-                        int64_t totalDecodedBodyLength) override {
+                        int64_t totalDecodedBodyLength,
+                        bool blocked_cross_site_document) override {
     EXPECT_TRUE(loader_);
     EXPECT_TRUE(did_receive_response_);
     EXPECT_FALSE(did_finish_);
@@ -323,8 +325,7 @@ class WebURLLoaderImplTest : public testing::Test {
     redirect_info.new_method = "GET";
     redirect_info.new_url = GURL(kTestURL);
     redirect_info.new_site_for_cookies = GURL(kTestURL);
-    peer()->OnReceivedRedirect(redirect_info,
-                               content::ResourceResponseInfo());
+    peer()->OnReceivedRedirect(redirect_info, network::ResourceResponseInfo());
     EXPECT_TRUE(client()->did_receive_redirect());
   }
 
@@ -335,14 +336,13 @@ class WebURLLoaderImplTest : public testing::Test {
     redirect_info.new_method = "GET";
     redirect_info.new_url = GURL(kTestHTTPSURL);
     redirect_info.new_site_for_cookies = GURL(kTestHTTPSURL);
-    peer()->OnReceivedRedirect(redirect_info,
-                               content::ResourceResponseInfo());
+    peer()->OnReceivedRedirect(redirect_info, network::ResourceResponseInfo());
     EXPECT_TRUE(client()->did_receive_redirect());
   }
 
   void DoReceiveResponse() {
     EXPECT_FALSE(client()->did_receive_response());
-    peer()->OnReceivedResponse(content::ResourceResponseInfo());
+    peer()->OnReceivedResponse(network::ResourceResponseInfo());
     EXPECT_TRUE(client()->did_receive_response());
   }
 
@@ -381,7 +381,7 @@ class WebURLLoaderImplTest : public testing::Test {
 
   void DoReceiveResponseFtp() {
     EXPECT_FALSE(client()->did_receive_response());
-    content::ResourceResponseInfo response_info;
+    network::ResourceResponseInfo response_info;
     response_info.mime_type = kFtpDirMimeType;
     peer()->OnReceivedResponse(response_info);
     EXPECT_TRUE(client()->did_receive_response());
@@ -648,7 +648,7 @@ TEST_F(WebURLLoaderImplTest, BrowserSideNavigationCommit) {
   EXPECT_EQ(kStreamURL, dispatcher()->stream_url());
 
   EXPECT_FALSE(client()->did_receive_response());
-  peer()->OnReceivedResponse(content::ResourceResponseInfo());
+  peer()->OnReceivedResponse(network::ResourceResponseInfo());
   EXPECT_TRUE(client()->did_receive_response());
 
   // The response info should have been overriden.
@@ -679,7 +679,7 @@ TEST_F(WebURLLoaderImplTest, ResponseIPAddress) {
 
   for (const auto& test : cases) {
     SCOPED_TRACE(test.ip);
-    content::ResourceResponseInfo info;
+    network::ResourceResponseInfo info;
     info.socket_address = net::HostPortPair(test.ip, 443);
     blink::WebURLResponse response;
     WebURLLoaderImpl::PopulateURLResponse(url, info, &response, true);
@@ -700,7 +700,7 @@ TEST_F(WebURLLoaderImplTest, ResponseCert) {
   base::StringPiece cert1_der =
       net::x509_util::CryptoBufferAsStringPiece(certs[1]->cert_buffer());
 
-  content::ResourceResponseInfo info;
+  network::ResourceResponseInfo info;
   net::SSLConnectionStatusSetVersion(net::SSL_CONNECTION_VERSION_TLS1_2,
                                      &info.ssl_connection_status);
   info.certificate.emplace_back(cert0_der);
@@ -736,7 +736,7 @@ TEST_F(WebURLLoaderImplTest, ResponseCertWithNoSANs) {
   base::StringPiece cert0_der =
       net::x509_util::CryptoBufferAsStringPiece(certs[0]->cert_buffer());
 
-  content::ResourceResponseInfo info;
+  network::ResourceResponseInfo info;
   net::SSLConnectionStatusSetVersion(net::SSL_CONNECTION_VERSION_TLS1_2,
                                      &info.ssl_connection_status);
   info.certificate.emplace_back(cert0_der);

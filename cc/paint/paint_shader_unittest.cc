@@ -42,7 +42,7 @@ class MockImageProvider : public ImageProvider {
     sk_sp<SkImage> image = SkImage::MakeFromBitmap(bitmap);
     return ScopedDecodedDrawImage(
         DecodedDrawImage(image, SkSize::MakeEmpty(), SkSize::Make(1.0f, 1.0f),
-                         draw_image.filter_quality()));
+                         draw_image.filter_quality(), true));
   }
 
   const DrawImage& draw_image() const { return draw_image_; }
@@ -93,7 +93,7 @@ TEST(PaintShaderTest, DecodePaintRecord) {
 
   MockImageProvider image_provider;
   SaveCountingCanvas canvas;
-  buffer.Playback(&canvas, &image_provider);
+  buffer.Playback(&canvas, PlaybackParams(&image_provider));
 
   EXPECT_EQ(canvas.draw_rect_, SkRect::MakeWH(100, 100));
   SkShader* shader = canvas.paint_.getShader();
@@ -114,7 +114,8 @@ TEST(PaintShaderTest, DecodePaintRecord) {
 
   // Using the shader requests decode for images at the correct scale.
   EXPECT_EQ(image_provider.draw_image().paint_image(), paint_image);
-  EXPECT_EQ(image_provider.draw_image().scale(), SkSize::Make(0.25f, 0.25f));
+  EXPECT_EQ(image_provider.draw_image().scale().width(), 0.25f);
+  EXPECT_EQ(image_provider.draw_image().scale().height(), 0.25f);
 }
 
 }  // namespace cc

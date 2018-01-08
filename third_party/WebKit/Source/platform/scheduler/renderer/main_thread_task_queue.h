@@ -25,7 +25,9 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
     // the situation settles.
     kControl = 0,
     kDefault = 1,
-    kDefaultLoading = 2,
+
+    // 2 was used for default loading task runner but this was deprecated.
+
     // kDefaultTimer is deprecated and should be replaced with appropriate
     // per-frame task queues.
     kDefaultTimer = 3,
@@ -36,17 +38,18 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
     kCompositor = 8,
     kIdle = 9,
     kTest = 10,
-    kFrameLoading_kControl = 11,
+    kFrameLoadingControl = 11,
     kFrameThrottleable = 12,
     kFrameDeferrable = 13,
     kFramePausable = 14,
     kFrameUnpausable = 15,
     kV8 = 16,
     kIPC = 17,
+    kInput = 18,
 
     // Used to group multiple types when calculating Expected Queueing Time.
-    kOther = 18,
-    kCount = 19
+    kOther = 19,
+    kCount = 20
   };
 
   // Returns name of the given queue type. Returned string has application
@@ -153,7 +156,8 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
   void OnTaskCompleted(const TaskQueue::Task& task,
                        base::TimeTicks start,
-                       base::TimeTicks end);
+                       base::TimeTicks end,
+                       base::Optional<base::TimeDelta> thread_time);
 
   void DetachFromRendererScheduler();
 

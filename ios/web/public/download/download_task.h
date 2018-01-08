@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "ui/base/page_transition_types.h"
 
 class GURL;
 
@@ -82,6 +83,9 @@ class DownloadTask {
   // the total size is unknown.
   virtual int64_t GetTotalBytes() const = 0;
 
+  // Total number of bytes that have been received.
+  virtual int64_t GetReceivedBytes() const = 0;
+
   // Rough percent complete. Returns -1 if progress is unknown. 100 if the
   // download is already complete.
   virtual int GetPercentComplete() const = 0;
@@ -91,6 +95,9 @@ class DownloadTask {
 
   // Effective MIME type of downloaded content.
   virtual std::string GetMimeType() const = 0;
+
+  // The page transition type associated with the download request.
+  virtual ui::PageTransition GetTransitionType() const = 0;
 
   // Suggested name for the downloaded file.
   virtual base::string16 GetSuggestedFilename() const = 0;

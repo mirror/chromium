@@ -61,9 +61,8 @@ class CONTENT_EXPORT DelegatedFrameHostClient {
   virtual ui::Layer* DelegatedFrameHostGetLayer() const = 0;
   virtual bool DelegatedFrameHostIsVisible() const = 0;
 
-  // Returns the color that the resize gutters should be drawn with. Takes the
-  // suggested color from the current page background.
-  virtual SkColor DelegatedFrameHostGetGutterColor(SkColor color) const = 0;
+  // Returns the color that the resize gutters should be drawn with.
+  virtual SkColor DelegatedFrameHostGetGutterColor() const = 0;
   virtual gfx::Size DelegatedFrameHostDesiredSizeInDIP() const = 0;
 
   virtual bool DelegatedFrameCanCreateResizeLock() const = 0;
@@ -71,9 +70,12 @@ class CONTENT_EXPORT DelegatedFrameHostClient {
   DelegatedFrameHostCreateResizeLock() = 0;
   virtual viz::LocalSurfaceId GetLocalSurfaceId() const = 0;
 
+  virtual void OnFirstSurfaceActivation(
+      const viz::SurfaceInfo& surface_info) = 0;
   virtual void OnBeginFrame(base::TimeTicks frame_time) = 0;
   virtual bool IsAutoResizeEnabled() const = 0;
   virtual void OnFrameTokenChanged(uint32_t frame_token) = 0;
+  virtual void DidReceiveFirstFrameAfterNavigation() = 0;
 };
 
 // The DelegatedFrameHost is used to host all of the RenderWidgetHostView state
@@ -164,11 +166,6 @@ class CONTENT_EXPORT DelegatedFrameHost
   void EndFrameSubscription();
   bool HasFrameSubscriber() const { return !!frame_subscriber_; }
   viz::FrameSinkId GetFrameSinkId();
-  // Returns a null SurfaceId if this DelegatedFrameHost has not yet created
-  // a compositor Surface.
-  viz::SurfaceId SurfaceIdAtPoint(viz::SurfaceHittestDelegate* delegate,
-                                  const gfx::PointF& point,
-                                  gfx::PointF* transformed_point);
 
   // Given the SurfaceID of a Surface that is contained within this class'
   // Surface, find the relative transform between the Surfaces and apply it
@@ -188,10 +185,10 @@ class CONTENT_EXPORT DelegatedFrameHost
                                          gfx::PointF* transformed_point);
 
   void SetNeedsBeginFrames(bool needs_begin_frames);
+  void SetWantsAnimateOnlyBeginFrames();
   void DidNotProduceFrame(const viz::BeginFrameAck& ack);
 
-  // Exposed for tests.
-  viz::SurfaceId SurfaceIdForTesting() const {
+  viz::SurfaceId GetCurrentSurfaceId() const {
     return viz::SurfaceId(frame_sink_id_, local_surface_id_);
   }
   viz::CompositorFrameSinkSupport* GetCompositorFrameSinkSupportForTesting() {
@@ -216,6 +213,8 @@ class CONTENT_EXPORT DelegatedFrameHost
   gfx::Size CurrentFrameSizeInDipForTesting() const {
     return current_frame_size_in_dip_;
   }
+
+  void DidNavigate();
 
  private:
   friend class DelegatedFrameHostClient;
@@ -278,10 +277,6 @@ class CONTENT_EXPORT DelegatedFrameHost
 
   void CreateCompositorFrameSinkSupport();
   void ResetCompositorFrameSinkSupport();
-
-  // Returns SurfaceReferenceFactory instance. If |enable_viz| is true then it
-  // will be a stub factory, otherwise it will be the real factory.
-  scoped_refptr<viz::SurfaceReferenceFactory> GetSurfaceReferenceFactory();
 
   const viz::FrameSinkId frame_sink_id_;
   viz::LocalSurfaceId local_surface_id_;
@@ -351,6 +346,9 @@ class CONTENT_EXPORT DelegatedFrameHost
       nullptr;
 
   std::unique_ptr<viz::FrameEvictor> frame_evictor_;
+
+  uint32_t first_parent_sequence_number_after_navigation_ = 0;
+  bool received_frame_after_navigation_ = false;
 
   base::WeakPtrFactory<DelegatedFrameHost> weak_ptr_factory_;
 };

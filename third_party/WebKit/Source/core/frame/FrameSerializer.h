@@ -43,6 +43,7 @@
 
 namespace blink {
 
+class AtRuleDescriptorValueSet;
 class CSSRule;
 class CSSStyleSheet;
 class CSSValue;
@@ -70,7 +71,7 @@ class CORE_EXPORT FrameSerializer final {
 
   class Delegate {
    public:
-    virtual ~Delegate() {}
+    virtual ~Delegate() = default;
 
     // Controls whether HTML serialization should skip the given element.
     virtual bool ShouldIgnoreElement(const Element&) { return false; }
@@ -149,9 +150,11 @@ class CORE_EXPORT FrameSerializer final {
                       scoped_refptr<const SharedBuffer>,
                       const KURL&);
   void AddImageToResources(ImageResourceContent*, const KURL&);
-  void AddFontToResources(FontResource*);
+  void AddFontToResources(FontResource&);
 
   void RetrieveResourcesForProperties(const CSSPropertyValueSet*, Document&);
+  void RetrieveResourcesForProperties(const AtRuleDescriptorValueSet*,
+                                      Document&);
   void RetrieveResourcesForCSSValue(const CSSValue&, Document&);
 
   Deque<SerializedResource>* resources_;

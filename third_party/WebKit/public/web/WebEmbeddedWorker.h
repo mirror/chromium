@@ -33,28 +33,17 @@
 
 #include <memory>
 
+#include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "public/platform/WebCommon.h"
-#include "public/platform/WebVector.h"
 
 namespace blink {
 
 class WebContentSettingsClient;
 class WebServiceWorkerContextClient;
-class WebString;
-class WebURL;
+class WebServiceWorkerInstalledScriptsManager;
 struct WebConsoleMessage;
 struct WebEmbeddedWorkerStartData;
-
-// As we're on the border line between non-Blink and Blink variants, we need
-// to use mojo::ScopedMessagePipeHandle to pass Mojo types.
-struct WebServiceWorkerInstalledScriptsManagerParams {
-  WebVector<WebURL> installed_scripts_urls;
-  // A handle for mojom::blink::ServiceWorkerInstalledScriptsManagerRequest.
-  mojo::ScopedMessagePipeHandle manager_request;
-  // A handle for mojom::blink::ServiceWorkerInstalledScriptsManagerHostPtrInfo.
-  mojo::ScopedMessagePipeHandle manager_host_ptr;
-};
 
 // An interface to start and terminate an embedded worker.
 // All methods of this class must be called on the main thread.
@@ -66,13 +55,11 @@ class BLINK_EXPORT WebEmbeddedWorker {
   // WorkerGlobalScope.
   static std::unique_ptr<WebEmbeddedWorker> Create(
       std::unique_ptr<WebServiceWorkerContextClient>,
-      std::unique_ptr<WebServiceWorkerInstalledScriptsManagerParams>,
-      // A handle for mojom::blink::WorkerContentSettingsProxyPtrInfo.
+      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
       mojo::ScopedMessagePipeHandle content_settings_handle,
-      // A handle for service_manager::mojom::blink::InterfaceProviderPtrInfo.
       mojo::ScopedMessagePipeHandle interface_provider);
 
-  virtual ~WebEmbeddedWorker() {}
+  virtual ~WebEmbeddedWorker() = default;
 
   // Starts and terminates WorkerThread and WorkerGlobalScope.
   virtual void StartWorkerContext(const WebEmbeddedWorkerStartData&) = 0;
@@ -83,15 +70,9 @@ class BLINK_EXPORT WebEmbeddedWorker {
   virtual void ResumeAfterDownload() = 0;
 
   // Inspector related methods.
-  virtual void AttachDevTools(int session_id) = 0;
-  virtual void ReattachDevTools(int session_id,
-                                const WebString& saved_state) = 0;
-  virtual void DetachDevTools(int session_id) = 0;
-  virtual void DispatchDevToolsMessage(int session_id,
-                                       int call_id,
-                                       const WebString& method,
-                                       const WebString& message) = 0;
   virtual void AddMessageToConsole(const WebConsoleMessage&) = 0;
+  virtual void BindDevToolsAgent(
+      mojo::ScopedInterfaceEndpointHandle devtools_agent_request) = 0;
 };
 
 }  // namespace blink

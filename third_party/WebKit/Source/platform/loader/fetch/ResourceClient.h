@@ -44,7 +44,7 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
     kRawResourceType
   };
 
-  virtual ~ResourceClient() {}
+  virtual ~ResourceClient() = default;
 
   // DataReceived() is called each time a chunk of data is received.
   // For cache hits, the data is replayed before NotifyFinished() is called.
@@ -72,9 +72,9 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
   void Trace(blink::Visitor* visitor) override { visitor->Trace(resource_); }
 
  protected:
-  ResourceClient() {}
+  ResourceClient() = default;
 
-  void ClearResource() { SetResource(nullptr); }
+  void ClearResource() { SetResource(nullptr, nullptr); }
 
  private:
   // ResourceFetcher is primarily responsible for calling SetResource() with a
@@ -91,7 +91,7 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
   // additional clients.
   friend class CSSFontFaceSrcValue;
 
-  void SetResource(Resource* new_resource) {
+  void SetResource(Resource* new_resource, WebTaskRunner* task_runner) {
     if (new_resource == resource_)
       return;
 
@@ -101,7 +101,7 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
       old_resource->RemoveClient(this);
     resource_ = new_resource;
     if (resource_)
-      resource_->AddClient(this);
+      resource_->AddClient(this, task_runner);
   }
 
   Member<Resource> resource_;

@@ -66,7 +66,7 @@ ShadowRoot& ElementShadow::AddShadowRoot(Element& shadow_host,
     for (ShadowRoot* root = &YoungestShadowRoot(); root;
          root = root->OlderShadowRoot())
       root->LazyReattachIfAttached();
-  } else if (type == ShadowRootType::V0 || type == ShadowRootType::kUserAgent) {
+  } else if (type == ShadowRootType::V0) {
     DCHECK(!element_shadow_v0_);
     element_shadow_v0_ = ElementShadowV0::Create(*this);
   }
@@ -94,15 +94,8 @@ ShadowRoot& ElementShadow::AddShadowRoot(Element& shadow_host,
 }
 
 void ElementShadow::AppendShadowRoot(ShadowRoot& shadow_root) {
-  if (!shadow_root_) {
-    shadow_root_ = &shadow_root;
-    return;
-  }
-  ShadowRoot& youngest = YoungestShadowRoot();
-  DCHECK(shadow_root.GetType() == ShadowRootType::V0);
-  DCHECK(youngest.GetType() == ShadowRootType::V0);
-  youngest.SetYoungerShadowRoot(shadow_root);
-  shadow_root.SetOlderShadowRoot(youngest);
+  DCHECK(!shadow_root_);
+  shadow_root_ = &shadow_root;
 }
 
 void ElementShadow::Attach(const Node::AttachContext& context) {
@@ -117,6 +110,7 @@ void ElementShadow::Attach(const Node::AttachContext& context) {
 
 void ElementShadow::Detach(const Node::AttachContext& context) {
   Node::AttachContext children_context(context);
+  children_context.clear_invalidation = true;
 
   for (ShadowRoot* root = &YoungestShadowRoot(); root;
        root = root->OlderShadowRoot())

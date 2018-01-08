@@ -49,10 +49,10 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
-#include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLImageElement.h"
-#include "core/html/ImageData.h"
+#include "core/html/canvas/HTMLCanvasElement.h"
+#include "core/html/canvas/ImageData.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLLabelElement.h"
 #include "core/html/forms/HTMLOptionElement.h"
@@ -75,8 +75,6 @@
 #include "core/layout/LayoutTextControl.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutAPIShim.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/api/LineLayoutAPIShim.h"
 #include "core/loader/ProgressTracker.h"
 #include "core/page/Page.h"
@@ -92,6 +90,7 @@
 #include "modules/accessibility/AXSpinButton.h"
 #include "modules/accessibility/AXTable.h"
 #include "platform/geometry/TransformState.h"
+#include "platform/graphics/ImageDataBuffer.h"
 #include "platform/text/PlatformLocale.h"
 #include "platform/text/TextDirection.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -432,29 +431,31 @@ bool AXLayoutObject::IsFocused() const {
   return false;
 }
 
-bool AXLayoutObject::IsSelected() const {
+AccessibilitySelectedState AXLayoutObject::IsSelected() const {
   if (!GetLayoutObject() || !GetNode() || !CanSetSelectedAttribute())
-    return false;
+    return kSelectedStateUndefined;
 
   // aria-selected overrides automatic behaviors
   bool is_selected;
   if (HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kSelected, is_selected))
-    return is_selected;
+    return is_selected ? kSelectedStateTrue : kSelectedStateFalse;
 
   // Tab item with focus in the associated tab
   if (IsTabItem() && IsTabItemSelected())
-    return true;
+    return kSelectedStateTrue;
 
   // Selection follows focus, but ONLY in single selection containers,
   // and only if aria-selected was not present to override
 
   AXObject* container = ContainerWidget();
   if (!container || container->IsMultiSelectable())
-    return false;
+    return kSelectedStateFalse;
 
   AXObject* focused_object = AXObjectCache().FocusedObject();
-  return focused_object == this ||
-         (focused_object && focused_object->ActiveDescendant() == this);
+  return (focused_object == this ||
+          (focused_object && focused_object->ActiveDescendant() == this))
+             ? kSelectedStateTrue
+             : kSelectedStateFalse;
 }
 
 //
@@ -658,6 +659,10 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
 
   if (RoleValue() == kTimeRole)
     return false;
+
+  if (RoleValue() == kProgressIndicatorRole) {
+    return false;
+  }
 
   // if this element has aria attributes on it, it should not be ignored.
   if (SupportsARIAAttributes())
@@ -1358,6 +1363,10 @@ bool AXLayoutObject::AriaHasPopup() const {
          RoleValue() == kTextFieldWithComboBoxRole;
 }
 
+// TODO : Aria-dropeffect and aria-grabbed are deprecated in aria 1.1
+// Also those properties are expected to be replaced by a new feature in
+// a future version of WAI-ARIA. After that we will re-implement them
+// following new spec.
 bool AXLayoutObject::SupportsARIADragging() const {
   const AtomicString& grabbed = GetAttribute(aria_grabbedAttr);
   return EqualIgnoringASCIICase(grabbed, "true") ||
@@ -1434,6 +1443,11 @@ AXObject* AXLayoutObject::AccessibilityHitTest(const IntPoint& point) const {
   if (!layout_object_ || !layout_object_->HasLayer() ||
       !layout_object_->IsBox())
     return nullptr;
+
+  auto* frame_view = DocumentFrameView();
+  if (!frame_view)
+    return nullptr;
+  frame_view->UpdateLifecycleToPrePaintClean();
 
   PaintLayer* layer = ToLayoutBox(layout_object_)->Layer();
 
@@ -1780,14 +1794,10 @@ AXObject::AXRange AXLayoutObject::Selection() const {
   VisiblePosition visible_start = selection.VisibleStart();
   Position start = visible_start.ToParentAnchoredPosition();
   TextAffinity start_affinity = visible_start.Affinity();
-  VisiblePosition visible_end = selection.VisibleEnd();
-  Position end = visible_end.ToParentAnchoredPosition();
-  TextAffinity end_affinity = visible_end.Affinity();
-
   Node* anchor_node = start.AnchorNode();
   DCHECK(anchor_node);
-
   AXLayoutObject* anchor_object = nullptr;
+
   // Find the closest node that has a corresponding AXObject.
   // This is because some nodes may be aria hidden or might not even have
   // a layout object if they are part of the shadow DOM.
@@ -1801,10 +1811,20 @@ AXObject::AXRange AXLayoutObject::Selection() const {
     else
       anchor_node = anchor_node->parentNode();
   }
+  if (!anchor_object)
+    return AXRange();
+  int anchor_offset = anchor_object->IndexForVisiblePosition(visible_start);
+  DCHECK_GE(anchor_offset, 0);
+  if (selection.IsCaret()) {
+    return AXRange(anchor_object, anchor_offset, start_affinity, anchor_object,
+                   anchor_offset, start_affinity);
+  }
 
+  VisiblePosition visible_end = selection.VisibleEnd();
+  Position end = visible_end.ToParentAnchoredPosition();
+  TextAffinity end_affinity = visible_end.Affinity();
   Node* focus_node = end.AnchorNode();
   DCHECK(focus_node);
-
   AXLayoutObject* focus_object = nullptr;
   while (focus_node) {
     focus_object = GetUnignoredObjectFromNode(*focus_node);
@@ -1816,12 +1836,8 @@ AXObject::AXRange AXLayoutObject::Selection() const {
     else
       focus_node = focus_node->parentNode();
   }
-
-  if (!anchor_object || !focus_object)
+  if (!focus_object)
     return AXRange();
-
-  int anchor_offset = anchor_object->IndexForVisiblePosition(visible_start);
-  DCHECK_GE(anchor_offset, 0);
   int focus_offset = focus_object->IndexForVisiblePosition(visible_end);
   DCHECK_GE(focus_offset, 0);
   return AXRange(anchor_object, anchor_offset, start_affinity, focus_object,
@@ -2074,7 +2090,7 @@ bool AXLayoutObject::OnNativeSetSelectionAction(const AXRange& selection) {
   if (anchor_visible_position.IsNull() || focus_visible_position.IsNull())
     return false;
 
-  frame->Selection().SetSelection(
+  frame->Selection().SetSelectionAndEndTyping(
       SelectionInDOMTree::Builder()
           .Collapse(anchor_visible_position.ToPositionWithAffinity())
           .Extend(focus_visible_position.DeepEquivalent())

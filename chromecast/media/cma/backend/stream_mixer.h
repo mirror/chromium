@@ -193,6 +193,7 @@ class StreamMixer {
   void SetMixerOutputStreamForTest(std::unique_ptr<MixerOutputStream> output);
   void WriteFramesForTest();  // Can be called on any thread.
   void ClearInputsForTest();  // Removes all inputs.
+  void SetNumOutputChannelsForTest(int num_output_channels);
 
   void AddLoopbackAudioObserver(
       CastMediaShlib::LoopbackAudioObserver* observer);
@@ -264,7 +265,7 @@ class StreamMixer {
   bool TryWriteFrames();
   void WriteMixedPcm(int frames);
   void UpdateRenderingDelay(int newly_pushed_frames);
-  void ResizeBuffersIfNecessary(int chunk_size);
+  void ResizeBuffersIfNecessary(int num_frames);
 
   // Sets active channel in multichannel group.
   void UpdatePlayoutChannel();

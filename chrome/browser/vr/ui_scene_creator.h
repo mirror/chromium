@@ -13,6 +13,7 @@
 namespace vr {
 
 class ContentInputDelegate;
+class Ui;
 class UiBrowserInterface;
 class UiScene;
 struct Model;
@@ -22,6 +23,7 @@ class UiSceneCreator {
  public:
   UiSceneCreator(UiBrowserInterface* browser,
                  UiScene* scene,
+                 Ui* ui,
                  ContentInputDelegate* content_input_delegate,
                  KeyboardDelegate* keyboard_delegate,
                  TextInputDelegate* text_input_delegate,
@@ -39,27 +41,32 @@ class UiSceneCreator {
  private:
   void Create2dBrowsingSubtreeRoots();
   void CreateWebVrRoot();
-  void CreateWebVRExitWarning();
   void CreateSystemIndicators();
   void CreateContentQuad();
-  void CreateSplashScreenForDirectWebVrLaunch();
-  void CreateWebVrTimeoutScreen();
   void CreateUnderDevelopmentNotice();
   void CreateBackground();
   void CreateViewportAwareRoot();
   void CreateUrlBar();
+  void CreateLoadingIndicator();
+  void CreateSnackbars();
   void CreateOmnibox();
-  void CreateWebVrUrlToast();
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateAudioPermissionPrompt();
-  void CreateToasts();
+  void CreateFullscreenToast();
   void CreateVoiceSearchUiGroup();
+  void CreateContentRepositioningAffordance();
+  void CreateExitWarning();
+  void CreateWebVrSubtree();
+  void CreateWebVrOverlayElements();
+  void CreateSplashScreenForDirectWebVrLaunch();
+  void CreateWebVrTimeoutScreen();
   void CreateController();
   void CreateKeyboard();
 
   UiBrowserInterface* browser_;
   UiScene* scene_;
+  Ui* ui_;
   ContentInputDelegate* content_input_delegate_;
   KeyboardDelegate* keyboard_delegate_;
   TextInputDelegate* text_input_delegate_;

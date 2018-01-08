@@ -177,17 +177,26 @@ const DOMMatrix* CSSTranslation::AsMatrix(
   }
 
   DOMMatrix* matrix = DOMMatrix::Create();
-  return matrix->translate(x->value(), y->value(), z->value());
+  if (is2D())
+    matrix->translateSelf(x->value(), y->value());
+  else
+    matrix->translateSelf(x->value(), y->value(), z->value());
+
+  return matrix;
 }
 
-const CSSFunctionValue* CSSTranslation::ToCSSValue(
-    SecureContextMode secure_context_mode) const {
+const CSSFunctionValue* CSSTranslation::ToCSSValue() const {
+  const CSSValue* x = x_->ToCSSValue();
+  const CSSValue* y = y_->ToCSSValue();
+
   CSSFunctionValue* result = CSSFunctionValue::Create(
       is2D() ? CSSValueTranslate : CSSValueTranslate3d);
-  result->Append(*x_->ToCSSValue(secure_context_mode));
-  result->Append(*y_->ToCSSValue(secure_context_mode));
-  if (!is2D())
-    result->Append(*z_->ToCSSValue(secure_context_mode));
+  result->Append(*x);
+  result->Append(*y);
+  if (!is2D()) {
+    const CSSValue* z = z_->ToCSSValue();
+    result->Append(*z);
+  }
   return result;
 }
 

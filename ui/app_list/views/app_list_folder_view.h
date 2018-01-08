@@ -27,12 +27,13 @@ class AppListItemView;
 class AppListMainView;
 class AppListModel;
 class FolderHeaderView;
+class PageSwitcher;
 
-class AppListFolderView : public views::View,
-                          public FolderHeaderViewDelegate,
-                          public AppListModelObserver,
-                          public ui::ImplicitAnimationObserver,
-                          public AppsGridViewFolderDelegate {
+class APP_LIST_EXPORT AppListFolderView : public views::View,
+                                          public FolderHeaderViewDelegate,
+                                          public AppListModelObserver,
+                                          public ui::ImplicitAnimationObserver,
+                                          public AppsGridViewFolderDelegate {
  public:
   AppListFolderView(AppsContainerView* container_view,
                     AppListModel* model,
@@ -50,9 +51,6 @@ class AppListFolderView : public views::View,
   // AppListFolderView.
   gfx::Rect GetItemIconBoundsAt(int index);
 
-  void UpdateFolderNameVisibility(bool visible);
-  void SetBackButtonLabel(bool folder);
-
   // Hides the view immediately without animation.
   void HideViewImmediately();
 
@@ -62,7 +60,6 @@ class AppListFolderView : public views::View,
   // views::View
   gfx::Size CalculatePreferredSize() const override;
   void Layout() override;
-  bool OnKeyPressed(const ui::KeyEvent& event) override;
 
   // AppListModelObserver
   void OnAppListItemWillBeDeleted(AppListItem* item) override;
@@ -95,7 +92,6 @@ class AppListFolderView : public views::View,
   void SetItemName(AppListFolderItem* item, const std::string& name) override;
 
   // Overridden from AppsGridViewFolderDelegate:
-  void UpdateFolderViewBackground(bool show_bubble) override;
   void ReparentItem(AppListItemView* original_drag_view,
                     const gfx::Point& drag_point_in_folder_grid,
                     bool has_native_drag) override;
@@ -112,6 +108,7 @@ class AppListFolderView : public views::View,
   AppListMainView* app_list_main_view_;   // Not Owned.
   FolderHeaderView* folder_header_view_;  // Owned by views hierarchy.
   AppsGridView* items_grid_view_;         // Owned by the views hierarchy.
+  PageSwitcher* page_switcher_ = nullptr;  // Owned by the views hierarchy.
 
   std::unique_ptr<views::ViewModel> view_model_;
 
@@ -121,9 +118,6 @@ class AppListFolderView : public views::View,
   bool hide_for_reparent_;
 
   base::string16 accessible_name_;
-
-  // Whether the app list focus is enabled.
-  const bool is_app_list_focus_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListFolderView);
 };

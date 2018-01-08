@@ -57,9 +57,9 @@ void WaitForSignalTask(WorkerThread* worker_thread,
   EXPECT_TRUE(worker_thread->IsCurrentThread());
 
   // Notify the main thread that the debugger task is waiting for the signal.
-  worker_thread->GetParentFrameTaskRunners()
-      ->Get(TaskType::kInternalTest)
-      ->PostTask(FROM_HERE, CrossThreadBind(&testing::ExitRunLoop));
+  PostCrossThreadTask(
+      *worker_thread->GetParentFrameTaskRunners()->Get(TaskType::kInternalTest),
+      FROM_HERE, CrossThreadBind(&testing::ExitRunLoop));
   waitable_event->Wait();
 }
 
@@ -67,7 +67,7 @@ void WaitForSignalTask(WorkerThread* worker_thread,
 
 class WorkerThreadTest : public ::testing::Test {
  public:
-  WorkerThreadTest() {}
+  WorkerThreadTest() = default;
 
   void SetUp() override {
     reporting_proxy_ = std::make_unique<MockWorkerReportingProxy>();
@@ -300,7 +300,7 @@ TEST_F(WorkerThreadTest, Terminate_WhileDebuggerTaskIsRunningOnInitialization) {
       std::make_unique<GlobalScopeCreationParams>(
           KURL("http://fake.url/"), "fake user agent", headers.get(),
           kReferrerPolicyDefault, security_origin_.get(),
-          nullptr /* workerClients */, kWebAddressSpaceLocal,
+          nullptr /* workerClients */, mojom::IPAddressSpace::kLocal,
           nullptr /* originTrialToken */,
           std::make_unique<WorkerSettings>(Settings::Create().get()),
           kV8CacheOptionsDefault);

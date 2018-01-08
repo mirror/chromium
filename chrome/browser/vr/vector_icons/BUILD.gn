@@ -7,7 +7,11 @@ import("//components/vector_icons/vector_icons.gni")
 aggregate_vector_icons("vr_vector_icons") {
   icon_directory = "."
 
-  icons = [ "sad_tab.icon" ]
+  icons = [
+    "file_download_done.icon",
+    "reposition.icon",
+    "sad_tab.icon",
+  ]
 }
 
 source_set("vector_icons") {

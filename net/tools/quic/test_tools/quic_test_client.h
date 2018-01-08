@@ -127,6 +127,7 @@ class QuicTestClient : public QuicSpdyStream::Visitor,
   // Sends a GET request for |uri|, waits for the response, and returns the
   // response body.
   std::string SendSynchronousRequest(const std::string& uri);
+  void SendConnectivityProbing();
   void Connect();
   void ResetConnection();
   void Disconnect();
@@ -183,7 +184,12 @@ class QuicTestClient : public QuicSpdyStream::Visitor,
     WaitUntil(timeout_ms, [this]() { return response_size() != 0; });
   }
 
-  void MigrateSocket(const QuicIpAddress& new_host);
+  // Migrate local address to <|new_host|, a random port>.
+  // Return whether the migration succeeded.
+  bool MigrateSocket(const QuicIpAddress& new_host);
+  // Migrate local address to <|new_host|, |port|>.
+  // Return whether the migration succeeded.
+  bool MigrateSocketWithSpecifiedPort(const QuicIpAddress& new_host, int port);
   QuicIpAddress bind_to_address() const;
   void set_bind_to_address(QuicIpAddress address);
   const QuicSocketAddress& address() const;

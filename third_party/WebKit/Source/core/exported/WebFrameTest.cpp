@@ -81,7 +81,7 @@
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutFullScreen.h"
-#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/LayoutView.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/DocumentThreadableLoader.h"
 #include "core/loader/DocumentThreadableLoaderClient.h"
@@ -162,6 +162,7 @@
 #include "public/web/WebViewClient.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/page/launching_process_state.h"
 #include "v8/include/v8.h"
 
 using blink::URLTestHelpers::ToKURL;
@@ -194,6 +195,18 @@ class WebFrameTest : public ::testing::Test {
     Platform::Current()
         ->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
+  }
+
+  void DisableRendererSchedulerThrottling() {
+    // Make sure that the RendererScheduler is foregrounded to avoid getting
+    // throttled.
+    if (kLaunchingProcessIsBackgrounded) {
+      Platform::Current()
+          ->CurrentThread()
+          ->Scheduler()
+          ->GetRendererSchedulerForTest()
+          ->SetRendererBackgrounded(false);
+    }
   }
 
   void RegisterMockedHttpURLLoad(const std::string& file_name) {
@@ -392,7 +405,7 @@ class ScriptExecutionCallbackHelper : public WebScriptExecutionCallback {
  public:
   explicit ScriptExecutionCallbackHelper(v8::Local<v8::Context> context)
       : did_complete_(false), bool_value_(false), context_(context) {}
-  ~ScriptExecutionCallbackHelper() override {}
+  ~ScriptExecutionCallbackHelper() override = default;
 
   bool DidComplete() const { return did_complete_; }
   const String& StringValue() const { return string_value_; }
@@ -496,6 +509,7 @@ TEST_P(ParameterizedWebFrameTest, RequestExecuteV8Function) {
 }
 
 TEST_P(ParameterizedWebFrameTest, RequestExecuteV8FunctionWhileSuspended) {
+  DisableRendererSchedulerThrottling();
   RegisterMockedHttpURLLoad("foo.html");
 
   FrameTestHelpers::WebViewHelper web_view_helper;
@@ -530,6 +544,7 @@ TEST_P(ParameterizedWebFrameTest, RequestExecuteV8FunctionWhileSuspended) {
 
 TEST_P(ParameterizedWebFrameTest,
        RequestExecuteV8FunctionWhileSuspendedWithUserGesture) {
+  DisableRendererSchedulerThrottling();
   RegisterMockedHttpURLLoad("foo.html");
 
   FrameTestHelpers::WebViewHelper web_view_helper;
@@ -564,6 +579,140 @@ TEST_P(ParameterizedWebFrameTest,
   RunPendingTasks();
   EXPECT_TRUE(callback_helper.DidComplete());
   EXPECT_EQ(true, callback_helper.BoolValue());
+}
+
+class ScriptNotPausedCallbackHelper {
+ public:
+  ScriptNotPausedCallbackHelper() = default;
+  ~ScriptNotPausedCallbackHelper() = default;
+
+  WebLocalFrame::PausableTaskCallback GetCallback() {
+    return WTF::Bind(&ScriptNotPausedCallbackHelper::Run,
+                     WTF::Unretained(this));
+  }
+
+  void set_closure(base::OnceClosure closure) { closure_ = std::move(closure); }
+  const base::Optional<WebLocalFrame::PausableTaskResult>& result() const {
+    return result_;
+  }
+
+ private:
+  void Run(WebLocalFrame::PausableTaskResult result) {
+    ASSERT_FALSE(result_) << "Callback invoked multiple times!";
+    result_ = result;
+    if (closure_)
+      std::move(*closure_).Run();
+  }
+
+  base::Optional<WebLocalFrame::PausableTaskResult> result_;
+  base::Optional<base::OnceClosure> closure_;
+};
+
+TEST_P(ParameterizedWebFrameTest, CallingPostPausableTaskWhileNotPaused) {
+  RegisterMockedHttpURLLoad("foo.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  ScriptState::Scope scope(ToScriptStateForMainWorld(main_frame->GetFrame()));
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->PostPausableTask(callback_helper.GetCallback());
+  RunPendingTasks();
+
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebLocalFrame::PausableTaskResult::kReady,
+            *callback_helper.result());
+}
+
+// Flaky on Android: crbug.com/804892.
+#if defined(OS_ANDROID)
+TEST_P(ParameterizedWebFrameTest, DISABLED_CallingPostPausableTaskWhilePaused)
+#else
+TEST_P(ParameterizedWebFrameTest, CallingPostPausableTaskWhilePaused)
+#endif
+{
+  RegisterMockedHttpURLLoad("foo.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  ScriptState::Scope scope(ToScriptStateForMainWorld(main_frame->GetFrame()));
+
+  // Suspend scheduled tasks so the script doesn't run.
+  main_frame->GetFrame()->GetDocument()->PauseScheduledTasks();
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->PostPausableTask(callback_helper.GetCallback());
+  RunPendingTasks();
+  EXPECT_FALSE(callback_helper.result());
+
+  main_frame->GetFrame()->GetDocument()->UnpauseScheduledTasks();
+  RunPendingTasks();
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebLocalFrame::PausableTaskResult::kReady,
+            *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest, CallingPostPausableTaskAndNavigating) {
+  RegisterMockedHttpURLLoad("foo.html");
+  RegisterMockedHttpURLLoad("bar.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  ScriptState::Scope scope(ToScriptStateForMainWorld(main_frame->GetFrame()));
+
+  // Suspend scheduled tasks so the script doesn't run.
+  main_frame->GetFrame()->GetDocument()->PauseScheduledTasks();
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->PostPausableTask(callback_helper.GetCallback());
+  RunPendingTasks();
+  EXPECT_FALSE(callback_helper.result());
+
+  // If the frame navigates, pending scripts should be removed, but the callback
+  // should always be ran.
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
+                              base_url_ + "bar.html");
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebLocalFrame::PausableTaskResult::kContextInvalidOrDestroyed,
+            *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest,
+       CallingPostPausableTaskAndDestroyingTheContext) {
+  RegisterMockedHttpURLLoad("foo.html");
+  RegisterMockedHttpURLLoad("bar.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  auto navigate_frame = [](FrameTestHelpers::WebViewHelper* web_view_helper,
+                           const std::string& url) {
+    FrameTestHelpers::LoadFrame(web_view_helper->GetWebView()->MainFrameImpl(),
+                                url);
+  };
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  // Navigate the frame when the helper is notified that script can run. This
+  // will invalidate the context immediately.
+  callback_helper.set_closure(WTF::Bind(navigate_frame,
+                                        WTF::Unretained(&web_view_helper),
+                                        base_url_ + "bar.html"));
+
+  ScriptState::Scope scope(ToScriptStateForMainWorld(main_frame->GetFrame()));
+
+  main_frame->PostPausableTask(callback_helper.GetCallback());
+  RunPendingTasks();
+
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebLocalFrame::PausableTaskResult::kReady,
+            *callback_helper.result());
 }
 
 TEST_P(ParameterizedWebFrameTest, IframeScriptRemovesSelf) {
@@ -694,7 +843,7 @@ class EvaluateOnLoadWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   EvaluateOnLoadWebFrameClient() : executing_(false), was_executed_(false) {}
-  ~EvaluateOnLoadWebFrameClient() override {}
+  ~EvaluateOnLoadWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidClearWindowObject() override {
@@ -721,7 +870,7 @@ TEST_P(ParameterizedWebFrameTest, DidClearWindowObjectIsNotRecursive) {
 class CSSCallbackWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
   CSSCallbackWebFrameClient() : update_count_(0) {}
-  ~CSSCallbackWebFrameClient() override {}
+  ~CSSCallbackWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidMatchCSS(
@@ -1085,8 +1234,8 @@ namespace {
 class FixedLayoutTestWebViewClient
     : public FrameTestHelpers::TestWebViewClient {
  public:
-  FixedLayoutTestWebViewClient() {}
-  ~FixedLayoutTestWebViewClient() override {}
+  FixedLayoutTestWebViewClient() = default;
+  ~FixedLayoutTestWebViewClient() override = default;
 
   // FrameTestHelpers::TestWebViewClient:
   WebScreenInfo GetScreenInfo() override { return screen_info_; }
@@ -1099,12 +1248,12 @@ class FakeCompositingWebViewClient : public FixedLayoutTestWebViewClient {};
 // Helper function to set autosizing multipliers on a document.
 bool SetTextAutosizingMultiplier(Document* document, float multiplier) {
   bool multiplier_set = false;
-  for (LayoutItem layout_item = document->GetLayoutViewItem();
-       !layout_item.IsNull(); layout_item = layout_item.NextInPreOrder()) {
-    if (layout_item.Style()) {
-      layout_item.MutableStyleRef().SetTextAutosizingMultiplier(multiplier);
+  for (LayoutObject* layout_object = document->GetLayoutView(); layout_object;
+       layout_object = layout_object->NextInPreOrder()) {
+    if (layout_object->Style()) {
+      layout_object->MutableStyleRef().SetTextAutosizingMultiplier(multiplier);
 
-      EXPECT_EQ(multiplier, layout_item.Style()->TextAutosizingMultiplier());
+      EXPECT_EQ(multiplier, layout_object->Style()->TextAutosizingMultiplier());
       multiplier_set = true;
     }
   }
@@ -1114,10 +1263,10 @@ bool SetTextAutosizingMultiplier(Document* document, float multiplier) {
 // Helper function to check autosizing multipliers on a document.
 bool CheckTextAutosizingMultiplier(Document* document, float multiplier) {
   bool multiplier_checked = false;
-  for (LayoutItem layout_item = document->GetLayoutViewItem();
-       !layout_item.IsNull(); layout_item = layout_item.NextInPreOrder()) {
-    if (layout_item.Style() && layout_item.IsText()) {
-      EXPECT_EQ(multiplier, layout_item.Style()->TextAutosizingMultiplier());
+  for (LayoutObject* layout_object = document->GetLayoutView(); layout_object;
+       layout_object = layout_object->NextInPreOrder()) {
+    if (layout_object->Style() && layout_object->IsText()) {
+      EXPECT_EQ(multiplier, layout_object->Style()->TextAutosizingMultiplier());
       multiplier_checked = true;
     }
   }
@@ -1207,11 +1356,11 @@ TEST_P(ParameterizedWebFrameTest,
       continue;
     EXPECT_TRUE(
         SetTextAutosizingMultiplier(ToLocalFrame(frame)->GetDocument(), 2));
-    for (LayoutItem layout_item =
-             ToLocalFrame(frame)->GetDocument()->GetLayoutViewItem();
-         !layout_item.IsNull(); layout_item = layout_item.NextInPreOrder()) {
-      if (layout_item.IsText())
-        EXPECT_FALSE(layout_item.NeedsLayout());
+    for (LayoutObject* layout_object =
+             ToLocalFrame(frame)->GetDocument()->GetLayoutView();
+         layout_object; layout_object = layout_object->NextInPreOrder()) {
+      if (layout_object->IsText())
+        EXPECT_FALSE(layout_object->NeedsLayout());
     }
   }
 
@@ -1220,11 +1369,11 @@ TEST_P(ParameterizedWebFrameTest,
   for (Frame* frame = main_frame; frame; frame = frame->Tree().TraverseNext()) {
     if (!frame->IsLocalFrame())
       continue;
-    for (LayoutItem layout_item =
-             ToLocalFrame(frame)->GetDocument()->GetLayoutViewItem();
-         !layout_item.IsNull(); layout_item = layout_item.NextInPreOrder()) {
-      if (layout_item.IsText())
-        EXPECT_TRUE(layout_item.NeedsLayout());
+    for (LayoutObject* layout_object =
+             ToLocalFrame(frame)->GetDocument()->GetLayoutView();
+         !layout_object; layout_object = layout_object->NextInPreOrder()) {
+      if (layout_object->IsText())
+        EXPECT_TRUE(layout_object->NeedsLayout());
     }
   }
 }
@@ -2585,8 +2734,8 @@ TEST_P(ParameterizedWebFrameTest, pageScaleFactorDoesNotApplyCssTransform) {
 
   EXPECT_EQ(980,
             ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
-                ->ContentLayoutItem()
-                .DocumentRect()
+                ->ContentLayoutObject()
+                ->DocumentRect()
                 .Width());
   EXPECT_EQ(980, web_view_helper.GetWebView()
                      ->MainFrameImpl()
@@ -4281,8 +4430,8 @@ TEST_P(ParameterizedWebFrameTest, FirstRectForCharacterRangeWithPinchZoom) {
 class TestReloadDoesntRedirectWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestReloadDoesntRedirectWebFrameClient() {}
-  ~TestReloadDoesntRedirectWebFrameClient() override {}
+  TestReloadDoesntRedirectWebFrameClient() = default;
+  ~TestReloadDoesntRedirectWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   WebNavigationPolicy DecidePolicyForNavigation(
@@ -4311,8 +4460,8 @@ TEST_P(ParameterizedWebFrameTest, ReloadDoesntSetRedirect) {
 class ClearScrollStateOnCommitWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  ClearScrollStateOnCommitWebFrameClient() {}
-  ~ClearScrollStateOnCommitWebFrameClient() override {}
+  ClearScrollStateOnCommitWebFrameClient() = default;
+  ~ClearScrollStateOnCommitWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
@@ -4535,7 +4684,7 @@ class ContextLifetimeTestWebFrameClient
       Vector<std::unique_ptr<Notification>>& release_notifications)
       : create_notifications_(create_notifications),
         release_notifications_(release_notifications) {}
-  ~ContextLifetimeTestWebFrameClient() override {}
+  ~ContextLifetimeTestWebFrameClient() override = default;
 
   void Reset() {
     create_notifications_.clear();
@@ -4873,8 +5022,8 @@ TEST_P(ParameterizedWebFrameTest, GetFullHtmlOfPage) {
 class TestExecuteScriptDuringDidCreateScriptContext
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestExecuteScriptDuringDidCreateScriptContext() {}
-  ~TestExecuteScriptDuringDidCreateScriptContext() override {}
+  TestExecuteScriptDuringDidCreateScriptContext() = default;
+  ~TestExecuteScriptDuringDidCreateScriptContext() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCreateScriptContext(v8::Local<v8::Context> context,
@@ -4898,7 +5047,7 @@ class FindUpdateWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
   FindUpdateWebFrameClient()
       : find_results_are_ready_(false), count_(-1), active_index_(-1) {}
-  ~FindUpdateWebFrameClient() override {}
+  ~FindUpdateWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void ReportFindInPageMatchCount(int, int count, bool final_update) override {
@@ -5975,7 +6124,7 @@ TEST_P(ParameterizedWebFrameTest, MoveCaretStaysHorizontallyAlignedWhenMoved) {
 class CompositedSelectionBoundsTestLayerTreeView : public WebLayerTreeView {
  public:
   CompositedSelectionBoundsTestLayerTreeView() : selection_cleared_(false) {}
-  ~CompositedSelectionBoundsTestLayerTreeView() override {}
+  ~CompositedSelectionBoundsTestLayerTreeView() override = default;
 
   // WebLayerTreeView:
   void RegisterSelection(const WebSelection& selection) override {
@@ -6008,7 +6157,7 @@ class CompositedSelectionBoundsTestLayerTreeView : public WebLayerTreeView {
 class CompositedSelectionBoundsTestWebViewClient
     : public FrameTestHelpers::TestWebViewClient {
  public:
-  ~CompositedSelectionBoundsTestWebViewClient() override {}
+  ~CompositedSelectionBoundsTestWebViewClient() override = default;
   WebLayerTreeView* InitializeLayerTreeView() override {
     return &test_layer_tree_view_;
   }
@@ -6291,8 +6440,8 @@ TEST_P(CompositedSelectionBoundsTest, InputScrolled) {
 class DisambiguationPopupTestWebViewClient
     : public FrameTestHelpers::TestWebViewClient {
  public:
-  DisambiguationPopupTestWebViewClient() {}
-  ~DisambiguationPopupTestWebViewClient() override {}
+  DisambiguationPopupTestWebViewClient() = default;
+  ~DisambiguationPopupTestWebViewClient() override = default;
 
   // FrameTestHelpers::TestWebViewClient:
   bool DidTapMultipleTargets(const WebSize&,
@@ -6604,7 +6753,7 @@ class TestSubstituteDataWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   TestSubstituteDataWebFrameClient() : commit_called_(false) {}
-  ~TestSubstituteDataWebFrameClient() override {}
+  ~TestSubstituteDataWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidFailProvisionalLoad(const WebURLError& error,
@@ -6665,7 +6814,7 @@ class TestWillInsertBodyWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   TestWillInsertBodyWebFrameClient() : num_bodies_(0), did_load_(false) {}
-  ~TestWillInsertBodyWebFrameClient() override {}
+  ~TestWillInsertBodyWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
@@ -6718,7 +6867,7 @@ TEST_P(ParameterizedWebFrameTest,
 class TextCheckClient : public WebTextCheckClient {
  public:
   TextCheckClient() : number_of_times_checked_(0) {}
-  ~TextCheckClient() override {}
+  ~TextCheckClient() override = default;
 
   // WebTextCheckClient:
   bool IsSpellCheckingEnabled() const override { return true; }
@@ -6877,7 +7026,7 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkersUnderWords) {
 class StubbornTextCheckClient : public WebTextCheckClient {
  public:
   StubbornTextCheckClient() : completion_(nullptr) {}
-  ~StubbornTextCheckClient() override {}
+  ~StubbornTextCheckClient() override = default;
 
   // WebTextCheckClient:
   bool IsSpellCheckingEnabled() const override { return true; }
@@ -7037,8 +7186,8 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultsSavedInDocument) {
 class TestAccessInitialDocumentWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestAccessInitialDocumentWebFrameClient() {}
-  ~TestAccessInitialDocumentWebFrameClient() override {}
+  TestAccessInitialDocumentWebFrameClient() = default;
+  ~TestAccessInitialDocumentWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidAccessInitialDocument() override { ++did_access_initial_document_; }
@@ -7208,7 +7357,7 @@ TEST_P(ParameterizedWebFrameTest, DidWriteToInitialDocumentBeforeModalDialog) {
 class TestScrolledFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
   TestScrolledFrameClient() { Reset(); }
-  ~TestScrolledFrameClient() override {}
+  ~TestScrolledFrameClient() override = default;
 
   void Reset() { did_scroll_frame_ = false; }
   bool WasFrameScrolled() const { return did_scroll_frame_; }
@@ -7332,8 +7481,8 @@ TEST_P(ParameterizedWebFrameTest, SiteForCookiesForRedirect) {
 class TestNavigationPolicyWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestNavigationPolicyWebFrameClient() {}
-  ~TestNavigationPolicyWebFrameClient() override {}
+  TestNavigationPolicyWebFrameClient() = default;
+  ~TestNavigationPolicyWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidNavigateWithinPage(const WebHistoryItem&,
@@ -7371,8 +7520,8 @@ TEST_P(ParameterizedWebFrameTest, SimulateFragmentAnchorMiddleClick) {
 
 class TestNewWindowWebViewClient : public FrameTestHelpers::TestWebViewClient {
  public:
-  TestNewWindowWebViewClient() {}
-  ~TestNewWindowWebViewClient() override {}
+  TestNewWindowWebViewClient() = default;
+  ~TestNewWindowWebViewClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   WebView* CreateView(WebLocalFrame*,
@@ -7391,7 +7540,7 @@ class TestNewWindowWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   TestNewWindowWebFrameClient() : decide_policy_call_count_(0) {}
-  ~TestNewWindowWebFrameClient() override {}
+  ~TestNewWindowWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   WebNavigationPolicy DecidePolicyForNavigation(
@@ -7556,7 +7705,7 @@ class TestCachePolicyWebFrameClient
   TestCachePolicyWebFrameClient()
       : cache_mode_(mojom::FetchCacheMode::kDefault),
         will_send_request_call_count_(0) {}
-  ~TestCachePolicyWebFrameClient() override {}
+  ~TestCachePolicyWebFrameClient() override = default;
 
   mojom::FetchCacheMode GetCacheMode() const { return cache_mode_; }
   int WillSendRequestCallCount() const { return will_send_request_call_count_; }
@@ -7635,7 +7784,7 @@ class TestSameDocumentWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   TestSameDocumentWebFrameClient() : frame_load_type_reload_seen_(false) {}
-  ~TestSameDocumentWebFrameClient() override {}
+  ~TestSameDocumentWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void WillSendRequest(WebURLRequest&) override {
@@ -7679,7 +7828,7 @@ class TestSameDocumentWithImageWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   TestSameDocumentWithImageWebFrameClient() : num_of_image_requests_(0) {}
-  ~TestSameDocumentWithImageWebFrameClient() override {}
+  ~TestSameDocumentWithImageWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void WillSendRequest(WebURLRequest& request) override {
@@ -7740,6 +7889,62 @@ TEST_P(ParameterizedWebFrameTest, WebNodeImageContents) {
   EXPECT_EQ(bitmap.getColor(0, 0), SK_ColorBLUE);
 }
 
+TEST_P(ParameterizedWebFrameTest, WebNodeImageContentsWithOrientation) {
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad("about:blank");
+  WebLocalFrame* frame = web_view_helper.LocalMainFrame();
+
+  // 4x8 jpg with orientation = 6 ( 90 degree CW rotation ).
+  // w - white, b - blue.
+  //   raw      =>       oriented
+  // w w w w          b b b b w w w w
+  // w w w w          b b b b w w w w
+  // w w w w          b b b b w w w w
+  // w w w w          b b b b w w w w
+  // b b b b
+  // b b b b
+  // b b b b
+  // b b b b
+  static const char kBlueJPGWithOrientation[] =
+      "<img "
+      "src=\"data:image/"
+      "jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QBiRXhpZgAATU0AKgAAAAgABQESAAM"
+      "AAAABAAYAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAAITAAMAAAABAA"
+      "EAAAAAAAAAAABgAAAAAQAAAGAAAAAB/9sAQwACAQECAQECAgICAgICAgMFAwMDAwMGBAQDB"
+      "QcGBwcHBgcHCAkLCQgICggHBwoNCgoLDAwMDAcJDg8NDA4LDAwM/9sAQwECAgIDAwMGAwMG"
+      "DAgHCAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw"
+      "M/8AAEQgACAAEAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC/"
+      "/EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJ"
+      "DNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3"
+      "eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tf"
+      "Y2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCA"
+      "kKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM"
+      "1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpz"
+      "dHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytL"
+      "T1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A7j/iMz/6tv8A/Mgf/e"
+    "2iiiv9ff8AiVzwx/6Fn/lbEf8Ay0+A/tvG/wA/4L/I/9k=\">";
+
+  // Load up the image and test that we can extract the contents.
+  KURL test_url = ToKURL("about:blank");
+  FrameTestHelpers::LoadHTMLString(frame, kBlueJPGWithOrientation, test_url);
+
+  WebNode node = frame->GetDocument().Body().FirstChild();
+  EXPECT_TRUE(node.IsElementNode());
+  WebElement element = node.To<WebElement>();
+
+  WebImage image_with_orientation = element.ImageContents();
+  ASSERT_FALSE(image_with_orientation.IsNull());
+  EXPECT_EQ(image_with_orientation.Size().width, 8);
+  EXPECT_EQ(image_with_orientation.Size().height, 4);
+  SkBitmap oriented_bitmap = image_with_orientation.GetSkBitmap();
+  // Should be almost blue.
+  SkColor oriented_color = oriented_bitmap.getColor(0, 0);
+  EXPECT_NEAR(SkColorGetR(oriented_color), SkColorGetR(SK_ColorBLUE), 5);
+  EXPECT_NEAR(SkColorGetG(oriented_color), SkColorGetG(SK_ColorBLUE), 5);
+  EXPECT_NEAR(SkColorGetB(oriented_color), SkColorGetB(SK_ColorBLUE), 5);
+  EXPECT_NEAR(SkColorGetA(oriented_color), SkColorGetA(SK_ColorBLUE), 5);
+}
+
 class TestStartStopCallbackWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
@@ -7747,7 +7952,7 @@ class TestStartStopCallbackWebFrameClient
       : start_loading_count_(0),
         stop_loading_count_(0),
         different_document_start_count_(0) {}
-  ~TestStartStopCallbackWebFrameClient() override {}
+  ~TestStartStopCallbackWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidStartLoading(bool to_different_document) override {
@@ -7789,7 +7994,7 @@ class TestDidNavigateCommitTypeWebFrameClient
  public:
   TestDidNavigateCommitTypeWebFrameClient()
       : last_commit_type_(kWebHistoryInertCommit) {}
-  ~TestDidNavigateCommitTypeWebFrameClient() override {}
+  ~TestDidNavigateCommitTypeWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidNavigateWithinPage(const WebHistoryItem&,
@@ -7828,8 +8033,8 @@ TEST_P(ParameterizedWebFrameTest, SameDocumentHistoryNavigationCommitType) {
 class TestHistoryChildWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestHistoryChildWebFrameClient() {}
-  ~TestHistoryChildWebFrameClient() override {}
+  TestHistoryChildWebFrameClient() = default;
+  ~TestHistoryChildWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidStartProvisionalLoad(WebDocumentLoader* document_loader,
@@ -7846,8 +8051,8 @@ class TestHistoryChildWebFrameClient
 
 class TestHistoryWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestHistoryWebFrameClient() {}
-  ~TestHistoryWebFrameClient() override {}
+  TestHistoryWebFrameClient() = default;
+  ~TestHistoryWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   WebLocalFrame* CreateChildFrame(WebLocalFrame* parent,
@@ -7986,7 +8191,7 @@ TEST_P(ParameterizedWebFrameTest, CurrentHistoryItem) {
 class FailCreateChildFrame : public FrameTestHelpers::TestWebFrameClient {
  public:
   FailCreateChildFrame() : call_count_(0) {}
-  ~FailCreateChildFrame() override {}
+  ~FailCreateChildFrame() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   WebLocalFrame* CreateChildFrame(
@@ -8424,12 +8629,12 @@ TEST_P(ParameterizedWebFrameTest, FullscreenWithTinyViewport) {
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
-                                        ->MainFrameImpl()
-                                        ->GetFrameView()
-                                        ->GetLayoutViewItem();
-  EXPECT_EQ(320, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(533, layout_view_item.LogicalHeight().Floor());
+  auto* layout_view = web_view_helper.GetWebView()
+                          ->MainFrameImpl()
+                          ->GetFrameView()
+                          ->GetLayoutView();
+  EXPECT_EQ(320, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(533, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.2, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.2, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8440,16 +8645,16 @@ TEST_P(ParameterizedWebFrameTest, FullscreenWithTinyViewport) {
   Fullscreen::RequestFullscreen(*frame->GetDocument()->documentElement());
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(384, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(640, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(384, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(640, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
 
   web_view_impl->DidExitFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(320, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(533, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(320, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(533, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.2, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.2, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8469,18 +8674,18 @@ TEST_P(ParameterizedWebFrameTest, FullscreenResizeWithTinyViewport) {
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
-                                        ->MainFrameImpl()
-                                        ->GetFrameView()
-                                        ->GetLayoutViewItem();
+  auto* layout_view = web_view_helper.GetWebView()
+                          ->MainFrameImpl()
+                          ->GetFrameView()
+                          ->GetLayoutView();
   LocalFrame* frame = web_view_impl->MainFrameImpl()->GetFrame();
   std::unique_ptr<UserGestureIndicator> gesture =
       Frame::NotifyUserActivation(frame);
   Fullscreen::RequestFullscreen(*frame->GetDocument()->documentElement());
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(384, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(640, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(384, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(640, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
@@ -8491,16 +8696,16 @@ TEST_P(ParameterizedWebFrameTest, FullscreenResizeWithTinyViewport) {
   client.screen_info_.rect.height = viewport_height;
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(640, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(384, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(640, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(384, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
 
   web_view_impl->DidExitFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(320, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(192, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(320, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(192, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(2, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(2, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8526,14 +8731,14 @@ TEST_P(ParameterizedWebFrameTest, FullscreenRestoreScaleFactorUponExiting) {
   client.screen_info_.rect.height =
       screen_size_minus_status_bars_minus_url_bar.height;
   web_view_helper.Resize(screen_size_minus_status_bars_minus_url_bar);
-  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
-                                        ->MainFrameImpl()
-                                        ->GetFrameView()
-                                        ->GetLayoutViewItem();
+  auto* layout_view = web_view_helper.GetWebView()
+                          ->MainFrameImpl()
+                          ->GetFrameView()
+                          ->GetLayoutView();
   EXPECT_EQ(screen_size_minus_status_bars_minus_url_bar.width,
-            layout_view_item.LogicalWidth().Floor());
+            layout_view->LogicalWidth().Floor());
   EXPECT_EQ(screen_size_minus_status_bars_minus_url_bar.height,
-            layout_view_item.LogicalHeight().Floor());
+            layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8553,8 +8758,8 @@ TEST_P(ParameterizedWebFrameTest, FullscreenRestoreScaleFactorUponExiting) {
   client.screen_info_.rect.width = screen_size.width;
   client.screen_info_.rect.height = screen_size.height;
   web_view_helper.Resize(screen_size);
-  EXPECT_EQ(screen_size.width, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(screen_size.height, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(screen_size.width, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(screen_size.height, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
@@ -8570,9 +8775,9 @@ TEST_P(ParameterizedWebFrameTest, FullscreenRestoreScaleFactorUponExiting) {
       screen_size_minus_status_bars_minus_url_bar.height;
   web_view_helper.Resize(screen_size_minus_status_bars_minus_url_bar);
   EXPECT_EQ(screen_size_minus_status_bars_minus_url_bar.width,
-            layout_view_item.LogicalWidth().Floor());
+            layout_view->LogicalWidth().Floor());
   EXPECT_EQ(screen_size_minus_status_bars_minus_url_bar.height,
-            layout_view_item.LogicalHeight().Floor());
+            layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8594,10 +8799,10 @@ TEST_P(ParameterizedWebFrameTest, ClearFullscreenConstraintsOnNavigation) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   // viewport-tiny.html specifies a 320px layout width.
-  LayoutViewItem layout_view_item =
-      web_view_impl->MainFrameImpl()->GetFrameView()->GetLayoutViewItem();
-  EXPECT_EQ(320, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(640, layout_view_item.LogicalHeight().Floor());
+  auto* layout_view =
+      web_view_impl->MainFrameImpl()->GetFrameView()->GetLayoutView();
+  EXPECT_EQ(320, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(640, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(0.3125, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(0.3125, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8611,8 +8816,8 @@ TEST_P(ParameterizedWebFrameTest, ClearFullscreenConstraintsOnNavigation) {
 
   // Entering fullscreen causes layout size and page scale limits to be
   // overridden.
-  EXPECT_EQ(100, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(200, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(100, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(200, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
@@ -8628,10 +8833,9 @@ TEST_P(ParameterizedWebFrameTest, ClearFullscreenConstraintsOnNavigation) {
 
   // Make sure the new page's layout size and scale factor limits aren't
   // overridden.
-  layout_view_item =
-      web_view_impl->MainFrameImpl()->GetFrameView()->GetLayoutViewItem();
-  EXPECT_EQ(200, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(400, layout_view_item.LogicalHeight().Floor());
+  layout_view = web_view_impl->MainFrameImpl()->GetFrameView()->GetLayoutView();
+  EXPECT_EQ(200, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(400, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(0.5, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
 }
@@ -8640,8 +8844,8 @@ namespace {
 
 class TestFullscreenWebLayerTreeView : public WebLayerTreeView {
  public:
-  TestFullscreenWebLayerTreeView() {}
-  ~TestFullscreenWebLayerTreeView() override {}
+  TestFullscreenWebLayerTreeView() = default;
+  ~TestFullscreenWebLayerTreeView() override = default;
 
   // WebLayerTreeView:
   void SetBackgroundColor(blink::WebColor color) override {
@@ -8652,8 +8856,8 @@ class TestFullscreenWebLayerTreeView : public WebLayerTreeView {
 
 class TestFullscreenWebViewClient : public FrameTestHelpers::TestWebViewClient {
  public:
-  TestFullscreenWebViewClient() {}
-  ~TestFullscreenWebViewClient() override {}
+  TestFullscreenWebViewClient() = default;
+  ~TestFullscreenWebViewClient() override = default;
 
   // FrameTestHelpers::TestWebViewClient:
   WebLayerTreeView* InitializeLayerTreeView() override {
@@ -8760,7 +8964,7 @@ class ManifestChangeWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   ManifestChangeWebFrameClient() : manifest_change_count_(0) {}
-  ~ManifestChangeWebFrameClient() override {}
+  ~ManifestChangeWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidChangeManifest() override { ++manifest_change_count_; }
@@ -8951,7 +9155,7 @@ class ThemeColorTestWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   ThemeColorTestWebFrameClient() : did_notify_(false) {}
-  ~ThemeColorTestWebFrameClient() override {}
+  ~ThemeColorTestWebFrameClient() override = default;
 
   void Reset() { did_notify_ = false; }
 
@@ -9112,8 +9316,8 @@ namespace {
 class SwapMainFrameWhenTitleChangesWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  SwapMainFrameWhenTitleChangesWebFrameClient() {}
-  ~SwapMainFrameWhenTitleChangesWebFrameClient() override {}
+  SwapMainFrameWhenTitleChangesWebFrameClient() = default;
+  ~SwapMainFrameWhenTitleChangesWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidReceiveTitle(const WebString& title, WebTextDirection) override {
@@ -9490,7 +9694,8 @@ TEST_P(WebFrameSwapTest, RemoteWindowNamedAccess) {
 }
 
 TEST_P(WebFrameSwapTest, RemoteWindowToString) {
-  v8::HandleScope scope(v8::Isolate::GetCurrent());
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  v8::HandleScope scope(isolate);
 
   WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   LastChild(MainFrame())->Swap(remote_frame);
@@ -9498,7 +9703,8 @@ TEST_P(WebFrameSwapTest, RemoteWindowToString) {
       MainFrame()->ExecuteScriptAndReturnValue(
           WebScriptSource("Object.prototype.toString.call(window[2])"));
   ASSERT_FALSE(to_string_result.IsEmpty());
-  EXPECT_STREQ("[object Object]", *v8::String::Utf8Value(to_string_result));
+  EXPECT_STREQ("[object Object]",
+               *v8::String::Utf8Value(isolate, to_string_result));
 }
 
 // TODO(alexmos, dcheng): This test and some other OOPIF tests use
@@ -9557,7 +9763,7 @@ class RemoteToLocalSwapWebFrameClient
   explicit RemoteToLocalSwapWebFrameClient(WebRemoteFrame* remote_frame)
       : history_commit_type_(kWebHistoryInertCommit),
         remote_frame_(remote_frame) {}
-  ~RemoteToLocalSwapWebFrameClient() override {}
+  ~RemoteToLocalSwapWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
@@ -9624,8 +9830,8 @@ TEST_P(WebFrameSwapTest, HistoryCommitTypeAfterExistingRemoteToLocalSwap) {
 class RemoteNavigationClient
     : public FrameTestHelpers::TestWebRemoteFrameClient {
  public:
-  RemoteNavigationClient() {}
-  ~RemoteNavigationClient() override {}
+  RemoteNavigationClient() = default;
+  ~RemoteNavigationClient() override = default;
 
   // FrameTestHelpers::TestWebRemoteFrameClient:
   void Navigate(const WebURLRequest& request,
@@ -9692,7 +9898,7 @@ TEST_P(WebFrameSwapTest, WindowOpenOnRemoteFrame) {
 class RemoteWindowCloseClient : public FrameTestHelpers::TestWebViewClient {
  public:
   RemoteWindowCloseClient() : closed_(false) {}
-  ~RemoteWindowCloseClient() override {}
+  ~RemoteWindowCloseClient() override = default;
 
   // FrameTestHelpers::TestWebViewClient:
   void CloseWidgetSoon() override { closed_ = true; }
@@ -9771,7 +9977,7 @@ TEST_P(ParameterizedWebFrameTest, SwapWithOpenerCycle) {
 class CommitTypeWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
   CommitTypeWebFrameClient() : history_commit_type_(kWebHistoryInertCommit) {}
-  ~CommitTypeWebFrameClient() override {}
+  ~CommitTypeWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
@@ -9811,7 +10017,7 @@ class GestureEventTestWebWidgetClient
     : public FrameTestHelpers::TestWebWidgetClient {
  public:
   GestureEventTestWebWidgetClient() : did_handle_gesture_event_(false) {}
-  ~GestureEventTestWebWidgetClient() override {}
+  ~GestureEventTestWebWidgetClient() override = default;
 
   // FrameTestHelpers::TestWebWidgetClient:
   void DidHandleGestureEvent(const WebGestureEvent& event,
@@ -9850,7 +10056,7 @@ class MockDocumentThreadableLoaderClient
     : public DocumentThreadableLoaderClient {
  public:
   MockDocumentThreadableLoaderClient() : failed_(false) {}
-  ~MockDocumentThreadableLoaderClient() override {}
+  ~MockDocumentThreadableLoaderClient() override = default;
 
   // DocumentThreadableLoaderClient:
   void DidFail(const ResourceError&) override { failed_ = true; }
@@ -9909,8 +10115,8 @@ TEST_P(ParameterizedWebFrameTest, DetachRemoteFrame) {
 class TestConsoleMessageWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestConsoleMessageWebFrameClient() {}
-  ~TestConsoleMessageWebFrameClient() override {}
+  TestConsoleMessageWebFrameClient() = default;
+  ~TestConsoleMessageWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidAddMessageToConsole(const WebConsoleMessage& message,
@@ -10698,14 +10904,15 @@ TEST_P(ParameterizedWebFrameTest, ImageDocumentLoadFinishTime) {
   DocumentLoader* loader = document->Loader();
 
   EXPECT_TRUE(loader);
-  EXPECT_EQ(loader->GetTiming().ResponseEnd(), resource->LoadFinishTime());
+  EXPECT_EQ(TimeTicksInSeconds(loader->GetTiming().ResponseEnd()),
+            resource->LoadFinishTime());
 }
 
 class CallbackOrderingWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   CallbackOrderingWebFrameClient() : callback_count_(0) {}
-  ~CallbackOrderingWebFrameClient() override {}
+  ~CallbackOrderingWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void DidStartLoading(bool to_different_document) override {
@@ -10744,7 +10951,7 @@ class TestWebRemoteFrameClientForVisibility
     : public FrameTestHelpers::TestWebRemoteFrameClient {
  public:
   TestWebRemoteFrameClientForVisibility() : visible_(true) {}
-  ~TestWebRemoteFrameClientForVisibility() override {}
+  ~TestWebRemoteFrameClientForVisibility() override = default;
 
   // FrameTestHelpers::TestWebRemoteFrameClient:
   void VisibilityChanged(bool visible) override { visible_ = visible; }
@@ -10766,7 +10973,7 @@ class WebFrameVisibilityChangeTest : public ParameterizedWebFrameTest {
     web_remote_frame_ = FrameTestHelpers::CreateRemote(&remote_frame_client_);
   }
 
-  ~WebFrameVisibilityChangeTest() {}
+  ~WebFrameVisibilityChangeTest() = default;
 
   void ExecuteScriptOnMainFrame(const WebScriptSource& script) {
     MainFrame()->ExecuteScript(script);
@@ -10896,8 +11103,8 @@ TEST(WebFrameGlobalReuseTest, ReuseForMainFrameIfEnabled) {
 class SaveImageFromDataURLWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  SaveImageFromDataURLWebFrameClient() {}
-  ~SaveImageFromDataURLWebFrameClient() override {}
+  SaveImageFromDataURLWebFrameClient() = default;
+  ~SaveImageFromDataURLWebFrameClient() override = default;
 
   // WebFrameClient:
   void SaveImageFromDataURL(const WebString& data_url) override {
@@ -11099,8 +11306,8 @@ class TestResourcePriorityWebFrameClient
     bool seen;
   };
 
-  TestResourcePriorityWebFrameClient() {}
-  ~TestResourcePriorityWebFrameClient() override {}
+  TestResourcePriorityWebFrameClient() = default;
+  ~TestResourcePriorityWebFrameClient() override = default;
 
   // FrameTestHelpers::TestWebFrameClient:
   void WillSendRequest(WebURLRequest& request) override {
@@ -11196,8 +11403,8 @@ TEST_P(ParameterizedWebFrameTest, ScriptPriority) {
 
 class MultipleDataChunkDelegate : public WebURLLoaderTestDelegate {
  public:
-  MultipleDataChunkDelegate() {}
-  ~MultipleDataChunkDelegate() override {}
+  MultipleDataChunkDelegate() = default;
+  ~MultipleDataChunkDelegate() override = default;
 
   // WebURLLoaderTestDelegate:
   void DidReceiveData(WebURLLoaderClient* original_client,
@@ -11263,8 +11470,7 @@ TEST_P(ParameterizedWebFrameTest, RootLayerMinimumHeight) {
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
   LocalFrameView* frame_view = web_view->MainFrameImpl()->GetFrameView();
-  PaintLayerCompositor* compositor =
-      frame_view->GetLayoutViewItem().Compositor();
+  PaintLayerCompositor* compositor = frame_view->GetLayoutView()->Compositor();
 
   EXPECT_EQ(kViewportHeight - kBrowserControlsHeight,
             compositor->RootLayer()->BoundingBoxForCompositing().Height());
@@ -11385,7 +11591,7 @@ TEST_P(ParameterizedWebFrameTest, MouseOverDifferntNodeClearsTooltip) {
       WebFloatPoint(div1_tag->OffsetLeft() + 5, div1_tag->OffsetTop() + 5),
       WebFloatPoint(div1_tag->OffsetLeft() + 5, div1_tag->OffsetTop() + 5),
       WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
-      CurrentTimeTicks().InSeconds());
+      CurrentTimeTicksInSeconds());
   mouse_move_over_link_event.SetFrameScale(1);
   document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
       mouse_move_over_link_event, Vector<WebMouseEvent>());
@@ -11404,7 +11610,7 @@ TEST_P(ParameterizedWebFrameTest, MouseOverDifferntNodeClearsTooltip) {
       WebFloatPoint(div2_tag->OffsetLeft() + 5, div2_tag->OffsetTop() + 5),
       WebFloatPoint(div2_tag->OffsetLeft() + 5, div2_tag->OffsetTop() + 5),
       WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
-      CurrentTimeTicks().InSeconds());
+      CurrentTimeTicksInSeconds());
   mouse_move_event.SetFrameScale(1);
   document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
       mouse_move_event, Vector<WebMouseEvent>());
@@ -11626,8 +11832,8 @@ TEST_P(ParameterizedWebFrameTest, NoLoadingCompletionCallbacksInDetach) {
   class LoadingObserverFrameClient
       : public FrameTestHelpers::TestWebFrameClient {
    public:
-    LoadingObserverFrameClient() {}
-    ~LoadingObserverFrameClient() override {}
+    LoadingObserverFrameClient() = default;
+    ~LoadingObserverFrameClient() override = default;
 
     // FrameTestHelpers::TestWebFrameClient:
     void FrameDetached(DetachType type) override {
@@ -11682,8 +11888,8 @@ TEST_P(ParameterizedWebFrameTest, NoLoadingCompletionCallbacksInDetach) {
 
   class MainFrameClient : public FrameTestHelpers::TestWebFrameClient {
    public:
-    MainFrameClient() {}
-    ~MainFrameClient() override {}
+    MainFrameClient() = default;
+    ~MainFrameClient() override = default;
 
     // FrameTestHelpers::TestWebFrameClient:
     WebLocalFrame* CreateChildFrame(WebLocalFrame* parent,
@@ -11736,7 +11942,7 @@ class ShowVirtualKeyboardObserverWidgetClient
  public:
   ShowVirtualKeyboardObserverWidgetClient()
       : did_show_virtual_keyboard_(false) {}
-  ~ShowVirtualKeyboardObserverWidgetClient() override {}
+  ~ShowVirtualKeyboardObserverWidgetClient() override = default;
 
   // FrameTestHelpers::TestWebWidgetClient:
   void ShowVirtualKeyboardOnElementFocus() override {
@@ -11777,8 +11983,8 @@ TEST_P(ParameterizedWebFrameTest, ShowVirtualKeyboardOnElementFocus) {
 
 class ContextMenuWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
-  ContextMenuWebFrameClient() {}
-  ~ContextMenuWebFrameClient() override {}
+  ContextMenuWebFrameClient() = default;
+  ~ContextMenuWebFrameClient() override = default;
 
   // WebFrameClient:
   void ShowContextMenu(const WebContextMenuData& data) override {
@@ -11934,7 +12140,7 @@ TEST_P(ParameterizedWebFrameTest, LocalFrameWithRemoteParentIsTransparent) {
 class TestFallbackWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
   TestFallbackWebFrameClient() : child_client_(nullptr) {}
-  ~TestFallbackWebFrameClient() override {}
+  ~TestFallbackWebFrameClient() override = default;
 
   void SetChildWebFrameClient(TestFallbackWebFrameClient* client) {
     child_client_ = client;

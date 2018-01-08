@@ -15,7 +15,7 @@
 namespace content {
 namespace appcache_storage_unittest {
 
-const storage::StorageType kTemp = storage::kStorageTypeTemporary;
+const blink::mojom::StorageType kTemp = blink::mojom::StorageType::kTemporary;
 
 class AppCacheStorageTest : public testing::Test {
  public:

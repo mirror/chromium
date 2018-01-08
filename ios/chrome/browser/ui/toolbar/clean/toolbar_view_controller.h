@@ -8,7 +8,6 @@
 #import <UIKit/UIKit.h>
 
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h"
-#import "ios/chrome/browser/ui/bubble/bubble_view_anchor_point_provider.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_consumer.h"
 
@@ -23,7 +22,6 @@
 // controls and/or labels.
 @interface ToolbarViewController
     : UIViewController<ActivityServicePositioner,
-                       BubbleViewAnchorPointProvider,
                        FullscreenUIElement,
                        ToolbarConsumer>
 
@@ -41,8 +39,6 @@
 
 // The dispatcher for this view controller.
 @property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
-// The location bar view, containing the omnibox.
-@property(nonatomic, strong) UIView* locationBarView;
 // The ToolsMenu button.
 @property(nonatomic, strong, readonly) ToolbarToolsMenuButton* toolsMenuButton;
 // Whether the toolbar is in the expanded state or not.
@@ -50,9 +46,16 @@
 // Omnibox focuser.
 @property(nonatomic, weak) id<OmniboxFocuser> omniboxFocuser;
 
+// Sets the location bar view, containing the omnibox.
+- (void)setLocationBarView:(UIView*)locationBarView;
+
 // Adds the toolbar expanded state animations to |animator|, and changes the
 // toolbar constraints in preparation for the animation.
-- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator;
+// Adds the toolbar post-expanded state animations (fading-in the contract
+// button) to the |completionAnimator|.
+- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator
+                   completionAnimator:
+                       (UIViewPropertyAnimator*)completionAnimator;
 // Adds the toolbar contracted state animations to |animator|, and changes the
 // toolbar constraints in preparation for the animation.
 - (void)addToolbarContractionAnimations:(UIViewPropertyAnimator*)animator;
@@ -66,9 +69,6 @@
 - (void)setBackgroundToIncognitoNTPColorWithAlpha:(CGFloat)alpha;
 // Briefly animate the progress bar when a pre-rendered tab is displayed.
 - (void)showPrerenderingAnimation;
-// TODO(crbug.com/789583):Use named layout guide instead of frame.
-// Returns visible omnibox frame in Toolbar's superview coordinate system.
-- (CGRect)visibleOmniboxFrame;
 // IPad only function. iPad doesn't animate when locationBar is first responder,
 // but there are small UI changes to the locationBarContainer.
 - (void)locationBarIsFirstResonderOnIPad:(BOOL)isFirstResponder;

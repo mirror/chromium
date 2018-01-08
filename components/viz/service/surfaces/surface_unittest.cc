@@ -42,6 +42,7 @@ TEST(SurfaceTest, PresentationCallback) {
             .Build();
     EXPECT_CALL(client, DidReceiveCompositorFrameAck(testing::_)).Times(1);
     support->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    testing::Mock::VerifyAndClearExpectations(&client);
   }
 
   {
@@ -55,50 +56,8 @@ TEST(SurfaceTest, PresentationCallback) {
     EXPECT_CALL(client, DidDiscardCompositorFrame(1)).Times(1);
     EXPECT_CALL(client, DidReceiveCompositorFrameAck(testing::_)).Times(1);
     support->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    testing::Mock::VerifyAndClearExpectations(&client);
   }
-
-  {
-    // Submits a frame with token 3 and different size. This frame with token 3
-    // will be discarded immediately.
-    CompositorFrame frame = CompositorFrameBuilder()
-                                .AddRenderPass(gfx::Rect(400, 400), kDamageRect)
-                                .SetPresentationToken(3)
-                                .Build();
-    EXPECT_CALL(client, DidDiscardCompositorFrame(3)).Times(1);
-    support->SubmitCompositorFrame(local_surface_id, std::move(frame));
-  }
-
-  {
-    // Submits a frame with token 4 and different scale factor, this frame with
-    // token 4 will be discarded immediately.
-    CompositorFrame frame =
-        CompositorFrameBuilder()
-            .AddRenderPass(gfx::Rect(kSurfaceSize), kDamageRect)
-            .SetDeviceScaleFactor(2.f)
-            .SetPresentationToken(4)
-            .Build();
-    EXPECT_CALL(client, DidDiscardCompositorFrame(4)).Times(1);
-    support->SubmitCompositorFrame(local_surface_id, std::move(frame));
-  }
-}
-
-TEST(SurfaceTest, SurfaceLifetime) {
-  FrameSinkManagerImpl frame_sink_manager(
-      SurfaceManager::LifetimeType::SEQUENCES);
-  SurfaceManager* surface_manager = frame_sink_manager.surface_manager();
-  auto support = std::make_unique<CompositorFrameSinkSupport>(
-      nullptr, &frame_sink_manager, kArbitraryFrameSinkId, kIsRoot,
-      kNeedsSyncPoints);
-
-  LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
-  SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);
-  support->SubmitCompositorFrame(local_surface_id,
-                                 MakeDefaultCompositorFrame());
-  EXPECT_TRUE(surface_manager->GetSurfaceForId(surface_id));
-  support->EvictCurrentSurface();
-  frame_sink_manager.surface_manager()->GarbageCollectSurfaces();
-
-  EXPECT_EQ(nullptr, surface_manager->GetSurfaceForId(surface_id));
 }
 
 TEST(SurfaceTest, SurfaceIds) {

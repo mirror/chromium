@@ -32,6 +32,7 @@
 
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ScriptController.h"
+#include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WindowProxy.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
@@ -41,6 +42,7 @@
 #include "core/css/MediaQueryMatcher.h"
 #include "core/css/StyleMedia.h"
 #include "core/css/resolver/StyleResolver.h"
+#include "core/dom/ComputedAccessibleNode.h"
 #include "core/dom/DOMImplementation.h"
 #include "core/dom/FrameRequestCallbackCollection.h"
 #include "core/dom/SandboxFlags.h"
@@ -88,7 +90,6 @@
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "platform/EventDispatchForbiddenScope.h"
-#include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/scroll/ScrollbarTheme.h"
@@ -122,7 +123,6 @@ class PostMessageTimer final
         location_(std::move(location)),
         user_gesture_token_(user_gesture_token),
         disposal_allowed_(true) {
-    probe::AsyncTaskScheduled(window.document(), "postMessage", this);
   }
 
   MessageEvent* Event() const { return event_; }
@@ -620,6 +620,7 @@ void LocalDOMWindow::SchedulePostMessage(
                            UserGestureIndicator::CurrentToken());
   timer->StartOneShot(TimeDelta(), FROM_HERE);
   timer->PauseIfNeeded();
+  probe::AsyncTaskScheduled(document(), "postMessage", timer);
   post_message_timers_.insert(timer);
 }
 
@@ -631,7 +632,8 @@ void LocalDOMWindow::PostMessageTimerFired(PostMessageTimer* timer) {
 
   UserGestureToken* token = timer->GetUserGestureToken();
   std::unique_ptr<UserGestureIndicator> gesture_indicator;
-  if (token && token->HasGestures() && document())
+  if (!RuntimeEnabledFeatures::UserActivationV2Enabled() && token &&
+      token->HasGestures() && document())
     gesture_indicator = Frame::NotifyUserActivation(document()->GetFrame());
 
   event->EntangleMessagePorts(document());
@@ -1103,6 +1105,15 @@ CSSStyleDeclaration* LocalDOMWindow::getComputedStyle(
   return CSSComputedStyleDeclaration::Create(elt, false, pseudo_elt);
 }
 
+ScriptPromise LocalDOMWindow::getComputedAccessibleNode(
+    ScriptState* script_state,
+    Element* element) {
+  DCHECK(element);
+  ComputedAccessibleNode* computed_accessible_node =
+      element->GetComputedAccessibleNode();
+  return computed_accessible_node->ComputeAccessibleProperties(script_state);
+}
+
 CSSRuleList* LocalDOMWindow::getMatchedCSSRules(
     Element* element,
     const String& pseudo_element) const {
@@ -1440,9 +1451,10 @@ void LocalDOMWindow::WarnUnusedPreloads(TimerBase* base) {
 
 void LocalDOMWindow::DispatchLoadEvent() {
   Event* load_event(Event::Create(EventTypeNames::load));
-  if (GetFrame() && GetFrame()->Loader().GetDocumentLoader() &&
-      !GetFrame()->Loader().GetDocumentLoader()->GetTiming().LoadEventStart()) {
-    DocumentLoader* document_loader = GetFrame()->Loader().GetDocumentLoader();
+  DocumentLoader* document_loader =
+      GetFrame() ? GetFrame()->Loader().GetDocumentLoader() : nullptr;
+  if (document_loader &&
+      document_loader->GetTiming().LoadEventStart().is_null()) {
     DocumentLoadTiming& timing = document_loader->GetTiming();
     timing.MarkLoadEventStart();
     DispatchEvent(load_event, document());
@@ -1492,17 +1504,7 @@ DispatchEventResult LocalDOMWindow::DispatchEvent(Event* event,
 
   TRACE_EVENT1("devtools.timeline", "EventDispatch", "data",
                InspectorEventDispatchEvent::Data(*event));
-  DispatchEventResult result;
-
-  if (GetFrame() && GetFrame()->IsMainFrame() &&
-      event->type() == EventTypeNames::resize) {
-    SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.EventListenerDuration.Resize");
-    result = FireEventListeners(event);
-  } else {
-    result = FireEventListeners(event);
-  }
-
-  return result;
+  return FireEventListeners(event);
 }
 
 void LocalDOMWindow::RemoveAllEventListeners() {

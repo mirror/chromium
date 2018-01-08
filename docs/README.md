@@ -102,8 +102,10 @@ used when committed.
 *   [Code Reviews](code_reviews.md) - Code review requirements and guidelines
 *   [Respectful Code Reviews](cr_respect.md) - A guide for code reviewers
 *   [Respectful Changes](cl_respect.md) - A guide for code authors
+*   [LUCI Migration FAQ](luci_migration_faq.md) - FAQ on Buildbot-to-LUCI
+    builder migration for Chromium
 *   [Tour of Continuous Integration UI](tour_of_luci_ui.md) - A tour of our
-    the user interface for LUCI, our continuous integration system.
+    the user interface for LUCI, our continuous integration system
 *   [Closure Compilation](closure_compilation.md) - The _Closure_ JavaScript
     compiler
 *   [Threading and Tasks in Chrome](threading_and_tasks.md) - How to run tasks
@@ -208,8 +210,6 @@ used when committed.
 *   [Running Layout Tests on Linux](layout_tests_linux.md) - Linux-specific
     instructions for running layout tests.
 *   [Linux Sysroot Images](linux_sysroot.md) - How builds use libraries on Linux
-*   [`msttcorefonts` on Mandriva](mandriva_msttcorefonts.md) - Getting fonts
-    needed to build Chrome that are not available for Mandriva
 *   [Linux Hardware Video Decoding](linux_hw_video_decode.md) - Enabling
     hardware video decode codepaths on Linux
 

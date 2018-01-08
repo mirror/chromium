@@ -273,7 +273,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
-  ~RendererSchedulerImplTest() override {}
+  ~RendererSchedulerImplTest() override = default;
 
   void SetUp() override {
     if (!message_loop_) {
@@ -281,7 +281,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
           base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
     }
     Initialize(std::make_unique<RendererSchedulerImplForTest>(
-        CreateTaskQueueManagerWithUnownedClockForTest(
+        CreateTaskQueueManagerForTest(
             message_loop_.get(),
             message_loop_ ? message_loop_->task_runner() : mock_task_runner_,
             &clock_)));
@@ -297,12 +297,14 @@ class RendererSchedulerImplTest : public ::testing::Test {
     }
     default_task_runner_ = scheduler_->DefaultTaskQueue();
     compositor_task_runner_ = scheduler_->CompositorTaskQueue();
-    loading_task_runner_ = scheduler_->LoadingTaskQueue();
+    input_task_runner_ = scheduler_->InputTaskQueue();
+    loading_task_runner_ = scheduler_->NewLoadingTaskQueue(
+        MainThreadTaskQueue::QueueType::kFrameLoading);
     loading_control_task_runner_ = scheduler_->NewLoadingTaskQueue(
-        MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
+        MainThreadTaskQueue::QueueType::kFrameLoadingControl);
     idle_task_runner_ = scheduler_->IdleTaskRunner();
     timer_task_runner_ = scheduler_->TimerTaskQueue();
-    v8_task_runner_ = scheduler_->kV8TaskQueue();
+    v8_task_runner_ = scheduler_->V8TaskQueue();
     fake_queue_ = scheduler_->NewLoadingTaskQueue(
         MainThreadTaskQueue::QueueType::kFrameLoading);
   }
@@ -577,7 +579,8 @@ class RendererSchedulerImplTest : public ::testing::Test {
     scheduler_->OnTaskStarted(fake_queue_.get(), fake_task_, start);
     clock_.Advance(base::TimeDelta::FromSecondsD(duration));
     base::TimeTicks end = clock_.NowTicks();
-    scheduler_->OnTaskCompleted(fake_queue_.get(), fake_task_, start, end);
+    scheduler_->OnTaskCompleted(fake_queue_.get(), fake_task_, start, end,
+                                base::nullopt);
   }
 
   void GetQueueingTimeEstimatorLock() {
@@ -604,6 +607,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
   // task identifier specifies the task type:
   // - 'D': Default task
   // - 'C': Compositor task
+  // - 'P': Input task
   // - 'L': Loading task
   // - 'M': Loading Control task
   // - 'I': Idle task
@@ -622,6 +626,10 @@ class RendererSchedulerImplTest : public ::testing::Test {
           break;
         case 'C':
           compositor_task_runner_->PostTask(
+              FROM_HERE, base::Bind(&AppendToVectorTestTask, run_order, task));
+          break;
+        case 'P':
+          input_task_runner_->PostTask(
               FROM_HERE, base::Bind(&AppendToVectorTestTask, run_order, task));
           break;
         case 'L':
@@ -708,11 +716,6 @@ class RendererSchedulerImplTest : public ::testing::Test {
     return scheduler->ThrottleableTaskQueue();
   }
 
-  static scoped_refptr<TaskQueue> LoadingTaskQueue(
-      WebFrameSchedulerImpl* scheduler) {
-    return scheduler->LoadingTaskQueue();
-  }
-
   base::SimpleTestTickClock clock_;
   TaskQueue::Task fake_task_;
   scoped_refptr<MainThreadTaskQueue> fake_queue_;
@@ -723,7 +726,8 @@ class RendererSchedulerImplTest : public ::testing::Test {
   std::unique_ptr<RendererSchedulerImplForTest> scheduler_;
   scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
-  scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> input_task_runner_;
+  scoped_refptr<TaskQueue> loading_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> loading_control_task_runner_;
   scoped_refptr<SingleThreadIdleTaskRunner> idle_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> timer_task_runner_;
@@ -747,10 +751,11 @@ TEST_F(RendererSchedulerImplTest, TestPostDefaultTask) {
 
 TEST_F(RendererSchedulerImplTest, TestPostDefaultAndCompositor) {
   std::vector<std::string> run_order;
-  PostTestTasks(&run_order, "D1 C1");
+  PostTestTasks(&run_order, "D1 C1 P1");
   RunUntilIdle();
   EXPECT_THAT(run_order, ::testing::Contains("D1"));
   EXPECT_THAT(run_order, ::testing::Contains("C1"));
+  EXPECT_THAT(run_order, ::testing::Contains("P1"));
 }
 
 TEST_F(RendererSchedulerImplTest, TestRentrantTask) {
@@ -885,13 +890,14 @@ TEST_F(RendererSchedulerImplTest, TestDelayedEndIdlePeriodCanceled) {
 
 TEST_F(RendererSchedulerImplTest, TestDefaultPolicy) {
   std::vector<std::string> run_order;
-  PostTestTasks(&run_order, "L1 I1 D1 C1 D2 C2");
+  PostTestTasks(&run_order, "L1 I1 D1 P1 C1 D2 P2 C2");
 
   EnableIdleTasks();
   RunUntilIdle();
   EXPECT_THAT(run_order,
               ::testing::ElementsAre(std::string("L1"), std::string("D1"),
-                                     std::string("C1"), std::string("D2"),
+                                     std::string("P1"), std::string("C1"),
+                                     std::string("D2"), std::string("P2"),
                                      std::string("C2"), std::string("I1")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::kNone, CurrentUseCase());
 }
@@ -1861,8 +1867,7 @@ class RendererSchedulerImplWithMockSchedulerTest
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
     mock_scheduler_ = new RendererSchedulerImplForTest(
-        CreateTaskQueueManagerWithUnownedClockForTest(
-            nullptr, mock_task_runner_, &clock_));
+        CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_));
     Initialize(base::WrapUnique(mock_scheduler_));
   }
 
@@ -2091,7 +2096,7 @@ class RendererSchedulerImplWithMessageLoopTest
  public:
   RendererSchedulerImplWithMessageLoopTest()
       : RendererSchedulerImplTest(new base::MessageLoop()) {}
-  ~RendererSchedulerImplWithMessageLoopTest() override {}
+  ~RendererSchedulerImplWithMessageLoopTest() override = default;
 
   void PostFromNestedRunloop(
       std::vector<std::pair<SingleThreadIdleTaskRunner::IdleTask, bool>>*
@@ -2560,7 +2565,7 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
 }
 
 TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedLoadingSuspension) {
-  ScopedStopLoadingInBackgroundAndroidForTest stop_loading_enabler(true);
+  ScopedStopLoadingInBackgroundForTest stop_loading_enabler(true);
 
   scheduler_->SetStoppingWhenBackgroundedEnabled(true);
 
@@ -3140,7 +3145,7 @@ class WebViewSchedulerImplForTest : public WebViewSchedulerImpl {
  public:
   WebViewSchedulerImplForTest(RendererSchedulerImpl* scheduler)
       : WebViewSchedulerImpl(nullptr, nullptr, scheduler, false) {}
-  ~WebViewSchedulerImplForTest() override {}
+  ~WebViewSchedulerImplForTest() override = default;
 
   void ReportIntervention(const std::string& message) override {
     interventions_.push_back(message);
@@ -3768,7 +3773,7 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
       scheduler_->NewLoadingTaskQueue(
           MainThreadTaskQueue::QueueType::kFrameLoading);
   scoped_refptr<TaskQueue> loading_control_tq = scheduler_->NewLoadingTaskQueue(
-      MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
+      MainThreadTaskQueue::QueueType::kFrameLoadingControl);
   scoped_refptr<MainThreadTaskQueue> timer_tq = scheduler_->NewTimerTaskQueue(
       MainThreadTaskQueue::QueueType::kFrameThrottleable);
   scoped_refptr<MainThreadTaskQueue> unthrottled_tq =
@@ -3779,13 +3784,13 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->CompositorTaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
-  EXPECT_EQ(scheduler_->LoadingTaskQueue()->GetTimeDomain(),
+  EXPECT_EQ(loading_task_runner_->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->TimerTaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->VirtualTimeControlTaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
-  EXPECT_EQ(scheduler_->kV8TaskQueue()->GetTimeDomain(),
+  EXPECT_EQ(scheduler_->V8TaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
 
   // The main control task queue remains in the real time domain.
@@ -3857,13 +3862,13 @@ TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->CompositorTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
-  EXPECT_EQ(scheduler_->LoadingTaskQueue()->GetTimeDomain(),
+  EXPECT_EQ(loading_task_runner_->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->TimerTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->ControlTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
-  EXPECT_EQ(scheduler_->kV8TaskQueue()->GetTimeDomain(),
+  EXPECT_EQ(scheduler_->V8TaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_FALSE(scheduler_->VirtualTimeControlTaskQueue());
 }
@@ -3893,9 +3898,8 @@ TEST_F(RendererSchedulerImplTest, Tracing) {
 
   scheduler_->TimerTaskQueue()->PostTask(FROM_HERE, base::Bind(NullTask));
 
-  LoadingTaskQueue(web_frame_scheduler.get())
-      ->PostDelayedTask(FROM_HERE, base::Bind(NullTask),
-                        TimeDelta::FromMilliseconds(10));
+  loading_task_runner_->PostDelayedTask(FROM_HERE, base::BindOnce(NullTask),
+                                        TimeDelta::FromMilliseconds(10));
 
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> value =
       scheduler_->AsValue(base::TimeTicks());

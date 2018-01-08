@@ -30,6 +30,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/common/blob/blob_registry.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker.mojom.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
@@ -60,7 +61,6 @@ namespace content {
 
 struct PlatformNotificationData;
 struct PushEventPayload;
-struct ServiceWorkerClientInfo;
 class EmbeddedWorkerInstanceClientImpl;
 class ServiceWorkerNetworkProvider;
 class ServiceWorkerProviderContext;
@@ -126,7 +126,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   void OpenNewTab(
       const blink::WebURL&,
       std::unique_ptr<blink::WebServiceWorkerClientCallbacks>) override;
-  void OpenNewPopup(
+  void OpenPaymentHandlerWindow(
       const blink::WebURL&,
       std::unique_ptr<blink::WebServiceWorkerClientCallbacks>) override;
   void SetCachedMetadata(const blink::WebURL&,
@@ -152,10 +152,6 @@ class CONTENT_EXPORT ServiceWorkerContextClient
                             const blink::WebString& message,
                             int line_number,
                             const blink::WebString& source_url) override;
-  void SendDevToolsMessage(int session_id,
-                           int call_id,
-                           const blink::WebString& message,
-                           const blink::WebString& state) override;
   void DidHandleActivateEvent(int request_id,
                               blink::mojom::ServiceWorkerEventStatus status,
                               double dispatch_event_time) override;
@@ -260,7 +256,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   // This method needs to be used only if the event comes directly from a
   // client, which means it is coming through the ControllerServiceWorkerImpl.
   void DispatchOrQueueFetchEvent(
-      const ResourceRequest& request,
+      const network::ResourceRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback);
@@ -315,7 +311,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override;
   void DispatchFetchEvent(
-      const ResourceRequest& request,
+      const network::ResourceRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override;
@@ -333,6 +329,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
                          DispatchPushEventCallback callback) override;
   void DispatchSyncEvent(const std::string& tag,
                          bool last_chance,
+                         base::TimeDelta timeout,
                          DispatchSyncEventCallback callback) override;
   void DispatchAbortPaymentEvent(
       int payment_request_id,
@@ -362,22 +359,17 @@ class CONTENT_EXPORT ServiceWorkerContextClient
       const std::string& notification_id,
       const PlatformNotificationData& notification_data);
 
-  void OnDidGetClient(int request_id, const ServiceWorkerClientInfo& client);
-  void OnDidGetClients(int request_id,
-                       const std::vector<ServiceWorkerClientInfo>& clients);
-  void OnOpenWindowResponse(int request_id,
-                            const ServiceWorkerClientInfo& client);
+  void OnOpenWindowResponse(
+      int request_id,
+      const blink::mojom::ServiceWorkerClientInfo& client);
   void OnOpenWindowError(int request_id, const std::string& message);
-  void OnFocusClientResponse(int request_id,
-                             const ServiceWorkerClientInfo& client);
-  void OnNavigateClientResponse(int request_id,
-                                const ServiceWorkerClientInfo& client);
+  void OnFocusClientResponse(
+      int request_id,
+      const blink::mojom::ServiceWorkerClientInfo& client);
+  void OnNavigateClientResponse(
+      int request_id,
+      const blink::mojom::ServiceWorkerClientInfo& client);
   void OnNavigateClientError(int request_id, const GURL& url);
-  void OnDidSkipWaiting(int request_id);
-  void OnDidClaimClients(
-      std::unique_ptr<blink::WebServiceWorkerClientsClaimCallbacks> callbacks,
-      blink::mojom::ServiceWorkerErrorType error,
-      const base::Optional<std::string>& error_msg);
   // Called to resolve the FetchEvent.preloadResponse promise.
   void OnNavigationPreloadResponse(
       int fetch_event_id,

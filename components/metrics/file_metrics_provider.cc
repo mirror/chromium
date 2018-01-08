@@ -4,6 +4,8 @@
 
 #include "components/metrics/file_metrics_provider.h"
 
+#include <memory>
+
 #include "base/command_line.h"
 #include "base/containers/flat_map.h"
 #include "base/files/file.h"
@@ -11,7 +13,6 @@
 #include "base/files/file_util.h"
 #include "base/files/memory_mapped_file.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_base.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/persistent_histogram_allocator.h"
@@ -95,6 +96,9 @@ enum Happening : int {
   RECORD_HISTOGRAM_SNAPSHOTS_FROM_SOURCE,
   PROVIDE_INDEPENDENT_METRICS,
   SCHEDULE_SOURCES_FAILED,
+  OLD_DELETE_FILE_FAILED,
+  OVER_DELETE_FILE_FAILED,
+  ASYNC_DELETE_FILE_FAILED,
   MAX_HAPPENINGS
 };
 
@@ -113,8 +117,12 @@ void DeleteFileWhenPossible(const base::FilePath& path) {
   // scope. This is the only cross-platform safe way to delete a file that may
   // be open elsewhere, a distinct possibility given the asynchronous nature
   // of the delete task.
-  base::File file(path, base::File::FLAG_OPEN | base::File::FLAG_READ |
-                            base::File::FLAG_DELETE_ON_CLOSE);
+  {
+    base::File file(path, base::File::FLAG_OPEN | base::File::FLAG_READ |
+                              base::File::FLAG_DELETE_ON_CLOSE);
+  }
+  if (base::PathExists(path))
+    RecordHappening(ASYNC_DELETE_FILE_FAILED);
 }
 
 // A task runner to use for testing.
@@ -147,7 +155,7 @@ struct FileMetricsProvider::SourceInfo {
     switch (type) {
       case SOURCE_HISTOGRAMS_ACTIVE_FILE:
         DCHECK(prefs_key.empty());
-      // fall through
+        FALLTHROUGH;
       case SOURCE_HISTOGRAMS_ATOMIC_FILE:
         path = params.path;
         break;
@@ -292,7 +300,7 @@ bool FileMetricsProvider::LocateNextFileInDirectory(SourceInfo* source) {
 
   base::Time now_time = base::Time::Now();
   if (!source->found_files) {
-    source->found_files = base::MakeUnique<SourceInfo::FoundFiles>();
+    source->found_files = std::make_unique<SourceInfo::FoundFiles>();
     base::FileEnumerator file_iter(source->directory, /*recursive=*/false,
                                    base::FileEnumerator::FILES);
     SourceInfo::FoundFile found_file;
@@ -336,6 +344,8 @@ bool FileMetricsProvider::LocateNextFileInDirectory(SourceInfo* source) {
         // is not removed, it will continue to be ignored bacuse of the older
         // modification time.
         base::DeleteFile(found_file.path, /*recursive=*/false);
+        if (base::PathExists(found_file.path))
+          RecordHappening(OLD_DELETE_FILE_FAILED);
         ++delete_count;
       }
     }
@@ -360,6 +370,8 @@ bool FileMetricsProvider::LocateNextFileInDirectory(SourceInfo* source) {
         now_time - found.info.GetLastModifiedTime() > source->max_age;
     if (too_many || too_big || too_old) {
       base::DeleteFile(found.path, /*recursive=*/false);
+      if (base::PathExists(found.path))
+        RecordHappening(OVER_DELETE_FILE_FAILED);
       ++delete_count;
       --file_count;
       total_size_kib -= found.info.GetSize() >> 10;
@@ -526,7 +538,7 @@ FileMetricsProvider::AccessResult FileMetricsProvider::CheckAndMapMetricSource(
 
   // Map the file and validate it.
   std::unique_ptr<base::PersistentMemoryAllocator> memory_allocator =
-      base::MakeUnique<base::FilePersistentMemoryAllocator>(
+      std::make_unique<base::FilePersistentMemoryAllocator>(
           std::move(mapped), 0, 0, base::StringPiece(), read_only);
   if (memory_allocator->GetMemoryState() ==
       base::PersistentMemoryAllocator::MEMORY_DELETED) {
@@ -534,7 +546,7 @@ FileMetricsProvider::AccessResult FileMetricsProvider::CheckAndMapMetricSource(
   }
 
   // Create an allocator for the mapped file. Ownership passes to the allocator.
-  source->allocator = base::MakeUnique<base::PersistentHistogramAllocator>(
+  source->allocator = std::make_unique<base::PersistentHistogramAllocator>(
       std::move(memory_allocator));
 
   // Check that an "independent" file has the necessary information present.

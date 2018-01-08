@@ -424,8 +424,22 @@ class PathParser {
     let href;
     [href, this.dir, this.file] = path.match("/(.*/)?(.*)");
     this.dir = this.dir || "";
-    [, this.basename, this.extension] = this.file.match(/(.*)\.(\w+)/);
-    this.testHref = this.testBaseHref() + href.replace(/\/virtual\/[^\/]*/, "");
+    [, this.raw_basename, this.raw_extension] = this.file.match(/(.+)\.(.+)/);
+
+    // WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py output_filename()
+    let index = this.raw_extension.indexOf("?");
+    if (index > -1) {
+      let query_string = this.raw_extension.slice(index + 1);
+      query_string = query_string.replace(/[~#%&*{}\:<>?\/|"]/g, "_");
+      this.basename = this.raw_basename + "_" + query_string;
+      this.extension = this.raw_extension.slice(0, index);
+    } else {
+      [this.basename, this.extension] = [this.raw_basename, this.raw_extension];
+    }
+
+    href = href.replace(/^\/virtual\/[^\/]*/, "");  // virtual suites
+    href = href.replace(/\?.*$/, "");               // query strings (variants)
+    this.testHref = this.testBaseHref() + href;
   }
 
   static initGlobals(fullResults) {
@@ -658,9 +672,12 @@ const Report = {
     html.forEach(result => {
       let key = result.key || "null";
       if (!(key in renderMap)) {
+        const number_of_items = html.filter(result => (result.key || "null") === key).length;
         let container =
             report.querySelector(`div[key="${key}"]`) ||
-            Report.createContainerForGroup(report, key, keyed_title, null_title);
+            Report.createContainerForGroup(report, key,
+                `${keyed_title} ${number_of_items}`,
+                `${null_title} ${number_of_items}`);
         renderMap[key] = {container: container, html: ""};
       }
       renderMap[key].html += result.html;
@@ -1246,8 +1263,7 @@ const GUI = {
   },
 
   printSummary: function (fullResults) {
-    if (fullResults.builder_name)
-      document.querySelector("#builder_name").innerText = fullResults.builder_name;
+    document.querySelector("#builder_name").innerText = fullResults.builder_name || document.lastModified;
     document.querySelector("#summary_passed").innerText = fullResults.num_passes;
     document.querySelector("#summary_regressions").innerText = fullResults.num_regressions;
     let failures = fullResults["num_failures_by_type"];

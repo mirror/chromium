@@ -65,10 +65,6 @@ for (let params of testParams) {
   test(() => {
     assert_equals(matrixComponent.is2D, params.is2D);
   }, "is2D value is correct for " + params.cssText);
-
-  test(() => {
-    assert_equals(matrixComponent.toString(), params.cssText);
-  }, "toString is correct for " + params.cssText);
 }
 
 test(() => {
@@ -78,18 +74,5 @@ test(() => {
   assert_throws(new TypeError(), () => { new CSSMatrixComponent(null); });
   assert_throws(new TypeError(), () => { new CSSMatrixComponent(undefined); });
 }, "invalid number of arguments to the constructor throws");
-
-test(() => {
-  let matrix3d = new DOMMatrixReadOnly(
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
-  let matrix2d = new DOMMatrixReadOnly([1, 2, 5, 6, 13, 14]);
-  let matrixComponent = new CSSMatrixComponent(matrix3d);
-  matrixComponent.is2D = true;
-  assert_matrix_approx_equals(matrixComponent.matrix, matrix3d, EPSILON);
-
-  let transformValue = new CSSTransformValue([matrixComponent]);
-  assert_true(transformValue.is2D);
-  assert_matrix_approx_equals(transformValue.toMatrix(), matrix2d, EPSILON);
-}, "Matrix is converted to 2D inside CSSTransformValue when is2D is true.");
 
 </script>

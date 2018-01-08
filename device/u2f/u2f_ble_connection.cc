@@ -72,6 +72,9 @@ constexpr const char* ToString(BluetoothGattService::GattErrorCode error_code) {
 
 }  // namespace
 
+U2fBleConnection::U2fBleConnection(std::string device_address)
+    : address_(std::move(device_address)), weak_factory_(this) {}
+
 U2fBleConnection::U2fBleConnection(
     std::string device_address,
     ConnectionStatusCallback connection_status_callback,
@@ -80,14 +83,17 @@ U2fBleConnection::U2fBleConnection(
       connection_status_callback_(std::move(connection_status_callback)),
       read_callback_(std::move(read_callback)),
       weak_factory_(this) {
-  BluetoothAdapterFactory::GetAdapter(
-      base::Bind(&U2fBleConnection::OnGetAdapter, weak_factory_.GetWeakPtr()));
   DCHECK(!address_.empty());
 }
 
 U2fBleConnection::~U2fBleConnection() {
   if (adapter_)
     adapter_->RemoveObserver(this);
+}
+
+void U2fBleConnection::Connect() {
+  BluetoothAdapterFactory::GetAdapter(
+      base::Bind(&U2fBleConnection::OnGetAdapter, weak_factory_.GetWeakPtr()));
 }
 
 void U2fBleConnection::ReadControlPointLength(
@@ -435,7 +441,7 @@ void U2fBleConnection::DeviceChanged(BluetoothAdapter* adapter,
                                      BluetoothDevice* device) {
   if (adapter != adapter_ || device->GetAddress() != address_)
     return;
-  if (!device->IsGattConnected()) {
+  if (connection_ && !device->IsGattConnected()) {
     DLOG(ERROR) << "GATT Disconnected: " << device->GetAddress();
     OnConnectionError();
   }

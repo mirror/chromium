@@ -11,6 +11,7 @@
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "mojo/public/cpp/bindings/sync_call_restrictions.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
 
 namespace viz {
@@ -26,10 +27,6 @@ void HostFrameSinkManager::SetLocalManager(
   frame_sink_manager_impl_ = frame_sink_manager_impl;
 
   frame_sink_manager_ = frame_sink_manager_impl;
-
-  // Assign temporary references if FrameSinkManagerImpl is using them.
-  assign_temporary_references_ =
-      frame_sink_manager_impl_->surface_manager()->using_surface_references();
 }
 
 void HostFrameSinkManager::BindAndSetManager(
@@ -76,7 +73,14 @@ void HostFrameSinkManager::InvalidateFrameSinkId(
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
   DCHECK(data.IsFrameSinkRegistered());
 
-  // This will destroy |frame_sink_id| if using mojom::CompositorFrameSink.
+  if (data.has_created_compositor_frame_sink && data.is_root) {
+    // This synchronous call ensures that the GL context/surface that draw to
+    // the platform window (eg. XWindow or HWND) get destroyed before the
+    // platform window is destroyed.
+    mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
+    frame_sink_manager_->DestroyCompositorFrameSink(frame_sink_id);
+  }
+
   frame_sink_manager_->InvalidateFrameSinkId(frame_sink_id);
   data.has_created_compositor_frame_sink = false;
   data.client = nullptr;
@@ -91,18 +95,21 @@ void HostFrameSinkManager::InvalidateFrameSinkId(
 void HostFrameSinkManager::SetFrameSinkDebugLabel(
     const FrameSinkId& frame_sink_id,
     const std::string& debug_label) {
+  DCHECK(frame_sink_id.is_valid());
+
+  FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
+  DCHECK(data.IsFrameSinkRegistered());
+
+  data.debug_label = debug_label;
   frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id, debug_label);
 }
 
 void HostFrameSinkManager::CreateRootCompositorFrameSink(
-    const FrameSinkId& frame_sink_id,
-    gpu::SurfaceHandle surface_handle,
-    bool force_software_compositing,
-    const RendererSettings& renderer_settings,
-    mojom::CompositorFrameSinkAssociatedRequest request,
-    mojom::CompositorFrameSinkClientPtr client,
-    mojom::DisplayPrivateAssociatedRequest display_private_request,
-    mojom::DisplayClientPtr display_client) {
+    mojom::RootCompositorFrameSinkParamsPtr params) {
+  // Should only be used with an out-of-process display compositor.
+  DCHECK(frame_sink_manager_ptr_);
+
+  FrameSinkId frame_sink_id = params->frame_sink_id;
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
   DCHECK(data.IsFrameSinkRegistered());
   DCHECK(!data.HasCompositorFrameSinkData());
@@ -110,11 +117,8 @@ void HostFrameSinkManager::CreateRootCompositorFrameSink(
   data.is_root = true;
   data.has_created_compositor_frame_sink = true;
 
-  frame_sink_manager_->CreateRootCompositorFrameSink(
-      frame_sink_id, surface_handle, force_software_compositing,
-      renderer_settings, std::move(request), std::move(client),
-      std::move(display_private_request), std::move(display_client));
-  display_hit_test_query_[frame_sink_id] = base::MakeUnique<HitTestQuery>();
+  frame_sink_manager_->CreateRootCompositorFrameSink(std::move(params));
+  display_hit_test_query_[frame_sink_id] = std::make_unique<HitTestQuery>();
 }
 
 void HostFrameSinkManager::CreateCompositorFrameSink(
@@ -202,6 +206,16 @@ void HostFrameSinkManager::AssignTemporaryReference(
   frame_sink_manager_->AssignTemporaryReference(surface_id, frame_sink_id);
 }
 
+void HostFrameSinkManager::AddVideoDetectorObserver(
+    mojom::VideoDetectorObserverPtr observer) {
+  frame_sink_manager_->AddVideoDetectorObserver(std::move(observer));
+}
+
+void HostFrameSinkManager::CreateVideoCapturer(
+    mojom::FrameSinkVideoCapturerRequest request) {
+  frame_sink_manager_->CreateVideoCapturer(std::move(request));
+}
+
 std::unique_ptr<CompositorFrameSinkSupport>
 HostFrameSinkManager::CreateCompositorFrameSinkSupport(
     mojom::CompositorFrameSinkClient* client,
@@ -223,6 +237,9 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
 
   data.support = support.get();
   data.is_root = is_root;
+
+  if (is_root)
+    display_hit_test_query_[frame_sink_id] = std::make_unique<HitTestQuery>();
 
   return support;
 }
@@ -302,6 +319,10 @@ void HostFrameSinkManager::RegisterAfterConnectionLoss() {
     FrameSinkData& data = map_entry.second;
     if (data.client)
       frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
+    if (!data.debug_label.empty()) {
+      frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id,
+                                                  data.debug_label);
+    }
   }
 
   // Register FrameSink hierarchy second.
@@ -382,10 +403,5 @@ HostFrameSinkManager::FrameSinkData::~FrameSinkData() = default;
 
 HostFrameSinkManager::FrameSinkData& HostFrameSinkManager::FrameSinkData::
 operator=(FrameSinkData&& other) = default;
-
-void HostFrameSinkManager::AddVideoDetectorObserver(
-    mojom::VideoDetectorObserverPtr observer) {
-  frame_sink_manager_->AddVideoDetectorObserver(std::move(observer));
-}
 
 }  // namespace viz

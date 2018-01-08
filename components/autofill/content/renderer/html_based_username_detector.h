@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef COMPONENTS_AUTOFILL_CONTENT_RENDERER_HTML_BASED_USERNAME_DETECTOR_H_
+#define COMPONENTS_AUTOFILL_CONTENT_RENDERER_HTML_BASED_USERNAME_DETECTOR_H_
+
 #include <map>
 
 #include "components/autofill/core/common/password_form.h"
@@ -10,8 +13,10 @@
 
 namespace autofill {
 
+// The detector's cache is a map from WebFormElement to the list of predictions
+// for the given form (in the order of decreasing reliability).
 using UsernameDetectorCache =
-    std::map<blink::WebFormElement, blink::WebInputElement>;
+    std::map<blink::WebFormElement, std::vector<blink::WebInputElement>>;
 
 // Classifier for getting username field by analyzing HTML attribute values.
 // The algorithm looks for words that are likely to point to username field
@@ -20,14 +25,17 @@ using UsernameDetectorCache =
 // and the algorithm ends. By searching for words in order of their probability
 // to be username words, it is sure that the first match will also be the best
 // one. The function returns true if username element was found.
-// If the result for the given form is cached in |username_detector_cache|, then
-// |username_element| is set to the cached result. Otherwise, the classifier
-// will be run and the outcome will be saved to the cache.
-// |username_detector_cache| can be null.
+// If detector's outcome for the given form is cached in
+// |username_detector_cache|, then |username_element| is set based on the cached
+// data. Otherwise, the detector will be run and the outcome will be saved to
+// the cache. |username_detector_cache| can be null.
 bool GetUsernameFieldBasedOnHtmlAttributes(
-    const std::vector<blink::WebInputElement>& all_possible_usernames,
+    const std::vector<blink::WebFormControlElement>& all_control_elements,
+    const std::vector<blink::WebInputElement>& possible_usernames,
     const FormData& form_data,
     blink::WebInputElement* username_element,
     UsernameDetectorCache* username_detector_cache);
 
 }  // namespace autofill
+
+#endif  // COMPONENTS_AUTOFILL_CONTENT_RENDERER_HTML_BASED_USERNAME_DETECTOR_H_

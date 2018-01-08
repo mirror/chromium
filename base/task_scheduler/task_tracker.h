@@ -15,6 +15,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_base.h"
+#include "base/strings/string_piece.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/task_scheduler/can_schedule_sequence_observer.h"
 #include "base/task_scheduler/scheduler_lock.h"
@@ -84,9 +85,11 @@ namespace internal {
 // TaskPriority::USER_BLOCKING.
 class BASE_EXPORT TaskTracker {
  public:
+  // |histogram_label| is used as a suffix for histograms, it must not be empty.
   // |max_num_scheduled_background_sequences| is the maximum number of
-  // background sequences that be scheduled concurrently.
-  TaskTracker(int max_num_scheduled_background_sequences =
+  // background sequences that can be scheduled concurrently (default to max())
+  TaskTracker(StringPiece histogram_label,
+              int max_num_scheduled_background_sequences =
                   std::numeric_limits<int>::max());
   virtual ~TaskTracker();
 
@@ -104,7 +107,14 @@ class BASE_EXPORT TaskTracker {
   //
   // Does not wait for delayed tasks. Waits for undelayed tasks posted from
   // other threads during the call. Returns immediately when shutdown completes.
-  void Flush();
+  void FlushForTesting();
+
+  // Returns and calls |flush_callback| when there are no incomplete undelayed
+  // tasks. |flush_callback| may be called back on any thread and should not
+  // perform a lot of work. May be used when additional work on the current
+  // thread needs to be performed during a flush. Only one
+  // FlushAsyncForTesting() may be pending at any given time.
+  void FlushAsyncForTesting(OnceClosure flush_callback);
 
   // Informs this TaskTracker that |task| is about to be posted. Returns true if
   // this operation is allowed (|task| should be posted if-and-only-if it is).
@@ -164,9 +174,10 @@ class BASE_EXPORT TaskTracker {
   virtual bool IsPostingBlockShutdownTaskAfterShutdownAllowed();
 #endif
 
-  // Returns the number of undelayed tasks that haven't completed their
-  // execution (still queued or in progress).
-  int GetNumIncompleteUndelayedTasksForTesting() const;
+  // Returns true if there are undelayed tasks that haven't completed their
+  // execution (still queued or in progress). If it returns false: the side-
+  // effects of all completed tasks are guaranteed to be visible to the caller.
+  bool HasIncompleteUndelayedTasksForTesting() const;
 
  private:
   class State;
@@ -219,25 +230,35 @@ class BASE_EXPORT TaskTracker {
   // for |task|.
   void RecordTaskLatencyHistogram(const Task& task);
 
+  // Calls |flush_callback_for_testing_| if one is available in a lock-safe
+  // manner.
+  void CallFlushCallbackForTesting();
+
   // Number of tasks blocking shutdown and boolean indicating whether shutdown
   // has started.
   const std::unique_ptr<State> state_;
 
   // Number of undelayed tasks that haven't completed their execution. Is
   // decremented with a memory barrier after a task runs. Is accessed with an
-  // acquire memory barrier in Flush(). The memory barriers ensure that the
-  // memory written by flushed tasks is visible when Flush() returns.
+  // acquire memory barrier in FlushForTesting(). The memory barriers ensure
+  // that the memory written by flushed tasks is visible when FlushForTesting()
+  // returns.
   subtle::Atomic32 num_incomplete_undelayed_tasks_ = 0;
 
   // Lock associated with |flush_cv_|. Partially synchronizes access to
   // |num_incomplete_undelayed_tasks_|. Full synchronization isn't needed
   // because it's atomic, but synchronization is needed to coordinate waking and
-  // sleeping at the right time.
+  // sleeping at the right time. Fully synchronizes access to
+  // |flush_callback_for_testing_|.
   mutable SchedulerLock flush_lock_;
 
-  // Signaled when |num_incomplete_undelayed_tasks_| is zero or when shutdown
-  // completes.
+  // Signaled when |num_incomplete_undelayed_tasks_| is or reaches zero or when
+  // shutdown completes.
   const std::unique_ptr<ConditionVariable> flush_cv_;
+
+  // Invoked if non-null when |num_incomplete_undelayed_tasks_| is zero or when
+  // shutdown completes.
+  OnceClosure flush_callback_for_testing_;
 
   // Synchronizes access to shutdown related members below.
   mutable SchedulerLock shutdown_lock_;

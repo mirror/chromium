@@ -28,6 +28,7 @@ class ChromePaymentRequestDelegate : public ContentPaymentRequestDelegate {
   void ShowDialog(PaymentRequest* request) override;
   void CloseDialog() override;
   void ShowErrorMessage() override;
+  void ShowProcessingSpinner() override;
   autofill::PersonalDataManager* GetPersonalDataManager() override;
   const std::string& GetApplicationLocale() const override;
   bool IsIncognito() const override;
@@ -46,6 +47,9 @@ class ChromePaymentRequestDelegate : public ContentPaymentRequestDelegate {
   scoped_refptr<PaymentManifestWebDataService>
   GetPaymentManifestWebDataService() const override;
   PaymentRequestDisplayManager* GetDisplayManager() override;
+  void EmbedPaymentHandlerWindow(
+      const GURL& url,
+      PaymentHandlerOpenWindowCallback callback) override;
 
  protected:
   // Reference to the dialog so that we can satisfy calls to CloseDialog(). This

@@ -17,6 +17,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "content/public/test/mock_download_item.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -291,7 +292,9 @@ TEST_F(DownloadItemModelTest, InterruptTooltip) {
     for (const base::string16& line :
          base::SplitString(truncated_tooltip, base::ASCIIToUTF16("\n"),
                            base::KEEP_WHITESPACE, base::SPLIT_WANT_NONEMPTY))
-      EXPECT_GE(kSmallTooltipWidth, gfx::GetStringWidth(line, font_list));
+      // Tooltips are always typeset with the native typesetter.
+      EXPECT_GE(kSmallTooltipWidth,
+                gfx::GetStringWidth(line, font_list, gfx::Typesetter::NATIVE));
   }
 }
 
