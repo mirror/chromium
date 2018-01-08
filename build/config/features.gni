@@ -48,7 +48,7 @@ declare_args() {
   # libudev usage. This currently only affects the content layer.
   use_udev = is_linux && !is_chromecast
 
-  use_dbus = is_linux && !is_chromecast
+  use_dbus = is_linux
 
   # Option controlling the use of GConf (the classic GNOME configuration
   # system).
