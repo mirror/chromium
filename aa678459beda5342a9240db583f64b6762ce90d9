@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06d93220_ed38801e",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-08T21:41:44Z",
+      "side": 1,
+      "message": "As you mentioned the term \"active\" is confusing so add a comment:\n\n// \"Active\" here means that sensor has been initialized and is either ready\n// or not available.",
+      "revId": "aa678459beda5342a9240db583f64b6762ce90d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ee4b2c_9a01d686",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-08T21:41:44Z",
+      "side": 1,
+      "message": "Try calling FireEvent() as you call SetData for each sensor type and assert that only after all the sensors have data is an event fired. Previous tests already check that if one sensor is unavailable the event is still fired if the others have data.",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 14
+      },
+      "revId": "aa678459beda5342a9240db583f64b6762ce90d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6521a2bb_c69ee7fc",
+        "filename": "content/renderer/device_sensors/fake_sensor_and_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-08T21:41:44Z",
+      "side": 1,
+      "message": "This method isn\u0027t necessary because this is the default state when the reading is initialized.",
+      "revId": "aa678459beda5342a9240db583f64b6762ce90d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
