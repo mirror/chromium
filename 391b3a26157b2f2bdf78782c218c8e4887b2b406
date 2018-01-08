@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b2eedaa9_f522917d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "I couldn\u0027t find a clean way to move it to NGPhysicalFragment. It seems really hacky to pass line boxes to the function.\n\nAdded a TODO for it.",
+      "parentUuid": "dd82c038_6f2c5e40",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 42
+      },
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bc4df90_bdbaefaa",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -93,6 +117,30 @@
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e070a53c_82ee51f2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "Added a TODO for it.",
+      "parentUuid": "7bc4df90_bdbaefaa",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +176,24 @@
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c5922b_6824d930",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "Marking as done...",
+      "parentUuid": "ce49c4b8_665525ee",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +268,24 @@
     },
     {
       "key": {
+        "uuid": "f431f453_ef1334d3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "Marking as resolved...",
+      "parentUuid": "83a57127_c72ea3a2",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c8634b_f8d8ad72",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -234,6 +318,24 @@
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9675bebd_9e9a8e3b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "Marking as done...",
+      "parentUuid": "814f3ef6_e98599fb",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -535,6 +637,24 @@
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c79e93_19b12d11",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c328b56_49de8cb0",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

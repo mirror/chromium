@@ -45,6 +45,54 @@
       "revId": "aaaa18024e6b10d8cb91ff648f8de3ab746601cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7454d692_c1beef00",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14a19aa3_1fcc9516",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "aaaa18024e6b10d8cb91ff648f8de3ab746601cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "202ba2cb_3d07f52d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "Marking as resolved for better tracking.",
+      "parentUuid": "6f732557_34c6362c",
+      "range": {
+        "startLine": 28,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "aaaa18024e6b10d8cb91ff648f8de3ab746601cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a2c5470_9e3c6a91",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-08T22:42:20Z",
+      "side": 1,
+      "message": "When we find a candidate, the offset must be at fragment boundary.",
+      "parentUuid": "657c0f9d_fd4dedf5",
+      "range": {
+        "startLine": 55,
+        "startChar": 26,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "72b8d112496968624bf2190b10e26d50d4aa9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eea1343b_e9644c9f",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
         "patchSetId": 14
