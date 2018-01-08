@@ -486,6 +486,24 @@
       "revId": "fead490422081b34a533394627104192b7c8d067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d09396_85e4b3c4",
+        "filename": "chrome/browser/extensions/api/settings_private/settings_private_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T21:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb31817_864ff34f",
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
