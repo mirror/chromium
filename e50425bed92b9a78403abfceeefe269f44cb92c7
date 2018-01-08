@@ -22,6 +22,30 @@
       "revId": "e50425bed92b9a78403abfceeefe269f44cb92c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43eb0818_05b6f9dd",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2018-01-08T23:10:59Z",
+      "side": 0,
+      "message": "This is a change left  from my previous CL. The next line is actually taking care of this, so this is redundant. (If value is empty, so is the sanitized value.)",
+      "parentUuid": "70d09ed9_eb20841c",
+      "range": {
+        "startLine": 806,
+        "startChar": 8,
+        "endLine": 806,
+        "endChar": 38
+      },
+      "revId": "e50425bed92b9a78403abfceeefe269f44cb92c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
