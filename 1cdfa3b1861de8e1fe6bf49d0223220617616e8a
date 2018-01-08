@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d5b62b_a3a44392",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:59:28Z",
+      "side": 1,
+      "message": "this is unused I think (views_test_base #includes it, for a data member, but i don\u0027t think it\u0027s exposed to subclasses)",
+      "revId": "1cdfa3b1861de8e1fe6bf49d0223220617616e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cddc0202_ba992762",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:59:28Z",
+      "side": 1,
+      "message": "ah, ok - TestViewsDelegate provides a base implementation, but the problem is that HoverButton has crhome-specific constants. So I\u0027d just update this like \"HoverButton uses layout provider constants in its layout\" -\u003e \"HoverButton uses Chrome-specific layout constants,\"",
+      "revId": "1cdfa3b1861de8e1fe6bf49d0223220617616e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42dfde60_30f925cd",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:59:28Z",
+      "side": 1,
+      "message": "this should be at the top of the for loop (i.e. after the |pair| declaration) (otherwise the EXPECT_EQ on line 108 won\u0027t be annotated).",
+      "revId": "1cdfa3b1861de8e1fe6bf49d0223220617616e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6548c94_588f3ee0",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-08T06:59:28Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "1cdfa3b1861de8e1fe6bf49d0223220617616e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
