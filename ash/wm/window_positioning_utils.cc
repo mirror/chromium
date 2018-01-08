@@ -152,10 +152,11 @@ void SetBoundsInScreen(aura::Window* window,
       origin.Offset(-display_origin.x(), -display_origin.y());
       gfx::Rect new_bounds = gfx::Rect(origin, bounds_in_screen.size());
 
-      // Set new bounds now so that the container's layout manager can adjust
-      // the bounds if necessary.
-      window->SetBounds(new_bounds);
-
+      // Set new size now so that the container's layout manager can adjust
+      // the bounds if necessary, but skip if the bounds can be controlled by
+      // the client.
+      if (!wm::GetWindowState(window)->allow_set_bounds_direct())
+        window->SetBounds(new_bounds);
       dst_container->AddChild(window);
 
       // Restore focused/active window.
