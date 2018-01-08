@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac674a16_36bcbfce",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1134889
+      },
+      "writtenOn": "2018-01-08T23:22:55Z",
+      "side": 1,
+      "message": "missing std::move(callback).Run({}, {});? Or remove if-check altogether\n\nSomewhat related, is it possible to create a stack-based object that would reply with an error/empty result if a reply is not explicitly sent? That would help ensure that we don\u0027t miss any returns, or future developers don\u0027t forget to add a reply.",
+      "range": {
+        "startLine": 296,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 10
+      },
+      "revId": "618c5a21ab79e6041846be93647635bae0929d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c167ae_aa762782",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1134889
+      },
+      "writtenOn": "2018-01-08T23:22:55Z",
+      "side": 1,
+      "message": "Another missing reply? What happens if the callback does not get run? Will the renderer just wait forever? I don\u0027t expect CreateNumbersubstitution/CreateTextAnalysisSource/MapCharacters to fail, but if they do, I think it would be better to use the wrong font or the unrenderable character glyph instead of blocking the renderer.",
+      "range": {
+        "startLine": 388,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 10
+      },
+      "revId": "618c5a21ab79e6041846be93647635bae0929d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
