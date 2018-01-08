@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e94b5687_e5c5075c",
+        "filename": "base/allocator/allocator_shim_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-08T11:10:49Z",
+      "side": 1,
+      "message": "why do you need to change this? the allocation sizes in the test below doesn\u0027t seem to be dependent on the page size. What is failing?\n\nIf something is dependent on the page size, either:\n1) we should fix the text fixture to have an absolute size:\nor\n2) this constant should be a function of GetPageSize().",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "e380633205d1a1933abd6e8ed8125d3a73672861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
