@@ -4,6 +4,7 @@ include_rules = [
   "+components/about_handler",
   "+components/guest_view/common",
   "+components/language/core/browser",
+  "+components/upload_list",
   "+services/device/public",
    # Enable remote assistance on Chrome OS
   "+remoting/base",
