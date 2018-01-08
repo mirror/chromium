@@ -170,4 +170,6 @@ mojom("mojo_bindings") {
   export_class_attribute_blink = "CORE_EXPORT"
   export_define_blink = "BLINK_CORE_IMPLEMENTATION=1"
   export_header_blink = "third_party/WebKit/Source/core/CoreExport.h"
+
+  support_lazy_serialization = true
 }

@@ -370,6 +370,27 @@ void SerializedScriptValue::TransferArrayBuffers(
       TransferArrayBufferContents(isolate, array_buffers, exception_state);
 }
 
+void SerializedScriptValue::CloneSharedArrayBuffers(
+    v8::Isolate* isolate,
+    SharedArrayBufferArray& array_buffers,
+    ExceptionState& exception_state) {
+  if (!array_buffers.size())
+    return;
+
+  HeapHashSet<Member<DOMArrayBufferBase>> visited;
+  shared_array_buffer_contents_array_.Grow(array_buffers.size());
+  uint32_t i = 0;
+  for (auto it = array_buffers.begin(); it != array_buffers.end(); ++it) {
+    DOMSharedArrayBuffer* shared_array_buffer = *it;
+    if (visited.Contains(shared_array_buffer))
+      continue;
+    visited.insert(shared_array_buffer);
+    shared_array_buffer->ShareContentsWith(
+        shared_array_buffer_contents_array_.at(i));
+    i++;
+  }
+}
+
 v8::Local<v8::Value> SerializedScriptValue::Deserialize(
     v8::Isolate* isolate,
     const DeserializeOptions& options) {
@@ -391,6 +412,7 @@ UnpackedSerializedScriptValue* SerializedScriptValue::Unpack(
 
 bool SerializedScriptValue::HasPackedContents() const {
   return !array_buffer_contents_array_.IsEmpty() ||
+         !shared_array_buffer_contents_array_.IsEmpty() ||
          !image_bitmap_contents_array_.IsEmpty();
 }
 
@@ -571,6 +593,8 @@ void SerializedScriptValue::
   if (!transferables_need_external_allocation_registration_) {
     for (auto& buffer : array_buffer_contents_array_)
       buffer.UnregisterExternalAllocationWithCurrentContext();
+    for (auto& buffer : shared_array_buffer_contents_array_)
+      buffer.UnregisterExternalAllocationWithCurrentContext();
     transferables_need_external_allocation_registration_ = true;
   }
 }
@@ -588,6 +612,8 @@ void SerializedScriptValue::RegisterMemoryAllocatedWithCurrentScriptContext() {
   // SerializedScriptValue has explicitly unregistered them before.
   if (transferables_need_external_allocation_registration_) {
     for (auto& buffer : array_buffer_contents_array_)
+      buffer.RegisterExternalAllocationWithCurrentContext();
+    for (auto& buffer : shared_array_buffer_contents_array_)
       buffer.RegisterExternalAllocationWithCurrentContext();
   }
 }

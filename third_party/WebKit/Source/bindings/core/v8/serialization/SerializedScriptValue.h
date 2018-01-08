@@ -56,14 +56,17 @@ class SharedBuffer;
 class StaticBitmapImage;
 class UnpackedSerializedScriptValue;
 class WebBlobInfo;
+class DOMSharedArrayBuffer;
 
 typedef HashMap<String, scoped_refptr<BlobDataHandle>> BlobDataHandleMap;
 typedef Vector<WebBlobInfo> WebBlobInfoArray;
+typedef HeapVector<Member<DOMSharedArrayBuffer>> SharedArrayBufferArray;
 
 class CORE_EXPORT SerializedScriptValue
     : public ThreadSafeRefCounted<SerializedScriptValue> {
  public:
   using ArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
+  using SharedArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
   using ImageBitmapContentsArray = Vector<scoped_refptr<StaticBitmapImage>, 1>;
   using TransferredWasmModulesArray =
       WTF::Vector<v8::WasmCompiledModule::TransferrableModule>;
@@ -255,7 +258,9 @@ class CORE_EXPORT SerializedScriptValue
   void TransferOffscreenCanvas(v8::Isolate*,
                                const OffscreenCanvasArray&,
                                ExceptionState&);
-
+  void CloneSharedArrayBuffers(v8::Isolate*,
+                               SharedArrayBufferArray&,
+                               ExceptionState&);
   DataBufferPtr data_buffer_;
   size_t data_buffer_size_ = 0;
 
@@ -267,6 +272,7 @@ class CORE_EXPORT SerializedScriptValue
   // These do not have one-use transferred contents, like the above.
   TransferredWasmModulesArray wasm_modules_;
   BlobDataHandleMap blob_data_handles_;
+  SharedArrayBufferContentsArray shared_array_buffer_contents_array_;
 
   bool has_registered_external_allocation_;
   bool transferables_need_external_allocation_registration_;

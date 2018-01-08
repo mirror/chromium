@@ -2838,7 +2838,6 @@ crbug.com/688515 fast/spatial-navigation/snav-div-overflow-scrol-hidden.html [ P
 
 crbug.com/716320 external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/broadcastchannel-success-and-failure.html [ Timeout ]
 crbug.com/716320 external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/broadcastchannel-success.html [ Timeout ]
-crbug.com/716320 external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/window-messagechannel-success.html [ Timeout ]
 crbug.com/716320 external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/window-sharedworker-failure.html [ Timeout ]
 
 # Flaky on trybots
