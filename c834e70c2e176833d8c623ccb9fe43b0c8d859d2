@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b9aeb8e_79bfb5a7",
+        "filename": "ui/base/cocoa/weak_ptr_object.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-08T21:11:03Z",
+      "side": 1,
+      "message": "Can you expand this comment a bit more? Do clients always have to use a base::WeakPtr\u003cT\u003e here (and why)? Also, why/when would a client need to use this?",
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5801af6_f61a0089",
+        "filename": "ui/base/cocoa/weak_ptr_object.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-08T21:11:03Z",
+      "side": 1,
+      "message": "NSObject to make it clear that this is for ObjC stuff?",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4a7217_675cc715",
+        "filename": "ui/base/cocoa/weak_ptr_object.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-08T21:11:03Z",
+      "side": 1,
+      "message": "Perhaps a simple unittest for this?",
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7f149c_48cea88a",
+        "filename": "ui/base/cocoa/weak_ptr_object.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-08T21:11:03Z",
+      "side": 1,
+      "message": "naming: WeakPtrNSObject to make it clear that this isn\u0027t related to the //base-variety?",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "c834e70c2e176833d8c623ccb9fe43b0c8d859d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
