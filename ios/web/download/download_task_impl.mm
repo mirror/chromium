@@ -9,6 +9,7 @@
 
 #import "base/mac/bind_objc_block.h"
 #include "base/strings/sys_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #import "ios/web/net/cookies/wk_cookie_util.h"
 #include "ios/web/public/browser_state.h"
 #import "ios/web/public/download/download_task_observer.h"
@@ -25,11 +26,14 @@
 #error "This file requires ARC support."
 #endif
 
+using web::WebThread;
+
 namespace {
 
 // CRWURLSessionDelegate block types.
 using PropertiesBlock = void (^)(NSURLSessionTask*, NSError*);
-using DataBlock = void (^)(scoped_refptr<net::IOBufferWithSize> buffer);
+using DataBlock = void (^)(scoped_refptr<net::IOBufferWithSize> buffer,
+                           void (^completionHandler)(void));
 
 // Translates an CFNetwork error code to a net error code. Returns 0 if |error|
 // is nil.
@@ -60,29 +64,32 @@ int GetTaskPercentComplete(NSURLSessionTask* task) {
   return 100.0 * task.countOfBytesReceived / task.countOfBytesExpectedToReceive;
 }
 
-// Used as no-op callback.
-void DoNothing(int) {}
-
 }  // namespace
 
 // NSURLSessionDataDelegate that forwards data and properties task updates to
 // the client. Client of this delegate can pass blocks to receive the updates.
 @interface CRWURLSessionDelegate : NSObject<NSURLSessionDataDelegate>
+
+// Called when DownloadTaskImpl should update its properties (is_done,
+// error_code, total_bytes, and percent_complete) and call OnDownloadUpdated
+// callback.
+@property(nonatomic, readonly) PropertiesBlock propertiesBlock;
+// Called when DownloadTaskImpl should write a chunk of downloaded data.
+@property(nonatomic, readonly) DataBlock dataBlock;
+
 - (instancetype)init NS_UNAVAILABLE;
-// Initializes delegate with blocks. |propertiesBlock| is called when
-// DownloadTaskImpl should update its properties (is_done, error_code,
-// total_bytes, and percent_complete) and call OnDownloadUpdated callback.
-// |dataBlock| is called when DownloadTaskImpl should write a chunk of
-// downloaded data.
+// Initializes delegate with blocks.
 - (instancetype)initWithPropertiesBlock:(PropertiesBlock)propertiesBlock
                               dataBlock:(DataBlock)dataBlock
     NS_DESIGNATED_INITIALIZER;
 @end
 
 @implementation CRWURLSessionDelegate {
-  PropertiesBlock _propertiesBlock;
-  DataBlock _dataBlock;
+  scoped_refptr<base::SequencedTaskRunner> _taskRunner;
 }
+
+@synthesize propertiesBlock = _propertiesBlock;
+@synthesize dataBlock = _dataBlock;
 
 - (instancetype)initWithPropertiesBlock:(PropertiesBlock)propertiesBlock
                               dataBlock:(DataBlock)dataBlock {
@@ -91,6 +98,8 @@ void DoNothing(int) {}
   if ((self = [super init])) {
     _propertiesBlock = propertiesBlock;
     _dataBlock = dataBlock;
+    _taskRunner = base::CreateSequencedTaskRunnerWithTraits(
+        {base::MayBlock(), base::TaskPriority::BACKGROUND});
   }
   return self;
 }
@@ -104,12 +113,26 @@ void DoNothing(int) {}
 - (void)URLSession:(NSURLSession*)session
           dataTask:(NSURLSessionDataTask*)task
     didReceiveData:(NSData*)data {
-  using Bytes = const void* _Nonnull;
-  [data enumerateByteRangesUsingBlock:^(Bytes bytes, NSRange range, BOOL*) {
-    auto buffer = GetBuffer(bytes, range.length);
-    _dataBlock(std::move(buffer));
-  }];
-  _propertiesBlock(task, nil);
+  __weak CRWURLSessionDelegate* weakSelf = self;
+  // This callback is received on the UI thread which should not be blocked by
+  // disk IO operation.
+  _taskRunner->PostTask(FROM_HERE, base::BindBlockArc(^{
+    using Bytes = const void* _Nonnull;
+    [data enumerateByteRangesUsingBlock:^(Bytes bytes, NSRange range, BOOL*) {
+      // Block this backgound task until chunk of data is written.
+      dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+      auto buffer = GetBuffer(bytes, range.length);
+      WebThread::PostTask(WebThread::UI, FROM_HERE, base::BindBlockArc(^{
+        weakSelf.dataBlock(std::move(buffer), ^{
+          dispatch_semaphore_signal(semaphore);
+        });
+      }));
+      dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    }];
+    WebThread::PostTask(WebThread::UI, FROM_HERE, base::BindBlockArc(^{
+      weakSelf.propertiesBlock(task, nil);
+    }));
+  }));
 }
 
 - (void)URLSession:(NSURLSession*)session
@@ -289,12 +312,13 @@ NSURLSession* DownloadTaskImpl::CreateSession(NSString* identifier) {
           OnDownloadFinished(error_code_);
         }
       }
-      dataBlock:^(scoped_refptr<net::IOBufferWithSize> buffer) {
+      dataBlock:^(scoped_refptr<net::IOBufferWithSize> buffer,
+                  void (^completion_handler)()) {
         if (weak_this.get()) {
-          // Ignore Write's completion handler. |dataBlock| may be called
-          // multiple times for a single downloaded chunk of data and there is
-          // no need to wait for writing completion.
-          writer_->Write(buffer.get(), buffer->size(), base::Bind(&DoNothing));
+          writer_->Write(buffer.get(), buffer->size(),
+                         base::BindBlockArc(^(int) {
+                           completion_handler();
+                         }));
         }
       }];
   return delegate_->CreateSession(identifier, session_delegate,
