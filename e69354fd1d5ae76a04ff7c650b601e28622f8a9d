@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "b06b3dcd_f1675b76",
+        "filename": ".gitignore",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-08T18:50:25Z",
+      "side": 1,
+      "message": "A patch with new assets will come soon. Will change it then ;) NB: at the moment the assets are only used for the testapp. However, I plan on using them for other things too in the future.",
+      "parentUuid": "1ec47e3d_3fd9144b",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38cf7d85_c567d1c5",
         "filename": "DEPS",
         "patchSetId": 4
