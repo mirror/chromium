@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8cff1fa1_395ecc0c",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-08T21:50:05Z",
+      "side": 1,
+      "message": "Hey -- A map\u003cGURL, list\u003cCallback\u003e\u003e would be basically the same thing... I thought multimap was the canonical data structure that we used for these situations.\n\nI also use \u0027it\u0027 as a hint as to where to insert the new entry in line 47. Theoretically because we have already found the position to insert the new element it\u0027s a bit faster.\n\nAnyways I thought multimap was the canonical thing to use in these cases but I\u0027m flexible to change it to map\u003cGURL, list\u003e if you think that\u0027s more readable.\n\nlet me know",
+      "parentUuid": "fb24776d_57d8c29e",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "19ba072328ede105f39d0fa5ffe545c89eb66bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce9b01c5_1b29406a",
         "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
         "patchSetId": 4
