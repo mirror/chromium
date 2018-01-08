@@ -16,7 +16,7 @@
 #include "net/base/io_buffer.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_registration.mojom.h"
 
 namespace content {
 

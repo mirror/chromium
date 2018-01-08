@@ -22,8 +22,8 @@
 #include "public/platform/site_engagement.mojom-shared.h"
 #include "public/web/WebTextDirection.h"
 #include "public/web/selection_menu_behavior.mojom-shared.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
-#include "third_party/WebKit/common/sandbox_flags.h"
+#include "third_party/WebKit/public/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/public/common/frame/sandbox_flags.h"
 #include "v8/include/v8.h"
 
 namespace blink {

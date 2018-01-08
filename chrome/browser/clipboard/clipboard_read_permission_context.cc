@@ -5,7 +5,7 @@
 #include "chrome/browser/clipboard/clipboard_read_permission_context.h"
 
 #include "components/content_settings/core/common/content_settings_types.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
+#include "third_party/WebKit/public/common/feature_policy/feature_policy_feature.h"
 
 ClipboardReadPermissionContext::ClipboardReadPermissionContext(Profile* profile)
     : PermissionContextBase(profile,
