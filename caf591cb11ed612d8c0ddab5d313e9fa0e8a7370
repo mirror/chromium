@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5448df5b_9c709a1e",
+        "filename": "ash/system/power/power_button_controller_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-08T22:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c07b83e9_1e11b93d",
+      "revId": "caf591cb11ed612d8c0ddab5d313e9fa0e8a7370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5486dab7_5c7151f9",
         "filename": "ash/system/power/power_button_controller_util.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "caf591cb11ed612d8c0ddab5d313e9fa0e8a7370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f90d1b_22f8ec77",
+        "filename": "ash/system/power/power_button_controller_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-08T22:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5486dab7_5c7151f9",
+      "revId": "caf591cb11ed612d8c0ddab5d313e9fa0e8a7370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
