@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "1b07d8db_30fc2300",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-01-08T05:01:05Z",
+      "side": 1,
+      "message": "I don\u0027t know. I added some for the parsing for the feature engagement stuff. But I don\u0027t think it\u0027s necessary at all here.",
+      "parentUuid": "f511647d_619b732d",
+      "range": {
+        "startLine": 383,
+        "startChar": 49,
+        "endLine": 384,
+        "endChar": 28
+      },
+      "revId": "2d676fc455e648cd759537710679ae0b45787460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6917e841_8a935531",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
         "patchSetId": 1
@@ -175,6 +199,30 @@
       "revId": "2d676fc455e648cd759537710679ae0b45787460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30dc22c_d0861cd9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-01-08T05:01:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a998501_0d44589c",
+      "range": {
+        "startLine": 387,
+        "startChar": 37,
+        "endLine": 388,
+        "endChar": 97
+      },
+      "revId": "2d676fc455e648cd759537710679ae0b45787460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
