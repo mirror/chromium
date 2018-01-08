@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b19a5d1e_f669e674",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-08T17:21:59Z",
+      "side": 1,
+      "message": "As a reader, I am unable to verify if this formula is correct, because there is no easy way to see what unit |minFrameDuration| is intended to be in. Could you do me a favor and change the variable name to reveal the units it is using?\n\nAssuming it is using nanoseconds, this seems correct.",
+      "revId": "7ad712d5651eb4bb26035e99aaa05f838f4bd9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
