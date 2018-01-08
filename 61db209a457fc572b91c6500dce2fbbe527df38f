@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cd4751d_8f0d29e3",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-08T19:35:46Z",
+      "side": 1,
+      "message": "nit: extract common code.",
+      "revId": "61db209a457fc572b91c6500dce2fbbe527df38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
