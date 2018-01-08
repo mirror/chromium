@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faead734_c6e73899",
+        "filename": "chrome/browser/vr/elements/button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-08T15:52:13Z",
+      "side": 1,
+      "message": "Wouldn\u0027t you also want this test case to also set a non-zero hover and check for EXPECT_NE(), for coverage and symmetry?",
+      "revId": "eb06674030d196ad3f79a5f0f7f38334e4d178e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
