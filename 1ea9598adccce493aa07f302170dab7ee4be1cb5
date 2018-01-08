@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84afbcf6_e4377e1b",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-08T17:54:33Z",
+      "side": 1,
+      "message": "Can we spell out the \"NetworkErrorLogging\" flag name?",
+      "range": {
+        "startLine": 114,
+        "startChar": 35,
+        "endLine": 114,
+        "endChar": 38
+      },
+      "revId": "1ea9598adccce493aa07f302170dab7ee4be1cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85686f11_50abe96b",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-08T17:54:33Z",
+      "side": 1,
+      "message": "Do we expect more options or just enable / disable? \nIf it is just enable / disable, then we may not need the dictionary.",
+      "range": {
+        "startLine": 116,
+        "startChar": 11,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "1ea9598adccce493aa07f302170dab7ee4be1cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
