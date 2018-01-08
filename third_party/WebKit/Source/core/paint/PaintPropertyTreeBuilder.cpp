@@ -1,5 +1,5 @@
 // Copyright 2015 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
+// Use o.pp this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "core/paint/PaintPropertyTreeBuilder.h"
@@ -43,6 +43,24 @@ PaintPropertyTreeBuilderFragmentContext::
       TransformPaintPropertyNode::Root();
   current.scroll = absolute_position.scroll = fixed_position.scroll =
       ScrollPaintPropertyNode::Root();
+}
+
+static bool NeedsFrameContentClip(const LocalFrame& frame) {
+  if (!frame.GetDocument()->Printing())
+    return true;
+
+  // Don't issue frame content clip the frame is the root frame of printing.
+  // WebLocalFrameImpl will issue artificial page clip for each page instead.
+  const auto* parent_frame = frame.Tree().Parent();
+  if (!parent_frame)
+    return false;
+  // TODO(crbug.com/455764): The local frame may not be the root frame of
+  // printing root when it's printing under a remote frame.
+  if (!parent_frame->IsLocalFrame())
+    return false;
+
+  // If the parent frame is printing, this frame should clip normally.
+  return ToLocalFrame(parent_frame)->GetDocument()->Printing();
 }
 
 // True if a new property was created, false if an existing one was updated.
@@ -189,7 +207,9 @@ void FrameViewPaintPropertyTreeBuilder::Update(
         frame_view, context.current.transform, frame_translate, FloatPoint3D());
 
     FloatRoundedRect content_clip(
-        IntRect(IntPoint(), frame_view.VisibleContentSize()));
+        NeedsFrameContentClip(frame_view.GetFrame())
+            ? IntRect(IntPoint(), frame_view.VisibleContentSize())
+            : LayoutRect::InfiniteIntRect());
     full_context.force_subtree_update |= UpdateContentClip(
         frame_view, context.current.clip, frame_view.PreTranslation(),
         content_clip, full_context.clip_changed);
@@ -940,7 +960,9 @@ void FragmentPaintPropertyTreeBuilder::UpdateLocalBorderBoxContext() {
 }
 
 static bool NeedsOverflowClip(const LayoutObject& object) {
-  return object.IsBox() && ToLayoutBox(object).ShouldClipOverflow();
+  return object.IsBox() && ToLayoutBox(object).ShouldClipOverflow() &&
+         (!object.IsLayoutView() ||
+          NeedsFrameContentClip(*ToLayoutView(object).GetFrame()));
 }
 
 static bool NeedsInnerBorderRadiusClip(const LayoutObject& object) {
