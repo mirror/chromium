@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acb50096_4c179ac7",
+        "filename": "third_party/WebKit/Source/core/html/RelList.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-08T12:48:30Z",
+      "side": 1,
+      "message": "AFAICT only \"noreferrer\" and \"noopener\" actually incur processing in Blink: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLAnchorElement.cpp?rcl\u003de50425bed92b9a78403abfceeefe269f44cb92c7\u0026l\u003d287",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "877196fbe2216ba3170040a38049e71d6e904104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
