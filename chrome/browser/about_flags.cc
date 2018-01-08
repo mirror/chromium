@@ -1597,11 +1597,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableUsernameCorrectionName,
      flag_descriptions::kEnableUsernameCorrectionDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(password_manager::features::kEnableUsernameCorrection)},
-    {"enable-password-force-saving",
+    {"PasswordForceSaving",
      flag_descriptions::kPasswordForceSavingName,
      flag_descriptions::kPasswordForceSavingDescription, kOsAll,
      FEATURE_VALUE_TYPE(
-         password_manager::features::kEnablePasswordForceSaving)},
+         password_manager::features::kPasswordForceSaving)},
     {"enable-manual-password-generation",
      flag_descriptions::kManualPasswordGenerationName,
      flag_descriptions::kManualPasswordGenerationDescription, kOsAll,
