@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9af859b_0743e722",
+        "filename": "content/public/browser/web_ui_data_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T15:20:18Z",
+      "side": 1,
+      "message": "Since we pass in the resource ID above in AddResourcePath/SetDefaultResource, and grit knows which IDs are zipped, why do we need to explicitly pass this map to webui code? i.e. why can\u0027t it use the resource IDs as a key to a global map that\u0027s generated, the same way it can use the single ID to get the resource data?",
+      "revId": "ad22225533ce882dd68bfbb714d0f4d4cbe9e38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ea551f_f72108e1",
+        "filename": "content/public/browser/web_ui_data_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T15:20:18Z",
+      "side": 1,
+      "message": "I don\u0027t understand the comment, since there\u0027s no return value?",
+      "revId": "ad22225533ce882dd68bfbb714d0f4d4cbe9e38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
