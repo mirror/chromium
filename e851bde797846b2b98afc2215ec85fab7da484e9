@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eecd2f7_ef3b1777",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/components/color-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-08T17:47:51Z",
+      "side": 1,
+      "message": "Why is this \u0027rgba\u0027 and not \u0027rgb\u0027?",
+      "range": {
+        "startLine": 139,
+        "startChar": 3,
+        "endLine": 139,
+        "endChar": 7
+      },
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9871cca5_d6b19fce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-08T17:47:51Z",
+      "side": 1,
+      "message": "This is components.trim(), right? Should be easier to understand. Also, you can just trim at line 113.",
+      "range": {
+        "startLine": 116,
+        "startChar": 28,
+        "endLine": 116,
+        "endChar": 53
+      },
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96c759b_edc2479a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-08T17:47:51Z",
+      "side": 1,
+      "message": "Might be easier to initially split by /\\s+|\\// instead and drop any empty parts.",
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed6a51e_124d3524",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-08T17:47:51Z",
+      "side": 1,
+      "message": "There could also be \u0027e-10\u0027 notation. Number.isInteger(parsed) should be better.",
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd025493_379b972b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-08T17:47:51Z",
+      "side": 1,
+      "message": "Extract this to a variable and reuse below.",
+      "range": {
+        "startLine": 198,
+        "startChar": 14,
+        "endLine": 198,
+        "endChar": 52
+      },
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b68ec22_a2cb9fbb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-08T17:47:51Z",
+      "side": 1,
+      "message": "Do we need this second check? I think it only catches something like \"grad\" which should also fail the first check.",
+      "range": {
+        "startLine": 198,
+        "startChar": 57,
+        "endLine": 198,
+        "endChar": 68
+      },
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1680e1d6_63fd760c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-08T17:47:51Z",
+      "side": 1,
+      "message": "This allows \u0027123%%\u0027. We should check for |value.indexOf(\u0027%\u0027) \u003d\u003d\u003d value.length - 1|.",
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff58f59f_0565d31c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-08T17:47:51Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "e851bde797846b2b98afc2215ec85fab7da484e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
