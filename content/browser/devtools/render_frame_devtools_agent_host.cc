@@ -326,7 +326,6 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
 
 void RenderFrameDevToolsAgentHost::DetachSession(int session_id) {
   // Destroying session automatically detaches in renderer.
-  suspended_messages_by_session_id_.erase(session_id);
   if (sessions().empty()) {
     frame_trace_recorder_.reset();
     RevokePolicy();
@@ -341,15 +340,8 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
     const std::string& message) {
   int call_id = 0;
   std::string method;
-  int session_id = session->session_id();
   if (session->Dispatch(message, &call_id, &method) !=
       protocol::Response::kFallThrough) {
-    return true;
-  }
-
-  if (!navigation_handles_.empty()) {
-    suspended_messages_by_session_id_[session_id].push_back(
-        {call_id, method, message});
     return true;
   }
 
@@ -392,25 +384,11 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
       static_cast<NavigationHandleImpl*>(navigation_handle);
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
-  navigation_handles_.erase(handle);
 
   // UpdateFrameHost may destruct |this|.
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
   UpdateFrameHost(frame_tree_node_->current_frame_host());
 
-  if (navigation_handles_.empty()) {
-    for (auto& pair : suspended_messages_by_session_id_) {
-      int session_id = pair.first;
-      DevToolsSession* session = SessionById(session_id);
-      for (const Message& message : pair.second) {
-        session->DispatchProtocolMessageToAgent(message.call_id, message.method,
-                                                message.message);
-        session->waiting_messages()[message.call_id] = {message.method,
-                                                        message.message};
-      }
-    }
-    suspended_messages_by_session_id_.clear();
-  }
   if (handle->HasCommitted()) {
     for (auto* target : protocol::TargetHandler::ForAgentHost(this))
       target->DidCommitNavigation();
@@ -494,15 +472,6 @@ void RenderFrameDevToolsAgentHost::RevokePolicy() {
     ChildProcessSecurityPolicyImpl::GetInstance()->RevokeReadRawCookies(
         process_host->GetID());
   }
-}
-
-void RenderFrameDevToolsAgentHost::DidStartNavigation(
-    NavigationHandle* navigation_handle) {
-  NavigationHandleImpl* handle =
-      static_cast<NavigationHandleImpl*>(navigation_handle);
-  if (handle->frame_tree_node() != frame_tree_node_)
-    return;
-  navigation_handles_.insert(handle);
 }
 
 void RenderFrameDevToolsAgentHost::RenderFrameHostChanged(
@@ -628,7 +597,6 @@ void RenderFrameDevToolsAgentHost::DidReceiveCompositorFrame() {
 
 void RenderFrameDevToolsAgentHost::DisconnectWebContents() {
   frame_tree_node_ = nullptr;
-  navigation_handles_.clear();
   WebContentsObserver::Observe(nullptr);
   UpdateFrameHost(nullptr);
   // UpdateFrameHost may destruct |this|.

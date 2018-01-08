@@ -8,7 +8,7 @@
   await dp.Page.reload();
   dp.Page.setLifecycleEventsEnabled({enabled: true});
   await dp.Page.onceLifecycleEvent(event => event.params.name === 'load');
-
+  await new Promise(resolve => setTimeout(1000, resolve));
   testRunner.log('Querying window.foo after reload (expect "undefined"): ' + (await session.evaluate(() => window.foo)));
   testRunner.completeTest();
 })

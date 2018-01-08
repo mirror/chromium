@@ -35,7 +35,6 @@ class BrowserContext;
 class DevToolsFrameTraceRecorder;
 class FrameTreeNode;
 class NavigationHandle;
-class NavigationHandleImpl;
 class NavigationRequest;
 class NavigationThrottle;
 class RenderFrameHostImpl;
@@ -106,7 +105,6 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
       const std::string& message) override;
 
   // WebContentsObserver overrides.
-  void DidStartNavigation(NavigationHandle* navigation_handle) override;
   void ReadyToCommitNavigation(NavigationHandle* navigation_handle) override;
   void DidFinishNavigation(NavigationHandle* navigation_handle) override;
   void RenderFrameHostChanged(RenderFrameHost* old_host,
@@ -145,17 +143,7 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   // The active host we are talking to.
   RenderFrameHostImpl* frame_host_ = nullptr;
   mojom::DevToolsAgentAssociatedPtr agent_ptr_;
-  base::flat_set<NavigationHandleImpl*> navigation_handles_;
   bool render_frame_alive_ = false;
-
-  // These messages were queued after suspending, not sent to the agent,
-  // and will be sent after resuming.
-  struct Message {
-    int call_id;
-    std::string method;
-    std::string message;
-  };
-  std::map<int, std::vector<Message>> suspended_messages_by_session_id_;
 
   // The FrameTreeNode associated with this agent.
   FrameTreeNode* frame_tree_node_;
