@@ -50,6 +50,24 @@
       "revId": "fa3a15b47e71225d0044fbdd2c422ae2791393d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d7825dd_5653f02d",
+        "filename": "ui/views/accessibility/ax_window_obj_wrapper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T18:51:58Z",
+      "side": 1,
+      "message": "I agree it\u0027s a little confusing and asymmetrical for AXViewObjWrapper to\nget the unique ID from ViewAccessibility and the other wrappers to get\ntheir own unique ID. But, I don\u0027t see why it won\u0027t work. AXAuraObjCache\nis still keeping track of a map from unique ID to object. The only difference\nis who provides the ID when a new wrapper is created.",
+      "parentUuid": "9fe6314e_67e5fde2",
+      "revId": "fa3a15b47e71225d0044fbdd2c422ae2791393d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
