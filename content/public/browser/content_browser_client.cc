@@ -608,4 +608,9 @@ void ContentBrowserClient::CreateUsbChooserService(
     RenderFrameHost* render_frame_host,
     device::mojom::UsbChooserServiceRequest request) {}
 
+void ContentBrowserClient::ShowPaymentHandlerWindow(
+    content::BrowserContext* browser_context,
+    int request_id,
+    const GURL& url) {}
+
 }  // namespace content

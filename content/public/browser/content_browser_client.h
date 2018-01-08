@@ -994,6 +994,11 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual void CreateUsbChooserService(
       RenderFrameHost* render_frame_host,
       device::mojom::UsbChooserServiceRequest request);
+
+  virtual void ShowPaymentHandlerWindow(
+      content::BrowserContext* browser_context,
+      int request_id,
+      const GURL& url);
 };
 
 }  // namespace content

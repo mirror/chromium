@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "url/gurl.h"
 
 namespace payments {
 
@@ -21,12 +22,15 @@ class PaymentRequestDisplayManager : public KeyedService {
  public:
   class DisplayHandle {
    public:
-    explicit DisplayHandle(PaymentRequestDisplayManager* display_manager);
+    explicit DisplayHandle(PaymentRequestDisplayManager* display_manager,
+                           ContentPaymentRequestDelegate* delegate);
     ~DisplayHandle();
-    void Show(ContentPaymentRequestDelegate* delegate, PaymentRequest* request);
+    void Show(PaymentRequest* request);
+    void DisplayPaymentHandlerWindow(const GURL& url);
 
    private:
     PaymentRequestDisplayManager* display_manager_;
+    ContentPaymentRequestDelegate* delegate_;
     DISALLOW_COPY_AND_ASSIGN(DisplayHandle);
   };
 
@@ -36,12 +40,14 @@ class PaymentRequestDisplayManager : public KeyedService {
   // If no PaymentRequest is currently showing, returns a unique_ptr to a
   // display handle that can be used to display the PaymentRequest dialog. The
   // UI is considered open until the handle object is deleted.
-  std::unique_ptr<DisplayHandle> TryShow();
+  std::unique_ptr<DisplayHandle> TryShow(
+      ContentPaymentRequestDelegate* delegate);
+  void ShowPaymentHandlerWindow(const GURL& url);
 
  private:
-  void SetHandleAlive(bool handle_alive);
+  void SetCurrentHandle(DisplayHandle* handle);
 
-  bool handle_alive_;
+  DisplayHandle* current_handle_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentRequestDisplayManager);
 };
