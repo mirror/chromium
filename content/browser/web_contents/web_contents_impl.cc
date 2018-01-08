@@ -5768,8 +5768,8 @@ void WebContentsImpl::CreateBrowserPluginEmbedderIfNecessary() {
 }
 
 gfx::Size WebContentsImpl::GetSizeForNewRenderView() {
-  gfx::Size size;
-  if (delegate_)
+  gfx::Size size = device_emulation_size_;
+  if (size.IsEmpty() && delegate_)
     size = delegate_->GetSizeForNewRenderView(this);
   if (size.IsEmpty())
     size = GetContainerBounds().size();
@@ -5903,6 +5903,27 @@ void WebContentsImpl::SetForceDisableOverscrollContent(bool force_disable) {
   force_disable_overscroll_content_ = force_disable;
   if (view_)
     view_->SetOverscrollControllerEnabled(CanOverscrollContent());
+}
+
+bool WebContentsImpl::SetDeviceEmulationSize(const gfx::Size& new_size) {
+  device_emulation_size_ = new_size;
+  RenderWidgetHostView* view = GetMainFrame()->GetView();
+
+  const gfx::Size current_size = view->GetViewBounds().size();
+  if (view_size_before_emulation_.IsEmpty())
+    view_size_before_emulation_ = current_size;
+
+  if (current_size != new_size)
+    view->SetSize(new_size);
+
+  return current_size != new_size;
+}
+
+void WebContentsImpl::ClearDeviceEmulationSize() {
+  device_emulation_size_ = gfx::Size();
+  DCHECK(!view_size_before_emulation_.IsEmpty());
+  GetMainFrame()->GetView()->SetSize(view_size_before_emulation_);
+  view_size_before_emulation_ = gfx::Size();
 }
 
 void WebContentsImpl::MediaStartedPlaying(
