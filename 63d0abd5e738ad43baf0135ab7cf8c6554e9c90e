@@ -34,6 +34,24 @@
       "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafc71c2_bca86c5f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-08T00:29:14Z",
+      "side": 1,
+      "message": "i understand that you\u0027re interested in being able to distinguish whether a given active tab is likely to be \"in the forefront\", but i still don\u0027t understand why that wouldn\u0027t already be possible to figure out by checking is_active \u0026\u0026 is_browser_focused (given a tab-property version of is_active). will the system that\u0027s consuming these logs be able to infer correlations like that?",
+      "parentUuid": "8b8b447f_370532e7",
+      "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
