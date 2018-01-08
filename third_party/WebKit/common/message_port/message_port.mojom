@@ -18,6 +18,7 @@ struct CloneableMessage {
   array<uint8> encoded_message;
   // Blob handles for any blobs being sent in this message.
   array<SerializedBlob> blobs;
+  array<SerializedArrayBufferContents> arrayBufferContentsArray;
 };
 
 // This struct combines the cloneable part of a message with the parts of the
@@ -28,6 +29,7 @@ struct TransferableMessage {
   CloneableMessage message;
   // Any ports being transfered as part of this message.
   array<handle<message_pipe>> ports;
+  // array<SerializedImageBitmap> imageBitmaps;
 };
 
 // Struct wrapping a Blob interface pointer.
@@ -40,3 +42,38 @@ struct SerializedBlob {
   uint64 size;
   Blob blob;
 };
+
+struct SerializedArrayBufferContents {
+        array<uint8> contents;
+};
+
+//struct SerializedImageBitmap {
+//        array<uint8> pixel_data;
+//        uint32 width;
+        // uint32 height;
+        // bool is_image_bitmap_premultiplied;
+        // bool is_image_bitmap_origin_clean;
+        // SerializedCanvasColorParams canvasColorParams;
+//};
+
+//struct SerializedCanvasColorParams {
+//        enum CanvasColorSpace {
+//                SRGB,
+//                REC_2020,
+//                P3,
+//        };
+//        enum CanvasPixelFormat {
+//                RGB_A8,
+//                RGB_10A2,
+//                RGB_A12,
+//                F16,
+//        };
+//        enum GraphicsType {
+//                NON_OPAQUE,
+//                OPAQUE,
+//        };
+//
+//        CanvasColorSpace canvasColorSpace;
+//        CanvasPixelFormat canvasPixelFormat;
+//        GraphicsType graphicsType;
+//};

@@ -8,6 +8,8 @@
 #include "base/macros.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/CoreExport.h"
+#include "third_party/WebKit/Source/platform/wtf/Vector.h"
+#include "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h"
 
 namespace blink {
 
@@ -23,6 +25,7 @@ struct CORE_EXPORT BlinkCloneableMessage {
   BlinkCloneableMessage& operator=(BlinkCloneableMessage&&);
 
   scoped_refptr<blink::SerializedScriptValue> message;
+  Vector<WTF::ArrayBufferContents> arrayBufferContentsArray;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BlinkCloneableMessage);
