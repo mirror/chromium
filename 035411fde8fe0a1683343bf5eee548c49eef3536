@@ -16,6 +16,24 @@
       "revId": "035411fde8fe0a1683343bf5eee548c49eef3536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cb5d50_77382ee8",
+        "filename": "media/renderers/paint_canvas_video_renderer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T21:08:24Z",
+      "side": 1,
+      "message": "In this test it doesn\u0027t matter because we\u0027re the 10bpc |dst|\nis going to be downshifted to be 8bpc, truncating those two\nbits; IOW those two bits are irrelevant for this test.",
+      "parentUuid": "cc094e5e_24d8176e",
+      "revId": "035411fde8fe0a1683343bf5eee548c49eef3536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
