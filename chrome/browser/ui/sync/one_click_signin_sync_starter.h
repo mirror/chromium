@@ -125,6 +125,9 @@ class OneClickSigninSyncStarter : public SigninTracker::Observer,
   friend class OneClickSigninSyncStarterTest;
   FRIEND_TEST_ALL_PREFIXES(OneClickSigninSyncStarterTest, CallbackSigninFailed);
   FRIEND_TEST_ALL_PREFIXES(OneClickSigninSyncStarterTest, CallbackNull);
+  FRIEND_TEST_ALL_PREFIXES(OneClickSigninSyncStarterTest,
+                           RevokeTokenOnCancelAuthInProgress);
+  FRIEND_TEST_ALL_PREFIXES(OneClickSigninSyncStarterTest, RevokeTokenOnCancel);
 
   // Initializes the internals of the OneClickSigninSyncStarter object. Can also
   // be used to re-initialize the object to refer to a newly created profile.
