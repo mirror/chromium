@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbfdfca8_bb3759a8",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-08T19:19:13Z",
+      "side": 1,
+      "message": "Should we do anything here to set the HDR bit if needed? This might get called after RenderWidget::Resize, with no guarantee that there will be another one.",
+      "revId": "b9eaeb24012da8049af2c54302928d9dd55838a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0551f3ab_0839bccf",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-08T19:19:13Z",
+      "side": 1,
+      "message": "Is Unretained safe? Can you document why?",
+      "revId": "b9eaeb24012da8049af2c54302928d9dd55838a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -34,6 +34,24 @@
       "revId": "518da0a1c16a350b3ed6e0bfe87c5d444741730c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a3c906_eec2c4b8",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-08T19:19:13Z",
+      "side": 1,
+      "message": "Well, you\u0027re now using ColorSpace::IsHDR(), not DirectCompositionSurfaceWin::IsHDRSupported() any more, so I\u0027m not convinced you\u0027d get the same value for the bool every time in a multi-screen situation?\nOr if so, could you document why this is true?",
+      "parentUuid": "d5635ab6_a371a8ef",
+      "revId": "518da0a1c16a350b3ed6e0bfe87c5d444741730c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
