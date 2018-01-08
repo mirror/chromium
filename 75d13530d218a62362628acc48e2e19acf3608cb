@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d11a0d26_6e895e3c",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aa7a888_fa487833",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d16c82e_081d68f6",
         "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b1e1fc_3ed8e06b",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Changed to return as you suggest.",
+      "parentUuid": "8d16c82e_081d68f6",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 12
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2e3b93bd_51715bd6",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "948e4a93_d2000de6",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84cc2d65_0ce2a43a",
         "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12275b3_cb915c24",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "personally, I prefer having the extra comments, but since you expressed a preference, I removed them.",
+      "parentUuid": "84cc2d65_0ce2a43a",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "c890d5cc_131537ed",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8984335b_c914fb7e",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 10
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea80252a_ab0d0d76",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
         "patchSetId": 3
@@ -281,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "187f3acb_a3a6295d",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Yes, it can fail if an exception is thrown on the Java side.  I added a try-catch in case it does throw.  Docs do not mention it throwing, but anectdotally I have heard that it can throw.\n\nIt will be called on whichever thread we specify when we create the task.",
+      "parentUuid": "ea80252a_ab0d0d76",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 60
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "200efb59_686b5af7",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
         "patchSetId": 3
@@ -301,6 +445,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548543a8_85afbca7",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "200efb59_686b5af7",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -375,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "7fef4fa5_12cec765",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Yes, I think I got them all.",
+      "parentUuid": "0febbdfa_0a53c5da",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c3c3d4f_38bf3d1c",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
         "patchSetId": 3
@@ -445,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "fb4d18cd_caac5690",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "As we discussed, left as is for now, but I added a TODO for later.",
+      "parentUuid": "8135f222_4b3e1bcb",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 57
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f69595_756b8fab",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
         "patchSetId": 3
@@ -465,6 +681,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962ed991_aee46e3c",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f69595_756b8fab",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -526,6 +766,30 @@
     },
     {
       "key": {
+        "uuid": "f68f9576_5145c45c",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc67a3f0_812ac396",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a53f00_e76bc0b5",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
         "patchSetId": 3
@@ -579,6 +843,24 @@
     },
     {
       "key": {
+        "uuid": "9a59872d_bb65ad73",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c537b0b0_8a74e29a",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4691363f_034e7ea2",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
         "patchSetId": 3
@@ -602,6 +884,30 @@
     },
     {
       "key": {
+        "uuid": "b478cfa5_9a545797",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Left as is since we added another test. (I also think it is better style to have all the test constants at the top as many of our other test files do).",
+      "parentUuid": "4691363f_034e7ea2",
+      "range": {
+        "startLine": 77,
+        "startChar": 52,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5283b378_4ac5a1ab",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
         "patchSetId": 3
@@ -616,6 +922,24 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0326fb3_6482df2e",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5283b378_4ac5a1ab",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -642,6 +966,30 @@
     },
     {
       "key": {
+        "uuid": "2c787e7a_09417d5f",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f7458d5_efd199f0",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5764c97c_55ae59e2",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
         "patchSetId": 3
@@ -656,6 +1004,24 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e650192e_ab89c38d",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5764c97c_55ae59e2",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -682,6 +1048,30 @@
     },
     {
       "key": {
+        "uuid": "c179d0af_944cdf0c",
+        "filename": "components/offline_pages/core/system_download_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "904b33b8_5fa3de22",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537ec96d_d8c5f457",
         "filename": "components/offline_pages/core/system_download_manager.h",
         "patchSetId": 3
@@ -702,6 +1092,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5da3a5_8a24f717",
+        "filename": "components/offline_pages/core/system_download_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done.\n\nAh, right, I copied the function names from the Java bridge to match exactly, but the coding standards are different in Java land.  I capitalized them.",
+      "parentUuid": "537ec96d_d8c5f457",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -807,6 +1221,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dab4980_fe76e686",
+        "filename": "components/offline_pages/core/system_download_manager_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-08T22:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcfc65e0_8ecbcc31",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
