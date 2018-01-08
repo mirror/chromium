@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56f6fefe_23c18fee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-08T23:08:10Z",
+      "side": 1,
+      "message": "Yeah, this helps catch the other cases to clear mSuppressedTouchDownEvent. I think it still doesn\u0027t allow us to simplify any of the logic above since we have to reset mSuppressedTouchDownEvent on touch down anyway for the case when the UrlBar isn\u0027t focused, and I was not resetting it for the case where it *is* focused. I renamed mSuppressingTouchMoveEventsUntilNextTouchDown to mSuppressingTouchMoveEventsForThisTouch for clarity, and decided not reset it in this block since the state of the variable doesn\u0027t matter when there\u0027s not an active touch.",
+      "parentUuid": "99f594c1_8a57d2d2",
+      "revId": "3ef706e95bd03e834e3953114d18affd05b42266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58623a18_63fa6d59",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "3ef706e95bd03e834e3953114d18affd05b42266",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d6fca2_f1b646d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/UrlBar.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-08T23:08:10Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "58623a18_63fa6d59",
+      "range": {
+        "startLine": 419,
+        "startChar": 21,
+        "endLine": 419,
+        "endChar": 33
+      },
+      "revId": "3ef706e95bd03e834e3953114d18affd05b42266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
