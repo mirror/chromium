@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "586767e0_58500e9a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 10990,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "nit: is this a question?  Or should it be something like \"prompt\", \"message\", etc?",
+      "range": {
+        "startLine": 10990,
+        "startChar": 74,
+        "endLine": 10990,
+        "endChar": 104
+      },
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f413b34_eabc62a4",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 10990,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "nit: end in a period",
+      "range": {
+        "startLine": 10990,
+        "startChar": 169,
+        "endLine": 10990,
+        "endChar": 170
+      },
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e6f2cd_479a1f4e",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "nit: move this to an anonymous namespace.  Also, please add class comments - particularly about lifetime.",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28038dc7_8564b5e8",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "Can we add a private dtor to ensure nothing else deletes this?",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1191d52e_541c201a",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "should this ever happen, or is it an indication of a bad message?  (This API is only exposed to the cryptotoken extension, so I\u0027d assume that it should only pass valid URLs.)  If it shouldn\u0027t, prefer EXTENSION_FUNCTION_VALIDATE(app_id_url.is_valid()), which will DCHECK in debug builds and kill the renderer in release builds.",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a03569f_26d306e0",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "optional nit: I prefer (!permission_request_manager), but I don\u0027t feel strongly.",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2519f6_4e8ae11b",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "nit: shouldn\u0027t need this change",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee8d7e5_fa39f08b",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "Could we instead use extension_function_test_utils::RunFunction[AndReturnSingleResult]?",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 5
+      },
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b203af3_ba5ece9b",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T22:09:43Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
