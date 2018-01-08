@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58c1080e_00956f55",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T22:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "339fabf3_bcba1d1c",
+      "revId": "6d6aaaf0eac6c953adb15759a0009552b1d5779d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f75ded8_2cc6f9aa",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-08T10:42:35Z",
       "side": 1,
       "message": "any reason this is moved up?",
+      "revId": "6d6aaaf0eac6c953adb15759a0009552b1d5779d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80493d2f_5e50bf9f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T22:07:02Z",
+      "side": 1,
+      "message": "This is to get rid of the null checking against SelectionPopupController in |setContainerView|. By having SPC initialized before calling |setContainerView| here, the null checking logic can be removed altogether.",
+      "parentUuid": "7f75ded8_2cc6f9aa",
       "revId": "6d6aaaf0eac6c953adb15759a0009552b1d5779d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
