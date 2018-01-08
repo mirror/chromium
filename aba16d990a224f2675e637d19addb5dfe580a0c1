@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6474420b_78443f27",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "Then let me just remove the null checking in this method if you\u0027re okay. I find SelectionPopupController.fromWebContents(mWebContents) lengthy than desirable.",
+      "parentUuid": "c2001b62_89b82114",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "854d57e6_5b324b69",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6118cc3a_d9a86095",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854d57e6_5b324b69",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2d811974_62cad447",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15876ba2_dfe6ad1a",
+      "range": {
+        "startLine": 194,
+        "startChar": 30,
+        "endLine": 194,
+        "endChar": 37
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53e60323_28a717ba",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 2
@@ -88,6 +154,47 @@
     },
     {
       "key": {
+        "uuid": "4209a83c_9fae0f4c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "Changed not to keep a ref here. It didn\u0027t have to.\n\nAdded |create| because |fromWebContents| by convention only requires a single param |WebContents| but SelectionPopupControllerImpl needs more. But current WebContentsUserData.fromWebContents is implemented such that it not only returns what\u0027s already there but also creates one if not available yet. This risks returning an instance not properly initialized. \n\nI updated WCUD so that WCUD.fromWebContents can optionally skip creating a new one to avoid returning such half-ready instance.",
+      "parentUuid": "53e60323_28a717ba",
+      "range": {
+        "startLine": 372,
+        "startChar": 36,
+        "endLine": 372,
+        "endChar": 64
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b90f98_284e3414",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "Removed destroyPastePopup since it\u0027s dup\u0027ed - already called in hidePopups... above.",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591104fb_e7bed735",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 2
@@ -99,6 +206,24 @@
       "writtenOn": "2018-01-05T15:25:33Z",
       "side": 1,
       "message": "why is this check needed now?",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26a43c6_10add0ad",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "It was because I wanted to remove CVC.setSelectionPopupControllerForTesting which is useful only for PopupZoomerTest. In the new patch I tried a different approach and the check is not needed any more.\n\nPopupZoomer is unique in that it uses uninitialized ContentViewCore. Many internal objects remain null (event WebContents). It fills some test-only objects to avoid null-checking. SelectionPopupController was one of them but SPC can\u0027t be used in that way any more because it depends on non-null WebContents now. Now I gave CVC.setWebContentsForTesting instead for that. I think in the upcoming CL, other test-only instances for PopupZoomerTest can be removed too.",
+      "parentUuid": "591104fb_e7bed735",
       "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +253,30 @@
     },
     {
       "key": {
+        "uuid": "b661c087_8e9c4b8b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0240f50_9b9aa234",
+      "range": {
+        "startLine": 767,
+        "startChar": 16,
+        "endLine": 767,
+        "endChar": 54
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe94028c_9f5c18d2",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupControllerImpl.java",
         "patchSetId": 2
@@ -139,6 +288,24 @@
       "writtenOn": "2018-01-05T15:25:33Z",
       "side": 1,
       "message": "why is there a create and a fromWebContents? fromWebContents should never return something that\u0027s partially initialized",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c4ae3c_672b9f71",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "I wanted to avoid fromWebContents with too many parameters i.e. fromWebContents(Context, WindowAndroid, WebContents, View) every time it is invoked.\n\nNow SelectionPopupController is here to either return the fully initialized instance or null if not available. See if that will work. I know it\u0027s a bit different from other classes, but this is not first class that needs parameters more than WebContents to instantiate. I remember we had a chat about it but duplicating too much code from WebContentsUserData here (IIUC what you said) doesn\u0027t look good to me.",
+      "parentUuid": "fe94028c_9f5c18d2",
       "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "dece1e4f_04573767",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ActionModeCallbackHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01c0e17f_fd306c84",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60c28c3f_37982933",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
         "patchSetId": 2
@@ -182,6 +367,30 @@
       "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7c5efb_a0c4fe4b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-08T02:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60c28c3f_37982933",
+      "range": {
+        "startLine": 112,
+        "startChar": 17,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
