@@ -239,42 +239,39 @@ TEST_F('SelectToSpeakUnitTest', 'findAllMatching', function() {
   assertEquals(container2, result[0]);
 });
 
-TEST_F('SelectToSpeakUnitTest', 'getDeepEquivalentForSelectionNoChildren',
-    function() {
+TEST_F('SelectToSpeakUnitTest', 'getNodeForSelectionNoChildren', function() {
   let node = {name: 'Hello, world', children: []};
-  let result = getDeepEquivalentForSelection(node, 0);
+  let result = getNodeForSelection(node, 0);
   assertEquals(node, result.node);
   assertEquals(0, result.offset);
 
-  result = getDeepEquivalentForSelection(node, 6);
+  result = getNodeForSelection(node, 6);
   assertEquals(node, result.node);
   assertEquals(6, result.offset);
 });
 
-TEST_F('SelectToSpeakUnitTest', 'getDeepEquivalentForSelectionSimpleChildren',
-    function() {
+TEST_F('SelectToSpeakUnitTest', 'getNodeForSelectionSimpleChildren', function() {
   let child1 = {name: 'Hello,', children: []};
   let child2 = {name: ' world', children: []};
   let root = {name: 'Hello, world', children: [child1, child2]};
-  let result = getDeepEquivalentForSelection(root, 0);
+  let result = getNodeForSelection(root, 0);
   assertEquals(child1, result.node);
   assertEquals(0, result.offset);
 
-  result = getDeepEquivalentForSelection(root, 5);
+  result = getNodeForSelection(root, 5);
   assertEquals(child1, result.node);
   assertEquals(5, result.offset);
 
-  result = getDeepEquivalentForSelection(root, 6);
+  result = getNodeForSelection(root, 6);
   assertEquals(child2, result.node);
   assertEquals(0, result.offset);
 
-  result = getDeepEquivalentForSelection(root, 9);
+  result = getNodeForSelection(root, 9);
   assertEquals(child2, result.node);
   assertEquals(3, result.offset);
 });
 
-TEST_F('SelectToSpeakUnitTest', 'getDeepEquivalentForSelectionComplexChildren',
-    function() {
+TEST_F('SelectToSpeakUnitTest', 'getNodeForSelectionComplexChildren', function() {
   let child1 = {name: 'Hello', children: []};
   let child2 = {name: undefined, children: []};  // Empty name
   let child3 = {name: ',', children: []};
@@ -286,19 +283,19 @@ TEST_F('SelectToSpeakUnitTest', 'getDeepEquivalentForSelectionComplexChildren',
 
   let root = {name: 'Hello, world', children: [child4, child7]};
 
-  let result = getDeepEquivalentForSelection(root, 0);
+  let result = getNodeForSelection(root, 0);
   assertEquals(child1, result.node);
   assertEquals(0, result.offset);
 
-  result = getDeepEquivalentForSelection(root, 5);
+  result = getNodeForSelection(root, 5);
   assertEquals(child3, result.node);
   assertEquals(0, result.offset);
 
-  result = getDeepEquivalentForSelection(root, 6);
+  result = getNodeForSelection(root, 6);
   assertEquals(child5, result.node);
   assertEquals(0, result.offset);
 
-  result = getDeepEquivalentForSelection(root, 9);
+  result = getNodeForSelection(root, 9);
   assertEquals(child6, result.node);
   assertEquals(2, result.offset);
 });

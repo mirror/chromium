@@ -44,8 +44,6 @@ gfx::PointF GetScreenLocationFromEvent(const ui::LocatedEvent& event) {
 }
 }  // namespace
 
-const ui::KeyboardCode kSpeakSelectionKey = ui::VKEY_S;
-
 SelectToSpeakEventRewriter::SelectToSpeakEventRewriter(
     aura::Window* root_window)
     : root_window_(root_window) {
@@ -86,10 +84,10 @@ bool SelectToSpeakEventRewriter::OnKeyEvent(const ui::KeyEvent* event) {
       } else if (state_ == MOUSE_RELEASED) {
         cancel_event = true;
         state_ = INACTIVE;
-      } else if (state_ == CAPTURING_SPEAK_SELECTION_KEY) {
+      } else if (state_ == CAPTURING_S) {
         cancel_event = true;
-        state_ = WAIT_FOR_SPEAK_SELECTION_KEY_RELEASE;
-      } else if (state_ == SPEAK_SELECTION_KEY_RELEASED) {
+        state_ = WAIT_FOR_S_RELEASE;
+      } else if (state_ == S_RELEASED) {
         cancel_event = true;
         state_ = INACTIVE;
       } else if (state_ == SEARCH_DOWN) {
@@ -99,21 +97,21 @@ bool SelectToSpeakEventRewriter::OnKeyEvent(const ui::KeyEvent* event) {
         state_ = INACTIVE;
       }
     }
-  } else if (key_code == kSpeakSelectionKey) {
+  } else if (key_code == ui::VKEY_S) {
     if (event->type() == ui::ET_KEY_PRESSED &&
-        (state_ == SEARCH_DOWN || state_ == SPEAK_SELECTION_KEY_RELEASED)) {
+        (state_ == SEARCH_DOWN || state_ == S_RELEASED)) {
       // They pressed the S key while search was down.
-      // It's possible to press the selection key multiple times to read
-      // the same region over and over, so state S_RELEASED can become state
-      // CAPTURING_SPEAK_SELECTION_KEY if the search key is not lifted.
+      // It's possible to press S multiple times to read the same
+      // region over and over, so state S_RELEASED can become state
+      // CAPTURING_S if the search key is not lifted.
       cancel_event = true;
-      state_ = CAPTURING_SPEAK_SELECTION_KEY;
+      state_ = CAPTURING_S;
     } else if (event->type() == ui::ET_KEY_RELEASED) {
-      if (state_ == CAPTURING_SPEAK_SELECTION_KEY) {
-        // They released the speak selection key while it was being captured.
+      if (state_ == CAPTURING_S) {
+        // They released the S key while S was being captured.
         cancel_event = true;
-        state_ = SPEAK_SELECTION_KEY_RELEASED;
-      } else if (state_ == WAIT_FOR_SPEAK_SELECTION_KEY_RELEASE) {
+        state_ = S_RELEASED;
+      } else if (state_ == WAIT_FOR_S_RELEASE) {
         // They have already released the search key
         cancel_event = true;
         state_ = INACTIVE;

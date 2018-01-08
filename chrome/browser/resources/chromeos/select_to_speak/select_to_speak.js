@@ -262,8 +262,8 @@ function findAllMatching(node, rect, nodes) {
 var Position;
 
 /**
- * Finds the deep equivalent node where a selection starts given a node
- * object and selection offset. This is meant to be used in conjunction with
+ * Finds the node where a selection starts given a node object and
+ * selection offset. This is meant to be used in conjunction with
  * the anchorObject/anchorOffset and focusObject/focusOffset of the
  * automation API.
  * @param {AutomationNode} parent The parent node of the selection,
@@ -272,7 +272,7 @@ var Position;
  * similar to chrome.automation.focusOffset.
  * @return {!Position} The node matching the selected offset.
  */
-function getDeepEquivalentForSelection(parent, offset) {
+function getNodeForSelection(parent, offset) {
   if (parent.children.length == 0)
     return {node: parent, offset: offset};
   // Create a stack of children nodes to search through.
@@ -387,6 +387,8 @@ var SelectToSpeak = function() {
    * @private {number|undefined}
    */
   this.intervalId_;
+
+  this.readSelectionEnabled_ = READ_SELECTION_ENABLED;
 
   this.initPreferences_();
 
@@ -528,7 +530,7 @@ SelectToSpeak.prototype = {
         evt.keyCode == SelectToSpeak.SEARCH_KEY_CODE) {
       this.isSearchKeyDown_ = true;
     } else if (
-        READ_SELECTION_ENABLED && this.keysCurrentlyDown_.size == 1 &&
+        this.readSelectionEnabled_ && this.keysCurrentlyDown_.size == 1 &&
         evt.keyCode == SelectToSpeak.READ_SELECTION_KEY_CODE &&
         !this.trackingMouse_) {
       // Only go into selection mode if we aren't already tracking the mouse.
@@ -590,23 +592,34 @@ SelectToSpeak.prototype = {
     if (!focusedNode || !focusedNode.root || !focusedNode.root.anchorObject ||
         !focusedNode.root.focusObject)
       return;
-    let anchorObject = focusedNode.root.anchorObject;
-    let anchorOffset = focusedNode.root.anchorOffset || 0;
-    let focusObject = focusedNode.root.focusObject;
-    let focusOffset = focusedNode.root.focusOffset || 0;
-    if (anchorObject === focusObject && anchorOffset == focusOffset)
+    // Save the selection params in case we need to use them to hide/show
+    // the selection. TODO: Remove this if we decide not to hide/show the
+    // selection.
+    let params = {
+      anchorObject: focusedNode.root.anchorObject,
+      anchorOffset: focusedNode.root.anchorOffset || 0,
+      focusObject: focusedNode.root.focusObject,
+      focusOffset: focusedNode.root.focusOffset || 0
+    };
+    if (params.anchorObject === params.focusObject &&
+        params.anchorOffset == params.focusOffset)
       return;
     let firstPosition;
     let lastPosition;
-    let dir = AutomationUtil.getDirection(anchorObject, focusObject);
+    let dir =
+        AutomationUtil.getDirection(params.anchorObject, params.focusObject);
     // Highlighting may be forwards or backwards. Make sure we start at the
     // first node.
     if (dir == constants.Dir.FORWARD) {
-      firstPosition = getDeepEquivalentForSelection(anchorObject, anchorOffset);
-      lastPosition = getDeepEquivalentForSelection(focusObject, focusOffset);
+      firstPosition =
+          getNodeForSelection(params.anchorObject, params.anchorOffset);
+      lastPosition =
+          getNodeForSelection(params.focusObject, params.focusOffset);
     } else {
-      lastPosition = getDeepEquivalentForSelection(anchorObject, anchorOffset);
-      firstPosition = getDeepEquivalentForSelection(focusObject, focusOffset);
+      lastPosition =
+          getNodeForSelection(params.anchorObject, params.anchorOffset);
+      firstPosition =
+          getNodeForSelection(params.focusObject, params.focusOffset);
     }
 
     // Adjust such that non-text types don't have offsets into their names.
@@ -723,14 +736,15 @@ SelectToSpeak.prototype = {
     for (var i = 0; i < nodes.length; i++) {
       let node = nodes[i];
       let nodeGroup = buildNodeGroup(nodes, i);
-      if (i == 0) {
+      if (i == 0 && opt_startIndex !== undefined) {
         // We need to start in the middle of a node. Remove all text before
         // the start index so that it is not spoken.
         // Backfill with spaces so that index counting functions don't get
         // confused.
-        // Must check opt_startIndex in its own if statement to make the
-        // Closure compiler happy.
-        if (opt_startIndex !== undefined) {
+        if (opt_startIndex === undefined) {
+          // The compiler was getting mad that opt_startIndex would be
+          // undefined.
+        } else {
           nodeGroup.text = ' '.repeat(opt_startIndex) +
               nodeGroup.text.substr(opt_startIndex);
         }
@@ -1125,5 +1139,34 @@ SelectToSpeak.prototype = {
       this.currentNodeWord_ = {'start': nodeStart, 'end': nodeEnd};
       this.testCurrentNode_();
     }
+  },
+
+  // ---------- Functionality for testing ---------- //
+
+  /**
+   * Fires a mock key down event for testing.
+   * @param {!Event} event The fake key down event to fire. The object
+   * must contain at minimum a keyCode.
+   */
+  fireMockKeyDownEvent: function(event) {
+    this.onKeyDown_(event);
+  },
+
+  /**
+   * Fires a mock key up event for testing.
+   * @param {!Event} event The fake key up event to fire. The object
+   * must contain at minimum a keyCode.
+   */
+  fireMockKeyUpEvent: function(event) {
+    this.onKeyUp_(event);
+  },
+
+  /**
+   * Overrides default setting to read selected text and enables the
+   * ability to read selected text at a keystroke. Should only be used
+   * for testing.
+   */
+  enableReadSelectedTextForTesting: function() {
+    this.readSelectionEnabled_ = true;
   }
 };
