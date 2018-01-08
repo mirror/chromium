@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb17f9ae_ca1e962f",
+        "filename": "chrome/tools/build/win/makecab.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-08T10:52:15Z",
+      "side": 1,
+      "message": "with open(...) as output_file:",
+      "revId": "66095422d8940e254cb6b63b9e9fd28ba6330bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c481f85_c28872f8",
+        "filename": "chrome/tools/build/win/makecab.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-08T10:52:15Z",
+      "side": 1,
+      "message": "with open(flags.input, \u0027rb\u0027) as input_file:",
+      "revId": "66095422d8940e254cb6b63b9e9fd28ba6330bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3472f896_d999d80e",
+        "filename": "chrome/tools/build/win/makecab.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-08T10:52:15Z",
+      "side": 1,
+      "message": "no error handling? i\u0027d expect this to return non-zero in case anything goes wrong. what happens if the output file can\u0027t be opened, or a write fails or something?",
+      "revId": "66095422d8940e254cb6b63b9e9fd28ba6330bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
