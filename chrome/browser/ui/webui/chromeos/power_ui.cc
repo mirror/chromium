@@ -36,6 +36,10 @@ const char kRequestBatteryChargeDataCallback[] = "requestBatteryChargeData";
 const char kOnRequestBatteryChargeDataFunction[] =
     "powerUI.showBatteryChargeData";
 
+const char kRequestCpuTemperatureDataCallback[] = "requestCpuTemperatureData";
+const char kOnRequestCpuTemperatureDataFunction[] =
+    "powerUI.showCpuTemperatureData";
+
 const char kRequestCpuIdleDataCallback[] = "requestCpuIdleData";
 const char kOnRequestCpuIdleDataFunction[] =
     "powerUI.showCpuIdleData";
@@ -54,6 +58,7 @@ class PowerMessageHandler : public content::WebUIMessageHandler {
 
  private:
   void OnGetBatteryChargeData(const base::ListValue* value);
+  void OnGetCpuTemperatureData(const base::ListValue* value);
   void OnGetCpuIdleData(const base::ListValue* value);
   void OnGetCpuFreqData(const base::ListValue* value);
   void GetJsStateOccupancyData(
@@ -73,6 +78,10 @@ void PowerMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       kRequestBatteryChargeDataCallback,
       base::Bind(&PowerMessageHandler::OnGetBatteryChargeData,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      kRequestCpuTemperatureDataCallback,
+      base::Bind(&PowerMessageHandler::OnGetCpuTemperatureData,
                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       kRequestCpuIdleDataCallback,
@@ -105,6 +114,25 @@ void PowerMessageHandler::OnGetBatteryChargeData(const base::ListValue* value) {
   web_ui()->CallJavascriptFunctionUnsafe(kOnRequestBatteryChargeDataFunction,
                                          js_power_supply_data,
                                          js_system_resumed_data);
+}
+
+void PowerMessageHandler::OnGetCpuTemperatureData(
+    const base::ListValue* value) {
+  const CpuDataCollector& cpu_data_collector =
+      PowerDataCollector::Get()->cpu_data_collector();
+
+  const std::vector<CpuDataCollector::StateOccupancySampleDeque>& idle_data =
+      cpu_data_collector.cpu_idle_state_data();
+  const std::vector<std::string>& idle_state_names =
+      cpu_data_collector.cpu_idle_state_names();
+  base::ListValue js_idle_data;
+  GetJsStateOccupancyData(idle_data, idle_state_names, &js_idle_data);
+
+  base::ListValue js_system_resumed_data;
+  GetJsSystemResumedData(&js_system_resumed_data);
+
+  web_ui()->CallJavascriptFunctionUnsafe(kOnRequestCpuTemperatureDataFunction,
+                                         js_idle_data, js_system_resumed_data);
 }
 
 void PowerMessageHandler::OnGetCpuIdleData(const base::ListValue* value) {
@@ -223,6 +251,8 @@ PowerUI::PowerUI(content::WebUI* web_ui) : content::WebUIController(web_ui) {
   html->AddLocalizedString("samplesText",
                            IDS_ABOUT_POWER_AVERAGE_SAMPLES_TEXT);
 
+  html->AddLocalizedString("cpuTemperatureSectionTitle",
+                           IDS_ABOUT_POWER_CPU_TEMPERATURE_SECTION_TITLE);
   html->AddLocalizedString("cpuIdleSectionTitle",
                            IDS_ABOUT_POWER_CPU_IDLE_SECTION_TITLE);
   html->AddLocalizedString("idleStateOccupancyPercentageHeader",

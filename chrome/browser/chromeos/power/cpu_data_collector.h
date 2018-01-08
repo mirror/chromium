@@ -47,7 +47,23 @@ class CpuDataCollector {
     std::vector<base::TimeDelta> time_in_state;
   };
 
+  struct StateTemperatureSample {
+    StateTemperatureSample() : temperature(0.0) {}
+    base::Time time;
+    double temperature;
+  };
+
+  using StateTemperatureSampleDeque = base::circular_deque<StateTemperatureSample>;
+
   using StateOccupancySampleDeque = base::circular_deque<StateOccupancySample>;
+
+  const string& cpu_temperature_state_name() const {
+    return cpu_temperature_state_name_;
+  }
+
+  const std::vector<StateTemperatureSampleDeque>& cpu_temperature_state_data() const {
+    return cpu_temperature_state_data_;
+  }
 
   const std::vector<std::string>& cpu_idle_state_names() const {
     return cpu_idle_state_names_;
@@ -122,6 +138,10 @@ class CpuDataCollector {
 
   // Names of the idle states.
   std::vector<std::string> cpu_idle_state_names_;
+
+  std::string cpu_temperature_state_name_;
+
+  std::vector<StateTemperatureSampleDeque> cpu_temperature_state_data_;
 
   // The deque at index <i> in the vector corresponds to the idle state
   // occupancy data of CPU<i>.
