@@ -130,7 +130,7 @@ void MimeSniffingResourceHandler::OnWillStart(
     const GURL& url,
     std::unique_ptr<ResourceController> controller) {
   DCHECK(!has_controller());
-
+  
   AttachAcceptHeader(GetRequestInfo()->GetResourceType(), request());
   next_handler_->OnWillStart(url, std::move(controller));
 }
@@ -140,7 +140,7 @@ void MimeSniffingResourceHandler::OnResponseStarted(
     std::unique_ptr<ResourceController> controller) {
   DCHECK_EQ(STATE_STARTING, state_);
   DCHECK(!has_controller());
-
+  
   response_ = response;
 
   state_ = STATE_BUFFERING;
@@ -430,13 +430,19 @@ bool MimeSniffingResourceHandler::MaybeStartInterception() {
     return false;
 
   info->set_is_download(true);
-  std::unique_ptr<ResourceHandler> handler(
-      host_->CreateResourceHandlerForDownload(request(),
-                                              true,  // is_content_initiated
-                                              must_download,
-                                              false /* is_new_request */));
-  intercepting_handler_->UseNewHandler(std::move(handler), std::string());
+  if (!ShouldDownloadBeSquelched()) {
+    std::unique_ptr<ResourceHandler> handler(
+        host_->CreateResourceHandlerForDownload(request(),
+                                                true,  // is_content_initiated
+                                                must_download,
+                                                false /* is_new_request */));
+    intercepting_handler_->UseNewHandler(std::move(handler), std::string());
+  }
   return true;
+}
+
+bool MimeSniffingResourceHandler::ShouldDownloadBeSquelched() {
+  return false;
 }
 
 bool MimeSniffingResourceHandler::CheckForPluginHandler(

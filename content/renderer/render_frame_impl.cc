@@ -481,6 +481,8 @@ base::TimeTicks SanitizeNavigationTiming(
 CommonNavigationParams MakeCommonNavigationParams(
     const blink::WebFrameClient::NavigationPolicyInfo& info,
     int load_flags) {
+  base::debug::StackTrace().Print();
+  
   Referrer referrer(
       GURL(info.url_request.HttpHeaderField(WebString::FromUTF8("Referer"))
                .Latin1()),
@@ -537,7 +539,8 @@ CommonNavigationParams MakeCommonNavigationParams(
       base::TimeTicks::Now(), info.url_request.HttpMethod().Latin1(),
       GetRequestBodyForWebURLRequest(info.url_request), source_location,
       should_check_main_world_csp, false /* started_from_context_menu */,
-      info.url_request.HasUserGesture());
+      info.url_request.HasUserGesture(),
+      false /* should_squelch_downloads */);
 }
 
 WebFrameLoadType ReloadFrameLoadTypeFor(

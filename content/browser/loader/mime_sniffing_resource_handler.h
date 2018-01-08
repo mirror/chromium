@@ -151,6 +151,13 @@ class CONTENT_EXPORT MimeSniffingResourceHandler
   // stream.
   bool CanBeIntercepted();
 
+  // Whether the download should be squelched. Unlike CanBeIntercepted which
+  // prevents the resource from being treated as a download and instead as a
+  // normal resource load, CanDownloadBeSquelched() is called after determining
+  // that the resource should be a download, but will be prevented due to
+  // security restrictions or other policies.
+  bool ShouldDownloadBeSquelched();
+  
   // Whether the response we received is not provisional.
   bool CheckResponseIsNotProvisional();
 

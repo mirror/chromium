@@ -692,7 +692,9 @@ CommonNavigationParams NavigationEntryImpl::ConstructCommonNavigationParams(
       navigation_start, method, post_body ? post_body : post_data_,
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
-      has_started_from_context_menu(), user_gesture);
+      has_started_from_context_menu(),
+      user_gesture,
+      false /* should_squelch_downloads */);
 }
 
 StartNavigationParams NavigationEntryImpl::ConstructStartNavigationParams()

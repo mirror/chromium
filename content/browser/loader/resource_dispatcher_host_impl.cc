@@ -1008,6 +1008,8 @@ void ResourceDispatcherHostImpl::BeginRequest(
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   int child_id = requester_info->child_id();
 
+  LOG(ERROR) << "BeginRequest " << request_data.url;
+  
   // Reject request id that's currently in use.
   if (IsRequestIDInUse(GlobalRequestID(child_id, request_id))) {
     // Navigation preload requests have child_id's of -1 and monotonically
@@ -1190,6 +1192,9 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   }
 
   // Construct the request.
+  LOG(ERROR) << "Creating request for " << (is_navigation_stream_request ? request_data.resource_body_stream_url
+                                            : request_data.url);
+  
   std::unique_ptr<net::URLRequest> new_request = request_context->CreateRequest(
       is_navigation_stream_request ? request_data.resource_body_stream_url
                                    : request_data.url,
@@ -2011,6 +2016,8 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
   DCHECK_EQ(IsNavigationMojoResponseEnabled(), url_loader_client.is_bound());
   DCHECK_EQ(IsNavigationMojoResponseEnabled(), url_loader_request.is_pending());
 
+  LOG(ERROR) << "BeginNavigationRequest for " << info.common_params.url;
+  
   ResourceType resource_type = info.is_main_frame ?
       RESOURCE_TYPE_MAIN_FRAME : RESOURCE_TYPE_SUB_FRAME;
 
@@ -2347,6 +2354,8 @@ void ResourceDispatcherHostImpl::BeginURLRequest(
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(!request->is_pending());
 
+  LOG(ERROR) << "BeginURLRequest for " << request->url();
+  
   ResourceRequestInfoImpl* info =
       ResourceRequestInfoImpl::ForRequest(request.get());
   DCHECK(info);
