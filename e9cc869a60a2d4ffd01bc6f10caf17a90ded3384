@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "275cbaed_56b52a26",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-08T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63515d63_3e7e5957",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34c36107_a2e2af02",
         "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be48600_96738401",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-08T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34c36107_a2e2af02",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2414fba5_f073103b",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-08T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f942e834_6ab815c5",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b899a32_4dc9ef6e",
         "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ed9a584b_74a91563",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-08T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b899a32_4dc9ef6e",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d10f81f8_e2550093",
         "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206fe17e_9e6dacd3",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-08T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d10f81f8_e2550093",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c01e1ee_95e53d76",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-08T18:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1461195a_e08ee316",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 24
+      },
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
