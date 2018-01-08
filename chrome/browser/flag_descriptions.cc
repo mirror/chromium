@@ -2423,6 +2423,10 @@ const char kArcVpnName[] = "Enable ARC VPN integration";
 const char kArcVpnDescription[] =
     "Allow Android VPN clients to tunnel Chrome traffic.";
 
+const char kArcVpnName[] = "Enable ARC USB host integration";
+const char kArcVpnDescription[] =
+    "Allow Android apps to use USB host feature on ChromeOS devices.";
+
 const char kAshEnableUnifiedDesktopName[] = "Unified desktop mode";
 const char kAshEnableUnifiedDesktopDescription[] =
     "Enable unified desktop mode which allows a window to span multiple "

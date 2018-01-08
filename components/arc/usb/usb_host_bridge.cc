@@ -11,6 +11,7 @@
 #include "chromeos/dbus/permission_broker_client.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
+#include "components/arc/arc_features.h"
 #include "device/base/device_client.h"
 #include "device/usb/mojo/type_converters.h"
 #include "device/usb/usb_device_handle.h"
@@ -219,6 +220,11 @@ void ArcUsbHostBridge::WillDestroyUsbService() {
 }
 
 void ArcUsbHostBridge::OnConnectionReady() {
+  if (!base::FeatureList::IsEnabled(arc::kUsbHostFeature)) {
+    VLOG(1) << "AndroidUSBHost: feature is disabled; ignoring";
+    return;
+  }
+
   if (!usb_service_)
     return;
   // Send the (filtered) list of already existing USB devices to the other side.
