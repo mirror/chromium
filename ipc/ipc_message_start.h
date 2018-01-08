@@ -80,7 +80,6 @@ enum IPCMessageStart {
   CastCryptoMsgStart,
   CastChannelMsgStart,
   IPCTestMsgStart,
-  DWriteFontProxyMsgStart,
   MediaPlayerDelegateMsgStart,
   SurfaceViewManagerMsgStart,
   ExtensionWorkerMsgStart,
