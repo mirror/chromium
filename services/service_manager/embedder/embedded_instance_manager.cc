@@ -7,122 +7,230 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 
 namespace service_manager {
 
+namespace {
+
+void JoinAndReleaseThread(std::unique_ptr<base::Thread> thread) {
+  if (!thread)
+    return;
+
+  thread.reset();
+}
+
+}  // namespace
+
 EmbeddedInstanceManager::EmbeddedInstanceManager(
     const base::StringPiece& name,
     const EmbeddedServiceInfo& info,
-    const base::Closure& quit_closure)
+    base::RepeatingClosure quit_closure)
     : name_(name.as_string()),
       factory_callback_(info.factory),
-      use_own_thread_(!info.task_runner && info.use_own_thread),
+      use_dedicated_thread_(!info.task_runner && info.use_own_thread),
       message_loop_type_(info.message_loop_type),
       thread_priority_(info.thread_priority),
-      quit_closure_(quit_closure),
-      quit_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      service_task_runner_(info.task_runner) {
-  if (!use_own_thread_ && !service_task_runner_)
+      quit_closure_(std::move(quit_closure)),
+      owner_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      service_task_runner_(info.task_runner),
+      active_and_pending_service_request_count_(0),
+      shutdown_has_been_called_(false) {
+  CHECK(quit_closure_);
+  if (!use_dedicated_thread_ && !service_task_runner_)
     service_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+}
+
+EmbeddedInstanceManager::~EmbeddedInstanceManager() {
+  if (optional_dedicated_service_thread_) {
+    // This may happen if the owner shuts down the thread serving
+    // |owner_task_runner_| before an invocation of
+    // OnServiceRequestCountChangedToZero() posted to it had the chance to
+    // execute.
+
+    // If the owner thread is already torn down, the destructor is called by
+    // whoever ends up with ownership of |this| attached to the
+    // posted task that was never run. That thread may not allow base::sync
+    // primitives. As a result, we have not other option but to leak the thread.
+    // Unfortunately, even that leads to a failed CHECK during destruction of
+    // BrowserMainLoop.
+    // => We have to make sure that whoever calls ShutDownAsync() waits for
+    // a callback indicating that the shutdown is complete (as opposed to
+    // fire-and-forget).
+    LOG(WARNING) << "EmbeddedInstanceManager is leaking "
+                    "|optional_dedicated_service_threa_| because "
+                    "|owner_task_runner_| has stopped serving tasks before "
+                    "|quit_closure_| was invoked";
+    optional_dedicated_service_thread_.release();
+  }
+}
+
+void EmbeddedInstanceManager::SetEventHandlingCompleteObserver(
+    base::RepeatingClosure observer_cb) {
+  optional_event_handling_complete_observer_cb_ = std::move(observer_cb);
 }
 
 void EmbeddedInstanceManager::BindServiceRequest(
     service_manager::mojom::ServiceRequest request) {
-  DCHECK_CALLED_ON_VALID_THREAD(runner_thread_checker_);
+  DCHECK(owner_task_runner_->RunsTasksInCurrentSequence());
 
-  if (use_own_thread_ && !thread_) {
-    // Start a new thread if necessary.
-    thread_.reset(new base::Thread(name_));
+  // If this is called after ShutDownAsync(), it may happen that a new
+  // dedicated thread gets created while an old one is still running and
+  // potentially serving callbacks/tasks. Since this may lead to difficult to
+  // interpret symptoms, we put a hard check in place to prevent this.
+  CHECK(!shutdown_has_been_called_);
+
+  // Increase this counter to prevent a call to OnInstanceLost() from tearing
+  // down our dedicated thread after we create it.
+  active_and_pending_service_request_count_++;
+
+  // Start a new thread if necessary.
+  if (use_dedicated_thread_ && active_and_pending_service_request_count_ == 1) {
+    DCHECK(service_task_runner_ == nullptr);
+    optional_dedicated_service_thread_.reset(new base::Thread(name_));
     base::Thread::Options options;
     options.message_loop_type = message_loop_type_;
     options.priority = thread_priority_;
-    thread_->StartWithOptions(options);
-    service_task_runner_ = thread_->task_runner();
+    optional_dedicated_service_thread_->StartWithOptions(options);
+    service_task_runner_ = optional_dedicated_service_thread_->task_runner();
   }
 
   DCHECK(service_task_runner_);
-  service_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&EmbeddedInstanceManager::BindServiceRequestOnServiceSequence,
-                 this, base::Passed(&request)));
-}
-
-void EmbeddedInstanceManager::ShutDown() {
-  DCHECK_CALLED_ON_VALID_THREAD(runner_thread_checker_);
-  if (!service_task_runner_)
-    return;
-  // Any extant ServiceContexts must be destroyed on the application thread.
   if (service_task_runner_->RunsTasksInCurrentSequence()) {
-    QuitOnServiceSequence();
+    BindServiceRequestOnServiceSequence(std::move(request));
   } else {
     service_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&EmbeddedInstanceManager::QuitOnServiceSequence, this));
+        base::BindOnce(
+            &EmbeddedInstanceManager::BindServiceRequestOnServiceSequence, this,
+            base::Passed(&request)));
   }
-  thread_.reset();
 }
 
-EmbeddedInstanceManager::~EmbeddedInstanceManager() {
-  // If this instance had its own thread, it MUST be explicitly destroyed by
-  // QuitOnRunnerThread() by the time this destructor is run.
-  DCHECK(!thread_);
+void EmbeddedInstanceManager::ShutDownAsync() {
+  DCHECK(owner_task_runner_->RunsTasksInCurrentSequence());
+  shutdown_has_been_called_ = true;
+  if (!service_task_runner_) {
+    // This may happen if either there never was any entry or all entries have
+    // already been removed via OnInstanceLost().
+    OnEventHandlingComplete();
+    return;
+  }
+  // Any extant ServiceContexts must be destroyed on |service_task_runner_|.
+  if (service_task_runner_->RunsTasksInCurrentSequence()) {
+    ShutDownOnServiceSequence();
+  } else {
+    service_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&EmbeddedInstanceManager::ShutDownOnServiceSequence,
+                       this));
+  }
 }
 
 void EmbeddedInstanceManager::BindServiceRequestOnServiceSequence(
     service_manager::mojom::ServiceRequest request) {
+  // At this point, |service_task_runner_| is guaranteed to be valid, because
+  // the already increased value of |active_and_pending_service_request_count_|
+  // guarantees that a corresponding dedicated thread does not get torn down via
+  // OnInstanceLost().
   DCHECK(service_task_runner_->RunsTasksInCurrentSequence());
-
   int instance_id = next_instance_id_++;
-
-  std::unique_ptr<service_manager::ServiceContext> context =
-      std::make_unique<service_manager::ServiceContext>(factory_callback_.Run(),
-                                                        std::move(request));
-
-  service_manager::ServiceContext* raw_context = context.get();
-  context->SetQuitClosure(
-      base::Bind(&EmbeddedInstanceManager::OnInstanceLost, this, instance_id));
-  contexts_.insert(std::make_pair(raw_context, std::move(context)));
-  id_to_context_map_.insert(std::make_pair(instance_id, raw_context));
+  auto context = std::make_unique<service_manager::ServiceContext>(
+      factory_callback_.Run(), std::move(request));
+  context->SetQuitClosure(base::BindRepeating(
+      &EmbeddedInstanceManager::OnInstanceLost, this, instance_id));
+  id_to_context_map_.insert(std::make_pair(instance_id, std::move(context)));
 }
 
 void EmbeddedInstanceManager::OnInstanceLost(int instance_id) {
-  DCHECK(service_task_runner_->RunsTasksInCurrentSequence());
-
-  auto id_iter = id_to_context_map_.find(instance_id);
-  CHECK(id_iter != id_to_context_map_.end());
-
-  auto context_iter = contexts_.find(id_iter->second);
-  CHECK(context_iter != contexts_.end());
-  contexts_.erase(context_iter);
-  id_to_context_map_.erase(id_iter);
-
-  // If we've lost the last instance, run the quit closure.
-  if (contexts_.empty())
-    QuitOnServiceSequence();
-}
-
-void EmbeddedInstanceManager::QuitOnServiceSequence() {
-  DCHECK(service_task_runner_->RunsTasksInCurrentSequence());
-
-  contexts_.clear();
-  if (quit_task_runner_->RunsTasksInCurrentSequence()) {
-    QuitOnRunnerThread();
-  } else {
-    quit_task_runner_->PostTask(
-        FROM_HERE,
-        base::Bind(&EmbeddedInstanceManager::QuitOnRunnerThread, this));
+  if (!service_task_runner_) {
+    // This may happen if the entry has already been cleared by a call to
+    // ShutDown().
+    OnEventHandlingComplete();
+    return;
   }
+  DCHECK(service_task_runner_->RunsTasksInCurrentSequence());
+  auto context_iter = id_to_context_map_.find(instance_id);
+  if (context_iter == id_to_context_map_.end()) {
+    // This may happen if the entry has already been cleared by a call to
+    // ShutDown().
+    OnEventHandlingComplete();
+    return;
+  }
+  id_to_context_map_.erase(context_iter);
+  // If the owner has already released its reference to |this| it may
+  // also already have shut down the thread serving |owner_task_runner_|.
+  // In that case, the posted task will never get run.
+  owner_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&EmbeddedInstanceManager::DecreaseServiceRequestCount,
+                     this));
 }
 
-void EmbeddedInstanceManager::QuitOnRunnerThread() {
-  DCHECK_CALLED_ON_VALID_THREAD(runner_thread_checker_);
-  if (thread_) {
-    thread_.reset();
+void EmbeddedInstanceManager::ShutDownOnServiceSequence() {
+  if (!service_task_runner_) {
+    // This may happen if either there never was any entry or all entries have
+    // already been removed via OnInstanceLost().
+    OnEventHandlingComplete();
+    return;
+  }
+  DCHECK(service_task_runner_->RunsTasksInCurrentSequence());
+  if (id_to_context_map_.empty()) {
+    // This may happen if either there never was any entry or all entries have
+    // already been removed via OnInstanceLost().
+    OnEventHandlingComplete();
+    return;
+  }
+  id_to_context_map_.clear();
+  // If the owner has already released its reference to |this| it may
+  // also already have shut down the thread serving |owner_task_runner_|.
+  // In that case, the posted task will never get run.
+  owner_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&EmbeddedInstanceManager::SetServiceRequestCountToZero,
+                     this));
+}
+
+void EmbeddedInstanceManager::DecreaseServiceRequestCount() {
+  DCHECK(owner_task_runner_->RunsTasksInCurrentSequence());
+  active_and_pending_service_request_count_--;
+  if (active_and_pending_service_request_count_ == 0)
+    OnServiceRequestCountChangedToZero();
+  OnEventHandlingComplete();
+}
+
+void EmbeddedInstanceManager::SetServiceRequestCountToZero() {
+  DCHECK(owner_task_runner_->RunsTasksInCurrentSequence());
+  active_and_pending_service_request_count_ = 0;
+  OnServiceRequestCountChangedToZero();
+  OnEventHandlingComplete();
+}
+
+void EmbeddedInstanceManager::OnServiceRequestCountChangedToZero() {
+  DCHECK(owner_task_runner_->RunsTasksInCurrentSequence());
+  if (use_dedicated_thread_) {
+    base::PostTaskWithTraits(
+        FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
+        base::BindOnce(&JoinAndReleaseThread,
+                       base::Passed(&optional_dedicated_service_thread_)));
     service_task_runner_ = nullptr;
   }
   quit_closure_.Run();
+}
+
+void EmbeddedInstanceManager::OnEventHandlingComplete() {
+  if (!owner_task_runner_->RunsTasksInCurrentSequence()) {
+    owner_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&EmbeddedInstanceManager::OnEventHandlingComplete,
+                       this));
+    return;
+  }
+  if (!optional_event_handling_complete_observer_cb_)
+    return;
+  optional_event_handling_complete_observer_cb_.Run();
 }
 
 }  // namespace service_manager

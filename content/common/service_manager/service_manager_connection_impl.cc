@@ -201,6 +201,9 @@ class ServiceManagerConnectionImpl::IOThreadContext
     ClearConnectionFiltersOnIOThread();
 
     request_handlers_.clear();
+    // TODO: We want to make shutdown of embedded_services_ asynchronous.
+    // Probably best is to use a done_cb. And do a continuation when all
+    // done_cbs have run.
     embedded_services_.clear();
     child_binding_.Close();
   }

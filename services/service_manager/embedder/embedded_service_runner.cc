@@ -20,7 +20,7 @@ EmbeddedServiceRunner::EmbeddedServiceRunner(const base::StringPiece& name,
 }
 
 EmbeddedServiceRunner::~EmbeddedServiceRunner() {
-  instance_manager_->ShutDown();
+  instance_manager_->ShutDownAsync();
 }
 
 void EmbeddedServiceRunner::BindServiceRequest(
