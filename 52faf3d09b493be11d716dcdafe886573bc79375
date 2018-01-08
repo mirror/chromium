@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0928eac_c3ea4919",
+        "filename": "build/fuchsia/runner_v2/qemu_target_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "don\u0027t need 2 empty lines",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "52faf3d09b493be11d716dcdafe886573bc79375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046120d1_d6895f15",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "I don\u0027t think you need env here. env finds ssh in PATH and if ssh is in PATH then subprocess should be able to find it as well. Internally subprocess uses execvp() syscall which finds the binary in PATH.",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "52faf3d09b493be11d716dcdafe886573bc79375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb357693_cd8e5a7b",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "This can be removed.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "52faf3d09b493be11d716dcdafe886573bc79375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9716a3f7_239fcabf",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "this class doesn\u0027t set this field and expects child classes to set it. It\u0027s better to replace it with an abstract _GetSshConfigPath() method that children are expected to override, similar to _GetEndpoint()",
+      "range": {
+        "startLine": 70,
+        "startChar": 39,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "52faf3d09b493be11d716dcdafe886573bc79375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d729da_186f6dbf",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "I\u0027d still prefer to rename it to have \"sdk\" in the name. Otherwise it\u0027s confusing that self._GetTargetArch() !\u003d self._target_cpu",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 20
+      },
+      "revId": "52faf3d09b493be11d716dcdafe886573bc79375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666d6043_86f6bf16",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "It\u0027s best to avoid spamming the console from here, except for fatal errors.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 22
+      },
+      "revId": "52faf3d09b493be11d716dcdafe886573bc79375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f25afd2_34fb29fa",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "raise an exception?",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 16
+      },
+      "revId": "52faf3d09b493be11d716dcdafe886573bc79375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

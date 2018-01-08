@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "ea1b66e3_686cf425",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "I think the common practice for abstract methods in Python is to use an empty body with a single line \"raise NotImplementedError\". E.g. see build/android/pylib/base/test_run.py. I don\u0027t think that abc makes this code clearer.\nABC is useful to override issubclass() and isinstance() behavior, but we don\u0027t need it here.",
+      "parentUuid": "a0738ad0_6abcd206",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41cf68f8_e42cdef2",
         "filename": "build/fuchsia/runner_v2/target.py",
         "patchSetId": 2
@@ -648,6 +672,30 @@
       "side": 1,
       "message": "Convention to indicate private member.\n\nSingle underscore means protected.",
       "parentUuid": "1216bddd_a9c72fa8",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 8
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dea0d82_328e6591",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-08T22:51:35Z",
+      "side": 1,
+      "message": "Is this convention documented anywhere? From https://www.python.org/dev/peps/pep-0008/#descriptive-naming-styles double underscores are reserved for mangled names:\n\n_single_leading_underscore: weak \"internal use\" indicator. E.g. from M import * does not import objects whose name starts with an underscore.\n... \n__double_leading_underscore: when naming a class attribute, invokes name mangling (inside class FooBar, __boo becomes _FooBar__boo; see below).\n\n\n\"internal use\" doesn\u0027t make distinction between private and protected methods. \nWe don\u0027t need name mangling here, as the clients are not expected to override this method (see\nhttps://docs.python.org/2/tutorial/classes.html#private-variables-and-class-local-references for an example when it can be useful).",
+      "parentUuid": "3417520c_8deb3f51",
       "range": {
         "startLine": 189,
         "startChar": 6,
