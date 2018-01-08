@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd39c66d_7dda716c",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 7378,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-08T21:51:20Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me whether these checks are needed at all anymore?",
+      "range": {
+        "startLine": 7378,
+        "startChar": 2,
+        "endLine": 7378,
+        "endChar": 8
+      },
+      "revId": "8b99b59d175bdcdb68ae171de01ce37fe5b87119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
