@@ -73,9 +73,11 @@ class TabLifecycleUnitSource::TabLifecycleUnit
   TabLifecycleUnitExternal* AsTabLifecycleUnitExternal() override;
   base::string16 GetTitle() const override;
   std::string GetIconURL() const override;
+  base::ProcessHandle GetProcessHandle() const override;
   SortKey GetSortKey() const override;
   State GetState() const override;
   int GetEstimatedMemoryFreedOnDiscardKB() const override;
+  bool CanPurge() const override;
   bool CanDiscard(DiscardReason reason) const override;
   bool Discard(DiscardReason discard_reason) override;
 
@@ -114,9 +116,10 @@ class TabLifecycleUnitSource::TabLifecycleUnit
   // Last time at which this tab was focused, or TimeTicks::Max() if it is
   // currently focused.
   //
-  // TODO(fdoray): To keep old behavior (sort order and protection of recently
-  // focused tabs), this is initialized with NowTicks(). Consider initializing
-  // this with a null TimeTicks when the tab isn't initially focused.
+  // TODO(fdoray): This is initialized with NowTicks() to preserve the old
+  // behavior of preventing newly create background tabs from being discarded.
+  // Consider initializing this with a null TimeTicks and allowing background
+  // tabs that have never been focused to be discarded. https://crbug.com/775644
   base::TimeTicks last_focused_time_ = NowTicks();
 
   // When this is false, CanDiscard() always returns false.
