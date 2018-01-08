@@ -25,6 +25,213 @@
     },
     {
       "key": {
+        "uuid": "fe6a26ec_5f984dbc",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "Can we make this non-reentrant?  e.g. post it?",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c01f5b_0fdc8835",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "Same as above.  Can we post the response?",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 45
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4ef77a_bf38d05e",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "Just curious what happens if we try to query the driver for a download after trying to start one in this case.  What happens in the normal flow too?  If we\u0027re not doing any fancy tracking here, should we just take care of this in ControllerImpl?",
+      "range": {
+        "startLine": 173,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 62
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cd17d4_d64e4bdb",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "Should we do this if there is no handle?",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 51
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c17737e_ed4e6a6e",
+        "filename": "components/download/internal/debugging_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "Can you pass nullptr to here or no?",
+      "range": {
+        "startLine": 45,
+        "startChar": 26,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5acc87_284e95ef",
+        "filename": "components/download/internal/download_driver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "Maybe update?  Doesn\u0027t really return anything but hits |callback|?",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 59
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b520e3_3b9f2b34",
+        "filename": "components/download/internal/download_driver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "Should this be const\u0026?",
+      "range": {
+        "startLine": 69,
+        "startChar": 31,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e31b6a_e20c1142",
+        "filename": "components/download/public/client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "const\u0026?",
+      "range": {
+        "startLine": 132,
+        "startChar": 29,
+        "endLine": 132,
+        "endChar": 50
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7df2c2_c9f0ed00",
+        "filename": "components/download/public/test/mock_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-08T21:40:08Z",
+      "side": 1,
+      "message": "Should all of these post?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb038f42_3489d6f7",
         "filename": "content/browser/download/download_utils.h",
         "patchSetId": 5
