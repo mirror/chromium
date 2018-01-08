@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61dcb665_74a22fd7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-01-08T15:35:16Z",
+      "side": 1,
+      "message": "This should be * not + to allow zero whitespace as well\n\nAlso, the regex parts \u0027^.*\u0027 and \u0027.*$\u0027 should be no-ops - anchoring to the beginning/end of the string and then allowing anything should be the same as doing nothing?\n\n...also I guess technically this will match FooDomain\u003dbar or similar, which isn\u0027t actually a domain attribute? I guess it needs to include a ; or something.. (with further whitespace-ignoring) :/",
+      "range": {
+        "startLine": 220,
+        "startChar": 46,
+        "endLine": 220,
+        "endChar": 47
+      },
+      "revId": "89dad63804922ea94f754e5487dc90bb6365a2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
