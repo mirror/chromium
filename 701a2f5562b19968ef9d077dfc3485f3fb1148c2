@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e54837fe_044c6176",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-08T22:29:55Z",
+      "side": 1,
+      "message": "It might be confusing to try to maintain both of these variables (ie. you have to make sure that isDownloadPending is false every time PendingState.NOT_PENDING). If you want to keep the getIsDownloadPending as a readable call, perhaps you can just have DownloadUpdate.getIsPending return pendingState \u003d\u003d PendingState.NOT_PENDING?",
+      "parentUuid": "f593756c_33b6bd8f",
+      "range": {
+        "startLine": 210,
+        "startChar": 45,
+        "endLine": 210,
+        "endChar": 70
+      },
+      "revId": "701a2f5562b19968ef9d077dfc3485f3fb1148c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e21850a_b4cae14d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 9
