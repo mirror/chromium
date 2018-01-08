@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b22067b9_52b3c5e2",
+        "filename": "chrome/profiling/profiling_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-08T13:13:08Z",
+      "side": 1,
+      "message": "I *think* (but never 100% sure about mojo) this is need only the first time and can reuse the bound interface on the subsequent times",
+      "range": {
+        "startLine": 81,
+        "startChar": 1,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "968cd7b2f88e658534e5c233625256518b7051b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
