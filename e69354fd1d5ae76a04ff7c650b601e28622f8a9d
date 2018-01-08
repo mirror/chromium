@@ -427,6 +427,30 @@
     },
     {
       "key": {
+        "uuid": "3548d1dc_1ec9623d",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-08T18:38:32Z",
+      "side": 1,
+      "message": "The UI uploads the image to a GL texture. After the upload the SkBitmap is not needed anymore. So, we delete it from memory. The upload may happen asynchronously though. Thus, we cannot delete it right after passing it to the UI. Passing the ownership makes this easier for us. In production code, the data is not loaded from a resource bundle but directly from disk. The files are served through a Chrome component.",
+      "parentUuid": "e6c99b79_376a051b",
+      "range": {
+        "startLine": 505,
+        "startChar": 6,
+        "endLine": 505,
+        "endChar": 45
+      },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b99ce8db_d6a5b913",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 4
@@ -495,6 +519,30 @@
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788ba22f_61c8e9c1",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-08T18:38:32Z",
+      "side": 1,
+      "message": "Added better error handling.",
+      "parentUuid": "d4fa9158_2bceebc0",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 8
+      },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
