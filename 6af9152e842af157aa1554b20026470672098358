@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5224746_d381fffc",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-08T18:15:52Z",
+      "side": 1,
+      "message": "In other parts of the code we call this the \"deep equivalent\".\nOne idea I had was for Blink to expose both the current\nselection, and also its deep equivalent, directly - that way\nyou wouldn\u0027t have to do this calculation.\n\nFor now, consider using the word \"deep\" or \"deep equivalent\"\nwhen trying to find the deepest node that corresponds to the\nstart of a selection, for consistency.",
+      "revId": "6af9152e842af157aa1554b20026470672098358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
