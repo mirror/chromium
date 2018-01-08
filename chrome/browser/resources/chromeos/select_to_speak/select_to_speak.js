@@ -884,11 +884,22 @@ SelectToSpeak.prototype = {
     if (this.currentNode_ == null) {
       return;
     }
-    var parent = getNearestContainingWindow(evt.target);
-    var currentParent = getNearestContainingWindow(this.currentNode_.node);
-    var inForeground =
-        currentParent != null && parent != null && currentParent == parent;
-    this.updateFromNodeState_(this.currentNode_.node, inForeground);
+    chrome.automation.getFocus(function(focusedNode) {
+      var parent = getNearestContainingWindow(evt.target);
+      var currentParent = getNearestContainingWindow(this.currentNode_.node);
+      var inForeground =
+          currentParent != null && parent != null && currentParent == parent;
+      if (!inForeground && focusedNode && currentParent) {
+        // See if the focused node parent matches the currentParent.
+        // This may happen in some cases, for example, ARC++, when the window
+        // which received the hit test request is not part of the tree that
+        // contains the actual content. In such cases, use focus to get the
+        // appropriate root.
+        parent = getNearestContainingWindow(focusedNode.root);
+        inForeground = parent != null && currentParent == parent;
+      }
+      this.updateFromNodeState_(this.currentNode_.node, inForeground);
+    }.bind(this));
   },
 
   /**
