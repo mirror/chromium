@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841c7079_60722bb1",
+        "filename": "device/u2f/sign_response_data_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-08T16:41:29Z",
+      "side": 1,
+      "message": "if we split data like this, we\u0027ll always have the same (or off by one) length for in both vectors. Is that intended? Would it make sense to allow these to have different length?",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "62be6e658aaac3017e3a81def24fd3e966c575ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
