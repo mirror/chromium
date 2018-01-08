@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a41a18_cee3f023",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "nit: maybe just\nreturn DevToolsUI::IsFrontendResourceURL(url);",
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915c365d_62dee578",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "const \u0026",
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b089873b_6b10e566",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique\u003c\u003e",
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21df52b8_c5d3f2ce",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "My understanding is that content::RunALlTasksUntilIdle() will *not* wait on the IO thread, only the blocking threads, task scheduler, and current message loop (in this case, UI).  Instead, I think this will have to be something like:\nbase::RunLoop run_loop;\ncontent::BrowserThread::PostTaskAndReply(\n    content::BrowserThread::IO, FROM_HERE,\n    base::BindOnce(\u0026SetUpDevToolsFrontendInterceptorOnIO, port,\n                   test_root_dir_),\n    run_loop.QuitClosure());\nrun_loop.Run();",
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be897179_7a30baaa",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "nit: no need for .get()",
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbc64e9_cc21a336",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 428,
+        "startChar": 62,
+        "endLine": 428,
+        "endChar": 71
+      },
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48f1f67_96aca4bb",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/devtoolsfrontend/fakedevtools.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "nit: indentation off",
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67f626c_20cb3551",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_devtools.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "nit: four-space line continuation indentation.\n\nNote: clang format will also work with JS files.  It doesn\u0027t do it automatically with git cl format, but will if you pass the file directly to clang format.",
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f078086_291c7eca",
+        "filename": "extensions/browser/api/extensions_api_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-08T23:59:48Z",
+      "side": 1,
+      "message": "This method reads to me like it\u0027s hiding the request from the browser (i.e., the browser cannot see it).  Maybe rename to something like ShouldHideBrowserNetworkRequest() or similar?",
+      "revId": "582e6a80aa68527c4dc14c1419bb921092c0f07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
