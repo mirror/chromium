@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52cbfede_f946ab00",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-08T18:23:31Z",
+      "side": 1,
+      "message": "should this be three different tests? I don\u0027t feel strongly but if we wanted to add more tests along the same lines this one big test would become unwieldy.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "ab707b9644b6ea4a13f3332da7850f904b5d6d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
