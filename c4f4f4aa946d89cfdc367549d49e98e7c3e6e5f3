@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f66abcf_e4033839",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2018-01-08T08:16:01Z",
+      "side": 1,
+      "message": "SmbService owns SmbFileSystem. This creates circular dependency without a good reason. Is it really necessary?",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "c4f4f4aa946d89cfdc367549d49e98e7c3e6e5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0159d0f2_cf58a184",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2018-01-08T08:16:01Z",
+      "side": 1,
+      "message": "return; missing after callback call.",
+      "range": {
+        "startLine": 155,
+        "startChar": 61,
+        "endLine": 155,
+        "endChar": 0
+      },
+      "revId": "c4f4f4aa946d89cfdc367549d49e98e7c3e6e5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a402b3_e669ef2a",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2018-01-08T08:16:01Z",
+      "side": 1,
+      "message": "This is a public method, and external components may call SmbService::Unmount to unmount samba. However, this will only unmount the file system, not the client, and make things end up in a weird state.\n\n\nSo, instead I\u0027d suggest to call RequestUnmount() from smb::Service::Unmount and pass a callback to a private method smb::Service::HandleUnmount.\n\n\nsmb::Service::Unmount(...) {\n  GetProviderService()-\u003eRequestUnmount(...);\n}\n\n\nsmb::Service::HandleUnmount(...) {\n    const storage::AsyncFileUtil::StatusCallback\u0026 callback,\n    smbprovider::ErrorType error) const {\n  if (TranslateError(error) \u003d\u003d base::File::FILE_OK)\n    GetProviderService()-\u003eUnmountFileSystem(provider_id, file_system_id, reason);\n}\n\n\n// Pass this as callback to SmbFileSystem constructors.\nvoid smb::Service::OnUnmountResponse(\n    const storage::AsyncFileUtil::StatusCallback\u0026 callback,\n    smbprovider::ErrorType error) const {\n  if (TranslateError(error) \u003d\u003d base::File::FILE_OK) {\n    GetProviderService()-\u003eUnmountFileSystem(provider_id, file_system_id, reason);\n    return;\n  }\n  // Maybe handle error, but maybe not.\n}\n\nAbortCallback SmbFileSystem::RequestUnmount(\n    const storage::AsyncFileUtil::StatusCallback\u0026 callback) {\n    const storage::AsyncFileUtil::StatusCallback\u0026 callback) {\n  // File systems are only unmounted via smb::Service::Unmount().\n  NOTIMPLEMENTED();\n  callback.Run(INVALID_OPERATION);\n}\n\n\nAs a result, we have no circular depedency, no way to get in a half unmounted state.\n\nWDYT?",
+      "revId": "c4f4f4aa946d89cfdc367549d49e98e7c3e6e5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
