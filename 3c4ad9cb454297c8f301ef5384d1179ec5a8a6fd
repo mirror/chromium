@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99eed6ac_0e86422c",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-08T05:25:43Z",
+      "side": 1,
+      "message": "(Y)",
+      "parentUuid": "9d3c95d2_3e3ec605",
+      "range": {
+        "startLine": 235,
+        "startChar": 6,
+        "endLine": 235,
+        "endChar": 11
+      },
+      "revId": "3c4ad9cb454297c8f301ef5384d1179ec5a8a6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aec58568_2e8b0acd",
         "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-05T17:21:51Z",
       "side": 1,
       "message": "Does it work to get rid of the menuCommands_ list, and have this be a computed property instead?\n\nLike,\n\n  \u003ctemplate is\u003d\"dom-repeat\" items\u003d\"[[getMenuCommands(menuSource_)]]\" as\u003d\"command\"\u003e\n    \u003cbutton class\u003d\"dropdown-item\"\u003e\n      ..etc..\n    \u003c/button\u003e\n  \u003c/template\u003e\n\n  getMenuCommands: function(menuSource) {\n    switch(this.menuSource_) {\n      case MenuSource.ITEM:\n        return [\n          ...\n        ]\n    }\n  }\n\nI don\u0027t think there should be any behavioral difference between the two, and doing it with a computed thing removes a piece of extra redundant state.",
+      "revId": "3c4ad9cb454297c8f301ef5384d1179ec5a8a6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93fc2c6_ea5eb30b",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-08T05:25:43Z",
+      "side": 1,
+      "message": "I think we\u0027d need it around anyway for computing this.hasAnySublabel_ which is below this. I think it does make dependencies more obvious though, so done.",
+      "parentUuid": "aec58568_2e8b0acd",
       "revId": "3c4ad9cb454297c8f301ef5384d1179ec5a8a6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2c2ceabf_5fb0b70c",
+        "filename": "chrome/browser/resources/md_bookmarks/constants.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-08T05:25:43Z",
+      "side": 1,
+      "message": "Removed 1. I thought this was meant to be MD Bookmarks where we believed in extra whitespace..",
+      "parentUuid": "2daf94f5_c6b1b8b1",
+      "revId": "3c4ad9cb454297c8f301ef5384d1179ec5a8a6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba9fc91_02311757",
         "filename": "chrome/browser/resources/md_bookmarks/item.js",
         "patchSetId": 3
@@ -79,6 +139,30 @@
       "revId": "3c4ad9cb454297c8f301ef5384d1179ec5a8a6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9d45bc_9e9b1afd",
+        "filename": "chrome/browser/resources/md_bookmarks/item.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-08T05:25:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ba9fc91_02311757",
+      "range": {
+        "startLine": 79,
+        "startChar": 28,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "3c4ad9cb454297c8f301ef5384d1179ec5a8a6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
