@@ -553,14 +553,13 @@ ScriptValue WebGL2RenderingContextBase::getInternalformatParameter(
 
   switch (pname) {
     case GL_SAMPLES: {
-      std::unique_ptr<GLint[]> values;
       GLint length = -1;
       ContextGL()->GetInternalformativ(target, internalformat,
                                        GL_NUM_SAMPLE_COUNTS, 1, &length);
       if (length <= 0)
         return WebGLAny(script_state, DOMInt32Array::Create(0));
 
-      values = WrapArrayUnique(new GLint[length]);
+      auto values = std::make_unique<GLint[]>(length);
       for (GLint ii = 0; ii < length; ++ii)
         values[ii] = 0;
       ContextGL()->GetInternalformativ(target, internalformat, GL_SAMPLES,
