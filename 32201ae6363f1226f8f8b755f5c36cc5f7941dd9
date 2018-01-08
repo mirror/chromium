@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c13d67d_a7e09ee3",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-08T23:50:55Z",
+      "side": 1,
+      "message": "nit: change to \"Helper method to expand or collapse all logs in the message-logs-table.\"",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 29
+      },
+      "revId": "32201ae6363f1226f8f8b755f5c36cc5f7941dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
