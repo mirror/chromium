@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f72c04_10c0d6e9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_floats_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-08T22:21:38Z",
+      "side": 0,
+      "message": "I didn\u0027t see what\u0027s wrong with that, so I removed the TODO. Please correct me if this should be kept.",
+      "revId": "7e04a9d1f143fb6d37d380833f766bf938cc0284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
