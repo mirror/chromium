@@ -23,6 +23,7 @@
 #include "net/cert/cert_verify_result.h"
 #include "net/cert/crl_set.h"
 #include "net/cert/ev_root_ca_metadata.h"
+#include "net/cert/known_roots.h"
 #include "net/cert/known_roots_win.h"
 #include "net/cert/test_root_certs.h"
 #include "net/cert/x509_certificate.h"
@@ -262,19 +263,6 @@ bool CertSubjectCommonNameHasNull(PCCERT_CONTEXT cert) {
     }
   }
   return false;
-}
-
-// IsIssuedByKnownRoot returns true if the given chain is rooted at a root CA
-// which we recognise as a standard root.
-// static
-bool IsIssuedByKnownRoot(PCCERT_CHAIN_CONTEXT chain_context) {
-  PCERT_SIMPLE_CHAIN first_chain = chain_context->rgpChain[0];
-  int num_elements = first_chain->cElement;
-  if (num_elements < 1)
-    return false;
-  PCERT_CHAIN_ELEMENT* element = first_chain->rgpElement;
-  PCCERT_CONTEXT cert = element[num_elements - 1]->pCertContext;
-  return IsKnownRoot(cert);
 }
 
 // Saves some information about the certificate chain |chain_context| in
@@ -527,8 +515,9 @@ CRLSetResult CheckChainRevocationWithCRLSet(PCCERT_CHAIN_CONTEXT chain,
   return result;
 }
 
-void AppendPublicKeyHashes(PCCERT_CHAIN_CONTEXT chain,
-                           HashValueVector* hashes) {
+void AppendPublicKeyHashesAndUpdateKnownRoot(PCCERT_CHAIN_CONTEXT chain,
+                                             HashValueVector* hashes,
+                                             bool* known_root) {
   if (chain->cChain == 0)
     return;
 
@@ -549,6 +538,11 @@ void AppendPublicKeyHashes(PCCERT_CHAIN_CONTEXT chain,
     HashValue sha256(HASH_VALUE_SHA256);
     crypto::SHA256HashString(spki_bytes, sha256.data(), crypto::kSHA256Length);
     hashes->push_back(sha256);
+
+    if (!*known_root) {
+      *known_root =
+          GetNetTrustAnchorHistogramIdForSPKI(sha256) != 0 || IsKnownRoot(cert);
+    }
   }
 }
 
@@ -1163,8 +1157,9 @@ int CertVerifyProcWin::VerifyInternal(
     verify_result->cert_status &= ~CERT_STATUS_UNABLE_TO_CHECK_REVOCATION;
   }
 
-  AppendPublicKeyHashes(chain_context, &verify_result->public_key_hashes);
-  verify_result->is_issued_by_known_root = IsIssuedByKnownRoot(chain_context);
+  AppendPublicKeyHashesAndUpdateKnownRoot(
+      chain_context, &verify_result->public_key_hashes,
+      &verify_result->is_issued_by_known_root);
 
   if (IsCertStatusError(verify_result->cert_status))
     return MapCertStatusToNetError(verify_result->cert_status);
