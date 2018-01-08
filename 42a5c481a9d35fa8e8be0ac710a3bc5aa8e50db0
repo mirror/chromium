@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bae32d36_3a9d0d25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-08T19:05:52Z",
+      "side": 1,
+      "message": "There would be two separate records. Let\u0027s say I delete 4 items in the first 5 seconds and 6 items in the next 5 seconds. We will record both 4 and 6.",
+      "parentUuid": "3641193b_66ed5c08",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "42a5c481a9d35fa8e8be0ac710a3bc5aa8e50db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63c7b0b6_bcf003f5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-08T17:54:07Z",
       "side": 1,
       "message": "We may be able to do this sort of analysis through custom queries if we always log Android.HistoryPage.RemoveSingleItem. I think it\u0027s worth syncing with Kingston to see how easy it would be to write a script that counts # of repeated actions over X seconds.",
+      "range": {
+        "startLine": 1139,
+        "startChar": 4,
+        "endLine": 1140,
+        "endChar": 54
+      },
+      "revId": "42a5c481a9d35fa8e8be0ac710a3bc5aa8e50db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0145117_5133b0b0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-08T19:05:52Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll sync with Kingston. If we are able to do some analysis, would this be logging user action instead?",
+      "parentUuid": "63c7b0b6_bcf003f5",
       "range": {
         "startLine": 1139,
         "startChar": 4,
