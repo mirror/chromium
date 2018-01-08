@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee93bcfe_1a20cfed",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/AppManifestView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-08T19:39:57Z",
+      "side": 1,
+      "message": "let\u0027s render once :)",
+      "range": {
+        "startLine": 53,
+        "startChar": 18,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "368bf5b1e7aa6b238fd65df247a9a16457f15401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d00c5b92_dd1454fe",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/AppManifestView.js",
         "patchSetId": 3
@@ -13,6 +36,52 @@
       "writtenOn": "2018-01-05T22:09:15Z",
       "side": 1,
       "message": "Bring back classList.",
+      "revId": "368bf5b1e7aa6b238fd65df247a9a16457f15401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb6e3d4_7e35c89d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XReport.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-08T19:39:57Z",
+      "side": 1,
+      "message": "let\u0027s merge style attr from element to the template expansion",
+      "range": {
+        "startLine": 5,
+        "startChar": 83,
+        "endLine": 5,
+        "endChar": 90
+      },
+      "revId": "368bf5b1e7aa6b238fd65df247a9a16457f15401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0eb7850_7808c595",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XReport.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-08T19:39:57Z",
+      "side": 1,
+      "message": "Isn\u0027t it part of resources? Why is it under UI?",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 28
+      },
       "revId": "368bf5b1e7aa6b238fd65df247a9a16457f15401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
