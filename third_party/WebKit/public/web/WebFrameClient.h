@@ -109,7 +109,6 @@ class WebPresentationClient;
 class WebPushClient;
 class WebRTCPeerConnectionHandler;
 class WebRelatedAppsFetcher;
-class WebScreenOrientationClient;
 class WebString;
 class WebURL;
 class WebURLResponse;
@@ -755,13 +754,6 @@ class BLINK_EXPORT WebFrameClient {
   // implemented in content/, and putting it here avoids adding more public
   // content/ APIs.
   virtual bool ShouldBlockWebGL() { return false; }
-
-  // Screen Orientation --------------------------------------------------
-
-  // Access the embedder API for (client-based) screen orientation client .
-  virtual WebScreenOrientationClient* GetWebScreenOrientationClient() {
-    return nullptr;
-  }
 
   // Accessibility -------------------------------------------------------
 
