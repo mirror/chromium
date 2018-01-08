@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc72f517_a9784aa1",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-08T06:20:18Z",
+      "side": 1,
+      "message": "Why are the import/export title case but not everything else? Toolbar menu looks funny. What case should this be?\n\nMy instinct is Sentence case for the lot of them.",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 20
+      },
+      "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
