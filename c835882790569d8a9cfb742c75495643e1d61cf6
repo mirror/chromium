@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9ef154e_3a27d7f2",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-08T15:10:10Z",
+      "side": 1,
+      "message": "This conditional has gotten complex and should be broken into pieces with a comment before each idea unless it\u0027s obvious to newcomers.",
+      "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c88598_38645e3a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-08T15:10:10Z",
+      "side": 1,
+      "message": "I found this confusing in that a leaf or static text should not have children. Reading the leafOrStaticText code, I see that it means that the item should be presented atomically. Perhaps \"leaf\" is a misnomer in the code ... just food for thought, as others might be confused as well.",
+      "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e90fb3_9b3d7b56",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-08T15:10:10Z",
+      "side": 1,
+      "message": "Is it possible to not have a first child and still have a last child? That would be weird. I think you only need to test one of these.",
+      "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b001e1_081d653c",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-08T15:10:10Z",
+      "side": 1,
+      "message": "So this only delves into the left-most and right-most nodes? What is the reason for not iterating over the full subtree?",
+      "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
