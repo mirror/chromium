@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "085f9eaa_0c2623f3",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-08T18:53:03Z",
+      "side": 1,
+      "message": "When the code goes into printing mode, pre-paint is invalidated, right?\n(and also when leaving printing mode)\nIf so, then you can put this code in PaintPropertyTreeBuilder instead.",
+      "revId": "2acf0515c12fe32512f814904c8dbcaa662f7fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
