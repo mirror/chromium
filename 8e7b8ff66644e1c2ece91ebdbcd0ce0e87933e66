@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22e1c01e_6c2f4572",
+        "filename": "base/metrics/sparse_histogram_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T15:53:44Z",
+      "side": 1,
+      "message": "What is this for?\n\nIt also doesn\u0027t seem to be allowed by style guide. Under Namespaces, \"Do not use using-directives (e.g. using namespace foo).\"",
+      "range": {
+        "startLine": 211,
+        "startChar": 39,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4026d9d7_05ffdefe",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T15:53:44Z",
+      "side": 1,
+      "message": "Can we avoid the loop via:\n\nreturn std::vector\u003cconst BucketRanges*\u003e(top_-\u003eranges_.begin(),top_-\u003eranges_.end());\n\n? (Or something similar).",
+      "range": {
+        "startLine": 182,
+        "startChar": 53,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c7d24f_45838a3e",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T15:53:44Z",
+      "side": 1,
+      "message": "This is very similar to GetKNownHistograms().\n\nHave you considered unifying with a helper function, passing a different predicate? It could be a templated function so the predicate gets inlined without extra overhead.",
+      "range": {
+        "startLine": 261,
+        "startChar": 3,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4094de84_8d95e78b",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T15:53:44Z",
+      "side": 1,
+      "message": "Nit: Add {}\u0027s",
+      "range": {
+        "startLine": 369,
+        "startChar": 66,
+        "endLine": 369,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa043cd8_da46bc18",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T15:53:44Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this does - is it the same as SizeIs(0)? If so, use that syntax since that\u0027s more understandable.",
+      "range": {
+        "startLine": 196,
+        "startChar": 75,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43c2439_f02afde6",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-08T15:53:44Z",
+      "side": 1,
+      "message": "Out of curiosity, what\u0027s the benefit of using testing::SizeIs(0) vs. just _EQ on size() like was done before? The previous code would fit on one fewer lines. But I don\u0027t know what SizeIs(0) provides as a benefit...",
+      "range": {
+        "startLine": 431,
+        "startChar": 34,
+        "endLine": 431,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
