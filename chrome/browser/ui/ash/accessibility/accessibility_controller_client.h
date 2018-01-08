@@ -22,6 +22,14 @@ class AccessibilityControllerClient
   // Tests can provide a mock mojo interface for the ash controller.
   void InitForTesting(ash::mojom::AccessibilityControllerPtr controller);
 
+  static AccessibilityControllerClient* Get();
+
+  // Overrides the instance for testing.
+  static void SetInstanceForTesting(AccessibilityControllerClient* instance);
+
+  // Starts or stops darkening the screen.
+  void SetDarkenScreen(bool darken);
+
   // ash::mojom::AccessibilityControllerClient:
   void TriggerAccessibilityAlert(ash::mojom::AccessibilityAlert alert) override;
   void PlayEarcon(int32_t sound_key) override;

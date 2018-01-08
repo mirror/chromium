@@ -15,6 +15,8 @@
 
 namespace {
 
+AccessibilityControllerClient* g_instance = nullptr;
+
 void SetAutomationManagerEnabled(content::BrowserContext* context,
                                  bool enabled) {
   DCHECK(context);
@@ -28,9 +30,15 @@ void SetAutomationManagerEnabled(content::BrowserContext* context,
 }  // namespace
 
 AccessibilityControllerClient::AccessibilityControllerClient()
-    : binding_(this) {}
+    : binding_(this) {
+  DCHECK(!g_instance);
+  g_instance = this;
+}
 
-AccessibilityControllerClient::~AccessibilityControllerClient() = default;
+AccessibilityControllerClient::~AccessibilityControllerClient() {
+  DCHECK_EQ(this, g_instance);
+  g_instance = nullptr;
+}
 
 void AccessibilityControllerClient::Init() {
   content::ServiceManagerConnection::GetForProcess()
@@ -43,6 +51,22 @@ void AccessibilityControllerClient::InitForTesting(
     ash::mojom::AccessibilityControllerPtr controller) {
   accessibility_controller_ = std::move(controller);
   BindAndSetClient();
+}
+
+// static
+AccessibilityControllerClient* AccessibilityControllerClient::Get() {
+  return g_instance;
+}
+
+// static
+void AccessibilityControllerClient::SetInstanceForTesting(
+    AccessibilityControllerClient* instance) {
+  DCHECK(instance);
+  g_instance = instance;
+}
+
+void AccessibilityControllerClient::SetDarkenScreen(bool darken) {
+  accessibility_controller_->SetDarkenScreen(darken);
 }
 
 void AccessibilityControllerClient::TriggerAccessibilityAlert(
