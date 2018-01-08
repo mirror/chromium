@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5412d27_296ac288",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-08T18:38:14Z",
+      "side": 1,
+      "message": "code itself looks good to me, and way simpler than the previous iteration, thanks.\n\none minor: CL adds to support to x11_window_back so both x11_window and x11_ozone_window instances benefit from it. The statement above might need a slight change to reflect it.\n\nminor 1: s/or/and",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
