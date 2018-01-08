@@ -159,6 +159,24 @@
       "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5968716d_22aa831e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T17:15:16Z",
+      "side": 1,
+      "message": "SetArcAvailableCommandLineForTesting().\n\nOnce the profile has been set (in ArcSessionManagerTestBase), we cannot call this function anymore, and we\u0027re stuck with it either being enabled or disabled for all the the tests (and we do want to change that for the login screen test). So it does need to be outside of that class\u0027 hierarchy :(",
+      "parentUuid": "39b4284f_2fb42dbd",
+      "revId": "fe0e7d92ac48366b3c530c95f5bf2f7fc5c85c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
