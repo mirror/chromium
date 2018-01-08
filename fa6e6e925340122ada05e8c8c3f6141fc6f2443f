@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4b326ad5_93b184f6",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T18:18:06Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "93ef02ea_22faae7d",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 40
+      },
+      "revId": "fa6e6e925340122ada05e8c8c3f6141fc6f2443f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c691ec1_a41f3a3c",
         "filename": "content/renderer/image_capture/image_capture_frame_grabber.cc",
         "patchSetId": 5
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b4f837be_c6dc7bfc",
+        "filename": "content/renderer/image_capture/image_capture_frame_grabber.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T18:18:06Z",
+      "side": 0,
+      "message": "I\u0027m the owner of this code and no worries here, this was\na provision to accept both planar formats coming out of\na MediaStreamVideoTrack, but now it should be moved to \nI420 only.",
+      "parentUuid": "7c691ec1_a41f3a3c",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "fa6e6e925340122ada05e8c8c3f6141fc6f2443f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b996ecb6_fdc8d95b",
         "filename": "content/renderer/media_recorder/video_track_recorder.cc",
         "patchSetId": 5
@@ -92,6 +140,30 @@
       "revId": "fa6e6e925340122ada05e8c8c3f6141fc6f2443f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0278c84d_96a65406",
+        "filename": "content/renderer/media_recorder/video_track_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T18:18:06Z",
+      "side": 0,
+      "message": "Same here.",
+      "parentUuid": "b996ecb6_fdc8d95b",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 60
+      },
+      "revId": "fa6e6e925340122ada05e8c8c3f6141fc6f2443f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

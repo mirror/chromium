@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2dbbe58a_7a57c781",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T18:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1346722e_4facd82e",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "8fa5e8676a9ebb046080c594d9c0fc572daed4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a3974b7_e1d14ac8",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "8fa5e8676a9ebb046080c594d9c0fc572daed4a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddf0652_05a2cfc8",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T18:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a3974b7_e1d14ac8",
+      "range": {
+        "startLine": 121,
+        "startChar": 1,
+        "endLine": 121,
+        "endChar": 49
+      },
+      "revId": "8fa5e8676a9ebb046080c594d9c0fc572daed4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
