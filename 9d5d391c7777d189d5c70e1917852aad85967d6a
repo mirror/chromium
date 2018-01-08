@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "364ef99a_80b610d7",
+        "filename": "base/third_party/icu/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2018-01-08T22:22:24Z",
+      "side": 1,
+      "message": "s/this/the license file/",
+      "revId": "9d5d391c7777d189d5c70e1917852aad85967d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
