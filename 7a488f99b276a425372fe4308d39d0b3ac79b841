@@ -16,6 +16,24 @@
       "revId": "7a488f99b276a425372fe4308d39d0b3ac79b841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5af678_e0f287ce",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-08T14:24:21Z",
+      "side": 1,
+      "message": "+charlie: we probably should add submit check that blocks new disabling without bug/reason",
+      "parentUuid": "e1aa0334_de762da6",
+      "revId": "7a488f99b276a425372fe4308d39d0b3ac79b841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
