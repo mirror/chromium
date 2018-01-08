@@ -16,6 +16,24 @@
       "revId": "2894c17c9f356b50b4d5e2c7e8b5a455c7fb1d1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d81c88_a4bc55e2",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-08T16:56:32Z",
+      "side": 1,
+      "message": "Never mind this question, I saw this CL afterward: https://chromium-review.googlesource.com/c/chromium/src/+/852817",
+      "parentUuid": "762c9a6b_132b43f9",
+      "revId": "2894c17c9f356b50b4d5e2c7e8b5a455c7fb1d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
