@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
@@ -42,6 +43,8 @@ import org.chromium.chrome.test.util.ApplicationTestUtils;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_public.common.ScreenOrientationValues;
+
+import java.util.concurrent.Callable;
 
 /**
  * Tests that WebappActivities are launched correctly.
@@ -130,6 +133,37 @@ public class WebappModeTest {
                                 WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true));
                     }
                 });
+    }
+
+    /**
+     * Tests that WebappActivities are started properly by WebappLauncherActivity.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Webapps"})
+    public void testWebappLaunchesByLauncherActivity() {
+        WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
+
+        WebappInfo webappInfo = WebappInfo.create(
+                createIntent(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true));
+
+        Intent launchIntent = null;
+        try {
+            launchIntent = ThreadUtils.runOnUiThreadBlocking(new Callable<Intent>() {
+                @Override
+                public Intent call() {
+                    return WebappLauncherActivity.createWebappLaunchIntent(webappInfo, false);
+                }
+            });
+        } catch (Exception e) {
+            Assert.fail("Create launcher intent failed with exception" + e);
+            return;
+        }
+        WebappActivity webappActivity =
+                (WebappActivity) mActivityTestRule.startAndWaitForActivityType(
+                        launchIntent, WebappActivity.class);
+        Assert.assertEquals(webappInfo.id(), webappActivity.getWebappInfo().id());
+        Assert.assertEquals(webappInfo.uri(), webappActivity.getWebappInfo().uri());
     }
 
     /**
