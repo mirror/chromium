@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67c159b9_f7c17d2d",
+        "filename": "chrome/browser/engagement/site_engagement_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-08T00:04:45Z",
+      "side": 1,
+      "message": "Why are these ignored? I\u0027d like to see both: a) a comment explaining why we clear the vector on navigation (to avoid the list growing indefinitely), and b) why certain types of navigations are excluded here.",
+      "revId": "6698cb97620dd80ce9cd1ccb006ba323039969a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c17a483_e15cd5a3",
+        "filename": "chrome/browser/engagement/site_engagement_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-08T00:04:45Z",
+      "side": 1,
+      "message": "Nit: Hyphenate \"non-main-frame\", \"same-page\" and \"error-page\" since they are adjectival phrases for \"navigations\".",
+      "range": {
+        "startLine": 177,
+        "startChar": 28,
+        "endLine": 177,
+        "endChar": 29
+      },
+      "revId": "6698cb97620dd80ce9cd1ccb006ba323039969a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
