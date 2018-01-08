@@ -752,13 +752,13 @@ Sources.NavigatorView = class extends UI.VBox {
     var contextMenu = new UI.ContextMenu(event);
 
     Sources.NavigatorView.appendSearchItem(contextMenu, path);
-    if (project.type() !== Workspace.projectTypes.FileSystem)
-      return;
 
-    contextMenu.defaultSection().appendItem(
-        Common.UIString('New file'), this._handleContextMenuCreate.bind(this, project, path));
+    if (project.canCreateFile()) {
+      contextMenu.defaultSection().appendItem(
+          Common.UIString('New file'), this._handleContextMenuCreate.bind(this, project, path));
+    }
 
-    if (!(node instanceof Sources.NavigatorGroupTreeNode)) {
+    if (project.canExcludeFolder()) {
       contextMenu.defaultSection().appendItem(
           Common.UIString('Exclude folder'), this._handleContextMenuExclude.bind(this, project, path));
     }
@@ -769,9 +769,11 @@ Sources.NavigatorView = class extends UI.VBox {
         project.remove();
     }
 
-    Sources.NavigatorView.appendAddFolderItem(contextMenu);
-    if (node instanceof Sources.NavigatorGroupTreeNode)
-      contextMenu.defaultSection().appendItem(Common.UIString('Remove folder from workspace'), removeFolder);
+    if (project.type() === Workspace.projectTypes.FileSystem) {
+      Sources.NavigatorView.appendAddFolderItem(contextMenu);
+      if (node instanceof Sources.NavigatorGroupTreeNode)
+        contextMenu.defaultSection().appendItem(Common.UIString('Remove folder from workspace'), removeFolder);
+    }
 
     contextMenu.show();
   }
