@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f29dca_82d865b1",
+        "filename": "device/u2f/u2f_ble_discovery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T18:21:17Z",
+      "side": 1,
+      "message": "Nit: Can you move this above DeviceRemoved() to match the declaration order in BluetoothAdapter::Observer and do the corresponding change in the .cc file?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 55
+      },
+      "revId": "d3d086b65088a8d933c8866fcd1b3a26cb0acd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
