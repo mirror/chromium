@@ -39,6 +39,24 @@
       "revId": "6698cb97620dd80ce9cd1ccb006ba323039969a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd03ceed_86862bd2",
+        "filename": "chrome/browser/engagement/site_engagement_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-08T00:23:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67c159b9_f7c17d2d",
+      "revId": "6698cb97620dd80ce9cd1ccb006ba323039969a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
