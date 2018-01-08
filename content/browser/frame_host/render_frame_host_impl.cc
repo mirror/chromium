@@ -45,7 +45,6 @@
 #include "content/browser/frame_host/navigator_impl.h"
 #include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
-#include "content/browser/generic_sensor/sensor_provider_proxy_impl.h"
 #include "content/browser/geolocation/geolocation_service_impl.h"
 #include "content/browser/image_capture/image_capture_impl.h"
 #include "content/browser/installedapp/installed_app_provider_impl_default.h"
@@ -54,7 +53,6 @@
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_scheduler_filter.h"
 #include "content/browser/media/media_interface_proxy.h"
-#include "content/browser/media/session/media_session_service_impl.h"
 #include "content/browser/payments/payment_app_context_impl.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
@@ -259,48 +257,6 @@ void GrantFileAccess(int child_id,
   }
 }
 
-#if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-// RemoterFactory that delegates Create() calls to the ContentBrowserClient.
-//
-// Since Create() could be called at any time, perhaps by a stray task being run
-// after a RenderFrameHost has been destroyed, the RemoterFactoryImpl uses the
-// process/routing IDs as a weak reference to the RenderFrameHostImpl.
-class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
- public:
-  RemoterFactoryImpl(int process_id, int routing_id)
-      : process_id_(process_id), routing_id_(routing_id) {}
-
-  static void Bind(int process_id,
-                   int routing_id,
-                   media::mojom::RemoterFactoryRequest request) {
-    mojo::MakeStrongBinding(
-        std::make_unique<RemoterFactoryImpl>(process_id, routing_id),
-        std::move(request));
-  }
-
- private:
-  void Create(media::mojom::RemotingSourcePtr source,
-              media::mojom::RemoterRequest request) final {
-    if (auto* host = RenderFrameHostImpl::FromID(process_id_, routing_id_)) {
-      GetContentClient()->browser()->CreateMediaRemoter(
-          host, std::move(source), std::move(request));
-    }
-  }
-
-  const int process_id_;
-  const int routing_id_;
-
-  DISALLOW_COPY_AND_ASSIGN(RemoterFactoryImpl);
-};
-#endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
-
-void CreateFrameResourceCoordinator(
-    RenderFrameHostImpl* render_frame_host,
-    resource_coordinator::mojom::FrameCoordinationUnitRequest request) {
-  render_frame_host->GetFrameResourceCoordinator()->AddBinding(
-      std::move(request));
-}
-
 // The following functions simplify code paths where the UI thread notifies the
 // ResourceDispatcherHostImpl of information pertaining to loading behavior of
 // frame hosts.
@@ -393,27 +349,6 @@ void RenderFrameHost::AllowDataUrlNavigationForAndroidWebView() {
 bool RenderFrameHost::IsDataUrlNavigationAllowedForAndroidWebView() {
   return g_allow_data_url_navigation;
 }
-
-void CreateMediaPlayerRenderer(int process_id,
-                               int routing_id,
-                               RenderFrameHostDelegate* delegate,
-                               media::mojom::RendererRequest request) {
-  std::unique_ptr<MediaPlayerRenderer> renderer =
-      std::make_unique<MediaPlayerRenderer>(process_id, routing_id,
-                                            delegate->GetAsWebContents());
-
-  // base::Unretained is safe here because the lifetime of the MediaPlayerRender
-  // is tied to the lifetime of the MojoRendererService.
-  media::MojoRendererService::InitiateSurfaceRequestCB surface_request_cb =
-      base::Bind(&MediaPlayerRenderer::InitiateScopedSurfaceRequest,
-                 base::Unretained(renderer.get()));
-
-  media::MojoRendererService::Create(
-      nullptr,  // CDMs are not supported.
-      nullptr,  // Manages its own audio_sink.
-      nullptr,  // Does not use video_sink. See StreamTextureWrapper instead.
-      std::move(renderer), surface_request_cb, std::move(request));
-}
 #endif  // defined(OS_ANDROID)
 
 // static
@@ -491,6 +426,8 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       accessibility_reset_count_(0),
       browser_plugin_embedder_ax_tree_id_(ui::AXTreeIDRegistry::kNoAXTreeID),
       no_create_browser_accessibility_manager_for_testing_(false),
+      permission_service_context_(
+          std::make_unique<PermissionServiceContext>(this)),
       web_ui_type_(WebUI::kNoWebUI),
       pending_web_ui_type_(WebUI::kNoWebUI),
       should_reuse_web_ui_(false),
@@ -3022,37 +2959,7 @@ void RenderFrameHostImpl::SubresourceResponseStarted(const GURL& url,
                                         ip, cert_status);
 }
 
-namespace {
-
-void GetRestrictedCookieManager(
-    RenderFrameHostImpl* render_frame_host_impl,
-    network::mojom::RestrictedCookieManagerRequest request) {
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableExperimentalWebPlatformFeatures)) {
-    return;
-  }
-
-  BrowserContext* browser_context =
-      render_frame_host_impl->GetProcess()->GetBrowserContext();
-  StoragePartition* storage_partition =
-      BrowserContext::GetDefaultStoragePartition(browser_context);
-  mojom::NetworkContext* network_context =
-      storage_partition->GetNetworkContext();
-  uint32_t render_process_id = render_frame_host_impl->GetProcess()->GetID();
-  uint32_t render_frame_id = render_frame_host_impl->GetRoutingID();
-  network_context->GetRestrictedCookieManager(
-      std::move(request), render_process_id, render_frame_id);
-}
-
-}  // anonymous namespace
-
 void RenderFrameHostImpl::RegisterMojoInterfaces() {
-#if !defined(OS_ANDROID)
-  // The default (no-op) implementation of InstalledAppProvider. On Android, the
-  // real implementation is provided in Java.
-  registry_->AddInterface(base::Bind(&InstalledAppProviderImplDefault::Create));
-#endif  // !defined(OS_ANDROID)
-
   PermissionManager* permission_manager =
       GetProcess()->GetBrowserContext()->GetPermissionManager();
 
@@ -3070,129 +2977,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
                      base::Unretained(geolocation_service_.get())));
     }
   }
-
-  registry_->AddInterface<device::mojom::WakeLock>(base::Bind(
-      &RenderFrameHostImpl::BindWakeLockRequest, base::Unretained(this)));
-
-#if defined(OS_ANDROID)
-  if (base::FeatureList::IsEnabled(features::kWebNfc)) {
-    registry_->AddInterface<device::mojom::NFC>(base::Bind(
-        &RenderFrameHostImpl::BindNFCRequest, base::Unretained(this)));
-  }
-#endif
-
-  if (!permission_service_context_)
-    permission_service_context_.reset(new PermissionServiceContext(this));
-
-  registry_->AddInterface(
-      base::Bind(&PermissionServiceContext::CreateService,
-                 base::Unretained(permission_service_context_.get())));
-
-  registry_->AddInterface(
-      base::Bind(&RenderFrameHostImpl::BindPresentationServiceRequest,
-                 base::Unretained(this)));
-
-  registry_->AddInterface(
-      base::Bind(&MediaSessionServiceImpl::Create, base::Unretained(this)));
-
-#if defined(OS_ANDROID)
-  // Creates a MojoRendererService, passing it a MediaPlayerRender.
-  registry_->AddInterface<media::mojom::Renderer>(
-      base::Bind(&content::CreateMediaPlayerRenderer, GetProcess()->GetID(),
-                 GetRoutingID(), delegate_));
-#endif  // defined(OS_ANDROID)
-
-  registry_->AddInterface(base::Bind(
-      base::IgnoreResult(&RenderFrameHostImpl::CreateWebBluetoothService),
-      base::Unretained(this)));
-
-  registry_->AddInterface(base::BindRepeating(
-      &RenderFrameHostImpl::CreateUsbDeviceManager, base::Unretained(this)));
-
-  registry_->AddInterface(base::BindRepeating(
-      &RenderFrameHostImpl::CreateUsbChooserService, base::Unretained(this)));
-
-  registry_->AddInterface<media::mojom::InterfaceFactory>(
-      base::Bind(&RenderFrameHostImpl::BindMediaInterfaceFactoryRequest,
-                 base::Unretained(this)));
-
-  registry_->AddInterface(base::Bind(&SharedWorkerConnectorImpl::Create,
-                                     process_->GetID(), routing_id_));
-
-  registry_->AddInterface<device::mojom::VRService>(base::Bind(
-      &WebvrServiceProvider::BindWebvrService, base::Unretained(this)));
-
-  if (RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories()) {
-    registry_->AddInterface(base::BindRepeating(
-        &RenderFrameHostImpl::CreateAudioOutputStreamFactory,
-        base::Unretained(this)));
-  }
-
-  if (resource_coordinator::IsResourceCoordinatorEnabled()) {
-    registry_->AddInterface(
-        base::Bind(&CreateFrameResourceCoordinator, base::Unretained(this)));
-  }
-
-#if BUILDFLAG(ENABLE_WEBRTC)
-  // BrowserMainLoop::GetInstance() may be null on unit tests.
-  if (BrowserMainLoop::GetInstance()) {
-    // BrowserMainLoop, which owns MediaStreamManager, is alive for the lifetime
-    // of Mojo communication (see BrowserMainLoop::ShutdownThreadsAndCleanUp(),
-    // which shuts down Mojo). Hence, passing that MediaStreamManager instance
-    // as a raw pointer here is safe.
-    MediaStreamManager* media_stream_manager =
-        BrowserMainLoop::GetInstance()->media_stream_manager();
-    registry_->AddInterface(
-        base::Bind(&MediaDevicesDispatcherHost::Create, GetProcess()->GetID(),
-                   GetRoutingID(),
-                   base::Unretained(media_stream_manager)),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
-  }
-#endif
-
-#if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-  registry_->AddInterface(base::Bind(&RemoterFactoryImpl::Bind,
-                                     GetProcess()->GetID(), GetRoutingID()));
-#endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
-
-  registry_->AddInterface(base::Bind(
-      &KeyboardLockServiceImpl::CreateMojoService, base::Unretained(this)));
-
-  registry_->AddInterface(base::Bind(&ImageCaptureImpl::Create));
-
-#if !defined(OS_ANDROID)
-  if (base::FeatureList::IsEnabled(features::kWebAuth)) {
-    registry_->AddInterface(
-        base::Bind(&RenderFrameHostImpl::BindAuthenticatorRequest,
-                   base::Unretained(this)));
-  }
-#endif  // !defined(OS_ANDROID)
-
-  if (permission_manager) {
-    sensor_provider_proxy_.reset(
-        new SensorProviderProxyImpl(permission_manager, this));
-    registry_->AddInterface(
-        base::Bind(&SensorProviderProxyImpl::Bind,
-                   base::Unretained(sensor_provider_proxy_.get())));
-  }
-
-  registry_->AddInterface(base::BindRepeating(
-      &media::MediaMetricsProvider::Create,
-      // Only save decode stats when on-the-record.
-      GetSiteInstance()->GetBrowserContext()->IsOffTheRecord()
-          ? nullptr
-          : GetSiteInstance()
-                ->GetBrowserContext()
-                ->GetVideoDecodePerfHistory()));
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          cc::switches::kEnableGpuBenchmarking)) {
-    registry_->AddInterface(
-        base::Bind(&InputInjectorImpl::Create, weak_ptr_factory_.GetWeakPtr()));
-  }
-
-  registry_->AddInterface(
-      base::BindRepeating(GetRestrictedCookieManager, base::Unretained(this)));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
@@ -3674,11 +3458,9 @@ void RenderFrameHostImpl::InvalidateMojoConnection() {
 
   frame_resource_coordinator_.reset();
 
-  // The geolocation service and sensor provider proxy may attempt to cancel
-  // permission requests so they must be reset before the routing_id mapping is
-  // removed.
+  // The geolocation service may attempt to cancel permission requests so it
+  // must be reset before the routing_id mapping is removed.
   geolocation_service_.reset();
-  sensor_provider_proxy_.reset();
 }
 
 bool RenderFrameHostImpl::IsFocused() {
@@ -4529,6 +4311,10 @@ mojom::FrameNavigationControl* RenderFrameHostImpl::GetNavigationControl() {
   if (!navigation_control_)
     GetRemoteAssociatedInterfaces()->GetInterface(&navigation_control_);
   return navigation_control_.get();
+}
+
+base::WeakPtr<RenderFrameHostImpl> RenderFrameHostImpl::GetWeakPtr() {
+  return weak_ptr_factory_.GetWeakPtr();
 }
 
 }  // namespace content

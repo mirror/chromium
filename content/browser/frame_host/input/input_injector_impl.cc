@@ -24,10 +24,11 @@ InputInjectorImpl::InputInjectorImpl(
 
 InputInjectorImpl::~InputInjectorImpl() {}
 
-void InputInjectorImpl::Create(base::WeakPtr<RenderFrameHostImpl> frame_host,
+void InputInjectorImpl::Create(RenderFrameHostImpl* frame_host,
                                mojom::InputInjectorRequest request) {
-  mojo::MakeStrongBinding(std::make_unique<InputInjectorImpl>(frame_host),
-                          std::move(request));
+  mojo::MakeStrongBinding(
+      std::make_unique<InputInjectorImpl>(frame_host->GetWeakPtr()),
+      std::move(request));
 }
 
 void InputInjectorImpl::QueueSyntheticSmoothDrag(

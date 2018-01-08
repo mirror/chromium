@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/feature_list.h"
 #include "base/macros.h"
 
 namespace url {
@@ -43,6 +44,12 @@ class WebInterfaceFilter {
 };
 
 std::unique_ptr<WebInterfaceFilter> CreateAlwaysAllowFilter();
+
+std::unique_ptr<WebInterfaceFilter> CreateFeatureFilter(
+    const base::Feature& feature);
+
+std::unique_ptr<WebInterfaceFilter> CreateCommandLineSwitchFilter(
+    const char* switch_name);
 
 std::unique_ptr<WebInterfaceFilter> CreateFilterBundle(
     std::vector<std::unique_ptr<WebInterfaceFilter>> filters);

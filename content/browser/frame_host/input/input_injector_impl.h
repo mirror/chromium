@@ -16,7 +16,7 @@ class CONTENT_EXPORT InputInjectorImpl : public mojom::InputInjector {
   explicit InputInjectorImpl(base::WeakPtr<RenderFrameHostImpl> frame_host);
   ~InputInjectorImpl() override;
 
-  static void Create(base::WeakPtr<RenderFrameHostImpl> frame_host,
+  static void Create(RenderFrameHostImpl* frame_host,
                      mojom::InputInjectorRequest request);
 
   // mojom::InputInjector overrides.

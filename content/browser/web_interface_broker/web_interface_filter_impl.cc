@@ -7,7 +7,9 @@
 #include <memory>
 #include <utility>
 
+#include "base/command_line.h"
 #include "base/containers/flat_set.h"
+#include "base/feature_list.h"
 #include "content/public/browser/web_context_type.h"
 
 namespace url {
@@ -84,10 +86,54 @@ class ContextTypeInterfaceFilter : public WebInterfaceFilter {
   base::flat_set<WebContextType> context_types_;
 };
 
+class FeatureFilter : public WebInterfaceFilter {
+ public:
+  explicit FeatureFilter(const base::Feature& feature) : feature_(feature) {}
+
+  Result FilterInterface(WebContextType context_type,
+                         RenderProcessHost* process_host,
+                         RenderFrameHost* frame_host,
+                         const url::Origin& origin) override {
+    return base::FeatureList::IsEnabled(feature_) ? Result::kAllow
+                                                  : Result::kBadMessage;
+  }
+
+ private:
+  const base::Feature& feature_;
+};
+
+class CommandLineSwitchFilter : public WebInterfaceFilter {
+ public:
+  explicit CommandLineSwitchFilter(const char* switch_name)
+      : switch_name_(switch_name) {}
+
+  Result FilterInterface(WebContextType context_type,
+                         RenderProcessHost* process_host,
+                         RenderFrameHost* frame_host,
+                         const url::Origin& origin) override {
+    return base::CommandLine::ForCurrentProcess()->HasSwitch(switch_name_)
+               ? Result::kAllow
+               : Result::kBadMessage;
+  }
+
+ private:
+  const base::StringPiece switch_name_;
+};
+
 }  // namespace
 
 std::unique_ptr<WebInterfaceFilter> CreateAlwaysAllowFilter() {
   return std::make_unique<AlwaysAllowFilter>();
+}
+
+std::unique_ptr<WebInterfaceFilter> CreateFeatureFilter(
+    const base::Feature& feature) {
+  return std::make_unique<FeatureFilter>(feature);
+}
+
+std::unique_ptr<WebInterfaceFilter> CreateCommandLineSwitchFilter(
+    const char* switch_name) {
+  return std::make_unique<CommandLineSwitchFilter>(switch_name);
 }
 
 std::unique_ptr<WebInterfaceFilter> CreateFilterBundle(

@@ -67,6 +67,13 @@ class CONTENT_EXPORT WebInterfaceBrokerBuilder {
       base::RepeatingCallback<void(mojo::InterfaceRequest<Interface>,
                                    RenderFrameHost*)>;
 
+  // A binder of interfaces that requires the RenderFrameHost. A
+  // FrameInterfaceBinder will never be tried for requests from a worker.
+  template <typename Interface>
+  using LegacyFrameInterfaceBinder =
+      base::RepeatingCallback<void(RenderFrameHost*,
+                                   mojo::InterfaceRequest<Interface>)>;
+
   template <typename Interface>
   using FrameAssociatedInterfaceBinder =
       base::RepeatingCallback<void(mojo::AssociatedInterfaceRequest<Interface>,
@@ -87,6 +94,10 @@ class CONTENT_EXPORT WebInterfaceBrokerBuilder {
   template <typename Interface>
   void AddInterface(std::unique_ptr<WebInterfaceFilter> filter,
                     FrameInterfaceBinder<Interface> frame_binder);
+
+  template <typename Interface>
+  void AddInterface(std::unique_ptr<WebInterfaceFilter> filter,
+                    LegacyFrameInterfaceBinder<Interface> frame_binder);
 
   template <typename Interface>
   void AddInterface(std::unique_ptr<WebInterfaceFilter> filter,
@@ -163,6 +174,12 @@ class CONTENT_EXPORT WebInterfaceBrokerBuilder {
       base::RepeatingCallback<void(mojo::AssociatedInterfaceRequest<Interface>,
                                    RenderFrameHost*)> callback);
 
+  template <typename Interface>
+  static void AdaptLegacyFrameInterfaceBinder(
+      const LegacyFrameInterfaceBinder<Interface>& binder,
+      mojo::InterfaceRequest<Interface>,
+      RenderFrameHost*);
+
   DISALLOW_COPY_AND_ASSIGN(WebInterfaceBrokerBuilder);
 };
 
@@ -189,6 +206,18 @@ void WebInterfaceBrokerBuilder::AddInterface(
       Interface::Name_, std::move(filter),
       CreateForwarder<Interface, RenderFrameHost*>(std::move(frame_binder)),
       {});
+}
+
+template <typename Interface>
+void WebInterfaceBrokerBuilder::AddInterface(
+    std::unique_ptr<WebInterfaceFilter> filter,
+    LegacyFrameInterfaceBinder<Interface> frame_binder) {
+  DCHECK(frame_binder);
+  AddInterface(std::move(filter),
+               base::BindRepeating(
+                   &WebInterfaceBrokerBuilder::AdaptLegacyFrameInterfaceBinder<
+                       Interface>,
+                   std::move(frame_binder)));
 }
 
 template <typename Interface>
@@ -272,6 +301,16 @@ WebInterfaceBrokerBuilder::CreateAssociatedForwarder(
   return base::BindRepeating(
       &WebInterfaceBrokerBuilder::ForwardToAssociatedBinder<Interface>,
       std::move(callback));
+}
+
+// static
+template <typename Interface>
+void WebInterfaceBrokerBuilder::AdaptLegacyFrameInterfaceBinder(
+    const WebInterfaceBrokerBuilder::LegacyFrameInterfaceBinder<Interface>&
+        binder,
+    mojo::InterfaceRequest<Interface> request,
+    RenderFrameHost* frame) {
+  binder.Run(frame, std::move(request));
 }
 
 }  // namespace content

@@ -122,7 +122,6 @@ class RenderWidgetHostImpl;
 class RenderWidgetHostView;
 class RenderWidgetHostViewBase;
 class ResourceRequestBody;
-class SensorProviderProxyImpl;
 class StreamHandle;
 class TimeoutMonitor;
 class WebBluetoothServiceImpl;
@@ -669,6 +668,40 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return active_sandbox_flags_;
   }
 
+  PermissionServiceContext& permission_service_context() {
+    return *permission_service_context_;
+  }
+
+  // Creates Web Bluetooth Service owned by the frame. Returns a raw pointer
+  // to it.
+  WebBluetoothServiceImpl* CreateWebBluetoothService(
+      blink::mojom::WebBluetoothServiceRequest request);
+
+  void BindWakeLockRequest(device::mojom::WakeLockRequest request);
+
+#if defined(OS_ANDROID)
+  void BindNFCRequest(device::mojom::NFCRequest request);
+#endif
+
+  void BindPresentationServiceRequest(
+      blink::mojom::PresentationServiceRequest request);
+
+#if !defined(OS_ANDROID)
+  void BindAuthenticatorRequest(webauth::mojom::AuthenticatorRequest request);
+#endif
+
+  // Creates connections to WebUSB interfaces bound to this frame.
+  void CreateUsbDeviceManager(device::mojom::UsbDeviceManagerRequest request);
+  void CreateUsbChooserService(device::mojom::UsbChooserServiceRequest request);
+
+  void CreateAudioOutputStreamFactory(
+      mojom::RendererAudioOutputStreamFactoryRequest request);
+
+  void BindMediaInterfaceFactoryRequest(
+      media::mojom::InterfaceFactoryRequest request);
+
+  base::WeakPtr<RenderFrameHostImpl> GetWeakPtr();
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -933,40 +966,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
   FrameTreeNode* FindAndVerifyChild(int32_t child_frame_routing_id,
                                     bad_message::BadMessageReason reason);
 
-  // Creates Web Bluetooth Service owned by the frame. Returns a raw pointer
-  // to it.
-  WebBluetoothServiceImpl* CreateWebBluetoothService(
-      blink::mojom::WebBluetoothServiceRequest request);
-
   // Deletes the Web Bluetooth Service owned by the frame.
   void DeleteWebBluetoothService(
       WebBluetoothServiceImpl* web_bluetooth_service);
 
-  // Creates connections to WebUSB interfaces bound to this frame.
-  void CreateUsbDeviceManager(device::mojom::UsbDeviceManagerRequest request);
-  void CreateUsbChooserService(device::mojom::UsbChooserServiceRequest request);
-
-  void CreateAudioOutputStreamFactory(
-      mojom::RendererAudioOutputStreamFactoryRequest request);
-
-  void BindMediaInterfaceFactoryRequest(
-      media::mojom::InterfaceFactoryRequest request);
-
   // Callback for connection error on the media::mojom::InterfaceFactory client.
   void OnMediaInterfaceFactoryConnectionError();
-
-  void BindWakeLockRequest(device::mojom::WakeLockRequest request);
-
-#if defined(OS_ANDROID)
-  void BindNFCRequest(device::mojom::NFCRequest request);
-#endif
-
-  void BindPresentationServiceRequest(
-      blink::mojom::PresentationServiceRequest request);
-
-#if !defined(OS_ANDROID)
-  void BindAuthenticatorRequest(webauth::mojom::AuthenticatorRequest request);
-#endif
 
   // service_manager::mojom::InterfaceProvider:
   void GetInterface(const std::string& interface_name,
@@ -1151,9 +1156,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // GeolocationService which provides Geolocation.
   std::unique_ptr<GeolocationServiceImpl> geolocation_service_;
-
-  // SensorProvider proxy which acts as a gatekeeper to the real SensorProvider.
-  std::unique_ptr<SensorProviderProxyImpl> sensor_provider_proxy_;
 
   std::unique_ptr<AssociatedInterfaceRegistryImpl> associated_registry_;
 

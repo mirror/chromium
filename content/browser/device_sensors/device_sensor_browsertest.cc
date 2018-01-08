@@ -26,7 +26,7 @@
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "content/shell/browser/shell_javascript_dialog_manager.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/buffer.h"
 #include "net/dns/mock_host_resolver.h"
@@ -135,14 +135,14 @@ class FakeSensor : public device::mojom::Sensor {
 
 class FakeSensorProvider : public device::mojom::SensorProvider {
  public:
-  FakeSensorProvider() : binding_(this) {}
+  FakeSensorProvider() = default;
   ~FakeSensorProvider() override = default;
 
   void Bind(const std::string& interface_name,
             mojo::ScopedMessagePipeHandle handle,
             const service_manager::BindSourceInfo& source_info) {
-    DCHECK(!binding_.is_bound());
-    binding_.Bind(device::mojom::SensorProviderRequest(std::move(handle)));
+    bindings_.AddBinding(
+        this, device::mojom::SensorProviderRequest(std::move(handle)));
   }
 
   void set_accelerometer_is_available(bool accelerometer_is_available) {
@@ -249,7 +249,7 @@ class FakeSensorProvider : public device::mojom::SensorProvider {
   }
 
  private:
-  mojo::Binding<device::mojom::SensorProvider> binding_;
+  mojo::BindingSet<device::mojom::SensorProvider> bindings_;
   bool accelerometer_is_available_ = true;
   bool linear_acceleration_sensor_is_available_ = true;
   bool gyroscope_is_available_ = true;
