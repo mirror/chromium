@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d1093f_e725e2e1",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2018-01-08T23:57:39Z",
+      "side": 1,
+      "message": "nit: for consistency, consider using http://example/frameB/1/iframe/",
+      "range": {
+        "startLine": 1279,
+        "startChar": 14,
+        "endLine": 1279,
+        "endChar": 40
+      },
+      "revId": "5cb3f3d204ff0ea83e8412fe66954d202604120e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
