@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e768a0de_bf572a7a",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6536,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-08T09:49:30Z",
+      "side": 1,
+      "message": "If I\u0027m reading the code correctly, the actual value of this hash doesn\u0027t matter, just that it\u0027s a valid SPKI hash -- is that right? If so, could you note that in the comment as well?",
+      "range": {
+        "startLine": 6531,
+        "startChar": 0,
+        "endLine": 6536,
+        "endChar": 65
+      },
+      "revId": "85d573618ee9731d076035c2bf2574afc3b54ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf012f0f_ed62b182",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6554,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-08T09:49:30Z",
+      "side": 1,
+      "message": "Is this cast necessary?",
+      "range": {
+        "startLine": 6554,
+        "startChar": 8,
+        "endLine": 6554,
+        "endChar": 59
+      },
+      "revId": "85d573618ee9731d076035c2bf2574afc3b54ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f75e6b6_b60f2c93",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6556,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-08T09:49:30Z",
+      "side": 1,
+      "message": "nit: const ref",
+      "range": {
+        "startLine": 6556,
+        "startChar": 14,
+        "endLine": 6556,
+        "endChar": 20
+      },
+      "revId": "85d573618ee9731d076035c2bf2574afc3b54ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5a2c4d_e8f5b597",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6577,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-08T09:49:30Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary, I think... should only be necessary to create a non-overridable interstitial which I think (?) doesn\u0027t matter in this case.",
+      "range": {
+        "startLine": 6573,
+        "startChar": 4,
+        "endLine": 6577,
+        "endChar": 75
+      },
+      "revId": "85d573618ee9731d076035c2bf2574afc3b54ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0c9bfd_510603e8",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6604,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-08T09:49:30Z",
+      "side": 1,
+      "message": "is this supposed to say \"dynamic interstitial list\" instead?",
+      "range": {
+        "startLine": 6604,
+        "startChar": 18,
+        "endLine": 6604,
+        "endChar": 49
+      },
+      "revId": "85d573618ee9731d076035c2bf2574afc3b54ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2e7b6a_d9e2c4ee",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-08T09:49:30Z",
+      "side": 1,
+      "message": "nit: const ref\n(same on line 41)",
+      "range": {
+        "startLine": 37,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "85d573618ee9731d076035c2bf2574afc3b54ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804272c8_aaa29317",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-08T09:49:30Z",
+      "side": 1,
+      "message": "nit: optional",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 10
+      },
+      "revId": "85d573618ee9731d076035c2bf2574afc3b54ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
