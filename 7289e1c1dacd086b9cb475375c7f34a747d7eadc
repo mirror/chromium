@@ -22,6 +22,76 @@
       "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85e1647_ef6f09df",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-08T10:48:37Z",
+      "side": 1,
+      "message": "I don\u0027t understand what\u0027s going on, but it shows up as Sentence case for me on Mac canary.\n\nAnyway, Alan has previously stated everything should be sentence case, so this and the above should be changed.",
+      "parentUuid": "dc72f517_a9784aa1",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 20
+      },
+      "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18feb68_40f07d86",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-08T10:48:37Z",
+      "side": 1,
+      "message": "I feel like in other places we used a chrome.tabs API to open links. Should we use that here? What does Settings do when it needs to open a help center link?",
+      "range": {
+        "startLine": 397,
+        "startChar": 10,
+        "endLine": 397,
+        "endChar": 21
+      },
+      "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80a4547_0753391a",
+        "filename": "chrome/browser/resources/md_bookmarks/constants.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-08T10:48:37Z",
+      "side": 1,
+      "message": "Better put this in enums.xml as well",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
