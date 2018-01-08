@@ -181,14 +181,18 @@ CrOSComponentManager::~CrOSComponentManager() {}
 
 void CrOSComponentManager::Load(
     const std::string& name,
+    bool mount,
     base::OnceCallback<void(const base::FilePath&)> load_callback) {
   if (!IsCompatible(name)) {
     // A compatible component is not installed, start installation process.
     auto* const cus = g_browser_process->component_updater();
-    Install(cus, name, std::move(load_callback));
-  } else {
+    Install(cus, name, mount, std::move(load_callback));
+  } else if (mount) {
     // A compatible component is intalled, load it directly.
     LoadInternal(name, std::move(load_callback));
+  } else {
+    base::PostTask(FROM_HERE,
+                   base::BindOnce(std::move(load_callback), base::FilePath()));
   }
 }
 
@@ -244,6 +248,7 @@ void CrOSComponentManager::Register(ComponentUpdateService* cus,
 void CrOSComponentManager::Install(
     ComponentUpdateService* cus,
     const std::string& name,
+    bool mount,
     base::OnceCallback<void(const base::FilePath&)> load_callback) {
   const ConfigMap components = CONFIG_MAP_CONTENT;
   const auto it = components.find(name);
@@ -259,7 +264,7 @@ void CrOSComponentManager::Install(
                           base::Unretained(this), cus,
                           GenerateId(it->second.find("sha2hashstr")->second),
                           base::BindOnce(&CrOSComponentManager::FinishInstall,
-                                         base::Unretained(this), name,
+                                         base::Unretained(this), name, mount,
                                          std::move(load_callback))));
 }
 
@@ -272,9 +277,14 @@ void CrOSComponentManager::StartInstall(
 
 void CrOSComponentManager::FinishInstall(
     const std::string& name,
+    bool mount,
     base::OnceCallback<void(const base::FilePath&)> load_callback,
     update_client::Error error) {
-  LoadInternal(name, std::move(load_callback));
+  if (mount)
+    LoadInternal(name, std::move(load_callback));
+  else
+    base::PostTask(FROM_HERE,
+                   base::BindOnce(std::move(load_callback), base::FilePath()));
 }
 
 void CrOSComponentManager::LoadInternal(
