@@ -340,12 +340,12 @@ bool FillExpirationMonthSelectControl(const base::string16& value,
   }
 
   // Attempt to match with each of the options' content.
-  for (const base::string16& option_contents : field->option_contents) {
+  for (size_t i = 0; i < field->option_contents.size(); ++i) {
     int converted_contents = 0;
-    if (CreditCard::ConvertMonth(option_contents, app_locale,
+    if (CreditCard::ConvertMonth(field->option_contents[i], app_locale,
                                  &converted_contents) &&
         month == converted_contents) {
-      field->value = option_contents;
+      field->value = field->option_values[i];
       return true;
     }
   }
@@ -633,6 +633,7 @@ bool FieldFiller::FillFormField(const AutofillField& field,
   }
 
   base::string16 value = data_model.GetInfo(type, app_locale_);
+
   if (type.GetStorableType() == CREDIT_CARD_VERIFICATION_CODE)
     value = cvc;
 
