@@ -310,10 +310,17 @@ bool SharedMemory::MapAt(off_t offset, size_t bytes) {
     return false;
   }
 
-  memory_ = MapViewOfFile(
-      shm_.GetHandle(),
-      read_only_ ? FILE_MAP_READ : FILE_MAP_READ | FILE_MAP_WRITE,
-      static_cast<uint64_t>(offset) >> 32, static_cast<DWORD>(offset), bytes);
+  // Try to map the shared memory. On the first failure, release any reserved
+  // address space for a single retry.
+  for (int i = 0; i < 2; ++i) {
+    memory_ = MapViewOfFile(
+        shm_.GetHandle(),
+        read_only_ ? FILE_MAP_READ : FILE_MAP_READ | FILE_MAP_WRITE,
+        static_cast<uint64_t>(offset) >> 32, static_cast<DWORD>(offset), bytes);
+    if (!memory_)
+      break;
+    ReleaseReservation();
+  }
   if (!memory_) {
     DPLOG(ERROR) << "Failed executing MapViewOfFile";
     return false;
