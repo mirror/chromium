@@ -340,6 +340,11 @@ void WallpaperControllerClient::RemovePolicyWallpaper(
                                                GetFilesId(account_id).id());
 }
 
+void WallpaperControllerClient::SetAnimationDuration(
+    uint32_t animation_duration_ms) {
+  wallpaper_controller_->SetAnimationDuration(animation_duration_ms);
+}
+
 void WallpaperControllerClient::OpenWallpaperPickerIfAllowed() {
   wallpaper_controller_->OpenWallpaperPickerIfAllowed();
 }

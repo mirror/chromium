@@ -164,7 +164,6 @@ class VideoDetector;
 class VoiceInteractionController;
 class VpnList;
 class WallpaperController;
-class WallpaperDelegate;
 class WebNotificationTray;
 class WindowCycleController;
 class WindowPositioner;
@@ -463,7 +462,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   WallpaperController* wallpaper_controller() {
     return wallpaper_controller_.get();
   }
-  WallpaperDelegate* wallpaper_delegate() { return wallpaper_delegate_.get(); }
   WindowCycleController* window_cycle_controller() {
     return window_cycle_controller_.get();
   }
@@ -676,7 +674,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<VoiceInteractionController> voice_interaction_controller_;
   std::unique_ptr<VpnList> vpn_list_;
   std::unique_ptr<WallpaperController> wallpaper_controller_;
-  std::unique_ptr<WallpaperDelegate> wallpaper_delegate_;
   std::unique_ptr<WindowCycleController> window_cycle_controller_;
   std::unique_ptr<WindowSelectorController> window_selector_controller_;
   std::unique_ptr<::wm::ShadowController> shadow_controller_;

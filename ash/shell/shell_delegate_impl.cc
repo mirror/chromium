@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "ash/accessibility/default_accessibility_delegate.h"
-#include "ash/default_wallpaper_delegate.h"
 #include "ash/keyboard/test_keyboard_ui.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"

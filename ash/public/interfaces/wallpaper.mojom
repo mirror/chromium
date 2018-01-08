@@ -186,6 +186,9 @@ interface WallpaperController {
   // |wallpaper_files_id|: The file id for user_info.account_id.
   RemovePolicyWallpaper(WallpaperUserInfo user_info, string wallpaper_files_id);
 
+  // Sets wallpaper animation duration in ms. Passing 0 disables the animation.
+  SetAnimationDuration(uint32 animation_duration_ms);
+
   // Opens the wallpaper picker if the active user is not controlled by policy
   // and changing wallpaper is allowed based on the active user type.
   OpenWallpaperPickerIfAllowed();

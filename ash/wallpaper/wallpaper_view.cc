@@ -10,7 +10,6 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wallpaper/wallpaper_controller.h"
-#include "ash/wallpaper/wallpaper_delegate.h"
 #include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/window_animation_types.h"
@@ -251,12 +250,11 @@ views::Widget* CreateWallpaper(aura::Window* root_window, int container_id) {
       Shell::Get()->session_controller()->NumberOfLoggedInUsers()) {
     ::wm::SetWindowVisibilityAnimationTransition(wallpaper_window,
                                                  ::wm::ANIMATE_SHOW);
-    int duration_override =
-        Shell::Get()->wallpaper_delegate()->GetAnimationDurationOverride();
-    if (duration_override) {
+    uint32_t animation_duration = controller->animation_duration_ms();
+    if (animation_duration) {
       ::wm::SetWindowVisibilityAnimationDuration(
           wallpaper_window,
-          base::TimeDelta::FromMilliseconds(duration_override));
+          base::TimeDelta::FromMilliseconds(animation_duration));
     }
   } else {
     // Disable animation if transition to login screen from an empty background.

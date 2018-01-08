@@ -68,6 +68,7 @@ class TestWallpaperController : ash::mojom::WallpaperController {
                            const std::string& wallpaper_files_id) override;
   void RemovePolicyWallpaper(ash::mojom::WallpaperUserInfoPtr user_info,
                              const std::string& wallpaper_files_id) override;
+  void SetAnimationDuration(uint32_t animation_duration_ms) override;
   void OpenWallpaperPickerIfAllowed() override;
   void SetWallpaper(const SkBitmap& wallpaper,
                     const wallpaper::WallpaperInfo& wallpaper_info) override;

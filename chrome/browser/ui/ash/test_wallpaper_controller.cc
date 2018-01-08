@@ -100,6 +100,11 @@ void TestWallpaperController::RemovePolicyWallpaper(
   NOTIMPLEMENTED();
 }
 
+void TestWallpaperController::SetAnimationDuration(
+    uint32_t animation_duration_ms) {
+  NOTIMPLEMENTED();
+}
+
 void TestWallpaperController::OpenWallpaperPickerIfAllowed() {
   NOTIMPLEMENTED();
 }
