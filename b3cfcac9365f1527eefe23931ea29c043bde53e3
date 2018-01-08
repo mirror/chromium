@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e16c0db_92f531e2",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-08T21:00:33Z",
+      "side": 1,
+      "message": "non-const",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 9
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0162d6_831d8067",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-08T21:00:33Z",
+      "side": 1,
+      "message": "pass by non-const value",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 25
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce4521f_a543abae",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-08T21:00:33Z",
+      "side": 1,
+      "message": "std::move(name)",
+      "range": {
+        "startLine": 210,
+        "startChar": 11,
+        "endLine": 210,
+        "endChar": 15
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965a86f1_97fa8d34",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-08T21:00:33Z",
+      "side": 1,
+      "message": "std::move(registry_key_path)",
+      "range": {
+        "startLine": 212,
+        "startChar": 24,
+        "endLine": 212,
+        "endChar": 41
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d54b80c_f54444ee",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-08T21:00:33Z",
+      "side": 1,
+      "message": "nit: appends",
+      "range": {
+        "startLine": 100,
+        "startChar": 17,
+        "endLine": 100,
+        "endChar": 23
+      },
+      "revId": "b3cfcac9365f1527eefe23931ea29c043bde53e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
