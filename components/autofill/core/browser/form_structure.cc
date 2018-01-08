@@ -1316,9 +1316,9 @@ bool FormStructure::IsMalformed() const {
 }
 
 void FormStructure::IdentifySections(bool has_author_specified_sections) {
+  const std::string kCreditCardSection = "credit-card";
   if (fields_.empty())
     return;
-
   if (!has_author_specified_sections) {
     // Name sections after the first field in the section.
     base::string16 current_section = fields_.front()->unique_name();
@@ -1329,7 +1329,10 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
 
     for (const auto& field : fields_) {
       const ServerFieldType current_type = field->Type().GetStorableType();
-
+      if (AutofillType(current_type).group() == CREDIT_CARD) {
+        field->set_section(kCreditCardSection);
+        continue;
+      }
       bool already_saw_current_type = seen_types.count(current_type) > 0;
 
       // Forms often ask for multiple phone numbers -- e.g. both a daytime and
