@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110d1b29_6d16bcde",
+        "filename": "chrome/browser/offline_pages/test_offline_page_model_builder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-08T21:17:20Z",
+      "side": 1,
+      "message": "shall we use the getter to get this (as in production code) instead of a hardcoded path?",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "391751a8ce6fa13d495e5b73b818bb293d09aa53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de22a2e5_0dc57ff3",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-08T21:17:20Z",
+      "side": 1,
+      "message": "can this name be improved? I feel like getting a \u0027private\u0027 archive dir is the same as returning the private_archive_dir, but this one may also return the \u0027temporary_archives_dir\u0027 if the name_space is temporary. WDYT?",
+      "range": {
+        "startLine": 124,
+        "startChar": 24,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "391751a8ce6fa13d495e5b73b818bb293d09aa53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f436ff44_f87d4a49",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-08T21:17:20Z",
+      "side": 1,
+      "message": "i think you can remove this todo maybe?",
+      "revId": "391751a8ce6fa13d495e5b73b818bb293d09aa53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
