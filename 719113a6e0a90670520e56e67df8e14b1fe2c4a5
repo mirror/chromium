@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5f8c68f_1ea533fe",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:19:42Z",
+      "side": 1,
+      "message": "Apologies for not noticing this previously. Two things:\n1. This is notifying that we are *requesting* a connection to the best network. An new connection may or may not occur. We should reflect that in the observer method name and its comment.\n2. Update this comment to reflect that the change is due to a \u0027policy or certificate\u0027 change. Alternately, it would be a little more forward thinking to always notify the observers and pass a reason so that the observer can decide when to ignore the event.",
+      "revId": "719113a6e0a90670520e56e67df8e14b1fe2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a92b9ee_b6714461",
+        "filename": "chromeos/network/auto_connect_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:19:42Z",
+      "side": 1,
+      "message": "nit: just \u0027request_best_connection_triggered_by_login\u0027 (I realize it could be triggered by both, but I don\u0027t think that\u0027s important, the \u0027only\u0027 is more likely to confuse than help, imho).",
+      "revId": "719113a6e0a90670520e56e67df8e14b1fe2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
