@@ -210,9 +210,6 @@ class SiteEngagementScore {
   // Determine bonus from being installed, and having been launched recently..
   double BonusIfShortcutLaunched() const;
 
-  // Determine bonus from having been granted notifications permission.
-  double BonusIfHasNotifications() const;
-
   // Updates the content settings dictionary |score_dict| with the current score
   // fields. Returns true if |score_dict| changed, otherwise return false.
   bool UpdateScoreDict(base::DictionaryValue* score_dict);
