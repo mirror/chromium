@@ -2321,6 +2321,18 @@ be describing additional metrics about the same event.
       Number of mouse events that were sent to the page.
     </summary>
   </metric>
+  <metric name="NavigationEntryCount">
+    <summary>
+      Number of navigation entries in the tab's NavigationController.
+      Corresponds to the size of the tab's back/forward list.
+    </summary>
+  </metric>
+  <metric name="NavigationSource">
+    <summary>
+      Source of the navigation. See metrics::TabEvent::NavigationType for
+      explanations of values.
+    </summary>
+  </metric>
   <metric name="SequenceId">
     <summary>
       The sequence of this event in the current session. Incremented by 1 each
