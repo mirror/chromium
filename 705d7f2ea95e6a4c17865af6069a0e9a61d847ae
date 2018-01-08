@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69dce75d_eb067907",
+        "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-01-08T10:55:56Z",
+      "side": 1,
+      "message": "I\u0027d expect this to be passed as an int. Are we sure it\u0027s not causing issues with UMA somewhere?",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 75
+      },
+      "revId": "705d7f2ea95e6a4c17865af6069a0e9a61d847ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
