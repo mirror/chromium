@@ -194,6 +194,9 @@ void PrintViewManagerBase::OnPrintSettingsDone(
     int page_count,
     PrinterHandler::PrintCallback callback,
     scoped_refptr<printing::PrinterQuery> printer_query) {
+  PrintJobManager* print_job_manager = g_browser_process->print_job_manager();
+  if (!print_job_manager || print_job_manager->is_shutdown())
+    std::move(callback).Run(base::Value("Update settings failed."));
 
   // Check if the job was cancelled. This should only happen on Windows when
   // the system dialog is cancelled.
@@ -211,7 +214,7 @@ void PrintViewManagerBase::OnPrintSettingsDone(
   }
 
   if (!printer_query || !printer_query->cookie() ||
-      !printer_query->settings().dpi()) {
+      !printer_query->settings().dpi() || !printer_query->is_valid()) {
     if (printer_query)
       printer_query->StopWorker();
     std::move(callback).Run(base::Value("Update settings failed"));

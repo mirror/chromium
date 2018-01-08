@@ -72,6 +72,9 @@ class PrintJobManager : public content::NotificationObserver {
   // Thread. Reference could be stored and used from any thread.
   scoped_refptr<PrintQueriesQueue> queue();
 
+  // Whether the print job manager is shutting down.
+  bool is_shutdown() { return is_shutdown_; }
+
  private:
   typedef std::set<scoped_refptr<PrintJob> > PrintJobs;
 
