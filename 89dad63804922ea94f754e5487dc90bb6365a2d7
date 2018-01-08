@@ -22,6 +22,30 @@
       "revId": "89dad63804922ea94f754e5487dc90bb6365a2d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d29b71c_2a4ee4e4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-01-08T19:15:49Z",
+      "side": 1,
+      "message": "\u003e This should be * not + to allow zero whitespace as well\n\nOof, you\u0027re right. Done.\n\n\u003e Also, the regex parts \u0027^.*\u0027 and \u0027.*$\u0027 should be no-ops\n\nWell, the \"^\" and \"$\" are implied in Java, but not the \".*\"s. Java\u0027s String#matches() applies to the entire string--this differs from some other languages, e.g. JavaScript. I could rely on the implied \"^\" and \"$\", but I think it\u0027s more readable if I\u0027m explicit.\n\n\u003e I guess it needs to include a ; or something.. (with further whitespace-ignoring)\n\nJava supports word boundaries with \"\\b\". So I\u0027ll just put that before \"Domain\", that should do the right thing.",
+      "parentUuid": "61dcb665_74a22fd7",
+      "range": {
+        "startLine": 220,
+        "startChar": 46,
+        "endLine": 220,
+        "endChar": 47
+      },
+      "revId": "89dad63804922ea94f754e5487dc90bb6365a2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
