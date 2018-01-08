@@ -22,6 +22,30 @@
       "revId": "c5d05169b4a1a134bf3e6bc3467a14679806d8f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77b8bfa_7cce2ba3",
+        "filename": "third_party/protobuf/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-08T21:04:08Z",
+      "side": 1,
+      "message": "Yes, it will used to replace chrome tracing.\ngo/perfetto-project (internal only for the moment, will move soon to the open-source repo) has linked the docs with plans and motivations. \n\nThe \"full\" library though is NOT linked into the main app and is used only by our unittest targets. ftrace:full is testonly\u003dtrue:\n\nhttps://android.googlesource.com/platform/external/perfetto/+/master/protos/ftrace/BUILD.gn#45\n\nI wished there was a way to make it more explicit, but GN check seems to need all the paths that end up including those sources. Happy to hear suggestion if you know some GN trickery to make it more explicit.\n\nI guess in any case the binary size performance alerts would notice if we did link it into chrome accidentally.",
+      "parentUuid": "a6e46fe6_ccc94630",
+      "range": {
+        "startLine": 231,
+        "startChar": 27,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "c5d05169b4a1a134bf3e6bc3467a14679806d8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
