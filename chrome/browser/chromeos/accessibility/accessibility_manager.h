@@ -29,10 +29,6 @@
 
 class Profile;
 
-namespace ash {
-class ScopedBacklightsForcedOff;
-}  // namespace ash
-
 namespace gfx {
 class Rect;
 }  // namespace gfx
@@ -183,9 +179,6 @@ class AccessibilityManager
   void EnableMonoAudio(bool enabled);
   // Returns true if mono audio output is enabled, otherwise false.
   bool IsMonoAudioEnabled() const;
-
-  // Starts or stops darkening the screen.
-  void SetDarkenScreen(bool darken);
 
   // Invoked to enable or disable caret highlighting.
   void SetCaretHighlightEnabled(bool enabled);
@@ -443,9 +436,6 @@ class AccessibilityManager
 
   std::unique_ptr<chromeos::SwitchAccessEventHandler>
       switch_access_event_handler_;
-
-  // Used to force the backlights off to darken the screen.
-  std::unique_ptr<ash::ScopedBacklightsForcedOff> scoped_backlights_forced_off_;
 
   std::unique_ptr<ScopedKeyboardStateSetter> keyboard_state_setter_;
 

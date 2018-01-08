@@ -37,12 +37,15 @@ class TestAccessibilityController : ash::mojom::AccessibilityController {
   void SetClient(ash::mojom::AccessibilityControllerClientPtr client) override {
     was_client_set_ = true;
   }
+  void SetDarkenScreen(bool darken) override { darken_screen_ = darken; }
 
   bool was_client_set() const { return was_client_set_; }
+  bool darken_screen() const { return darken_screen_; }
 
  private:
   mojo::Binding<ash::mojom::AccessibilityController> binding_;
   bool was_client_set_ = false;
+  bool darken_screen_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TestAccessibilityController);
 };
@@ -98,12 +101,18 @@ class AccessibilityControllerClientTest : public testing::Test {
 
 TEST_F(AccessibilityControllerClientTest, MethodCalls) {
   FakeAccessibilityControllerClient client;
+  AccessibilityControllerClient::SetInstanceForTesting(&client);
   TestAccessibilityController controller;
   client.InitForTesting(controller.CreateInterfacePtr());
   client.FlushForTesting();
 
   // Tests client is set.
   EXPECT_TRUE(controller.was_client_set());
+
+  // Tests SetDarkenScreen.
+  client.SetDarkenScreen(true);
+  client.FlushForTesting();
+  EXPECT_TRUE(controller.darken_screen());
 
   // Tests TriggerAccessibilityAlert method call.
   const ash::mojom::AccessibilityAlert alert =

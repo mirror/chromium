@@ -13,6 +13,8 @@
 #include "ash/session/session_observer.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
+#include "ash/system/power/backlights_forced_off_setter.h"
+#include "ash/system/power/scoped_backlights_forced_off.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "components/pref_registry/pref_registry_syncable.h"
@@ -147,6 +149,15 @@ void AccessibilityController::HandleAccessibilityGesture(
 void AccessibilityController::SetClient(
     mojom::AccessibilityControllerClientPtr client) {
   client_ = std::move(client);
+}
+
+void AccessibilityController::SetDarkenScreen(bool darken) {
+  if (darken && !scoped_backlights_forced_off_) {
+    scoped_backlights_forced_off_ =
+        Shell::Get()->backlights_forced_off_setter()->ForceBacklightsOff();
+  } else if (!darken && scoped_backlights_forced_off_) {
+    scoped_backlights_forced_off_.reset();
+  }
 }
 
 void AccessibilityController::OnSigninScreenPrefServiceInitialized(
