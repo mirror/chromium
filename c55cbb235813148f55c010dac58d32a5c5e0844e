@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3290b7c5_7ae4b5c6",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-08T15:10:30Z",
+      "side": 1,
+      "message": "Do step 6 and 7 need to be in exact order? Could we bundle them into one for loop?",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 293,
+        "endChar": 37
+      },
+      "revId": "c55cbb235813148f55c010dac58d32a5c5e0844e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
