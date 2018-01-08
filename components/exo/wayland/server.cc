@@ -13,6 +13,7 @@
 #include <keyboard-extension-unstable-v1-server-protocol.h>
 #include <linux/input.h>
 #include <pointer-gestures-unstable-v1-server-protocol.h>
+#include <pointer-unstable-v1-server-protocol.h>
 #include <presentation-time-server-protocol.h>
 #include <remote-shell-unstable-v1-server-protocol.h>
 #include <secure-output-unstable-v1-server-protocol.h>
@@ -4515,6 +4516,69 @@ void bind_keyboard_extension(wl_client* client,
                                  data, nullptr);
 }
 
+////////////////////////////////////////////////////////////////////
+// Pointer blending
+class PointerBlending {
+ public:
+  PointerBlending(Pointer* pointer) : pointer_(pointer) {
+  }
+
+  void SendCursorDetails(float value, int32_t type) {
+  }
+
+ private:
+  Pointer* pointer_;
+
+  DISALLOW_COPY_AND_ASSIGN(PointerBlending);
+};
+
+void pointer_blending_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+void blending_send_cursor_details(wl_client* client,
+                        wl_resource* resource,
+                        wl_fixed_t alpha,
+                        int32_t type) {
+  GetUserDataAs<PointerBlending>(resource)->SendCursorDetails(wl_fixed_to_double(alpha), type);
+}
+
+const struct zwp_pointer_blending_v1_interface
+    pointer_blending_implementation = {pointer_blending_destroy, blending_send_cursor_details};
+
+////////////////////////////////////////////////////////////////////////////////
+// alpha_compositing_interface:
+
+void pointer_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+void pointer_get_blending(wl_client* client,
+                          wl_resource* resource,
+                          uint32_t id,
+                          wl_resource* pointer_resource) {
+  Pointer* pointer = GetUserDataAs<Pointer>(pointer_resource);
+
+  wl_resource* blending_resource =
+      wl_resource_create(client, &zwp_pointer_blending_v1_interface, 1, id);
+
+  SetImplementation(blending_resource, &pointer_blending_implementation,
+                    std::make_unique<PointerBlending>(pointer));
+}
+
+const struct zwp_shaped_cursors_v1_interface
+    zwp_pointer_implementation = {pointer_destroy, pointer_get_blending};
+
+void bind_zwp_pointer(wl_client* client,
+                  void* data,
+                  uint32_t version,
+                  uint32_t id) {
+  wl_resource* resource =
+      wl_resource_create(client, &zwp_shaped_cursors_v1_interface, 1, id);
+
+  wl_resource_set_implementation(resource, &zwp_pointer_implementation,
+                                 data, nullptr);
+}
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4569,6 +4633,8 @@ Server::Server(Display* display)
                    display_, bind_stylus_tools);
   wl_global_create(wl_display_.get(), &zcr_keyboard_extension_v1_interface, 1,
                    display_, bind_keyboard_extension);
+  wl_global_create(wl_display_.get(), &zwp_shaped_cursors_v1_interface, 1,
+                   display_, bind_zwp_pointer);
 }
 
 Server::~Server() {}
