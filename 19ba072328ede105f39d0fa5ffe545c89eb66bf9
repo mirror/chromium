@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5c9f5be5_316c1e80",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-08T22:24:44Z",
+      "side": 1,
+      "message": "\u003e I would admit that you\u0027re unlikely to see these kinds of numbers, but I am wondering why not do it the faster, simpler way.\n\nMy $0.02: I don\u0027t care much about which is faster given that there\u0027s no practical difference here. Whichever is simpler would be my preference. The map of lists sounds conceptually simpler, not sure about the code itself. (Do you have to explicitly create the list when putting the first entry for a key in?)",
+      "parentUuid": "e8af1b7d_a91cbc6c",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "19ba072328ede105f39d0fa5ffe545c89eb66bf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce9b01c5_1b29406a",
         "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
         "patchSetId": 4
