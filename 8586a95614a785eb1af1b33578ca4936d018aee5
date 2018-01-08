@@ -1,0 +1,422 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5550b1b3_32cdaba8",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "/* existed_before_interval */ false",
+      "range": {
+        "startLine": 68,
+        "startChar": 55,
+        "endLine": 68,
+        "endChar": 60
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5b3b33_60d89329",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "optional: Given that OnTabAdded() and ResetIntervalData() both know the TabID, you could pass it as argument instead of doing a lookup.",
+      "range": {
+        "startLine": 196,
+        "startChar": 18,
+        "endLine": 196,
+        "endChar": 40
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e2e9fd_fd78769e",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "Not used",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 37
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc8853a_e19ae22f",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "// Creates a new interval map. The returned pointer is owned by |this|.",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 55
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80367cf7_1b7b95cb",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "rename to _unittest.cc\nthis is more common in Chrome",
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee86433_578bb51d",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "not used",
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7e1f22_4e0f5914",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "optional: Less lines of code:\n\ntest_web_contents_vec.emplace_back(CreateTestWebContents());\ndata_store_-\u003eOnTabAdded(test_web_contents_vec.back().get());",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 66
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3433b6b5_a8d1b761",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "emplace_back",
+      "range": {
+        "startLine": 75,
+        "startChar": 21,
+        "endLine": 75,
+        "endChar": 47
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65efd0cf_0a1d03be",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "The new id is supposed to be equal to the old id.",
+      "range": {
+        "startLine": 151,
+        "startChar": 1,
+        "endLine": 152,
+        "endChar": 60
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce547325_72cf1003",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "You should test that everything works fine after a tab is replaced.\n\nE.g.\n\nAdd tab.\nInteract with tab.\nVerify that \"interacted\" bit is set.\n-- Replace tab. --\nVerify that the size of the map hasn\u0027t changed.\nVerify that \"interacted\" bit is set.\nMake tab audible.\nVerify that \"audible\" bit is set.\nClose tab.\nVerify that \"exists currently\" bit is unset.\n\nE.g.\n\nAdd tab A with WebContents 0x1.\nReplace tab A with WebContents 0x2.\nAdd tab B with WebContents 0x1 (in theory, a tab can be added with a WebContents pointer that was used in the past...).\nVerify that the size of the map is 2.",
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12774993_765c7cc4",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "optional: Can be written as:\n\nif (detached_tabs_.erase(web_contents) \u003d\u003d 0)\n  OnTabAdded(web_contents);",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 3
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314172dd_2354bf83",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "old_contents",
+      "range": {
+        "startLine": 235,
+        "startChar": 38,
+        "endLine": 236,
+        "endChar": 54
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c68c32_3ce4212c",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "Comment on why this is tracked as 2 separate fields in the map given that setting either of this fields produces the same result.",
+      "range": {
+        "startLine": 307,
+        "startChar": 8,
+        "endLine": 308,
+        "endChar": 54
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd3d1b2_f1a44da1",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "Would a maximum of 1000 be more appropriate than 10000?",
+      "range": {
+        "startLine": 337,
+        "startChar": 8,
+        "endLine": 337,
+        "endChar": 31
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1a251e_2d466ca8",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "I think this could be private instead of protected. You could even forward-declare it here:\n\nclass WebContentsUsageObserver;\n\nAnd move the full declaration to the .cc file:\n\nclass TabStatsTracker::WebContentsUsageObserver : public content::WebContentsObserver {\n  ...\n};",
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "731d2627_3fed2de4",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ed7388_92241319",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "track",
+      "range": {
+        "startLine": 180,
+        "startChar": 24,
+        "endLine": 180,
+        "endChar": 30
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52b25f1_8504f6b0",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "rename to _unittest.cc\nthis is more common in Chrome",
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35fe716_6d585e4d",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "This could be used in TabStatsTracker::UmaStatsReportingDelegate::ReportUsageDuringInterval. It could take a base::TimeDelta as argument and do the .InSeconds() conversion to avoid passing ints in TabStatsTracker.",
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d559706_854da2ef",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-08T17:32:50Z",
+      "side": 1,
+      "message": "ExpectUniqueSample(..., web_contentses.size(), 1);\n\nUse it and elsewhere when it makes sense.",
+      "range": {
+        "startLine": 310,
+        "startChar": 20,
+        "endLine": 310,
+        "endChar": 38
+      },
+      "revId": "8586a95614a785eb1af1b33578ca4936d018aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
