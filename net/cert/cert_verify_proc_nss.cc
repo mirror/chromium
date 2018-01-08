@@ -30,6 +30,7 @@
 #include "net/cert/cert_verify_result.h"
 #include "net/cert/crl_set.h"
 #include "net/cert/ev_root_ca_metadata.h"
+#include "net/cert/known_roots.h"
 #include "net/cert/known_roots_nss.h"
 #include "net/cert/x509_certificate.h"
 #include "net/cert/x509_util_nss.h"
@@ -650,16 +651,26 @@ HashValue CertPublicKeyHashSHA256(CERTCertificate* cert) {
   return hash;
 }
 
-void AppendPublicKeyHashes(CERTCertList* cert_list,
-                           CERTCertificate* root_cert,
-                           HashValueVector* hashes) {
+void AppendPublicKeyHashesAndTestKnownRoot(CERTCertList* cert_list,
+                                           CERTCertificate* root_cert,
+                                           HashValueVector* hashes,
+                                           bool* known_root) {
+  *known_root = false;
+
   for (CERTCertListNode* node = CERT_LIST_HEAD(cert_list);
-       !CERT_LIST_END(node, cert_list);
-       node = CERT_LIST_NEXT(node)) {
+       !CERT_LIST_END(node, cert_list); node = CERT_LIST_NEXT(node)) {
     hashes->push_back(CertPublicKeyHashSHA256(node->cert));
+    if (!*known_root) {
+      *known_root = GetNetTrustAnchorHistogramIdForSPKI(hashes->back()) != 0 ||
+                    IsKnownRoot(node->cert);
+    }
   }
   if (root_cert) {
     hashes->push_back(CertPublicKeyHashSHA256(root_cert));
+    if (!*known_root) {
+      *known_root = GetNetTrustAnchorHistogramIdForSPKI(hashes->back()) != 0 ||
+                    IsKnownRoot(root_cert);
+    }
   }
 }
 
@@ -886,9 +897,18 @@ int CertVerifyProcNSS::VerifyInternalImpl(
       PKIXVerifyCert(cert_handle, check_revocation, false, cert_io_enabled,
                      NULL, 0, trust_anchors.get(), &crlset_callback, cvout);
 
+  bool known_root = false;
+  HashValueVector hashes;
+  if (status == SECSuccess) {
+    AppendPublicKeyHashesAndTestKnownRoot(
+        cvout[cvout_cert_list_index].value.pointer.chain,
+        cvout[cvout_trust_anchor_index].value.pointer.cert, &hashes,
+        &known_root);
+  }
+
   if (status == SECSuccess &&
       (flags & CertVerifier::VERIFY_REV_CHECKING_REQUIRED_LOCAL_ANCHORS) &&
-      !IsKnownRoot(cvout[cvout_trust_anchor_index].value.pointer.cert)) {
+      !known_root) {
     // TODO(rsleevi): Optimize this by supplying the constructed chain to
     // libpkix via cvin. Omitting for now, due to lack of coverage in upstream
     // NSS tests for that feature.
@@ -896,15 +916,18 @@ int CertVerifyProcNSS::VerifyInternalImpl(
     verify_result->cert_status |= CERT_STATUS_REV_CHECKING_ENABLED;
     status = PKIXVerifyCert(cert_handle, true, true, cert_io_enabled, NULL, 0,
                             trust_anchors.get(), &crlset_callback, cvout);
+    if (status == SECSuccess) {
+      AppendPublicKeyHashesAndTestKnownRoot(
+          cvout[cvout_cert_list_index].value.pointer.chain,
+          cvout[cvout_trust_anchor_index].value.pointer.cert, &hashes,
+          &known_root);
+    }
   }
 
   if (status == SECSuccess) {
-    AppendPublicKeyHashes(cvout[cvout_cert_list_index].value.pointer.chain,
-                          cvout[cvout_trust_anchor_index].value.pointer.cert,
-                          &verify_result->public_key_hashes);
+    verify_result->public_key_hashes = hashes;
+    verify_result->is_issued_by_known_root = known_root;
 
-    verify_result->is_issued_by_known_root =
-        IsKnownRoot(cvout[cvout_trust_anchor_index].value.pointer.cert);
     verify_result->is_issued_by_additional_trust_anchor =
         IsAdditionalTrustAnchor(
             trust_anchors.get(),
