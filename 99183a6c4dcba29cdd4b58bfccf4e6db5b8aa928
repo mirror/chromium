@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b755c2b_c4e598ea",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-08T17:40:42Z",
+      "side": 1,
+      "message": "Then you can remove this line and rely on the default constructor of the bundle class.",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 66
+      },
+      "revId": "99183a6c4dcba29cdd4b58bfccf4e6db5b8aa928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
