@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <title>position:sticky elements should respect the top constraint</title>
-<link rel="match" href="position-sticky-top-ref.html" />
 <link rel="help" href="https://www.w3.org/TR/css-position-3/#sticky-pos" />
 <meta name="assert" content="This test checks that position:sticky elements obey their top anchor after scrolling" />
 
-<style>
-.group {
-  display: inline-block;
-  position: relative;
-  width: 150px;
-  height: 250px;
-}
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
 
+<style>
 .scroller {
   position: relative;
   width: 100px;
   height: 200px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: scroll;
 }
 
 .contents {
@@ -36,12 +30,6 @@
   height: 50px;
 }
 
-.indicator {
-  background-color: red;
-  position: absolute;
-  left: 0;
-}
-
 .sticky {
   background-color: green;
   position: sticky;
@@ -54,51 +42,70 @@
 }
 </style>
 
+<div id="scroller1" class="scroller">
+  <div class="contents">
+    <div class="prepadding"></div>
+    <div class="container">
+      <div class="innerpadding"></div>
+      <div class="sticky box"></div>
+    </div>
+  </div>
+</div>
+
+<div id="scroller2" class="scroller">
+  <div class="contents">
+    <div class="prepadding"></div>
+    <div class="container">
+      <div class="innerpadding"></div>
+      <div class="sticky box"></div>
+    </div>
+  </div>
+</div>
+
+<div id="scroller3" class="scroller">
+  <div class="contents">
+    <div class="prepadding"></div>
+    <div class="container">
+      <div class="innerpadding"></div>
+      <div class="sticky box"></div>
+    </div>
+  </div>
+</div>
+
 <script>
-window.addEventListener('load', function() {
-  document.getElementById('scroller1').scrollTop = 50;
-  document.getElementById('scroller2').scrollTop = 125;
-  document.getElementById('scroller3').scrollTop = 200;
-});
+test(() => {
+  const scroller = document.getElementById('scroller1');
+  const sticky = scroller.querySelector('.sticky');
+
+  const initialOffset = sticky.offsetTop;
+  scroller.scrollTop = 50;
+  assert_equals(sticky.offsetTop, initialOffset);
+}, 'before reaching the sticking point the sticky box should not be offset');
+
+test(() => {
+  const scroller = document.getElementById('scroller2');
+  const sticky = scroller.querySelector('.sticky');
+
+  scroller.scrollTop = 125;
+  // TODO(smcgruer): I'm not sure this math holds up in all cases; am I assuming
+  // something important about the size of the prepadding and innerpadding here?
+  //
+  // Note that this calculation does already assume that the scrollTop above
+  // puts us in the 'stuck' range, which is fine. I am just concerned that it
+  // isn't robust for all padding/etc values in the stuck range.
+  //
+  // It does see to work if I halve or double all the CSS/scroll values, so
+  // maybe it's fine and I'm just being paranoid.
+  assert_equals(sticky.offsetTop, scroller.scrollTop + 50);
+}, 'after reaching the sticking point the sticky box should be offset');
+
+test(() => {
+  const scroller = document.getElementById('scroller3');
+  const container = scroller.querySelector('.container');
+  const sticky = container.querySelector('.sticky');
+
+  scroller.scrollTop = 200;
+  const maxOffsetInContainer = container.clientHeight - sticky.clientHeight;
+  assert_equals(sticky.offsetTop - container.offsetTop, maxOffsetInContainer);
+}, 'the sticky box should not be pushed outside its containing block');
 </script>
-
-<div class="group">
-  <div id="scroller1" class="scroller">
-    <div class="indicator box" style="top: 150px;"></div>
-    <div class="contents">
-      <div class="prepadding"></div>
-      <div class="container">
-        <div class="innerpadding"></div>
-        <div class="sticky box"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="group">
-  <div id="scroller2" class="scroller">
-    <div class="indicator box" style="top: 175px;"></div>
-    <div class="contents">
-      <div class="prepadding"></div>
-      <div class="container">
-        <div class="innerpadding"></div>
-        <div class="sticky box"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="group">
-  <div id="scroller3" class="scroller">
-    <div class="indicator box" style="top: 200px;"></div>
-    <div class="contents">
-      <div class="prepadding"></div>
-      <div class="container">
-        <div class="innerpadding"></div>
-        <div class="sticky box"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div>You should see three green boxes above. No red should be visible.</div>
