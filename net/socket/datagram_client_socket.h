@@ -44,6 +44,9 @@ class NET_EXPORT_PRIVATE DatagramClientSocket : public DatagramSocket,
 
   // Apply |tag| to this socket.
   virtual void ApplySocketTag(const SocketTag& tag) = 0;
+
+  // Enables experimental optimization. By default, this method is no-op.
+  virtual void EnableOptimization() {}
 };
 
 }  // namespace net

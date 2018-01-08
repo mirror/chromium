@@ -137,7 +137,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
           kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
           allow_server_migration, race_cert_verification, estimate_initial_rtt,
           env->connection_options, env->client_connection_options,
-          enable_token_binding);
+          enable_token_binding, /* enable_socket_optimization */ false);
 
   QuicStreamRequest request(factory.get());
   TestCompletionCallback callback;
