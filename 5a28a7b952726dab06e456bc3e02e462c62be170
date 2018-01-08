@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "16dd4075_bf5e20ee",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-08T17:59:58Z",
+      "side": 1,
+      "message": "+primiano, Can you speak to the differences in malloc_... blink_..., v8_..., etc in chrome_dump? I can\u0027t find comments on what these exactly mean.",
+      "range": {
+        "startLine": 485,
+        "startChar": 50,
+        "endLine": 485,
+        "endChar": 65
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eedb7d83_bdf294e6",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 2
@@ -13,6 +36,30 @@
       "writtenOn": "2018-01-08T17:49:13Z",
       "side": 1,
       "message": "nit: Add\n// Next Id: some_number\nas a comment to avoid merge conflicts.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 7
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f68ba8a_e9844a41",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-08T17:59:58Z",
+      "side": 1,
+      "message": "I\u0027ll do that when the other CL lands to prevent future problems.",
+      "parentUuid": "eedb7d83_bdf294e6",
       "range": {
         "startLine": 31,
         "startChar": 0,
@@ -48,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c38fd8dd_139205a1",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-08T17:59:58Z",
+      "side": 1,
+      "message": "I opened a comment to the memory API usage part of the CL, so let\u0027s move the conversation there.",
+      "parentUuid": "64677ebf_a386afc9",
+      "range": {
+        "startLine": 118,
+        "startChar": 18,
+        "endLine": 118,
+        "endChar": 24
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc736f7f_d811af67",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 2
@@ -59,6 +130,30 @@
       "writtenOn": "2018-01-08T17:49:13Z",
       "side": 1,
       "message": "why not 20?",
+      "range": {
+        "startLine": 121,
+        "startChar": 44,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9405e0_79a9f6cc",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-08T17:59:58Z",
+      "side": 1,
+      "message": "See comment on draft 1",
+      "parentUuid": "cc736f7f_d811af67",
       "range": {
         "startLine": 121,
         "startChar": 44,
