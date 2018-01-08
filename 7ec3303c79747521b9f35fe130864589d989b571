@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "550dcb20_57589ad0",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T15:11:54Z",
+      "side": 1,
+      "message": "\u003e Fetch API defines similar concept as request destination and it is defined that some security checks are run based on destination, I think we\u0027ll probably want it (instead of this one) in services/network at some point. Maybe something like:\n\nWe\u0027re not implementing Fetch in the network service though (just CORS), so why does this matter?\n\n\u003e \n\u003e TODO: remove this if network service shouldn\u0027t know about this, or redefine the enum in services/network in the way that follows the spec (https://fetch.spec.whatwg.org/#concept-request-destination).",
+      "parentUuid": "3ef1f526_4dc80672",
+      "revId": "7ec3303c79747521b9f35fe130864589d989b571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbd0acb0_bcc189d7",
         "filename": "content/public/common/resource_request.h",
         "patchSetId": 7
