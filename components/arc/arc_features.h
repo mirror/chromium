@@ -15,6 +15,7 @@ namespace arc {
 extern const base::Feature kBootCompletedBroadcastFeature;
 extern const base::Feature kNativeBridgeExperimentFeature;
 extern const base::Feature kVpnFeature;
+extern const base::Feature kUsbHostFeature;
 
 }  // namespace arc
 
