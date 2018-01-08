@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd6e22f2_82fe0625",
+        "filename": "components/unzip_service/public/cpp/unzip.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-08T18:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c701a1e5_227e4e56",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 79
+      },
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af4d2f98_5427a55b",
         "filename": "components/unzip_service/public/cpp/unzip.cc",
         "patchSetId": 17
