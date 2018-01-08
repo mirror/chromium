@@ -60,9 +60,7 @@ class AppListModelUpdater {
   virtual ChromeAppListItem* FindItem(const std::string& id) = 0;
   virtual size_t ItemCount() = 0;
   virtual ChromeAppListItem* ItemAtForTest(size_t index) = 0;
-  // TODO(hejq): |FindFolderItem| will return |ChromeAppListItem|.
-  virtual app_list::AppListFolderItem* FindFolderItem(
-      const std::string& folder_id) = 0;
+  virtual ChromeAppListItem* FindFolderItem(const std::string& folder_id) = 0;
   virtual bool FindItemIndexForTest(const std::string& id, size_t* index) = 0;
   virtual app_list::AppListViewState StateFullscreen() = 0;
   virtual std::map<std::string, size_t> GetIdToAppListIndexMap() = 0;
@@ -71,6 +69,8 @@ class AppListModelUpdater {
   virtual bool SearchEngineIsGoogle() = 0;
 
  protected:
+  friend class ::ChromeAppListItem;
+
   virtual ~AppListModelUpdater() {}
 
   // Item field setters only used by ChromeAppListItem and its derived classes.
@@ -87,6 +87,5 @@ class AppListModelUpdater {
   virtual void SetItemPercentDownloaded(const std::string& id,
                                         int32_t percent_downloaded) {}
 };
-
 
 #endif  // CHROME_BROWSER_UI_APP_LIST_APP_LIST_MODEL_UPDATER_H_

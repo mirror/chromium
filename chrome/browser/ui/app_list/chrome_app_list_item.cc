@@ -6,6 +6,7 @@
 
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_service.h"
+#include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
 #include "extensions/browser/app_sorting.h"
 #include "extensions/browser/extension_system.h"
 #include "ui/gfx/color_utils.h"
@@ -14,6 +15,7 @@
 namespace {
 
 AppListControllerDelegate* g_controller_for_test = nullptr;
+AppListModelUpdater* g_model_updater_for_test = nullptr;
 
 }  // namespace
 
@@ -24,6 +26,11 @@ void ChromeAppListItem::OverrideAppListControllerDelegateForTesting(
 }
 
 // static
+void ChromeAppListItem::OverrideModelUpdaterForTesting(
+    AppListModelUpdater* model_updater) {
+  g_model_updater_for_test = model_updater;
+}
+
 gfx::ImageSkia ChromeAppListItem::CreateDisabledIcon(
     const gfx::ImageSkia& icon) {
   const color_utils::HSL shift = {-1, 0, 0.6};
@@ -32,9 +39,12 @@ gfx::ImageSkia ChromeAppListItem::CreateDisabledIcon(
 
 ChromeAppListItem::ChromeAppListItem(Profile* profile,
                                      const std::string& app_id)
-    : app_list::AppListItem(app_id),
-      profile_(profile)  {
-}
+    : metadata_(ash::mojom::AppListItemMetadata::New(app_id,
+                                                     "",
+                                                     "",
+                                                     syncer::StringOrdinal(),
+                                                     false)),
+      profile_(profile) {}
 
 ChromeAppListItem::~ChromeAppListItem() {
 }
@@ -57,6 +67,13 @@ AppListControllerDelegate* ChromeAppListItem::GetController() {
   return g_controller_for_test != nullptr
              ? g_controller_for_test
              : AppListService::Get()->GetControllerDelegate();
+}
+
+AppListModelUpdater* ChromeAppListItem::GetModelUpdater() {
+  return g_model_updater_for_test != nullptr
+             ? g_model_updater_for_test
+             : app_list::AppListSyncableServiceFactory::GetForProfile(profile_)
+                   ->GetModelUpdater();
 }
 
 void ChromeAppListItem::UpdateFromSync(
@@ -86,8 +103,7 @@ void ChromeAppListItem::SetDefaultPositionIfApplicable() {
                                      launch_ordinal.ToInternalValue()));
 }
 
-bool ChromeAppListItem::CompareForTest(
-    const app_list::AppListItem* other) const {
+bool ChromeAppListItem::CompareForTest(const ChromeAppListItem* other) const {
   return id() == other->id() && folder_id() == other->folder_id() &&
          name() == other->name() && GetItemType() == other->GetItemType() &&
          position().Equals(other->position());

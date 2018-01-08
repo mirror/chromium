@@ -47,13 +47,13 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
 
   // Methods only for visiting Chrome items that never talk to ash.
   void ActivateChromeItem(const std::string& id, int event_flags);
+  void AddChromeItem(std::unique_ptr<ChromeAppListItem> app_item);
 
   // Methods for item querying.
   ChromeAppListItem* FindItem(const std::string& id) override;
   size_t ItemCount() override;
   ChromeAppListItem* ItemAtForTest(size_t index) override;
-  app_list::AppListFolderItem* FindFolderItem(
-      const std::string& folder_id) override;
+  ChromeAppListItem* FindFolderItem(const std::string& folder_id) override;
   bool FindItemIndexForTest(const std::string& id, size_t* index) override;
   bool TabletMode() override;
   app_list::AppListViewState StateFullscreen() override;
@@ -68,7 +68,7 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
       const std::string& oem_folder_id,
       const std::string& oem_folder_name,
       const syncer::StringOrdinal& preffered_oem_position);
-  app_list::AppListFolderItem* ResolveOemFolderPosition(
+  ChromeAppListItem* ResolveOemFolderPosition(
       const std::string& oem_folder_id,
       const syncer::StringOrdinal& preffered_oem_position);
   void UpdateAppItemFromSyncItem(
@@ -98,15 +98,28 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
   // this once we remove AppListViewDelegate.
   friend class app_list::AppListSyncableService;
 
-  void FindOrCreateOemFolder(
+  // Methods only used by ChromeAppListModelUpdater that never talk to ash.
+  ChromeAppListItem* MoveChromeItemFromFolder(const std::string& id);
+  void MoveChromeItemToFolder(const std::string& id,
+                              const std::string& folder_id);
+  ChromeAppListItem* CreateChromeFolderIfNotExists(
+      Profile* profile,
+      const std::string& folder_id);
+  void IncreaseChromeItemChild(const std::string& folder_id);
+  void DecreaseChromeItemChild(const std::string& folder_id);
+
+  // TODO(hejq): Move the following methods to ash.
+  ash::mojom::AppListItemMetadataPtr FindOrCreateOemFolder(
       app_list::AppListSyncableService::SyncItem* oem_sync_item,
       const std::string& oem_folder_id,
       const std::string& oem_folder_name,
       const syncer::StringOrdinal& preffered_oem_position);
   syncer::StringOrdinal GetOemFolderPos();
+  app_list::AppListFolderItem* FindAshFolderItem(const std::string& folder_id);
 
   std::unique_ptr<app_list::AppListModel> model_;
   std::unique_ptr<app_list::SearchModel> search_model_;
+  std::map<std::string, std::unique_ptr<ChromeAppListItem>> items_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAppListModelUpdater);
 };
