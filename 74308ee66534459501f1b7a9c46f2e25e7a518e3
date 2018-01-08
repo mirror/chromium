@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "959ad8ce_c8a3a3a4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-08T22:06:00Z",
+      "side": 1,
+      "message": "There are multiple places in this file where we check for mTextInputType \u003d\u003d TextInputType.NONE or mTextInputType !\u003d TextInputType.NONE, which should be extended to check for input mode\u003d\"none\" as well. For example, we aren\u0027t detaching input connection here, so the user will still be able to type on a physical keyboard, which is not what we want.\n\nAssuming that (textInputType \u003d\u003d TextInputType.CONTENT_EDITABLE \u0026\u0026 textInputMode \u003d\u003d ..None) is entirely synonymous with textInputType \u003d\u003d NONE, can we convert that at the beginning of updateState() for simplicity?\n\nLooking at the logic that\u0027s currently check for type\u003d\"none\", I suggest that we add new end-to-end test cases such as,\n\n1) New show and hide keyboard tests when moving to and from input mode\u003d\"none\". (both against type\u003d\"none\" and against a normal input form).\n2) Attach a physical keyboard on input mode\u003d\"none\", and check that keyboard does not show up / restart.",
+      "range": {
+        "startLine": 486,
+        "startChar": 12,
+        "endLine": 486,
+        "endChar": 48
+      },
+      "revId": "74308ee66534459501f1b7a9c46f2e25e7a518e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd71eac_6bbf2578",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-08T22:06:00Z",
+      "side": 1,
+      "message": "Could you fix this in a separate CL? Having a test would be nice, too.",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 55
+      },
+      "revId": "74308ee66534459501f1b7a9c46f2e25e7a518e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
