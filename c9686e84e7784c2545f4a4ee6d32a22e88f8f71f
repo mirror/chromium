@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "030e407f_4b840347",
+        "filename": "net/cert/cert_verify_proc_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-08T14:32:05Z",
+      "side": 1,
+      "message": "This is the most subtle/significant of the changes, so it bears calling out specifically:\n\nPreviously, we\u0027d only test the last certificate. This ends up testing every cert for IsKnownRoot(), which ends up testing the attribute for every certificate. Prior to this change, we\u0027d only opportunistically test the attribute.\n\nMy own (local) testing indicates this is safe, but if folks want to play it cautious, I can remove this \"IsKnownRoot()\" check entirely, and it would match the existing behaviour (in which only the built-in list is consulted).\n\nTo put differently, the overall change reduces the false-negative case, but this specific change MAY increase the false-positive case (but I don\u0027t believe it will)",
+      "revId": "c9686e84e7784c2545f4a4ee6d32a22e88f8f71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b92ade_05923090",
+        "filename": "net/cert/known_roots_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-08T14:32:05Z",
+      "side": 1,
+      "message": "I can pull this change out to a separate CL if it\u0027d help; it was a leftover from an earlier branch on optimizing the memory access here from the red-black tree to just the sorted array.",
+      "revId": "c9686e84e7784c2545f4a4ee6d32a22e88f8f71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e170a38c_764f20cf",
+        "filename": "net/cert/known_roots_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-08T14:32:05Z",
+      "side": 1,
+      "message": "See above re: the effective change here",
+      "revId": "c9686e84e7784c2545f4a4ee6d32a22e88f8f71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
