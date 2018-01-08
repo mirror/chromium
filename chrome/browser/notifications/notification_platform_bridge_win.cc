@@ -296,17 +296,92 @@ class NotificationPlatformBridgeWinImpl
     // TODO(peter): Implement the ability to close notifications.
   }
 
+  std::unique_ptr<std::set<std::string>> GetDisplayedFromActionCenter(
+      const std::string& profile_id,
+      bool incognito) const {
+    auto displayed_notifications = std::make_unique<std::set<std::string>>();
+
+    mswr::ComPtr<winui::Notifications::IToastNotificationManagerStatics>
+        toast_manager;
+    HRESULT hr = CreateActivationFactory(
+        RuntimeClass_Windows_UI_Notifications_ToastNotificationManager,
+        toast_manager.GetAddressOf());
+    if (FAILED(hr)) {
+      LOG(ERROR) << "Unable to create the ToastNotificationManager";
+      return displayed_notifications;
+    }
+
+    mswr::ComPtr<winui::Notifications::IToastNotificationManagerStatics2>
+        toast_manager2;
+    hr = toast_manager
+             .As<winui::Notifications::IToastNotificationManagerStatics2>(
+                 &toast_manager2);
+    if (FAILED(hr)) {
+      LOG(ERROR) << "Failed to get IToastNotificationManagerStatics2";
+      return displayed_notifications;
+    }
+
+    mswr::ComPtr<winui::Notifications::IToastNotificationHistory> history;
+    hr = toast_manager2->get_History(&history);
+    if (FAILED(hr)) {
+      LOG(ERROR) << "Failed to get IToastNotificationHistory";
+      return displayed_notifications;
+    }
+
+    mswr::ComPtr<winui::Notifications::IToastNotificationHistory2> history2;
+    hr =
+        history.As<winui::Notifications::IToastNotificationHistory2>(&history2);
+    if (FAILED(hr)) {
+      LOG(ERROR) << "Failed to get IToastNotificationHistory2";
+      return displayed_notifications;
+    }
+
+    base::string16 browser_model_id =
+        ShellUtil::GetBrowserModelId(InstallUtil::IsPerUserInstall());
+    ScopedHString application_id = ScopedHString::Create(browser_model_id);
+
+    using winfoundtn::Collections::IVectorView;
+    using winui::Notifications::ToastNotification;
+    using winui::Notifications::IToastNotification;
+
+    mswr::ComPtr<IVectorView<ToastNotification*>> list;
+    hr = history2->GetHistoryWithId(application_id.get(), &list);
+    size_t size;
+    hr = list->get_Size(&size);
+    IToastNotification* tn;
+    for (size_t index = 0; index < size; ++index) {
+      hr = list->GetAt(0U, &tn);
+      std::string toast_id = GetNotificationId(tn);
+      std::string decoded_notification_id;
+      std::string decoded_profile_id;
+      bool decoded_incognito;
+      if (!NotificationPlatformBridgeWin::DecodeTemplateId(
+              toast_id, nullptr, &decoded_notification_id, &decoded_profile_id,
+              &decoded_incognito, nullptr)) {
+        LOG(ERROR) << "Failed to decode notification ID";
+        continue;
+      }
+      if (decoded_profile_id != profile_id || decoded_incognito != incognito)
+        continue;
+      displayed_notifications->insert(decoded_notification_id);
+    }
+
+    return displayed_notifications;
+  }
+
   void GetDisplayed(const std::string& profile_id,
                     bool incognito,
                     const GetDisplayedNotificationsCallback& callback) const {
     // TODO(finnur): Once this function is properly implemented, add DCHECK(UI)
     // to NotificationPlatformBridgeWin::GetDisplayed.
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
-    auto displayed_notifications = std::make_unique<std::set<std::string>>();
+
+    auto displayed_notifications =
+        GetDisplayedFromActionCenter(profile_id, incognito);
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::Bind(callback, base::Passed(&displayed_notifications),
-                   false /* supports_synchronization */));
+                   true /* supports_synchronization */));
   }
 
   void SetReadyCallback(
@@ -321,7 +396,7 @@ class NotificationPlatformBridgeWinImpl
   ~NotificationPlatformBridgeWinImpl() = default;
 
   std::string GetNotificationId(
-      winui::Notifications::IToastNotification* notification) {
+      winui::Notifications::IToastNotification* notification) const {
     mswr::ComPtr<winxml::Dom::IXmlDocument> document;
     HRESULT hr = notification->get_Content(&document);
     if (FAILED(hr)) {
@@ -555,16 +630,21 @@ bool NotificationPlatformBridgeWin::DecodeTemplateId(
   if (split.size() < kMinVectorSize)
     return false;
 
-  int type = -1;
-  if (!base::StringToInt(split[0], &type))
-    return false;
-  if (type < 0 || type > static_cast<int>(NotificationHandler::Type::MAX))
-    return false;
-  *notification_type = static_cast<NotificationHandler::Type>(type);
+  if (notification_type) {
+    int type = -1;
+    if (!base::StringToInt(split[0], &type))
+      return false;
+    if (type < 0 || type > static_cast<int>(NotificationHandler::Type::MAX))
+      return false;
+    *notification_type = static_cast<NotificationHandler::Type>(type);
+  }
 
-  *profile_id = split[1];
-  *incognito = split[2] == "1" ? true : false;
-  *origin_url = GURL(split[3]);
+  if (profile_id)
+    *profile_id = split[1];
+  if (incognito)
+    *incognito = split[2] == "1" ? true : false;
+  if (origin_url)
+    *origin_url = GURL(split[3]);
 
   notification_id->clear();
   // Notification IDs is the rest of the string (delimeters not stripped off).
