@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9dcf3f4e_958e6b48",
+        "filename": "content/public/browser/web_ui_data_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-08T21:00:19Z",
+      "side": 1,
+      "message": "by the way, something that wasn\u0027t immediately clear to me: because a WebUIDataSource has the notion of a \"default resource\", it can respond to arbitrary URLs/paths.\n\nex: somebody types chrome://settings/blah-blah-blah it should basically silently map to (and possibly redirect the URL to) chrome://settings/.  this is mildly important for old/broken URLs as well.\n\nwhen the WebUIDataSource\u0027s default resource is gzipped, it means that any unknown path will be set up with a net::SourceStream to gunzip the contents. \n\nfor pages like chrome://tracing that use a request filter, the page XHRs \"/json/some-url-that-responds-with-data\". having a global map of IDRs doesn\u0027t help here. if there\u0027s no resource registered to that path, it\u0027d be silently mapped to the default resource (i.e. IDR_TRACING_HTML_OR_WHATEVER), which can be gzipped.  this data call is effectively broken because the bytes responded with are uncompressed even though the path is set up as gzipped because of the default resource.\n\ni\u0027m saying this mainly as an FYI: a global map of IDRs isn\u0027t necessarily a total silver bullet.",
+      "parentUuid": "e532b86d_2fded185",
+      "revId": "ad22225533ce882dd68bfbb714d0f4d4cbe9e38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43ea551f_f72108e1",
         "filename": "content/public/browser/web_ui_data_source.h",
         "patchSetId": 11
