@@ -34,7 +34,7 @@ namespace extensions {
 class UpdateDataProvider : public base::RefCounted<UpdateDataProvider> {
  public:
   using UpdateClientCallback = ExtensionInstaller::UpdateClientCallback;
-  using InstallCallback = base::OnceCallback<void(
+  using InstallCallback = base::RepeatingCallback<void(
       content::BrowserContext* context,
       const std::string& /* extension_id */,
       const std::string& /* public_key */,

@@ -135,10 +135,10 @@ class UpdateDataProviderTest : public ExtensionsTest {
 TEST_F(UpdateDataProviderTest, GetData_NoDataAdded) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
-          nullptr,
-          base::BindOnce([](content::BrowserContext*, const std::string&,
-                            const std::string&, const base::FilePath&,
-                            UpdateClientCallback update_client_callback) {}));
+          nullptr, base::BindRepeating(
+                       [](content::BrowserContext*, const std::string&,
+                          const std::string&, const base::FilePath&,
+                          UpdateClientCallback update_client_callback) {}));
 
   std::vector<std::string> ids({kExtensionId1});
   std::vector<update_client::CrxComponent> data;
@@ -150,11 +150,11 @@ TEST_F(UpdateDataProviderTest, GetData_EnabledExtension) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, true,
@@ -177,11 +177,11 @@ TEST_F(UpdateDataProviderTest, GetData_EnabledExtensionWithData) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, true,
@@ -207,11 +207,11 @@ TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_WithNoReason) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, false,
@@ -236,11 +236,11 @@ TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_UnknownReason) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, false,
@@ -265,11 +265,11 @@ TEST_F(UpdateDataProviderTest, GetData_DisabledExtension_WithReasons) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, false,
@@ -298,11 +298,11 @@ TEST_F(UpdateDataProviderTest,
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, false,
@@ -334,11 +334,11 @@ TEST_F(UpdateDataProviderTest, GetData_MultipleExtensions) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version1 = "0.1.2.3";
   const std::string version2 = "9.8.7.6";
@@ -369,11 +369,11 @@ TEST_F(UpdateDataProviderTest, GetData_MultipleExtensions_DisabledExtension) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version1 = "0.1.2.3";
   const std::string version2 = "9.8.7.6";
@@ -408,11 +408,11 @@ TEST_F(UpdateDataProviderTest,
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version = "0.1.2.3";
   AddExtension(kExtensionId1, version, true,
@@ -438,11 +438,11 @@ TEST_F(UpdateDataProviderTest, GetData_MultipleExtensions_CorruptExtension) {
   scoped_refptr<UpdateDataProvider> data_provider =
       base::MakeRefCounted<UpdateDataProvider>(
           browser_context(),
-          base::BindOnce([](content::BrowserContext* context,
-                            const std::string& extension_id,
-                            const std::string& public_key,
-                            const base::FilePath& temp_dir,
-                            UpdateClientCallback update_client_callback) {}));
+          base::BindRepeating(
+              [](content::BrowserContext* context,
+                 const std::string& extension_id, const std::string& public_key,
+                 const base::FilePath& temp_dir,
+                 UpdateClientCallback update_client_callback) {}));
 
   const std::string version1 = "0.1.2.3";
   const std::string version2 = "9.8.7.6";

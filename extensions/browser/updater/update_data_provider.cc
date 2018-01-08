@@ -96,7 +96,7 @@ void UpdateDataProvider::RunInstallCallback(
   DCHECK(!install_callback_.is_null());
   content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
       ->PostTask(FROM_HERE,
-                 base::BindOnce(std::move(install_callback_), browser_context_,
+                 base::BindOnce(install_callback_, browser_context_,
                                 extension_id, public_key, unpacked_dir,
                                 std::move(update_client_callback)));
 }

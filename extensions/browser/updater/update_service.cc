@@ -90,7 +90,7 @@ UpdateService::UpdateService(
       weak_ptr_factory_(this) {
   DCHECK(update_client_);
   update_data_provider_ = base::MakeRefCounted<UpdateDataProvider>(
-      browser_context_, base::BindOnce(&InstallUpdateCallback));
+      browser_context_, base::BindRepeating(&InstallUpdateCallback));
 }
 
 UpdateService::~UpdateService() {}
