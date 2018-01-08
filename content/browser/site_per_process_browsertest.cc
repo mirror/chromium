@@ -339,23 +339,14 @@ void SurfaceHitTestTestHelper(
 
   WaitForChildFrameSurfaceReady(child_node->current_frame_host());
 
-  float scale_factor = GetPageScaleFactor(shell);
-
-  // Get the view bounds of the child iframe, which should account for the
-  // relative offset of its direct parent within the root frame, for use in
-  // targeting the input event.
-  gfx::Rect bounds = rwhv_child->GetViewBounds();
-
   // Target input event to child frame.
+  gfx::PointF child_location(5, 5);
+  child_location = rwhv_child->TransformPointToRootCoordSpaceF(child_location);
   blink::WebMouseEvent child_event(blink::WebInputEvent::kMouseDown,
                                    blink::WebInputEvent::kNoModifiers,
                                    blink::WebInputEvent::kTimeStampForTesting);
   child_event.button = blink::WebPointerProperties::Button::kLeft;
-  child_event.SetPositionInWidget(
-      gfx::ToCeiledInt((bounds.x() - root_view->GetViewBounds().x() + 5) *
-                       scale_factor),
-      gfx::ToCeiledInt((bounds.y() - root_view->GetViewBounds().y() + 5) *
-                       scale_factor));
+  child_event.SetPositionInWidget(child_location.x(), child_location.y());
   child_event.click_count = 1;
 
   // Check the renderer hit-test API return the correct frame for
@@ -364,12 +355,9 @@ void SurfaceHitTestTestHelper(
   viz::FrameSinkId received_frame_sink_id;
   base::Closure quit_closure =
       content::GetDeferredQuitTaskForRunLoop(&run_loop);
-  // TODO(crbug.com/793018): There is a confusion here about scale_factor.
   DCHECK_NE(root->current_frame_host()->GetInputTargetClient(), nullptr);
   root->current_frame_host()->GetInputTargetClient()->FrameSinkIdAt(
-      gfx::ScaleToCeiledPoint(
-          gfx::ToCeiledPoint(child_event.PositionInWidget()), scale_factor,
-          scale_factor),
+      gfx::ToCeiledPoint(child_event.PositionInWidget()),
       base::BindLambdaForTesting([&](const viz::FrameSinkId& id) {
         received_frame_sink_id = id;
         quit_closure.Run();
@@ -407,6 +395,167 @@ void SurfaceHitTestTestHelper(
   EXPECT_TRUE(main_frame_monitor.EventWasReceived());
   EXPECT_NEAR(2, main_frame_monitor.event().PositionInWidget().x, 2);
   EXPECT_NEAR(2, main_frame_monitor.event().PositionInWidget().y, 2);
+}
+
+void OverlapSurfaceHitTestHelper(
+    Shell* shell,
+    net::test_server::EmbeddedTestServer* embedded_test_server) {
+  GURL main_url(embedded_test_server->GetURL(
+      "/frame_tree/page_with_content_overlap_positioned_frame.html"));
+  EXPECT_TRUE(NavigateToURL(shell, main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  ASSERT_EQ(1U, root->child_count());
+
+  FrameTreeNode* child_node = root->child_at(0);
+  GURL site_url(embedded_test_server->GetURL("baz.com", "/title1.html"));
+  EXPECT_EQ(site_url, child_node->current_url());
+  EXPECT_NE(shell->web_contents()->GetSiteInstance(),
+            child_node->current_frame_host()->GetSiteInstance());
+
+  // Create listeners for mouse events.
+  RenderWidgetHostMouseEventMonitor main_frame_monitor(
+      root->current_frame_host()->GetRenderWidgetHost());
+  RenderWidgetHostMouseEventMonitor child_frame_monitor(
+      child_node->current_frame_host()->GetRenderWidgetHost());
+
+  RenderWidgetHostInputEventRouter* router =
+      static_cast<WebContentsImpl*>(shell->web_contents())
+          ->GetInputEventRouter();
+
+  RenderWidgetHostViewBase* rwhv_root = static_cast<RenderWidgetHostViewBase*>(
+      root->current_frame_host()->GetRenderWidgetHost()->GetView());
+  RenderWidgetHostViewBase* rwhv_child = static_cast<RenderWidgetHostViewBase*>(
+      child_node->current_frame_host()->GetRenderWidgetHost()->GetView());
+
+  WaitForChildFrameSurfaceReady(child_node->current_frame_host());
+
+  // Target input event to the button overlapping the child frame.
+  gfx::PointF button_location(5, 5);
+  button_location =
+      rwhv_child->TransformPointToRootCoordSpaceF(button_location);
+  blink::WebMouseEvent button_event(blink::WebInputEvent::kMouseDown,
+                                    blink::WebInputEvent::kNoModifiers,
+                                    blink::WebInputEvent::kTimeStampForTesting);
+  button_event.button = blink::WebPointerProperties::Button::kLeft;
+  button_event.SetPositionInWidget(button_location.x(), button_location.y());
+  button_event.click_count = 1;
+
+  main_frame_monitor.ResetEventReceived();
+  child_frame_monitor.ResetEventReceived();
+  RouteMouseEventAndWaitUntilDispatch(router, rwhv_root, rwhv_root,
+                                      &button_event);
+
+  // The main-frame should receive the event at the same location it was
+  // dispatched to.
+  EXPECT_TRUE(main_frame_monitor.EventWasReceived());
+  EXPECT_NEAR(button_location.x(),
+              main_frame_monitor.event().PositionInWidget().x, 2);
+  EXPECT_NEAR(button_location.y(),
+              main_frame_monitor.event().PositionInWidget().y, 2);
+  EXPECT_FALSE(child_frame_monitor.EventWasReceived());
+
+  // Now send an event that should go to the bottom-right edge of child.
+  gfx::PointF event_location(95, 95);
+  event_location = rwhv_child->TransformPointToRootCoordSpaceF(event_location);
+  blink::WebMouseEvent child_event(blink::WebInputEvent::kMouseDown,
+                                   blink::WebInputEvent::kNoModifiers,
+                                   blink::WebInputEvent::kTimeStampForTesting);
+  child_event.SetPositionInWidget(event_location.x(), event_location.y());
+  child_event.click_count = 1;
+  main_frame_monitor.ResetEventReceived();
+  child_frame_monitor.ResetEventReceived();
+  RouteMouseEventAndWaitUntilDispatch(router, rwhv_root, rwhv_child,
+                                      &child_event);
+  EXPECT_TRUE(child_frame_monitor.EventWasReceived());
+  // The expected result coordinates are (5, 5) from the bottom-right edge (and
+  // it's sized 100x100), but can get slightly different results due to rounding
+  // error with some page scale factors.
+  EXPECT_NEAR(95, child_frame_monitor.event().PositionInWidget().x, 2);
+  EXPECT_NEAR(95, child_frame_monitor.event().PositionInWidget().y, 2);
+  EXPECT_FALSE(main_frame_monitor.EventWasReceived());
+}
+
+// Helper function that performs a surface hittest in nested frame.
+void NestedSurfaceHitTestTestHelper(
+    Shell* shell,
+    net::test_server::EmbeddedTestServer* embedded_test_server) {
+  auto* web_contents = static_cast<WebContentsImpl*>(shell->web_contents());
+  GURL main_url(embedded_test_server->GetURL(
+      "/frame_tree/page_with_positioned_nested_frames.html"));
+  EXPECT_TRUE(NavigateToURL(shell, main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = web_contents->GetFrameTree()->root();
+  ASSERT_EQ(1U, root->child_count());
+
+  FrameTreeNode* parent_iframe_node = root->child_at(0);
+  GURL site_url(embedded_test_server->GetURL(
+      "a.com", "/frame_tree/page_with_positioned_frame.html"));
+  EXPECT_EQ(site_url, parent_iframe_node->current_url());
+  EXPECT_NE(shell->web_contents()->GetSiteInstance(),
+            parent_iframe_node->current_frame_host()->GetSiteInstance());
+
+  FrameTreeNode* nested_iframe_node = parent_iframe_node->child_at(0);
+  GURL nested_site_url(embedded_test_server->GetURL("baz.com", "/title1.html"));
+  EXPECT_EQ(nested_site_url, nested_iframe_node->current_url());
+  EXPECT_NE(shell->web_contents()->GetSiteInstance(),
+            nested_iframe_node->current_frame_host()->GetSiteInstance());
+  EXPECT_NE(parent_iframe_node->current_frame_host()->GetSiteInstance(),
+            nested_iframe_node->current_frame_host()->GetSiteInstance());
+
+  // Create listeners for mouse events.
+  RenderWidgetHostMouseEventMonitor main_frame_monitor(
+      root->current_frame_host()->GetRenderWidgetHost());
+  RenderWidgetHostMouseEventMonitor nested_frame_monitor(
+      nested_iframe_node->current_frame_host()->GetRenderWidgetHost());
+
+  RenderWidgetHostInputEventRouter* router =
+      web_contents->GetInputEventRouter();
+
+  RenderWidgetHostViewBase* root_view = static_cast<RenderWidgetHostViewBase*>(
+      root->current_frame_host()->GetRenderWidgetHost()->GetView());
+  RenderWidgetHostViewBase* rwhv_nested =
+      static_cast<RenderWidgetHostViewBase*>(
+          nested_iframe_node->current_frame_host()
+              ->GetRenderWidgetHost()
+              ->GetView());
+
+  WaitForChildFrameSurfaceReady(nested_iframe_node->current_frame_host());
+
+  float scale_factor = GetPageScaleFactor(shell);
+
+  // Get the view bounds of the nested iframe, which should account for the
+  // relative offset of its direct parent within the root frame, for use in
+  // targeting the input event.
+  gfx::Rect bounds = rwhv_nested->GetViewBounds();
+
+  // Target input event to nested frame.
+  blink::WebMouseEvent nested_event(blink::WebInputEvent::kMouseDown,
+                                    blink::WebInputEvent::kNoModifiers,
+                                    blink::WebInputEvent::kTimeStampForTesting);
+  nested_event.button = blink::WebPointerProperties::Button::kLeft;
+  nested_event.SetPositionInWidget(
+      gfx::ToCeiledInt((bounds.x() - root_view->GetViewBounds().x() + 10) *
+                       scale_factor),
+      gfx::ToCeiledInt((bounds.y() - root_view->GetViewBounds().y() + 10) *
+                       scale_factor));
+  nested_event.click_count = 1;
+  nested_frame_monitor.ResetEventReceived();
+  main_frame_monitor.ResetEventReceived();
+  auto* rwhv_child = nested_iframe_node->current_frame_host()
+                         ->GetRenderWidgetHost()
+                         ->GetView();
+  RouteMouseEventAndWaitUntilDispatch(router, root_view, rwhv_child,
+                                      &nested_event);
+
+  EXPECT_TRUE(nested_frame_monitor.EventWasReceived());
+  EXPECT_NEAR(10, nested_frame_monitor.event().PositionInWidget().x, 2);
+  EXPECT_NEAR(10, nested_frame_monitor.event().PositionInWidget().y, 2);
+  EXPECT_FALSE(main_frame_monitor.EventWasReceived());
 }
 
 class RedirectNotificationObserver : public NotificationObserver {
@@ -2215,79 +2364,21 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessHighDPIBrowserTest,
 // Test that mouse events are being routed to the correct RenderWidgetHostView
 // when there are nested out-of-process iframes.
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, NestedSurfaceHitTestTest) {
-  GURL main_url(embedded_test_server()->GetURL(
-      "/frame_tree/page_with_positioned_nested_frames.html"));
-  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+  NestedSurfaceHitTestTestHelper(shell(), embedded_test_server());
+}
 
-  // It is safe to obtain the root frame tree node here, as it doesn't change.
-  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
-  ASSERT_EQ(1U, root->child_count());
+IN_PROC_BROWSER_TEST_F(SitePerProcessHighDPIBrowserTest,
+                       NestedSurfaceHitTestTest) {
+  NestedSurfaceHitTestTestHelper(shell(), embedded_test_server());
+}
 
-  FrameTreeNode* parent_iframe_node = root->child_at(0);
-  GURL site_url(embedded_test_server()->GetURL(
-      "a.com", "/frame_tree/page_with_positioned_frame.html"));
-  EXPECT_EQ(site_url, parent_iframe_node->current_url());
-  EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
-            parent_iframe_node->current_frame_host()->GetSiteInstance());
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, OverlapSurfaceHitTestTest) {
+  OverlapSurfaceHitTestHelper(shell(), embedded_test_server());
+}
 
-  FrameTreeNode* nested_iframe_node = parent_iframe_node->child_at(0);
-  GURL nested_site_url(
-      embedded_test_server()->GetURL("baz.com", "/title1.html"));
-  EXPECT_EQ(nested_site_url, nested_iframe_node->current_url());
-  EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
-            nested_iframe_node->current_frame_host()->GetSiteInstance());
-  EXPECT_NE(parent_iframe_node->current_frame_host()->GetSiteInstance(),
-            nested_iframe_node->current_frame_host()->GetSiteInstance());
-
-  // Create listeners for mouse events.
-  RenderWidgetHostMouseEventMonitor main_frame_monitor(
-      root->current_frame_host()->GetRenderWidgetHost());
-  RenderWidgetHostMouseEventMonitor nested_frame_monitor(
-      nested_iframe_node->current_frame_host()->GetRenderWidgetHost());
-
-  RenderWidgetHostInputEventRouter* router =
-      web_contents()->GetInputEventRouter();
-
-  RenderWidgetHostViewBase* root_view = static_cast<RenderWidgetHostViewBase*>(
-      root->current_frame_host()->GetRenderWidgetHost()->GetView());
-  RenderWidgetHostViewBase* rwhv_nested =
-      static_cast<RenderWidgetHostViewBase*>(
-          nested_iframe_node->current_frame_host()
-              ->GetRenderWidgetHost()
-              ->GetView());
-
-  WaitForChildFrameSurfaceReady(nested_iframe_node->current_frame_host());
-
-  float scale_factor = GetPageScaleFactor(shell());
-
-  // Get the view bounds of the nested iframe, which should account for the
-  // relative offset of its direct parent within the root frame, for use in
-  // targeting the input event.
-  gfx::Rect bounds = rwhv_nested->GetViewBounds();
-
-  // Target input event to nested frame.
-  blink::WebMouseEvent nested_event(blink::WebInputEvent::kMouseDown,
-                                    blink::WebInputEvent::kNoModifiers,
-                                    blink::WebInputEvent::kTimeStampForTesting);
-  nested_event.button = blink::WebPointerProperties::Button::kLeft;
-  nested_event.SetPositionInWidget(
-      gfx::ToCeiledInt((bounds.x() - root_view->GetViewBounds().x() + 10) *
-                       scale_factor),
-      gfx::ToCeiledInt((bounds.y() - root_view->GetViewBounds().y() + 10) *
-                       scale_factor));
-  nested_event.click_count = 1;
-  nested_frame_monitor.ResetEventReceived();
-  main_frame_monitor.ResetEventReceived();
-  auto* rwhv_child = nested_iframe_node->current_frame_host()
-                         ->GetRenderWidgetHost()
-                         ->GetView();
-  RouteMouseEventAndWaitUntilDispatch(router, root_view, rwhv_child,
-                                      &nested_event);
-
-  EXPECT_TRUE(nested_frame_monitor.EventWasReceived());
-  EXPECT_NEAR(10, nested_frame_monitor.event().PositionInWidget().x, 2);
-  EXPECT_NEAR(10, nested_frame_monitor.event().PositionInWidget().y, 2);
-  EXPECT_FALSE(main_frame_monitor.EventWasReceived());
+IN_PROC_BROWSER_TEST_F(SitePerProcessHighDPIBrowserTest,
+                       OverlapSurfaceHitTestTest) {
+  OverlapSurfaceHitTestHelper(shell(), embedded_test_server());
 }
 
 // This test tests that browser process hittesting ignores frames with
@@ -12876,17 +12967,13 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, HitTestNestedFrames) {
 
   WaitForChildFrameSurfaceReady(grandchild_node->current_frame_host());
 
-  float scale_factor = GetPageScaleFactor(shell());
-  gfx::Rect child_bounds = rwhv_child->GetViewBounds();
-  gfx::Rect nested_child_bounds = rwhv_grandchild->GetViewBounds();
-
   // Create two points to hit test: One in the child of the main frame, and
   // one in the frame nested within that. The hit test request is sent to the
   // child's renderer.
   gfx::Point point_in_child(1, 1);
-  gfx::Point point_in_nested_child(
-      (nested_child_bounds.x() - child_bounds.x() + 5) * scale_factor,
-      (nested_child_bounds.y() - child_bounds.y() + 5) * scale_factor);
+  gfx::PointF point_in_nested_child(5, 5);
+  rwhv_grandchild->TransformPointToCoordSpaceForView(
+      point_in_nested_child, rwhv_child, &point_in_nested_child);
 
   {
     base::RunLoop run_loop;
@@ -12917,7 +13004,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, HitTestNestedFrames) {
     DCHECK_NE(child_node->current_frame_host()->GetInputTargetClient(),
               nullptr);
     child_node->current_frame_host()->GetInputTargetClient()->FrameSinkIdAt(
-        point_in_nested_child,
+        gfx::ToCeiledPoint(point_in_nested_child),
         base::BindLambdaForTesting([&](const viz::FrameSinkId& id) {
           received_frame_sink_id = id;
           quit_closure.Run();
