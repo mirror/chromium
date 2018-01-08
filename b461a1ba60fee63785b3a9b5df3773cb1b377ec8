@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "096c4872_4383f1f0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/po-customusertiming.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-08T14:37:32Z",
+      "side": 1,
+      "message": "Ah, sorry, I was misreading checkEntries.\n\nSo we only assert on startTime if it\u0027s present in the expected entry.\nThat\u0027s reasonable, thanks.",
+      "parentUuid": "af195159_c469a3d9",
+      "range": {
+        "startLine": 21,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 65
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93e5582_7cf01b26",
         "filename": "third_party/WebKit/Source/core/timing/Performance.idl",
         "patchSetId": 4
