@@ -2687,10 +2687,9 @@ void RenderFrameImpl::LoadNavigationErrorPage(
   std::string error_html;
   if (error_page_content.has_value()) {
     error_html = error_page_content.value();
-  } else {
-    GetContentClient()->renderer()->GetNavigationErrorStrings(
-        this, failed_request, error, &error_html, nullptr);
   }
+  GetContentClient()->renderer()->PrepareErrorPage(this, failed_request, error,
+                                                   &error_html, nullptr);
   LoadNavigationErrorPageInternal(error_html, GURL(kUnreachableWebDataURL),
                                   error.url(), replace, frame_load_type,
                                   history_item);
@@ -2709,7 +2708,7 @@ void RenderFrameImpl::LoadNavigationErrorPageForHttpStatusError(
       entry ? entry->root() : blink::WebHistoryItem();
 
   std::string error_html;
-  GetContentClient()->renderer()->GetNavigationErrorStringsForHttpStatusError(
+  GetContentClient()->renderer()->PrepareErrorPageForHttpStatusError(
       this, failed_request, unreachable_url, http_status, &error_html, nullptr);
   LoadNavigationErrorPageInternal(error_html, GURL(kUnreachableWebDataURL),
                                   unreachable_url, replace, frame_load_type,
@@ -2840,7 +2839,7 @@ void RenderFrameImpl::LoadErrorPage(int reason) {
   WebURLError error(reason, frame_->GetDocument().Url());
 
   std::string error_html;
-  GetContentClient()->renderer()->GetNavigationErrorStrings(
+  GetContentClient()->renderer()->PrepareErrorPage(
       this, frame_->GetDocumentLoader()->GetRequest(), error, &error_html,
       nullptr);
 
@@ -4517,12 +4516,8 @@ void RenderFrameImpl::DidFailLoad(const WebURLError& error,
 
   const WebURLRequest& failed_request = document_loader->GetRequest();
   base::string16 error_description;
-  GetContentClient()->renderer()->GetNavigationErrorStrings(
-      this,
-      failed_request,
-      error,
-      nullptr,
-      &error_description);
+  GetContentClient()->renderer()->PrepareErrorPage(this, failed_request, error,
+                                                   nullptr, &error_description);
   Send(new FrameHostMsg_DidFailLoadWithError(
       routing_id_, failed_request.Url(), error.reason(), error_description));
 }
@@ -6735,7 +6730,7 @@ void RenderFrameImpl::SendFailedProvisionalLoad(
 
   FrameHostMsg_DidFailProvisionalLoadWithError_Params params;
   params.error_code = error.reason();
-  GetContentClient()->renderer()->GetNavigationErrorStrings(
+  GetContentClient()->renderer()->PrepareErrorPage(
       this, request, error, nullptr, &params.error_description);
   params.url = error.url(),
   params.showing_repost_interstitial = show_repost_interstitial;
