@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "110585e2_168e9e4c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2806,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T23:30:37Z",
+      "side": 1,
+      "message": "Missed this one, also sort alphabetically.",
+      "range": {
+        "startLine": 2804,
+        "startChar": 0,
+        "endLine": 2806,
+        "endChar": 47
+      },
+      "revId": "99545b1879a2cb794e0b3e4fb9b65b21e1c40f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7018bc5a_aecd773d",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 5
@@ -84,6 +107,30 @@
       "side": 1,
       "message": "Looks the others all put kXXXName on top of kXXXDescription\n\nMaybe we should just follow them here? It looks weird if this is the only pair in alphabet order.",
       "parentUuid": "ddb061ab_370d3788",
+      "range": {
+        "startLine": 1501,
+        "startChar": 0,
+        "endLine": 1503,
+        "endChar": 43
+      },
+      "revId": "99545b1879a2cb794e0b3e4fb9b65b21e1c40f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0253ab0_b15e3fa8",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-08T23:30:37Z",
+      "side": 1,
+      "message": "Ah yes, keep that order for consistency with the rest of the file. But move it before kArcVpnName/Description.\n\nSee https://chromium-review.googlesource.com/c/chromium/src/+/854990/5/chrome/browser/flag_descriptions.h#26",
+      "parentUuid": "82c74d25_e1531886",
       "range": {
         "startLine": 1501,
         "startChar": 0,
