@@ -33,6 +33,24 @@
       "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bddc3e11_8804cefa",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-08T23:35:28Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood how printing works.  It appears this is all recorded into a PaintOpBuffer and not going directly into an SkCanvas at the bottom of the recording stack.\n\nI think this is still too heavy-handed in PaintOpBuffer.  I think storing an SkPicture pointer on every PaintOpBuffer just for the case that the PaintOpBuffer represents a placeholder is very big.\n\nI\u0027m going to propose the following, which should be extensible for the next person who wants to do something similar:\n* add a new CustomData PaintOpType and a CustomDataOp PaintOp class that stores a size_t data\n* add a custom_data_callback function to PlaybackParams\n* when rasterizing, if a CustomDataOp is encountered, call the custom data callback with the data and the PaintCanvas (and maybe the playback params too)\n\nThat should give you enough to store the id directly and then stitch them back together later without requiring putting an SkPicture on every PaintOpBuffer.",
+      "parentUuid": "1f77da55_b704e3ee",
+      "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
