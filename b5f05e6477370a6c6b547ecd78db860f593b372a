@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "a9267586_240d80db",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-08T09:39:29Z",
+      "side": 1,
+      "message": "Thank you for explanation. Rephrased.",
+      "parentUuid": "fc5244e9_6beb8496",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "482959ee_8cd03831",
         "filename": "base/optional.h",
         "patchSetId": 2
