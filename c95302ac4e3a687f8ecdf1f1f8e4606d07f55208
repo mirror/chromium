@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a9e1cd2_63e19958",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/rellist-feature-detection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-08T12:24:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f3deb05_8ba1be83",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "c95302ac4e3a687f8ecdf1f1f8e4606d07f55208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b3e0fa_00af15ac",
         "filename": "third_party/WebKit/Source/core/html/HTMLAnchorElement.cpp",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-08T06:47:27Z",
       "side": 1,
       "message": "Current RelList assumes it is tied to HTMLLinkElement, at least in its `supports()` implementation. You\u0027ll need to split it.",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 23
+      },
+      "revId": "c95302ac4e3a687f8ecdf1f1f8e4606d07f55208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a5b7e7_66a0703d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAnchorElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-08T12:24:42Z",
+      "side": 1,
+      "message": "Thanks for the review and suggestion. Implemented supports() separately for anchor and link element.",
+      "parentUuid": "b3b3e0fa_00af15ac",
       "range": {
         "startLine": 56,
         "startChar": 16,
