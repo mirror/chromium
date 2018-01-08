@@ -217,6 +217,11 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // returns true if this scroll would change pages.
   bool HandleScrollFromAppListView(int offset, ui::EventType type);
 
+  // Handles hiding other context menus if they exist.
+  void OnShowContextMenu(AppListItemView* source);
+
+  void OnHideContextMenu();
+
   // Return the view model for test purposes.
   const views::ViewModelT<AppListItemView>* view_model_for_test() const {
     return &view_model_;
@@ -636,6 +641,8 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   bool is_ignoring_scroll_events_ = false;
 
   std::unique_ptr<FadeoutLayerDelegate> fadeout_layer_delegate_;
+  // TODO(newcomer): Convert to unique_ptr.
+  AppListItemView* item_with_active_touchable_context_menu_ = nullptr;
 
   // True if the fullscreen app list feature is enabled.
   const bool is_fullscreen_app_list_enabled_;

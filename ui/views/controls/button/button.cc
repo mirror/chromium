@@ -4,6 +4,8 @@
 
 #include "ui/views/controls/button/button.h"
 
+#include <iostream>
+
 #include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/ax_node_data.h"
 
@@ -254,8 +256,10 @@ void Button::OnMouseCaptureLost() {
 }
 
 void Button::OnMouseEntered(const ui::MouseEvent& event) {
-  if (state_ != STATE_DISABLED)
+  if (state_ != STATE_DISABLED) {
     SetState(STATE_HOVERED);
+    LOG(ERROR) << "Hovered!";
+  }
 }
 
 void Button::OnMouseExited(const ui::MouseEvent& event) {
@@ -492,6 +496,7 @@ void Button::NotifyClick(const ui::Event& event) {
     AnimateInkDrop(InkDropState::ACTION_TRIGGERED,
                    ui::LocatedEvent::FromIfValid(&event));
   }
+  std::cout << "Button Clicked!!------------------------------" << std::endl;
   // We can be called when there is no listener, in cases like double clicks on
   // menu buttons etc.
   if (listener_)

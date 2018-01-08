@@ -49,6 +49,7 @@
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/menu/menu_model_adapter.h"
 #include "ui/views/controls/menu/menu_runner.h"
+#include "ui/views/controls/menu/touchable_menu_root_view.h"
 #include "ui/views/focus/focus_search.h"
 #include "ui/views/view_model.h"
 #include "ui/views/view_model_utils.h"
@@ -1871,6 +1872,16 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
                          views::InkDrop* ink_drop) {
   menu_model_ = std::move(menu_model);
 
+  if (app_list::features::IsTouchableAppContextMenuEnabled()) {
+    if (touchable_menu_root_view_)
+      touchable_menu_root_view_->GetWidget()->CloseNow();
+
+    touchable_menu_root_view_ = new views::TouchableMenuRootView( menu_model_.get(), source);
+    views::BubbleDialogDelegateView::CreateBubble(touchable_menu_root_view_)
+        ->Show();
+    return;
+  }
+
   closing_event_time_ = base::TimeTicks();
   int run_types = 0;
   if (context_menu)
@@ -1890,7 +1901,6 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
 
   views::MenuAnchorPosition menu_alignment = views::MENU_ANCHOR_TOPLEFT;
   gfx::Rect anchor = gfx::Rect(click_point, gfx::Size());
-
   if (!context_menu) {
     DCHECK(source) << "Application lists require a source button view.";
     // Application lists use a bubble.

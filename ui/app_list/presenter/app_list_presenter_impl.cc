@@ -4,6 +4,8 @@
 
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 
+#include <iostream>
+
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "ui/app_list/app_list_constants.h"
@@ -257,6 +259,12 @@ void AppListPresenterImpl::OnWindowFocused(aura::Window* gained_focus,
     if (applist_container->Contains(lost_focus) &&
         (!gained_focus || !applist_container->Contains(gained_focus)) &&
         !switches::ShouldNotDismissOnBlur()) {
+      std::cout << "About to Dismiss AppListView because the focus switched "
+                   "between windows."
+                << std::endl;
+      std::cout << "lost focus: " << lost_focus->GetName() << std::endl;
+      std::cout << "Gained focus? " << gained_focus << std::endl;
+      // Don't close when the popup loses focus.
       Dismiss();
     }
   }
@@ -271,6 +279,10 @@ void AppListPresenterImpl::OnWindowBoundsChanged(
     ui::PropertyChangeReason reason) {
   if (presenter_delegate_)
     presenter_delegate_->UpdateBounds();
+}
+
+void AppListPresenterImpl::OnWindowAdded(aura::Window* window) {
+  // save it if it's the context menu?
 }
 
 ////////////////////////////////////////////////////////////////////////////////

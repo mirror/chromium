@@ -14,6 +14,8 @@
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/common/context_menu_params.h"
+#include "ui/app_list/app_list_features.h"
+#include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace app_list {
@@ -39,8 +41,9 @@ ExtensionAppContextMenu::ExtensionAppContextMenu(
     Profile* profile,
     const std::string& app_id,
     AppListControllerDelegate* controller)
-    : AppContextMenu(delegate, profile, app_id, controller) {
-}
+    : AppContextMenu(delegate, profile, app_id, controller),
+      is_touchable_app_context_menu_enabled_(
+          app_list::features::IsTouchableAppContextMenuEnabled()) {}
 
 ExtensionAppContextMenu::~ExtensionAppContextMenu() {
 }
@@ -56,30 +59,53 @@ ui::MenuModel* ExtensionAppContextMenu::GetMenuModel() {
 
 void ExtensionAppContextMenu::BuildMenu(ui::SimpleMenuModel* menu_model) {
   if (app_id() == extension_misc::kChromeAppId) {
-    menu_model->AddItemWithStringId(
-        MENU_NEW_WINDOW,
-        IDS_APP_LIST_NEW_WINDOW);
+    // if (is_touchable_app_context_menu_enabled_) {
+    // menu_model->AddButtonWithStringId(MENU_NEW_WINDOW,
+    //                                 IDS_APP_LIST_NEW_WINDOW,
+    //                               app_list::kIcGoogleBlackIcon);
+    //} else {
+    menu_model->AddItemWithStringId(MENU_NEW_WINDOW, IDS_APP_LIST_NEW_WINDOW);
+    //}
     if (!profile()->IsOffTheRecord()) {
-      menu_model->AddItemWithStringId(
-          MENU_NEW_INCOGNITO_WINDOW,
-          IDS_APP_LIST_NEW_INCOGNITO_WINDOW);
+      // if (is_touchable_app_context_menu_enabled_) {
+      //  menu_model->AddButtonWithStringId(MENU_NEW_INCOGNITO_WINDOW,
+      //                                     IDS_APP_LIST_NEW_INCOGNITO_WINDOW,
+      //                                    app_list::kIcGoogleBlackIcon);
+      // } else {
+      menu_model->AddItemWithStringId(MENU_NEW_INCOGNITO_WINDOW,
+                                      IDS_APP_LIST_NEW_INCOGNITO_WINDOW);
+      // }
     }
     if (controller()->CanDoShowAppInfoFlow()) {
+      // if (is_touchable_app_context_menu_enabled_) {
+      // menu_model->AddButtonWithStringId(SHOW_APP_INFO,
+      //                                 IDS_APP_CONTEXT_MENU_SHOW_INFO,
+      //                                app_list::kIcGoogleBlackIcon);
+      // } else {
       menu_model->AddItemWithStringId(SHOW_APP_INFO,
                                       IDS_APP_CONTEXT_MENU_SHOW_INFO);
+      //}
     }
   } else {
     extension_menu_items_.reset(new extensions::ContextMenuMatcher(
-        profile(), this, menu_model,
-        base::Bind(MenuItemHasLauncherContext)));
+        profile(), this, menu_model, base::Bind(MenuItemHasLauncherContext)));
+
+    //  const bool is_tacme =
+    //  app_list::features::IsTouchableAppContextMenuEnabled();
 
     // First, add the primary actions.
-    if (!is_platform_app_)
+    if (!is_platform_app_) {
+      // if (is_tacme)
+      // menu_model->AddButton(LAUNCH_NEW, base::string16(),
+      //  app_list::kIcGoogleBlackIcon);
+      // else
       menu_model->AddItem(LAUNCH_NEW, base::string16());
+    }
 
     // Create default items.
     AppContextMenu::BuildMenu(menu_model);
-    menu_model->AddSeparator(ui::NORMAL_SEPARATOR);
+    menu_model->AddSeparator(/*is_tacme ? ui::VERTICAL_SEPARATOR
+                                      : */ ui::NORMAL_SEPARATOR);
 
     if (!is_platform_app_) {
       // When bookmark apps are enabled, hosted apps can only toggle between
