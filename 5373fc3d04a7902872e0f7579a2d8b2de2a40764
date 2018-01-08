@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f09a6263_6b9fcbf2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/worker-timeout.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1257330
+      },
+      "writtenOn": "2018-01-08T15:28:00Z",
+      "side": 1,
+      "message": "This is not a great approach, IMO. Can we use a .worker.js test? See http://web-platform-tests.org/writing-tests/testharness.html#standalone-workers-tests",
+      "revId": "5373fc3d04a7902872e0f7579a2d8b2de2a40764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
