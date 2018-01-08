@@ -28,6 +28,7 @@
 #include "net/nqe/network_quality_estimator_test_util.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
 #include "net/spdy/core/spdy_protocol.h"
@@ -191,7 +192,7 @@ class HttpProxyClientSocketPoolTest
     return CreateParams(false, proxy_delegate);
   }
 
-  MockClientSocketFactory* socket_factory() {
+  MockTaggingClientSocketFactory* socket_factory() {
     return session_deps_.socket_factory.get();
   }
 
@@ -270,7 +271,7 @@ TEST_P(HttpProxyClientSocketPoolTest, NoTunnel) {
 
   std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
   int rv = handle_.Init("a", CreateNoTunnelParams(proxy_delegate.get()), LOW,
-                        ClientSocketPool::RespectLimits::ENABLED,
+                        SocketTag(), ClientSocketPool::RespectLimits::ENABLED,
                         CompletionCallback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsOk());
   EXPECT_TRUE(handle_.is_initialized());
@@ -292,7 +293,7 @@ TEST_P(HttpProxyClientSocketPoolTest, NoTunnel) {
 TEST_P(HttpProxyClientSocketPoolTest, SetSocketRequestPriorityOnInit) {
   Initialize(NULL, 0, NULL, 0, NULL, 0, NULL, 0);
   EXPECT_EQ(
-      OK, handle_.Init("a", CreateNoTunnelParams(NULL), HIGHEST,
+      OK, handle_.Init("a", CreateNoTunnelParams(NULL), HIGHEST, SocketTag(),
                        ClientSocketPool::RespectLimits::ENABLED,
                        CompletionCallback(), pool_.get(), NetLogWithSource()));
   EXPECT_EQ(HIGHEST, GetLastTransportRequestPriority());
@@ -332,7 +333,7 @@ TEST_P(HttpProxyClientSocketPoolTest, NeedAuth) {
              spdy_reads, arraysize(spdy_reads), spdy_writes,
              arraysize(spdy_writes));
 
-  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
+  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW, SocketTag(),
                         ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -382,7 +383,7 @@ TEST_P(HttpProxyClientSocketPoolTest, HaveAuth) {
 
   std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
   int rv = handle_.Init("a", CreateTunnelParams(proxy_delegate.get()), LOW,
-                        ClientSocketPool::RespectLimits::ENABLED,
+                        SocketTag(), ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsOk());
   EXPECT_TRUE(handle_.is_initialized());
@@ -433,7 +434,7 @@ TEST_P(HttpProxyClientSocketPoolTest, AsyncHaveAuth) {
 
   std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
   int rv = handle_.Init("a", CreateTunnelParams(proxy_delegate.get()), LOW,
-                        ClientSocketPool::RespectLimits::ENABLED,
+                        SocketTag(), ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
@@ -470,7 +471,7 @@ TEST_P(HttpProxyClientSocketPoolTest,
 
   EXPECT_EQ(
       ERR_IO_PENDING,
-      handle_.Init("a", CreateTunnelParams(NULL), MEDIUM,
+      handle_.Init("a", CreateTunnelParams(NULL), MEDIUM, SocketTag(),
                    ClientSocketPool::RespectLimits::ENABLED,
                    callback_.callback(), pool_.get(), NetLogWithSource()));
   EXPECT_EQ(MEDIUM, GetLastTransportRequestPriority());
@@ -486,7 +487,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TCPError) {
 
   socket_factory()->AddSocketDataProvider(data_.get());
 
-  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
+  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW, SocketTag(),
                         ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -519,7 +520,7 @@ TEST_P(HttpProxyClientSocketPoolTest, SSLError) {
   }
   socket_factory()->AddSSLSocketDataProvider(ssl_data_.get());
 
-  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
+  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW, SocketTag(),
                         ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -551,7 +552,7 @@ TEST_P(HttpProxyClientSocketPoolTest, SslClientAuth) {
   }
   socket_factory()->AddSSLSocketDataProvider(ssl_data_.get());
 
-  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
+  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW, SocketTag(),
                         ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -594,7 +595,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelUnexpectedClose) {
              arraysize(spdy_writes));
   AddAuthToCache();
 
-  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
+  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW, SocketTag(),
                         ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -634,7 +635,7 @@ TEST_P(HttpProxyClientSocketPoolTest, Tunnel1xxResponse) {
   Initialize(reads, arraysize(reads), writes, arraysize(writes),
              NULL, 0, NULL, 0);
 
-  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
+  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW, SocketTag(),
                         ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -673,7 +674,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelSetupError) {
              arraysize(spdy_writes));
   AddAuthToCache();
 
-  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
+  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW, SocketTag(),
                         ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -730,7 +731,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelSetupRedirect) {
              arraysize(spdy_writes));
   AddAuthToCache();
 
-  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
+  int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW, SocketTag(),
                         ClientSocketPool::RespectLimits::ENABLED,
                         callback_.callback(), pool_.get(), NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -882,5 +883,40 @@ TEST_P(HttpProxyClientSocketPoolTest,
 }
 
 // It would be nice to also test the timeouts in HttpProxyClientSocketPool.
+
+// Test that SocketTag passed into HttpProxyClientSocketPool is applied to
+// returned underlying TCP sockets.
+#if defined(OS_ANDROID)
+TEST_P(HttpProxyClientSocketPoolTest, Tag) {
+  Initialize(NULL, 0, NULL, 0, NULL, 0, NULL, 0);
+  SocketTag tag1(SocketTag::UNSET_UID, 0x12345678);
+  SocketTag tag2(getuid(), 0x87654321);
+  std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
+
+  // Verify requested socket is tagged properly.
+  int rv = handle_.Init("a", CreateNoTunnelParams(proxy_delegate.get()), LOW,
+                        tag1, ClientSocketPool::RespectLimits::ENABLED,
+                        CompletionCallback(), pool_.get(), NetLogWithSource());
+  EXPECT_THAT(rv, IsOk());
+  EXPECT_TRUE(handle_.is_initialized());
+  ASSERT_TRUE(handle_.socket());
+  EXPECT_TRUE(handle_.socket()->IsConnected());
+  EXPECT_TRUE(socket_factory()->GetLastProducedSocket()->tag() == tag1);
+
+  // Verify reused socket is retagged properly.
+  StreamSocket* socket = handle_.socket();
+  handle_.Reset();
+  rv = handle_.Init("a", CreateNoTunnelParams(proxy_delegate.get()), LOW, tag2,
+                    ClientSocketPool::RespectLimits::ENABLED,
+                    CompletionCallback(), pool_.get(), NetLogWithSource());
+  EXPECT_THAT(rv, IsOk());
+  EXPECT_TRUE(handle_.socket());
+  EXPECT_TRUE(handle_.socket()->IsConnected());
+  EXPECT_TRUE(handle_.socket() == socket);
+  EXPECT_TRUE(socket_factory()->GetLastProducedSocket()->tag() == tag2);
+  handle_.socket()->Disconnect();
+  handle_.Reset();
+}
+#endif
 
 }  // namespace net
