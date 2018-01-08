@@ -51,6 +51,24 @@
       "revId": "d5dd3aa3d2b9e38b8ca7345db7c6bc3696876759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45186559_1384ea50",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIterator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-08T13:19:51Z",
+      "side": 1,
+      "message": "Ah, understood, thank you.\n\nThe |num_grapheme_clusters| is always 1, as far as the current usage, correct? Then I would suggest removing it, and name such as:\n  unsigned LengthOfGraphemeCluster(StringView);\nThe term \"Characters\" is ambiguous in this context, and isn\u0027t clear whether it means grapheme cluster, code unit, or code point.\n\nWe can extend it to support |num_grapheme_clusters| when we need.",
+      "parentUuid": "73561601_6321627f",
+      "revId": "d5dd3aa3d2b9e38b8ca7345db7c6bc3696876759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
