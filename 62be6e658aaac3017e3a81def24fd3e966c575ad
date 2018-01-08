@@ -46,6 +46,30 @@
       "revId": "62be6e658aaac3017e3a81def24fd3e966c575ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc205cd9_8dbae3f8",
+        "filename": "device/u2f/sign_response_data_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-08T17:04:09Z",
+      "side": 1,
+      "message": "Sounds good. Presumably, there are no interesting testcases that can be used as seed corpus? If there are any, please upload them and specify via seed_corpus attribute: https://chromium.googlesource.com/chromium/src/+/master/testing/libfuzzer/efficient_fuzzer.md#Seed-Corpus",
+      "parentUuid": "ea053fe1_aed663b2",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "62be6e658aaac3017e3a81def24fd3e966c575ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
