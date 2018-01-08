@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f1da38_aa04a798",
+        "filename": "chrome/browser/repost_form_warning_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-08T19:44:32Z",
+      "side": 1,
+      "message": "Can you add an override dtor when there methods that override?",
+      "revId": "d48c6fc88875dc8181532d25c07f0d04152751ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
