@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1634828_ffbe16de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-08T16:40:36Z",
+      "side": 1,
+      "message": "It\u0027s standard to put the CL description *before* the Bug and Change-Id lines. (With a one-line gap before and after the commit description).",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "835f67abaffcb0c585883b68985331a3373773ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6e1593_1ec28a06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-08T16:40:36Z",
+      "side": 1,
+      "message": "Notification channels themselves have only existed since Android O so I\u0027d drop the \u0027starting with O\u0027. Instead, something like: \u0027Note, an optional description field exists for notification channels.\u0027",
+      "revId": "835f67abaffcb0c585883b68985331a3373773ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81576e53_69930dd9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-08T16:40:36Z",
+      "side": 1,
+      "message": "That sample code does indeed contain an example usage of setDescription, but it also sets a bunch of other properties, so I\u0027d say the api reference for setDescription itself would be the most useful thing to link here ( https://developer.android.com/reference/android/app/NotificationChannel.html#setDescription(java.lang.String) )",
+      "range": {
+        "startLine": 68,
+        "startChar": 49,
+        "endLine": 68,
+        "endChar": 158
+      },
+      "revId": "835f67abaffcb0c585883b68985331a3373773ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
