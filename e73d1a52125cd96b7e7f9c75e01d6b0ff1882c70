@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be08e07_72c4ab8d",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-08T21:15:49Z",
+      "side": 1,
+      "message": "const LocalSurfaceId\u0026",
+      "revId": "e73d1a52125cd96b7e7f9c75e01d6b0ff1882c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421c7944_fabd80f2",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-08T21:15:49Z",
+      "side": 1,
+      "message": "const LocalSurfaceId\u0026 GenerateId()",
+      "revId": "e73d1a52125cd96b7e7f9c75e01d6b0ff1882c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f948a13d_4b24a9b6",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-08T21:15:49Z",
+      "side": 1,
+      "message": "const LocalSurfaceId\u0026 last_generated_id() const { return last_generated_id_; }",
+      "revId": "e73d1a52125cd96b7e7f9c75e01d6b0ff1882c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
