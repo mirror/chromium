@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71538345_7abc39bb",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85fae16b_1d645009",
+      "revId": "cb5489094b1544546aeb0681a0d07fa86565a947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10d0c9b8_4b85b8db",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-08T22:39:29Z",
       "side": 1,
       "message": "nit: currentWindow?",
+      "revId": "cb5489094b1544546aeb0681a0d07fa86565a947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6494aca_5f0976d4",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10d0c9b8_4b85b8db",
       "revId": "cb5489094b1544546aeb0681a0d07fa86565a947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d87995f7_edf8d314",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfefe93e_10cdad64",
+      "revId": "cb5489094b1544546aeb0681a0d07fa86565a947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9cbd9_603fa8f1",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7adc1f60_6f8d54c9",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9cbd9_603fa8f1",
+      "revId": "cb5489094b1544546aeb0681a0d07fa86565a947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cc956cf_5b7c78d0",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-08T22:39:29Z",
       "side": 1,
       "message": "nit: maybe |focusedWindow|",
+      "revId": "cb5489094b1544546aeb0681a0d07fa86565a947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f009c3a3_0c5317d9",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T23:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cc956cf_5b7c78d0",
       "revId": "cb5489094b1544546aeb0681a0d07fa86565a947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
