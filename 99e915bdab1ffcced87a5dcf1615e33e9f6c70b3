@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "552b9079_68847b61",
+        "filename": "components/browsing_data/core/counters/autofill_counter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-08T09:26:35Z",
+      "side": 1,
+      "message": "please update \"base::Time::Max()\" to \"end\"",
+      "revId": "99e915bdab1ffcced87a5dcf1615e33e9f6c70b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878f7f5c_46b6335a",
+        "filename": "components/browsing_data/core/counters/autofill_counter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-08T09:26:35Z",
+      "side": 1,
+      "message": "here as well",
+      "revId": "99e915bdab1ffcced87a5dcf1615e33e9f6c70b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
