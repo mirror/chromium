@@ -46,6 +46,30 @@
       "revId": "89dad63804922ea94f754e5487dc90bb6365a2d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6ba5a6_4b79d600",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-01-08T20:01:27Z",
+      "side": 1,
+      "message": "Ugggghhh my least favourite thing in the world is regex functions that expect the whole string to conform, there\u0027s no excuse for it (and the docs here don\u0027t even remotely explain this unless you go two levels of indirection away and read the explanation in Matcher; String and Pattern fail to mention this afaict). So, yeah, that\u0027s fine.\n\nI don\u0027t think a word boundary is strictly correct here either because \u0027-\u0027 (amongst other things) is a non-word character. It seems like \u0027;[\\t ]*Domain\u0027 should work, unless I\u0027m not thinking of something? You always have a semicolon, I think, since you have to have the name\u003dvalue first before the options?",
+      "parentUuid": "0d29b71c_2a4ee4e4",
+      "range": {
+        "startLine": 220,
+        "startChar": 46,
+        "endLine": 220,
+        "endChar": 47
+      },
+      "revId": "89dad63804922ea94f754e5487dc90bb6365a2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
