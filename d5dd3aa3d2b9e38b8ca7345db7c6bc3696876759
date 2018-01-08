@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a8a53f_b443eeb8",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-08T09:15:12Z",
+      "side": 1,
+      "message": "It looks like we create substring several times. Suggestion:\na. Make the function to accept StringView instead of String.\nb. Instantiate NonSharedCharacterBreakIterator and use it to iterate.\nWhich ever is fine, probably b is cleaner but may need larger change.",
+      "revId": "d5dd3aa3d2b9e38b8ca7345db7c6bc3696876759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa1c86a_fb33361e",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIterator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-08T09:15:12Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same function as |NumGraphemeClusters()|? If different, can you explain how this is different?",
+      "revId": "d5dd3aa3d2b9e38b8ca7345db7c6bc3696876759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
