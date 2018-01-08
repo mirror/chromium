@@ -543,7 +543,7 @@ void TaskManagerImpl::Refresh() {
     auto callback = base::Bind(&TaskManagerImpl::OnReceivedMemoryDump,
                                weak_ptr_factory_.GetWeakPtr());
     memory_instrumentation::MemoryInstrumentation::GetInstance()
-        ->RequestGlobalDump(std::move(callback));
+        ->RequestGlobalDump(std::vector<std::string>(), std::move(callback));
   }
 
   for (auto& groups_itr : task_groups_by_proc_id_) {

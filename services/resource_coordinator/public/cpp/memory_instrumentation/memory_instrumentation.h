@@ -38,13 +38,17 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT MemoryInstrumentation {
                              const std::string& service_name);
   static MemoryInstrumentation* GetInstance();
 
-  // Requests a global memory dump.
+  // Requests a global memory dump with |allocator_dump_names| indicating
+  // the name of allocator dumps in which the consumer is interested. If
+  // |allocator_dump_names| is empty, no dumps will be returned.
   // Returns asynchronously, via the callback argument:
   //  (true, global_dump) if succeeded;
-  //  (false, nullptr) if failed.
+  //  (false, global_dump) if failed, with global_dump being non-null
+  //  but missing data.
   // The callback (if not null), will be posted on the same thread of the
   // RequestGlobalDump() call.
-  void RequestGlobalDump(RequestGlobalDumpCallback);
+  void RequestGlobalDump(const std::vector<std::string>& allocator_dump_names,
+                         RequestGlobalDumpCallback);
 
   // Requests a global memory dump.
   // Returns asynchronously, via the callback argument, the global memory
