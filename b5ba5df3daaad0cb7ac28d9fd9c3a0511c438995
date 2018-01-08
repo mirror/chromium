@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1816a6c_d6c15b27",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-08T18:56:53Z",
+      "side": 1,
+      "message": "This just extracts what was in MakeCredential so GetAssertion can call it, too. https://chromium-review.googlesource.com/c/chromium/src/+/775630 is going to spiff up the effective domain and rpId validation.",
+      "revId": "b5ba5df3daaad0cb7ac28d9fd9c3a0511c438995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
