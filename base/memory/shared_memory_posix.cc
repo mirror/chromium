@@ -11,6 +11,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "base/allocator/partition_allocator/page_allocator.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
@@ -283,10 +284,17 @@ bool SharedMemory::MapAt(off_t offset, size_t bytes) {
   }
 #endif
 
-  memory_ = mmap(nullptr, bytes, PROT_READ | (read_only_ ? 0 : PROT_WRITE),
-                 MAP_SHARED, shm_.GetHandle(), offset);
+  // Try to map the shared memory. On the first failure, release any reserved
+  // address space for a single retry.
+  for (int i = 0; i < 2; ++i) {
+    memory_ = mmap(nullptr, bytes, PROT_READ | (read_only_ ? 0 : PROT_WRITE),
+                   MAP_SHARED, shm_.GetHandle(), offset);
+    if (memory_ != MAP_FAILED)
+      break;
+    ReleaseReservation();
+  }
 
-  bool mmap_succeeded = memory_ && memory_ != reinterpret_cast<void*>(-1);
+  bool mmap_succeeded = memory_ && memory_ != MAP_FAILED;
   if (mmap_succeeded) {
     mapped_size_ = bytes;
     mapped_id_ = shm_.GetGUID();
