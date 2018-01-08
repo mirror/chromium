@@ -754,8 +754,10 @@ void PageInfoBubbleView::SetPermissionInfo(
   // When a permission is changed, PageInfo::OnSitePermissionChanged()
   // calls this method with updated permissions. However, PermissionSelectorRow
   // will have already updated its state, so it's already reflected in the UI.
-  // In addition, if a permission is set to the default setting, PageInfo
-  // removes it from |permission_info_list|, but the button should remain.
+  // Theoretically, it's possible that a permission that previously was not in
+  // |permission_info_list| is now in |permission_info_list|, but in practice
+  // this probably isn't possible because the Page Info bubble closes on
+  // deactivation, so do nothing here.
   if (permissions_view_->has_children())
     return;
 
