@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "88438e86_4e9e9497",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_characteristic_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-08T22:05:07Z",
+      "side": 1,
+      "message": "See https://crbug.com/622389.\n\nCould you write a test for this? Ideally it would work on all platforms.",
+      "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d28b0bbb_1dcc35e0",
         "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
         "patchSetId": 4
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "That is true, but I am still not quite sure what the semantics of GattServicesDiscovered should be. So I\u0027m very curious what ortuno@ has to say about this. I do agree though that calling GattServicesDiscovered when a new service is added makes intuitive sense and likely simplifies testing. I guess I\u0027m just not quite sure how common this is with real devices, I imagine in the majority of cases the list of services is static and doesn\u0027t change for a given device.\n\nortuno@, what is your take on this? In https://crbug.com/710352 you mention \n\n\u003e Note that a remote device that modifies GATT attributes is not tested or\nexpected to work with this code at this time.\n\nWhat is the expected behavior of GattServicesDiscovered in context of this?",
       "parentUuid": "d28b0bbb_1dcc35e0",
+      "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035aab5a_77616e8c",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-08T22:05:07Z",
+      "side": 1,
+      "message": "GattServicesDiscovered should be called whenever a discovery procedure finishes. This can happen when we first connect to the peripheral and discover its services or when the peripheral sends a services changed notification and we re-discover its services. This is what happens on Chrome OS, Linux and macOS.\n\nI believe the comment in https://crbug.com/710352 was added by scheib and refers to the Android implementation, where, due to API limitations, we haven\u0027t been able to implement the desired behavior.",
+      "parentUuid": "df600958_f45acc66",
       "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
