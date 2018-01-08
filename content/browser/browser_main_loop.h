@@ -107,6 +107,7 @@ class SpeechRecognitionManagerImpl;
 class StartupTaskRunner;
 class SwapMetricsDriver;
 class TracingControllerImpl;
+class WebRTCInternals;
 struct MainFunctionParams;
 
 #if defined(OS_ANDROID)
@@ -171,6 +172,10 @@ class CONTENT_EXPORT BrowserMainLoop {
     return discardable_shared_memory_manager_.get();
   }
   midi::MidiService* midi_service() const { return midi_service_.get(); }
+
+  WebRTCInternals* webrtc_internals() const {
+    return webrtc_internals_.get();
+  }
 
   bool is_tracing_startup_for_duration() const {
     return is_tracing_startup_for_duration_;
@@ -355,6 +360,8 @@ class CONTENT_EXPORT BrowserMainLoop {
   std::unique_ptr<media::AudioSystem> audio_system_;
 
   std::unique_ptr<midi::MidiService> midi_service_;
+
+  std::unique_ptr<WebRTCInternals> webrtc_internals_;
 
   // Must be deleted on the IO thread.
   std::unique_ptr<SpeechRecognitionManagerImpl> speech_recognition_manager_;

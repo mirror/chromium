@@ -11,7 +11,6 @@
 #include "base/containers/hash_tables.h"
 #include "base/containers/queue.h"
 #include "base/gtest_prod_util.h"
-#include "base/lazy_instance.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/process/process.h"
@@ -36,7 +35,10 @@ class WebRTCInternalsUIObserver;
 class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
                                        public ui::SelectFileDialog::Listener {
  public:
-  static WebRTCInternals* GetInstance();
+  // The default ctor sets |aggregate_updates_ms| to 500ms.
+  WebRTCInternals();
+  WebRTCInternals(int aggregate_updates_ms, bool should_block_power_saving);
+  ~WebRTCInternals() override;
 
   // This method is called when a PeerConnection is created.
   // |render_process_id| is the id of the render process (not OS pid), which is
@@ -110,14 +112,6 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
   int num_open_connections() const { return num_open_connections_; }
 
  protected:
-  // Constructor/Destructor are protected to allow tests to derive from the
-  // class and do per-instance testing without having to use the global
-  // instance.
-  // The default ctor sets |aggregate_updates_ms| to 500ms.
-  WebRTCInternals();
-  WebRTCInternals(int aggregate_updates_ms, bool should_block_power_saving);
-  ~WebRTCInternals() override;
-
   // This allows unit-tests to override to using either a mock, or a locally
   // scoped, version of WebRtcEventLogManager.
   virtual WebRtcEventLogManager* GetWebRtcEventLogManager();

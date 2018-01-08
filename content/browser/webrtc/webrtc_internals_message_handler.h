@@ -25,16 +25,13 @@ class CONTENT_EXPORT WebRTCInternalsMessageHandler
     : public WebUIMessageHandler,
       public WebRTCInternalsUIObserver {
  public:
-  WebRTCInternalsMessageHandler();
+  explicit WebRTCInternalsMessageHandler(WebRTCInternals* webrtc_internals);
   ~WebRTCInternalsMessageHandler() override;
 
   // WebUIMessageHandler implementation.
   void RegisterMessages() override;
 
  protected:
-  // The WebRTCInternals to use. Always WebRTCInternals::GetInstance()
-  // except for testing.
-  explicit WebRTCInternalsMessageHandler(WebRTCInternals* webrtc_internals);
   WebRTCInternals* const webrtc_internals_;
 
  private:

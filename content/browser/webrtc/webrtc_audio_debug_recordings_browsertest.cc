@@ -139,7 +139,8 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
 
   // This fakes the behavior of another open tab with webrtc-internals, and
   // enabling audio debug recordings in that tab.
-  WebRTCInternals::GetInstance()->FileSelected(base_file_path, -1, nullptr);
+  // TODO: !!!
+//  WebRTCInternals::GetInstance()->FileSelected(base_file_path, -1, nullptr);
 
   // Make a call.
   GURL url(embedded_test_server()->GetURL("/media/peerconnection-call.html"));
@@ -147,7 +148,8 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
   ExecuteJavascriptAndWaitForOk("call({video: true, audio: true});");
   ExecuteJavascriptAndWaitForOk("hangup();");
 
-  WebRTCInternals::GetInstance()->DisableAudioDebugRecordings();
+  // TODO: !!!
+//  WebRTCInternals::GetInstance()->DisableAudioDebugRecordings();
 
   // Verify that the expected input audio file exists and contains some data.
   std::vector<base::FilePath> input_files =
@@ -224,8 +226,9 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
 
   // This fakes the behavior of another open tab with webrtc-internals, and
   // enabling audio debug recordings in that tab, then disabling it.
-  WebRTCInternals::GetInstance()->FileSelected(base_file_path, -1, nullptr);
-  WebRTCInternals::GetInstance()->DisableAudioDebugRecordings();
+  // TODO: !!!
+//  WebRTCInternals::GetInstance()->FileSelected(base_file_path, -1, nullptr);
+//  WebRTCInternals::GetInstance()->DisableAudioDebugRecordings();
 
   // Make a call.
   GURL url(embedded_test_server()->GetURL("/media/peerconnection-call.html"));
@@ -283,7 +286,8 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
 
   // This fakes the behavior of another open tab with webrtc-internals, and
   // enabling audio debug recordings in that tab.
-  WebRTCInternals::GetInstance()->FileSelected(base_file_path, -1, nullptr);
+  // TODO: !!!
+//  WebRTCInternals::GetInstance()->FileSelected(base_file_path, -1, nullptr);
 
   // Make the calls.
   GURL url(embedded_test_server()->GetURL("/media/peerconnection-call.html"));
@@ -299,7 +303,8 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
   EXPECT_TRUE(ExecuteScriptAndExtractString(shell2, "hangup();", &result));
   ASSERT_STREQ("OK", result.c_str());
 
-  WebRTCInternals::GetInstance()->DisableAudioDebugRecordings();
+  // TODO: !!!
+//  WebRTCInternals::GetInstance()->DisableAudioDebugRecordings();
 
   int64_t file_size = 0;
 

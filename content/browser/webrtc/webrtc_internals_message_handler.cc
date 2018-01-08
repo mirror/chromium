@@ -15,9 +15,6 @@
 
 namespace content {
 
-WebRTCInternalsMessageHandler::WebRTCInternalsMessageHandler()
-    : WebRTCInternalsMessageHandler(WebRTCInternals::GetInstance()) {}
-
 WebRTCInternalsMessageHandler::WebRTCInternalsMessageHandler(
     WebRTCInternals* webrtc_internals)
     : webrtc_internals_(webrtc_internals) {

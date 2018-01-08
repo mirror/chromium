@@ -40,9 +40,6 @@ namespace content {
 
 namespace {
 
-base::LazyInstance<WebRTCInternals>::Leaky g_webrtc_internals =
-    LAZY_INSTANCE_INITIALIZER;
-
 // Makes sure that |dict| has a ListValue under path "log".
 base::ListValue* EnsureLogList(base::DictionaryValue* dict) {
   base::ListValue* log = nullptr;
@@ -59,29 +56,6 @@ void FreeLogList(base::Value* value) {
 }
 
 }  // namespace
-
-WebRTCInternals::PendingUpdate::PendingUpdate(
-    const char* command,
-    std::unique_ptr<base::Value> value)
-    : command_(command), value_(std::move(value)) {}
-
-WebRTCInternals::PendingUpdate::PendingUpdate(PendingUpdate&& other)
-    : command_(other.command_),
-      value_(std::move(other.value_)) {}
-
-WebRTCInternals::PendingUpdate::~PendingUpdate() {
-  DCHECK(thread_checker_.CalledOnValidThread());
-}
-
-const char* WebRTCInternals::PendingUpdate::command() const {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  return command_;
-}
-
-const base::Value* WebRTCInternals::PendingUpdate::value() const {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  return value_.get();
-}
 
 WebRTCInternals::WebRTCInternals() : WebRTCInternals(500, true) {}
 
@@ -120,8 +94,27 @@ WebRTCInternals::WebRTCInternals(int aggregate_updates_ms,
 WebRTCInternals::~WebRTCInternals() {
 }
 
-WebRTCInternals* WebRTCInternals::GetInstance() {
-  return g_webrtc_internals.Pointer();
+WebRTCInternals::PendingUpdate::PendingUpdate(
+    const char* command,
+    std::unique_ptr<base::Value> value)
+    : command_(command), value_(std::move(value)) {}
+
+WebRTCInternals::PendingUpdate::PendingUpdate(PendingUpdate&& other)
+    : command_(other.command_),
+      value_(std::move(other.value_)) {}
+
+WebRTCInternals::PendingUpdate::~PendingUpdate() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+}
+
+const char* WebRTCInternals::PendingUpdate::command() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return command_;
+}
+
+const base::Value* WebRTCInternals::PendingUpdate::value() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return value_.get();
 }
 
 WebRtcEventLogManager* WebRTCInternals::GetWebRtcEventLogManager() {

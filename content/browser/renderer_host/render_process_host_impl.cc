@@ -1345,7 +1345,8 @@ RenderProcessHostImpl::RenderProcessHostImpl(
   // construction at a potentially illegal time.
   // TODO(eladalon): Remove the necessity for this; it is brittle.
   // https://crbug.com/792847
-  WebRTCInternals::GetInstance();
+  // TODO: !!!
+//  WebRTCInternals::GetInstance();
 #endif
 
   widget_helper_ = new RenderWidgetHelper();
@@ -3936,10 +3937,11 @@ void RenderProcessHostImpl::OnProcessLaunched() {
   GetProcessResourceCoordinator()->SetPID(base::GetProcId(GetHandle()));
 
 #if BUILDFLAG(ENABLE_WEBRTC)
-  if (WebRTCInternals::GetInstance()->IsAudioDebugRecordingsEnabled()) {
-    EnableAudioDebugRecordings(
-        WebRTCInternals::GetInstance()->GetAudioDebugRecordingsFilePath());
-  }
+  // TODO: !!!
+//  if (WebRTCInternals::GetInstance()->IsAudioDebugRecordingsEnabled()) {
+//    EnableAudioDebugRecordings(
+//        WebRTCInternals::GetInstance()->GetAudioDebugRecordingsFilePath());
+//  }
 #endif
 }
 
@@ -4071,11 +4073,12 @@ void RenderProcessHostImpl::RegisterAecDumpConsumerOnUIThread(int id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   aec_dump_consumers_.push_back(id);
 
-  if (WebRTCInternals::GetInstance()->IsAudioDebugRecordingsEnabled()) {
-    base::FilePath file_with_extensions = GetAecDumpFilePathWithExtensions(
-        WebRTCInternals::GetInstance()->GetAudioDebugRecordingsFilePath());
-    EnableAecDumpForId(file_with_extensions, id);
-  }
+  // TODO: !!!
+//  if (WebRTCInternals::GetInstance()->IsAudioDebugRecordingsEnabled()) {
+//    base::FilePath file_with_extensions = GetAecDumpFilePathWithExtensions(
+//        WebRTCInternals::GetInstance()->GetAudioDebugRecordingsFilePath());
+//    EnableAecDumpForId(file_with_extensions, id);
+//  }
 }
 
 void RenderProcessHostImpl::UnregisterAecDumpConsumerOnUIThread(int id) {
