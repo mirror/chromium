@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "339fabf3_bcba1d1c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-08T10:42:35Z",
+      "side": 1,
+      "message": "then just inline this",
+      "revId": "6d6aaaf0eac6c953adb15759a0009552b1d5779d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f75ded8_2cc6f9aa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-08T10:42:35Z",
+      "side": 1,
+      "message": "any reason this is moved up?",
+      "revId": "6d6aaaf0eac6c953adb15759a0009552b1d5779d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
