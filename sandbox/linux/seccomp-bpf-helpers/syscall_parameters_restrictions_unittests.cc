@@ -86,6 +86,17 @@ BPF_TEST_C(ParameterRestrictions,
   CheckClock(CLOCK_REALTIME);
   CheckClock(CLOCK_REALTIME_COARSE);
   CheckClock(CLOCK_THREAD_CPUTIME_ID);
+#if defined(OS_ANDROID)
+  // Adapted from:
+  // http://elixir.free-electrons.com/linux/latest/source/include/linux/posix-timers.h
+  auto MAKE_PROCESS_CPUCLOCK = [](pid_t pid, clockid_t clock) -> clockid_t {
+    return static_cast<clockid_t>(~static_cast<uint32_t>(pid) << 3) | clock;
+  };
+  const pid_t kInitPID = 1;
+  const clockid_t kInitCPUClockID =
+      MAKE_PROCESS_CPUCLOCK(kInitPID, 2 /* CPUCLOCK_SCHED */);
+  CheckClock(kInitCPUClockID);
+#endif
 }
 
 BPF_DEATH_TEST_C(ParameterRestrictions,
