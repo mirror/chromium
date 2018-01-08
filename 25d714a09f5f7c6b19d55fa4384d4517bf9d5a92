@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93607f14_de297513",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-08T18:59:18Z",
+      "side": 1,
+      "message": "Should there be a state PENDING_NO_DESCRIPTION or PENDING_REASON_UNKNOWN (something like that) for the cases where !OfflinePageBridge.isOfflinePagesDescriptivePendingStatusEnabled() and you do not want to include a pending reason in the notification?",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
