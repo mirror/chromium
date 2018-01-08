@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c437905_9620f69f",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T19:47:41Z",
+      "side": 1,
+      "message": "Done.  This was just copied from old code.",
+      "parentUuid": "7ff0641a_22971505",
+      "range": {
+        "startLine": 879,
+        "startChar": 5,
+        "endLine": 879,
+        "endChar": 15
+      },
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2370ee5_b6ddce58",
         "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "00c30b061584e0316b54553f4169dac011f597a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4424d198_7a4f4c02",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T19:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2370ee5_b6ddce58",
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9396e67e_4ebb8a5a",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T19:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e213320b_9edbe1c6",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d8d992_de4f36e0",
         "filename": "extensions/browser/api/web_request/web_request_api.cc",
         "patchSetId": 2
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "1da45d0a_9232bfb5",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T19:47:41Z",
+      "side": 1,
+      "message": "Ack.  Not going to change this because it requires auditing hundreds of URLFetcher consumers, and with the network service stuff, it will all end up being completely rewritten, anyways.",
+      "parentUuid": "f1d8d992_de4f36e0",
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b69722db_20f6fdd0",
         "filename": "net/test/embedded_test_server/default_handlers.cc",
         "patchSetId": 2
@@ -93,6 +177,30 @@
       "writtenOn": "2018-01-06T00:59:43Z",
       "side": 1,
       "message": "PROXY %s",
+      "range": {
+        "startLine": 680,
+        "startChar": 15,
+        "endLine": 680,
+        "endChar": 17
+      },
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f331f4a_6a62bd2d",
+        "filename": "net/test/embedded_test_server/default_handlers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T19:47:41Z",
+      "side": 1,
+      "message": "Erm...Oops.  Done, thanks for catching that!",
+      "parentUuid": "b69722db_20f6fdd0",
       "range": {
         "startLine": 680,
         "startChar": 15,
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "1ad02e0f_ebe07930",
+        "filename": "net/test/embedded_test_server/default_handlers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T19:47:41Z",
+      "side": 1,
+      "message": "That doesn\u0027t work.  I can\u0027t change it to returning a BasicHttpResponse since this is bound and passed as a EmbeddedTestServer::HandleRequestCallback.  I can\u0027t just return the http_response because the types don\u0027t match.\n\nI believe either clang or presubmit checks whine about return \"std::move(...)\" in cases where it can just be removed.",
+      "parentUuid": "5c012a8e_ef79d378",
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "970cd3f8_f7b0b85b",
         "filename": "net/url_request/url_request.h",
         "patchSetId": 2
@@ -133,6 +259,24 @@
       "writtenOn": "2018-01-06T00:59:43Z",
       "side": 1,
       "message": "What about using SetUserData() ?\n\nIt is uglier to retrieve the value, but at least we won\u0027t pollute URLRequest\u0027s interface with this one-off attribute.",
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b531a0_caf6c16b",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T19:47:41Z",
+      "side": 1,
+      "message": "I considered that, but decided against it.  SetUserData() is a way for external consumers to associate data with a URLRequest.  In this case, the consumer is ProxyScriptFetcher, which is an internal consumer, and this makes it part of the official API.  I also prefer consumers depending a url_request.h rather than net/proxy/proxy_script_fetcher_impl.h (Or net/proxy/proxy_script_fetcher.h).  I also want to get away from SetUserData().  With the advent of the network service, I don\u0027t think we\u0027ll need to support than any more (Though, admittedly, at that point, we can probably get rid of this value, anyways - and having it here also means that my TODO is less likely to be overlooked.  By me, at least)",
+      "parentUuid": "970cd3f8_f7b0b85b",
       "revId": "00c30b061584e0316b54553f4169dac011f597a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -159,6 +303,30 @@
       "revId": "00c30b061584e0316b54553f4169dac011f597a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a886af_db832891",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-08T19:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c66726a_e1d44740",
+      "range": {
+        "startLine": 901,
+        "startChar": 37,
+        "endLine": 901,
+        "endChar": 47
+      },
+      "revId": "00c30b061584e0316b54553f4169dac011f597a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
