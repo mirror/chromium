@@ -46,6 +46,30 @@
       "revId": "c5d05169b4a1a134bf3e6bc3467a14679806d8f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a65504a_0cf37c7e",
+        "filename": "third_party/protobuf/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1149279
+      },
+      "writtenOn": "2018-01-08T21:31:08Z",
+      "side": 1,
+      "message": "OK, this makes sense. I don\u0027t know of any GN way to make it impossible, however I don\u0027t consider it very risky -- it would require significant effort to make it even compile, due to symbol conflicts during linking, and in any case, I also hope someone would notice the binary size bump. My concern here is rather to save my colleagues from doing useless work in case they operate under incorrect assumption that they can use full protobuf in Chromium :).",
+      "parentUuid": "f77b8bfa_7cce2ba3",
+      "range": {
+        "startLine": 231,
+        "startChar": 27,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "c5d05169b4a1a134bf3e6bc3467a14679806d8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
