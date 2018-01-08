@@ -124,6 +124,24 @@
       "revId": "71bb9274dcc99666657d402dea9f661558094a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5fb319e_1a10c463",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-08T17:25:36Z",
+      "side": 1,
+      "message": "I prefer handling that in a follow-up. There are some potentially tricky edge cases around unique origins, and unless those end up just be handled entirely in the renderer, checks here would need to be special cased for unique origins.",
+      "parentUuid": "98b4093a_4712626c",
+      "revId": "71bb9274dcc99666657d402dea9f661558094a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
