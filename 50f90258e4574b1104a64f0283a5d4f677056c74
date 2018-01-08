@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b27f056_bb65fc33",
+        "filename": "ash/app_list/model/search/search_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T22:30:43Z",
+      "side": 1,
+      "message": "Can we pass in the results vector by value and do a std::move instead of duplicating?",
+      "range": {
+        "startLine": 86,
+        "startChar": 32,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce674e4_99c8b25b",
+        "filename": "chrome/browser/ui/app_list/search/mixer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T22:30:43Z",
+      "side": 1,
+      "message": "In existing code, the results are going to be sorted by sort_data.score. In this CL, SearchModel::PublishResults uses the relevance of the results. We should put sort_data.score into the duplicated results here to keep existing behavior.",
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55798649_972536e7",
+        "filename": "chrome/browser/ui/app_list/search/mixer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T22:30:43Z",
+      "side": 1,
+      "message": "nit: const pointer\ni.e.\n  AppListModelUpdater* const modeul_updater_;",
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d30e43_e428886a",
+        "filename": "chrome/browser/ui/app_list/search/mixer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T22:30:43Z",
+      "side": 1,
+      "message": "Can we get rid of this?",
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a351357e_a1d765bb",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T22:30:43Z",
+      "side": 1,
+      "message": "This can be search_results_ \u003d std::move(results) when we change the interface to pass results vector by value.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 51
+      },
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd021c6_b2b9a909",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T22:30:43Z",
+      "side": 1,
+      "message": "nit: SearchResults -\u003e search_results\n\nand const method",
+      "range": {
+        "startLine": 52,
+        "startChar": 62,
+        "endLine": 52,
+        "endChar": 75
+      },
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
