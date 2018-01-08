@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f28bb4a1_ca513c3f",
+        "filename": "net/tools/ct_log_list/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-08T17:00:16Z",
+      "side": 1,
+      "message": "I think the existing code may be bugged / not working.\n\nBased on reading https://cs.chromium.org/chromium/tools/depot_tools/presubmit_support.py?rcl\u003ddf27bf6f0034ac718433f8c745f9229514aca960\u0026l\u003d496 , I think it was supposed to be input_api.change.LocalPaths() - does that match your read?\n\nNamely, input_api.LocalPaths() depends on input_api.AffectedFiles(), which filters out only files in the presubmit directory (meaning it misses the log_list.json change)\n\nBut input_api.change.LocalPaths() uses input_api.change.AffectedFiles, which would pick up the log_list.json\n\nLooking at other PRESUBMIT.py examples, it seems they use the input_api.os_path.normpath() call to normalize the path, such as\n\nfiles \u003d (input_api.os_path.normpath(x) for x in (\u0027/net/tools\u0027 ...))\nif not any(f in input_api.change.LocalPaths() for f in files):",
+      "revId": "041884cabbb501d8907f74cf55813c382a2a8e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
