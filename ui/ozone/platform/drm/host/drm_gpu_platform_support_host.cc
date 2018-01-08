@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/ozone/common/gpu/ozone_gpu_message_params.h"
 #include "ui/ozone/common/gpu/ozone_gpu_messages.h"
@@ -83,7 +84,14 @@ void CursorIPC::Send(IPC::Message* message) {
 }  // namespace
 
 DrmGpuPlatformSupportHost::DrmGpuPlatformSupportHost(DrmCursor* cursor)
-    : cursor_(cursor), weak_ptr_factory_(this) {}
+    : ui_runner_(base::ThreadTaskRunnerHandle::IsSet()
+                     ? base::ThreadTaskRunnerHandle::Get()
+                     : nullptr),
+      cursor_(cursor),
+      weak_ptr_factory_(this) {
+  if (ui_runner_)
+    weak_ptr_ = weak_ptr_factory_.GetWeakPtr();
+}
 
 DrmGpuPlatformSupportHost::~DrmGpuPlatformSupportHost() {}
 
@@ -109,8 +117,12 @@ void DrmGpuPlatformSupportHost::OnGpuProcessLaunched(
     scoped_refptr<base::SingleThreadTaskRunner> ui_runner,
     scoped_refptr<base::SingleThreadTaskRunner> send_runner,
     const base::Callback<void(IPC::Message*)>& send_callback) {
-  DCHECK(!ui_runner->BelongsToCurrentThread());
-  ui_runner_ = std::move(ui_runner);
+  // If there was a task runner set during construction, prefer using that.
+  if (!ui_runner_) {
+    ui_runner_ = std::move(ui_runner);
+    weak_ptr_ = weak_ptr_factory_.GetWeakPtr();
+  }
+  DCHECK(!ui_runner_->BelongsToCurrentThread());
   TRACE_EVENT1("drm", "DrmGpuPlatformSupportHost::OnGpuProcessLaunched",
                "host_id", host_id);
   host_id_ = host_id;
@@ -121,8 +133,9 @@ void DrmGpuPlatformSupportHost::OnGpuProcessLaunched(
     observer.OnGpuProcessLaunched();
 
   ui_runner_->PostTask(
-      FROM_HERE, base::Bind(&DrmGpuPlatformSupportHost::OnChannelEstablished,
-                            weak_ptr_factory_.GetWeakPtr()));
+      FROM_HERE,
+      base::BindOnce(&DrmGpuPlatformSupportHost::OnChannelEstablished,
+                     weak_ptr_));
 }
 
 void DrmGpuPlatformSupportHost::OnChannelDestroyed(int host_id) {
@@ -141,13 +154,17 @@ void DrmGpuPlatformSupportHost::OnChannelDestroyed(int host_id) {
 
 }
 
-bool DrmGpuPlatformSupportHost::OnMessageReceived(const IPC::Message& message) {
-  if (OnMessageReceivedForDrmDisplayHostManager(message))
-    return true;
-  if (OnMessageReceivedForDrmOverlayManager(message))
-    return true;
-
-  return false;
+void DrmGpuPlatformSupportHost::OnMessageReceived(const IPC::Message& message) {
+  if (ui_runner_->BelongsToCurrentThread()) {
+    if (OnMessageReceivedForDrmDisplayHostManager(message))
+      return;
+    OnMessageReceivedForDrmOverlayManager(message);
+  } else {
+    ui_runner_->PostTask(
+        FROM_HERE,
+        base::BindRepeating(&DrmGpuPlatformSupportHost::OnMessageReceived,
+                            weak_ptr_, message));
+  }
 }
 
 bool DrmGpuPlatformSupportHost::Send(IPC::Message* message) {
