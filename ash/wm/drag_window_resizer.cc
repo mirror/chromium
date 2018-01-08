@@ -62,6 +62,7 @@ void DragWindowResizer::Drag(const gfx::Point& location, int event_flags) {
 }
 
 void DragWindowResizer::CompleteDrag() {
+  window_state_->OnCompleteDrag();
   next_window_resizer_->CompleteDrag();
 
   GetTarget()->layer()->SetOpacity(details().initial_opacity);
@@ -108,6 +109,7 @@ void DragWindowResizer::CompleteDrag() {
 }
 
 void DragWindowResizer::RevertDrag() {
+  window_state_->OnRevertDrag();
   next_window_resizer_->RevertDrag();
 
   drag_window_controller_.reset();
