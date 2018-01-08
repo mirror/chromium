@@ -69,12 +69,10 @@ void TabLifecycleUnitSource::TabLifecycleUnit::SetFocused(bool focused) {
 
 void TabLifecycleUnitSource::TabLifecycleUnit::SetRecentlyAudible(
     bool recently_audible) {
-  if (recently_audible) {
+  if (recently_audible)
     recently_audible_time_ = base::TimeTicks::Max();
-  } else if (recently_audible_time_.is_null() ||
-             recently_audible_time_ == base::TimeTicks::Max()) {
+  else if (recently_audible_time_ == base::TimeTicks::Max())
     recently_audible_time_ = NowTicks();
-  }
 }
 
 base::string16 TabLifecycleUnitSource::TabLifecycleUnit::GetTitle() const {
@@ -88,6 +86,16 @@ std::string TabLifecycleUnitSource::TabLifecycleUnit::GetIconURL() const {
     return std::string();
   const auto& favicon = last_committed_entry->GetFavicon();
   return favicon.valid ? favicon.url.spec() : std::string();
+}
+
+base::ProcessHandle TabLifecycleUnitSource::TabLifecycleUnit::GetProcessHandle()
+    const {
+  return GetWebContents()->GetMainFrame()->GetProcess()->GetHandle();
+}
+
+TabLifecycleUnitExternal*
+TabLifecycleUnitSource::TabLifecycleUnit::AsTabLifecycleUnitExternal() {
+  return this;
 }
 
 LifecycleUnit::SortKey TabLifecycleUnitSource::TabLifecycleUnit::GetSortKey()
@@ -104,6 +112,11 @@ int TabLifecycleUnitSource::TabLifecycleUnit::
     GetEstimatedMemoryFreedOnDiscardKB() const {
   // TODO(fdoray): Implement this. https://crbug.com/775644
   return 0;
+}
+
+bool TabLifecycleUnitSource::TabLifecycleUnit::CanPurge() const {
+  // A renderer can be purged if it's not playing media.
+  return !IsMediaTab();
 }
 
 bool TabLifecycleUnitSource::TabLifecycleUnit::CanDiscard(
@@ -264,8 +277,8 @@ void TabLifecycleUnitSource::TabLifecycleUnit::SetAutoDiscardable(
     observer.OnAutoDiscardableStateChange(GetWebContents(), auto_discardable_);
 }
 
-void TabLifecycleUnitSource::TabLifecycleUnit::DiscardTab() {
-  Discard(DiscardReason::kExternal);
+bool TabLifecycleUnitSource::TabLifecycleUnit::DiscardTab() {
+  return Discard(DiscardReason::kExternal);
 }
 
 bool TabLifecycleUnitSource::TabLifecycleUnit::IsDiscarded() const {

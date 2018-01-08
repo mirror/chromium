@@ -6,6 +6,7 @@
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/api/tabs/tabs_constants.h"
 #include "chrome/browser/extensions/extension_function_test_utils.h"
 #include "chrome/browser/extensions/extension_service_test_base.h"
@@ -62,6 +63,10 @@ class TabsApiUnitTest : public ExtensionServiceTestBase {
 
 void TabsApiUnitTest::SetUp() {
   ExtensionServiceTestBase::SetUp();
+
+  // Force TabManager creation before the first tab is created.
+  g_browser_process->GetTabManager();
+
   InitializeEmptyExtensionService();
 
   if (content::IsBrowserSideNavigationEnabled())
