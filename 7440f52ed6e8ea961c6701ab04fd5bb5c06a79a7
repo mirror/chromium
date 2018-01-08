@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07ee6eef_d1527cbb",
+        "filename": "chrome/browser/ui/ash/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8230b6b1_f0d05256",
+      "revId": "7440f52ed6e8ea961c6701ab04fd5bb5c06a79a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf8a1260_0d8972a1",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-06T00:19:45Z",
       "side": 1,
       "message": "Does the tab scrubber test file need to move too?",
+      "revId": "7440f52ed6e8ea961c6701ab04fd5bb5c06a79a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24712d53_91955032",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1626,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-08T17:02:24Z",
+      "side": 1,
+      "message": "Ugh, yes, not sure how I missed that, thanks for catching it!",
+      "parentUuid": "cf8a1260_0d8972a1",
       "revId": "7440f52ed6e8ea961c6701ab04fd5bb5c06a79a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
