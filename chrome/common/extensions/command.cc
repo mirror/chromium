@@ -40,7 +40,8 @@ static const int kMaxTokenSize = 3;
 
 bool IsNamedCommand(const std::string& command_name) {
   return command_name != values::kPageActionCommandEvent &&
-         command_name != values::kBrowserActionCommandEvent;
+         command_name != values::kBrowserActionCommandEvent &&
+         command_name != values::kActionCommandEvent;
 }
 
 bool DoesRequireModifier(const std::string& accelerator) {

@@ -7,5 +7,5 @@ chrome.tabs.getSelected(null, function(tab) {
     tabId: tab.id,
     popup: 'another_popup.html'
   });
-  chrome.test.notifyPass();
+  //chrome.test.notifyPass();
 });

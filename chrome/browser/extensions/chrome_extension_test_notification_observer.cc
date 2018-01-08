@@ -31,6 +31,13 @@ bool HasPageActionVisibilityReachedTarget(
          target_visible_page_action_count;
 }
 
+bool HasActionVisibilityReachedTarget(Browser* browser,
+                                      size_t target_visible_action_count) {
+  return extension_action_test_util::GetVisibleActionCount(
+             browser->tab_strip_model()->GetActiveWebContents()) ==
+         target_visible_action_count;
+}
+
 bool HaveAllExtensionRenderFrameHostsFinishedLoading(ProcessManager* manager) {
   ProcessManager::FrameSet all_views = manager->GetAllFrames();
   for (content::RenderFrameHost* host : manager->GetAllFrames()) {
@@ -76,6 +83,17 @@ bool ChromeExtensionTestNotificationObserver::
   observer.Add(ExtensionActionAPI::Get(GetBrowserContext()));
   WaitForCondition(
       base::Bind(&HasPageActionVisibilityReachedTarget, browser_, count), NULL);
+  return true;
+}
+
+bool ChromeExtensionTestNotificationObserver::WaitForActionVisibilityChangeTo(
+    int count) {
+  DCHECK(browser_);
+  ScopedObserver<ExtensionActionAPI, ExtensionActionAPI::Observer> observer(
+      this);
+  observer.Add(ExtensionActionAPI::Get(GetBrowserContext()));
+  WaitForCondition(
+      base::Bind(&HasActionVisibilityReachedTarget, browser_, count), NULL);
   return true;
 }
 

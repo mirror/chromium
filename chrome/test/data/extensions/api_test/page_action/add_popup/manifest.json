@@ -9,7 +9,7 @@
     "tabs", "http://*/*"
   ],
   "page_action": {
-    "default_title": "Popup Title",
+    "default_title": "Popup Title 1:",
     "default_icon": "icon.png"
   }
 }

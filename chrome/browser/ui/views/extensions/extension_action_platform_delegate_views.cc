@@ -129,8 +129,7 @@ bool ExtensionActionPlatformDelegateViews::AcceleratorPressed(
     const ui::Accelerator& accelerator) {
   // We shouldn't be handling any accelerators if the view is hidden, unless
   // this is a browser action.
-  DCHECK(controller_->extension_action()->action_type() ==
-             ActionInfo::TYPE_BROWSER ||
+  DCHECK(controller_->extension_action()->IsDefaultEnabled() ||
          GetDelegateViews()->GetAsView()->visible());
 
   // Normal priority shortcuts must be handled via standard browser commands to

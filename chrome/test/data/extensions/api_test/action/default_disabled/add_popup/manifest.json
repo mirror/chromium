@@ -1,0 +1,16 @@
+{
+  "name": "An action which adds a popup.",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "tabs", "http://*/*"
+  ],
+  "action": {
+    "default_title": "Popup Title 1:",
+    "default_icon": "icon.png",
+    "default_state": "disabled"
+  }
+}

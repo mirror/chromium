@@ -256,6 +256,11 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
     return observer_->WaitForPageActionVisibilityChangeTo(count);
   }
 
+  // Wait for the number of visible actions to change to |count|.
+  bool WaitForActionVisibilityChangeTo(int count) {
+    return observer_->WaitForActionVisibilityChangeTo(count);
+  }
+
   // Wait for an extension install error to be raised. Returns true if an
   // error was raised.
   bool WaitForExtensionInstallError() {

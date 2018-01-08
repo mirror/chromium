@@ -144,6 +144,12 @@ class ExtensionAction {
     return GetValue(&badge_background_color_, tab_id);
   }
 
+  // Checks if the action is default enabled.
+  bool IsDefaultEnabled() const;
+
+  // Checks if the action is default disabled.
+  bool IsDefaultDisabled() const;
+
   // Set this action's badge visibility on a specific tab.  Returns true if
   // the visibility has changed.
   bool SetIsVisible(int tab_id, bool value);
@@ -169,8 +175,9 @@ class ExtensionAction {
       return true;
 
     if (const bool* default_is_visible =
-        FindOrNull(&is_visible_, kDefaultTabId))
+            FindOrNull(&is_visible_, kDefaultTabId)) {
       return *default_is_visible;
+    }
 
     return false;
   }
@@ -253,6 +260,10 @@ class ExtensionAction {
   const std::string extension_name_;
 
   const extensions::ActionInfo::Type action_type_;
+
+  // Specifies if the action applies to all web pages ("enabled") or
+  // only specific pages ("disabled"). Only applies to the "action" key.
+  const extensions::ActionInfo::DefaultState default_state_;
 
   // Each of these data items can have both a global state (stored with the key
   // kDefaultTabId), or tab-specific state (stored with the tab_id as the key).
