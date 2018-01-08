@@ -69,6 +69,24 @@
       "revId": "d5dd3aa3d2b9e38b8ca7345db7c6bc3696876759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a0ba96_9b1f8594",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIterator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-08T16:46:27Z",
+      "side": 1,
+      "message": "Someone on the WebKit patch made this same point, and suggested NumCodeUnitsInGraphemeClusters. Would you support just renaming it like this? Or do you think that since we aren\u0027t currently using |num_grapheme_clusters| \u003e 1 I should just change it as you propose?",
+      "parentUuid": "45186559_1384ea50",
+      "revId": "d5dd3aa3d2b9e38b8ca7345db7c6bc3696876759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
