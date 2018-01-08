@@ -119,7 +119,7 @@ std::unique_ptr<views::Textfield> CreateUsernameEditable(
 
 std::unique_ptr<views::Label> CreatePasswordLabel(
     const autofill::PasswordForm& form,
-    bool is_password_visible) {
+    bool are_passwords_revealed) {
   base::string16 text =
       form.federation_origin.unique()
           ? form.password_value
@@ -129,7 +129,7 @@ std::unique_ptr<views::Label> CreatePasswordLabel(
   auto label = std::make_unique<views::Label>(text, CONTEXT_BODY_TEXT_LARGE,
                                               STYLE_SECONDARY);
   label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  if (form.federation_origin.unique() && !is_password_visible)
+  if (form.federation_origin.unique() && !are_passwords_revealed)
     label->SetObscured(true);
   if (!form.federation_origin.unique())
     label->SetElideBehavior(gfx::ELIDE_HEAD);
