@@ -14,6 +14,34 @@ goog.require('__crWeb.message');
 
 /** Beginning of anonymous object */
 (function() {
+  /**
+   * Namespace for this file. It depends on |__gCrWeb| having already been
+   * injected.
+   */
+  __gCrWeb.form = {};
+
+  // Store form namespace object in a global __gCrWeb object referenced by a
+  // string, so it does not get renamed by closure compiler during the
+  // minification.
+  __gCrWeb['form'] = __gCrWeb.form;
+
+  /**
+   * A DOM mutation observer that will track the creation of deletion of
+   * new nodes.
+   */
+  __gCrWeb.form.formWatcherObserver = null;
+
+  /**
+   * A timeout to ensure batch the notification for DOM update.
+   */
+  __gCrWeb.form.formWatcherTimeout = null;
+
+  /**
+   * The value of the form signature last time formWatcherInterval was
+   * triggerred.
+   */
+  __gCrWeb.form.lastFormSignature = {};
+
   // Skip iframes that have different origins from the main frame. For such
   // frames no form related actions (eg. filling, saving) are supported.
   try {
@@ -100,5 +128,50 @@ goog.require('__crWeb.message');
   if (__gCrWeb.message) {
     __gCrWeb.message.invokeQueues();
   }
+
+  /**
+   * Returns a simple signature of the form content of the page. Must be fast
+   * as it is called regularly.
+   */
+  var getFormSignature_ = function() {
+    return {
+      forms: document.forms.length,
+      input: document.getElementsByTagName('input').length
+    };
+  };
+
+  var handleUpdates_ = function() {
+    __gCrWeb.form.formWatcherTimeout = null;
+    var signature = getFormSignature_();
+    var old_signature = __gCrWeb.form.lastFormSignature;
+    if (signature.forms != old_signature.forms ||
+        signature.input != old_signature.input) {
+      var msg = {
+        'command': 'form.activity',
+        'formName': '',
+        'fieldName': '',
+        'fieldType': '',
+        'type': 'form_changed',
+        'value': ''
+      };
+      __gCrWeb.form.lastFormSignature = signature;
+      __gCrWeb.message.invokeOnHost(msg);
+    }
+  };
+
+  /**
+   * Install a watcher to check the form changes.
+   */
+  __gCrWeb.form['trackFormUpdates'] = function() {
+    __gCrWeb.form.formWatcherObserver =
+        new MutationObserver(function(mutations) {
+          if (__gCrWeb.form.formWatcherTimeout == null) {
+            __gCrWeb.form.formWatcherTimeout = setTimeout(handleUpdates_, 100);
+          }
+        }
+    );
+    var config = { subtree: true, childList: true };
+    __gCrWeb.form.formWatcherObserver.observe(document.body, config);
+  };
 
 }());  // End of anonymous object

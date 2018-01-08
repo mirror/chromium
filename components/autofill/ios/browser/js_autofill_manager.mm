@@ -45,6 +45,11 @@
   }];
 }
 
+- (void)trackFormUpdates {
+  [self executeJavaScript:@"__gCrWeb.form.trackFormUpdates()"
+        completionHandler:nil];
+}
+
 - (void)fillForm:(NSString*)dataString
     forceFillFieldName:(NSString*)forceFillFieldName
      completionHandler:(ProceduralBlock)completionHandler {

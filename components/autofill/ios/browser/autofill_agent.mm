@@ -732,8 +732,9 @@ void GetFormAndField(autofill::FormData* form,
     return;
 
   // This process is only done once.
-  if ([jsAutofillManager_ hasBeenInjected])
+  if ([jsAutofillManager_ hasBeenInjected]) {
     return;
+  }
 
   popupDelegate_.reset();
   suggestionsAvailableCompletion_ = nil;
@@ -742,7 +743,11 @@ void GetFormAndField(autofill::FormData* form,
   typedValue_ = nil;
 
   [jsAutofillManager_ inject];
+  [jsAutofillManager_ trackFormUpdates];
+  [self scanFormsInPage:webState pageURL:pageURL];
+}
 
+- (void)scanFormsInPage:(web::WebState*)webState pageURL:(const GURL&)pageURL {
   __weak AutofillAgent* weakSelf = self;
   id completionHandler = ^(BOOL success, const FormDataVector& forms) {
     AutofillAgent* strongSelf = weakSelf;
@@ -790,6 +795,11 @@ void GetFormAndField(autofill::FormData* form,
   // when the page is already loaded, or if the user focuses a field before the
   // page is fully loaded.
   [self processPage:webState];
+
+  if (params.type.compare("form_changed") == 0) {
+    [self scanFormsInPage:webState pageURL:pageURL];
+    return;
+  }
 
   // Blur not handled; we don't reset the suggestion state because if the
   // keyboard is about to be dismissed there's no point. If not it means the
