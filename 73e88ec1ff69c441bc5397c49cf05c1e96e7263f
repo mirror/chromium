@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cfe8524_73a69c31",
+        "filename": "chrome/browser/resources/md_bookmarks/constants.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-08T16:41:57Z",
+      "side": 1,
+      "message": "Is it worth adding a histogram for this? Might be handy to help understand how the menus are being used.\n\n(if you agree, feel free to do it in a follow-up. Keep that CL count growing).",
+      "revId": "73e88ec1ff69c441bc5397c49cf05c1e96e7263f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
