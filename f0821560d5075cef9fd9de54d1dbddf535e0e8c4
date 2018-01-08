@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29da1d48_70fd7bf4",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T21:16:16Z",
+      "side": 1,
+      "message": "This is currently not used. Would it make sense to integrate it in the IsPresent() check?",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "f0821560d5075cef9fd9de54d1dbddf535e0e8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf2443b_690f1dcf",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T21:16:16Z",
+      "side": 1,
+      "message": "This is also not used,but it could be used for IsPowered(), what do you think?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 48
+      },
+      "revId": "f0821560d5075cef9fd9de54d1dbddf535e0e8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf884ec_4c09b041",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T21:16:16Z",
+      "side": 1,
+      "message": "Changing the state is not instant, which is why I introduce this queue which gets processed during the next adapter polling.",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 28
+      },
+      "revId": "f0821560d5075cef9fd9de54d1dbddf535e0e8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b12fc4_79fd0a12",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T21:16:16Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 223,
+        "endChar": 33
+      },
+      "revId": "f0821560d5075cef9fd9de54d1dbddf535e0e8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be13175_ed424476",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-08T21:16:16Z",
+      "side": 1,
+      "message": "Unfortunately, testing the newly implemented methods is tricky, as the APIs don\u0027t interact with the mock device, but with the real device instead. That is, running an earlier version of the test toggled the bluetooth powered state of my actual Mac Pro, and not of the MockCentralManager. Any ideas here?",
+      "revId": "f0821560d5075cef9fd9de54d1dbddf535e0e8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
