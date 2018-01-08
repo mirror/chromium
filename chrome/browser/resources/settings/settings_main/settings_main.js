@@ -80,6 +80,8 @@ Polymer({
 
     showMultidevice: Boolean,
 
+    showSmb: Boolean,
+
     havePlayStoreApp: Boolean,
   },
 

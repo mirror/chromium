@@ -1,0 +1,33 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<link rel="import" href="../settings_shared_css.html">
+<link rel="import" href="smb_browser_proxy.html">
+
+
+<dom-module id="settings-smb-page">
+  <template>
+    <style include="settings-shared">
+      .block {
+        display: block;
+      }
+    </style>
+    <div class="settings-box two-line">
+      <div class="start">
+        $i18n{smbMountUrl}
+        <div class="secondary">
+          <paper-input class="mount-url-input" 
+              label="smb://192.168.50.60/testShare" autofocus
+              id="mountUrlInput" value="{{mountUrl}}">
+          </paper-input>
+        </div>   
+      </div>
+      <div class="separator"></div>
+      <controlled-button class="secondary-button" id="mountSmb"
+          label="$i18n{smbMount}"
+          on-tap="mountSmbFileSystem_"
+          end-justified>
+      </controlled-button>
+    </div>
+  </template>
+  <script src="smb_page.js"></script>
+</dom-module>
