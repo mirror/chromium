@@ -133,6 +133,26 @@ public class WebappModeTest {
     }
 
     /**
+     * Tests that WebappActivities are started properly by WebappLauncherActivity.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Webapps"})
+    public void testWebappLaunchesByLauncherActivity() {
+        WebappInfo webappInfo = WebappInfo.create(
+                createIntent(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true));
+        Intent launchIntent = WebappLauncherActivity.createWebappLaunchIntent(webappInfo, false);
+        WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
+
+        WebappActivity webappActivity =
+                (WebappActivity) mActivityTestRule.startAndWaitForActivityType(
+                        launchIntent, WebappActivity.class);
+
+        Assert.assertEquals(webappInfo.id(), webappActivity.getWebappInfo().id());
+        Assert.assertEquals(webappInfo.uri(), webappActivity.getWebappInfo().uri());
+    }
+
+    /**
      * Tests that WebappActivities are started properly.
      */
     @Test
