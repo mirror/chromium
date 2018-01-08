@@ -194,6 +194,7 @@ class ProfileChooserView : public content::WebContentsDelegate,
   views::LabelButton* manage_accounts_button_;
   views::LabelButton* signin_current_profile_button_;
   views::LabelButton* signin_with_gaia_account_button_;
+  views::LabelButton* sync_to_another_account_button_;
 
   // For material design user menu, the active profile card owns the profile
   // name and photo.
@@ -232,6 +233,7 @@ class ProfileChooserView : public content::WebContentsDelegate,
   // ID of the GAIA account that should be signed in when
   // |signin_with_gaia_account_button_| is pressed.
   std::string signin_with_gaia_account_id_;
+  std::vector<AccountInfo> accounts_;
 
   const int menu_width_;
 
