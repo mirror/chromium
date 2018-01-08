@@ -67,6 +67,23 @@
       "revId": "712d404ee149d10095bcbce11fcc89f5981393fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93be16da_d4759334",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-08T18:05:28Z",
+      "side": 1,
+      "message": "nit: nuke this empty line",
+      "revId": "712d404ee149d10095bcbce11fcc89f5981393fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
