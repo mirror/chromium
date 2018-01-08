@@ -52,6 +52,24 @@
       "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff1adf7_8783e266",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-08T00:45:02Z",
+      "side": 1,
+      "message": "We wouldn\u0027t be able to infer which tab is at the front from \"is_active\" and \"is_browser_focused\" alone. The reason is there may be an app that\u0027s in focus, and then all \"is_browser_focused\" will be false. However, in this case, we\u0027re still interested in finding out which tab is at the front among all the tabs in the browsers. We do have plan to log apps separately in the future, but for now, we\u0027d like to understand the most \"important\"/\"active\" tabs.",
+      "parentUuid": "cafc71c2_bca86c5f",
+      "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
