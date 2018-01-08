@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aad51ca9_b9e16cce",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T20:01:38Z",
+      "side": 1,
+      "message": "Great point. I\u0027ve added comments.",
+      "parentUuid": "a9ef154e_3a27d7f2",
+      "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78c88598_38645e3a",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-08T15:10:10Z",
       "side": 1,
       "message": "I found this confusing in that a leaf or static text should not have children. Reading the leafOrStaticText code, I see that it means that the item should be presented atomically. Perhaps \"leaf\" is a misnomer in the code ... just food for thought, as others might be confused as well.",
+      "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c64d38_0a166e58",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T20:01:38Z",
+      "side": 1,
+      "message": "Good point. Leaf is probably really overloaded. I guess this usage is meant as ChromeVox leaf and not accessibility tree leaf. Not entirely obvious how to fix this, but thanks for noting.",
+      "parentUuid": "78c88598_38645e3a",
       "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01ed764e_b6783407",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T20:01:38Z",
+      "side": 1,
+      "message": "Yup, that would be really weird (and a major bug).\n\nI did this to satisfy Closure\u0027s type checking. Closure isn\u0027t smart enough to know that if leftmost is defined then rightmost should also be defined.\n\nIf you remove either, Closure flags it.",
+      "parentUuid": "a3e90fb3_9b3d7b56",
+      "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0b001e1_081d653c",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-08T15:10:10Z",
       "side": 1,
       "message": "So this only delves into the left-most and right-most nodes? What is the reason for not iterating over the full subtree?",
+      "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc177a91_18845e5b",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T20:01:38Z",
+      "side": 1,
+      "message": "Good question. I\u0027ve added a comment.\n\nThis logic constructs a range that covers the node. Imagine if |node| were a table. Then, this logic would build a range that starts at the beginning of the table (i.e. the first leaf or static text) and ends at the last leaf or static text.\n\nThe |render_| does the actual walking to build up all of the output.\n\nThe final result is as if a user navigated through the entire table using linear nav.",
+      "parentUuid": "d0b001e1_081d653c",
       "revId": "c835882790569d8a9cfb742c75495643e1d61cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
