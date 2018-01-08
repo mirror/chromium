@@ -65,6 +65,7 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
+#include "google_apis/google_api_keys.h"
 #include "rlz/features/features.h"
 #include "ui/base/ui_features.h"
 
@@ -792,10 +793,11 @@ void StartupBrowserCreatorImpl::AddInfoBarsIfNecessary(
       !command_line_.HasSwitch(switches::kTestType) &&
       !command_line_.HasSwitch(switches::kEnableAutomation)) {
     chrome::ShowBadFlagsPrompt(browser);
-    GoogleApiKeysInfoBarDelegate::Create(InfoBarService::FromWebContents(
-        browser->tab_strip_model()->GetActiveWebContents()));
-    ObsoleteSystemInfoBarDelegate::Create(InfoBarService::FromWebContents(
-        browser->tab_strip_model()->GetActiveWebContents()));
+    InfoBarService* infobar_service = InfoBarService::FromWebContents(
+        browser->tab_strip_model()->GetActiveWebContents());
+    if (!google_apis::HasKeysConfigured())
+      GoogleApiKeysInfoBarDelegate::Create(infobar_service);
+    ObsoleteSystemInfoBarDelegate::Create(infobar_service);
 
 #if !defined(OS_CHROMEOS)
     if (!command_line_.HasSwitch(switches::kNoDefaultBrowserCheck)) {
