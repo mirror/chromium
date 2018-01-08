@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac78966_aaa3e3d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-08T18:12:16Z",
+      "side": 1,
+      "message": "optional nit: [s/here/the setDescription documentation] (nice to state what you\u0027re linking to)",
+      "revId": "8a5d12df6e1a2c224db968bed427189b7b80d7e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
