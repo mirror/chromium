@@ -34,6 +34,24 @@
       "revId": "7bf9f5c28d5fdd8d3b9a14199d9f4d102d9eb7a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768ee0ca_ad5e8cc6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-08T20:42:37Z",
+      "side": 0,
+      "message": "What test(s) triggered this DHCECK?\n\nHistorically, if ResourceFetcher::RequestResource() failed a load synchronously, it would return a nullptr Resource*, rather than a Resource with ErrorOccurred() \u003d\u003d true (with an excpetion for the sync case). We added an early-exit case that fails with a Resource* and ErrorOccurred() a while back (see ResourceForBlockedRequest()), and now we\u0027re adding this one. It\u0027s *probably* OK, but I don\u0027t know for certain that all resource requetsors handle this kind of failure, so I\u0027d like to understand in what cases this DCHECK can trigger.",
+      "parentUuid": "8dba0732_5f67885c",
+      "revId": "7bf9f5c28d5fdd8d3b9a14199d9f4d102d9eb7a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
