@@ -26,6 +26,7 @@
 #include <stdint.h>
 
 #include <map>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -34,7 +35,6 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/debug/profiler.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -474,14 +474,14 @@ void RunOneBenchmark::Create(const MeasuringPoint& p) {
   transport_sender_.Init(
       new CastTransportImpl(
           &testing_clock_sender_, base::TimeDelta::FromSeconds(1),
-          base::MakeUnique<TransportClient>(nullptr),
+          std::make_unique<TransportClient>(nullptr),
           base::WrapUnique(sender_to_receiver_), task_runner_sender_),
       &video_bytes_encoded_, &audio_bytes_encoded_);
 
   receiver_to_sender_ = new LoopBackTransport(cast_environment_receiver_);
   transport_receiver_.reset(new CastTransportImpl(
       &testing_clock_receiver_, base::TimeDelta::FromSeconds(1),
-      base::MakeUnique<TransportClient>(this),
+      std::make_unique<TransportClient>(this),
       base::WrapUnique(receiver_to_sender_), task_runner_receiver_));
 
   cast_receiver_ =
