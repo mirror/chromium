@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7ccf75b5_db38015e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-08T22:26:02Z",
+      "side": 1,
+      "message": "Is this correct when the flag is turned off?  The default in all the methods set this to NOT_PENDING",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 52
+      },
+      "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93607f14_de297513",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
         "patchSetId": 8
@@ -46,6 +69,29 @@
       "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "797e0caf_ffb2b455",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-08T22:26:02Z",
+      "side": 1,
+      "message": "pending state is not used?  Perhaps a comment here explaining why it\u0027s not used, or name it notUsed",
+      "range": {
+        "startLine": 218,
+        "startChar": 77,
+        "endLine": 218,
+        "endChar": 89
+      },
+      "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
