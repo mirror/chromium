@@ -301,3 +301,24 @@ source_set("keyboard_extension_protocol") {
 
   public_configs = [ ":keyboard_extension_protocol_config" ]
 }
+
+config("wl_pointer_protocol_config") {
+  include_dirs = [ "include/protocol" ]
+}
+
+source_set("wl_pointer_protocol") {
+  sources = [
+    "include/protocol/wl-pointer-protocol-unstable-v1-client-protocol.h",
+    "include/protocol/wl_pointer_protocol-unstable-v1-server-protocol.h",
+    "protocol/wl-pointer-protocol-protocol.c",
+  ]
+
+  deps = [
+    "//third_party/wayland:wayland_util",
+  ]
+
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [ "//build/config/compiler:no_chromium_code" ]
+
+  public_configs = [ ":wl_pointer_protocol_config" ]
+}
