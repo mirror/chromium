@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b752520c_93bbb3ca",
+        "filename": "chrome/browser/profiles/profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-08T10:35:33Z",
+      "side": 1,
+      "message": "Nit: nullptr",
+      "range": {
+        "startLine": 302,
+        "startChar": 9,
+        "endLine": 302,
+        "endChar": 13
+      },
+      "revId": "9aa51fe7cb53b2e2074257df4de04cd6ef1ee9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
