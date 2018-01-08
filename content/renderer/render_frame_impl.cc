@@ -4300,15 +4300,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   if (commit_type == blink::WebHistoryCommitType::kWebBackForwardCommit)
     render_view_->DidCommitProvisionalHistoryLoad();
 
-  for (auto& observer : render_view_->observers_)
-    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
-  {
-    SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.DidCommitProvisionalLoad");
-    for (auto& observer : observers_) {
-      observer.DidCommitProvisionalLoad(
-          is_new_navigation, navigation_state->WasWithinSameDocument());
-    }
-  }
+  NotifyObservers(is_new_navigation, navigation_state->WasWithinSameDocument());
 
   // Notify the MediaPermissionDispatcher that its connection will be closed
   // due to a navigation to a different document.
@@ -5592,6 +5584,18 @@ void RenderFrameImpl::UpdateZoomLevel() {
   } else {
     // Subframes should match the zoom level of the main frame.
     render_view_->SetZoomLevel(render_view_->page_zoom_level());
+  }
+}
+
+void RenderFrameImpl::NotifyObserversOfNavigationCommit(bool is_new_navigation,
+                                                        bool is_same_document) {
+  for (auto& observer : render_view_->observers_)
+    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
+  {
+    SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.DidCommitProvisionalLoad");
+    for (auto& observer : observers_) {
+      observer.DidCommitProvisionalLoad(is_new_navigation, is_same_document);
+    }
   }
 }
 

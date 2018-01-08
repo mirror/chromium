@@ -1267,6 +1267,10 @@ class CONTENT_EXPORT RenderFrameImpl
   // Updates the Zoom level of the render view to match current content.
   void UpdateZoomLevel();
 
+  // Notify render_view_ observers that a commit happend.
+  void NotifyObserversOfNavigationCommit(bool is_new_navigation,
+                                         bool is_same_document);
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
