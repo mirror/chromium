@@ -44,6 +44,7 @@ import org.chromium.chrome.test.util.OmniboxTestUtils.StubAutocompleteController
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.KeyUtils;
+import org.chromium.content.browser.test.util.TouchCommon;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -1046,6 +1047,26 @@ public class UrlBarTest {
                         ? clip.getItemAt(0).getText()
                         : null;
                 return text != null ? text.toString() : null;
+            }
+        });
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"Omnibox"})
+    @RetryOnFailure
+    public void testLongPress() throws InterruptedException {
+        // This is a more realistic test than HUGE_URL because it's full of separator characters
+        // which have historically been known to trigger odd behavior with long-pressing.
+        final String longPressUrl = "data:text/plain,hi.hi.hi.hi.hi.hi.hi.hi.hi.hi/hi/hi/hi/hi/hi/";
+        mActivityTestRule.startMainActivityWithURL(longPressUrl);
+        TouchCommon.longPressView(getUrlBar());
+
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return getUrlBar().getSelectionStart() == 0
+                        && getUrlBar().getSelectionEnd() == longPressUrl.length();
             }
         });
     }
