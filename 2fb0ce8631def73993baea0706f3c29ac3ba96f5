@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "478595ac_8dd198bc",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-08T21:35:56Z",
+      "side": 1,
+      "message": "On error do you really want to send both invalid then success?",
+      "range": {
+        "startLine": 520,
+        "startChar": 4,
+        "endLine": 525,
+        "endChar": 39
+      },
+      "revId": "2fb0ce8631def73993baea0706f3c29ac3ba96f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
