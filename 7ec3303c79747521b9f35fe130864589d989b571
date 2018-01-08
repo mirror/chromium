@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef1f526_4dc80672",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-08T14:16:07Z",
+      "side": 1,
+      "message": "Fetch API defines similar concept as request destination and it is defined that some security checks are run based on destination, I think we\u0027ll probably want it (instead of this one) in services/network at some point. Maybe something like:\n\nTODO: remove this if network service shouldn\u0027t know about this, or redefine the enum in services/network in the way that follows the spec (https://fetch.spec.whatwg.org/#concept-request-destination).",
+      "revId": "7ec3303c79747521b9f35fe130864589d989b571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd0acb0_bcc189d7",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-08T14:16:07Z",
+      "side": 1,
+      "message": "As far as I read the spec/code I suspect this one\u0027s needed to implement CORS, could we slightly modify the TODO comment?\n\n\u0027remove this if network service shouldn\u0027t know about this, or redefine it in /services/network if it is needed to implement CORS in network service.\u0027",
+      "revId": "7ec3303c79747521b9f35fe130864589d989b571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
