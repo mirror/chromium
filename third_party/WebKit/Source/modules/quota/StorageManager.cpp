@@ -17,7 +17,7 @@
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/Platform.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom-blink.h"
+#include "third_party/WebKit/public/common/quota/quota_types.mojom-blink.h"
 
 namespace blink {
 

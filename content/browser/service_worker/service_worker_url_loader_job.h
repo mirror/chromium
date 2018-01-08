@@ -21,8 +21,8 @@
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
-#include "third_party/WebKit/common/blob/blob.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_stream_handle.mojom.h"
+#include "third_party/WebKit/public/common/blob/blob.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_stream_handle.mojom.h"
 
 namespace content {
 

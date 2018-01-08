@@ -44,7 +44,7 @@
 #include "services/network/public/interfaces/cors.mojom-blink.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
-#include "third_party/WebKit/common/net/ip_address_space.mojom-blink.h"
+#include "third_party/WebKit/public/common/net/ip_address_space.mojom-blink.h"
 
 namespace blink {
 

@@ -65,7 +65,7 @@
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/Source/platform/exported/WebClipboardImpl.h"
-#include "third_party/WebKit/common/origin_trials/trial_policy.h"
+#include "third_party/WebKit/public/common/origin_trials/trial_policy.h"
 
 namespace blink {
 

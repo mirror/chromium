@@ -7,8 +7,8 @@
 
 #include "base/time/time.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
+#include "third_party/WebKit/public/common/page/page_visibility_state.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_client.mojom.h"
 #include "url/gurl.h"
 
 namespace content {

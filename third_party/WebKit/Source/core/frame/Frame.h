@@ -39,7 +39,7 @@
 #include "core/page/FrameTree.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/public/common/feature_policy/feature_policy.h"
 
 namespace blink {
 

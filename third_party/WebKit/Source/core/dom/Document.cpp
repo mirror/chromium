@@ -38,7 +38,7 @@
 #include "bindings/core/v8/WindowProxy.h"
 #include "bindings/core/v8/html_script_element_or_svg_script_element.h"
 #include "bindings/core/v8/string_or_dictionary.h"
-#include "common/net/ip_address_space.mojom-blink.h"
+#include "public/common/net/ip_address_space.mojom-blink.h"
 #include "core/animation/DocumentAnimations.h"
 #include "core/animation/DocumentTimeline.h"
 #include "core/animation/PendingAnimations.h"
@@ -266,7 +266,7 @@
 #include "services/metrics/public/cpp/ukm_source_id.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom-shared.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
+#include "third_party/WebKit/public/common/page/page_visibility_state.mojom-blink.h"
 
 #ifndef NDEBUG
 using WeakDocumentSet =
