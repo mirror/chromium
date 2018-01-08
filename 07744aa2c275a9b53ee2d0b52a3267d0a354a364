@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3dfe0cc_5ef28bd8",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c6eac3c_47265045",
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16bc2568_f4590dba",
         "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
         "patchSetId": 9
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "4c9df609_0a59e76b",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16bc2568_f4590dba",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c042d3c8_196609bd",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dad89cf_3362b177",
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df61ac30_f7f04b37",
         "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
         "patchSetId": 9
@@ -70,6 +130,30 @@
       "writtenOn": "2018-01-08T22:26:37Z",
       "side": 1,
       "message": "Is this intentionally in the extensions namespace instead of extensions::api?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e3bc89_604164cb",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "It was suggested by Steven, I just assume he known this code better than me.",
+      "parentUuid": "df61ac30_f7f04b37",
       "range": {
         "startLine": 26,
         "startChar": 0,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "24b3cfbf_eeed9df1",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c8c53b6_d4774c4b",
+      "range": {
+        "startLine": 18,
+        "startChar": 34,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "709060f6_c2b98d74",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 9
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "dfe162aa_0106c83f",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "709060f6_c2b98d74",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab6fde53_ce82f426",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 9
@@ -139,6 +271,30 @@
       "writtenOn": "2018-01-08T22:26:37Z",
       "side": 1,
       "message": "Unused.",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53aaf3c_00446ee5",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "It will be used in the next CL (which adds first generated prefs).",
+      "parentUuid": "ab6fde53_ce82f426",
       "range": {
         "startLine": 43,
         "startChar": 26,
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "eb940353_41e58467",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c74147_aa9056f4",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "369135bd_bbdd2367",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
         "patchSetId": 9
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "26767385_adc05ac0",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "369135bd_bbdd2367",
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f154dd81_9220c414",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.h",
         "patchSetId": 9
@@ -205,6 +403,24 @@
       "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19c7209_6195ce7a",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-08T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f154dd81_9220c414",
+      "revId": "07744aa2c275a9b53ee2d0b52a3267d0a354a364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
