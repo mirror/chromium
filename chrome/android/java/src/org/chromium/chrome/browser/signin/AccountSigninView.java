@@ -151,7 +151,7 @@ public class AccountSigninView extends FrameLayout {
         mProfileDataCache = new ProfileDataCache(context,
                 context.getResources().getDimensionPixelSize(R.dimen.signin_account_image_size));
 
-        mCancelButtonTextId = R.string.no_thanks;
+        mCancelButtonTextId = R.string.cancel;
     }
 
     /**
@@ -219,9 +219,9 @@ public class AccountSigninView extends FrameLayout {
     }
 
     private void initAccessPoint(@SigninAccessPoint int accessPoint) {
-        if (accessPoint == SigninAccessPoint.BOOKMARK_MANAGER
-                || accessPoint == SigninAccessPoint.RECENT_TABS) {
-            mCancelButtonTextId = R.string.cancel;
+        if (accessPoint == SigninAccessPoint.START_PAGE
+                || accessPoint == SigninAccessPoint.SIGNIN_PROMO) {
+            mCancelButtonTextId = R.string.no_thanks;
         }
     }
 
