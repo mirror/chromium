@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/status/data_promo_notification.h"
+#include "chrome/browser/ui/ash/network/data_promo_notification.h"
 
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/system/system_notifier.h"
@@ -13,9 +13,9 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/mobile_config.h"
-#include "chrome/browser/chromeos/net/network_state_notifier.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/ash/network/network_state_notifier.h"
 #include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -130,12 +130,13 @@ bool DataSaverSwitchDemoMode() {
 
 const chromeos::MobileConfig::Carrier* GetCarrier(
     const NetworkState* cellular) {
-  const DeviceState* device = NetworkHandler::Get()->network_state_handler()->
-      GetDeviceState(cellular->device_path());
+  const DeviceState* device =
+      NetworkHandler::Get()->network_state_handler()->GetDeviceState(
+          cellular->device_path());
   std::string carrier_id = device ? device->operator_name() : "";
   if (carrier_id.empty()) {
     NET_LOG_ERROR("Empty carrier ID for cellular network",
-                  device ? device->path(): "No device");
+                  device ? device->path() : "No device");
     return nullptr;
   }
 
@@ -155,8 +156,8 @@ const chromeos::MobileConfig::CarrierDeal* GetCarrierDeal(
     if (carrier_deal_promo_pref >= deal->notification_count())
       return NULL;
     const std::string locale = g_browser_process->GetApplicationLocale();
-    std::string deal_text = deal->GetLocalizedString(locale,
-                                                     "notification_text");
+    std::string deal_text =
+        deal->GetLocalizedString(locale, "notification_text");
     NET_LOG_DEBUG("Carrier Deal Found", deal_text);
     if (deal_text.empty())
       return NULL;
@@ -183,15 +184,14 @@ void NotificationClicked(const std::string& network_id,
 // DataPromoNotification
 
 DataPromoNotification::DataPromoNotification()
-    : notifications_shown_(false),
-      weak_ptr_factory_(this) {
+    : notifications_shown_(false), weak_ptr_factory_(this) {
   NetworkHandler::Get()->network_state_handler()->AddObserver(this, FROM_HERE);
 }
 
 DataPromoNotification::~DataPromoNotification() {
   if (NetworkHandler::IsInitialized()) {
-    NetworkHandler::Get()->network_state_handler()->RemoveObserver(
-        this, FROM_HERE);
+    NetworkHandler::Get()->network_state_handler()->RemoveObserver(this,
+                                                                   FROM_HERE);
   }
 }
 
@@ -223,8 +223,9 @@ void DataPromoNotification::ShowOptionalMobileDataPromoNotification() {
       NetworkHandler::Get()->network_state_handler()->DefaultNetwork();
   if (!default_network)
     return;
-  if (NetworkHandler::Get()->network_connection_handler()->
-      HasPendingConnectRequest())
+  if (NetworkHandler::Get()
+          ->network_connection_handler()
+          ->HasPendingConnectRequest())
     return;
 
   if (!DataSaverSwitchDemoMode() &&
