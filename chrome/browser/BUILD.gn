@@ -2617,8 +2617,6 @@ split_static_library("browser") {
       "resource_coordinator/tab_manager_stats_collector.h",
       "resource_coordinator/tab_manager_web_contents_data.cc",
       "resource_coordinator/tab_manager_web_contents_data.h",
-      "resource_coordinator/tab_stats.cc",
-      "resource_coordinator/tab_stats.h",
       "resource_coordinator/time.cc",
       "resource_coordinator/time.h",
       "search/iframe_source.cc",

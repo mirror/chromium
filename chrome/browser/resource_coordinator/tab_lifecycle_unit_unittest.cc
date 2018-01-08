@@ -103,11 +103,14 @@ TEST_F(TabLifecycleUnitTest, SetFocused) {
   test_clock_.Advance(kShortDelay);
   TabLifecycleUnit tab_lifecycle_unit(&observers_, web_contents_.get(),
                                       tab_strip_model_.get());
-  EXPECT_EQ(base::TimeTicks(),
-            tab_lifecycle_unit.GetSortKey().last_focused_time);
-  EXPECT_TRUE(tab_lifecycle_unit.CanDiscard(DiscardReason::kExternal));
-  EXPECT_TRUE(tab_lifecycle_unit.CanDiscard(DiscardReason::kProactive));
+  EXPECT_EQ(NowTicks(), tab_lifecycle_unit.GetSortKey().last_focused_time);
+  EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kExternal));
+  EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kProactive));
+#if defined(OS_CHROMEOS)
   EXPECT_TRUE(tab_lifecycle_unit.CanDiscard(DiscardReason::kUrgent));
+#else
+  EXPECT_FALSE(tab_lifecycle_unit.CanDiscard(DiscardReason::kUrgent));
+#endif
 
   test_clock_.Advance(kShortDelay);
   tab_lifecycle_unit.SetFocused(true);

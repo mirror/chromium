@@ -11,6 +11,7 @@
 #include "chrome/browser/resource_coordinator/lifecycle_unit.h"
 #include "chrome/browser/resource_coordinator/tab_lifecycle_unit_external.h"
 #include "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h"
+#include "chrome/browser/resource_coordinator/time.h"
 #include "content/public/browser/web_contents_observer.h"
 
 class TabStripModel;
@@ -71,9 +72,12 @@ class TabLifecycleUnitSource::TabLifecycleUnit
   // LifecycleUnit:
   base::string16 GetTitle() const override;
   std::string GetIconURL() const override;
+  base::ProcessHandle GetProcessHandle() const override;
+  TabLifecycleUnitExternal* AsTabLifecycleUnitExternal() override;
   SortKey GetSortKey() const override;
   State GetState() const override;
   int GetEstimatedMemoryFreedOnDiscardKB() const override;
+  bool CanPurge() const override;
   bool CanDiscard(DiscardReason reason) const override;
   bool Discard(DiscardReason discard_reason) override;
 
@@ -82,7 +86,7 @@ class TabLifecycleUnitSource::TabLifecycleUnit
   bool IsMediaTab() const override;
   bool IsAutoDiscardable() const override;
   void SetAutoDiscardable(bool auto_discardable) override;
-  void DiscardTab() override;
+  bool DiscardTab() override;
   bool IsDiscarded() const override;
   int GetDiscardCount() const override;
 
@@ -111,7 +115,11 @@ class TabLifecycleUnitSource::TabLifecycleUnit
 
   // Last time at which this tab was focused, or TimeTicks::Max() if it is
   // currently focused.
-  base::TimeTicks last_focused_time_;
+  //
+  // TODO(fdoray): To keep old behavior (sort order and protection of recently
+  // focused tabs), this is initialized with NowTicks(). Consider initializing
+  // this with a null TimeTicks when the tab isn't initially focused.
+  base::TimeTicks last_focused_time_ = NowTicks();
 
   // When this is false, CanDiscard() always returns false.
   bool auto_discardable_ = true;
