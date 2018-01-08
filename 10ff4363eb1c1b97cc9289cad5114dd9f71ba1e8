@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e8745ed_0649afd5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-08T23:16:22Z",
+      "side": 1,
+      "message": "I considered putting this in //net but I wanted to preserve the ability for tests to assert that bad proxies are not returned by OnResolveProxy and that already removes non-QUIC proxies that are marked as bad.",
+      "parentUuid": "69f5141a_6d6db8e4",
+      "range": {
+        "startLine": 259,
+        "startChar": 25,
+        "endLine": 259,
+        "endChar": 47
+      },
+      "revId": "10ff4363eb1c1b97cc9289cad5114dd9f71ba1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08fc93a5_9f3e3760",
         "filename": "net/base/test_proxy_delegate.cc",
         "patchSetId": 1
