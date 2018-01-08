@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04c2ffbd_ddb52056",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_service_bluez.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2018-01-08T19:06:05Z",
+      "side": 1,
+      "message": "nit: \"{}\" can be removed",
+      "range": {
+        "startLine": 93,
+        "startChar": 54,
+        "endLine": 93,
+        "endChar": 55
+      },
+      "revId": "6c6b550ff875a17fcfa82cb1fdea1ead07e73c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
