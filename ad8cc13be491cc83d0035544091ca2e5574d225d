@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "02126f52_a33525c1",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-08T20:22:16Z",
+      "side": 1,
+      "message": "I believe previous behavior was for it to be hidden entirely on webui, as that implements a separate shelf. iirc oobe/login/lock webui has logic to account for the size of the self.",
+      "parentUuid": "f248b12c_bc2c6aea",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37f6f3ba_ac4b88de",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 1
