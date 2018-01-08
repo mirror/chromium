@@ -77,7 +77,6 @@
 #include "components/error_page/common/localized_error.h"
 #include "components/network_hints/renderer/prescient_networking_dispatcher.h"
 #include "components/pdf/renderer/pepper_pdf_host.h"
-#include "components/safe_browsing/renderer/renderer_url_loader_throttle.h"
 #include "components/safe_browsing/renderer/threat_dom_details.h"
 #include "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h"
 #include "components/spellcheck/spellcheck_build_features.h"
@@ -1297,15 +1296,19 @@ bool ChromeContentRendererClient::WillSendRequest(
     content::ResourceType resource_type,
     std::vector<std::unique_ptr<content::URLLoaderThrottle>>* throttles,
     GURL* new_url) {
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    InitSafeBrowsingIfNecessary();
-    RenderFrame* render_frame = content::RenderFrame::FromWebFrame(frame);
-    int render_frame_id =
-        render_frame ? render_frame->GetRoutingID() : MSG_ROUTING_NONE;
-    throttles->push_back(
-        base::MakeUnique<safe_browsing::RendererURLLoaderThrottle>(
-            safe_browsing_.get(), render_frame_id));
+  if (!throttle_provider_) {
+    throttle_provider_ = std::make_unique<URLLoaderThrottleProviderImpl>(
+        URLLoaderThrottleProviderImpl::PROVIDER_TYPE_FRAME);
   }
+
+  RenderFrame* render_frame = content::RenderFrame::FromWebFrame(frame);
+  int render_frame_id =
+      render_frame ? render_frame->GetRoutingID() : MSG_ROUTING_NONE;
+
+  // TODO(yzshen): Pass the actual resource type once the change for prerender
+  // throttle lands.
+  *throttles = throttle_provider_->CreateThrottles(
+      render_frame_id, url, content::RESOURCE_TYPE_SUB_RESOURCE);
 
 // Check whether the request should be allowed. If not allowed, we reset the
 // URL to something invalid to prevent the request and cause an error.
@@ -1721,4 +1724,10 @@ bool ChromeContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
       "more information.",
       url::Origin::Create(url).Serialize().c_str(), in_future_string);
   return true;
+}
+
+std::unique_ptr<content::URLLoaderThrottleProvider>
+ChromeContentRendererClient::CreateWorkerURLLoaderThrottleProvider() {
+  return std::make_unique<URLLoaderThrottleProviderImpl>(
+      URLLoaderThrottleProviderImpl::PROVIDER_TYPE_WORKER);
 }

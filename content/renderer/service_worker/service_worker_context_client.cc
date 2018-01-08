@@ -1201,7 +1201,8 @@ ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
   // Blink is responsible for deleting the returned object.
   return std::make_unique<ServiceWorkerFetchContextImpl>(
       script_url_, url_loader_factory_getter->GetClonedInfo(),
-      provider_context_->provider_id());
+      provider_context_->provider_id(),
+      GetContentClient()->renderer()->CreateWorkerURLLoaderThrottleProvider());
 }
 
 std::unique_ptr<blink::WebServiceWorkerProvider>

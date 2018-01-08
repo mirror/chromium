@@ -3537,7 +3537,10 @@ RenderFrameImpl::CreateWorkerFetchContext() {
       std::make_unique<WorkerFetchContextImpl>(
           std::move(service_worker_client_request),
           std::move(container_host_ptr_info),
-          url_loader_factory_getter->GetClonedInfo());
+          url_loader_factory_getter->GetClonedInfo(),
+          GetContentClient()
+              ->renderer()
+              ->CreateWorkerURLLoaderThrottleProvider());
 
   worker_fetch_context->set_parent_frame_id(routing_id_);
   worker_fetch_context->set_site_for_cookies(
