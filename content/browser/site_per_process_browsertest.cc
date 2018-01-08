@@ -302,6 +302,17 @@ void RouteMouseEventAndWaitUntilDispatch(
   waiter.Wait();
 }
 
+void RouteMouseWheelEventAndWaitUntilDispatch(
+    RenderWidgetHostInputEventRouter* router,
+    RenderWidgetHostViewBase* root_view,
+    RenderWidgetHostViewBase* expected_target,
+    blink::WebMouseWheelEvent* event) {
+  InputEventAckWaiter waiter(expected_target->GetRenderWidgetHost(),
+                             event->GetType());
+  router->RouteMouseWheelEvent(root_view, event, ui::LatencyInfo());
+  waiter.Wait();
+}
+
 // Helper function that performs a surface hittest.
 void SurfaceHitTestTestHelper(
     Shell* shell,
@@ -1802,7 +1813,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   scroll_event.delta_y = 5.0f;
   scroll_event.phase = blink::WebMouseWheelEvent::kPhaseBegan;
   scroll_event.has_precise_scrolling_deltas = true;
-  router->RouteMouseWheelEvent(root_view, &scroll_event, ui::LatencyInfo());
+  RouteMouseWheelEventAndWaitUntilDispatch(router, root_view, root_view,
+                                           &scroll_event);
   scroll_begin_observer.Wait();
 
   // Now destroy the child_rwhv, scroll bubbling stops and a GSE gets sent to
@@ -1817,7 +1829,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   scroll_event.phase = blink::WebMouseWheelEvent::kPhaseEnded;
   scroll_event.dispatch_type =
       blink::WebInputEvent::DispatchType::kEventNonBlocking;
-  router->RouteMouseWheelEvent(root_view, &scroll_event, ui::LatencyInfo());
+  RouteMouseWheelEventAndWaitUntilDispatch(router, root_view, root_view,
+                                           &scroll_event);
 
   scroll_end_observer.Wait();
 }
