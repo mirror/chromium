@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66d86de6_870b1ff0",
+        "filename": "media/base/android/java/src/org/chromium/media/BitrateAdjuster.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-08T16:57:39Z",
+      "side": 1,
+      "message": "s/7/8 .. happy new year!",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e460edc72ce84416af03fea76ad4e46273cc2b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59254049_b3e8cc44",
+        "filename": "media/base/android/java/src/org/chromium/media/BitrateAdjuster.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-08T16:57:39Z",
+      "side": 1,
+      "message": "good candidate for unit tests.",
+      "revId": "e460edc72ce84416af03fea76ad4e46273cc2b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
