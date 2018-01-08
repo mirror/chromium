@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d3fb75b_60be0d92",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-08T17:22:17Z",
+      "side": 1,
+      "message": "See https://chromium-review.googlesource.com/c/chromium/src/+/838368/10/components/data_reduction_proxy/proto/pageload_metrics.proto for use of #20.",
+      "revId": "5b9af96ded717ab1d723b20cf84186b065259b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
