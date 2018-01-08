@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4827e63_01f74306",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-08T15:03:52Z",
+      "side": 1,
+      "message": "nit: It would have helped me connect the dots if the underscore arguments were somehow named, but I don\u0027t know if this is standard or would clutter things.",
+      "range": {
+        "startLine": 49,
+        "startChar": 31,
+        "endLine": 49,
+        "endChar": 56
+      },
+      "revId": "17d13baa0c9c857729388ac48e9f8c2563fe797d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
