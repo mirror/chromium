@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f09f6a_365f9162",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-08T00:52:48Z",
+      "side": 1,
+      "message": "Nit: I think a blank line separating these sections would be good.",
+      "revId": "1c84f49b5344dc6d5a231b0037b2014792507a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0bed71_41949499",
+        "filename": "device/u2f/sign_response_data_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-08T00:52:48Z",
+      "side": 1,
+      "message": "Does it make sense to randomize the URL, too? I don\u0027t know.",
+      "revId": "1c84f49b5344dc6d5a231b0037b2014792507a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
