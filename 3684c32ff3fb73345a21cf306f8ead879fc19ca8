@@ -22,6 +22,30 @@
       "revId": "3684c32ff3fb73345a21cf306f8ead879fc19ca8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b907a9_22c21821",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7543,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-08T22:04:55Z",
+      "side": 1,
+      "message": "Thanks. The label was wrong.",
+      "parentUuid": "c79ff7dc_001cb547",
+      "range": {
+        "startLine": 7543,
+        "startChar": 14,
+        "endLine": 7543,
+        "endChar": 16
+      },
+      "revId": "3684c32ff3fb73345a21cf306f8ead879fc19ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
