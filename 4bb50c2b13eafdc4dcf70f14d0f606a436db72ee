@@ -16,6 +16,24 @@
       "revId": "4bb50c2b13eafdc4dcf70f14d0f606a436db72ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394fc5b0_ea5426a6",
+        "filename": "chrome/browser/ui/cocoa/extensions/extension_action_platform_delegate_cocoa.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-08T11:51:58Z",
+      "side": 0,
+      "message": "Nice!",
+      "parentUuid": "f67babc2_07a600c2",
+      "revId": "4bb50c2b13eafdc4dcf70f14d0f606a436db72ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
