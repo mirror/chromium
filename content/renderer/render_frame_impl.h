@@ -1277,6 +1277,15 @@ class CONTENT_EXPORT RenderFrameImpl
   void NotifyObserversOfNavigationCommit(bool is_new_navigation,
                                          bool is_same_document);
 
+  // Updates the internal commit state before notifying the FrameHost of the
+  // commit.
+  void UpdateStateBeforeCommitMessage(const blink::WebHistoryItem& item,
+                                      blink::WebHistoryCommitType commit_type);
+
+  // Updates the internal commit state after notifying the FrameHost of the
+  // commit.
+  void UpdateStateAfterCommitMessage();
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
