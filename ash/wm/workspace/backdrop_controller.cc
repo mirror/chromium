@@ -221,7 +221,7 @@ aura::Window* BackdropController::GetTopmostWindowWithBackdrop() {
 bool BackdropController::WindowShouldHaveBackdrop(aura::Window* window) {
   if (window->GetAllPropertyKeys().count(aura::client::kHasBackdrop) &&
       window->GetProperty(aura::client::kHasBackdrop)) {
-    return true;
+    return delegate_ ? delegate_->HasBackdrop(window) : true;
   }
 
   // If |window| is the current active window and is an ARC app window, |window|
@@ -230,7 +230,7 @@ bool BackdropController::WindowShouldHaveBackdrop(aura::Window* window) {
           static_cast<int>(AppType::ARC_APP) &&
       wm::IsActiveWindow(window) &&
       Shell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled()) {
-    return true;
+    return delegate_ ? delegate_->HasBackdrop(window) : true;
   }
 
   return delegate_ ? delegate_->HasBackdrop(window) : false;

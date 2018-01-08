@@ -10,6 +10,7 @@
 #include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/wm/screen_pinning_controller.h"
+#include "ash/wm/splitview/split_view_controller.h"
 #include "ash/wm/window_animation_types.h"
 #include "ash/wm/window_parenting_utils.h"
 #include "ash/wm/window_positioning_utils.h"
@@ -65,9 +66,7 @@ void ClientControlledState::HandleTransitionEvents(WindowState* window_state,
     case WM_EVENT_NORMAL:
     case WM_EVENT_MAXIMIZE:
     case WM_EVENT_MINIMIZE:
-    case WM_EVENT_FULLSCREEN:
-    case WM_EVENT_SNAP_LEFT:
-    case WM_EVENT_SNAP_RIGHT: {
+    case WM_EVENT_FULLSCREEN: {
       // Reset window state
       window_state->UpdateWindowPropertiesFromStateType();
       mojom::WindowStateType next_state = GetStateForTransitionEvent(event);
@@ -75,6 +74,34 @@ void ClientControlledState::HandleTransitionEvents(WindowState* window_state,
               << ", state=" << state_type_ << ", next_state=" << next_state;
       // Then ask delegate to handle the window state change.
       delegate_->HandleWindowStateRequest(window_state, next_state);
+      break;
+    }
+    case WM_EVENT_SNAP_LEFT:
+    case WM_EVENT_SNAP_RIGHT: {
+      if (window_state->CanSnap()) {
+        mojom::WindowStateType next_state_type =
+            GetStateForTransitionEvent(event);
+        state_type_ = next_state_type;
+
+        // Get the desired window bounds for the snap state.
+        gfx::Rect bounds = window_state->window()->bounds();
+        if (SplitViewController::ShouldAllowSplitView() &&
+            Shell::Get()->IsSplitViewModeActive()) {
+          bounds = Shell::Get()
+                       ->split_view_controller()
+                       ->GetSnappedWindowBoundsInParent(
+                           window_state->window(),
+                           (event->type() == WM_EVENT_SNAP_LEFT)
+                               ? SplitViewController::LEFT
+                               : SplitViewController::RIGHT);
+        } else {
+          // TODO: get the half screen size
+          window_state->AdjustSnappedBounds(&bounds);
+        }
+
+        // Then ask delegate to set the desired bounds for the snap state.
+        delegate_->HandleBoundsRequest(window_state, bounds);
+      }
       break;
     }
     case WM_EVENT_SHOW_INACTIVE:

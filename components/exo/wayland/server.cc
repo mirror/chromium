@@ -2387,11 +2387,19 @@ void HandleRemoteSurfaceBoundsChangedCallback(
     bool drag,
     bool resize) {
   zcr_remote_surface_v1_bounds_change_reason reason =
-      resize ? ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_RESIZE
-             : (drag ? ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG
-                     : ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_WINDOW_MANAGER);
-  zcr_remote_surface_v1_send_bounds_changed(
-      resource, bounds.x(), bounds.y(), bounds.width(), bounds.height(), reason);
+      ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_WINDOW_MANAGER;
+  if (resize)
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_RESIZE;
+  else if (drag)
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG;
+  else if (current_state_type == ash::mojom::WindowStateType::LEFT_SNAPPED)
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_LEFT_SNAPPED;
+  else if (current_state_type == ash::mojom::WindowStateType::RIGHT_SNAPPED)
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_RIGHT_SNAPPED;
+
+  zcr_remote_surface_v1_send_bounds_changed(resource, bounds.x(), bounds.y(),
+                                            bounds.width(), bounds.height(),
+                                            reason);
   wl_client_flush(wl_resource_get_client(resource));
 }
 
