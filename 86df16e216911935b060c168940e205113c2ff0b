@@ -34,6 +34,24 @@
       "revId": "86df16e216911935b060c168940e205113c2ff0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0229de1_22b6b59a",
+        "filename": "ui/ozone/platform/test/mock_platform_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-08T13:08:41Z",
+      "side": 0,
+      "message": "1. Both of you proposed different locations. Which one to choose then? The ui/events/platform_window/ path or ui/platform_window path?\n\n2. Sadrul, what do you mean by saying \"Note that ui/platform_window is one of the places where gmock is not used.\"? Does it mean I can\u0027t use gmock there?",
+      "parentUuid": "31c893e1_93d57d73",
+      "revId": "86df16e216911935b060c168940e205113c2ff0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
