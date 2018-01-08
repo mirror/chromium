@@ -799,10 +799,11 @@ void Deprecation::GenerateReport(const LocalFrame* frame, WebFeature feature) {
   Platform* platform = Platform::Current();
   platform->GetConnector()->BindInterface(platform->GetBrowserServiceName(),
                                           &service);
-  service->QueueDeprecationReport(document->Url(), info.id,
-                                  WTF::Time::FromDoubleT(removalDate),
-                                  info.message, body->sourceFile(),
-                                  body->lineNumber(), body->columnNumber());
+  const KURL& document_url =
+      document->Url().IsNull() ? EmptyURL() : document->Url();
+  service->QueueDeprecationReport(
+      document_url, info.id, WTF::Time::FromDoubleT(removalDate), info.message,
+      body->sourceFile(), body->lineNumber(), body->columnNumber());
 }
 
 // static

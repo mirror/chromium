@@ -195,6 +195,11 @@ const KURL& NullURL() {
   return static_null_url;
 }
 
+const KURL& EmptyURL() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(KURL, static_empty_url, (""));
+  return static_empty_url;
+}
+
 String KURL::ElidedString() const {
   if (GetString().length() <= 1024)
     return GetString();

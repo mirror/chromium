@@ -48,7 +48,9 @@ void Intervention::GenerateReport(const LocalFrame* frame,
   Platform* platform = Platform::Current();
   platform->GetConnector()->BindInterface(platform->GetBrowserServiceName(),
                                           &service);
-  service->QueueInterventionReport(document->Url(), message, body->sourceFile(),
+  const KURL& document_url =
+      document->Url().IsNull() ? EmptyURL() : document->Url();
+  service->QueueInterventionReport(document_url, message, body->sourceFile(),
                                    body->lineNumber(), body->columnNumber());
 }
 
