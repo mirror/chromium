@@ -22,6 +22,30 @@
       "revId": "6bff81709a63aad406ff059b93ae94d868c7d216",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd92a0d7_afb5b266",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-08T18:48:55Z",
+      "side": 1,
+      "message": "Renderers don\u0027t have access to the NetworkContext interface",
+      "parentUuid": "704e317d_c4d69cb5",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 19
+      },
+      "revId": "6bff81709a63aad406ff059b93ae94d868c7d216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
