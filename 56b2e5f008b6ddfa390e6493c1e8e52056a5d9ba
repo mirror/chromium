@@ -52,6 +52,24 @@
       "revId": "56b2e5f008b6ddfa390e6493c1e8e52056a5d9ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5bb139_b67fe0ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-08T09:41:04Z",
+      "side": 1,
+      "message": "\u003e What is actually depending on the AGSA account in Chrome? What would the user experience be like if it takes longer to get the account?\n\nChrome only reports state to Icing if the AGSA account matches the signed-in account in Chrome, so we would miss some state initially. That does already happen today though, so the time period would just be a bit longer.",
+      "parentUuid": "1b961d8c_c28d3899",
+      "revId": "56b2e5f008b6ddfa390e6493c1e8e52056a5d9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
