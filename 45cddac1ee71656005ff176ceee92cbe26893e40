@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21fb42ba_e9e5cfe6",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719a092b_f45183e6",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376e5812_109dce3c",
         "filename": "ash/accelerators/accelerator_table.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6c51c8f1_ea6024ee",
+        "filename": "ash/accelerators/accelerator_table.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376e5812_109dce3c",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3933cc4_b29f2d6b",
         "filename": "ash/accelerators/accelerator_table.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-06T01:11:01Z",
       "side": 1,
       "message": "I\u0027m not sure we need this. Most keyboard shortcuts close any open menus. I don\u0027t think there\u0027s a particular reason to special-case dictation like we do for things like screenshots. You can\u0027t use dictation to select menu items, right?",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e107c1ba_398d7c73",
+        "filename": "ash/accelerators/accelerator_table.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Would there ever be a text field inside of a menu? e.g. interactive menu help?\nAlso, I don\u0027t think we should close the menu if someone accidentally triggers dictation.",
+      "parentUuid": "e3933cc4_b29f2d6b",
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0318c3e9_a997b509",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Too brief I admit, but dictation does capture the feature exactly\nDefinition:\n1.\nthe action of saying words aloud to be typed, written down, or recorded on tape.\n\nI summarized as (type what you speak) in the same style of language as the other accessibility features.",
+      "parentUuid": "67e8be48_b932cf89",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cccfd91b_27272906",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8185f2a7_9533f057",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cccfd91b_27272906",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "366bf9dd_5f91146c",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fe084c0_66ecf48d",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49153e3b_c94b563e",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.h",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e6acf3e_a7712850",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49153e3b_c94b563e",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "f2ff03b3_52f7f7d8",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f336c39b_54ab2f56",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62a60bcc_e7fb8ef4",
         "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86510040_a8193059",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62a60bcc_e7fb8ef4",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "4814b022_08fd5dc6",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2deb8524_bb33fd5e",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c7ca674_c0505ea2",
         "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
         "patchSetId": 6
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "14f71416_f50a3299",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c7ca674_c0505ea2",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4704b4e9_66a51349",
         "filename": "chrome/browser/chromeos/accessibility/dictation.h",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2018-01-06T01:11:01Z",
       "side": 1,
       "message": "nit: move below #ifndef",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3051a0b_4d84e3fa",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "4704b4e9_66a51349",
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "d684043f_a2fd3230",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e5a5c31_685cc94e",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aac3684a_7bdb85ec",
         "filename": "chrome/browser/chromeos/accessibility/dictation.h",
         "patchSetId": 6
@@ -237,6 +471,24 @@
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a932f78b_d0ce1e98",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aac3684a_7bdb85ec",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "7ada93bf_9c7f55df",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a8d965e_a1463560",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c505b24_65c792c4",
         "filename": "chrome/browser/chromeos/accessibility/dictation.h",
         "patchSetId": 6
@@ -271,6 +541,24 @@
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f93752_6540d6d7",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c505b24_65c792c4",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "cd6f231f_c632125a",
+        "filename": "chrome/browser/speech/speech_recognizer_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Agreed. I think though, for the vr copy, it should be a larger refactor. They not only duplicate this enum, but also SpeechRecognizer.  I totally understand why, as it wouldhav been much easier for me to do the same thing. Can we tackle that as a follow up?",
+      "parentUuid": "59088c7a_60b94db1",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30d470a4_8219babb",
         "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
         "patchSetId": 6
@@ -302,6 +608,24 @@
       "writtenOn": "2018-01-06T01:11:01Z",
       "side": 1,
       "message": "Do you have to null-check this? None of the other methods in this function do. I think AccessibilityManager and AccessibilityControllerClient are both created early in startup.",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd5963e_3038faf0",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "30d470a4_8219babb",
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -328,6 +652,30 @@
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dde9f7b_449740cf",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-08T19:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22fd56bb_94d50cfa",
+      "range": {
+        "startLine": 977,
+        "startChar": 0,
+        "endLine": 978,
+        "endChar": 72
+      },
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
