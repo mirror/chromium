@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "8fa27bea_05c49789",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-08T23:11:28Z",
+      "side": 1,
+      "message": "Reusing the existing CompositorSurfaceManager but with an injected Surface was kind of gross, so I went with an interface and separate implementation of the SurfaceManager for VR.",
+      "parentUuid": "4f2290c9_6d2842f0",
+      "range": {
+        "startLine": 423,
+        "startChar": 8,
+        "endLine": 423,
+        "endChar": 33
+      },
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd2edcb0_419c3513",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 2

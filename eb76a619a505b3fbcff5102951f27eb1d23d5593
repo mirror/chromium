@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "259307cf_1c57ddd1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-08T23:11:28Z",
+      "side": 1,
+      "message": "Sorry about bad diffs. This file hasn\u0027t changed other than mechanical things, like passing a Surface instead of a SurfaceHolder to the SurfaceManagerCallbackTarget callbacks where applicable. Also some of the function-level comments were moved up into the interface.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "eb76a619a505b3fbcff5102951f27eb1d23d5593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
