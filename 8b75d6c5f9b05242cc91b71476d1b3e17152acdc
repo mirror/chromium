@@ -22,6 +22,30 @@
       "revId": "8b75d6c5f9b05242cc91b71476d1b3e17152acdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f34a599_3b62e07d",
+        "filename": "media/cast/test/simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-01-08T03:06:49Z",
+      "side": 1,
+      "message": "right. Let me restore ptr_util.h here.",
+      "parentUuid": "6b905106_7cf55b90",
+      "range": {
+        "startLine": 406,
+        "startChar": 6,
+        "endLine": 406,
+        "endChar": 22
+      },
+      "revId": "8b75d6c5f9b05242cc91b71476d1b3e17152acdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
