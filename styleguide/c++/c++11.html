@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
 Copyright 2014 The Chromium Authors. All rights reserved.
 Use of this source code is governed by a BSD-style license that can be
@@ -374,6 +374,14 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 <th style='width:240px;'>Description</th>
 <th style='width:240px;'>Documentation Link</th>
 <th style='width:240px;'>Notes and Discussion Thread</th>
+</tr>
+
+<tr>
+<td>Generic lambdas</td>
+<td><code>[](const auto&amp; x) { <i>...</i> }</code></td>
+<td>Allows lambda argument types to be deduced using <code>auto</code> (according to the rules that apply to templates).</td>
+<td><a href="http://en.cppreference.com/w/cpp/language/lambda">lambda expressions</a></td>
+<td></td>
 </tr>
 
 <tr>
@@ -959,14 +967,6 @@ for printing or reading in this format. Still seems useful in minor ways.</td>
 <td>Allows the return type of a function to be automatically deduced from its return statements, according to either template or <code>decltype</code> rules.</td>
 <td><a href="http://en.cppreference.com/w/cpp/language/function#Return_type_deduction">Return type deduction</a></td>
 <td>Likely to be primarily useful in abstract template code.</td>
-</tr>
-
-<tr>
-<td>Generic lambdas</td>
-<td><code>[](const auto&amp; x) { <i>...</i> }</code></td>
-<td>Allows lambda argument types to be deduced using <code>auto</code> (according to the rules that apply to templates).</td>
-<td><a href="http://en.cppreference.com/w/cpp/language/lambda">lambda expressions</a></td>
-<td></td>
 </tr>
 
 <tr>
