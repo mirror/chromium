@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "gin/gin_export.h"
 #include "v8/include/v8-platform.h"
 
@@ -40,6 +41,13 @@ class GIN_EXPORT V8Platform : public v8::Platform {
   StackTracePrinter GetStackTracePrinter() override;
   v8::TracingController* GetTracingController() override;
 
+  // Shifts wallclock time used by V8.
+  void SetClockTimeOffsetMillis(base::Optional<double> offset);
+
+  base::Optional<double> GetClockTimeOffsetMillis() const {
+    return clock_time_offset_millis_;
+  }
+
  private:
   friend struct base::LazyInstanceTraitsBase<V8Platform>;
 
@@ -48,6 +56,9 @@ class GIN_EXPORT V8Platform : public v8::Platform {
 
   class TracingControllerImpl;
   std::unique_ptr<TracingControllerImpl> tracing_controller_;
+
+  base::Optional<double> clock_time_offset_millis_;
+  base::Optional<double> last_clock_time_millis_;
 
   DISALLOW_COPY_AND_ASSIGN(V8Platform);
 };
