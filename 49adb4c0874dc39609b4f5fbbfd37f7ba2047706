@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dda2f039_e9d5523a",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-09T23:43:55Z",
+      "side": 1,
+      "message": "Nope, using base::CreateSingleThreadTaskRunnerWithTraits in latest patch instead.",
+      "parentUuid": "04a6e238_b52d098a",
+      "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06f21412_a19c25ee",
         "filename": "ash/cursor/cursor_view.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "31ea5f04_41cd0e6c",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-09T23:43:55Z",
+      "side": 1,
+      "message": "This was only used on X11. I removed this function from latest patch and instead implemented ui::CursorController::CursorObserver support on X11.\n\nOn Ozone-DRM we get EVDEV -\u003e paint thread. On X11, we of course process input on UI thread but that\u0027s not a case we care about except for development and debugging purposes.",
+      "parentUuid": "06f21412_a19c25ee",
+      "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e92f829c_e561cb9c",
         "filename": "ash/cursor/cursor_view.h",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-09T20:23:50Z",
       "side": 1,
       "message": "Why is this code in Ash? This seems working against the goal of Mustash team to separate Ash from the WS/Viz. The functionality here belongs in the WS/Viz?",
+      "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa88b65_f48c4f40",
+        "filename": "ash/cursor/cursor_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-09T23:43:55Z",
+      "side": 1,
+      "message": "This is built on the ash FastInk code that is used by the highlighter and laser pointer. I\u0027m not sure what the plan is for those UI elements and Mustash but I was under the impression that this code already worked fine with MUS.\n\nFyi, unlike a traditional HW cursor, this cursor implementation is closely tied to WM and UI code and can as a result easily support all kinds of accessibility features that we rely on a SW cursor for today. It\u0027s faster than the current SW cursor as it uses the fast ink rendering mechanism we developed for zero-latency stylus.",
+      "parentUuid": "e92f829c_e561cb9c",
       "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
