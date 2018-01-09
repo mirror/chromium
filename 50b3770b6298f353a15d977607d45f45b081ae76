@@ -378,6 +378,30 @@
       "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b6185d_5f9265c2",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-09T22:51:28Z",
+      "side": 1,
+      "message": "This delta is kept track in wheel_target_.delta in RWHIER and was updated in DispatchMouseWheelEvent. By \"position conversion\", I meant keeping \"mouse_wheel_event.SetPositionInWidget\" in line 191 in this function (the newest patchset includes these changes). Could you explain what \"the delta is what allows the point conversion\" means?",
+      "parentUuid": "0c9fa122_3389407e",
+      "range": {
+        "startLine": 190,
+        "startChar": 24,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
