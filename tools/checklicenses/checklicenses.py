@@ -514,6 +514,9 @@ PATH_SPECIFIC_WHITELISTED_LICENSES = {
     'third_party/sqlite': [
         'UNKNOWN',
     ],
+    'third_party/unrar': [
+        'UNKNOWN',
+    ],
 
     # New BSD license. http://crbug.com/98455
     'tools/swarming_client/third_party/google': [
