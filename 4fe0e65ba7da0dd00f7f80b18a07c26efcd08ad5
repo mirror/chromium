@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a7db0e_6e07166e",
+        "filename": "content/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-09T20:23:48Z",
+      "side": 1,
+      "message": "no need for this namespace, otherwise Browser::Histogram is not much shorter than Array\u003cHistogram\u003e",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71874be_9817bec2",
+        "filename": "content/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-09T20:23:48Z",
+      "side": 1,
+      "message": "style: inline these - you only have a handful of them.",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4fcb91_94674d9d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-09T20:23:48Z",
+      "side": 1,
+      "message": "experimental type",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e9960c_bde0e4e0",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-09T20:23:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361dd579_94325535",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-09T20:23:48Z",
+      "side": 1,
+      "message": "experimental command",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd83b38_135a7dd7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-09T20:23:48Z",
+      "side": 1,
+      "message": "ditto, also, can we leave getHistograms only? Is there a way to pass name as a query?",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
