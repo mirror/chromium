@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f5051e_8c80470f",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:57:37Z",
+      "side": 1,
+      "message": "OK, how about:\n\n// The time this window was last focused. Set to base::TimeTicks() if it\u0027s a non-window client.\nmojo.common.mojom.TimeTicks last_focus_time;\n\n// The time this client was created.\nmojo.common.mojom.TimeTicks creation_time;",
+      "revId": "94fea21edf29905763585e7a13772014a7601eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
