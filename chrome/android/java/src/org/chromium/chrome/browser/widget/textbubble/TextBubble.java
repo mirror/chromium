@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.widget.textbubble;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
@@ -187,17 +188,7 @@ public class TextBubble implements OnTouchListener {
         createContentView();
         updateBubbleLayout();
         mPopupWindow.showAtLocation(mRootView, Gravity.TOP | Gravity.START, mX, mY);
-
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!mPopupWindow.isShowing() || mPopupWindow.getContentView() == null) return;
-
-                mPopupWindow.getContentView().announceForAccessibility(
-                        mContext.getString(mAccessibilityStringId));
-            }
-        });
-
+        announceForAccessibility();
         sBubbles.add(this);
     }
 
@@ -415,6 +406,27 @@ public class TextBubble implements OnTouchListener {
         // is shown. Explicitly set the LayoutParams to avoid crashing. See crbug.com/713759.
         view.setLayoutParams(
                 new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+    }
+
+    /**
+     * Announce an accessibility event about the bubble text.
+     */
+    private void announceForAccessibility() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!mPopupWindow.isShowing() || mPopupWindow.getContentView() == null) return;
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+                    mPopupWindow.getContentView().announceForAccessibility(
+                            mContext.getString(mAccessibilityStringId));
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    if (mRootView == null) return;
+                    // For Android J and K, send the accessibility event from root view.
+                    // See https://crbug.com/773387.
+                    mRootView.announceForAccessibility(mContext.getString(mAccessibilityStringId));
+                }
+            }
+        });
     }
 
     // OnTouchListener implementation.
