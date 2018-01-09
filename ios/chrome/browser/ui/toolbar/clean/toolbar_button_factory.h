@@ -12,6 +12,7 @@
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @class ToolbarButton;
+@protocol ToolbarCommands;
 @class ToolbarToolsMenuButton;
 @class ToolbarConfiguration;
 
@@ -29,7 +30,9 @@
 @property(nonatomic, strong, readonly)
     ToolbarConfiguration* toolbarConfiguration;
 // Dispatcher used to initialize targets for the buttons.
-@property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
+@property(nonatomic, weak)
+    id<ApplicationCommands, BrowserCommands, ToolbarCommands>
+        dispatcher;
 
 // Back ToolbarButton.
 - (ToolbarButton*)backButton;
