@@ -11,7 +11,6 @@
 #include "base/bind.h"
 #include "base/callback_forward.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 
 // This is a helper utility to wrap a base::OnceCallback such that if the
 // callback is destructed before it has a chance to run (e.g. the callback is
@@ -83,7 +82,7 @@ inline base::OnceCallback<T> ScopedCallbackRunner(base::OnceCallback<T> cb,
                                                   Args&&... args) {
   return base::BindOnce(
       &internal::ScopedCallbackRunnerHelper<T>::Run,
-      base::MakeUnique<internal::ScopedCallbackRunnerHelper<T>>(
+      std::make_unique<internal::ScopedCallbackRunnerHelper<T>>(
           std::move(cb), std::forward<Args>(args)...));
 }
 
