@@ -278,3 +278,124 @@ testcase.hideGoogleDocs = function() {
     },
   ]);
 };
+
+/**
+ * Test for the "paste" menu item
+ */
+testcase.showPasteInGearMenu = function() {
+  const entrySet = [ENTRIES.hello, ENTRIES.world];
+  var appId;
+  StepsRunner.run([
+    function() {
+      addEntries(['local'], entrySet, this.next);
+    },
+    function(result) {
+      chrome.test.assertTrue(result);
+      openNewWindow(null, RootPath.DOWNLOADS).then(this.next);
+    },
+    function(inAppId) {
+      appId = inAppId;
+      remoteCall.waitForElement(appId, '#detail-table').then(this.next);
+    },
+    // Wait for the expected files to appear in the file list.
+    function() {
+      remoteCall.waitForFiles(appId, TestEntryInfo.getExpectedRows(entrySet))
+          .then(this.next);
+    },
+    function() {
+      remoteCall.waitForElement(appId, '#gear-button').then(this.next);
+    },
+
+    // 1. Before selecting entries
+    function() {
+      remoteCall.callRemoteTestUtil(
+          'fakeMouseClick', appId, ['#gear-button'], this.next);
+    },
+    // Wait for menu to appear.
+    function(result) {
+      chrome.test.assertTrue(result);
+      remoteCall.waitForElement(appId, '#gear-menu:not([hidden])')
+          .then(this.next);
+    },
+    // #paste command is shown. Disabled because no file was copied.
+    function(result) {
+      remoteCall
+          .waitForElement(
+              appId,
+              '#gear-menu cr-menu-item[command=\'#paste\'][disabled]' +
+                  ':not([hidden])')
+          .then(this.next);
+    },
+    function() {
+      remoteCall.callRemoteTestUtil(
+          'fakeMouseClick', appId, ['#file-list'], this.next);
+    },
+    function() {
+      remoteCall.waitForElement(appId, '#gear-menu[hidden]').then(this.next);
+    },
+
+    // 2. Selecting a single regular file
+    function(result) {
+      remoteCall.callRemoteTestUtil(
+          'selectFile', appId, [ENTRIES.hello.nameText], this.next);
+    },
+    function(result) {
+      chrome.test.assertTrue(result);
+      remoteCall.callRemoteTestUtil(
+          'fakeMouseClick', appId, ['#gear-button'], this.next);
+    },
+    // Wait for menu to appear.
+    // The command is still hidden because the selection is not a directory.
+    function() {
+      remoteCall
+          .waitForElement(
+              appId,
+              '#gear-menu:not([hidden])' +
+                  ' cr-menu-item[command=\'#paste\'][disabled]:not([hidden])')
+          .then(this.next);
+    },
+    function() {
+      remoteCall.callRemoteTestUtil(
+          'fakeMouseClick', appId, ['#file-list'], this.next);
+    },
+    function() {
+      remoteCall.waitForElement(appId, '#gear-menu[hidden]').then(this.next);
+    },
+
+    // 3. When ready to paste a file
+    function(result) {
+      remoteCall.callRemoteTestUtil(
+          'selectFile', appId, [ENTRIES.hello.nameText], this.next);
+    },
+    // Ctrl-C to copy the selected file
+    function() {
+      remoteCall
+          .fakeKeyDown(appId, '#file-list', 'c', 'U+0043', true, false, false)
+          .then(this.next);
+    },
+    function() {
+      remoteCall.callRemoteTestUtil(
+          'fakeMouseClick', appId, ['#gear-button'], this.next);
+    },
+    function() {
+      remoteCall
+          .waitForElement(
+              appId,
+              '#gear-menu:not([hidden])' +
+                  ' cr-menu-item[command=\'#paste\']' +
+                  ':not([disabled]):not([hidden])')
+          .then(this.next);
+    },
+    function() {
+      remoteCall.callRemoteTestUtil(
+          'fakeMouseClick', appId, ['#file-list'], this.next);
+    },
+    function() {
+      remoteCall.waitForElement(appId, '#gear-menu[hidden]').then(this.next);
+    },
+
+    function() {
+      checkIfNoErrorsOccured(this.next);
+    },
+  ]);
+};
