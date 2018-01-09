@@ -329,6 +329,7 @@ static_library("test_support") {
     "//components/signin/core/browser",
     "//components/ukm",
     "//components/ukm:test_support",
+    "//content/test:test_support",
     "//google_apis:test_support",
     "//skia",
     "//testing/gtest",
