@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19483c2d_f73362bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-09T19:18:58Z",
+      "side": 1,
+      "message": "We should have some doc about this interface",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 6
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b21117_37eebcf3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-09T19:18:58Z",
+      "side": 1,
+      "message": "should we just have onEnterVr that takes the surface manager and compositor window?  Are these expected to be called back to back?\n\nTangent, I think it would be good to get rid of getNativePointer as a public method from WindowAndroid and add a FromJavaObject on window_android natively that would be able to call the now private getNativePointer and get the native object.",
+      "range": {
+        "startLine": 398,
+        "startChar": 16,
+        "endLine": 398,
+        "endChar": 42
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed52c78_df3209f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-09T19:18:58Z",
+      "side": 1,
+      "message": "nit, 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c29b2c8_0b4029fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-09T19:18:58Z",
+      "side": 1,
+      "message": "should we add any checks that setSurface has been called at this point?  Throw an exception if mSurface \u003d\u003d null?",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c8f729_90c70b01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-09T19:18:58Z",
+      "side": 1,
+      "message": "this is only called from within CompositorSurfaceManager.  Looks like we could make it package protected for testing and remove it from the interface.",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b7baa0_fa916446",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-09T19:18:58Z",
+      "side": 1,
+      "message": "should we do anything here?  Assert this isn\u0027t called while in VR?",
+      "range": {
+        "startLine": 84,
+        "startChar": 47,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
