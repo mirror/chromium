@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2f90bce_d675367b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-09T21:00:13Z",
+      "side": 1,
+      "message": "Ooops, I\u0027ll finish that comment :-)\n\nIt should read \"until we determine the cause of the empty gesture target queue and fix it.\"",
+      "parentUuid": "801c685b_439ac3ab",
+      "revId": "1c40ce2cc92e0a9695f8e3acc3c25201e00182fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79b5f386_77862f26",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T20:31:44Z",
       "side": 1,
       "message": "I think this can just become a RenderWidgetHostViewBase, since it\u0027s no longer using |delta| (I think?).",
+      "revId": "1c40ce2cc92e0a9695f8e3acc3c25201e00182fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085b261f_57052687",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-09T21:00:13Z",
+      "side": 1,
+      "message": "I was thinking we\u0027d finish all the refactors, including RouteTouchpadGestureEvent(), then see if we can do a single CL to get rid of all the TargetData\u0027s at once. But I can convert this as a one-off if you like.",
+      "parentUuid": "79b5f386_77862f26",
       "revId": "1c40ce2cc92e0a9695f8e3acc3c25201e00182fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
