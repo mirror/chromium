@@ -22,6 +22,23 @@
       "revId": "69af8d1981115611e01a6b39637e6a81bd493018",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730c361a_9eddee02",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T23:27:40Z",
+      "side": 1,
+      "message": "this argument list is getting pretty long. it might be cleaner to make this method take a const StartArcInstanceRequest\u0026 instead. that would also have the benefit of pulling the startup_mode logic out of this class and moving it somewhere else that\u0027d probably be easier to test. see https://chromium.googlesource.com/chromiumos/docs/+/master/dbus_in_chrome.md#Keep-your-class-minimal",
+      "revId": "69af8d1981115611e01a6b39637e6a81bd493018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
