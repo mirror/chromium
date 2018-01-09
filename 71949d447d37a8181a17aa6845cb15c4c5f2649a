@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73025f76_3115f14a",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/DOMUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-09T18:11:10Z",
+      "side": 1,
+      "message": "I assume flooring here is ok?",
+      "revId": "71949d447d37a8181a17aa6845cb15c4c5f2649a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
