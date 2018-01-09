@@ -5,6 +5,8 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -28,6 +30,7 @@
 #include "content/public/common/proxy_config.mojom.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "net/base/cache_type.h"
+#include "net/base/ip_endpoint.h"
 #include "net/base/net_errors.h"
 #include "net/base/test_completion_callback.h"
 #include "net/cookies/canonical_cookie.h"
@@ -45,6 +48,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_job_factory.h"
+#include "services/network/udp_socket_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/scheme_host_port.h"
@@ -666,5 +670,107 @@ class TestProxyConfigLazyPoller : public mojom::ProxyConfigPollerClient {
   DISALLOW_COPY_AND_ASSIGN(TestProxyConfigLazyPoller);
 };
 
+net::IPEndPoint GetLocalHostWithAnyPort() {
+  return net::IPEndPoint(net::IPAddress(127, 0, 0, 1), 0);
+}
+
+std::vector<uint8_t> CreateTestMessage(uint8_t initial, size_t size) {
+  std::vector<uint8_t> array(size);
+  for (size_t i = 0; i < size; ++i)
+    array[i] = static_cast<uint8_t>((i + initial) % 256);
+  return array;
+}
+
+TEST_F(NetworkContextTest, CreateUDPSocket) {
+  std::unique_ptr<NetworkContext> network_context =
+      CreateContextWithParams(CreateContextParams());
+
+  network::mojom::UDPSocketFactoryPtr factory_ptr;
+  network_context->GetUDPSocketFactory(mojo::MakeRequest(&factory_ptr));
+
+  // Create a server socket to listen for incoming datagrams.
+  network::test::UDPSocketReceiverImpl receiver;
+  mojo::Binding<network::mojom::UDPSocketReceiver> receiver_binding(&receiver);
+  network::mojom::UDPSocketReceiverPtr receiver_interface_ptr;
+  receiver_binding.Bind(mojo::MakeRequest(&receiver_interface_ptr));
+
+  net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
+  network::mojom::UDPSocketPtr server_socket;
+  network::mojom::UDPSocketOptionsPtr server_socket_options;
+  int result = net::ERR_FAILED;
+  {
+    base::RunLoop run_loop;
+    factory_ptr->OpenAndBind(
+        mojo::MakeRequest(&server_socket), std::move(server_socket_options),
+        std::move(receiver_interface_ptr), server_addr,
+        base::BindOnce(
+            [](base::RunLoop* run_loop, int* result_out,
+               net::IPEndPoint* local_addr_out, int result,
+               const base::Optional<net::IPEndPoint>& local_addr) {
+              if (local_addr)
+                *local_addr_out = local_addr.value();
+              *result_out = result;
+              run_loop->Quit();
+            },
+            base::Unretained(&run_loop), base::Unretained(&result),
+            base::Unretained(&server_addr)));
+    run_loop.Run();
+  }
+  ASSERT_EQ(net::OK, result);
+
+  // Create a client socket to send datagrams.
+  network::mojom::UDPSocketPtr client_socket;
+  network::mojom::UDPSocketOptionsPtr client_socket_options;
+  network::test::UDPSocketReceiverImpl client_receiver;
+  mojo::Binding<network::mojom::UDPSocketReceiver> client_receiver_binding(
+      &client_receiver);
+  network::mojom::UDPSocketReceiverPtr client_receiver_ptr;
+  client_receiver_binding.Bind(mojo::MakeRequest(&client_receiver_ptr));
+  net::IPEndPoint client_addr;
+  {
+    base::RunLoop run_loop;
+    factory_ptr->OpenAndConnect(
+        mojo::MakeRequest(&client_socket), std::move(client_socket_options),
+        std::move(client_receiver_ptr), server_addr,
+        base::BindOnce(
+            [](base::RunLoop* run_loop, int* result_out,
+               net::IPEndPoint* local_addr_out, int result,
+               const base::Optional<net::IPEndPoint>& local_addr) {
+              if (local_addr)
+                *local_addr_out = local_addr.value();
+              *result_out = result;
+              run_loop->Quit();
+            },
+            base::Unretained(&run_loop), base::Unretained(&result),
+            base::Unretained(&client_addr)));
+    run_loop.Run();
+  }
+  ASSERT_EQ(net::OK, result);
+  const size_t kDatagramCount = 6;
+  const size_t kDatagramSize = 255;
+  server_socket->ReceiveMore(kDatagramCount);
+
+  for (size_t i = 0; i < kDatagramCount; ++i) {
+    std::vector<uint8_t> test_msg(
+        CreateTestMessage(static_cast<uint8_t>(i), kDatagramSize));
+    int result =
+        network::test::UDPSocketTestHelper::SendSync(&client_socket, test_msg);
+    EXPECT_EQ(net::OK, result);
+  }
+
+  receiver.WaitForReceivedResults(kDatagramCount);
+  EXPECT_EQ(kDatagramCount, receiver.results().size());
+
+  int i = 0;
+  for (const auto& result : receiver.results()) {
+    EXPECT_EQ(net::OK, result.net_error);
+    EXPECT_EQ(result.src_addr, client_addr);
+    EXPECT_EQ(CreateTestMessage(static_cast<uint8_t>(i), kDatagramSize),
+              result.data.value());
+    i++;
+  }
+}
+
 }  // namespace
+
 }  // namespace content
