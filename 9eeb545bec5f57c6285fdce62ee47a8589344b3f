@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2135b1d0_c1e24c6d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryService/service-found.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T18:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14cab1af_a92cbc9b",
+      "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0cb7dd8_5404ee2f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/blocklisted-services-with-uuid.https.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9155eb7_7173bf87",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/blocklisted-services-with-uuid.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T18:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0cb7dd8_5404ee2f",
+      "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "64869584_f487efbb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/blocklisted-services.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T18:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9138aa01_a3cfedfc",
+      "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58900878_88ef0960",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/correct-services.https.html",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419bfc23_05c882a7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/correct-services.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T18:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58900878_88ef0960",
+      "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "40e87533_d4ae16be",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/services-found-with-uuid.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T18:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5245e3fa_6e39cbe3",
+      "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f71158e_31ffb4b4",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/services-found.https.html",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a75027_a90d4f03",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/services-found.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T18:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f71158e_31ffb4b4",
+      "revId": "9eeb545bec5f57c6285fdce62ee47a8589344b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
