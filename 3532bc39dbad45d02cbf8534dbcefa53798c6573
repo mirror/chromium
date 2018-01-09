@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8c917a0_d90073d7",
+        "filename": "content/browser/child_process_security_policy_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-09T00:04:24Z",
+      "side": 1,
+      "message": "let\u0027s just remove the the test if there\u0027s nothing special about these any more (and below) so that searching the code for blobinternal shouldn\u0027t give hits.",
+      "range": {
+        "startLine": 233,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 76
+      },
+      "revId": "3532bc39dbad45d02cbf8534dbcefa53798c6573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
