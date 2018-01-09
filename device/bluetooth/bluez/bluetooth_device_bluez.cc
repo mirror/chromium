@@ -540,6 +540,7 @@ void BluetoothDeviceBlueZ::SetPinCode(const std::string& pincode) {
 }
 
 void BluetoothDeviceBlueZ::SetPasskey(uint32_t passkey) {
+  DCHECK(pairing_.get());
   if (!pairing_.get())
     return;
 

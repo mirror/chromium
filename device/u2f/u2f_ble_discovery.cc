@@ -69,6 +69,10 @@ void U2fBleDiscovery::OnSetPowered() {
   VLOG(2) << "Adapter " << adapter_->GetAddress() << " is powered on.";
 
   for (BluetoothDevice* device : adapter_->GetDevices()) {
+    VLOG(2) << "Seen existing BLE device: " << device->GetAddress() << " "
+            << device->GetName().value_or(std::string()) << " "
+            << device->GetNameForDisplay();
+    LOG(ERROR) << device->GetUUIDs().size();
     if (base::ContainsKey(device->GetUUIDs(), U2fServiceUUID())) {
       VLOG(2) << "U2F BLE device: " << device->GetAddress();
       AddDevice(std::make_unique<U2fBleDevice>(device->GetAddress()));
