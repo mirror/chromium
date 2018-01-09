@@ -1052,49 +1052,72 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
   touchscreen_gesture_target_.target->ProcessGestureEvent(*event, latency);
 }
 
+RenderWidgetHostViewBase*
+RenderWidgetHostInputEventRouter::FindTouchpadGeestureEvent(
+    RenderWidgetHostViewBase* root_view,
+    const blink::WebGestureEvent& event,
+    gfx::PointF* transformed_point) const {
+  if (event.GetType() != blink::WebInputEvent::kGesturePinchBegin &&
+      event.GetType() != blink::WebInputEvent::kGestureFlingStart) {
+    return nullptr;
+  }
+
+  auto result = FindViewAtLocation(root_view, event.PositionInWidget(),
+                                   event.PositionInScreen(),
+                                   viz::EventSource::TOUCH, transformed_point);
+  // TODO(crbug.com/796656): Do not ignore |result.should_query_view|.
+  return result.view;
+}
+
 void RenderWidgetHostInputEventRouter::RouteTouchpadGestureEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebGestureEvent* event,
     const ui::LatencyInfo& latency) {
   DCHECK_EQ(blink::kWebGestureDeviceTouchpad, event->source_device);
+  gfx::PointF transformed_point;
+  RenderWidgetHostViewBase* const target =
+      FindTouchpadGeestureEvent(root_view, *event, &transformed_point);
+  DispatchTouchpadGestureEvent(root_view, target, *event, latency,
+                               transformed_point - event->PositionInWidget());
+}
 
-  if (event->GetType() == blink::WebInputEvent::kGesturePinchBegin ||
-      event->GetType() == blink::WebInputEvent::kGestureFlingStart) {
-    gfx::PointF transformed_point;
-    gfx::PointF original_point(event->x, event->y);
-    gfx::PointF original_point_in_screen(event->global_x, event->global_y);
-    auto result =
-        FindViewAtLocation(root_view, original_point, original_point_in_screen,
-                           viz::EventSource::TOUCH, &transformed_point);
-    // TODO(crbug.com/796656): Do not ignore |result.should_query_view|.
-    touchpad_gesture_target_.target = result.view;
+void RenderWidgetHostInputEventRouter::DispatchTouchpadGestureEvent(
+    RenderWidgetHostViewBase* root_view,
+    RenderWidgetHostViewBase* target,
+    const blink::WebGestureEvent& touchpad_gesture_event,
+    const ui::LatencyInfo& latency,
+    const gfx::Vector2dF& delta) {
+  if (target) {
+    touchpad_gesture_target_.target = target;
     // TODO(mohsen): Instead of just computing a delta, we should extract the
     // complete transform. We assume it doesn't change for the duration of the
     // touchpad gesture sequence, though this could be wrong; a better approach
     // might be to always transform each point to the
     // |touchpad_gesture_target_.target| for the duration of the sequence.
-    touchpad_gesture_target_.delta = transformed_point - original_point;
+    touchpad_gesture_target_.delta = delta;
 
     // Abort any scroll bubbling in progress to avoid double entry.
     if (touchpad_gesture_target_.target &&
         touchpad_gesture_target_.target ==
             bubbling_gesture_scroll_target_.target) {
-      SendGestureScrollEnd(bubbling_gesture_scroll_target_.target,
-                           DummyGestureScrollUpdate(event->TimeStampSeconds()));
+      SendGestureScrollEnd(
+          bubbling_gesture_scroll_target_.target,
+          DummyGestureScrollUpdate(touchpad_gesture_event.TimeStampSeconds()));
       CancelScrollBubbling(bubbling_gesture_scroll_target_.target);
     }
   }
 
   if (!touchpad_gesture_target_.target) {
-    root_view->GestureEventAck(*event,
+    root_view->GestureEventAck(touchpad_gesture_event,
                                INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS);
     return;
   }
 
+  blink::WebGestureEvent gesture_event = touchpad_gesture_event;
   // TODO(mohsen): Add tests to check event location.
-  event->x += touchpad_gesture_target_.delta.x();
-  event->y += touchpad_gesture_target_.delta.y();
-  touchpad_gesture_target_.target->ProcessGestureEvent(*event, latency);
+  gesture_event.x += delta.x();
+  gesture_event.y += delta.y();
+  touchpad_gesture_target_.target->ProcessGestureEvent(gesture_event, latency);
 }
 
 std::vector<RenderWidgetHostView*>
