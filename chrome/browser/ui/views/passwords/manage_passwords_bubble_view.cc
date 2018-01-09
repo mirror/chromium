@@ -491,9 +491,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
   const autofill::PasswordForm& password_form =
       parent_->model()->pending_password();
   const bool is_password_credential = password_form.federation_origin.unique();
-  if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnableUsernameCorrection) &&
-      parent_->model()->enable_editing()) {
+  if (parent_->model()->enable_editing()) {
     username_field_ = CreateUsernameEditable(password_form).release();
   } else {
     username_field_ = CreateUsernameLabel(password_form).release();
@@ -501,9 +499,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
 
   CreatePasswordField();
 
-  if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnablePasswordSelection) &&
-      !parent_->model()->hide_eye_icon() && is_password_credential) {
+  if (!parent_->model()->hide_eye_icon() && is_password_credential) {
     password_view_button_ = CreatePasswordViewButton(this).release();
   }
 
@@ -515,9 +511,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
       l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_BUBBLE_BLACKLIST_BUTTON));
 
   CreateAndSetLayout(is_password_credential);
-  if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnableUsernameCorrection) &&
-      parent_->model()->enable_editing() &&
+  if (parent_->model()->enable_editing() &&
       parent_->model()->pending_password().username_value.empty()) {
     parent_->set_initially_focused_view(username_field_);
   } else {
@@ -579,12 +573,9 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout(
 }
 
 void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
-  const bool enable_password_selection = base::FeatureList::IsEnabled(
-      password_manager::features::kEnablePasswordSelection);
   const autofill::PasswordForm& password_form =
       parent_->model()->pending_password();
-  if (enable_password_selection &&
-      password_form.all_possible_passwords.size() > 1 &&
+  if (password_form.all_possible_passwords.size() > 1 &&
       parent_->model()->enable_editing()) {
     password_dropdown_ = CreatePasswordDropdownView(password_form).release();
   } else {
@@ -612,12 +603,8 @@ void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
 void ManagePasswordsBubbleView::PendingView::
     UpdateUsernameAndPasswordInModel() {
   const bool username_editable =
-      base::FeatureList::IsEnabled(
-          password_manager::features::kEnableUsernameCorrection) &&
       parent_->model()->enable_editing();
   const bool password_editable =
-      base::FeatureList::IsEnabled(
-          password_manager::features::kEnablePasswordSelection) &&
       password_dropdown_ && parent_->model()->enable_editing();
   if (!username_editable && !password_editable)
     return;

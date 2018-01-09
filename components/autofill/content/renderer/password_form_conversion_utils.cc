@@ -675,8 +675,6 @@ bool GetPasswordForm(
   LocateSpecificPasswords(passwords, &password, &new_password,
                           &confirmation_password);
 
-  if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnablePasswordSelection)) {
     bool form_has_autofilled_value = false;
     // Add non-empty unique possible passwords to the vector.
     std::vector<base::string16> all_possible_passwords;
@@ -699,7 +697,6 @@ bool GetPasswordForm(
       password_form->all_possible_passwords = std::move(all_possible_passwords);
       password_form->form_has_autofilled_value = form_has_autofilled_value;
     }
-  }
 
   // Base heuristic for username detection.
   WebInputElement base_heuristic_prediction;
