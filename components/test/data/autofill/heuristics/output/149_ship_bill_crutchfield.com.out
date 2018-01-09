@@ -1,0 +1,20 @@
+UNKNOWN_TYPE | accountLoginEmail | Email |  | accountLoginEmail_1-default
+UNKNOWN_TYPE | accountLoginPassword | Password |  | accountLoginEmail_1-default
+NAME_FULL | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName | Full Name * Enter your full name |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+ADDRESS_HOME_LINE1 | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingAddress1 | Street Address * Enter your address |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+ADDRESS_HOME_LINE2 | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingAddress2 | optional |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+HTML_TYPE_ADDRESS_LEVEL2 | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingCityStateZip$addressCity | City * |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+HTML_TYPE_ADDRESS_LEVEL1 | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingCityStateZip$addressState | State * | Select your state | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+HTML_TYPE_POSTAL_CODE | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingCityStateZip$addressZip | Zip * |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+PHONE_HOME_WHOLE_NUMBER | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingPhone | Phone * Enter a valid phone number |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+EMAIL_ADDRESS | ctl00$CheckoutResponsiveMainContentPlaceHolder$email | Email * Enter a valid Email |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+UNKNOWN_TYPE | ctl00$CheckoutResponsiveMainContentPlaceHolder$emailSignup | Send me exclusive offers, deals and expert reviews. | on | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+UNKNOWN_TYPE | ctl00$CheckoutResponsiveMainContentPlaceHolder$giftOrder | This order is a gift (prices will not appear on invoice) | on | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+UNKNOWN_TYPE | ctl00$CheckoutResponsiveMainContentPlaceHolder$same | Ship to my Billing Address | on | ctl00$CheckoutResponsiveMainContentPlaceHolder$billingName_1-default
+NAME_FULL | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingName | Full Name * Enter your full name |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingName_1-default
+ADDRESS_HOME_LINE1 | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingAddress1 | Street Address * Enter a 'Ship To' address |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingName_1-default
+ADDRESS_HOME_LINE2 | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingAddress2 | Shipping Address |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingName_1-default
+HTML_TYPE_ADDRESS_LEVEL2 | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingCityStateZip$addressCity | City * |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingName_1-default
+HTML_TYPE_ADDRESS_LEVEL1 | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingCityStateZip$addressState | State * | Select your state | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingName_1-default
+HTML_TYPE_POSTAL_CODE | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingCityStateZip$addressZip | Zip * |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingName_1-default
+PHONE_HOME_WHOLE_NUMBER | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingPhone | Phone * Enter a 'Ship To' phone |  | ctl00$CheckoutResponsiveMainContentPlaceHolder$shippingName_1-default

@@ -1322,6 +1322,7 @@ void AutofillManager::FillOrPreviewDataModelForm(
   // If the relevant section is auto-filled, we should fill |field| but not the
   // rest of the form.
   if (SectionIsAutofilled(*form_structure, form, autofill_field->section())) {
+    LOG(ERROR) << "Section was already filled " << autofill_field->section();
     for (FormFieldData& iter : result.fields) {
       if (iter.SameFieldAs(field)) {
         FillFieldWithValue(autofill_field, data_model, &iter,
@@ -1337,6 +1338,7 @@ void AutofillManager::FillOrPreviewDataModelForm(
     driver()->SendFormDataToRenderer(query_id, action, result);
     return;
   }
+  LOG(ERROR) << "Filling whole section " << autofill_field->section();
 
   DCHECK_EQ(form_structure->field_count(), form.fields.size());
 

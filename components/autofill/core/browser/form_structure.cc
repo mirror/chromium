@@ -1320,6 +1320,7 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
     return;
 
   if (!has_author_specified_sections) {
+    LOG(ERROR) << "Author has NOT specified sections";
     // Name sections after the first field in the section.
     base::string16 current_section = fields_.front()->unique_name();
 
@@ -1328,6 +1329,7 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
     ServerFieldType previous_type = UNKNOWN_TYPE;
 
     for (const auto& field : fields_) {
+      LOG(ERROR) << "check section for " << field->name;
       const ServerFieldType current_type = field->Type().GetStorableType();
 
       bool already_saw_current_type = seen_types.count(current_type) > 0;
@@ -1343,8 +1345,10 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
       bool ignored_field =
           !field->is_focusable ||
           field->role == FormFieldData::ROLE_ATTRIBUTE_PRESENTATION;
-      if (ignored_field)
+      if (ignored_field) {
+        LOG(ERROR) << "Was ignored";
         already_saw_current_type = false;
+      }
 
       // Some forms have adjacent fields of the same type.  Two common examples:
       //  * Forms with two email fields, where the second is meant to "confirm"
@@ -1360,6 +1364,7 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
 
       if (current_type != UNKNOWN_TYPE && already_saw_current_type) {
         // We reached the end of a section, so start a new section.
+        LOG(ERROR) << "Starting a new section";
         seen_types.clear();
         current_section = field->unique_name();
       }
@@ -1378,6 +1383,8 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
 
       field->set_section(base::UTF16ToUTF8(current_section));
     }
+  } else {
+    LOG(ERROR) << "Author HAS specified sections";
   }
 
   // Ensure that credit card and address fields are in separate sections.
