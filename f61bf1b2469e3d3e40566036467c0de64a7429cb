@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "127e93a9_e1f8856b",
+        "filename": "chrome/browser/extensions/theme_installed_infobar_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-09T20:48:16Z",
+      "side": 1,
+      "message": "Can you please document what the |name| parameter should be? It is non-obvious",
+      "revId": "f61bf1b2469e3d3e40566036467c0de64a7429cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
