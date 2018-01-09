@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2268dc76_c66a8b89",
+        "filename": "chrome/browser/autofill/risk_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-09T19:53:54Z",
+      "side": 1,
+      "message": "fix comment",
+      "revId": "1a531e5f1d6b0cc2cdb1b3a7eb2f91f2cf2adbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
