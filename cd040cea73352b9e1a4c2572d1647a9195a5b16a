@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c950d9e_bb4e78c1",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/PostMessageTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2018-01-09T10:32:59Z",
+      "side": 1,
+      "message": "It seems like this comment should be rewritten.",
+      "range": {
+        "startLine": 597,
+        "startChar": 7,
+        "endLine": 597,
+        "endChar": 23
+      },
+      "revId": "cd040cea73352b9e1a4c2572d1647a9195a5b16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
