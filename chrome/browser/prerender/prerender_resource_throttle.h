@@ -13,8 +13,8 @@
 #include "base/optional.h"
 #include "chrome/common/prerender_types.h"
 #include "content/public/browser/resource_request_info.h"
-#include "content/public/browser/resource_throttle.h"
 #include "content/public/common/resource_type.h"
+#include "content/public/network/resource_throttle.h"
 #include "net/base/request_priority.h"
 
 class GURL;

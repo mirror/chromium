@@ -14,7 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "content/browser/loader/layered_resource_handler.h"
 #include "content/common/content_export.h"
-#include "content/public/browser/resource_throttle.h"
+#include "content/public/network/resource_throttle.h"
 #include "net/url_request/redirect_info.h"
 #include "url/gurl.h"
 

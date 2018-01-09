@@ -8,7 +8,7 @@
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/android/download/download_controller_base.h"
 #include "content/public/browser/resource_request_info.h"
-#include "content/public/browser/resource_throttle.h"
+#include "content/public/network/resource_throttle.h"
 #include "net/cookies/cookie_store.h"
 
 namespace net {

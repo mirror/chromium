@@ -10,7 +10,7 @@
 #include "base/memory/weak_ptr.h"
 #include "components/component_updater/component_updater_service.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/resource_throttle.h"
+#include "content/public/network/resource_throttle.h"
 
 using content::BrowserThread;
 
