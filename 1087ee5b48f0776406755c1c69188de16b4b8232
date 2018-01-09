@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a6e0a9f_d72e1804",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2018-01-09T21:41:51Z",
+      "side": 1,
+      "message": "In the initial CL, https://chromium-review.googlesource.com/c/chromium/src/+/765488, added support to be able to select the new time range (Older than 30days) in \"Clear browsing data\" dialog, under the feature flag for Android. \nIn subsequent CLs, we are adding tests to verify that different browsing data bases (counting \u0026 deletion) can work with (base::Time(), t2) instead of just (t1, base::Time:Max()).\n\nCurrent CL adds tests to verify ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData() for  DATA_TYPE_FORM_DATA.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc?type\u003dcs\u0026q\u003dRemoveEmbedderData\u0026l\u003d901\n      web_data_service-\u003eRemoveFormElementsAddedBetween(delete_begin_,\n          delete_end_);\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc?type\u003dcs\u0026q\u003dRemoveEmbedderData\u0026l\u003d903\n      web_data_service-\u003eRemoveAutofillDataModifiedBetween(\n          delete_begin_, delete_end_);\n\nSo these tests verify that AutofillTable::RemoveFormElementsAddedBetween() and AutofillTable::RemoveAutofillDataModifiedBetween() work OK with (base::Time(), T2).\n\nWe have not changed anything related to date_modified vs date_created / date_last_used.\n|autofill| table uses \"date_created\" and \"date_last_used\". for deletion.\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/webdata/autofill_table.cc?type\u003dcs\u0026l\u003d581\n\n|autofill_profiles| uses \"date_modified\" for deletion.\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/webdata/autofill_table.cc?type\u003dcs\u0026l\u003d1569",
+      "parentUuid": "12ab303a_82719e79",
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b962b74e_725a0856",
         "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T15:40:27Z",
       "side": 1,
       "message": "IIUC this test is actually about autocomplete data, not autofill data. Rename?",
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20f588f_6214ebcb",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2018-01-09T21:41:51Z",
+      "side": 1,
+      "message": "I think it is still autofill data, as in other testcases. It tests the deletion from \"autofill\" table.",
+      "parentUuid": "b962b74e_725a0856",
       "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ea2da64a_86d022ad",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2018-01-09T21:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f67bdfb8_a77af15f",
+      "range": {
+        "startLine": 739,
+        "startChar": 2,
+        "endLine": 739,
+        "endChar": 12
+      },
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d85f4c5_7b2a59eb",
         "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
         "patchSetId": 7
@@ -79,6 +139,30 @@
       "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b1ee17_6ce08526",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2018-01-09T21:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d85f4c5_7b2a59eb",
+      "range": {
+        "startLine": 740,
+        "startChar": 13,
+        "endLine": 740,
+        "endChar": 30
+      },
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
