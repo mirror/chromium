@@ -824,7 +824,7 @@ EGLDisplay GLSurfaceEGL::InitializeDisplay(
     EGLDisplay display = GetDisplayFromType(display_type, g_native_display);
     if (display == EGL_NO_DISPLAY) {
       LOG(ERROR) << "EGL display query failed with error "
-                 << GetLastEGLErrorString();
+                 << GetLastEGLErrorString() << " " << g_native_display;
     }
 
     // Init ANGLE platform now that we have the global display.
