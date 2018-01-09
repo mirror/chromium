@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d62d651b_97754cb5",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-09T16:33:12Z",
+      "side": 1,
+      "message": "Makes sense. Renamed to animate_only.",
+      "parentUuid": "24ed3bae_440baca3",
+      "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "237fb620_bb015714",
         "filename": "cc/trees/proxy_main.cc",
         "patchSetId": 11
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "The TestLayerTreeFrameSink that the LayerTreeTest::CreateLayerTreeFrameSink uses has an external begin frame source which then gets passed to the cc::Scheduler.  You could intercept or recreate BeginFrameArgs in OnBeginFrame there?  That\u0027d be where I would start.",
       "parentUuid": "d5555cc8_ff6847cc",
+      "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c89113_bf9c5e16",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-09T16:33:12Z",
+      "side": 1,
+      "message": "Added a test. I ended up replacing the root BeginFrameSource, that\u0027s the only way I can ensure no other BeginFrames mess with the LayerTreeHost.",
+      "parentUuid": "1239b35b_edcb2e6f",
       "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
