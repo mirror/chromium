@@ -99,6 +99,12 @@ class TabActivityWatcherTest : public ChromeRenderViewHostTestHarness {
     TabActivityWatcher::GetInstance()->ResetForTesting();
   }
 
+  void SetUp() override {
+    ChromeRenderViewHostTestHarness::SetUp();
+    // Force TabManager creation before the first tab is created.
+    g_browser_process->GetTabManager();
+  }
+
   void TearDown() override {
     EXPECT_FALSE(WasNewEntryRecorded());
     TabActivityWatcher::GetInstance()->ResetForTesting();
