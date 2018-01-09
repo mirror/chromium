@@ -87,6 +87,24 @@
       "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc23f201_3c021f76",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T02:23:37Z",
+      "side": 1,
+      "message": "Yep, thanks",
+      "parentUuid": "9c991733_975b7d41",
+      "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
