@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b420a88_64b4ece9",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-09T01:56:42Z",
+      "side": 1,
+      "message": "This method is basically for applying WebPreferences, so the common pattern is to update WebPreferences with these parameters and apply them to settings here, while it needs more boilerplate code changes...",
+      "revId": "82285ef9aca704b1d0503404d84cf5f518cbc0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
