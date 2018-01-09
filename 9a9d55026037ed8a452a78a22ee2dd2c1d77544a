@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0dca70d_e0bce158",
+        "filename": "ash/system/network/tray_network_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T08:40:00Z",
+      "side": 0,
+      "message": "This Initialize() is still needed because the CHECK here: https://cs.chromium.org/chromium/src/chromeos/network/network_handler.cc?sq\u003dpackage:chromium\u0026l\u003d33",
+      "revId": "9a9d55026037ed8a452a78a22ee2dd2c1d77544a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
