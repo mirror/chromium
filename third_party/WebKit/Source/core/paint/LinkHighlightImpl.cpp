@@ -274,6 +274,7 @@ void LinkHighlightImpl::PaintContents(
   if (!node_ || !node_->GetLayoutObject())
     return;
 
+  LOG(ERROR) << "Paint link highlight";
   PaintRecorder recorder;
   gfx::Rect record_bounds = PaintableRegion();
   PaintCanvas* canvas =
@@ -295,6 +296,7 @@ void LinkHighlightImpl::StartHighlightAnimationIfNeeded() {
   if (is_animating_)
     return;
 
+  LOG(ERROR) << "StartHighlightAnimation";
   is_animating_ = true;
   const float kStartOpacity = 1;
   // FIXME: Should duration be configurable?
@@ -363,6 +365,7 @@ void LinkHighlightImpl::UpdateGeometry() {
   if (!geometry_needs_update_)
     return;
 
+  LOG(ERROR) << "LinkHightlightImpl::UpdateGeometry";
   geometry_needs_update_ = false;
 
   bool has_layout_object = node_ && node_->GetLayoutObject();
@@ -375,6 +378,7 @@ void LinkHighlightImpl::UpdateGeometry() {
       // otherwise we can just re-position the layer without needing to
       // repaint.
       content_layer_->Layer()->Invalidate();
+      LOG(ERROR) << "Invalidate";
 
       if (current_graphics_layer_) {
         current_graphics_layer_->TrackRasterInvalidation(

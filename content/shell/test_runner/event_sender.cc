@@ -2448,6 +2448,7 @@ void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
       break;
     }
     case WebInputEvent::kGestureShowPress: {
+      LOG(ERROR) << "ShowPress";
       float width = 30;
       float height = 30;
       if (!args->PeekNext().IsEmpty()) {
