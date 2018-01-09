@@ -29,6 +29,7 @@ class TestFrameSinkManagerImpl : public mojom::FrameSinkManager {
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
       bool force_software_compositor,
+      bool external_begin_frames_enabled,
       const RendererSettings& renderer_settings,
       mojom::CompositorFrameSinkAssociatedRequest request,
       mojom::CompositorFrameSinkClientPtr client,

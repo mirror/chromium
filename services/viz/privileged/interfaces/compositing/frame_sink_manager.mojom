@@ -51,10 +51,14 @@ interface FrameSinkManager {
   // talks to the Display (e.g. ResizeDisplay(), SetDisplayVisible(), etc).
   // If |force_software_compositing| is true, then the resulting display
   // compositor will not use Gpu acceleration even if it would by default.
+  // If |external_begin_frames_enabled| is true, the resulting display will be
+  // driven by a BeginFrameSource controlled by the client via the
+  // DisplayPrivate's ExternalBeginFrameController.
   CreateRootCompositorFrameSink(
       FrameSinkId frame_sink_id,
       gpu.mojom.SurfaceHandle widget,
       bool force_software_compositing,
+      bool external_begin_frames_enabled,
       RendererSettings renderer_settings,
       associated CompositorFrameSink& compositor_frame_sink,
       CompositorFrameSinkClient compositor_frame_sink_client,
