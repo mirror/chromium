@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09fb4c79_39fb5476",
+        "filename": "chrome/android/java/res/layout/download_location_dialog.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35ba291d_42655f96",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c03a0d52_d28f1225",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "404ea979569018e12025a68e81e793d943ac1118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e5b421_2537e453",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c03a0d52_d28f1225",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a24c6741_641f8fe1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d94ef9cd_a723ea94",
+      "range": {
+        "startLine": 26,
+        "startChar": 54,
+        "endLine": 26,
+        "endChar": 90
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71bc80e8_260fd5c9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogHelper.java",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "404ea979569018e12025a68e81e793d943ac1118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c2797c_9ad29aba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71bc80e8_260fd5c9",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f4e15ab9_7df5cbb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5393f2c4_e37ad7fe",
+      "range": {
+        "startLine": 36,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75a2d352_f97b6fe3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/DownloadPreferences.java",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "404ea979569018e12025a68e81e793d943ac1118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf88718e_1a3d223f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/DownloadPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "As discussed offline, we need the Android-specific permission because the other preference gets synced.",
+      "parentUuid": "75a2d352_f97b6fe3",
+      "range": {
+        "startLine": 61,
+        "startChar": 52,
+        "endLine": 61,
+        "endChar": 79
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e1754f57_5a73b9c9",
+        "filename": "chrome/browser/android/download/download_location_dialog_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "124d5775_092d87ed",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 77
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2a205de_f8a361c7",
         "filename": "chrome/browser/android/download/download_location_dialog_helper.cc",
         "patchSetId": 9
@@ -183,6 +351,30 @@
       "revId": "404ea979569018e12025a68e81e793d943ac1118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a5413e_2d1841e8",
+        "filename": "chrome/browser/android/download/download_location_dialog_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2a205de_f8a361c7",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "8789fe19_7143629d",
+        "filename": "chrome/browser/android/download/download_location_dialog_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "161f09d6_403cdba4",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cab1e40_27eb2abe",
         "filename": "chrome/browser/android/download/download_location_dialog_helper.h",
         "patchSetId": 9
@@ -229,6 +445,30 @@
       "revId": "404ea979569018e12025a68e81e793d943ac1118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188e3f2d_47233e0a",
+        "filename": "chrome/browser/android/download/download_location_dialog_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cab1e40_27eb2abe",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "2d3b41b7_2c447a27",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "No :(",
+      "parentUuid": "04bf046e_65b511e1",
+      "range": {
+        "startLine": 1247,
+        "startChar": 31,
+        "endLine": 1247,
+        "endChar": 63
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b285d41b_bfa13f2f",
         "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
         "patchSetId": 9
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "738aaea6_cd994e1d",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b285d41b_bfa13f2f",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 68
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "760b9462_81f66606",
         "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
         "patchSetId": 9
@@ -298,6 +586,30 @@
       "revId": "404ea979569018e12025a68e81e793d943ac1118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b146e1_7d67addc",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-09T23:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "760b9462_81f66606",
+      "range": {
+        "startLine": 775,
+        "startChar": 6,
+        "endLine": 778,
+        "endChar": 7
+      },
+      "revId": "404ea979569018e12025a68e81e793d943ac1118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
