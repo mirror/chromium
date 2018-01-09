@@ -63,8 +63,7 @@ MessageEvent::MessageEvent(const AtomicString& type,
 MessageEvent::MessageEvent(const String& origin,
                            const String& last_event_id,
                            EventTarget* source,
-                           MessagePortArray* ports,
-                           const String& suborigin)
+                           MessagePortArray* ports)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeScriptValue),
       origin_(origin),
@@ -78,8 +77,7 @@ MessageEvent::MessageEvent(scoped_refptr<SerializedScriptValue> data,
                            const String& origin,
                            const String& last_event_id,
                            EventTarget* source,
-                           MessagePortArray* ports,
-                           const String& suborigin)
+                           MessagePortArray* ports)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeSerializedScriptValue),
       data_as_serialized_script_value_(
@@ -98,8 +96,7 @@ MessageEvent::MessageEvent(scoped_refptr<SerializedScriptValue> data,
                            const String& origin,
                            const String& last_event_id,
                            EventTarget* source,
-                           Vector<MessagePortChannel> channels,
-                           const String& suborigin)
+                           Vector<MessagePortChannel> channels)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeSerializedScriptValue),
       data_as_serialized_script_value_(
@@ -107,33 +104,26 @@ MessageEvent::MessageEvent(scoped_refptr<SerializedScriptValue> data,
       origin_(origin),
       last_event_id_(last_event_id),
       source_(source),
-      channels_(std::move(channels)),
-      suborigin_(suborigin) {
+      channels_(std::move(channels)) {
   if (data_as_serialized_script_value_)
     data_as_serialized_script_value_->Value()
         ->RegisterMemoryAllocatedWithCurrentScriptContext();
   DCHECK(IsValidSource(source_.Get()));
 }
 
-MessageEvent::MessageEvent(const String& data,
-                           const String& origin,
-                           const String& suborigin)
+MessageEvent::MessageEvent(const String& data, const String& origin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeString),
       data_as_string_(data),
       origin_(origin) {}
 
-MessageEvent::MessageEvent(Blob* data,
-                           const String& origin,
-                           const String& suborigin)
+MessageEvent::MessageEvent(Blob* data, const String& origin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeBlob),
       data_as_blob_(data),
       origin_(origin) {}
 
-MessageEvent::MessageEvent(DOMArrayBuffer* data,
-                           const String& origin,
-                           const String& suborigin)
+MessageEvent::MessageEvent(DOMArrayBuffer* data, const String& origin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeArrayBuffer),
       data_as_array_buffer_(data),
@@ -172,7 +162,6 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
   source_ = source;
   ports_ = ports;
   is_ports_dirty_ = true;
-  suborigin_ = "";
 }
 
 void MessageEvent::initMessageEvent(const AtomicString& type,
@@ -196,7 +185,6 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
   source_ = source;
   ports_ = ports;
   is_ports_dirty_ = true;
-  suborigin_ = "";
 
   if (data_as_serialized_script_value_)
     data_as_serialized_script_value_->Value()
@@ -223,7 +211,6 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
   source_ = source;
   ports_ = ports;
   is_ports_dirty_ = true;
-  suborigin_ = "";
 }
 
 const AtomicString& MessageEvent::InterfaceName() const {

@@ -184,18 +184,6 @@ base::Optional<CORSError> CheckAccess(
   const WebString& allow_origin_header_value =
       response_header.Get(HTTPNames::Access_Control_Allow_Origin);
 
-  // Check Suborigins, unless the Access-Control-Allow-Origin is '*', which
-  // implies that all Suborigins are okay as well.
-  if (!security_origin.Suborigin().IsEmpty() &&
-      allow_origin_header_value != WebString(g_star_atom)) {
-    const WebString& allow_suborigin_header_value =
-        response_header.Get(HTTPNames::Access_Control_Allow_Suborigin);
-    if (allow_suborigin_header_value != WebString(g_star_atom) &&
-        allow_suborigin_header_value != security_origin.Suborigin()) {
-      return CORSError::kSubOriginMismatch;
-    }
-  }
-
   if (allow_origin_header_value == "*") {
     // A wildcard Access-Control-Allow-Origin can not be used if credentials are
     // to be sent, even with Access-Control-Allow-Credentials set to true.
@@ -265,14 +253,8 @@ base::Optional<CORSError> HandleRedirect(
   }
 
   if (!current_security_origin.CanRequest(new_url)) {
-    new_request.ClearHTTPHeaderField(WebString(HTTPNames::Suborigin));
     new_request.SetHTTPHeaderField(WebString(HTTPNames::Origin),
                                    new_security_origin.ToString());
-    if (!new_security_origin.Suborigin().IsEmpty()) {
-      new_request.SetHTTPHeaderField(WebString(HTTPNames::Suborigin),
-                                     new_security_origin.Suborigin());
-    }
-
     options.cors_flag = true;
   }
   return base::nullopt;
@@ -390,16 +372,6 @@ WebString GetErrorString(const CORSError error,
       return String::Format(
           "%sInvalid response. Origin '%s' is therefore not allowed access.",
           redirect_denied.Utf8().data(), origin.ToString().Utf8().data());
-    case CORSError::kSubOriginMismatch:
-      return String::Format(
-          "%sThe 'Access-Control-Allow-Suborigin' header has a value '%s' that "
-          "is not equal to the supplied suborigin. Origin '%s' is therefore "
-          "not allowed access.",
-          redirect_denied.Utf8().data(),
-          response_header.Get(HTTPNames::Access_Control_Allow_Suborigin)
-              .Utf8()
-              .data(),
-          origin.ToString().Utf8().data());
     case CORSError::kWildcardOriginNotAllowed:
       return String::Format(
           "%sThe value of the 'Access-Control-Allow-Origin' header in the "
