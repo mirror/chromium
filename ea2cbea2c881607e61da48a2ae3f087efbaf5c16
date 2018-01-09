@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1600b368_98183925",
+        "filename": "mojo/public/tools/bindings/pylib/mojom_tests/parse/conditional_features_unittest.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-09T00:17:46Z",
+      "side": 1,
+      "message": "Consider factoring out a common function to:\n* parse source and remove disabled definitions\n* parse expected\n* assert equal",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 37
+      },
+      "revId": "ea2cbea2c881607e61da48a2ae3f087efbaf5c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
