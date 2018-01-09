@@ -32,10 +32,12 @@ import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.chrome.browser.ChromeApplication;
+import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.chrome.browser.download.items.OfflineContentAggregatorNotificationBridgeUiFactory;
 import org.chromium.chrome.browser.init.BrowserParts;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
 import org.chromium.chrome.browser.init.EmptyBrowserParts;
+import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.LegacyHelpers;
@@ -129,7 +131,8 @@ public class DownloadBroadcastManager extends Service {
         switch (action) {
             case ACTION_DOWNLOAD_PAUSE:
                 mDownloadNotificationService.notifyDownloadPaused(entry.id, entry.fileName, true,
-                        false, entry.isOffTheRecord, entry.isTransient, null, true, false);
+                        false, entry.isOffTheRecord, entry.isTransient, null, true, false,
+                        PendingState.NOT_PENDING);
                 break;
 
             case ACTION_DOWNLOAD_CANCEL:
@@ -147,9 +150,15 @@ public class DownloadBroadcastManager extends Service {
                                 entry.isOffTheRecord, canDownloadWhileMetered, entry.fileName, true,
                                 entry.isTransient));
 
-                mDownloadNotificationService.notifyDownloadPending(entry.id, entry.fileName,
-                        entry.isOffTheRecord, entry.canDownloadWhileMetered, entry.isTransient,
-                        null, true);
+                if (OfflinePageBridge.isOfflinePagesDescriptivePendingStatusEnabled()) {
+                    mDownloadNotificationService.notifyDownloadPending(entry.id, entry.fileName,
+                            entry.isOffTheRecord, entry.canDownloadWhileMetered, entry.isTransient,
+                            null, true, PendingState.PENDING_NETWORK);
+                } else {
+                    mDownloadNotificationService.notifyDownloadPending(entry.id, entry.fileName,
+                            entry.isOffTheRecord, entry.canDownloadWhileMetered, entry.isTransient,
+                            null, true, PendingState.PENDING_NO_DESCRIPTION);
+                }
                 break;
 
             default:
