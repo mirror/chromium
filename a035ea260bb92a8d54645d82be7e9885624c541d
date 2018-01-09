@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "009f674d_03c0079c",
+        "filename": "ui/gfx/text_elider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-09T10:59:26Z",
+      "side": 1,
+      "message": "There\u0027s an output variable, which makes trailing default arguments problematic (hence the extra function).. But I think it makes sense to jump ElideRectangleText to this final state anyway (i.e. decouple it from the planned Typesetter::DEFAULT flip).",
+      "revId": "a035ea260bb92a8d54645d82be7e9885624c541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
