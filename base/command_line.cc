@@ -31,6 +31,11 @@ namespace {
 const CommandLine::CharType kSwitchTerminator[] = FILE_PATH_LITERAL("--");
 const CommandLine::CharType kSwitchValueSeparator[] = FILE_PATH_LITERAL("=");
 
+#if defined(OS_FUCHSIA)
+constexpr char kPackagedFileExe[] = "/pkg/bin/app";
+constexpr char kPackageUrlPrefix[] = "file://";
+#endif
+
 // Since we use a lazy match, make sure that longer versions (like "--") are
 // listed before shorter versions (like "-") of similar prefixes.
 #if defined(OS_WIN)
@@ -269,6 +274,13 @@ FilePath CommandLine::GetProgram() const {
 void CommandLine::SetProgram(const FilePath& program) {
 #if defined(OS_WIN)
   TrimWhitespace(program.value(), TRIM_ALL, &argv_[0]);
+#elif defined(OS_FUCHSIA)
+  TrimWhitespaceASCII(program.value(), TRIM_ALL, &argv_[0]);
+
+  // Resolve the path to the binary as seen from inside a package.
+  if (argv_[0].find(kPackageUrlPrefix) == 0) {
+    argv_[0] = kPackagedFileExe;
+  }
 #else
   TrimWhitespaceASCII(program.value(), TRIM_ALL, &argv_[0]);
 #endif
