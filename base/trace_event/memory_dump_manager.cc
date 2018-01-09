@@ -730,12 +730,7 @@ void MemoryDumpManager::InvokeOnMemoryDump(
       // crashes while invoking dump after a |dump_provider| is not unregistered
       // in safe way.
       // TODO(ssid): Remove this after fixing crbug.com/643438.
-      char provider_name_for_debugging[16];
-      strncpy(provider_name_for_debugging, mdpinfo->name,
-              sizeof(provider_name_for_debugging) - 1);
-      provider_name_for_debugging[sizeof(provider_name_for_debugging) - 1] =
-          '\0';
-      base::debug::Alias(provider_name_for_debugging);
+      DEBUG_ALIAS_FOR_CSTR(provider_name_for_debugging, mdpinfo->name, 16);
 
       ProcessMemoryDump* pmd = pmd_async_state->process_memory_dump.get();
       ANNOTATE_BENIGN_RACE(&mdpinfo->disabled, "best-effort race detection");
