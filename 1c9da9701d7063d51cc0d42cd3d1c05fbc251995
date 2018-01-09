@@ -22,6 +22,30 @@
       "revId": "1c9da9701d7063d51cc0d42cd3d1c05fbc251995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef3ab1c_7354cfa0",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2620,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-09T18:36:23Z",
+      "side": 0,
+      "message": "Agreed to only remove kIsolateOrigins in this CL, since we\u0027ll want to merge it, and revisiting other switches in a followup.",
+      "parentUuid": "00488fd1_488b4765",
+      "range": {
+        "startLine": 2620,
+        "startChar": 4,
+        "endLine": 2620,
+        "endChar": 30
+      },
+      "revId": "1c9da9701d7063d51cc0d42cd3d1c05fbc251995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

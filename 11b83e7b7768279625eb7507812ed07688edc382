@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "889140e3_60489f1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-09T18:36:23Z",
+      "side": 1,
+      "message": "I was surprised by this, since the enterprise policy should be adding a command-line flag here: https://cs.chromium.org/chromium/src/chrome/browser/chrome_browser_main.cc?l\u003d1179\u0026rcl\u003d9a5463121df462574e231a6994bd710be1b2b1d2\n\nDoes that not update the browser command line that PropagateBrowserCommandLineToRenderer sees, so that it won\u0027t pick it up as a candidate to propagate?\n\nDigging a bit more, I see that RenderProcessHostImpl::AppendRendererCommandLine() passes some other switches to the renderer, including kIsolateOrigins (and kSitePerProcess!) in ChromeContentBrowserClient::AppendExtraCommandLineSwitches.  I think we should remove kIsolateOrigins from that list as well.  I think this might be the reason why --isolate-origins might be appended twice sometimes (we had a report of that, I think).\n\nAgain, that would only append --isolate-origins if it\u0027s present in browser process\u0027s base::CommandLine::ForCurrentProcess() -- would the switch appended by enterprise policy be there?  Depending on this, the enterprise policy might actually be safe from this bug altogether.",
+      "parentUuid": "8884e5b0_31feedbb",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "11b83e7b7768279625eb7507812ed07688edc382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d5bc1e6_cb07b12b",
         "filename": "content/browser/isolated_origin_browsertest.cc",
         "patchSetId": 1
@@ -68,6 +92,47 @@
       "revId": "11b83e7b7768279625eb7507812ed07688edc382",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04df0a7_c3e75aca",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-09T18:36:23Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "3d5bc1e6_cb07b12b",
+      "range": {
+        "startLine": 1083,
+        "startChar": 6,
+        "endLine": 1083,
+        "endChar": 32
+      },
+      "revId": "11b83e7b7768279625eb7507812ed07688edc382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90c21ccb_bf9677d2",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-09T18:36:23Z",
+      "side": 1,
+      "message": "nit: I\u0027d also check https://foo1000.com, (navigation as well as IsIsolatedOrigin()), just to make sure the last ones aren\u0027t cut off or something like that.",
+      "revId": "11b83e7b7768279625eb7507812ed07688edc382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
