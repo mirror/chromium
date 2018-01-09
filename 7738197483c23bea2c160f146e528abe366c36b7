@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bf1fcc2_331e426a",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "This needs a clearer name since we already have a SetOnNewProcessedFrameCallback; maybe SetOnFirstFrameConsumedCallback?",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bfb5d2_29d8e0d7",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "Can you explain why you want this here? It may be arbitrarily long until StartPipeline and thus a frame is generated.",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cebdd85_3d6c0a23",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "Before this can land we need to know the existing load times to see how this compares to today. My CL adds that, so I think it should be landed first.",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b4b844_eb15719a",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "exceed",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510da9e5_c28e7053",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "unnecessary, DCHECK only exists in debug.",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b1a0f0_a9f88aaf",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "unnecessary extra parens?",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610418d7_5c03ae2c",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "size_t?",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44602de2_822c0ecc",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "These types of increasing histograms are hard to interpret. I\u0027ve created a few in the past and have been much happier since we have WatchTimeReporter which records these values only once.\n\nYou should look at using a base::SingleSampleMetric for this I think instead.",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05095cd_60ac2361",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "for (auto\u0026 kv : players_) ?",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6b8bef_bc96c505",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ccc8a9_3335bf28",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-09T23:05:02Z",
+      "side": 1,
+      "message": "float, but INT_MIN? Also should this be std::numeric_limits?",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
