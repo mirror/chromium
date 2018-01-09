@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3600543a_01074d5a",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-09T18:01:20Z",
+      "side": 1,
+      "message": "WebMouseWheelEvent already has a delta, right? Why do we need it here?",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406fc0b0_401d9818",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-09T18:01:20Z",
+      "side": 1,
+      "message": "You can remove the DCHECK here, and add a NOTREACHED() below instead.",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b592c8c3_87714dd1",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 5
@@ -13,6 +47,23 @@
       "writtenOn": "2018-01-09T16:48:24Z",
       "side": 1,
       "message": "Why is this argument optional? If we are going to DCHECK it has a value then it really shouldn\u0027t be, but I\u0027m having trouble seeing why it was done that way in the first place.",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8b8c19_d95be347",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-09T18:01:20Z",
+      "side": 1,
+      "message": "You can add a NOTREACHED() in else here, to replace the DCHECK() from above.",
       "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
