@@ -108,7 +108,7 @@ class Supplement : public GarbageCollectedMixin,
  public:
   // TODO(haraken): Remove the default constructor.
   // All Supplement objects should be instantiated with |supplementable_|.
-  Supplement() {}
+  Supplement() = default;
 
   explicit Supplement(T& supplementable) : supplementable_(&supplementable) {}
 

@@ -17,7 +17,7 @@ class GeometryStructTraitsTest
     : public ::testing::Test,
       public gfx::mojom::blink::GeometryTraitsTestService {
  public:
-  GeometryStructTraitsTest() {}
+  GeometryStructTraitsTest() = default;
 
  protected:
   gfx::mojom::blink::GeometryTraitsTestServicePtr GetTraitsTestProxy() {
