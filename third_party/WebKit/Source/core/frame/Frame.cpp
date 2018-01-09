@@ -261,6 +261,32 @@ void Frame::UpdateInertIfPossible() {
   }
 }
 
+// static
+void Frame::UpgradeInsecureRequest(KURL& url, Document& origin_document) {
+  // We always upgrade requests that meet any of the following criteria:
+  //
+  // Enforced in FrameLoader::UpgradeInsecureRequest.
+  //    1. Are for subresources.
+  //    2. Are for nested frames.
+  //    3. Are form submissions.
+  //    4. Whose hosts are contained in the origin_document's upgrade insecure
+  //       navigations set. (same-frame navigation).
+  // Enforced in Frame::UpgradeInsecureRequest.
+  //    4. Whose hosts are contained in the origin_document's upgrade insecure
+  //       navigations set. (cross-frame navigation).
+  if (url.ProtocolIs("http") &&
+      origin_document.GetInsecureRequestPolicy() & kUpgradeInsecureRequests &&
+      !url.Host().IsNull() &&
+      origin_document.InsecureNavigationsToUpgrade()->Contains(
+          url.Host().Impl()->GetHash())) {
+    UseCounter::Count(origin_document,
+                      WebFeature::kUpgradeInsecureRequestsUpgradedRequest);
+    url.SetProtocol("https");
+    if (url.Port() == 80)
+      url.SetPort(443);
+  }
+}
+
 Frame::Frame(FrameClient* client,
              Page& page,
              FrameOwner* owner,

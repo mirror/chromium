@@ -1471,7 +1471,7 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
           kCheckContentSecurityPolicy,
       settings && settings->GetBrowserSideNavigationEnabled(),
       ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
-  ModifyRequestForCSP(resource_request, nullptr);
+  ModifyRequestForCSP(resource_request, frame_load_request.OriginDocument());
 
   WebTriggeringEventInfo triggering_event_info =
       WebTriggeringEventInfo::kNotFromEvent;
@@ -1677,15 +1677,7 @@ FrameLoader::InsecureNavigationsToUpgrade() const {
   if (!parent_frame)
     return nullptr;
 
-  // FIXME: We need a way to propagate insecure requests policy flags to
-  // out-of-process frames. For now, we'll always use default behavior.
-  if (!parent_frame->IsLocalFrame())
-    return nullptr;
-
-  DCHECK(ToLocalFrame(parent_frame)->GetDocument());
-  return ToLocalFrame(parent_frame)
-      ->GetDocument()
-      ->InsecureNavigationsToUpgrade();
+  return parent_frame->GetSecurityContext()->InsecureNavigationsToUpgrade();
 }
 
 void FrameLoader::ModifyRequestForCSP(ResourceRequest& resource_request,
@@ -1724,6 +1716,17 @@ void FrameLoader::ModifyRequestForCSP(ResourceRequest& resource_request,
 
 void FrameLoader::UpgradeInsecureRequest(ResourceRequest& resource_request,
                                          Document* document) const {
+  // We always upgrade requests that meet any of the following criteria:
+  //
+  // Enforced in FrameLoader::UpgradeInsecureRequest.
+  //    1.  Are for subresources.
+  //    2.  Are for nested frames.
+  //    3.  Are form submissions.
+  //    4.1 Whose hosts are contained in the originDocument's upgrade insecure
+  //        navigations set. (same-frame navigation).
+  // Enforced in Frame::UpgradeInsecureRequest.
+  //    4.2 Whose hosts are contained in the originDocument's upgrade insecure
+  //        navigations set. (cross-frame navigation).
   KURL url = resource_request.Url();
 
   // If we don't yet have an |m_document| (because we're loading an iframe, for
@@ -1736,11 +1739,6 @@ void FrameLoader::UpgradeInsecureRequest(ResourceRequest& resource_request,
                : InsecureNavigationsToUpgrade();
 
   if (url.ProtocolIs("http") && relevant_policy & kUpgradeInsecureRequests) {
-    // We always upgrade requests that meet any of the following criteria:
-    //
-    // 1. Are for subresources (including nested frames).
-    // 2. Are form submissions.
-    // 3. Whose hosts are contained in the document's InsecureNavigationSet.
     if (resource_request.GetFrameType() ==
             network::mojom::RequestContextFrameType::kNone ||
         resource_request.GetFrameType() ==

@@ -260,7 +260,10 @@ void LocalFrame::Navigate(Document& origin_document,
                           const KURL& url,
                           bool replace_current_item,
                           UserGestureStatus user_gesture_status) {
-  navigation_scheduler_->ScheduleFrameNavigation(&origin_document, url,
+  KURL upgraded_url(url);
+  UpgradeInsecureRequest(upgraded_url, origin_document);
+
+  navigation_scheduler_->ScheduleFrameNavigation(&origin_document, upgraded_url,
                                                  replace_current_item);
 }
 
