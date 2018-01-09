@@ -771,18 +771,6 @@ TEST(GURLTest, SchemeIsBlob) {
   EXPECT_FALSE(GURL("http://bar/").SchemeIsBlob());
 }
 
-TEST(GURLTest, SchemeIsSuborigin) {
-  EXPECT_TRUE(GURL("http-so://foo.bar.com/").SchemeIsSuborigin());
-  EXPECT_TRUE(GURL("HTTP-SO://foo.bar.com/").SchemeIsSuborigin());
-  EXPECT_TRUE(GURL("HtTp-So://foo.bar.com/").SchemeIsSuborigin());
-  EXPECT_FALSE(GURL("http://foo.bar.com/").SchemeIsSuborigin());
-
-  EXPECT_TRUE(GURL("https-so://foo.bar.com/").SchemeIsSuborigin());
-  EXPECT_TRUE(GURL("HTTPS-SO://foo.bar.com/").SchemeIsSuborigin());
-  EXPECT_TRUE(GURL("HtTpS-So://foo.bar.com/").SchemeIsSuborigin());
-  EXPECT_FALSE(GURL("https://foo.bar.com/").SchemeIsSuborigin());
-}
-
 TEST(GURLTest, ContentAndPathForNonStandardURLs) {
   struct TestCase {
     const char* url;
