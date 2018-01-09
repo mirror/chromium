@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f11362c_05f305e7",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-09T22:35:30Z",
+      "side": 1,
+      "message": "On ES, they are never part of core, and are exposed through extension.\nOn desktop core profile, I think it\u0027s not OK to remove them, because then the extensions are no longer conformant. Instead, we need to emulate these sized LUMINANCE_ALPHA formats like we emulate the unsized ones.\n\nYou can look at gpu/command_buffer/service/texture_manager.cc and search for swizzle.",
+      "range": {
+        "startLine": 1663,
+        "startChar": 27,
+        "endLine": 1663,
+        "endChar": 28
+      },
+      "revId": "5df7ad8982ce552ab6b1ba65aa1c09a3bd72821b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
