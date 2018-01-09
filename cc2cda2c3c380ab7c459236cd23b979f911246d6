@@ -16,6 +16,24 @@
       "revId": "cc2cda2c3c380ab7c459236cd23b979f911246d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fca3a0b_3162cf9b",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-09T17:48:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6d193c_75ea2754",
+      "revId": "cc2cda2c3c380ab7c459236cd23b979f911246d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
