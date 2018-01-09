@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42400f25_f465a5b2",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-09T21:34:08Z",
+      "side": 1,
+      "message": "What is interesting is that this method already exists, but it does not seem to be used anywhere else. Perhaps it was being used at some earlier version of the code and this was a leftover?\n\nhttps://cs.chromium.org/search/?q\u003dremovePatternWildcard\u0026ssfr\u003d1\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "d0f06b2da57a31de6e91f060172d14cb5f410c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
