@@ -130,6 +130,8 @@
 #include "ui/wm/core/ime_util_chromeos.h"
 #endif
 
+#include "base/debug/stack_trace.h"
+
 using gfx::RectToSkIRect;
 using gfx::SkIRectToRect;
 
@@ -629,6 +631,10 @@ void RenderWidgetHostViewAura::SetNeedsBeginFrames(bool needs_begin_frames) {
 
 void RenderWidgetHostViewAura::OnBeginFrame(base::TimeTicks frame_time) {
   host_->ProgressFling(frame_time);
+#if defined(OS_WIN)
+  if (legacy_render_widget_host_HWND_)
+    legacy_render_widget_host_HWND_->OnBeginFrame();
+#endif
   UpdateNeedsBeginFramesInternal();
 }
 
