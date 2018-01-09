@@ -35,6 +35,9 @@
 #include "ui/gfx/image/image_unittest_util.h"
 #include "url/url_constants.h"
 
+const base::FilePath::CharType kDocRoot[] =
+    FILE_PATH_LITERAL("chrome/test/data");
+
 namespace {
 
 using testing::ElementsAre;
@@ -697,3 +700,35 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
                 .bitmap_data);
 }
 #endif
+
+// Test that a mixed content favicon is not downloaded.
+IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest, MixedContentFaviconBlocked) {
+  net::EmbeddedTestServer ssl_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  ssl_server.AddDefaultHandlers(base::FilePath(kDocRoot));
+  ASSERT_TRUE(ssl_server.Start());
+
+  const GURL insecure_favicon_url =
+      ssl_server.GetURL("/favicon/page_with_insecure_favicon.html");
+  const GURL secure_favicon_url =
+      ssl_server.GetURL("/favicon/page_with_favicon.html");
+
+  PendingTaskWaiter waiter(web_contents());
+
+  // The mixed-content favicon should not have been downloaded at all.
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), insecure_favicon_url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+  EXPECT_FALSE(GetFaviconForPageURL(insecure_favicon_url,
+                                    favicon_base::IconType::kFavicon)
+                   .is_valid());
+
+  // The secure favicon should be downloaded and accessible.
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), secure_favicon_url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+  EXPECT_TRUE(
+      GetFaviconForPageURL(secure_favicon_url, favicon_base::IconType::kFavicon)
+          .is_valid());
+}
