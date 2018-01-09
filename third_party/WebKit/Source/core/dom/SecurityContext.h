@@ -33,7 +33,6 @@
 #include "core/CoreExport.h"
 #include "core/dom/SandboxFlags.h"
 #include "platform/heap/Handle.h"
-#include "platform/weborigin/Suborigin.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/text/StringHash.h"
 #include "platform/wtf/text/WTFString.h"
@@ -93,8 +92,6 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   WebInsecureRequestPolicy GetInsecureRequestPolicy() const {
     return insecure_request_policy_;
   }
-
-  void EnforceSuborigin(const Suborigin&);
 
   FeaturePolicy* GetFeaturePolicy() const { return feature_policy_.get(); }
   void InitializeFeaturePolicy(const ParsedFeaturePolicy& parsed_header,
