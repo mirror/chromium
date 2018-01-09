@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6bbe5c0_3de4f3c9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-09T19:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae240e74_bf51642d",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 78
+      },
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c412fc88_a55fa79c",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 26
@@ -45,6 +69,30 @@
       "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8e731b_afe47cd3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-09T19:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c412fc88_a55fa79c",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 60
+      },
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "a8a11eda_4ce1851a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-09T19:53:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure either. Maybe we\u0027ll reach this when dealing with mixed BiDi?\n\nAnyway, I\u0027ve changed it to single candidate for now for simplicity and catch the multi-candidate case with DCHECK.\n\nNot sure how this is related to culled inline box.",
+      "parentUuid": "b137e1dd_e455ba9b",
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b0a046_a946208e",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
         "patchSetId": 26
@@ -103,6 +169,30 @@
       "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050ad328_af153d6f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-09T19:53:11Z",
+      "side": 1,
+      "message": "Created crrev.com/c/857900 to move LocalCaretRect to its own files.",
+      "parentUuid": "78b0a046_a946208e",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +228,24 @@
       "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3043df77_f04affb4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-09T19:53:11Z",
+      "side": 1,
+      "message": "Comment added.",
+      "parentUuid": "4d007a1a_f983f1c0",
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
