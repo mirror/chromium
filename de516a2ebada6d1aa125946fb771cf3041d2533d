@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3715ae4a_a29c3e80",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-09T14:02:39Z",
+      "side": 1,
+      "message": "I considered that too, but I wanted to keep the tests cheap and flexible, which asserting over files isn\u0027t.\n\nFor the least code possible, I would have had Exporter hold a Callback. I decided against it because function pointers are cheaper for prod.",
+      "parentUuid": "6254f71a_8278d7c1",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "de516a2ebada6d1aa125946fb771cf3041d2533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883ac4ed_36404d1b",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "de516a2ebada6d1aa125946fb771cf3041d2533d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e190da35_e0569129",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-09T14:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "883ac4ed_36404d1b",
+      "range": {
+        "startLine": 72,
+        "startChar": 35,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "de516a2ebada6d1aa125946fb771cf3041d2533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
