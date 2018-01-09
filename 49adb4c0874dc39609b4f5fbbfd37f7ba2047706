@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a6e238_b52d098a",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-09T20:23:50Z",
+      "side": 1,
+      "message": "Do you need to add a new thread?",
+      "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f21412_a19c25ee",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-09T20:23:50Z",
+      "side": 1,
+      "message": "You are post-tasking from EV_DEV -\u003e UI -\u003e paint thread yes? Or I am misunderstanding the code. The UI thread is busy. Won\u0027t this have jank?",
+      "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92f829c_e561cb9c",
+        "filename": "ash/cursor/cursor_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-09T20:23:50Z",
+      "side": 1,
+      "message": "Why is this code in Ash? This seems working against the goal of Mustash team to separate Ash from the WS/Viz. The functionality here belongs in the WS/Viz?",
+      "revId": "49adb4c0874dc39609b4f5fbbfd37f7ba2047706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
