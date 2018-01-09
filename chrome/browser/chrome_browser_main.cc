@@ -1165,11 +1165,14 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   // tasks.
   SetupFieldTrials();
 
-  // Add Site Isolation switches as dictated by policy.
+  // Add Site Isolation switches as dictated by policy. Do not enforce site
+  // isolation in browsers started for automation (--enable-automation) to
+  // keep WebDriver and other remote drivers functioning.
   auto* command_line = base::CommandLine::ForCurrentProcess();
   auto* local_state = g_browser_process->local_state();
   if (local_state->GetBoolean(prefs::kSitePerProcess) &&
-      !command_line->HasSwitch(switches::kSitePerProcess)) {
+      !command_line->HasSwitch(switches::kSitePerProcess) &&
+      !command_line->HasSwitch(switches::kEnableAutomation)) {
     command_line->AppendSwitch(switches::kSitePerProcess);
   }
   // We don't check for `HasSwitch` here, because we don't want the command-line
