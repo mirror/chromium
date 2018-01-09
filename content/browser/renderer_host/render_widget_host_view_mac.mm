@@ -1085,6 +1085,10 @@ void RenderWidgetHostViewMac::OnSynchronizedDisplayPropertiesChanged() {
   browser_compositor_->WasResized();
 }
 
+void RenderWidgetHostViewMac::DidNavigate() {
+  browser_compositor_->DidNavigate();
+}
+
 gfx::Size RenderWidgetHostViewMac::GetRequestedRendererSize() const {
   return browser_compositor_->DelegatedFrameHostDesiredSizeInDIP();
 }
@@ -1721,6 +1725,10 @@ void RenderWidgetHostViewMac::PauseForPendingResizeOrRepaintsAndDraw() {
   repaint_state_ = RepaintState::None;
 }
 
+void RenderWidgetHostViewMac::DidReceiveFirstFrameAfterNavigation() {
+  render_widget_host_->DidReceiveFirstFrameAfterNavigation();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // display::DisplayObserver, public:
 
@@ -1740,7 +1748,6 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
 Class GetRenderWidgetHostViewCocoaClassForTesting() {
   return [RenderWidgetHostViewCocoa class];
-}
 
 }  // namespace content
 
