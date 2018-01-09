@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "579313b7_4ee269f5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-09T18:33:48Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 300,
+        "startChar": 51,
+        "endLine": 300,
+        "endChar": 52
+      },
+      "revId": "793384bc8cb1de928dcabb4bfe6340772d740877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096b263c_9eddba87",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-09T18:33:48Z",
+      "side": 1,
+      "message": "Please define the destructor and DCHECK that all traceable variables have been removed.",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 8
+      },
+      "revId": "793384bc8cb1de928dcabb4bfe6340772d740877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5b65c9_27e3f07f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-09T18:33:48Z",
+      "side": 1,
+      "message": "Let\u0027s call it traceable_variables_ to make it clearer.",
+      "range": {
+        "startLine": 61,
+        "startChar": 41,
+        "endLine": 61,
+        "endChar": 49
+      },
+      "revId": "793384bc8cb1de928dcabb4bfe6340772d740877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c2c1b7_6d345cfa",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-09T18:33:48Z",
+      "side": 1,
+      "message": "If you move these calls to TraceableVariable, you\u0027ll avoid the duplication in TraceableState and TraceableCounter.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 45
+      },
+      "revId": "793384bc8cb1de928dcabb4bfe6340772d740877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cb9e0b_a190b914",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-09T18:33:48Z",
+      "side": 1,
+      "message": "Do you need this to call Assign from TraceableStateForTest? If so, you could just make Assign and mock_trace_for_test protected.",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 46
+      },
+      "revId": "793384bc8cb1de928dcabb4bfe6340772d740877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e04ffc8_c4355ff2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-09T18:33:48Z",
+      "side": 1,
+      "message": "nit: extra line after this function.",
+      "range": {
+        "startLine": 243,
+        "startChar": 3,
+        "endLine": 243,
+        "endChar": 0
+      },
+      "revId": "793384bc8cb1de928dcabb4bfe6340772d740877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
