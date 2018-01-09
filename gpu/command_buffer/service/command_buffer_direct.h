@@ -10,7 +10,7 @@
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
-#include "gpu/gpu_export.h"
+#include "gpu/gpu_gles2_export.h"
 
 namespace gpu {
 
@@ -21,9 +21,9 @@ class SyncPointManager;
 class SyncPointOrderData;
 struct SyncToken;
 
-class GPU_EXPORT CommandBufferDirect : public CommandBuffer,
-                                       public CommandBufferServiceClient,
-                                       public gles2::GLES2DecoderClient {
+class GPU_GLES2_EXPORT CommandBufferDirect : public CommandBuffer,
+                                             public CommandBufferServiceClient,
+                                             public gles2::GLES2DecoderClient {
  public:
   using MakeCurrentCallback = base::Callback<bool()>;
 
