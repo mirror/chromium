@@ -114,6 +114,8 @@ ScopedJavaLocalRef<jstring> JNI_CronetLibraryLoader_GetCronetVersion(
   return base::android::ConvertUTF8ToJavaString(env, CRONET_VERSION);
 }
 
+void EnsureInitialized() {}
+
 std::unique_ptr<net::ProxyConfigService> CreateProxyConfigService(
     const scoped_refptr<base::SequencedTaskRunner>& io_task_runner) {
   std::unique_ptr<net::ProxyConfigService> service =

@@ -1,10 +1,35 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
 import("//components/cronet/native/include/headers.gni")
+import("//components/grpc_support/include/headers.gni")
 import("//testing/test.gni")
+
+config("cronet_native_include_config") {
+  include_dirs = [
+    "//components/cronet/native/generated",
+    "//components/cronet/native/include",
+    "//components/grpc_support/include",
+  ]
+}
 
 # Cronet native API implementation.
 source_set("cronet_native_impl") {
+  deps = [
+    "//base",
+    "//components/cronet:cronet_common",
+    "//components/cronet:cronet_version_header",
+    "//components/grpc_support:grpc_support",
+    "//net",
+  ]
+
+  configs += [ ":cronet_native_include_config" ]
+
   sources = [
     "buffer.cc",
+    "engine.cc",
+    "engine.h",
     "include/cronet_c.h",
     "runnables.cc",
     "runnables.h",
@@ -15,14 +40,6 @@ source_set("cronet_native_impl") {
     "generated/cronet.idl_impl_interface.h",
     "generated/cronet.idl_impl_struct.cc",
     "generated/cronet.idl_impl_struct.h",
-  ]
-  deps = [
-    "//base",
-    "//net",
-  ]
-  include_dirs = [
-    "//components/cronet/native/generated",
-    "//components/cronet/native/include",
   ]
 }
 
@@ -36,10 +53,7 @@ source_set("cronet_native_unittests") {
     "//net:test_support",
   ]
 
-  include_dirs = [
-    "//components/cronet/native/generated",
-    "//components/cronet/native/include",
-  ]
+  configs += [ ":cronet_native_include_config" ]
 
   sources = [
     "runnables_unittest.cc",
@@ -60,15 +74,15 @@ source_set("cronet_native_tests") {
   deps = [
     "//base",
     "//base/test:test_support",
+    "//net:test_support",
     "//testing/gtest",
   ]
 
-  include_dirs = [
-    "//components/cronet/native/generated",
-    "//components/cronet/native/include",
-  ]
+  configs += [ ":cronet_native_include_config" ]
+
   sources = [
     "buffer_test.cc",
+    "engine_test.cc",
     "executors_test.cc",
     "test_util.cc",
     "test_util.h",
