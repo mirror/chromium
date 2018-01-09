@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52808725_e8a9f060",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T23:36:33Z",
+      "side": 1,
+      "message": "nit: I think this would be cleaner as just having\nvoid AddRetainedFile(const base::FilePath\u0026 path) {\n  retained_files_.push_back(path);\n}\n\nand then calling with:\n\nAddRetainedFile(base::FilePath(FILE_PATH_LITERAL(\"foo\")));",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 282,
+        "endChar": 3
+      },
+      "revId": "2c32e91f673393a995c6caded17c275fd1fb913a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
