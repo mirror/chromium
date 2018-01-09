@@ -7,14 +7,14 @@
 #include "core/css/CSSBorderImage.h"
 #include "core/css/CSSBorderImageSliceValue.h"
 #include "core/css/CSSColorValue.h"
-#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPrimitiveValueMappings.h"
 #include "core/css/CSSQuadValue.h"
 #include "core/css/CSSReflectValue.h"
 #include "core/css/CSSValue.h"
 #include "core/css/CSSValuePair.h"
 #include "core/css/StyleColor.h"
-#include "core/css/ZoomAdjustedPixelValue.h"
+#include "core/layout/LayoutBlock.h"
+#include "core/layout/LayoutBox.h"
 
 namespace blink {
 
@@ -427,6 +427,209 @@ CSSValue* ComputedStyleUtils::ValueForReflection(
 
   return CSSReflectValue::Create(
       direction, offset, ValueForNinePieceImage(reflection->Mask(), style));
+}
+
+CSSValue* ComputedStyleUtils::MinWidthOrMinHeightAuto(
+    Node* styled_node,
+    const ComputedStyle& style) {
+  Node* parent = styled_node->parentNode();
+  const ComputedStyle* ensured_style =
+      parent ? parent->EnsureComputedStyle() : nullptr;
+  if (ensured_style && ensured_style->IsDisplayFlexibleOrGridBox())
+    return CSSIdentifierValue::Create(CSSValueAuto);
+  return ZoomAdjustedPixelValue(0, style);
+}
+
+CSSValue* ComputedStyleUtils::ValueForPositionOffset(
+    const ComputedStyle& style,
+    const CSSProperty& property,
+    const LayoutObject* layout_object) {
+  std::pair<const Length*, const Length*> positions;
+  switch (property.PropertyID()) {
+    case CSSPropertyLeft:
+      positions = std::make_pair(&style.Left(), &style.Right());
+      break;
+    case CSSPropertyRight:
+      positions = std::make_pair(&style.Right(), &style.Left());
+      break;
+    case CSSPropertyTop:
+      positions = std::make_pair(&style.Top(), &style.Bottom());
+      break;
+    case CSSPropertyBottom:
+      positions = std::make_pair(&style.Bottom(), &style.Top());
+      break;
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
+  DCHECK(positions.first && positions.second);
+
+  const Length& offset = *positions.first;
+  const Length& opposite = *positions.second;
+
+  if (offset.IsPercentOrCalc() && layout_object && layout_object->IsBox() &&
+      layout_object->IsPositioned()) {
+    LayoutUnit containing_block_size =
+        (property.IDEquals(CSSPropertyLeft) ||
+         property.IDEquals(CSSPropertyRight))
+            ? ToLayoutBox(layout_object)
+                  ->ContainingBlockLogicalWidthForContent()
+            : ToLayoutBox(layout_object)
+                  ->ContainingBlockLogicalHeightForGetComputedStyle();
+    return ZoomAdjustedPixelValue(ValueForLength(offset, containing_block_size),
+                                  style);
+  }
+
+  if (offset.IsAuto() && layout_object) {
+    // If the property applies to a positioned element and the resolved value of
+    // the display property is not none, the resolved value is the used value.
+    // Position offsets have special meaning for position sticky so we return
+    // auto when offset.isAuto() on a sticky position object:
+    // https://crbug.com/703816.
+    if (layout_object->IsRelPositioned()) {
+      // If e.g. left is auto and right is not auto, then left's computed value
+      // is negative right. So we get the opposite length unit and see if it is
+      // auto.
+      if (opposite.IsAuto()) {
+        return CSSPrimitiveValue::Create(0,
+                                         CSSPrimitiveValue::UnitType::kPixels);
+      }
+
+      if (opposite.IsPercentOrCalc()) {
+        if (layout_object->IsBox()) {
+          LayoutUnit containing_block_size =
+              (property.IDEquals(CSSPropertyLeft) ||
+               property.IDEquals(CSSPropertyRight))
+                  ? ToLayoutBox(layout_object)
+                        ->ContainingBlockLogicalWidthForContent()
+                  : ToLayoutBox(layout_object)
+                        ->ContainingBlockLogicalHeightForGetComputedStyle();
+          return ZoomAdjustedPixelValue(
+              -FloatValueForLength(opposite, containing_block_size), style);
+        }
+        // FIXME:  fall back to auto for position:relative, display:inline
+        return CSSIdentifierValue::Create(CSSValueAuto);
+      }
+
+      // Length doesn't provide operator -, so multiply by -1.
+      Length negated_opposite = opposite;
+      negated_opposite *= -1.f;
+      return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+          negated_opposite, style);
+    }
+
+    if (layout_object->IsOutOfFlowPositioned() && layout_object->IsBox()) {
+      // For fixed and absolute positioned elements, the top, left, bottom, and
+      // right are defined relative to the corresponding sides of the containing
+      // block.
+      LayoutBlock* container = layout_object->ContainingBlock();
+      const LayoutBox* layout_box = ToLayoutBox(layout_object);
+
+      // clientOffset is the distance from this object's border edge to the
+      // container's padding edge. Thus it includes margins which we subtract
+      // below.
+      const LayoutSize client_offset =
+          layout_box->LocationOffset() -
+          LayoutSize(container->ClientLeft(), container->ClientTop());
+      LayoutUnit position;
+
+      switch (property.PropertyID()) {
+        case CSSPropertyLeft:
+          position = client_offset.Width() - layout_box->MarginLeft();
+          break;
+        case CSSPropertyTop:
+          position = client_offset.Height() - layout_box->MarginTop();
+          break;
+        case CSSPropertyRight:
+          position = container->ClientWidth() - layout_box->MarginRight() -
+                     (layout_box->OffsetWidth() + client_offset.Width());
+          break;
+        case CSSPropertyBottom:
+          position = container->ClientHeight() - layout_box->MarginBottom() -
+                     (layout_box->OffsetHeight() + client_offset.Height());
+          break;
+        default:
+          NOTREACHED();
+      }
+      return ZoomAdjustedPixelValue(position, style);
+    }
+  }
+
+  if (offset.IsAuto())
+    return CSSIdentifierValue::Create(CSSValueAuto);
+
+  return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(offset, style);
+}
+
+CSSValueList* ComputedStyleUtils::ValueForItemPositionWithOverflowAlignment(
+    const StyleSelfAlignmentData& data) {
+  CSSValueList* result = CSSValueList::CreateSpaceSeparated();
+  if (data.PositionType() == ItemPositionType::kLegacy)
+    result->Append(*CSSIdentifierValue::Create(CSSValueLegacy));
+  if (data.GetPosition() == ItemPosition::kBaseline) {
+    result->Append(
+        *CSSValuePair::Create(CSSIdentifierValue::Create(CSSValueBaseline),
+                              CSSIdentifierValue::Create(CSSValueBaseline),
+                              CSSValuePair::kDropIdenticalValues));
+  } else if (data.GetPosition() == ItemPosition::kLastBaseline) {
+    result->Append(
+        *CSSValuePair::Create(CSSIdentifierValue::Create(CSSValueLast),
+                              CSSIdentifierValue::Create(CSSValueBaseline),
+                              CSSValuePair::kDropIdenticalValues));
+  } else {
+    result->Append(*CSSIdentifierValue::Create(data.GetPosition()));
+  }
+  if (data.GetPosition() >= ItemPosition::kCenter &&
+      data.Overflow() != OverflowAlignment::kDefault)
+    result->Append(*CSSIdentifierValue::Create(data.Overflow()));
+  DCHECK_LE(result->length(), 2u);
+  return result;
+}
+
+CSSValueList*
+ComputedStyleUtils::ValueForContentPositionAndDistributionWithOverflowAlignment(
+    const StyleContentAlignmentData& data) {
+  CSSValueList* result = CSSValueList::CreateSpaceSeparated();
+  // Handle content-distribution values
+  if (data.Distribution() != ContentDistributionType::kDefault)
+    result->Append(*CSSIdentifierValue::Create(data.Distribution()));
+
+  // Handle content-position values (either as fallback or actual value)
+  switch (data.GetPosition()) {
+    case ContentPosition::kNormal:
+      // Handle 'normal' value, not valid as content-distribution fallback.
+      if (data.Distribution() == ContentDistributionType::kDefault) {
+        result->Append(*CSSIdentifierValue::Create(CSSValueNormal));
+      }
+      break;
+    case ContentPosition::kLastBaseline:
+      result->Append(
+          *CSSValuePair::Create(CSSIdentifierValue::Create(CSSValueLast),
+                                CSSIdentifierValue::Create(CSSValueBaseline),
+                                CSSValuePair::kDropIdenticalValues));
+      break;
+    default:
+      result->Append(*CSSIdentifierValue::Create(data.GetPosition()));
+  }
+
+  // Handle overflow-alignment (only allowed for content-position values)
+  if ((data.GetPosition() >= ContentPosition::kCenter ||
+       data.Distribution() != ContentDistributionType::kDefault) &&
+      data.Overflow() != OverflowAlignment::kDefault)
+    result->Append(*CSSIdentifierValue::Create(data.Overflow()));
+  DCHECK_GT(result->length(), 0u);
+  DCHECK_LE(result->length(), 3u);
+  return result;
+}
+
+CSSValue* ComputedStyleUtils::ValueForLineHeight(const ComputedStyle& style) {
+  const Length& length = style.LineHeight();
+  if (length.IsNegative())
+    return CSSIdentifierValue::Create(CSSValueNormal);
+
+  return ZoomAdjustedPixelValue(
+      FloatValueForLength(length, style.GetFontDescription().ComputedSize()),
+      style);
 }
 
 }  // namespace blink

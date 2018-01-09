@@ -6,7 +6,9 @@
 #define ComputedStyleUtils_h
 
 #include "core/css/CSSBorderImageSliceValue.h"
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSValueList.h"
+#include "core/css/ZoomAdjustedPixelValue.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/wtf/Allocator.h"
@@ -27,6 +29,15 @@ class ComputedStyleUtils {
       const AtomicString& resource) {
     return "#" + resource;
   }
+
+  inline static CSSValue* ZoomAdjustedPixelValueOrAuto(
+      const Length& length,
+      const ComputedStyle& style) {
+    if (length.IsAuto())
+      return CSSIdentifierValue::Create(CSSValueAuto);
+    return ZoomAdjustedPixelValue(length.Value(), style);
+  }
+
   static CSSValue* CurrentColorOrValidColor(const ComputedStyle&,
                                             const StyleColor&);
   static const blink::Color BorderSideColor(const ComputedStyle&,
@@ -70,6 +81,16 @@ class ComputedStyleUtils {
                                           const ComputedStyle&);
   static CSSValue* ValueForReflection(const StyleReflection*,
                                       const ComputedStyle&);
+  static CSSValue* MinWidthOrMinHeightAuto(Node*, const ComputedStyle&);
+  static CSSValue* ValueForPositionOffset(const ComputedStyle&,
+                                          const CSSProperty&,
+                                          const LayoutObject*);
+  static CSSValueList* ValueForItemPositionWithOverflowAlignment(
+      const StyleSelfAlignmentData&);
+  static CSSValueList*
+  ValueForContentPositionAndDistributionWithOverflowAlignment(
+      const StyleContentAlignmentData&);
+  static CSSValue* ValueForLineHeight(const ComputedStyle&);
 };
 
 }  // namespace blink
