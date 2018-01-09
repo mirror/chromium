@@ -368,28 +368,27 @@ suite('<bookmarks-command-manager>', function() {
   });
 
   test('toolbar menu options are disabled when appropriate', function() {
+
     store.data.selectedFolder = '1';
     store.data.prefs.canEdit = true;
     store.notifyObservers();
 
     commandManager.openCommandMenuAtPosition(0, 0, MenuSource.TOOLBAR);
-    assertTrue(commandManager.canExecute(Command.SORT, new Set()));
     assertTrue(commandManager.canExecute(Command.ADD_BOOKMARK, new Set()));
     assertTrue(commandManager.canExecute(Command.ADD_FOLDER, new Set()));
 
     store.data.selectedFolder = '4';
     store.notifyObservers();
 
-    assertFalse(commandManager.canExecute(Command.SORT, new Set()));
     assertFalse(commandManager.canExecute(Command.ADD_BOOKMARK, new Set()));
     assertFalse(commandManager.canExecute(Command.ADD_FOLDER, new Set()));
+
     assertTrue(commandManager.canExecute(Command.IMPORT, new Set()));
 
     store.data.selectedFolder = '1';
     store.data.prefs.canEdit = false;
     store.notifyObservers();
 
-    assertFalse(commandManager.canExecute(Command.SORT, new Set()));
     assertFalse(commandManager.canExecute(Command.IMPORT, new Set()));
     assertFalse(commandManager.canExecute(Command.ADD_BOOKMARK, new Set()));
     assertFalse(commandManager.canExecute(Command.ADD_FOLDER, new Set()));
