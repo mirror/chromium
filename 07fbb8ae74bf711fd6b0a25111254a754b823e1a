@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caa020bd_e6835c24",
+        "filename": "ui/events/event.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-09T21:50:32Z",
+      "side": 1,
+      "message": "How about: Location of the event relative to the target window and in the target window\u0027s coordinate space. If there is no target this is the same as |root_location_|.",
+      "range": {
+        "startLine": 417,
+        "startChar": 5,
+        "endLine": 417,
+        "endChar": 75
+      },
+      "revId": "07fbb8ae74bf711fd6b0a25111254a754b823e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12028cdb_c0facfc0",
+        "filename": "ui/events/event.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-09T21:50:32Z",
+      "side": 1,
+      "message": "Location of the event. What coordinate system this is in depends upon the phase of event dispatch. For client code (meaning EventHanalders) it is generally in screen coordinates, but early on it may be in pixels and relative to a display.",
+      "range": {
+        "startLine": 420,
+        "startChar": 5,
+        "endLine": 420,
+        "endChar": 77
+      },
+      "revId": "07fbb8ae74bf711fd6b0a25111254a754b823e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
