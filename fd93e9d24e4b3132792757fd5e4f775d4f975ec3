@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4bb249d_8d790c56",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-09T15:45:49Z",
+      "side": 1,
+      "message": "Can you add descriptions to this commit message?",
+      "revId": "fd93e9d24e4b3132792757fd5e4f775d4f975ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649f4d05_33f4045c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-09T15:45:49Z",
+      "side": 1,
+      "message": "Please consider filing a crbug and linking it here. If there isn\u0027t a way to summarize the context without disclosing internal information, you can use the Restrict-View-Google label.",
+      "revId": "fd93e9d24e4b3132792757fd5e4f775d4f975ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
