@@ -1793,8 +1793,8 @@ public class Tab
         cv.setContentDescription(mThemedApplicationContext.getResources().getString(
                 R.string.accessibility_content_view));
         cvc.initialize(new TabViewAndroidDelegate(this, cv), cv, webContents, getWindowAndroid());
-        ChromeActionModeCallback actionModeCallback = new ChromeActionModeCallback(
-                mThemedApplicationContext, this, cvc.getActionModeCallbackHelper());
+        ChromeActionModeCallback actionModeCallback =
+                new ChromeActionModeCallback(this, cvc.getActionModeCallbackHelper());
         cvc.setActionModeCallback(actionModeCallback);
         return cvc;
     }
