@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3f3dd2_6cc3a81a",
+        "filename": "device/gamepad/gamepad_platform_data_fetcher_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-01-09T01:06:22Z",
+      "side": 1,
+      "message": "This was buggy; the gamepad is marked as still connected when GetPadState is called. Here we were calling GetPadState before checking if the device is actually still connceted (via GetDeviceWithJoydevIndex), so it will always be marked as connected.",
+      "range": {
+        "startLine": 311,
+        "startChar": 20,
+        "endLine": 311,
+        "endChar": 31
+      },
+      "revId": "0575ad90846bb60ade96ae8e9266057fb8848d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
