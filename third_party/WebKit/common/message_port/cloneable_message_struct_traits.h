@@ -7,6 +7,7 @@
 
 #include "third_party/WebKit/common/message_port/cloneable_message.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom.h"
+#include "third_party/WebKit/common/message_port/stack_trace_id.mojom.h"
 
 namespace mojo {
 
@@ -20,6 +21,11 @@ struct BLINK_COMMON_EXPORT
   static std::vector<blink::mojom::SerializedBlobPtr>& blobs(
       blink::CloneableMessage& input) {
     return input.blobs;
+  }
+
+  static blink::mojom::StackTraceIdPtr sender_stack_trace_id(
+      blink::CloneableMessage& input) {
+    return input.sender_stack_trace_id->Clone();
   }
 
   static bool Read(blink::mojom::CloneableMessage::DataView data,

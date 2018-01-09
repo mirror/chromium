@@ -5,6 +5,7 @@
 module blink.mojom;
 
 import "third_party/WebKit/common/blob/blob.mojom";
+import "third_party/WebKit/common/message_port/stack_trace_id.mojom";
 
 // A MessagePort is represented as a raw mojo message pipe, as such no interface
 // definition exists for it here. Messages on this pipe are serialized versions
@@ -18,6 +19,8 @@ struct CloneableMessage {
   array<uint8> encoded_message;
   // Blob handles for any blobs being sent in this message.
   array<SerializedBlob> blobs;
+  // Stack trace captured by sender.
+  StackTraceId sender_stack_trace_id;
 };
 
 // This struct combines the cloneable part of a message with the parts of the
