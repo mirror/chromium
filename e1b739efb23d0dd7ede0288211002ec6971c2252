@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "06c5ef46_a74c71c6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-09T05:20:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2de9bde_ff3196a5",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "557863e0_05b15cb0",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "I think that these metrics provide additional benefit -- they show us the full distribution instead of just a sum. I think that we might decrease the granularity here, but record some distributions (e.g. overall/main frame/subframe). However, should we do it in a separate patch?\n\nRe AddCount(): see my comment above.",
       "parentUuid": "557863e0_05b15cb0",
+      "range": {
+        "startLine": 184,
+        "startChar": 1,
+        "endLine": 216,
+        "endChar": 50
+      },
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42278bbf_12cdaab5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-09T05:20:33Z",
+      "side": 1,
+      "message": "I see. It would not be too late to have a separate patch to do so after seeing result differences between the new and old metrics.",
+      "parentUuid": "0471775a_6b05d063",
       "range": {
         "startLine": 184,
         "startChar": 1,

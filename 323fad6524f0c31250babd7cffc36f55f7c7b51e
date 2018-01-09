@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "67052d29_4d1ee279",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-09T05:20:33Z",
+      "side": 1,
+      "message": "Do you intentionally have a separate anonymous namespace here? Otherwise, could you merge this to the first anonymous namespace at line 19?",
+      "revId": "323fad6524f0c31250babd7cffc36f55f7c7b51e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f2103ae_48ec54e3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
