@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6295dc6a_fbfde313",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T22:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97a1060a_43f329a9",
+      "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d1085b4_7e6c8147",
         "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "OnSessionStateChanged should be called when session state changes. It would not fire if session state does not change though. So make sure we also check the current session state when starting to observe.",
       "parentUuid": "35f7bf23_f071f3c4",
+      "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afa767d_af73f7cb",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T22:54:38Z",
+      "side": 1,
+      "message": "ok, great, so we don\u0027t have to override any new observer methods. Done.",
+      "parentUuid": "68146c1d_52972723",
       "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
