@@ -33,6 +33,24 @@
       "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749ec213_c205dd7d",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T01:56:57Z",
+      "side": 1,
+      "message": "perhaps. Which SessionObserver method is called when the user type changes? I guess it\u0027s either OnUserSessionChanged or OnActiveUserSessionChanged but it\u0027s not obvious (not as obvious as login status/OnLoginStatusChanged at least). As far as deprecating LoginStatus, the only comment I saw[1] recommended SessionState, but that doesn\u0027t know about arc kiosk mode.\n\nXiyuan, thoughts?\n\n[1] https://cs.chromium.org/chromium/src/ash/session/session_controller.h?rcl\u003d70c32f6696eae34c08a202f4edd1dddc6cb0856b\u0026l\u003d167",
+      "parentUuid": "2d1085b4_7e6c8147",
+      "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
