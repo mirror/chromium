@@ -50,6 +50,23 @@
       "revId": "f46e7787f915edbd81758547a21b0b47959367f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee00cd84_3fd4d6bd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTreeAsText.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-09T19:42:19Z",
+      "side": 1,
+      "message": "-\u003e UpdateLifecyclePhasesForPrinting() which can handle the case of detached frames being printed.",
+      "revId": "f46e7787f915edbd81758547a21b0b47959367f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
