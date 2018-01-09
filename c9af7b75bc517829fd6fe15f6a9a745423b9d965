@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a26416ed_e98bf3c4",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T16:33:54Z",
+      "side": 1,
+      "message": "nit: can be simply \"localhost\", the conversion to std::string is implicit, also applies above",
+      "range": {
+        "startLine": 116,
+        "startChar": 30,
+        "endLine": 116,
+        "endChar": 54
+      },
+      "revId": "c9af7b75bc517829fd6fe15f6a9a745423b9d965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd845a7_9e45cd20",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T16:33:54Z",
+      "side": 1,
+      "message": "nit: DCHECK_LE(length, arraysize(test_data::kTestU2fSignResponse))",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "c9af7b75bc517829fd6fe15f6a9a745423b9d965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2f2f55_ce173280",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T16:33:54Z",
+      "side": 1,
+      "message": "you could inline this too, or move it down to its first usage.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 36
+      },
+      "revId": "c9af7b75bc517829fd6fe15f6a9a745423b9d965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c790aa_c1444698",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T16:33:54Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 36
+      },
+      "revId": "c9af7b75bc517829fd6fe15f6a9a745423b9d965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
