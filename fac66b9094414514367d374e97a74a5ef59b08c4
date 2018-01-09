@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7ed4ab0_a0119459",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-09T20:26:12Z",
+      "side": 1,
+      "message": "I\u0027m a bit torn about these two. I looked at the C++ style guide, and couldn\u0027t find anything about public members in a class. (it says members must be private, with an exception for test fixtures)\n\nMy initial instinct was that the members are part of the API, so they\u0027re like a struct\u0027s members, and shouldn\u0027t have a _.\n\nHow about avoiding all this by pulling logic that manages these into separate methods? I\u0027ll point them out below.",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0e0765_9429f23a",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-09T20:26:12Z",
+      "side": 1,
+      "message": "OriginState::{AddRequest, EnqueueRequest}(lock_id, name, mode, request)",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df716cde_a248b683",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-09T20:26:12Z",
+      "side": 1,
+      "message": "bool OriginState::Erase(lock_id)",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64554c4_5c17bc99",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-09T20:26:12Z",
+      "side": 1,
+      "message": "bool OriginState::IsEmpty()",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5b785d_417d9f0b",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-09T20:26:12Z",
+      "side": 1,
+      "message": "std::vector\u003cblink::mojom::LockInfoPtr\u003e OriginState::Copy{Pending,Requested}()",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd442e8_fade2f37",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-09T20:26:12Z",
+      "side": 1,
+      "message": "std::map\u003cint64_t, std::unique_ptr\u003cLock\u003e\u003e\u0026 OriginState::Requests()\n\n(this one\u0027s quite ugly, but I can\u0027t figure out anything better for the iteration below)",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
