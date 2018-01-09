@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67a78dfa_d4153f35",
+        "filename": "device/ctap/authenticator_get_assertion_response.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa257214_9bb37f51",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\" (for DISALLOW_COPY_AND_ASSIGN)",
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09173c5f_2c579a1f",
+        "filename": "device/ctap/authenticator_get_info_response.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa6baad_6916e347",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\" (for DISALLOW_COPY_AND_ASSIGN)",
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce39dbb_a6b3804b",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "More of a nit about the specification: I don\u0027t see any definition at that link for what \"AAGUID\" actually stands for.",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b04899a_89d39c0f",
+        "filename": "device/ctap/authenticator_options.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b681cc_3e9864b9",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "It\u0027s unclear from the name what this flag controls. Would SetRequireUserVerification be accurate?",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b25588_376ef63d",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "user_presence",
+      "range": {
+        "startLine": 26,
+        "startChar": 45,
+        "endLine": 26,
+        "endChar": 63
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49659b8_e1231454",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "Same here, does this mean that user presence is required?",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fbe6ee_55d74385",
+        "filename": "device/ctap/ctap_authenticator_response.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0780a895_cdfc5fde",
+        "filename": "device/ctap/ctap_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "2018 (no \"(c)\")",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb41cb9_713eba40",
+        "filename": "device/ctap/ctap_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "This will create a static initializer. Please use a normal array instead.",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91edb106_6cec1bd6",
+        "filename": "device/ctap/ctap_get_assertion_request_param.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "Same question here about these flags being unclearly named.",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 51
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef2715f_54d67bf6",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T18:58:26Z",
+      "side": 1,
+      "message": "A cbor::CBORValue::FromBoolean() method would makes this code more readable.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 73
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
