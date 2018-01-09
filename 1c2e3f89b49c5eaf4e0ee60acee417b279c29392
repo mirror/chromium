@@ -140,6 +140,30 @@
       "revId": "1c2e3f89b49c5eaf4e0ee60acee417b279c29392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc0ab41_dc44b6dd",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-09T18:10:45Z",
+      "side": 1,
+      "message": "Oh, ok, I get it. I tend to think this is a bug in CancelableTaskTracker::HasTrackedTasks. Seems like if there are tasks it needs see if they are canceled. I\u0027m adding Brett for his thoughts.",
+      "parentUuid": "26f336bb_a5745274",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 54
+      },
+      "revId": "1c2e3f89b49c5eaf4e0ee60acee417b279c29392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
