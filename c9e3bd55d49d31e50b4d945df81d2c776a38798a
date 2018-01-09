@@ -16,6 +16,24 @@
       "revId": "c9e3bd55d49d31e50b4d945df81d2c776a38798a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ee6174_a5aa271f",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-09T23:19:53Z",
+      "side": 1,
+      "message": "Done, after removing the API 14 compatibility code, lint no longer throw warnings.",
+      "parentUuid": "c3a62384_3ad6ad04",
+      "revId": "c9e3bd55d49d31e50b4d945df81d2c776a38798a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
