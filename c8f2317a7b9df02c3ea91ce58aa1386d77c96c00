@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d706645e_4e65cb24",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-09T15:14:12Z",
+      "side": 1,
+      "message": "does the logic here need to be updated as well?",
+      "revId": "c8f2317a7b9df02c3ea91ce58aa1386d77c96c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d7855e_2b494336",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-09T15:14:12Z",
+      "side": 1,
+      "message": "if the behavior you want is for the embedder to not set error_html if it\u0027s not empty, why not have RenderFrameImpl pass a nullptr in that case?",
+      "revId": "c8f2317a7b9df02c3ea91ce58aa1386d77c96c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
