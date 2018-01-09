@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e7de719_0dc4325f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:32:01Z",
+      "side": 1,
+      "message": "Documentation (https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions and linked https://chris.beams.io/posts/git-commit/) suggest using imperative voice when writing commit subject line, so I would change this to \"Implement DownloadManagerTabHelper\".",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "8eab5aa7682763113c3626757a84d1eea9b51723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb10bec8_20326871",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:32:01Z",
+      "side": 1,
+      "message": "The design document is only readable if logged with an @google.com, so not enough for a commit message. Can you add some detail about DownloadManagerTabHelper that would allow to understand why this class needs to exists? Could be as simple as (or something like this):\n\n  The new download design will use a distinct tab helper to manage the\n  in-progress download per tab. DownloadManagerTabHelper implement this.",
+      "revId": "8eab5aa7682763113c3626757a84d1eea9b51723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c3798d_42dc9408",
+        "filename": "ios/chrome/test/fakes/fake_download_manager_tab_helper_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:32:01Z",
+      "side": 1,
+      "message": "Remove, web::WebState is not used anywhere in this header.",
+      "revId": "8eab5aa7682763113c3626757a84d1eea9b51723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa9c6ff_d69e942a",
+        "filename": "ios/chrome/test/fakes/fake_download_manager_tab_helper_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:32:01Z",
+      "side": 1,
+      "message": "This is a pointer to a c++ object, so nil → null",
+      "range": {
+        "startLine": 19,
+        "startChar": 39,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "8eab5aa7682763113c3626757a84d1eea9b51723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
