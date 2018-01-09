@@ -773,8 +773,8 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 - (void)dismissPopups;
 // Returns whether |tab| is scrolled to the top.
 - (BOOL)isTabScrolledToTop:(Tab*)tab;
-// Returns the footer view if one exists (e.g. the voice search bar).
-- (UIView*)footerView;
+// Returns the footer views. May be empty.
+- (NSArray*)footerViews;
 // Returns the header height needed for |tab|.
 - (CGFloat)headerHeightForTab:(Tab*)tab;
 // Sets the frame for the headers.
@@ -2315,8 +2315,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   return CGPointEqualToPoint(scrollOffset, CGPointZero);
 }
 
-- (UIView*)footerView {
-  return _voiceSearchBar;
+- (NSArray*)footerViews {
+  NSMutableArray* footers = [NSMutableArray array];
 }
 
 - (CGFloat)headerHeightForTab:(Tab*)tab {
@@ -3572,7 +3572,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
   UIView* footer = nil;
   // Only animate the voice search bar if the tab is a voice search results tab.
   if ([_model currentTab].isVoiceSearchResultsTab) {
-    footer = [self footerView];
+    // The adaptive toolbar is using the new fullscreen.
+    DCHECK(!base::FeatureList::IsEnabled(kAdaptiveToolbar));
+
+    footer = [self footerViews].firstObject;
     footerFrame = footer.frame;
     footerFrame.origin.y = [self footerYForHeaderOffset:headerOffset];
   }
@@ -3613,7 +3616,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
   UIView* footer = nil;
   // Only animate the voice search bar if the tab is a voice search results tab.
   if ([_model currentTab].isVoiceSearchResultsTab) {
-    footer = [self footerView];
+    // The adaptive toolbar is using the new fullscreen.
+    DCHECK(!base::FeatureList::IsEnabled(kAdaptiveToolbar));
+
+    footer = [self footerViews].firstObject;
     footerFrame = footer.frame;
     footerFrame.origin.y = [self footerYForHeaderOffset:headerOffset];
   }
@@ -3646,7 +3652,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // Returns the y coordinate for the footer's frame when animating the footer
 // in/out of fullscreen.
 - (CGFloat)footerYForHeaderOffset:(CGFloat)headerOffset {
-  UIView* footer = [self footerView];
+  // The adaptive toolbar is using the new fullscreen.
+  DCHECK(!base::FeatureList::IsEnabled(kAdaptiveToolbar));
+
+  UIView* footer = [self footerViews].firstObject;
   CGFloat headerHeight = [self headerHeight];
   if (!footer || headerHeight == 0)
     return 0.0;
@@ -3942,18 +3951,15 @@ bubblePresenterForFeature:(const base::Feature&)feature
                    atOffset:(1.0 - progress) * [self toolbarHeight]];
 }
 
-// Translates the footer view up and down according to |progress|, where a
-// progress of 1.0 fully shows the footer and a progress of 0.0 fully hides it.
+// Translates the footer views up and down according to |progress|, where a
+// progress of 1.0 fully shows the footers and a progress of 0.0 fully hides it.
 - (void)updateFootersForFullscreenProgress:(CGFloat)progress {
-  if (![_model currentTab].isVoiceSearchResultsTab)
-    return;
-
-  UIView* footerView = [self footerView];
-  DCHECK(footerView);
-  CGRect frame = footerView.frame;
-  frame.origin.y = CGRectGetMaxY(footerView.superview.bounds) -
-                   progress * CGRectGetHeight(frame);
-  footerView.frame = frame;
+  for (UIView* footerView in [self footerViews]) {
+    CGRect frame = footerView.frame;
+    frame.origin.y = CGRectGetMaxY(footerView.superview.bounds) -
+                     progress * CGRectGetHeight(frame);
+    footerView.frame = frame;
+  }
 }
 
 // Updates the top padding of the web view proxy.  This either resets the frame
