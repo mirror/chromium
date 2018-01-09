@@ -52,6 +52,24 @@
       "revId": "86df16e216911935b060c168940e205113c2ff0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cca6cd2_2bf4a1b6",
+        "filename": "ui/ozone/platform/test/mock_platform_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-09T21:28:01Z",
+      "side": 0,
+      "message": "Sorry, I meant ui/platform_window. If that won\u0027t work because of gmock, then ui/ozone/test would be more appropriate than ui/ozone/platform/test since this is a test helper not an ozone platform.",
+      "parentUuid": "d0229de1_22b6b59a",
+      "revId": "86df16e216911935b060c168940e205113c2ff0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
