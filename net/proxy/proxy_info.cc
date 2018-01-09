@@ -96,4 +96,8 @@ void ProxyInfo::Reset() {
   did_use_pac_script_ = false;
 }
 
+const NetworkTrafficAnnotationTag ProxyInfo::traffic_annotation() const {
+  return NO_TRAFFIC_ANNOTATION_BUG_656607;
+}
+
 }  // namespace net
