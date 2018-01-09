@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "64537f16_0a990831",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-09T07:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f85e1647_ef6f09df",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 20
+      },
+      "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d18feb68_40f07d86",
         "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-08T10:48:37Z",
       "side": 1,
       "message": "I feel like in other places we used a chrome.tabs API to open links. Should we use that here? What does Settings do when it needs to open a help center link?",
+      "range": {
+        "startLine": 397,
+        "startChar": 10,
+        "endLine": 397,
+        "endChar": 21
+      },
+      "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a69e9b_32624bb3",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-09T07:31:33Z",
+      "side": 1,
+      "message": "Settings does this, but with an i18ned string. I wonder if we need an i18ned string here?",
+      "parentUuid": "d18feb68_40f07d86",
       "range": {
         "startLine": 397,
         "startChar": 10,
@@ -92,6 +140,30 @@
       "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd667e1_3d8cd03a",
+        "filename": "chrome/browser/resources/md_bookmarks/constants.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-09T07:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b80a4547_0753391a",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
