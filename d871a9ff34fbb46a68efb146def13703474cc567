@@ -22,6 +22,30 @@
       "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4254596c_078d7dce",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-09T23:07:20Z",
+      "side": 1,
+      "message": "My initial reaction is no, we want to keep this separated. If we send the Intent through the LaunchIntentDispatcher, we\u0027ll have to have logic in there to filter precisely those Intents and dispatch them in this way. The filtering logic would have to be run on every Intent launched by Chrome in the LaunchIntentDispatcher::dispatch() method, which has the following comment:\n\n\"Figure out how to route the Intent.  Because this is on the critical path to startup, please avoid making the pathway any more complicated than it already is. Make sure that anything you add _absolutely has_ to be here.\"\n\nEssentially we\u0027d combine it with the other Intents just to do work to re-extract them, which seems less than ideal. WDYT?",
+      "parentUuid": "989ff5a4_a05884ce",
+      "range": {
+        "startLine": 267,
+        "startChar": 9,
+        "endLine": 267,
+        "endChar": 17
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
