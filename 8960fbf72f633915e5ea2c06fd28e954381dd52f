@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e8dcdea_02d92679",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:35:22Z",
+      "side": 1,
+      "message": "Why not put this behind the same check as the other call to -setActive:?\n\n  ProceduralBlock browsingDataRemoved \u003d ^{\n    if (mask \u0026 IOSChromeBrowsingDataRemover::REMOVE_SITE_DATA) {\n      [self.mainBVC setActive:YES];\n    }\n    if (completionHandler) {\n      completionHandler();\n    }\n  };\n\nOtherwise you may activate the BVC even if you didn\u0027t de-activate it which may have side-effects (for example if it was inactive).",
+      "revId": "8960fbf72f633915e5ea2c06fd28e954381dd52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
