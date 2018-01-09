@@ -16,6 +16,24 @@
       "revId": "16dbc463046aa17ddfec2852f3baaa75bc26e413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db36b8cb_c4de061e",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-09T18:49:40Z",
+      "side": 1,
+      "message": "Done. That\u0027s much cleaner, thanks for the suggestion.",
+      "parentUuid": "e3ed9bab_a3dfd5c0",
+      "revId": "16dbc463046aa17ddfec2852f3baaa75bc26e413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
