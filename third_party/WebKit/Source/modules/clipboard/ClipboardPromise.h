@@ -8,8 +8,8 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
+#include "public/common/clipboard/clipboard.mojom-blink.h"
 #include "public/platform/modules/permissions/permission.mojom-blink.h"
-#include "third_party/WebKit/common/clipboard/clipboard.mojom-blink.h"
 
 namespace blink {
 

@@ -41,6 +41,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/StringBuilder.h"
+#include "public/common/page/page_visibility_state.mojom-blink.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebData.h"
 #include "public/platform/WebString.h"
@@ -52,7 +53,6 @@
 #include "public/web/WebSettings.h"
 #include "public/web/WebTreeScopeType.h"
 #include "public/web/WebViewClient.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 namespace blink {
 namespace FrameTestHelpers {

@@ -14,8 +14,8 @@
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Vector.h"
+#include "public/common/page/page_visibility_state.mojom-blink.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 #include "v8/include/v8.h"
 
 namespace blink {

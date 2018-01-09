@@ -140,6 +140,7 @@
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Time.h"
+#include "public/common/page/page_visibility_state.mojom-blink.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositeAndReadbackAsyncCallback.h"
 #include "public/platform/WebCompositorSupport.h"
@@ -170,7 +171,6 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 #if defined(WTF_USE_DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"

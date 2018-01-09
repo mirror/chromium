@@ -47,6 +47,7 @@
 #include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 #include "platform/instrumentation/tracing/MemoryCacheDumpProvider.h"
 #include "platform/wtf/HashMap.h"
+#include "public/common/origin_trials/trial_policy.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/WebCanvasCaptureHandler.h"
 #include "public/platform/WebGestureCurve.h"
@@ -65,7 +66,6 @@
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/Source/platform/exported/WebClipboardImpl.h"
-#include "third_party/WebKit/common/origin_trials/trial_policy.h"
 
 namespace blink {
 

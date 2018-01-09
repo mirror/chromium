@@ -27,12 +27,12 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/common/feature_policy/feature_policy_feature.h"
 #include "public/platform/WebEncryptedMediaClient.h"
 #include "public/platform/WebEncryptedMediaRequest.h"
 #include "public/platform/WebMediaKeySystemConfiguration.h"
 #include "public/platform/WebMediaKeySystemMediaCapability.h"
 #include "public/platform/WebVector.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 
 namespace blink {
 

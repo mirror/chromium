@@ -14,11 +14,11 @@
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/common/blob/blob_registry.mojom-blink.h"
 #include "public/platform/FilePathConversion.h"
 #include "public/platform/InterfaceProvider.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/blob/blob_registry.mojom-blink.h"
 
 namespace blink {
 

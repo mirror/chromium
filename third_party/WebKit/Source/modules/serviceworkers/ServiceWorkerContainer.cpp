@@ -56,12 +56,12 @@
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
+#include "public/common/service_worker/service_worker_error_type.mojom-blink.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/modules/serviceworker/WebServiceWorker.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
-#include "third_party/WebKit/common/service_worker/service_worker_error_type.mojom-blink.h"
 
 namespace blink {
 

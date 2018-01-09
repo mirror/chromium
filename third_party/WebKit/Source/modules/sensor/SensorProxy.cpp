@@ -8,10 +8,10 @@
 #include "core/page/FocusController.h"
 #include "modules/sensor/SensorProviderProxy.h"
 #include "platform/mojo/MojoHelper.h"
+#include "public/common/page/page_visibility_state.mojom-blink.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
 #include "services/device/public/cpp/generic_sensor/sensor_traits.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 namespace blink {
 

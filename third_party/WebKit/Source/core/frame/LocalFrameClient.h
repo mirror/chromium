@@ -49,6 +49,7 @@
 #include "platform/weborigin/Referrer.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Vector.h"
+#include "public/common/feature_policy/feature_policy.h"
 #include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "public/platform/WebEffectiveConnectionType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
@@ -58,7 +59,6 @@
 #include "public/platform/WebURLRequest.h"
 #include "public/web/WebGlobalObjectReusePolicy.h"
 #include "public/web/WebTriggeringEventInfo.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "v8/include/v8.h"
 
 namespace service_manager {

@@ -73,11 +73,11 @@
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/common/page/page_visibility_state.mojom-blink.h"
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
 #include "public/web/WebWidgetClient.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 namespace blink {
 

@@ -15,9 +15,9 @@
 #include "platform/graphics/test/FakeGLES2Interface.h"
 #include "platform/graphics/test/FakeWebGraphicsContext3DProvider.h"
 #include "platform/testing/TestingPlatformSupport.h"
+#include "public/common/page/page_visibility_state.mojom-blink.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 using ::testing::Mock;
 

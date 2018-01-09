@@ -14,10 +14,10 @@
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
+#include "public/common/page/page_visibility_state.mojom-blink.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 #include <memory>
 

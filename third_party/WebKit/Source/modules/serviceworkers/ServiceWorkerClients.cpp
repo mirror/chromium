@@ -22,9 +22,9 @@
 #include "modules/serviceworkers/ServiceWorkerWindowClientCallback.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/wtf/Vector.h"
+#include "public/common/service_worker/service_worker_client.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientQueryOptions.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsInfo.h"
-#include "third_party/WebKit/common/service_worker/service_worker_client.mojom-blink.h"
 
 namespace blink {
 

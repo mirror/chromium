@@ -18,8 +18,8 @@
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerError.h"
 #include "platform/bindings/ScriptState.h"
+#include "public/common/service_worker/service_worker_registration.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
-#include "third_party/WebKit/common/service_worker/service_worker_registration.mojom-blink.h"
 
 namespace blink {
 

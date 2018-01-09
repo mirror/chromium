@@ -41,9 +41,9 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "public/common/quota/quota_types.mojom-blink.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom-blink.h"
 
 namespace blink {
 

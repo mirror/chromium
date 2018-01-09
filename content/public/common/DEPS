@@ -2,7 +2,7 @@ specific_include_rules = {
   ".*\.cc": [
     "+content/common",
     "+services/network/public/cpp",
-    "+third_party/WebKit/common",
+    "+third_party/WebKit/public/common",
   ],
   "resource_response_info.h": [
     "+services/network/public/cpp",

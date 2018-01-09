@@ -11,6 +11,7 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
+#include "public/common/message_port/message_port_channel.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
@@ -23,7 +24,6 @@
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/message_port/message_port_channel.h"
 
 namespace blink {
 namespace {

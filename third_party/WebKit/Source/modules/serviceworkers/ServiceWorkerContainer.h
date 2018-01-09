@@ -43,9 +43,9 @@
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "public/common/service_worker/service_worker_registration.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
-#include "third_party/WebKit/common/service_worker/service_worker_registration.mojom-blink.h"
 
 namespace blink {
 

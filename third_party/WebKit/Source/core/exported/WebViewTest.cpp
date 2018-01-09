@@ -83,6 +83,7 @@
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/common/page/page_visibility_state.mojom-blink.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebCursorInfo.h"
@@ -117,7 +118,6 @@
 #include "public/web/WebWidget.h"
 #include "public/web/WebWidgetClient.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 

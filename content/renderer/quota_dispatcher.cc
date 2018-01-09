@@ -15,7 +15,7 @@
 #include "content/public/renderer/render_thread.h"
 #include "mojo/public/cpp/bindings/callback_helpers.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom.h"
+#include "third_party/WebKit/public/common/quota/quota_types.mojom.h"
 #include "url/origin.h"
 
 using blink::mojom::QuotaStatusCode;

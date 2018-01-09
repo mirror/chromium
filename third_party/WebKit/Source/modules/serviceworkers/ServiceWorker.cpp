@@ -39,9 +39,9 @@
 #include "modules/EventTargetModules.h"
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "platform/bindings/ScriptState.h"
+#include "public/common/service_worker/service_worker_state.mojom-blink.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebString.h"
-#include "third_party/WebKit/common/service_worker/service_worker_state.mojom-blink.h"
 
 namespace blink {
 

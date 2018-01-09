@@ -14,9 +14,9 @@
 #include "platform/network/NetworkStateNotifier.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Assertions.h"
+#include "public/common/feature_policy/feature_policy_feature.h"
 #include "public/platform/WebMediaPlayer.h"
 #include "public/web/WebSettings.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 
 namespace blink {
 

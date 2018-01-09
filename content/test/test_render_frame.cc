@@ -18,7 +18,7 @@
 #include "content/public/common/resource_response.h"
 #include "content/public/test/mock_render_thread.h"
 #include "content/renderer/loader/web_url_loader_impl.h"
-#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
+#include "third_party/WebKit/public/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace content {

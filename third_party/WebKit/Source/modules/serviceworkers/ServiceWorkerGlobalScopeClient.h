@@ -37,11 +37,11 @@
 #include "modules/ModulesExport.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
+#include "public/common/service_worker/service_worker_event_status.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsClaimCallbacks.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsInfo.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerSkipWaitingCallbacks.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerStreamHandle.h"
-#include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom-blink.h"
 
 namespace blink {
 

@@ -21,9 +21,9 @@
 #include "core/page/Page.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
+#include "public/common/frame/sandbox_flags.h"
 #include "public/web/WebElement.h"
 #include "public/web/WebFrameOwnerProperties.h"
-#include "third_party/WebKit/common/sandbox_flags.h"
 
 namespace blink {
 

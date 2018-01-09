@@ -16,8 +16,8 @@
 #include "modules/quota/StorageEstimate.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
+#include "public/common/quota/quota_types.mojom-blink.h"
 #include "public/platform/Platform.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom-blink.h"
 
 namespace blink {
 

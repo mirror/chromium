@@ -26,6 +26,7 @@
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/heap/Handle.h"
+#include "public/common/feature_policy/feature_policy.h"
 #include "public/platform/WebFloatRect.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebRemoteScrollProperties.h"
@@ -34,7 +35,6 @@
 #include "public/web/WebPerformance.h"
 #include "public/web/WebRange.h"
 #include "public/web/WebTreeScopeType.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "v8/include/v8.h"
 
 namespace blink {

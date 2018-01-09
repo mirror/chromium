@@ -83,12 +83,12 @@
 #include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
+#include "public/common/service_worker/service_worker_client.mojom-blink.h"
+#include "public/common/service_worker/service_worker_event_status.mojom-blink.h"
 #include "public/platform/modules/notifications/WebNotificationData.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "public/web/WebSerializedScriptValue.h"
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
-#include "third_party/WebKit/common/service_worker/service_worker_client.mojom-blink.h"
-#include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom-blink.h"
 
 namespace blink {
 

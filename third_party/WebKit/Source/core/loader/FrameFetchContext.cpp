@@ -86,13 +86,13 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/Vector.h"
+#include "public/common/device_memory/approximated_device_memory.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-blink.h"
-#include "third_party/WebKit/common/device_memory/approximated_device_memory.h"
 
 namespace blink {
 
