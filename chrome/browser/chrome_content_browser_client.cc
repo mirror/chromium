@@ -1838,7 +1838,6 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kProfilingFile,
       switches::kProfilingFlush,
       switches::kReaderModeHeuristics,
-      switches::kSitePerProcess,
       translate::switches::kTranslateSecurityOrigin,
     };
 
