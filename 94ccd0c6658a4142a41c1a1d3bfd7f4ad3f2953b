@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9859533d_696caea5",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-09T06:40:34Z",
+      "side": 1,
+      "message": "Since I\u0027m keeping the percentages, I need to keep this. Switched it to TimeTicks to be the same as SCOPED_UMA_HISTOGRAM_TIMER though.",
+      "parentUuid": "e87af560_e1b4b371",
+      "range": {
+        "startLine": 267,
+        "startChar": 2,
+        "endLine": 267,
+        "endChar": 39
+      },
+      "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e0c7e7c_12859631",
         "filename": "components/history/core/browser/expire_history_backend.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582edd80_6d807649",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-09T06:40:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e0c7e7c_12859631",
+      "range": {
+        "startLine": 286,
+        "startChar": 43,
+        "endLine": 286,
+        "endChar": 47
+      },
+      "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +139,54 @@
       "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf7ad48_76f74cb0",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-09T06:40:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23e7e1ae_d125f0ff",
+      "range": {
+        "startLine": 288,
+        "startChar": 38,
+        "endLine": 288,
+        "endChar": 64
+      },
+      "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e46ef10b_d9625f46",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-09T06:40:34Z",
+      "side": 1,
+      "message": "I thought about this a bit and really, what we want to figure out here is whether the redirect calculation takes up a significant portion of the deletion time.\n\nIf we logged them as separate raw timings, we could assume that the low TotalDurations match up with the low GetRedirectsDurations, but that\u0027s not necessarily true. While this setup doesn\u0027t give absolute values, I think it\u0027s more valuable to know how much of the deletion the redirect calculation is taking up to decide if it needs to be optimized.",
+      "parentUuid": "2935f2c8_ce642994",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 28
+      },
+      "revId": "94ccd0c6658a4142a41c1a1d3bfd7f4ad3f2953b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
