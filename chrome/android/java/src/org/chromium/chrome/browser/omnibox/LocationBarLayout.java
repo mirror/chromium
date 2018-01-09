@@ -77,6 +77,7 @@ import org.chromium.chrome.browser.page_info.PageInfoPopup;
 import org.chromium.chrome.browser.preferences.privacy.PrivacyPreferencesManager;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.toolbar.ToolbarActionModeCallback;
 import org.chromium.chrome.browser.toolbar.ToolbarDataProvider;
@@ -93,6 +94,7 @@ import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentControll
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetPaddingUtils;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.RenderFrameHost;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.ui.UiUtils;
@@ -2617,6 +2619,22 @@ public class LocationBarLayout extends FrameLayout
         if (url == null) {
             url = TemplateUrlService.getInstance().getUrlForVoiceSearchQuery(
                     topResultQuery);
+        }
+        // Since voice was used, we let the frame know that there was a user gesture.
+        Tab currentTab = getCurrentTab();
+        if (currentTab != null) {
+            currentTab.addObserver(new EmptyTabObserver() {
+                @Override
+                public void onLoadUrl(Tab tab, LoadUrlParams params, int loadType) {
+                    RenderFrameHost renderFrameHost = tab.getWebContents().getMainFrame();
+                    if (renderFrameHost == null) return;
+                    if (TemplateUrlService.getInstance()
+                                    .isSearchResultsPageFromDefaultSearchProvider(url)) {
+                        renderFrameHost.setHasReceivedUserGesture();
+                    }
+                    tab.removeObserver(this);
+                }
+            });
         }
         loadUrl(url, PageTransition.TYPED);
     }
