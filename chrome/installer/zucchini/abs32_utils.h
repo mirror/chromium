@@ -101,6 +101,8 @@ class Abs32ReaderWin32 : public ReferenceReader {
  private:
   Abs32RvaExtractorWin32 abs32_rva_extractor_;
   AddressTranslator::RvaToOffsetCache target_rva_to_offset_;
+
+  DISALLOW_COPY_AND_ASSIGN(Abs32ReaderWin32);
 };
 
 // A writer for Win32 abs32 references. |addr| determines the bitness of the
@@ -119,6 +121,8 @@ class Abs32WriterWin32 : public ReferenceWriter {
   MutableBufferView image_;
   AbsoluteAddress addr_;
   AddressTranslator::OffsetToRvaCache target_offset_to_rva_;
+
+  DISALLOW_COPY_AND_ASSIGN(Abs32WriterWin32);
 };
 
 // Given a sorted list of abs32 |locations|, removes all elements whose body
