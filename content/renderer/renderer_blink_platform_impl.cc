@@ -1145,6 +1145,7 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
     attributes.context_type = gpu::CONTEXT_TYPE_WEBGL2;
   else
     attributes.context_type = gpu::CONTEXT_TYPE_WEBGL1;
+  attributes.enable_raster_interface = true;
 
   constexpr bool automatic_flushes = true;
   constexpr bool support_locking = false;
