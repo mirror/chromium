@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03cbc1bc_81da1fc9",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T20:56:05Z",
+      "side": 1,
+      "message": "Done. I think. :)\nI had to move the file_thread_ out of NetworkTasks as it can\u0027t be destroyed from the network thread due to blocking.",
+      "parentUuid": "881bf9f1_b2a74d10",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 33
+      },
+      "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b5d0ee6_6131e2ba",
         "filename": "components/cronet/cronet_url_request_context.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63ce5ed_ddac7a52",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T20:56:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5d0ee6_6131e2ba",
+      "range": {
+        "startLine": 261,
+        "startChar": 11,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "499d4965_e7992ee8",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T20:56:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9902e6da_628db86e",
+      "range": {
+        "startLine": 101,
+        "startChar": 78,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0865b153_da8262b9",
         "filename": "components/cronet/cronet_url_request_context.h",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af03aac3_7267f7cb",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T20:56:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0865b153_da8262b9",
+      "range": {
+        "startLine": 102,
+        "startChar": 79,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
