@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a1542bcb_39b7a3ad",
+        "filename": "ash/accelerators/accelerator_table.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T01:41:06Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "e107c1ba_398d7c73",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67e8be48_b932cf89",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 6
@@ -591,6 +609,24 @@
       "side": 1,
       "message": "Agreed. I think though, for the vr copy, it should be a larger refactor. They not only duplicate this enum, but also SpeechRecognizer.  I totally understand why, as it wouldhav been much easier for me to do the same thing. Can we tackle that as a follow up?",
       "parentUuid": "59088c7a_60b94db1",
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c8e12d_c16eb030",
+        "filename": "chrome/browser/speech/speech_recognizer_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T01:41:06Z",
+      "side": 1,
+      "message": "OK. Please file a bug for cleanup and reference it here. I\u0027m often OK with 2 copies of things, but 3 is a bit much. :-)",
+      "parentUuid": "cd6f231f_c632125a",
       "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
