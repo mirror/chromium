@@ -229,9 +229,13 @@ class MapFileParserGold(object):
                     symbol_gap_count += 1
                     syms.append(sym)
 
+              full_name = name
+              if mangled_name and (not name or mangled_name.startswith('_Z') or
+                                   '._Z' in mangled_name):
+                full_name = mangled_name
+
               sym = models.Symbol(section_name, size, address=address,
-                                  full_name=name or mangled_name,
-                                  object_path=path)
+                                  full_name=full_name, object_path=path)
               syms.append(sym)
           section_end_address = section_address + section_size
           if section_name != models.SECTION_BSS and (
