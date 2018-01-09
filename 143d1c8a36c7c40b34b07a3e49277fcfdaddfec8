@@ -87,6 +87,24 @@
       "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68146c1d_52972723",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T18:10:46Z",
+      "side": 1,
+      "message": "OnSessionStateChanged should be called when session state changes. It would not fire if session state does not change though. So make sure we also check the current session state when starting to observe.",
+      "parentUuid": "35f7bf23_f071f3c4",
+      "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
