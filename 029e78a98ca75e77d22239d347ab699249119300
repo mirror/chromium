@@ -16,6 +16,24 @@
       "revId": "029e78a98ca75e77d22239d347ab699249119300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f12fe01_b83c946c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-01-09T19:54:44Z",
+      "side": 1,
+      "message": "Done\n\nNot exactly a dup of line 328, was putting it here to preventing SelectionMetricLogger below too.",
+      "parentUuid": "c380c27c_afb369d0",
+      "revId": "029e78a98ca75e77d22239d347ab699249119300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
