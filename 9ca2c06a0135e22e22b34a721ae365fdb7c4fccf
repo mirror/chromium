@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6d63ed1_0816fe29",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-09T21:02:56Z",
+      "side": 1,
+      "message": "This is a strange way to handle an error condition, especially when you already have a SessionFailed state. Could you use that state instead and add a new SessionErrorCode instead?",
+      "range": {
+        "startLine": 617,
+        "startChar": 37,
+        "endLine": 617,
+        "endChar": 0
+      },
+      "revId": "9ca2c06a0135e22e22b34a721ae365fdb7c4fccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
