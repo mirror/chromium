@@ -16,6 +16,24 @@
       "revId": "1b0f527c88441007458a45833c26a8187227ce83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc3b787_1b4c25e7",
+        "filename": "chrome/common/prerender_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-09T23:20:53Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve moved starting the timer to willstartrequest, which more closely resembles the behavior of the resourcethrottle.",
+      "parentUuid": "fe6a9cd6_bada3ea4",
+      "revId": "1b0f527c88441007458a45833c26a8187227ce83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
