@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4e1442d8_005ad742",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-09T23:18:40Z",
+      "side": 1,
+      "message": "Update: I checked with Justin, the author of the safe numerics code, who told me that checked_cast\u003c\u003e doesn\u0027t support this use case, as there\u0027s no general way to determine whether a value falls within the range of an enum. So, please disregard my suggestion about using something like checked_cast\u003c\u003e.",
+      "parentUuid": "8136fb66_323bd36c",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 1
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57514f93_b567233a",
         "filename": "ash/metrics/pointer_metrics_recorder.cc",
         "patchSetId": 3
