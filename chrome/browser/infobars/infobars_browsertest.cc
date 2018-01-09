@@ -30,6 +30,7 @@
 #include "chrome/browser/ui/page_info/page_info_infobar_delegate.h"
 #include "chrome/browser/ui/startup/automation_infobar_delegate.h"
 #include "chrome/browser/ui/startup/bad_flags_prompt.h"
+#include "chrome/browser/ui/startup/google_api_keys_infobar_delegate.h"
 #include "chrome/browser/ui/startup/obsolete_system_infobar_delegate.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/test/test_browser_ui.h"
@@ -225,6 +226,7 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       {"alternate_nav", IBD::ALTERNATE_NAV_INFOBAR_DELEGATE},
       {"bad_flags", IBD::BAD_FLAGS_INFOBAR_DELEGATE},
       {"default_browser", IBD::DEFAULT_BROWSER_INFOBAR_DELEGATE},
+      {"google_api_keys", IBD::GOOGLE_API_KEYS_INFOBAR_DELEGATE},
       {"obsolete_system", IBD::OBSOLETE_SYSTEM_INFOBAR_DELEGATE},
       {"session_crashed", IBD::SESSION_CRASHED_INFOBAR_DELEGATE_MAC_IOS},
       {"page_info", IBD::PAGE_INFO_INFOBAR_DELEGATE},
@@ -241,6 +243,7 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       banners::AppBannerInfoBarDelegateDesktop::Create(
           GetWebContents(), nullptr, nullptr, content::Manifest());
       break;
+
     case IBD::DEV_TOOLS_INFOBAR_DELEGATE:
       DevToolsInfoBarDelegate::Create(
           l10n_util::GetStringFUTF16(
@@ -248,10 +251,12 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
               base::ASCIIToUTF16("file_path")),
           DevToolsInfoBarDelegate::Callback());
       break;
+
     case IBD::EXTENSION_DEV_TOOLS_INFOBAR_DELEGATE:
       extensions::ExtensionDevToolsInfoBar::Create("id", "name", nullptr,
                                                    base::Closure());
       break;
+
     case IBD::NACL_INFOBAR_DELEGATE:
 #if BUILDFLAG(ENABLE_NACL)
       NaClInfoBarDelegate::Create(GetInfoBarService());
@@ -259,25 +264,30 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       ADD_FAILURE() << "This infobar is not supported when NaCl is disabled.";
 #endif
       break;
+
     case IBD::PEPPER_BROKER_INFOBAR_DELEGATE:
       PepperBrokerInfoBarDelegate::Create(
           GetInfoBarService(), GURL("http://example.com/"),
           base::ASCIIToUTF16("Test Plugin"), nullptr, nullptr,
           base::Callback<void(bool)>());
       break;
+
     case IBD::RELOAD_PLUGIN_INFOBAR_DELEGATE:
       ReloadPluginInfoBarDelegate::Create(
           GetInfoBarService(), nullptr,
           l10n_util::GetStringFUTF16(IDS_PLUGIN_CRASHED_PROMPT,
                                      base::ASCIIToUTF16("Test Plugin")));
       break;
+
     case IBD::PLUGIN_OBSERVER_INFOBAR_DELEGATE:
       PluginObserver::CreatePluginObserverInfoBar(
           GetInfoBarService(), base::ASCIIToUTF16("Test Plugin"));
       break;
+
     case IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE:
       ChromeSelectFilePolicy(GetWebContents()).SelectFileDenied();
       break;
+
     case IBD::KEYSTONE_PROMOTION_INFOBAR_DELEGATE_MAC:
 #if defined(OS_MACOSX)
       KeystonePromotionInfoBarDelegate::Create(GetWebContents());
@@ -285,9 +295,11 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       ADD_FAILURE() << "This infobar is not supported on this OS.";
 #endif
       break;
+
     case IBD::COLLECTED_COOKIES_INFOBAR_DELEGATE:
       CollectedCookiesInfoBarDelegate::Create(GetInfoBarService());
       break;
+
     case IBD::ALTERNATE_NAV_INFOBAR_DELEGATE: {
       AutocompleteMatch match;
       match.destination_url = GURL("http://intranetsite/");
@@ -295,11 +307,13 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
                                           match, GURL("http://example.com/"));
       break;
     }
+
     case IBD::BAD_FLAGS_INFOBAR_DELEGATE:
       chrome::ShowBadFlagsInfoBar(GetWebContents(),
                                   IDS_BAD_FLAGS_WARNING_MESSAGE,
                                   switches::kNoSandbox);
       break;
+
     case IBD::DEFAULT_BROWSER_INFOBAR_DELEGATE:
 #if defined(OS_CHROMEOS)
       ADD_FAILURE() << "This infobar is not supported on this OS.";
@@ -308,9 +322,15 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
                                                     browser()->profile());
 #endif
       break;
+
+    case IBD::GOOGLE_API_KEYS_INFOBAR_DELEGATE:
+      GoogleApiKeysInfoBarDelegate::Create(GetInfoBarService());
+      break;
+
     case IBD::OBSOLETE_SYSTEM_INFOBAR_DELEGATE:
       ObsoleteSystemInfoBarDelegate::Create(GetInfoBarService());
       break;
+
     case IBD::SESSION_CRASHED_INFOBAR_DELEGATE_MAC_IOS:
 #if defined(OS_MACOSX)
       SessionCrashedInfoBarDelegate::Create(browser());
@@ -318,9 +338,11 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       ADD_FAILURE() << "This infobar is not supported on this OS.";
 #endif
       break;
+
     case IBD::PAGE_INFO_INFOBAR_DELEGATE:
       PageInfoInfoBarDelegate::Create(GetInfoBarService());
       break;
+
     case IBD::TRANSLATE_INFOBAR_DELEGATE_NON_AURA: {
 #if defined(USE_AURA)
       ADD_FAILURE() << "This infobar is not supported on this toolkit.";
@@ -336,15 +358,18 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
 #endif
       break;
     }
+
     case IBD::DATA_REDUCTION_PROXY_PREVIEW_INFOBAR_DELEGATE:
       PreviewsInfoBarDelegate::Create(
           GetWebContents(), previews::PreviewsType::LOFI, base::Time(), true,
           false, PreviewsInfoBarDelegate::OnDismissPreviewsInfobarCallback(),
           nullptr);
       break;
+
     case IBD::AUTOMATION_INFOBAR_DELEGATE:
       AutomationInfoBarDelegate::Create();
       break;
+
     default:
       break;
   }
@@ -434,6 +459,10 @@ IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_default_browser) {
   ShowAndVerifyUi();
 }
 #endif
+
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_google_api_keys) {
+  ShowAndVerifyUi();
+}
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_obsolete_system) {
   ShowAndVerifyUi();
