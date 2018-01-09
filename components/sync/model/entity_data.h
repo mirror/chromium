@@ -35,6 +35,9 @@ using EntityDataList = std::vector<EntityDataPtr>;
 // EntityData is supposed to be wrapped and passed by reference.
 struct EntityData {
  public:
+  // TODO: Require at least one specific when constructing, plus required fields
+  // such as |client_tag_hash| unknown-field-set to avoid screwing up. We might
+  // want to instead introduce a few factory functions.
   EntityData();
   ~EntityData();
 
@@ -53,6 +56,8 @@ struct EntityData {
 
   // Model type specific sync data.
   sync_pb::EntitySpecifics specifics;
+
+  // Unknown proto fields for the cases where
 
   // Entity creation and modification timestamps.
   base::Time creation_time;

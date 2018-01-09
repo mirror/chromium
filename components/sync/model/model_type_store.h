@@ -74,6 +74,8 @@ class ModelTypeStore {
     virtual ~WriteBatch();
 
     // Write the given |value| for data with |id|.
+    // TODO: |value| is always serialized proto, but it seems like we should
+    // be type-safe here, e.g. reading_list::ReadingListLocal.
     void WriteData(const std::string& id, const std::string& value);
 
     // Delete the record for data with |id|.

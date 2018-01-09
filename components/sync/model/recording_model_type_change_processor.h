@@ -19,6 +19,13 @@ namespace syncer {
 // members that can then be accessed for verification.
 class RecordingModelTypeChangeProcessor : public FakeModelTypeChangeProcessor {
  public:
+  // Needed because of std::set<EntityDataPtr> used below.
+  struct CompareEntityDataPtr {
+    inline bool operator()(EntityDataPtr lhs, EntityDataPtr rhs) {
+      return lhs.operator->() < rhs.operator->();
+    }
+  };
+
   RecordingModelTypeChangeProcessor();
   ~RecordingModelTypeChangeProcessor() override;
 
@@ -37,19 +44,17 @@ class RecordingModelTypeChangeProcessor : public FakeModelTypeChangeProcessor {
 
   void SetIsTrackingMetadata(bool is_tracking);
 
-  const std::multimap<std::string, std::unique_ptr<EntityData>>& put_multimap()
-      const {
+  const std::multimap<std::string, EntityDataPtr>& put_multimap() const {
     return put_multimap_;
   }
 
-  const std::multimap<std::string, std::unique_ptr<EntityData>>&
-  update_multimap() const {
+  const std::multimap<std::string, EntityDataPtr>& update_multimap() const {
     return update_multimap_;
   }
 
   const std::set<std::string>& delete_set() const { return delete_set_; }
 
-  const std::set<std::unique_ptr<EntityData>>& untrack_set() const {
+  const std::set<EntityDataPtr, CompareEntityDataPtr>& untrack_set() const {
     return untrack_set_;
   }
 
@@ -65,10 +70,10 @@ class RecordingModelTypeChangeProcessor : public FakeModelTypeChangeProcessor {
       bool expect_error = false);
 
  private:
-  std::multimap<std::string, std::unique_ptr<EntityData>> put_multimap_;
-  std::multimap<std::string, std::unique_ptr<EntityData>> update_multimap_;
+  std::multimap<std::string, EntityDataPtr> put_multimap_;
+  std::multimap<std::string, EntityDataPtr> update_multimap_;
   std::set<std::string> delete_set_;
-  std::set<std::unique_ptr<EntityData>> untrack_set_;
+  std::set<EntityDataPtr, CompareEntityDataPtr> untrack_set_;
   std::unique_ptr<MetadataBatch> metadata_;
   bool is_tracking_metadata_ = true;
 };

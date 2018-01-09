@@ -39,7 +39,7 @@ void RecordingModelTypeChangeProcessor::Put(
     const std::string& storage_key,
     std::unique_ptr<EntityData> entity_data,
     MetadataChangeList* metadata_changes) {
-  put_multimap_.insert(std::make_pair(storage_key, std::move(entity_data)));
+  put_multimap_.insert(std::make_pair(storage_key, entity_data->PassToPtr()));
 }
 
 void RecordingModelTypeChangeProcessor::Delete(
@@ -53,12 +53,14 @@ void RecordingModelTypeChangeProcessor::UpdateStorageKey(
     const std::string& storage_key,
     MetadataChangeList* metadata_change_list) {
   update_multimap_.insert(std::make_pair(
-      storage_key, FakeModelTypeSyncBridge::CopyEntityData(entity_data)));
+      storage_key,
+      FakeModelTypeSyncBridge::CopyEntityData(entity_data)->PassToPtr()));
 }
 
 void RecordingModelTypeChangeProcessor::UntrackEntity(
     const EntityData& entity_data) {
-  untrack_set_.insert(FakeModelTypeSyncBridge::CopyEntityData(entity_data));
+  untrack_set_.insert(
+      FakeModelTypeSyncBridge::CopyEntityData(entity_data)->PassToPtr());
 }
 
 void RecordingModelTypeChangeProcessor::ModelReadyToSync(
