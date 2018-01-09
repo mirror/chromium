@@ -2,7 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/resource_coordinator/discard_metrics_util.h"
+
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/browser_process.h"
 
 namespace resource_coordinator {
 
@@ -28,6 +31,18 @@ void RecordTabReloaded(base::TimeTicks last_active_time,
         "TabManager.Discarding.InactiveToReloadTime", inactive_to_reload_time,
         base::TimeDelta::FromSeconds(1), base::TimeDelta::FromDays(1), 100);
   }
+}
+
+void RecordDiscardedAndReloadedTabClosed(base::TimeTicks reload_time,
+                                         base::TimeTicks close_time) {
+  // No histogram to record if Chrome is shutting down.
+  if (g_browser_process->IsShuttingDown())
+    return;
+
+  auto reload_to_close_time = close_time - reload_time;
+  UMA_HISTOGRAM_CUSTOM_TIMES(
+      "TabManager.Discarding.ReloadToCloseTime", reload_to_close_time,
+      base::TimeDelta::FromSeconds(1), base::TimeDelta::FromDays(1), 100);
 }
 
 }  // namespace resource_coordinator

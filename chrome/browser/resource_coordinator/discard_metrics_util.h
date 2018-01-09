@@ -9,6 +9,9 @@
 
 namespace resource_coordinator {
 
+// TODO(fdoray): Histograms should be recorded by an observer.
+// https://crbug.com/775644
+
 // Records histograms when a tab is discarded.
 void RecordTabDiscarded();
 
@@ -19,6 +22,12 @@ void RecordTabDiscarded();
 void RecordTabReloaded(base::TimeTicks last_active_time,
                        base::TimeTicks discard_time,
                        base::TimeTicks reload_time);
+
+// Records histograms when a tab that was discarded and reloaded is closed.
+// |reload_time| is the time at which the tab was reloaded. |close_time| is the
+// time at which the tab was closed.
+void RecordDiscardedAndReloadedTabClosed(base::TimeTicks reload_time,
+                                         base::TimeTicks close_time);
 
 }  // namespace resource_coordinator
 

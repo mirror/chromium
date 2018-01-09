@@ -4,8 +4,6 @@
 
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 
-#include "base/metrics/histogram_macros.h"
-#include "base/time/tick_clock.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/resource_coordinator/discard_metrics_util.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
@@ -92,13 +90,8 @@ void TabManager::WebContentsData::WebContentsDestroyed() {
   // If the tab has been previously discarded but is not currently discarded
   // (ie. it has been reloaded), we want to record the time it took between the
   // reload event and the closing of the tab.
-  if (tab_data_.discard_count > 0 && !tab_data_.is_discarded) {
-    auto delta = NowTicks() - tab_data_.last_reload_time;
-    // Capped to one day for now, will adjust if necessary.
-    UMA_HISTOGRAM_CUSTOM_TIMES("TabManager.Discarding.ReloadToCloseTime", delta,
-                               base::TimeDelta::FromSeconds(1),
-                               base::TimeDelta::FromDays(1), 100);
-  }
+  if (tab_data_.discard_count > 0 && !tab_data_.is_discarded)
+    RecordDiscardedAndReloadedTabClosed(tab_data_.last_reload_time, NowTicks());
 
   ReportUKMWhenTabIsClosed();
 
