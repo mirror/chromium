@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c60c6a49_bdedf216",
+        "filename": "chrome/installer/zucchini/abs32_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T19:44:29Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "b9e1606ad71b6d7de2e979cfb62330603db2c4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
