@@ -16,6 +16,24 @@
       "revId": "bec107123c67bd52440fce206bf6274c7bd0398c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f20a98_89b8dc39",
+        "filename": "internal_gyp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-09T20:40:09Z",
+      "side": 1,
+      "message": "I don\u0027t know yet. I filed a bug to figure out how to remove it (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d800473) and will only land this CL once the issue is fixed. Please ignore it for the moment.",
+      "parentUuid": "c7cc0e58_04081add",
+      "revId": "bec107123c67bd52440fce206bf6274c7bd0398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
