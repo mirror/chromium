@@ -72,7 +72,7 @@ HeadlessURLRequestContextGetter::HeadlessURLRequestContextGetter(
   // the URLRequestContextStorage on the IO thread in GetURLRequestContext().
   if (!proxy_config_) {
     proxy_config_service_ =
-        net::ProxyService::CreateSystemProxyConfigService(io_task_runner_);
+        net::ProxyResolutionService::CreateSystemProxyConfigService(io_task_runner_);
   }
   base::AutoLock lock(lock_);
   headless_browser_context_->AddObserver(this);
@@ -141,7 +141,7 @@ HeadlessURLRequestContextGetter::GetURLRequestContext() {
     builder.set_data_enabled(true);
     builder.set_file_enabled(true);
     if (proxy_config_) {
-      builder.set_proxy_service(net::ProxyService::CreateFixed(*proxy_config_));
+      builder.set_proxy_service(net::ProxyResolutionService::CreateFixed(*proxy_config_));
     } else {
       builder.set_proxy_config_service(std::move(proxy_config_service_));
     }

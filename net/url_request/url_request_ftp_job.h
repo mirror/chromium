@@ -79,9 +79,9 @@ class NET_EXPORT_PRIVATE URLRequestFtpJob : public URLRequestJob {
 
   RequestPriority priority_;
 
-  ProxyService* proxy_service_;
+  ProxyResolutionService* proxy_service_;
   ProxyInfo proxy_info_;
-  ProxyService::PacRequest* pac_request_;
+  ProxyResolutionService::PacRequest* pac_request_;
 
   FtpRequestInfo ftp_request_info_;
   std::unique_ptr<FtpTransaction> ftp_transaction_;

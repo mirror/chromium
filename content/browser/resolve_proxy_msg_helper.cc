@@ -21,7 +21,7 @@ ResolveProxyMsgHelper::ResolveProxyMsgHelper(
       context_getter_(getter),
       proxy_service_(nullptr) {}
 
-ResolveProxyMsgHelper::ResolveProxyMsgHelper(net::ProxyService* proxy_service)
+ResolveProxyMsgHelper::ResolveProxyMsgHelper(net::ProxyResolutionService* proxy_service)
     : BrowserMessageFilter(ViewMsgStart),
       proxy_service_(proxy_service) {
 }
@@ -46,7 +46,7 @@ void ResolveProxyMsgHelper::OnResolveProxy(const GURL& url,
 }
 
 ResolveProxyMsgHelper::~ResolveProxyMsgHelper() {
-  // Clear all pending requests if the ProxyService is still alive (if we have a
+  // Clear all pending requests if the ProxyResolutionService is still alive (if we have a
   // default request context or override).
   if (!pending_requests_.empty()) {
     PendingRequest req = pending_requests_.front();
