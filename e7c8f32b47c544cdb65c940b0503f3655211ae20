@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f0ab4a_f21fefec",
+        "filename": "chrome/browser/ui/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T21:32:21Z",
+      "side": 1,
+      "message": "Nit: std::make_unique\u003c\u003e?",
+      "range": {
+        "startLine": 255,
+        "startChar": 26,
+        "endLine": 255,
+        "endChar": 42
+      },
+      "revId": "e7c8f32b47c544cdb65c940b0503f3655211ae20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
