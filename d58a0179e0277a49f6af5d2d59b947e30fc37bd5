@@ -46,6 +46,30 @@
       "revId": "d58a0179e0277a49f6af5d2d59b947e30fc37bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd872014_6b3a98a9",
+        "filename": "chrome/browser/ui/app_list/search/common/url_icon_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T22:07:41Z",
+      "side": 1,
+      "message": "Another option may be to pass in the Profile*, and have the URLLoaderSource get the URLLoaderFactory from that, assuming the UrlIconSource doesn\u0027t outlive the Profile (Which is probably the case).",
+      "parentUuid": "a2674221_b7e3f229",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "d58a0179e0277a49f6af5d2d59b947e30fc37bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
