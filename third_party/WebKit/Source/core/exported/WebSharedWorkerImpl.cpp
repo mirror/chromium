@@ -142,14 +142,6 @@ void WebSharedWorkerImpl::OnShadowPageInitialized() {
   // invoked and |this| might have been deleted at this point.
 }
 
-bool WebSharedWorkerImpl::SendProtocolMessage(int session_id,
-                                              int call_id,
-                                              const String& message,
-                                              const String& state) {
-  DCHECK(IsMainThread());
-  return false;
-}
-
 void WebSharedWorkerImpl::ResumeStartup() {
   DCHECK(IsMainThread());
   bool is_paused_on_start = is_paused_on_start_;

@@ -829,6 +829,11 @@ void ServiceWorkerVersion::SetDevToolsAttached(bool attached) {
   SetAllRequestExpirations(tick_clock_->NowTicks() + kRequestTimeout);
 }
 
+void ServiceWorkerVersion::GetDevToolsAgent(
+    blink::mojom::DevToolsAgentAssociatedRequest request) {
+  embedded_worker()->GetDevToolsAgent(std::move(request));
+}
+
 void ServiceWorkerVersion::SetMainScriptHttpResponseInfo(
     const net::HttpResponseInfo& http_info) {
   main_script_http_info_.reset(new net::HttpResponseInfo(http_info));

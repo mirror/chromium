@@ -31,6 +31,7 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/common/service_worker/service_worker.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_installed_scripts_manager.mojom.h"
+#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
 #include "url/gurl.h"
 
 namespace IPC {
@@ -176,6 +177,8 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
 
   void SetDevToolsAttached(bool attached);
   bool devtools_attached() const { return devtools_attached_; }
+
+  void GetDevToolsAgent(blink::mojom::DevToolsAgentAssociatedRequest request);
 
   bool network_accessed_for_script() const {
     return network_accessed_for_script_;

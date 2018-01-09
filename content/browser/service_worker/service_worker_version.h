@@ -415,6 +415,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
       const blink::TrialTokenValidator::FeatureToTokensMap& tokens);
 
   void SetDevToolsAttached(bool attached);
+  void GetDevToolsAgent(blink::mojom::DevToolsAgentAssociatedRequest request);
 
   // Sets the HttpResponseInfo used to load the main script.
   // This HttpResponseInfo will be used for all responses sent back from the

@@ -14,14 +14,13 @@
 #include "base/unguessable_token.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/browser/devtools/service_worker_devtools_manager.h"
-#include "ipc/ipc_listener.h"
+#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
 
 namespace content {
 
 class BrowserContext;
 
-class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
-                                       public IPC::Listener {
+class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
  public:
   using List = std::vector<scoped_refptr<ServiceWorkerDevToolsAgentHost>>;
   using Map = std::map<std::string,
@@ -52,9 +51,6 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
   void DetachSession(int session_id) override;
   bool DispatchProtocolMessage(DevToolsSession* session,
                                const std::string& message) override;
-
-  // IPC::Listener implementation.
-  bool OnMessageReceived(const IPC::Message& msg) override;
 
   void PauseForDebugOnStart();
   bool IsPausedForDebugOnStart();
@@ -92,9 +88,7 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
 
   ~ServiceWorkerDevToolsAgentHost() override;
 
-  void AttachToWorker();
-  void DetachFromWorker();
-  void OnDispatchOnInspectorFrontend(const DevToolsMessageChunk& message);
+  bool EnsureAgent();
 
   WorkerState state_;
   base::UnguessableToken devtools_worker_token_;
@@ -107,6 +101,7 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
   GURL scope_;
   base::Time version_installed_time_;
   base::Time version_doomed_time_;
+  blink::mojom::DevToolsAgentAssociatedPtr agent_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerDevToolsAgentHost);
 };
