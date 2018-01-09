@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4bfb626e_8b3983cb",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4048,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2018-01-09T20:19:24Z",
+      "side": 1,
+      "message": "You can leave it.  I\u0027m not sure why it was written that way and having compatibility is important right now.",
+      "parentUuid": "219b19ad_145d3aec",
+      "range": {
+        "startLine": 4048,
+        "startChar": 2,
+        "endLine": 4048,
+        "endChar": 46
+      },
+      "revId": "3350f5fe519d7076860e322297c5b179bff8d67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef9e606_9cdd3fe2",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
         "patchSetId": 7
