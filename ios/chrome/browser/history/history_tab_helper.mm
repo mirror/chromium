@@ -96,7 +96,8 @@ void HistoryTabHelper::DidFinishNavigation(
   DCHECK(web_state->GetNavigationManager()->GetVisibleItem());
   web::NavigationItem* visible_item =
       web_state_->GetNavigationManager()->GetVisibleItem();
-  DCHECK(!visible_item->GetTimestamp().is_null());
+  DCHECK(!visible_item->GetTimestamp().is_null())
+      << visible_item->GetURL().spec();
 
   // Do not update the history database for back/forward navigations.
   // TODO(crbug.com/661667): on iOS the navigation is not currently tagged with
