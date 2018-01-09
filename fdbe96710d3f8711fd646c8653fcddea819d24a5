@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5535d1e7_5e0ac3fa",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T03:08:24Z",
+      "side": 1,
+      "message": "Can you add some documentation about the \"invalid\" client infos? E.g., An invalid client info can be indicated by setting the client_uuid to the empty string. Sometimes this is needed when the browser process couldn\u0027t find a client.\n\n(If we convert things to use ClientInfoPtr isntead of ClientInfo, could we just use nullptr to indicate invalid?)",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46323e5_0306774e",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T03:08:24Z",
+      "side": 1,
+      "message": "Makes sense to make the default kHidden?",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc79719_d0489f47",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T03:08:24Z",
+      "side": 1,
+      "message": "These needs docu too: for example, what is frame_type and last_focus_time for a non-window client.",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
