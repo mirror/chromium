@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3ed9bab_a3dfd5c0",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-09T00:18:22Z",
+      "side": 1,
+      "message": "I understand that this array is expected to be fairly small most of the time, but is there any reason not to use a JS Map, keyed by the request ID? Then there would be no need for linear search or using splice()?\n\nline: 53\nthis.outstandingTransformPagePointRequests_.set(\n    this.nextId_, {callback: callback, params: params});\n\nhere:\nconst outstandingRequest \u003d this.outstandingTransformPagePointRequests_.get(message.data.id);\nthis.outstandingTransformPagePointRequests_.delete(message.data.id);\noutstandingRequest.callback(message.data, outstandingRequest.params);",
+      "revId": "16dbc463046aa17ddfec2852f3baaa75bc26e413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
