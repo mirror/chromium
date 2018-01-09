@@ -21,6 +21,8 @@
 namespace optimization_guide {
 
 const base::FilePath::CharType kFileName[] = FILE_PATH_LITERAL("somefile.pb");
+const base::FilePath::CharType kSentinelFileName[] =
+    FILE_PATH_LITERAL("process_attempt_sentinel.txt");
 
 class TestObserver : public OptimizationGuideServiceObserver {
  public:
@@ -71,17 +73,17 @@ class OptimizationGuideServiceTest : public testing::Test {
   }
 
   void UpdateHints(const base::Version& version,
-                   const base::FilePath& filePath) {
-    ComponentInfo info(version, filePath);
+                   const base::FilePath& file_path) {
+    ComponentInfo info(version, file_path);
     optimization_guide_service_->ProcessHints(info);
   }
 
-  void WriteConfigToFile(const base::FilePath& filePath,
+  void WriteConfigToFile(const base::FilePath& file_path,
                          const proto::Configuration& config) {
     std::string serialized_config;
     ASSERT_TRUE(config.SerializeToString(&serialized_config));
     ASSERT_EQ(static_cast<int32_t>(serialized_config.length()),
-              base::WriteFile(filePath, serialized_config.data(),
+              base::WriteFile(file_path, serialized_config.data(),
                               serialized_config.length()));
   }
 
@@ -123,13 +125,13 @@ TEST_F(OptimizationGuideServiceTest, ProcessHintsPastVersionIgnored) {
   optimization_guide_service()->SetLatestProcessedVersionForTesting(
       base::Version("2.0.0"));
 
-  const base::FilePath filePath = temp_dir().Append(kFileName);
+  const base::FilePath file_path = temp_dir().Append(kFileName);
   proto::Configuration config;
   proto::Hint* hint = config.add_hints();
   hint->set_key("google.com");
-  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(filePath, config));
+  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(file_path, config));
 
-  UpdateHints(base::Version("1.0.0"), filePath);
+  UpdateHints(base::Version("1.0.0"), file_path);
 
   RunUntilIdle();
 
@@ -141,13 +143,13 @@ TEST_F(OptimizationGuideServiceTest, ProcessHintsSameVersionIgnored) {
   const base::Version version("1.0.0");
   optimization_guide_service()->SetLatestProcessedVersionForTesting(version);
 
-  const base::FilePath filePath = temp_dir().Append(kFileName);
+  const base::FilePath file_path = temp_dir().Append(kFileName);
   proto::Configuration config;
   proto::Hint* hint = config.add_hints();
   hint->set_key("google.com");
-  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(filePath, config));
+  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(file_path, config));
 
-  UpdateHints(version, filePath);
+  UpdateHints(version, file_path);
 
   RunUntilIdle();
 
@@ -172,7 +174,11 @@ TEST_F(OptimizationGuideServiceTest, ProcessHintsEmptyFileNameIgnored) {
 TEST_F(OptimizationGuideServiceTest, ProcessHintsInvalidFileIgnored) {
   base::HistogramTester histogram_tester;
   AddObserver();
-  UpdateHints(base::Version("1.0.0"), base::FilePath(kFileName));
+  const base::FilePath file_path = temp_dir()
+                                       .Append(FILE_PATH_LITERAL("nowhere"))
+                                       .Append(FILE_PATH_LITERAL(".."))
+                                       .Append(kFileName);
+  UpdateHints(base::Version("1.0.0"), file_path);
 
   RunUntilIdle();
 
@@ -187,10 +193,10 @@ TEST_F(OptimizationGuideServiceTest, ProcessHintsInvalidFileIgnored) {
 TEST_F(OptimizationGuideServiceTest, ProcessHintsNotAConfigInFileIgnored) {
   base::HistogramTester histogram_tester;
   AddObserver();
-  const base::FilePath filePath = temp_dir().Append(kFileName);
-  ASSERT_EQ(static_cast<int32_t>(3), base::WriteFile(filePath, "boo", 3));
+  const base::FilePath file_path = temp_dir().Append(kFileName);
+  ASSERT_EQ(static_cast<int32_t>(3), base::WriteFile(file_path, "boo", 3));
 
-  UpdateHints(base::Version("1.0.0"), filePath);
+  UpdateHints(base::Version("1.0.0"), file_path);
 
   RunUntilIdle();
 
@@ -202,16 +208,73 @@ TEST_F(OptimizationGuideServiceTest, ProcessHintsNotAConfigInFileIgnored) {
       1);
 }
 
-TEST_F(OptimizationGuideServiceTest, ProcessHintsIssuesNotification) {
+TEST_F(OptimizationGuideServiceTest,
+       ProcessHintsWithSentinelFileAttemptAllowed) {
   base::HistogramTester histogram_tester;
   AddObserver();
-  const base::FilePath filePath = temp_dir().Append(kFileName);
+  const base::Version version("1.0.0");
+
+  const base::FilePath file_path = temp_dir().Append(kFileName);
   proto::Configuration config;
   proto::Hint* hint = config.add_hints();
   hint->set_key("google.com");
-  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(filePath, config));
+  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(file_path, config));
 
-  UpdateHints(base::Version("1.0.0"), filePath);
+  const base::FilePath sentinel_path =
+      file_path.DirName().Append(kSentinelFileName);
+  base::WriteFile(sentinel_path, "2", 1);
+
+  UpdateHints(version, file_path);
+
+  RunUntilIdle();
+
+  EXPECT_TRUE(observer()->received_notification());
+  EXPECT_FALSE(base::PathExists(sentinel_path));
+  histogram_tester.ExpectUniqueSample(
+      "OptimizationGuide.ProcessHintsResult",
+      static_cast<int>(OptimizationGuideService::ProcessHintsResult::SUCCESS),
+      1);
+}
+
+TEST_F(OptimizationGuideServiceTest,
+       ProcessHintsWithSentinelFileTooManyAttempts) {
+  base::HistogramTester histogram_tester;
+  AddObserver();
+  const base::Version version("1.0.0");
+
+  const base::FilePath file_path = temp_dir().Append(kFileName);
+  proto::Configuration config;
+  proto::Hint* hint = config.add_hints();
+  hint->set_key("google.com");
+  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(file_path, config));
+
+  const base::FilePath sentinel_path =
+      file_path.DirName().Append(kSentinelFileName);
+  base::WriteFile(sentinel_path, "3", 1);  // Max attempts
+
+  UpdateHints(version, file_path);
+
+  RunUntilIdle();
+
+  EXPECT_FALSE(observer()->received_notification());
+  EXPECT_TRUE(base::PathExists(sentinel_path));
+  histogram_tester.ExpectUniqueSample(
+      "OptimizationGuide.ProcessHintsResult",
+      static_cast<int>(OptimizationGuideService::ProcessHintsResult::
+                           FAILED_FINISH_PROCESSING),
+      1);
+}
+
+TEST_F(OptimizationGuideServiceTest, ProcessHintsIssuesNotification) {
+  base::HistogramTester histogram_tester;
+  AddObserver();
+  const base::FilePath file_path = temp_dir().Append(kFileName);
+  proto::Configuration config;
+  proto::Hint* hint = config.add_hints();
+  hint->set_key("google.com");
+  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(file_path, config));
+
+  UpdateHints(base::Version("1.0.0"), file_path);
 
   RunUntilIdle();
 
@@ -231,13 +294,13 @@ TEST_F(OptimizationGuideServiceTest,
   AddObserver();
   RemoveObserver();
 
-  const base::FilePath filePath = temp_dir().Append(kFileName);
+  const base::FilePath file_path = temp_dir().Append(kFileName);
   proto::Configuration config;
   proto::Hint* hint = config.add_hints();
   hint->set_key("google.com");
-  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(filePath, config));
+  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(file_path, config));
 
-  UpdateHints(base::Version("1.0.0"), filePath);
+  UpdateHints(base::Version("1.0.0"), file_path);
 
   RunUntilIdle();
 

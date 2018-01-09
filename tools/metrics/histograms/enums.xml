@@ -31878,6 +31878,7 @@ Called by update_net_trust_anchors.py.-->
   <int value="1" label="FailedInvalidParameters"/>
   <int value="2" label="FailedReadingFile"/>
   <int value="3" label="FailedInvalidConfiguration"/>
+  <int value="4" label="FailedFinishProcessing"/>
 </enum>
 
 <enum name="OriginTrialEnableResult">
