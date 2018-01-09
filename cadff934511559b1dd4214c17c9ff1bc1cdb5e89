@@ -117,6 +117,30 @@
       "revId": "cadff934511559b1dd4214c17c9ff1bc1cdb5e89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4c8526_df6aaefb",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-09T15:28:11Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t understand how it\u0027s related to the votes uploading. Is it a UI feature that is just good on its own to minimize user mistakes? If yes, I\u0027d prefer not to attach it to this CL. If no (that is, it\u0027s really important somewhere in PasswordFormManager) then I\u0027d move it out of the UI code.\n\nExample:\nA user typed \"johnsmith1980\", \"Smith\", \"John\" on a form. Chrome prompts to save \"John\", a user copied \"johnsmith1980   \" from, say, the target page or somewhere else. If we don\u0027t trim whitespaces, we don\u0027t upload a username correction vote that we should use the field where a user typed \"johnsmith1980\". \n\nTrimming was in PasswordFormManager::UpdateUsername. Why work with two versions of the typed username (w/ and w/o whitspaces)? Let\u0027s trim them and trim earlier. To me, it is not bad if we sanitize the user input. It is unlikely that whitespaces are really needed for login.\n\nThis line is about edge cases. If you strongly dislike it, I can remove it.",
+      "parentUuid": "1a46c00d_df346c95",
+      "range": {
+        "startLine": 628,
+        "startChar": 3,
+        "endLine": 628,
+        "endChar": 75
+      },
+      "revId": "cadff934511559b1dd4214c17c9ff1bc1cdb5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
