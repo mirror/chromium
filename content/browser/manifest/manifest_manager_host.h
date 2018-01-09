@@ -42,6 +42,8 @@ class ManifestManagerHost : public WebContentsObserver,
 
   // WebContentsObserver
   void RenderFrameDeleted(RenderFrameHost* render_frame_host) override;
+  void NavigationEntryCommitted(
+      const LoadCommittedDetails& load_details) override;
 
  private:
   using CallbackMap = base::IDMap<std::unique_ptr<GetManifestCallback>>;

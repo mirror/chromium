@@ -2,103 +2,95 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_RENDERER_MANIFEST_MANIFEST_MANAGER_H_
-#define CONTENT_RENDERER_MANIFEST_MANIFEST_MANAGER_H_
+#ifndef THIRD_PARTY_WEBKIT_SOURCE_MODULES_MANIFEST_MANIFESTMANAGER_H_
+#define THIRD_PARTY_WEBKIT_SOURCE_MODULES_MANIFEST_MANIFESTMANAGER_H_
 
 #include <memory>
-#include <string>
-#include <vector>
 
-#include "base/callback_forward.h"
-#include "base/macros.h"
-#include "base/memory/weak_ptr.h"
-#include "content/public/common/manifest.h"
-#include "content/public/renderer/render_frame_observer.h"
+#include "core/frame/LocalFrame.h"
+#include "modules/ModulesExport.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "third_party/WebKit/public/platform/modules/manifest/manifest_manager.mojom.h"
+#include "platform/Supplementable.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
+#include "third_party/WebKit/public/platform/modules/manifest/manifest_manager.mojom-blink.h"
 
-class GURL;
+class KURL;
 
 namespace blink {
-class WebURLResponse;
-}
-
-namespace content {
-
-class ManifestFetcher;
 
 // The ManifestManager is a helper class that takes care of fetching and parsing
-// the Manifest of the associated RenderFrame. It uses the ManifestFetcher and
-// the ManifestParser in order to do so.
+// the Manifest of the associated RenderFrame. It uses
+// ManifestManager::Fetcher and ManifestParser in order to do so.
 //
 // Consumers should use the mojo ManifestManager interface to use this class.
-class ManifestManager : public RenderFrameObserver,
-                        public blink::mojom::ManifestManager {
+class MODULES_EXPORT ManifestManager
+    : public GarbageCollectedFinalized<ManifestManager>,
+      public Supplement<Document>,
+      public mojom::blink::ManifestManager {
+  WTF_MAKE_NONCOPYABLE(ManifestManager);
+  USING_GARBAGE_COLLECTED_MIXIN(ManifestManager);
+
  public:
-  explicit ManifestManager(RenderFrame* render_frame);
+  explicit ManifestManager(Document&);
   ~ManifestManager() override;
 
-  // RenderFrameObserver implementation.
-  void DidChangeManifest() override;
-  void DidCommitProvisionalLoad(bool is_new_navigation,
-                                bool is_same_document_navigation) override;
+  void Trace(Visitor*) override;
 
-  void BindToRequest(blink::mojom::ManifestManagerRequest request);
+  static const char* SupplementName();
+  static void BindMojoRequest(LocalFrame*,
+                              mojom::blink::ManifestManagerRequest);
+  static ManifestManager* From(Document*);
+  static void ProvideTo(Document&);
 
  private:
-  enum ResolveState {
-    ResolveStateSuccess,
-    ResolveStateFailure
-  };
+  class Fetcher;
 
   using InternalRequestManifestCallback =
-      base::OnceCallback<void(const GURL&,
-                              const Manifest&,
-                              const blink::mojom::ManifestDebugInfo*)>;
+      base::OnceCallback<void(const KURL&,
+                              const mojom::blink::Manifest*,
+                              const mojom::blink::ManifestDebugInfo*)>;
 
-  // RenderFrameObserver implementation.
-  void OnDestruct() override;
+  void BindToRequest(mojom::blink::ManifestManagerRequest);
 
-  // blink::mojom::ManifestManager implementation.
-  void RequestManifest(RequestManifestCallback callback) override;
-  void RequestManifestDebugInfo(
-      RequestManifestDebugInfoCallback callback) override;
+  // mojom::blink::ManifestManager implementation.
+  void RequestManifest(RequestManifestCallback) override;
+  void RequestManifestDebugInfo(RequestManifestDebugInfoCallback) override;
 
-  void RequestManifestImpl(InternalRequestManifestCallback callback);
+  void RequestManifestImpl(InternalRequestManifestCallback);
 
   void FetchManifest();
-  void OnManifestFetchComplete(const GURL& document_url,
-                               const blink::WebURLResponse& response,
-                               const std::string& data);
-  void ResolveCallbacks(ResolveState state);
+  void OnManifestFetchComplete(const KURL& manifest_url, const String& data);
+  void ResolveCallbacks();
 
-  std::unique_ptr<ManifestFetcher> fetcher_;
+  bool CheckForManifestChange();
+  Document& GetDocument() { return *GetSupplementable(); }
+  HTMLLinkElement* GetManifestLink() { return GetDocument().LinkManifest(); }
+  KURL GetManifestUrl();
+  bool UseCredentials();
 
-  // Whether the RenderFrame may have an associated Manifest. If true, the frame
-  // may have a manifest, if false, it can't have one. This boolean is true when
-  // DidChangeManifest() is called, if it is never called, it means that the
-  // associated document has no <link rel='manifest'>.
-  bool may_have_manifest_;
+  Member<Fetcher> fetcher_;
 
-  // Whether the current Manifest is dirty.
-  bool manifest_dirty_;
+  // Current Manifest.
+  mojom::blink::ManifestPtr manifest_;
 
-  // Current Manifest. Might be outdated if manifest_dirty_ is true.
-  Manifest manifest_;
+  // The manifest URL in the Document.
+  KURL document_manifest_url_;
 
-  // The URL of the current manifest.
-  GURL manifest_url_;
+  // The manifest URL, taking any redirects into account. If the fetch fails,
+  // |manifest_url_| is set to |document_manifest_url_|.
+  KURL manifest_url_;
 
   // Current Manifest debug information.
-  blink::mojom::ManifestDebugInfoPtr manifest_debug_info_;
+  mojom::blink::ManifestDebugInfoPtr manifest_debug_info_;
 
-  std::vector<InternalRequestManifestCallback> pending_callbacks_;
+  // This must be before |bindings_| so the bindings are closed before any
+  // pending callbacks are discarded.
+  Vector<InternalRequestManifestCallback> pending_callbacks_;
 
-  mojo::BindingSet<blink::mojom::ManifestManager> bindings_;
-
-  DISALLOW_COPY_AND_ASSIGN(ManifestManager);
+  mojo::BindingSet<mojom::blink::ManifestManager> bindings_;
 };
 
-}  // namespace content
+}  // namespace blink
 
-#endif  // CONTENT_RENDERER_MANIFEST_MANIFEST_MANAGER_H_
+#endif  // THIRD_PARTY_WEBKIT_SOURCE_MODULES_MANIFEST_MANIFESTMANAGER_H_
