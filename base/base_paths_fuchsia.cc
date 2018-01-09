@@ -8,39 +8,46 @@
 
 #include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 
 namespace base {
+namespace {
+
+const char kPackageRoot[] = "/pkg";
+
+bool IsPackageProcess() {
+  return PathExists(base::FilePath(kPackageRoot));
+}
+
+}  // namespace
 
 bool PathProviderFuchsia(int key, FilePath* result) {
   switch (key) {
     case FILE_MODULE:
-    // Not supported in debug or component builds. Fall back on using the EXE
-    // path for now.
-    // TODO(fuchsia): Get this value from an API. See crbug.com/726124
+      NOTIMPLEMENTED();
+      return false;
     case FILE_EXE: {
-      // Use the binary name as specified on the command line.
-      // TODO(fuchsia): It would be nice to get the canonical executable path
-      // from a kernel API. See https://crbug.com/726124
-      char bin_dir[PATH_MAX + 1];
-      if (realpath(base::CommandLine::ForCurrentProcess()
-                       ->GetProgram()
-                       .AsUTF8Unsafe()
-                       .c_str(),
-                   bin_dir) == NULL) {
-        return false;
-      }
-      *result = FilePath(bin_dir);
+      *result = base::MakeAbsoluteFilePath(base::FilePath(
+          base::CommandLine::ForCurrentProcess()->GetProgram().AsUTF8Unsafe()));
       return true;
     }
     case DIR_SOURCE_ROOT:
-      // This is only used for tests, so we return the binary location for now.
-      *result = FilePath("/system");
+      if (IsPackageProcess()) {
+        *result = FilePath(kPackageRoot);
+      } else {
+        *result = FilePath("/system");
+      }
       return true;
     case DIR_CACHE:
       *result = FilePath("/data");
       return true;
+    case DIR_EXE:
+      if (IsPackageProcess()) {
+        *result = FilePath(kPackageRoot);
+        return true;
+      }
+      return false;
   }
-
   return false;
 }
 

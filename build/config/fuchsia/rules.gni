@@ -1,4 +1,4 @@
-# Copyright 2017 The Chromium Authors. All rights reserved.
+# Copyright 2018 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
@@ -102,9 +102,9 @@ template("test_runner_script") {
   generate_runner_script(target_name) {
     testonly = true
     runner_script = "test_runner.py"
-    exe_target = invoker.test_name
+    exe_target = invoker.exe_target
     generated_script =
-        "$root_build_dir/bin/run_" + get_label_info(exe_target, "name")
+        "$root_build_dir/bin/run_" + get_label_info(invoker.test_name, "name")
     forward_variables_from(invoker, "*")
   }
 }
