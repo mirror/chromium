@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c18661d3_fd596057",
+        "filename": "chrome/browser/offline_pages/test_offline_page_model_builder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-09T00:03:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d440584_225d50fe",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "391751a8ce6fa13d495e5b73b818bb293d09aa53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de22a2e5_0dc57ff3",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
         "patchSetId": 6
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "2479f6bf_5e8d5ffb",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-09T00:03:37Z",
+      "side": 1,
+      "message": "GetInternalArchiveDirectory as we discussed offline.",
+      "parentUuid": "764d2580_68f19e14",
+      "range": {
+        "startLine": 124,
+        "startChar": 24,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "391751a8ce6fa13d495e5b73b818bb293d09aa53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f436ff44_f87d4a49",
         "filename": "components/offline_pages/core/offline_page_model_impl.cc",
         "patchSetId": 6
@@ -125,6 +173,24 @@
       "side": 1,
       "message": "It isn\u0027t quite done yet, this change is just the first step, so I thought it appropriate to leave it in place.",
       "parentUuid": "f436ff44_f87d4a49",
+      "revId": "391751a8ce6fa13d495e5b73b818bb293d09aa53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccdcfa64_b0501a77",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-09T00:03:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b46c7031_b4468c39",
       "revId": "391751a8ce6fa13d495e5b73b818bb293d09aa53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
