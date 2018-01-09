@@ -14,6 +14,7 @@ include_rules = [
 
   "+components/arc",
   "+components/drive",
+  "+components/password_manager/core/browser/hash_password_manager.h",
   "+components/session_manager/core",
   "+components/user_manager",
   "+media",
