@@ -210,9 +210,12 @@ bool Ui::ShouldRenderWebVr() {
   return model_->web_vr.has_produced_frames();
 }
 
-void Ui::OnGlInitialized(unsigned int content_texture_id,
-                         UiElementRenderer::TextureLocation content_location,
-                         bool use_ganesh) {
+void Ui::OnGlInitialized(
+    unsigned int content_texture_id,
+    UiElementRenderer::TextureLocation content_location,
+    unsigned int content_overlay_texture_id,
+    UiElementRenderer::TextureLocation content_overlay_location,
+    bool use_ganesh) {
   ui_element_renderer_ = base::MakeUnique<UiElementRenderer>();
   ui_renderer_ =
       base::MakeUnique<UiRenderer>(scene_.get(), ui_element_renderer_.get());
@@ -223,7 +226,9 @@ void Ui::OnGlInitialized(unsigned int content_texture_id,
   }
   scene_->OnGlInitialized(provider_.get());
   model_->content_texture_id = content_texture_id;
+  model_->content_overlay_texture_id = content_overlay_texture_id;
   model_->content_location = content_location;
+  model_->content_overlay_location = content_overlay_location;
 }
 
 void Ui::RequestFocus(int element_id) {
