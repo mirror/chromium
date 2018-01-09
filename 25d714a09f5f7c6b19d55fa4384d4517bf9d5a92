@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70993ef2_74737976",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-09T00:46:33Z",
+      "side": 1,
+      "message": "Thanks. Joy pointed that out as well. Correction was made in Patch 9.",
+      "parentUuid": "7ccf75b5_db38015e",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 52
+      },
+      "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93607f14_de297513",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
         "patchSetId": 8
@@ -92,6 +116,30 @@
       "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e689606f_e037ec34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-09T00:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "797e0caf_ffb2b455",
+      "range": {
+        "startLine": 218,
+        "startChar": 77,
+        "endLine": 218,
+        "endChar": 89
+      },
+      "revId": "25d714a09f5f7c6b19d55fa4384d4517bf9d5a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
