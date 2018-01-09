@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d61011c7_bb00a4c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-09T20:35:18Z",
+      "side": 1,
+      "message": "nit: \"Once an explicit\", \"the events are passed\"",
+      "revId": "2913e69295a00df6d35dbe89b489fba04ce26ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95363116_6abd853a",
         "filename": "ui/platform_window/x11/x11_window_ozone_unittest.cc",
         "patchSetId": 19
