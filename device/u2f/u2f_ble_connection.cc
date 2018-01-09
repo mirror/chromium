@@ -91,6 +91,10 @@ U2fBleConnection::~U2fBleConnection() {
     adapter_->RemoveObserver(this);
 }
 
+BluetoothDevice* U2fBleConnection::GetDevice() const {
+  return adapter_->GetDevice(address_);
+}
+
 void U2fBleConnection::Connect() {
   BluetoothAdapterFactory::GetAdapter(
       base::Bind(&U2fBleConnection::OnGetAdapter, weak_factory_.GetWeakPtr()));
