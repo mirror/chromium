@@ -414,10 +414,10 @@ class EVENTS_EXPORT LocatedEvent : public Event {
                base::TimeTicks time_stamp,
                int flags);
 
+  // |location_| is event location in the target window's coordinate space.
   gfx::PointF location_;
 
-  // |location_| multiplied by an optional transformation matrix for
-  // rotations, animations and skews.
+  // |root_location_| is event location in the root window's coordinate space.
   gfx::PointF root_location_;
 };
 
