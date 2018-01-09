@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "283bcade_b4c57ecb",
+        "filename": "content/renderer/accessibility/aom_content_ax_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:51:05Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60176b4_20d69baa",
+        "filename": "content/renderer/accessibility/aom_content_ax_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:51:05Z",
+      "side": 1,
+      "message": "This is a raw pointer, who owns it? Comment on its lifecycle.\nHow does this pointer get cleared if the tree changes and the\nAXNode goes away?\n\nI think I was imagining that we wouldn\u0027t even need an object for\nevery node. One object for the tree would suffice. To access the\nname, call GetName(id). Or we could have an object like this but\nit could store a pointer to the AXTree and the node id instead of a\npointer to the AXNode instead, that might make the lifecycle easier.",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f6078a_5b5a8806",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:51:05Z",
+      "side": 1,
+      "message": "Will this work if RequestTreeSnapshot is called from a callback?\n\nI don\u0027t honestly know, but I\u0027m worried about a case where the user\ncalls the AOM from within an iframe, but then we post a task and\nthen call RequestTreeSnapshot at the top of the next event loop -\nwe\u0027re no longer in the context of that JavaScript call being run\non the iframe anymore, so the current frame might be the root frame.\n\nPerhaps explicitly passing the frame to Create() might make sense?\nYou could call WebLocalFrame::FrameForCurrentContext() at the time\nthe AOM request is made, or else get it directly from the Element\nlike element-\u003eGetDocument().GetFrame() or something like that.",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68c821f_89227bed",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:51:05Z",
+      "side": 1,
+      "message": "Can you say tree_update.nodes.assign(...) instead and\nskip the \"nodes\" temporary?",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be08b54e_8425d13d",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:51:05Z",
+      "side": 1,
+      "message": "Calling Unserialize() will delete AXNodes from the tree that are\nno longer there, which will leave some dangling pointers.\n\nPlease add a test for this, something like:\n\n* Get an element\u0027s computed role\n* Hide the element (e.g. display:none)\n* Trigger ReqeustTreeSnapshot a second time with the changed tree\n* Try to access that computed node\u0027s role again - that node should not be\n  in the accessibility tree anymore, so it will crash if it tries to access\n  the old AXNode*.",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b518b3_26996ad0",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:51:05Z",
+      "side": 1,
+      "message": "This probably shouldn\u0027t be a DCHECK. You need to explicitly\nhandle the case where you get a ComputedAccessibleNode and then\nthe underlying node it points to goes away. It could either\nreturn null, or throw an exception, we\u0027ll need to figure out\nwhat makes more sense.",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833b2032_885145c1",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:51:05Z",
+      "side": 1,
+      "message": "Rather than \"stored in content/renderer\", I\u0027d maybe just say\n\"from the platform\"",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d59a670_3e899a85",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:51:05Z",
+      "side": 1,
+      "message": "High-level comment: while the names \"PlatformAXTree\" and\n\"PlatformAXNode\" make a ton of sense from within Blink,\nthey\u0027re kind of confusing when you look at the whole\nChrome codebase because we already have a class\nAXPlatformNode that means something completely different. :)\n\nLet\u0027s not use the word \"Platform\" in these class names.\nThe fact that these are in the platform directory is sufficent.\n\nMaybe ComputedAXTree and ComputedAXNode?\n\nAlso, I think you\u0027re missing PlatformAXNode.h from this file.",
+      "revId": "100077d3352919a24bdc388c88651689e6539422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
