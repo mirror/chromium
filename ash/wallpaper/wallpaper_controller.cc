@@ -720,7 +720,6 @@ void WallpaperController::SetCustomizedDefaultWallpaperPaths(
 
 void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
                                             const WallpaperInfo& info) {
-  current_user_wallpaper_info_ = info;
   wallpaper::WallpaperLayout layout = info.layout;
   VLOG(1) << "SetWallpaper: image_id="
           << wallpaper::WallpaperResizer::GetImageId(image)
@@ -905,9 +904,6 @@ bool WallpaperController::IsBlurEnabled() const {
 void WallpaperController::SetUserWallpaperInfo(const AccountId& account_id,
                                                const WallpaperInfo& info,
                                                bool is_persistent) {
-  // TODO(xdai): Remove this line after wallpaper refactoring is done.
-  // |current_user_wallpaper_info_| will be later updated in SetWallpaperImage()
-  // so theoretically it should be safe to remove the udpate here.
   current_user_wallpaper_info_ = info;
   if (!is_persistent)
     return;
