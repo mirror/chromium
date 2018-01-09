@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6d941bf_5bd6c418",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "This is wpt code, but because of the bug I had to make this a browser test, which is in a completely separate directory. If the bug is resolved this will be removed.",
+      "parentUuid": "9b73e48e_1df86b3e",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ed7b420_243e73fe",
         "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0618dd9d_2e76a37d",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9ed7b420_243e73fe",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3ffbb08d_71b0ece1",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56c7c712_7755814b",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "367353c6_dfb863a7",
         "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5997ef_fa531ce4",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "367353c6_dfb863a7",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0936a3a2_0f741cdb",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "setTimeout(f, 0) is the same as \"queue a task that...\". This gives the behavior of checking every new task, which is what we want to guarantee that we notice it as soon as the color changes.",
+      "parentUuid": "379dc5d6_bb31e98b",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a88e5d6c_9db30176",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https-expected.txt",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8b8a43bc_c29bfcb6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "Yes, unfortunately you can\u0027t add bug links to -expected.txt files:\nhttps://crbug.com/webrtc/8692",
+      "parentUuid": "a88e5d6c_9db30176",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93483d40_b9bfbd2e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https.html",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe78d5a_81a8d7c6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "I view these tests as cousins to the track tests, and a lot of those test events firing. When testing events firing it was natural to use async_test, and so I did these with the same style. But I think we can wrap events in promises and use promise_test in most places. If we decide to do that cleanup though I would prefer to do it separately.",
+      "parentUuid": "93483d40_b9bfbd2e",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "5183588c_de066c71",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "Comment added here and on the subsequent test with a bug link.",
+      "parentUuid": "62932310_247b1bd5",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d1e2794_59fc68f4",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSender.h",
         "patchSetId": 7
@@ -188,6 +332,24 @@
       "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6ae299_0ed2929b",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSender.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-09T11:18:41Z",
+      "side": 1,
+      "message": "Added bug reference.",
+      "parentUuid": "4d1e2794_59fc68f4",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
