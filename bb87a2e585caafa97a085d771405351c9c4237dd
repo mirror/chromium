@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0943536a_67e9c1c8",
+        "filename": "third_party/WebKit/Source/core/paint/SVGFilterPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-09T19:16:13Z",
+      "side": 0,
+      "message": "In the cases you fixed, it\u0027s the case that there is not a new self-contained PaintRecord?",
+      "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
