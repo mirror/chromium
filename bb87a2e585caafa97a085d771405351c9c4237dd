@@ -16,6 +16,24 @@
       "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7ec694_240c3906",
+        "filename": "third_party/WebKit/Source/core/paint/SVGFilterPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-09T19:33:11Z",
+      "side": 0,
+      "message": "The PaintRecord is not fully self-contained regarding property tree states.\n\nFor example, if the transform tree is like\n Root\n   Transform1\n     Transform2\n, and the filtered element starts before Transform2, and the filter is a reference filter, painting of the filter will contain a chunk whose transform state is Transform2. When replaying the repainting to a record, Transform2 need to map to the state of SVGFilterRecordingContext. Previously we mapped to the root state which resulted extra transform (Transform1) created in the record.",
+      "parentUuid": "0943536a_67e9c1c8",
+      "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
