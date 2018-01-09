@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed7ec21c_dae42c53",
+        "filename": "media/midi/midi_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-09T07:04:58Z",
+      "side": 1,
+      "message": "oops, this fix was mistakenly reverted in the last update due to working on different machines. let me restore.",
+      "range": {
+        "startLine": 102,
+        "startChar": 37,
+        "endLine": 102,
+        "endChar": 74
+      },
+      "revId": "09fdf2090361a547e20c73c1a1230b2815181105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
