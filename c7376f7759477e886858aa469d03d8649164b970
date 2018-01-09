@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "f704bfde_f6433cad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-09T22:34:41Z",
+      "side": 1,
+      "message": "D\u0027oh...I checked CompositorViewHolder and not CompositorView...sorry for the noise.",
+      "parentUuid": "6c19bd23_43d73d5d",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b7baa0_fa916446",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
         "patchSetId": 13
