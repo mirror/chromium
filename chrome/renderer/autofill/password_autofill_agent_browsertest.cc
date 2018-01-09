@@ -776,8 +776,8 @@ TEST_F(PasswordAutofillAgentTest,
 
   // Filled even though username is not the preferred match.
   SimulateOnFillPasswordForm(fill_data_);
-  CheckTextFieldsState(UTF16ToUTF8(username3_), false,
-                       UTF16ToUTF8(password3_), true);
+  CheckTextFieldsState(UTF16ToUTF8(username3_), false, UTF16ToUTF8(password3_),
+                       true);
 }
 
 // Fill a password field if the stored username is a prefix of username in

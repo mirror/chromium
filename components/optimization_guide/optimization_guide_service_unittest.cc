@@ -21,6 +21,8 @@
 namespace optimization_guide {
 
 const base::FilePath::CharType kFileName[] = FILE_PATH_LITERAL("somefile.pb");
+const base::FilePath::CharType kSentinelFileName[] =
+    FILE_PATH_LITERAL("process_attempt_sentinel.txt");
 
 class TestObserver : public OptimizationGuideServiceObserver {
  public:
@@ -199,6 +201,63 @@ TEST_F(OptimizationGuideServiceTest, ProcessHintsNotAConfigInFileIgnored) {
       "OptimizationGuide.ProcessHintsResult",
       static_cast<int>(OptimizationGuideService::ProcessHintsResult::
                            FAILED_INVALID_CONFIGURATION),
+      1);
+}
+
+TEST_F(OptimizationGuideServiceTest,
+       ProcessHintsWithSentinelFileAttemptAllowed) {
+  base::HistogramTester histogram_tester;
+  AddObserver();
+  const base::Version version("1.0.0");
+
+  const base::FilePath file_path = temp_dir().Append(kFileName);
+  proto::Configuration config;
+  proto::Hint* hint = config.add_hints();
+  hint->set_key("google.com");
+  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(file_path, config));
+
+  const base::FilePath sentinel_path =
+      file_path.DirName().Append(kSentinelFileName);
+  base::WriteFile(sentinel_path, "2", 1);
+
+  UpdateHints(version, file_path);
+
+  RunUntilIdle();
+
+  EXPECT_TRUE(observer()->received_notification());
+  EXPECT_FALSE(base::PathExists(sentinel_path));
+  histogram_tester.ExpectUniqueSample(
+      "OptimizationGuide.ProcessHintsResult",
+      static_cast<int>(OptimizationGuideService::ProcessHintsResult::SUCCESS),
+      1);
+}
+
+TEST_F(OptimizationGuideServiceTest,
+       ProcessHintsWithSentinelFileTooManyAttempts) {
+  base::HistogramTester histogram_tester;
+  AddObserver();
+  const base::Version version("1.0.0");
+
+  const base::FilePath file_path = temp_dir().Append(kFileName);
+  proto::Configuration config;
+  proto::Hint* hint = config.add_hints();
+  hint->set_key("google.com");
+  ASSERT_NO_FATAL_FAILURE(WriteConfigToFile(file_path, config));
+
+  const base::FilePath sentinel_path =
+      file_path.DirName().Append(kSentinelFileName);
+  base::WriteFile(sentinel_path, "3", 1);  // Max attempts
+
+  UpdateHints(version, file_path);
+
+  RunUntilIdle();
+
+  EXPECT_FALSE(observer()->received_notification());
+  EXPECT_TRUE(base::PathExists(sentinel_path));
+  histogram_tester.ExpectUniqueSample(
+      "OptimizationGuide.ProcessHintsResult",
+      static_cast<int>(OptimizationGuideService::ProcessHintsResult::
+                           FAILED_TOO_MANY_ATTEMPTS),
       1);
 }
 
