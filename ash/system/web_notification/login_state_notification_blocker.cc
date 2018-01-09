@@ -4,9 +4,9 @@
 
 #include "ash/system/web_notification/login_state_notification_blocker.h"
 
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "ui/message_center/message_center.h"
 
 using session_manager::SessionState;

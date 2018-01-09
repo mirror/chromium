@@ -9,8 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"

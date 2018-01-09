@@ -4,7 +4,7 @@
 
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_notification_controller.h"
 
-#include "ash/system/system_notifier.h"
+#include "ash/public/cpp/system_notifier.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_factory.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_storage.h"

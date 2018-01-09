@@ -4,7 +4,7 @@
 
 #include "chrome/browser/chromeos/net/tether_notification_presenter.h"
 
-#include "ash/system/system_notifier.h"
+#include "ash/public/cpp/system_notifier.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"

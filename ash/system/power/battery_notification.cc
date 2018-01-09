@@ -4,11 +4,11 @@
 
 #include "ash/system/power/battery_notification.h"
 
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/power/power_status.h"
-#include "ash/system/system_notifier.h"
 #include "base/i18n/message_formatter.h"
 #include "base/i18n/time_formatting.h"
 #include "base/strings/utf_string_conversions.h"

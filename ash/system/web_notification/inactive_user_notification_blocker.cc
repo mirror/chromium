@@ -4,9 +4,9 @@
 
 #include "ash/system/web_notification/inactive_user_notification_blocker.h"
 
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/message_center/message_center.h"
 

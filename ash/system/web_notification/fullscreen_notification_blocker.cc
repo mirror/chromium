@@ -4,9 +4,9 @@
 
 #include "ash/system/web_notification/fullscreen_notification_blocker.h"
 
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "ash/wm/window_state.h"
 #include "base/metrics/histogram_macros.h"
 #include "ui/aura/window.h"

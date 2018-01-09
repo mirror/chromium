@@ -6,8 +6,8 @@
 
 #include <memory>
 
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/resources/vector_icons/vector_icons.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/tray_constants.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
