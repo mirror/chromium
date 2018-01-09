@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "594024b2_cafa5c8a",
+        "filename": "chrome/browser/chrome_browser_main.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-09T05:31:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a77b4f38_d48e9fa5",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 78
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7280b4b0_f0c257ae",
         "filename": "components/metrics/call_stack_profile_metrics_provider.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-06T00:45:48Z",
       "side": 1,
       "message": "I think it makes sense to enable the periodic sampling for the IO thread as well. To minimize risk I\u0027d recommend doing it in a follow-on CL though.",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 57
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f785342c_d976d41e",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-09T05:31:10Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll do it using another CL.",
+      "parentUuid": "7280b4b0_f0c257ae",
       "range": {
         "startLine": 308,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a3b1a563_495a8eaa",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-09T05:31:10Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t think /components should know /content. \nI did try to pass the BrowserThread::ID here, which requires including \"browser_thread.h\" in this file. This further requires updating the build.gn and DEPS file for components/metrics. I got \"ERROR Dependency cycle\" when building chrome in the end. Does this also indicate we\u0027d better not including /content headers in /components headers?",
+      "parentUuid": "6dee7fd8_aa956890",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c31c8a5_4ba53a94",
         "filename": "content/public/browser/browser_main_parts.h",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-06T00:45:48Z",
       "side": 1,
       "message": "The content layer doesn\u0027t know anything about the profiling (only the Chrome embedder does), so I think it\u0027s better to make this interface more general, and defer the decision about which threads are profiled to the embedder.\n\nSomething like this maybe:\nvirtual void PostThreadCreate(BrowserThread::ID browser_thread_id, base::PlatformThreadId thread_id);\nvirtual void PreThreadDestroy(BrowserThread::ID browser_thread_id, base::PlatformThreadId thread_id);",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 80
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfa3c7f_1dcb9637",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-09T05:31:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4c31c8a5_4ba53a94",
       "range": {
         "startLine": 76,
         "startChar": 0,
