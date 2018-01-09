@@ -16,6 +16,24 @@
       "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb885c79_543868b3",
+        "filename": "third_party/WebKit/Source/core/paint/SVGContainerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-09T23:59:37Z",
+      "side": 0,
+      "message": "We can\u0027t swap them because the clip\u0027s scope (line 46-56) is smaller the the transform\u0027s scope. Perhaps we can let Viewport() be in the local space.",
+      "parentUuid": "3b35e131_87e84bcd",
+      "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
