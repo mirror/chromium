@@ -10,7 +10,6 @@
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
-#include "base/lazy_instance.h"
 #include "base/memory/scoped_refptr.h"
 #include "base/sequenced_task_runner.h"
 #include "base/time/clock.h"
@@ -31,6 +30,12 @@ namespace content {
 class CONTENT_EXPORT WebRtcEventLogManager
     : protected WebRtcLocalEventLogsObserver {
  public:
+  // Ensures that no previous instantiation of the class was performed, then
+  // instantiates the class and returns the object. Subsequent calls to
+  // GetInstance() will return this object.
+  static WebRtcEventLogManager* CreateSingletonInstance();
+
+  // Returns the object previously constructed using CreateSingletonInstance().
   static WebRtcEventLogManager* GetInstance();
 
   // Currently, we only support manual logs initiated by the user
@@ -110,7 +115,6 @@ class CONTENT_EXPORT WebRtcEventLogManager
 
  protected:
   friend class WebRtcEventLogManagerTest;  // Unit tests inject a frozen clock.
-  friend struct base::LazyInstanceTraitsBase<WebRtcEventLogManager>;
 
   WebRtcEventLogManager();
   ~WebRtcEventLogManager() override;

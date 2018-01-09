@@ -90,6 +90,7 @@
 #include "content/browser/tracing/background_tracing_manager_impl.h"
 #include "content/browser/tracing/tracing_controller_impl.h"
 #include "content/browser/utility_process_host_impl.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/browser/webui/content_web_ui_controller_factory.h"
 #include "content/browser/webui/url_data_manager.h"
@@ -1563,6 +1564,12 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   device_monitor_mac_.reset(
       new media::DeviceMonitorMac(audio_manager_->GetTaskRunner()));
 #endif
+
+  {
+    TRACE_EVENT0("startup",
+                 "BrowserMainLoop::BrowserThreadsStarted:WebRtcEventLogManager");
+    webrtc_event_log_manager_.reset(WebRtcEventLogManager::CreateSingletonInstance());
+  }
 
   {
     TRACE_EVENT0("startup",

@@ -94,10 +94,6 @@ class WebRTCInternalsForTest : public WebRTCInternals {
 
   bool HasWakeLock() { return mock_wake_lock_.HasWakeLock(); }
 
-  WebRtcEventLogManager* GetWebRtcEventLogManager() override {
-    return &temporary_webrtc_event_log_manager_;
-  }
-
  private:
   MockWakeLock mock_wake_lock_;
   // WebRtcEventLogManager is a lazily constructed singleton with its own
