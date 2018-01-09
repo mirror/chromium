@@ -205,6 +205,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void OnSynchronizedDisplayPropertiesChanged() override;
   void ResizeDueToAutoResize(const gfx::Size& new_size,
                              uint64_t sequence_number) override;
+  void DidNavigate() override;
 
   // Overridden from ui::TextInputClient:
   void SetCompositionText(const ui::CompositionText& composition) override;
