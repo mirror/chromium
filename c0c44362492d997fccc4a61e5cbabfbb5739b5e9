@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c868b2ce_a322b654",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-09T13:54:05Z",
+      "side": 1,
+      "message": "Please elaborate what the secondary toolbar is. It makes sense to us today, but it will be hard to understand 2 years from now by somebody else.",
+      "range": {
+        "startLine": 15,
+        "startChar": 23,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "c0c44362492d997fccc4a61e5cbabfbb5739b5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37de654_a50257a7",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-09T13:54:05Z",
+      "side": 1,
+      "message": "remove this (see below)",
+      "range": {
+        "startLine": 19,
+        "startChar": 50,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "c0c44362492d997fccc4a61e5cbabfbb5739b5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ad27ec_00aa995c",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-09T13:54:05Z",
+      "side": 1,
+      "message": "Add comments to every button",
+      "revId": "c0c44362492d997fccc4a61e5cbabfbb5739b5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5936bf_a9f6a01d",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-09T13:54:05Z",
+      "side": 1,
+      "message": "1. Constraint everything to the safe area guides\n2. Use SafeAreaLayoutGuideForView(self) from \"ios/chrome/browser/ui/util/constraints_ui_util.h\"\n3. Or just use PinToSafeArea() from same file.",
+      "revId": "c0c44362492d997fccc4a61e5cbabfbb5739b5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f03eb1_122a1ccb",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-09T13:54:05Z",
+      "side": 1,
+      "message": "Remove this (see above)",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 3
+      },
+      "revId": "c0c44362492d997fccc4a61e5cbabfbb5739b5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
