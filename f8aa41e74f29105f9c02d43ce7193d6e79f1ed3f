@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "1893a57a_841e108b",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T18:52:43Z",
+      "side": 1,
+      "message": "BFS isn\u0027t set if we don\u0027t have a surface (SetVisible(false) is called), so if we do the window swap while we don\u0027t have a surface, we don\u0027t have to do anything. Adding a surface later will correctly set visibility and BFS (AFAIK).\n\n(Also, added the SetBounds call)",
+      "parentUuid": "a211ac24_f39a198e",
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75d7623c_8409f075",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 2
