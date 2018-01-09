@@ -41,6 +41,7 @@
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/media_stream_utils.h"
 #include "content/public/renderer/render_frame.h"
+#include "content/renderer/accessibility/aom_content_ax_tree.h"
 #include "content/renderer/blob_storage/webblobregistry_impl.h"
 #include "content/renderer/cache_storage/webserviceworkercachestorage_impl.h"
 #include "content/renderer/device_sensors/device_motion_event_pump.h"
@@ -399,6 +400,10 @@ void RendererBlinkPlatformImpl::SetCompositorThread(
   compositor_thread_ = compositor_thread;
   if (compositor_thread_)
     WaitUntilWebThreadTLSUpdate(compositor_thread_);
+}
+
+blink::PlatformAXTree* RendererBlinkPlatformImpl::PlatformAXTree() {
+  return content::AomContentAxTree::Create();
 }
 
 blink::WebThread* RendererBlinkPlatformImpl::CurrentThread() {
