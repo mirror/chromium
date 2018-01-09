@@ -16,6 +16,24 @@
       "revId": "3f5d1e5f3e0c83ebacc4952dea45623f06a33f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc81383_93bebf77",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-09T23:04:00Z",
+      "side": 1,
+      "message": "My bad: the HDR support changes per screen, so we have to \ntry to do this more actively: moved that part to \ncrrev.com/c/852912",
+      "parentUuid": "b2a5a3dd_4b7ccb6e",
+      "revId": "3f5d1e5f3e0c83ebacc4952dea45623f06a33f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
