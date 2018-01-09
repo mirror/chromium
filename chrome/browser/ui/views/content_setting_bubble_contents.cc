@@ -454,6 +454,7 @@ void ContentSettingBubbleContents::Init() {
       radio->SetEnabled(bubble_content.radio_group_enabled);
       radio->set_listener(this);
       radio->SetMultiLine(true);
+      radio->SetVerticallyCenterImage(false);
       radio_group_.push_back(radio);
       layout->StartRow(0, kIndentedSingleColumnSetId);
       layout->AddView(radio);
