@@ -53,7 +53,7 @@ class ASH_EXPORT ConvertiblePowerButtonController
   void OnTabletModeEnded() override;
 
   // Cancel the ongoing power button behavior of convertible devices.
-  void CancelTabletPowerButton();
+  void CancelConvertiblePowerButton();
 
  private:
   friend class ConvertiblePowerButtonControllerTestApi;
