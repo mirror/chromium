@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d9bcae_d2e3c2ea",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T17:15:04Z",
+      "side": 1,
+      "message": "Agreed that looks better.",
+      "revId": "fda38559ff070b7eda935f9692d51d2b9e6091d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
