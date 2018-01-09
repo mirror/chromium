@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682b7a8e_004e348f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:30:38Z",
+      "side": 1,
+      "message": "Is this offline page specific?  Should this method be moved somewhere more generic?",
+      "range": {
+        "startLine": 153,
+        "startChar": 20,
+        "endLine": 153,
+        "endChar": 85
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5225153_c2d1f949",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:30:38Z",
+      "side": 1,
+      "message": "Can you just pull out the PendingState instead of duplicating the whole call?  e.g.\n\nPendingState pendingState \u003d OfflinePageBridge.is....Enabled() ? PendingState.PENDING_NETWORK : PendingState.PENDING_REASON_UNKNOWN;",
+      "range": {
+        "startLine": 156,
+        "startChar": 40,
+        "endLine": 156,
+        "endChar": 68
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee0050a_9a432573",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:30:38Z",
+      "side": 1,
+      "message": "Pull out the pending state to a variable instead of duplicating the whole call.",
+      "range": {
+        "startLine": 456,
+        "startChar": 16,
+        "endLine": 462,
+        "endChar": 17
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a73c0a_e378f462",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:30:38Z",
+      "side": 1,
+      "message": "Add \"  // Intentional fallthrough.\"",
+      "range": {
+        "startLine": 95,
+        "startChar": 51,
+        "endLine": 95,
+        "endChar": 52
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6fd779_abd58cf9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:30:38Z",
+      "side": 1,
+      "message": "Pull out pending state variable here as well.",
+      "range": {
+        "startLine": 527,
+        "startChar": 12,
+        "endLine": 535,
+        "endChar": 13
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce87984_97d5fd05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:30:38Z",
+      "side": 1,
+      "message": "etc.! :)",
+      "range": {
+        "startLine": 668,
+        "startChar": 12,
+        "endLine": 674,
+        "endChar": 13
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
