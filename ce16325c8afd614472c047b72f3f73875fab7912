@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29c2cf57_3bd6da48",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-09T23:56:26Z",
+      "side": 1,
+      "message": "I prefer this functionality for virtualizing the functionality. The alternative is to have the unittest capture the process id and callback as well, but I\u0027d rather have the unittest know about less of the core impl.",
+      "parentUuid": "3fbabfb3_5f666dc6",
+      "range": {
+        "startLine": 353,
+        "startChar": 23,
+        "endLine": 353,
+        "endChar": 44
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2008ed5f_131ab04b",
         "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-09T22:58:30Z",
       "side": 1,
       "message": "Is it costly to obtain a memory dump?",
+      "range": {
+        "startLine": 488,
+        "startChar": 40,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8065ca2_af98a41a",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-09T23:56:26Z",
+      "side": 1,
+      "message": "primiano, any thoughts on this?",
+      "parentUuid": "2008ed5f_131ab04b",
       "range": {
         "startLine": 488,
         "startChar": 40,
@@ -68,6 +116,30 @@
       "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a189964e_b0e70d05",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-09T23:56:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee87f532_03571810",
+      "range": {
+        "startLine": 120,
+        "startChar": 56,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
