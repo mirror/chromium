@@ -16,6 +16,24 @@
       "revId": "8960fbf72f633915e5ea2c06fd28e954381dd52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a279ee_b70fe2fd",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-09T17:24:21Z",
+      "side": 1,
+      "message": "I was just following the old code pattern where [self setWebUsageEnabled:YES] \u003d\u003e [self activateBVCAndMakeCurrentBVCPrimary] was always being called on the completion block. \n\nThere is no need to check for pending removal operations since this is the completion block that will be called when there are no pending removal operations. Thats why I directly set the mainBVC as active. \n\nWhat I\u0027m not completely sure about and I\u0027d like some input, is on not calling [self.otrBVC setActive:YES]; [self.currentBVC setPrimary:YES]; \n\nWe were completely removing those before this reland, and this approach seems to work, but I want to know what you think.",
+      "parentUuid": "9e8dcdea_02d92679",
+      "revId": "8960fbf72f633915e5ea2c06fd28e954381dd52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
