@@ -22,6 +22,30 @@
       "revId": "6a1ee6ff97eea1a993cda6bc08635b0d4cbf8897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de139a1_e47f798f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-09T21:35:58Z",
+      "side": 1,
+      "message": "This code is actually for ICE_CREAM_SANDWICH where announceForAccessibility is introduced in later version.\n\n1. The root view here is to fix IPH issue on J and K.\n2. The use of sendAccessibilityEvent instead of announceForAccessibility is for ICE_CREAM_SANDWICH compatibility.",
+      "parentUuid": "83d5e0dd_980f7855",
+      "range": {
+        "startLine": 432,
+        "startChar": 19,
+        "endLine": 447,
+        "endChar": 21
+      },
+      "revId": "6a1ee6ff97eea1a993cda6bc08635b0d4cbf8897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
