@@ -150,9 +150,6 @@ class AccessibilityManager
   // Returns true if spoken feedback is enabled, or false if not.
   bool IsSpokenFeedbackEnabled() const;
 
-  // Toggles whether Chrome OS spoken feedback is on or off.
-  void ToggleSpokenFeedback(ash::AccessibilityNotificationVisibility notify);
-
   // Enables or disables the high contrast mode for Chrome.
   void EnableHighContrast(bool enabled);
 
@@ -319,7 +316,7 @@ class AccessibilityManager
   void UpdateAlwaysShowMenuFromPref();
   void OnLargeCursorChanged();
   void UpdateStickyKeysFromPref();
-  void UpdateSpokenFeedbackFromPref();
+  void OnSpokenFeedbackChanged();
   void OnHighContrastChanged();
   void OnAutoclickChanged();
   void UpdateAutoclickDelayFromPref();
