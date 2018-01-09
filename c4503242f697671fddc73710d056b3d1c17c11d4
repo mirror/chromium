@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2f6b3b_50fb66a2",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:56:04Z",
+      "side": 1,
+      "message": "Rather than firing HIT_TEST_RESULT and then handling it, would it\nmake more sense to just fire an event that implies moving ChromeVox\nfocus to that point unambiguously?\n\nIntuitively, I think EventType.SCROLLED_TO_ANCHOR is actually a\ngood semantic fit. That\u0027s kind of what focus recovery is doing,\nright? It\u0027s analogous to how the browser restores your scroll\noffset when you switch back to a tab.",
+      "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
