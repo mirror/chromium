@@ -132,6 +132,12 @@ gfx::ImageSkia* ThemeService::BrowserThemeProvider::GetImageSkiaNamed(
 }
 
 SkColor ThemeService::BrowserThemeProvider::GetColor(int id) const {
+  // The incognito NTP always uses the default background color, unless there is
+  // a custom NTP background image. See also https://crbug.com/21798#c114.
+  if (id == ThemeProperties::COLOR_NTP_BACKGROUND && incognito_ &&
+      !HasCustomImage(IDR_THEME_NTP_BACKGROUND)) {
+    return ThemeProperties::GetDefaultColor(id, incognito_);
+  }
   return theme_service_.GetColor(id, incognito_);
 }
 

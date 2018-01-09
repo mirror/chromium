@@ -453,17 +453,12 @@ void NTPResourceCache::CreateNewTabHTML() {
 }
 
 void NTPResourceCache::CreateNewTabIncognitoCSS() {
-  // TODO(estade): this returns a subtly incorrect theme provider because
-  // |profile_| is actually not the incognito profile. See crbug.com/568388
-  const ui::ThemeProvider& tp =
-      ThemeService::GetThemeProviderForProfile(profile_);
+  const ui::ThemeProvider& tp = ThemeService::GetThemeProviderForProfile(
+      profile_->GetOffTheRecordProfile());
 
-  // Get our theme colors
+  // Get our theme colors.
   SkColor color_background =
-      tp.HasCustomImage(IDR_THEME_NTP_BACKGROUND)
-          ? GetThemeColor(tp, ThemeProperties::COLOR_NTP_BACKGROUND)
-          : ThemeProperties::GetDefaultColor(
-                ThemeProperties::COLOR_NTP_BACKGROUND, true /* incognito */);
+      GetThemeColor(tp, ThemeProperties::COLOR_NTP_BACKGROUND);
 
   // Generate the replacements.
   ui::TemplateReplacements substitutions;
