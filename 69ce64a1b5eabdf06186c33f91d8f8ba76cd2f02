@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd2ba58_cc572960",
+        "filename": "ash/app_list/model/app_list_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 0,
+      "message": "Why removing this? Think this is important to ensure model validity.",
+      "revId": "69ce64a1b5eabdf06186c33f91d8f8ba76cd2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d275b3d_301526af",
+        "filename": "ash/app_list/model/app_list_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "69ce64a1b5eabdf06186c33f91d8f8ba76cd2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

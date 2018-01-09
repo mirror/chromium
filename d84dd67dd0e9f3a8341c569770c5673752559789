@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a73718d_8f642ab4",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "Prefer to make SetItemXXX public than having a friend.",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974e37d4_2fb2ba8f",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "Pass ChromeAppListeItem*, here an other places ?",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1f8163_ab5e65c9",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "I wonder whether it makes sense to have a pre-flight CL to replace this with a ChromeAppListModelUpdaterDelegate. ChromeAppListModelUpdater uses this interface to call AppListSyncableService for the add/delete/update.\n\nAlso can we move AppListModel member from AppListSyncableService to AppListModelUpdater (in another pre-flight CL) ?",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 43
+      },
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b69c5f_5a9a0386",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "Wouldn\u0027t std::move work?",
+      "range": {
+        "startLine": 467,
+        "startChar": 8,
+        "endLine": 468,
+        "endChar": 43
+      },
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b2fec5_053b094d",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "Can we pass ChromeAppListItem here and other places? Ideally, AppListSyncableService does not need to know anything from ash.",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660e49a3_ce230e08",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "Move the impl to cc file here unless it is a one liner that we should inline, here an other places.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 64
+      },
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cefd5ef5_a63eac97",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "Can we move this into ChromeAppListModelUpdater ? Or you need it for test?",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741d6105_d6063243",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "Member var should stay in private.",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3b9a1e_78fc248f",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "Is this necessary? The ash AppListItem is created from |chrome_item|, why do we need to set back the meta data?",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf618d4_b72ffdd8",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T21:29:38Z",
+      "side": 1,
+      "message": "It feels like that we are doing too much work for folder items inside chrome. We probably only need a placeholder ChromeAppListItem to hold id, name and position.",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
