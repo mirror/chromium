@@ -8,6 +8,8 @@
 
 #include "ash/public/cpp/shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_model_observer.h"
+#include "ui/gfx/image/image_skia_operations.h"
+#include "ui/gfx/skbitmap_operations.h"
 
 namespace ash {
 
@@ -67,6 +69,7 @@ ShelfModel::ShelfModel() {
 ShelfModel::~ShelfModel() = default;
 
 void ShelfModel::PinAppWithID(const std::string& app_id) {
+  LOG(ERROR) << "Pinning an App!";
   const ShelfID shelf_id(app_id);
 
   // If the app is already pinned, do nothing and return.
@@ -123,12 +126,39 @@ int ShelfModel::Add(const ShelfItem& item) {
   return AddAt(items_.size(), item);
 }
 
+void ShelfModel::UpdateItemNotifications(const int index) {
+  DCHECK(index >= 0 && index < item_count());
+  ShelfItem& item = items_[index];
+
+  auto it = app_id_to_notification_id_.find(item.id.app_id);
+  std::string notification_id = std::string();
+
+  if (it != app_id_to_notification_id_.end()) {
+    auto notification_set = it->second;
+    for (auto str : notification_set) {
+      notification_id = str;
+      break;
+    }
+    // notification_id = notification_set.begin(); // TODO(me) either make it
+    // accept the set (meh) or just set the bool.
+    item.has_active_notification = true;
+  }
+
+  if (item.has_active_notification)
+    LOG(ERROR) << "Added item with active notification";
+  else
+    LOG(ERROR) << "No active notification.";
+
+  item.notification_id = notification_id;
+}
+
 int ShelfModel::AddAt(int index, const ShelfItem& item) {
   // Items should have unique non-empty ids to avoid undefined model behavior.
   DCHECK(!item.id.IsNull()) << " The id is null.";
   DCHECK_EQ(ItemIndexByID(item.id), -1) << " The id is not unique: " << item.id;
   index = ValidateInsertionIndex(item.type, index);
   items_.insert(items_.begin() + index, item);
+  UpdateItemNotifications(index);
   for (auto& observer : observers_)
     observer.ShelfItemAdded(index);
   return index;
@@ -185,6 +215,72 @@ void ShelfModel::Set(int index, const ShelfItem& item) {
   }
 }
 
+void ShelfModel::GiveItemNotifierId(std::string app_id,
+                                    std::string notification_id) {
+  auto it = app_id_to_notification_id_.find(app_id);
+  if (it != app_id_to_notification_id_.end()) {
+    // The app_id exists in the map, modify the set.
+    it->second.insert(notification_id);
+  } else {
+    // The app_id hasn't been recorded yet, create a set.
+    app_id_to_notification_id_.insert(
+        std::pair<std::string, std::set<std::string>>(app_id,
+                                                      {notification_id}));
+  }
+
+  notification_id_to_app_id_.insert(
+      std::pair<std::string, std::string>(notification_id, app_id));
+
+  int index = ItemIndexByAppID(app_id);
+  // If the item is not pinned or active on the shelf.
+  if (index == -1)
+    return;
+
+  // Update the item on the shelf.
+  ShelfItem& item = items_[index];
+  item.notification_id = notification_id;
+  item.has_active_notification = true;
+
+  for (auto& observer : observers_)
+    observer.ShelfItemChanged(index, item);
+}
+
+void ShelfModel::RemoveItemNotifierId(const std::string& notification_id) {
+  auto notification_it = notification_id_to_app_id_.find(notification_id);
+  std::string app_id;
+
+  // If we have a record of this notification, erase it from both maps.
+  if (notification_it != notification_id_to_app_id_.end()) {
+    // Save the AppId so the app can be updated.
+    app_id = notification_it->second;
+
+    auto app_id_it = app_id_to_notification_id_.find(app_id);
+
+    // Remove the un-posted notification.
+    app_id_it->second.erase(notification_id);
+
+    // If the set is empty erase the pair.
+    if (app_id_it->second.empty())
+      app_id_to_notification_id_.erase(app_id_it);
+
+    // Erase the pair in the NotificationId -> AppId map.
+    notification_id_to_app_id_.erase(notification_it);
+  }
+
+  int index = ItemIndexByAppID(app_id);
+  // If the item is not pinned or active on the shelf.
+  if (index == -1)
+    return;
+
+  // Update the item on the shelf.
+  ShelfItem& item = items_[index];
+  item.notification_id = std::string();
+  item.has_active_notification = false;
+
+  for (auto& observer : observers_)
+    observer.ShelfItemChanged(index, item);
+}
+
 int ShelfModel::ItemIndexByID(const ShelfID& shelf_id) const {
   ShelfItems::const_iterator i = ItemByID(shelf_id);
   return i == items_.end() ? -1 : static_cast<int>(i - items_.begin());
@@ -204,6 +300,22 @@ ShelfItems::const_iterator ShelfModel::ItemByID(const ShelfID& shelf_id) const {
       return i;
   }
   return items_.end();
+}
+
+int ShelfModel::ItemIndexByAppID(const std::string& app_id) {
+  for (size_t i = 0; i < items_.size(); ++i) {
+    if (!app_id.compare(items_[i].id.app_id))
+      return i;
+  }
+  return -1;
+}
+
+int ShelfModel::ItemIndexByNotificationID(const std::string& notification_id) {
+  for (size_t i = 0; i < items_.size(); ++i) {
+    if (!notification_id.compare(items_[i].notification_id))
+      return i;
+  }
+  return -1;
 }
 
 int ShelfModel::FirstRunningAppIndex() const {

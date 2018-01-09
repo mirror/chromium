@@ -33,8 +33,14 @@ struct ASH_PUBLIC_EXPORT ShelfItem {
   // The title to display for tooltips, etc.
   base::string16 title;
 
+  // The identifier for the notification supplied by the MessageCenter.
+  std::string notification_id;
+
   // Whether the tooltip should be shown on hover; generally true.
   bool shows_tooltip = true;
+
+  // Whether the item has an active notification.
+  bool has_active_notification = false;
 
   // Whether the item is pinned by a policy preference (ie. user cannot un-pin).
   bool pinned_by_policy = false;

@@ -31,6 +31,12 @@
 #include "ui/views/controls/image_view.h"
 #include "ui/views/painter.h"
 
+#include "base/debug/stack_trace.h"
+#include "ui/gfx/canvas.h"
+#include "ui/gfx/image/canvas_image_source.h"
+#include "ui/gfx/image/image_skia_operations.h"
+#include "ui/views/background.h"
+
 namespace {
 
 constexpr int kIconSize = 32;
@@ -126,9 +132,87 @@ class ShelfButtonAnimation : public gfx::AnimationDelegate {
   DISALLOW_COPY_AND_ASSIGN(ShelfButtonAnimation);
 };
 
+// The background image source for badge.
+class BadgeBackgroundImageSource : public gfx::CanvasImageSource {
+ public:
+  explicit BadgeBackgroundImageSource(int size)
+      : CanvasImageSource(gfx::Size(size, size), false),
+        radius_(static_cast<float>(size / 2)) {}
+  ~BadgeBackgroundImageSource() override = default;
+
+ private:
+  // gfx::CanvasImageSource overrides:
+  void Draw(gfx::Canvas* canvas) override {
+    cc::PaintFlags flags;
+    flags.setColor(SK_ColorWHITE);
+    flags.setAntiAlias(true);
+    flags.setStyle(cc::PaintFlags::kFill_Style);
+    canvas->DrawCircle(gfx::PointF(radius_, radius_), radius_, flags);
+  }
+
+  const float radius_;
+
+  DISALLOW_COPY_AND_ASSIGN(BadgeBackgroundImageSource);
+};
+
 }  // namespace
 
 namespace ash {
+
+class ShelfButton::AppNotificationIndicatorView : public views::View {
+ public:
+  AppNotificationIndicatorView(SkColor indicator_color = kIndicatorColor,
+                               int indicator_radius_dip = kIndicatorRadiusDip,
+                               int stroke_width_px = 1)
+      : show_attention_(false),
+        indicator_color_(indicator_color),
+        indicator_radius_dip_(indicator_radius_dip),
+        stroke_width_px_(stroke_width_px) {}
+  ~AppNotificationIndicatorView() override {}
+
+  void OnPaint(gfx::Canvas* canvas) override {
+    gfx::ScopedCanvas scoped(canvas);
+
+    const SkAlpha alpha =
+        show_attention_ ? SK_AlphaOPAQUE : SK_AlphaTRANSPARENT;
+    canvas->SaveLayerAlpha(alpha);
+
+    DCHECK_EQ(width(), height());
+    DCHECK_EQ(indicator_radius_dip_, width() / 2);
+    const float dsf = canvas->UndoDeviceScaleFactor();
+    gfx::PointF center = gfx::RectF(GetLocalBounds()).CenterPoint();
+    center.Scale(dsf);
+
+    // Fill the center.
+    cc::PaintFlags flags;
+    flags.setColor(indicator_color_);
+    flags.setAntiAlias(true);
+    canvas->DrawCircle(center, dsf * indicator_radius_dip_ - stroke_width_px_,
+                       flags);
+
+    // Stroke the border.
+    flags.setColor(SkColorSetA(SK_ColorBLACK, 0x4D));
+    flags.setStyle(cc::PaintFlags::kStroke_Style);
+    canvas->DrawCircle(
+        center, dsf * indicator_radius_dip_ - stroke_width_px_ / 2.0f, flags);
+  }
+
+  void ShowAttention(bool show) {
+    if (show_attention_ == show)
+      return;
+    show_attention_ = show;
+    SchedulePaint();
+  }
+
+  int indicator_radius_dip() { return indicator_radius_dip_; }
+
+  bool show_attention_;
+  const SkColor indicator_color_;
+  const int indicator_radius_dip_;
+  const int stroke_width_px_;
+
+  DISALLOW_COPY_AND_ASSIGN(AppNotificationIndicatorView);
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // ShelfButton::AppStatusIndicatorView
@@ -137,8 +221,14 @@ class ShelfButton::AppStatusIndicatorView
     : public views::View,
       public ShelfButtonAnimation::Observer {
  public:
-  AppStatusIndicatorView()
-      : show_attention_(false), animation_end_time_(base::TimeTicks()) {
+  AppStatusIndicatorView(SkColor indicator_color = kIndicatorColor,
+                         int indicator_radius_dip = kIndicatorRadiusDip,
+                         int stroke_width_px = 1)
+      : show_attention_(false),
+        animation_end_time_(base::TimeTicks()),
+        indicator_color_(indicator_color),
+        indicator_radius_dip_(indicator_radius_dip),
+        stroke_width_px_(stroke_width_px) {
     // Make sure the events reach the parent view for handling.
     set_can_process_events_within_subtree(false);
   }
@@ -151,31 +241,31 @@ class ShelfButton::AppStatusIndicatorView
   void OnPaint(gfx::Canvas* canvas) override {
     gfx::ScopedCanvas scoped(canvas);
     if (show_attention_) {
-      SkAlpha alpha = ShelfButtonAnimation::GetInstance()->HasObserver(this)
-                          ? ShelfButtonAnimation::GetInstance()->GetAlpha()
-                          : SK_AlphaOPAQUE;
+      const SkAlpha alpha =
+          ShelfButtonAnimation::GetInstance()->HasObserver(this)
+              ? ShelfButtonAnimation::GetInstance()->GetAlpha()
+              : SK_AlphaOPAQUE;
       canvas->SaveLayerAlpha(alpha);
     }
 
     DCHECK_EQ(width(), height());
-    DCHECK_EQ(kIndicatorRadiusDip, width() / 2);
+    DCHECK_EQ(indicator_radius_dip_, width() / 2);
     const float dsf = canvas->UndoDeviceScaleFactor();
-    const int kStrokeWidthPx = 1;
     gfx::PointF center = gfx::RectF(GetLocalBounds()).CenterPoint();
     center.Scale(dsf);
 
     // Fill the center.
     cc::PaintFlags flags;
-    flags.setColor(kIndicatorColor);
+    flags.setColor(indicator_color_);
     flags.setAntiAlias(true);
-    canvas->DrawCircle(center, dsf * kIndicatorRadiusDip - kStrokeWidthPx,
+    canvas->DrawCircle(center, dsf * indicator_radius_dip_ - stroke_width_px_,
                        flags);
 
     // Stroke the border.
     flags.setColor(SkColorSetA(SK_ColorBLACK, 0x4D));
     flags.setStyle(cc::PaintFlags::kStroke_Style);
     canvas->DrawCircle(
-        center, dsf * kIndicatorRadiusDip - kStrokeWidthPx / 2.0f, flags);
+        center, dsf * indicator_radius_dip_ - stroke_width_px_ / 2.0f, flags);
   }
 
   // ShelfButtonAnimation::Observer
@@ -187,7 +277,6 @@ class ShelfButton::AppStatusIndicatorView
   void ShowAttention(bool show) {
     if (show_attention_ == show)
       return;
-
     show_attention_ = show;
     if (show_attention_) {
       animation_end_time_ = base::TimeTicks::Now() +
@@ -198,7 +287,9 @@ class ShelfButton::AppStatusIndicatorView
     }
   }
 
- private:
+  int indicator_radius_dip() { return indicator_radius_dip_; }
+
+ protected:
   void UpdateAnimating() {
     if (base::TimeTicks::Now() > animation_end_time_)
       ShelfButtonAnimation::GetInstance()->RemoveObserver(this);
@@ -206,6 +297,10 @@ class ShelfButton::AppStatusIndicatorView
 
   bool show_attention_;
   base::TimeTicks animation_end_time_;  // For attention throbbing underline.
+
+  const SkColor indicator_color_;
+  const int indicator_radius_dip_;
+  const int stroke_width_px_;
 
   DISALLOW_COPY_AND_ASSIGN(AppStatusIndicatorView);
 };
@@ -218,10 +313,15 @@ const char ShelfButton::kViewClassName[] = "ash/ShelfButton";
 
 ShelfButton::ShelfButton(InkDropButtonListener* listener, ShelfView* shelf_view)
     : Button(nullptr),
+
+      has_notification_(false),
       listener_(listener),
       shelf_view_(shelf_view),
       icon_view_(new views::ImageView()),
       indicator_(new AppStatusIndicatorView()),
+      notification_indicator_(
+          new AppNotificationIndicatorView(kIndicatorColor,
+                                           kIndicatorRadiusDip + 5)),
       state_(STATE_NORMAL),
       destroyed_flag_(nullptr) {
   SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
@@ -246,6 +346,7 @@ ShelfButton::ShelfButton(InkDropButtonListener* listener, ShelfView* shelf_view)
 
   AddChildView(indicator_);
   AddChildView(icon_view_);
+  AddChildView(notification_indicator_);
 
   SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
 }
@@ -258,6 +359,16 @@ ShelfButton::~ShelfButton() {
 void ShelfButton::SetShadowedImage(const gfx::ImageSkia& image) {
   icon_view_->SetImage(gfx::ImageSkiaOperations::CreateImageWithDropShadow(
       image, icon_shadows_));
+}
+
+void ShelfButton::MakeIconStrange() {
+  // SetShadowedImage(gfx::ImageSkiaOperations::CreateRotatedImage(icon_view_->GetImage(),
+  // SkBitmapOperations::ROTATION_90_CW));
+}
+
+void ShelfButton::UnMakeIconStrange() {
+  // SetShadowedImage(gfx::ImageSkiaOperations::CreateRotatedImage(icon_view_->GetImage(),
+  // SkBitmapOperations::ROTATION_270_CW));
 }
 
 void ShelfButton::SetImage(const gfx::ImageSkia& image) {
@@ -290,13 +401,18 @@ const gfx::ImageSkia& ShelfButton::GetImage() const {
   return icon_view_->GetImage();
 }
 
+void ShelfButton::AddNotificationBadge(bool active_notification) {
+  notification_indicator_->ShowAttention(active_notification);
+}
+
 void ShelfButton::AddState(State state) {
   if (!(state_ & state)) {
     state_ |= state;
     Layout();
     if (state & STATE_ATTENTION)
       indicator_->ShowAttention(true);
-
+    if (state & STATE_NOTIFICATION)
+      has_notification_ = true;
     if (state & STATE_DRAGGING)
       ScaleAppIcon(true);
   }
@@ -308,7 +424,8 @@ void ShelfButton::ClearState(State state) {
     Layout();
     if (state & STATE_ATTENTION)
       indicator_->ShowAttention(false);
-
+    if (state & STATE_NOTIFICATION)
+      has_notification_ = false;
     if (state & STATE_DRAGGING)
       ScaleAppIcon(false);
   }
@@ -431,6 +548,7 @@ void ShelfButton::Layout() {
                 icon_width, icon_height);
   // The indicator should be aligned with the icon, not the icon + shadow.
   gfx::Point indicator_midpoint = icon_view_bounds.CenterPoint();
+  gfx::Point notification_indicator_midpoint = icon_view_bounds.CenterPoint();
   icon_view_bounds.Inset(insets_shadows);
   icon_view_bounds.AdjustToFit(gfx::Rect(size()));
   icon_view_->SetBoundsRect(icon_view_bounds);
@@ -444,22 +562,36 @@ void ShelfButton::Layout() {
   switch (shelf->alignment()) {
     case SHELF_ALIGNMENT_BOTTOM:
     case SHELF_ALIGNMENT_BOTTOM_LOCKED:
-      indicator_midpoint.set_y(button_bounds.bottom() - kIndicatorRadiusDip -
+      indicator_midpoint.set_y(button_bounds.bottom() -
+                               indicator_->indicator_radius_dip() -
                                kIndicatorOffsetFromBottom);
+      notification_indicator_midpoint.set_y(
+          button_bounds.y() + notification_indicator_->indicator_radius_dip());
+      notification_indicator_midpoint.set_x(
+          button_bounds.width() -
+          notification_indicator_->indicator_radius_dip() * 2);
       break;
     case SHELF_ALIGNMENT_LEFT:
-      indicator_midpoint.set_x(button_bounds.x() + kIndicatorRadiusDip +
+      indicator_midpoint.set_x(button_bounds.x() +
+                               indicator_->indicator_radius_dip() +
                                kIndicatorOffsetFromBottom);
       break;
     case SHELF_ALIGNMENT_RIGHT:
-      indicator_midpoint.set_x(button_bounds.right() - kIndicatorRadiusDip -
+      indicator_midpoint.set_x(button_bounds.right() -
+                               indicator_->indicator_radius_dip() -
                                kIndicatorOffsetFromBottom);
       break;
   }
 
   gfx::Rect indicator_bounds(indicator_midpoint, gfx::Size());
-  indicator_bounds.Inset(gfx::Insets(-kIndicatorRadiusDip));
+  indicator_bounds.Inset(gfx::Insets(-indicator_->indicator_radius_dip()));
   indicator_->SetBoundsRect(indicator_bounds);
+
+  gfx::Rect notification_indicator_bounds(notification_indicator_midpoint,
+                                          gfx::Size());
+  notification_indicator_bounds.Inset(
+      gfx::Insets(-notification_indicator_->indicator_radius_dip()));
+  notification_indicator_->SetBoundsRect(notification_indicator_bounds);
 
   UpdateState();
 }
@@ -575,6 +707,10 @@ void ShelfButton::ScaleAppIcon(bool scale_up) {
   } else {
     layer()->SetTransform(gfx::Transform());
   }
+}
+
+void ShelfButton::SetNotificationIStateTemp(bool on) {
+  notification_indicator_->ShowAttention(on);
 }
 
 }  // namespace ash

@@ -13,7 +13,11 @@
 #include "ash/public/interfaces/shelf.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "ui/message_center/message_center_observer.h"
 
+namespace message_center {
+class Notification;
+}
 namespace ash {
 
 class ShelfItemDelegate;
@@ -63,6 +67,16 @@ class ASH_PUBLIC_EXPORT ShelfModel {
   // Resets the item at the specified index. The item's id should not change.
   void Set(int index, const ShelfItem& item);
 
+  // TODO(newcomer): Refactor to Update with a bool for add/remove.
+  // Updates |app_id_to_notification_id_| and the ShelfItem.
+  void GiveItemNotifierId(const std::string app_id,
+                          const std::string notifier_id);
+
+  // Updates |app_id_to_notification_id_| and the ShelfItem.
+  void RemoveItemNotifierId(const std::string& notification_id);
+
+  void UpdateItemNotifications(const int index);
+
   // Returns the index of the item with id |shelf_id|, or -1 if none exists.
   int ItemIndexByID(const ShelfID& shelf_id) const;
 
@@ -83,6 +97,14 @@ class ASH_PUBLIC_EXPORT ShelfModel {
   // items().end() if there is no item with the specified id.
   ShelfItems::const_iterator ItemByID(const ShelfID& shelf_id) const;
 
+  // Returns the index of the matching ShelfItem or -1 if the |app_id| doesn't
+  // match a ShelfItem.
+  int ItemIndexByAppID(const std::string& app_id);
+
+  // Returns the index of the matching ShelfItem or -1 if the |notification_id|
+  // doesn't match a ShelfItem.
+  int ItemIndexByNotificationID(const std::string& notification_id);
+
   const ShelfItems& items() const { return items_; }
   int item_count() const { return static_cast<int>(items_.size()); }
 
@@ -96,6 +118,12 @@ class ASH_PUBLIC_EXPORT ShelfModel {
   void AddObserver(ShelfModelObserver* observer);
   void RemoveObserver(ShelfModelObserver* observer);
 
+  // todo -- move to private.
+  // Maps one app id to all of its notification ids.
+  std::map<std::string, std::set<std::string>> app_id_to_notification_id_;
+  // Maps one notification id to its app id.
+  std::map<std::string, std::string> notification_id_to_app_id_;
+
  private:
   // Makes sure |index| is in line with the type-based order of items. If that
   // is not the case, adjusts index by shifting it to the valid range and
@@ -103,6 +131,7 @@ class ASH_PUBLIC_EXPORT ShelfModel {
   int ValidateInsertionIndex(ShelfItemType type, int index) const;
 
   ShelfItems items_;
+
   base::ObserverList<ShelfModelObserver> observers_;
 
   std::map<ShelfID, std::unique_ptr<ShelfItemDelegate>>
