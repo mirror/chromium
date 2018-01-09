@@ -33,6 +33,24 @@
       "revId": "55176f300c04fdab28f63cfb7fd382999aaa846f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e7d4bb_87848148",
+        "filename": "components/autofill/core/browser/test_autofill_external_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-09T23:44:59Z",
+      "side": 1,
+      "message": "100% agreed.  Thanks for pointing out the deprecation warning and base::RunLoop suggestion; that works just fine.  Removing sky@ from review since this is no longer an issue (thanks Scott!)",
+      "parentUuid": "4ad2603f_60944103",
+      "revId": "55176f300c04fdab28f63cfb7fd382999aaa846f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
