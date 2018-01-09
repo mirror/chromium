@@ -225,19 +225,19 @@ layer at (0,0) size 1046x2685 backgroundClip at (0,0) size 1046x799 clip at (0,0
       LayoutBlockFlow {P} at (0,2633) size 1030x20
         LayoutText {#text} at (0,0) size 60x19
           text run at (0,0) width 60: "Filler lines"
-layer at (8,0) size 2010x48 backgroundClip at (0,0) size 1046x799 clip at (0,0) size 1046x799
+layer at (0,0) size 0x0
   LayoutBlockFlow (positioned) {DIV} at (8,0) size 2010x48 [border: (5px solid #000000)]
     LayoutBlockFlow {DIV} at (5,5) size 2000x30
       LayoutBlockFlow (anonymous) at (0,0) size 2000x20
         LayoutText {#text} at (0,0) size 672x19
           text run at (0,0) width 672: "crbug.com/303728: Footer Line should be repeated on every page and should be clipped because it's too wide."
-layer at (13,33) size 2000x2 backgroundClip at (13,33) size 1033x2 clip at (0,0) size 0x0
+layer at (8,36) size 2000x2 backgroundClip at (8,36) size 1038x2 clip at (0,0) size 0x0
   LayoutBlockFlow {HR} at (0,28) size 2000x2 [border: (1px inset #EEEEEE)]
-layer at (8,751) size 2010x48 backgroundClip at (0,0) size 1046x799 clip at (0,0) size 1046x799
+layer at (0,0) size 0x0
   LayoutBlockFlow (positioned) {DIV} at (8,751) size 2010x48 [border: (5px solid #000000)]
     LayoutBlockFlow {DIV} at (5,13) size 2000x30
       LayoutBlockFlow (anonymous) at (0,10) size 2000x20
         LayoutText {#text} at (0,0) size 672x19
           text run at (0,0) width 672: "crbug.com/303728: Footer Line should be repeated on every page and should be clipped because it's too wide."
-layer at (13,764) size 2000x2 backgroundClip at (13,764) size 1033x2 clip at (0,0) size 0x0
+layer at (8,2718) size 2000x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
   LayoutBlockFlow {HR} at (0,0) size 2000x2 [border: (1px inset #EEEEEE)]
