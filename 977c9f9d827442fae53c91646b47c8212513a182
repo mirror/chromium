@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69fc5c55_51a567d6",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/ua/summary-details-and-ua-shadow.html",
+        "patchSetId": 24
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "You can use assert_true()",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ff9240_36740975",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/ua/summary-details-distribution-expected.html",
+        "patchSetId": 24
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "Nit: unnecessary double quote?",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17d663b_7d06ddd1",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "I am a little worrying about code duplication of this function with ResolveAssignment(), seeing that the similar structure appears in both functions with a little difference.\n\nCould you improve that by something like the following?\n\n  for (Node\u0026 child : NodeTraversal::ChildrenOf(owner_-\u003ehost())) {\n    if (!child.IsSlotable()) {\n      child.LazyReattachIfAttached();\n      continue;\n    }\n    if (HTMLSlotElement* slot \u003d ..... // FildSlotByName or FindSlotInUserAgentShadow \n      slot-\u003eAppendAssignedNode(child);\n    else\n      child.LazyReattachIfAttached();",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693ee36f_4234fcf9",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "It looks we are looking up a hash table N (\u003d\u003d the number of children) times for the *same* key in one ResolveAssignment().\n\nIt would be better to look up a hash table only once for two kinds of slots in one ResolveAssignment operation.",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e9e203_4190efb8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "Neither this class nor AssignmentFilter have any member variables.\n\nGiven that, I don\u0027t think we need AssignmentFilter. A simple lambda expression, instead of AssignmentFilter::CanAssign(), would serve well, I think.",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfc33fb_9a768feb",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "Two comments:\n\n1. Could you extract L54-L60 as a function and name it? That would make this more readable.\n\ne.g. IsFirstHTMLSummaryElement or anything better.\n\n2. I think this can be more simple:\n\nif (node.parentElement() \u0026\u0026 node \u003d\u003d Traversal\u003cHTMLSummaryElement\u003e::firstChild(node.parentElement()))",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d49929c_4043b11c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "Can\u0027t we have IsInUserAgentShadowRoot?\n\nI am too lazy to confirm whether we already have it or not in Node. :)",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9760640_2d7d3b8b",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "Could you share your thought briefly here?\nYou tried to return earlier? e.g. in DOM mutations?\n\nI appreciate if you could note what you have investigated here so that the goal of this TODO would become clear to us.",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cf7b70_a3218d8d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-09T08:46:21Z",
+      "side": 1,
+      "message": "A pair of \"Filtered\" and \"Fallback\" might not sound a good name to me. It would be better to avoid to use \"Fallback\" because it is already used in another meaning in the slot assignments world.\n\nAlso, it might be better to avoid *filter* because filter is sometimes a confusing name.\ne.g. It is unclear whether it includes or excludes something if a *filter function* returns true.\n\nHow about UserAgentCustomAssignSlot and UserAgentDefaultSlot or anything better names?",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
