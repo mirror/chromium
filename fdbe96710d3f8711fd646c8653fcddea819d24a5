@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a4c980a_bc3c3e3c",
+        "filename": "content/browser/service_worker/service_worker_client_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-09T04:04:01Z",
+      "side": 1,
+      "message": "Are we going to use ClientInfoPtr and return nullptr when we have no client info to return, ...maybe once all other legacy IPC code using this info is gone?",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddbf49b1_f4d4ba66",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 6
