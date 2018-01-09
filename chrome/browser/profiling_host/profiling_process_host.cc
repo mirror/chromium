@@ -352,11 +352,12 @@ void ProfilingProcessHost::AddClientToProfilingService(
   // This code doesn't actually hang onto the client_for_browser interface
   // poiner beyond sending this message to start since there are no other
   // messages we need to send.
+  LOG(ERROR) << "AddProfilingClient: " << (int)stack_mode_;
   profiling_service_->AddProfilingClient(
       pid, std::move(client),
       mojo::WrapPlatformFile(pipes.PassSender().release().handle),
       mojo::WrapPlatformFile(pipes.PassReceiver().release().handle),
-      process_type);
+      process_type, stack_mode_);
 }
 
 // static
@@ -418,13 +419,31 @@ ProfilingProcessHost::Mode ProfilingProcessHost::ConvertStringToMode(
 }
 
 // static
+profiling::mojom::StackMode ProfilingProcessHost::GetStackModeForStartup() {
+  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  if (cmdline->HasSwitch(switches::kMemlogStackMode)) {
+    std::string stack_mode =
+        cmdline->GetSwitchValueASCII(switches::kMemlogStackMode);
+    if (stack_mode == switches::kMemlogStackModeNative)
+      return profiling::mojom::StackMode::NATIVE;
+    if (stack_mode == switches::kMemlogStackModePseudo)
+      return profiling::mojom::StackMode::PSEUDO;
+    if (stack_mode == switches::kMemlogStackModeMixed)
+      return profiling::mojom::StackMode::MIXED;
+  }
+  return profiling::mojom::StackMode::NATIVE;
+}
+
+// static
 ProfilingProcessHost* ProfilingProcessHost::Start(
     content::ServiceManagerConnection* connection,
-    Mode mode) {
+    Mode mode,
+    profiling::mojom::StackMode stack_mode) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   CHECK(!has_started_);
   has_started_ = true;
   ProfilingProcessHost* host = GetInstance();
+  host->stack_mode_ = stack_mode;
   host->SetMode(mode);
   host->Register();
   host->MakeConnector(connection);
@@ -618,7 +637,8 @@ void ProfilingProcessHost::StartManualProfiling(base::ProcessId pid) {
 
   if (!has_started_) {
     profiling::ProfilingProcessHost::Start(
-        content::ServiceManagerConnection::GetForProcess(), Mode::kManual);
+        content::ServiceManagerConnection::GetForProcess(), Mode::kManual,
+        GetStackModeForStartup());
   } else {
     SetMode(Mode::kManual);
   }
