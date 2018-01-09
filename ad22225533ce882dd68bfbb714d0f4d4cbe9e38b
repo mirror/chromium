@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "fef1459b_3a2bd2f4",
+        "filename": "content/public/browser/web_ui_data_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-09T00:35:19Z",
+      "side": 1,
+      "message": "\u003e Regarding the extra bits off disk: this change is already writing extra maps to the grd file i.e. in the components_resources_map.h files?\n\njust making sure we\u0027re using the same terms:\n\n.grd files are source files that annotate paths / set up IDs to resources needed by chrome.  these resources are generally packed into big globby files named .pak file (for our purposes).\n\n.pak files are loaded a runtime into memory and have a specific format that contains a metadata table that\u0027s used to located a part of the file based on a request ID.  this part of the file is mapped into memory when requested (the ID basically just translates to an offset and length, afaik).\n\n.grd files are never \"written to\" or used directly by chrome\u0027s binary (they never make it into out/, with the exception of tracing which does some dynamic generation there).  you can generate various .h and .cc files at compile time and link them into the binary (which is what I assume you\u0027re talking about).\n\nthis change does a few things with regards to generating .h/.cc files from .grd files, but mainly:\n\n1) if code previously needed access to these \"resource maps\", I just changed the format to the one that includes 1 boolean per entry (whether the resource is gzipped).  to be clear:\n\nbefore: {\"path.js\", IDR_PATH_JS},\nafter: {\"path.js\", IDR_PATH_JS, true},  // true/false is whether gzipped\n\n2) if there wasn\u0027t previously a need to generate a resource map but i want to know whether a resource is gzipped or not from a WebUIDataSource, I added a new map\n\nNote: the .h has only a struct definition; the .cc has the map entries.\n\n\u003e \n\u003e This patch, as is, makes adding gzipped resources harder IMO from a normal developer pov.\n\nI disagree; having converted many resources from ungzipped -\u003e gzipped I would\u0027ve loved to have this.\n\nPreviously, you enabled gzip for a while data source (UseGzip()) and then excluded any resources or dynamic paths manually at runtime.  If you forgot compress\u003d\"gzip\"[1] or forgot to exclude that path, the URL was just broken.  No indication; no CHECK(); just busted.\n\nBy contrast, this CL adds CHECK()s for gzip info when registering a resource.  This indicates to developers in a much better way, IMO, than causing potentially silent failures[2] when content encoding mismatches.  Sadly, I\u0027ve seen quite a few examples where tests didn\u0027t break even when something like a default resource has a content encoding mismatch (because it shows jibberish and doesn\u0027t load any other resources and many tests just look for script errors which don\u0027t happen in this case).\n\nThis CL also allows adding or changing a line of a .grd file:\n\nbefore: \u003cstructure name\u003d\"IDR_...\"\u003e\nafter: \u003cstructure name\u003d\"IDR_...\" compress\u003d\"gzip\"\u003e\n\nwith NO changes to source .cc files.\n\nA .cc file in out/\u003cname\u003e/gen/ automatically gets regenerated.  Most WebUIDataSources add resources from a single .grd file, so once the right AddGzipMap() call is added, it will almost never need to be modified.  I\u0027ve done a large majority of the work required to know which AddGzipMap() call to add in this CL; most people shouldn\u0027t have to.  In addition, most web ui pages currently just slip a couple resources into the same .grd file (browser_resources.grd).\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/770550#message-6d03177be5021284075215660f2cb996d2c54d0f\n[2] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d791195",
+      "parentUuid": "2d0cdae9_d7a798f7",
+      "revId": "ad22225533ce882dd68bfbb714d0f4d4cbe9e38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43ea551f_f72108e1",
         "filename": "content/public/browser/web_ui_data_source.h",
         "patchSetId": 11
