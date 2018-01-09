@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "014e9f78_abd3cecb",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T21:57:15Z",
+      "side": 1,
+      "message": "Optional:  May want a blank line below the return, here and in the next method.  I think it makes it easier to read, but up to you.",
+      "range": {
+        "startLine": 161,
+        "startChar": 17,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734e9bb3_b0cd7255",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T21:57:15Z",
+      "side": 1,
+      "message": "nit:  Move this above the if, since it\u0027s describing what the conditional does.",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d656b7_b739ab24",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T21:57:15Z",
+      "side": 1,
+      "message": "0 should be false.  Is this talking about the return value or the value of sockopt_success?",
+      "range": {
+        "startLine": 173,
+        "startChar": 21,
+        "endLine": 173,
+        "endChar": 24
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec96e040_8e46b517",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T21:57:15Z",
+      "side": 1,
+      "message": "I\u0027d also recommend switching these, so it returns whether it succeeded, and sets the argument to the result.  This is a more common pattern, and helps to ensure that consumers are checking the return value (Though it is a bit unfortunate that they\u0027re both bools, as it means confusing the two won\u0027t result in a compile error).",
+      "range": {
+        "startLine": 174,
+        "startChar": 51,
+        "endLine": 174,
+        "endChar": 66
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3e0cdc_dbe9281c",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T21:57:15Z",
+      "side": 1,
+      "message": "nit:  Move above the if.",
+      "range": {
+        "startLine": 190,
+        "startChar": 20,
+        "endLine": 190,
+        "endChar": 0
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
