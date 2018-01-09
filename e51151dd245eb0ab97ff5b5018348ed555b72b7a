@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "cf030f54_38441b15",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:58:30Z",
+      "side": 1,
+      "message": "I agree, thanks!",
+      "parentUuid": "01efcdea_3b30d0fb",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f59fea_cf989b97",
         "filename": "device/ctap/authenticator_get_assertion_response.h",
         "patchSetId": 2
@@ -422,6 +446,29 @@
       "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab8517d1_92df26c7",
+        "filename": "device/ctap/ctap_authenticator_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:58:30Z",
+      "side": 1,
+      "message": "Either keep this line, or if you want to be able to copy, remove the user defined move operations so that the compiler does the job for you :)",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

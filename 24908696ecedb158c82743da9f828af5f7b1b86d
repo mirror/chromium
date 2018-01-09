@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e2bbf0_bcf159bc",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:58:30Z",
+      "side": 1,
+      "message": "nit: update the parameter names",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "24908696ecedb158c82743da9f828af5f7b1b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a96da4_ecdcabf5",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:58:30Z",
+      "side": 1,
+      "message": "could you update the name of the getters as well?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "24908696ecedb158c82743da9f828af5f7b1b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
