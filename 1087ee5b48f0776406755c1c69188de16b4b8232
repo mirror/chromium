@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f67bdfb8_a77af15f",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-09T13:18:50Z",
+      "side": 1,
+      "message": "Should the four base::Time variables be const (and use kCamelCase)?",
+      "range": {
+        "startLine": 739,
+        "startChar": 2,
+        "endLine": 739,
+        "endChar": 12
+      },
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d85f4c5_7b2a59eb",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-09T13:18:50Z",
+      "side": 1,
+      "message": "nit: The assigned value is not \"older than\" 29 days, it is rather precisely 29 days older. Should the name reflect it and say something like |k29DaysOld| (if you make it const) or |back_29_days| instead of \"older than...\"?",
+      "range": {
+        "startLine": 740,
+        "startChar": 13,
+        "endLine": 740,
+        "endChar": 30
+      },
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
