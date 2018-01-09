@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fffef587_4e6364ef",
+        "filename": "third_party/WebKit/Source/core/css/ActiveStyleSheets.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-09T11:58:53Z",
+      "side": 1,
+      "message": "If you look at the removed code in TreeScopeStyleSheetCollection it now used a range-based for loop which looks a bit cleaner, I think.",
+      "parentUuid": "eb788522_bec70c7e",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b476f86_146a0974",
         "filename": "third_party/WebKit/Source/core/css/CSSStyleSheet.h",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-09T05:31:16Z",
       "side": 1,
       "message": "So if it\u0027s a user sheet then we need to invalidate all scopes.",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f639d7_ae0b6956",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContents.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-09T11:58:53Z",
+      "side": 1,
+      "message": "I don\u0027t understand why. This method is only called with kUserOrigin when rulesets are cleared from user stylesheets when media queries change. In that case we already call MarkUserStyleDirty() from StyleEngine::MediaQueryAffectingValueChanged(). Why call it again in SetNeedsActiveStyleUpdate()?",
+      "parentUuid": "f7f110c4_79bed3d7",
       "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
