@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fda09b94_6894d129",
+        "filename": "mojo/public/cpp/base/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-09T19:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "415fe535_5fc00169",
+      "range": {
+        "startLine": 1,
+        "startChar": 19,
+        "endLine": 1,
+        "endChar": 26
+      },
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41059661_ace35444",
         "filename": "mojo/public/cpp/base/big_buffer.cc",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "36e5247c_9d418e7d",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-09T19:18:19Z",
+      "side": 1,
+      "message": "Yeah, makes sense. Done.",
+      "parentUuid": "41059661_ace35444",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4207469d_1f773ea6",
         "filename": "mojo/public/cpp/base/big_buffer.cc",
         "patchSetId": 7
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-09T18:19:06Z",
       "side": 1,
       "message": "nit: Please consider removing the default case (here and line 111).",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f57604_d64fae5c",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-09T19:18:19Z",
+      "side": 1,
+      "message": "MSVC cries if we don\u0027t handle the (obviously unreachable) default cases. It\u0027s either a default clause or the same code outside of the switch. I thought a default clause seemed cleaner.",
+      "parentUuid": "4207469d_1f773ea6",
       "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "8585fd1e_8a0a6da0",
+        "filename": "mojo/public/cpp/base/mojo_base_traits_export.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-09T19:18:19Z",
+      "side": 1,
+      "message": "Nope just a mistake :) Fixed\n\nI dropped \"SHARED\" since it\u0027s kind of redundant given a lack of a non-shared traits library, which would never be necessary anyway.",
+      "parentUuid": "fc15c340_90866a11",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d9d55b5_c18eb9a9",
         "filename": "mojo/public/cpp/bindings/lib/serialization.h",
         "patchSetId": 7
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "7a484045_73a6c7e1",
+        "filename": "mojo/public/cpp/bindings/lib/serialization.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-09T19:18:19Z",
+      "side": 1,
+      "message": "Renamed to just SerializeImpl and DeserializeImpl - I think we can always extend them to support other types in the future, but having static assertions guard against non-struct non-union use should be fine for now. WDYT?",
+      "parentUuid": "7d9d55b5_c18eb9a9",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8161df3_42eba297",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
         "patchSetId": 7
@@ -104,6 +200,24 @@
       "writtenOn": "2018-01-09T18:19:06Z",
       "side": 1,
       "message": "Although this overload makes some template code more concise, people might easily forget about the fact that for unions they need to consider two different cases. WDYT? Thanks!",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8c52a6_05ec6f0c",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-09T19:18:19Z",
+      "side": 1,
+      "message": "Good point, removed",
+      "parentUuid": "c8161df3_42eba297",
       "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
