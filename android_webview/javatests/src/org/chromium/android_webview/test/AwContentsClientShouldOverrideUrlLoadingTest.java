@@ -830,6 +830,42 @@ public class AwContentsClientShouldOverrideUrlLoadingTest {
 
     @Test
     @SmallTest
+    @Feature({"AndroidWebView", "Navigation"})
+    public void testReloadingUrlDoesNotBreakBackForwardList() throws Throwable {
+        class ReloadInCallbackClient extends TestAwContentsClient {
+            @Override
+            public boolean shouldOverrideUrlLoading(AwContentsClient.AwWebResourceRequest request) {
+                mAwContents.loadUrl(request.url);
+                return true;
+            }
+        }
+
+        setupWithProvidedContentsClient(new ReloadInCallbackClient());
+        mShouldOverrideUrlLoadingHelper = mContentsClient.getShouldOverrideUrlLoadingHelper();
+
+        final String linkUrl =
+                addPageToTestServer("/foo.html", "<html><body>hello world</body></html>");
+        final String html = CommonResources.makeHtmlPageWithSimpleLinkTo(linkUrl);
+        final String firstUrl = addPageToTestServer("/first.html", html);
+        CallbackHelper onPageFinishedHelper = mContentsClient.getOnPageFinishedHelper();
+        mActivityTestRule.loadUrlSync(mAwContents, onPageFinishedHelper, firstUrl);
+
+        int pageFinishedCount = onPageFinishedHelper.getCallCount();
+        clickOnLinkUsingJs();
+        onPageFinishedHelper.waitForCallback(pageFinishedCount);
+
+        Assert.assertEquals(linkUrl, mAwContents.getUrl());
+        Assert.assertTrue("Should have a navigation history", mAwContents.canGoBack());
+
+        pageFinishedCount = onPageFinishedHelper.getCallCount();
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> mAwContents.goBack());
+        onPageFinishedHelper.waitForCallback(pageFinishedCount);
+        Assert.assertTrue("Should not be able to navigate backward", mAwContents.canGoBack());
+        Assert.assertEquals(firstUrl, mAwContents.getUrl());
+    }
+
+    @Test
+    @SmallTest
     @Feature({"AndroidWebView"})
     public void testCallStopAndLoadJsInCallback() throws Throwable {
         final String globalJsVar = "window.testCallStopAndLoadJsInCallback";
