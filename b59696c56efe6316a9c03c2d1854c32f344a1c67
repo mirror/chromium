@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85c322cf_7f0e5f2a",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2018-01-09T01:18:47Z",
+      "side": 1,
+      "message": "Just checked with my colleague that\u0027s moving this over. Let\u0027s use https instead.",
+      "range": {
+        "startLine": 285,
+        "startChar": 57,
+        "endLine": 285,
+        "endChar": 0
+      },
+      "revId": "b59696c56efe6316a9c03c2d1854c32f344a1c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
