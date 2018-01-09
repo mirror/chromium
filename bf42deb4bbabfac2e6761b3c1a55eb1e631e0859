@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f8f2bad_ba03975e",
+        "filename": "content/renderer/p2p/ipc_socket_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-09T01:14:37Z",
+      "side": 1,
+      "message": "Please remove this TODO.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "bf42deb4bbabfac2e6761b3c1a55eb1e631e0859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
