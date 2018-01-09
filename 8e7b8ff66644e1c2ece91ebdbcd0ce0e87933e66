@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e29818b4_586ebc4d",
+        "filename": "base/metrics/sparse_histogram_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T15:46:35Z",
+      "side": 1,
+      "message": "While I agree that this is pretty localized, I\u0027d rather not go against the style guide which just says not to use \"using namespace\".\n\nIs it even needed in this case? histogram_name() is a C string, so I think you can just use EXPECT_STREQ here?",
+      "parentUuid": "c2ec886f_7cf4a230",
+      "range": {
+        "startLine": 211,
+        "startChar": 39,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4026d9d7_05ffdefe",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 9
@@ -190,6 +214,23 @@
     },
     {
       "key": {
+        "uuid": "8754fd1a_1820d71c",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T15:46:35Z",
+      "side": 1,
+      "message": "Nit: If the default arg is just to benefit a single callsite (ToJSON()), I suggest omitting it. I don\u0027t think it\u0027s worth the extra complexity in the header file to satisfy a single callsite.",
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa043cd8_da46bc18",
         "filename": "base/metrics/statistics_recorder_unittest.cc",
         "patchSetId": 9
@@ -237,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "2c1641ea_ff84e32c",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T15:46:35Z",
+      "side": 1,
+      "message": "I find ElementsAre() to be pretty non-obvious. I suggest using IsEmpty() - please also do that for any cases where you currently use SizeIs(0). (This is consistent for advise for code that checks collection sizes - i.e. empty() is preferred over comparing size() to 0.)",
+      "parentUuid": "b9e016a1_cf1449f2",
+      "range": {
+        "startLine": 196,
+        "startChar": 75,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d43c2439_f02afde6",
         "filename": "base/metrics/statistics_recorder_unittest.cc",
         "patchSetId": 9
@@ -272,6 +337,30 @@
       "side": 1,
       "message": "If the test fails, EXPECT_THAT(..., SizeIs(n)) and EXPECT_THAT(..., IsEmpty()) provide a better error message. In particular, they print the elements of the collection.",
       "parentUuid": "d43c2439_f02afde6",
+      "range": {
+        "startLine": 431,
+        "startChar": 34,
+        "endLine": 431,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2524474_b8f23544",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T15:46:35Z",
+      "side": 1,
+      "message": "Thanks for the explanation - that does sound more useful!",
+      "parentUuid": "c61eb650_1fa1ef49",
       "range": {
         "startLine": 431,
         "startChar": 34,
