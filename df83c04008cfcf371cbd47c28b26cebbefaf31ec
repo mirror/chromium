@@ -93,6 +93,30 @@
       "revId": "df83c04008cfcf371cbd47c28b26cebbefaf31ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa2e778_4f73467c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-09T16:43:50Z",
+      "side": 1,
+      "message": "The RendererScheduler class is already complex enough, let\u0027s avoid adding extra interfaces and extra non-trivial methods to it.\n\nAlso taking care of low-level implementation details shouldn\u0027t be a job of RendererScheduler anyway from architectural point of view. Let\u0027s make TraceableVariableController a member of RendererSchedulerImpl and add a getter to RendererSchedulerImpl for WebFrameSchedulerImpl to use.",
+      "parentUuid": "591de5c9_5461d9d7",
+      "range": {
+        "startLine": 592,
+        "startChar": 2,
+        "endLine": 592,
+        "endChar": 42
+      },
+      "revId": "df83c04008cfcf371cbd47c28b26cebbefaf31ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
