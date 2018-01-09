@@ -963,21 +963,15 @@ public class ContextualSearchManagerTest {
     }
 
     /**
-     * Taps the base page near the top.
+     * Calls hidContextualSearch by calling the manager directly on the UI thread.
      */
-    private void tapBasePageToClosePanel() throws InterruptedException {
-        // TODO(pedrosimonetti): This is not reliable. Find a better approach.
-        // This taps on the panel in an area that will be selected if the "intelligence" node has
-        // been tap-selected, and that will cause it to be long-press selected.
-        // We use the far right side (x == 0.9f) to prevent simulating a tap on top of an
-        // existing long-press selection (the pins are a tap target). This might not work on RTL.
-        // We are using y == 0.35f because otherwise it will fail for long press cases.
-        // It might be better to get the position of the Panel and tap just about outside
-        // the Panel. I suspect some Flaky tests are caused by this problem (ones involving
-        // long press and trying to close with the bar peeking, with a long press selection
-        // established).
-        tapBasePage(0.9f, 0.35f);
-        waitForPanelToClose();
+    private void hideContextualSearch() throws InterruptedException {
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mManager.hideContextualSearch(StateChangeReason.UNKNOWN);
+            }
+        });
     }
 
     /**
@@ -1004,7 +998,7 @@ public class ContextualSearchManagerTest {
      */
     private void tapBarToExpandAndClosePanel() throws InterruptedException {
         tapPeekingBarToExpandAndAssert();
-        tapBasePageToClosePanel();
+        hideContextualSearch();
     }
 
     /**
@@ -1868,7 +1862,7 @@ public class ContextualSearchManagerTest {
         pressAppMenuKey();
         assertAppMenuVisibility(false);
 
-        tapBasePageToClosePanel();
+        hideContextualSearch();
 
         pressAppMenuKey();
         assertAppMenuVisibility(true);
@@ -1951,11 +1945,9 @@ public class ContextualSearchManagerTest {
      * Tests the counter for the number of taps between opens.
      */
     @Test
-    @DisabledTest(message = "crbug.com/800334")
     @SmallTest
     @Feature({"ContextualSearch"})
-    public void testTapCountDLD() throws InterruptedException, TimeoutException {
-        resetCounters();
+    public void testTapCount() throws InterruptedException, TimeoutException {
         Assert.assertEquals(0, mPolicy.getTapCount());
 
         // A simple Tap should change the counter.
@@ -2050,7 +2042,7 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals(1, observer.getShowCount());
         Assert.assertEquals(0, observer.getHideCount());
 
-        tapBasePageToClosePanel();
+        hideContextualSearch();
         Assert.assertEquals(1, observer.getShowCount());
         Assert.assertEquals(1, observer.getHideCount());
         mManager.removeObserver(observer);
@@ -2075,7 +2067,7 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals(1, observer.getShowCount());
         Assert.assertEquals(0, observer.getHideCount());
 
-        tapBasePageToClosePanel();
+        hideContextualSearch();
         Assert.assertEquals(1, observer.getShowRedactedCount());
         Assert.assertEquals(1, observer.getShowCount());
         Assert.assertEquals(1, observer.getHideCount());
@@ -2097,7 +2089,7 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals(1, observer.getShowCount());
         Assert.assertEquals(0, observer.getHideCount());
 
-        tapBasePageToClosePanel();
+        hideContextualSearch();
         Assert.assertEquals(1, observer.getShowCount());
         Assert.assertEquals(1, observer.getHideCount());
         mManager.removeObserver(observer);
@@ -2195,7 +2187,7 @@ public class ContextualSearchManagerTest {
     @Test
     @SmallTest
     @Feature({"ContextualSearch"})
-    public void testTapALotDLD() throws InterruptedException, TimeoutException {
+    public void testTapALot() throws InterruptedException, TimeoutException {
         for (int i = 0; i < 50; i++) {
             clickToTriggerPrefetch();
             waitForSelectionEmpty();
@@ -2322,7 +2314,7 @@ public class ContextualSearchManagerTest {
         assertContentViewCoreVisible();
 
         // Closing the Panel should destroy the Content.
-        tapBasePageToClosePanel();
+        hideContextualSearch();
         assertNoContentViewCore();
     }
 
@@ -2346,7 +2338,7 @@ public class ContextualSearchManagerTest {
         assertContentViewCoreVisible();
 
         // Closing the Panel should destroy the Content.
-        tapBasePageToClosePanel();
+        hideContextualSearch();
         assertNoContentViewCore();
     }
 
@@ -2381,7 +2373,7 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals(1, mFakeServer.getLoadedUrlCount());
 
         // Closing the Panel should destroy the Content.
-        tapBasePageToClosePanel();
+        hideContextualSearch();
         assertNoContentViewCore();
         Assert.assertEquals(1, mFakeServer.getLoadedUrlCount());
     }
@@ -2418,7 +2410,7 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals(1, mFakeServer.getLoadedUrlCount());
 
         // Closing the Panel should destroy the Content.
-        tapBasePageToClosePanel();
+        hideContextualSearch();
         assertNoContentViewCore();
         Assert.assertEquals(1, mFakeServer.getLoadedUrlCount());
     }
@@ -2502,7 +2494,7 @@ public class ContextualSearchManagerTest {
         Assert.assertNotSame(cvc1, cvc2);
 
         // Closing the Panel should destroy the Content.
-        tapBasePageToClosePanel();
+        hideContextualSearch();
         assertNoContentViewCore();
         Assert.assertEquals(2, mFakeServer.getLoadedUrlCount());
     }
@@ -2554,7 +2546,7 @@ public class ContextualSearchManagerTest {
         String url = mFakeServer.getLoadedUrl();
 
         // Close the Panel without seeing the Content.
-        tapBasePageToClosePanel();
+        hideContextualSearch();
 
         // Now check that the URL has been removed from history.
         Assert.assertTrue(mFakeServer.hasRemovedUrl(url));
@@ -2577,7 +2569,7 @@ public class ContextualSearchManagerTest {
         tapPeekingBarToExpandAndAssert();
 
         // Close the Panel.
-        tapBasePageToClosePanel();
+        hideContextualSearch();
 
         // Now check that the URL has not been removed from history, since the Content was seen.
         Assert.assertFalse(mFakeServer.hasRemovedUrl(url));
@@ -2754,7 +2746,7 @@ public class ContextualSearchManagerTest {
                 0);
 
         // Tap the base page and assert that the panel is closed.
-        tapBasePageToClosePanel();
+        hideContextualSearch();
     }
 
     /**
@@ -3096,7 +3088,7 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals(0, observer.getHideCount());
         mManager.removeObserver(observer);
 
-        tapBasePageToClosePanel();
+        hideContextualSearch();
 
         // Tell the ContextualSearchManager that Smart Selection is enabled.
         mManager.suppressContextualSearchForSmartSelection(true);
