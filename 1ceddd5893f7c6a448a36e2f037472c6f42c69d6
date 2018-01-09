@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81566acc_ff20c1be",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T16:37:43Z",
+      "side": 1,
+      "message": "This seems dangerous.  Can we just do:\n\nbool GetTcpRtt(SocketDescriptor fd, uint32_t* value) {\n  *value \u003d 0;\n  tcp_info info;\n  socklen_t info_len \u003d sizeof(info);\n  if (getsockopt(fd, IPPROTO_TCP, TCP_INFO, \u0026info, \u0026info_len) !\u003d 0 ||\n      info_len \u003c offsetof(socklen_t, tcpi_rtt) + sizeof(info.tcpi_rtt)) {\n    return false;\n  }\n  *value \u003d info.tcpi_rtt;\n  return true;\n}\n\nAnd the same for tcpi_options.  As-is the method seems too dangerous to rely on consumers to get things right.\n\nAlso...Why are the sizes different?  Should we be including a different header file?  Is info_len too large or too small?  Are we sure that tcpi_rtt is at the same offset as before?\n\nI don\u0027t think we should land this until we understand just what\u0027s going on, and that this is the right fix.",
+      "range": {
+        "startLine": 159,
+        "startChar": 19,
+        "endLine": 159,
+        "endChar": 20
+      },
+      "revId": "1ceddd5893f7c6a448a36e2f037472c6f42c69d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
