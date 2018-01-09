@@ -22,6 +22,30 @@
       "revId": "a3f9c2ec38382df3dfa6082ee0d23855dcc6164c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe9f41f_ae3b3447",
+        "filename": "ash/system/web_notification/session_state_notification_blocker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T23:59:47Z",
+      "side": 1,
+      "message": "uh, good catch. But perhaps both kiosk modes should block notifications?",
+      "parentUuid": "53c803d3_086d88f5",
+      "range": {
+        "startLine": 22,
+        "startChar": 57,
+        "endLine": 22,
+        "endChar": 76
+      },
+      "revId": "a3f9c2ec38382df3dfa6082ee0d23855dcc6164c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
