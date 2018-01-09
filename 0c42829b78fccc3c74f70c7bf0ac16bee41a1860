@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a27371_1aad00b7",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-09T17:13:21Z",
+      "side": 1,
+      "message": "Can we just get rid of AggregatedDamageResult and use the mock instead? Instead of \n  EXPECT_EQ(last_damage_rect,\n            aggregated_damage_result.last_damage_rect());\n  EXPECT_EQ(local_surface_id,\n            aggregated_damage_result.last_local_surface_id());\nWe can have\n  EXPECT_CALL(aggregated_damage_result, OnAggregatedDamage(local_surface_id, damage_rect))",
+      "revId": "0c42829b78fccc3c74f70c7bf0ac16bee41a1860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316e5c58_02b0da1d",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-09T17:13:21Z",
+      "side": 1,
+      "message": "Does this have to be a class member? Can we just instantiate it in tests when we need to?",
+      "range": {
+        "startLine": 444,
+        "startChar": 6,
+        "endLine": 444,
+        "endChar": 25
+      },
+      "revId": "0c42829b78fccc3c74f70c7bf0ac16bee41a1860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45739f3a_f0b858d1",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-09T17:13:21Z",
+      "side": 1,
+      "message": "We usually call testing::Mock::VerifyAndClearExpectations when you expect the calls to have happened. (In this case, for example, it would be after line 717.) This helps ensure that expectations are not satisfied later than we wanted them to.",
+      "revId": "0c42829b78fccc3c74f70c7bf0ac16bee41a1860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
