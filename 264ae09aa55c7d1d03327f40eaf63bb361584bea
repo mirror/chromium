@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f85a5076_33a6e717",
+        "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-09T02:55:36Z",
+      "side": 1,
+      "message": "Oh, awesome, that definitely makes these things much nicer, I should start using that :)",
+      "parentUuid": "e8701807_83a16952",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4de7ab69_cef49def",
         "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
         "patchSetId": 9
@@ -198,6 +222,24 @@
       "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76444c91_f88f1127",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-09T02:55:36Z",
+      "side": 1,
+      "message": "Yep, that sounds good to me.",
+      "parentUuid": "ff397ec0_b2f6486e",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +389,24 @@
       "side": 1,
       "message": "I changed the comment to explain this in more detail. For the deletion UI it is important that GetLocalStorageUsage() doesn\u0027t return this data anymore. Would it make sense to also wait for the commit to happen? What event would I have to wait for?",
       "parentUuid": "4ec3fcdf_fac6a99a",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d928cd5b_30e80494",
+        "filename": "content/public/browser/dom_storage_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-09T02:55:36Z",
+      "side": 1,
+      "message": "Unfortunately there isn\u0027t an easy way to figure out when that happens. It more or less would be a call to LocalStorageContextMojo::LevelDBWrapperHolder::DidCommit for the matching leveldbwrapper, but I think it would be possible for the first call to that method to be from an earlier in-flight commit. If you do want that I suspect it might make the most sense to add a callback parameter to ScheduleImmediateCommit. which would then make sure to call it when that particularly commit is finished...",
+      "parentUuid": "00594fcc_602ccc20",
       "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
