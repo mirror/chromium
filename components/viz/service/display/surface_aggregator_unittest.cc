@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <set>
 #include <utility>
 
 #include "base/macros.h"
@@ -38,6 +39,7 @@
 namespace viz {
 namespace {
 
+using ::testing::_;
 constexpr FrameSinkId kArbitraryRootFrameSinkId(1, 1);
 constexpr FrameSinkId kArbitraryFrameSinkId1(2, 2);
 constexpr FrameSinkId kArbitraryFrameSinkId2(3, 3);
@@ -69,7 +71,7 @@ gfx::Rect NoDamage() {
 struct AggregatedDamageResult : base::SupportsWeakPtr<AggregatedDamageResult> {
  public:
   AggregatedDamageResult() = default;
-  ~AggregatedDamageResult() = default;
+  virtual ~AggregatedDamageResult() {}
 
   const gfx::Rect& last_damage_rect() const { return last_damage_rect_; }
   const LocalSurfaceId& last_local_surface_id() const {
@@ -81,9 +83,8 @@ struct AggregatedDamageResult : base::SupportsWeakPtr<AggregatedDamageResult> {
                                AsWeakPtr());
   }
 
- private:
-  void OnAggregatedDamage(const LocalSurfaceId& local_surface_id,
-                          const gfx::Rect& damage_rect) {
+  virtual void OnAggregatedDamage(const LocalSurfaceId& local_surface_id,
+                                  const gfx::Rect& damage_rect) {
     last_local_surface_id_ = local_surface_id;
     last_damage_rect_ = damage_rect;
   }
@@ -92,6 +93,19 @@ struct AggregatedDamageResult : base::SupportsWeakPtr<AggregatedDamageResult> {
   LocalSurfaceId last_local_surface_id_;
 
   DISALLOW_COPY_AND_ASSIGN(AggregatedDamageResult);
+};
+
+class MockAggregatedDamageResult : public AggregatedDamageResult {
+ public:
+  MockAggregatedDamageResult() = default;
+  ~MockAggregatedDamageResult() override = default;
+
+  MOCK_METHOD2(OnAggregatedDamage,
+               void(const LocalSurfaceId& local_surface_id,
+                    const gfx::Rect& damage_rect));
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockAggregatedDamageResult);
 };
 
 class SurfaceAggregatorTest : public testing::Test {
@@ -347,12 +361,17 @@ class SurfaceAggregatorValidSurfaceTest : public SurfaceAggregatorTest {
     root_local_surface_id_ = allocator_.GenerateId();
     root_surface_ = manager_.surface_manager()->GetSurfaceForId(
         SurfaceId(support_->frame_sink_id(), root_local_surface_id_));
+    mock_damage_result_ =
+        std::make_unique<testing::NiceMock<MockAggregatedDamageResult>>();
   }
 
   void TearDown() override {
     child_support_->EvictCurrentSurface();
     SurfaceAggregatorTest::TearDown();
+    mock_damage_result_.reset();
   }
+
+  MockAggregatedDamageResult& impl() { return *mock_damage_result_; }
 
   void AggregateAndVerify(Pass* expected_passes,
                           size_t expected_pass_count,
@@ -421,6 +440,8 @@ class SurfaceAggregatorValidSurfaceTest : public SurfaceAggregatorTest {
   ParentLocalSurfaceIdAllocator allocator_;
   std::unique_ptr<CompositorFrameSinkSupport> child_support_;
   ParentLocalSurfaceIdAllocator child_allocator_;
+  std::unique_ptr<testing::NiceMock<MockAggregatedDamageResult>>
+      mock_damage_result_;
 };
 
 // Tests that a very simple frame containing only two solid color quads makes it
@@ -448,9 +469,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleFrame) {
             aggregated_damage_result.last_damage_rect());
   EXPECT_EQ(root_local_surface_id_,
             aggregated_damage_result.last_local_surface_id());
-
-  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called.
-  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(root_surface_id));
 }
 
 TEST_F(SurfaceAggregatorValidSurfaceTest, OpacityCopied) {
@@ -674,6 +692,15 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
 
   SurfaceId root_surface_id(support_->frame_sink_id(), root_local_surface_id_);
   SurfaceId ids[] = {root_surface_id, fallback_child_surface_id};
+
+  primary_child_support->SetAggregatedDamageCallback(impl().GetCallback());
+  fallback_child_support->SetAggregatedDamageCallback(impl().GetCallback());
+
+  EXPECT_CALL(impl(), OnAggregatedDamage(fallback_child_local_surface_id, _))
+      .Times(1);
+  EXPECT_CALL(impl(), OnAggregatedDamage(primary_child_local_surface_id, _))
+      .Times(0);
+
   // The primary_surface will not be listed in previously contained surfaces.
   AggregateAndVerify(expected_passes1, arraysize(expected_passes1), ids,
                      arraysize(ids));
@@ -691,13 +718,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
 
   // The damage should be equal to whole size of the primary SurfaceDrawQuad.
   EXPECT_EQ(surface_quad_rect, aggregated_damage_result.last_damage_rect());
-
-  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called only
-  // for the fallback surface.
-  EXPECT_FALSE(observer_.IsSurfaceSubtreeDamaged(primary_child_surface_id));
-  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(fallback_child_surface_id));
-
-  observer_.Reset();
 
   Quad primary_child_quads[] = {
       Quad::SolidColorQuad(SK_ColorGREEN, gfx::Rect(5, 5))};
@@ -721,6 +741,12 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
       Pass(expected_quads2, arraysize(expected_quads2), SurfaceSize())};
 
   SurfaceId ids2[] = {root_surface_id, primary_child_surface_id};
+
+  EXPECT_CALL(impl(), OnAggregatedDamage(primary_child_local_surface_id, _))
+      .Times(1);
+  EXPECT_CALL(impl(), OnAggregatedDamage(fallback_child_local_surface_id, _))
+      .Times(0);
+
   AggregateAndVerify(expected_passes2, arraysize(expected_passes2), ids2,
                      arraysize(ids2));
 
@@ -728,11 +754,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
   // surface.
   EXPECT_EQ(primary_surface_size,
             aggregated_damage_result.last_damage_rect().size());
-
-  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called only
-  // for the primary surface.
-  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(primary_child_surface_id));
-  EXPECT_FALSE(observer_.IsSurfaceSubtreeDamaged(fallback_child_surface_id));
 
   primary_child_support->EvictCurrentSurface();
   fallback_child_support->EvictCurrentSurface();
