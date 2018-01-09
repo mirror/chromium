@@ -146,12 +146,12 @@ WebStyleSheetId StyleEngine::InjectSheet(StyleSheetContents* sheet,
   if (origin == WebDocument::kUserOrigin) {
     injected_user_style_sheets_.push_back(
         std::make_pair(++injected_sheets_id_count_,
-                       CSSStyleSheet::Create(sheet, *document_)));
+                       CSSStyleSheet::Create(sheet, *document_, origin)));
     MarkUserStyleDirty();
   } else {
     injected_author_style_sheets_.push_back(
         std::make_pair(++injected_sheets_id_count_,
-                       CSSStyleSheet::Create(sheet, *document_)));
+                       CSSStyleSheet::Create(sheet, *document_, origin)));
     MarkDocumentDirty();
   }
 
@@ -227,9 +227,15 @@ void StyleEngine::RemovePendingSheet(Node& style_sheet_candidate_node,
   GetDocument().DidRemoveAllPendingStylesheet();
 }
 
-void StyleEngine::SetNeedsActiveStyleUpdate(TreeScope& tree_scope) {
-  if (GetDocument().IsActive() || !IsMaster())
-    MarkTreeScopeDirty(tree_scope);
+void StyleEngine::SetNeedsActiveStyleUpdate(
+    TreeScope& tree_scope,
+    InvalidationScope invalidation_scope) {
+  if (GetDocument().IsActive() || !IsMaster()) {
+    if (invalidation_scope == kInvalidateAllScopes)
+      MarkUserStyleDirty();
+    else
+      MarkTreeScopeDirty(tree_scope);
+  }
 }
 
 void StyleEngine::AddStyleSheetCandidateNode(Node& node) {
@@ -310,6 +316,8 @@ void StyleEngine::MediaQueryAffectingValueChanged(
 }
 
 void StyleEngine::MediaQueryAffectingValueChanged() {
+  if (ClearMediaQueryDependentRuleSets(active_user_style_sheets_))
+    MarkUserStyleDirty();
   if (GetDocumentStyleSheetCollection().MediaQueryAffectingValueChanged())
     SetNeedsActiveStyleUpdate(GetDocument());
   MediaQueryAffectingValueChanged(active_tree_scopes_);
@@ -656,6 +664,18 @@ CSSStyleSheet* StyleEngine::ParseSheet(Element& element,
                                             GetDocument().Encoding());
   style_sheet->Contents()->ParseStringAtPosition(text, start_position);
   return style_sheet;
+}
+
+void StyleEngine::CollectUserStyleFeaturesTo(RuleFeatureSet& features) const {
+  for (unsigned i = 0; i < active_user_style_sheets_.size(); ++i) {
+    CSSStyleSheet* sheet = active_user_style_sheets_[i].first;
+    features.ViewportDependentMediaQueryResults().AppendVector(
+        sheet->ViewportDependentMediaQueryResults());
+    features.DeviceDependentMediaQueryResults().AppendVector(
+        sheet->DeviceDependentMediaQueryResults());
+    DCHECK(sheet->Contents()->HasRuleSet());
+    features.Add(sheet->Contents()->GetRuleSet().Features());
+  }
 }
 
 void StyleEngine::CollectScopedStyleFeaturesTo(RuleFeatureSet& features) const {

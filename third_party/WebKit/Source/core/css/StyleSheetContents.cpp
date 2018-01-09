@@ -635,7 +635,11 @@ static void SetNeedsActiveStyleUpdateForClients(
     Node* node = sheet->ownerNode();
     if (!document || !node || !node->isConnected())
       continue;
-    document->GetStyleEngine().SetNeedsActiveStyleUpdate(node->GetTreeScope());
+    InvalidationScope invalidation_scope = kInvalidateCurrentScope;
+    if (sheet->Origin() == WebDocument::kUserOrigin)
+      invalidation_scope = kInvalidateAllScopes;
+    document->GetStyleEngine().SetNeedsActiveStyleUpdate(node->GetTreeScope(),
+                                                         invalidation_scope);
   }
 }
 

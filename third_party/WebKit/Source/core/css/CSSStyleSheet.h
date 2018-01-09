@@ -31,6 +31,7 @@
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/TextEncoding.h"
 #include "platform/wtf/text/TextPosition.h"
+#include "public/web/WebDocument.h"
 
 namespace blink {
 
@@ -52,7 +53,9 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
 
   static CSSStyleSheet* Create(StyleSheetContents*,
                                CSSImportRule* owner_rule = nullptr);
-  static CSSStyleSheet* Create(StyleSheetContents*, Node& owner_node);
+  static CSSStyleSheet* Create(StyleSheetContents*, Node& owner_node,
+                               WebDocument::CSSOrigin =
+                                   WebDocument::kAuthorOrigin);
   static CSSStyleSheet* CreateInline(
       Node&,
       const KURL&,
@@ -140,6 +143,7 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
 
   bool IsInline() const { return is_inline_stylesheet_; }
   TextPosition StartPositionInSource() const { return start_position_; }
+  WebDocument::CSSOrigin Origin() const { return origin_; }
 
   bool SheetLoaded();
   bool LoadCompleted() const { return load_completed_; }
@@ -153,7 +157,8 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
   CSSStyleSheet(StyleSheetContents*,
                 Node& owner_node,
                 bool is_inline_stylesheet,
-                const TextPosition& start_position);
+                const TextPosition& start_position,
+                WebDocument::CSSOrigin);
 
   bool IsCSSStyleSheet() const override { return true; }
   String type() const override { return "text/css"; }
@@ -179,6 +184,7 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
   Member<CSSRule> owner_rule_;
 
   TextPosition start_position_;
+  WebDocument::CSSOrigin origin_ = WebDocument::kAuthorOrigin;
   mutable Member<MediaList> media_cssom_wrapper_;
   mutable HeapVector<Member<CSSRule>> child_rule_cssom_wrappers_;
   mutable Member<CSSRuleList> rule_list_cssom_wrapper_;

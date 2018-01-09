@@ -92,16 +92,18 @@ CSSStyleSheet* CSSStyleSheet::Create(StyleSheetContents* sheet,
 }
 
 CSSStyleSheet* CSSStyleSheet::Create(StyleSheetContents* sheet,
-                                     Node& owner_node) {
+                                     Node& owner_node,
+                                     WebDocument::CSSOrigin origin) {
   return new CSSStyleSheet(sheet, owner_node, false,
-                           TextPosition::MinimumPosition());
+                           TextPosition::MinimumPosition(), origin);
 }
 
 CSSStyleSheet* CSSStyleSheet::CreateInline(StyleSheetContents* sheet,
                                            Node& owner_node,
                                            const TextPosition& start_position) {
   DCHECK(sheet);
-  return new CSSStyleSheet(sheet, owner_node, true, start_position);
+  return new CSSStyleSheet(sheet, owner_node, true, start_position,
+                           WebDocument::kAuthorOrigin);
 }
 
 CSSStyleSheet* CSSStyleSheet::CreateInline(Node& owner_node,
@@ -113,7 +115,8 @@ CSSStyleSheet* CSSStyleSheet::CreateInline(Node& owner_node,
       owner_node.GetDocument().GetReferrerPolicy(), encoding);
   StyleSheetContents* sheet =
       StyleSheetContents::Create(base_url.GetString(), parser_context);
-  return new CSSStyleSheet(sheet, owner_node, true, start_position);
+  return new CSSStyleSheet(sheet, owner_node, true, start_position,
+                           WebDocument::kAuthorOrigin);
 }
 
 CSSStyleSheet::CSSStyleSheet(StyleSheetContents* contents,
@@ -127,11 +130,13 @@ CSSStyleSheet::CSSStyleSheet(StyleSheetContents* contents,
 CSSStyleSheet::CSSStyleSheet(StyleSheetContents* contents,
                              Node& owner_node,
                              bool is_inline_stylesheet,
-                             const TextPosition& start_position)
+                             const TextPosition& start_position,
+                             WebDocument::CSSOrigin origin)
     : contents_(contents),
       is_inline_stylesheet_(is_inline_stylesheet),
       owner_node_(&owner_node),
-      start_position_(start_position) {
+      start_position_(start_position),
+      origin_(origin) {
 #if DCHECK_IS_ON()
   DCHECK(IsAcceptableCSSStyleSheetParent(owner_node));
 #endif
