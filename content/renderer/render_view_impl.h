@@ -340,7 +340,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   const WebPreferences& GetWebkitPreferences() override;
   void SetWebkitPreferences(const WebPreferences& preferences) override;
   blink::WebView* GetWebView() override;
-  blink::WebFrameWidget* GetWebFrameWidget() override;
   bool ShouldDisplayScrollbars(int width, int height) const override;
   bool GetContentStateImmediately() const override;
   void Repaint(const gfx::Size& size) override;
