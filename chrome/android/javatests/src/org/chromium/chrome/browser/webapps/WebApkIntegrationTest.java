@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
@@ -35,6 +36,8 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.net.test.EmbeddedTestServerRule;
 import org.chromium.webapk.lib.common.WebApkConstants;
+
+import java.util.concurrent.Callable;
 
 /** Integration tests for WebAPK feature. */
 @RunWith(ChromeJUnit4ClassRunner.class)
@@ -99,6 +102,35 @@ public class WebApkIntegrationTest {
     @Before
     public void setUp() throws Exception {
         WebApkUpdateManager.setUpdatesEnabledForTesting(false);
+    }
+
+    /**
+     * Tests that WebApkActivities are started properly by WebappLauncherActivity.
+     */
+    @Test
+    @LargeTest
+    @Feature({"Webapps"})
+    public void testWebApkLaunchesByLauncherActivity() {
+        WebappActivityTestRule activityTestRule = new WebappActivityTestRule();
+        WebApkInfo info = WebApkInfo.create("org.chromium.webapk", "https://pwa.rocks/", 0, false);
+
+        Intent launchIntent = null;
+        try {
+            launchIntent = ThreadUtils.runOnUiThreadBlocking(new Callable<Intent>() {
+                @Override
+                public Intent call() {
+                    return WebappLauncherActivity.createWebappLaunchIntent(info, true);
+                }
+            });
+        } catch (Exception e) {
+            Assert.fail("Create launcher intent failed with exception" + e);
+            return;
+        }
+
+        WebApkActivity webApkActivity =
+                (WebApkActivity) activityTestRule.startAndWaitForActivityType(
+                        launchIntent, WebApkActivity.class);
+        Assert.assertEquals(info.uri(), webApkActivity.getWebappInfo().uri());
     }
 
     /**

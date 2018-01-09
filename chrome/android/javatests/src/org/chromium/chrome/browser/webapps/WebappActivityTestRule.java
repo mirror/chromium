@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.webapps;
 
 import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.customtabs.TrustedWebUtils;
@@ -17,7 +18,11 @@ import org.junit.Rule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import org.chromium.base.ActivityState;
+import org.chromium.base.ApplicationStatus;
+import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ShortcutHelper;
@@ -27,6 +32,9 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.net.test.EmbeddedTestServerRule;
+
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Custom {@link ChromeActivityTestRule} for tests using {@link WebappActivity}.
@@ -243,5 +251,34 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
 
     public boolean isSplashScreenVisible() {
         return getActivity().getSplashScreenForTests() != null;
+    }
+
+    public Activity startAndWaitForActivityType(Intent intent, Class<?> activityClass) {
+        final CallbackHelper activityCallback = new CallbackHelper();
+        final AtomicReference<Activity> activityRef = new AtomicReference<>();
+        ActivityStateListener stateListener = new ActivityStateListener() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public void onActivityStateChange(Activity activity, int newState) {
+                if (newState == ActivityState.RESUMED) {
+                    if (!activityClass.isAssignableFrom(activity.getClass())) return;
+                    activityRef.set(activity);
+                    activityCallback.notifyCalled();
+                    ApplicationStatus.unregisterActivityStateListener(this);
+                }
+            }
+        };
+        try {
+            ApplicationStatus.registerStateListenerForAllActivities(stateListener);
+            InstrumentationRegistry.getTargetContext().startActivity(intent);
+            activityCallback.waitForCallback("Activity did not start as expected", 0);
+            Activity activity = activityRef.get();
+            Assert.assertNotNull("Activity reference is null.", activity);
+            return activity;
+        } catch (InterruptedException | TimeoutException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ApplicationStatus.unregisterActivityStateListener(stateListener);
+        }
     }
 }
