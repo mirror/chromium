@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e50af6a_28d6c745",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-09T22:10:53Z",
+      "side": 1,
+      "message": "I\u0027m a little confused about float equals here.  This is serialization checking, not math checking, so really you should do something like PaintOp::AreEqualEvenIfNaN?\n\nCan you please put this equality code inside of PaintFilter itself so that the equality fuzzer can also use it, and then change PaintFlags::operator\u003d\u003d to use that?  See TODO on paint_flags.cc:192.",
+      "revId": "35706000552697fa52cc118749e029fa2d24b4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b3b24a_00ef87a8",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-09T22:10:53Z",
+      "side": 1,
+      "message": "Remove this?",
+      "revId": "35706000552697fa52cc118749e029fa2d24b4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
