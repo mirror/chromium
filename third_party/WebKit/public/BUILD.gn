@@ -122,6 +122,7 @@ source_set("blink_headers") {
     "platform/InterfaceProvider.h",
     "platform/InterfaceRegistry.h",
     "platform/Platform.h",
+    "platform/PlatformAXTree.h",
     "platform/PointerProperties.h",
     "platform/ShapeProperties.h",
     "platform/TaskType.h",
