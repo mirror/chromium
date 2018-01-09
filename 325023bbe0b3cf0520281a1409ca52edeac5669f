@@ -16,6 +16,24 @@
       "revId": "325023bbe0b3cf0520281a1409ca52edeac5669f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8bd1a23_8c635a26",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-09T03:54:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07e231ad_f8b06ff5",
+      "revId": "325023bbe0b3cf0520281a1409ca52edeac5669f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
