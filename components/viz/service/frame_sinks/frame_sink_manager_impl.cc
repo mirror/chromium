@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
+#include "components/viz/service/display_embedder/external_begin_frame_controller_impl.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
@@ -121,6 +122,7 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
     bool force_software_compositing,
+    bool external_begin_frames_enabled,
     const RendererSettings& renderer_settings,
     mojom::CompositorFrameSinkAssociatedRequest request,
     mojom::CompositorFrameSinkClientPtr client,
@@ -131,14 +133,23 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
   DCHECK(display_provider_);
 
+  std::unique_ptr<ExternalBeginFrameControllerImpl>
+      external_begin_frame_controller;
+  if (external_begin_frames_enabled) {
+    external_begin_frame_controller =
+        std::make_unique<ExternalBeginFrameControllerImpl>();
+  }
+
   std::unique_ptr<SyntheticBeginFrameSource> begin_frame_source;
   auto display = display_provider_->CreateDisplay(
       frame_sink_id, surface_handle, force_software_compositing,
-      renderer_settings, &begin_frame_source);
+      external_begin_frame_controller.get(), renderer_settings,
+      &begin_frame_source);
 
   auto frame_sink = std::make_unique<RootCompositorFrameSinkImpl>(
       this, frame_sink_id, std::move(display), std::move(begin_frame_source),
-      std::move(request), std::move(client), std::move(display_private_request),
+      std::move(external_begin_frame_controller), std::move(request),
+      std::move(client), std::move(display_private_request),
       std::move(display_client));
   SinkAndSupport& entry = compositor_frame_sinks_[frame_sink_id];
   DCHECK(entry.support);  // |entry| was created by RootCompositorFrameSinkImpl.
