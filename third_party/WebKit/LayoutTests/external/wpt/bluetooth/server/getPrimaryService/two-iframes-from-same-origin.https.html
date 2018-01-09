@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<script src="../../../resources/testharness.js"></script>
-<script src="../../../resources/testharnessreport.js"></script>
-<script src="../../../resources/testdriver.js"></script>
-<script src="../../../resources/testdriver-vendor.js"></script>
-<script src="../../../external/wpt/bluetooth/resources/bluetooth-helpers.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+<script src="/bluetooth/resources/bluetooth-helpers.js"></script>
 <script>
 "use strict";
 const test_desc = 'Two iframes in the same origin should be able to access ' +
@@ -16,7 +16,7 @@ function add_iframe(iframe) {
   let promise = new Promise(resolve =>
       iframe.addEventListener('load', resolve));
   iframe.src =
-    '../../../resources/bluetooth/health-thermometer-two-iframes.html';
+    '/bluetooth/resources/health-thermometer-iframe.html';
   document.body.appendChild(iframe);
   return promise;
 }
@@ -32,8 +32,14 @@ function send_message(iframe, command, arg, assert_func) {
       resolve();
     }
   });
+  if (command === 'RequestAndConnect') {
+    arg = {filters: [{services: [arg]}]};
+  }
   callWithTrustedClick(() =>
-      iframe.contentWindow.postMessage(`${command} ${arg}`, '*'));
+      iframe.contentWindow.postMessage({
+        type: command,
+        options: arg,
+      }, '*'));
   return promise;
 }
 
@@ -43,11 +49,11 @@ bluetooth_test(() => getHealthThermometerDevice()
   // 2. Connect with the first iframe, requesting the health thermometer
   // service.
   .then(() => send_message(iframe1, 'RequestAndConnect', 'health_thermometer',
-      msg => assert_equals(msg, 'SUCCESS')))
+      msg => assert_equals(msg, 'Connected')))
   // 3. Access the health thermometer service with the first iframe
   // (successfully).
   .then(() => send_message(iframe1, 'GetService', 'health_thermometer',
-      msg => assert_equals(msg, 'SUCCESS')))
+      msg => assert_equals(msg, 'ServiceReceived')))
   // 4. Access the generic access service with the first iframe
   // (unsuccessfully).
   .then(() => send_message(iframe1, 'GetService', 'generic_access', msg => {
@@ -59,18 +65,18 @@ bluetooth_test(() => getHealthThermometerDevice()
   .then(() => add_iframe(iframe2))
   // 6. Connect with the second iframe, requesting the generic access service.
   .then(() => send_message(iframe2, 'RequestAndConnect', 'generic_access',
-      msg => assert_equals(msg, 'SUCCESS')))
+      msg => assert_equals(msg, 'Connected')))
   // 7. Access the health thermometer service with the second iframe
   // (successfully).  Both iframes should have access to both services at this
   // point since they have the same origin.
   .then(() => send_message(iframe2, 'GetService', 'health_thermometer',
-      msg => assert_equals(msg, 'SUCCESS')))
+      msg => assert_equals(msg, 'ServiceReceived')))
   // 8. Access the generic access service with the second iframe
   // (unsuccessfully).
   .then(() => send_message(iframe2, 'GetService', 'generic_access',
-      msg => assert_equals(msg, 'SUCCESS')))
+      msg => assert_equals(msg, 'ServiceReceived')))
   // 9. Access the generic access service with the first iframe
   // (successfully).
   .then(() => send_message(iframe1, 'GetService', 'generic_access',
-      msg => assert_equals(msg, 'SUCCESS'))), test_desc);
+      msg => assert_equals(msg, 'ServiceReceived'))), test_desc);
 </script>
