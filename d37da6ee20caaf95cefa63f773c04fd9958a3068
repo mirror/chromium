@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e661c5d_36f6a223",
+        "filename": "sandbox/linux/seccomp-bpf/syscall_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-09T20:48:52Z",
+      "side": 1,
+      "message": "This should be size_t, not int.",
+      "revId": "d37da6ee20caaf95cefa63f773c04fd9958a3068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
