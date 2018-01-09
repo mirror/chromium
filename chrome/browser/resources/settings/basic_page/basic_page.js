@@ -23,6 +23,8 @@ Polymer({
 
     showMultidevice: Boolean,
 
+    showSmb: Boolean,
+
     havePlayStoreApp: Boolean,
     // </if>
 
@@ -254,6 +256,16 @@ Polymer({
     var visibility = /** @type {boolean|undefined} */ (
         this.get('pageVisibility.multidevice'));
     return this.showMultidevice && this.showPage_(visibility);
+  },
+
+  /**
+   * @return {boolean} Whether to show the smb settings page.
+   * @private
+   */
+  shouldShowSmb_: function() {
+    var visibility =
+        /** @type {boolean|undefined} */ (this.get('pageVisibility.smb'));
+    return this.showSmb && this.showPage_(visibility);
   },
 
   /**
