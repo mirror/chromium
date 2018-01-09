@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ed12c2f_936b19e8",
+        "filename": "third_party/WebKit/Source/devtools/scripts/jsdoc_validator/src/org/chromium/devtools/jsdoc/FileCheckerCallable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2018-01-09T21:33:28Z",
+      "side": 1,
+      "message": "Why not just?\n\nNodeTraversal.traverseEs6(new Compiler(), parseScript(context), dispatcher);",
+      "revId": "164f122a9b2ee9d10bc3c155e943aad85e2e0a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
