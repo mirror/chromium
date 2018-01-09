@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df499b4d_e1816bfe",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-09T00:50:59Z",
+      "side": 1,
+      "message": "Not needed? Or is it going to be used in a later CL?",
+      "revId": "1746db2fd27201c5c8c97f354c8921c00203a68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
