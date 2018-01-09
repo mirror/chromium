@@ -22,6 +22,30 @@
       "revId": "bf42deb4bbabfac2e6761b3c1a55eb1e631e0859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34b4e53_ab841d51",
+        "filename": "content/renderer/p2p/ipc_socket_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-09T15:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8f2bad_ba03975e",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "bf42deb4bbabfac2e6761b3c1a55eb1e631e0859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
