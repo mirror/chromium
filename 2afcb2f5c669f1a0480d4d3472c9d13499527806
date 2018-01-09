@@ -590,6 +590,30 @@
     },
     {
       "key": {
+        "uuid": "ac355594_53db2c77",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-09T19:23:12Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, done.",
+      "parentUuid": "ea1b66e3_686cf425",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41cf68f8_e42cdef2",
         "filename": "build/fuchsia/runner_v2/target.py",
         "patchSetId": 2
@@ -696,6 +720,30 @@
       "side": 1,
       "message": "Is this convention documented anywhere? From https://www.python.org/dev/peps/pep-0008/#descriptive-naming-styles double underscores are reserved for mangled names:\n\n_single_leading_underscore: weak \"internal use\" indicator. E.g. from M import * does not import objects whose name starts with an underscore.\n... \n__double_leading_underscore: when naming a class attribute, invokes name mangling (inside class FooBar, __boo becomes _FooBar__boo; see below).\n\n\n\"internal use\" doesn\u0027t make distinction between private and protected methods. \nWe don\u0027t need name mangling here, as the clients are not expected to override this method (see\nhttps://docs.python.org/2/tutorial/classes.html#private-variables-and-class-local-references for an example when it can be useful).",
       "parentUuid": "3417520c_8deb3f51",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 8
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b35b08e3_264b8cf1",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-09T19:23:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3dea0d82_328e6591",
       "range": {
         "startLine": 189,
         "startChar": 6,
