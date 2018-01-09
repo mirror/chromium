@@ -12,16 +12,6 @@ test(() => assert_selection(
         currentCommand = name;
         selection.document.execCommand(name);
       }
-      // Move SELECT into OPTION before calling |FrameSelection::setSelection()|
-      // in |Editor::reappliedEditing()|.
-      div.addEventListener('webkitEditableContentChanged', () => {
-        if (currentCommand !== 'redo')
-          return;
-        const div = selection.document.querySelector('div');
-        const select = selection.document.querySelector('select');
-        const option = selection.document.querySelector('option');
-        option.appendChild(select);
-      });
       execCommand('bold');
       execCommand('undo');
       execCommand('redo');

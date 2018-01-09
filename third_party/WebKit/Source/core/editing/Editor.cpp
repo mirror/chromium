@@ -916,16 +916,6 @@ String Editor::SelectionStartCSSPropertyValue(CSSPropertyID property_id) {
   return selection_style->Style()->GetPropertyValue(property_id);
 }
 
-static void DispatchEditableContentChangedEvents(Element* start_root,
-                                                 Element* end_root) {
-  if (start_root)
-    start_root->DispatchEvent(
-        Event::Create(EventTypeNames::webkitEditableContentChanged));
-  if (end_root && end_root != start_root)
-    end_root->DispatchEvent(
-        Event::Create(EventTypeNames::webkitEditableContentChanged));
-}
-
 static SelectionInDOMTree CorrectedSelectionAfterCommand(
     const SelectionForUndoStep& passed_selection,
     Document* document) {
@@ -944,8 +934,6 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
 
   UndoStep* undo_step = cmd->GetUndoStep();
   DCHECK(undo_step);
-  DispatchEditableContentChangedEvents(undo_step->StartingRootEditableElement(),
-                                       undo_step->EndingRootEditableElement());
   // TODO(chongz): Filter empty InputType after spec is finalized.
   DispatchInputEventEditableContentChanged(
       undo_step->StartingRootEditableElement(),
@@ -987,8 +975,6 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
 void Editor::UnappliedEditing(UndoStep* cmd) {
   EventQueueScope scope;
 
-  DispatchEditableContentChangedEvents(cmd->StartingRootEditableElement(),
-                                       cmd->EndingRootEditableElement());
   DispatchInputEventEditableContentChanged(
       cmd->StartingRootEditableElement(), cmd->EndingRootEditableElement(),
       InputEvent::InputType::kHistoryUndo, g_null_atom,
@@ -1010,8 +996,6 @@ void Editor::UnappliedEditing(UndoStep* cmd) {
 void Editor::ReappliedEditing(UndoStep* cmd) {
   EventQueueScope scope;
 
-  DispatchEditableContentChangedEvents(cmd->StartingRootEditableElement(),
-                                       cmd->EndingRootEditableElement());
   DispatchInputEventEditableContentChanged(
       cmd->StartingRootEditableElement(), cmd->EndingRootEditableElement(),
       InputEvent::InputType::kHistoryRedo, g_null_atom,
@@ -1351,15 +1335,6 @@ void Editor::CountEvent(ExecutionContext* execution_context,
                       WebFeature::kWebkitBeforeTextInsertedOnContentEditable,
                       WebFeature::kWebkitBeforeTextInsertedOnNotNode);
     return;
-  }
-
-  if (event->type() == EventTypeNames::webkitEditableContentChanged) {
-    CountEditingEvent(
-        execution_context, event,
-        WebFeature::kWebkitEditableContentChangedOnInput,
-        WebFeature::kWebkitEditableContentChangedOnTextArea,
-        WebFeature::kWebkitEditableContentChangedOnContentEditable,
-        WebFeature::kWebkitEditableContentChangedOnNotNode);
   }
 }
 

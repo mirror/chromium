@@ -112,8 +112,7 @@ void TextControlInnerEditorElement::DefaultEventHandler(Event* event) {
   // Then we would add one to the text field's inner div, and we wouldn't need
   // this subclass.
   // Or possibly we could just use a normal event listener.
-  if (event->IsBeforeTextInsertedEvent() ||
-      event->type() == EventTypeNames::webkitEditableContentChanged) {
+  if (event->IsBeforeTextInsertedEvent()) {
     Element* shadow_ancestor = OwnerShadowHost();
     // A TextControlInnerTextElement can have no host if its been detached,
     // but kept alive by an EditCommand. In this case, an undo/redo can
