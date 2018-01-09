@@ -22,6 +22,30 @@
       "revId": "cd74e9788e9e7cc0b0a1c1bfab699a7102bfb7ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbbb578c_bcf7256f",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-09T00:41:31Z",
+      "side": 1,
+      "message": "Yep:\n\nnew machine: https://chromium-swarm.appspot.com/bot?id\u003dvm35-m9\nold machine: https://build.chromium.org/deprecated/chromium.mac/buildslaves/vm645-m1",
+      "parentUuid": "668092f4_5e50cdad",
+      "range": {
+        "startLine": 194,
+        "startChar": 19,
+        "endLine": 194,
+        "endChar": 27
+      },
+      "revId": "cd74e9788e9e7cc0b0a1c1bfab699a7102bfb7ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
