@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ad2587c_51bc3268",
+        "filename": "third_party/WebKit/Source/platform/wtf/VectorTraits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-09T09:08:42Z",
+      "side": 1,
+      "message": "FYI Kentaro: Finally found the case where copy and move semantics differ wrt. to WTF containers. After realizing what is going on it\u0027s actually clear: Whenever the contained type has internal knowledge that depends on copy vs move.\n\nIn this case the internal reference count needs to be properly maintained, so we cannot copy using memcpy. Move is fine though as that does not change the ref count semantically.",
+      "range": {
+        "startLine": 93,
+        "startChar": 20,
+        "endLine": 93,
+        "endChar": 38
+      },
+      "revId": "467cda34403bfcd6b942e3b469c6f24387966077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
