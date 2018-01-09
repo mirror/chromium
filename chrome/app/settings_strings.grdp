@@ -194,6 +194,9 @@
     <message name="IDS_SETTINGS_SCREEN_MAGNIFIER_LABEL" desc="Label for checkbox which enables the screen magnifier">
       Enable screen magnifier
     </message>
+    <message name="IDS_SETTINGS_SCREEN_MAGNIFIER_DESCRIPTION" desc="In the settings tab, an explanation that the magnification settings can be adjusted using a key combination and gesture.">
+      Hold Control and Alt and use two-finger scroll to adjust the magnification
+    </message>
     <message name="IDS_SETTINGS_TAP_DRAGGING_LABEL" desc="Label for checkbox which enables tap dragging.">
       Enable tap dragging
     </message>

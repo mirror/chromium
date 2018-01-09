@@ -154,6 +154,7 @@ void AddA11yStrings(content::WebUIDataSource* html_source) {
     {"chromeVoxLabel", IDS_SETTINGS_CHROMEVOX_LABEL},
     {"chromeVoxOptionsLabel", IDS_SETTINGS_CHROMEVOX_OPTIONS_LABEL},
     {"screenMagnifierLabel", IDS_SETTINGS_SCREEN_MAGNIFIER_LABEL},
+    {"screenMagnifierDescription", IDS_SETTINGS_SCREEN_MAGNIFIER_DESCRIPTION},
     {"tapDraggingLabel", IDS_SETTINGS_TAP_DRAGGING_LABEL},
     {"clickOnStopLabel", IDS_SETTINGS_CLICK_ON_STOP_LABEL},
     {"delayBeforeClickLabel", IDS_SETTINGS_DELAY_BEFORE_CLICK_LABEL},
