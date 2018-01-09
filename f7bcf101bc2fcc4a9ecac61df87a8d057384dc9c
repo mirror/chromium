@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c992e618_767bacf8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e1612b_6abda0a7",
+      "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc03975b_f661e10d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea9993f_ea36c59f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "Went with the destroyed + enum option.",
+      "parentUuid": "cc03975b_f661e10d",
+      "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "eb327fb0_28c6bd08",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e75cc7_80d43c35",
+      "range": {
+        "startLine": 44,
+        "startChar": 22,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a899263e_38c93cd7",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 14
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "a3d322f8_6c78edb1",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a899263e_38c93cd7",
+      "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a314df5_37abc916",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 14
@@ -90,6 +168,24 @@
       "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6612912a_572b46f6",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a314df5_37abc916",
+      "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

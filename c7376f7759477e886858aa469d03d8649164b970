@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a81902c_11ab976d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19483c2d_f73362bd",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 6
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6b21117_37eebcf3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "c7376f7759477e886858aa469d03d8649164b970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61003739_05c1f926",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "Looks like there\u0027s only a small number of calls to getNativePointer. I\u0027ll do that in a followup.\n\nI merged the two functions.",
+      "parentUuid": "b6b21117_37eebcf3",
+      "range": {
+        "startLine": 398,
+        "startChar": 16,
+        "endLine": 398,
+        "endChar": 42
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f8f5b402_d5a55aa8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed52c78_df3209f2",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c29b2c8_0b4029fd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "c7376f7759477e886858aa469d03d8649164b970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce7d27d_3173f2a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "An assertion should be fine.",
+      "parentUuid": "1c29b2c8_0b4029fd",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6c19bd23_43d73d5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "It\u0027s called from CompositorView too so I can\u0027t remove it from the interface without a cast.",
+      "parentUuid": "73c8f729_90c70b01",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b7baa0_fa916446",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
         "patchSetId": 13
@@ -137,6 +257,30 @@
       "revId": "c7376f7759477e886858aa469d03d8649164b970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe7df8a_fa141e76",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCompositorSurfaceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T22:17:13Z",
+      "side": 1,
+      "message": "No, the CompositorSurfaceManagerImpl just uses this as a signal to hide the surfaceViews that we don\u0027t have here, so there\u0027s nothing to do.",
+      "parentUuid": "a4b7baa0_fa916446",
+      "range": {
+        "startLine": 84,
+        "startChar": 47,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "c7376f7759477e886858aa469d03d8649164b970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
