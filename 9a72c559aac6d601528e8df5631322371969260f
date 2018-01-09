@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "067ac93e_e81f2c10",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-09T02:00:54Z",
+      "side": 1,
+      "message": "nit: please add a comment that these are also used for UMA so that we have some safeguard against the two files getting out of sync.",
+      "range": {
+        "startLine": 61,
+        "startChar": 3,
+        "endLine": 61,
+        "endChar": 66
+      },
+      "revId": "9a72c559aac6d601528e8df5631322371969260f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd5626e_33ad1126",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-09T02:00:54Z",
+      "side": 1,
+      "message": "Should we record an enum value for UMA not enabled? How about for tablets? Or for Chrome Home not being enabled at all?\n\nAlso, do we want to log something when the infobar is shown, but hidden behind other infobars? Or can\u0027t be shown because of the current tab is in the background?\n\nLooking back through this code again, I think it\u0027s possible that a user qualifies, downloads the survey successfully but can\u0027t be shown the survey right away. If the user comes back the next day, rolls again and doesn\u0027t qualify, we may never show them the survey. We should probably be skipping the once per day/number rolling filter if we have already a downloaded survey waiting to be shown.",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 73
+      },
+      "revId": "9a72c559aac6d601528e8df5631322371969260f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c025a1_017658af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-09T02:00:54Z",
+      "side": 1,
+      "message": "nit: I would create a helper method that logs this histogram, e.g.\n\nrecordSurveyFilteringResult(int value) {\n ...\n}",
+      "range": {
+        "startLine": 242,
+        "startChar": 11,
+        "endLine": 244,
+        "endChar": 69
+      },
+      "revId": "9a72c559aac6d601528e8df5631322371969260f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
