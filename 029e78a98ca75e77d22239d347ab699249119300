@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c380c27c_afb369d0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-09T17:44:58Z",
+      "side": 1,
+      "message": "this reads a bit weirdly. so this is supposed be a duplicate of line 328 below, right? can you write in a way to avoid duplicating this line. I\u0027m sure in the future, we might add more things below, and then forget to update this up here",
+      "revId": "029e78a98ca75e77d22239d347ab699249119300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
