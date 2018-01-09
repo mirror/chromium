@@ -1054,6 +1054,20 @@ public final class PrefServiceBridge {
         nativeSetDownloadDefaultDirectory(directory);
     }
 
+    /**
+     * @return Whether the download location prompt is enabled.
+     */
+    public boolean getPromptForDownloadAndroid() {
+        return nativeGetPromptForDownloadAndroid();
+    }
+
+    /**
+     * @param enabled Whether download location prompt is enabled.
+     */
+    public void setPromptForDownloadAndroid(boolean enabled) {
+        nativeSetPromptForDownloadAndroid(enabled);
+    }
+
     private native boolean nativeGetBoolean(int preference);
     private native void nativeSetBoolean(int preference, boolean value);
     private native boolean nativeGetAcceptCookiesEnabled();
@@ -1168,4 +1182,6 @@ public final class PrefServiceBridge {
     private native void nativeSetLanguageBlockedState(String language, boolean blocked);
     private native String nativeGetDownloadDefaultDirectory();
     private native void nativeSetDownloadDefaultDirectory(String directory);
+    private native boolean nativeGetPromptForDownloadAndroid();
+    private native void nativeSetPromptForDownloadAndroid(boolean enabled);
 }
