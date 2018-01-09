@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83beb1ef_80cda581",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-09T23:36:14Z",
+      "side": 1,
+      "message": "nit: WebFrameWidget",
+      "range": {
+        "startLine": 7,
+        "startChar": 64,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "4599924ca75452b92cba1ce263ea79f3ca091093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1962b3c_2c6c61fb",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-09T23:36:14Z",
+      "side": 1,
+      "message": "nit: s/recieve/receive/",
+      "range": {
+        "startLine": 1634,
+        "startChar": 65,
+        "endLine": 1634,
+        "endChar": 72
+      },
+      "revId": "4599924ca75452b92cba1ce263ea79f3ca091093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6420ec7f_7cf9b72e",
+        "filename": "content/renderer/render_widget.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-09T23:36:14Z",
+      "side": 1,
+      "message": "nit: Add a comment for this?",
+      "revId": "4599924ca75452b92cba1ce263ea79f3ca091093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
