@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "935c1318_842c19a2",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T23:19:10Z",
+      "side": 1,
+      "message": "It\u0027s not your fault, but can you sort all these?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "69af8d1981115611e01a6b39637e6a81bd493018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
