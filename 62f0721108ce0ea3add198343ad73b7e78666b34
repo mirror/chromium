@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5a7165a_4cb9b9fb",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-09T20:00:20Z",
+      "side": 1,
+      "message": "As discussed offline: we can probably measure the delta here. I would prefer that, since |delta| is useful for only a limited set of events, and only in certain cases. So if we can avoid adding it to the generic API, that would be useful.",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3600543a_01074d5a",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
         "patchSetId": 5
@@ -37,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8f65b687_708cc1d0",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-09T20:00:20Z",
+      "side": 1,
+      "message": "Ah, I see! Thanks!",
+      "parentUuid": "697a5321_40680594",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "406fc0b0_401d9818",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 5
@@ -65,6 +100,24 @@
       "writtenOn": "2018-01-09T16:48:24Z",
       "side": 1,
       "message": "Why is this argument optional? If we are going to DCHECK it has a value then it really shouldn\u0027t be, but I\u0027m having trouble seeing why it was done that way in the first place.",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d85404_ca02dcd1",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-09T20:00:20Z",
+      "side": 1,
+      "message": "Yeah. I think we don\u0027t need to keep this an optional arg. anymore. (although it would make sense to fix that in a separate CL)",
+      "parentUuid": "b592c8c3_87714dd1",
       "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
