@@ -276,14 +276,21 @@ bool ScreenLayoutObserver::GetDisplayMessageForNotification(
       return false;
     }
 
-    if (iter.second.configured_ui_scale() !=
-        old_iter->second.configured_ui_scale()) {
-      *out_message = l10n_util::GetStringUTF16(
-          IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TITLE);
-      *out_additional_message = l10n_util::GetStringFUTF16(
-          IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED,
-          GetDisplayName(iter.first), GetDisplaySize(iter.first));
-      return true;
+    if (should_ignore_change_from_settings_ui_) {
+      // Consume this state so that later changes are not affected.
+      should_ignore_change_from_settings_ui_ = false;
+    } else {
+      if ((iter.second.configured_ui_scale() !=
+           old_iter->second.configured_ui_scale()) ||
+          (GetDisplayManager()->IsInUnifiedMode() &&
+           iter.second.size_in_pixel() != old_iter->second.size_in_pixel())) {
+        *out_message = l10n_util::GetStringUTF16(
+            IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TITLE);
+        *out_additional_message = l10n_util::GetStringFUTF16(
+            IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED,
+            GetDisplayName(iter.first), GetDisplaySize(iter.first));
+        return true;
+      }
     }
     // Don't show rotation change notification if
     // a) no rotation change

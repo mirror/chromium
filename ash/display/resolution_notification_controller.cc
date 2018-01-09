@@ -9,6 +9,7 @@
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/system/screen_layout_observer.h"
 #include "ash/system/system_notifier.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -158,6 +159,9 @@ bool ResolutionNotificationController::PrepareNotificationAndSetDisplayMode(
     const display::ManagedDisplayMode& old_resolution,
     const display::ManagedDisplayMode& new_resolution,
     const base::Closure& accept_callback) {
+  Shell::Get()
+      ->screen_layout_observer()
+      ->set_should_ignore_change_from_settings_ui(true);
   display::DisplayManager* const display_manager =
       Shell::Get()->display_manager();
   if (display::Display::IsInternalDisplayId(display_id)) {
@@ -183,8 +187,8 @@ bool ResolutionNotificationController::PrepareNotificationAndSetDisplayMode(
     RevertResolutionChange(false /* display_was_removed */);
   }
 
-  change_info_.reset(new ResolutionChangeInfo(display_id, old_resolution,
-                                              new_resolution, accept_callback));
+  change_info_ = std::make_unique<ResolutionChangeInfo>(
+      display_id, old_resolution, new_resolution, accept_callback);
   if (!original_resolution.size().IsEmpty())
     change_info_->old_resolution = original_resolution;
 
@@ -293,6 +297,9 @@ void ResolutionNotificationController::RevertResolutionChange(
   int64_t display_id = change_info_->display_id;
   display::ManagedDisplayMode old_resolution = change_info_->old_resolution;
   change_info_.reset();
+  Shell::Get()
+      ->screen_layout_observer()
+      ->set_should_ignore_change_from_settings_ui(true);
   if (display_was_removed) {
     // If display was removed then we are inside the stack of
     // DisplayManager::UpdateDisplaysWith(), and we need to update the selected

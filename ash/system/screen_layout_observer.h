@@ -24,8 +24,17 @@ class ASH_EXPORT ScreenLayoutObserver : public WindowTreeHostManager::Observer {
   ScreenLayoutObserver();
   ~ScreenLayoutObserver() override;
 
+  static const char kNotificationId[];
+
   // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
+
+  // If set to true, no notification will be shown only for the next ui scale
+  // change, and it will be consumed so that subsequent changes won't be
+  // affected.
+  void set_should_ignore_change_from_settings_ui(bool value) {
+    should_ignore_change_from_settings_ui_ = value;
+  }
 
   // Notifications are shown in production and are not shown in unit tests.
   // Allow individual unit tests to show notifications.
@@ -37,8 +46,6 @@ class ASH_EXPORT ScreenLayoutObserver : public WindowTreeHostManager::Observer {
   friend class ScreenLayoutObserverTest;
 
   using DisplayInfoMap = std::map<int64_t, display::ManagedDisplayInfo>;
-
-  static const char kNotificationId[];
 
   // Scans the current display info and updates |display_info_|. Sets the
   // previous data to |old_info| if it's not NULL.
@@ -76,6 +83,10 @@ class ASH_EXPORT ScreenLayoutObserver : public WindowTreeHostManager::Observer {
 
   DisplayMode old_display_mode_ = DisplayMode::SINGLE;
   DisplayMode current_display_mode_ = DisplayMode::SINGLE;
+
+  // When the UI scale of a display is modified from the Settings UI, we should
+  // ignore this change and avoid showing a notification for it.
+  bool should_ignore_change_from_settings_ui_ = false;
 
   bool show_notifications_for_testing_ = true;
 
