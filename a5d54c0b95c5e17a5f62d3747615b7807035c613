@@ -16,6 +16,24 @@
       "revId": "a5d54c0b95c5e17a5f62d3747615b7807035c613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35cfcda_7fe7d97b",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-09T16:07:32Z",
+      "side": 1,
+      "message": "True. Also made the loading code more concise.",
+      "parentUuid": "34e81e48_6e9b901f",
+      "revId": "a5d54c0b95c5e17a5f62d3747615b7807035c613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
