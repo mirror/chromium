@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9bec01a2_eae223d5",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T17:05:59Z",
+      "side": 1,
+      "message": "Right, but that same page says \"Functions can have return values just like C/C++. But the out and inout qualifiers allow functions to return multiple values\".  Up to you - I just think it\u0027s clearer to use the return approach unless you need otherwise.",
+      "parentUuid": "8fb26080_dc7e7de4",
+      "revId": "673b1da398dc5b8ccab496f64689196869e435df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00b30dcc_97202e32",
         "filename": "chrome/browser/vr/elements/environment/stars.cc",
         "patchSetId": 5
