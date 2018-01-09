@@ -16,6 +16,24 @@
       "revId": "eca7263cf27ad7da3a3a72f989d32735b63790e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e98aaca_3f133473",
+        "filename": "content/browser/zygote_host/zygote_communication_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2018-01-09T19:38:58Z",
+      "side": 0,
+      "message": "I\u0027m honestly not sure. Maybe it was just to prevent the mapping from being used after it should be?",
+      "parentUuid": "34ab9182_6642374b",
+      "revId": "eca7263cf27ad7da3a3a72f989d32735b63790e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
