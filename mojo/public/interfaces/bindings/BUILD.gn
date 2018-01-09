@@ -4,12 +4,20 @@
 
 import("../../tools/bindings/mojom.gni")
 
+mojom("native_struct") {
+  sources = [
+    "native_struct.mojom",
+  ]
+}
+
 mojom("bindings") {
   visibility = []
   sources = [
     "interface_control_messages.mojom",
-    "native_struct.mojom",
     "pipe_control_messages.mojom",
+  ]
+  public_deps = [
+    ":native_struct",
   ]
 
   allow_native_structs = false

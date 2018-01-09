@@ -172,6 +172,8 @@ component("bindings") {
     "//ipc:native_handle_type_converters",
     "//mojo/public/interfaces/bindings:bindings__generator",
     "//mojo/public/interfaces/bindings:bindings_shared__generator",
+    "//mojo/public/interfaces/bindings:native_struct__generator",
+    "//mojo/public/interfaces/bindings:native_struct_shared__generator",
   ]
 
   defines = [ "MOJO_CPP_BINDINGS_IMPLEMENTATION" ]
