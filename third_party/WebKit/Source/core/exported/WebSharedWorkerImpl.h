@@ -43,7 +43,6 @@
 #include "core/workers/WorkerThread.h"
 #include "platform/WebTaskRunner.h"
 #include "public/platform/WebContentSecurityPolicy.h"
-#include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebSharedWorkerClient.h"
 #include "public/web/worker_content_settings_proxy.mojom-blink.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
@@ -73,11 +72,11 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
       WebApplicationCacheHostClient*) override;
   void OnShadowPageInitialized() override;
 
-  // WebDevToolsAgentClient overrides.
-  void SendProtocolMessage(int session_id,
+  // WebDevToolsAgentImpl::Client overrides.
+  bool SendProtocolMessage(int session_id,
                            int call_id,
-                           const WebString&,
-                           const WebString&) override;
+                           const String&,
+                           const String&) override;
   void ResumeStartup() override;
   const WebString& GetInstrumentationToken() override;
 
@@ -95,13 +94,8 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
   void TerminateWorkerContext() override;
 
   void PauseWorkerContextOnStart() override;
-  void AttachDevTools(int session_id) override;
-  void ReattachDevTools(int sesion_id, const WebString& saved_state) override;
-  void DetachDevTools(int session_id) override;
-  void DispatchDevToolsMessage(int session_id,
-                               int call_id,
-                               const WebString& method,
-                               const WebString& message) override;
+  void GetDevToolsAgent(
+      mojo::ScopedInterfaceEndpointHandle devtools_agent_request) override;
 
   // Callback methods for SharedWorkerReportingProxy.
   void CountFeature(WebFeature);
