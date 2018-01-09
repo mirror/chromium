@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "237106c0_d2960fef",
+        "filename": "chrome/browser/resources/pdf/coords_transformer.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-09T19:37:23Z",
+      "side": 1,
+      "message": "Should document both keys and values, since the keys can be of any type not just strings.\n\n!Map\u003cnumber, !TransformPagePointRequest\u003e",
+      "range": {
+        "startLine": 32,
+        "startChar": 24,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "6cf4736ce191cb15e4ddcab7a1e4afc99687cc6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
