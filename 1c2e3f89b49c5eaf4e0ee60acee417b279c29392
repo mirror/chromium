@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "397d8634_c14c7981",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1187549
+      },
+      "writtenOn": "2018-01-09T06:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6bae46c_ccdc44bb",
+      "range": {
+        "startLine": 184,
+        "startChar": 26,
+        "endLine": 184,
+        "endChar": 27
+      },
+      "revId": "1c2e3f89b49c5eaf4e0ee60acee417b279c29392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "decfac94_8f523f24",
         "filename": "components/favicon/core/favicon_driver.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "13b53a79_8841bde5",
+        "filename": "components/favicon/core/favicon_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1187549
+      },
+      "writtenOn": "2018-01-09T06:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "decfac94_8f523f24",
+      "range": {
+        "startLine": 35,
+        "startChar": 56,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "1c2e3f89b49c5eaf4e0ee60acee417b279c29392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26a6f13b_11cbf8bb",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-02T17:25:38Z",
       "side": 1,
       "message": "Why do you need to do this change?",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 54
+      },
+      "revId": "1c2e3f89b49c5eaf4e0ee60acee417b279c29392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f336bb_a5745274",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1187549
+      },
+      "writtenOn": "2018-01-09T06:14:05Z",
+      "side": 1,
+      "message": "We need a smart pointer here to track a condition when tasks are canceled. We cannot use CancelableTaskTracker::HasTrackedTasks method to be sure the tasks were canceled. TryCancelAll is asynchronous and it doesn\u0027t change a CancelableTaskTracker state immediately.\nCalling the destructor of CancelableTaskTracker is similar to TryCancelAll, but it is better because we can track whether it was called recently (by resetting the tracker on call). That\u0027s why I use a smart pointer here.\n\nFavicon tests get flaky if not using smart pointers here.\n\nIs this way acceptable? If not, I need an idea because I don\u0027t see a better way.",
+      "parentUuid": "26a6f13b_11cbf8bb",
       "range": {
         "startLine": 196,
         "startChar": 2,
