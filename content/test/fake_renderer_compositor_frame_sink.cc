@@ -13,6 +13,9 @@ FakeRendererCompositorFrameSink::FakeRendererCompositorFrameSink(
 
 FakeRendererCompositorFrameSink::~FakeRendererCompositorFrameSink() = default;
 
+void FakeRendererCompositorFrameSink::AddRenderFrameMetadataObserver(
+    viz::mojom::RenderFrameMetadataObserverPtr observer) {}
+
 void FakeRendererCompositorFrameSink::DidReceiveCompositorFrameAck(
     const std::vector<viz::ReturnedResource>& resources) {
   ReclaimResources(resources);

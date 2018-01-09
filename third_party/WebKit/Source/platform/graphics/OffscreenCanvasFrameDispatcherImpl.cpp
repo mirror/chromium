@@ -346,6 +346,9 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
                                nullptr, 0);
 }
 
+void OffscreenCanvasFrameDispatcherImpl::AddRenderFrameMetadataObserver(
+    viz::mojom::blink::RenderFrameMetadataObserverPtr observer) {}
+
 void OffscreenCanvasFrameDispatcherImpl::DidReceiveCompositorFrameAck(
     const WTF::Vector<viz::ReturnedResource>& resources) {
   ReclaimResources(resources);

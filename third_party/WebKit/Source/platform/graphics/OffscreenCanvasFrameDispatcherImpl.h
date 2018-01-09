@@ -44,6 +44,8 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl
   void Reshape(int width, int height) final;
 
   // viz::mojom::blink::CompositorFrameSinkClient implementation.
+  void AddRenderFrameMetadataObserver(
+      viz::mojom::blink::RenderFrameMetadataObserverPtr) final;
   void DidReceiveCompositorFrameAck(
       const WTF::Vector<viz::ReturnedResource>& resources) final;
   void DidPresentCompositorFrame(uint32_t presentation_token,

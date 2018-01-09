@@ -140,6 +140,9 @@ void DirectLayerTreeFrameSink::DisplayDidDrawAndSwap() {
   // be drawn.
 }
 
+void DirectLayerTreeFrameSink::AddRenderFrameMetadataObserver(
+    mojom::RenderFrameMetadataObserverPtr observer) {}
+
 void DirectLayerTreeFrameSink::DisplayDidReceiveCALayerParams(
     const gfx::CALayerParams& ca_layer_params) {
   // If |ca_layer_params| should have content only when there exists a client

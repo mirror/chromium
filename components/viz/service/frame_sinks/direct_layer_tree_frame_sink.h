@@ -71,6 +71,8 @@ class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
 
  private:
   // mojom::CompositorFrameSinkClient implementation:
+  void AddRenderFrameMetadataObserver(
+      mojom::RenderFrameMetadataObserverPtr observer) override;
   void DidReceiveCompositorFrameAck(
       const std::vector<ReturnedResource>& resources) override;
   void DidPresentCompositorFrame(uint32_t presentation_token,

@@ -359,6 +359,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       current_content_source_id_(0),
       monitoring_composition_info_(false),
       compositor_frame_sink_binding_(this),
+      render_frame_metadata_observer_binding_(this),
       weak_factory_(this) {
   CHECK(delegate_);
   CHECK_NE(MSG_ROUTING_NONE, routing_id_);
@@ -2030,6 +2031,11 @@ void RenderWidgetHostImpl::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
     view_->OnDidNotProduceFrame(modified_ack);
 }
 
+void RenderWidgetHostImpl::OnCompositorFrameSubmission(
+    viz::RenderFrameMetadata metadata) {
+  LOG(ERROR) << "JR CF submitted! " << metadata.root_scroll_offset.ToString();
+}
+
 void RenderWidgetHostImpl::OnResizeOrRepaintACK(
     const ViewHostMsg_ResizeOrRepaint_ACK_Params& params) {
   TRACE_EVENT0("renderer_host", "RenderWidgetHostImpl::OnResizeOrRepaintACK");
@@ -2659,6 +2665,12 @@ void RenderWidgetHostImpl::RequestCompositorFrameSink(
   if (view_)
     view_->DidCreateNewRendererCompositorFrameSink(client.get());
   renderer_compositor_frame_sink_ = std::move(client);
+
+  // TODO(jonross): Actually only do this in the enable_viz_ block above.
+  viz::mojom::RenderFrameMetadataObserverPtr observer;
+  render_frame_metadata_observer_binding_.Bind(mojo::MakeRequest(&observer));
+  renderer_compositor_frame_sink_->AddRenderFrameMetadataObserver(
+      std::move(observer));
 }
 
 bool RenderWidgetHostImpl::HasGestureStopped() {

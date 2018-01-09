@@ -20,6 +20,10 @@ class MockCompositorFrameSinkClient : public mojom::CompositorFrameSinkClient {
   mojom::CompositorFrameSinkClientPtr BindInterfacePtr();
 
   // mojom::CompositorFrameSinkClient implementation.
+  void AddRenderFrameMetadataObserver(
+      mojom::RenderFrameMetadataObserverPtr observer) override {}
+  //  MOCK_METHOD1(AddRenderFrameMetadataObserver,
+  //             void(mojom::RenderFrameMetadataObserverPtr));
   MOCK_METHOD1(DidReceiveCompositorFrameAck,
                void(const std::vector<ReturnedResource>&));
   MOCK_METHOD4(DidPresentCompositorFrame,

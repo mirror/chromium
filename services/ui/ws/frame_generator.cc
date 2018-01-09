@@ -83,6 +83,9 @@ void FrameGenerator::ReclaimResources(
   DCHECK(resources.empty());
 }
 
+void FrameGenerator::AddRenderFrameMetadataObserver(
+    viz::mojom::RenderFrameMetadataObserverPtr observer) {}
+
 void FrameGenerator::DidReceiveCompositorFrameAck(
     const std::vector<viz::ReturnedResource>& resources) {}
 
