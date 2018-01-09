@@ -2888,36 +2888,6 @@ void WebContentsImpl::UpdatePreferredSize(const gfx::Size& pref_size) {
   OnPreferredSizeChanged(old_size);
 }
 
-void WebContentsImpl::ResizeDueToAutoResize(
-    RenderWidgetHostImpl* render_widget_host,
-    const gfx::Size& new_size,
-    uint64_t sequence_number) {
-  if (render_widget_host != GetRenderViewHost()->GetWidget())
-    return;
-
-  auto_resize_size_ = new_size;
-
-  // Out-of-process iframe visible viewport sizes usually come from the
-  // top-level RenderWidgetHostView, but when auto-resize is enabled on the
-  // top frame then that size is used instead.
-  for (FrameTreeNode* node : frame_tree_.Nodes()) {
-    if (node->current_frame_host()->is_local_root()) {
-      RenderWidgetHostImpl* host =
-          node->current_frame_host()->GetRenderWidgetHost();
-      if (host != render_widget_host)
-        host->WasResized();
-    }
-  }
-
-  if (delegate_)
-    delegate_->ResizeDueToAutoResize(this, new_size);
-
-  RenderWidgetHostViewBase* view =
-      static_cast<RenderWidgetHostViewBase*>(GetRenderWidgetHostView());
-  if (view)
-    view->ResizeDueToAutoResize(new_size, sequence_number);
-}
-
 gfx::Size WebContentsImpl::GetAutoResizeSize() {
   return auto_resize_size_;
 }

@@ -281,11 +281,11 @@ void RenderWidgetHostViewBase::DidUnregisterFromTextInputManager(
   text_input_manager_ = nullptr;
 }
 
-void RenderWidgetHostViewBase::ResizeDueToAutoResize(const gfx::Size& new_size,
-                                                     uint64_t sequence_number) {
+void RenderWidgetHostViewBase::ResizeDueToAutoResize(
+    const gfx::Size& new_size) {
   RenderWidgetHostImpl* host =
       RenderWidgetHostImpl::From(GetRenderWidgetHost());
-  host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
+  host->DidAllocateLocalSurfaceId();
 }
 
 base::WeakPtr<RenderWidgetHostViewBase> RenderWidgetHostViewBase::GetWeakPtr() {
