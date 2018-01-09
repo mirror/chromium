@@ -299,6 +299,10 @@ const char kEnableClearBrowsingDataCountersName[] =
 const char kEnableClearBrowsingDataCountersDescription[] =
     "Shows data volume counters in the Clear browsing data dialog.";
 
+const char kEnableCaptivePortalRandomUrl[] = "Captive Portal url Randomization";
+const char kEnableCaptivePortalRandomUrlDescription[] =
+    "Enable Captive Portal URL randomization.";
+
 const char kEnableClientLoFiName[] = "Client-side Lo-Fi previews";
 
 const char kEnableClientLoFiDescription[] =

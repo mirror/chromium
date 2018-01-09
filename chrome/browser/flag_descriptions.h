@@ -210,6 +210,9 @@ extern const char kEnableBrotliDescription[];
 extern const char kEnableClearBrowsingDataCountersName[];
 extern const char kEnableClearBrowsingDataCountersDescription[];
 
+extern const char kEnableCaptivePortalRandomUrl[];
+extern const char kEnableCaptivePortalRandomUrlDescription[];
+
 extern const char kEnableClientLoFiName[];
 extern const char kEnableClientLoFiDescription[];
 
