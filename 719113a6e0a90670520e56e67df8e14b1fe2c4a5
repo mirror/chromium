@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3bc81164_9704a113",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-09T00:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eec81338_885c2f9c",
+      "revId": "719113a6e0a90670520e56e67df8e14b1fe2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f8c68f_1ea533fe",
         "filename": "chromeos/network/auto_connect_handler.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f5bd5824_a3639877",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-09T00:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f8c68f_1ea533fe",
+      "revId": "719113a6e0a90670520e56e67df8e14b1fe2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a92b9ee_b6714461",
         "filename": "chromeos/network/auto_connect_handler.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "719113a6e0a90670520e56e67df8e14b1fe2c4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1151f2b1_6bbc4264",
+        "filename": "chromeos/network/auto_connect_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-09T00:43:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a92b9ee_b6714461",
+      "revId": "719113a6e0a90670520e56e67df8e14b1fe2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
