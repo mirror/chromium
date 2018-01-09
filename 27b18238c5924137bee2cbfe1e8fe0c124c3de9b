@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e20f0234_a5a9990b",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T17:34:49Z",
+      "side": 0,
+      "message": "Can you elaborate on why this is no longer necessary?",
+      "revId": "27b18238c5924137bee2cbfe1e8fe0c124c3de9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ad0067e_e946051d",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T17:34:49Z",
+      "side": 1,
+      "message": "AttemptDelayedInstallation sounds to me like a method to try to start a delayed installation, rather than finish one.  Maybe we could have this be something like FinishDelayedInstallationIfReady()?",
+      "revId": "f512625501aa791f4548858c288ac94c8e0b8ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8a4082_1e52c173",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T17:34:49Z",
+      "side": 1,
+      "message": "nit: easier to verify this is correct as pending_id(32, \u0027e\u0027)",
+      "revId": "f512625501aa791f4548858c288ac94c8e0b8ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab55c819_6916e742",
+        "filename": "chrome/test/data/extensions/pending_updates_with_imports/updated_with_imports/1.0.0/background.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T17:34:49Z",
+      "side": 1,
+      "message": "Do we need these background page files?",
+      "revId": "f512625501aa791f4548858c288ac94c8e0b8ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
