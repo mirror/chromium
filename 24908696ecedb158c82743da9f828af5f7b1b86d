@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "23654e97_81f87e83",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-09T10:00:16Z",
+      "side": 1,
+      "message": "let\u0027s change these method names to the longer form as well",
+      "revId": "24908696ecedb158c82743da9f828af5f7b1b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75a96da4_ecdcabf5",
         "filename": "device/ctap/authenticator_options.h",
         "patchSetId": 6
