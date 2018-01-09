@@ -30,6 +30,9 @@ group("perf") {
 
     # For Pylib used by VR tests
     "//build/android/pylib/",
+
+    # Specifies all python dependencies.
+    "//.vpython",
   ]
 }
 
