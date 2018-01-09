@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a5267331_60dc4c70",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T22:14:27Z",
+      "side": 1,
+      "message": "Yeah, I think it will be easier to read / understand.",
+      "parentUuid": "ce1989b7_76cf07f2",
+      "range": {
+        "startLine": 114,
+        "startChar": 35,
+        "endLine": 114,
+        "endChar": 38
+      },
+      "revId": "1ea9598adccce493aa07f302170dab7ee4be1cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85686f11_50abe96b",
         "filename": "components/cronet/url_request_context_config.cc",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I\u0027m expecting that some clients may request that we expose ssome of the members of ReportingPolicy to be customized.",
       "parentUuid": "85686f11_50abe96b",
+      "range": {
+        "startLine": 116,
+        "startChar": 11,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "1ea9598adccce493aa07f302170dab7ee4be1cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f945908_188adf1c",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T22:14:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "741a9c87_1e9696bb",
       "range": {
         "startLine": 116,
         "startChar": 11,
