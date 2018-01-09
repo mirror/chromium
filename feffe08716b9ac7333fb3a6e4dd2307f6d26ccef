@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a8b2cc5_0c39046f",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T02:05:11Z",
+      "side": 1,
+      "message": "Yes, it is only used in chrome/ tests. I will address it in a follow-up.",
+      "parentUuid": "53c9109c_36ed6103",
+      "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4ea7a09_f2eef7e7",
         "filename": "chrome/browser/chromeos/preferences.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-08T20:30:16Z",
       "side": 1,
       "message": "(I suspect the pref is still used in settings code, though, since you can adjust the delay in webui settings.)",
+      "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b39a1c_e6ad2648",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T02:05:11Z",
+      "side": 1,
+      "message": "It is adjusted from webui and tests only. But we still need to register here, right? The pref change handler could be in ash/. I will address this with ditto CL.",
+      "parentUuid": "f4ea7a09_f2eef7e7",
       "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
