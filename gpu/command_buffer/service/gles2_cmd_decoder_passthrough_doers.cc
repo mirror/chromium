@@ -4045,6 +4045,7 @@ error::Error GLES2DecoderPassthroughImpl::DoReleaseTexImage2DCHROMIUM(
 error::Error GLES2DecoderPassthroughImpl::DoTraceBeginCHROMIUM(
     const char* category_name,
     const char* trace_name) {
+  debug_marker_manager_.PushGroup(trace_name);
   if (!gpu_tracer_->Begin(category_name, trace_name, kTraceCHROMIUM)) {
     InsertError(GL_INVALID_OPERATION, "Failed to create begin trace");
     return error::kNoError;
@@ -4053,6 +4054,7 @@ error::Error GLES2DecoderPassthroughImpl::DoTraceBeginCHROMIUM(
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoTraceEndCHROMIUM() {
+  debug_marker_manager_.PopGroup();
   if (!gpu_tracer_->End(kTraceCHROMIUM)) {
     InsertError(GL_INVALID_OPERATION, "No trace to end");
     return error::kNoError;
