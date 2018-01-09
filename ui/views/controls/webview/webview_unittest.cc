@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -181,6 +182,7 @@ class WebViewUnitTest : public views::test::WidgetTest {
 
  private:
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
+  std::unique_ptr<content::WebRtcEventLogManager> webrtc_event_log_manager_;
   std::unique_ptr<content::WebRTCInternals> webrtc_internals_;
   std::unique_ptr<content::TestBrowserContext> browser_context_;
   content::TestContentBrowserClient test_browser_client_;

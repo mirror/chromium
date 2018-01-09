@@ -108,6 +108,7 @@ class StartupTaskRunner;
 class SwapMetricsDriver;
 class TracingControllerImpl;
 class WebRTCInternals;
+class WebRtcEventLogManager;
 struct MainFunctionParams;
 
 #if defined(OS_ANDROID)
@@ -371,6 +372,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   std::unique_ptr<gfx::ClientNativePixmapFactory> client_native_pixmap_factory_;
 #endif
 
+  std::unique_ptr<WebRtcEventLogManager> webrtc_event_log_manager_;
   std::unique_ptr<WebRTCInternals> webrtc_internals_;
 
   std::unique_ptr<LoaderDelegateImpl> loader_delegate_;

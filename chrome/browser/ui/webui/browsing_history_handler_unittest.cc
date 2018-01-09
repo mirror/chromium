@@ -29,6 +29,7 @@
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
 #include "components/sync/base/model_type.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
@@ -160,6 +161,7 @@ class BrowsingHistoryHandlerTest : public ::testing::Test {
   }
 
   content::TestBrowserThreadBundle thread_bundle_;
+  std::unique_ptr<content::WebRtcEventLogManager> webrtc_event_log_manager_;
   std::unique_ptr<content::WebRTCInternals> webrtc_internals_;
   std::unique_ptr<TestingProfile> profile_;
   TestSyncService* sync_service_;

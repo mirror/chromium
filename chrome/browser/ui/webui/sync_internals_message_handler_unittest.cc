@@ -18,6 +18,7 @@
 #include "components/sync/driver/sync_service.h"
 #include "components/sync/js/js_test_util.h"
 #include "components/sync/user_events/fake_user_event_service.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
@@ -199,6 +200,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
+  std::unique_ptr<content::WebRtcEventLogManager> webrtc_event_log_manager_;
   std::unique_ptr<content::WebRTCInternals> webrtc_internals_;
   TestingProfile profile_;
   scoped_refptr<content::SiteInstance> site_instance_;

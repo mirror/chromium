@@ -22,6 +22,7 @@
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_plugin_guest_delegate.h"
@@ -206,6 +207,7 @@ class RenderWidgetHostViewGuestSurfaceTest
 
  protected:
   TestBrowserThreadBundle thread_bundle_;
+  std::unique_ptr<WebRtcEventLogManager> webrtc_event_log_manager_;
   std::unique_ptr<WebRTCInternals> webrtc_internals_;
   std::unique_ptr<BrowserContext> browser_context_;
   MockRenderWidgetHostDelegate delegate_;
