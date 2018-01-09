@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "004bd181_8bcdeb2a",
+        "filename": "ui/events/blink/input_handler_proxy_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-09T18:50:32Z",
+      "side": 0,
+      "message": "Should we say something else instead?",
+      "revId": "0aeffba21ac5213b205cfb98b6fc14581b153871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
