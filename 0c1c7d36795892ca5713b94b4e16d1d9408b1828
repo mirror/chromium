@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0def920_6a1bca95",
+        "filename": "third_party/WebKit/Source/platform/Timer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-09T05:59:47Z",
+      "side": 0,
+      "message": "Why is this assertion no longer needed? Is there a case that |web_task_runner_| is null?",
+      "revId": "0c1c7d36795892ca5713b94b4e16d1d9408b1828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
