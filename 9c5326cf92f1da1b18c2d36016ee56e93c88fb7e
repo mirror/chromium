@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a32b7be3_7041d99b",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:25:30Z",
+      "side": 1,
+      "message": "Is it possible to write a test for this in //ash, like maybe in ash_unittests?",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079b0912_060e09f6",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:25:30Z",
+      "side": 1,
+      "message": "nit: Please add something to this comment explaining *why* it\u0027s an accessibility feature to darken the screen. Like \"(e.g. to allow ...)\"",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b002ae9a_c92671ff",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:25:30Z",
+      "side": 1,
+      "message": "optional: Instead of adding SetDarkenScreen() to A11yControllerClient you could also just directly connect to the ash mojo interface and call the method on ash, like this piece of code (but for the A11yController interface): https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc?q\u003dsignin_screen_handler\u0026sq\u003dpackage:chromium\u0026l\u003d1244\n\nThis would mean A11yControllerClient wouldn\u0027t need to be a singleton. But it\u0027s up to you.",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae28f6a_d2e07d0e",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:25:30Z",
+      "side": 1,
+      "message": "Why do you need this SetInstanceForTesting() method?",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
