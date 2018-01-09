@@ -84,10 +84,32 @@ class MockAuthenticator {
       let info = new webauth.mojom.CommonCredentialInfo(
           { id: this.id_,
             rawId: this.rawId_,
-            clientDataJson: this.clientDataJson_,});
+            clientDataJson: this.clientDataJson_,
+          });
       response = new webauth.mojom.MakeCredentialResponse(
           { info: info,
             attestationObject: this.attestationObject_
+          });
+    }
+    let status = this.status_;
+    this.reset();
+    return {status, credential: response};
+  }
+
+  async getAssertion(options) {
+    var response = null;
+    if (this.status_ == webauth.mojom.AuthenticatorStatus.SUCCESS) {
+      let info = new webauth.mojom.CommonCredentialInfo(
+          { id: this.id_,
+            rawId: this.rawId_,
+            clientDataJson: this.clientDataJson_,
+          });
+      response = new webauth.mojom.GetAssertionResponse(
+          { info: info,
+            attestationObject: this.attestationObject_,
+            authenticatorData: this.authenticatorData_,
+            signature: this.signature_,
+            userHandle: this.userHandle_,
           });
     }
     let status = this.status_;
@@ -104,7 +126,7 @@ class MockAuthenticator {
     this.attestationObject_ = new Uint8Array(0);
     this.authenticatorData_ = new Uint8Array(0);
     this.signature_ = new Uint8Array(0);
-    this.userHandle = new Uint8Array(0);
+    this.userHandle_ = new Uint8Array(0);
   }
 
   setAuthenticatorStatus(status) {
@@ -136,7 +158,7 @@ class MockAuthenticator {
   }
 
   setUserHandle(userHandle) {
-    this.userHandle = userHandle;
+    this.userHandle_ = userHandle;
   }
 }
 

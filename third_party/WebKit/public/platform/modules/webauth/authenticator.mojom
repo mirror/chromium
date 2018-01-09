@@ -17,6 +17,7 @@ enum AuthenticatorStatus {
   PENDING_REQUEST,
   NOT_ALLOWED_ERROR,
   NOT_SUPPORTED_ERROR,
+  SECURITY_ERROR,
   UNKNOWN_ERROR,
 };
 
@@ -52,8 +53,9 @@ struct GetAssertionResponse {
   array<uint8> signature;
 
    // Only supported by CTAP devices, not by U2F devices.
-   // Equal to the `user.id` passed into create(), maximum 64 bytes.
-   array<uint8> user_handle;
+   // Equivalent of the `user.id` passed into create().
+   // Maximum 64 bytes.
+   array<uint8>? user_handle;
 };
 
 // Information about the relying party. These fields take arbitrary input.
@@ -91,6 +93,19 @@ struct PublicKeyCredentialUserEntity {
 struct PublicKeyCredentialParameters {
   PublicKeyCredentialType type;
   int32 algorithm_identifier;
+};
+
+// Parameters passed into calls to GetAssertion.
+struct PublicKeyCredentialRequestOptions {
+  // A blob passed from the the relying party server.
+  array<uint8> challenge;
+
+  mojo.common.mojom.TimeDelta adjusted_timeout;
+
+  // An ASCII serialization of an origin claimed by the relying party.
+  string? relying_party_id;
+
+  array<PublicKeyCredentialDescriptor> allow_credentials;
 };
 
 // Parameters passed into calls to MakeCredential.
@@ -140,7 +155,13 @@ enum AuthenticatorTransport {
 interface Authenticator {
   // Gets the credential info for a new public key credential created by an
   // authenticator for the given |MakePublicKeyCredentialOptions|
-  // [PublicKeyCredentialInfo] will only be set if status == SUCCESS.
+  // [MakeCredentialResponse] will only be set if status == SUCCESS.
   MakeCredential(MakePublicKeyCredentialOptions options)
       => (AuthenticatorStatus status, MakeCredentialResponse? credential);
+
+  // Uses an existing credential to produce an assertion for the given
+  // |PublicKeyCredentialRequestOptions|.
+  // |GetAssertionResponse| will only be set if status == SUCCESS.
+  GetAssertion(PublicKeyCredentialRequestOptions options)
+      => (AuthenticatorStatus status, GetAssertionResponse? credential);
 };

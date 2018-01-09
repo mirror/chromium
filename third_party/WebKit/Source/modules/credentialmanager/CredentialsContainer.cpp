@@ -19,8 +19,8 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/page/FrameTree.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
+#include "modules/credentialmanager/AuthenticatorAssertionResponse.h"
 #include "modules/credentialmanager/AuthenticatorAttestationResponse.h"
-#include "modules/credentialmanager/AuthenticatorResponse.h"
 #include "modules/credentialmanager/Credential.h"
 #include "modules/credentialmanager/CredentialCreationOptions.h"
 #include "modules/credentialmanager/CredentialManagerProxy.h"
@@ -31,6 +31,7 @@
 #include "modules/credentialmanager/MakePublicKeyCredentialOptions.h"
 #include "modules/credentialmanager/PasswordCredential.h"
 #include "modules/credentialmanager/PublicKeyCredential.h"
+#include "modules/credentialmanager/PublicKeyCredentialRequestOptions.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
 #include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
@@ -47,6 +48,9 @@ using ::webauth::mojom::blink::AuthenticatorStatus;
 using MojoMakePublicKeyCredentialOptions =
     ::webauth::mojom::blink::MakePublicKeyCredentialOptions;
 using ::webauth::mojom::blink::MakeCredentialResponsePtr;
+using MojoPublicKeyCredentialRequestOptions =
+    ::webauth::mojom::blink::PublicKeyCredentialRequestOptions;
+using ::webauth::mojom::blink::GetAssertionResponsePtr;
 
 enum class RequiredOriginType { kSecure, kSecureAndSameWithAncestors };
 
@@ -186,6 +190,10 @@ DOMException* CredentialManagerErrorToDOMException(
       return DOMException::Create(
           kNotSupportedError,
           "Parameters for this operation are not supported.");
+    case CredentialManagerError::SECURITY_ERROR:
+      return DOMException::Create(kSecurityError,
+                                  "The operation is insecure and "
+                                  "is not allowed.");
     case CredentialManagerError::UNKNOWN:
       return DOMException::Create(kNotReadableError,
                                   "An unknown error occurred while talking "
@@ -250,13 +258,54 @@ void OnMakePublicKeyCredentialComplete(
     DCHECK(!credential->attestation_object.IsEmpty());
     DOMArrayBuffer* client_data_buffer =
         VectorToDOMArrayBuffer(std::move(credential->info->client_data_json));
-    DOMArrayBuffer* attestation_buffer =
-        VectorToDOMArrayBuffer(std::move(credential->attestation_object));
     DOMArrayBuffer* raw_id =
         VectorToDOMArrayBuffer(std::move(credential->info->raw_id));
+    DOMArrayBuffer* attestation_buffer =
+        VectorToDOMArrayBuffer(std::move(credential->attestation_object));
     AuthenticatorAttestationResponse* authenticator_response =
         AuthenticatorAttestationResponse::Create(client_data_buffer,
                                                  attestation_buffer);
+    resolver->Resolve(PublicKeyCredential::Create(credential->info->id, raw_id,
+                                                  authenticator_response));
+  } else {
+    DCHECK(!credential);
+    resolver->Reject(CredentialManagerErrorToDOMException(
+        mojo::ConvertTo<CredentialManagerError>(status)));
+  }
+}
+
+void OnGetAssertionComplete(
+    std::unique_ptr<ScopedPromiseResolver> scoped_resolver,
+    AuthenticatorStatus status,
+    GetAssertionResponsePtr credential) {
+  auto resolver = scoped_resolver->Release();
+  const auto required_origin_type = RequiredOriginType::kSecure;
+
+  AssertSecurityRequirementsBeforeResponse(resolver, required_origin_type);
+  if (status == AuthenticatorStatus::SUCCESS) {
+    DCHECK(credential);
+    DCHECK(!credential->signature.IsEmpty());
+    DCHECK(!credential->authenticator_data.IsEmpty());
+    DOMArrayBuffer* client_data_buffer =
+        VectorToDOMArrayBuffer(std::move(credential->info->client_data_json));
+    DOMArrayBuffer* raw_id =
+        VectorToDOMArrayBuffer(std::move(credential->info->raw_id));
+
+    DOMArrayBuffer* authenticator_buffer =
+        VectorToDOMArrayBuffer(std::move(credential->authenticator_data));
+    DOMArrayBuffer* signature_buffer =
+        VectorToDOMArrayBuffer(std::move(credential->signature));
+    DOMArrayBuffer* user_handle;
+
+    if (credential->user_handle) {
+      user_handle = VectorToDOMArrayBuffer(std::move(*credential->user_handle));
+    } else {
+      user_handle = DOMArrayBuffer::Create(nullptr, 0);
+    }
+    AuthenticatorAssertionResponse* authenticator_response =
+        AuthenticatorAssertionResponse::Create(client_data_buffer,
+                                               authenticator_buffer,
+                                               signature_buffer, user_handle);
     resolver->Resolve(PublicKeyCredential::Create(credential->info->id, raw_id,
                                                   authenticator_response));
   } else {
@@ -286,6 +335,25 @@ ScriptPromise CredentialsContainer::get(
           : RequiredOriginType::kSecure;
   if (!CheckSecurityRequirementsBeforeRequest(resolver, required_origin_type))
     return promise;
+
+  if (options.hasPublicKey()) {
+    auto mojo_options =
+        MojoPublicKeyCredentialRequestOptions::From(options.publicKey());
+    if (mojo_options) {
+      auto* authenticator =
+          CredentialManagerProxy::From(script_state)->Authenticator();
+      authenticator->GetAssertion(
+          std::move(mojo_options),
+          WTF::Bind(
+              &OnGetAssertionComplete,
+              WTF::Passed(std::make_unique<ScopedPromiseResolver>(resolver))));
+    } else {
+      resolver->Reject(DOMException::Create(
+          kNotSupportedError,
+          "Required parameters missing in 'options.publicKey'."));
+    }
+    return promise;
+  }
 
   Vector<KURL> providers;
   if (options.hasFederated() && options.federated().hasProviders()) {
