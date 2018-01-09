@@ -22,6 +22,30 @@
       "revId": "f492b885d3153686f1c9403aa4505cfc557bb510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a100ee_c0a1d9ae",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-09T14:56:33Z",
+      "side": 0,
+      "message": "\u003e Can we remove some headers here?\n\nI will do that when I remove |kEnableHtmlBasedUsernameDetector| flag",
+      "parentUuid": "5f0bd839_55b0defe",
+      "range": {
+        "startLine": 1801,
+        "startChar": 6,
+        "endLine": 1801,
+        "endChar": 58
+      },
+      "revId": "f492b885d3153686f1c9403aa4505cfc557bb510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
