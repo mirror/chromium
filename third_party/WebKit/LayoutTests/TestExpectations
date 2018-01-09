@@ -1246,8 +1246,6 @@ crbug.com/492664 external/wpt/css/css-writing-modes/clip-rect-vrl-006.xht [ Fail
 crbug.com/492664 external/wpt/css/css-writing-modes/clip-rect-vrl-008.xht [ Failure ]
 crbug.com/492664 external/wpt/css/css-writing-modes/line-box-direction-vrl-009.xht [ Failure ]
 
-crbug.com/637255 [ Win10 ] media/video-transformed.html [ Pass Failure ]
-
 crbug.com/760367 http/tests/devtools/console/console-tainted-globals.js [ NeedsManualRebaseline Timeout ]
 crbug.com/760367 http/tests/devtools/runtime/runtime-callFunctionOn.js [ NeedsManualRebaseline Timeout ]
 
@@ -1317,8 +1315,6 @@ crbug.com/443615 [ Linux Win ] external/wpt/css/css-shapes/shape-outside/support
 
 crbug.com/381684 [ Mac Win ] fonts/family-fallback-gardiner.html [ Skip ]
 crbug.com/467635 fast/dom/HTMLImageElement/image-sizes-meta-viewport.html [ Skip ]
-
-crbug.com/636239 [ Win7 ] media/video-zoom-controls.html [ Failure ]
 
 # Printing Layout broken in these tests.
 crbug.com/377696 printing/setPrinting.html [ Skip ]
@@ -1638,9 +1634,7 @@ crbug.com/595483 [ Android ] fast/hidpi/clip-text-in-hidpi.html [ Failure Crash 
 
 crbug.com/591500 [ Win10 ] printing/webgl-repeated-printing.html [ Failure ]
 
-crbug.com/591500 [ Win10 ] printing/simultaneous-position-float-change.html [ Failure ]
 crbug.com/591500 [ Win10 ] printing/webgl-repeated-printing-preservedrawingbuffer.html [ Failure ]
-crbug.com/591500 [ Win10 ] virtual/threaded/printing/simultaneous-position-float-change.html [ Failure ]
 crbug.com/591500 [ Win10 ] virtual/threaded/printing/webgl-repeated-printing-preservedrawingbuffer.html [ Failure ]
 crbug.com/591500 [ Win10 ] virtual/threaded/printing/webgl-repeated-printing.html [ Failure ]
 crbug.com/591500 [ Win10 ] printing/quirks-percentage-height-body.html [ Failure ]
@@ -1653,19 +1647,7 @@ crbug.com/591500 [ Win10 ] virtual/threaded/printing/standards-percentage-height
 crbug.com/591500 [ Win10 ] virtual/threaded/printing/subframes-percentage-height.html [ Failure ]
 
 # TODO(chrishtr) uncomment ones marked crbug.com/591500 after fixing crbug.com/665259.
-crbug.com/591500 [ Win10 ] printing/fixed-positioned-headers-and-footers-absolute-covering-some-pages.html [ Failure ]
-crbug.com/591500 [ Win10 ] virtual/threaded/printing/fixed-positioned-headers-and-footers-absolute-covering-some-pages.html [ Failure ]
-crbug.com/591500 [ Win10 ] printing/fixed-positioned-but-static-headers-and-footers.html [ Skip ]
-crbug.com/591500 [ Win10 ] printing/absolute-position-headers-and-footers.html [ Skip ]
-crbug.com/591500 [ Win10 ] printing/fixed-positioned-headers-and-footers-inside-transform.html [ Skip ]
-crbug.com/591500 [ Win10 ] printing/fixed-positioned-headers-and-footers-larger-than-page.html [ Skip ]
-crbug.com/591500 [ Win10 ] printing/fixed-positioned-headers-and-footers.html [ Skip ]
-crbug.com/591500 [ Win10 ] virtual/threaded/printing/absolute-position-headers-and-footers.html [ Skip ]
-crbug.com/591500 [ Win10 ] virtual/threaded/printing/fixed-positioned-but-static-headers-and-footers.html [ Skip ]
 crbug.com/591500 [ Win10 ] virtual/threaded/printing/fixed-positioned-headers-and-footers-clipped.html [ Skip ]
-crbug.com/591500 [ Win10 ] virtual/threaded/printing/fixed-positioned-headers-and-footers-inside-transform.html [ Skip ]
-crbug.com/591500 [ Win10 ] virtual/threaded/printing/fixed-positioned-headers-and-footers-larger-than-page.html [ Skip ]
-crbug.com/591500 [ Win10 ] virtual/threaded/printing/fixed-positioned-headers-and-footers.html [ Skip ]
 crbug.com/591500 [ Win10 ] printing/iframe-print.html [ Failure ]
 crbug.com/591500 [ Win10 ] virtual/threaded/printing/iframe-print.html [ Failure ]
 crbug.com/591500 [ Win10 ] printing/list-item-with-empty-first-line.html [ Failure ]
@@ -1726,7 +1708,6 @@ crbug.com/772014 external/wpt/web-animations/animation-model/animation-types/add
 crbug.com/771722 external/wpt/web-animations/timing-model/animations/current-time.html [ Failure ]
 crbug.com/771722 crbug.com/771751 crbug.com/772060 external/wpt/web-animations/timing-model/animations/set-the-animation-start-time.html [ Failure ]
 
-crbug.com/611658 [ Win7 ] fast/forms/text/text-font-height-mismatch.html [ Failure ]
 crbug.com/611658 [ Win ] fast/text/emphasis-combined-text.html [ Failure ]
 
 crbug.com/611658 [ Win7 ] fast/writing-mode/english-lr-text.html [ Failure ]
@@ -2591,9 +2572,6 @@ crbug.com/610835 http/tests/security/XFrameOptions/x-frame-options-deny-multiple
 # Added 2016-12-12
 crbug.com/673539 [ Linux Win ] css3/filters/effect-contrast-hw.html [ Pass Failure ]
 
-# Added 2016-12-15
-crbug.com/674466 [ Win10 ] fast/forms/select/menulist-appearance-rtl.html [ Pass Failure ]
-
 
 crbug.com/765738 [ Linux Win Mac ] virtual/enable_wasm/http/tests/wasm/wasm_remote_postMessage_test.https.html [ Pass Timeout ]
 
@@ -3185,7 +3163,6 @@ crbug.com/755405 [ Android ] fast/css/nth-child-dynamic.html [ Failure ]
 crbug.com/755405 [ Android ] fast/events/reveal-link-when-focused.html [ Failure ]
 crbug.com/755405 [ Android ] virtual/mouseevent_fractional/fast/events/reveal-link-when-focused.html [ Failure ]
 crbug.com/755405 [ Android ] fast/layers/normal-flow-hit-test.html [ Failure ]
-crbug.com/755405 [ Android ] fast/layers/opacity-transforms.html [ Failure ]
 crbug.com/755405 [ Android ] fast/selectors/018.html [ Failure ]
 crbug.com/755405 [ Android ] fast/selectors/061.html [ Failure ]
 crbug.com/755405 [ Android ] images/imagemap-focus-ring-outline-color-not-inherited-from-map.html [ Failure ]
@@ -3384,8 +3361,6 @@ crbug.com/774437 virtual/spv175/paint/invalidation/selection/selection-partial-i
 crbug.com/774463 [ Win7 Debug ] fast/events/autoscroll-should-not-stop-on-keypress.html [ Failure Pass ]
 crbug.com/774463 [ Win7 Debug ] virtual/mouseevent_fractional/fast/events/autoscroll-should-not-stop-on-keypress.html [ Failure Pass ]
 crbug.com/774688 [ Mac ] fast/spatial-navigation/snav-container-white-space.html [ Pass Failure ]
-
-crbug.com/776201 [ Win7 Debug ] virtual/longtask-v2/http/tests/performance-timing/longtask-v2/longtask-v8compile.html [ Pass Failure ]
 
 # Sheriff failures 2017-10-23
 crbug.com/772411 http/tests/media/autoplay-crossorigin.html [ Timeout Failure Pass ]
