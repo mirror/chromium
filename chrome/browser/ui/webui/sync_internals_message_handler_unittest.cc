@@ -18,6 +18,7 @@
 #include "components/sync/driver/sync_service.h"
 #include "components/sync/js/js_test_util.h"
 #include "components/sync/user_events/fake_user_event_service.h"
+#include "content/browser/webrtc/webrtc_internals.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -107,7 +108,8 @@ static std::unique_ptr<KeyedService> BuildFakeUserEventService(
 
 class SyncInternalsMessageHandlerTest : public ::testing::Test {
  protected:
-  SyncInternalsMessageHandlerTest() {
+  SyncInternalsMessageHandlerTest()
+      : webrtc_internals_(content::WebRTCInternals::CreateSingletonInstance()) {
     site_instance_ = content::SiteInstance::Create(&profile_);
     web_contents_.reset(content::WebContents::Create(
         content::WebContents::CreateParams(&profile_, site_instance_.get())));
@@ -197,6 +199,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
+  std::unique_ptr<content::WebRTCInternals> webrtc_internals_;
   TestingProfile profile_;
   scoped_refptr<content::SiteInstance> site_instance_;
   std::unique_ptr<content::WebContents> web_contents_;
