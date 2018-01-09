@@ -13,6 +13,8 @@
 
 namespace base {
 
+const char kPackageRoot[] = "/pkg";
+
 Process::Process(ProcessHandle handle)
     : process_(handle), is_current_process_(false) {
   CHECK_NE(handle, zx_process_self());
@@ -221,6 +223,10 @@ int Process::GetPriority() const {
   DCHECK(IsValid());
   // No process priorities on Fuchsia.
   return 0;
+}
+
+bool IsPackageProcess() {
+  return PathExists(base::FilePath(kPackageRoot));
 }
 
 }  // namespace base
