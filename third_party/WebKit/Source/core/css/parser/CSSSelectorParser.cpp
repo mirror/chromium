@@ -170,9 +170,11 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeComplexSelector(
   while (CSSSelector::RelationType combinator = ConsumeCombinator(range)) {
     std::unique_ptr<CSSParserSelector> next_selector =
         ConsumeCompoundSelector(range);
-    if (!next_selector)
-      return combinator == CSSSelector::kDescendant ? std::move(selector)
-                                                    : nullptr;
+    if (!next_selector) {
+      if (combinator != CSSSelector::kDescendant)
+        return nullptr;
+      break;
+    }
     if (previous_compound_flags & kHasPseudoElementForRightmostCompound)
       return nullptr;
     CSSParserSelector* end = next_selector.get();
@@ -190,6 +192,7 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeComplexSelector(
     selector = std::move(next_selector);
   }
 
+  selector->UpdateLinkMatchType();
   return selector;
 }
 

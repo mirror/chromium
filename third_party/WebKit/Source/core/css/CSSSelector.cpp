@@ -930,9 +930,7 @@ bool CSSSelector::IsCompound() const {
   return true;
 }
 
-unsigned CSSSelector::ComputeLinkMatchType() const {
-  unsigned link_match_type = kMatchAll;
-
+void CSSSelector::UpdateLinkMatchType() {
   // Determine if this selector will match a link in visited, unvisited or any
   // state, or never.
   // :visited never matches other elements than the innermost link element.
@@ -947,16 +945,16 @@ unsigned CSSSelector::ComputeLinkMatchType() const {
              sub_selector; sub_selector = sub_selector->TagHistory()) {
           PseudoType sub_type = sub_selector->GetPseudoType();
           if (sub_type == kPseudoVisited)
-            link_match_type &= ~kMatchVisited;
+            link_match_type_ &= ~kMatchVisited;
           else if (sub_type == kPseudoLink)
-            link_match_type &= ~kMatchLink;
+            link_match_type_ &= ~kMatchLink;
         }
       } break;
       case kPseudoLink:
-        link_match_type &= ~kMatchVisited;
+        link_match_type_ &= ~kMatchVisited;
         break;
       case kPseudoVisited:
-        link_match_type &= ~kMatchLink;
+        link_match_type_ &= ~kMatchLink;
         break;
       default:
         // We don't support :link and :visited inside :-webkit-any.
@@ -966,11 +964,10 @@ unsigned CSSSelector::ComputeLinkMatchType() const {
     if (relation == kSubSelector)
       continue;
     if (relation != kDescendant && relation != kChild)
-      return link_match_type;
-    if (link_match_type != kMatchAll)
-      return link_match_type;
+      return;
+    if (link_match_type_ != kMatchAll)
+      return;
   }
-  return link_match_type;
 }
 
 void CSSSelector::SetNth(int a, int b) {

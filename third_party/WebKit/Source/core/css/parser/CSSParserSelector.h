@@ -82,6 +82,7 @@ class CORE_EXPORT CSSParserSelector {
                         CSSParserMode mode) const {
     selector_->UpdatePseudoType(value, context, has_arguments, mode);
   }
+  void UpdateLinkMatchType() { selector_->UpdateLinkMatchType(); }
   void UpdatePseudoPage(const AtomicString& value) {
     selector_->UpdatePseudoPage(value);
   }
