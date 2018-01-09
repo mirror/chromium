@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64e2b408_ecb5d867",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-09T13:08:43Z",
+      "side": 1,
+      "message": "Please add a comment to explain how these are different and why we need both.",
+      "range": {
+        "startLine": 19,
+        "startChar": 58,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "143105d03c985bc3526a077f7dbda8d3f28774ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e57147_66b37ca7",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-09T13:08:43Z",
+      "side": 1,
+      "message": "optional: These could also be packed into CSS vars. Especially for \u0027transition\u0027 that\u0027d remove some string fiddling.",
+      "range": {
+        "startLine": 574,
+        "startChar": 31,
+        "endLine": 574,
+        "endChar": 0
+      },
+      "revId": "143105d03c985bc3526a077f7dbda8d3f28774ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

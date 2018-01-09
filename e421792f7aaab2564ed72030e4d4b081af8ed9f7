@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89e99a89_d75fd0fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-09T13:08:43Z",
+      "side": 1,
+      "message": "Still open: Bug please",
+      "parentUuid": "670cbf05_37164ac8",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "e421792f7aaab2564ed72030e4d4b081af8ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "631c1dd2_a500203d",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "\u003e iframe_width_px gets ignored?\n\nThat\u0027s how I understood Tom\u0027s expectation.",
       "parentUuid": "631c1dd2_a500203d",
+      "range": {
+        "startLine": 182,
+        "startChar": 14,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "e421792f7aaab2564ed72030e4d4b081af8ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2f516f7_ac39f657",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-09T13:08:43Z",
+      "side": 1,
+      "message": "Okay, that seems extremely weird to me... can we maybe add a comment about this somewhere? To at least make clear that it\u0027s intentional and not just an oversight.",
+      "parentUuid": "560b4869_44d9f854",
       "range": {
         "startLine": 182,
         "startChar": 14,
