@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1606c93f_db046f50",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T19:21:15Z",
+      "side": 1,
+      "message": "I renamed this file so this broke the diff with the previous patchset... The only non trivial diff is this test.",
+      "revId": "43c55cef68689b648725f4724a334bfed4633f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
