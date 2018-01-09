@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6ca27f1_3bc38ea2",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:20:23Z",
+      "side": 1,
+      "message": "I think we can still use the scroll events, but we just need to adjust the offset by which we increase/decrease the scale to be relative to the current scale (rather than multiplying by a constant factor kScrollScaleChangeFactor).\n\nPlease take a look at how we handle tab scrubbing: https://cs.chromium.org/chromium/src/chrome/browser/ui/ash/tab_scrubber.cc?dr\u0026l\u003d314",
+      "range": {
+        "startLine": 688,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 62
+      },
+      "revId": "a27831d3ffe491f11f5517165705e72bba9fea3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7d912f_cb829915",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:20:23Z",
+      "side": 1,
+      "message": "You need to get UX approval for new strings as well as changes in the settings UI.",
+      "range": {
+        "startLine": 198,
+        "startChar": 6,
+        "endLine": 198,
+        "endChar": 80
+      },
+      "revId": "a27831d3ffe491f11f5517165705e72bba9fea3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
