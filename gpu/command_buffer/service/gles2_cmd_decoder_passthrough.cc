@@ -562,6 +562,20 @@ base::WeakPtr<GLES2Decoder> GLES2DecoderPassthroughImpl::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
+void APIENTRY
+GLES2DecoderPassthroughImpl::GLDebugCallback(GLenum source,
+                                             GLenum type,
+                                             GLuint id,
+                                             GLenum severity,
+                                             GLsizei length,
+                                             const GLchar* message,
+                                             GLvoid* user_param) {
+  GLES2DecoderPassthroughImpl* decoder =
+      static_cast<GLES2DecoderPassthroughImpl*>(user_param);
+  decoder->logger_.LogMessage(
+      __FILE__, __LINE__, " " + GLES2Util::GetStringEnum(id) + ": " + message);
+}
+
 gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
     const scoped_refptr<gl::GLSurface>& surface,
     const scoped_refptr<gl::GLContext>& context,
@@ -725,6 +739,14 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
       feature_info_->feature_flags().khr_debug) {
     InitializeGLDebugLogging();
+  } else if (feature_info_->feature_flags().is_angle) {
+    // Report ANGLE GL errors to the client (so they show up in the devtools
+    // console).
+    glEnable(GL_DEBUG_OUTPUT);
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    glDebugMessageControl(GL_DONT_CARE, GL_DEBUG_TYPE_ERROR, GL_DONT_CARE, 0,
+                          nullptr, GL_TRUE);
+    glDebugMessageCallback(&GLDebugCallback, this);
   }
 
   if (feature_info_->feature_flags().chromium_texture_filtering_hint &&

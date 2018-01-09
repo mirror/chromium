@@ -1684,6 +1684,8 @@ error::Error GLES2DecoderPassthroughImpl::HandleTraceBeginCHROMIUM(
     return error::kInvalidArguments;
   }
 
+  debug_marker_manager_.PushGroup(trace_name);
+
   return DoTraceBeginCHROMIUM(category_name.c_str(), trace_name.c_str());
 }
 

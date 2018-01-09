@@ -238,6 +238,10 @@ void FeatureInfo::InitializeBasicState(const base::CommandLine* command_line) {
       (command_line->GetSwitchValueASCII(switches::kUseGL) ==
        gl::kGLImplementationSwiftShaderName);
 
+  feature_flags_.is_angle =
+      (command_line->GetSwitchValueASCII(switches::kUseGL) ==
+       gl::kGLImplementationANGLEName);
+
   feature_flags_.chromium_raster_transport =
       command_line->HasSwitch(switches::kEnableOOPRasterization);
 

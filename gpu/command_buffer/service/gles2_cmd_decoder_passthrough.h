@@ -307,6 +307,14 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
   // Allow unittests to inspect internal state tracking
   friend class GLES2DecoderPassthroughTestBase;
 
+  static void APIENTRY GLDebugCallback(GLenum source,
+                                       GLenum type,
+                                       GLuint id,
+                                       GLenum severity,
+                                       GLsizei length,
+                                       const GLchar* message,
+                                       GLvoid* user_param);
+
   const char* GetCommandName(unsigned int command_id) const;
 
   void SetOptionalExtensionsRequestedForTesting(bool request_extensions);
