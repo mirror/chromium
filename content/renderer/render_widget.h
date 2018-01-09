@@ -411,7 +411,7 @@ class CONTENT_EXPORT RenderWidget
   gfx::Point ConvertWindowPointToViewport(const gfx::Point& point);
 
   uint32_t GetContentSourceId();
-  void IncrementContentSourceId();
+  void DidNavigate();
 
   // MainThreadEventQueueClient overrides.
 
