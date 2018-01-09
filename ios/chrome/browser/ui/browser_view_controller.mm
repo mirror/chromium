@@ -191,6 +191,7 @@
 #import "ios/chrome/browser/ui/tabs/requirements/tab_strip_presentation.h"
 #import "ios/chrome/browser/ui/tabs/tab_strip_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.h"
+#import "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_coordinator.h"
 #include "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater.h"
 #import "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h"
@@ -588,6 +589,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   // Coordinator for the primary toolbar, displayed on top.
   PrimaryToolbarCoordinator* _topToolbarCoordinator;
 
+  // Coordinator for the secondary toolbar, displayed on bottom.
+  SecondaryToolbarCoordinator* _bottomToolbarCoordinator;
+
   // The toolbar UI updater for the toolbar managed by |_toolbarCoordinator|.
   LegacyToolbarUIUpdater* _toolbarUIUpdater;
 
@@ -689,6 +693,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 // Primary toolbar.
 @property(nonatomic, readonly) id<PrimaryToolbarCoordinator>
     primaryToolbarCoordinator;
+// Secondary toolbar.
+@property(nonatomic, readonly)
+    SecondaryToolbarCoordinator* secondaryToolbarCoordinator;
 // TODO(crbug.com/788705): Removes this property and associated calls.
 // Returns the LegacyToolbarCoordinator. This property is here to separate
 // methods which will be removed during cleanup to other methods. Uses this
@@ -766,7 +773,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 // Returns whether |tab| is scrolled to the top.
 - (BOOL)isTabScrolledToTop:(Tab*)tab;
 // Returns the footer view if one exists (e.g. the voice search bar).
-- (UIView*)footerView;
+- (NSArray*)footerViews;
 // Returns the header height needed for |tab|.
 - (CGFloat)headerHeightForTab:(Tab*)tab;
 // Sets the frame for the headers.
@@ -1305,6 +1312,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   } else {
     return _toolbarCoordinator;
   }
+}
+
+- (SecondaryToolbarCoordinator*)secondaryToolbarCoordinator {
+  return _bottomToolbarCoordinator;
 }
 
 - (LegacyToolbarCoordinator*)legacyToolbarCoordinator {
@@ -1936,6 +1947,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     _topToolbarCoordinator.URLLoader = self;
     _topToolbarCoordinator.webStateList = [_model webStateList];
     [_topToolbarCoordinator start];
+    _bottomToolbarCoordinator = [[SecondaryToolbarCoordinator alloc]
+        initWithBaseViewController:nil
+                      browserState:_browserState];
+    _bottomToolbarCoordinator.dispatcher = self.dispatcher;
+    [_bottomToolbarCoordinator start];
   } else {
     _toolbarCoordinator = [[LegacyToolbarCoordinator alloc]
             initWithBaseViewController:self
@@ -2005,6 +2021,16 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [self.primaryToolbarCoordinator.viewController.view.trailingAnchor
         constraintEqualToAnchor:[self view].trailingAnchor],
   ]];
+  if (self.secondaryToolbarCoordinator) {
+    [NSLayoutConstraint activateConstraints:@[
+      [self.secondaryToolbarCoordinator.viewController.view.leadingAnchor
+          constraintEqualToAnchor:[self view].leadingAnchor],
+      [self.secondaryToolbarCoordinator.viewController.view.trailingAnchor
+          constraintEqualToAnchor:[self view].trailingAnchor],
+      [self.secondaryToolbarCoordinator.viewController.view.bottomAnchor
+          constraintEqualToAnchor:[self view].bottomAnchor],
+    ]];
+  }
   [[self view] layoutIfNeeded];
 }
 
@@ -2103,8 +2129,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   // Position the toolbar next, either at the top of the browser view or
   // directly under the tabstrip.
-  if (initialLayout)
+  if (initialLayout) {
     [self addChildViewController:self.primaryToolbarCoordinator.viewController];
+    if (self.secondaryToolbarCoordinator)
+      [self addChildViewController:self.secondaryToolbarCoordinator
+                                       .viewController];
+  }
   if (!IsSafeAreaCompatibleToolbarEnabled()) {
     CGFloat minY = self.headerOffset;
     if (self.tabStripView) {
@@ -2127,15 +2157,25 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [[self view]
         insertSubview:self.primaryToolbarCoordinator.viewController.view
          aboveSubview:infoBarContainerView];
+    if (self.secondaryToolbarCoordinator) {
+      [[self view]
+          insertSubview:self.secondaryToolbarCoordinator.viewController.view
+           aboveSubview:infoBarContainerView];
+    }
     AddNamedGuide(kOmniboxGuide, self.view);
     AddNamedGuide(kBackButtonGuide, self.view);
     AddNamedGuide(kForwardButtonGuide, self.view);
     AddNamedGuide(kToolsMenuGuide, self.view);
     AddNamedGuide(kTabSwitcherGuide, self.view);
   }
-  if (initialLayout)
+  if (initialLayout) {
     [self.primaryToolbarCoordinator.viewController
         didMoveToParentViewController:self];
+    if (self.secondaryToolbarCoordinator) {
+      [self.secondaryToolbarCoordinator.viewController
+          didMoveToParentViewController:self];
+    }
+  }
 
   // Adjust the content area to be under the toolbar, for fullscreen or below
   // the toolbar is not fullscreen.
@@ -2279,8 +2319,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   return CGPointEqualToPoint(scrollOffset, CGPointZero);
 }
 
-- (UIView*)footerView {
-  return _voiceSearchBar;
+- (NSArray*)footerViews {
+  NSMutableArray* footers = [NSMutableArray array];
+  if (_voiceSearchBar)
+    [footers addObject:_voiceSearchBar];
+  if (self.secondaryToolbarCoordinator)
+    [footers addObject:self.secondaryToolbarCoordinator.viewController.view];
+  return footers;
 }
 
 - (CGFloat)headerHeightForTab:(Tab*)tab {
@@ -3536,7 +3581,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
   UIView* footer = nil;
   // Only animate the voice search bar if the tab is a voice search results tab.
   if ([_model currentTab].isVoiceSearchResultsTab) {
-    footer = [self footerView];
+    // The adaptive toolbar is using the new fullscreen.
+    DCHECK(!base::FeatureList::IsEnabled(kAdaptiveToolbar));
+
+    footer = [self footerViews].firstObject;
     footerFrame = footer.frame;
     footerFrame.origin.y = [self footerYForHeaderOffset:headerOffset];
   }
@@ -3577,7 +3625,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
   UIView* footer = nil;
   // Only animate the voice search bar if the tab is a voice search results tab.
   if ([_model currentTab].isVoiceSearchResultsTab) {
-    footer = [self footerView];
+    // The adaptive toolbar is using the new fullscreen.
+    DCHECK(!base::FeatureList::IsEnabled(kAdaptiveToolbar));
+
+    footer = [self footerViews].firstObject;
     footerFrame = footer.frame;
     footerFrame.origin.y = [self footerYForHeaderOffset:headerOffset];
   }
@@ -3610,7 +3661,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // Returns the y coordinate for the footer's frame when animating the footer
 // in/out of fullscreen.
 - (CGFloat)footerYForHeaderOffset:(CGFloat)headerOffset {
-  UIView* footer = [self footerView];
+  // The adaptive toolbar is using the new fullscreen.
+  DCHECK(!base::FeatureList::IsEnabled(kAdaptiveToolbar));
+
+  UIView* footer = [self footerViews].firstObject;
   CGFloat headerHeight = [self headerHeight];
   if (!footer || headerHeight == 0)
     return 0.0;
@@ -3909,15 +3963,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // Translates the footer view up and down according to |progress|, where a
 // progress of 1.0 fully shows the footer and a progress of 0.0 fully hides it.
 - (void)updateFootersForFullscreenProgress:(CGFloat)progress {
-  if (![_model currentTab].isVoiceSearchResultsTab)
-    return;
-
-  UIView* footerView = [self footerView];
-  DCHECK(footerView);
-  CGRect frame = footerView.frame;
-  frame.origin.y = CGRectGetMaxY(footerView.superview.bounds) -
-                   progress * CGRectGetHeight(frame);
-  footerView.frame = frame;
+  for (UIView* footerView in [self footerViews]) {
+    CGRect frame = footerView.frame;
+    frame.origin.y = CGRectGetMaxY(footerView.superview.bounds) -
+                     progress * CGRectGetHeight(frame);
+    footerView.frame = frame;
+  }
 }
 
 // Updates the top padding of the web view proxy.  This either resets the frame
