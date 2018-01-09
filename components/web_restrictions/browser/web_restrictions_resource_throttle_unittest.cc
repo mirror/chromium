@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "components/web_restrictions/browser/web_restrictions_resource_throttle.h"
 #include "base/bind.h"
 #include "base/run_loop.h"
 #include "components/web_restrictions/browser/mock_web_restrictions_client.h"
 #include "components/web_restrictions/browser/web_restrictions_client.h"
-#include "components/web_restrictions/browser/web_restrictions_resource_throttle.h"
-#include "content/public/browser/resource_throttle.h"
+#include "content/public/network/resource_throttle.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"

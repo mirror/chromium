@@ -5,7 +5,7 @@
 #ifndef CHROME_BROWSER_OFFLINE_PAGES_DOWNLOADS_RESOURCE_THROTTLE_H_
 #define CHROME_BROWSER_OFFLINE_PAGES_DOWNLOADS_RESOURCE_THROTTLE_H_
 
-#include "content/public/browser/resource_throttle.h"
+#include "content/public/network/resource_throttle.h"
 #include "net/url_request/url_request.h"
 
 namespace offline_pages {

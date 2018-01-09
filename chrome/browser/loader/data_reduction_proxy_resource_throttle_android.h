@@ -12,8 +12,8 @@
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
-#include "content/public/browser/resource_throttle.h"
 #include "content/public/common/resource_type.h"
+#include "content/public/network/resource_throttle.h"
 
 namespace content {
 class ResourceContext;

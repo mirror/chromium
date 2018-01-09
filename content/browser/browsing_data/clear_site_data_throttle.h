@@ -15,8 +15,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "content/public/browser/resource_request_info.h"
-#include "content/public/browser/resource_throttle.h"
 #include "content/public/common/console_message_level.h"
+#include "content/public/network/resource_throttle.h"
 #include "net/http/http_response_headers.h"
 #include "url/gurl.h"
 
