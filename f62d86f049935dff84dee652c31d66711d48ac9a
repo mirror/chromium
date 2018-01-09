@@ -52,6 +52,24 @@
       "revId": "f62d86f049935dff84dee652c31d66711d48ac9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0b15b4_2a65e020",
+        "filename": "content/browser/child_process_launcher_helper_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2018-01-09T18:48:37Z",
+      "side": 1,
+      "message": "I agree. Let\u0027s remove these cases from the switch, because it\u0027s confusing, but I\u0027d feel much more comfortable with a hard CHECK(false). \n\nTom it looks like PDF_COMPOSITOR and PROFILING aren\u0027t unsandboxed, is that correct?",
+      "parentUuid": "7fcb69a4_9c08825f",
+      "revId": "f62d86f049935dff84dee652c31d66711d48ac9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
