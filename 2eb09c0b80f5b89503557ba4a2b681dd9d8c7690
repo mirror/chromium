@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6473df1d_88418987",
+        "filename": "chrome/tools/build/win/makecab.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-09T01:16:28Z",
+      "side": 1,
+      "message": "Nit: maybe just \"Parses sys.argv\" ?",
+      "revId": "2eb09c0b80f5b89503557ba4a2b681dd9d8c7690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7428938b_838d8108",
+        "filename": "chrome/tools/build/win/makecab_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-09T01:16:28Z",
+      "side": 1,
+      "message": "Nit: I\u0027d use `from io` instead. StringIO doesn\u0027t exist as a module in python3.",
+      "revId": "2eb09c0b80f5b89503557ba4a2b681dd9d8c7690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
