@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ffd521_47306dbd",
+        "filename": "ui/gfx/x/x11_types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-09T04:11:41Z",
+      "side": 1,
+      "message": "Drive-by: I\u0027d love to see a digit separator in these binary literals and would argue that it should be accepted alongside binary literals.",
+      "range": {
+        "startLine": 162,
+        "startChar": 29,
+        "endLine": 162,
+        "endChar": 35
+      },
+      "revId": "666c43293058509597082059e3fd33ad43eaa84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
