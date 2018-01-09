@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "989ff5a4_a05884ce",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-09T21:56:28Z",
+      "side": 1,
+      "message": "thoughts on using an activity-alias like above targeting org.chromium.chrome.browser.document.ChromeLauncherActivity?  The alias could be default disabled and then the intent dispatching logic could go into LaunchIntentDispatcher?  I\u0027m wondering if we can centralize it (and again, whether it is worth it).  Just my initial quick thought.",
+      "range": {
+        "startLine": 267,
+        "startChar": 9,
+        "endLine": 267,
+        "endChar": 17
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
