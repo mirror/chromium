@@ -70,16 +70,21 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
 
   bool v2_process = false;
   switch (sandbox_type) {
+    case service_manager::SANDBOX_TYPE_NO_SANDBOX:
+      break;
     case service_manager::SANDBOX_TYPE_CDM:
     case service_manager::SANDBOX_TYPE_GPU:
     case service_manager::SANDBOX_TYPE_PPAPI:
     case service_manager::SANDBOX_TYPE_RENDERER:
     case service_manager::SANDBOX_TYPE_UTILITY:
     case service_manager::SANDBOX_TYPE_NACL_LOADER:
+    case service_manager::SANDBOX_TYPE_NETWORK:
+    case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
+    case service_manager::SANDBOX_TYPE_PROFILING:
       v2_process = true;
       break;
     default:
-      break;
+      NOTREACHED();
   }
 
   bool use_v2 =
@@ -107,6 +112,9 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
         profile += service_manager::kSeatbeltPolicyString_renderer_v2;
         break;
       case service_manager::SANDBOX_TYPE_UTILITY:
+      case service_manager::SANDBOX_TYPE_NETWORK:
+      case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
+      case service_manager::SANDBOX_TYPE_PROFILING:
         profile += service_manager::kSeatbeltPolicyString_utility;
         break;
       default:
@@ -131,6 +139,9 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
         SetupCommonSandboxParameters(seatbelt_exec_client_.get());
         break;
       case service_manager::SANDBOX_TYPE_UTILITY:
+      case service_manager::SANDBOX_TYPE_NETWORK:
+      case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
+      case service_manager::SANDBOX_TYPE_PROFILING:
         SetupUtilitySandboxParameters(seatbelt_exec_client_.get(),
                                       *command_line_.get());
         break;
