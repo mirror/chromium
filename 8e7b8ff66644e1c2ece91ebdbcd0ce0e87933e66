@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2ec886f_7cf4a230",
+        "filename": "base/metrics/sparse_histogram_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T01:48:40Z",
+      "side": 1,
+      "message": "This is to gain access to operator\"\"s used in the following two lines.\n\nInitially, I wrote\nusing std::operator\"\"s;\n\nbut it generated a compilation warning (which is turned into a compilation error) by Visual Studio.\n\nAccording to http://en.cppreference.com/w/cpp/string/basic_string/operator%22%22s,\naccess to these operators can be gained with using namespace std::literals, using namespace std::string_literals, and using namespace std::literals::string_literals.\n\nI don\u0027t think this using directive is problematic. It is well enclosed within a short function. It doesn\u0027t leak any symbol into the enclosing namespace. And it seems the recommended way of gaining access to these symbols.",
+      "parentUuid": "22e1c01e_6c2f4572",
+      "range": {
+        "startLine": 211,
+        "startChar": 39,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4026d9d7_05ffdefe",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17e5d02_4b2fbd1f",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T01:48:40Z",
+      "side": 1,
+      "message": "We can, but it might introduce a pessimization. Since unordered containers don\u0027t provide random access iterators, we\u0027d lose the memory preallocation if we remove out.reserve().\n\nUsed vector::assign instead. I\u0027m assuming (hoping) that vector::assign is smart enough to reuse the memory preallocated by vector::reserve.",
+      "parentUuid": "4026d9d7_05ffdefe",
+      "range": {
+        "startLine": 182,
+        "startChar": 53,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a1bec9d8_b3e5a39a",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T01:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c7d24f_45838a3e",
+      "range": {
+        "startLine": 261,
+        "startChar": 3,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4094de84_8d95e78b",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3ed3cc_ba59046f",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T01:48:40Z",
+      "side": 1,
+      "message": "Now that the condition fits on one line, it\u0027s not that necessary,",
+      "parentUuid": "4094de84_8d95e78b",
+      "range": {
+        "startLine": 369,
+        "startChar": 66,
+        "endLine": 369,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b9e016a1_cf1449f2",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T01:48:40Z",
+      "side": 1,
+      "message": "Yes, ElementsAre() (without any argument) acts as SizeIs(0) or IsEmpty().\n\nHere, I used ElementsAre() for consistency with the other lines in this test case. I could also have used SizeIs(0) or IsEmpty().",
+      "parentUuid": "aa043cd8_da46bc18",
+      "range": {
+        "startLine": 196,
+        "startChar": 75,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d43c2439_f02afde6",
         "filename": "base/metrics/statistics_recorder_unittest.cc",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61eb650_1fa1ef49",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T01:48:40Z",
+      "side": 1,
+      "message": "If the test fails, EXPECT_THAT(..., SizeIs(n)) and EXPECT_THAT(..., IsEmpty()) provide a better error message. In particular, they print the elements of the collection.",
+      "parentUuid": "d43c2439_f02afde6",
+      "range": {
+        "startLine": 431,
+        "startChar": 34,
+        "endLine": 431,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
