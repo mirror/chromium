@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4b0311e2_f488eea0",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T17:44:21Z",
+      "side": 1,
+      "message": "This is fine.  FWIW, though, \"arrow functions\" are highly googleable :)",
+      "parentUuid": "42cc3210_d096f160",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccc98bc9_f3310462",
         "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
         "patchSetId": 5

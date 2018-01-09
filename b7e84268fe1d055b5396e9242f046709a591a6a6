@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "914123f1_97b22155",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T17:44:21Z",
+      "side": 1,
+      "message": "Link bug.",
+      "revId": "b7e84268fe1d055b5396e9242f046709a591a6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
