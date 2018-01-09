@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90fa0916_49b16762",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-09T13:30:32Z",
+      "side": 1,
+      "message": "presented -\u003e displayed. I\u0027d like to avoid using \"presented\" loosely when it has a specific technical meaning that can matter in this context.",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "903039107ae7a18f8e4071e958acd8291065e30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fbb3a8_01bdfe74",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-09T13:30:32Z",
+      "side": 1,
+      "message": "Optional: I\u0027m not convinced of the utility of nullability annotations in code that isn\u0027t going to interoperate with Swift. I don\u0027t think the warnings that the static analyzer can generate are comprehensive enough; the annotation feels like it should be as strict as a c++ const specifier, but it really isn\u0027t. But, there\u0027s no team style consensus on this.",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "903039107ae7a18f8e4071e958acd8291065e30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981c8df3_28ceaeb0",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-09T13:30:32Z",
+      "side": 1,
+      "message": "-willMoveToSuperview: is a good place to set up a view\u0027s view hierarchy without depending on the view\u0027s owner to call a method.",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "903039107ae7a18f8e4071e958acd8291065e30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
