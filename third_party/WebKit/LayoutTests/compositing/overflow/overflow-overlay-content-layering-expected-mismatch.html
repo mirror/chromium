@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<style>
+  /**
+   * This is the scrollable area. In the test page this will become a stacking context,
+   * which disallows the content from rendering on top of the scroll bar.
+   */
+  .scroller {
+    width: 300px;
+    height: 300px;
+    overflow: overlay;
+  }
+
+  /**
+   * This element is just to stretch out the scrollable area to get a scroll bar.
+   */
+  .content {
+    width: 200px;
+    height: 1000px;
+    background: silver;
+    position: relative;
+  }
+
+  /**
+   * This line will render on top of the scroll bar in this reference page, but underneath the
+   * scroll bar in the test page.
+   */
+  .line {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 300px;
+    height: 40px;
+    background: red;
+  }
+
+  .scroller::-webkit-scrollbar {
+    width: 60px;
+    background: rgba(0, 255, 0, 0.5);
+  }
+
+  .scroller::-webkit-scrollbar-thumb {
+    background: rgb(0, 255, 0, 1);
+  }
+</style>
+<div class="scroller">
+  <div class="content">
+    <div class="line">
+    </div>
+  </div>
+</div>
