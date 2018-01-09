@@ -551,11 +551,14 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @param {boolean} hasSourceURL
    * @param {boolean} hasSyntaxError
    * @param {number} length
-   * @return {!SDK.Script}
    */
   _parsedScriptSource(
       scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
       executionContextAuxData, isLiveEdit, sourceMapURL, hasSourceURL, hasSyntaxError, length) {
+    // if (executionContextAuxData && ('isMainThreadWorklet' in executionContextAuxData))  ???
+    if (this._runtimeModel.executionContext(executionContextId).name.includes('PaintWorklet'))
+      return;
+
     var isContentScript = false;
     if (executionContextAuxData && ('isDefault' in executionContextAuxData))
       isContentScript = !executionContextAuxData['isDefault'];
@@ -593,7 +596,6 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
       this._discardableScripts.push(script);
       this._collectDiscardedScripts();
     }
-    return script;
   }
 
   /**

@@ -137,11 +137,18 @@ void MainThreadDebugger::ContextCreated(ScriptState* script_state,
                                         LocalFrame* frame,
                                         const SecurityOrigin* origin) {
   DCHECK(IsMainThread());
+  const ExecutionContext* execution_context =
+      ExecutionContext::From(script_state);
   v8::HandleScope handles(script_state->GetIsolate());
   DOMWrapperWorld& world = script_state->World();
   StringBuilder aux_data_builder;
   aux_data_builder.Append("{\"isDefault\":");
   aux_data_builder.Append(world.IsMainWorld() ? "true" : "false");
+  aux_data_builder.Append(",\"isMainThreadWorklet\":\"");
+  aux_data_builder.Append(
+      execution_context && execution_context->IsMainThreadWorkletGlobalScope()
+          ? "true"
+          : "false");
   aux_data_builder.Append(",\"frameId\":\"");
   aux_data_builder.Append(IdentifiersFactory::FrameId(frame));
   aux_data_builder.Append("\"}");
@@ -155,8 +162,7 @@ void MainThreadDebugger::ContextCreated(ScriptState* script_state,
   context_info.origin = ToV8InspectorStringView(origin_string);
   context_info.auxData = ToV8InspectorStringView(aux_data);
   context_info.hasMemoryOnConsole =
-      ExecutionContext::From(script_state) &&
-      ExecutionContext::From(script_state)->IsDocument();
+      execution_context && execution_context->IsDocument();
   GetV8Inspector()->contextCreated(context_info);
 }
 
