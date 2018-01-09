@@ -270,7 +270,8 @@ NSURLSession* DownloadTaskImpl::CreateSession(NSString* identifier) {
 
         error_code_ = GetNetErrorCodeFromNSError(error);
         percent_complete_ = GetTaskPercentComplete(task);
-        total_bytes_ = task.countOfBytesExpectedToReceive;
+        if (task.countOfBytesExpectedToReceive)  // can be nil if offline.
+          total_bytes_ = task.countOfBytesExpectedToReceive;
         if (task.response.MIMEType) {
           mime_type_ = base::SysNSStringToUTF8(task.response.MIMEType);
         }
