@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e37839a_b607abf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-09T02:04:48Z",
+      "side": 1,
+      "message": "Is this the right bug number? 796539?",
+      "revId": "c36b4ae605fa4d50166203f1528fc7674982f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ca3440_9be5b84a",
+        "filename": "chrome/browser/printing/print_job_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-09T02:04:48Z",
+      "side": 1,
+      "message": "Is this really necessary? Since |lock_| is for protecting |queued_queries_|, once it has been swapped, aren\u0027t we done? How does acquiring the lock for the duration of the method help?",
+      "revId": "c36b4ae605fa4d50166203f1528fc7674982f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599e9f14_8002ab79",
+        "filename": "chrome/browser/printing/print_job_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-09T02:04:48Z",
+      "side": 1,
+      "message": "const method, assuming we keep it.",
+      "revId": "c36b4ae605fa4d50166203f1528fc7674982f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34be0810_5de96424",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-09T02:04:48Z",
+      "side": 1,
+      "message": "Looking at the sample crashes, they are not in shut down. Do we really need this?",
+      "revId": "c36b4ae605fa4d50166203f1528fc7674982f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4e4547_1a0ea7c8",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-09T02:04:48Z",
+      "side": 1,
+      "message": "This can\u0027t happen as is.",
+      "range": {
+        "startLine": 198,
+        "startChar": 6,
+        "endLine": 198,
+        "endChar": 24
+      },
+      "revId": "c36b4ae605fa4d50166203f1528fc7674982f58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
