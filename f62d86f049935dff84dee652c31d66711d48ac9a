@@ -16,6 +16,24 @@
       "revId": "f62d86f049935dff84dee652c31d66711d48ac9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2554a224_557cad12",
+        "filename": "content/browser/child_process_launcher_helper_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-09T17:51:39Z",
+      "side": 1,
+      "message": "The thing we must avoid is having someone change IsSandboxedSandboxType() down the road without updating this code. So, the alternative would be to hard CHECK() (not dcheck) for NETWORK/default case.",
+      "parentUuid": "333d748e_5522de8e",
+      "revId": "f62d86f049935dff84dee652c31d66711d48ac9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
