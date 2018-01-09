@@ -6,6 +6,7 @@
 #define ASH_SYSTEM_WEB_NOTIFICATION_LOGIN_STATE_NOTIFICATION_BLOCKER_H_
 
 #include "ash/ash_export.h"
+#include "ash/login_status.h"
 #include "ash/session/session_observer.h"
 #include "base/macros.h"
 #include "ui/message_center/notification_blocker.h"
@@ -33,6 +34,7 @@ class ASH_EXPORT LoginStateNotificationBlocker
 
   // SessionObserver overrides:
   void OnSessionStateChanged(session_manager::SessionState state) override;
+  void OnLoginStatusChanged(LoginStatus state) override;
   void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
 
   void CheckStateAndNotifyIfChanged();

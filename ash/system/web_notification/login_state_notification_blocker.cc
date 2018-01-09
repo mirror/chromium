@@ -17,6 +17,11 @@ namespace {
 
 // Returns true when screen is not locked.
 bool CalculateShouldShowNotification() {
+  if (Shell::Get()->session_controller()->login_status() ==
+      LoginStatus::ARC_KIOSK_APP) {
+    return false;
+  }
+
   return !Shell::Get()->session_controller()->IsScreenLocked();
 }
 
@@ -25,6 +30,7 @@ bool CalculateShouldShowNotification() {
 bool CalculateShouldShowPopup() {
   SessionController* const session_controller =
       Shell::Get()->session_controller();
+
   if (session_controller->GetSessionState() != SessionState::ACTIVE)
     return false;
 
@@ -55,6 +61,12 @@ bool LoginStateNotificationBlocker::ShouldShowNotification(
 
 bool LoginStateNotificationBlocker::ShouldShowNotificationAsPopup(
     const message_center::Notification& notification) const {
+  // Arc kiosk state overrides ShouldAlwaysShowPopup().
+  if (Shell::Get()->session_controller()->login_status() ==
+      LoginStatus::ARC_KIOSK_APP) {
+    return false;
+  }
+
   if (ash::system_notifier::ShouldAlwaysShowPopups(notification.notifier_id()))
     return true;
 
@@ -62,6 +74,10 @@ bool LoginStateNotificationBlocker::ShouldShowNotificationAsPopup(
 }
 
 void LoginStateNotificationBlocker::OnSessionStateChanged(SessionState state) {
+  CheckStateAndNotifyIfChanged();
+}
+
+void LoginStateNotificationBlocker::OnLoginStatusChanged(LoginStatus state) {
   CheckStateAndNotifyIfChanged();
 }
 
