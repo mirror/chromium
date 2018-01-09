@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "697a5321_40680594",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-09T18:42:57Z",
+      "side": 1,
+      "message": "This is a different \u0027delta\u0027. This one is the coordinate offset between the root view and the target view.",
+      "parentUuid": "3600543a_01074d5a",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "406fc0b0_401d9818",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 5
