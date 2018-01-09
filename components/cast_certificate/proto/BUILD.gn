@@ -18,20 +18,3 @@ proto_library("unittest_proto") {
     "test_suite.proto",
   ]
 }
-
-if (is_android) {
-  proto_java_library("proto_java") {
-    proto_path = "//components/cast_certificate/proto"
-
-    sources = [
-      "revocation.proto",
-    ]
-  }
-  proto_java_library("unittest_proto_java") {
-    proto_path = "//components/cast_certificate/proto"
-
-    sources = [
-      "test_suite.proto",
-    ]
-  }
-}
