@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fbabfb3_5f666dc6",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T22:58:30Z",
+      "side": 1,
+      "message": "nit: Why do either of these variables need to be passed to RequestProcessDump() method? Can that method directly access/generate these?",
+      "range": {
+        "startLine": 353,
+        "startChar": 23,
+        "endLine": 353,
+        "endChar": 44
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2008ed5f_131ab04b",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T22:58:30Z",
+      "side": 1,
+      "message": "Is it costly to obtain a memory dump?",
+      "range": {
+        "startLine": 488,
+        "startChar": 40,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee87f532_03571810",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T22:58:30Z",
+      "side": 1,
+      "message": "Add a disclaimer about OOPIF :)",
+      "range": {
+        "startLine": 120,
+        "startChar": 56,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
