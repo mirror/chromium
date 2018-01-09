@@ -303,7 +303,7 @@ TEST_F(PageInfoBubbleViewTest, SetPermissionInfoWithUsbDevice) {
   const int kLabelIndex = 1;
   views::Label* label =
       static_cast<views::Label*>(object_view->child_at(kLabelIndex));
-  EXPECT_EQ(base::ASCIIToUTF16("Gizmo"), label->text());
+  EXPECT_EQ(base::ASCIIToUTF16("USB device: Gizmo"), label->text());
 
   const int kButtonIndex = 2;
   views::Button* button =
