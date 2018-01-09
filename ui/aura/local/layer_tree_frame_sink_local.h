@@ -56,6 +56,8 @@ class LayerTreeFrameSinkLocal : public cc::LayerTreeFrameSink,
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
 
   // viz::mojom::CompositorFrameSinkClient:
+  void AddRenderFrameMetadataObserver(
+      viz::mojom::RenderFrameMetadataObserverPtr observer) override;
   void DidReceiveCompositorFrameAck(
       const std::vector<viz::ReturnedResource>& resources) override;
   void DidPresentCompositorFrame(uint32_t presentation_token,

@@ -178,6 +178,9 @@ void TestLayerTreeFrameSink::DidNotProduceFrame(const BeginFrameAck& ack) {
   support_->DidNotProduceFrame(ack);
 }
 
+void TestLayerTreeFrameSink::AddRenderFrameMetadataObserver(
+    mojom::RenderFrameMetadataObserverPtr observer) {}
+
 void TestLayerTreeFrameSink::DidReceiveCompositorFrameAck(
     const std::vector<ReturnedResource>& resources) {
   ReclaimResources(resources);

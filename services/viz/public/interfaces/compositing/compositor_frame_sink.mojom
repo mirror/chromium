@@ -8,6 +8,7 @@ import "mojo/common/time.mojom";
 import "services/viz/public/interfaces/compositing/begin_frame_args.mojom";
 import "services/viz/public/interfaces/compositing/compositor_frame.mojom";
 import "services/viz/public/interfaces/compositing/local_surface_id.mojom";
+import "services/viz/public/interfaces/compositing/render_frame_metadata.mojom";
 import "services/viz/public/interfaces/compositing/returned_resource.mojom";
 import "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
@@ -47,6 +48,8 @@ interface CompositorFrameSink {
 };
 
 interface CompositorFrameSinkClient {
+  AddRenderFrameMetadataObserver(RenderFrameMetadataObserver observer);
+
   // Notification that the previous CompositorFrame given to
   // SubmitCompositorFrame() has been processed and that another frame
   // can be submitted. This provides backpressure from the display compositor
@@ -77,4 +80,8 @@ interface CompositorFrameSinkClient {
 
   // Returns resources sent to SubmitCompositorFrame to be reused or freed.
   ReclaimResources(array<ReturnedResource> resources);
+};
+
+interface RenderFrameMetadataObserver {
+  OnCompositorFrameSubmission(RenderFrameMetadata metadata);
 };

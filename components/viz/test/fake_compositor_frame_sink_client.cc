@@ -9,6 +9,9 @@ namespace viz {
 FakeCompositorFrameSinkClient::FakeCompositorFrameSinkClient() = default;
 FakeCompositorFrameSinkClient::~FakeCompositorFrameSinkClient() = default;
 
+void FakeCompositorFrameSinkClient::AddRenderFrameMetadataObserver(
+    mojom::RenderFrameMetadataObserverPtr observer) {}
+
 void FakeCompositorFrameSinkClient::DidReceiveCompositorFrameAck(
     const std::vector<ReturnedResource>& resources) {
   InsertResources(resources);

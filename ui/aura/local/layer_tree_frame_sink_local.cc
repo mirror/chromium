@@ -101,6 +101,9 @@ void LayerTreeFrameSinkLocal::DidNotProduceFrame(
   support_->DidNotProduceFrame(ack);
 }
 
+void LayerTreeFrameSinkLocal::AddRenderFrameMetadataObserver(
+    viz::mojom::RenderFrameMetadataObserverPtr observer) {}
+
 void LayerTreeFrameSinkLocal::DidReceiveCompositorFrameAck(
     const std::vector<viz::ReturnedResource>& resources) {
   DCHECK(thread_checker_);

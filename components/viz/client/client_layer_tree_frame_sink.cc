@@ -13,6 +13,7 @@
 #include "components/viz/client/local_surface_id_provider.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/quads/compositor_frame.h"
+#include "components/viz/common/quads/render_frame_metadata.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 
 namespace viz {
@@ -153,6 +154,7 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
   if (hit_test_data_provider_)
     hit_test_region_list = hit_test_data_provider_->GetHitTestData();
 
+  // TODO(jonross): build a RenderFrameMetadata and send to observer.
   compositor_frame_sink_ptr_->SubmitCompositorFrame(
       local_surface_id_, std::move(frame), std::move(hit_test_region_list),
       tracing_enabled ? base::TimeTicks::Now().since_origin().InMicroseconds()
@@ -164,6 +166,17 @@ void ClientLayerTreeFrameSink::DidNotProduceFrame(const BeginFrameAck& ack) {
   DCHECK(!ack.has_damage);
   DCHECK_LE(BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
   compositor_frame_sink_ptr_->DidNotProduceFrame(ack);
+}
+
+void ClientLayerTreeFrameSink::AddRenderFrameMetadataObserver(
+    mojom::RenderFrameMetadataObserverPtr observer) {
+  // TODO(jonross): Cache the observer here. Actually send it metadata in
+  // SubmitCompositorFrame
+  LOG(ERROR) << "JR Add observer!!!";
+  RenderFrameMetadata metadata;
+  metadata.root_scroll_offset = gfx::Vector2dF(1.0f, 1.0f);
+  LOG(ERROR) << "JR " << metadata.root_scroll_offset.ToString();
+  observer->OnCompositorFrameSubmission(std::move(metadata));
 }
 
 void ClientLayerTreeFrameSink::DidReceiveCompositorFrameAck(
