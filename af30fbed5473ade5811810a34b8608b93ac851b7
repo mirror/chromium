@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13ade1cb_23b22092",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskSchedulerExternalUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-01-09T21:57:11Z",
+      "side": 1,
+      "message": "Optional for future related CLs: final?",
+      "revId": "af30fbed5473ade5811810a34b8608b93ac851b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
