@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6254f71a_8278d7c1",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-09T13:40:29Z",
+      "side": 1,
+      "message": "I appreciate that this allows to keep the unit testing in memory. However, it also adds complexity both the production code and to the unittest itself (e.g., keeping the global MockCallback and delegating to it).\n\nThe alternative would be to hardcode base::WriteFile use in the production code, and in the unit test just examine the resulting file. That is dirtier in that it also \"tests\" base::WriteFile and includes I/O operations in the test, but it keeps the code simple.\n\nI leave this up to you, because both options seem reasonable to me. Just wanted to make sure that I understood your decision on this and reasons behind it. Please let me know if I missed something.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "de516a2ebada6d1aa125946fb771cf3041d2533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883ac4ed_36404d1b",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-09T13:40:29Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure I saw the s_ prefix for global static variables. I saw g_ used instead. If you saw s_ used, then I\u0027m fine with that. The style guides don\u0027t prescribe anything in this case, except for consistency in general.",
+      "range": {
+        "startLine": 72,
+        "startChar": 35,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "de516a2ebada6d1aa125946fb771cf3041d2533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
