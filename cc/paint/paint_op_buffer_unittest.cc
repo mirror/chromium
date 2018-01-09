@@ -43,6 +43,291 @@ void ValidateOps(PaintOpBuffer* buffer) {
     EXPECT_TRUE(static_cast<T*>(op)->IsValid());
 }
 
+template <typename T>
+bool float_equal(T one, T two) {
+  static_assert(!std::numeric_limits<T>::is_integer,
+                "Used float_equal to compare integral types.");
+  return std::abs(one - two) < std::numeric_limits<T>::epsilon();
+}
+
+bool FiltersAreEqual(const PaintFilter* one, const PaintFilter* two);
+
+bool FiltersAreEqual(const ColorFilterPaintFilter* one,
+                     const ColorFilterPaintFilter* two) {
+  return FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const BlurPaintFilter* one, const BlurPaintFilter* two) {
+  return float_equal(one->sigma_x(), two->sigma_x()) &&
+         float_equal(one->sigma_y(), two->sigma_y()) &&
+         one->tile_mode() == two->tile_mode() &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const DropShadowPaintFilter* one,
+                     const DropShadowPaintFilter* two) {
+  return float_equal(one->dx(), two->dx()) &&
+         float_equal(one->dy(), two->dy()) &&
+         float_equal(one->sigma_x(), two->sigma_x()) &&
+         float_equal(one->sigma_y(), two->sigma_y()) &&
+         one->shadow_mode() == two->shadow_mode() &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const MagnifierPaintFilter* one,
+                     const MagnifierPaintFilter* two) {
+  return one->src_rect() == two->src_rect() &&
+         float_equal(one->inset(), two->inset()) &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const ComposePaintFilter* one,
+                     const ComposePaintFilter* two) {
+  return FiltersAreEqual(one->outer().get(), two->outer().get()) &&
+         FiltersAreEqual(one->inner().get(), two->inner().get());
+}
+
+bool FiltersAreEqual(const AlphaThresholdPaintFilter* one,
+                     const AlphaThresholdPaintFilter* two) {
+  return one->region() == two->region() &&
+         float_equal(one->inner_min(), two->inner_min()) &&
+         float_equal(one->outer_max(), two->outer_max()) &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const XfermodePaintFilter* one,
+                     const XfermodePaintFilter* two) {
+  return one->blend_mode() == two->blend_mode() &&
+         FiltersAreEqual(one->background().get(), two->background().get()) &&
+         FiltersAreEqual(one->foreground().get(), two->foreground().get());
+}
+
+bool FiltersAreEqual(const ArithmeticPaintFilter* one,
+                     const ArithmeticPaintFilter* two) {
+  return float_equal(one->k1(), two->k1()) &&
+         float_equal(one->k2(), two->k2()) &&
+         float_equal(one->k3(), two->k3()) &&
+         float_equal(one->k4(), two->k4()) &&
+         one->enforce_pm_color() == two->enforce_pm_color() &&
+         FiltersAreEqual(one->background().get(), two->background().get()) &&
+         FiltersAreEqual(one->foreground().get(), two->foreground().get());
+}
+
+bool FiltersAreEqual(const MatrixConvolutionPaintFilter* one,
+                     const MatrixConvolutionPaintFilter* two) {
+  if (one->kernel_size() != two->kernel_size())
+    return false;
+  auto size =
+      sk_64_mul(one->kernel_size().width(), one->kernel_size().height());
+
+  for (long i = 0; i < size; ++i) {
+    if (!float_equal(one->kernel_at(i), two->kernel_at(i)))
+      return false;
+  }
+  return float_equal(one->gain(), two->gain()) &&
+         float_equal(one->bias(), two->bias()) &&
+         one->kernel_offset() == two->kernel_offset() &&
+         one->tile_mode() == two->tile_mode() &&
+         one->convolve_alpha() == two->convolve_alpha() &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const DisplacementMapEffectPaintFilter* one,
+                     const DisplacementMapEffectPaintFilter* two) {
+  return one->channel_x() == two->channel_x() &&
+         one->channel_y() == two->channel_y() &&
+         float_equal(one->scale(), two->scale()) &&
+         FiltersAreEqual(one->displacement().get(), two->displacement().get());
+}
+
+bool FiltersAreEqual(const ImagePaintFilter* one, const ImagePaintFilter* two) {
+  // We don't compare the image, just its existence.
+  return !!one->image() == !!two->image() &&
+         one->src_rect() == two->src_rect() &&
+         one->dst_rect() == two->dst_rect() &&
+         one->filter_quality() == two->filter_quality();
+}
+
+bool FiltersAreEqual(const RecordPaintFilter* one,
+                     const RecordPaintFilter* two) {
+  // We could compare PaintRecords, but for now just check the existence.
+  return !!one->record() == !!two->record() &&
+         one->record_bounds() == two->record_bounds();
+}
+
+bool FiltersAreEqual(const MergePaintFilter* one, const MergePaintFilter* two) {
+  if (one->input_count() != two->input_count())
+    return false;
+  for (size_t i = 0; i < one->input_count(); ++i) {
+    if (!FiltersAreEqual(one->input_at(i), two->input_at(i)))
+      return false;
+  }
+  return true;
+}
+
+bool FiltersAreEqual(const MorphologyPaintFilter* one,
+                     const MorphologyPaintFilter* two) {
+  return one->morph_type() == two->morph_type() &&
+         one->radius_x() == two->radius_x() &&
+         one->radius_y() == two->radius_y() &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const OffsetPaintFilter* one,
+                     const OffsetPaintFilter* two) {
+  return float_equal(one->dx(), two->dx()) &&
+         float_equal(one->dy(), two->dy()) &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const TilePaintFilter* one, const TilePaintFilter* two) {
+  return one->src() == two->src() && one->dst() == two->dst() &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const TurbulencePaintFilter* one,
+                     const TurbulencePaintFilter* two) {
+  return one->turbulence_type() == two->turbulence_type() &&
+         float_equal(one->base_frequency_x(), two->base_frequency_x()) &&
+         float_equal(one->base_frequency_y(), two->base_frequency_y()) &&
+         one->num_octaves() == two->num_octaves() &&
+         float_equal(one->seed(), two->seed()) &&
+         one->tile_size() == two->tile_size();
+}
+
+bool FiltersAreEqual(const PaintFlagsPaintFilter* one,
+                     const PaintFlagsPaintFilter* two) {
+  // We should compare paint flags here.
+  return true;
+}
+
+bool FiltersAreEqual(const MatrixPaintFilter* one,
+                     const MatrixPaintFilter* two) {
+  return one->matrix() == two->matrix() &&
+         one->filter_quality() == two->filter_quality() &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const LightingDistantPaintFilter* one,
+                     const LightingDistantPaintFilter* two) {
+  return one->lighting_type() == two->lighting_type() &&
+         one->direction() == two->direction() &&
+         one->light_color() == two->light_color() &&
+         float_equal(one->surface_scale(), two->surface_scale()) &&
+         float_equal(one->kconstant(), two->kconstant()) &&
+         float_equal(one->shininess(), two->shininess()) &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const LightingPointPaintFilter* one,
+                     const LightingPointPaintFilter* two) {
+  return one->lighting_type() == two->lighting_type() &&
+         one->location() == two->location() &&
+         one->light_color() == two->light_color() &&
+         float_equal(one->surface_scale(), two->surface_scale()) &&
+         float_equal(one->kconstant(), two->kconstant()) &&
+         float_equal(one->shininess(), two->shininess()) &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const LightingSpotPaintFilter* one,
+                     const LightingSpotPaintFilter* two) {
+  return one->lighting_type() == two->lighting_type() &&
+         one->location() == two->location() && one->target() == two->target() &&
+         float_equal(one->specular_exponent(), two->specular_exponent()) &&
+         float_equal(one->cutoff_angle(), two->cutoff_angle()) &&
+         one->light_color() == two->light_color() &&
+         float_equal(one->surface_scale(), two->surface_scale()) &&
+         float_equal(one->kconstant(), two->kconstant()) &&
+         float_equal(one->shininess(), two->shininess()) &&
+         FiltersAreEqual(one->input().get(), two->input().get());
+}
+
+bool FiltersAreEqual(const PaintFilter* one, const PaintFilter* two) {
+  if (!one || !two)
+    return !one && !two;
+  if (one->type() != two->type())
+    return false;
+
+  switch (one->type()) {
+    case PaintFilter::Type::kNullFilter:
+      return true;
+    case PaintFilter::Type::kColorFilter:
+      return FiltersAreEqual(static_cast<const ColorFilterPaintFilter*>(one),
+                             static_cast<const ColorFilterPaintFilter*>(two));
+    case PaintFilter::Type::kBlur:
+      return FiltersAreEqual(static_cast<const BlurPaintFilter*>(one),
+                             static_cast<const BlurPaintFilter*>(two));
+    case PaintFilter::Type::kDropShadow:
+      return FiltersAreEqual(static_cast<const DropShadowPaintFilter*>(one),
+                             static_cast<const DropShadowPaintFilter*>(two));
+    case PaintFilter::Type::kMagnifier:
+      return FiltersAreEqual(static_cast<const MagnifierPaintFilter*>(one),
+                             static_cast<const MagnifierPaintFilter*>(two));
+    case PaintFilter::Type::kCompose:
+      return FiltersAreEqual(static_cast<const ComposePaintFilter*>(one),
+                             static_cast<const ComposePaintFilter*>(two));
+    case PaintFilter::Type::kAlphaThreshold:
+      return FiltersAreEqual(
+          static_cast<const AlphaThresholdPaintFilter*>(one),
+          static_cast<const AlphaThresholdPaintFilter*>(two));
+    case PaintFilter::Type::kSkImageFilter:
+      // This should be removed eventually, so just assume they are equal.
+      return true;
+    case PaintFilter::Type::kXfermode:
+      return FiltersAreEqual(static_cast<const XfermodePaintFilter*>(one),
+                             static_cast<const XfermodePaintFilter*>(two));
+    case PaintFilter::Type::kArithmetic:
+      return FiltersAreEqual(static_cast<const ArithmeticPaintFilter*>(one),
+                             static_cast<const ArithmeticPaintFilter*>(two));
+    case PaintFilter::Type::kMatrixConvolution:
+      return FiltersAreEqual(
+          static_cast<const MatrixConvolutionPaintFilter*>(one),
+          static_cast<const MatrixConvolutionPaintFilter*>(two));
+    case PaintFilter::Type::kDisplacementMapEffect:
+      return FiltersAreEqual(
+          static_cast<const DisplacementMapEffectPaintFilter*>(one),
+          static_cast<const DisplacementMapEffectPaintFilter*>(two));
+    case PaintFilter::Type::kImage:
+      return FiltersAreEqual(static_cast<const ImagePaintFilter*>(one),
+                             static_cast<const ImagePaintFilter*>(two));
+    case PaintFilter::Type::kPaintRecord:
+      return FiltersAreEqual(static_cast<const RecordPaintFilter*>(one),
+                             static_cast<const RecordPaintFilter*>(two));
+    case PaintFilter::Type::kMerge:
+      return FiltersAreEqual(static_cast<const MergePaintFilter*>(one),
+                             static_cast<const MergePaintFilter*>(two));
+    case PaintFilter::Type::kMorphology:
+      return FiltersAreEqual(static_cast<const MorphologyPaintFilter*>(one),
+                             static_cast<const MorphologyPaintFilter*>(two));
+    case PaintFilter::Type::kOffset:
+      return FiltersAreEqual(static_cast<const OffsetPaintFilter*>(one),
+                             static_cast<const OffsetPaintFilter*>(two));
+    case PaintFilter::Type::kTile:
+      return FiltersAreEqual(static_cast<const TilePaintFilter*>(one),
+                             static_cast<const TilePaintFilter*>(two));
+    case PaintFilter::Type::kTurbulence:
+      return FiltersAreEqual(static_cast<const TurbulencePaintFilter*>(one),
+                             static_cast<const TurbulencePaintFilter*>(two));
+    case PaintFilter::Type::kPaintFlags:
+      return FiltersAreEqual(static_cast<const PaintFlagsPaintFilter*>(one),
+                             static_cast<const PaintFlagsPaintFilter*>(two));
+    case PaintFilter::Type::kMatrix:
+      return FiltersAreEqual(static_cast<const MatrixPaintFilter*>(one),
+                             static_cast<const MatrixPaintFilter*>(two));
+    case PaintFilter::Type::kLightingDistant:
+      return FiltersAreEqual(
+          static_cast<const LightingDistantPaintFilter*>(one),
+          static_cast<const LightingDistantPaintFilter*>(two));
+    case PaintFilter::Type::kLightingPoint:
+      return FiltersAreEqual(static_cast<const LightingPointPaintFilter*>(one),
+                             static_cast<const LightingPointPaintFilter*>(two));
+    case PaintFilter::Type::kLightingSpot:
+      return FiltersAreEqual(static_cast<const LightingSpotPaintFilter*>(one),
+                             static_cast<const LightingSpotPaintFilter*>(two));
+  }
+}
+
 }  // namespace
 
 class PaintOpSerializationTestUtils {
@@ -2805,6 +3090,102 @@ TEST(PaintOpBufferTest, ReplacesImagesFromProvider) {
                                  MatchesShader(flags, scale_adjustment[2])));
 
   buffer.Playback(&canvas, &image_provider);
+}
+
+TEST(PaintOpBufferTest, FilterSerialization) {
+  SkScalar scalars[9] = {1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f};
+  std::vector<sk_sp<PaintFilter>> filters = {
+      sk_sp<PaintFilter>{new ColorFilterPaintFilter(
+          SkColorFilter::MakeLinearToSRGBGamma(), nullptr)},
+      sk_sp<PaintFilter>{new BlurPaintFilter(
+          0.5f, 0.3f, SkBlurImageFilter::kRepeat_TileMode, nullptr)},
+      sk_sp<PaintFilter>{new DropShadowPaintFilter(
+          5.f, 10.f, 0.1f, 0.3f, SK_ColorBLUE,
+          SkDropShadowImageFilter::kDrawShadowOnly_ShadowMode, nullptr)},
+      sk_sp<PaintFilter>{new MagnifierPaintFilter(SkRect::MakeXYWH(5, 6, 7, 8),
+                                                  10.5f, nullptr)},
+      sk_sp<PaintFilter>{new AlphaThresholdPaintFilter(
+          SkRegion(SkIRect::MakeXYWH(0, 0, 100, 200)), 10.f, 20.f, nullptr)},
+      sk_sp<PaintFilter>{new MatrixConvolutionPaintFilter(
+          SkISize::Make(3, 3), scalars, 30.f, 123.f, SkIPoint::Make(0, 0),
+          SkMatrixConvolutionImageFilter::kClampToBlack_TileMode, true,
+          nullptr)},
+      sk_sp<PaintFilter>{
+          new RecordPaintFilter(sk_sp<PaintRecord>{new PaintRecord},
+                                SkRect::MakeXYWH(10, 15, 20, 25))},
+      sk_sp<PaintFilter>{new MorphologyPaintFilter(
+          MorphologyPaintFilter::MorphType::kErode, 15, 30, nullptr)},
+      sk_sp<PaintFilter>{new OffsetPaintFilter(-1.f, -2.f, nullptr)},
+      sk_sp<PaintFilter>{new TilePaintFilter(
+          SkRect::MakeXYWH(1, 2, 3, 4), SkRect::MakeXYWH(4, 3, 2, 1), nullptr)},
+      sk_sp<PaintFilter>{new TurbulencePaintFilter(
+          TurbulencePaintFilter::TurbulenceType::kFractalNoise, 3.3f, 4.4f, 2,
+          123, nullptr)},
+      sk_sp<PaintFilter>{
+          new MatrixPaintFilter(SkMatrix::I(), kHigh_SkFilterQuality, nullptr)},
+      sk_sp<PaintFilter>{new LightingDistantPaintFilter(
+          PaintFilter::LightingType::kSpecular, SkPoint3::Make(1, 2, 3),
+          SK_ColorCYAN, 1.1f, 2.2f, 3.3f, nullptr)},
+      sk_sp<PaintFilter>{new LightingPointPaintFilter(
+          PaintFilter::LightingType::kDiffuse, SkPoint3::Make(2, 3, 4),
+          SK_ColorRED, 1.2f, 3.4f, 5.6f, nullptr)},
+      sk_sp<PaintFilter>{new LightingSpotPaintFilter(
+          PaintFilter::LightingType::kSpecular, SkPoint3::Make(100, 200, 300),
+          SkPoint3::Make(400, 500, 600), 1, 2, SK_ColorMAGENTA, 3, 4, 5,
+          nullptr)}};
+
+  filters.emplace_back(new ComposePaintFilter(filters[0], filters[1]));
+  filters.emplace_back(
+      new XfermodePaintFilter(SkBlendMode::kDst, filters[2], filters[3]));
+  filters.emplace_back(new ArithmeticPaintFilter(
+      1.1f, 2.2f, 3.3f, 4.4f, false, filters[4], filters[5], nullptr));
+  filters.emplace_back(new DisplacementMapEffectPaintFilter(
+      SkDisplacementMapEffect::kR_ChannelSelectorType,
+      SkDisplacementMapEffect::kG_ChannelSelectorType, 10, filters[6],
+      filters[7]));
+  filters.emplace_back(new MergePaintFilter(filters.data(), filters.size()));
+
+  std::unique_ptr<char, base::AlignedFreeDeleter> memory(
+      static_cast<char*>(base::AlignedAlloc(PaintOpBuffer::kInitialBufferSize,
+                                            PaintOpBuffer::PaintOpAlign)));
+  TestOptionsProvider options_proivder;
+  PaintOpBufferSerializer::Preamble preamble;
+  for (size_t i = 0; i < filters.size(); ++i) {
+    SCOPED_TRACE(i);
+    auto& filter = filters[i];
+
+    PaintFlags flags;
+    flags.setImageFilter(filter);
+    PaintOpBuffer buffer;
+    buffer.push<DrawRectOp>(SkRect::MakeXYWH(1, 2, 3, 4), flags);
+
+    SimpleBufferSerializer serializer(memory.get(),
+                                      PaintOpBuffer::kInitialBufferSize,
+                                      options_proivder.image_provider(),
+                                      options_proivder.transfer_cache_helper());
+    serializer.Serialize(&buffer, nullptr, preamble);
+    ASSERT_TRUE(serializer.valid());
+    ASSERT_GT(serializer.written(), 0u);
+
+    auto deserialized_buffer =
+        PaintOpBuffer::MakeFromMemory(memory.get(), serializer.written(),
+                                      options_proivder.deserialize_options());
+    PaintOpBuffer::Iterator it(deserialized_buffer.get());
+    bool rect_op_found = false;
+    for (auto* op : it) {
+      // There may be various ops serialized as a part of the preamble, but
+      // we're only really looking for the draw rect op.
+      if (op->GetType() != PaintOpType::DrawRect)
+        continue;
+      EXPECT_FALSE(rect_op_found);
+      rect_op_found = true;
+      auto* rect_op = static_cast<DrawRectOp*>(op);
+      EXPECT_FLOAT_RECT_EQ(rect_op->rect, SkRect::MakeXYWH(1, 2, 3, 4));
+      EXPECT_TRUE(
+          FiltersAreEqual(filter.get(), rect_op->flags.getImageFilter().get()));
+    }
+    EXPECT_TRUE(rect_op_found);
+  }
 }
 
 }  // namespace cc
