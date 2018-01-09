@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a7c70c_6c3f1203",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T02:16:20Z",
+      "side": 1,
+      "message": "NIT: Replace chr(96) with single quote chr(39) or double quote chr(34)  (I prefer the double quote for strings in comments).  This appears 8 times.",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc194170_4d696e00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T02:16:20Z",
+      "side": 1,
+      "message": "NIT: Try to wrap to 72 columns for commit messages.",
+      "range": {
+        "startLine": 9,
+        "startChar": 98,
+        "endLine": 9,
+        "endChar": 120
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a42df0_43db5803",
+        "filename": "chrome/installer/zucchini/address_translator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T02:16:20Z",
+      "side": 1,
+      "message": "std::string preferred in this case (better to be explicit).",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b29cd2_bf15092f",
+        "filename": "chrome/installer/zucchini/address_translator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T02:16:20Z",
+      "side": 1,
+      "message": "To print size_t:\n  #include \"base/format_macros.h\"\nthen\n  ...(\"Case #\" PRIuS \": %s\", i, ..)\n\nNote that binary_data_histogram.cc does this.",
+      "range": {
+        "startLine": 97,
+        "startChar": 36,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26a0b4f_5e8bbe97",
+        "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T02:16:20Z",
+      "side": 1,
+      "message": "This is causing compile error in Windows (MSVC?). Simpler solution is\n\n  #include \"base/numerics/safe_conversions.h\"\n  ...\n  int lo \u003d base::checked_cast\u003cint\u003e(gap-\u003ebegin() - image.begin());\n  ...\n  ...(\"[%d,%d)\", lo, hi));\n\nPedantic solution is to cast to size_t:\n\n  #include \"base/format_macros.h\"\n  ...\n  size_t lo \u003d static_cast\u003csize_t\u003e(gap-\u003ebegin() - image.begin());\n  ... \n  ...(\"[\" PRIuS \",\" PRIuS \")\", lo, hi));\n\n\nMeanwhile, the macro for std::ptrdiff_t seems to be missing from format_macros.h. According to\n  https://cs.chromium.org/chromium/src/v8/src/base/macros.h\nthis should be \"td\" for standard and \"Id\" for MSVC. More info:\n  https://en.wikipedia.org/wiki/Printf_format_string\n\nSo depending on how you like risk:\n\n1. Ignore this: Move on and focus on Zucchini since this is a distraction (and there will be plenty in the future).\n2. Implement the change in a separate CL; even add cross platform unit test for format_macros.h. Then you get to change base and reach out to more people!\n\nThere are merits in either alternative; choose your adventure!",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 62
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
