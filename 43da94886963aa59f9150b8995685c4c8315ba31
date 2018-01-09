@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f8725b5_466ccd92",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-09T16:29:49Z",
+      "side": 1,
+      "message": "nit/style: Could you elide braces for consistency?",
+      "revId": "43da94886963aa59f9150b8995685c4c8315ba31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14537f9_0235e54e",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-09T16:29:49Z",
+      "side": 1,
+      "message": "style: four-space indent, please.",
+      "revId": "43da94886963aa59f9150b8995685c4c8315ba31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
