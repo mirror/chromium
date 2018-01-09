@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "eebcc054_6dec02c7",
+        "filename": "ash/cursor/cursor_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-09T01:20:47Z",
+      "side": 1,
+      "message": "f or factor lgtm",
+      "parentUuid": "d03fe75f_284f03ce",
+      "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c62e780_a6b08a5b",
         "filename": "ash/cursor/cursor_view.cc",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "We need this to minimize jank. Fast ink cursor works without it, but it requires that input events bounce off the UI thread. UI thread can get relatively busy and will sometimes run tasks that take long enough that they will cause a missed frame.\n\nA major benefit with this fast ink cursor approach is that we shortcut cursor updates to a small amount of processing on just the Evdev+Cursor_PaintThread. That\u0027s even better than the current HW cursor, which require Evdev+GPUIO+DRM thread processing.\n\nIn case it\u0027s not clear; This DrmCursor code executes on the Evdev thread, and the CursorController::SetCursorLocation call allows location changes of the cursor (normally just forwarded to the GPU process for the HW cursor) to be forwarded directly to the Cursor_PaintThread.\n\nIdeally we\u0027d replace the HW cursor with this mechanism in the future but I\u0027m not sure that\u0027s possible on devices without HW overlay support. The mechanism should be faster (or at least as fast) as the current sw cursor on devices without HW overlays. However, it\u0027s on devices with HW overlay support that this really shines and can outperform the HW cursor. Not just in terms of more flexible cursor rendering, but also in terms of smoothness and latency.",
       "parentUuid": "de917c7e_afab56a1",
+      "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21f189a_58ddaf18",
+        "filename": "ui/ozone/platform/drm/host/drm_cursor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-09T01:20:47Z",
+      "side": 1,
+      "message": "What was not clear to me is why we need both. Is it possible to replace the existing EventHandler based one with this (with proper impl on x11 ozone)?",
+      "parentUuid": "147502b1_94ff1684",
       "revId": "8f23a7638516a20af7352ccf4e3b5c41a9393ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
