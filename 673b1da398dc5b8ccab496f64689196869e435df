@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8656c268_486988d6",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T16:40:08Z",
+      "side": 1,
+      "message": "GL shader functions can return values AFAIK.  Why use an out param if you\u0027re only returning one thing?",
+      "revId": "673b1da398dc5b8ccab496f64689196869e435df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b30dcc_97202e32",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T16:40:08Z",
+      "side": 1,
+      "message": "Critical issue:  Missing period like above.  \u003cmental parse error\u003e.\n\nCan you also somewhere indicate what phase is doing?  It\u0027s non-obvious, unlike the other properties.",
+      "revId": "673b1da398dc5b8ccab496f64689196869e435df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
