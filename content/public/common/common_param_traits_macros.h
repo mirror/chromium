@@ -43,10 +43,6 @@ IPC_ENUM_TRAITS_VALIDATE(ui::PageTransition,
                          ((value &
                            ui::PageTransition::PAGE_TRANSITION_CORE_MASK) <=
                           ui::PageTransition::PAGE_TRANSITION_LAST_CORE))
-IPC_ENUM_TRAITS_MAX_VALUE(net::NetworkChangeNotifier::ConnectionType,
-                          net::NetworkChangeNotifier::CONNECTION_LAST)
-IPC_ENUM_TRAITS_MAX_VALUE(net::EffectiveConnectionType,
-                          net::EFFECTIVE_CONNECTION_TYPE_LAST - 1)
 IPC_ENUM_TRAITS_MAX_VALUE(content::ConsoleMessageLevel,
                           content::CONSOLE_MESSAGE_LEVEL_LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebFrameSerializerCacheControlPolicy,

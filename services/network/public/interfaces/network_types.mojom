@@ -1,0 +1,12 @@
+module network.mojom;
+
+// This file is a collection of network types which rely on legacy IPC
+// ParamTraits for serialization. All of these should eventually be converted to
+// proper mojom definitions.
+
+[Native]
+enum NetworkConnectionType;
+
+[Native]
+enum EffectiveConnectionType;
+
