@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "806142b9_7543c8eb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-09T03:45:38Z",
+      "side": 1,
+      "message": "Do you clarify \"null\" of NGCaretPosition and test it?",
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
