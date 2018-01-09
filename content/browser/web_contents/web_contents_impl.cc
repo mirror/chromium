@@ -3338,7 +3338,7 @@ void WebContentsImpl::SaveFrameWithHeaders(const GURL& url,
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("download_web_contents_frame", R"(
         semantics {
-          sender: "Save Page Action"
+          sender: "Save Page Action 2"
           description:
             "Saves the given frame's URL to the local file system."
           trigger:
