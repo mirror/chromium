@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d60c8196_d0ff9d3d",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "As I recall, it\u0027s a google3 thing: using std::string where one would might more naturally use a vector\u003c\u003e (my guess is folks familiar with google3 wrote this code. Anyho it works but does feel odd).",
+      "parentUuid": "22d3275f_646f06f5",
+      "range": {
+        "startLine": 55,
+        "startChar": 46,
+        "endLine": 55,
+        "endChar": 57
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4f67c7_16696141",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "47698b33914c67af06100488d8a31636be8ad492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a4baad_e68119a8",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "Added an initializer (for those who don\u0027t understand that statics are 0 initialized by default).",
+      "parentUuid": "bf4f67c7_16696141",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 21
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "097be70b_c1d5a7c1",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "I added an initialize helper to fix that part.  These clocks are only accurate to a micro second mind, and a scaled double is sufficient to represent that with good precision, no?",
+      "parentUuid": "ad014993_2a5db921",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6daeac4_09dfd69b",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "47698b33914c67af06100488d8a31636be8ad492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5908be62_1a5ed6bf",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep it, was using it to delimit the parts of this test harness that call/use third_party/zlib things.\n\neg., zlib has a compress routine, compress(), so I called mine z_compress() just so they were different (for code search etc).",
+      "parentUuid": "d6daeac4_09dfd69b",
+      "range": {
+        "startLine": 118,
+        "startChar": 14,
+        "endLine": 118,
+        "endChar": 16
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "41ac886c_6b774fe0",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "zlib also provides a helper to estimate the size of compressed output, we can just all that: compressBound().",
+      "parentUuid": "e5421da4_c201cff3",
+      "range": {
+        "startLine": 119,
+        "startChar": 35,
+        "endLine": 119,
+        "endChar": 44
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5f82070_d71ae099",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "47698b33914c67af06100488d8a31636be8ad492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e561e982_8ee3e029",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure I follow this. Perhaps the function should be named to indicate that it returns the window bits.\n\nVery surprised you don\u0027t understand it: this magic use of window bits is well documented in zlib.h.\n\n\u003e But even still, we\u0027re calling this to pass the returned value into inflateInit2() and deflateInit2(). MAX_WBITS is 15 for us [1] and both inflateInit2() [2] and deflateInit2() docs [3] say the value should be in the range 8..15.\n\nYour references [2,3] are to\n\n  third_party/freetype/src/src/gzip/zlib.h\n\nperhaps that confused you.  I\u0027m using third_party/zlib.h, and its documentation is clear.  Refer to the inflate/deflateInit2() docs where it mentions window bits.  It says:\n\n\"The windowBits parameter is the base two logarithm of the maximum window size (the size of the history buffer).  It should be in the range 8..15 for this version of the library.\"\n\nbut it goes on to add:\n\n\"windowBits can also be -8..-15 for raw inflate.  In this case, windowBits determines the window size.inflate() will then process raw deflate data, not looking for a zlib or gzip header,\"\n\n\"windowBits can also be greater than 15 for optional gzip decoding.  Add 32 to windowBits to enable zlib and gzip decoding with automatic header detection, or add 16 to decode only the gzip format (the zlib format will return a Z_DATA_ERROR).\"\n\n\u003e That makes it seem like this would only work for kWrapperZLIB and would fail on the other wrappers?\n\nBit funny how zlib use window bits to choose wrappers, but zlib does document this aspect well.  And it certainly does work for the wrappers I defined / used herein, eg., deflateInit2 [1].\n\n[1] https://cs.chromium.org/chromium/src/third_party/zlib/deflate.c?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d316\n\n   if (windowBits \u003c 0) { /* suppress zlib wrapper */\n        wrap \u003d 0;\n        windowBits \u003d -windowBits;\n    }\n#ifdef GZIP\n    else if (windowBits \u003e 15) {\n        wrap \u003d 2;       /* write gzip wrapper instead */\n        windowBits -\u003d 16;\n    }\n#endif\n\nands there\u0027s similar code in inflateInit2.  Surprised you didn\u0027t understand or know of this zlib window bits whackyness :)",
+      "parentUuid": "a5f82070_d71ae099",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 1
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "46c167de_381045ab",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "\u003e Doesn\u0027t next_in need to be initialized before calling deflateInit2? [1]\n\nThis time your reference is to the perl zlib :)\n\nAgain we should refer to the third_party/zlib.h. \"The fields next_in, zalloc, zfree and opaque must be initialized before by the caller.\"  And 0 is perfectly fine value to use for init: zlib sets them for you in that case, which is usually what is wanted. If you look at chrome uses of deflateInit2 in code search, you\u0027ll see:\n\n  memset(\u0026stream, 0, sizeof(stream));\n\njust before calls to deflateInit2().\n\nTechnically, zlib only cares about zalloc, zfree and opaque being 0.  For example, the compress2() helper in zlib show show how to use deflateInit/2 given a new z_stream [1].\n\n[1] https://cs.chromium.org/chromium/src/third_party/zlib/compress.c?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d22\n\nNote how it only sets \n\n    stream.zalloc \u003d (alloc_func)0;\n    stream.zfree \u003d (free_func)0;\n    stream.opaque \u003d (voidpf)0;\n\nand then calls deflateInit()?  That\u0027s the minimum needed.\n\n\u003e When working on the fuzzers, I initialized like this [2].\n\nLet me add some notes to that.\n\n  z_stream stream;\n  stream.next_in \u003d input_buffer.data();\n  stream.avail_in \u003d size;\n  // following is not needed, zlib clears it to 0\n  stream.total_in \u003d size;\n  stream.next_out \u003d buffer;\n  stream.avail_out \u003d buffer_length;\n  // following not needed zlib, clears it to 0\n  stream.total_out \u003d buffer_length;\n  stream.zalloc \u003d Z_NULL;\n  stream.zfree \u003d Z_NULL;\n\nAlso stream.opaque is not set, that does not look right to me but maybe that was an intentional bug?\n\nThe easy way to init a zstream is to memset it\n\n  memset(\u0026stream, 0, sizeof(stream));\n\nand that\u0027s what chrome users do (dunno why you do it differently).\nThen you call deflateInit(), and catch / deal with any error. Otherwise, hook up your buffers ...\n\n  stream.next_in \u003d input_buffer.data();\n  stream.avail_in \u003d size;\n  stream.next_out \u003d buffer;\n  stream.avail_out \u003d buffer_length;\n\nand call deflate(), and away you go.  They way you have done it in the fuzzers is not exactly canonical.",
+      "parentUuid": "6eca1a72_bd94d670",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 37
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f947b305_09258690",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "53a6b07b_e004fa77",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "\u003e Same here. next_in and avail_in should be initialized before the call to inflateInit2 [1]. \n\nThey are intiialized ... to 0, right? \n\n\u003e An example is here [2].\n\nSame problems with that code as above, opaque not set, etc, would be easier to do it right with a memset.",
+      "parentUuid": "f947b305_09258690",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 0
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42a03549_bee0549d",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -203,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "ed090efb_3dc7b2bc",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "Ok added initialize_timer() helper to make it clear.",
+      "parentUuid": "42a03549_bee0549d",
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2769ad2_336aa805",
         "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
         "patchSetId": 12
@@ -214,6 +424,30 @@
       "writtenOn": "2018-01-08T20:19:51Z",
       "side": 1,
       "message": "I\u0027m a bit confused where this magic number comes from.",
+      "range": {
+        "startLine": 255,
+        "startChar": 23,
+        "endLine": 255,
+        "endChar": 31
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442831c4_65b9f708",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "Looks like 10Meg to me.",
+      "parentUuid": "b2769ad2_336aa805",
       "range": {
         "startLine": 255,
         "startChar": 23,
@@ -269,6 +503,30 @@
       "revId": "47698b33914c67af06100488d8a31636be8ad492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c7bbba_c8170208",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-09T18:53:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9592e95d_14649fdb",
+      "range": {
+        "startLine": 305,
+        "startChar": 9,
+        "endLine": 305,
+        "endChar": 17
+      },
+      "revId": "47698b33914c67af06100488d8a31636be8ad492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
