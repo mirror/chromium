@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/struct_ptr.h"
 #include "third_party/WebKit/common/common_export.h"
+#include "third_party/WebKit/common/message_port/stack_trace_id.mojom.h"
 
 namespace blink {
 namespace mojom {
@@ -39,6 +40,9 @@ struct BLINK_COMMON_EXPORT CloneableMessage {
 
   // Blob handles for any blobs being sent in this message.
   std::vector<mojo::StructPtr<mojom::SerializedBlob>> blobs;
+
+  // Stack trace captured by sender.
+  mojom::StackTraceIdPtr sender_stack_trace_id;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CloneableMessage);

@@ -154,6 +154,7 @@ mojom("mojo_platform_bindings") {
 mojom("mojo_bindings") {
   sources = [
     "message_port/message_port.mojom",
+    "message_port/stack_trace_id.mojom",
   ]
 
   public_deps = [

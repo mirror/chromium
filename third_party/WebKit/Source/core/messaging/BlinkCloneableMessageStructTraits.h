@@ -10,6 +10,7 @@
 #include "mojo/public/cpp/bindings/array_traits_wtf_vector.h"
 #include "mojo/public/cpp/bindings/string_traits_wtf.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom-blink.h"
+#include "third_party/WebKit/common/message_port/stack_trace_id.mojom-blink.h"
 
 namespace mojo {
 
@@ -23,6 +24,14 @@ struct StructTraits<blink::mojom::blink::CloneableMessage::DataView,
 
   static Vector<blink::mojom::blink::SerializedBlobPtr> blobs(
       blink::BlinkCloneableMessage& input);
+
+  static blink::mojom::blink::StackTraceIdPtr sender_stack_trace_id(
+      blink::BlinkCloneableMessage& input) {
+    return blink::mojom::blink::StackTraceId::New(
+        input.sender_stack_trace_id.id,
+        input.sender_stack_trace_id.debugger_id.first,
+        input.sender_stack_trace_id.debugger_id.second);
+  }
 
   static bool Read(blink::mojom::blink::CloneableMessage::DataView,
                    blink::BlinkCloneableMessage* out);
