@@ -49,8 +49,11 @@
 - (id)initWithDelegate:(autofill::AutofillPopupViewDelegate*)delegate
                  frame:(NSRect)frame {
   self = [super initWithFrame:frame];
-  if (self)
+  if (self) {
     popup_delegate_ = delegate;
+    if (delegate)
+      delegate->SetTypesetter(gfx::Typesetter::PLATFORM);
+  }
 
   return self;
 }

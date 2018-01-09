@@ -146,8 +146,9 @@ base::string16 JavaScriptDialogManager::GetTitleImpl(
         unwrapped_alerting_frame_url,
         url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS);
 #else
-    base::string16 url_string = url_formatter::ElideHost(
-        unwrapped_alerting_frame_url, gfx::FontList(), kUrlElideWidth);
+    base::string16 url_string =
+        url_formatter::ElideHost(unwrapped_alerting_frame_url, gfx::FontList(),
+                                 kUrlElideWidth, gfx::Typesetter::PLATFORM);
 #endif
     return l10n_util::GetStringFUTF16(
         is_same_origin_as_main_frame ? IDS_JAVASCRIPT_MESSAGEBOX_TITLE
