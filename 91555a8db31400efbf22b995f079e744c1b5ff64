@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a8bd63a_e6dc237d",
+        "filename": "net/base/url_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-09T00:53:17Z",
+      "side": 1,
+      "message": "Please rename this to \"HostStringIsLocalhost()\".\n\n(When I proposed \"UrlHost\" as a name, I had meant that to mean the host returned by GURL::host(). But seeing the change I agree with your decision to go the other direction and make this take the unbracketed version.).",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 34
+      },
+      "revId": "91555a8db31400efbf22b995f079e744c1b5ff64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
