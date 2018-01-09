@@ -181,6 +181,7 @@ test("accessibility_unittests") {
     "platform/ax_platform_node_unittest.cc",
     "platform/ax_platform_node_unittest.h",
     "platform/ax_platform_node_win_unittest.cc",
+    "platform/ax_platform_unique_id_unittest.cc",
   ]
 
   deps = [

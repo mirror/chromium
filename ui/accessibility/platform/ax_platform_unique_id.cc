@@ -2,19 +2,47 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "ui/accessibility/platform/ax_platform_unique_id.h"
 
 namespace ui {
 
-int32_t GetNextAXPlatformNodeUniqueId() {
-  static int32_t next_unique_id = 1;
-  int32_t unique_id = next_unique_id;
-  if (next_unique_id == INT32_MAX)
-    next_unique_id = 1;
-  else
-    next_unique_id++;
+AXUniqueId::AXUniqueId(const int32_t max_id) : id_(GetNextAXUniqueId(max_id)) {}
 
-  return unique_id;
+AXUniqueId::~AXUniqueId() {
+  AssignedIds()->erase(id_);
+}
+
+base::hash_set<int32_t>* AXUniqueId::AssignedIds() {
+  static base::hash_set<int32_t>* assigned_ids;
+  if (!assigned_ids)
+    assigned_ids = new base::hash_set<int32_t>();
+  return assigned_ids;
+}
+
+bool AXUniqueId::IsAssigned(int32_t id) const {
+  return AssignedIds()->find(id) != AssignedIds()->end();
+}
+
+int32_t AXUniqueId::GetNextAXUniqueId(const int32_t max_id) {
+  static int32_t current_unique_id = 0;
+  static bool has_wrapped = false;
+
+  while (true) {
+    if (current_unique_id == max_id) {
+      current_unique_id = 1;
+      has_wrapped = true;
+    } else {
+      current_unique_id++;
+    }
+    if (!has_wrapped || !IsAssigned(current_unique_id))
+      break;
+  }
+
+  AssignedIds()->insert(current_unique_id);
+
+  return current_unique_id;
 }
 
 }  // namespace ui
