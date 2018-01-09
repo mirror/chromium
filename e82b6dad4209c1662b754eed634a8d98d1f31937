@@ -22,6 +22,30 @@
       "revId": "e82b6dad4209c1662b754eed634a8d98d1f31937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510cfa21_cca3493f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1226095
+      },
+      "writtenOn": "2018-01-09T12:36:44Z",
+      "side": 1,
+      "message": "hi Toby,\nI have no idea which UI and the native side will be better, however, it would be reasonable to keep their values consistent during constructed.\nFor this issue, in addition to PopupTouchHandleDrawable\u0027s visibility, both mAlpha and mVisible will not affect mContainer.showAtLocation(), mAlpha is only used to implement fade in. Maybe, we can also call updateVisiblity() before calling mContainer.showAtLocation().\n\nThanks!",
+      "parentUuid": "0bb1ea1c_629540f2",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 21
+      },
+      "revId": "e82b6dad4209c1662b754eed634a8d98d1f31937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
