@@ -50,10 +50,11 @@ ProgramKey ProgramKey::DebugBorder() {
 }
 
 // static
-ProgramKey ProgramKey::SolidColor(AAMode aa_mode) {
+ProgramKey ProgramKey::SolidColor(AAMode aa_mode, bool has_color_matrix) {
   ProgramKey result;
   result.type_ = PROGRAM_TYPE_SOLID_COLOR;
   result.aa_mode_ = aa_mode;
+  result.has_color_matrix_ = has_color_matrix;
   return result;
 }
 
@@ -62,7 +63,8 @@ ProgramKey ProgramKey::Tile(TexCoordPrecision precision,
                             SamplerType sampler,
                             AAMode aa_mode,
                             SwizzleMode swizzle_mode,
-                            bool is_opaque) {
+                            bool is_opaque,
+                            bool has_color_matrix) {
   ProgramKey result;
   result.type_ = PROGRAM_TYPE_TILE;
   result.precision_ = precision;
@@ -70,6 +72,7 @@ ProgramKey ProgramKey::Tile(TexCoordPrecision precision,
   result.aa_mode_ = aa_mode;
   result.swizzle_mode_ = swizzle_mode;
   result.is_opaque_ = is_opaque;
+  result.has_color_matrix_ = has_color_matrix;
   return result;
 }
 
@@ -78,7 +81,8 @@ ProgramKey ProgramKey::Texture(TexCoordPrecision precision,
                                SamplerType sampler,
                                PremultipliedAlphaMode premultiplied_alpha,
                                bool has_background_color,
-                               bool has_tex_clamp_rect) {
+                               bool has_tex_clamp_rect,
+                               bool has_color_matrix) {
   ProgramKey result;
   result.type_ = PROGRAM_TYPE_TEXTURE;
   result.precision_ = precision;
@@ -86,6 +90,7 @@ ProgramKey ProgramKey::Texture(TexCoordPrecision precision,
   result.premultiplied_alpha_ = premultiplied_alpha;
   result.has_background_color_ = has_background_color;
   result.has_tex_clamp_rect_ = has_tex_clamp_rect;
+  result.has_color_matrix_ = has_color_matrix;
   return result;
 }
 
@@ -122,11 +127,13 @@ ProgramKey ProgramKey::VideoStream(TexCoordPrecision precision) {
 ProgramKey ProgramKey::YUVVideo(TexCoordPrecision precision,
                                 SamplerType sampler,
                                 YUVAlphaTextureMode yuv_alpha_texture_mode,
-                                UVTextureMode uv_texture_mode) {
+                                UVTextureMode uv_texture_mode,
+                                bool has_color_matrix) {
   ProgramKey result;
   result.type_ = PROGRAM_TYPE_YUV_VIDEO;
   result.precision_ = precision;
   result.sampler_ = sampler;
+  result.has_color_matrix_ = has_color_matrix;
   result.yuv_alpha_texture_mode_ = yuv_alpha_texture_mode;
   DCHECK(yuv_alpha_texture_mode == YUV_NO_ALPHA_TEXTURE ||
          yuv_alpha_texture_mode == YUV_HAS_ALPHA_TEXTURE);
