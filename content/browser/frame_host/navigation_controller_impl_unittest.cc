@@ -50,7 +50,7 @@
 #include "content/test/test_web_contents.h"
 #include "skia/ext/platform_canvas.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/frame_policy.h"
+#include "third_party/WebKit/public/common/frame/frame_policy.h"
 
 using base::Time;
 

@@ -8,7 +8,7 @@
 #include <memory>
 #include "base/macros.h"
 #include "bindings/core/v8/V8CacheOptions.h"
-#include "common/net/ip_address_space.mojom-blink.h"
+#include "public/common/net/ip_address_space.mojom-blink.h"
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/workers/WorkerClients.h"

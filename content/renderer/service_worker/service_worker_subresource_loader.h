@@ -17,9 +17,9 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/redirect_info.h"
-#include "third_party/WebKit/common/blob/blob.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_stream_handle.mojom.h"
+#include "third_party/WebKit/public/common/blob/blob.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_event_status.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_stream_handle.mojom.h"
 
 namespace content {
 

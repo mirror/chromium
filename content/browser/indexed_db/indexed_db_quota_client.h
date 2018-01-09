@@ -14,7 +14,7 @@
 #include "content/common/content_export.h"
 #include "storage/browser/quota/quota_client.h"
 #include "storage/browser/quota/quota_task.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom.h"
+#include "third_party/WebKit/public/common/quota/quota_types.mojom.h"
 #include "url/gurl.h"
 
 namespace content {

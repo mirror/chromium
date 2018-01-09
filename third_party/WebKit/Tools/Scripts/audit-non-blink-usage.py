@@ -97,7 +97,7 @@ _CONFIG = [
             'service_manager::InterfaceProvider',
 
             # STL containers such as std::string and std::vector are discouraged
-            # but still needed for interop with WebKit/common. Note that other
+            # but still needed for interop with WebKit/public/common. Note that other
             # STL types such as std::unique_ptr are encouraged.
             'std::.+',
 
