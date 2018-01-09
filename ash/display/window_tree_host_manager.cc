@@ -325,6 +325,7 @@ WindowTreeHostManager::GetAllRootWindowControllers() {
 }
 
 void WindowTreeHostManager::SetPrimaryDisplayId(int64_t id) {
+  LOG(ERROR) << "MSW WindowTreeHostManager::SetPrimaryDisplayId A " << id; 
   // TODO(oshima): Move primary display management to DisplayManager.
   DCHECK_NE(display::kInvalidDisplayId, id);
   if (id == display::kInvalidDisplayId || primary_display_id == id ||

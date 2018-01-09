@@ -584,6 +584,7 @@ std::unique_ptr<DisplayLayout> DisplayLayout::Copy() const {
 }
 
 void DisplayLayout::SwapPrimaryDisplay(int64_t new_primary_id) {
+  LOG(ERROR) << "MSW DisplayLayout::SwapPrimaryDisplay A: " << ToString(); 
   if (primary_id == new_primary_id)
     return;
 
@@ -602,6 +603,7 @@ void DisplayLayout::SwapPrimaryDisplay(int64_t new_primary_id) {
   }
   std::sort(placement_list.begin(), placement_list.end(), ComparePlacements);
   primary_id = new_primary_id;
+  LOG(ERROR) << "MSW DisplayLayout::SwapPrimaryDisplay B: " << ToString(); 
 }
 
 bool DisplayLayout::HasSamePlacementList(const DisplayLayout& layout) const {

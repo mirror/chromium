@@ -318,9 +318,11 @@ void WindowTreeHost::InitCompositor() {
 }
 
 void WindowTreeHost::OnAcceleratedWidgetAvailable() {
+  LOG(ERROR) << "MSW WindowTreeHost::OnAcceleratedWidgetAvailable A " << this << " / " << GetAcceleratedWidget();// << " / " << GetDisplay().bounds().ToString(); 
   compositor_->SetAcceleratedWidget(GetAcceleratedWidget());
   prop_.reset(new ui::ViewProp(GetAcceleratedWidget(),
                                kWindowTreeHostForAcceleratedWidget, this));
+  LOG(ERROR) << "MSW WindowTreeHost::OnAcceleratedWidgetAvailable B " << this << " / " << GetAcceleratedWidget();// << " / " << GetDisplay().bounds().ToString(); 
 }
 
 void WindowTreeHost::OnHostMovedInPixels(

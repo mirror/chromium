@@ -68,8 +68,10 @@ WindowTreeHostMus::WindowTreeHostMus(WindowTreeHostMusInitParams init_params)
     accelerated_widget =
         static_cast<gfx::AcceleratedWidget>(accelerated_widget_count++);
 #endif
+    LOG(ERROR) << "MSW WindowTreeHostMus CTOR Calling OnAcceleratedWidgetAvailable A " << this << " / " << GetAcceleratedWidget() << " / " << GetDisplay().bounds().ToString(); 
     OnAcceleratedWidgetAvailable(accelerated_widget,
                                  GetDisplay().device_scale_factor());
+    LOG(ERROR) << "MSW WindowTreeHostMus CTOR Calling OnAcceleratedWidgetAvailable B " << this << " / " << GetAcceleratedWidget() << " / " << GetDisplay().bounds().ToString(); 
   }
 
   delegate_->OnWindowTreeHostCreated(this);
@@ -176,11 +178,13 @@ display::Display WindowTreeHostMus::GetDisplay() const {
 
 void WindowTreeHostMus::OverrideAcceleratedWidget(
     gfx::AcceleratedWidget widget) {
+  LOG(ERROR) << "MSW WindowTreeHostMus::OverrideAcceleratedWidget A " << this << " / " << widget << " / " << GetDisplay().bounds().ToString(); 
   bool was_visible = compositor()->IsVisible();
   if (was_visible)
     compositor()->SetVisible(false);
   compositor()->ReleaseAcceleratedWidget();
   OnAcceleratedWidgetAvailable(widget, GetDisplay().device_scale_factor());
+  LOG(ERROR) << "MSW WindowTreeHostMus::OverrideAcceleratedWidget B " << this << " / " << widget << " / " << GetDisplay().bounds().ToString(); 
   if (was_visible)
     compositor()->SetVisible(true);
 

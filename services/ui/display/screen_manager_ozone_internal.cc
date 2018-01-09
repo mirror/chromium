@@ -63,6 +63,7 @@ ScreenManagerOzoneInternal::~ScreenManagerOzoneInternal() {
 }
 
 void ScreenManagerOzoneInternal::SetPrimaryDisplayId(int64_t display_id) {
+  LOG(ERROR) << "MSW ScreenManagerOzoneInternal::SetPrimaryDisplayId A " << display_id; 
   DCHECK_NE(kInvalidDisplayId, display_id);
   if (primary_display_id_ == display_id)
     return;

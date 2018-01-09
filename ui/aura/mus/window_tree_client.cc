@@ -2207,12 +2207,21 @@ void WindowTreeClient::AddDisplayReusingWindowTreeHost(
 
 void WindowTreeClient::SwapDisplayRoots(WindowTreeHostMus* window_tree_host1,
                                         WindowTreeHostMus* window_tree_host2) {
+  LOG(ERROR) << "MSW WindowTreeClient::SwapDisplayRoots A";
   DCHECK_NE(window_tree_host1, window_tree_host2);
   const int64_t display_id1 = window_tree_host1->display_id();
   const int64_t display_id2 = window_tree_host2->display_id();
   DCHECK_NE(display_id1, display_id2);
   window_tree_host1->set_display_id(display_id2);
   window_tree_host2->set_display_id(display_id1);
+
+  gfx::AcceleratedWidget widget1 = window_tree_host1->GetAcceleratedWidget();
+  gfx::AcceleratedWidget widget2 = window_tree_host2->GetAcceleratedWidget();
+  LOG(ERROR) << "MSW WindowTreeClient::SwapDisplayRoots B " << widget1 << " " << widget2;
+  window_tree_host1->OverrideAcceleratedWidget(widget2);
+  window_tree_host2->OverrideAcceleratedWidget(widget1);
+  LOG(ERROR) << "MSW WindowTreeClient::SwapDisplayRoots C " << window_tree_host1->GetAcceleratedWidget() << " " << window_tree_host2->GetAcceleratedWidget();
+
   if (window_manager_client_) {
     window_manager_client_->SwapDisplayRoots(
         display_id1, display_id2, base::Bind(&OnAckMustSucceed, FROM_HERE));

@@ -117,6 +117,7 @@ void DisplaySynchronizer::OnWindowTreeHostReusedForDisplay(
 void DisplaySynchronizer::OnWindowTreeHostsSwappedDisplays(
     AshWindowTreeHost* host1,
     AshWindowTreeHost* host2) {
+  LOG(ERROR) << "MSW DisplaySynchronizer::OnWindowTreeHostsSwappedDisplays A";
   DCHECK(host1);
   DCHECK(host2);
   window_manager_client_->SwapDisplayRoots(ToWindowTreeHostMus(host1),
