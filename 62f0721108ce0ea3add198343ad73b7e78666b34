@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b592c8c3_87714dd1",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-09T16:48:24Z",
+      "side": 1,
+      "message": "Why is this argument optional? If we are going to DCHECK it has a value then it really shouldn\u0027t be, but I\u0027m having trouble seeing why it was done that way in the first place.",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dade493_18452a15",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-09T16:48:24Z",
+      "side": 1,
+      "message": "Same question about the optional argument.",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
