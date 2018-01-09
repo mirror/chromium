@@ -740,7 +740,7 @@ static inline bool CompareAndSwapNonSharedCharacterBreakIterator(
 }
 
 NonSharedCharacterBreakIterator::NonSharedCharacterBreakIterator(
-    const String& string)
+    StringView string)
     : is8_bit_(true),
       charaters8_(nullptr),
       offset_(0),
