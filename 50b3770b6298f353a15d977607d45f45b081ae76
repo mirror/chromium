@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "83103369_2287583e",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-09T21:45:36Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation! I added EventAckNoTarget to RenderWidgetTargeter::Delegate and moved the ack code to RWHIER.",
+      "parentUuid": "036a0248_f01cb51b",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 6
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfed2cb6_9c4d9514",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 4
@@ -297,6 +321,30 @@
       "side": 1,
       "message": "I\u0027m only interested in the value passed to DispatchEventToTarget(). If it has the root view, the target view, and the *original* event location, then it can do the transformation itself without needing the delta parameter at all. Up until this point the original event has had its PositionInWidget() left unchanged, and if you continue to leave it unchanged then you don\u0027t need the delta parameter, you can just do the final transformation in DispatchMouseWheelEvent().",
       "parentUuid": "d00c7ab4_c07bf382",
+      "range": {
+        "startLine": 190,
+        "startChar": 24,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56867044_c474adc6",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-09T21:45:36Z",
+      "side": 1,
+      "message": "I talked with Sadrul offline and he found that we can compute the delta in DispatchMouseWheelEvent instead of in here. WDYT computing the delta in DispatchMouseWheelEvent (it\u0027s not a common case), keeping the position conversion code here unchanged and looking into a cleanup later?",
+      "parentUuid": "12a300f3_dc5c299c",
       "range": {
         "startLine": 190,
         "startChar": 24,

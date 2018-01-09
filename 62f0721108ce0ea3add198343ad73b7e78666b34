@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b88b5d89_17e46392",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-09T21:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a7165a_4cb9b9fb",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3600543a_01074d5a",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
         "patchSetId": 5
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7d01ce5d_afb501d4",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-09T21:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406fc0b0_401d9818",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b592c8c3_87714dd1",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 5
@@ -124,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "dc1b6633_892dd996",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-09T21:45:36Z",
+      "side": 1,
+      "message": "It was optional because FindTargetSynchronously can return a base::nullopt for the target_location, but it shouldn\u0027t be nullopt after if (!result.view) so DCHECK here. Will fix this in a follow-up CL, WDYT?",
+      "parentUuid": "b0d85404_ca02dcd1",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca8b8c19_d95be347",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 5
@@ -138,6 +192,24 @@
       "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45262927_a2d2ca67",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-09T21:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca8b8c19_d95be347",
+      "revId": "62f0721108ce0ea3add198343ad73b7e78666b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
