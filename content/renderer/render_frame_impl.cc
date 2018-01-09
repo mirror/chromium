@@ -3537,7 +3537,9 @@ RenderFrameImpl::CreateWorkerFetchContext() {
       std::make_unique<WorkerFetchContextImpl>(
           std::move(service_worker_client_request),
           std::move(container_host_ptr_info),
-          url_loader_factory_getter->GetClonedInfo());
+          url_loader_factory_getter->GetClonedInfo(),
+          GetContentClient()->renderer()->CreateURLLoaderThrottleProvider(
+              URLLoaderThrottleProviderType::kWorker));
 
   worker_fetch_context->set_parent_frame_id(routing_id_);
   worker_fetch_context->set_site_for_cookies(
@@ -4796,11 +4798,10 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
         transition_type | ui::PAGE_TRANSITION_CLIENT_REDIRECT);
   }
 
-  std::vector<std::unique_ptr<URLLoaderThrottle>> throttles;
   GURL new_url;
+  ResourceType resource_type = WebURLRequestToResourceType(request);
   if (GetContentClient()->renderer()->WillSendRequest(
-          frame_, transition_type, request.Url(),
-          WebURLRequestToResourceType(request), &throttles, &new_url)) {
+          frame_, transition_type, request.Url(), resource_type, &new_url)) {
     request.SetURL(WebURL(new_url));
   }
 
@@ -4870,8 +4871,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
       GetContentClient()->renderer()->IsPrefetchOnly(this, request);
   extra_data->set_is_prefetch(is_prefetch);
   extra_data->set_download_to_network_cache_only(
-      is_prefetch &&
-      WebURLRequestToResourceType(request) != RESOURCE_TYPE_MAIN_FRAME);
+      is_prefetch && resource_type != RESOURCE_TYPE_MAIN_FRAME);
   extra_data->set_initiated_in_secure_context(frame_document.IsSecureContext());
 
   // Renderer process transfers apply only to navigational requests.
@@ -4889,9 +4889,13 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
     }
   }
 
-  // TODO(kinuko, yzshen): We need to set up throttles for some worker cases
-  // that don't go through here.
-  extra_data->set_url_loader_throttles(std::move(throttles));
+  // RenderThreadImpl may not be available in some tests.
+  RenderThreadImpl* render_thread = RenderThreadImpl::current();
+  if (render_thread) {
+    extra_data->set_url_loader_throttles(
+        render_thread->url_loader_throttle_provider()->CreateThrottles(
+            routing_id_, request.Url(), resource_type));
+  }
 
   request.SetExtraData(extra_data);
 
