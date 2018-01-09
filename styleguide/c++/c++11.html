@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
 Copyright 2014 The Chromium Authors. All rights reserved.
 Use of this source code is governed by a BSD-style license that can be
@@ -374,6 +374,14 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 <th style='width:240px;'>Description</th>
 <th style='width:240px;'>Documentation Link</th>
 <th style='width:240px;'>Notes and Discussion Thread</th>
+</tr>
+
+<tr>
+<td>Number literal separators</td>
+<td><code>float f = 1'000'000.000'1;</code></td>
+<td><code>'</code>s anywhere in int or float literals are ignored</td>
+<td><a href="http://en.cppreference.com/w/cpp/language/integer_literal">Integer literals</a>, <a href="http://en.cppreference.com/w/cpp/language/floating_literal">Floating point literals</a></td>
+<td></td>
 </tr>
 
 <tr>
@@ -975,16 +983,6 @@ for printing or reading in this format. Still seems useful in minor ways.</td>
 <td>Allows lambda captures to be explicitly initialized with expressions.</td>
 <td><a href="http://en.cppreference.com/w/cpp/language/lambda#Lambda_capture">Lambda capture</a></td>
 <td>Particularly useful to capture move-only types in a lambda when a reference would go out of scope. Less useful without allowing lambdas to outlive the scope.</td>
-</tr>
-
-<tr>
-<td>Number literal separators</td>
-<td><code>float f = 1'000'000.000'1;</code></td>
-<td><code>'</code>s anywhere in int or float literals are ignored</td>
-<td><a href="http://en.cppreference.com/w/cpp/language/integer_literal">Integer literals</a>, <a href="http://en.cppreference.com/w/cpp/language/floating_literal">Floating point literals</a></td>
-<td>Might confuse syntax highlighting in editors. No standard library support
-for printing or reading in this format. Seems less useful and harder on editors
-than binary literals.</td>
 </tr>
 
 <tr>
