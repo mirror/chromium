@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "0cd68655_9d6856ab",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-09T05:20:23Z",
+      "side": 1,
+      "message": "+1 to add a new ToWebServiceWorkerClientInfo.",
+      "parentUuid": "b48cacd1_96a20031",
+      "range": {
+        "startLine": 1480,
+        "startChar": 37,
+        "endLine": 1480,
+        "endChar": 58
+      },
+      "revId": "a6eeac39109911563aa2fc731ea1998dc3103bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b3ace9_c8844406",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 1
