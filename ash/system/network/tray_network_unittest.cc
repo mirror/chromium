@@ -12,7 +12,6 @@
 #include "ash/system/tray/system_tray_test_api.h"
 #include "ash/test/ash_test_base.h"
 #include "base/macros.h"
-#include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/network/network_handler.h"
 #include "components/prefs/testing_pref_service.h"
 #include "ui/message_center/message_center.h"
@@ -29,7 +28,6 @@ class TrayNetworkTest : public AshTestBase {
 
   // testing::Test:
   void SetUp() override {
-    chromeos::DBusThreadManager::Initialize();
     // Initializing NetworkHandler before ash is more like production.
     chromeos::NetworkHandler::Initialize();
     AshTestBase::SetUp();
@@ -50,7 +48,6 @@ class TrayNetworkTest : public AshTestBase {
     }
     AshTestBase::TearDown();
     chromeos::NetworkHandler::Shutdown();
-    chromeos::DBusThreadManager::Shutdown();
   }
 
  private:

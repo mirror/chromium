@@ -32,7 +32,6 @@ class NetworkIconTest : public chromeos::NetworkStateTest {
   ~NetworkIconTest() override = default;
 
   void SetUp() override {
-    chromeos::DBusThreadManager::Initialize();
     chromeos::NetworkStateTest::SetUp();
 
     chromeos::NetworkHandler::Initialize();
@@ -66,7 +65,6 @@ class NetworkIconTest : public chromeos::NetworkStateTest {
 
     ShutdownNetworkState();
     chromeos::NetworkStateTest::TearDown();
-    chromeos::DBusThreadManager::Shutdown();
   }
 
   gfx::Image ImageForNetwork(chromeos::NetworkState* network) {
