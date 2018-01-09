@@ -258,9 +258,30 @@ void MessageLoop::RemoveTaskObserver(TaskObserver* task_observer) {
 }
 
 bool MessageLoop::IsIdleForTesting() {
-  // We only check the incoming queue, since we don't want to lock the work
-  // queue.
-  return incoming_task_queue_->IsIdleForTesting();
+  // Have unprocessed tasks? (this reloads the work queue if necessary)
+  if (incoming_task_queue_->triage_tasks().HasTasks())
+    return false;
+
+  // Have unprocessed deferred tasks which can be processed at this run-level?
+  if (incoming_task_queue_->deferred_tasks().HasTasks() &&
+      !RunLoop::IsNestedOnCurrentThread()) {
+    return false;
+  }
+
+  // Have unprocessed delayed tasks which were ready in the last invocation
+  // of DoDelayedWork()?
+  // Use |recent_time_| instead of |TimeTicks::Now()| to avoid flakiness
+  // (https://crbug.com/799081). Since |recent_time_| only advances when
+  // processing delayed tasks, the delayed queue will only be considered non-
+  // idle if not all tasks which were ready as of the last invocation of
+  // DoDelayedWork() have been processed.
+  if (incoming_task_queue_->delayed_tasks().HasTasks() &&
+      incoming_task_queue_->delayed_tasks().Peek().delayed_run_time <=
+          recent_time_) {
+    return false;
+  }
+
+  return true;
 }
 
 //------------------------------------------------------------------------------

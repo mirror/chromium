@@ -266,7 +266,16 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   void AddTaskObserver(TaskObserver* task_observer);
   void RemoveTaskObserver(TaskObserver* task_observer);
 
-  // Returns true if the message loop is "idle". Provided for testing.
+  // Returns true if the message loop is idle. This is the same condition which
+  // triggers RunLoop::RunUntilIdle() to return: i.e. out of tasks which can be
+  // processed at the current run-level -- there might be deferred non-nestable
+  // tasks remaining if currently in a nested run level. The delayed queue will
+  // only be considered non-idle if tasks which were ready in the last run still
+  // haven't executed (tasks that are just now ready but weren't in the last
+  // DoDelayedWork() invocation will not be considered -- this prevents
+  // flakiness). In other words, if tasks aren't being posted in parallel: this
+  // is guaranteed to return true after Runloop::RunUntilIdle() returned
+  // naturally (wasn't force quit).
   bool IsIdleForTesting();
 
   // Runs the specified PendingTask.
