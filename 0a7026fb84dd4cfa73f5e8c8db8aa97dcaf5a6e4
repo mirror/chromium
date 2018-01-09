@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77878fc_6c39e86a",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-09T06:56:11Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure what style I should follow here. I chose \"value\" to be consistent with other type traits, but should we use kValue to follow the chromium style guide?",
+      "revId": "0a7026fb84dd4cfa73f5e8c8db8aa97dcaf5a6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
