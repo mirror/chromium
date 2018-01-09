@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "486ece82_6f69d59b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/cpu_time_budget_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2018-01-09T16:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f22b63_9d158ac3",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "df83c04008cfcf371cbd47c28b26cebbefaf31ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cb3b2cd_f3e9fdd9",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-05T17:43:08Z",
       "side": 1,
       "message": "Let\u0027s encapsulate this in TraceableStateController and use encapsulation instead of inheritance.",
+      "range": {
+        "startLine": 592,
+        "startChar": 2,
+        "endLine": 592,
+        "endChar": 42
+      },
+      "revId": "df83c04008cfcf371cbd47c28b26cebbefaf31ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591de5c9_5461d9d7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2018-01-09T16:29:20Z",
+      "side": 1,
+      "message": "So, actually I would prefer interface since we already propagate RendererSchedulerImpl to sub-schedulers. Of course we can write a method which returns controller, but this version just look simplier. Any strong arguments?",
+      "parentUuid": "1cb3b2cd_f3e9fdd9",
       "range": {
         "startLine": 592,
         "startChar": 2,
