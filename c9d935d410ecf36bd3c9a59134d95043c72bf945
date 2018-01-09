@@ -16,6 +16,24 @@
       "revId": "c9d935d410ecf36bd3c9a59134d95043c72bf945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb8d376_16b086c6",
+        "filename": "third_party/WebKit/Source/core/css/properties/ComputedStyleUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2018-01-09T04:55:46Z",
+      "side": 1,
+      "message": "Done. Also ran the failing tests that caught this issue.",
+      "parentUuid": "b2831a77_2827cd91",
+      "revId": "c9d935d410ecf36bd3c9a59134d95043c72bf945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
