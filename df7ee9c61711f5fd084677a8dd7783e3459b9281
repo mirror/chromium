@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2a351f1_47b51d02",
+        "filename": "components/webrtc_logging/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-09T09:17:22Z",
+      "side": 1,
+      "message": "Blink\u003eWebRTC\u003eTools",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36455fe7_64cc4d55",
+        "filename": "components/webrtc_logging/browser/log_cleanup.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-09T09:17:22Z",
+      "side": 1,
+      "message": "Nit: Empty line before.",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75ee40a_08ca4470",
+        "filename": "components/webrtc_logging/browser/log_cleanup.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-09T09:17:22Z",
+      "side": 1,
+      "message": "I\u0027m assuming this file is unchanged apart from the move related pieces (namespace etc.)?",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37382bce_b23c690b",
+        "filename": "components/webrtc_logging/browser/log_cleanup.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-09T09:17:22Z",
+      "side": 1,
+      "message": "2018 now. :) Same for other files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5886db81_5f30f6d2",
+        "filename": "components/webrtc_logging/browser/log_cleanup_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-09T09:17:22Z",
+      "side": 1,
+      "message": "Nit: empty line before.",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75adaca_22a8eaf1",
+        "filename": "components/webrtc_logging/browser/log_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-09T09:17:22Z",
+      "side": 1,
+      "message": "Same nit.",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
