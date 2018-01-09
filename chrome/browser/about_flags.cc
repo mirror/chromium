@@ -155,6 +155,10 @@
 #include "base/win/windows_version.h"
 #endif  // OS_WIN
 
+#if defined(TOOLKIT_VIEWS)
+#include "chrome/browser/history/nav_tree.h"
+#endif
+
 using flags_ui::FeatureEntry;
 using flags_ui::kOsAndroid;
 using flags_ui::kOsCrOS;
@@ -3578,6 +3582,12 @@ const FeatureEntry kFeatureEntries[] = {
     {"stop-in-background", flag_descriptions::kStopInBackgroundName,
      flag_descriptions::kStopInBackgroundDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kStopInBackground)},
+
+#if defined(TOOLKIT_VIEWS)
+    {"debug-nav-tree", flag_descriptions::kDebugNavTreeName,
+     flag_descriptions::kDebugNavTreeDescription, kOsWin | kOsLinux,
+     FEATURE_VALUE_TYPE(NavTree::kFeature)},
+#endif  // defined(OS_WIN)
 
 #if defined(OS_CHROMEOS)
     {"ash-enable-display-move-window-accels",
