@@ -85,6 +85,23 @@
       "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0954de33_a627e0f2",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-09T21:40:03Z",
+      "side": 1,
+      "message": "Does |window_properties_| get updated synchronously or asynchronously? This type of DCHECK might be a problem if it\u0027s async (eg. maximize and then quickly minimize again where IsMinimized() is still true).",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
