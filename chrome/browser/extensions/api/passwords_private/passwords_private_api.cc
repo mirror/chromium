@@ -192,8 +192,32 @@ PasswordsPrivateExportPasswordsFunction::Run() {
   PasswordsPrivateDelegate* delegate =
       PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
                                                             true /* create */);
-  delegate->ExportPasswords(GetAssociatedWebContents());
-  return RespondNow(NoArguments());
+  delegate->ExportPasswords(
+      base::BindOnce(
+          &PasswordsPrivateExportPasswordsFunction::ExportRequestCompleted,
+          this),
+      GetAssociatedWebContents());
+  return RespondLater();
+}
+
+void PasswordsPrivateExportPasswordsFunction::ExportRequestCompleted(
+    bool accepted) {
+  Respond(OneArgument(std::make_unique<base::Value>(accepted)));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// PasswordsPrivateGetExportProgressStatusFunction
+
+PasswordsPrivateGetExportProgressStatusFunction::
+    ~PasswordsPrivateGetExportProgressStatusFunction() {}
+
+ExtensionFunction::ResponseAction
+PasswordsPrivateGetExportProgressStatusFunction::Run() {
+  PasswordsPrivateDelegate* delegate =
+      PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
+                                                            true /* create */);
+  return RespondNow(OneArgument(
+      std::make_unique<base::Value>(delegate->GetExportProgressStatus())));
 }
 
 }  // namespace extensions

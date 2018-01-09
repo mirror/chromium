@@ -118,7 +118,10 @@ class MockPasswordManagerExporter
     : public password_manager::PasswordManagerExporter {
  public:
   MockPasswordManagerExporter()
-      : password_manager::PasswordManagerExporter(nullptr) {}
+      : password_manager::PasswordManagerExporter(
+            nullptr,
+            base::BindRepeating([](password_manager::ExportProgressStatus,
+                                   const std::string&) -> void {})) {}
   ~MockPasswordManagerExporter() override = default;
 
   MOCK_METHOD0(PreparePasswordsForExport, void());
