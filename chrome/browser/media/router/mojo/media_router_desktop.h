@@ -50,6 +50,8 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   // MediaRouterMojoImpl override:
   base::Optional<MediaRouteProviderId> GetProviderIdForPresentation(
       const std::string& presentation_id) override;
+  bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
+  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
 
  private:
   template <bool>
@@ -123,6 +125,8 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   DualMediaSinkService* media_sink_service_;
   DualMediaSinkService::Subscription media_sink_service_subscription_;
+  DualMediaSinkService::SinksReceivedSubscription
+      media_sink_service_sinks_received_subscription_;
 
   // A flag to ensure that we record the provider version once, during the
   // initial event page wakeup attempt.

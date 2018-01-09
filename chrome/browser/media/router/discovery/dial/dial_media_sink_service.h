@@ -7,15 +7,19 @@
 
 #include <memory>
 
+#include "base/containers/flat_map.h"
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner_helpers.h"
+#include "chrome/browser/media/router/media_sinks_observer.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "url/origin.h"
 
 namespace net {
 class URLRequestContextGetter;
@@ -33,6 +37,25 @@ using OnDialSinkAddedCallback =
 // SequencedTaskRunner.
 class DialMediaSinkService {
  public:
+  // Called when a new sink becomes available or an available sink becomes
+  // unavailable for media source with id |media_source_id|.
+  // |media_source_id|: media source id of the sink query to be notified about
+  // sink list changes.
+  // |available_sinks|: list of currently available sinks for |media_source_id|
+  // |origins|: list of white listed origins. If empty, all origins are valid.
+  using OnSinksReceivedCallback = base::RepeatingCallback<void(
+      const MediaSource::Id& media_source_id,
+      const std::vector<MediaSinkInternal>& available_sinks,
+      const std::vector<url::Origin>& origins)>;
+
+  // Called when a new sink becomes available or an available sink becomes
+  // unavailable for |app_name|.
+  // |app_name|: app name on receiver device (e.g. YouTube)
+  // |available_sinks|: list of currently available sinks for |app_name|
+  using OnAvailableSinksUpdatedCallback = base::RepeatingCallback<void(
+      const std::string& app_name,
+      const std::vector<MediaSinkInternal>& available_sinks)>;
+
   explicit DialMediaSinkService(
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
   virtual ~DialMediaSinkService();
@@ -45,7 +68,8 @@ class DialMediaSinkService {
   // after |this| is destroyed. Can be null.
   // Marked virtual for tests.
   virtual void Start(const OnSinksDiscoveredCallback& sink_discovery_cb,
-                     const OnDialSinkAddedCallback& dial_sink_added_cb);
+                     const OnDialSinkAddedCallback& dial_sink_added_cb,
+                     const OnSinksReceivedCallback& on_sinks_received_cb);
 
   // Initiates discovery immediately in response to a user gesture
   // (i.e., opening the Media Router dialog). This method can only be called
@@ -53,6 +77,9 @@ class DialMediaSinkService {
   // TODO(imcheng): Rename to ManuallyInitiateDiscovery() or similar.
   // Marked virtual for tests.
   virtual void OnUserGesture();
+
+  virtual void AddSinkQuery(const MediaSource& media_source);
+  virtual void RemoveSinkQuery(const MediaSource& media_source);
 
  private:
   friend class DialMediaSinkServiceTest;
@@ -62,17 +89,27 @@ class DialMediaSinkService {
   CreateImpl(
       const OnSinksDiscoveredCallback& sink_discovery_cb,
       const OnDialSinkAddedCallback& dial_sink_added_cb,
+      const OnAvailableSinksUpdatedCallback& available_sinks_updated_cb,
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
 
   void RunSinksDiscoveredCallback(
       const OnSinksDiscoveredCallback& sinks_discovered_cb,
       std::vector<MediaSinkInternal> sinks);
 
+  void RunAvailableSinksUpdatedCallback(
+      const OnSinksReceivedCallback& on_sinks_received_cb,
+      const std::string& app_name,
+      const std::vector<MediaSinkInternal>& available_sinks);
+
   // Created on the UI thread, used and destroyed on its SequencedTaskRunner.
   std::unique_ptr<DialMediaSinkServiceImpl, base::OnTaskRunnerDeleter> impl_;
 
   // Passed to |impl_| when |Start| is called.
   scoped_refptr<net::URLRequestContextGetter> request_context_;
+
+  // Map of list of DIAL media sources, keyed by app name
+  base::flat_map<std::string, base::flat_set<MediaSource::Id>>
+      app_name_dial_sources_;
 
   SEQUENCE_CHECKER(sequence_checker_);
   base::WeakPtrFactory<DialMediaSinkService> weak_ptr_factory_;
