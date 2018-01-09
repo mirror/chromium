@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c199069_421af4dd",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T22:46:12Z",
+      "side": 1,
+      "message": "Please expand comment to mention the set of histograms logged and point to the histogram suffixes entry that would need to be updated if this changes.",
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a42043_f6cf74be",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T22:46:12Z",
+      "side": 1,
+      "message": "Nit: Move this above the g_instance so that the constants are together before it.",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c4c2d2_8db3c672",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T22:46:12Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026",
+      "range": {
+        "startLine": 311,
+        "startChar": 13,
+        "endLine": 311,
+        "endChar": 17
+      },
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e513b1_c96f389e",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T22:46:12Z",
+      "side": 1,
+      "message": "What enforces that interval is one of the specified values you have in histogram_suffixes? Can there be a DCHECK or something that it\u0027s one of those?",
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171b698f_6ec275c0",
+        "filename": "content/test/test_web_contents.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T22:46:12Z",
+      "side": 1,
+      "message": "Nit: We don\u0027t usually mark POD params const.\n\nAlso, render_widget_host should be last in param list, since it\u0027s not const.",
+      "range": {
+        "startLine": 394,
+        "startChar": 44,
+        "endLine": 394,
+        "endChar": 0
+      },
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10446bf_0e542d73",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 36
+      },
+      "lineNbr": 89852,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T22:46:12Z",
+      "side": 1,
+      "message": "If you\u0027re never logging this histogram without a suffix, add base\u003d\"true\" to it (and any others for which it\u0027s the case.)",
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1f658f_b4b60f99",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 36
+      },
+      "lineNbr": 110686,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T22:46:12Z",
+      "side": 1,
+      "message": "I think you\u0027re logging multiple histograms with these suffixes. Please list the others here too.",
+      "range": {
+        "startLine": 110686,
+        "startChar": 58,
+        "endLine": 110686,
+        "endChar": 0
+      },
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
