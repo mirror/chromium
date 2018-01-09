@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5b6351_e6bc084e",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T21:59:59Z",
+      "side": 0,
+      "message": "I think you can remove some includes now for resource_bundle and ui_resources",
+      "range": {
+        "startLine": 329,
+        "startChar": 24,
+        "endLine": 334,
+        "endChar": 37
+      },
+      "revId": "96721289b5bdc87d6c74880d474ea8089f09b504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cf908f_0d946221",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T21:59:59Z",
+      "side": 0,
+      "message": "make this a DCHECK?",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 398,
+        "endChar": 26
+      },
+      "revId": "96721289b5bdc87d6c74880d474ea8089f09b504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
