@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "347f7cf6_1e72a1c4",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T16:22:25Z",
+      "side": 1,
+      "message": "possible to put this in ThemeService::GetColor, since that has non-trivial logic already? This function is just a pass-through so it would be nice to keep it that way if possible.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 3
+      },
+      "revId": "eefa0767d3c6f5c4eabdd94b272adc314e94e1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d61f9998_e4c39667",
         "filename": "chrome/browser/ui/webui/ntp/ntp_resource_cache.cc",
         "patchSetId": 6
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "You mean inline GetThemeColor here? It\u0027s also used multiple times in CreateNewTabCSS, so we\u0027d still have to keep it. Or am I misunderstanding what you meant?",
       "parentUuid": "d61f9998_e4c39667",
+      "range": {
+        "startLine": 461,
+        "startChar": 6,
+        "endLine": 461,
+        "endChar": 63
+      },
+      "revId": "eefa0767d3c6f5c4eabdd94b272adc314e94e1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8870a1d0_fcf3e84f",
+        "filename": "chrome/browser/ui/webui/ntp/ntp_resource_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T16:22:25Z",
+      "side": 1,
+      "message": "I meant |color_background| is only used in one place in this function so no need for a local var",
+      "parentUuid": "65300b83_901c320c",
       "range": {
         "startLine": 461,
         "startChar": 6,
