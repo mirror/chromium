@@ -95,9 +95,11 @@ void ExtensionIconPlaceholder::Draw(gfx::Canvas* canvas) {
   gfx::Rect bounds(size().width(), size().height());
   // Draw the letter on top.
   canvas->DrawStringRectWithFlags(
-      letter_, ui::ResourceBundle::GetSharedInstance().GetFontList(
-                   GetFontStyleForIconSize(icon_size_)),
-      SK_ColorWHITE, bounds, gfx::Canvas::TEXT_ALIGN_CENTER);
+      letter_,
+      ui::ResourceBundle::GetSharedInstance().GetFontList(
+          GetFontStyleForIconSize(icon_size_)),
+      SK_ColorWHITE, bounds,
+      gfx::Canvas::TEXT_ALIGN_CENTER | gfx::Canvas::NO_ELLIPSIS);
 }
 
 }  // namespace extensions
