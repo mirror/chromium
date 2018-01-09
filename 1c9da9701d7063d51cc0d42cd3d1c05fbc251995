@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00488fd1_488b4765",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2620,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-09T17:14:15Z",
+      "side": 0,
+      "message": "I guess we could also remove propagation of some other switches, but\n\n1) minimal change might be desirable to minimize the risk of a potential M64 merge?\n\n2) we might want to remove more than kSitePerProcess.  I tried the following:\n\n$ for i in `cat ~/scratch/switches.txt`; do echo -n \"$i \"; git grep -l \"\\\\b$i\\\\b\" | grep -v \u0027/browser/\u0027 | grep -v \u0027/common/\u0027 | wc -l; done | tee ~/scratch/switches.out\n...\n\n$ cat ~/scratch/switches.out | grep \u0027 0$\u0027\nkDisableGestureRequirementForPresentation 0\nkDisableLocalStorage 0\nkDisablePinch 0\nkEnablePinch 0\nkEnableSmoothScrolling 0\nkEnableStatsTable 0\nkEnableSurfaceSynchronization 0\nkForceWebRtcIPHandlingPolicy 0\nkMainFrameResizesAreOrientationChanges 0\nkNoReferrers 0\nkRendererWaitForJavaDebugger 0\nkTraceConfigFile 0\nkUseMobileUserAgent 0\n\n\nBTW: This didn\u0027t catch kSitePerProcess, because it also appears in content/public/test/test_utils.cc.\n\nWe need to vet the findings above one-by-one.  For example, kTraceConfigFile propagation seems required going forward.\n\n\nSo - let\u0027s land removal of propagation of switches::kIsolateOrigins and consider removing propagation of other switches in a follow-up CL?",
+      "range": {
+        "startLine": 2620,
+        "startChar": 4,
+        "endLine": 2620,
+        "endChar": 30
+      },
+      "revId": "1c9da9701d7063d51cc0d42cd3d1c05fbc251995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

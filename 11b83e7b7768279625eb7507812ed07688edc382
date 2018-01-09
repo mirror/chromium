@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "125d1c3a_25481a6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-09T17:14:15Z",
+      "side": 1,
+      "message": "This is mostly based on code inspection - searching [1] for kIsolateOrigins only yields results under .../browser/... or .../common/...\n\nI wondered about the BrowserPlugin and I think we don\u0027t need to forward kIsolateOrigins cmdline flag there either: A) AFAIK right now BrowserPlugin/GuestView is implemented on top of OOPIFs (rather than spawning a separate browser process) and B) even if a new browser process was spawned, OOPIFs are not supported *inside* GuestView, so --isolate-origins or --site-per-process *within* a GuestView is a no-op.\n\n[1] $ git grep -l \u0027\\bkIsolateOrigins\\b\u0027\nchrome/browser/apps/guest_view/web_view_browsertest.cc\nchrome/browser/chrome_browser_main.cc\nchrome/browser/chrome_content_browser_client.cc\nchrome/browser/chrome_content_browser_client_browsertest.cc\nchrome/browser/extensions/process_management_browsertest.cc\nchrome/browser/policy/configuration_policy_handler_list_factory.cc\nchrome/browser/policy/site_isolation_policy_browsertest.cc\nchrome/browser/prefs/chrome_command_line_pref_store.cc\nchrome/browser/ui/extensions/hosted_app_browsertest.cc\nchrome/common/pref_names.cc\nchrome/common/pref_names.h\ncontent/browser/isolated_origin_browsertest.cc\ncontent/browser/loader/cross_site_document_blocking_browsertest.cc\ncontent/browser/renderer_host/render_process_host_impl.cc\ncontent/browser/site_isolation_policy.cc\ncontent/public/common/content_features.cc\ncontent/public/common/content_features.h\ncontent/public/common/content_switches.cc\ncontent/public/common/content_switches.h",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "11b83e7b7768279625eb7507812ed07688edc382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8884e5b0_31feedbb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-09T17:14:15Z",
+      "side": 1,
+      "message": "The new test passes.  This is definitely good.\n\nOTOH, I\u0027ve tried testing what happens with Enterprise Policy by editing /etc/opt/chromium/policies/managed/isolated-origins.json (to include a very long list of origins), but even before this CL I could not repro a crash and did not see the origins list added to any cmdlines (inspected via: ps -Af | grep out/gn/chrome)\n\nDo you have any suggestions for how to test this further?  I don\u0027t think the tests would block landing of this CL, right (since this CL *does* fix the problem when --isolate-origins is used on the cmdline)?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "11b83e7b7768279625eb7507812ed07688edc382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5bc1e6_cb07b12b",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-09T17:14:15Z",
+      "side": 1,
+      "message": "The new test crashes before this CL [1] and passes after this CL.\n\n[1] $ DISPLAY\u003d:20 out/gn/content_browsertests --gtest_filter\u003d*IsolatedOriginLongListTest.Test*                            \n                         \nIMPORTANT DEBUGGING NOTE: each test is run inside its own process.\nFor debugging a test inside a debugger, use the\n--gtest_filter\u003d\u003cyour_test_name\u003e flag along with either\n--single_process (to run the test in one launcher/browser process) or\n--single-process (to do the above, and also run Chrome in single-process mode).\nUsing sharding settings from environment. This is shard 0/1\nUsing 1 parallel jobs.\nNote: Google Test filter \u003d IsolatedOriginLongListTest.Test\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] Running 1 test from 1 test case.\n[----------] Global test environment set-up.\n[----------] 1 test from IsolatedOriginLongListTest, where TypeParam \u003d \n[ RUN      ] IsolatedOriginLongListTest.Test\n\nDevTools listening on ws://127.0.0.1:36441/devtools/browser/f778e5d9-8f86-498e-b8b2-d742e12aeb46\nFontconfig warning: \"/etc/fonts/fonts.conf\", line 146: blank doesn\u0027t take any effect anymore. please remove it from yo\nur fonts.conf\n[7295:7318:0109/062903.143947:FATAL:zygote_communication_linux.cc(49)] Check failed: data.size() \u003c\u003d kZygoteMaxMessageL\nength. Trying to send too-large message to zygote (sending 20624 bytes, max is 8192)\n#0 0x7fb9f7e7398c base::debug::StackTrace::StackTrace()\n#1 0x7fb9f7e9dddc logging::LogMessage::~LogMessage()\n#2 0x7fb9f676a4b3 content::ZygoteCommunication::SendMessage()\n#3 0x7fb9f676ae77 content::ZygoteCommunication::ForkRequest()\n#4 0x7fb9f62a949a content::internal::ChildProcessLauncherHelper::LaunchProcessOnLauncherThread()\n#5 0x7fb9f62a815c content::internal::ChildProcessLauncherHelper::LaunchOnLauncherThread()\n#6 0x7fb9f5e5ea2b _ZN4base8internal7InvokerINS0_9BindStateIMN7content12_GLOBAL__N_121FileTraceDataEndpointEFvvEJ13scop\ned_refptrIS5_EEEEFvvEE3RunEPNS0_13BindStateBaseE\n#7 0x7fb9f7e742aa base::debug::TaskAnnotator::RunTask()\n#8 0x7fb9f7f11808 base::internal::TaskTracker::RunOrSkipTask()\n#9 0x7fb9f7f1247b base::internal::TaskTrackerPosix::RunOrSkipTask()\n#10 0x7fb9f7f108da base::internal::TaskTracker::RunNextTask()\n#11 0x7fb9f7f08416 base::internal::SchedulerWorker::Thread::ThreadMain()\n#12 0x7fb9f7f1c9bf base::(anonymous namespace)::ThreadFunc()\n#13 0x7fb9f8ae9184 start_thread\n#14 0x7fb9eeefeffd clone\n\n[1/1] IsolatedOriginLongListTest.Test (CRASHED)\n1 test crashed:\n    IsolatedOriginLongListTest.Test (../../content/browser/isolated_origin_browsertest.cc:1101)",
+      "range": {
+        "startLine": 1083,
+        "startChar": 6,
+        "endLine": 1083,
+        "endChar": 32
+      },
+      "revId": "11b83e7b7768279625eb7507812ed07688edc382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
