@@ -895,6 +895,9 @@ class ReporterRunner {
       invocation->set_reporter_logs_upload_enabled(false);
     }
 
+    // DO NOT SUBMIT
+    invocation->mutable_command_line().AppendSwitch("enable-test-only-uws");
+
     if (ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()) {
       invocation->mutable_command_line().AppendSwitch(
           chrome_cleaner::kEnableCrashReportingSwitch);
