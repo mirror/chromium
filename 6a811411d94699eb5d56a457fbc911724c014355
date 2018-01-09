@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b25ebc4_a72bbd15",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-09T15:44:44Z",
+      "side": 1,
+      "message": "Can you instead do that in the loop at the end of the function? That way it will work event if the author has specified some sections.",
+      "range": {
+        "startLine": 1333,
+        "startChar": 6,
+        "endLine": 1338,
+        "endChar": 7
+      },
+      "revId": "6a811411d94699eb5d56a457fbc911724c014355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
