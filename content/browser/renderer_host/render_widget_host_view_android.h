@@ -238,6 +238,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void OnBeginFrame(const viz::BeginFrameArgs& args) override;
   const viz::BeginFrameArgs& LastUsedBeginFrameArgs() const override;
   void OnBeginFrameSourcePausedChanged(bool paused) override;
+  bool WantsAnimateOnlyBeginFrames() const override;
 
   // Non-virtual methods
   void SetContentViewCore(ContentViewCore* content_view_core);
@@ -388,6 +389,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   viz::BeginFrameSource* begin_frame_source_;
   viz::BeginFrameArgs last_begin_frame_args_;
   bool begin_frame_paused_ = false;
+  bool wants_animate_only_begin_frames_ = false;
 
   // Indicates whether and for what reason a request for begin frames has been
   // issued. Used to control action dispatch at the next |OnBeginFrame()| call.

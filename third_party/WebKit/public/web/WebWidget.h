@@ -89,7 +89,14 @@ class WebWidget {
   // Called to run through the entire set of document lifecycle phases needed
   // to render a frame of the web widget. This MUST be called before Paint,
   // and it may result in calls to WebWidgetClient::didInvalidateRect.
-  virtual void UpdateAllLifecyclePhases() {}
+  virtual void UpdateAllLifecyclePhases() { UpdateLifecycle(); }
+
+  // Selectively runs all lifecycle phases or only phases up to LayoutClean. The
+  // latter can be used to trigger side effects of layout if painting is not
+  // required.
+  enum class LifecycleUpdate { kLayout, kAll };
+  virtual void UpdateLifecycle(
+      LifecycleUpdate requested_update = LifecycleUpdate::kAll) {}
 
   // Called to paint the rectangular region within the WebWidget
   // onto the specified canvas at (viewPort.x,viewPort.y). You MUST call
