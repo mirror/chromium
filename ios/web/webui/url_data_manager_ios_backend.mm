@@ -359,9 +359,7 @@ int URLRequestChromeJob::ReadRawData(net::IOBuffer* buf, int buf_size) {
 
 int URLRequestChromeJob::CompleteRead(net::IOBuffer* buf, int buf_size) {
   // http://crbug.com/373841
-  char url_buf[128];
-  base::strlcpy(url_buf, request_->url().spec().c_str(), arraysize(url_buf));
-  base::debug::Alias(url_buf);
+  DEBUG_ALIAS_FOR_GURL(url_buf, request_->url());
 
   int remaining = data_->size() - data_offset_;
   if (buf_size > remaining)
