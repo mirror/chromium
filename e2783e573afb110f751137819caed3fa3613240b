@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0eff797d_3456fffc",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-09T20:05:47Z",
+      "side": 1,
+      "message": "Done.\n\nLooks like most of the callers never remove the observe though...",
+      "parentUuid": "f54e727c_5f573b1a",
+      "revId": "e2783e573afb110f751137819caed3fa3613240b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b40c0c39_5b8b2c57",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "e2783e573afb110f751137819caed3fa3613240b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9b58eb_3578dfd6",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-09T20:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b40c0c39_5b8b2c57",
+      "range": {
+        "startLine": 426,
+        "startChar": 38,
+        "endLine": 426,
+        "endChar": 39
+      },
+      "revId": "e2783e573afb110f751137819caed3fa3613240b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
