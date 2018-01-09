@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a0bac73_f1dde5ab",
+        "filename": "extensions/renderer/bindings/exception_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115640
+      },
+      "writtenOn": "2018-01-09T16:47:25Z",
+      "side": 1,
+      "message": "Fails to link otherwise. I would have liked to avoid it.",
+      "parentUuid": "aeda65b9_89abcb06",
+      "revId": "229497b53ca9b4e8cc90d24a2141140a3e6038ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2112e11f_399f2ec0",
         "filename": "extensions/renderer/bindings/get_per_context_data.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "229497b53ca9b4e8cc90d24a2141140a3e6038ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5435a7a_711c958e",
+        "filename": "extensions/renderer/bindings/get_per_context_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115640
+      },
+      "writtenOn": "2018-01-09T16:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2112e11f_399f2ec0",
+      "revId": "229497b53ca9b4e8cc90d24a2141140a3e6038ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
