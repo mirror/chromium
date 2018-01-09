@@ -24,6 +24,7 @@
 #include "ui/display/display_layout_builder.h"
 #include "ui/display/manager/chromeos/touch_device_manager.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/display/manager/display_manager_utilities.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/display/unified_desktop_utils.h"
 #include "ui/gfx/geometry/point.h"
@@ -32,6 +33,7 @@
 namespace extensions {
 
 namespace system_display = api::system_display;
+using MirrorParamsErrors = display::MixedMirrorModeParamsErrors;
 
 namespace {
 
@@ -510,6 +512,36 @@ const char DisplayInfoProviderChromeOS::kNativeTouchCalibrationActiveError[] =
 // static
 const char DisplayInfoProviderChromeOS::kNoExternalTouchDevicePresent[] =
     "No external touch device present.";
+
+// static
+const char DisplayInfoProviderChromeOS::kMirrorModeSourceIdBadFormatError[] =
+    "Mirroring source id is in bad format.";
+
+// static
+const char
+    DisplayInfoProviderChromeOS::kMirrorModeDestinationIdBadFormatError[] =
+        "Mirroring destination id is in bad format.";
+
+// static
+const char DisplayInfoProviderChromeOS::kMirrorModeSingleDisplayError[] =
+    "Mirror mode cannot be turned on for single display.";
+
+// static
+const char DisplayInfoProviderChromeOS::kMirrorModeSourceIdNotFoundError[] =
+    "Mirroring source id cannot be found.";
+
+// static
+const char DisplayInfoProviderChromeOS::kMirrorModeDestinationIdsEmptyError[] =
+    "At least one mirroring destination id should be specified.";
+
+// static
+const char
+    DisplayInfoProviderChromeOS::kMirrorModeDestinationIdNotFoundError[] =
+        "Mirroring destination id cannot be found.";
+
+// static
+const char DisplayInfoProviderChromeOS::kMirrorModeDuplicateIdError[] =
+    "Display id should not be duplicate.";
 
 DisplayInfoProviderChromeOS::DisplayInfoProviderChromeOS() {}
 
@@ -1017,6 +1049,71 @@ bool DisplayInfoProviderChromeOS::IsNativeTouchCalibrationActive(
     *error = kNativeTouchCalibrationActiveError;
     return true;
   }
+  return false;
+}
+
+bool DisplayInfoProviderChromeOS::SetMirrorMode(
+    bool enabled,
+    bool mixed,
+    const std::string& mirroring_source_id,
+    const std::vector<std::string>& mirroring_destination_ids,
+    std::string* out_error) {
+  display::DisplayManager* display_manager =
+      ash::Shell::Get()->display_manager();
+
+  if (!display_manager->is_multi_mirroring_enabled())
+    return false;
+
+  if (!enabled || !mixed) {
+    // Ignore the specified source and destination displays and turn on mirror
+    // mode for all connected displays.
+    display_manager->SetMirrorMode(enabled, base::nullopt);
+    return true;
+  }
+
+  int64_t source_id;
+  if (!base::StringToInt64(mirroring_source_id, &source_id)) {
+    *out_error = DisplayInfoProviderChromeOS::kMirrorModeSourceIdBadFormatError;
+    return false;
+  }
+
+  display::DisplayIdList destination_ids;
+  for (auto& id : mirroring_destination_ids) {
+    int64_t destination_id;
+    if (!base::StringToInt64(id, &destination_id)) {
+      *out_error =
+          DisplayInfoProviderChromeOS::kMirrorModeDestinationIdBadFormatError;
+      return false;
+    }
+    destination_ids.emplace_back(destination_id);
+  }
+
+  base::Optional<display::MixedMirrorModeParams> mixed_params(
+      base::in_place, source_id, destination_ids);
+  const MirrorParamsErrors error_type =
+      display::ValidateParamsForMixedMirrorMode(
+          display_manager->GetCurrentDisplayIdList(), *mixed_params);
+  switch (error_type) {
+    case MirrorParamsErrors::kErrorSingleDisplay:
+      *out_error = kMirrorModeSingleDisplayError;
+      return false;
+    case MirrorParamsErrors::kErrorSourceIdNotFound:
+      *out_error = kMirrorModeSourceIdNotFoundError;
+      return false;
+    case MirrorParamsErrors::kErrorDestinationIdsEmpty:
+      *out_error = kMirrorModeDestinationIdsEmptyError;
+      return false;
+    case MirrorParamsErrors::kErrorDestinationIdNotFound:
+      *out_error = kMirrorModeDestinationIdNotFoundError;
+      return false;
+    case MirrorParamsErrors::kErrorDuplicateId:
+      *out_error = kMirrorModeDuplicateIdError;
+      return false;
+    case MirrorParamsErrors::kSuccess:
+      display_manager->SetMirrorMode(true, std::move(mixed_params));
+      return true;
+  }
+  NOTREACHED();
   return false;
 }
 

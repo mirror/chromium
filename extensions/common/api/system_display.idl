@@ -192,6 +192,7 @@ namespace system.display {
     // other properties may not apply. This is has no effect if not provided.
     boolean? isUnified;
 
+    // Depracated. Please use SetMirrorMode() instead.
     // Chrome OS only. If set and not empty, enables mirroring for this display.
     // Otherwise disables mirroring for this display. This value should indicate
     // the id of the source display to mirror, which must not be the same as the
@@ -244,6 +245,7 @@ namespace system.display {
   callback SetDisplayUnitInfoCallback = void();
   callback SetDisplayLayoutCallback = void();
   callback NativeTouchCalibrationCallback = void(boolean success);
+  callback SetMirrorModeCallback = void();
 
   interface Functions {
     // Requests the information for all attached display devices.
@@ -351,6 +353,35 @@ namespace system.display {
     // display.
     // |id|: The display's unique identifier.
     static void clearTouchCalibration(DOMString id);
+
+    // Turns on/off the mirror mode. If |enabled| is false, the following three
+    // parameters will be ignored and all displays will be set in default mode
+    // (extended or unified desktop mode). Otherwise, mirror mode will be turned
+    // on. If |mixed| is false, default mirror mode will be turned on.
+    // |mirroringSourceId| and |mirroringDestinationIds| will be ignored, the
+    // source display will be selected by the platform and mirrored to all other
+    // displays. Otherwise, mixed mirror mode will be turned on. The source
+    // display specified by |mirroringSourceId| will be selected and mirrored to
+    // all displays specified by |mirroringDestinationIds|. All other displays
+    // will be set in extended mode.
+    // Note that calling setDisplayProperties() will fail for the mirroring
+    // destination displays. Although |mirroringSourceId| in DisplayProperties
+    // is depracated, it still can be used to turn on/off the mirror mode.
+    // NOTE: This is only available to Chrome OS Kiosk apps and Web UI.
+    // |enabled|: True if the mirror mode should be turned on.
+    // |mixed|: True if mirroring source and destination displays should be
+    //     specified by the following two parameters.
+    // |mirroringSourceId|: The id of the mirroring source display.
+    // |mirroringDestinationIds|: The ids of the mirroring destination displays.
+    // |callback|: Empty function called when the function finishes. To find out
+    //     whether the function succeeded, $(ref:runtime.lastError) should be
+    //     queried.
+    static void setMirrorMode(
+        boolean enabled,
+        boolean mixed,
+        DOMString mirroringSourceId,
+        DOMString[] mirroringDestinationIds,
+        optional SetMirrorModeCallback callback);
   };
 
   interface Events {

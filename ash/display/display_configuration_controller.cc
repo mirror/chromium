@@ -203,7 +203,7 @@ void DisplayConfigurationController::SetDisplayLayoutImpl(
 }
 
 void DisplayConfigurationController::SetMirrorModeImpl(bool mirror) {
-  display_manager_->SetMirrorMode(mirror);
+  display_manager_->SetMirrorMode(mirror, base::nullopt);
   if (display_animator_)
     display_animator_->StartFadeInAnimation();
 }

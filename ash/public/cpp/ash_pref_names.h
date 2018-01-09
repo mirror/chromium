@@ -35,6 +35,7 @@ ASH_PUBLIC_EXPORT extern const char kDisplayProperties[];
 ASH_PUBLIC_EXPORT extern const char kDisplayRotationLock[];
 ASH_PUBLIC_EXPORT extern const char kDisplayTouchAssociations[];
 ASH_PUBLIC_EXPORT extern const char kExternalDisplayMirrorInfo[];
+ASH_PUBLIC_EXPORT extern const char kDisplayMixedMirrorModeParams[];
 ASH_PUBLIC_EXPORT extern const char kSecondaryDisplays[];
 
 ASH_PUBLIC_EXPORT extern const char kHasSeenStylus[];
