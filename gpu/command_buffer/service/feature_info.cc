@@ -1660,6 +1660,17 @@ void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
         GL_LUMINANCE_ALPHA16F_EXT);
   }
 
+  // Luminance formats were deprecated in GLES 3.0 / OpenGL 3.1.
+  const bool is_luminance_deprecated = gl_version_info_->IsAtLeastGLES(3, 0) ||
+                                       gl_version_info_->IsAtLeastGL(3, 1);
+  if (is_luminance_deprecated) {
+    const GLenum values[] = {GL_LUMINANCE8_EXT,   GL_LUMINANCE8_ALPHA8_EXT,
+                             GL_LUMINANCE16F_EXT, GL_LUMINANCE_ALPHA16F_EXT,
+                             GL_LUMINANCE32F_EXT, GL_LUMINANCE_ALPHA32F_EXT};
+    validators_.texture_internal_format_storage.RemoveValues(values,
+                                                             arraysize(values));
+  }
+
   g_l16_is_present =
       enable_texture_half_float && feature_flags_.ext_texture_storage;
 }
