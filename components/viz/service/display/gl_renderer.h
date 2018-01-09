@@ -53,7 +53,8 @@ class TextureDrawQuad;
 struct DrawRenderPassDrawQuadParams;
 
 // Class that handles drawing of composited render layers using GL.
-class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
+class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer,
+                                      base::trace_event::MemoryDumpProvider {
  public:
   class ScopedUseGrContext;
 
@@ -72,6 +73,9 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
       const gpu::TextureInUseResponses& responses) override;
 
   virtual bool IsContextLost();
+  // base::trace_event::MemoryDumpProvider implementation.
+  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
+                    base::trace_event::ProcessMemoryDump* pmd) override;
 
  protected:
   void DidChangeVisibility() override;
