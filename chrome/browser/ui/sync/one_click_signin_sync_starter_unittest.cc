@@ -178,34 +178,3 @@ TEST_F(OneClickSigninSyncStarterTest, CallbackNull) {
   EXPECT_EQ(0, failed_count_);
   EXPECT_EQ(0, succeeded_count_);
 }
-
-// Checks that the token is revoked when signin is canceled while authentication
-// is in progress.
-TEST_F(OneClickSigninSyncStarterTest, RemoveAccountOnCancel) {
-  signin::ScopedAccountConsistencyDicePrepareMigration prepare_migration;
-  SigninManager* signin_manager =
-      SigninManagerFactory::GetForProfile(profile());
-  // Start from signed-out state.
-  signin_manager->SignOut(signin_metrics::SIGNOUT_TEST,
-                          signin_metrics::SignoutDelete::IGNORE_METRIC);
-  ProfileOAuth2TokenService* token_service =
-      ProfileOAuth2TokenServiceFactory::GetForProfile(profile());
-  token_service->UpdateCredentials(account_id_, kTestingRefreshToken);
-  ASSERT_TRUE(token_service->RefreshTokenIsAvailable(account_id_));
-
-  // Use NEW_PROFILE to pause the OneClickSynStarter in the middle of the
-  // signin, while it is waiting for a new Profile to be created.
-  sync_starter_ = new OneClickSigninSyncStarter(
-      profile(), nullptr, kTestingGaiaId, kTestingUsername, std::string(),
-      kTestingRefreshToken, signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,
-      signin_metrics::Reason::REASON_UNKNOWN_REASON,
-      OneClickSigninSyncStarter::NEW_PROFILE,
-      OneClickSigninSyncStarter::SYNC_WITH_DEFAULT_SETTINGS,
-      OneClickSigninSyncStarter::CONFIRM_UNTRUSTED_SIGNIN,
-      OneClickSigninSyncStarter::Callback());
-
-  // Check that the token is deleted.
-  ASSERT_TRUE(signin_manager->AuthInProgress());
-  sync_starter_->CancelSigninAndDelete();
-  EXPECT_FALSE(token_service->RefreshTokenIsAvailable(account_id_));
-}
