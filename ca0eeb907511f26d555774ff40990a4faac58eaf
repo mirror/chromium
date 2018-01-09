@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b2ee74a_ed2dfeda",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-09T19:15:46Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to rename this one, right?",
+      "range": {
+        "startLine": 143,
+        "startChar": 33,
+        "endLine": 143,
+        "endChar": 63
+      },
+      "revId": "ca0eeb907511f26d555774ff40990a4faac58eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d50a774_b356b68d",
+        "filename": "chrome/common/mac/launchd.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-09T19:15:46Z",
+      "side": 1,
+      "message": "Same comment here.",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 37
+      },
+      "revId": "ca0eeb907511f26d555774ff40990a4faac58eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
