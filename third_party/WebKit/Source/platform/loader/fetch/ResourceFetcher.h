@@ -204,6 +204,8 @@ class PLATFORM_EXPORT ResourceFetcher
   Resource* ResourceForStaticData(const FetchParameters&,
                                   const ResourceFactory&,
                                   const SubstituteData&);
+  Resource* ResourceForInvalidRequest(const FetchParameters&,
+                                      const ResourceFactory&);
   Resource* ResourceForBlockedRequest(const FetchParameters&,
                                       const ResourceFactory&,
                                       ResourceRequestBlockedReason);
