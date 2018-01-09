@@ -46,6 +46,30 @@
       "revId": "a668b5363cd374a29ca0f46124c226e2e2aa21d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb65f2e_670cdcfa",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-09T15:23:24Z",
+      "side": 0,
+      "message": "Let\u0027s coalesce this discussion @ https://chromium-review.googlesource.com/c/chromium/src/+/856982, thanks!",
+      "parentUuid": "390f1909_09c31fbc",
+      "range": {
+        "startLine": 264,
+        "startChar": 33,
+        "endLine": 264,
+        "endChar": 59
+      },
+      "revId": "a668b5363cd374a29ca0f46124c226e2e2aa21d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
