@@ -181,7 +181,7 @@ const base::Feature kCCTRedirectPreconnect{"CCTRedirectPreconnect",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kChromeHomeFeature{"ChromeHome",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kChromeHomeBottomNavLabels{
     "ChromeHomeBottomNavLabels", base::FEATURE_DISABLED_BY_DEFAULT};

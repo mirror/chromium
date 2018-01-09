@@ -7,8 +7,12 @@ package org.chromium.chrome.browser.widget.textbubble;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.StringRes;
+import android.support.v4.view.accessibility.AccessibilityEventCompat;
+import android.support.v4.view.accessibility.AccessibilityRecordCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,12 +21,15 @@ import android.view.View.MeasureSpec;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
@@ -176,6 +183,42 @@ public class TextBubble implements OnTouchListener {
                 ApiCompatibilityUtils.getColor(mContext.getResources(), R.color.google_blue_500));
     }
 
+    /**
+     * Announce an accessibility event about the bubble text.
+     */
+    private void announceForAccessibility() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!mPopupWindow.isShowing() || mPopupWindow.getContentView() == null) return;
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+                    mPopupWindow.getContentView().announceForAccessibility(
+                            mContext.getString(mAccessibilityStringId));
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    if (mRootView == null) return;
+                    // For Android J and K, use compatible API and send the accessibility event from
+                    // root view. See https://crbug.com/773387.
+                    AccessibilityManager manager =
+                            (AccessibilityManager) ContextUtils.getApplicationContext()
+                                    .getSystemService(Context.ACCESSIBILITY_SERVICE);
+                    if (manager.isEnabled()) {
+                        AccessibilityEvent event = AccessibilityEvent.obtain(
+                                AccessibilityEventCompat.TYPE_ANNOUNCEMENT);
+                        event.getText().add(mContext.getString(mAccessibilityStringId));
+                        event.setEnabled(true);
+                        event.setClassName(mRootView.getClass().getName());
+                        event.setPackageName(mRootView.getContext().getPackageName());
+                        AccessibilityRecordCompat record = AccessibilityEventCompat.asRecord(event);
+                        record.setSource(mRootView);
+                        manager.sendAccessibilityEvent(event);
+                        mRootView.sendAccessibilityEvent(
+                                AccessibilityEventCompat.TYPE_ANNOUNCEMENT);
+                    }
+                }
+            }
+        });
+    }
+
     /** Shows the bubble. Will have no effect if the bubble is already showing. */
     public void show() {
         if (mPopupWindow.isShowing()) return;
@@ -187,17 +230,7 @@ public class TextBubble implements OnTouchListener {
         createContentView();
         updateBubbleLayout();
         mPopupWindow.showAtLocation(mRootView, Gravity.TOP | Gravity.START, mX, mY);
-
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!mPopupWindow.isShowing() || mPopupWindow.getContentView() == null) return;
-
-                mPopupWindow.getContentView().announceForAccessibility(
-                        mContext.getString(mAccessibilityStringId));
-            }
-        });
-
+        announceForAccessibility();
         sBubbles.add(this);
     }
 

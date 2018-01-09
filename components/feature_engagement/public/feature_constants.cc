@@ -9,26 +9,26 @@
 namespace feature_engagement {
 
 const base::Feature kIPHDemoMode{"IPH_DemoMode",
-                                 base::FEATURE_DISABLED_BY_DEFAULT};
+                                 base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kIPHDummyFeature{"IPH_Dummy",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_ANDROID)
 const base::Feature kIPHDataSaverDetailFeature{
-    "IPH_DataSaverDetail", base::FEATURE_DISABLED_BY_DEFAULT};
+    "IPH_DataSaverDetail", base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kIPHDataSaverPreviewFeature{
     "IPH_DataSaverPreview", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kIPHDownloadHomeFeature{"IPH_DownloadHome",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kIPHDownloadPageFeature{"IPH_DownloadPage",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kIPHDownloadPageScreenshotFeature{
-    "IPH_DownloadPageScreenshot", base::FEATURE_DISABLED_BY_DEFAULT};
+    "IPH_DownloadPageScreenshot", base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kIPHChromeHomeExpandFeature{
-    "IPH_ChromeHomeExpand", base::FEATURE_DISABLED_BY_DEFAULT};
+    "IPH_ChromeHomeExpand", base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kIPHChromeHomeMenuHeaderFeature{
-    "IPH_ChromeHomeMenuHeader", base::FEATURE_DISABLED_BY_DEFAULT};
+    "IPH_ChromeHomeMenuHeader", base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kIPHChromeHomePullToRefreshFeature{
     "IPH_ChromeHomePullToRefresh", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kIPHMediaDownloadFeature{"IPH_MediaDownload",
