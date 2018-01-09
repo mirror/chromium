@@ -93,7 +93,6 @@ class CannedBrowsingDataLocalStorageHelper
   ~CannedBrowsingDataLocalStorageHelper() override;
 
   std::set<GURL> pending_local_storage_info_;
-  std::multimap<GURL, GURL> pending_origins_to_pending_suborigins_;
 
   DISALLOW_COPY_AND_ASSIGN(CannedBrowsingDataLocalStorageHelper);
 };
