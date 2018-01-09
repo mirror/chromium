@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7d0df85_49b49985",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T23:46:17Z",
+      "side": 1,
+      "message": "Used GetHistograms() instead.",
+      "parentUuid": "1ac6e5d9_92cec868",
+      "revId": "cb7b76e3384eb5c58d9be1ebe8d3f7f12e4b2426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1ebb33a_e1d180b5",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 17
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e7bc1150_201f3621",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T23:46:17Z",
+      "side": 1,
+      "message": "I\u0027ll leave it as it is for the time being.\n\nI might be able to simplify that even further. For example by removing GetHistogramsWithPredicate and GetKnownHistograms altogether.",
+      "parentUuid": "c1ebb33a_e1d180b5",
+      "range": {
+        "startLine": 353,
+        "startChar": 68,
+        "endLine": 353,
+        "endChar": 0
+      },
+      "revId": "cb7b76e3384eb5c58d9be1ebe8d3f7f12e4b2426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d10d997d_3eb40ff9",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 17
@@ -62,6 +104,30 @@
       "revId": "cb7b76e3384eb5c58d9be1ebe8d3f7f12e4b2426",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50da2b5f_0190a2ef",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T23:46:17Z",
+      "side": 1,
+      "message": "Yes.\n\nAnd GetSnapshot(\"\") is also the same as GetHistograms().\n\nI think they should all go. There should be only one GetHistograms(), and then the caller can apply whatever filtering it wants. It would also prevent the lock from being held while the predicate is checked.\n\nI see if I can think about an elegant solution.",
+      "parentUuid": "d10d997d_3eb40ff9",
+      "range": {
+        "startLine": 362,
+        "startChar": 15,
+        "endLine": 362,
+        "endChar": 33
+      },
+      "revId": "cb7b76e3384eb5c58d9be1ebe8d3f7f12e4b2426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
