@@ -598,7 +598,7 @@
       },
       'linux-chromeos-rel': {
         'additional_compile_targets': [
-          'gn_all',
+          'all',
         ],
         'test_suites': {
           'gtest_tests': 'linux_chromeos_rel_gtests',
