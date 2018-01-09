@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/net/network_connect_delegate_chromeos.h"
+#include "chrome/browser/ui/ash/network/network_connect_delegate_chromeos.h"
 
-#include "chrome/browser/chromeos/enrollment_dialog_view.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
-#include "chrome/browser/chromeos/net/network_state_notifier.h"
+#include "chrome/browser/ui/ash/network/enrollment_dialog_view.h"
+#include "chrome/browser/ui/ash/network/network_state_notifier.h"
 #include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/browser/ui/webui/chromeos/mobile_setup_dialog.h"
 
