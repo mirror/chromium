@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34d7642a_2b7638e5",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:22:26Z",
+      "side": 1,
+      "message": "How about just select_to_speak_tests for this target, or\nsomething like select_to_speak_extension_tests?\n\nThis is confusingly similar to the existing source file\nselect_to_speak_browsertest.cc, which is just one set of\ntests in the existing browser_tests target.",
+      "revId": "477f9e75c1ba1a04b91ffc4ff63582eeba133570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289bde80_089332c8",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_keystroke_selection_test.extjs",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:22:26Z",
+      "side": 1,
+      "message": "It\u0027s slightly confusing to me to see these here, they look like\nofficial APIs on chrome.tts rather than on the mock.\n\nHow about something like:\n\nwindow.mockTts \u003d new MockTts();\nchrome.tts \u003d mockTts;\n\nThen when asserting:\n\nassertFalse(mockTts.currentlySpeaking());",
+      "revId": "477f9e75c1ba1a04b91ffc4ff63582eeba133570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7640fcf1_09fd602e",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_keystroke_selection_test.extjs",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:22:26Z",
+      "side": 1,
+      "message": "Tiny nit: I prefer indenting this and all subsequent lines 4 spaces,\nsince it\u0027s continuation of the previous line. Makes it slightly\neasier to see the @params at a glance.",
+      "revId": "477f9e75c1ba1a04b91ffc4ff63582eeba133570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3573fa_3b02b2e8",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_keystroke_selection_test.extjs",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:22:26Z",
+      "side": 1,
+      "message": "I\u0027d either make \"This is some text\" a constant, or make it\nan argument to this function. That way you can avoid the duplicate of\nthe same string below.\n\nYou don\u0027t even really need \"expected\", right? You can infer it from\nthe string \"This is some text\" and the offsets.\n\nI think it\u0027d be more clear to do one of these, either:\n\ntestSimpleTextAtKeystroke(0, 5);\ntestSimpleTextAtKeystroke(3, 17);\n...\n\n- no expected string required.\n\nAlternatively, specify both the string and expected:\n\ntestSimpleTextAtKeystroke(\"This is some text\", 0, 4, \"This\");\n...\n\nThat second version seems potentially more flexible as you could\ntest corner cases like the empty string.",
+      "revId": "477f9e75c1ba1a04b91ffc4ff63582eeba133570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714d7ad9_97718660",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_keystroke_selection_test.extjs",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:22:26Z",
+      "side": 1,
+      "message": "Note that there are some limitations to setDocumentSelection, I\u0027d\nrecommend also having some tests that set the selection directly in the\npage, something like:\n\n\u003cbody\u003e\n  \u003cp\u003eHere is some text\u003c/p\u003e\n  \u003cscript\u003e\n    var p \u003d document.querySelector(\u0027p\u0027);\n    var range \u003d document.createRange();\n    range.selectNodeContents(document.querySelector(\u0027p\u0027););\n    window.getSelection().addRange(range);\n  \u003c/script\u003e\n\u003c/body\u003e\n\nBasically I think there are some ranges you could get via the DOM\nor via selecting with the mouse or keyboard that wouldn\u0027t be possible\nto select using chrome.automation.setDocumentSelection, and we should\nbe able to test them all.\n\nNot needed for this change!",
+      "revId": "477f9e75c1ba1a04b91ffc4ff63582eeba133570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f570149_3c426ac6",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_keystroke_selection_test.extjs",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:22:26Z",
+      "side": 1,
+      "message": "\"load a data:text/html page\" -\u003e \"load given html using a data url\", perhaps?",
+      "revId": "477f9e75c1ba1a04b91ffc4ff63582eeba133570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b9061a_7a978685",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_keystroke_selection_test.extjs",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-09T21:22:26Z",
+      "side": 1,
+      "message": "Maybe a helper function findTextNode(desktop, \u0027This is some \u0027);",
+      "revId": "477f9e75c1ba1a04b91ffc4ff63582eeba133570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
