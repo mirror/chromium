@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dadb7e2c_0519e67b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 10
+      },
+      "lineNbr": 2275,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-09T15:47:51Z",
+      "side": 1,
+      "message": "Should we make this \"main frame\" only or do you actually use the \"any frame\" part?",
+      "range": {
+        "startLine": 2275,
+        "startChar": 71,
+        "endLine": 2275,
+        "endChar": 80
+      },
+      "revId": "a1590bb3ab4fd3dfe0aa1e624de6e78c5c29702a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
