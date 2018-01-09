@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "333d748e_5522de8e",
+        "filename": "content/browser/child_process_launcher_helper_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-09T16:06:06Z",
+      "side": 1,
+      "message": "Leave a comment saying that these are currently unsandboxed? (Though IMO it may make more sense to not add the things here that are IsUnsandboxedSandboxType()).",
+      "revId": "f62d86f049935dff84dee652c31d66711d48ac9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
