@@ -3428,6 +3428,18 @@ bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
   return false;
 }
 
+void Document::DispatchFreezeEvent() {
+  const double freeze_event_start = CurrentTimeTicksInSeconds();
+  bool last_running_mode = is_running_in_restricted_mode_;
+  is_running_in_restricted_mode_ = true;
+  domWindow()->DispatchEvent(Event::Create(EventTypeNames::freeze));
+  is_running_in_restricted_mode_ = last_running_mode;
+  const double freeze_event_end = CurrentTimeTicksInSeconds();
+  DEFINE_STATIC_LOCAL(CustomCountHistogram, freeze_histogram,
+                      ("DocumentEventTiming.FreezeDuration", 0, 10000000, 50));
+  freeze_histogram.Count((freeze_event_end - freeze_event_start) * 1000000.0);
+}
+
 void Document::DispatchUnloadEvents() {
   PluginScriptForbiddenScope forbid_plugin_destructor_scripting;
   if (parser_)

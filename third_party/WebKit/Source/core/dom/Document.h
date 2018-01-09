@@ -621,6 +621,7 @@ class CORE_EXPORT Document : public ContainerNode,
   bool DispatchBeforeUnloadEvent(ChromeClient&,
                                  bool is_reload,
                                  bool& did_allow_navigation);
+  void DispatchFreezeEvent();
   void DispatchUnloadEvents();
 
   enum PageDismissalType {
@@ -971,6 +972,9 @@ class CORE_EXPORT Document : public ContainerNode,
                    const String& value,
                    ExceptionState&);
   bool IsRunningExecCommand() const { return is_running_exec_command_; }
+  bool IsRunningInRestrictedMode() const {
+    return is_running_in_restricted_mode_;
+  }
   bool queryCommandEnabled(const String& command, ExceptionState&);
   bool queryCommandIndeterm(const String& command, ExceptionState&);
   bool queryCommandState(const String& command, ExceptionState&);
@@ -1683,6 +1687,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   bool design_mode_;
   bool is_running_exec_command_;
+  bool is_running_in_restricted_mode_;
 
   HeapHashSet<WeakMember<const LiveNodeListBase>>
       lists_invalidated_at_document_;

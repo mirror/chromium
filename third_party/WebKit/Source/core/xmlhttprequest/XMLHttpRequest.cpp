@@ -1144,6 +1144,13 @@ void XMLHttpRequest::CreateRequest(scoped_refptr<EncodedFormData> http_body,
     return;
   }
 
+  if (GetExecutionContext()->IsDocument() &&
+      GetDocument()->IsRunningInRestrictedMode()) {
+    LogConsoleError(GetExecutionContext(),
+                    "Sync XHR is not allowed when running in restriced mode.");
+    return;
+  }
+
   // Use count for XHR synchronous requests.
   UseCounter::Count(&execution_context, WebFeature::kXMLHttpRequestSynchronous);
   if (GetExecutionContext()->IsDocument()) {

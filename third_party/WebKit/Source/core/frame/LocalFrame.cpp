@@ -473,15 +473,8 @@ void LocalFrame::DidChangeVisibilityState() {
 
 void LocalFrame::DidFreeze() {
   DCHECK(RuntimeEnabledFeatures::PageLifecycleEnabled());
-  if (DomWindow()) {
-    const double freeze_event_start = CurrentTimeTicksInSeconds();
-    DomWindow()->DispatchEvent(Event::Create(EventTypeNames::freeze));
-    const double freeze_event_end = CurrentTimeTicksInSeconds();
-    DEFINE_STATIC_LOCAL(
-        CustomCountHistogram, freeze_histogram,
-        ("DocumentEventTiming.FreezeDuration", 0, 10000000, 50));
-    freeze_histogram.Count((freeze_event_end - freeze_event_start) * 1000000.0);
-  }
+  if (GetDocument())
+    GetDocument()->DispatchFreezeEvent();
 }
 
 void LocalFrame::DidResume() {
