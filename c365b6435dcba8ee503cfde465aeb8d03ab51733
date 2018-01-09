@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b4275de_9f3a8ca1",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-09T02:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "581e175e_03d17575",
+      "range": {
+        "startLine": 66,
+        "startChar": 53,
+        "endLine": 66,
+        "endChar": 70
+      },
+      "revId": "c365b6435dcba8ee503cfde465aeb8d03ab51733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac236a23_fcd61464",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "993ab639_9d8cda4d",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-09T02:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac236a23_fcd61464",
+      "range": {
+        "startLine": 986,
+        "startChar": 21,
+        "endLine": 986,
+        "endChar": 24
+      },
+      "revId": "c365b6435dcba8ee503cfde465aeb8d03ab51733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aac02e0_5be2922b",
         "filename": "chrome/browser/resources/print_preview/previewarea/preview_area.html",
         "patchSetId": 17
@@ -68,6 +116,30 @@
       "revId": "c365b6435dcba8ee503cfde465aeb8d03ab51733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecde451_3981a56a",
+        "filename": "chrome/browser/resources/print_preview/previewarea/preview_area.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-09T02:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aac02e0_5be2922b",
+      "range": {
+        "startLine": 14,
+        "startChar": 52,
+        "endLine": 14,
+        "endChar": 63
+      },
+      "revId": "c365b6435dcba8ee503cfde465aeb8d03ab51733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
