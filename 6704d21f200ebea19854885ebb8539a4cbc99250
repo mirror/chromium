@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9c50c49_f58a122a",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:52:41Z",
+      "side": 1,
+      "message": "nit: this could also use base::StringPiece and the find() function",
+      "revId": "6704d21f200ebea19854885ebb8539a4cbc99250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0d49b2_615c7ee3",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:52:41Z",
+      "side": 1,
+      "message": "Style guide recommends to not overload function/methods (https://google.github.io/styleguide/cppguide.html#Function_Overloading). I think this method could be named GetHistogramsWithPredicate.",
+      "revId": "6704d21f200ebea19854885ebb8539a4cbc99250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
