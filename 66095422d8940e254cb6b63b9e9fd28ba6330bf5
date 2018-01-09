@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f4d47e5_d4286601",
+        "filename": "chrome/tools/build/win/makecab.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-09T00:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb17f9ae_ca1e962f",
+      "revId": "66095422d8940e254cb6b63b9e9fd28ba6330bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c481f85_c28872f8",
         "filename": "chrome/tools/build/win/makecab.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e8ce2088_2be846fb",
+        "filename": "chrome/tools/build/win/makecab.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-09T00:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c481f85_c28872f8",
+      "revId": "66095422d8940e254cb6b63b9e9fd28ba6330bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3472f896_d999d80e",
         "filename": "chrome/tools/build/win/makecab.py",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-08T10:52:15Z",
       "side": 1,
       "message": "no error handling? i\u0027d expect this to return non-zero in case anything goes wrong. what happens if the output file can\u0027t be opened, or a write fails or something?",
+      "revId": "66095422d8940e254cb6b63b9e9fd28ba6330bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfa29b0_67ac2234",
+        "filename": "chrome/tools/build/win/makecab.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-09T00:58:55Z",
+      "side": 1,
+      "message": "An exception is thrown, which makes the script return non-zero.",
+      "parentUuid": "3472f896_d999d80e",
       "revId": "66095422d8940e254cb6b63b9e9fd28ba6330bf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
