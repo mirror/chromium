@@ -39,6 +39,8 @@ class ASH_EXPORT ShelfButton : public views::Button {
     STATE_HIDDEN = 1 << 3,
     // Button is being dragged.
     STATE_DRAGGING = 1 << 4,
+    // App has notification.
+    STATE_NOTIFICATION = 1 << 5
   };
 
   ShelfButton(InkDropButtonListener* listener, ShelfView* shelf_view);
@@ -49,6 +51,8 @@ class ASH_EXPORT ShelfButton : public views::Button {
 
   // Retrieve the image to show proxy operations.
   const gfx::ImageSkia& GetImage() const;
+
+  void AddNotificationBadge(bool active_notification);
 
   // |state| is or'd into the current state.
   void AddState(State state);
@@ -62,6 +66,8 @@ class ASH_EXPORT ShelfButton : public views::Button {
 
   // Called when user started dragging the shelf button.
   void OnDragStarted(const ui::LocatedEvent* event);
+
+  bool IsNotificationIndicatorActiveForTest() const;
 
   // Overrides to views::Button:
   void ShowContextMenu(const gfx::Point& p,
@@ -94,6 +100,7 @@ class ASH_EXPORT ShelfButton : public views::Button {
 
  private:
   class AppStatusIndicatorView;
+  class AppNotificationIndicatorView;
 
   // Updates the parts of the button to reflect the current |state_| and
   // alignment. This may add or remove views, layout and paint.
@@ -117,6 +124,10 @@ class ASH_EXPORT ShelfButton : public views::Button {
   // Draws an indicator underneath the image to represent the state of the
   // application.
   AppStatusIndicatorView* indicator_;
+
+  // Draws an indicator in the top right corner of the image to represent an
+  // active notification.
+  AppNotificationIndicatorView* notification_indicator_;
 
   // The current application state, a bitfield of State enum values.
   int state_;

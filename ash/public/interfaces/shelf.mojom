@@ -83,6 +83,8 @@ interface ShelfController {
   UpdateShelfItem(ShelfItem item);
   // Sets the |delegate| for the item with |id|.
   SetShelfItemDelegate(ShelfID id, ShelfItemDelegate delegate);
+  NotificationAdded(string app_id, string notification_id);
+  NotificationRemoved(string notification);
 };
 
 // A Shelf observer, used to persist profile settings and cache a ShelfModel.
@@ -99,6 +101,10 @@ interface ShelfObserver {
   OnShelfItemUpdated(ShelfItem item);
   // Called when |delegate| for the item with |id| has been changed.
   OnShelfItemDelegateChanged(ShelfID id, ShelfItemDelegate delegate);
+  // Called when a notification posts.
+  NotificationAdded(string app_id, string notification);
+  // Called when a notification is removed.
+  NotificationRemoved(string notification);
 };
 
 // ShelfItemDelegate handles shelf item selection, menu command execution, etc.
@@ -159,7 +165,7 @@ struct ShelfID {
 struct ShelfItem {
   ShelfItemType type;          // The type of the shelf item.
   gfx.mojom.ImageSkia? image;  // The icon shown on the shelf; null for updates
-                               // with no icon change, null for ShelfObservers.
+                               // with no icon change, null for ShelfObserver.
   ShelfItemStatus status;      // The running/closed/etc. status of the item.
   ShelfID shelf_id;            // The id for the shelf item and its windows.
   mojo.common.mojom.String16 title;  // The title to display for tooltips, etc.
