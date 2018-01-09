@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b23aa5d9_4319b9a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-09T00:59:25Z",
+      "side": 1,
+      "message": "nit: i like PENDING_REASON_UNKNOWN or simply PENDING as opposed to _NO_DESCRIPTION because no description is a bit confusing",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "5658ee1958fdc01913cf5dcd316ae7edc1a39143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
