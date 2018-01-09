@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<script src="../../../resources/testharness.js"></script>
-<script src="../../../resources/testharnessreport.js"></script>
-<script src="../../../resources/testdriver.js"></script>
-<script src="../../../resources/testdriver-vendor.js"></script>
-<script src="../../../external/wpt/bluetooth/resources/bluetooth-helpers.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+<script src="/bluetooth/resources/bluetooth-helpers.js"></script>
 <script>
 'use strict';
-bluetooth_test(() => {
-  return getMeasurementIntervalCharacteristic()
+bluetooth_test(() => getMeasurementIntervalCharacteristic()
     .then(({characteristic, fake_characteristic}) => {
       return fake_characteristic.setNextReadResponse(GATT_SUCCESS, [0,1,2])
         .then(() => assert_promise_resolves_after_event(
@@ -22,6 +21,5 @@ bluetooth_test(() => {
         assert_equals(event_value.buffer, read_value.buffer);
         assert_array_equals(event_value, read_value);
       }
-    });
-}, 'Add multiple event listeners then readValue().');
+    }), 'Add multiple event listeners then readValue().');
 </script>
