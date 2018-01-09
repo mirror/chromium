@@ -57,6 +57,8 @@ struct CONTENT_EXPORT ResizeParams {
   // ViewHostMsg_ResizeOrRepaint_ACK with the
   // ViewHostMsg_ResizeOrRepaint_ACK_Flags::IS_RESIZE_ACK bit set in flags.
   bool needs_resize_ack;
+
+  uint32_t content_source_id;
 };
 
 }  // namespace content
