@@ -62,6 +62,7 @@ DesktopAutomationHandler = function(node) {
   this.addListener_(EventType.CHILDREN_CHANGED, this.onChildrenChanged);
   this.addListener_(EventType.EXPANDED_CHANGED, this.onEventIfInRange);
   this.addListener_(EventType.FOCUS, this.onFocus);
+  this.addListener_(EventType.HIT_TEST_RESULT, this.onHitTestResult);
   this.addListener_(EventType.HOVER, this.onHover);
   this.addListener_(EventType.INVALID_STATUS_CHANGED, this.onEventIfInRange);
   this.addListener_(EventType.LOAD_COMPLETE, this.onLoadComplete);
@@ -195,6 +196,16 @@ DesktopAutomationHandler.prototype = {
     if (evt.target.state.editable)
       return;
     this.onEventIfInRange(evt);
+  },
+
+  /**
+   * Handles the result of a hit test.
+   * @param {!AutomationEvent} evt
+   */
+  onHitTestResult: function(evt) {
+    // Even though we usually don't output events from actions, hit test results
+    // should generate output.
+    this.onEventDefault(new CustomAutomationEvent(evt.type, evt.target, ''));
   },
 
   /**
@@ -581,14 +592,13 @@ DesktopAutomationHandler.prototype = {
     url = url.substring(0, url.indexOf('#')) || url;
     var pos = cvox.ChromeVox.position[url];
     if (pos) {
-      focus = AutomationUtil.hitTest(focusedRoot, pos) || focus;
-      if (focus != focusedRoot)
-        o.format('$name', focusedRoot);
-    } else {
-      // This catches initial focus (i.e. on startup).
-      if (!curRoot && focus != focusedRoot)
-        o.format('$name', focusedRoot);
+      focusedRoot.hitTest(pos.x, pos.y, EventType.HIT_TEST_RESULT);
+      return;
     }
+
+    // This catches initial focus (i.e. on startup).
+    if (!curRoot && focus != focusedRoot)
+      o.format('$name', focusedRoot);
 
     ChromeVoxState.instance.setCurrentRange(cursors.Range.fromNode(focus));
 
