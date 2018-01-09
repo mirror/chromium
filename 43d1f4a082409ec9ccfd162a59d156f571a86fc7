@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4403b1e0_a15446f3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-09T22:53:04Z",
+      "side": 1,
+      "message": "It is unclear what the exact conditions for shaping together versus separate should be. This is a good start but arguably if there is padding, margin, or a border in between we shouldn\u0027t. For now please add a comment, something like\n\n// Shape adjacent items together if the font and direction matches to allow\n// ligatures and kerning to apply.\n// TODO(layout-dev): Figure out the exact conditions under which this behavior is desirable.",
+      "revId": "43d1f4a082409ec9ccfd162a59d156f571a86fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
