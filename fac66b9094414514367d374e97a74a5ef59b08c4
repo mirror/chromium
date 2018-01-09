@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e680824d_420da488",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-09T21:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7ed4ab0_a0119459",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d0e0765_9429f23a",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395d7652_cda879dd",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-09T21:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d0e0765_9429f23a",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b5c9f80a_df0db497",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-09T21:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df716cde_a248b683",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d64554c4_5c17bc99",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a9c277_298b090a",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-09T21:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d64554c4_5c17bc99",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ca4a5488_84e58e01",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-09T21:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c5b785d_417d9f0b",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdd442e8_fade2f37",
         "filename": "content/browser/locks/lock_manager.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-09T20:26:12Z",
       "side": 1,
       "message": "std::map\u003cint64_t, std::unique_ptr\u003cLock\u003e\u003e\u0026 OriginState::Requests()\n\n(this one\u0027s quite ugly, but I can\u0027t figure out anything better for the iteration below)",
+      "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b13433e_10a68c3a",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-09T21:13:14Z",
+      "side": 1,
+      "message": "How about moving the guts of ProcessRequests into OriginState::ProcessRequests ?",
+      "parentUuid": "cdd442e8_fade2f37",
       "revId": "fac66b9094414514367d374e97a74a5ef59b08c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
