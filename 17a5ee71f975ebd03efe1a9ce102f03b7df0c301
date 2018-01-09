@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "45bbef7c_4176d25e",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-09T18:02:39Z",
+      "side": 1,
+      "message": "Done. This file was copied over from Mandoline\u0027s implementation, so I kepted \"2014\". Since much has changed since then, I will change it to 2018.",
+      "parentUuid": "b15046f0_4a26586b",
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb863492_cb34b544",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
