@@ -69,6 +69,24 @@
       "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f7bf23_f071f3c4",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T18:03:43Z",
+      "side": 1,
+      "message": "so which SessionObserver method should we override to know when the session state initially changes from unknown to known?",
+      "parentUuid": "ad4469fe_1e8293bb",
+      "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
