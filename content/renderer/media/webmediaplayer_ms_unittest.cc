@@ -525,7 +525,7 @@ class WebMediaPlayerMSTest
   void ActivateViewportIntersectionMonitoring(bool activate) override {}
   void MediaRemotingStarted(
       const blink::WebString& remote_device_friendly_name) override {}
-  void MediaRemotingStopped() override {}
+  void MediaRemotingStopped(WebLocalizedString::Name string_name) override {}
 
   // Implementation of cc::VideoFrameProvider::Client
   void StopUsingProvider() override;

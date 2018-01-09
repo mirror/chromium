@@ -147,7 +147,7 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   bool IsRemotingInterstitialVisible() const;
 
   void MediaRemotingStarted(const WebString& remote_device_friendly_name) final;
-  void MediaRemotingStopped() final;
+  void MediaRemotingStopped(WebLocalizedString::Name string_name) final;
   WebMediaPlayer::DisplayType DisplayType() const final;
 
  private:
