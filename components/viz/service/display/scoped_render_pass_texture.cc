@@ -24,7 +24,8 @@ ScopedRenderPassTexture::ScopedRenderPassTexture(
     : context_provider_(context_provider),
       size_(size),
       mipmap_(mipmap),
-      color_space_(color_space) {
+      color_space_(color_space),
+      format_(format) {
   DCHECK(context_provider_);
   gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
   const gpu::Capabilities& caps = context_provider_->ContextCapabilities();

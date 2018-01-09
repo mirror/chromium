@@ -36,6 +36,7 @@ class VIZ_SERVICE_EXPORT ScopedRenderPassTexture {
   const gfx::Size& size() const { return size_; }
   bool mipmap() const { return mipmap_; }
   const gfx::ColorSpace& color_space() const { return color_space_; }
+  ResourceFormat format() const { return format_; }
 
  private:
   void Free();
@@ -51,6 +52,8 @@ class VIZ_SERVICE_EXPORT ScopedRenderPassTexture {
   // TODO(xing.xu): Remove this and set the color space when we draw the
   // RenderPassDrawQuad.
   gfx::ColorSpace color_space_;
+  // For memory dump only.
+  ResourceFormat format_;
 };
 
 }  // namespace viz
