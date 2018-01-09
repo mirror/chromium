@@ -1329,6 +1329,32 @@ void ChromeLauncherController::OnShelfItemDelegateChanged(
   }
 }
 
+void ChromeLauncherController::NotificationAdded(
+    const std::string& app_id,
+    const std::string& notification_id) {
+  base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
+
+  // Add the notification to the model and notify observers.
+  model_->AddNotificationRecord(app_id, notification_id);
+
+  // model_->app_id_to_notification_id_.insert(std::pair<std::string,
+  // std::string>(app_id, notification_id));
+  // model_->notification_id_to_app_id_.insert(std::pair<std::string,
+  // std::string>(notification_id, app_id));
+
+  // maybe alert everyone? Which observer notification really does what I want?
+  // model_->GiveItemNotifierId(app_id, notification_id);
+}
+
+void ChromeLauncherController::NotificationRemoved(
+
+    const std::string& notification_id) {
+  // why?
+  base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
+  // Remove the notification from the model and notify the observers.
+  model_->RemoveNotificationRecord(notification_id);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // ash::ShelfModelObserver:
 

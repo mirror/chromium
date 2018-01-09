@@ -83,6 +83,8 @@ interface ShelfController {
   UpdateShelfItem(ShelfItem item);
   // Sets the |delegate| for the item with |id|.
   SetShelfItemDelegate(ShelfID id, ShelfItemDelegate delegate);
+  NotificationAdded(string app_id, string notification_id);
+  NotificationRemoved(string notification);
 };
 
 // A Shelf observer, used to persist profile settings and cache a ShelfModel.
@@ -99,6 +101,9 @@ interface ShelfObserver {
   OnShelfItemUpdated(ShelfItem item);
   // Called when |delegate| for the item with |id| has been changed.
   OnShelfItemDelegateChanged(ShelfID id, ShelfItemDelegate delegate);
+  // add comment :)
+  NotificationAdded(string app_id, string notification);
+  NotificationRemoved(string notification);
 };
 
 // ShelfItemDelegate handles shelf item selection, menu command execution, etc.
