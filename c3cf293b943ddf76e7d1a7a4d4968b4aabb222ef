@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c20ee57a_5bb01dfa",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIteratorICU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2018-01-09T06:59:13Z",
+      "side": 1,
+      "message": "Upgrading from CHECK to DCHECK looks okay to me, but I\u0027d say for checking iterator_ you could remove it here, and don\u0027t use \u0027else\u0027 but uncoditionally add a CHECK(iterator_) below?",
+      "revId": "c3cf293b943ddf76e7d1a7a4d4968b4aabb222ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
