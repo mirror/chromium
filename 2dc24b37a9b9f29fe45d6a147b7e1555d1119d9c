@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeef69a0_e8039630",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-09T00:36:06Z",
+      "side": 1,
+      "message": "Document what |reason| is used for and when set. That said, AFAICT you only call this function from one place with null. So, what\u0027s the point of passing in reason?",
+      "range": {
+        "startLine": 156,
+        "startChar": 10,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "2dc24b37a9b9f29fe45d6a147b7e1555d1119d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7faa9f15_5ad8e97b",
+        "filename": "ui/base/touch/touch_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-09T00:36:06Z",
+      "side": 1,
+      "message": "It would be nice if this matched the function you call. That is, is_touch_device_present.",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 27
+      },
+      "revId": "2dc24b37a9b9f29fe45d6a147b7e1555d1119d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
