@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc964222_826a54d3",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T21:47:16Z",
+      "side": 1,
+      "message": "You\u0027re already checking this at line 30, you don\u0027t need this unless you\u0027re looking for a race here.",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "adac4f5908014c5757ba83fb8791d718c1906a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482f038f_f7480d74",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T21:47:16Z",
+      "side": 1,
+      "message": "destroys",
+      "range": {
+        "startLine": 44,
+        "startChar": 38,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "adac4f5908014c5757ba83fb8791d718c1906a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e286b31f_302fec1a",
+        "filename": "chrome/browser/resource_coordinator/discard_metrics_lifecycle_unit_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T21:47:16Z",
+      "side": 1,
+      "message": "Would it make sense to call \u0027lifecycle_unit-\u003eRemoveObserver(this);\u0027 before this? This will make sure that there\u0027s no temporary state during which the observer list contains a pointer to a freed object... (I\u0027ve seen several UAF caused by some patterns similar to this one).",
+      "revId": "adac4f5908014c5757ba83fb8791d718c1906a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
