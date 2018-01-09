@@ -62,6 +62,18 @@ void RotateToward(const gfx::Vector3dF& fwd, gfx::Transform* transform) {
   transform->PreconcatTransform(gfx::Transform(quat));
 }
 
+bool LoadPng(int resource_id, std::unique_ptr<SkBitmap>* out_image) {
+  base::StringPiece data =
+      ui::ResourceBundle::GetSharedInstance().GetRawDataResource(resource_id);
+  *out_image = base::MakeUnique<SkBitmap>();
+  if (!gfx::PNGCodec::Decode(
+          reinterpret_cast<const unsigned char*>(data.data()), data.size(),
+          out_image->get())) {
+    return false;
+  }
+  return true;
+}
+
 }  // namespace
 
 VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
@@ -509,14 +521,21 @@ void VrTestContext::CycleOrigin() {
 void VrTestContext::LoadAssets() {
   base::Version assets_component_version(VR_ASSETS_COMPONENT_VERSION);
 #if defined(GOOGLE_CHROME_BUILD)
-  base::StringPiece data =
-      ui::ResourceBundle::GetSharedInstance().GetRawDataResource(
-          IDR_VR_BACKGROUND_IMAGE);
   auto assets = base::MakeUnique<Assets>();
-  assets->background = base::MakeUnique<SkBitmap>();
-  if (!gfx::PNGCodec::Decode(
-          reinterpret_cast<const unsigned char*>(data.data()), data.size(),
-          assets->background.get())) {
+  bool success = LoadPng(IDR_VR_BACKGROUND_IMAGE, &assets->background);
+  if (success) {
+    success = LoadPng(IDR_VR_NORMAL_GRADIENT_IMAGE, &assets->normal_gradient);
+  }
+  if (success) {
+    success =
+        LoadPng(IDR_VR_INCOGNITO_GRADIENT_IMAGE, &assets->incognito_gradient);
+  }
+  if (success) {
+    success =
+        LoadPng(IDR_VR_FULLSCREEN_GRADIENT_IMAGE, &assets->fullscreen_gradient);
+  }
+
+  if (!success) {
     ui_->OnAssetsLoaded(AssetsLoadStatus::kInvalidContent, nullptr,
                         assets_component_version);
     return;
