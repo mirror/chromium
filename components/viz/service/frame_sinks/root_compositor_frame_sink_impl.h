@@ -20,6 +20,7 @@
 namespace viz {
 
 class Display;
+class ExternalBeginFrameControllerImpl;
 class FrameSinkManagerImpl;
 class SyntheticBeginFrameSource;
 
@@ -35,6 +36,8 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
       const FrameSinkId& frame_sink_id,
       std::unique_ptr<Display> display,
       std::unique_ptr<SyntheticBeginFrameSource> begin_frame_source,
+      std::unique_ptr<ExternalBeginFrameControllerImpl>
+          external_begin_frame_controller,
       mojom::CompositorFrameSinkAssociatedRequest request,
       mojom::CompositorFrameSinkClientPtr client,
       mojom::DisplayPrivateAssociatedRequest display_private_request,
@@ -51,6 +54,9 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
                             const gfx::ColorSpace& device_color_space) override;
   void SetOutputIsSecure(bool secure) override;
   void SetAuthoritativeVSyncInterval(base::TimeDelta interval) override;
+  void InitializeExternalBeginFrameController(
+      mojom::ExternalBeginFrameControllerAssociatedRequest controller,
+      mojom::ExternalBeginFrameControllerClientPtr client) override;
 
   // mojom::CompositorFrameSink:
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
@@ -80,6 +86,8 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
 
   void OnClientConnectionLost();
 
+  BeginFrameSource* begin_frame_source();
+
   mojom::CompositorFrameSinkClientPtr compositor_frame_sink_client_;
   mojo::AssociatedBinding<mojom::CompositorFrameSink>
       compositor_frame_sink_binding_;
@@ -94,7 +102,14 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
   // RootCompositorFrameSinkImpl holds a Display and its BeginFrameSource if
   // it was created with a non-null gpu::SurfaceHandle.
   std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source_;
+  // If non-null, |synthetic_begin_frame_source_| will not exist.
+  std::unique_ptr<ExternalBeginFrameControllerImpl>
+      external_begin_frame_controller_;
   std::unique_ptr<Display> display_;
+
+  // Unbound until InitializeExternalBeginFrameController is called.
+  mojo::AssociatedBinding<mojom::ExternalBeginFrameController>
+      external_begin_frame_controller_binding_;
 
   HitTestAggregator hit_test_aggregator_;
 

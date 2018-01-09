@@ -68,6 +68,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
       bool force_software_compositing,
+      bool external_begin_frames_enabled,
       const RendererSettings& renderer_settings,
       mojom::CompositorFrameSinkAssociatedRequest request,
       mojom::CompositorFrameSinkClientPtr client,

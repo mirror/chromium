@@ -93,10 +93,12 @@ class VizHostProxyImpl : public VizHostProxy {
     if (manager_) {
       // No software compositing on ChromeOS.
       bool force_software_compositing = false;
+      bool external_begin_frames_enabled = false;
       manager_->CreateRootCompositorFrameSink(
           frame_sink_id, surface_handle, force_software_compositing,
-          renderer_settings, std::move(request), std::move(client),
-          std::move(display_private_request), std::move(display_client));
+          external_begin_frames_enabled, renderer_settings, std::move(request),
+          std::move(client), std::move(display_private_request),
+          std::move(display_client));
     }
   }
 

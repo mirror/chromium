@@ -5,6 +5,7 @@
 module viz.mojom;
 
 import "mojo/common/time.mojom";
+import "services/viz/privileged/interfaces/compositing/external_begin_frame_controller.mojom";
 import "ui/gfx/mojo/ca_layer_params.mojom";
 import "ui/gfx/mojo/color_space.mojom";
 import "ui/gfx/mojo/transform.mojom";
@@ -13,6 +14,10 @@ import "ui/gfx/mojo/transform.mojom";
 // The DisplayPrivate is used by privileged clients to talk to Display.
 // DisplayPrivate would eventually replace or be used by ContextFactoryPrivate.
 interface DisplayPrivate {
+  // Errors observable from InitializeExternalBeginFrameController().
+  const uint32 kErrorExternalBeginFramesDisabled = 1;
+  const uint32 kErrorExternalBeginFrameControllerAlreadyInitialized = 2;
+
   SetDisplayVisible(bool visible);
 
   // Sets the matrix that will be used to transform the output color of the
@@ -27,6 +32,14 @@ interface DisplayPrivate {
   // ignores vsync interval information from other sources. This will do nothing
   // if the display is using an external BeginFrame source.
   SetAuthoritativeVSyncInterval(mojo.common.mojom.TimeDelta interval);
+
+  // Initializes the ExternalBeginFrameController for the Display. Requires that
+  // external BeginFrames were enabled for the Display when it was created by
+  // FrameSinkManager::CreateRootCompositorFrameSink. Otherwise, |controller|
+  // will not be bound.
+  InitializeExternalBeginFrameController(
+      associated ExternalBeginFrameController& controller,
+      ExternalBeginFrameControllerClient client);
 };
 
 interface DisplayClient {
