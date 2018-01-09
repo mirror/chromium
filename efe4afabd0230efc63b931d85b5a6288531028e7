@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2e442f5_ece3ff47",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/upgrade-insecure-requests/basic-link-no-upgrade.https.php",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-09T15:07:36Z",
+      "side": 1,
+      "message": "I\u0027ve struggled a lot to do this in the past. I don\u0027t think it is possible.\nThe problem is that web platform tests doesn\u0027t support main frame navigation. I am doing main frame navigation in all of my tests.\n\nI could wrap each test inside an iframe and use PostMessage on the new document to emulate testRunner.notifyDone(), but that\u0027s dirty. I don\u0027t really want to do that.\n\nDo you still want me to do this?\nMaybe I don\u0027t know web-platform-tests enough. Do you know know if it is possible to do a main frame navigation and tell the test runner that the test was a success from the new document?",
+      "parentUuid": "2cfe670e_a754915b",
+      "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f405e6d_d22f0de0",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "92a6e044_7b788ffc",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-09T15:07:36Z",
+      "side": 1,
+      "message": "They are the same, except that |document-\u003eEnforceInsecureNavigationsSet()| will also triggers the replication of the set among the remote frames.\n\nIn this CL, there are a test that will fail if I \"merge\" these two lines.",
+      "parentUuid": "1f405e6d_d22f0de0",
+      "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38035c73_a03fb34b",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-08T14:23:08Z",
       "side": 1,
       "message": "Nit: 5? 1?",
+      "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb0584b_9d13d412",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-09T15:07:36Z",
+      "side": 1,
+      "message": "This was intentional ;-) I guess I need to change it. What about 4.1 and 4.2 ?",
+      "parentUuid": "38035c73_a03fb34b",
       "revId": "efe4afabd0230efc63b931d85b5a6288531028e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
