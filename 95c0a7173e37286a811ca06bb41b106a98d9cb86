@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aef1bad_d56fe03e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-09T03:55:55Z",
+      "side": 1,
+      "message": "please wrap commit message text to 80 characters and the first line should be a concise summary.",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "95c0a7173e37286a811ca06bb41b106a98d9cb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3dd3759_9e668438",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-09T03:55:55Z",
+      "side": 1,
+      "message": "ambiguously worded comment implies touch is excluded. Try \"Mouse events are limited to just the left mouse button.\"",
+      "range": {
+        "startLine": 184,
+        "startChar": 9,
+        "endLine": 184,
+        "endChar": 13
+      },
+      "revId": "95c0a7173e37286a811ca06bb41b106a98d9cb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599c9e0c_8830fbb3",
+        "filename": "ui/keyboard/container_floating_behavior.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-09T03:55:55Z",
+      "side": 1,
+      "message": "Fix wording. Something like: \"Distinguish whether the current drag is from a touch event or mouse event, so drag/move events can be filtered accordingly.\"",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 70
+      },
+      "revId": "95c0a7173e37286a811ca06bb41b106a98d9cb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
