@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aaa77227_562f22c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2268,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-09T21:54:39Z",
+      "side": 1,
+      "message": "Embarrassing oversight, done.",
+      "parentUuid": "95c0ee82_a20b9681",
+      "range": {
+        "startLine": 2268,
+        "startChar": 24,
+        "endLine": 2268,
+        "endChar": 28
+      },
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "683e492e_4b92fea3",
         "filename": "chrome/browser/ui/tab_helpers.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7600f7dc_6d8dc2bc",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-09T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683e492e_4b92fea3",
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6019f771_5c82842f",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-09T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cff0c76_ae1828b3",
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "961086d8_45022f10",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7089e5_aa71497b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2765,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-09T21:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "961086d8_45022f10",
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7196b1_c629af9d",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-09T21:54:39Z",
+      "side": 1,
+      "message": "Oops, made me curious how it was working despite this mistake. Turns out we already had FrameMsg_SetHasReceivedUserGesture already defined below, so I removed this one.",
+      "parentUuid": "b08efebb_de702d95",
+      "range": {
+        "startLine": 1041,
+        "startChar": 20,
+        "endLine": 1041,
+        "endChar": 51
+      },
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
