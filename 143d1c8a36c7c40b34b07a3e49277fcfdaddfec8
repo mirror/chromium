@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97a1060a_43f329a9",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T01:27:04Z",
+      "side": 1,
+      "message": "nit: Update (or remove) comment",
+      "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1085b4_7e6c8147",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T01:27:04Z",
+      "side": 1,
+      "message": "Can you use GetUserType()? I think we\u0027re trying to get rid of ash::LoginStatus.",
+      "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
