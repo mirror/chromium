@@ -198,17 +198,6 @@ pid_t ZygoteCommunication::ForkRequest(
       return base::kNullProcessHandle;
   }
 
-#if !defined(OS_OPENBSD)
-  // This is just a starting score for a renderer or extension (the
-  // only types of processes that will be started this way).  It will
-  // get adjusted as time goes on.  (This is the same value as
-  // chrome::kLowestRendererOomScore in chrome/chrome_constants.h, but
-  // that's not something we can include here.)
-  const int kLowestRendererOomScore = 300;
-  ZygoteHostImpl::GetInstance()->AdjustRendererOOMScore(
-      pid, kLowestRendererOomScore);
-#endif
-
   ZygoteChildBorn(pid);
   return pid;
 }
