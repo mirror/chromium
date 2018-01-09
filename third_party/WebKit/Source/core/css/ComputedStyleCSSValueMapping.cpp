@@ -75,147 +75,7 @@ namespace blink {
 
 using namespace cssvalue;
 
-inline static bool IsFlexOrGrid(const ComputedStyle* style) {
-  return style && style->IsDisplayFlexibleOrGridBox();
-}
-
-inline static CSSValue* ZoomAdjustedPixelValueOrAuto(
-    const Length& length,
-    const ComputedStyle& style) {
-  if (length.IsAuto())
-    return CSSIdentifierValue::Create(CSSValueAuto);
-  return ZoomAdjustedPixelValue(length.Value(), style);
-}
-
-static CSSValue* PixelValueForUnzoomedLength(
-    const UnzoomedLength& unzoomed_length,
-    const ComputedStyle& style) {
-  const Length& length = unzoomed_length.length();
-  if (length.IsFixed())
-    return CSSPrimitiveValue::Create(length.Value(),
-                                     CSSPrimitiveValue::UnitType::kPixels);
-  return CSSValue::Create(length, style.EffectiveZoom());
-}
-
-static CSSValue* ValueForPositionOffset(const ComputedStyle& style,
-                                        const CSSProperty& property,
-                                        const LayoutObject* layout_object) {
-  std::pair<const Length*, const Length*> positions;
-  switch (property.PropertyID()) {
-    case CSSPropertyLeft:
-      positions = std::make_pair(&style.Left(), &style.Right());
-      break;
-    case CSSPropertyRight:
-      positions = std::make_pair(&style.Right(), &style.Left());
-      break;
-    case CSSPropertyTop:
-      positions = std::make_pair(&style.Top(), &style.Bottom());
-      break;
-    case CSSPropertyBottom:
-      positions = std::make_pair(&style.Bottom(), &style.Top());
-      break;
-    default:
-      NOTREACHED();
-      return nullptr;
-  }
-  DCHECK(positions.first && positions.second);
-
-  const Length& offset = *positions.first;
-  const Length& opposite = *positions.second;
-
-  if (offset.IsPercentOrCalc() && layout_object && layout_object->IsBox() &&
-      layout_object->IsPositioned()) {
-    LayoutUnit containing_block_size =
-        (property.IDEquals(CSSPropertyLeft) ||
-         property.IDEquals(CSSPropertyRight))
-            ? ToLayoutBox(layout_object)
-                  ->ContainingBlockLogicalWidthForContent()
-            : ToLayoutBox(layout_object)
-                  ->ContainingBlockLogicalHeightForGetComputedStyle();
-    return ZoomAdjustedPixelValue(ValueForLength(offset, containing_block_size),
-                                  style);
-  }
-
-  if (offset.IsAuto() && layout_object) {
-    // If the property applies to a positioned element and the resolved value of
-    // the display property is not none, the resolved value is the used value.
-    // Position offsets have special meaning for position sticky so we return
-    // auto when offset.isAuto() on a sticky position object:
-    // https://crbug.com/703816.
-    if (layout_object->IsRelPositioned()) {
-      // If e.g. left is auto and right is not auto, then left's computed value
-      // is negative right. So we get the opposite length unit and see if it is
-      // auto.
-      if (opposite.IsAuto())
-        return CSSPrimitiveValue::Create(0,
-                                         CSSPrimitiveValue::UnitType::kPixels);
-
-      if (opposite.IsPercentOrCalc()) {
-        if (layout_object->IsBox()) {
-          LayoutUnit containing_block_size =
-              (property.IDEquals(CSSPropertyLeft) ||
-               property.IDEquals(CSSPropertyRight))
-                  ? ToLayoutBox(layout_object)
-                        ->ContainingBlockLogicalWidthForContent()
-                  : ToLayoutBox(layout_object)
-                        ->ContainingBlockLogicalHeightForGetComputedStyle();
-          return ZoomAdjustedPixelValue(
-              -FloatValueForLength(opposite, containing_block_size), style);
-        }
-        // FIXME:  fall back to auto for position:relative, display:inline
-        return CSSIdentifierValue::Create(CSSValueAuto);
-      }
-
-      // Length doesn't provide operator -, so multiply by -1.
-      Length negated_opposite = opposite;
-      negated_opposite *= -1.f;
-      return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
-          negated_opposite, style);
-    }
-
-    if (layout_object->IsOutOfFlowPositioned() && layout_object->IsBox()) {
-      // For fixed and absolute positioned elements, the top, left, bottom, and
-      // right are defined relative to the corresponding sides of the containing
-      // block.
-      LayoutBlock* container = layout_object->ContainingBlock();
-      const LayoutBox* layout_box = ToLayoutBox(layout_object);
-
-      // clientOffset is the distance from this object's border edge to the
-      // container's padding edge. Thus it includes margins which we subtract
-      // below.
-      const LayoutSize client_offset =
-          layout_box->LocationOffset() -
-          LayoutSize(container->ClientLeft(), container->ClientTop());
-      LayoutUnit position;
-
-      switch (property.PropertyID()) {
-        case CSSPropertyLeft:
-          position = client_offset.Width() - layout_box->MarginLeft();
-          break;
-        case CSSPropertyTop:
-          position = client_offset.Height() - layout_box->MarginTop();
-          break;
-        case CSSPropertyRight:
-          position = container->ClientWidth() - layout_box->MarginRight() -
-                     (layout_box->OffsetWidth() + client_offset.Width());
-          break;
-        case CSSPropertyBottom:
-          position = container->ClientHeight() - layout_box->MarginBottom() -
-                     (layout_box->OffsetHeight() + client_offset.Height());
-          break;
-        default:
-          NOTREACHED();
-      }
-      return ZoomAdjustedPixelValue(position, style);
-    }
-  }
-
-  if (offset.IsAuto())
-    return CSSIdentifierValue::Create(CSSValueAuto);
-
-  return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(offset, style);
-}
-
+// RJW
 static CSSValueList* ValueForItemPositionWithOverflowAlignment(
     const StyleSelfAlignmentData& data) {
   CSSValueList* result = CSSValueList::CreateSpaceSeparated();
@@ -241,6 +101,7 @@ static CSSValueList* ValueForItemPositionWithOverflowAlignment(
   return result;
 }
 
+// NO
 static CSSValueList* ValuesForGridShorthand(
     const StylePropertyShorthand& shorthand,
     const ComputedStyle& style,
@@ -258,6 +119,7 @@ static CSSValueList* ValuesForGridShorthand(
   return list;
 }
 
+// NO
 static CSSValueList* ValuesForShorthandProperty(
     const StylePropertyShorthand& shorthand,
     const ComputedStyle& style,
@@ -275,6 +137,7 @@ static CSSValueList* ValuesForShorthandProperty(
   return list;
 }
 
+// RJW
 static CSSValue* ExpandNoneLigaturesValue() {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   list->Append(*CSSIdentifierValue::Create(CSSValueNoCommonLigatures));
@@ -284,6 +147,7 @@ static CSSValue* ExpandNoneLigaturesValue() {
   return list;
 }
 
+// NO
 static CSSValue* ValuesForFontVariantProperty(const ComputedStyle& style,
                                               const LayoutObject* layout_object,
                                               Node* styled_node,
@@ -340,6 +204,7 @@ static CSSValue* ValuesForFontVariantProperty(const ComputedStyle& style,
   }
 }
 
+// RJW
 static CSSValueList*
 ValueForContentPositionAndDistributionWithOverflowAlignment(
     const StyleContentAlignmentData& data) {
@@ -376,6 +241,7 @@ ValueForContentPositionAndDistributionWithOverflowAlignment(
   return result;
 }
 
+// RJW
 static CSSValue* ValueForLineHeight(const ComputedStyle& style) {
   const Length& length = style.LineHeight();
   if (length.IsNegative())
@@ -386,6 +252,7 @@ static CSSValue* ValueForLineHeight(const ComputedStyle& style) {
       style);
 }
 
+// RJW
 static CSSValue* ValueForPosition(const LengthPoint& position,
                                   const ComputedStyle& style) {
   DCHECK_EQ(position.X().IsAuto(), position.Y().IsAuto());
@@ -400,6 +267,7 @@ static CSSValue* ValueForPosition(const LengthPoint& position,
   return list;
 }
 
+// RJW
 static CSSValueID IdentifierForFamily(const AtomicString& family) {
   if (family == FontFamilyNames::webkit_cursive)
     return CSSValueCursive;
@@ -416,12 +284,14 @@ static CSSValueID IdentifierForFamily(const AtomicString& family) {
   return CSSValueInvalid;
 }
 
+// RJW
 static CSSValue* ValueForFamily(const AtomicString& family) {
   if (CSSValueID family_identifier = IdentifierForFamily(family))
     return CSSIdentifierValue::Create(family_identifier);
   return CSSFontFamilyValue::Create(family.GetString());
 }
 
+// RJW
 static CSSValueList* ValueForFontFamily(const ComputedStyle& style) {
   const FontFamily& first_family = style.GetFontDescription().Family();
   CSSValueList* list = CSSValueList::CreateCommaSeparated();
@@ -431,16 +301,19 @@ static CSSValueList* ValueForFontFamily(const ComputedStyle& style) {
   return list;
 }
 
+// RJW
 static CSSPrimitiveValue* ValueForFontSize(const ComputedStyle& style) {
   return ZoomAdjustedPixelValue(style.GetFontDescription().ComputedSize(),
                                 style);
 }
 
+// RJW
 static CSSPrimitiveValue* ValueForFontStretch(const ComputedStyle& style) {
   return CSSPrimitiveValue::Create(style.GetFontDescription().Stretch(),
                                    CSSPrimitiveValue::UnitType::kPercentage);
 }
 
+// RJW
 static CSSIdentifierValue* ValueForFontStretchAsKeyword(
     const ComputedStyle& style) {
   FontSelectionValue stretch_value = style.GetFontDescription().Stretch();
@@ -471,6 +344,7 @@ static CSSIdentifierValue* ValueForFontStretchAsKeyword(
   return nullptr;
 }
 
+// RJW
 static CSSIdentifierValue* ValueForFontStyle(const ComputedStyle& style) {
   FontSelectionValue angle = style.GetFontDescription().Style();
   if (angle == NormalSlopeValue()) {
@@ -485,11 +359,13 @@ static CSSIdentifierValue* ValueForFontStyle(const ComputedStyle& style) {
   return CSSIdentifierValue::Create(CSSValueNormal);
 }
 
+// RJW
 static CSSPrimitiveValue* ValueForFontWeight(const ComputedStyle& style) {
   return CSSPrimitiveValue::Create(style.GetFontDescription().Weight(),
                                    CSSPrimitiveValue::UnitType::kNumber);
 }
 
+// RJW
 static CSSIdentifierValue* ValueForFontVariantCaps(const ComputedStyle& style) {
   FontDescription::FontVariantCaps variant_caps =
       style.GetFontDescription().VariantCaps();
@@ -514,6 +390,7 @@ static CSSIdentifierValue* ValueForFontVariantCaps(const ComputedStyle& style) {
   }
 }
 
+// RJW
 static CSSValue* ValueForFontVariantLigatures(const ComputedStyle& style) {
   FontDescription::LigaturesState common_ligatures_state =
       style.GetFontDescription().CommonLigaturesState();
@@ -561,6 +438,7 @@ static CSSValue* ValueForFontVariantLigatures(const ComputedStyle& style) {
   return value_list;
 }
 
+// RJW
 static CSSValue* ValueForFontVariantNumeric(const ComputedStyle& style) {
   FontVariantNumeric variant_numeric =
       style.GetFontDescription().VariantNumeric();
@@ -596,6 +474,7 @@ static CSSValue* ValueForFontVariantNumeric(const ComputedStyle& style) {
   return value_list;
 }
 
+// RJW
 static CSSValue* ValueForFontVariantEastAsian(const ComputedStyle& style) {
   FontVariantEastAsian east_asian =
       style.GetFontDescription().VariantEastAsian();
@@ -645,6 +524,7 @@ static CSSValue* ValueForFontVariantEastAsian(const ComputedStyle& style) {
   return value_list;
 }
 
+// RJW
 static CSSValue* SpecifiedValueForGridTrackBreadth(
     const GridLength& track_breadth,
     const ComputedStyle& style) {
@@ -659,6 +539,7 @@ static CSSValue* SpecifiedValueForGridTrackBreadth(
       track_breadth_length, style);
 }
 
+// RJW
 static CSSValue* SpecifiedValueForGridTrackSize(const GridTrackSize& track_size,
                                                 const ComputedStyle& style) {
   switch (track_size.GetType()) {
@@ -731,6 +612,7 @@ class OrderedNamedLinesCollector {
   DISALLOW_COPY_AND_ASSIGN(OrderedNamedLinesCollector);
 };
 
+// RJW
 void OrderedNamedLinesCollector::AppendLines(
     CSSGridLineNamesValue& line_names_value,
     size_t index,
@@ -749,6 +631,7 @@ void OrderedNamedLinesCollector::AppendLines(
         *CSSCustomIdentValue::Create(AtomicString(line_name)));
 }
 
+// RJW
 void OrderedNamedLinesCollector::CollectLineNamesForIndex(
     CSSGridLineNamesValue& line_names_value,
     size_t i) const {
@@ -788,6 +671,7 @@ void OrderedNamedLinesCollector::CollectLineNamesForIndex(
               kAutoRepeatNamedLines);
 }
 
+// RJW
 static void AddValuesForNamedGridLinesAtIndex(
     OrderedNamedLinesCollector& collector,
     size_t i,
@@ -801,6 +685,7 @@ static void AddValuesForNamedGridLinesAtIndex(
     list.Append(*line_names);
 }
 
+// RJW
 static CSSValue* ValueForGridTrackSizeList(GridTrackSizingDirection direction,
                                            const ComputedStyle& style) {
   const Vector<GridTrackSize>& auto_track_sizes =
@@ -812,6 +697,7 @@ static CSSValue* ValueForGridTrackSizeList(GridTrackSizingDirection direction,
   return list;
 }
 
+// RJW
 static CSSValue* ValueForGridTrackList(GridTrackSizingDirection direction,
                                        const LayoutObject* layout_object,
                                        const ComputedStyle& style) {
@@ -870,6 +756,7 @@ static CSSValue* ValueForGridTrackList(GridTrackSizingDirection direction,
   return list;
 }
 
+// RJW
 static CSSValue* ValueForGridPosition(const GridPosition& position) {
   if (position.IsAuto())
     return CSSIdentifierValue::Create(CSSValueAuto);
@@ -892,6 +779,7 @@ static CSSValue* ValueForGridPosition(const GridPosition& position) {
   return list;
 }
 
+// RJW
 static LayoutRect SizingBox(const LayoutObject& layout_object) {
   if (!layout_object.IsBox())
     return LayoutRect();
@@ -902,6 +790,7 @@ static LayoutRect SizingBox(const LayoutObject& layout_object) {
              : box.ComputedCSSContentBoxRect();
 }
 
+// RJW
 static CSSValue* RenderTextDecorationFlagsToCSSValue(
     TextDecoration text_decoration) {
   // Blink value is ignored.
@@ -918,6 +807,7 @@ static CSSValue* RenderTextDecorationFlagsToCSSValue(
   return list;
 }
 
+// RJW
 static CSSValue* ValueForTextDecorationStyle(
     ETextDecorationStyle text_decoration_style) {
   switch (text_decoration_style) {
@@ -937,6 +827,7 @@ static CSSValue* ValueForTextDecorationStyle(
   return CSSInitialValue::Create();
 }
 
+// RJW
 static CSSValue* ValueForTextDecorationSkipInk(
     ETextDecorationSkipInk text_decoration_skip_ink) {
   if (text_decoration_skip_ink == ETextDecorationSkipInk::kNone)
@@ -944,6 +835,7 @@ static CSSValue* ValueForTextDecorationSkipInk(
   return CSSIdentifierValue::Create(CSSValueAuto);
 }
 
+// RJW
 static CSSValue* TouchActionFlagsToCSSValue(TouchAction touch_action) {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   if (touch_action == TouchAction::kTouchActionAuto) {
@@ -977,6 +869,7 @@ static CSSValue* TouchActionFlagsToCSSValue(TouchAction touch_action) {
   return list;
 }
 
+// RJW
 static CSSValue* ValueForWillChange(
     const Vector<CSSPropertyID>& will_change_properties,
     bool will_change_contents,
@@ -993,6 +886,7 @@ static CSSValue* ValueForWillChange(
   return list;
 }
 
+// RJW
 static CSSValue* ValueForAnimationDelay(const CSSTimingData* timing_data) {
   CSSValueList* list = CSSValueList::CreateCommaSeparated();
   if (timing_data) {
@@ -1006,6 +900,7 @@ static CSSValue* ValueForAnimationDelay(const CSSTimingData* timing_data) {
   return list;
 }
 
+// RJW
 static CSSValue* ValueForAnimationDirection(
     Timing::PlaybackDirection direction) {
   switch (direction) {
@@ -1023,6 +918,7 @@ static CSSValue* ValueForAnimationDirection(
   }
 }
 
+// RJW
 static CSSValue* ValueForAnimationDuration(const CSSTimingData* timing_data) {
   CSSValueList* list = CSSValueList::CreateCommaSeparated();
   if (timing_data) {
@@ -1038,6 +934,7 @@ static CSSValue* ValueForAnimationDuration(const CSSTimingData* timing_data) {
   return list;
 }
 
+// RJW
 static CSSValue* ValueForAnimationFillMode(Timing::FillMode fill_mode) {
   switch (fill_mode) {
     case Timing::FillMode::NONE:
@@ -1054,6 +951,7 @@ static CSSValue* ValueForAnimationFillMode(Timing::FillMode fill_mode) {
   }
 }
 
+// RJW
 static CSSValue* ValueForAnimationIterationCount(double iteration_count) {
   if (iteration_count == std::numeric_limits<double>::infinity())
     return CSSIdentifierValue::Create(CSSValueInfinite);
@@ -1061,6 +959,7 @@ static CSSValue* ValueForAnimationIterationCount(double iteration_count) {
                                    CSSPrimitiveValue::UnitType::kNumber);
 }
 
+// RJW
 static CSSValue* ValueForAnimationPlayState(EAnimPlayState play_state) {
   if (play_state == EAnimPlayState::kPlaying)
     return CSSIdentifierValue::Create(CSSValueRunning);
@@ -1068,6 +967,7 @@ static CSSValue* ValueForAnimationPlayState(EAnimPlayState play_state) {
   return CSSIdentifierValue::Create(CSSValuePaused);
 }
 
+// RJW
 static CSSValue* CreateTimingFunctionValue(
     const TimingFunction* timing_function) {
   switch (timing_function->GetType()) {
@@ -1130,6 +1030,7 @@ static CSSValue* CreateTimingFunctionValue(
   }
 }
 
+// RJW
 static CSSValue* ValueForAnimationTimingFunction(
     const CSSTimingData* timing_data) {
   CSSValueList* list = CSSValueList::CreateCommaSeparated();
@@ -1145,6 +1046,7 @@ static CSSValue* ValueForAnimationTimingFunction(
   return list;
 }
 
+// RJW
 static CSSValueList* ValuesForBorderRadiusCorner(const LengthSize& radius,
                                                  const ComputedStyle& style) {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
@@ -1163,6 +1065,7 @@ static CSSValueList* ValuesForBorderRadiusCorner(const LengthSize& radius,
   return list;
 }
 
+// RJW
 static const CSSValue& ValueForBorderRadiusCorner(const LengthSize& radius,
                                                   const ComputedStyle& style) {
   CSSValueList& list = *ValuesForBorderRadiusCorner(radius, style);
@@ -1171,6 +1074,7 @@ static const CSSValue& ValueForBorderRadiusCorner(const LengthSize& radius,
   return list;
 }
 
+// RJW
 static CSSFunctionValue* ValueForMatrixTransform(
     const TransformationMatrix& transform_param,
     const ComputedStyle& style) {
@@ -1237,6 +1141,7 @@ static CSSFunctionValue* ValueForMatrixTransform(
   return transform_value;
 }
 
+// RJW
 static CSSValue* ComputedTransform(const LayoutObject* layout_object,
                                    const ComputedStyle& style) {
   if (!layout_object || !style.HasTransform())
@@ -1260,6 +1165,7 @@ static CSSValue* ComputedTransform(const LayoutObject* layout_object,
   return list;
 }
 
+// RJW
 static CSSValue* CreateTransitionPropertyValue(
     const CSSTransitionData::TransitionProperty& property) {
   if (property.property_type == CSSTransitionData::kTransitionNone)
@@ -1273,6 +1179,7 @@ static CSSValue* CreateTransitionPropertyValue(
           .GetPropertyNameAtomicString());
 }
 
+// RJW
 static CSSValue* ValueForTransitionProperty(
     const CSSTransitionData* transition_data) {
   CSSValueList* list = CSSValueList::CreateCommaSeparated();
@@ -1286,6 +1193,7 @@ static CSSValue* ValueForTransitionProperty(
   return list;
 }
 
+// RJW
 CSSValueID ValueForQuoteType(const QuoteType quote_type) {
   switch (quote_type) {
     case QuoteType::kNoOpen:
@@ -1301,6 +1209,7 @@ CSSValueID ValueForQuoteType(const QuoteType quote_type) {
   return CSSValueInvalid;
 }
 
+// RJW
 static CSSValue* ValueForContentData(const ComputedStyle& style) {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   for (const ContentData* content_data = style.GetContentData(); content_data;
@@ -1339,6 +1248,7 @@ static CSSValue* ValueForContentData(const ComputedStyle& style) {
   return list;
 }
 
+// RJW
 static CSSValue* ValueForCounterDirectives(const ComputedStyle& style,
                                            const CSSProperty& property) {
   const CounterDirectiveMap* map = style.GetCounterDirectives();
@@ -1367,6 +1277,7 @@ static CSSValue* ValueForCounterDirectives(const ComputedStyle& style,
   return list;
 }
 
+// RJW
 static CSSValue* ValueForShape(const ComputedStyle& style,
                                ShapeValue* shape_value) {
   if (!shape_value)
@@ -1388,6 +1299,7 @@ static CSSValue* ValueForShape(const ComputedStyle& style,
   return list;
 }
 
+// NO
 static CSSValueList* ValuesForSidesShorthand(
     const StylePropertyShorthand& shorthand,
     const ComputedStyle& style,
@@ -1428,6 +1340,7 @@ static CSSValueList* ValuesForSidesShorthand(
   return list;
 }
 
+// NO
 static CSSValuePair* ValuesForInlineBlockShorthand(
     const StylePropertyShorthand& shorthand,
     const ComputedStyle& style,
@@ -1449,6 +1362,7 @@ static CSSValuePair* ValuesForInlineBlockShorthand(
   return pair;
 }
 
+// RJW
 static CSSValueList* ValueForBorderRadiusShorthand(const ComputedStyle& style) {
   CSSValueList* list = CSSValueList::CreateSlashSeparated();
 
@@ -1505,6 +1419,7 @@ static CSSValueList* ValueForBorderRadiusShorthand(const ComputedStyle& style) {
   return list;
 }
 
+// RJW
 static CSSValue* StrokeDashArrayToCSSValueList(const SVGDashArray& dashes,
                                                const ComputedStyle& style) {
   if (dashes.IsEmpty())
@@ -1519,6 +1434,7 @@ static CSSValue* StrokeDashArrayToCSSValueList(const SVGDashArray& dashes,
   return list;
 }
 
+// RJW
 static CSSValue* PaintOrderToCSSValueList(const SVGComputedStyle& svg_style) {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   for (int i = 0; i < 3; i++) {
@@ -1539,6 +1455,7 @@ static CSSValue* PaintOrderToCSSValueList(const SVGComputedStyle& svg_style) {
   return list;
 }
 
+// RJW
 static CSSValue* AdjustSVGPaintForCurrentColor(SVGPaintType paint_type,
                                                const String& url,
                                                const Color& color,
@@ -1562,6 +1479,7 @@ static CSSValue* AdjustSVGPaintForCurrentColor(SVGPaintType paint_type,
   return CSSColorValue::Create(color.Rgb());
 }
 
+// RJW
 CSSValue* ComputedStyleCSSValueMapping::ValueForShadowData(
     const ShadowData& shadow,
     const ComputedStyle& style,
@@ -1579,6 +1497,7 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForShadowData(
   return CSSShadowValue::Create(x, y, blur, spread, shadow_style, color);
 }
 
+// RJW
 CSSValue* ComputedStyleCSSValueMapping::ValueForShadowList(
     const ShadowList* shadow_list,
     const ComputedStyle& style,
@@ -1594,6 +1513,7 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForShadowList(
   return list;
 }
 
+// RJW
 CSSValue* ComputedStyleCSSValueMapping::ValueForFilter(
     const ComputedStyle& style,
     const FilterOperations& filter_operations) {
@@ -1686,6 +1606,7 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForFilter(
   return list;
 }
 
+// NO
 CSSValue* ComputedStyleCSSValueMapping::ValueForOffset(
     const ComputedStyle& style,
     const LayoutObject* layout_object,
@@ -1725,6 +1646,7 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForOffset(
   return list;
 }
 
+// RJW
 CSSValue* ComputedStyleCSSValueMapping::ValueForFont(
     const ComputedStyle& style) {
   // Add a slash between size and line-height.
@@ -1770,6 +1692,7 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForFont(
   return list;
 }
 
+// RJW
 static CSSValue* ValueForScrollSnapType(const ScrollSnapType& type,
                                         const ComputedStyle& style) {
   if (!type.is_none) {
@@ -1780,6 +1703,7 @@ static CSSValue* ValueForScrollSnapType(const ScrollSnapType& type,
   return CSSIdentifierValue::Create(CSSValueNone);
 }
 
+// RJW
 static CSSValue* ValueForScrollSnapAlign(const ScrollSnapAlign& align,
                                          const ComputedStyle& style) {
   return CSSValuePair::Create(CSSIdentifierValue::Create(align.alignmentX),
@@ -1787,6 +1711,7 @@ static CSSValue* ValueForScrollSnapAlign(const ScrollSnapAlign& align,
                               CSSValuePair::kDropIdenticalValues);
 }
 
+// RJW
 // Returns a suitable value for the page-break-(before|after) property, given
 // the computed value of the more general break-(before|after) property.
 static CSSValue* ValueForPageBreakBetween(EBreakBetween break_value) {
@@ -1805,6 +1730,7 @@ static CSSValue* ValueForPageBreakBetween(EBreakBetween break_value) {
   }
 }
 
+// RJW
 // Returns a suitable value for the -webkit-column-break-(before|after)
 // property, given the computed value of the more general break-(before|after)
 // property.
@@ -1826,6 +1752,7 @@ static CSSValue* ValueForWebkitColumnBreakBetween(EBreakBetween break_value) {
   }
 }
 
+// RJW
 // Returns a suitable value for the page-break-inside property, given the
 // computed value of the more general break-inside property.
 static CSSValue* ValueForPageBreakInside(EBreakInside break_value) {
@@ -1839,6 +1766,7 @@ static CSSValue* ValueForPageBreakInside(EBreakInside break_value) {
   }
 }
 
+// RJW
 // Returns a suitable value for the -webkit-column-break-inside property, given
 // the computed value of the more general break-inside property.
 static CSSValue* ValueForWebkitColumnBreakInside(EBreakInside break_value) {
@@ -1852,6 +1780,7 @@ static CSSValue* ValueForWebkitColumnBreakInside(EBreakInside break_value) {
   }
 }
 
+// NO
 const CSSValue* ComputedStyleCSSValueMapping::Get(
     const AtomicString custom_property_name,
     const ComputedStyle& style,
@@ -1877,6 +1806,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
   return CSSCustomPropertyDeclaration::Create(custom_property_name, data);
 }
 
+// NO
 std::unique_ptr<HashMap<AtomicString, scoped_refptr<CSSVariableData>>>
 ComputedStyleCSSValueMapping::GetVariables(const ComputedStyle& style) {
   // TODO(timloh): Also return non-inherited variables
@@ -1886,6 +1816,7 @@ ComputedStyleCSSValueMapping::GetVariables(const ComputedStyle& style) {
   return nullptr;
 }
 
+// RJW
 // https://drafts.csswg.org/cssom/#resolved-value
 //
 // For 'width' and 'height':
@@ -1937,7 +1868,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return list;
     }
     case CSSPropertyBottom:
-      return ValueForPositionOffset(style, resolved_property, layout_object);
+      return ComputedStyleUtils::ValueForPositionOffset(
+          style, resolved_property, layout_object);
     case CSSPropertyWebkitBoxDecorationBreak:
       if (style.BoxDecorationBreak() == EBoxDecorationBreak::kSlice)
         return CSSIdentifierValue::Create(CSSValueSlice);
@@ -2191,7 +2123,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyJustifySelf:
       return ValueForItemPositionWithOverflowAlignment(style.JustifySelf());
     case CSSPropertyLeft:
-      return ValueForPositionOffset(style, resolved_property, layout_object);
+      return ComputedStyleUtils::ValueForPositionOffset(
+          style, resolved_property, layout_object);
     case CSSPropertyLetterSpacing:
       if (!style.LetterSpacing())
         return CSSIdentifierValue::Create(CSSValueNormal);
@@ -2278,24 +2211,6 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(max_width,
                                                                  style);
     }
-    case CSSPropertyMinHeight:
-      if (style.MinHeight().IsAuto()) {
-        Node* parent = styled_node->parentNode();
-        if (IsFlexOrGrid(parent ? parent->EnsureComputedStyle() : nullptr))
-          return CSSIdentifierValue::Create(CSSValueAuto);
-        return ZoomAdjustedPixelValue(0, style);
-      }
-      return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
-          style.MinHeight(), style);
-    case CSSPropertyMinWidth:
-      if (style.MinWidth().IsAuto()) {
-        Node* parent = styled_node->parentNode();
-        if (IsFlexOrGrid(parent ? parent->EnsureComputedStyle() : nullptr))
-          return CSSIdentifierValue::Create(CSSValueAuto);
-        return ZoomAdjustedPixelValue(0, style);
-      }
-      return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
-          style.MinWidth(), style);
     case CSSPropertyObjectPosition:
       return CSSValuePair::Create(
           ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
@@ -2373,7 +2288,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       }
       return CSSIdentifierValue::Create(CSSValueNone);
     case CSSPropertyRight:
-      return ValueForPositionOffset(style, resolved_property, layout_object);
+      return ComputedStyleUtils::ValueForPositionOffset(
+          style, resolved_property, layout_object);
     case CSSPropertyTextDecoration:
       return ValuesForShorthandProperty(textDecorationShorthand(), style,
                                         layout_object, styled_node,
@@ -2452,7 +2368,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
         return CSSIdentifierValue::Create(CSSValueEllipsis);
       return CSSIdentifierValue::Create(CSSValueClip);
     case CSSPropertyTop:
-      return ValueForPositionOffset(style, resolved_property, layout_object);
+      return ComputedStyleUtils::ValueForPositionOffset(
+          style, resolved_property, layout_object);
     case CSSPropertyTouchAction:
       return TouchActionFlagsToCSSValue(style.GetTouchAction());
     case CSSPropertyVerticalAlign:
@@ -2666,12 +2583,14 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyClip: {
       if (style.HasAutoClip())
         return CSSIdentifierValue::Create(CSSValueAuto);
-      CSSValue* top = ZoomAdjustedPixelValueOrAuto(style.Clip().Top(), style);
-      CSSValue* right =
-          ZoomAdjustedPixelValueOrAuto(style.Clip().Right(), style);
-      CSSValue* bottom =
-          ZoomAdjustedPixelValueOrAuto(style.Clip().Bottom(), style);
-      CSSValue* left = ZoomAdjustedPixelValueOrAuto(style.Clip().Left(), style);
+      CSSValue* top = ComputedStyleUtils::ZoomAdjustedPixelValueOrAuto(
+          style.Clip().Top(), style);
+      CSSValue* right = ComputedStyleUtils::ZoomAdjustedPixelValueOrAuto(
+          style.Clip().Right(), style);
+      CSSValue* bottom = ComputedStyleUtils::ZoomAdjustedPixelValueOrAuto(
+          style.Clip().Bottom(), style);
+      CSSValue* left = ComputedStyleUtils::ZoomAdjustedPixelValueOrAuto(
+          style.Clip().Left(), style);
       return CSSQuadValue::Create(top, right, bottom, left,
                                   CSSQuadValue::kSerializeAsRect);
     }
@@ -2904,8 +2823,14 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
           svg_style.StrokePaintColor(), style.GetColor());
     case CSSPropertyStrokeDasharray:
       return StrokeDashArrayToCSSValueList(*svg_style.StrokeDashArray(), style);
-    case CSSPropertyStrokeWidth:
-      return PixelValueForUnzoomedLength(svg_style.StrokeWidth(), style);
+    case CSSPropertyStrokeWidth: {
+      const Length& length = svg_style.StrokeWidth().length();
+      if (length.IsFixed()) {
+        return CSSPrimitiveValue::Create(length.Value(),
+                                         CSSPrimitiveValue::UnitType::kPixels);
+      }
+      return CSSValue::Create(length, style.EffectiveZoom());
+    }
     case CSSPropertyBaselineShift: {
       switch (svg_style.BaselineShift()) {
         case BS_SUPER:
