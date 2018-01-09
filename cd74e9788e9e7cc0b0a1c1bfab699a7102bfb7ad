@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "668092f4_5e50cdad",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2018-01-09T00:37:20Z",
+      "side": 1,
+      "message": "really, our mac builds are so weak comparing to Linux/Win builders?",
+      "range": {
+        "startLine": 194,
+        "startChar": 19,
+        "endLine": 194,
+        "endChar": 27
+      },
+      "revId": "cd74e9788e9e7cc0b0a1c1bfab699a7102bfb7ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
