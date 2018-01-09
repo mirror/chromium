@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2d4ae236_23c7ecc3",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-09T00:57:44Z",
+      "side": 1,
+      "message": "I added a ContentBrowserClient::CreateClientCertStore() function, and it is implemented by ChromeContentBrowserClient which uses the same path as ResourceLoader.\n\nDone.",
+      "parentUuid": "ca92aedb_eaa55d7c",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ff1f29_77813c53",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 4
