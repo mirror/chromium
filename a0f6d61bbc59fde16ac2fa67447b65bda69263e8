@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c795cb06_31719cc5",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGTransformableContainer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-09T13:37:46Z",
+      "side": 1,
+      "message": "Returns false for !child_node here because it means the rendered child will be a text node which would otherwise not be allowed as a child of LayoutSVGTransformableContainer.",
+      "revId": "a0f6d61bbc59fde16ac2fa67447b65bda69263e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
