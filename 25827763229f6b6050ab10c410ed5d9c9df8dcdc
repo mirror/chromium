@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c301aa9_8bcd65a2",
+        "filename": "ash/system/power/power_button_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T01:35:15Z",
+      "side": 1,
+      "message": "Please update the string to \"Show lock screen when waking from sleep\" [1].\n\n[1] https://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?type\u003dcs\u0026q\u003dshow+lock+screen\u0026l\u003d2889",
+      "revId": "25827763229f6b6050ab10c410ed5d9c9df8dcdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
