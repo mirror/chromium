@@ -104,10 +104,13 @@ struct OptionalStorageBase<T, true /* trivially destructible */> {
 // "= default;", which generates a constexpr constructor (In this case,
 // the condition of constexpr-ness is satisfied because the base class also has
 // compiler generated constexpr {copy,move} constructors). Note that
-// placement-new is prohibited in constexpr.
+// placement-new is prohibited in constexpr. Also note that, base class's
+// compiler generated copy constructor requires that T is copy constructible
+// (otherwise the copy constructor of the base class is deleted).
 template <typename T,
           bool = std::is_trivially_copy_constructible<T>::value,
-          bool = std::is_trivially_move_constructible<T>::value>
+          bool = std::is_trivially_move_constructible<T>::value&&
+              std::is_copy_constructible<T>::value>
 struct OptionalStorage : OptionalStorageBase<T> {
   // This is no trivially {copy,move} constructible case. Other cases are
   // defined below as specializations.

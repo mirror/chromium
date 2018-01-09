@@ -115,6 +115,18 @@ class DeletedDefaultConstructor {
   int foo_;
 };
 
+class DeletedCopyConstructor {
+ public:
+  DeletedCopyConstructor(int foo) : foo_(foo) {}
+  DeletedCopyConstructor(const DeletedCopyConstructor&) = delete;
+  DeletedCopyConstructor(DeletedCopyConstructor&&) = default;
+
+  int foo() const { return foo_; }
+
+ private:
+  int foo_;
+};
+
 class DeleteNewOperators {
  public:
   void* operator new(size_t) = delete;
@@ -210,32 +222,44 @@ TEST(OptionalTest, MoveConstructor) {
     constexpr Optional<float> first(0.1f);
     constexpr Optional<float> second(std::move(first));
 
-    EXPECT_TRUE(second);
+    EXPECT_TRUE(second.has_value());
     EXPECT_EQ(second.value(), 0.1f);
 
-    EXPECT_TRUE(first);
+    EXPECT_TRUE(first.has_value());
   }
 
   {
     Optional<std::string> first("foo");
     Optional<std::string> second(std::move(first));
 
-    EXPECT_TRUE(second);
+    EXPECT_TRUE(second.has_value());
     EXPECT_EQ("foo", second.value());
 
-    EXPECT_TRUE(first);
+    EXPECT_TRUE(first.has_value());
   }
 
   {
     Optional<TestObject> first(TestObject(3, 0.1));
     Optional<TestObject> second(std::move(first));
 
-    EXPECT_TRUE(!!second);
+    EXPECT_TRUE(second.has_value());
     EXPECT_EQ(TestObject::State::MOVE_CONSTRUCTED, second->state());
     EXPECT_TRUE(TestObject(3, 0.1) == second.value());
 
-    EXPECT_TRUE(!!first);
+    EXPECT_TRUE(first.has_value());
     EXPECT_EQ(TestObject::State::MOVED_FROM, first->state());
+  }
+
+  // Even if copy constructor is deleted, move constructor needs to work.
+  // Note that it couldn't be constexpr.
+  {
+    Optional<DeletedCopyConstructor> first(in_place, 42);
+    Optional<DeletedCopyConstructor> second(std::move(first));
+
+    EXPECT_TRUE(second.has_value());
+    EXPECT_EQ(42, second->foo());
+
+    EXPECT_TRUE(first.has_value());
   }
 }
 
