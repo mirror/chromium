@@ -854,8 +854,11 @@ bool RenderWidgetHostViewAndroid::TransformPointToLocalCoordSpace(
     const gfx::PointF& point,
     const viz::SurfaceId& original_surface,
     gfx::PointF* transformed_point) {
-  if (!delegated_frame_host_)
+  if (!delegated_frame_host_) {
+    LOG(ERROR)
+        << "RWHVAn::TransformPointToLocalCoordSpace() !delegated_frame_host_";
     return false;
+  }
 
   float scale_factor = view_.GetDipScale();
   DCHECK_GT(scale_factor, 0);
@@ -864,8 +867,11 @@ bool RenderWidgetHostViewAndroid::TransformPointToLocalCoordSpace(
   gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
 
   viz::SurfaceId surface_id = delegated_frame_host_->SurfaceId();
-  if (!surface_id.is_valid())
+  if (!surface_id.is_valid()) {
+    LOG(ERROR)
+        << "RWHVAn::TransformPointToLocalCoordSpace() - invalid surface id";
     return false;
+  }
 
   if (original_surface == surface_id)
     return true;
@@ -874,8 +880,10 @@ bool RenderWidgetHostViewAndroid::TransformPointToLocalCoordSpace(
   viz::SurfaceHittest hittest(nullptr,
                               GetFrameSinkManager()->surface_manager());
   if (!hittest.TransformPointToTargetSurface(original_surface, surface_id,
-                                             transformed_point))
+                                             transformed_point)) {
+    LOG(ERROR) << "RWHVAn::TransformPointToLocalCoordSpace() - hit test failed";
     return false;
+  }
 
   *transformed_point = gfx::ConvertPointToDIP(scale_factor, *transformed_point);
   return true;
@@ -894,8 +902,11 @@ bool RenderWidgetHostViewAndroid::TransformPointToCoordSpaceForView(
   // but it is not necessary here because the final target view is responsible
   // for converting before computing the final transform.
   viz::SurfaceId surface_id = delegated_frame_host_->SurfaceId();
-  if (!surface_id.is_valid())
+  if (!surface_id.is_valid()) {
+    LOG(ERROR)
+        << "RWHVAn::TransformPointToCoordSpaceForView() - invalid surface id";
     return false;
+  }
 
   return target_view->TransformPointToLocalCoordSpace(point, surface_id,
                                                       transformed_point);
