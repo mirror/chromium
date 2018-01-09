@@ -16,6 +16,57 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6d0cc6_f306b102",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-09T03:54:30Z",
+      "side": 1,
+      "message": "Nit:\n// The request should not go to the previous controller.\nEXPECT_EQ(1, fake_controller1.fetch_event_count());",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90448e5d_21125697",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-09T03:54:30Z",
+      "side": 1,
+      "message": "nit:\n// The request should not go to the previous controllers.\nEXPECT_EQ(1, fake_controller1.fetch_event_count());\nEXPECT_EQ(1, fake_controller2.fetch_event_count());",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0a062f_abb89a5b",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-09T03:54:30Z",
+      "side": 1,
+      "message": "nit:\n\n// The request should not go to the previous controllers.\nEXPECT_EQ(1, fake_controller1.fetch_event_count());\nEXPECT_EQ(1, fake_controller2.fetch_event_count());\n// The request should not go to the network.\nEXPECT_EQ(1UL, fake_loader_factory_.clients_count());",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
