@@ -77,6 +77,11 @@ void PresentationReceiverWindowController::Terminate() {
   }
 }
 
+bool PresentationReceiverWindowController::HasPresentationReceiverWindow()
+    const {
+  return true;
+}
+
 void PresentationReceiverWindowController::CloseWindowForTest() {
   window_->Close();
 }
