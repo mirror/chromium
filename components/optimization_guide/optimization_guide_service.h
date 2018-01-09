@@ -48,6 +48,7 @@ class OptimizationGuideService {
     FAILED_INVALID_PARAMETERS,
     FAILED_READING_FILE,
     FAILED_INVALID_CONFIGURATION,
+    FAILED_FINISH_PROCESSING,
 
     // Insert new values before this line.
     MAX,
@@ -73,6 +74,18 @@ class OptimizationGuideService {
   void SetLatestProcessedVersionForTesting(const base::Version& version);
 
  private:
+  // Creates the sentinel file (at |sentinel_path|) to persistently mark the
+  // beginning of processing the configuration data. Returns true when the
+  // sentinel file is successfully created and processing should continue.
+  // Returns false if too many previous attempts have failed for |sentinel_path|
+  // and processing should not be continued for the current configuration data.
+  // Should be run in the background.
+  bool CreateSentinelFile(const base::FilePath& sentinel_path);
+
+  // Deletes the sentinel file. This should be done once processing the
+  // configuration is complete and should be done in the background.
+  void DeleteSentinelFile(const base::FilePath& sentinel_path);
+
   // Always called as part of a background priority task.
   void ProcessHintsInBackground(const ComponentInfo& component_info);
 
@@ -83,7 +96,8 @@ class OptimizationGuideService {
   void RemoveObserverOnIOThread(OptimizationGuideServiceObserver* observer);
 
   // Dispatches hints to listeners on IO thread.
-  void DispatchHintsOnIOThread(const proto::Configuration& config);
+  void DispatchHintsOnIOThread(const proto::Configuration& config,
+                               const base::FilePath& sentinel_path);
 
   // Runner for indexing tasks.
   scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
