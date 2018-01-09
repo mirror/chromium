@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f64a6a50_038209e9",
+        "filename": "device/ctap/authenticator_get_assertion_response.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67a78dfa_d4153f35",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa257214_9bb37f51",
         "filename": "device/ctap/authenticator_get_assertion_response.h",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bcc51e_39f0dd43",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa257214_9bb37f51",
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a0aec6b4_5f789a76",
+        "filename": "device/ctap/authenticator_get_info_response.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09173c5f_2c579a1f",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baa6baad_6916e347",
         "filename": "device/ctap/authenticator_get_info_response.h",
         "patchSetId": 8
@@ -79,6 +145,24 @@
       "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc89b0a2_9767f3a2",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baa6baad_6916e347",
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "1ec0d706_80e3b4f0",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce39dbb_a6b3804b",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b04899a_89d39c0f",
         "filename": "device/ctap/authenticator_options.cc",
         "patchSetId": 8
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "93e1b92e_359dd054",
+        "filename": "device/ctap/authenticator_options.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b04899a_89d39c0f",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7b681cc_3e9864b9",
         "filename": "device/ctap/authenticator_options.h",
         "patchSetId": 8
@@ -148,6 +280,30 @@
       "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2860a279_bf86e418",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Yup. Thanks for the suggestion. Changed parameters to \"user_presence_required\" / \"user_verification_required\" / \"client_pin_stored\".",
+      "parentUuid": "a7b681cc_3e9864b9",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +353,54 @@
     },
     {
       "key": {
+        "uuid": "bc41250c_396d0559",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b25588_376ef63d",
+      "range": {
+        "startLine": 26,
+        "startChar": 45,
+        "endLine": 26,
+        "endChar": 63
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b8bd9aa_4b67edce",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b49659b8_e1231454",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1fbe6ee_55d74385",
         "filename": "device/ctap/ctap_authenticator_response.cc",
         "patchSetId": 8
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "3143ec42_38f20b2f",
+        "filename": "device/ctap/ctap_authenticator_response.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1fbe6ee_55d74385",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0780a895_cdfc5fde",
         "filename": "device/ctap/ctap_constants.cc",
         "patchSetId": 8
@@ -240,6 +468,30 @@
       "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7702c992_88ef3e18",
+        "filename": "device/ctap/ctap_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0780a895_cdfc5fde",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -290,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "5397a7c3_5c983b16",
+        "filename": "device/ctap/ctap_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Deleted this file since kResponseCodeList is initialized in header file as constexpr.",
+      "parentUuid": "65da4d83_27d31da6",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91edb106_6cec1bd6",
         "filename": "device/ctap/ctap_get_assertion_request_param.h",
         "patchSetId": 8
@@ -313,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "90efefa1_593d40cb",
+        "filename": "device/ctap/ctap_get_assertion_request_param.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91edb106_6cec1bd6",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 51
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ef2715f_54d67bf6",
         "filename": "device/ctap/ctap_make_credential_request_param.cc",
         "patchSetId": 8
@@ -324,6 +624,30 @@
       "writtenOn": "2018-01-09T18:58:26Z",
       "side": 1,
       "message": "A cbor::CBORValue::FromBoolean() method would makes this code more readable.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 73
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a77ac0_7aa1e345",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T23:34:51Z",
+      "side": 1,
+      "message": "Could you point me to the function? I\u0027m not aware of any CBORValue constructor that take in boolean. If you meant implementing that function, I\u0027ll create a new CL for that! :)",
+      "parentUuid": "1ef2715f_54d67bf6",
       "range": {
         "startLine": 56,
         "startChar": 0,
