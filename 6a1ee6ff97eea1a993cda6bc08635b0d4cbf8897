@@ -46,6 +46,30 @@
       "revId": "6a1ee6ff97eea1a993cda6bc08635b0d4cbf8897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcddfeb_e672e88f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-09T21:52:33Z",
+      "side": 1,
+      "message": "Well it seems min_sdk is jellybean, so replace compatibility code to announceForAccessibility",
+      "parentUuid": "2de139a1_e47f798f",
+      "range": {
+        "startLine": 432,
+        "startChar": 19,
+        "endLine": 447,
+        "endChar": 21
+      },
+      "revId": "6a1ee6ff97eea1a993cda6bc08635b0d4cbf8897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
