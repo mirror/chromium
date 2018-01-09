@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b15046f0_4a26586b",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T00:02:46Z",
+      "side": 1,
+      "message": "random drive-by while I\u0027m here... not 2014 anymore :)",
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb863492_cb34b544",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
@@ -54,6 +71,30 @@
       "side": 1,
       "message": "We must go deeper :-}.  Devlin, could you comment?  (I\u0027m just making you a reviewer to get this one question on your radar screen--I\u0027m not actually looking for you to review the CL.)",
       "parentUuid": "eb863492_cb34b544",
+      "range": {
+        "startLine": 11,
+        "startChar": 43,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db673dd9_085d7288",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T00:02:46Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not familiar with net/ stuff or socket stuff.  Maybe one of the owners from //net?  Or am I missing something?",
+      "parentUuid": "c301c07a_0cd1b367",
       "range": {
         "startLine": 11,
         "startChar": 43,
