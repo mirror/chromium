@@ -1166,6 +1166,13 @@ bool VaapiWrapper::BlitSurface(
 // static
 void VaapiWrapper::PreSandboxInitialization() {
   VADisplayState::PreSandboxInitialization();
+  // next command will dlopen all necessary libraries for
+  // va-api to function properly, to know:
+  // libva.so
+  // i965_drv_video.so
+  // hybrid_drv_video.so (platforms that support it)
+  // libva-x11.so (X11) or libva-drm.so (Ozone).
+  VASupportedProfiles::Get();
 }
 
 VaapiWrapper::VaapiWrapper()
