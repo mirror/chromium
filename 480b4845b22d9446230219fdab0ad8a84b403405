@@ -186,6 +186,30 @@
     },
     {
       "key": {
+        "uuid": "72a7a0d9_649d921a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:42:36Z",
+      "side": 1,
+      "message": "Actually, for all of these I think we should just pass in the actual pending reason and if we don\u0027t want to use the new strings we fix that at the string generation section (e.g. just treat everything as PENDING_REASON_UNKNOWN).",
+      "parentUuid": "3d6fd779_abd58cf9",
+      "range": {
+        "startLine": 527,
+        "startChar": 12,
+        "endLine": 535,
+        "endChar": 13
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ce87984_97d5fd05",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 11
