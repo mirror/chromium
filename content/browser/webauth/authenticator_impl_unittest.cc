@@ -231,7 +231,8 @@ TEST_F(AuthenticatorImplTest, TestTimeout) {
       service_manager::Connector::Create(&request);
   service_manager::Connector::TestApi test_api(connector.get());
   test_api.OverrideBinderForTesting(
-      device::mojom::kServiceName, device::mojom::HidManager::Name_,
+      service_manager::Identity(device::mojom::kServiceName),
+      device::mojom::HidManager::Name_,
       base::Bind(&device::FakeHidManager::AddBinding,
                  base::Unretained(fake_hid_manager.get())));
 
