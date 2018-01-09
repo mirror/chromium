@@ -19,6 +19,7 @@ package org.chromium.chrome.browser.omnibox.geo;
 
 option java_outer_classname = "PartnerLocationDescriptor";
 option java_package = "org.chromium.chrome.browser.omnibox.geo";
+option optimize_for = LITE_RUNTIME;
 
 enum LocationRole {
   UNKNOWN_ROLE = 0;
