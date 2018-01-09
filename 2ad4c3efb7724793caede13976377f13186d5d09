@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558323e7_d7b197f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-09T04:27:46Z",
+      "side": 1,
+      "message": "Please add a short subject and a blank line after it (cf. https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions )",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "2ad4c3efb7724793caede13976377f13186d5d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
