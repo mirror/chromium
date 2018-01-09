@@ -16,6 +16,24 @@
       "revId": "8e311449c77316145efdecef3fe1393b9a391b57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9de184b_25f7ccfd",
+        "filename": "chrome/browser/extensions/global_shortcut_listener.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-09T11:07:53Z",
+      "side": 1,
+      "message": "Ill\u0027 try, thanks for advise. There will be not obvious code on registering accelerator, that is the change.",
+      "parentUuid": "b9779aea_281a97bf",
+      "revId": "8e311449c77316145efdecef3fe1393b9a391b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
