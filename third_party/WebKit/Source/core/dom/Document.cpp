@@ -7104,6 +7104,17 @@ void Document::EnforceInsecureRequestPolicy(WebInsecureRequestPolicy policy) {
         GetInsecureRequestPolicy());
 }
 
+void Document::EnforceInsecureNavigationsSet(
+    const InsecureNavigationsSet& set) {
+  for (unsigned hash : set)
+    AddInsecureNavigationUpgrade(hash);
+  if (GetFrame()) {
+    GetFrame()->Client()->DidEnforceInsecureNavigationsSet(
+        SecurityContext::SerializeInsecureNavigationSet(
+            *InsecureNavigationsToUpgrade()));
+  }
+}
+
 void Document::SetShadowCascadeOrder(ShadowCascadeOrder order) {
   DCHECK_NE(order, ShadowCascadeOrder::kShadowCascadeNone);
   if (order == shadow_cascade_order_)
