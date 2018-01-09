@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/status/data_promo_notification.h"
+#include "chrome/browser/ui/ash/network/data_promo_notification.h"
 
 #include "base/command_line.h"
 #include "base/macros.h"
