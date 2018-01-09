@@ -10,6 +10,7 @@ import("//extensions/features/features.gni")
 import("//media/media_options.gni")
 import("//ppapi/features/features.gni")
 import("//tools/grit/grit_rule.gni")
+import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
 
 grit("resources") {
   source = "resources/renderer_resources.grd"
@@ -153,7 +154,6 @@ static_library("renderer") {
     "//third_party/icu",
     "//third_party/re2",
     "//third_party/widevine/cdm:headers",
-    "//tools/v8_context_snapshot",
     "//ui/surface",
     "//v8:v8",
   ]
@@ -406,6 +406,12 @@ static_library("renderer") {
       "searchbox/searchbox.h",
       "searchbox/searchbox_extension.cc",
       "searchbox/searchbox_extension.h",
+    ]
+  }
+
+  if (use_v8_context_snapshot) {
+    data = [
+      "$root_out_dir/v8_context_snapshot.bin",
     ]
   }
 }

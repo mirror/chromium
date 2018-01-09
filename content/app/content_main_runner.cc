@@ -169,6 +169,7 @@ void InitializeFieldTrialAndFeatureList(
 }
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+
 void LoadV8ContextSnapshotFile() {
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
   base::FileDescriptorStore& file_descriptor_store =
@@ -230,9 +231,9 @@ void InitializeV8IfNeeded(const base::CommandLine& command_line,
     return;
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+  LoadV8ContextSnapshotFile();
   LoadV8SnapshotFile();
   LoadV8NativesFile();
-  LoadV8ContextSnapshotFile();
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
 }
 
