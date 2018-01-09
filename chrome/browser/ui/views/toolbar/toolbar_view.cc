@@ -121,6 +121,8 @@ ToolbarView::ToolbarView(Browser* browser)
 ToolbarView::~ToolbarView() {
   UpgradeDetector::GetInstance()->RemoveObserver(this);
 
+  chrome::RemoveCommandObserver(browser_, this);
+
   // NOTE: Don't remove the command observers here.  This object gets destroyed
   // after the Browser (which owns the CommandUpdater), so the CommandUpdater is
   // already gone.
