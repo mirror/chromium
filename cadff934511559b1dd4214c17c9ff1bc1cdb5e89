@@ -93,6 +93,30 @@
       "revId": "cadff934511559b1dd4214c17c9ff1bc1cdb5e89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a46c00d_df346c95",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-09T15:13:17Z",
+      "side": 1,
+      "message": "I don\u0027t understand how it\u0027s related to the votes uploading. Is it a UI feature that is just good on its own to minimize user mistakes? If yes, I\u0027d prefer not to attach it to this CL. If no (that is, it\u0027s really important somewhere in PasswordFormManager) then I\u0027d move it out of the UI code.",
+      "parentUuid": "234d5928_c8450d7b",
+      "range": {
+        "startLine": 628,
+        "startChar": 3,
+        "endLine": 628,
+        "endChar": 75
+      },
+      "revId": "cadff934511559b1dd4214c17c9ff1bc1cdb5e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
