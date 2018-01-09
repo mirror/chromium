@@ -16,6 +16,24 @@
       "revId": "27b18238c5924137bee2cbfe1e8fe0c124c3de9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3cda9a_9eb82388",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-09T18:33:44Z",
+      "side": 0,
+      "message": "The reason this was needed is to prevent the extension updater from installing primary app updates that have been delayed because they were not compliant with the current Chrome OS version (i.e. they were delayed until the Chrome OS is auto-updated).\n\nThe code after this runs extension_updater check with install_immediately param set, so if/when the extension downloader did not find an update (because the app was up-to date), extension_updater would handle the downloader failure by installing the delayed update (regardless of whether the update was still compliant or not). This cl fixed the issue with extension updater installing non-compliant updates, so this check is not necessary anymore.",
+      "parentUuid": "e20f0234_a5a9990b",
+      "revId": "27b18238c5924137bee2cbfe1e8fe0c124c3de9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
