@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "854cd457_ec87ecee",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-09T01:09:58Z",
+      "side": 1,
+      "message": "Should this be ?\n\n!this.isOffline \u0026\u0026 (!this.destination_.hasInvalidCertificate || loadTimeData.getBoolean(\u0027isEnterpriseManaged\u0027))",
+      "range": {
+        "startLine": 533,
+        "startChar": 30,
+        "endLine": 533,
+        "endChar": 56
+      },
+      "revId": "52a755d9216e3fc250b7116b858531cb8a1ad418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fdbd5b_dfcf2877",
+        "filename": "chrome/browser/resources/print_preview/search/destination_list_item.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-09T01:09:58Z",
+      "side": 1,
+      "message": "Nit: Same here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 47,
+        "endLine": 7,
+        "endChar": 59
+      },
+      "revId": "52a755d9216e3fc250b7116b858531cb8a1ad418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
