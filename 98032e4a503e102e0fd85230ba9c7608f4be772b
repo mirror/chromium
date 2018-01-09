@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d428542_2cbdf377",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-09T19:25:14Z",
+      "side": 1,
+      "message": "Nit (optional):\n\ncr.dispatchSimpleEvent(\n  this,\n  this.selectedDestination_.shouldShowInvalidCertificateError ?\n      DestinationStore.EventType.SELECTED_DESTINATION_UNSUPPORTED :\n      DestinationStore.EventType.SELECTED_DESTINATION_CAPABILITIES_READY);",
+      "revId": "98032e4a503e102e0fd85230ba9c7608f4be772b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
