@@ -418,6 +418,18 @@ inline void doubleToInteger(double d, unsigned long long& value) {
   }
 }
 
+// From http://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
+inline constexpr uint32_t RoundUpToPowerOfTwo32(uint32_t value) {
+  if (value)
+    --value;
+  value |= value >> 1;
+  value |= value >> 2;
+  value |= value >> 4;
+  value |= value >> 8;
+  value |= value >> 16;
+  return value + 1;
+}
+
 namespace WTF {
 
 inline unsigned FastLog2(unsigned i) {

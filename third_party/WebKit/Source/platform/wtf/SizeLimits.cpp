@@ -32,6 +32,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/ContainerAnnotations.h"
+#include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/ThreadRestrictionVerifier.h"
 #include "platform/wtf/Vector.h"
@@ -50,14 +51,25 @@ struct SameSizeAsVectorWithInlineCapacity;
 
 template <typename T>
 struct SameSizeAsVectorWithInlineCapacity<T, 0> {
+  WTF_MAKE_NONCOPYABLE(SameSizeAsVectorWithInlineCapacity);
+
+ public:
   void* buffer_pointer;
   unsigned capacity;
   unsigned size;
+  unsigned mask;
 };
 
+template <typename T>
+struct SameSizeAsVectorWithInlineCapacityBase
+    : SameSizeAsVectorWithInlineCapacity<T> {};
+
 template <typename T, unsigned inlineCapacity>
-struct SameSizeAsVectorWithInlineCapacity {
-  SameSizeAsVectorWithInlineCapacity<T, 0> base_capacity;
+struct SameSizeAsVectorWithInlineCapacity
+    : SameSizeAsVectorWithInlineCapacityBase<T> {
+  WTF_MAKE_NONCOPYABLE(SameSizeAsVectorWithInlineCapacity);
+
+ public:
 #if !defined(ANNOTATE_CONTIGUOUS_CONTAINER)
   AlignedBuffer<inlineCapacity * sizeof(T), WTF_ALIGN_OF(T)> inline_buffer;
 #endif
