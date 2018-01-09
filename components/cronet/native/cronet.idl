@@ -208,6 +208,17 @@ interface Engine {
   StopNetLog();
 
   /**
+   * Shuts down the Engine if there are no active requests,
+   * otherwise throws an exception.
+   *
+   * Cannot be called on network thread - the thread Cronet calls into
+   * Executor on (which is different from the thread the Executor invokes
+   * callbacks on). May block until all the Engine's
+   * resources have been cleaned up.
+   */
+  Shutdown();
+
+  /**
    * Returns a human-readable version string of the engine.
    */
   [Sync]
@@ -219,6 +230,7 @@ interface Engine {
    */
   [Sync]
   GetDefaultUserAgent() => (string default_user_agent);
+
 };
 
 /**
@@ -263,18 +275,23 @@ struct PublicKeyPins {
 
   /**
    * An array of pins. Each pin is the SHA-256 cryptographic
-   * hash of the DER-encoded ASN.1 representation of the Subject Public
-   * Key Info (SPKI) of the host's X.509 certificate.
+   * hash (in the form of "sha256/<base64-hash-value>") of the DER-encoded ASN.1
+   * representation of the Subject Public Key Info (SPKI) of the host's X.509 certificate.
    * Although, the method does not mandate the presence of the backup pin
    * that can be used if the control of the primary private key has been
    * lost, it is highly recommended to supply one.
    */
-  array<handle> pinsSha256;
+  array<string> pinsSha256;
 
   /**
    * Indicates whether the pinning policy should be applied to subdomains of |host|.
    */
   bool includeSubdomains = false;
+
+  /**
+   * The expiration date for the pins in milliseconds since epoch (as in java.util.Date).
+   */
+  int64 expirationDate;
 };
 
 /**
@@ -288,6 +305,12 @@ struct EngineParams {
    * set User-Agent header will override a value set using this param.
    */
   string userAgent;
+
+  /**
+   * Override of the Accept-Language header for all requests. An explicitly
+   * set Accept-Language header will override a value set using this param.
+   */
+  string acceptLanguage;
 
   /**
    * Directory for HTTP Cache and Prefs Storage. The directory must exist.
@@ -369,6 +392,11 @@ struct EngineParams {
    * https://www.chromium.org/Home/chromium-security/security-faq
    */
   bool enablePublicKeyPinningBypassForLocalTrustAnchors = true;
+
+  /**
+   * JSON formatted experimental options to be used in Cronet Engine.
+   */
+  string experimentalOptions;
 };
 
 /**
