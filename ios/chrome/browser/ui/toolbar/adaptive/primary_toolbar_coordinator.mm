@@ -17,6 +17,7 @@
 #import "ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
@@ -94,6 +95,8 @@ initWithToolsMenuConfigurationProvider:(id)configurationProvider
   ToolbarButtonFactory* buttonFactory =
       [[ToolbarButtonFactory alloc] initWithStyle:style];
   buttonFactory.dispatcher = self.dispatcher;
+  buttonFactory.visibilityConfiguration =
+      [[ToolbarButtonVisibilityConfiguration alloc] initWithType:PRIMARY];
 
   self.toolbarViewController = [[PrimaryToolbarViewController alloc]
       initWithButtonFactory:buttonFactory];
