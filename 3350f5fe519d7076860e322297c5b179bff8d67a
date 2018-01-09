@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff8e0205_aac9fcd7",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2018-01-09T16:15:29Z",
+      "side": 1,
+      "message": "Feel free to merge this with the \u0027else if\u0027 so they both use the same callback.",
+      "range": {
+        "startLine": 739,
+        "startChar": 6,
+        "endLine": 739,
+        "endChar": 63
+      },
+      "revId": "3350f5fe519d7076860e322297c5b179bff8d67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ba8abd_19dbe153",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4048,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2018-01-09T16:15:29Z",
+      "side": 1,
+      "message": "Should be after the error check.",
+      "range": {
+        "startLine": 4048,
+        "startChar": 2,
+        "endLine": 4048,
+        "endChar": 46
+      },
+      "revId": "3350f5fe519d7076860e322297c5b179bff8d67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef9e606_9cdd3fe2",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4057,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2018-01-09T16:15:29Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 4057,
+        "startChar": 2,
+        "endLine": 4057,
+        "endChar": 35
+      },
+      "revId": "3350f5fe519d7076860e322297c5b179bff8d67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
