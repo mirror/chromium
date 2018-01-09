@@ -7,6 +7,7 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -34,6 +35,8 @@
   ToolbarButtonFactory* buttonFactory =
       [[ToolbarButtonFactory alloc] initWithStyle:style];
   buttonFactory.dispatcher = self.dispatcher;
+  buttonFactory.visibilityConfiguration =
+      [[ToolbarButtonVisibilityConfiguration alloc] initWithType:SECONDARY];
 
   self.toolbarViewController = [[SecondaryToolbarViewController alloc]
       initWithButtonFactory:buttonFactory];
