@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e847a8b_176715d0",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-09T00:58:13Z",
+      "side": 1,
+      "message": "Do you specifically need 100 buckets, or would 50 suffice?",
+      "range": {
+        "startLine": 48,
+        "startChar": 74,
+        "endLine": 48,
+        "endChar": 77
+      },
+      "revId": "3733044c35a3c9bda2803394a61e3fd974fa07c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f86026c_751ee2f4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 54970,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-09T00:58:13Z",
+      "side": 1,
+      "message": "This annotation makes me think that a histogram_suffixes section should also be updated in this CL – or is that covered in some other way?",
+      "range": {
+        "startLine": 54970,
+        "startChar": 11,
+        "endLine": 54970,
+        "endChar": 22
+      },
+      "revId": "3733044c35a3c9bda2803394a61e3fd974fa07c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1882cc_342c9cc2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 54974,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-09T00:58:13Z",
+      "side": 1,
+      "message": "Please document when this is recorded.",
+      "range": {
+        "startLine": 54973,
+        "startChar": 0,
+        "endLine": 54974,
+        "endChar": 45
+      },
+      "revId": "3733044c35a3c9bda2803394a61e3fd974fa07c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
