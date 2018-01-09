@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cbc004b_c82eabd3",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2018-01-09T21:25:50Z",
+      "side": 1,
+      "message": "Not as feedback, but out of curiosity: What\u0027s preventing moving this one to BindOnce?",
+      "range": {
+        "startLine": 437,
+        "startChar": 33,
+        "endLine": 437,
+        "endChar": 34
+      },
+      "revId": "790af77784e5ab80aed5cb0956dc55ec04632a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
