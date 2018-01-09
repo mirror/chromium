@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e94f733_0972b8d6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-09T15:11:18Z",
+      "side": 1,
+      "message": "I am sorry, I should have mentioned the related v8 changes earlier. The idea is to remove the ProduceCodeCache and ProduceFullCodeCache options from the CompileOptions since we are requesting the code cache explicitly. I have updated the V8 to trigger a  EagerCompile when we pass EagerCompile option, so that when we request the cache we get a full code cache. Here is the v8 side cl: https://chromium-review.googlesource.com/c/v8/v8/+/828977. I will remove ProduceCodeCache and ProduceFullCodeCache options once I land the chromium side changes as well.",
+      "parentUuid": "02bbb5ae_d6b2ce34",
+      "revId": "bb1c700eac810b4d691b7eb24bdd9e0400fea1bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3a2a084_3dbdcad0",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "bb1c700eac810b4d691b7eb24bdd9e0400fea1bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47761c0_21c7fc55",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-09T15:11:18Z",
+      "side": 1,
+      "message": "Thanks, I missed this. I added trace events for produce cache as well. Now, there will be two different trace events when producing code cache. The first one is for the compilation and the second one where we produce the cache. The parser cache and the consume cache options remain unchanged. Done.",
+      "parentUuid": "b3a2a084_3dbdcad0",
+      "revId": "bb1c700eac810b4d691b7eb24bdd9e0400fea1bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

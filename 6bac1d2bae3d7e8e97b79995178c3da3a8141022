@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0bb7418_20340bab",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-09T15:11:18Z",
+      "side": 1,
+      "message": "We now pass kNoCompileOptions even when we want to produce a code cache. ProduceCacheOptions controls if we request a code cache or not. Though, we still need to look at CompileOptions to figure out whether we are requesting a full code cache or not. If we pass kEagerCompile it generates a full code cache otherwise it is the default code cache. This is slightly confusing. We are planning to remove the Produce/consume Parser cache options, so I can clean this up then. We can add ProduceCacheOptions::kProduceFullCodeCache and use ProduceCacheOptions instead of ScriptCompiler::CompileOptions. Once the Parser cache is disabled, we don\u0027t need this function for ConsumeCache trace event.",
+      "revId": "6bac1d2bae3d7e8e97b79995178c3da3a8141022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
