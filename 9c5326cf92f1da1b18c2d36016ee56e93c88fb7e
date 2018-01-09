@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "afb2c2b7_cdea999c",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T03:41:14Z",
+      "side": 1,
+      "message": "Sorry to argue, but are details that readers can figure out from the code. Do you know why the accessibility API provides a method to darken the screen at all? If so, that\u0027s the example I\u0027m looking for. If not, I would just say \"(e.g. to allow chrome a11y extensions to darken the screen)\".",
+      "parentUuid": "629389fa_ac0f7d6f",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b002ae9a_c92671ff",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
         "patchSetId": 3
@@ -139,6 +157,24 @@
       "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcf5d62_13b706e2",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T03:41:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79324e58_a76dcc8a",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

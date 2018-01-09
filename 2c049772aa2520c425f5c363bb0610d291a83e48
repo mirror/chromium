@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e085c9c_aac90ce2",
+        "filename": "ash/accessibility/accessibility_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T03:41:14Z",
+      "side": 1,
+      "message": "Are you sure this is needed? AshTestHelper (used by AshTestBase) tries to shut down DBusThreadManager. https://cs.chromium.org/chromium/src/ash/test/ash_test_helper.cc?q\u003ddbusthreadmanager::shutdown+f:src/ash\u0026sq\u003dpackage:chromium\u0026l\u003d231\u0026dr\u003dC\n\n(It might be needed, it\u0027s just not obvious to me why.)",
+      "revId": "2c049772aa2520c425f5c363bb0610d291a83e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c39c636_c5f6377e",
+        "filename": "ash/accessibility/accessibility_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T03:41:14Z",
+      "side": 1,
+      "message": "I like it. Basically it\u0027s testing that if the ash mojo methods are called, ash does the right thing internally.",
+      "revId": "2c049772aa2520c425f5c363bb0610d291a83e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
