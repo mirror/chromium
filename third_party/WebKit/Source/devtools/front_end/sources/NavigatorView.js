@@ -743,10 +743,10 @@ Sources.NavigatorView = class extends UI.VBox {
 
   /**
    * @param {!Event} event
-   * @param {!Sources.NavigatorFolderTreeNode} node
+   * @param {!Sources.NavigatorTreeNode} node
    */
   handleFolderContextMenu(event, node) {
-    var path = node._folderPath;
+    var path = node._folderPath || '';
     var project = node._project;
 
     var contextMenu = new UI.ContextMenu(event);
