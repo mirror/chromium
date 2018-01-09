@@ -75,6 +75,7 @@ class ContentFaviconDriver
   void OnFaviconDeleted(const GURL& page_url,
                         FaviconDriverObserver::NotificationIconType
                             notification_icon_type) override;
+  void OnFaviconLoadingCompleted() override;
 
   // content::WebContentsObserver implementation.
   void DidUpdateFaviconURL(

@@ -599,4 +599,75 @@ void BrowserActivationWaiter::OnBrowserSetLastActive(Browser* browser) {
     message_loop_runner_->Quit();
 }
 
+FaviconWaiter::FaviconWaiter(content::WebContents* web_contents)
+    : WebContentsObserver(web_contents),
+      scoped_observer_(this),
+      weak_factory_(this) {
+  scoped_observer_.Add(
+      favicon::ContentFaviconDriver::FromWebContents(web_contents));
+}
+
+FaviconWaiter::~FaviconWaiter() = default;
+
+void FaviconWaiter::AlsoRequireUrl(const GURL& url) {
+  required_url_ = url;
+}
+
+void FaviconWaiter::AlsoRequireTitle(const base::string16& title) {
+  required_title_ = title;
+}
+
+void FaviconWaiter::Wait() {
+  if (should_wait_) {
+    base::RunLoop run_loop;
+    quit_closure_ = run_loop.QuitClosure();
+    run_loop.Run();
+  }
+}
+
+void FaviconWaiter::OnFaviconUpdated(
+    favicon::FaviconDriver* favicon_driver,
+    NotificationIconType notification_icon_type,
+    const GURL& icon_url,
+    bool icon_url_changed,
+    const gfx::Image& image) {}
+
+void FaviconWaiter::OnFaviconLoadingCompleted() {
+  MaybeStopWaiting();
+}
+
+void FaviconWaiter::DidStopLoading() {
+  did_stop_loading_ = true;
+  MaybeStopWaiting();
+}
+
+void FaviconWaiter::TitleWasSet(content::NavigationEntry* entry) {
+  MaybeStopWaiting();
+}
+
+bool FaviconWaiter::HasExpectedUrlAndTitle() {
+  if (!required_url_.is_empty() &&
+      required_url_ != web_contents()->GetLastCommittedURL()) {
+    return false;
+  }
+
+  if (required_title_.has_value() &&
+      *required_title_ != web_contents()->GetTitle()) {
+    return false;
+  }
+
+  return true;
+}
+
+void FaviconWaiter::MaybeStopWaiting() {
+  if (did_stop_loading_ &&
+      !favicon::ContentFaviconDriver::FromWebContents(web_contents())
+           ->HasPendingTasks() &&
+      HasExpectedUrlAndTitle()) {
+    should_wait_ = false;
+    if (!quit_closure_.is_null())
+      std::move(quit_closure_).Run();
+  }
+}
+
 }  // namespace ui_test_utils

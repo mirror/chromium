@@ -52,9 +52,9 @@ void FaviconDriverImpl::FetchFavicon(const GURL& page_url,
     handler->FetchFavicon(page_url, is_same_document);
 }
 
-bool FaviconDriverImpl::HasPendingTasksForTest() {
+bool FaviconDriverImpl::HasPendingTasks() {
   for (const std::unique_ptr<FaviconHandler>& handler : handlers_) {
-    if (handler->HasPendingTasksForTest())
+    if (handler->HasPendingTasks())
       return true;
   }
   return false;

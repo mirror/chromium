@@ -16,6 +16,7 @@
 #include "base/strings/string16.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_list_observer.h"
+#include "components/favicon/content/content_favicon_driver.h"
 #include "components/history/core/browser/history_service.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_observer.h"
@@ -310,6 +311,51 @@ class BrowserActivationWaiter : public BrowserListObserver {
   scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserActivationWaiter);
+};
+
+// Waits for the following the finish:
+// - The pending navigation.
+// - FaviconHandler's pending favicon database requests.
+// - FaviconHandler's pending downloads.
+// - Optionally, for a specific page URL (as a mechanism to wait of Javascript
+//   completion).
+class FaviconWaiter : public favicon::FaviconDriverObserver,
+                      public content::WebContentsObserver {
+ public:
+  explicit FaviconWaiter(content::WebContents* web_contents);
+  ~FaviconWaiter() override;
+
+  void AlsoRequireUrl(const GURL& url);
+
+  void AlsoRequireTitle(const base::string16& title);
+
+  void Wait();
+
+ private:
+  // favicon::FaviconDriverObserver
+  void OnFaviconUpdated(favicon::FaviconDriver* favicon_driver,
+                        NotificationIconType notification_icon_type,
+                        const GURL& icon_url,
+                        bool icon_url_changed,
+                        const gfx::Image& image) override;
+  void OnFaviconLoadingCompleted() override;
+
+  // content::WebContentsObserver:
+  void DidStopLoading() override;
+  void TitleWasSet(content::NavigationEntry* entry) override;
+
+  bool HasExpectedUrlAndTitle();
+  void MaybeStopWaiting();
+
+  base::OnceClosure quit_closure_;
+  GURL required_url_;
+  base::Optional<base::string16> required_title_;
+  ScopedObserver<favicon::FaviconDriver, FaviconWaiter> scoped_observer_;
+  bool should_wait_ = true;
+  bool did_stop_loading_ = false;
+  base::WeakPtrFactory<FaviconWaiter> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(FaviconWaiter);
 };
 
 }  // namespace ui_test_utils
