@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "652faba8_15c29b8e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-09T16:09:02Z",
+      "side": 1,
+      "message": "I\u0027m probably missing something obvious, but what\u0027s the reason for introducing this scope?",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e014c7ae_f3608127",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
@@ -49,6 +66,41 @@
       "side": 1,
       "message": "\u003e I was thinking the same thing while I was in there. I think there\u0027s a very good chance we will want to re-attach HTTPS here soon.\n\u003e \n\u003e I was going to investigate separately though, since it\u0027s a semi-different motivation than this CL.\n\nYou can investigate it separately if you want.  I have a feeling, however, that the security folks will launch the hide-https at some point and we\u0027ll forgot to revise this code.  If you\u0027re not implementing the https-addition now, can you please add a test that will fail if we\u0027re starting to do https by default in order to remind someone to touch this code?",
       "parentUuid": "c0233ddd_38e36be1",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bda265f_fe4a54c7",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-09T16:09:02Z",
+      "side": 1,
+      "message": "Haha, yeah, especially since the security folk who\u0027s going to launch hide-https is Tommy. :)",
+      "parentUuid": "afb532b9_084c1252",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fdcb44_3be5632d",
+        "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-09T16:09:02Z",
+      "side": 1,
+      "message": "Would you mind combining this with MockOmniboxEditModel from c/b/ui/cocoa/omnibox/omnibox_view_mac_unittest.mm and putting it in a new file (test_omnibox_edit_model.h)? There are already a bunch of test_omnibox_* classes and it\u0027ll be nice to add this one to go along with the rest.",
       "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

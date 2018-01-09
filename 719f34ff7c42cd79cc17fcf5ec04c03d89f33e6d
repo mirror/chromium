@@ -152,6 +152,24 @@
       "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2f6c72_c807daf1",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-09T16:09:02Z",
+      "side": 1,
+      "message": "I think virtual is the right approach here. This is already being done in this file for OnUpOrDownKeyPressed. And I suspect that if there are no overriding methods in the binary that the virtual dispatch overhead is easily optimized away.\n\nI see that other classes sometimes have a comment that says \"Virtual for testing\". Tommy, how about adding that to these methods (and OnUpOrDownKeyPressed) for better clarity for the reader?",
+      "parentUuid": "fcd52027_b2a30cb3",
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
