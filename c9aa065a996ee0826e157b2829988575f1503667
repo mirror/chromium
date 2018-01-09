@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cb0b4af_75de3568",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:37:40Z",
+      "side": 1,
+      "message": "might as well make this kNone default too?",
+      "revId": "c9aa065a996ee0826e157b2829988575f1503667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9781358_cc875b07",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:37:40Z",
+      "side": 1,
+      "message": "I believe creation_time is set for non-window clients?\n\n  blink::mojom::ServiceWorkerClientInfo client_info(\n      host-\u003edocument_url(), host-\u003eclient_uuid(), host_client_type,\n      blink::mojom::PageVisibilityState::kHidden,\n      false,  // is_focused\n      network::mojom::RequestContextFrameType::kNone, base::TimeTicks(),\n      host-\u003ecreate_time());",
+      "revId": "c9aa065a996ee0826e157b2829988575f1503667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
