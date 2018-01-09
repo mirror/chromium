@@ -767,3 +767,21 @@ video::cue(i) {
 .state-no-source input[pseudo="-webkit-media-controls-volume-slider" i]::-webkit-slider-thumb {
     display: none;
 }
+
+.state-no-metadata input[pseudo="-webkit-media-controls-timeline" i]::-webkit-slider-thumb {
+    -webkit-appearance: -internal-media-control;
+    background-image: -webkit-image-set(
+      url(default_100_percent/legacy/mediaplayer_slider_thumb_grey.png) 1x);
+
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    height: 48px;
+    z-index: 2;
+    width: 36px;
+    margin: 0;
+    padding: 0;
+    top: -24px;
+    position: absolute;
+}
