@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/task_manager/task_manager_observer.h"
+#include "components/upload_list/upload_list.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_event_histogram_value.h"
@@ -189,6 +190,26 @@ class ProcessesGetProcessInfoFunction :
 
   std::vector<int> process_host_ids_;
   bool include_memory_ = false;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// This extension function returns the Process object for the renderer process
+// currently in use by the specified Tab.
+class ProcessesGetCrashesFunction : public UIThreadExtensionFunction {
+ public:
+  ProcessesGetCrashesFunction();
+
+  // UIThreadExtensionFunction:
+  ExtensionFunction::ResponseAction Run() override;
+
+  DECLARE_EXTENSION_FUNCTION("processes.getCrashes", PROCESSES_GETCRASHES);
+
+ private:
+  ~ProcessesGetCrashesFunction() override;
+
+  void OnUploadListAvailable();
+
+  scoped_refptr<UploadList> upload_list_;
 };
 
 }  // namespace extensions

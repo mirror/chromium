@@ -28,7 +28,7 @@ class ProcessesApiTest : public ExtensionApiTest {
 
 
 // This test is flaky. https://crbug.com/598445
-IN_PROC_BROWSER_TEST_F(ProcessesApiTest, DISABLED_Processes) {
+IN_PROC_BROWSER_TEST_F(ProcessesApiTest, Processes) {
   ASSERT_TRUE(RunExtensionTest("processes/api")) << message_;
 }
 

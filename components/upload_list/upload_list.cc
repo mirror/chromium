@@ -15,11 +15,13 @@ UploadList::UploadInfo::UploadInfo(const std::string& upload_id,
                                    const base::Time& upload_time,
                                    const std::string& local_id,
                                    const base::Time& capture_time,
+                                   const std::string& file_path,
                                    State state)
     : upload_id(upload_id),
       upload_time(upload_time),
       local_id(local_id),
       capture_time(capture_time),
+      file_path(base::FilePath::FromUTF8Unsafe(file_path)),
       state(state) {}
 
 UploadList::UploadInfo::UploadInfo(const std::string& local_id,
@@ -40,6 +42,7 @@ UploadList::UploadInfo::UploadInfo(const UploadInfo& upload_info)
       upload_time(upload_info.upload_time),
       local_id(upload_info.local_id),
       capture_time(upload_info.capture_time),
+      file_path(upload_info.file_path),
       state(upload_info.state),
       file_size(upload_info.file_size) {}
 

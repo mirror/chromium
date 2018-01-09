@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
@@ -26,7 +27,7 @@
 class UploadList : public base::RefCountedThreadSafe<UploadList> {
  public:
   struct UploadInfo {
-    enum class State {
+    enum class State : int {
       NotUploaded = 0,
       Pending,
       Pending_UserRequested,
@@ -37,6 +38,7 @@ class UploadList : public base::RefCountedThreadSafe<UploadList> {
                const base::Time& upload_time,
                const std::string& local_id,
                const base::Time& capture_time,
+               const std::string& file_path,
                State state);
     // Constructor for locally stored data.
     UploadInfo(const std::string& local_id,
@@ -57,6 +59,9 @@ class UploadList : public base::RefCountedThreadSafe<UploadList> {
     // The time the data was captured. This is useful if the data is stored
     // locally when captured and uploaded at a later time.
     base::Time capture_time;
+
+    // The crash dump file for windows.
+    base::FilePath file_path;
 
     State state;
 

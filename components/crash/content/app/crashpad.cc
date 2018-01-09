@@ -323,6 +323,7 @@ void GetReportsImpl(std::vector<Report>* reports) {
     report.capture_time = completed_report.creation_time;
     base::strlcpy(report.remote_id, completed_report.id.c_str(),
                   sizeof(report.remote_id));
+    strcpy(report.file_path, completed_report.file_path.MaybeAsASCII().c_str());
     if (completed_report.uploaded) {
       report.upload_time = completed_report.last_upload_attempt_time;
       report.state = ReportUploadState::Uploaded;
@@ -340,6 +341,7 @@ void GetReportsImpl(std::vector<Report>* reports) {
                   sizeof(report.local_id));
     report.capture_time = pending_report.creation_time;
     report.upload_time = 0;
+    strcpy(report.file_path, pending_report.file_path.MaybeAsASCII().c_str());
     report.state = pending_report.upload_explicitly_requested
                        ? ReportUploadState::Pending_UserRequested
                        : report.state = ReportUploadState::Pending;
