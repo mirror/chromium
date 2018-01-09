@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f526e11_3fd380b1",
+        "filename": "components/signin/core/browser/webdata/token_service_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-09T16:06:45Z",
+      "side": 1,
+      "message": "tokens",
+      "range": {
+        "startLine": 67,
+        "startChar": 25,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "70c865d960e4af73c645c32573bbb7d612e6d895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0937dc19_f7d5ac7d",
+        "filename": "components/signin/core/browser/webdata/token_service_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-09T16:06:45Z",
+      "side": 1,
+      "message": "This will crash Chrome. Is this really what we want here?\nSame for other fatal failures.",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "70c865d960e4af73c645c32573bbb7d612e6d895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
