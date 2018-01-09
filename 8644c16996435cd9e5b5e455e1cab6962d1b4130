@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea5440b8_febea0bb",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-09T19:16:42Z",
+      "side": 1,
+      "message": "I traced this route_id usage throughout the codebase, and it seems like we only use it for frames and not for shared workers, so removing it should be safe.",
+      "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
