@@ -51,17 +51,9 @@
         <item name="android:textColor">@color/black_alpha_87</item>
         <item name="android:textSize">@dimen/headline_size_large</item>
     </style>
-    <style name="BlackHeadline2" parent="RobotoMediumStyle">
-        <item name="android:textColor">@color/black_alpha_87</item>
-        <item name="android:textSize">@dimen/headline_size_medium</item>
-    </style>
     <style name="BlackTitle1" tools:ignore="UnusedResources">
         <item name="android:textColor">@color/black_alpha_87</item>
         <item name="android:textSize">@dimen/text_size_large</item>
-    </style>
-    <style name="BlackTitle2" parent="RobotoMediumStyle">
-        <item name="android:textColor">@color/black_alpha_87</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
     <style name="BlackHint1" tools:ignore="UnusedResources">
         <item name="android:textColor">@color/black_alpha_54</item>
@@ -103,10 +95,6 @@
         <item name="android:textColor">@color/black_alpha_54</item>
         <item name="android:textSize">@dimen/text_size_medium_dense</item>
     </style>
-    <style name="BlackButtonText" parent="RobotoMediumStyle">
-        <item name="android:textColor">@color/black_alpha_54</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
     <style name="BlackLink" tools:ignore="UnusedResources">
         <item name="android:textColor">@color/black_alpha_54</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -118,19 +106,11 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/headline_size_large</item>
     </style>
-    <style name="WhiteHeadline2" parent="RobotoMediumStyle">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/headline_size_medium</item>
-    </style>
     <style name="WhiteBodyIncognito" tools:ignore="UnusedResources">
         <item name="android:textColor">@color/white_alpha_70</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
     <style name="WhiteBody" tools:ignore="UnusedResources">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
-    <style name="WhiteTitle2" parent="RobotoMediumStyle">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
@@ -149,14 +129,6 @@
     </style>
 
     <!-- Blue Text Styles -->
-    <style name="BlueButtonText1" parent="RobotoMediumStyle">
-        <item name="android:textColor">@color/google_blue_300</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
-    <style name="BlueButtonText2" parent="RobotoMediumStyle">
-        <item name="android:textColor">@color/google_blue_500</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
     <style name="BlueLink1" tools:ignore="UnusedResources">
         <item name="android:textColor">@color/google_blue_700</item>
         <item name="android:textSize">@dimen/text_size_large</item>

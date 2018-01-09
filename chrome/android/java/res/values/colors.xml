@@ -16,6 +16,8 @@
     <color name="descriptive_text_color">#646464</color>
     <color name="error_text_color">@color/google_red_700</color>
     <color name="google_blue_grey_500">#607D8B</color>
+    <color name="google_blue_300">#7BAAF7</color>
+    <color name="google_blue_500">#4285F4</color>
     <color name="google_red_700">#C53929</color>
     <color name="google_green_700">#0B8043</color>
     <color name="google_grey_50">#FAFAFA</color>

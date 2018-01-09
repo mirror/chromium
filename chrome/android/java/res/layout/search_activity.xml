@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height_no_shadow"
             android:background="@android:color/white"
+            android:focusable="true"
             android:clickable="true" >
 
         <org.chromium.chrome.browser.searchwidget.SearchActivityLocationBarLayout

@@ -4,6 +4,9 @@
      found in the LICENSE file. -->
 
 <resources>
+    <!-- Common text sizes -->
+    <dimen name="headline_size_medium">20sp</dimen>
+
     <!-- Connection info popup dimensions -->
     <dimen name="connection_info_padding_wide">24dp</dimen>
     <dimen name="connection_info_padding_thin">16dp</dimen>

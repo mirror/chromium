@@ -207,8 +207,6 @@ public class ChartDataUsageView extends ChartView {
      * A chart axis that represents time.
      */
     public static class TimeAxis implements ChartAxis {
-        private static final int FIRST_DAY_OF_WEEK = Calendar.getInstance().getFirstDayOfWeek() - 1;
-
         private long mMin;
         private long mMax;
         private float mSize;

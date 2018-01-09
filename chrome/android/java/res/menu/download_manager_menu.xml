@@ -3,27 +3,25 @@
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:chrome="http://schemas.android.com/apk/res-auto" >
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/normal_menu_group" >
         <item
             android:id="@+id/info_menu_id"
             android:icon="@drawable/btn_info"
             android:title="@string/show_info"
             android:visible="false"
-            chrome:showAsAction="ifRoom" />
+            android:showAsAction="ifRoom" />
         <item
             android:id="@+id/search_menu_id"
             android:icon="@drawable/ic_search"
             android:title="@string/search"
             android:visible="false"
-            chrome:showAsAction="ifRoom" />
+            android:showAsAction="ifRoom" />
         <item
             android:id="@+id/close_menu_id"
             android:icon="@drawable/btn_close"
             android:title="@string/close"
-            chrome:showAsAction="ifRoom" />
+            android:showAsAction="ifRoom" />
      </group>
      <group
         android:id="@+id/selection_mode_menu_group"
@@ -32,11 +30,11 @@
             android:id="@+id/selection_mode_share_menu_id"
             android:icon="@drawable/ic_share_white_24dp"
             android:title="@string/share"
-            chrome:showAsAction="ifRoom" />
+            android:showAsAction="ifRoom" />
         <item
             android:id="@+id/selection_mode_delete_menu_id"
             android:icon="@drawable/ic_delete_white_24dp"
             android:title="@string/delete"
-            chrome:showAsAction="ifRoom" />
+            android:showAsAction="ifRoom" />
      </group>
 </menu>

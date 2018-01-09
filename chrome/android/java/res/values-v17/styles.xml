@@ -373,13 +373,32 @@
         <item name="android:paddingEnd">4dp</item>
     </style>
 
+    <!-- Text styles -->
+    <style name="BlackHeadline2" parent="RobotoMediumStyle">
+        <item name="android:textColor">@color/black_alpha_87</item>
+        <item name="android:textSize">@dimen/headline_size_medium</item>
+    </style>
+    <style name="BlackTitle1" tools:ignore="UnusedResources">
+        <item name="android:textColor">@color/black_alpha_87</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+    <style name="BlackTitle2" parent="RobotoMediumStyle">
+        <item name="android:textColor">@color/black_alpha_87</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+    <style name="WhiteHeadline2" parent="RobotoMediumStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/headline_size_medium</item>
+    </style>
+    <style name="BlueButtonText2" parent="RobotoMediumStyle">
+        <item name="android:textColor">@color/google_blue_500</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
     <!-- Bubble styles -->
     <style name="TextBubbleAnimation">
         <item name="android:windowEnterAnimation">@anim/textbubble_in</item>
         <item name="android:windowExitAnimation">@anim/textbubble_out</item>
-    </style>
-    <style name="FullscreenNotificationBubble" parent="@android:style/Animation.Toast">
-        <item name="android:windowEnterAnimation">@anim/fullscreen_notification_in</item>
     </style>
 
     <!-- Promo dialogs -->
@@ -403,21 +422,6 @@
     </style>
 
     <!-- Cast and media playback notifications -->
-    <style
-        name="MediaNotificationTitle"
-        parent="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
-    <style
-        name="MediaNotificationText"
-        parent="@android:style/TextAppearance.StatusBar.EventContent"/>
-    <style
-        name="RemoteNotificationTitle"
-        parent="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
-    <style
-        name="RemoteNotificationText"
-        parent="@android:style/TextAppearance.StatusBar.EventContent"/>
-    <style
-        name="RemoteNotificationProgressBar"
-        parent="@android:style/Widget.Holo.ProgressBar.Horizontal"/>
     <style name="CastMediaRouteButton" parent="@style/Widget.MediaRouter.MediaRouteButton">
         <item name="android:background">@null</item>
         <item name="android:paddingTop">0dp</item>
@@ -600,10 +604,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">center</item>
         <item name="android:layout_gravity">end</item>
-    </style>
-    <style name="LocationBarMenuButton" parent="LocationBarButton">
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">match_parent</item>
     </style>
     <style name="ModernToolbar" parent="Widget.AppCompat.Toolbar">
         <item name="titleTextAppearance">@style/BlackHeadline1</item>

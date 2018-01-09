@@ -5,18 +5,17 @@
      found in the LICENSE file.
 -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/actionbar_feedback"
         android:title="@string/actionbar_feedback"
-        app:showAsAction="ifRoom|withText"/>
+        android:showAsAction="ifRoom|withText"/>
     <item
         android:id="@+id/actionbar_play_store"
         android:title="@string/actionbar_play_store"
-        app:showAsAction="never"/>
+        android:showAsAction="never"/>
     <item
         android:id="@+id/actionbar_credits"
         android:title="@string/credits"
-        app:showAsAction="never"/>
+        android:showAsAction="never"/>
 </menu>
