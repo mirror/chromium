@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5137fac_2f5650d2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T03:54:12Z",
+      "side": 1,
+      "message": "Would it be possible to testharness.js to follow the standard format?",
+      "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04b807d_8fa21218",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T03:54:12Z",
+      "side": 1,
+      "message": "If we\u0027re using testharness, we can just assert that the location is 127.0.0.1 rather than localhost, right?",
+      "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc265f0_b01eb0f6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/frame-detached-in-animationstart-event.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T03:54:12Z",
+      "side": 1,
+      "message": "This TODO might need to be addressed?",
+      "revId": "fc1ac04dc0e395284f307c9e8781750d877ccbb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
