@@ -22,6 +22,29 @@
       "revId": "04035831b4fd47d79972e5ee28f88a790c7bd956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88847ba4_a080ca2e",
+        "filename": "README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2018-01-09T02:23:23Z",
+      "side": 1,
+      "message": "export REPO\u003dchromium/src\nmkdir -p meta/$REPO\ncd meta/$REPO\ngit init\ngit remote add origin https://chromium.googlesource.com/$REPO\ngit config --unset-all remote.origin.fetch\ngit config --add remote.origin.fetch refs/meta/config:refs/remotes/origin/master\ngit fetch origin\ngit new-branch my_edits\n# hack hack\ngit cl upload",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "04035831b4fd47d79972e5ee28f88a790c7bd956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
