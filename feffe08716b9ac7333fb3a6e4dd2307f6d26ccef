@@ -69,6 +69,24 @@
       "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c991733_975b7d41",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T02:22:10Z",
+      "side": 1,
+      "message": "Yes, you\u0027ll still need to register the pref here, I think. You might need to make it PUBLIC, like the other one.",
+      "parentUuid": "06b39a1c_e6ad2648",
+      "revId": "feffe08716b9ac7333fb3a6e4dd2307f6d26ccef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
