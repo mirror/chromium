@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3055d0_690f1b97",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 9545,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-09T01:06:05Z",
+      "side": 0,
+      "message": "These two histograms are unused \u0026 should never have been merged since they were renamed.",
+      "revId": "eca7263cf27ad7da3a3a72f989d32735b63790e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

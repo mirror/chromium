@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7524beb1_a9842093",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 40802,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-09T01:06:05Z",
+      "side": 1,
+      "message": "This enum could use a better name. Any suggestions?",
+      "revId": "f883c92384761104f41c456d83b85cce01c8f746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
