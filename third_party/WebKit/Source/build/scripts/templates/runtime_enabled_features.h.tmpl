@@ -47,6 +47,14 @@ class PLATFORM_EXPORT RuntimeEnabledFeatures {
   {% endif %}
   {% endfor %}
 
+  static void SetPaintUnderInvalidationCheckingEnabled(bool b) {
+    LOG(ERROR) << "Set: " << b;
+    SetPaintUnderInvalidationChecking0Enabled(b);
+  }
+  static bool PaintUnderInvalidationCheckingEnabled() {
+    return PaintUnderInvalidationChecking0Enabled();
+  }
+
  private:
   {% for feature in standard_features %}
   static bool is_{{feature.class_member_name}}enabled_;
