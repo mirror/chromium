@@ -69,8 +69,8 @@ class CustomFrameView : public ash::CustomFrameViewAsh {
  public:
   using ShapeRects = std::vector<gfx::Rect>;
 
-  CustomFrameView(views::Widget* widget, bool enabled)
-      : CustomFrameViewAsh(widget) {
+  CustomFrameView(views::Widget* widget, bool enabled, bool server_side_drag)
+      : CustomFrameViewAsh(widget), server_side_drag_(server_side_drag) {
     SetEnabled(enabled);
     if (!enabled)
       CustomFrameViewAsh::SetShouldPaintHeader(false);
@@ -121,7 +121,7 @@ class CustomFrameView : public ash::CustomFrameViewAsh {
     return client_bounds;
   }
   int NonClientHitTest(const gfx::Point& point) override {
-    if (enabled())
+    if (server_side_drag_)
       return ash::CustomFrameViewAsh::NonClientHitTest(point);
     return GetWidget()->client_view()->NonClientHitTest(point);
   }
@@ -147,27 +147,58 @@ class CustomFrameView : public ash::CustomFrameViewAsh {
   }
 
  private:
+  bool server_side_drag_;
   DISALLOW_COPY_AND_ASSIGN(CustomFrameView);
 };
 
 class CustomWindowTargeter : public aura::WindowTargeter {
  public:
-  CustomWindowTargeter(views::Widget* widget) : widget_(widget) {}
+  CustomWindowTargeter(views::Widget* widget, bool server_side_drag)
+      : widget_(widget), server_side_drag_(server_side_drag) {}
   ~CustomWindowTargeter() override {}
 
   // Overridden from aura::WindowTargeter:
   bool EventLocationInsideBounds(aura::Window* window,
                                  const ui::LocatedEvent& event) const override {
-    Surface* surface = ShellSurfaceBase::GetMainSurface(window);
-    if (!surface)
-      return false;
-
     gfx::Point local_point = event.location();
 
     if (window->parent()) {
       aura::Window::ConvertPointToTarget(window->parent(), window,
                                          &local_point);
     }
+
+    if (server_side_drag_ && widget_->GetNativeWindow() == window &&
+        widget_->widget_delegate()->CanResize()) {
+      // For resizeable ARC window, try the container's targeter first, if any,
+      // which may provide the outsets to start resizing for mouse and touch.
+      ui::EventTarget* parent =
+          static_cast<ui::EventTarget*>(window)->GetParentTarget();
+      if (parent) {
+        aura::WindowTargeter* parent_targeter =
+            static_cast<aura::WindowTargeter*>(parent->GetEventTargeter());
+
+        if (parent_targeter) {
+          gfx::Rect mouse_rect;
+          gfx::Rect touch_rect;
+
+          if (parent_targeter->GetHitTestRects(window, &mouse_rect,
+                                               &touch_rect)) {
+            const gfx::Vector2d offset = -window->bounds().OffsetFromOrigin();
+            mouse_rect.Offset(offset);
+            touch_rect.Offset(offset);
+            if (event.IsTouchEvent() || event.IsGestureEvent()
+                    ? touch_rect.Contains(local_point)
+                    : mouse_rect.Contains(local_point)) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+
+    Surface* surface = ShellSurfaceBase::GetMainSurface(window);
+    if (!surface)
+      return false;
 
     int component = widget_->non_client_view()->NonClientHitTest(local_point);
     if (component != HTNOWHERE && component != HTCLIENT)
@@ -179,7 +210,7 @@ class CustomWindowTargeter : public aura::WindowTargeter {
 
  private:
   views::Widget* const widget_;
-
+  bool server_side_drag_;
   DISALLOW_COPY_AND_ASSIGN(CustomWindowTargeter);
 };
 
@@ -559,6 +590,7 @@ void ShellSurfaceBase::OnSurfaceCommit() {
 
   // Apply new window geometry.
   geometry_ = pending_geometry_;
+  // LOG(ERROR) << "Updating Geometry:" << geometry_.ToString();
 
   // Apply new minimum/maximium size.
   minimum_size_ = pending_minimum_size_;
@@ -604,7 +636,6 @@ void ShellSurfaceBase::OnSurfaceCommit() {
         UpdateSystemModal();
     }
   }
-
   SubmitCompositorFrame();
 }
 
@@ -757,7 +788,8 @@ views::NonClientFrameView* ShellSurfaceBase::CreateNonClientFrameView(
   if (!frame_enabled_ && !window_state->HasDelegate()) {
     window_state->SetDelegate(std::make_unique<CustomWindowStateDelegate>());
   }
-  CustomFrameView* frame_view = new CustomFrameView(widget, frame_enabled_);
+  CustomFrameView* frame_view =
+      new CustomFrameView(widget, frame_enabled_, server_side_drag_);
   if (has_frame_colors_)
     frame_view->SetFrameColors(active_frame_color_, inactive_frame_color_);
   return frame_view;
@@ -1015,7 +1047,8 @@ void ShellSurfaceBase::CreateShellSurfaceWidget(
   // events.
   window->SetEventTargetingPolicy(
       ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
-  window->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter(widget_)));
+  window->SetEventTargeter(
+      base::WrapUnique(new CustomWindowTargeter(widget_, server_side_drag_)));
   SetApplicationId(window, application_id_);
   SetMainSurface(window, root_surface());
 
@@ -1120,8 +1153,9 @@ void ShellSurfaceBase::UpdateWidgetBounds() {
   }
 
   // 2) When a window is being dragged.
-  if (IsResizing())
+  if (resizer_ && IsResizing()) {
     return;
+  }
 
   // Return early if there is pending configure requests.
   if (!pending_configs_.empty() || scoped_configure_)
@@ -1137,8 +1171,12 @@ void ShellSurfaceBase::UpdateWidgetBounds() {
   // should not result in a configure request.
   DCHECK(!ignore_window_bounds_changes_);
   ignore_window_bounds_changes_ = true;
-  if (new_widget_bounds != widget_->GetWindowBoundsInScreen())
+  if (new_widget_bounds != widget_->GetWindowBoundsInScreen()) {
+    LOG(ERROR) << "Update Bounds:"
+               << widget_->GetWindowBoundsInScreen().ToString() << "=>"
+               << new_widget_bounds.ToString();
     SetWidgetBounds(new_widget_bounds);
+  }
   ignore_window_bounds_changes_ = false;
 }
 
@@ -1295,6 +1333,7 @@ bool ShellSurfaceBase::OnMouseDragged(const ui::MouseEvent& event) {
 
 void ShellSurfaceBase::AttemptToStartDrag(int component) {
   DCHECK(widget_);
+  LOG(ERROR) << "AttempToStartDragin base:" << component;
 
   // Cannot start another drag if one is already taking place.
   if (resizer_)

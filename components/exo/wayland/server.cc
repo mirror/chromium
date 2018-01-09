@@ -2030,7 +2030,8 @@ void remote_surface_set_window_type(wl_client* client,
 }
 
 void remote_surface_resize(wl_client* client, wl_resource* resource) {
-  GetUserDataAs<ShellSurface>(resource)->Resize(HTBORDER);
+  GetUserDataAs<ClientControlledShellSurface>(resource)
+      ->StartResize_DEPRECATED();
 }
 
 void remote_surface_set_resize_outset(wl_client* client,
@@ -2038,6 +2039,35 @@ void remote_surface_set_resize_outset(wl_client* client,
                                       int32_t outset) {
   GetUserDataAs<ClientControlledShellSurface>(resource)->SetResizeOutset(
       outset);
+}
+
+void remote_surface_start_move(wl_client* client,
+                               wl_resource* resource,
+                               int32_t x,
+                               int32_t y) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->StartMove(x, y);
+}
+
+void remote_surface_set_can_resize(wl_client* client,
+                                   wl_resource* resource,
+                                   uint32_t can_resize) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetCanResize(
+      can_resize != 0);
+}
+
+void remote_surface_set_can_maximize(wl_client* client,
+                                     wl_resource* resource,
+                                     uint32_t can_maximize) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetCanMaximize(
+      can_maximize != 0);
+}
+
+void remote_surface_set_min_size(wl_client* client,
+                                 wl_resource* resource,
+                                 int32_t width,
+                                 int32_t height) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetMinimumSize(
+      gfx::Size(width, height));
 }
 
 const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
@@ -2068,7 +2098,11 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_set_orientation,
     remote_surface_set_window_type,
     remote_surface_resize,
-    remote_surface_set_resize_outset};
+    remote_surface_set_resize_outset,
+    remote_surface_start_move,
+    remote_surface_set_can_resize,
+    remote_surface_set_can_maximize,
+    remote_surface_set_min_size};
 
 ////////////////////////////////////////////////////////////////////////////////
 // notification_surface_interface:
@@ -2331,6 +2365,73 @@ void HandleRemoteSurfaceStateChangedCallback(
   wl_client_flush(wl_resource_get_client(resource));
 }
 
+void HandleRemoteSurfaceBoundsChangedCallback(
+    wl_resource* resource,
+    ash::mojom::WindowStateType current_state_type,
+    const gfx::Rect& bounds,
+    bool drag,
+    bool resize) {
+  zcr_remote_surface_v1_bounds_change_reason reason =
+      resize
+          ? ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG_RESIZE
+          : (drag ? ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG_MOVE
+                  : ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_WINDOW_MANAGER);
+  zcr_remote_surface_v1_send_bounds_changed(resource, bounds.x(), bounds.y(),
+                                            bounds.width(), bounds.height(),
+                                            reason);
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
+uint32_t ComponentToDirection(int component) {
+  switch (component) {
+    case HTCAPTION:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_NONE;
+
+    case HTTOP:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOP;
+
+    case HTTOPRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPRIGHT;
+
+    case HTRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_RIGHT;
+
+    case HTBOTTOMRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMRIGHT;
+
+    case HTBOTTOM:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOM;
+
+    case HTBOTTOMLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMLEFT;
+
+    case HTLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_LEFT;
+
+    case HTTOPLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPLEFT;
+
+    default:
+      LOG(ERROR) << "Unknown component:" << component;
+      break;
+  }
+  NOTREACHED();
+  return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_NONE;
+}
+
+void HandleRemoteSurfaceDragStartedCallback(wl_resource* resource,
+                                            int component) {
+  zcr_remote_surface_v1_send_drag_started(resource,
+                                          ComponentToDirection(component));
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
+void HandleRemoteSurfaceDragFinishedCallback(wl_resource* resource,
+                                             bool canceled) {
+  zcr_remote_surface_v1_send_drag_finished(resource, canceled ? 1 : 0);
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
 uint32_t HandleRemoteSurfaceConfigureCallback(
     wl_resource* resource,
     const gfx::Size& size,
@@ -2398,6 +2499,19 @@ void remote_shell_get_remote_surface(wl_client* client,
                             base::Unretained(remote_surface_resource)));
   }
 
+  if (wl_resource_get_version(remote_surface_resource) >= 10) {
+    shell_surface->set_server_side_drag(true);
+    shell_surface->set_bounds_changed_callback(
+        base::BindRepeating(&HandleRemoteSurfaceBoundsChangedCallback,
+                            base::Unretained(remote_surface_resource)));
+    shell_surface->set_drag_started_callback(
+        base::BindRepeating(&HandleRemoteSurfaceDragStartedCallback,
+                            base::Unretained(remote_surface_resource)));
+    shell_surface->set_drag_finished_callback(
+        base::BindRepeating(&HandleRemoteSurfaceDragFinishedCallback,
+                            base::Unretained(remote_surface_resource)));
+  }
+
   SetImplementation(remote_surface_resource, &remote_surface_implementation,
                     std::move(shell_surface));
 }
@@ -2435,7 +2549,7 @@ const struct zcr_remote_shell_v1_interface remote_shell_implementation = {
     remote_shell_destroy, remote_shell_get_remote_surface,
     remote_shell_get_notification_surface};
 
-const uint32_t remote_shell_version = 9;
+const uint32_t remote_shell_version = 10;
 
 void bind_remote_shell(wl_client* client,
                        void* data,
