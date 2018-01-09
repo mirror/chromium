@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bccafe0a_4bb79365",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T23:50:57Z",
+      "side": 1,
+      "message": "Does it make sense to pull out the View and call announceForAccessibility once?",
+      "range": {
+        "startLine": 420,
+        "startChar": 20,
+        "endLine": 420,
+        "endChar": 49
+      },
+      "revId": "01dafb3393c1e71a2a250ef54b1371ec006e1667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
