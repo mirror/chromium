@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+<script src="/bluetooth/resources/bluetooth-helpers.js"></script>
+<script>
+bluetooth_test(() => {
+  let test_promises = Promise.resolve();
+  generateRequestDeviceArgsWithServices([]).forEach(args => {
+  test_promises = test_promises.then(() =>
+      assert_promise_rejects_with_message(requestDeviceWithTrustedClick(args),
+      new DOMException('Failed to execute \'requestDevice\' on \'Bluetooth\': ' +
+        '\'services\', if present, must contain at least one service.',
+       new TypeError()),
+      'Services member must contain at least one service'))
+  });
+  return test_promises;
+}, 'Services member must contain at least one service.');
+</script>
