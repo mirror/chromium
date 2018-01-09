@@ -22,7 +22,10 @@
 namespace zucchini {
 
 TEST(Abs32GapFinderTest, All) {
-  const size_t kRegionTotal = 99;
+  int* x = new (int);
+  *x = 5;
+  free(x);
+  const size_t kRegionTotal = 99 * *x;
   std::vector<uint8_t> buffer(kRegionTotal);
   ConstBufferView image(buffer.data(), buffer.size());
 
