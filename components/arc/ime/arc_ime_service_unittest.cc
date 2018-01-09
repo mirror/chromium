@@ -39,6 +39,10 @@ class FakeArcImeBridge : public ArcImeBridge {
   }
   void SendExtendSelectionAndDelete(size_t before, size_t after) override {
   }
+  bool SendOnKeyboardAppearanceChanging(bool is_available,
+                                        const gfx::Rect& new_bounds) override {
+    return true;
+  }
 
   int count_send_insert_text() const { return count_send_insert_text_; }
 
