@@ -10,6 +10,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/synchronization/lock.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
 #include "components/viz/common/gpu/context_lost_observer.h"
@@ -47,7 +48,7 @@ class VIZ_COMMON_EXPORT RasterContextProvider {
 
    private:
     RasterContextProvider* const context_provider_;
-    base::AutoLock context_lock_;
+    base::Optional<base::AutoLock> context_lock_;
     std::unique_ptr<ContextCacheController::ScopedBusy> busy_;
   };
 
@@ -74,6 +75,7 @@ class VIZ_COMMON_EXPORT RasterContextProvider {
 
   // Returns the lock that should be held if using this context from multiple
   // threads. This can be called on any thread.
+  // Returns null if the context does not support use from multiple threads.
   // NOTE: Helper method for ScopedContextLock. Use that instead of calling this
   // directly.
   virtual base::Lock* GetLock() = 0;

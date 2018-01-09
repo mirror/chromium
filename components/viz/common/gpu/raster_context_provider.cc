@@ -8,8 +8,9 @@ namespace viz {
 
 RasterContextProvider::ScopedRasterContextLock::ScopedRasterContextLock(
     RasterContextProvider* context_provider)
-    : context_provider_(context_provider),
-      context_lock_(*context_provider_->GetLock()) {
+    : context_provider_(context_provider) {
+  if (context_provider_->GetLock())
+    context_lock_.emplace(*context_provider_->GetLock());
   busy_ = context_provider_->CacheController()->ClientBecameBusy();
 }
 
