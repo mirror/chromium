@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "ae240e74_bf51642d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-09T07:29:39Z",
+      "side": 1,
+      "message": "Can we have a function to have this condition to share code with L144?",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 78
+      },
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c412fc88_a55fa79c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-09T07:29:39Z",
+      "side": 1,
+      "message": "Can we have a function to have this condition to share code with L150?",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 60
+      },
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188510f0_10de2797",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-09T07:29:39Z",
+      "side": 1,
+      "message": "Could you explain multiple candidates case? I\u0027m not sure why we need to\nhave list of candidates.",
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b0a046_a946208e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-09T07:29:39Z",
+      "side": 1,
+      "message": "We should tell C++ compiler about size of |LocalCaretRect| to avoid\nincluding \"ng_caret_rect.h\" with \"VisibleUnits.h\".\n\nIt is better to have \"layout/local_caret_rect.h\"",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "806142b9_7543c8eb",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
         "patchSetId": 26
