@@ -16,6 +16,24 @@
       "revId": "dcb632ddf76b1d9cd0837d5f8bf636d1a97e93bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728e0d39_4344ed38",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/international/shape-across-elements-simple.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-09T06:28:19Z",
+      "side": 1,
+      "message": "Thank you, Megalopolis looks great for ligatures testing!",
+      "parentUuid": "bdcb3887_5b36e4a5",
+      "revId": "dcb632ddf76b1d9cd0837d5f8bf636d1a97e93bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
