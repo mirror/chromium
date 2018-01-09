@@ -14,7 +14,7 @@
 namespace vr {
 
 namespace {
-constexpr size_t kNumStars = 200lu;
+constexpr size_t kNumStars = 400lu;
 
 // Position & opacity.
 constexpr size_t kFloatsPerStarVertex = 4lu;
@@ -23,7 +23,11 @@ constexpr size_t kOpacityDataOffset = 3 * sizeof(float);
 constexpr size_t kVerticesPerStar = 6lu;
 constexpr size_t kTrianglesPerStar = kVerticesPerStar - 1lu;
 
+constexpr float kMinStarWidth = 0.001f;
+constexpr float kMaxStarWidth = 0.007f;
+
 constexpr float kOpacityScale = 80.0f;
+constexpr float kMaxStarDegrees = 60.0f;
 
 float g_vertices[kNumStars * kFloatsPerStarVertex * kVerticesPerStar];
 GLushort g_indices[kNumStars * kTrianglesPerStar * 3lu];
@@ -125,17 +129,17 @@ void Stars::Renderer::CreateBuffers() {
   size_t cur_vertex = 0;
   size_t cur_index = 0;
   for (size_t i = 0; i < kNumStars; ++i) {
-    float x_rot =
-        gfx::Tween::FloatValueBetween(base::RandDouble(), -60.0f, 60.0f);
-    float y_rot =
-        gfx::Tween::FloatValueBetween(base::RandDouble(), -60.0f, 60.0f);
-    float size =
-        gfx::Tween::FloatValueBetween(base::RandDouble(), 0.007f, 0.002f);
+    float x_rot = gfx::Tween::FloatValueBetween(
+        base::RandDouble(), -kMaxStarDegrees, kMaxStarDegrees);
+    float y_rot = gfx::Tween::FloatValueBetween(
+        base::RandDouble(), -kMaxStarDegrees, kMaxStarDegrees);
+    float size = gfx::Tween::FloatValueBetween(base::RandDouble(),
+                                               kMinStarWidth, kMaxStarWidth);
     float opacity = 1.0 - gfx::Vector2dF(x_rot, y_rot).Length() / kOpacityScale;
 
     gfx::Transform local;
-    local.RotateAboutYAxis(x_rot);
     local.RotateAboutXAxis(y_rot);
+    local.RotateAboutYAxis(x_rot);
     local.Translate3d({0, 0, -kSkyDistance});
     local.Scale3d(size * kSkyDistance, size * kSkyDistance, 1.0f);
     for (size_t j = 0; j < kVerticesPerStar - 1; j++, cur_index += 3) {
