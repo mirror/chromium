@@ -322,7 +322,7 @@ source_set("common") {
     "//gpu/command_buffer/common",
     "//ipc",
     "//services/service_manager/sandbox",
-    "//third_party/WebKit/common:blink_common",
+    "//third_party/WebKit/public:blink_common",
     "//third_party/WebKit/public:blink_headers",
     "//ui/accessibility",
   ]
@@ -599,8 +599,8 @@ mojom("mojo_bindings") {
     "//services/video_capture/public/interfaces",
     "//services/viz/public/interfaces",
     "//skia/public/interfaces",
-    "//third_party/WebKit/common:mojo_platform_bindings",
     "//third_party/WebKit/public:mojo_bindings",
+    "//third_party/WebKit/public/common:mojo_platform_bindings",
     "//ui/base/mojo:mojo_bindings",
     "//ui/gfx/geometry/mojo",
     "//ui/gfx/mojo",
@@ -608,8 +608,9 @@ mojom("mojo_bindings") {
     "//url/mojo:url_mojom_origin",
   ]
 
-  overridden_deps = [ "//third_party/WebKit/common:mojo_platform_bindings" ]
-  component_deps = [ "//third_party/WebKit/common:blink_common" ]
+  overridden_deps =
+      [ "//third_party/WebKit/public/common:mojo_platform_bindings" ]
+  component_deps = [ "//third_party/WebKit/public:blink_common" ]
 
   component_output_prefix = "content_common_mojo_bindings"
   export_class_attribute = "CONTENT_EXPORT"

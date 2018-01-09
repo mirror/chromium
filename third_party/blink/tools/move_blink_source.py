@@ -283,6 +283,7 @@ Bug: 768828
     def _update_build(self, content):
         content = content.replace('//third_party/WebKit/Source', '//third_party/blink/renderer')
         content = content.replace('//third_party/WebKit/common', '//third_party/blink/common')
+        content = content.replace('//third_party/WebKit/public/common', '//third_party/blink/common/public')
         content = content.replace('//third_party/WebKit/public', '//third_party/blink/renderer/public')
         # export_header_blink exists outside of Blink too.
         content = content.replace('export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"',
@@ -302,6 +303,7 @@ Bug: 768828
     def _update_owners(self, content):
         content = content.replace('//third_party/WebKit/Source', '//third_party/blink/renderer')
         content = content.replace('//third_party/WebKit/common', '//third_party/blink/common')
+        content = content.replace('//third_party/WebKit/public/common', '//third_party/blink/renderer/common/public')
         content = content.replace('//third_party/WebKit/public', '//third_party/blink/renderer/public')
         return content
 
@@ -309,6 +311,7 @@ Bug: 768828
         original_content = content
         content = content.replace('third_party/WebKit/Source', 'third_party/blink/renderer')
         content = content.replace('third_party/WebKit/common', 'third_party/blink/common')
+        content = content.replace('third_party/WebKit/public/common', '//third_party/blink/renderer/common/public')
         content = content.replace('third_party/WebKit/public', 'third_party/blink/renderer/public')
         content = content.replace('third_party/WebKit', 'third_party/blink')
         if original_content == content:
@@ -322,6 +325,7 @@ Bug: 768828
     def _update_typemap(self, content):
         content = content.replace('//third_party/WebKit/Source', '//third_party/blink/renderer')
         content = content.replace('//third_party/WebKit/common', '//third_party/blink/common')
+        content = content.replace('//third_party/WebKit/public/common', '//third_party/blink/renderer/common/public')
         content = content.replace('//third_party/WebKit/public', '//third_party/blink/renderer/public')
         return self._update_basename(content)
 
@@ -428,6 +432,7 @@ Bug: 768828
         if path.startswith('third_party/WebKit'):
             path = path.replace('third_party/WebKit/Source', 'third_party/blink/renderer')
             path = path.replace('third_party/WebKit/common', 'third_party/blink/common')
+            path = path.replace('//third_party/WebKit/public/common', '//third_party/blink/renderer/common/public')
             path = path.replace('third_party/WebKit/public', 'third_party/blink/renderer/public')
             path = self._update_basename(path)
             return '#%s "%s"' % (include_or_import, path)
