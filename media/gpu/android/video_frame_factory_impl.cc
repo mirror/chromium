@@ -17,11 +17,11 @@
 #include "gpu/ipc/service/command_buffer_stub.h"
 #include "gpu/ipc/service/gpu_channel.h"
 #include "media/base/bind_to_current_loop.h"
-#include "media/base/scoped_callback_runner.h"
 #include "media/base/video_frame.h"
 #include "media/gpu//android/codec_image.h"
 #include "media/gpu//android/codec_image_group.h"
 #include "media/gpu/android/codec_wrapper.h"
+#include "mojo/public/cpp/bindings/callback_helpers.h"
 #include "ui/gl/android/surface_texture.h"
 #include "ui/gl/gl_bindings.h"
 
@@ -170,7 +170,7 @@ void GpuVideoFrameFactory::CreateVideoFrame(
 
   // Guarantee that the TextureRef is released even if the VideoFrame is
   // dropped. Otherwise we could keep TextureRefs we don't need alive.
-  auto release_cb = ScopedCallbackRunner(
+  auto release_cb = mojo::WrapCallbackWithDefaultInvokeIfNotRun(
       ToOnceCallback(BindToCurrentLoop(drop_texture_ref)), gpu::SyncToken());
   frame->SetReleaseMailboxCB(std::move(release_cb));
   task_runner->PostTask(FROM_HERE, base::BindOnce(output_cb, std::move(frame)));
