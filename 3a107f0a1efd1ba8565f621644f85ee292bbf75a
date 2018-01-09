@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d325dc98_7dd9039b",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T15:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c841e86_910933ed",
+      "revId": "3a107f0a1efd1ba8565f621644f85ee292bbf75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "654649aa_087ee311",
         "filename": "components/cronet/cronet_url_request_context.cc",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "653b5468_d53eb88f",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T15:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "654649aa_087ee311",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 24
+      },
+      "revId": "3a107f0a1efd1ba8565f621644f85ee292bbf75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002c1f61_25f9c5ed",
         "filename": "components/cronet/cronet_url_request_context.cc",
         "patchSetId": 11
@@ -62,6 +104,30 @@
       "revId": "3a107f0a1efd1ba8565f621644f85ee292bbf75a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a93696b_0d524cab",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-09T15:53:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "002c1f61_25f9c5ed",
+      "range": {
+        "startLine": 211,
+        "startChar": 53,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "3a107f0a1efd1ba8565f621644f85ee292bbf75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
