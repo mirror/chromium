@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f317c4bf_84fe04fc",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-09T14:32:08Z",
+      "side": 1,
+      "message": "I think we\u0027ll want to add an entry to policy_templates.json, just so that the policy gets documented.",
+      "range": {
+        "startLine": 61,
+        "startChar": 66,
+        "endLine": 61,
+        "endChar": 91
+      },
+      "revId": "f4d947c0efdc655344fc87e79ebf7f15feced93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ab9d98_e680ca82",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-09T14:32:08Z",
+      "side": 1,
+      "message": "|params|? Or change the parameter below to |voids| too.",
+      "range": {
+        "startLine": 619,
+        "startChar": 46,
+        "endLine": 619,
+        "endChar": 51
+      },
+      "revId": "f4d947c0efdc655344fc87e79ebf7f15feced93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f5b7fa_710a7255",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-09T14:32:08Z",
+      "side": 1,
+      "message": "As per my comment on the design doc, I would prefer not using regexes. The value doesn\u0027t even have to be a plain string -- we could for example accept a whitelist of account names, which would fulfill the requirements for the child account use case while also offering some flexibility for the general enterprise use case.",
+      "range": {
+        "startLine": 622,
+        "startChar": 45,
+        "endLine": 622,
+        "endChar": 52
+      },
+      "revId": "f4d947c0efdc655344fc87e79ebf7f15feced93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
