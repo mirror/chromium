@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/overlay_transform.h"
 #include "ui/gl/gl_export.h"
@@ -23,7 +24,8 @@ class GL_EXPORT GLSurfaceOverlay {
                    gfx::OverlayTransform transform,
                    GLImage* image,
                    const gfx::Rect& bounds_rect,
-                   const gfx::RectF& crop_rect);
+                   const gfx::RectF& crop_rect,
+                   gfx::GpuFenceHandle gpu_fence_handle);
   GLSurfaceOverlay(const GLSurfaceOverlay& other);
   ~GLSurfaceOverlay();
 
@@ -39,6 +41,7 @@ class GL_EXPORT GLSurfaceOverlay {
   scoped_refptr<GLImage> image_;
   gfx::Rect bounds_rect_;
   gfx::RectF crop_rect_;
+  gfx::GpuFenceHandle gpu_fence_handle_;
 };
 
 }  // namespace gl

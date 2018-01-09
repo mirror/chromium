@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "ui/display/types/display_snapshot.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gfx/native_pixmap.h"
 #include "ui/gl/gl_image_native_pixmap.h"
 #include "ui/gl/gl_surface_egl.h"
@@ -65,7 +66,7 @@ void GbmSurface::SwapBuffersAsync(
     const PresentationCallback& presentation_callback) {
   if (!images_[current_surface_]->ScheduleOverlayPlane(
           widget(), 0, gfx::OverlayTransform::OVERLAY_TRANSFORM_NONE,
-          gfx::Rect(GetSize()), gfx::RectF(1, 1))) {
+          gfx::Rect(GetSize()), gfx::RectF(1, 1), gfx::GpuFenceHandle())) {
     completion_callback.Run(gfx::SwapResult::SWAP_FAILED);
     // Notify the caller, the buffer is never presented on a screen.
     presentation_callback.Run(gfx::PresentationFeedback());

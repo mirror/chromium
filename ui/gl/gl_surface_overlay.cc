@@ -16,12 +16,14 @@ GLSurfaceOverlay::GLSurfaceOverlay(int z_order,
                                    gfx::OverlayTransform transform,
                                    GLImage* image,
                                    const gfx::Rect& bounds_rect,
-                                   const gfx::RectF& crop_rect)
+                                   const gfx::RectF& crop_rect,
+                                   gfx::GpuFenceHandle gpu_fence_handle)
     : z_order_(z_order),
       transform_(transform),
       image_(image),
       bounds_rect_(bounds_rect),
-      crop_rect_(crop_rect) {}
+      crop_rect_(crop_rect),
+      gpu_fence_handle_(gpu_fence_handle) {}
 
 GLSurfaceOverlay::GLSurfaceOverlay(const GLSurfaceOverlay& other) = default;
 
@@ -30,7 +32,8 @@ GLSurfaceOverlay::~GLSurfaceOverlay() {}
 bool GLSurfaceOverlay::ScheduleOverlayPlane(
     gfx::AcceleratedWidget widget) const {
   return image_->ScheduleOverlayPlane(widget, z_order_, transform_,
-                                      bounds_rect_, crop_rect_);
+                                      bounds_rect_, crop_rect_,
+                                      gpu_fence_handle_);
 }
 
 void GLSurfaceOverlay::Flush() const {
