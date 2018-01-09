@@ -22,6 +22,30 @@
       "revId": "68bf25251c062a65d719bf1f7c88584bd4875baa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5fb6e4b_58b92b05",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-01-09T21:09:37Z",
+      "side": 1,
+      "message": "Agreed.  Philippe and I talked about this and we don\u0027t see a good simple solution since the assist_ranker component owns the other flag.  Hopefully we\u0027ll be able to enable the suppression without too many iterations and the flags can go away without too much bother.",
+      "parentUuid": "00e67e5e_e54a474d",
+      "range": {
+        "startLine": 1778,
+        "startChar": 11,
+        "endLine": 1778,
+        "endChar": 55
+      },
+      "revId": "68bf25251c062a65d719bf1f7c88584bd4875baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
