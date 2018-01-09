@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fc06e856_4a68b736",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-09T13:00:13Z",
+      "side": 1,
+      "message": "Then let\u0027s mark this comment as resolved.",
+      "parentUuid": "97971b81_52b53b4e",
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f7bee04_b7150667",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
         "patchSetId": 4
@@ -148,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7049ad7d_22825ad4",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-09T13:00:13Z",
+      "side": 1,
+      "message": "I suppose, though you don\u0027t have to do an early return ... you could dispatch the event, and have the dispatcher do the Ack when it sees the null target.",
+      "parentUuid": "b19f5f76_ce02f19f",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 6
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfed2cb6_9c4d9514",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 4
@@ -183,6 +225,30 @@
       "side": 1,
       "message": "The point can be transformed by other function as well (e.g. FindViewAtLocation in RWHIER) other than TransformPointToCoordSpaceForView(), so I think we still need to pass back the result |target_location| in DispatchEventToTarget if we want to do the conversion in RWHIER. Did I misunderstand your proposal?",
       "parentUuid": "bfed2cb6_9c4d9514",
+      "range": {
+        "startLine": 190,
+        "startChar": 24,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a300f3_dc5c299c",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-09T13:00:13Z",
+      "side": 1,
+      "message": "I\u0027m only interested in the value passed to DispatchEventToTarget(). If it has the root view, the target view, and the *original* event location, then it can do the transformation itself without needing the delta parameter at all. Up until this point the original event has had its PositionInWidget() left unchanged, and if you continue to leave it unchanged then you don\u0027t need the delta parameter, you can just do the final transformation in DispatchMouseWheelEvent().",
+      "parentUuid": "d00c7ab4_c07bf382",
       "range": {
         "startLine": 190,
         "startChar": 24,
