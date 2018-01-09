@@ -1399,7 +1399,7 @@ To obtain new licenses, connect to the internet and play your downloaded content
         Settings
       </message>
       <message name="IDS_PAYMENTS_INTEGRATION" desc="Title for preference which enables import of Google Payments data for Autofill.">
-        Cards and addresses using Google Payments
+        Cards and addresses using Google Pay
       </message>
       <message name="IDS_SYNC_ENCRYPTION" desc="Preference category name for sync encryption. [CHAR-LIMT=32]">
         Encryption
