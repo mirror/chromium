@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83d5e0dd_980f7855",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-09T21:27:19Z",
+      "side": 1,
+      "message": "On Android K, I think mRootView.announceForAccessibility(mContext.getString(mAccessibilityStringId)); also works.\n\nThis code is borrowed from other google products for compatible accessibility announcement.",
+      "range": {
+        "startLine": 432,
+        "startChar": 19,
+        "endLine": 447,
+        "endChar": 21
+      },
+      "revId": "6a1ee6ff97eea1a993cda6bc08635b0d4cbf8897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
