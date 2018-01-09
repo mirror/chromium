@@ -208,6 +208,16 @@ BASE_EXPORT bool IsProcessBackgroundedCGroup(
     const StringPiece& cgroup_contents);
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(OS_FUCHSIA)
+// Path to the package root which contains the contents of a package deployment.
+// The existence of this path signifies that the current process is running
+// from inside a package.
+extern BASE_EXPORT const char kPackageRoot[];
+
+// Returns true if the current process is running from inside a package.
+BASE_EXPORT bool IsPackageProcess();
+#endif
+
 }  // namespace base
 
 #endif  // BASE_PROCESS_PROCESS_H_
