@@ -12,11 +12,26 @@
 #include "core/css/CSSQuadValue.h"
 #include "core/css/CSSReflectValue.h"
 #include "core/css/CSSValue.h"
+#include "core/css/CSSValueList.h"
 #include "core/css/CSSValuePair.h"
 #include "core/css/StyleColor.h"
 #include "core/css/ZoomAdjustedPixelValue.h"
 
 namespace blink {
+
+CSSValue* ComputedStyleUtils::ValueForPosition(const LengthPoint& position,
+                                               const ComputedStyle& style) {
+  DCHECK_EQ(position.X().IsAuto(), position.Y().IsAuto());
+  if (position.X().IsAuto())
+    return CSSIdentifierValue::Create(CSSValueAuto);
+
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  list->Append(*ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+      position.X(), style));
+  list->Append(*ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+      position.Y(), style));
+  return list;
+}
 
 CSSValue* ComputedStyleUtils::CurrentColorOrValidColor(
     const ComputedStyle& style,

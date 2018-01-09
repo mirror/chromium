@@ -9,7 +9,9 @@
 #include "core/css/parser/CSSParserLocalContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/CSSParsingUtils.h"
+#include "core/css/properties/ComputedStyleUtils.h"
 #include "core/css/properties/Longhand.h"
+#include "core/style/ComputedStyle.h"
 #include "platform/runtime_enabled_features.h"
 
 namespace blink {
@@ -114,6 +116,45 @@ bool Offset::ParseShorthand(
   }
 
   return true;
+}
+
+const CSSValue* Offset::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject* layout_object,
+    Node* styled_node,
+    bool allow_visited_style) const {
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    CSSValue* position = ValueForPosition(style.OffsetPosition(), style);
+    if (!position->IsIdentifierValue())
+      list->Append(*position);
+    else
+      DCHECK(ToCSSIdentifierValue(position)->GetValueID() == CSSValueAuto);
+  }
+
+  static const CSSProperty* longhands[3] = {&GetCSSPropertyOffsetPath(),
+                                            &GetCSSPropertyOffsetDistance(),
+                                            &GetCSSPropertyOffsetRotate()};
+  for (const CSSProperty* longhand : longhands) {
+    const CSSValue* value = longhand->CSSValueFromComputedStyle(
+        style, layout_object, styled_node, allow_visited_style);
+    DCHECK(value);
+    list->Append(*value);
+  }
+
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    CSSValue* anchor = ValueForPosition(style.OffsetAnchor(), style);
+    if (!anchor->IsIdentifierValue()) {
+      // Add a slash before anchor.
+      CSSValueList* result = CSSValueList::CreateSlashSeparated();
+      result->Append(*list);
+      result->Append(*anchor);
+      return result;
+    }
+    DCHECK(ToCSSIdentifierValue(anchor)->GetValueID() == CSSValueAuto);
+  }
+  return list;
 }
 
 }  // namespace CSSShorthand
