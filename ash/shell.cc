@@ -46,6 +46,7 @@
 #include "ash/laser/laser_pointer_controller.h"
 #include "ash/login/login_screen_controller.h"
 #include "ash/login_status.h"
+#include "ash/magnifier/docked_magnifier.h"
 #include "ash/magnifier/magnification_controller.h"
 #include "ash/magnifier/partial_magnification_controller.h"
 #include "ash/media_controller.h"
@@ -1020,6 +1021,8 @@ void Shell::Init(ui::ContextFactory* context_factory,
   autoclick_controller_.reset(AutoclickController::CreateInstance());
 
   high_contrast_controller_.reset(new HighContrastController);
+
+  docked_magnifier_ = std::make_unique<DockedMagnifier>();
 
   viz::mojom::VideoDetectorObserverPtr observer;
   video_detector_ =

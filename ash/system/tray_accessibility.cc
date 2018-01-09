@@ -10,6 +10,7 @@
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/accessibility_delegate.h"
 #include "ash/ash_view_ids.h"
+#include "ash/magnifier/docked_magnifier.h"
 #include "ash/public/cpp/accessibility_types.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
@@ -165,6 +166,10 @@ void AccessibilityDetailedView::OnAccessibilityStatusChanged() {
   TrayPopupUtils::UpdateCheckMarkVisibility(screen_magnifier_view_,
                                             screen_magnifier_enabled_);
 
+  docked_magnifier_enabled_ = Shell::Get()->docked_magnifier()->enabled();
+  TrayPopupUtils::UpdateCheckMarkVisibility(docked_magnifier_view_,
+                                            docked_magnifier_enabled_);
+
   autoclick_enabled_ = delegate->IsAutoclickEnabled();
   TrayPopupUtils::UpdateCheckMarkVisibility(autoclick_view_,
                                             autoclick_enabled_);
@@ -231,6 +236,13 @@ void AccessibilityDetailedView::AppendAccessibilityList() {
       l10n_util::GetStringUTF16(
           IDS_ASH_STATUS_TRAY_ACCESSIBILITY_SCREEN_MAGNIFIER),
       screen_magnifier_enabled_);
+
+  docked_magnifier_enabled_ = Shell::Get()->docked_magnifier()->enabled();
+  docked_magnifier_view_ = AddScrollListCheckableItem(
+      kSystemMenuAccessibilityScreenMagnifierIcon,
+      l10n_util::GetStringUTF16(
+          IDS_ASH_STATUS_TRAY_ACCESSIBILITY_DOCKED_MAGNIFIER),
+      docked_magnifier_enabled_);
 
   autoclick_enabled_ = delegate->IsAutoclickEnabled();
   autoclick_view_ = AddScrollListCheckableItem(
@@ -315,6 +327,9 @@ void AccessibilityDetailedView::HandleViewClicked(views::View* view) {
                      ? UserMetricsAction("StatusArea_MagnifierDisabled")
                      : UserMetricsAction("StatusArea_MagnifierEnabled"));
     delegate->SetMagnifierEnabled(!delegate->IsMagnifierEnabled());
+  } else if (view == docked_magnifier_view_) {
+    // TODO(afakhry): Record action.
+    Shell::Get()->docked_magnifier()->Toggle();
   } else if (large_cursor_view_ && view == large_cursor_view_) {
     bool new_state = !controller->IsLargeCursorEnabled();
     RecordAction(new_state
