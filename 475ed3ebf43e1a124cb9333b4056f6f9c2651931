@@ -46,6 +46,30 @@
       "revId": "475ed3ebf43e1a124cb9333b4056f6f9c2651931",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3251b57c_5442b163",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-09T14:58:53Z",
+      "side": 1,
+      "message": "Okay, done. I\u0027d be concerned that this breaks other things, but I\u0027ll trust you on this.",
+      "parentUuid": "038dc511_7e153909",
+      "range": {
+        "startLine": 176,
+        "startChar": 65,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "475ed3ebf43e1a124cb9333b4056f6f9c2651931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
