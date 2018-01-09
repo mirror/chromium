@@ -94,6 +94,75 @@
     },
     {
       "key": {
+        "uuid": "c3e1bed0_50ce7625",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:41:13Z",
+      "side": 1,
+      "message": "Add a .",
+      "range": {
+        "startLine": 181,
+        "startChar": 63,
+        "endLine": 181,
+        "endChar": 64
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04eb4193_7ae71802",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:41:13Z",
+      "side": 1,
+      "message": "Add a .",
+      "range": {
+        "startLine": 205,
+        "startChar": 63,
+        "endLine": 205,
+        "endChar": 64
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c1f1b8_10382b7b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:41:13Z",
+      "side": 1,
+      "message": ".",
+      "range": {
+        "startLine": 298,
+        "startChar": 55,
+        "endLine": 298,
+        "endChar": 56
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d6fd779_abd58cf9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 11
@@ -133,6 +202,121 @@
         "startChar": 12,
         "endLine": 674,
         "endChar": 13
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36dff00a_d48faeb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotifier.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:41:13Z",
+      "side": 1,
+      "message": "Get rid of this one if we\u0027re adding an argument with a NOT_PENDING option?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 87
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a0956f_ddb50c97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:41:13Z",
+      "side": 1,
+      "message": "Javadoc",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46732f8c_f127ccce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:41:13Z",
+      "side": 1,
+      "message": "Does it make sense to pull out a getPendingStatusString() method and use this here and in the notification factory?  I get that PENDING_ANOTHER_DOWNLOAD doesn\u0027t make sense here, but we should never have that as the pending reason in this case.  Can probably call:\n\ngetPendingStatusString(PENDING_NETWORK) and internally check if we\u0027re adding extra messages or not.",
+      "range": {
+        "startLine": 691,
+        "startChar": 12,
+        "endLine": 695,
+        "endChar": 13
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bb1f45_8c41efb5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier2.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:41:13Z",
+      "side": 1,
+      "message": "are we always pending here?  I might be mixed up on when we should use NOT_PENDING vs. PENDING_REASON_UNKNOWN.",
+      "range": {
+        "startLine": 73,
+        "startChar": 57,
+        "endLine": 73,
+        "endChar": 92
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaa5e8b_e9f65aeb",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:41:13Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be here if it\u0027s used by all components.  If this is using Chrome variations can we just use the Java API?",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 1
       },
       "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
