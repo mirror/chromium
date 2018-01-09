@@ -73,7 +73,6 @@
 #include "core/layout/ScrollAlignment.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/TracedLayoutObject.h"
-#include "core/layout/api/LayoutBoxModel.h"
 #include "core/layout/api/LayoutItem.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/loader/DocumentLoader.h"
@@ -1807,11 +1806,10 @@ bool LocalFrameView::InvalidateViewportConstrainedObjects() {
   for (const auto& viewport_constrained_object :
        *viewport_constrained_objects_) {
     LayoutObject* layout_object = viewport_constrained_object;
-    LayoutItem layout_item = LayoutItem(layout_object);
-    DCHECK(layout_item.Style()->HasViewportConstrainedPosition() ||
-           layout_item.Style()->HasStickyConstrainedPosition());
-    DCHECK(layout_item.HasLayer());
-    PaintLayer* layer = LayoutBoxModel(layout_item).Layer();
+    DCHECK(layout_object->Style()->HasViewportConstrainedPosition() ||
+           layout_object->Style()->HasStickyConstrainedPosition());
+    DCHECK(layout_object->HasLayer());
+    PaintLayer* layer = ToLayoutBoxModelObject(layout_object)->Layer();
 
     if (layer->IsPaintInvalidationContainer())
       continue;
@@ -1820,8 +1818,8 @@ bool LocalFrameView::InvalidateViewportConstrainedObjects() {
       continue;
 
     // invalidate even if there is an ancestor with a filter that moves pixels.
-    layout_item
-        .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    layout_object
+        ->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
 
     TRACE_EVENT_INSTANT1(
         TRACE_DISABLED_BY_DEFAULT("devtools.timeline.invalidationTracking"),
