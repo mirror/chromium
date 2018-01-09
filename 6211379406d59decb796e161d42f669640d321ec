@@ -22,6 +22,30 @@
       "revId": "6211379406d59decb796e161d42f669640d321ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0c7fab_52caa807",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-09T18:25:26Z",
+      "side": 1,
+      "message": "Fixed but moved the comment to somewhere else. Thanks!",
+      "parentUuid": "154bc429_3f7e2542",
+      "range": {
+        "startLine": 246,
+        "startChar": 58,
+        "endLine": 246,
+        "endChar": 77
+      },
+      "revId": "6211379406d59decb796e161d42f669640d321ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
