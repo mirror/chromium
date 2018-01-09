@@ -6,9 +6,6 @@ var AutomationEvent = chrome.automation.AutomationEvent;
 var EventType = chrome.automation.EventType;
 var RoleType = chrome.automation.RoleType;
 
-// Whether reading selected text is enabled.
-const READ_SELECTION_ENABLED = false;
-
 /**
  * Return the rect that encloses two points.
  * @param {number} x1 The first x coordinate.
@@ -388,7 +385,15 @@ var SelectToSpeak = function() {
    */
   this.intervalId_;
 
-  this.readSelectionEnabled_ = READ_SELECTION_ENABLED;
+  // Enable reading selection at keystroke when experimental accessibility
+  // features are enabled.
+  // TODO: When the feature is approved, remove this variable and callback.
+  // The feature will be always enabled.
+  this.readSelectionEnabled_ = false;
+  chrome.commandLinePrivate.hasSwitch(
+      'enable-experimental-accessibility-features', function(result) {
+        this.readSelectionEnabled_ = result;
+      }.bind(this));
 
   this.initPreferences_();
 
