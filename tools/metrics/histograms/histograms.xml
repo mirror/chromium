@@ -54478,6 +54478,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="OfflinePages.ClearStorageBatchSize" units="pages">
+  <obsolete>
+    Deprecated as of Jan 2018, replaced by
+    OfflinePages.ClearTemporaryPages.BatchSize.
+  </obsolete>
   <owner>romax@chromium.org</owner>
   <summary>
     Number of pages deleted in a batch during one clear-storage request.
@@ -54506,8 +54510,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="OfflinePages.ClearStorageResult"
     enum="OfflinePagesClearStorageResult">
+  <obsolete>
+    Deprecated as of Jan 2018, replaced by
+    OfflinePages.ClearTemporaryPages.Result.
+  </obsolete>
   <owner>romax@chromium.org</owner>
   <summary>Result of asking storage manager to clear storage.</summary>
+</histogram>
+
+<histogram name="OfflinePages.ClearTemporaryPages.BatchSize" units="pages">
+  <owner>romax@chromium.org</owner>
+  <summary>
+    Number of pages deleted in a batch in one clear storage task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.ClearTemporaryPages.Result"
+    enum="OfflinePagesClearStorageResult">
+  <owner>romax@chromium.org</owner>
+  <summary>
+    Result of clearing temporary pages to release storage space.
+  </summary>
 </histogram>
 
 <histogram name="OfflinePages.Consistency.DeleteOrphanedArchivesResult"
@@ -54942,6 +54965,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="OfflinePages.OpenSinceLastOpen" units="minutes">
   <owner>jianli@chromium.org</owner>
   <summary>Length of time between two consecutive opens.</summary>
+</histogram>
+
+<histogram base="true" name="OfflinePages.PageAccessInterval" units="minutes">
+  <owner>romax@chromium.org</owner>
+  <summary>
+    Length of time between accesses to an offline page. This is the same time
+    period used for expiring temporary pages.
+  </summary>
 </histogram>
 
 <histogram base="true" name="OfflinePages.PageLifetime" units="minutes">
