@@ -69,6 +69,24 @@
       "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74041432_8149695e",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-09T00:57:19Z",
+      "side": 1,
+      "message": "I don\u0027t think my proposal handles the cross-process reassembly, because right now you\u0027re still using Skia and SkPictures for that reassembly.  What I proposed is all for what\u0027s happening in the renderer itself.  The callback function will just get called during the PaintOpBuffer -\u003e SkPicture playback prior to cross-process serialization.  In the future, if you ever use PaintOpBuffer serialization, then this proposal will work quite naturally.\n\nI don\u0027t think it matters that picture IDs are not unique within processes.  I think the deserialization for oopifs will just have to happen in a bottom up manner, where you deserialize leaf pictures first.  Each deserialization operation will have its own \"namespace\" of ids that won\u0027t conflict.\n\nDo you need an unguessable token? I think a malicious renderer could attempt to reassemble the page in some incorrect (or infinitely looping) order, but the reassembly is happening elsewhere so it\u0027s not gaining access to anything that it shouldn\u0027t have.",
+      "parentUuid": "70fe5aef_bae15f65",
+      "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
