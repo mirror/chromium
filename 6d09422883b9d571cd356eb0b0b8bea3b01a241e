@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add7a48f_d1a13931",
+        "filename": "ui/ozone/platform/wayland/fake_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-09T13:03:07Z",
+      "side": 1,
+      "message": "Maybe you better move the MockWaylandXkbKeyboardLayoutEngine to a separate source file and avoid adding checks for the USE_XKBCOMMON build flags all around here?\n\nAnd all the mocked classes are inheritted from the ServerObject base class and kinda behave as server objects. MockWaylandXkbKeyboardLayoutEngine doesn\u0027t really suit this pattern much.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 1
+      },
+      "revId": "6d09422883b9d571cd356eb0b0b8bea3b01a241e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
