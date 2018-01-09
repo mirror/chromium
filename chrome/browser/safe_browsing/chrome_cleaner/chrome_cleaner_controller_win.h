@@ -100,8 +100,10 @@ class ChromeCleanerController {
     virtual void OnReporterRunning() {}
     virtual void OnScanning() {}
     virtual void OnInfected(
+        bool is_powered_by_partner,
         const ChromeCleanerScannerResults& scanner_results) {}
     virtual void OnCleaning(
+        bool is_powered_by_partner,
         const ChromeCleanerScannerResults& scanner_results) {}
     virtual void OnRebootRequired() {}
     virtual void OnRebootFailed() {}
@@ -118,7 +120,7 @@ class ChromeCleanerController {
   virtual bool ShouldShowCleanupInSettingsUI() = 0;
 
   // Returns whether Cleanup is powered by a partner company.
-  virtual bool IsPoweredByPartner() = 0;
+  virtual bool IsPoweredByPartner() const = 0;
 
   virtual State state() const = 0;
   virtual IdleReason idle_reason() const = 0;
