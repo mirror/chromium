@@ -3,8 +3,8 @@ boliu@chromium.org
 
 per-file child_process_security_policy_impl.*=tsepez@chromium.org
 per-file child_process_security_policy_impl.*=creis@chromium.org
-per-file child_process_security_unittest.cc=tsepez@chromium.org
-per-file child_process_security_unittest.cc=creis@chromium.org
+per-file child_process_security_policy_unittest.cc=tsepez@chromium.org
+per-file child_process_security_policy_unittest.cc=creis@chromium.org
 per-file host_zoom_*=wjmaclean@chromium.org
 per-file find_request_manager*=paulmeyer@chromium.org
 
