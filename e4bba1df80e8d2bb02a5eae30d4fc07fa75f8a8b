@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc526a42_6cb67db5",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T23:58:25Z",
+      "side": 1,
+      "message": "Ack. Add TODO on top of |spoken_feedback_enabled_|.",
+      "parentUuid": "e93c203a_adeac707",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f96c2730_39f18a47",
         "filename": "ash/accessibility/accessibility_controller.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T00:05:18Z",
       "side": 1,
       "message": "nit: please document why you are setting this then resetting it.",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2728dc_ae6abe3a",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T23:58:25Z",
+      "side": 1,
+      "message": "Thinking we don\u0027t need this line because |spoken_feedback_notification_| is only updated here.",
+      "parentUuid": "f96c2730_39f18a47",
       "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "590c8888_26ef4df3",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T23:58:25Z",
+      "side": 1,
+      "message": "Yep, I will take actions after this is landed.",
+      "parentUuid": "96fcc894_6833bfa7",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "729f0292_daabaf7d",
         "filename": "ash/ash_touch_exploration_manager_chromeos.cc",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-09T00:05:18Z",
       "side": 1,
       "message": "Not for this CL: This seems like a good thing to fix soon, since it\u0027s spoken feedback related.",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8110117_66cdbffe",
+        "filename": "ash/ash_touch_exploration_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T23:58:25Z",
+      "side": 1,
+      "message": "Yes, agree.",
+      "parentUuid": "729f0292_daabaf7d",
       "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6a750291_8fe5b1f4",
+        "filename": "ash/ash_touch_exploration_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T23:58:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "578ccd3c_ad0ad029",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c48ffd45_7584529e",
         "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-09T00:05:18Z",
       "side": 1,
       "message": "Can this call AccessibilityManager::EnableSpokenFeedback(), to avoid calling into //ash from //chrome?",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171cb314_e58ce931",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T23:58:25Z",
+      "side": 1,
+      "message": "they can, done.",
+      "parentUuid": "c48ffd45_7584529e",
       "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55469a9_684725ed",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T23:58:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "815f5819_170ad831",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
