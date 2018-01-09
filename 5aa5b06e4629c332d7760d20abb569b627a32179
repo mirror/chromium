@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "82bd07af_c9d37889",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-09T13:21:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "22e0ede6_06d5d3ef",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "5aa5b06e4629c332d7760d20abb569b627a32179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ffe8ae9_bc2e1b5c",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "This test and the one above are supposed to be outside of all size class check.\nI think there was a problem with git cl format.",
       "parentUuid": "4ffe8ae9_bc2e1b5c",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 22
+      },
+      "revId": "5aa5b06e4629c332d7760d20abb569b627a32179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40e8090e_67ac99ec",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-09T13:21:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8242da0e_d5a34d2a",
       "range": {
         "startLine": 78,
         "startChar": 8,
