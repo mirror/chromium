@@ -44,13 +44,13 @@
 
 namespace {
 
-const float kMaxMagnifiedScale = 4.0f;
-const float kMaxMagnifiedScaleThreshold = 4.0f;
+const float kMaxMagnifiedScale = 20.0f;
+const float kMaxMagnifiedScaleThreshold = 20.0f;
 const float kMinMagnifiedScaleThreshold = 1.1f;
 const float kNonMagnifiedScale = 1.0f;
 
 const float kInitialMagnifiedScale = 2.0f;
-const float kScrollScaleChangeFactor = 0.0125f;
+const float kScrollScaleChangeFactor = 0.00625f;
 
 // Default animation parameters for redrawing the magnification window.
 const gfx::Tween::Type kDefaultAnimationTweenType = gfx::Tween::EASE_OUT;
@@ -517,8 +517,8 @@ void MagnificationControllerImpl::ValidateScale(float* scale) {
   if (*scale < kMinMagnifiedScaleThreshold)
     *scale = kNonMagnifiedScale;
 
-  // Adjust the scale to just |kMinMagnifiedScale| if scale is bigger than
-  // |kMinMagnifiedScaleThreshold|;
+  // Adjust the scale to just |kMaxMagnifiedScale| if scale is bigger than
+  // |kMaxMagnifiedScaleThreshold|;
   if (*scale > kMaxMagnifiedScaleThreshold)
     *scale = kMaxMagnifiedScale;
 
@@ -685,6 +685,9 @@ void MagnificationControllerImpl::OnScrollEvent(ui::ScrollEvent* event) {
       return;
     }
 
+    // TODO: Instead of using the scroll event, try watching raw events
+    // so that we can react before the event is fully completed.
+    // This could make magnification control easier for users.
     if (event->type() == ui::ET_SCROLL) {
       ui::ScrollEvent* scroll_event = event->AsScrollEvent();
       float scale = GetScale();
