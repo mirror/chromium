@@ -39,13 +39,13 @@ class DEVICE_GAMEPAD_EXPORT AbstractHapticGamepad {
   void ResetVibration(
       mojom::GamepadHapticsManager::ResetVibrationActuatorCallback);
 
- private:
   // Set the vibration magnitude for the strong and weak vibration actuators.
   virtual void SetVibration(double strong_magnitude, double weak_magnitude) = 0;
 
   // Set the vibration magnitude for both actuators to zero.
   virtual void SetZeroVibration();
 
+ private:
   // For testing.
   virtual base::TimeDelta TaskDelayFromMilliseconds(double delay_millis);
 
