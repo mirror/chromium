@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43499855_a06c227a",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-09T15:58:15Z",
+      "side": 1,
+      "message": "We should add a comment explaining why we are doing this. This is non obvious",
+      "revId": "1d347ef2fcd592e96de35534a454363ea696fde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
