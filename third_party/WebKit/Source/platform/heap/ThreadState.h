@@ -147,10 +147,6 @@ class PLATFORM_EXPORT ThreadState {
     kPreciseGCScheduled,
     kFullGCScheduled,
     kPageNavigationGCScheduled,
-    kGCRunning,
-    kSweeping,
-    kSweepingAndIdleGCScheduled,
-    kSweepingAndPreciseGCScheduled,
   };
 
   // The NoAllocationScope class is used in debug mode to catch unwanted
@@ -179,6 +175,23 @@ class PLATFORM_EXPORT ThreadState {
     ~SweepForbiddenScope() {
       DCHECK(state_->sweep_forbidden_);
       state_->sweep_forbidden_ = false;
+    }
+
+   private:
+    ThreadState* state_;
+  };
+
+  class IsInAtomicPauseScope final {
+    STACK_ALLOCATED();
+
+   public:
+    explicit IsInAtomicPauseScope(ThreadState* state) : state_(state) {
+      DCHECK(!state_->is_in_atomic_pause_);
+      state_->is_in_atomic_pause_ = true;
+    }
+    ~IsInAtomicPauseScope() {
+      DCHECK(state_->is_in_atomic_pause_);
+      state_->is_in_atomic_pause_ = false;
     }
 
    private:
@@ -251,12 +264,7 @@ class PLATFORM_EXPORT ThreadState {
   void WillStartV8GC(BlinkGC::V8GCType);
   void SetGCState(GCState);
   GCState GcState() const { return gc_state_; }
-  bool IsInGC() const { return GcState() == kGCRunning; }
-  bool IsSweepingInProgress() const {
-    return GcState() == kSweeping ||
-           GcState() == kSweepingAndPreciseGCScheduled ||
-           GcState() == kSweepingAndIdleGCScheduled;
-  }
+  bool IsInAtomicPause() { return is_in_atomic_pause_; }
 
   // Incremental GC.
 
@@ -284,12 +292,6 @@ class PLATFORM_EXPORT ThreadState {
   // 4) Lazy sweeping sweeps heaps incrementally. completeSweep() may be called
   //    to complete the sweeping.
   // 5) postSweep() is called.
-  //
-  // Notes:
-  // - The world is stopped between 1) and 3).
-  // - isInGC() returns true between 1) and 3).
-  // - isSweepingInProgress() returns true while any sweeping operation is
-  //   running.
   void MarkPhasePrologue(BlinkGC::StackState,
                          BlinkGC::GCType,
                          BlinkGC::GCReason);
@@ -625,6 +627,7 @@ class PLATFORM_EXPORT ThreadState {
   size_t mixins_being_constructed_count_;
   double accumulated_sweeping_time_;
   bool object_resurrection_forbidden_;
+  bool is_in_atomic_pause_;
 
   GarbageCollectedMixinConstructorMarkerBase* gc_mixin_marker_;
 

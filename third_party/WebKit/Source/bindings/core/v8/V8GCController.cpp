@@ -418,7 +418,7 @@ void V8GCController::GcEpilogue(v8::Isolate* isolate,
                                            BlinkGC::kForcedGC);
 
       // Forces a precise GC at the end of the current event loop.
-      CHECK(!current_thread_state->IsInGC());
+      CHECK(!current_thread_state->IsInAtomicPause());
       current_thread_state->SetGCState(ThreadState::kFullGCScheduled);
     }
 
