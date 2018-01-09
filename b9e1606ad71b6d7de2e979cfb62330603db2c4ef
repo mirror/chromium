@@ -16,6 +16,24 @@
       "revId": "b9e1606ad71b6d7de2e979cfb62330603db2c4ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e8c8c4_c492538c",
+        "filename": "chrome/installer/zucchini/abs32_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-01-09T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c60c6a49_bdedf216",
+      "revId": "b9e1606ad71b6d7de2e979cfb62330603db2c4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
