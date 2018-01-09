@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e88c408f_7438a0c1",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-09T19:29:23Z",
+      "side": 1,
+      "message": "We should be using private_memory_footprint as the reported value. I don\u0027t see immediately how to extract that from the dump, perhaps one of the reviewers familiar with the code can help here.",
+      "parentUuid": "889d4d88_9b687f0a",
+      "range": {
+        "startLine": 485,
+        "startChar": 50,
+        "endLine": 485,
+        "endChar": 65
+      },
+      "revId": "5a28a7b952726dab06e456bc3e02e462c62be170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eedb7d83_bdf294e6",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 2
