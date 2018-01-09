@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2209db29_f983dbda",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertListCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-09T16:12:23Z",
+      "side": 1,
+      "message": "nit: we can move this up before the calculation of |end| to save some computation.",
+      "revId": "2e2d96709407ec5cab61d2b255a912e006734a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb40fa18_9b0a91a1",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertListCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-09T16:12:23Z",
+      "side": 1,
+      "message": "Ah, once again a bug due to visibility:hidden BR.",
+      "revId": "2e2d96709407ec5cab61d2b255a912e006734a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
