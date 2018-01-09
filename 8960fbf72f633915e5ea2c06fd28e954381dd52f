@@ -34,6 +34,24 @@
       "revId": "8960fbf72f633915e5ea2c06fd28e954381dd52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084fbab8_c871e5e2",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-09T23:15:43Z",
+      "side": 1,
+      "message": "In the interest of landing this sooner (and continue with the straightforward part of this whole refactoring) I\u0027ve uploaded a new patchset with the exact same behavior as before.",
+      "parentUuid": "71a279ee_b70fe2fd",
+      "revId": "8960fbf72f633915e5ea2c06fd28e954381dd52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
