@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "546c1788_fadf78e4",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T21:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59f5f76_3913bfa1",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 58
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26b1f074_3b505cd5",
         "filename": "chrome/browser/metrics/tab_stats_data_store.h",
         "patchSetId": 34
@@ -45,6 +69,30 @@
       "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61133baf_b0b32f48",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T21:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26b1f074_3b505cd5",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "616d0817_7343af00",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T21:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee00f138_4920ae30",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1a5a363_99f3eb4a",
         "filename": "chrome/browser/metrics/tab_stats_data_store.h",
         "patchSetId": 34
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4b7da00f_c8cd1c37",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T21:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1a5a363_99f3eb4a",
+      "range": {
+        "startLine": 139,
+        "startChar": 9,
+        "endLine": 139,
+        "endChar": 23
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcc203fb_5fcb76d1",
         "filename": "chrome/browser/metrics/tab_stats_tracker_unittest.cc",
         "patchSetId": 34
@@ -114,6 +210,30 @@
       "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fe78b3_6fef7125",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-09T21:14:19Z",
+      "side": 1,
+      "message": "Done, here and below.",
+      "parentUuid": "dcc203fb_5fcb76d1",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
