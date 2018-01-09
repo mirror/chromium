@@ -1245,6 +1245,10 @@ void CompositeEditCommand::CleanupAfterDeletion(EditingState* editing_state,
         MostForwardCaretPosition(caret_after_delete.DeepEquivalent());
     Node* node = position.AnchorNode();
 
+    // Bail if destination and node are same.
+    // InsertListCommandTest.InsertListOnEmptyTableWithAppearance reaches here.
+    if (destination_node == node)
+      return;
     // Bail if we'd remove an ancestor of our destination.
     if (destination_node && destination_node->IsDescendantOf(node))
       return;
