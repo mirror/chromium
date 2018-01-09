@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d45b17a_f9235faf",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AndroidScrollIntegrationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-09T08:23:56Z",
+      "side": 1,
+      "message": "\u003e this is actually relaxing the precision of this check, which is not good. what are the actual values here?\n\nFor Nexus 5x, window.scrollX and window.scrollX (when --use-zoom-for-dsf is enabled) are 101/2.625 and 211/2.625 (i.e., 38.476190476190474 and 80.38095238095238).\n\n\u003e can you track where we lost the precision exactly?\n\nWhen --use-zoom-for-dsf is \"disabled\", we round those 38.476190476190474 and 80.38095238095238 (i.e., scroll x and y) in ScrollTree::PullDeltaForMainThread() by getting\ngfx::ScrollOffset rounded_offset \u003d gfx::ScrollOffset(roundf(current_offset.x()), roundf(current_offset.y()));\n\nand those rounded x and y will be the same with those final window.scrollX and window.scrollX (i.e., 38 and 80).\n\nOn the other hand, when --use-zoom-for-dsf is \"enabled\", current_offset.x() and current_offset.x() in ScrollTree::PullDeltaForMainThread() to be rounded are integer values i.e., 101 and 211. It will be converted to CSS pixel scaled value in LocalDOMWindow::scrollX() and LocalDOMWindow::scrollY() by calling AdjustForAbsoluteZoom::AdjustScroll(viewport_x, GetFrame()-\u003ePageZoomFactor()) which divides those scroll x and y by DSF (i.e., 101/2.625 and 211/2.625).\n\nOne option to solve this problem is to change the way of rounding in ScrollTree::PullDeltaForMainThread() if --use-zoom-for-dsf is enabled.\n(e.g., final value \u003d roundf(original value / DSF) * DSF))\n\nHowever, side effects will be caused in Aura side and moreover content/public/common/use_zoom_for_dsf_policy.h cannot be used for cc/ because of cycling dependency.\n\nCould you recommend a way to solve this issue?",
+      "parentUuid": "398262ac_fc18bab3",
+      "revId": "a5d217e6161b5d6953adde513cfd2b9032a8f717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ead13037_a9694650",
         "filename": "content/public/browser/android/synchronous_compositor.h",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "a5d217e6161b5d6953adde513cfd2b9032a8f717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b65395_a816b661",
+        "filename": "content/public/browser/android/synchronous_compositor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-09T08:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e836750b_071109ee",
+      "revId": "a5d217e6161b5d6953adde513cfd2b9032a8f717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
