@@ -299,6 +299,11 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void ForceSynchronousDocumentInstall(const AtomicString& mime_type,
                                        scoped_refptr<SharedBuffer> data);
 
+  void SetIsProvisional(bool is_provisional) {
+    is_provisional_ = is_provisional;
+  }
+  bool IsProvisional() const { return is_provisional_; }
+
  private:
   friend class FrameNavigationDisabler;
 
@@ -359,6 +364,8 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   // Per-frame URLLoader factory.
   std::unique_ptr<WebURLLoaderFactory> url_loader_factory_;
+
+  bool is_provisional_ = false;
 };
 
 inline FrameLoader& LocalFrame::Loader() const {

@@ -362,10 +362,11 @@ void PageHandler::Navigate(const std::string& url,
     navigate_callback_->sendSuccess(frame_id, Maybe<std::string>(),
                                     Maybe<std::string>(error_string));
   }
-  if (web_contents->GetMainFrame()->frame_tree_node()->navigation_request())
+  if (web_contents->GetMainFrame()->frame_tree_node()->navigation_request()) {
     navigate_callback_ = std::move(callback);
-  else
+  } else {
     callback->sendSuccess(frame_id, Maybe<std::string>(), Maybe<std::string>());
+  }
 }
 
 void PageHandler::NavigationReset(NavigationRequest* navigation_request) {

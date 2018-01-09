@@ -3,12 +3,14 @@
 
   await dp.Page.enable();
 
+  dp.Page.setLifecycleEventsEnabled({enabled: true});
   await dp.Page.navigate({url: 'data:text/html,hello!'});
+  await dp.Page.onceLifecycleEvent(event => event.params.name === 'load');
   await session.evaluate(() => window.foo = 42);
+
   await dp.Page.reload();
   dp.Page.setLifecycleEventsEnabled({enabled: true});
   await dp.Page.onceLifecycleEvent(event => event.params.name === 'load');
-
   testRunner.log('Querying window.foo after reload (expect "undefined"): ' + (await session.evaluate(() => window.foo)));
   testRunner.completeTest();
 })
