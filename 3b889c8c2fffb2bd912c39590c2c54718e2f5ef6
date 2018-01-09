@@ -657,6 +657,30 @@
       "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c7ae7c_69d04af5",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T23:53:40Z",
+      "side": 1,
+      "message": "I meant you should implement that function.",
+      "parentUuid": "e4a77ac0_7aa1e345",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 73
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

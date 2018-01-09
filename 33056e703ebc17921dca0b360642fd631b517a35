@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dc5f235_d8094266",
+        "filename": "device/ctap/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T23:53:40Z",
+      "side": 1,
+      "message": "Is this dependency needed?",
+      "revId": "33056e703ebc17921dca0b360642fd631b517a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55bca76_2645aede",
+        "filename": "device/ctap/authenticator_make_credential_response.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T23:53:40Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "33056e703ebc17921dca0b360642fd631b517a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adad2d30_def577a3",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T23:53:40Z",
+      "side": 1,
+      "message": "SetPlatformDevice and SetResidentKey are still unclear to me.",
+      "range": {
+        "startLine": 24,
+        "startChar": 24,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "33056e703ebc17921dca0b360642fd631b517a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
