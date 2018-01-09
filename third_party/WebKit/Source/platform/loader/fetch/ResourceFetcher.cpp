@@ -469,6 +469,13 @@ Resource* ResourceFetcher::ResourceForStaticData(
   return resource;
 }
 
+Resource* ResourceFetcher::ResourceForInvalidRequest(
+    const FetchParameters& params,
+    const ResourceFactory& factory) {
+  return factory.Create(params.GetResourceRequest(), params.Options(),
+                        params.DecoderOptions());
+}
+
 Resource* ResourceFetcher::ResourceForBlockedRequest(
     const FetchParameters& params,
     const ResourceFactory& factory,
@@ -665,6 +672,7 @@ Resource* ResourceFetcher::RequestResource(
   DCHECK(!client ||
          params.Options().synchronous_policy == kRequestAsynchronously);
   Resource* resource = RequestResource(params, factory, substitute_data);
+  DCHECK(resource);
   if (client)
     client->SetResource(resource, Context().GetLoadingTaskRunner().get());
   return resource;
@@ -702,7 +710,7 @@ Resource* ResourceFetcher::RequestResource(
   PrepareRequestResult result = PrepareRequest(params, factory, substitute_data,
                                                identifier, blocked_reason);
   if (result == kAbort)
-    return nullptr;
+    return ResourceForBlockedRequest(params, factory, blocked_reason);
   if (result == kBlock)
     return ResourceForBlockedRequest(params, factory, blocked_reason);
 
@@ -729,7 +737,7 @@ Resource* ResourceFetcher::RequestResource(
       // in the case of data URLs which might have resources such as fonts that
       // need to be decoded only on demand. These data URLs are allowed to be
       // processed using the normal ResourceFetcher machinery.
-      return nullptr;
+      return ResourceForInvalidRequest(params, factory);
     }
   }
 
@@ -803,18 +811,14 @@ Resource* ResourceFetcher::RequestResource(
   if (!ResourceNeedsLoad(resource, params, policy)) {
     if (policy != kUse)
       InsertAsPreloadIfNecessary(resource, params, resource_type);
-    return resource;
+  } else if (StartLoad(resource)) {
+    if (policy != kUse)
+      InsertAsPreloadIfNecessary(resource, params, resource_type);
+    scoped_resource_load_tracker.ResourceLoadContinuesBeyondScope();
+  } else {
+    resource->FinishAsError(ResourceError::CancelledError(params.Url()),
+                            Context().GetLoadingTaskRunner().get());
   }
-
-  if (!StartLoad(resource))
-    return nullptr;
-
-  if (policy != kUse)
-    InsertAsPreloadIfNecessary(resource, params, resource_type);
-  scoped_resource_load_tracker.ResourceLoadContinuesBeyondScope();
-
-  DCHECK(!resource->ErrorOccurred() ||
-         params.Options().synchronous_policy == kRequestSynchronously);
   return resource;
 }
 
