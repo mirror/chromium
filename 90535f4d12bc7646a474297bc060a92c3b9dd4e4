@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ed9efe_f3cbccf1",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-09T23:04:06Z",
+      "side": 1,
+      "message": "Is this comment (repeated for each of the enums) accurate?  I believe that only one of the three enums can be safely modified in this way, so that the computed cross-product remains consistent before and after the change.  I think it might be more helpful to document that if this is changed, then DownEventInputFormFactorDestinationCombination needs to be updated as well.",
+      "range": {
+        "startLine": 23,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 57
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8136fb66_323bd36c",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-09T23:04:06Z",
+      "side": 1,
+      "message": "nit: I wonder whether base::checked_cast or something similar could be used here.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 1
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57514f93_b567233a",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-09T23:04:06Z",
+      "side": 1,
+      "message": "nit: I think these static_casts would be more appropriate to do within the implementation of FindCombination.",
+      "range": {
+        "startLine": 160,
+        "startChar": 22,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb7b805_0497211a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 9416,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-09T23:04:06Z",
+      "side": 1,
+      "message": "Optional: It\u0027s not really necessary to mark \u003cenums\u003e as obsolete – they\u0027re implicitly obsolete when they\u0027re only used by obsolete histograms – but it doesn\u0027t really hurt either. So, up to you whether to keep these annotations.",
+      "range": {
+        "startLine": 9413,
+        "startChar": 0,
+        "endLine": 9416,
+        "endChar": 13
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
