@@ -17,6 +17,7 @@
 #include "content/public/renderer/v8_value_converter.h"
 #include "extensions/renderer/bindings/api_event_listeners.h"
 #include "extensions/renderer/bindings/event_emitter.h"
+#include "extensions/renderer/bindings/get_per_context_data.h"
 #include "extensions/renderer/bindings/js_runner.h"
 #include "gin/handle.h"
 #include "gin/per_context_data.h"
@@ -33,6 +34,8 @@ void DoNothingOnListenersChanged(binding::EventListenersChanged change,
 const char kExtensionAPIEventPerContextKey[] = "extension_api_events";
 
 struct APIEventPerContextData : public base::SupportsUserData::Data {
+  static constexpr char kPerContextDataKey[] = "extension_api_events";
+
   APIEventPerContextData(v8::Isolate* isolate) : isolate(isolate) {}
   ~APIEventPerContextData() override {
     DCHECK(emitters.empty())
@@ -56,7 +59,15 @@ struct APIEventPerContextData : public base::SupportsUserData::Data {
 
   // The collection of anonymous events.
   std::vector<v8::Global<v8::Object>> anonymous_emitters;
+
+  static APIEventPerContextData* GetFrom(v8::Local<v8::Context> context,
+                                         CreatePerContextData should_create) {
+    return GetPerContextData<APIEventPerContextData>(context, should_create,
+                                                     context->GetIsolate());
+  }
 };
+
+constexpr char APIEventPerContextData::kPerContextDataKey[];
 
 APIEventPerContextData* GetContextData(v8::Local<v8::Context> context,
                                        bool should_create) {
@@ -86,7 +97,8 @@ void DispatchEvent(const v8::FunctionCallbackInfo<v8::Value>& info) {
   }
 
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
-  APIEventPerContextData* data = GetContextData(context, false);
+  APIEventPerContextData* data =
+      APIEventPerContextData::GetFrom(context, kDontCreateIfMissing);
   DCHECK(data);
   std::string event_name = gin::V8ToString(info.Data());
   auto iter = data->emitters.find(event_name);
@@ -127,7 +139,8 @@ v8::Local<v8::Object> APIEventHandler::CreateEventInstance(
   // context directly.
   v8::Context::Scope context_scope(context);
 
-  APIEventPerContextData* data = GetContextData(context, true);
+  APIEventPerContextData* data =
+      APIEventPerContextData::GetFrom(context, kCreateIfMissing);
   DCHECK(data->emitters.find(event_name) == data->emitters.end());
 
   APIEventListeners::ListenersUpdated updated =
