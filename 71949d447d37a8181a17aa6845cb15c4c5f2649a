@@ -16,6 +16,24 @@
       "revId": "71949d447d37a8181a17aa6845cb15c4c5f2649a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a8266a_f69bb6a2",
+        "filename": "content/public/test/android/javatests/src/org/chromium/content/browser/test/util/DOMUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T18:30:29Z",
+      "side": 1,
+      "message": "Either way there are going to be rounding issues when the scale here isn\u0027t 1 that make clicking an exact pixel tricky. Perhaps rounding would make it more likely for a single pixel target to be hit, but given that this is a test util for clicking DOM elements, targeting the center of an element, I think this is fine.",
+      "parentUuid": "73025f76_3115f14a",
+      "revId": "71949d447d37a8181a17aa6845cb15c4c5f2649a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
