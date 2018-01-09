@@ -395,6 +395,9 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void CreateUsbChooserService(
       content::RenderFrameHost* render_frame_host,
       device::mojom::UsbChooserServiceRequest request) override;
+  void ShowPaymentHandlerWindow(content::BrowserContext* browser_context,
+                                int request_id,
+                                const GURL& url) override;
 
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);

@@ -22,6 +22,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
 #include "base/time/default_tick_clock.h"
+#include "build/build_config.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/service_worker/embedded_worker_registry.h"
@@ -31,6 +32,7 @@
 #include "content/browser/service_worker/service_worker_installed_scripts_sender.h"
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/browser/service_worker/service_worker_type_converters.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/common/origin_trials/trial_policy_impl.h"
 #include "content/common/service_worker/embedded_worker.mojom.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
@@ -200,6 +202,15 @@ CompleteProviderHostPreparation(
       provider_host->CompleteStartWorkerPreparation(process_id, version);
   context->AddProviderHost(std::move(provider_host));
   return info;
+}
+
+void ShowPaymentHandlerWindowOnUI(
+    ContentBrowserClient* browser,
+    const scoped_refptr<ServiceWorkerContextWrapper>& context_wrapper,
+    int request_id,
+    const GURL& url) {
+  browser->ShowPaymentHandlerWindow(
+      context_wrapper->storage_partition()->browser_context(), request_id, url);
 }
 
 }  // namespace
@@ -1002,7 +1013,8 @@ bool ServiceWorkerVersion::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_GetClients,
                         OnGetClients)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenNewTab, OnOpenNewTab)
-    IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenNewPopup, OnOpenNewPopup)
+    IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenPaymentHandlerWindow,
+                        OnOpenPaymentHandlerWindow)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_PostMessageToClient,
                         OnPostMessageToClient)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_FocusClient,
@@ -1208,8 +1220,17 @@ void ServiceWorkerVersion::OnOpenNewTab(int request_id, const GURL& url) {
   OnOpenWindow(request_id, url, WindowOpenDisposition::NEW_FOREGROUND_TAB);
 }
 
-void ServiceWorkerVersion::OnOpenNewPopup(int request_id, const GURL& url) {
+void ServiceWorkerVersion::OnOpenPaymentHandlerWindow(int request_id,
+                                                      const GURL& url) {
+#if defined(OS_ANDROID)
   OnOpenWindow(request_id, url, WindowOpenDisposition::NEW_POPUP);
+#else
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &ShowPaymentHandlerWindowOnUI, GetContentClient()->browser(),
+          base::WrapRefCounted(context_->wrapper()), request_id, url));
+#endif
 }
 
 void ServiceWorkerVersion::OnOpenWindow(int request_id,
