@@ -10,6 +10,8 @@ include_rules = [
   "+components/arc",
   "+components/vector_icons",
   "+services/network/public/interfaces",
+  # For testing
+  "+content/test/test_web_contents.h",
 
   # For access to testing command line switches.
   "+ppapi/shared_impl",
