@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ca51f92_116c513a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2388,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-09T01:58:31Z",
+      "side": 1,
+      "message": "I check which \u003d\u003d\u003d 1 to fix this now.",
+      "parentUuid": "f8c1ff49_3a7cb48e",
+      "range": {
+        "startLine": 2388,
+        "startChar": 2,
+        "endLine": 2388,
+        "endChar": 10
+      },
+      "revId": "0f5262c9bdfc10bf751fa42d9f642941acbf1ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d5186f5_d910471f",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-05T21:41:29Z",
       "side": 1,
       "message": "Clicking the swatch icon on text-shadow/box-shadow properties no longer shows the shadow editor popup for me.  Perhaps we need the _iconClick to be \u0027useCapture: true\u0027, or some check whether we\u0027ve clicked on an icon?\n\nStrangely, clicking color swatches is, fine.",
+      "revId": "0f5262c9bdfc10bf751fa42d9f642941acbf1ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c8a248_58179c9c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-09T01:58:31Z",
+      "side": 1,
+      "message": "I consume the mousedown to fix this now.",
+      "parentUuid": "4d5186f5_d910471f",
       "revId": "0f5262c9bdfc10bf751fa42d9f642941acbf1ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
