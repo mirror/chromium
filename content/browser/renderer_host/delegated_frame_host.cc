@@ -294,7 +294,7 @@ void DelegatedFrameHost::WasResized() {
         surface_id, current_frame_size_in_dip_, GetGutterColor(),
         GetSurfaceReferenceFactory());
     if (compositor_ && !base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableResizeLock)) {
+                           switches::kDisableResizeLock)) {
       compositor_->OnChildResizing();
     }
     // Input throttling and guttering are handled differently when surface
