@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da452fd7_f4adb758",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15af0d7d_1e341d8d",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2af39dd4_fdd3b1e2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5f745555_0632aa5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af39dd4_fdd3b1e2",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73ebb7e_66405be1",
         "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4561204_22568c42",
+        "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f73ebb7e_66405be1",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "67cf40e5_38e783ae",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09468fbd_1c9ea6c6",
+      "range": {
+        "startLine": 190,
+        "startChar": 33,
+        "endLine": 190,
+        "endChar": 41
+      },
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "851ecf0d_ca12b405",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 6
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "12d47aa2_0acce551",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "851ecf0d_ca12b405",
+      "range": {
+        "startLine": 193,
+        "startChar": 33,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34cf8e2e_30bc2a20",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 6
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "6b15bc26_179e6561",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34cf8e2e_30bc2a20",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8a418bc_594f3491",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 6
@@ -136,6 +262,24 @@
       "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fae5b4_ee85a0fc",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8a418bc_594f3491",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "aecea6e9_249cb741",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66398a88_6daac223",
+      "range": {
+        "startLine": 44,
+        "startChar": 46,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0442bc9_3f94ebb1",
         "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
         "patchSetId": 6
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "78d77b3b_7bdccf5f",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0442bc9_3f94ebb1",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "575cbff4_9e310505",
         "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
         "patchSetId": 6
@@ -193,6 +379,24 @@
       "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42832e42_8817cafe",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-09T18:44:27Z",
+      "side": 1,
+      "message": "Done\n\nI make it optional and default true for now. This bug tracks the progress of migration: crbug.com/800403",
+      "parentUuid": "575cbff4_9e310505",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
