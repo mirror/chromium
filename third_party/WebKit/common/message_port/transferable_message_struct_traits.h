@@ -6,8 +6,8 @@
 #define THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_TRANSFERABLE_MESSAGE_STRUCT_TRAITS_H_
 
 #include "third_party/WebKit/common/message_port/cloneable_message_struct_traits.h"
-#include "third_party/WebKit/common/message_port/message_port.mojom.h"
-#include "third_party/WebKit/common/message_port/transferable_message.h"
+#include "third_party/WebKit/public/common/message_port/message_port.mojom.h"
+#include "third_party/WebKit/public/common/message_port/transferable_message.h"
 
 namespace mojo {
 
