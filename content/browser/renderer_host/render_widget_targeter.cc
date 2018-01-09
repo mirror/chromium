@@ -127,6 +127,8 @@ void RenderWidgetTargeter::QueryClient(
   request_in_flight_ = true;
   auto* target_client =
       target->GetRenderWidgetHostImpl()->input_target_client();
+  LOG(ERROR) << "Querying sink id at: " <<
+      gfx::ToCeiledPoint(mouse_event.PositionInWidget()).ToString();
   target_client->FrameSinkIdAt(
       gfx::ToCeiledPoint(mouse_event.PositionInWidget()),
       base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
@@ -199,6 +201,8 @@ void RenderWidgetTargeter::FoundTarget(
   } else {
     mouse_event = Convert(root_view, target, mouse_event);
   }
+  LOG(ERROR) << "Found target at: " <<
+      gfx::ToCeiledPoint(mouse_event.PositionInWidget()).ToString();
   if (mouse_event.GetType() != blink::WebInputEvent::kUndefined)
     delegate_->DispatchEventToTarget(root_view, target, mouse_event, latency);
   FlushEventQueue();
