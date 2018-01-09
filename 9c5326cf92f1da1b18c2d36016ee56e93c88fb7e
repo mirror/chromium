@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79fa9b24_e28322a2",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T03:30:21Z",
+      "side": 1,
+      "message": "Done. Let me know if the added test speaks your mind.",
+      "parentUuid": "a32b7be3_7041d99b",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "079b0912_060e09f6",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T00:25:30Z",
       "side": 1,
       "message": "nit: Please add something to this comment explaining *why* it\u0027s an accessibility feature to darken the screen. Like \"(e.g. to allow ...)\"",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629389fa_ac0f7d6f",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T03:30:21Z",
+      "side": 1,
+      "message": "I added \"This allows chrome.accessibilityPrivate.darkenScreen calling methods in ash::BacklightsForcedOffSetter.",
+      "parentUuid": "079b0912_060e09f6",
       "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "09bc2e97_32138c5b",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T03:30:21Z",
+      "side": 1,
+      "message": "I took your suggestion and removed singleton. thanks",
+      "parentUuid": "b002ae9a_c92671ff",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ae28f6a_d2e07d0e",
         "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client_unittest.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-09T00:25:30Z",
       "side": 1,
       "message": "Why do you need this SetInstanceForTesting() method?",
+      "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79324e58_a76dcc8a",
+        "filename": "chrome/browser/ui/ash/accessibility/accessibility_controller_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-09T03:30:21Z",
+      "side": 1,
+      "message": "Because I need to inject FakeAccessibilityControllerClient in. By taking your suggestion, it is not needed here.",
+      "parentUuid": "4ae28f6a_d2e07d0e",
       "revId": "9c5326cf92f1da1b18c2d36016ee56e93c88fb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
