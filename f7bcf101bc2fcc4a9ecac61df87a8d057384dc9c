@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a899263e_38c93cd7",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-09T19:18:36Z",
+      "side": 1,
+      "message": "!GetLayer more common in chromium I think",
+      "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a314df5_37abc916",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-09T19:18:36Z",
+      "side": 1,
+      "message": "separate DCHECks, so when it does fail, you know which condition failed exactly",
+      "revId": "f7bcf101bc2fcc4a9ecac61df87a8d057384dc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
