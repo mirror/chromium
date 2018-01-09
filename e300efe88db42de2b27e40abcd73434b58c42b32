@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1deebf02_12885f7d",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-09T14:32:57Z",
+      "side": 1,
+      "message": "|mouse_event| -\u003e |touch_event|",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 25
+      },
+      "revId": "e300efe88db42de2b27e40abcd73434b58c42b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
