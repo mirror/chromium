@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "319990fd_4312e2d6",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-09T14:10:28Z",
+      "side": 1,
+      "message": "Perhaps a better way of explaining what I\u0027m thinking is this: when there\u0027s no target, it should be up to the delegate (and not this class) to decide what should happen to the event. So if you just dispatch the event back to the delegate with a null target, it can decide what to do.\n\nFor example, for touch events, the target is set by the *first* touch start in a sequence. All subsequent touch events until the final TouchEnd/Cancel will not even be hit-tested by the delegate ... rather it will send back a null target, *and* indicate false for |should_query_view|. When the events are dispatched to it with null targets, it will know to handle them using the target found for the initial TouchStart.\n\nIn the touch case it\u0027s essential that the delegate has this control; it seems that we should do this consistently for all event types.",
+      "parentUuid": "7049ad7d_22825ad4",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 6
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfed2cb6_9c4d9514",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 4
