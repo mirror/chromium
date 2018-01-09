@@ -59,7 +59,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
       public RenderWidgetSignals::Observer,
       public QueueingTimeEstimator::Client,
       public base::trace_event::TraceLog::AsyncEnabledStateObserver,
-      public AutoAdvancingVirtualTimeDomain::Observer {
+      public AutoAdvancingVirtualTimeDomain::Observer,
+      public TraceableVariableController {
  public:
   // Keep RendererScheduler::UseCaseToString in sync with this enum.
   enum class UseCase {
@@ -292,6 +293,10 @@ class PLATFORM_EXPORT RendererSchedulerImpl
                        const TaskQueue::Task& task,
                        base::TimeTicks start,
                        base::TimeTicks end);
+
+  // TraceableVariableController implelemtation:
+  void RegisterTraceableVariable(TraceableVariable* tracer) final;
+  void DeregisterTraceableVariable(TraceableVariable* tracer) final;
 
   // base::trace_event::TraceLog::EnabledStateObserver implementation:
   void OnTraceLogEnabled() override;
@@ -585,6 +590,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // TaskQueueThrottler.
   void VirtualTimeResumed();
 
+  std::unordered_set<TraceableVariable*> tracers_;  // Not owned.
   MainThreadSchedulerHelper helper_;
   IdleHelper idle_helper_;
   IdleCanceledDelayedTaskSweeper idle_canceled_delayed_task_sweeper_;

@@ -320,120 +320,147 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       current_use_case(UseCase::kNone,
                        "RendererScheduler.UseCase",
                        renderer_scheduler_impl,
+                       renderer_scheduler_impl,
                        UseCaseToString),
       longest_jank_free_task_duration(
           base::TimeDelta(),
           "RendererScheduler.LongestJankFreeTaskDuration",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           TimeDeltaToMilliseconds),
       renderer_pause_count(0,
                            "RendererScheduler.PauseCount",
+                           renderer_scheduler_impl,
                            renderer_scheduler_impl),
       navigation_task_expected_count(
           0,
           "RendererScheduler.NavigationTaskExpectedCount",
+          renderer_scheduler_impl,
           renderer_scheduler_impl),
       expensive_task_policy(ExpensiveTaskPolicy::kRun,
                             "RendererScheduler.ExpensiveTaskPolicy",
+                            renderer_scheduler_impl,
                             renderer_scheduler_impl,
                             ExpensiveTaskPolicyToString),
       rail_mode_for_tracing(current_policy.rail_mode(),
                             "RendererScheduler.RAILMode",
                             renderer_scheduler_impl,
+                            renderer_scheduler_impl,
                             RAILModeToString),
       renderer_hidden(false,
                       "RendererScheduler.Hidden",
                       renderer_scheduler_impl,
+                      renderer_scheduler_impl,
                       HiddenStateToString),
       renderer_backgrounded(false,
                             "RendererScheduler.Backgrounded",
+                            renderer_scheduler_impl,
                             renderer_scheduler_impl,
                             BackgroundStateToString),
       stopping_when_backgrounded_enabled(
           false,
           "RendererScheduler.StoppingWhenBackgroundedEnabled",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           YesNoStateToString),
       stopped_when_backgrounded(
           false,
           "RendererScheduler.StoppedWhenBackgrounded",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           YesNoStateToString),
       was_shutdown(false,
                    "RendererScheduler.WasShutdown",
+                   renderer_scheduler_impl,
                    renderer_scheduler_impl,
                    YesNoStateToString),
       loading_task_estimated_cost(
           base::TimeDelta(),
           "RendererScheduler.LoadingTaskEstimatedCostMs",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           TimeDeltaToMilliseconds),
       timer_task_estimated_cost(
           base::TimeDelta(),
           "RendererScheduler.TimerTaskEstimatedCostMs",
+          renderer_scheduler_impl,
           renderer_scheduler_impl,
           TimeDeltaToMilliseconds),
       loading_tasks_seem_expensive(
           false,
           "RendererScheduler.LoadingTasksSeemExpensive",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           YesNoStateToString),
       timer_tasks_seem_expensive(false,
                                  "RendererScheduler.TimerTasksSeemExpensive",
                                  renderer_scheduler_impl,
+                                 renderer_scheduler_impl,
                                  YesNoStateToString),
       touchstart_expected_soon(false,
                                "RendererScheduler.TouchstartExpectedSoon",
+                               renderer_scheduler_impl,
                                renderer_scheduler_impl,
                                YesNoStateToString),
       have_seen_a_begin_main_frame(
           false,
           "RendererScheduler.HasSeenBeginMainFrame",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           YesNoStateToString),
       have_reported_blocking_intervention_in_current_policy(
           false,
           "RendererScheduler.HasReportedBlockingInterventionInCurrentPolicy",
+          renderer_scheduler_impl,
           renderer_scheduler_impl,
           YesNoStateToString),
       have_reported_blocking_intervention_since_navigation(
           false,
           "RendererScheduler.HasReportedBlockingInterventionSinceNavigation",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           YesNoStateToString),
       has_visible_render_widget_with_touch_handler(
           false,
           "RendererScheduler.HasVisibleRenderWidgetWithTouchHandler",
+          renderer_scheduler_impl,
           renderer_scheduler_impl,
           YesNoStateToString),
       begin_frame_not_expected_soon(
           false,
           "RendererScheduler.BeginFrameNotExpectedSoon",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           YesNoStateToString),
       in_idle_period_for_testing(false,
                                  "RendererScheduler.InIdlePeriod",
+                                 renderer_scheduler_impl,
                                  renderer_scheduler_impl,
                                  YesNoStateToString),
       use_virtual_time(false,
                        "RendererScheduler.UseVirtualTime",
                        renderer_scheduler_impl,
+                       renderer_scheduler_impl,
                        YesNoStateToString),
       is_audio_playing(false,
                        "RendererScheduler.AudioPlaying",
+                       renderer_scheduler_impl,
                        renderer_scheduler_impl,
                        AudioPlayingStateToString),
       compositor_will_send_main_frame_not_expected(
           false,
           "RendererScheduler.CompositorWillSendMainFrameNotExpected",
           renderer_scheduler_impl,
+          renderer_scheduler_impl,
           YesNoStateToString),
       has_navigated(false,
                     "RendererScheduler.HasNavigated",
                     renderer_scheduler_impl,
+                    renderer_scheduler_impl,
                     YesNoStateToString),
       pause_timers_for_webview(false,
                                "RendererScheduler.PauseTimersForWebview",
+                               renderer_scheduler_impl,
                                renderer_scheduler_impl,
                                YesNoStateToString),
       background_status_changed_at(now),
@@ -443,9 +470,11 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       process_type(RendererProcessType::kRenderer,
                    "RendererScheduler.ProcessType",
                    renderer_scheduler_impl,
+                   renderer_scheduler_impl,
                    RendererProcessTypeToString),
       task_description_for_tracing(base::nullopt,
                                    "RendererScheduler.MainThreadTask",
+                                   renderer_scheduler_impl,
                                    renderer_scheduler_impl,
                                    OptionalTaskDescriptionToString),
       virtual_time_policy(VirtualTimePolicy::kAdvance),
@@ -2473,47 +2502,20 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
   }
 }
 
+void RendererSchedulerImpl::RegisterTraceableVariable(
+    TraceableVariable* tracer) {
+  tracers_.insert(tracer);
+}
+
+void RendererSchedulerImpl::DeregisterTraceableVariable(
+    TraceableVariable* tracer) {
+  tracers_.erase(tracer);
+}
+
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
-
-  // TODO(kraynov): Create auto-registration mechanism.
-  main_thread_only().current_use_case.OnTraceLogEnabled();
-  main_thread_only().longest_jank_free_task_duration.Trace();
-  main_thread_only().renderer_pause_count.Trace();
-  main_thread_only().navigation_task_expected_count.Trace();
-  main_thread_only().expensive_task_policy.OnTraceLogEnabled();
-  main_thread_only().rail_mode_for_tracing.OnTraceLogEnabled();
-  main_thread_only().renderer_hidden.OnTraceLogEnabled();
-  main_thread_only().renderer_backgrounded.OnTraceLogEnabled();
-  main_thread_only().stopping_when_backgrounded_enabled.OnTraceLogEnabled();
-  main_thread_only().stopped_when_backgrounded.OnTraceLogEnabled();
-  main_thread_only().was_shutdown.OnTraceLogEnabled();
-  main_thread_only().loading_task_estimated_cost.Trace();
-  main_thread_only().timer_task_estimated_cost.Trace();
-  main_thread_only().loading_tasks_seem_expensive.OnTraceLogEnabled();
-  main_thread_only().timer_tasks_seem_expensive.OnTraceLogEnabled();
-  main_thread_only().touchstart_expected_soon.OnTraceLogEnabled();
-  main_thread_only().have_seen_a_begin_main_frame.OnTraceLogEnabled();
-  main_thread_only().have_reported_blocking_intervention_in_current_policy.
-      OnTraceLogEnabled();
-  main_thread_only().have_reported_blocking_intervention_since_navigation.
-      OnTraceLogEnabled();
-  main_thread_only().has_visible_render_widget_with_touch_handler.
-      OnTraceLogEnabled();
-  main_thread_only().begin_frame_not_expected_soon.OnTraceLogEnabled();
-  main_thread_only().in_idle_period_for_testing.OnTraceLogEnabled();
-  main_thread_only().use_virtual_time.OnTraceLogEnabled();
-  main_thread_only().is_audio_playing.OnTraceLogEnabled();
-  main_thread_only().compositor_will_send_main_frame_not_expected.
-      OnTraceLogEnabled();
-  main_thread_only().has_navigated.OnTraceLogEnabled();
-  main_thread_only().pause_timers_for_webview.OnTraceLogEnabled();
-  main_thread_only().process_type.OnTraceLogEnabled();
-  main_thread_only().task_description_for_tracing.OnTraceLogEnabled();
-
-  for (WebViewSchedulerImpl* web_view_scheduler :
-       main_thread_only().web_view_schedulers) {
-    web_view_scheduler->OnTraceLogEnabled();
+  for (auto tracer : tracers_) {
+    tracer->OnTraceLogEnabled();
   }
 }
 
