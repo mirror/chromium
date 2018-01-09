@@ -266,6 +266,7 @@ bool StructTraits<gpu::mojom::GpuInfoDataView, gpu::GPUInfo>::Read(
   out->system_visual = data.system_visual();
   out->rgba_visual = data.rgba_visual();
 #endif
+  out->oop_rasterization_supported = data.oop_rasterization_supported();
 
   return data.ReadInitializationTime(&out->initialization_time) &&
          data.ReadGpu(&out->gpu) &&

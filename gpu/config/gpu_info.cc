@@ -81,13 +81,12 @@ GPUInfo::GPUInfo()
 #if defined(OS_WIN)
       dx_diagnostics_info_state(kCollectInfoNone),
 #endif
-      jpeg_decode_accelerator_supported(false)
+      jpeg_decode_accelerator_supported(false),
 #if defined(USE_X11)
-      ,
       system_visual(0),
-      rgba_visual(0)
+      rgba_visual(0),
 #endif
-{
+      oop_rasterization_supported(false) {
 }
 
 GPUInfo::GPUInfo(const GPUInfo& other) = default;
@@ -218,6 +217,8 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
   enumerator->AddInt64("systemVisual", system_visual);
   enumerator->AddInt64("rgbaVisual", rgba_visual);
 #endif
+  enumerator->AddBool("OOPRasterizationSupported",
+                      jpeg_decode_accelerator_supported);
   enumerator->EndAuxAttributes();
 }
 

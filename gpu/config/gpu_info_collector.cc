@@ -20,11 +20,14 @@
 #include "base/trace_event/trace_event.h"
 #include "gpu/config/gpu_switches.h"
 #include "third_party/angle/src/gpu_info_util/SystemInfo.h"  // nogncheck
+#include "third_party/skia/include/gpu/GrBackendSurface.h"
+#include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/gl_version_info.h"
+#include "ui/gl/init/create_gr_gl_interface.h"
 #include "ui/gl/init/gl_factory.h"
 
 #if defined(OS_ANDROID)
@@ -105,6 +108,28 @@ int StringContainsName(
     }
   }
   return -1;
+}
+
+bool SupportsOOPRaster(const gl::GLVersionInfo& gl_info) {
+  sk_sp<const GrGLInterface> interface(gl::init::CreateGrGLInterface(gl_info));
+  if (!interface) {
+    DLOG(ERROR) << "OOP raster support disabled: GrGLInterface creation "
+                   "failed.";
+    return false;
+  }
+
+  sk_sp<GrContext> gr_context_;
+  gr_context_ = GrContext::MakeGL(std::move(interface));
+  if (gr_context_) {
+    static const int kMaxGaneshResourceCacheCount = 8196;
+    static const size_t kMaxGaneshResourceCacheBytes = 96 * 1024 * 1024;
+    gr_context_->setResourceCacheLimits(kMaxGaneshResourceCacheCount,
+                                        kMaxGaneshResourceCacheBytes);
+    return true;
+  }
+  DLOG(ERROR) << "OOP raster support disabled: GrContext creation "
+                 "failed.";
+  return false;
 }
 
 }  // namespace
@@ -198,6 +223,8 @@ CollectInfoResult CollectGraphicsInfoGL(GPUInfo* gpu_info) {
   }
 #endif
 
+  gpu_info->oop_rasterization_supported = SupportsOOPRaster(gl_info);
+
   // TODO(kbr): remove once the destruction of a current context automatically
   // clears the current context.
   context->ReleaseCurrent(surface.get());
@@ -259,6 +286,9 @@ void MergeGPUInfoGL(GPUInfo* basic_gpu_info,
   basic_gpu_info->system_visual = context_gpu_info.system_visual;
   basic_gpu_info->rgba_visual = context_gpu_info.rgba_visual;
 #endif
+
+  basic_gpu_info->oop_rasterization_supported =
+      context_gpu_info.oop_rasterization_supported;
 }
 
 void IdentifyActiveGPU(GPUInfo* gpu_info) {
