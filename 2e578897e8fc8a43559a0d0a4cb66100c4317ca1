@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c59f5f76_3913bfa1",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-09T20:43:51Z",
+      "side": 1,
+      "message": "braces for multiline for",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 58
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b1f074_3b505cd5",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-09T20:43:51Z",
+      "side": 1,
+      "message": "Indicates if\n\nTo be consistent with other members.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee00f138_4920ae30",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-09T20:43:51Z",
+      "side": 1,
+      "message": "Mention that a TabID is used instead of a WebContents because:\n- The WebContents of a tab can change during its lifetime.\n- A WebContents* can be reused for a separate tab after a tab has been closed.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a5a363_99f3eb4a",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-09T20:43:51Z",
+      "side": 1,
+      "message": "tabs that are currently alive?",
+      "range": {
+        "startLine": 139,
+        "startChar": 9,
+        "endLine": 139,
+        "endChar": 23
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc203fb_5fcb76d1",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-09T20:43:51Z",
+      "side": 1,
+      "message": "emplace_back",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "2e578897e8fc8a43559a0d0a4cb66100c4317ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
