@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c0e95b98_9cf4e4c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-09T20:27:55Z",
+      "side": 1,
+      "message": "nit: remove \"a\"",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5412d27_296ac288",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -31,6 +48,40 @@
       "side": 1,
       "message": "\u003e one minor: CL adds to support to x11_window_back so both x11_window and x11_ozone_window\n\nx11_window_base*",
       "parentUuid": "d5412d27_296ac288",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aef0c9b_fddc2062",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-09T20:27:55Z",
+      "side": 1,
+      "message": "nit: \"In addition, the CL implements\"",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4434bb5a_353de7ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-09T20:27:55Z",
+      "side": 1,
+      "message": "\"X11 Windows now send\"",
       "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
