@@ -77,6 +77,7 @@ template <typename T>
 struct SimpleClassVectorTraits : VectorTraitsBase<T> {
   static const bool kCanInitializeWithMemset = true;
   static const bool kCanClearUnusedSlotsWithMemset = true;
+  static const bool kCanCopyWithMemcpy = true;
   static const bool kCanMoveWithMemcpy = true;
   static const bool kCanCompareWithMemcmp = true;
 };
@@ -86,7 +87,11 @@ struct SimpleClassVectorTraits : VectorTraitsBase<T> {
 // work.
 template <typename P>
 struct VectorTraits<scoped_refptr<P>>
-    : SimpleClassVectorTraits<scoped_refptr<P>> {};
+    : SimpleClassVectorTraits<scoped_refptr<P>> {
+  // scoped_refptr cannot be copied using memcpy as the internals (e.g. ref
+  // count) depend on properly constructing the object.
+  static const bool kCanCopyWithMemcpy = false;
+};
 
 template <typename P>
 struct VectorTraits<std::unique_ptr<P>>
@@ -163,6 +168,7 @@ struct VectorTraits<std::pair<First, Second>> {
   struct VectorTraits<ClassName> : VectorTraitsBase<ClassName> {              \
     static const bool kCanInitializeWithMemset = true;                        \
     static const bool kCanClearUnusedSlotsWithMemset = true;                  \
+    static const bool kCanCopyWithMemcpy = true;                              \
     static const bool kCanMoveWithMemcpy = true;                              \
   };                                                                          \
   }
