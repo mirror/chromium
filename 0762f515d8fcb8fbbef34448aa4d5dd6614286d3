@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2313106a_f0525638",
+        "filename": "third_party/WebKit/Source/modules/canvas/offscreencanvas2d/OffscreenCanvasRenderingContext2D.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-09T19:34:38Z",
+      "side": 0,
+      "message": "Thanks for pointing this out. I just found out that SnapshotReason was initially created in \nthis CL (https://codereview.chromium.org/1609343004) to infer the Display List Fallback reason in RecordingImageBufferSurface. It is actually something that I forgot to remove during the removal of display list 2D mode and is not used anymore. I hope to remove it in another CL and put it under the Issue of \"removing display list 2d\" instead of these two.",
+      "parentUuid": "7471f984_f9fb88f2",
+      "range": {
+        "startLine": 115,
+        "startChar": 27,
+        "endLine": 115,
+        "endChar": 63
+      },
+      "revId": "0762f515d8fcb8fbbef34448aa4d5dd6614286d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2870b31_1e6d5b0a",
         "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedImageBufferSurface.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0762f515d8fcb8fbbef34448aa4d5dd6614286d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f4209d_207fce65",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedImageBufferSurface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-09T19:34:38Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c2870b31_1e6d5b0a",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "0762f515d8fcb8fbbef34448aa4d5dd6614286d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

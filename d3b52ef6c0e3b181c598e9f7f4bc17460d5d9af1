@@ -22,6 +22,30 @@
       "revId": "d3b52ef6c0e3b181c598e9f7f4bc17460d5d9af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2115684b_ae874db2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-09T19:34:38Z",
+      "side": 1,
+      "message": "Done. Doing DCHECK only; the current implementation does not check validity.",
+      "parentUuid": "d93da81d_8378ed06",
+      "range": {
+        "startLine": 389,
+        "startChar": 34,
+        "endLine": 389,
+        "endChar": 35
+      },
+      "revId": "d3b52ef6c0e3b181c598e9f7f4bc17460d5d9af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
