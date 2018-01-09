@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "extensions/common/manifest.h"
@@ -31,7 +32,9 @@ class Unpacker {
            const base::FilePath& extension_dir,
            const std::string& extension_id,
            Manifest::Location location,
-           int creation_flags);
+           int creation_flags,
+           base::File decoded_image_dump,
+           base::File message_catalog_dump);
   ~Unpacker();
 
   // Returns true if the given base::FilePath should be unzipped.
@@ -45,10 +48,7 @@ class Unpacker {
       const base::FilePath& extension_dir,
       std::string* error);
 
-  // Runs the processing steps for the extension. On success, this returns true
-  // and the decoded images will be in a file at
-  // |working_dir|/kDecodedImagesFilename and the decoded messages will be in a
-  // file at |working_dir|/kDecodedMessageCatalogsFilename.
+  // Runs the processing steps for the extension. On success, this returns true.
   bool Run();
 
   const base::string16& error_message() { return error_message_; }
@@ -69,14 +69,12 @@ class Unpacker {
   // error.
   bool ReadJSONRulesetIfNeeded(const Extension* extension);
 
-  // Write the decoded images to kDecodedImagesFilename.  We do this instead
-  // of sending them over IPC, since they are so large.  Returns true on
-  // success.
+  // Write the decoded images to |decoded_image_dump_|. We do this instead of
+  // sending them over IPC, since they are so large.  Returns true on success.
   bool DumpImagesToFile();
 
-  // Write the decoded messages to kDecodedMessageCatalogsFilename.  We do this
-  // instead of sending them over IPC, since they are so large.  Returns true on
-  // success.
+  // Write the decoded messages to |message_catalog_dump_|. We do this instead
+  // of sending them over IPC, since they are so large. Returns true on success.
   bool DumpMessageCatalogsToFile();
 
   // Parse all _locales/*/messages.json files inside the extension.
@@ -108,6 +106,12 @@ class Unpacker {
 
   // The creation flags to use with the created extension.
   int creation_flags_;
+
+  // The file to wich the decoded images are written.
+  base::File decoded_image_dump_;
+
+  // The file to wich the message catalogs are written.
+  base::File message_catalog_dump_;
 
   // The parsed version of the manifest JSON contained in the extension.
   std::unique_ptr<base::DictionaryValue> parsed_manifest_;

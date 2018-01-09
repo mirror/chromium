@@ -46,13 +46,6 @@ extern const char kInstallDirectoryName[];
 // validation before finalizing install.
 extern const char kTempExtensionName[];
 
-// The file to write our decoded images to, relative to the extension_path.
-extern const char kDecodedImagesFilename[];
-
-// The file to write our decoded message catalogs to, relative to the
-// extension_path.
-extern const char kDecodedMessageCatalogsFilename[];
-
 // The filename to use for a background page generated from
 // background.scripts.
 extern const char kGeneratedBackgroundPageFilename[];
