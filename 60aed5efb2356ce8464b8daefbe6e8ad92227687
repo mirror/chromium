@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "71ccea54_150e1cac",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T20:12:49Z",
+      "side": 1,
+      "message": "Nit: moving it outside of switch has the benefit that if new enum values are added later, we will get compilation failures/warnings. With a default case, it will be a run-time failure.",
+      "parentUuid": "66f57604_d64fae5c",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc15c340_90866a11",
         "filename": "mojo/public/cpp/base/mojo_base_traits_export.h",
         "patchSetId": 7
