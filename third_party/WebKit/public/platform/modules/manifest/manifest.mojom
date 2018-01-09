@@ -10,7 +10,6 @@ import "third_party/WebKit/public/platform/display_mode.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 import "url/mojo/url.mojom";
 
-
 // The Manifest structure is an internal representation of the Manifest file
 // described in the "Manifest for Web Application" document:
 // http://w3c.github.io/manifest/
@@ -19,13 +18,13 @@ struct Manifest {
 
   mojo.common.mojom.String16? short_name;
 
-  url.mojom.Url? start_url;
+  url.mojom.Url start_url;
 
   DisplayMode display;
 
   device.mojom.ScreenOrientationLockType orientation;
 
-  array<ManifestIcon>? icons;
+  array<ManifestIcon> icons;
 
   // TODO(constantina): This field is non-standard and part of a Chrome
   // experiment. See:
@@ -33,12 +32,14 @@ struct Manifest {
   // As such, this field should not be exposed to the drive-by web.
   ManifestShareTarget? share_target;
 
-  array<ManifestRelatedApplication>? related_applications;
+  array<ManifestRelatedApplication> related_applications;
 
   // A boolean that is used as a hint for the user agent to say that related
   // applications should be preferred over the web application. False if missing
   // or there is a parsing failure.
   bool prefer_related_applications;
+
+  const int64 kInvalidOrMissingColor = 0x80000000;
 
   // A 32 bit color value or kInvalidOrMissingColor if not set.
   int64 theme_color;
@@ -47,11 +48,11 @@ struct Manifest {
   int64 background_color;
 
   // A URL of the HTML splash screen.
-  url.mojom.Url? splash_screen_url;
+  url.mojom.Url splash_screen_url;
 
   mojo.common.mojom.String16? gcm_sender_id;
 
-  url.mojom.Url? scope;
+  url.mojom.Url scope;
 };
 
 // Structure representing an icon as per the Manifest specification, see:
@@ -87,7 +88,7 @@ struct ManifestRelatedApplication {
 
   // URL at which the application can be found. One of |url| or |id| must be
   // present.
-  url.mojom.Url? url;
+  url.mojom.Url url;
 
   // An id which is used to represent the application on the platform. One of
   // |url| or |id| must be present.
@@ -112,6 +113,4 @@ struct ManifestDebugInfo {
 struct ManifestError {
   string message;
   bool critical;
-  uint32 line;
-  uint32 column;
 };

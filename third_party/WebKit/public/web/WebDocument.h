@@ -131,7 +131,6 @@ class WebDocument : public WebNode {
       v8::Local<v8::Value> options);
 
   BLINK_EXPORT WebURL ManifestURL() const;
-  BLINK_EXPORT bool ManifestUseCredentials() const;
 
   BLINK_EXPORT WebURL CanonicalUrlForSharing() const;
 
