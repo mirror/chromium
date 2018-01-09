@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a422ed36_edc72c88",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-09T01:25:19Z",
+      "side": 1,
+      "message": "This new metric is basically merging the two metrics at line 277 and 283 of the following linked file, so I\u0027d like to keep it. Also I forgot to mark those two metrics obsolete, will upload the change as well.\nhttps://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_model_impl.cc?rcl\u003dd0827a723f95029b44b8f3b721f956243487ec31\u0026l\u003d277",
+      "parentUuid": "9e847a8b_176715d0",
+      "range": {
+        "startLine": 48,
+        "startChar": 74,
+        "endLine": 48,
+        "endChar": 77
+      },
+      "revId": "3733044c35a3c9bda2803394a61e3fd974fa07c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f86026c_751ee2f4",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f91f03f2_fe707e1d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 54970,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-09T01:25:19Z",
+      "side": 1,
+      "message": "Done\nSorry i missed it, it\u0027s reusing another suffix.",
+      "parentUuid": "2f86026c_751ee2f4",
+      "range": {
+        "startLine": 54970,
+        "startChar": 11,
+        "endLine": 54970,
+        "endChar": 22
+      },
+      "revId": "3733044c35a3c9bda2803394a61e3fd974fa07c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1882cc_342c9cc2",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "3733044c35a3c9bda2803394a61e3fd974fa07c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939046bd_4a025a62",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 54974,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-09T01:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a1882cc_342c9cc2",
+      "range": {
+        "startLine": 54973,
+        "startChar": 0,
+        "endLine": 54974,
+        "endChar": 45
+      },
+      "revId": "3733044c35a3c9bda2803394a61e3fd974fa07c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
