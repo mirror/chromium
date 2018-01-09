@@ -211,6 +211,7 @@ if (is_android) {
       "//third_party/cacheinvalidation:cacheinvalidation_javalib",
       "//third_party/cacheinvalidation:cacheinvalidation_proto_java",
       "//third_party/jsr-305:jsr_305_javalib",
+      "//third_party/protobuf:protobuf_lite_javalib",
     ]
     java_files = [
       "android/java/src/org/chromium/components/invalidation/InvalidationClientService.java",
@@ -223,6 +224,7 @@ if (is_android) {
     sources = [
       "$proto_path/serialized_invalidation.proto",
     ]
+    generate_lite = true
   }
   android_library("javatests") {
     testonly = true
