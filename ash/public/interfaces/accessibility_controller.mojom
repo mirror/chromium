@@ -42,6 +42,11 @@ enum AccessibilityAlert {
 interface AccessibilityController {
   // Sets the client interface.
   SetClient(AccessibilityControllerClient client);
+
+  // Starts or stops darkening the screen.
+  // This allows chrome.accessibilityPrivate.darkenScreen calling methods in
+  // ash::BacklightsForcedOffSetter.
+  SetDarkenScreen(bool darken);
 };
 
 // Interface for ash to request accessibility service from its client (e.g.
