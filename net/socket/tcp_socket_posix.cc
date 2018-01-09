@@ -150,10 +150,13 @@ base::LazyInstance<FastOpenProbe>::Leaky g_fast_open_probe =
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
 #if defined(HAVE_TCP_INFO)
-bool GetTcpInfo(SocketDescriptor fd, tcp_info* info) {
+// Returns false if |tcp_info| was not updated. When this method returns true,
+// it is still possible that some of the values in the |tcp_info| struct are not
+// updated.
+bool GetBestEffortTcpInfo(SocketDescriptor fd, tcp_info* info) {
   socklen_t info_len = sizeof(tcp_info);
   return getsockopt(fd, IPPROTO_TCP, TCP_INFO, info, &info_len) == 0 &&
-         info_len == sizeof(tcp_info);
+         info_len > 0;
 }
 #endif  // defined(TCP_INFO)
 
@@ -803,7 +806,7 @@ void TCPSocketPosix::NotifySocketPerformanceWatcher() {
   }
 
   tcp_info info;
-  if (!GetTcpInfo(socket_->socket_fd(), &info))
+  if (!GetBestEffortTcpInfo(socket_->socket_fd(), &info))
     return;
 
   // Only notify the |socket_performance_watcher_| if the RTT in |tcp_info|
@@ -837,7 +840,7 @@ void TCPSocketPosix::UpdateTCPFastOpenStatusAfterRead() {
 #if defined(HAVE_TCP_INFO)
   // Probe to see the if the socket used TCP FastOpen.
   tcp_info info;
-  getsockopt_success = GetTcpInfo(socket_->socket_fd(), &info);
+  getsockopt_success = GetBestEffortTcpInfo(socket_->socket_fd(), &info);
   server_acked_data =
       getsockopt_success && (info.tcpi_options & TCPI_OPT_SYN_DATA);
 #endif  // defined(TCP_INFO)
@@ -867,7 +870,7 @@ bool TCPSocketPosix::GetEstimatedRoundTripTime(base::TimeDelta* out_rtt) const {
 
 #if defined(HAVE_TCP_INFO)
   tcp_info info;
-  if (GetTcpInfo(socket_->socket_fd(), &info)) {
+  if (GetBestEffortTcpInfo(socket_->socket_fd(), &info)) {
     // tcpi_rtt is zero when the kernel doesn't have an RTT estimate,
     // and possibly in other cases such as connections to localhost.
     if (info.tcpi_rtt > 0) {
