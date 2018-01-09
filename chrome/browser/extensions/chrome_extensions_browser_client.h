@@ -71,6 +71,13 @@ class ChromeExtensionsBrowserClient : public ExtensionsBrowserClient {
       const base::FilePath& directory_path,
       const std::string& content_security_policy,
       bool send_cors_header) override;
+  bool MaybeLoadResourceFromResourceBundle(
+      const content::ResourceRequest& request,
+      content::mojom::URLLoaderRequest* loader,
+      const base::FilePath& directory_path,
+      const std::string& content_security_policy,
+      content::mojom::URLLoaderClientPtr* client,
+      bool send_cors_header) override;
   bool AllowCrossRendererResourceLoad(const GURL& url,
                                       content::ResourceType resource_type,
                                       ui::PageTransition page_transition,

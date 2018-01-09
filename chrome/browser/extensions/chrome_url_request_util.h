@@ -55,6 +55,17 @@ net::URLRequestJob* MaybeCreateURLRequestResourceBundleJob(
     const std::string& content_security_policy,
     bool send_cors_header);
 
+// Creates and starts a URLLoader for loading component extension resources out
+// of a Chrome resource bundle. Returns true if the URLLoader was started, and
+// false if not.
+bool MaybeLoadResourceFromResourceBundle(
+    const content::ResourceRequest& request,
+    content::mojom::URLLoaderRequest* loader,
+    const base::FilePath& directory_path,
+    const std::string& content_security_policy,
+    content::mojom::URLLoaderClientPtr* client,
+    bool send_cors_header);
+
 }  // namespace chrome_url_request_util
 }  // namespace extensions
 
