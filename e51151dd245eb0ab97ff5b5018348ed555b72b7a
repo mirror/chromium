@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7538b16_af022d54",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Happy new year! :)",
+      "parentUuid": "0ab51e89_57df28f3",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae220468_7f8c52d1",
         "filename": "device/ctap/authenticator_get_assertion_response.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01efcdea_3b30d0fb",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Thank you for the advice! :) In that case, I think it would be better to delete the base class and design all callbacks to CTAP requests to have request specific response objects as parameters instead.",
+      "parentUuid": "ae220468_7f8c52d1",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "73ea8bc3_2721c3b6",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4f59fea_cf989b97",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a760cb34_25fd48c6",
         "filename": "device/ctap/authenticator_get_assertion_response.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6205086c_197e2ca3",
+        "filename": "device/ctap/authenticator_get_assertion_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a760cb34_25fd48c6",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d884f65e_04d28dd0",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5f9873_9bfb679b",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8199f6d_8b4d0fd8",
         "filename": "device/ctap/authenticator_get_info_response.h",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3459108_52911ad7",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8199f6d_8b4d0fd8",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a7248900_296f827d",
+        "filename": "device/ctap/authenticator_get_info_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8525cac2_32245f96",
+      "range": {
+        "startLine": 49,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ff50373_e4430c6d",
         "filename": "device/ctap/authenticator_options.cc",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12ef0b0_a8742026",
+        "filename": "device/ctap/authenticator_options.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff50373_e4430c6d",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "48910b91_708a99f8",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dfca12d_977ce0b8",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0d78a76_934f7d40",
         "filename": "device/ctap/ctap_constants.h",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58dbec52_9afa212e",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0d78a76_934f7d40",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 13
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "c8d2879f_17b1e3d5",
+        "filename": "device/ctap/ctap_get_assertion_request_param.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d72865a1_4906edc5",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbfc9cbc_8cb3e6ca",
         "filename": "device/ctap/ctap_make_credential_request_param.cc",
         "patchSetId": 2
@@ -275,6 +539,30 @@
       "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2aae641_6165dcc7",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T08:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbfc9cbc_8cb3e6ca",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
