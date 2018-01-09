@@ -206,6 +206,8 @@ class CONTENT_EXPORT StoragePartition {
   // use only.
   virtual void FlushNetworkInterfaceForTesting() = 0;
 
+  virtual int GetDeletionTaskCountForTesting() = 0;
+
  protected:
   virtual ~StoragePartition() {}
 };

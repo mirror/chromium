@@ -165,6 +165,7 @@ class TestStoragePartition : public StoragePartition {
 
   void ClearBluetoothAllowedDevicesMapForTesting() override;
   void FlushNetworkInterfaceForTesting() override;
+  int GetDeletionTaskCountForTesting() override;
 
  private:
   base::FilePath file_path_;

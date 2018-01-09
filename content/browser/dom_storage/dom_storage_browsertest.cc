@@ -149,9 +149,8 @@ IN_PROC_BROWSER_TEST_F(MojoDOMStorageBrowserTest, MAYBE_DataPersists) {
 IN_PROC_BROWSER_TEST_F(MojoDOMStorageBrowserTest, DeletePhysicalOrigin) {
   EXPECT_EQ(0U, GetUsage().size());
   SimpleTest(GetTestUrl("dom_storage", "store_data.html"), kNotIncognito);
-  std::vector<LocalStorageUsageInfo> usage = GetUsage();
-  ASSERT_EQ(1U, usage.size());
-  DeletePhysicalOrigin(usage[0].origin);
+  EXPECT_EQ(1U, GetUsage().size());
+  DeletePhysicalOrigin(GetUsage()[0].origin);
   EXPECT_EQ(0U, GetUsage().size());
 }
 
