@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fd8ef58_2afaced5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/resources/helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-09T03:11:04Z",
+      "side": 1,
+      "message": "I think that the following version would also take 2 lines.\n\n  data.rqid \u003d next_request_id++;\n  iframe_window.postMessage(data, \u0027*\u0027);\n\nI\u0027m having an easier time reading this version. If you agree, please replace here and below?",
+      "revId": "5c0039e872d1ac91605c27c3140a259cf3b4ddb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
