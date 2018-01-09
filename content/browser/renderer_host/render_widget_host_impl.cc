@@ -825,10 +825,12 @@ void RenderWidgetHostImpl::WasResized() {
   bool width_changed =
       !old_resize_params_ ||
       old_resize_params_->new_size.width() != params->new_size.width();
+  Send(new ViewMsg_ResumeRenderLifecycle(routing_id_));
   if (Send(new ViewMsg_Resize(routing_id_, *params))) {
     resize_ack_pending_ = params->needs_resize_ack;
     old_resize_params_.swap(params);
   }
+  Send(new ViewMsg_PauseRenderLifecycle(routing_id_));
 
   if (delegate_)
     delegate_->RenderWidgetWasResized(this, width_changed);
@@ -882,7 +884,9 @@ void RenderWidgetHostImpl::SetPageFocus(bool focused) {
       touch_emulator_->CancelTouch();
   }
 
+  Send(new ViewMsg_ResumeRenderLifecycle(routing_id_));
   GetWidgetInputHandler()->SetFocus(focused);
+  Send(new ViewMsg_PauseRenderLifecycle(routing_id_));
 
   // Also send page-level focus state to other SiteInstances involved in
   // rendering the current FrameTree.

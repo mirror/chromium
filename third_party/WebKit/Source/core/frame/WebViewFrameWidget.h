@@ -66,6 +66,8 @@ class CORE_EXPORT WebViewFrameWidget : public WebFrameWidgetBase {
                                          bool has_scrolled_by_touch) override;
   void MouseCaptureLost() override;
   void SetFocus(bool) override;
+  void ResumeLifecycle() override;
+  void PauseLifecycle() override;
   bool SelectionBounds(WebRect& anchor, WebRect& focus) const override;
   bool IsAcceleratedCompositingActive() const override;
   bool IsWebView() const override { return false; }

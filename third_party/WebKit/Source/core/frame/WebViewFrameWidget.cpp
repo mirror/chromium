@@ -127,6 +127,14 @@ void WebViewFrameWidget::SetFocus(bool enable) {
   return web_view_->SetFocus(enable);
 }
 
+void WebViewFrameWidget::ResumeLifecycle() {
+  return web_view_->ResumeLifecycle();
+}
+
+void WebViewFrameWidget::PauseLifecycle() {
+  return web_view_->PauseLifecycle();
+}
+
 bool WebViewFrameWidget::SelectionBounds(WebRect& anchor,
                                          WebRect& focus) const {
   return web_view_->SelectionBounds(anchor, focus);

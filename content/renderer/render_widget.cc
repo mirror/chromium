@@ -664,6 +664,8 @@ bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(InputMsg_SetFocus, OnSetFocus)
     IPC_MESSAGE_HANDLER(ViewMsg_ShowContextMenu, OnShowContextMenu)
     IPC_MESSAGE_HANDLER(ViewMsg_Close, OnClose)
+    IPC_MESSAGE_HANDLER(ViewMsg_ResumeRenderLifecycle, OnResumeRenderLifecycle)
+    IPC_MESSAGE_HANDLER(ViewMsg_PauseRenderLifecycle, OnPauseRenderLifecycle)
     IPC_MESSAGE_HANDLER(ViewMsg_Resize, OnResize)
     IPC_MESSAGE_HANDLER(ViewMsg_SetLocalSurfaceIdForAutoResize,
                         OnSetLocalSurfaceIdForAutoResize)
@@ -785,6 +787,16 @@ void RenderWidget::OnClose() {
 
   // Balances the AddRef taken when we called AddRoute.
   Release();
+}
+
+void RenderWidget::OnResumeRenderLifecycle() {
+  if (GetWebWidget())
+    GetWebWidget()->ResumeLifecycle();
+}
+
+void RenderWidget::OnPauseRenderLifecycle() {
+  if (GetWebWidget())
+    GetWebWidget()->PauseLifecycle();
 }
 
 void RenderWidget::OnResize(const ResizeParams& params) {
@@ -954,6 +966,16 @@ void RenderWidget::OnSetFocus(bool enable) {
 
   for (auto& observer : render_frames_)
     observer.RenderWidgetSetFocus(enable);
+}
+
+void RenderWidget::ResumeLifecycle() {
+  if (GetWebWidget())
+    GetWebWidget()->ResumeLifecycle();
+}
+
+void RenderWidget::PauseLifecycle() {
+  if (GetWebWidget())
+    GetWebWidget()->PauseLifecycle();
 }
 
 void RenderWidget::SetNeedsMainFrame() {

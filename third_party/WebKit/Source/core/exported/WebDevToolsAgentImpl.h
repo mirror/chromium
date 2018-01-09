@@ -75,6 +75,8 @@ class CORE_EXPORT WebDevToolsAgentImpl final
   void LayoutOverlay();
   bool HandleInputEvent(const WebInputEvent&);
   void DispatchBufferedTouchEvents();
+  void ResumeMainLoopBreakpoints();
+  void PauseMainLoopBreakpoints();
 
   // ------ Deprecated ------
   // These public methods and client are temporary,

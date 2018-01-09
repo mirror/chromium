@@ -429,6 +429,8 @@ class CONTENT_EXPORT RenderWidget
 
   scoped_refptr<MainThreadEventQueue> GetInputEventQueue();
 
+  virtual void ResumeLifecycle();
+  virtual void PauseLifecycle();
   virtual void OnSetFocus(bool enable);
   void OnMouseCaptureLost();
   void OnCursorVisibilityChange(bool is_visible);
@@ -538,6 +540,8 @@ class CONTENT_EXPORT RenderWidget
       InputEventDispatchType dispatch_type);
   void OnClose();
   void OnCreatingNewAck();
+  virtual void OnResumeRenderLifecycle();
+  virtual void OnPauseRenderLifecycle();
   virtual void OnResize(const ResizeParams& params);
   void OnSetLocalSurfaceIdForAutoResize(
       uint64_t sequence_number,

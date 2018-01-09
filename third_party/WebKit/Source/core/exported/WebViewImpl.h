@@ -140,6 +140,8 @@ class CORE_EXPORT WebViewImpl final
                                          bool has_scrolled_by_touch) override;
   void MouseCaptureLost() override;
   void SetFocus(bool enable) override;
+  void ResumeLifecycle() override;
+  void PauseLifecycle() override;
   WebColor BackgroundColor() const override;
   WebPagePopupImpl* GetPagePopup() const override;
   bool SelectionBounds(WebRect& anchor, WebRect& focus) const override;

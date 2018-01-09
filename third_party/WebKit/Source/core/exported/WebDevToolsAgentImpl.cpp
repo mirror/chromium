@@ -722,6 +722,23 @@ void WebDevToolsAgentImpl::DispatchBufferedTouchEvents() {
     it.value->DispatchBufferedTouchEvents();
 }
 
+void WebDevToolsAgentImpl::ResumeMainLoopBreakpoints() {
+  for (auto& it : sessions_) {
+    printf("ResumeMainLoopBreakpoints\n");
+    it.value->V8Session()->setSkipAllPauses(true);
+    it.value->V8Session()->resume();
+  }
+}
+
+void WebDevToolsAgentImpl::PauseMainLoopBreakpoints() {
+  for (auto& it : sessions_) {
+    printf("PauseMainLoopBreakpoints\n");
+    it.value->V8Session()->setSkipAllPauses(false);
+  }
+}
+
+
+
 bool WebDevToolsAgentImpl::HandleInputEvent(const WebInputEvent& event) {
   for (auto& it : overlay_agents_) {
     if (it.value->HandleInputEvent(event))

@@ -334,6 +334,11 @@ IPC_MESSAGE_ROUTED1(ViewMsg_UpdateWebPreferences,
 // Expects a Close_ACK message when finished.
 IPC_MESSAGE_ROUTED0(ViewMsg_Close)
 
+// Tells the render view to resume all breakpoints within the render lifecycle.
+IPC_MESSAGE_ROUTED0(ViewMsg_ResumeRenderLifecycle)
+
+IPC_MESSAGE_ROUTED0(ViewMsg_PauseRenderLifecycle)
+
 // Tells the render view to change its size.  A ViewHostMsg_ResizeOrRepaint_ACK
 // message is generated in response provided new_size is not empty and not equal
 // to the view's current size.  The generated ViewHostMsg_ResizeOrRepaint_ACK

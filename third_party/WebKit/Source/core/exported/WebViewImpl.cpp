@@ -2146,6 +2146,16 @@ void WebViewImpl::MouseCaptureLost() {
   mouse_capture_node_ = nullptr;
 }
 
+void WebViewImpl::ResumeLifecycle() {
+  if (WebDevToolsAgentImpl* dev_tools = MainFrameDevToolsAgentImpl())
+    dev_tools->ResumeMainLoopBreakpoints();
+}
+
+void WebViewImpl::PauseLifecycle() {
+  if (WebDevToolsAgentImpl* dev_tools = MainFrameDevToolsAgentImpl())
+    dev_tools->PauseMainLoopBreakpoints();
+}
+
 void WebViewImpl::SetFocus(bool enable) {
   page_->GetFocusController().SetFocused(enable);
   if (enable) {

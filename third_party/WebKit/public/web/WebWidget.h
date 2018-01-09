@@ -149,6 +149,8 @@ class WebWidget {
 
   // Called to inform the WebWidget that it has gained or lost keyboard focus.
   virtual void SetFocus(bool) {}
+  virtual void ResumeLifecycle() {}
+  virtual void PauseLifecycle() {}
 
   // Returns the anchor and focus bounds of the current selection.
   // If the selection range is empty, it returns the caret bounds.
