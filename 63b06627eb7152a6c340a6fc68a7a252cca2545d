@@ -350,6 +350,24 @@
       "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6af5410a_5d6321ec",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T19:01:15Z",
+      "side": 1,
+      "message": "Add an explicit ctor (i.e., CryptoTokenPermissionTest() {}), and this should work.  (C++ provides an auto-generated ctor if none are specified, but if any are, it doesn\u0027t add a default one - since DISALLOW_COPY_AND_ASSIGN specifies a copy ctor, you need to add an explicit other ctor).",
+      "parentUuid": "18c723a2_45d50f17",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
