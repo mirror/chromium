@@ -1313,7 +1313,7 @@ TEST_F(DisplayManagerTest, TestNativeDisplaysChanged) {
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_EQ(default_bounds,
             display_manager()->GetDisplayAt(0).bounds().ToString());
-  EXPECT_EQ(1U, display_manager()->num_connected_displays());
+  EXPECT_EQ(0U, display_manager()->num_connected_displays());
   EXPECT_FALSE(display_manager()->IsInMirrorMode());
 
   // External connected while primary was disconnected.
@@ -1358,7 +1358,7 @@ TEST_F(DisplayManagerTest, TestNativeDisplaysChanged) {
             GetDisplayForId(internal_display_id).bounds().ToString());
   EXPECT_EQ("1,1 100x100",
             GetDisplayInfoForId(10).bounds_in_native().ToString());
-  EXPECT_EQ(2U, display_manager()->num_connected_displays());
+  EXPECT_EQ(0U, display_manager()->num_connected_displays());
   EXPECT_FALSE(display_manager()->IsInMirrorMode());
   EXPECT_EQ(ToDisplayName(internal_display_id),
             display_manager()->GetDisplayNameForId(internal_display_id));
@@ -1383,7 +1383,7 @@ TEST_F(DisplayManagerTest, TestNativeDisplaysChanged) {
   display_info_list.clear();
   display_manager()->OnNativeDisplaysChanged(display_info_list);
   EXPECT_EQ(2U, display_manager()->GetNumDisplays());
-  EXPECT_EQ(2U, display_manager()->num_connected_displays());
+  EXPECT_EQ(0U, display_manager()->num_connected_displays());
   EXPECT_FALSE(display_manager()->IsInMirrorMode());
 
   // and resume with different external display.
