@@ -58,12 +58,12 @@ class StructureUnittest(unittest.TestCase):
     filename = node.Process(tempfile.gettempdir())
     with open(os.path.join(tempfile.gettempdir(), filename)) as f:
       result = f.read()
-      self.failUnlessEqual(('<h1>Hello!</h1>\n'
+      self.failUnlessEqual(('<h1>Hello!</h1>'
                             'Some cool things are foo, bar, baz.\n'
-                            'Did you know that 2+2==4?\n'
-                            '<p>\n'
-                            '  Hello!\n'
-                            '</p>\n'), result)
+                            'Did you know that 2+2==4?'
+                            '<p>'
+                            'Hello!'
+                            '</p>'), result)
 
   def testCompressGzip(self):
     test_data_root = util.PathFromRoot('grit/testdata')
