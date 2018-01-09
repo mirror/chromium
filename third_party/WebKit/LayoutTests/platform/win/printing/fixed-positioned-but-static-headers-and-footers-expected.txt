@@ -225,19 +225,19 @@ layer at (0,0) size 1046x2685 backgroundClip at (0,0) size 1046x799 clip at (0,0
       LayoutBlockFlow {P} at (0,2633) size 1030x20
         LayoutText {#text} at (0,0) size 60x19
           text run at (0,0) width 60: "Filler lines"
-layer at (8,16) size 638x38
+layer at (0,0) size 0x0
   LayoutBlockFlow (positioned) {DIV} at (8,16) size 638x38
     LayoutBlockFlow {DIV} at (0,0) size 638x30
       LayoutBlockFlow (anonymous) at (0,0) size 638x20
         LayoutText {#text} at (0,0) size 638x19
           text run at (0,0) width 638: "crbug.com/303728: Fixed-position header Line is statically positioned and will be repeated on every page."
-layer at (8,44) size 638x2 clip at (0,0) size 0x0
+layer at (8,36) size 638x2 clip at (0,0) size 0x0
   LayoutBlockFlow {HR} at (0,28) size 638x2 [border: (1px inset #EEEEEE)]
-layer at (8,2685) size 589x38 backgroundClip at (0,0) size 1046x799 clip at (0,0) size 1046x799
+layer at (0,0) size 0x0
   LayoutBlockFlow (positioned) {DIV} at (8,2685) size 589x38
     LayoutBlockFlow {DIV} at (0,8) size 589x30
       LayoutBlockFlow (anonymous) at (0,10) size 589x20
         LayoutText {#text} at (0,0) size 589x19
           text run at (0,0) width 589: "crbug.com/303728: Footer Line is statically positioned and should not be repeated on every page."
-layer at (8,2693) size 589x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+layer at (8,2718) size 589x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
   LayoutBlockFlow {HR} at (0,0) size 589x2 [border: (1px inset #EEEEEE)]
