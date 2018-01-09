@@ -26,6 +26,8 @@ class CTAPGetAssertionRequestParam : public CTAPRequestParam {
   ~CTAPGetAssertionRequestParam() override;
 
   base::Optional<std::vector<uint8_t>> SerializeToCBOR() const override;
+  CTAPGetAssertionRequestParam& SetUserVerification(bool user_verfication);
+  CTAPGetAssertionRequestParam& SetUserPresence(bool user_presence);
   CTAPGetAssertionRequestParam& SetAllowList(
       std::vector<PublicKeyCredentialDescriptor> allow_list);
   CTAPGetAssertionRequestParam& SetPinAuth(std::vector<uint8_t> pin_auth);
@@ -34,6 +36,9 @@ class CTAPGetAssertionRequestParam : public CTAPRequestParam {
  private:
   std::string rp_id_;
   std::vector<uint8_t> client_data_hash_;
+  bool user_verification_ = false;
+  bool user_presence_ = true;
+
   base::Optional<std::vector<PublicKeyCredentialDescriptor>> allow_list_;
   base::Optional<std::vector<uint8_t>> pin_auth_;
   base::Optional<uint8_t> pin_protocol_;
