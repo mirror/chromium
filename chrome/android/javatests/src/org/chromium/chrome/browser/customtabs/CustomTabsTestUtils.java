@@ -24,6 +24,7 @@ import java.util.concurrent.TimeoutException;
  * Utility class that contains convenience calls related with custom tabs testing.
  */
 public class CustomTabsTestUtils {
+    private static Object sLock = new Object();
 
     /**
      * Creates the simplest intent that is sufficient to let {@link ChromeLauncherActivity} launch
@@ -49,32 +50,25 @@ public class CustomTabsTestUtils {
     }
 
     public static void cleanupSessions(final CustomTabsConnection connection) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                connection.cleanupAll();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> connection.cleanupAll());
     }
 
     /** Calls warmup() and waits for all the tasks to complete. Fails the test otherwise. */
     public static CustomTabsConnection warmUpAndWait() {
-        CustomTabsConnection connection = setUpConnection();
-        try {
-            final CallbackHelper startupCallbackHelper = new CallbackHelper();
-            connection.setWarmupCompletedCallbackForTesting(new Runnable() {
-                @Override
-                public void run() {
-                    startupCallbackHelper.notifyCalled();
-                }
-            });
-            Assert.assertTrue(connection.warmup(0));
-            startupCallbackHelper.waitForCallback(0);
-        } catch (TimeoutException | InterruptedException e) {
-            Assert.fail();
-        } finally {
-            connection.setWarmupCompletedCallbackForTesting(null);
+        synchronized (sLock) {
+            CustomTabsConnection connection = setUpConnection();
+            try {
+                final CallbackHelper startupCallbackHelper = new CallbackHelper();
+                connection.setWarmupCompletedCallbackForTesting(
+                        () -> startupCallbackHelper.notifyCalled());
+                Assert.assertTrue(connection.warmup(0));
+                startupCallbackHelper.waitForCallback(0);
+            } catch (TimeoutException | InterruptedException e) {
+                Assert.fail();
+            } finally {
+                connection.setWarmupCompletedCallbackForTesting(null);
+            }
+            return connection;
         }
-        return connection;
     }
 }
