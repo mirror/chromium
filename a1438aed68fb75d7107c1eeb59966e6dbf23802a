@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab19f3b9_dab1a2cd",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-09T00:16:30Z",
+      "side": 1,
+      "message": "Yep, it\u0027s accurate, but to me it was also a little confusing, so I updated it a little bit. LMK if it makes sense.\n\nI didn\u0027t make it a TODO because I think leaving those additional calls to SetPermissionInfo()/PresentSitePermissions() in would still work if there\u0027s no permissions shown in Page Info initially (currently this isn\u0027t true because flash is always shown, but maybe after this phase has passed).",
+      "parentUuid": "bce5e780_bc1ec1fd",
+      "revId": "a1438aed68fb75d7107c1eeb59966e6dbf23802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95a7e221_fb283dd6",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a1438aed68fb75d7107c1eeb59966e6dbf23802a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3951c08_624445e7",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-09T00:16:30Z",
+      "side": 1,
+      "message": "I don\u0027t think that would work because SetPermissionInfo(flash permission only) gets called from the PageInfoBubbleView constructor. So we would also have to move that call out of the constructor and somewhere else appropriate to get that to work.\n\nI think it\u0027s OK because it needs to be friends anyway (otherwise we can\u0027t retrieve the bubble for testing).",
+      "parentUuid": "95a7e221_fb283dd6",
+      "revId": "a1438aed68fb75d7107c1eeb59966e6dbf23802a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
