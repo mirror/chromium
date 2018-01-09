@@ -12,8 +12,10 @@
 #include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "mojo/public/cpp/bindings/disconnect_reason.h"
+#include "mojo/public/cpp/bindings/interface_invalidator.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "mojo/public/cpp/bindings/pipe_control_message_proxy.h"
+#include "mojo/public/cpp/bindings/weak_interface_ptr.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
 namespace mojo {
@@ -146,6 +148,17 @@ InterfaceRequest<Interface> MakeRequest(InterfacePtrInfo<Interface>* ptr_info) {
   MessagePipe pipe;
   ptr_info->set_handle(std::move(pipe.handle0));
   ptr_info->set_version(0u);
+  return InterfaceRequest<Interface>(std::move(pipe.handle1));
+}
+
+template <typename Interface>
+InterfaceRequest<Interface> MakeRequest(
+    WeakInterfacePtr<Interface>* ptr,
+    InterfaceInvalidator* invalidator,
+    scoped_refptr<base::SingleThreadTaskRunner> runner = nullptr) {
+  MessagePipe pipe;
+  ptr->Bind(InterfacePtrInfo<Interface>(std::move(pipe.handle0), 0u),
+            invalidator, std::move(runner));
   return InterfaceRequest<Interface>(std::move(pipe.handle1));
 }
 
