@@ -26,7 +26,8 @@ PrimaryAccountAccessTokenFetcher::PrimaryAccountAccessTokenFetcher(
       waiting_for_sign_in_(false),
       waiting_for_refresh_token_(false),
       access_token_retried_(false),
-      mode_(mode) {
+      mode_(mode),
+      weak_factory_(this) {
   Start();
 }
 
@@ -83,7 +84,7 @@ void PrimaryAccountAccessTokenFetcher::ScheduleStartAccessTokenRequest() {
   base::SequencedTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&PrimaryAccountAccessTokenFetcher::StartAccessTokenRequest,
-                     base::Unretained(this)));
+                     weak_factory_.GetWeakPtr()));
 }
 
 void PrimaryAccountAccessTokenFetcher::StartAccessTokenRequest() {
