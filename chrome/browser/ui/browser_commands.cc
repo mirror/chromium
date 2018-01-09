@@ -808,6 +808,7 @@ void BookmarkCurrentPageAllowingExtensionOverrides(Browser* browser) {
         break;
       case extensions::CommandService::BROWSER_ACTION:
       case extensions::CommandService::PAGE_ACTION:
+      case extensions::CommandService::ACTION:
         // BookmarkCurrentPage is called through a user gesture, so it is safe
         // to grant the active tab permission.
         extensions::ExtensionActionAPI::Get(browser->profile())->

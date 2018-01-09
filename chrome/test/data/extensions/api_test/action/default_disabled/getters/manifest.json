@@ -1,0 +1,16 @@
+{
+  "name": "An action for testing chrome.pageAction getters",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "tabs", "http://*/*"
+  ],
+  "action": {
+    "default_title": "Title",
+    "default_popup": "Popup.html",
+    "default_state": "disabled"
+  }
+}

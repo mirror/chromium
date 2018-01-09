@@ -28,6 +28,7 @@ struct ActionInfo {
 
   // The types of extension actions.
   enum Type {
+    TYPE_ACTION,
     TYPE_BROWSER,
     TYPE_PAGE,
     TYPE_SYSTEM_INDICATOR,
@@ -42,6 +43,9 @@ struct ActionInfo {
   static std::unique_ptr<ActionInfo> Load(const Extension* extension,
                                           const base::DictionaryValue* dict,
                                           base::string16* error);
+
+  // Returns the extension's action, if any.
+  static const ActionInfo* GetExtensionActionInfo(const Extension* extension);
 
   // Returns the extension's browser action, if any.
   static const ActionInfo* GetBrowserActionInfo(const Extension* extension);

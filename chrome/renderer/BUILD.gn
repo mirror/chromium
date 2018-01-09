@@ -299,6 +299,7 @@ static_library("renderer") {
       "media/cast_transport_ipc.h",
       "media/cast_udp_transport.cc",
       "media/cast_udp_transport.h",
+      "resources/extensions/action_custom_bindings.js",
       "resources/extensions/app_custom_bindings.js",
       "resources/extensions/automation_custom_bindings.js",
       "resources/extensions/browser_action_custom_bindings.js",

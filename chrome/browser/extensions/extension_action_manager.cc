@@ -80,6 +80,7 @@ void ExtensionActionManager::OnExtensionUnloaded(
     content::BrowserContext* browser_context,
     const Extension* extension,
     UnloadedExtensionReason reason) {
+  actions_.erase(extension->id());
   page_actions_.erase(extension->id());
   browser_actions_.erase(extension->id());
   system_indicators_.erase(extension->id());
@@ -127,6 +128,13 @@ ExtensionAction* GetOrCreateOrNull(
 
 }  // namespace
 
+ExtensionAction* ExtensionActionManager::GetAction(
+    const Extension& extension) const {
+  return GetOrCreateOrNull(&actions_, extension, ActionInfo::TYPE_ACTION,
+                           ActionInfo::GetExtensionActionInfo(&extension),
+                           profile_);
+}
+
 ExtensionAction* ExtensionActionManager::GetPageAction(
     const Extension& extension) const {
   return GetOrCreateOrNull(&page_actions_, extension,
@@ -146,10 +154,12 @@ ExtensionAction* ExtensionActionManager::GetBrowserAction(
 std::unique_ptr<ExtensionAction> ExtensionActionManager::GetBestFitAction(
     const Extension& extension,
     ActionInfo::Type type) const {
-  const ActionInfo* info = ActionInfo::GetBrowserActionInfo(&extension);
-  if (!info)
-    info = ActionInfo::GetPageActionInfo(&extension);
-
+  const ActionInfo* info = ActionInfo::GetExtensionActionInfo(&extension);
+  if (!info) {
+    info = ActionInfo::GetBrowserActionInfo(&extension);
+    if (!info)
+      info = ActionInfo::GetPageActionInfo(&extension);
+  }
   // Create a new ExtensionAction of |type| with |extension|'s ActionInfo.
   // If no ActionInfo exists for |extension|, create and return a new action
   // with a blank ActionInfo.
@@ -175,8 +185,13 @@ ExtensionAction* ExtensionActionManager::GetSystemIndicator(
 
 ExtensionAction* ExtensionActionManager::GetExtensionAction(
     const Extension& extension) const {
-  ExtensionAction* action = GetBrowserAction(extension);
-  return action ? action : GetPageAction(extension);
+  ExtensionAction* action = GetAction(extension);
+  if (action) {
+    return action;
+  } else {
+    action = GetBrowserAction(extension);
+    return action ? action : GetPageAction(extension);
+  }
 }
 
 }  // namespace extensions

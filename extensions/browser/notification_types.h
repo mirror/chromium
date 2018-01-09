@@ -107,12 +107,17 @@ enum NotificationType {
   // on Mac. The source is the BrowserContext* and the details is a std::pair of
   // a std::string containing an extension ID and a gfx::NativeWindow for the
   // associated window.
+  NOTIFICATION_EXTENSION_COMMAND_ACTION_MAC,
+
+  // Sent when an extension command shortcut for a browser action is activated
+  // on Mac. The source is the BrowserContext* and the details is a std::pair of
+  // a std::string containing an extension ID and a gfx::NativeWindow for the
+  // associated window.
   NOTIFICATION_EXTENSION_COMMAND_BROWSER_ACTION_MAC,
 
   // Sent when an extension command shortcut for a page action is activated
   // on Mac. The source is the BrowserContext* and the details is a std::pair of
-  // a
-  // std::string containing an extension ID and a gfx::NativeWindow for the
+  // a std::string containing an extension ID and a gfx::NativeWindow for the
   // associated window.
   NOTIFICATION_EXTENSION_COMMAND_PAGE_ACTION_MAC,
 

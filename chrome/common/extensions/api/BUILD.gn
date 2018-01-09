@@ -167,6 +167,7 @@ json_schema_api("api") {
 
   uncompiled_bundle_schema_sources = [
     "app.json",
+    "action.json",
     "browser_action.json",
     "commands.json",
     "declarative_content.json",

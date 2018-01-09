@@ -54,7 +54,8 @@ ExtensionActionViewController::ExtensionActionViewController(
       weak_factory_(this) {
   DCHECK(extension_action);
   DCHECK(extension_action->action_type() == ActionInfo::TYPE_PAGE ||
-         extension_action->action_type() == ActionInfo::TYPE_BROWSER);
+         extension_action->action_type() == ActionInfo::TYPE_BROWSER ||
+         extension_action->action_type() == ActionInfo::TYPE_ACTION);
   DCHECK(extension);
 }
 
@@ -274,7 +275,12 @@ bool ExtensionActionViewController::GetExtensionCommand(
     return command_service->GetPageActionCommand(
         extension_->id(), CommandService::ACTIVE, command, NULL);
   }
-  return command_service->GetBrowserActionCommand(
+  if (extension_action_->action_type() == ActionInfo::TYPE_BROWSER) {
+    return command_service->GetBrowserActionCommand(
+        extension_->id(), CommandService::ACTIVE, command, NULL);
+  }
+
+  return command_service->GetActionCommand(
       extension_->id(), CommandService::ACTIVE, command, NULL);
 }
 
@@ -407,8 +413,7 @@ ExtensionActionViewController::GetIconImageSource(
 
 bool ExtensionActionViewController::PageActionWantsToRun(
     content::WebContents* web_contents) const {
-  return extension_action_->action_type() ==
-             extensions::ActionInfo::TYPE_PAGE &&
+  return extension_action_->IsDefaultDisabled() &&
          extension_action_->GetIsVisible(
              SessionTabHelper::IdForTab(web_contents));
 }

@@ -89,11 +89,13 @@ ExtensionAction::ExtensionAction(const extensions::Extension& extension,
                                  const extensions::ActionInfo& manifest_data)
     : extension_id_(extension.id()),
       extension_name_(extension.name()),
-      action_type_(action_type) {
+      action_type_(action_type),
+      default_state_(manifest_data.default_state) {
   // Page/script actions are hidden/disabled by default, and browser actions are
-  // visible/enabled by default.
-  SetIsVisible(kDefaultTabId,
-               action_type == extensions::ActionInfo::TYPE_BROWSER);
+  // visible/enabled by default. For chrome.action, the state is specified via
+  // the |default_state| key. If the key is excluded, the state is default
+  // enabled.
+  SetIsVisible(kDefaultTabId, IsDefaultEnabled());
   Populate(extension, manifest_data);
 }
 
@@ -209,6 +211,18 @@ const gfx::Image ExtensionAction::GetDeclarativeIcon(int tab_id) const {
     return declarative_icon_.find(tab_id)->second.rbegin()->second.back();
   }
   return gfx::Image();
+}
+
+bool ExtensionAction::IsDefaultEnabled() const {
+  return action_type_ == extensions::ActionInfo::TYPE_BROWSER ||
+         (action_type_ == extensions::ActionInfo::TYPE_ACTION &&
+          default_state_ == extensions::ActionInfo::STATE_ENABLED);
+}
+
+bool ExtensionAction::IsDefaultDisabled() const {
+  return action_type_ == extensions::ActionInfo::TYPE_PAGE ||
+         (action_type_ == extensions::ActionInfo::TYPE_ACTION &&
+          default_state_ == extensions::ActionInfo::STATE_DISABLED);
 }
 
 void ExtensionAction::ClearAllValuesForTab(int tab_id) {

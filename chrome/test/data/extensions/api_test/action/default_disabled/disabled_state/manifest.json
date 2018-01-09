@@ -1,0 +1,14 @@
+{
+  "name": "Action test",
+  "description": "Tests the action key when the default state is disabled.",
+  "version": "0.1",
+  "manifest_version": 2,
+  "action": {
+    "default_state": "disabled",
+    "default_title": "Title",
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  }
+}

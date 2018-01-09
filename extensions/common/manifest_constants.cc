@@ -198,6 +198,7 @@ const char kFileSystemProviderCapabilities[] =
 
 namespace manifest_values {
 
+const char kActionCommandEvent[] = "_execute_action";
 const char kApiKey[] = "api_key";
 const char kBrowserActionCommandEvent[] = "_execute_browser_action";
 const char kIncognitoNotAllowed[] = "not_allowed";

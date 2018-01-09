@@ -166,6 +166,7 @@ void ChromeExtensionsDispatcherDelegate::RegisterNativeHandlers(
 void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
     extensions::ResourceBundleSourceMap* source_map) {
   // Custom bindings.
+  source_map->RegisterSource("action", IDR_ACTION_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("automation", IDR_AUTOMATION_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("automationEvent", IDR_AUTOMATION_EVENT_JS);
   source_map->RegisterSource("automationNode", IDR_AUTOMATION_NODE_JS);

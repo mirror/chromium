@@ -26,6 +26,8 @@ namespace extension_action_test_util {
 // TODO(devlin): Rename this function.
 size_t GetVisiblePageActionCount(content::WebContents* web_contents);
 
+size_t GetVisibleActionCount(content::WebContents* web_contents);
+
 // Returns the total number of page actions (visible or not) for the given
 // |web_contents|.
 size_t GetTotalPageActionCount(content::WebContents* web_contents);

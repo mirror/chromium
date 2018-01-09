@@ -99,6 +99,19 @@ ExtensionActionAPI::ExtensionActionAPI(content::BrowserContext* context)
   ExtensionFunctionRegistry* registry =
       ExtensionFunctionRegistry::GetInstance();
 
+  // Actions
+  registry->RegisterFunction<ActionSetIconFunction>();
+  registry->RegisterFunction<ActionSetTitleFunction>();
+  registry->RegisterFunction<ActionSetBadgeTextFunction>();
+  registry->RegisterFunction<ActionSetBadgeBackgroundColorFunction>();
+  registry->RegisterFunction<ActionSetPopupFunction>();
+  registry->RegisterFunction<ActionGetTitleFunction>();
+  registry->RegisterFunction<ActionGetBadgeTextFunction>();
+  registry->RegisterFunction<ActionGetBadgeBackgroundColorFunction>();
+  registry->RegisterFunction<ActionGetPopupFunction>();
+  registry->RegisterFunction<ActionEnableFunction>();
+  registry->RegisterFunction<ActionDisableFunction>();
+
   // Browser Actions
   registry->RegisterFunction<BrowserActionSetIconFunction>();
   registry->RegisterFunction<BrowserActionSetTitleFunction>();
@@ -210,6 +223,10 @@ void ExtensionActionAPI::DispatchExtensionActionClicked(
   events::HistogramValue histogram_value = events::UNKNOWN;
   const char* event_name = NULL;
   switch (extension_action.action_type()) {
+    case ActionInfo::TYPE_ACTION:
+      histogram_value = events::ACTION_ON_CLICKED;
+      event_name = "action.onClicked";
+      break;
     case ActionInfo::TYPE_BROWSER:
       histogram_value = events::BROWSER_ACTION_ON_CLICKED;
       event_name = "browserAction.onClicked";
@@ -301,11 +318,11 @@ void ExtensionActionAPI::Shutdown() {
 //
 
 ExtensionActionFunction::ExtensionActionFunction()
-    : details_(NULL),
+    : default_state(ActionInfo::STATE_ENABLED),
+      details_(NULL),
       tab_id_(ExtensionAction::kDefaultTabId),
       contents_(NULL),
-      extension_action_(NULL) {
-}
+      extension_action_(NULL) {}
 
 ExtensionActionFunction::~ExtensionActionFunction() {
 }
@@ -317,7 +334,10 @@ ExtensionFunction::ResponseAction ExtensionActionFunction::Run() {
                        base::CompareCase::INSENSITIVE_ASCII)) {
     extension_action_ = manager->GetSystemIndicator(*extension());
   } else {
-    extension_action_ = manager->GetBrowserAction(*extension());
+    extension_action_ = manager->GetAction(*extension());
+    if (!extension_action_) {
+      extension_action_ = manager->GetBrowserAction(*extension());
+    }
     if (!extension_action_) {
       extension_action_ = manager->GetPageAction(*extension());
     }
@@ -342,9 +362,9 @@ ExtensionFunction::ResponseAction ExtensionActionFunction::Run() {
   } else {
     // Only browser actions and system indicators have a default tabId.
     ActionInfo::Type action_type = extension_action_->action_type();
-    EXTENSION_FUNCTION_VALIDATE(
-        action_type == ActionInfo::TYPE_BROWSER ||
-        action_type == ActionInfo::TYPE_SYSTEM_INDICATOR);
+    EXTENSION_FUNCTION_VALIDATE(extension_action_->IsDefaultEnabled() ||
+                                action_type ==
+                                    ActionInfo::TYPE_SYSTEM_INDICATOR);
   }
   return RunExtensionAction();
 }

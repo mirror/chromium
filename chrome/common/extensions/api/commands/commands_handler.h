@@ -26,10 +26,12 @@ struct CommandsInfo : public Extension::ManifestData {
   // Get*Command[s] in CommandService).
   std::unique_ptr<Command> browser_action_command;
   std::unique_ptr<Command> page_action_command;
+  std::unique_ptr<Command> action_command;
   CommandMap named_commands;
 
   static const Command* GetBrowserActionCommand(const Extension* extension);
   static const Command* GetPageActionCommand(const Extension* extension);
+  static const Command* GetActionCommand(const Extension* extension);
   static const CommandMap* GetNamedCommands(const Extension* extension);
 };
 
@@ -48,6 +50,10 @@ class CommandsHandler : public ManifestHandler {
   // No keyboard shortcut will be assigned to it, until the user selects one.
   void MaybeSetBrowserActionDefault(const Extension* extension,
                                     CommandsInfo* info);
+  // If the extension defines an action, but no command for it, then
+  // we synthesize a generic one, so the user can configure a shortcut for it.
+  // No keyboard shortcut will be assigned to it, until the user selects one.
+  void MaybeSetActionDefault(const Extension* extension, CommandsInfo* info);
 
   const std::vector<std::string> Keys() const override;
 

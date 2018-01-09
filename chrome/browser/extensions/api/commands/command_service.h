@@ -69,11 +69,7 @@ class CommandService : public BrowserContextKeyedAPI,
   };
 
   // An enum specifying the types of commands that can be used by an extension.
-  enum ExtensionCommandType {
-    NAMED,
-    BROWSER_ACTION,
-    PAGE_ACTION
-  };
+  enum ExtensionCommandType { NAMED, BROWSER_ACTION, PAGE_ACTION, ACTION };
 
   class Observer {
    public:
@@ -130,6 +126,17 @@ class CommandService : public BrowserContextKeyedAPI,
                             QueryType type,
                             Command* command,
                             bool* active) const;
+
+  // Gets the command (if any) for the action of an extension given
+  // its |extension_id|. The function consults the master list to see if
+  // the command is active. Returns false if the extension has no page
+  // action. Returns false if the command is not active and |type| requested
+  // is ACTIVE. |command| contains the command found and |active| (if not
+  // NULL) contains whether |command| is active.
+  bool GetActionCommand(const std::string& extension_id,
+                        QueryType type,
+                        Command* command,
+                        bool* active) const;
 
   // Gets the active named commands (if any) for the extension with
   // |extension_id|. The function consults the master list to see if the

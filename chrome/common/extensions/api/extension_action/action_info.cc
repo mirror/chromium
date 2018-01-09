@@ -187,6 +187,8 @@ std::unique_ptr<ActionInfo> ActionInfo::Load(const Extension* extension,
       *error = base::ASCIIToUTF16(errors::kInvalidActionDefaultState);
       return nullptr;
     }
+  } else {
+    default_state = kEnabled;
   }
 
   result->default_state = default_state == kEnabled
@@ -194,6 +196,12 @@ std::unique_ptr<ActionInfo> ActionInfo::Load(const Extension* extension,
                               : ActionInfo::STATE_DISABLED;
 
   return result;
+}
+
+// static
+const ActionInfo* ActionInfo::GetExtensionActionInfo(
+    const Extension* extension) {
+  return GetActionInfo(extension, keys::kAction);
 }
 
 // static

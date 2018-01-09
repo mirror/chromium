@@ -1,0 +1,14 @@
+{
+  "name": "An action with no icon that makes the page red",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": [
+    "tabs", "http://*/*"
+  ],
+  "action": {
+      "name": "Make this page red"
+  }
+}

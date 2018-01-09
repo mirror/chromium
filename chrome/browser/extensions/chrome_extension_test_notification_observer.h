@@ -32,6 +32,10 @@ class ChromeExtensionTestNotificationObserver
   // Waits for the number of visible page actions to change to |count|.
   bool WaitForPageActionVisibilityChangeTo(int count);
 
+  // Waits for the number of visible actions that are default disabled to change
+  // to |count|.
+  bool WaitForActionVisibilityChangeTo(int count);
+
   // Waits for all extension views to load.
   bool WaitForExtensionViewsToLoad();
 
