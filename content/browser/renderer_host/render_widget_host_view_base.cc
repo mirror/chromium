@@ -451,8 +451,9 @@ viz::FrameSinkId RenderWidgetHostViewBase::FrameSinkIdAtPoint(
   gfx::PointF point_in_pixels =
       gfx::ConvertPointToPixel(device_scale_factor, point);
   viz::SurfaceId surface_id = GetCurrentSurfaceId();
+  LOG(ERROR) << "Quad hit test at: " << point_in_pixels.ToString();
   if (!surface_id.is_valid()) {
-    return viz::FrameSinkId();
+    return GetFrameSinkId();
   }
   viz::SurfaceHittest hittest(delegate,
                               GetFrameSinkManager()->surface_manager());
