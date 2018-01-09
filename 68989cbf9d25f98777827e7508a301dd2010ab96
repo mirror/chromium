@@ -466,6 +466,24 @@
     },
     {
       "key": {
+        "uuid": "0f865e7e_ab1626d7",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T22:39:21Z",
+      "side": 1,
+      "message": "TL;DR: We don\u0027t care.  Do something sane.\n\nMany APIs do different things here.  Most APIs do not have a separate namespace from extensions::.  When they do, it\u0027s frequently not for the entire api, but just for helpers, and the namespace reflects that (e.g., foo_api_helpers [1]).  I\u0027d have a slight preference to do that (though ideally not just settings_private_api_helpers, but rather having something more specific - e.g. settings_geolocation) rather than add more to the extensions::api:: namespace.  To Steven\u0027s point, having extensions::api:: be generated is a nice line to have.  But, we don\u0027t really have it now, and there\u0027s not a defined right or wrong way of doing it.\n\n[1] https://cs.chromium.org/search/?q\u003d+file:chrome/browser/extensions/api/.*helper\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "bca78ef4_2a4ebebd",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bef376e_3d050259",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
         "patchSetId": 3
