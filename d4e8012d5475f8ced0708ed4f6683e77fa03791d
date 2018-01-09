@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e786167b_5b467f67",
+        "filename": "chrome/browser/chromeos/file_manager/file_tasks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-09T01:43:59Z",
+      "side": 1,
+      "message": "Though there is a very limited UI path to reach here, I\u0027m a a bit cautious about switching to the original profile from the OTR profile because it\u0027s hard to notice for users. If the launched app uses webview, some user may continue browsing without noticing he/she is now out of the OTR mode. Instead of switching to the original profile, is there any possibility that we can fix the extension API so that it works with OTR profile?",
+      "range": {
+        "startLine": 157,
+        "startChar": 11,
+        "endLine": 157,
+        "endChar": 40
+      },
+      "revId": "d4e8012d5475f8ced0708ed4f6683e77fa03791d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
