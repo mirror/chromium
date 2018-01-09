@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44306b9c_14bb4365",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "didn\u0027t know that.  added #ifs, though _EQ doesn\u0027t work.  it can\u0027t figure out how to stringify the iterators, and fails to compile.",
+      "parentUuid": "1c7b8ddf_3adadb5b",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef1c0f3c_b4817ccc",
         "filename": "media/blink/resource_scheduler_metrics.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9c937a5f_dfa6c352",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "doesn\u0027t work -- can\u0027t stringify the iterators, unfortunately.",
+      "parentUuid": "ef1c0f3c_b4817ccc",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abe0eb7c_412a8550",
         "filename": "media/blink/resource_scheduler_metrics.cc",
         "patchSetId": 13
@@ -62,6 +110,24 @@
       "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4c4866_7c47530c",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe0eb7c_412a8550",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "240c048b_8b31f419",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "can\u0027t stringify the iterators with _EQ.",
+      "parentUuid": "294a8fcc_6300807e",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6175a5e_a318c4ea",
         "filename": "media/blink/resource_scheduler_metrics.cc",
         "patchSetId": 13
@@ -102,6 +192,24 @@
       "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc75abd_ddce8ef9",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6175a5e_a318c4ea",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "3fa723b7_c974f214",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "no, but it\u0027s poorly documented so it is a very good question.  i\u0027ll document it better.\n\nTL;DR, we want the histogram to separate reporting of right / wrong by the total list size.  so, bucket 4 in \"Media...Right\" is \"number of players that were ordered correctly when there were 4 players on the list total\".  to make sense of it, one must divide by the number of counts in bucket 4 of \"Media...Total\".\n\nrecording one count in the |right| bucket would make it hard to tell the impact of list size, which i expect will be something we want to measure.",
+      "parentUuid": "00a34bdf_7f643bf8",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a761b7d2_46ea612a",
         "filename": "media/blink/resource_scheduler_metrics.cc",
         "patchSetId": 13
@@ -136,6 +262,24 @@
       "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40833be7_4037f0a4",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a761b7d2_46ea612a",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "3707f267_234c6c04",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "done.  i often choose ^ for boolean inequality tests, and i have no idea why.  seems that very few others do.  i don\u0027t prefer !^ for equality, so i\u0027m not terribly consistent about it either.",
+      "parentUuid": "653540cc_4e381f77",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 44
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9202b456_74bb1676",
         "filename": "media/blink/resource_scheduler_metrics.cc",
         "patchSetId": 13
@@ -176,6 +344,24 @@
       "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ef8a6e_8850ac5b",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "added comment.",
+      "parentUuid": "9202b456_74bb1676",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +405,30 @@
     },
     {
       "key": {
+        "uuid": "b93a6953_b80b3844",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ace10c6_e92f33ee",
+      "range": {
+        "startLine": 302,
+        "startChar": 2,
+        "endLine": 302,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f32bd10_b4262017",
         "filename": "media/blink/video_frame_compositor_unittest.cc",
         "patchSetId": 13
@@ -239,6 +449,30 @@
       "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ad2eb9_e53d795a",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f32bd10_b4262017",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 314,
+        "endChar": 8
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +499,30 @@
     },
     {
       "key": {
+        "uuid": "c649e2b0_5f2dec6b",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c67840e_5873f2ea",
+      "range": {
+        "startLine": 567,
+        "startChar": 27,
+        "endLine": 567,
+        "endChar": 32
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56f8142_60da1f91",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 13
@@ -285,6 +543,30 @@
       "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d408670_2f29f908",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "we do have some metrics that would notice (time to first frame) if this goes sideways.\n\nhowever, local measurements put calls to ComputePlayerPriority in single-digit microseconds, almost always. i saw about 5% in the mid-20 usec range.  about half were 0 or 1 usec.",
+      "parentUuid": "e56f8142_60da1f91",
+      "range": {
+        "startLine": 568,
+        "startChar": 26,
+        "endLine": 568,
+        "endChar": 47
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -311,6 +593,30 @@
     },
     {
       "key": {
+        "uuid": "33e4f070_8c8e3665",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "i don\u0027t think that\u0027s safe.  it\u0027s passed as as an arg in base::Bind from a const\u0026, and the original referent is on the stack.  i think that one actually wants a copy here.",
+      "parentUuid": "e175d6fc_1220479d",
+      "range": {
+        "startLine": 324,
+        "startChar": 22,
+        "endLine": 324,
+        "endChar": 41
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4036437_d7a89f42",
         "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
         "patchSetId": 13
@@ -334,6 +640,30 @@
     },
     {
       "key": {
+        "uuid": "9193f7b6_ca561bf0",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 4233,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "i think that \"higher\" is intended.  i want numerically higher Y positions (lower on page) to have lower priorities.",
+      "parentUuid": "f4036437_d7a89f42",
+      "range": {
+        "startLine": 4233,
+        "startChar": 23,
+        "endLine": 4233,
+        "endChar": 29
+      },
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8d6dcc7_6150bb37",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 13
@@ -348,6 +678,24 @@
       "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b8dae7_231a59cb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 35070,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d6dcc7_6150bb37",
+      "revId": "467a7ea84be3db88de5ff595281c4ee968793c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
