@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ac6e5d9_92cec868",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T23:17:46Z",
+      "side": 1,
+      "message": "Nit: Pass std::string() rather than \"\" since the latter involves a conversion.",
+      "revId": "cb7b76e3384eb5c58d9be1ebe8d3f7f12e4b2426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ebb33a_e1d180b5",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T23:17:46Z",
+      "side": 1,
+      "message": "Nit: Please order methods in the same order as in the .cc file.\n\nThis might require needing to put the templated method in the .h file so its body is seen before this one? Not sure.",
+      "range": {
+        "startLine": 353,
+        "startChar": 68,
+        "endLine": 353,
+        "endChar": 0
+      },
+      "revId": "cb7b76e3384eb5c58d9be1ebe8d3f7f12e4b2426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10d997d_3eb40ff9",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-09T23:17:46Z",
+      "side": 1,
+      "message": "Hmm, so GetKnownHistograms(true) is the same as GetHistograms()?\n\nIf so, I think we should clean this up as well - i.e. callers passing true should just call GetHistograms() instead and then we can remove the param. Maybe just add a TODO about it here and it can be addressed in a separate CL? (Just so this one can be submitted sooner.)",
+      "range": {
+        "startLine": 362,
+        "startChar": 15,
+        "endLine": 362,
+        "endChar": 33
+      },
+      "revId": "cb7b76e3384eb5c58d9be1ebe8d3f7f12e4b2426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
