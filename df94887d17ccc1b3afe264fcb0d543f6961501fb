@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c500f1b3_69bc3821",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-09T15:44:25Z",
+      "side": 1,
+      "message": "This code should also use the new  ContentBrowserClient method you added for getting the certstore, and remove the one from ResourceDispatcherHostDelegate.",
+      "revId": "df94887d17ccc1b3afe264fcb0d543f6961501fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d93718a_f56e9ebf",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-09T15:44:25Z",
+      "side": 1,
+      "message": "ProfileIOData is for use on the IO thread. However this code is running on the UI thread.\n\nSLClientAuthHandler has a dcheck that it\u0027s created on the IO thread, is this code being exercised? You can take out the auth tests from the filter file to see the try run results.\n\nA simple workaround would be to create SLClientAuthHandler using a posttask on the IO thread.",
+      "revId": "df94887d17ccc1b3afe264fcb0d543f6961501fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
