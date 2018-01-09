@@ -340,6 +340,14 @@ void WebFrameWidgetBase::ShowContextMenu(WebMenuSourceType source_type) {
 }
 
 LocalFrame* WebFrameWidgetBase::FocusedLocalFrameInWidget() const {
+  if (!LocalRoot()) {
+    // WebFrameWidget is created in the call to CreateFrame. The corresponding
+    // RenderWidget, however, might not swap in right away (InstallNewDocument()
+    // will lead to it swapping in). During this interval LocalRoot() is nullptr
+    // (see https://crbug.com/792345).
+    return nullptr;
+  }
+
   LocalFrame* frame = GetPage()->GetFocusController().FocusedFrame();
   return (frame && frame->LocalFrameRoot() == ToCoreFrame(LocalRoot()))
              ? frame
