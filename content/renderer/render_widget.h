@@ -520,10 +520,8 @@ class CONTENT_EXPORT RenderWidget
       RenderWidgetScreenMetricsEmulator* emulator);
 #endif
 
-  void SetLocalSurfaceIdForAutoResize(
-      uint64_t sequence_number,
-      const content::ScreenInfo& screen_info,
-      const viz::LocalSurfaceId& local_surface_id);
+  void SetLocalSurfaceId(const content::ScreenInfo& screen_info,
+                         const viz::LocalSurfaceId& local_surface_id);
 
   // RenderWidget IPC message handlers
   void OnHandleInputEvent(
@@ -534,12 +532,12 @@ class CONTENT_EXPORT RenderWidget
   void OnClose();
   void OnCreatingNewAck();
   virtual void OnResize(const ResizeParams& params);
-  void OnSetLocalSurfaceIdForAutoResize(
+  /*void OnSetLocalSurfaceIdForAutoResize(
       uint64_t sequence_number,
       const gfx::Size& min_size,
       const gfx::Size& max_size,
       const content::ScreenInfo& screen_info,
-      const viz::LocalSurfaceId& local_surface_id);
+      const viz::LocalSurfaceId& local_surface_id);*/
   void OnEnableDeviceEmulation(const blink::WebDeviceEmulationParams& params);
   void OnDisableDeviceEmulation();
   virtual void OnWasHidden();

@@ -343,8 +343,7 @@ IPC_MESSAGE_ROUTED1(ViewMsg_Resize, content::ResizeParams /* params */)
 
 // Tells the widget to use the provided viz::LocalSurfaceId to submit
 // CompositorFrames for autosize.
-IPC_MESSAGE_ROUTED5(ViewMsg_SetLocalSurfaceIdForAutoResize,
-                    uint64_t /* sequence_number */,
+IPC_MESSAGE_ROUTED4(ViewMsg_SetLocalSurfaceId,
                     gfx::Size /* min_size */,
                     gfx::Size /* max_size */,
                     content::ScreenInfo /* screen_info */,

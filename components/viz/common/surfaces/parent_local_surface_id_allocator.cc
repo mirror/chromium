@@ -11,13 +11,19 @@
 
 namespace viz {
 
-ParentLocalSurfaceIdAllocator::ParentLocalSurfaceIdAllocator() : next_id_(1u) {}
+ParentLocalSurfaceIdAllocator::ParentLocalSurfaceIdAllocator()
+    : next_parent_id_(1u), child_sequence_number_(1u) {}
+
+ParentLocalSurfaceIdAllocator::ParentLocalSurfaceIdAllocator(
+    uint32_t child_sequence_number)
+    : next_parent_id_(1u), child_sequence_number_(child_sequence_number) {}
 
 ParentLocalSurfaceIdAllocator::~ParentLocalSurfaceIdAllocator() {}
 
 LocalSurfaceId ParentLocalSurfaceIdAllocator::GenerateId() {
-  LocalSurfaceId id(next_id_, base::UnguessableToken::Create());
-  next_id_++;
+  LocalSurfaceId id(next_parent_id_, child_sequence_number_,
+                    base::UnguessableToken::Create());
+  next_parent_id_++;
   return id;
 }
 

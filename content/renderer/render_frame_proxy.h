@@ -162,10 +162,6 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
     return pending_resize_params_.screen_info;
   }
 
-  uint64_t auto_size_sequence_number() const {
-    return pending_resize_params_.sequence_number;
-  }
-
   // blink::WebRemoteFrameClient implementation:
   void FrameDetached(DetachType type) override;
   void ForwardPostMessage(blink::WebLocalFrame* sourceFrame,
@@ -232,7 +228,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnScrollRectToVisible(
       const gfx::Rect& rect_to_scroll,
       const blink::WebRemoteScrollProperties& properties);
-  void OnResizeDueToAutoResize(uint64_t sequence_number);
+  void OnResizeDueToAutoResize();
 
 #if defined(USE_AURA)
   // MusEmbeddedFrameDelegate
@@ -264,7 +260,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   struct ResizeParams {
     gfx::Rect frame_rect;
     ScreenInfo screen_info;
-    uint64_t sequence_number = 0lu;
+    viz::LocalSurfaceId local_surface_id;
   };
 
   // The last ResizeParams sent to the browser process, if any.

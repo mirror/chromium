@@ -512,8 +512,7 @@ void RenderFrameProxy::OnScrollRectToVisible(
   web_frame_->ScrollRectToVisible(rect_to_scroll, properties);
 }
 
-void RenderFrameProxy::OnResizeDueToAutoResize(uint64_t sequence_number) {
-  pending_resize_params_.sequence_number = sequence_number;
+void RenderFrameProxy::OnResizeDueToAutoResize() {
   WasResized();
 }
 
@@ -533,8 +532,8 @@ void RenderFrameProxy::WasResized() {
       sent_resize_params_->frame_rect.size() !=
           pending_resize_params_.frame_rect.size() ||
       sent_resize_params_->screen_info != pending_resize_params_.screen_info ||
-      sent_resize_params_->sequence_number !=
-          pending_resize_params_.sequence_number;
+      sent_resize_params_->local_surface_id !=
+          pending_resize_params_.local_surface_id;
 
   if (synchronized_params_changed)
     local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
@@ -555,9 +554,8 @@ void RenderFrameProxy::WasResized() {
 
   if (resize_params_changed) {
     // Let the browser know about the updated view rect.
-    Send(new FrameHostMsg_UpdateResizeParams(
-        routing_id_, frame_rect(), screen_info(), auto_size_sequence_number(),
-        surface_id));
+    Send(new FrameHostMsg_UpdateResizeParams(routing_id_, frame_rect(),
+                                             screen_info(), surface_id));
     sent_resize_params_ = pending_resize_params_;
   }
 }

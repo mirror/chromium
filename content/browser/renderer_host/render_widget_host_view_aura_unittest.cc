@@ -269,11 +269,10 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
 
   double get_last_device_scale_factor() { return last_device_scale_factor_; }
   void ResizeDueToAutoResize(RenderWidgetHostImpl* render_widget_host,
-                             const gfx::Size& new_size,
-                             uint64_t sequence_number) override {
+                             const gfx::Size& new_size) override {
     RenderWidgetHostViewBase* rwhv = rwh_->GetView();
     if (rwhv)
-      rwhv->ResizeDueToAutoResize(new_size, sequence_number);
+      rwhv->ResizeDueToAutoResize(new_size);
   }
   void ScreenInfoChanged() override {
     display::Screen* screen = display::Screen::GetScreen();
@@ -2348,14 +2347,13 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithScale) {
   EXPECT_EQ(1u, sink_->message_count());
   {
     const IPC::Message* msg = sink_->GetMessageAt(0);
-    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceIdForAutoResize::ID),
+    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceId::ID),
               msg->type());
-    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
-    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
-    EXPECT_EQ(1u, std::get<0>(params));  // sequence_number
-    EXPECT_EQ("50x50", std::get<1>(params).ToString());
-    EXPECT_EQ("100x100", std::get<2>(params).ToString());
-    EXPECT_EQ(1, std::get<3>(params).device_scale_factor);
+    ViewMsg_SetLocalSurfaceId::Param params;
+    ViewMsg_SetLocalSurfaceId::Read(msg, &params);
+    EXPECT_EQ("50x50", std::get<0>(params).ToString());
+    EXPECT_EQ("100x100", std::get<1>(params).ToString());
+    EXPECT_EQ(1, std::get<2>(params).device_scale_factor);
   }
 
   sink_->ClearMessages();
@@ -2364,14 +2362,13 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithScale) {
   EXPECT_EQ(2u, sink_->message_count());
   {
     const IPC::Message* msg = sink_->GetMessageAt(1);
-    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceIdForAutoResize::ID),
+    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceId::ID),
               msg->type());
-    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
-    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
-    EXPECT_EQ(1u, std::get<0>(params));  // sequence_number
-    EXPECT_EQ("50x50", std::get<1>(params).ToString());
-    EXPECT_EQ("100x100", std::get<2>(params).ToString());
-    EXPECT_EQ(2, std::get<3>(params).device_scale_factor);
+    ViewMsg_SetLocalSurfaceId::Param params;
+    ViewMsg_SetLocalSurfaceId::Read(msg, &params);
+    EXPECT_EQ("50x50", std::get<0>(params).ToString());
+    EXPECT_EQ("100x100", std::get<1>(params).ToString());
+    EXPECT_EQ(2, std::get<2>(params).device_scale_factor);
   }
 }
 

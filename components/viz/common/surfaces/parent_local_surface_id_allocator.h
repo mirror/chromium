@@ -21,12 +21,14 @@ namespace viz {
 class VIZ_COMMON_EXPORT ParentLocalSurfaceIdAllocator {
  public:
   ParentLocalSurfaceIdAllocator();
+  explicit ParentLocalSurfaceIdAllocator(uint32_t child_sequence_number);
   ~ParentLocalSurfaceIdAllocator();
 
   LocalSurfaceId GenerateId();
 
  private:
-  uint32_t next_id_;
+  uint32_t next_parent_id_;
+  uint32_t child_sequence_number_;
 
   DISALLOW_COPY_AND_ASSIGN(ParentLocalSurfaceIdAllocator);
 };

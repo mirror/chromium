@@ -1122,8 +1122,7 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
                         OnEnablePreferredSizeChangedMode)
     IPC_MESSAGE_HANDLER(ViewMsg_EnableAutoResize, OnEnableAutoResize)
     IPC_MESSAGE_HANDLER(ViewMsg_DisableAutoResize, OnDisableAutoResize)
-    IPC_MESSAGE_HANDLER(ViewMsg_SetLocalSurfaceIdForAutoResize,
-                        OnSetLocalSurfaceIdForAutoResize)
+    IPC_MESSAGE_HANDLER(ViewMsg_SetLocalSurfaceId, OnSetLocalSurfaceId);
     IPC_MESSAGE_HANDLER(ViewMsg_DisableScrollbarsForSmallWindows,
                         OnDisableScrollbarsForSmallWindows)
     IPC_MESSAGE_HANDLER(ViewMsg_SetRendererPrefs, OnSetRendererPrefs)
@@ -1951,17 +1950,15 @@ void RenderViewImpl::OnDisableAutoResize(const gfx::Size& new_size) {
   }
 }
 
-void RenderViewImpl::OnSetLocalSurfaceIdForAutoResize(
-    uint64_t sequence_number,
+void RenderViewImpl::OnSetLocalSurfaceId(
     const gfx::Size& min_size,
     const gfx::Size& max_size,
     const content::ScreenInfo& screen_info,
     const viz::LocalSurfaceId& local_surface_id) {
-  if (!auto_resize_mode_ || resize_or_repaint_ack_num_ != sequence_number)
+  if (!auto_resize_mode_)
     return;
 
-  SetLocalSurfaceIdForAutoResize(sequence_number, screen_info,
-                                 local_surface_id);
+  SetLocalSurfaceId(screen_info, local_surface_id);
 
   if (IsUseZoomForDSFEnabled()) {
     webview()->EnableAutoResizeMode(

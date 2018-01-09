@@ -1100,7 +1100,7 @@ void BrowserPluginGuest::OnUpdateResizeParams(
   DCHECK(render_widget_host);
 
   if (render_widget_host->auto_resize_enabled()) {
-    render_widget_host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
+    render_widget_host->DidAllocateLocalSurfaceId();
     return;
   }
 

@@ -185,8 +185,7 @@ class CONTENT_EXPORT FrameConnectorDelegate {
 
   // Called by RenderWidgetHostViewChildFrame when the child frame has resized
   // to |new_size| because auto-resize is enabled.
-  virtual void ResizeDueToAutoResize(const gfx::Size& new_size,
-                                     uint64_t sequence_number) {}
+  virtual void ResizeDueToAutoResize(const gfx::Size& new_size) {}
 
  protected:
   explicit FrameConnectorDelegate(bool use_zoom_for_device_scale_factor);

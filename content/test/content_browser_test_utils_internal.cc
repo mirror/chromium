@@ -380,7 +380,6 @@ UpdateResizeParamsMessageFilter::~UpdateResizeParamsMessageFilter() {}
 void UpdateResizeParamsMessageFilter::OnUpdateResizeParams(
     const gfx::Rect& rect,
     const ScreenInfo& screen_info,
-    uint64_t sequence_number,
     const viz::SurfaceId& surface_id) {
   // Track each rect updates.
   content::BrowserThread::PostTask(

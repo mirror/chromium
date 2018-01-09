@@ -500,9 +500,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
     return max_size_for_auto_resize_;
   }
 
-  // Called to notify the RenderWidget that a viz::LocalSurfaceId was allocated
-  // for the auto-resize request specified by |sequence_number|.
-  void DidAllocateLocalSurfaceIdForAutoResize(uint64_t sequence_number);
+  // Called to notify the RenderWidget that a viz::LocalSurfaceId was allocated.
+  void DidAllocateLocalSurfaceId();
 
   void DidReceiveRendererFrame();
 
@@ -590,10 +589,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   const viz::CompositorFrameMetadata& last_frame_metadata() {
     return last_frame_metadata_;
-  }
-
-  uint64_t last_auto_resize_request_number() const {
-    return last_auto_resize_request_number_;
   }
 
   bool HasGestureStopped() override;
