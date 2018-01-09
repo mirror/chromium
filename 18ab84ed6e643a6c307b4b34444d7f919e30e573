@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a80b91a_44f07687",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-09T07:55:07Z",
+      "side": 1,
+      "message": "Please move changes for RootEditableElementOrTreeScopeRootNodeOf() in \nanother.\n\nWe would like to have smallest patch as possible we can.",
+      "revId": "18ab84ed6e643a6c307b4b34444d7f919e30e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
