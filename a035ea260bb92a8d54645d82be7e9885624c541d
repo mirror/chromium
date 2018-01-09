@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "617a52ae_0a76c99b",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-09T21:22:02Z",
+      "side": 1,
+      "message": "nit: maybe rename PLATFORM to BROWSER or similar to disambiguate from NATIVE?",
+      "revId": "a035ea260bb92a8d54645d82be7e9885624c541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "009f674d_03c0079c",
         "filename": "ui/gfx/text_elider.h",
         "patchSetId": 6
@@ -16,6 +33,24 @@
       "revId": "a035ea260bb92a8d54645d82be7e9885624c541d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60948bfd_611df10e",
+        "filename": "ui/gfx/text_elider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-09T21:22:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "009f674d_03c0079c",
+      "revId": "a035ea260bb92a8d54645d82be7e9885624c541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
