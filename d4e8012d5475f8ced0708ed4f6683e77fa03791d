@@ -22,6 +22,30 @@
       "revId": "d4e8012d5475f8ced0708ed4f6683e77fa03791d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98301989_ebc97a6f",
+        "filename": "chrome/browser/chromeos/file_manager/file_tasks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-09T19:16:30Z",
+      "side": 1,
+      "message": "The extension API is not the main problem here. Off the record platform apps are not well supported (off the record window is really a Chrome browser feature).\nMainly, an app window existence will not keep the off the record profile alive after all incognito browser windows are closed, but there are other issues too. For example, there is no separate app window registry for OTR app windows (the registry keyed service redirects to the original profile), there is no UI for launching platform apps in incognito, the user does not have any indication whether a platform app window is running in an incognito profile or not.\n\n+benwells, in case he can offer additional insight",
+      "parentUuid": "e786167b_5b467f67",
+      "range": {
+        "startLine": 157,
+        "startChar": 11,
+        "endLine": 157,
+        "endChar": 40
+      },
+      "revId": "d4e8012d5475f8ced0708ed4f6683e77fa03791d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
