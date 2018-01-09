@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4838530a_dbeaf3fb",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-09T22:11:58Z",
+      "side": 1,
+      "message": "This extra noise is exactly what I\u0027d feared would happen with the \"WebString\" discussion. :(",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 4
+      },
+      "revId": "39d93a3d1c0e3c242cfbaa39325ab107058dfa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
