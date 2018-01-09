@@ -117,6 +117,7 @@ void UiInputManager::HandleInput(base::TimeTicks current_time,
       request.ray_origin = kOrigin;
       request.ray_target = reticle_model->target_point;
       request.max_distance_to_plane = 2 * scene_->background_distance();
+      reticle_model->hit_test_request = request;
       HitTestResult result;
       captured->HitTest(request, &result);
       element_local_point = result.local_hit_point;
@@ -371,6 +372,7 @@ void UiInputManager::GetVisualTargetElement(
   request.ray_origin = ray_origin;
   request.ray_target = reticle_model->target_point;
   request.max_distance_to_plane = distance_limit;
+  reticle_model->hit_test_request = request;
   HitTestElements(&scene_->root_element(), reticle_model, &request);
 }
 
