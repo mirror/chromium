@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c633740_63e07e9e",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T09:25:02Z",
+      "side": 1,
+      "message": "I think you need to call completion_handler here, otherwise, the dispatch_semaphore_signal() will not be called and dispatch_semaphore_wait() will never return in -URLSession:dataTask:didReceiveData:.\n\nSorry for missing this in previous review.",
+      "revId": "99c538dc4d94c95e8bad2392a2e26ad90ca6cd5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
