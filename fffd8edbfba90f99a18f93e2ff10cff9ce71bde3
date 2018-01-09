@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d3d5180f_a1e6a0f5",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-09T05:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0a48849_5a429a2c",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dd6bfc2_894704d5",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
         "patchSetId": 1
@@ -189,6 +207,24 @@
       "writtenOn": "2017-12-29T12:09:24Z",
       "side": 1,
       "message": "Are these methods now used outside of StyleEngine? Could they be private?",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a92cc2_a76e966b",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-09T05:31:16Z",
+      "side": 1,
+      "message": "I\u0027ve made them private already.",
+      "parentUuid": "2a8febe7_423dee89",
       "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

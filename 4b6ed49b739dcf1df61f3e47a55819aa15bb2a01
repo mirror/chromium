@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb788522_bec70c7e",
+        "filename": "third_party/WebKit/Source/core/css/ActiveStyleSheets.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-09T05:31:16Z",
+      "side": 1,
+      "message": "This is identical to the code previously in TreeScopeStyleSheetCollection::MediaQueryAffectingValueChanged",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b476f86_146a0974",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-09T05:31:16Z",
+      "side": 1,
+      "message": "CSSStyleSheet now knows if it\u0027s an author sheet or a user sheet. We need this because when a user sheet is updated (e.g. media queries) we need to invalidate \"all scopes\" in StyleEngine (see corresponding change in StyleSheetContents.cpp).",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f110c4_79bed3d7",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContents.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-09T05:31:16Z",
+      "side": 1,
+      "message": "So if it\u0027s a user sheet then we need to invalidate all scopes.",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
