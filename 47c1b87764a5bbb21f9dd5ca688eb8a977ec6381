@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c08097eb_0fbdb553",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-09T19:15:34Z",
+      "side": 1,
+      "message": "Use a normal loop to take advantage of \u0027break\u0027. For long keywords you will do a lot of work that can probably be escaped. This return seems unnecessary either way as it is at the end of the method that is captured in for each.",
+      "revId": "47c1b87764a5bbb21f9dd5ca688eb8a977ec6381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
