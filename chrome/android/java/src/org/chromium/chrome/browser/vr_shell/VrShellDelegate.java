@@ -128,7 +128,6 @@ public class VrShellDelegate
     private VrDaydreamApi mVrDaydreamApi;
     private Boolean mIsDaydreamCurrentViewer;
     private VrCoreVersionChecker mVrCoreVersionChecker;
-    private TabModelSelector mTabModelSelector;
 
     private boolean mProbablyInDon;
     private boolean mInVr;
@@ -1651,11 +1650,11 @@ public class VrShellDelegate
         assert mVrShell == null;
         if (mVrClassesWrapper == null) return false;
         if (mActivity.getCompositorViewHolder() == null) return false;
-        mTabModelSelector = mActivity.getCompositorViewHolder().detachForVr();
-        if (mTabModelSelector == null) return false;
+        TabModelSelector tabModelSelector = mActivity.getTabModelSelector();
+        if (tabModelSelector == null) return false;
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
         try {
-            mVrShell = mVrClassesWrapper.createVrShell(mActivity, this, mTabModelSelector);
+            mVrShell = mVrClassesWrapper.createVrShell(mActivity, this, tabModelSelector);
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
@@ -1672,7 +1671,6 @@ public class VrShellDelegate
     }
 
     private void removeVrViews() {
-        mVrShell.onBeforeWindowDetached();
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());
@@ -1686,10 +1684,6 @@ public class VrShellDelegate
             mVrShell.getContainer().setOnSystemUiVisibilityChangeListener(null);
             mVrShell.teardown();
             mVrShell = null;
-            if (mActivity.getCompositorViewHolder() != null) {
-                mActivity.getCompositorViewHolder().onExitVr(mTabModelSelector);
-            }
-            mTabModelSelector = null;
         }
     }
 
