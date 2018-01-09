@@ -111,9 +111,12 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
   void OnBeginFrame(base::TimeTicks frame_time) override;
   bool IsAutoResizeEnabled() const override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
+  void DidReceiveFirstFrameAfterNavigation() override;
 
   // Returns nullptr if no compositor is attached.
   ui::Compositor* CompositorForTesting() const;
+
+  void DidNavigate();
 
  private:
   // The state of |delegated_frame_host_| and |recyclable_compositor_| to
