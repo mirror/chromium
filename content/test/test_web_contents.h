@@ -13,6 +13,7 @@
 #include <utility>
 
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/browser/webrtc/webrtc_internals.h"
 #include "content/public/test/web_contents_tester.h"
 #include "content/test/test_render_frame_host.h"
 #include "content/test/test_render_view_host.h"
@@ -174,6 +175,8 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
   void SaveFrameWithHeaders(const GURL& url,
                             const Referrer& referrer,
                             const std::string& headers) override;
+
+  std::unique_ptr<WebRTCInternals> webrtc_internals_;
 
   RenderViewHostDelegateView* delegate_view_override_;
 
