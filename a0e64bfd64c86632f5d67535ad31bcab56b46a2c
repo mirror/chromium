@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94ebcf46_e85dd643",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-09T13:59:11Z",
+      "side": 1,
+      "message": "nit: WARN_UNUSED_RESULT (assuming that it\u0027s valid would be a pretty bad bug)",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0591895a_a0b30e5b",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-09T13:59:11Z",
+      "side": 1,
+      "message": "GetIToastNotificationHistory2() returns a boolean, not a HRESULT",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd38976c_b1e15458",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-09T13:59:11Z",
+      "side": 1,
+      "message": "nit: could we extract this into a utility function now that it\u0027s used twice?",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d65f97_b691d584",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-09T13:59:11Z",
+      "side": 1,
+      "message": "nit: unsigned int -\u003e uint32_t",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5bc734_8c62a2d5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-09T13:59:11Z",
+      "side": 1,
+      "message": "^^^?",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356c4641_40d771d2",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-09T13:59:11Z",
+      "side": 1,
+      "message": "Please do annotate the nullptr arguments (here and elsewhere) when providing them:\n\nDecodeTemplateId(encoded, nullptr /* notification_type */, ...)",
+      "revId": "a0e64bfd64c86632f5d67535ad31bcab56b46a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
