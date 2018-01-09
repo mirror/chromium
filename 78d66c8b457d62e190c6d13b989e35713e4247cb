@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "245e19b1_309a9393",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-09T19:06:00Z",
+      "side": 1,
+      "message": "after checking for topmost browser, let\u0027s check if the browser window is for an incognito profile, and if so, skip over it to ensure we don\u0027t log it. (UKM is disabled anyway when an incognito profile is active, so this is just an extra precaution.)\n\n  if (browser-\u003eprofile()-\u003eIsOffTheRecord())\n    continue;",
+      "revId": "78d66c8b457d62e190c6d13b989e35713e4247cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
