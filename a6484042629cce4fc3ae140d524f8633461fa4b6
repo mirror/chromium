@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9458df76_e31a8996",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-09T13:45:52Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think this is necessary anymore either (or could be replaced with hardcoded values, i.e. lang\u003d\"en\").",
+      "range": {
+        "startLine": 2,
+        "startChar": 5,
+        "endLine": 2,
+        "endChar": 54
+      },
+      "revId": "a6484042629cce4fc3ae140d524f8633461fa4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3003143_81f4e3c9",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-09T13:45:52Z",
+      "side": 1,
+      "message": "Nit: This should be indented, and the closing tag on the next line.",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "a6484042629cce4fc3ae140d524f8633461fa4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2034ac2_d29225bb",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-09T13:45:52Z",
+      "side": 1,
+      "message": "Nit: Break these to fit into 80 columns.",
+      "range": {
+        "startLine": 46,
+        "startChar": 98,
+        "endLine": 46,
+        "endChar": 99
+      },
+      "revId": "a6484042629cce4fc3ae140d524f8633461fa4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
