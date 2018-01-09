@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea8ddcb_becec26b",
+        "filename": "chrome/browser/ui/app_list/search/common/url_icon_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T21:50:48Z",
+      "side": 1,
+      "message": "It\u0027s not safe to hold onto a raw pointer to this.  If the network stack crashes, we may destroy and re-create the URLLoaderFactory without warning.\n\nOptions are either to make this an argument to StartIconFetch() and grab it when calling the method, or use the (Not yet written class) SharableURLLoaderFactory.  See https://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!msg/network-service-dev/RvjOJ4CKr-Q/5UUWMfP3AgAJ for discussion on that class.",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "d58a0179e0277a49f6af5d2d59b947e30fc37bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
