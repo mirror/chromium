@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c37799be_1ead9a3e",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T22:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "014e9f78_abd3cecb",
+      "range": {
+        "startLine": 161,
+        "startChar": 17,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "734e9bb3_b0cd7255",
         "filename": "net/socket/tcp_socket_posix.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe063e3b_f9212852",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T22:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "734e9bb3_b0cd7255",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f5e5c5b1_085c6302",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T22:21:23Z",
+      "side": 1,
+      "message": "Sorry, that was a stale comment.\n\nDone.",
+      "parentUuid": "37d656b7_b739ab24",
+      "range": {
+        "startLine": 173,
+        "startChar": 21,
+        "endLine": 173,
+        "endChar": 24
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec96e040_8e46b517",
         "filename": "net/socket/tcp_socket_posix.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "73e5a52d_4b52e8c5",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T22:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec96e040_8e46b517",
+      "range": {
+        "startLine": 174,
+        "startChar": 51,
+        "endLine": 174,
+        "endChar": 66
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e3e0cdc_dbe9281c",
         "filename": "net/socket/tcp_socket_posix.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064f8bf3_004d23b6",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T22:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e3e0cdc_dbe9281c",
+      "range": {
+        "startLine": 190,
+        "startChar": 20,
+        "endLine": 190,
+        "endChar": 0
+      },
+      "revId": "dbe069510857e66c23fadfd10cb7b7ea45f7f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
