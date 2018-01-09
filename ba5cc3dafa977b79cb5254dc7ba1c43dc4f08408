@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e60170d_7c92917d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/canonicalizeFilter/empty-services-member.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T00:23:54Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "cf2e60af_0774bb98",
+      "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c6fdc09_12786da3",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/canonicalizeFilter/wrong-service-in-services-member.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c3cf08_10fdc0f2",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/canonicalizeFilter/wrong-service-in-services-member.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T00:23:54Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "7c6fdc09_12786da3",
+      "revId": "ba5cc3dafa977b79cb5254dc7ba1c43dc4f08408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
