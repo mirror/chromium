@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd1a923_90706356",
+        "filename": "chrome/browser/ui/app_list/search/common/url_icon_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T22:20:29Z",
+      "side": 1,
+      "message": "Could forward declare this, I believe.",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 9
+      },
+      "revId": "49cea1f243a97ab1dec625b802e80cd5c084e6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b28414a_4ea07c03",
+        "filename": "chrome/browser/ui/app_list/search/common/url_icon_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T22:20:29Z",
+      "side": 1,
+      "message": "Should include \u003cstring\u003e",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "49cea1f243a97ab1dec625b802e80cd5c084e6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
