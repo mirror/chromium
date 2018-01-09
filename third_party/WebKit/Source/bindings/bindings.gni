@@ -46,6 +46,7 @@ bindings_core_v8_files =
                     "core/v8/GeneratedCodeHelper.h",
                     "core/v8/IDLDictionaryBase.cpp",
                     "core/v8/IDLDictionaryBase.h",
+                    "core/v8/IDLTypeTraits.h",
                     "core/v8/IDLTypes.h",
                     "core/v8/IDLTypesBase.h",
                     "core/v8/Iterable.h",
