@@ -1749,12 +1749,6 @@ bool DXVAVideoDecodeAccelerator::CheckDecoderDxvaSupport() {
     support_copy_nv12_textures_ = false;
   }
 
-  // The MS VP9 MFT doesn't pass through the bind flags we specify, so
-  // textures aren't created with D3D11_BIND_SHADER_RESOURCE and can't be used
-  // from ANGLE.
-  if (using_ms_vp9_mft_)
-    support_share_nv12_textures_ = false;
-
   return true;
 }
 
@@ -1801,6 +1795,23 @@ bool DXVAVideoDecodeAccelerator::SetDecoderInputMediaType() {
     hr = media_type->SetUINT32(MF_MT_INTERLACE_MODE,
                                MFVideoInterlace_MixedInterlaceOrProgressive);
     RETURN_ON_HR_FAILURE(hr, "Failed to set interlace mode", false);
+  }
+
+  // These bind flags _must_ be set before SetInputType or SetOutputType to
+  // ensure that we get the proper surfaces created under the hood.
+  if (GetPictureBufferMechanism() == PictureBufferMechanism::BIND) {
+    Microsoft::WRL::ComPtr<IMFAttributes> out_attributes;
+    HRESULT hr =
+        decoder_->GetOutputStreamAttributes(0, out_attributes.GetAddressOf());
+    RETURN_ON_HR_FAILURE(hr, "Failed to get stream attributes", false);
+    out_attributes->SetUINT32(MF_SA_D3D11_BINDFLAGS,
+                              D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DECODER);
+    // For some reason newer Intel drivers need D3D11_BIND_DECODER textures to
+    // be created with a share handle or they'll crash in
+    // CreateShaderResourceView.  Technically MF_SA_D3D11_SHARED_WITHOUT_MUTEX
+    // is only honored by the sample allocator, not by the media foundation
+    // transform, but Microsoft's h.264 transform happens to pass it through.
+    out_attributes->SetUINT32(MF_SA_D3D11_SHARED_WITHOUT_MUTEX, TRUE);
   }
 
   hr = decoder_->SetInputType(0, media_type.Get(), 0);  // No flags
