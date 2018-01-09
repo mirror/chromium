@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e09e1f_9a0d7bb1",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T20:32:13Z",
+      "side": 1,
+      "message": "line.strip()?  No problem chopping at both ends, and the default is to trim whitespace (including \\r\\n).",
+      "revId": "9a3126762c95f93672376d04d154f544fdc155ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da138a6_85b8bf29",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T20:32:13Z",
+      "side": 1,
+      "message": "Check out Python\u0027s \"falsey\" idiom.  There\u0027s no need for \"is not None\" in several places - \"if major_version:\" is sufficient and clearer.",
+      "revId": "9a3126762c95f93672376d04d154f544fdc155ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6215e2d5_460e7221",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T20:32:13Z",
+      "side": 1,
+      "message": "eg: if not major_version or not minor_version:",
+      "revId": "9a3126762c95f93672376d04d154f544fdc155ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1229fe59_f5a41f52",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T20:32:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be a check somewhere that the version parsing succeeded?  Ie, this script shouldn\u0027t succeed if ParseVersion ever yields None, right?",
+      "revId": "9a3126762c95f93672376d04d154f544fdc155ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
