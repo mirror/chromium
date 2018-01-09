@@ -50,6 +50,15 @@ const char* FormSubmissionThrottle::GetNameForLogging() {
 
 NavigationThrottle::ThrottleCheckResult
 FormSubmissionThrottle::CheckContentSecurityPolicyFormAction(bool is_redirect) {
+  // TODO(arthursonzogni): form-action is enforced on the wrong RenderFrameHost.
+  // The navigating one is used instead of the one that has initiated the form
+  // submission. The renderer side checks are still in place and are used for
+  // the moment instead. For redirects, the behavior was already broken before
+  // using the browser side checks.
+  // See https://crbug.com/700964 and https://crbug.com/798698.
+  if (!is_redirect)
+    return NavigationThrottle::PROCEED;
+
   NavigationHandleImpl* handle =
       static_cast<NavigationHandleImpl*>(navigation_handle());
 
@@ -57,6 +66,10 @@ FormSubmissionThrottle::CheckContentSecurityPolicyFormAction(bool is_redirect) {
     return NavigationThrottle::PROCEED;
 
   const GURL& url = handle->GetURL();
+
+  // TODO(arthursonzogni): This is not the right RenderFrameHostImpl. The one
+  // that has initiated the navigation must be used instead.
+  // See https://crbug.com/700964
   RenderFrameHostImpl* render_frame =
       handle->frame_tree_node()->current_frame_host();
 
