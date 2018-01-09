@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8788adc6_79df3236",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T17:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e341dea_187e482a",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e0f6c22_6a1e3ff7",
         "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-08T20:57:51Z",
       "side": 1,
       "message": "optional: could use \u003d\u003e syntax here:\nchrome.webRequest.onBeforeRequest.addListener(\n    (details) \u003d\u003e { ++window.pacRequestCount; },\n    {urls: [\u0027*://*/self.pac\u0027]});",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cc3210_d096f160",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T17:32:18Z",
+      "side": 1,
+      "message": "I just copied this from another file.  I\u0027d rather stick with it as-is, as I know what a function is, and it matches the other test extensions.  New language features should be Google-able.  :(",
+      "parentUuid": "4e0f6c22_6a1e3ff7",
       "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f9328cfc_b58b9aef",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T17:32:18Z",
+      "side": 1,
+      "message": "Done.  Also did the same in the other test I copied this one from.",
+      "parentUuid": "ccc98bc9_f3310462",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "579a7d23_1af53091",
         "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/manifest.json",
         "patchSetId": 5
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "90241b61_05b3e9c6",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T17:32:18Z",
+      "side": 1,
+      "message": "Done.  Curses!  You foiled my plan to insidiously rename HTML to Goat Text Markup Language!",
+      "parentUuid": "579a7d23_1af53091",
+      "range": {
+        "startLine": 2,
+        "startChar": 52,
+        "endLine": 2,
+        "endChar": 53
+      },
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65e725c9_13ec029b",
         "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/manifest.json",
         "patchSetId": 5
@@ -102,6 +186,30 @@
       "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086d0555_926a5a1e",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T17:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65e725c9_13ec029b",
+      "range": {
+        "startLine": 3,
+        "startChar": 59,
+        "endLine": 3,
+        "endChar": 60
+      },
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +245,24 @@
       "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adefb89a_ff1cbc19",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T17:32:18Z",
+      "side": 1,
+      "message": "Done, though I trust the browser test a lot more (Which I\u0027m keeping, of course).",
+      "parentUuid": "aea56c86_269bb75c",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
