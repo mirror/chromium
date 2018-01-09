@@ -365,6 +365,7 @@ void UiElement::HitTest(const HitTestRequest& request,
   result->distance_to_plane = distance_to_plane;
   result->hit_point =
       request.ray_origin + gfx::ScaleVector3d(ray_vector, distance_to_plane);
+
   gfx::PointF unit_xy_point = GetUnitRectangleCoordinates(result->hit_point);
   result->local_hit_point.set_x(0.5f + unit_xy_point.x());
   result->local_hit_point.set_y(0.5f - unit_xy_point.y());
