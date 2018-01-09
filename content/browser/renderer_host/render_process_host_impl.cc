@@ -2617,7 +2617,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kForceVideoOverlays,
     switches::kFullMemoryCrashReport,
     switches::kIPCConnectionTimeout,
-    switches::kIsolateOrigins,
     switches::kJavaScriptFlags,
     switches::kLoggingLevel,
     switches::kMainFrameResizesAreOrientationChanges,

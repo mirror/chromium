@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <sstream>
+
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/test/scoped_feature_list.h"
@@ -1073,6 +1075,39 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginFieldTrialTest, Test) {
       url::Origin::Create(GURL("https://field.trial.com/"))));
   EXPECT_TRUE(
       policy->IsIsolatedOrigin(url::Origin::Create(GURL("https://bar.com/"))));
+}
+
+// This is a regresion test for https://crbug.com/793350 - the long list of
+// origins to isolate used to be unnecessarily propagated to the renderer
+// process, trigerring a crash due to exceeding kZygoteMaxMessageLength.
+class IsolatedOriginLongListTest : public ContentBrowserTest {
+ public:
+  IsolatedOriginLongListTest() {}
+  ~IsolatedOriginLongListTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
+
+    std::ostringstream origin_list;
+    origin_list
+        << embedded_test_server()->GetURL("isolated.foo.com", "/").spec();
+    for (int i = 0; i < 1000; i++)
+      origin_list << ",https://foo" << i << ".com/";
+    command_line->AppendSwitchASCII(switches::kIsolateOrigins,
+                                    origin_list.str());
+  }
+
+  void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+    embedded_test_server()->StartAcceptingConnections();
+  }
+};
+
+IN_PROC_BROWSER_TEST_F(IsolatedOriginLongListTest, Test) {
+  GURL isolated_url(
+      embedded_test_server()->GetURL("isolated.foo.com", "/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), isolated_url));
+  EXPECT_EQ(isolated_url, shell()->web_contents()->GetLastCommittedURL());
 }
 
 }  // namespace content
