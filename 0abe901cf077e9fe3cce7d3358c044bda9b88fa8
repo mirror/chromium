@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7b89f160_792a20d1",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-09T14:02:12Z",
+      "side": 1,
+      "message": "I believe emplace would work since it uses constructor.",
+      "parentUuid": "c2af000a_fab9477a",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 42
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7be7d0e_e40fd668",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 39
@@ -214,6 +238,30 @@
       "side": 1,
       "message": "Sounds good re. first point.\n\nFor the second point: Would this increase the numerical value of stuff and lead to larger patch?",
       "parentUuid": "761099e8_181adf13",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 72
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1028b367_66e7e88d",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-09T14:02:12Z",
+      "side": 1,
+      "message": "It\u0027s just a though and I\u0027d need to investigate. I don\u0027t think it would lead to larger patch given that we merge pools only for associating targets, while we\u0027d still use separate pools for reference delta.",
+      "parentUuid": "0666fed9_5964d8f9",
       "range": {
         "startLine": 257,
         "startChar": 0,
