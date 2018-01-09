@@ -280,6 +280,30 @@
     },
     {
       "key": {
+        "uuid": "1dd32778_f6506409",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotifier.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T23:49:34Z",
+      "side": 1,
+      "message": "SystemDownloadNotifier should be going away once SDN2 lands and sticks.  I think it\u0027s ok to just ignore the param in there for now :).",
+      "parentUuid": "9c1b222d_cf873e46",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 87
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70a0956f_ddb50c97",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
         "patchSetId": 11
@@ -339,6 +363,30 @@
       "side": 1,
       "message": "A Javadoc is a comment that explains of a method/class/enum/feature (check out https://engdoc.corp.google.com/eng/doc/devguide/java/practices/javadoc.md?cl\u003dhead for more info).",
       "parentUuid": "b1fa7ca7_d1bdeb39",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850c169a_5ce01df0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T23:49:34Z",
+      "side": 1,
+      "message": "Ah yeah sorry!  Just add some documentation about each of the states/when or why to use them.  Thanks!",
+      "parentUuid": "5e7fa0a3_cae450a2",
       "range": {
         "startLine": 17,
         "startChar": 4,
