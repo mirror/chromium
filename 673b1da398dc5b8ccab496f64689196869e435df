@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a55885cb_63ab1583",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-09T17:13:09Z",
+      "side": 1,
+      "message": "Ah, I just missed that line. I\u0027ve updated to return a value here and in background.cc.",
+      "parentUuid": "9bec01a2_eae223d5",
+      "revId": "673b1da398dc5b8ccab496f64689196869e435df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00b30dcc_97202e32",
         "filename": "chrome/browser/vr/elements/environment/stars.cc",
         "patchSetId": 5
