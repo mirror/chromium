@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d3bb23c_6f99a37b",
+        "filename": "content/browser/service_worker/service_worker_client_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-09T05:33:48Z",
+      "side": 1,
+      "message": "Yes, we will do it after all other legacy IPC code using this info is gone.",
+      "parentUuid": "2a4c980a_bc3c3e3c",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddbf49b1_f4d4ba66",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f35bb32_ba6b9ea7",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1676,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-09T05:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddbf49b1_f4d4ba66",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c9c19e50_bbe5bfdd",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-09T05:33:48Z",
+      "side": 1,
+      "message": "Done.\nYes,we will use ClientInfoPtr after other methods mojofication done.",
+      "parentUuid": "1361a3c1_72fa325d",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a46323e5_0306774e",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 6
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "4449a392_41e1eece",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-09T05:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a46323e5_0306774e",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adc79719_d0489f47",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 6
@@ -102,6 +174,24 @@
       "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3a0b5d_c5b33560",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-09T05:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adc79719_d0489f47",
+      "revId": "fdbe96710d3f8711fd646c8653fcddea819d24a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
