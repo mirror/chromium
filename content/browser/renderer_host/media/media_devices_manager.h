@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_RENDERER_HOST_MEDIA_MEDIA_DEVICES_MANAGER_H_
 
 #include <array>
+#include <map>
 #include <vector>
 
 #include "base/callback.h"
@@ -16,6 +17,7 @@
 #include "content/common/media/media_devices.h"
 #include "media/audio/audio_device_description.h"
 #include "media/capture/video/video_capture_device_descriptor.h"
+#include "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom.h"
 
 namespace media {
 class AudioSystem;
@@ -91,6 +93,10 @@ class CONTENT_EXPORT MediaDevicesManager
   void UnsubscribeDeviceChangeNotifications(
       MediaDeviceType type,
       MediaDeviceChangeSubscriber* subscriber);
+
+  uint32_t SubscribeDeviceChangeNotifications(
+      blink::mojom::MediaDevicesListenerPtr listener);
+  void UnsubscribeDeviceChange(uint32_t subscription_id);
 
   // Tries to start device monitoring. If successful, enables caching of
   // enumeration results for the device types supported by the monitor.
@@ -181,6 +187,9 @@ class CONTENT_EXPORT MediaDevicesManager
 
   std::vector<MediaDeviceChangeSubscriber*>
       device_change_subscribers_[NUM_MEDIA_DEVICE_TYPES];
+
+  uint32_t current_subscription_id_ = 0u;
+  std::map<uint32_t, blink::mojom::MediaDevicesListenerPtr> subscriptions_;
 
   base::WeakPtrFactory<MediaDevicesManager> weak_factory_;
 

@@ -151,6 +151,11 @@ MediaDevicesDispatcherHost::~MediaDevicesDispatcherHost() {
               static_cast<MediaDeviceType>(i), this);
     }
   }
+
+  for (auto& subscription_id : subscription_ids_) {
+    media_stream_manager_->media_devices_manager()->UnsubscribeDeviceChange(
+        subscription_id);
+  }
 }
 
 void MediaDevicesDispatcherHost::EnumerateDevices(
@@ -259,6 +264,16 @@ void MediaDevicesDispatcherHost::UnsubscribeDeviceChangeNotifications(
     media_stream_manager_->media_devices_manager()
         ->UnsubscribeDeviceChangeNotifications(type, this);
   }
+}
+
+void MediaDevicesDispatcherHost::AddMediaDevicesListener(
+    blink::mojom::MediaDevicesListenerPtr listener) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  uint32_t subscription_id =
+      media_stream_manager_->media_devices_manager()
+          ->SubscribeDeviceChangeNotifications(std::move(listener));
+  subscription_ids_.push_back(subscription_id);
 }
 
 void MediaDevicesDispatcherHost::OnDevicesChanged(
