@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e848e030_49cdec56",
+        "filename": "ui/gfx/mac/io_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-09T22:55:54Z",
+      "side": 1,
+      "message": "The call to -[CALayer setContents:io_surface] will use this value to interpret the texture\u0027s format.\n\nIt is indeed true that OpenGL ignores this (except, perhaps, that bits per pixel of the formats may need to match).",
+      "parentUuid": "28604379_e4583a93",
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c876eb95_57fe502a",
         "filename": "ui/gl/gl_image_io_surface.mm",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Update: it seems like CALayer is happy with 2101010 IOSurfaces if\nMacOSX \u003e\u003d 10.13 (see the bug).  Landing this CL is only part of\nthe story since IsNativeGpuMemoryBufferConfigurationSupported()\non ToT would not allow BGRX_1010102 GpuMemoryBuffers: follow up\nCLs will augment the code (prob. via a GpuInfo) to allow GMBs of\nthis format or not, depending on the version. SG ?",
       "parentUuid": "e77008f4_88485034",
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d312faa_881fa6dc",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-09T22:55:54Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "5286633f_e4b2cb83",
       "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
