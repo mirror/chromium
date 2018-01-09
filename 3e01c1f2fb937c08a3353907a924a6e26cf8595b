@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c977d7ef_937ba155",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-09T17:21:07Z",
+      "side": 1,
+      "message": "Drive-by: I\u0027d prefer this to go to content/ layer (e.g. RenderFrameDevToolsAgentHost) - DevToolsWindow does not need to know about any coord space transforms. As a bonus, it should fix \"inspect element\" for every other embedder, e.g. content shell.",
+      "revId": "3e01c1f2fb937c08a3353907a924a6e26cf8595b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
