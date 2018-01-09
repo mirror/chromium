@@ -578,11 +578,6 @@ void NavigationRequest::CreateNavigationHandle() {
   }
 }
 
-void NavigationRequest::TransferNavigationHandleOwnership(
-    RenderFrameHostImpl* render_frame_host) {
-  render_frame_host->SetNavigationHandle(std::move(navigation_handle_));
-}
-
 void NavigationRequest::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
     const scoped_refptr<ResourceResponse>& response) {
@@ -1241,8 +1236,7 @@ void NavigationRequest::CommitErrorPage(
     RenderFrameHostImpl* render_frame_host,
     const base::Optional<std::string>& error_page_content) {
   TransferNavigationHandleOwnership(render_frame_host);
-  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
-      render_frame_host);
+  navigation_handle_->ReadyToCommitNavigation(render_frame_host);
   render_frame_host->FailedNavigation(common_params_, request_params_,
                                       has_stale_copy_in_cache_, net_error_,
                                       error_page_content);

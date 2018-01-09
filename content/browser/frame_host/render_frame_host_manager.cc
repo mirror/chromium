@@ -372,9 +372,7 @@ void RenderFrameHostManager::SwapOutOldFrame(
       CreateRenderFrameProxyHost(old_render_frame_host->GetSiteInstance(),
                                  old_render_frame_host->render_view_host());
 
-  // Reset any NavigationHandle in the RenderFrameHost. This will prevent any
-  // ongoing navigation from attempting to transfer.
-  old_render_frame_host->SetNavigationHandle(nullptr);
+  // TODO(ahemery): Check that this is okay to delete.
 
   // Tell the old RenderFrameHost to swap out and be replaced by the proxy.
   old_render_frame_host->SwapOut(proxy, true);
@@ -502,9 +500,9 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
       // If the speculative RenderFrameHost is trying to commit a navigation,
       // inform the NavigationController that the load of the corresponding
       // NavigationEntry stopped.
-      if (speculative_render_frame_host_->navigation_handle()) {
+      if (speculative_render_frame_host_->GetNavigationHandle()) {
         frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
-            speculative_render_frame_host_->navigation_handle()
+            speculative_render_frame_host_->GetNavigationHandle()
                 ->pending_nav_entry_id());
       }
       DiscardUnusedFrame(UnsetSpeculativeRenderFrameHost());
@@ -634,9 +632,9 @@ void RenderFrameHostManager::CleanUpNavigation() {
     // If the speculative RenderFrameHost is trying to commit a navigation,
     // inform the NavigationController that the load of the corresponding
     // NavigationEntry stopped.
-    if (speculative_render_frame_host_->navigation_handle()) {
+    if (speculative_render_frame_host_->GetNavigationHandle()) {
       frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
-          speculative_render_frame_host_->navigation_handle()
+          speculative_render_frame_host_->GetNavigationHandle()
               ->pending_nav_entry_id());
     }
     bool was_loading = speculative_render_frame_host_->is_loading();

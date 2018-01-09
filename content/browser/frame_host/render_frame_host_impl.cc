@@ -574,9 +574,10 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
 }
 
 RenderFrameHostImpl::~RenderFrameHostImpl() {
+  // TODO(ahemery): VERIFY THIS, not entirely sure about params, doability.
   // Destroying navigation handle may call into delegates/observers,
   // so we do it early while |this| object is still in a sane state.
-  navigation_handle_.reset();
+  frame_tree_node->ResetNavigationRequest(false, true);
 
   // Release the WebUI instances before all else as the WebUI may accesses the
   // RenderFrameHost during cleanup.
@@ -1055,8 +1056,8 @@ void RenderFrameHostImpl::RenderProcessGone(SiteInstanceImpl* site_instance) {
   DCHECK_EQ(site_instance_.get(), site_instance);
 
   // The renderer process is gone, so this frame can no longer be loading.
-  if (navigation_handle_)
-    navigation_handle_->set_net_error_code(net::ERR_ABORTED);
+  if (GetNavigationHandle())
+    GetNavigationHandle()->set_net_error_code(net::ERR_ABORTED);
   ResetLoadingState();
 
   // The renderer process is gone, so the |stream_handle_| will no longer be
@@ -1487,8 +1488,8 @@ void RenderFrameHostImpl::OnDidFailProvisionalLoadWithError(
   // happening in practice. See https://crbug.com/605289.
 
   // Update the error code in the NavigationHandle of the navigation.
-  if (navigation_handle_) {
-    navigation_handle_->set_net_error_code(
+  if (GetNavigationHandle()) {
+    GetNavigationHandle()->set_net_error_code(
         static_cast<net::Error>(params.error_code));
   }
 
@@ -1669,7 +1670,7 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
     return;
   }
 
-  if (!navigation_handle_) {
+  if (!GetNavigationHandle()) {
     // The browser has not been notified about the start of the load in this
     // renderer yet (e.g., for same-document navigations that start in the
     // renderer). Do it now.
@@ -1750,9 +1751,20 @@ GlobalFrameRoutingId RenderFrameHostImpl::GetGlobalFrameRoutingId() {
   return GlobalFrameRoutingId(GetProcess()->GetID(), GetRoutingID());
 }
 
+NavigationRequest* RenderFrameHostImpl::GetNavigationRequest() {
+  return frame_tree_node_->navigation_request();
+}
+
 void RenderFrameHostImpl::SetNavigationHandle(
     std::unique_ptr<NavigationHandleImpl> navigation_handle) {
-  navigation_handle_ = std::move(navigation_handle);
+  NavigationRequest* navigation_request = GetNavigationRequest();
+  navigation_request = std::move(navigation_handle);
+}
+
+NavigationHandleImpl* RenderFrameHostImpl::GetNavigationHandle() {
+  return frame_tree_node_->navigation_request()
+             ? frame_tree_node->navigation_request()->navigation_handle()
+             : nullptr;
 }
 
 void RenderFrameHostImpl::SwapOut(
@@ -2697,7 +2709,7 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   }
 
   is_loading_ = false;
-  navigation_handle_.reset();
+  frame_tree_node_->ResetNavigationRequest();
 
   // Only inform the FrameTreeNode of a change in load state if the load state
   // of this RenderFrameHost is being tracked.
@@ -3282,11 +3294,9 @@ void RenderFrameHostImpl::DispatchBeforeUnload(bool for_navigation,
   if (!for_navigation) {
     // Cancel any pending navigations, to avoid their navigation commit/fail
     // event from wiping out the is_waiting_for_beforeunload_ack_ state.
-    if (frame_tree_node_->navigation_request() &&
-        frame_tree_node_->navigation_request()->navigation_handle()) {
-      frame_tree_node_->navigation_request()
-          ->navigation_handle()
-          ->set_net_error_code(net::ERR_ABORTED);
+    if (GetNavigationRequest() && GetNavigationRequest()->navigation_handle()) {
+      GetNavigationRequest()->navigation_handle()->set_net_error_code(
+          net::ERR_ABORTED);
     }
     frame_tree_node_->ResetNavigationRequest(false, true);
   }
@@ -3629,8 +3639,8 @@ void RenderFrameHostImpl::FailedNavigation(
 
   // An error page is expected to commit, hence why is_loading_ is set to true.
   is_loading_ = true;
-  if (navigation_handle_)
-    DCHECK_NE(net::OK, navigation_handle_->GetNetErrorCode());
+  if (GetNavigationHandle())
+    DCHECK_NE(net::OK, GetNavigationHandle()->GetNetErrorCode());
   frame_tree_node_->ResetNavigationRequest(true, true);
 }
 
@@ -4299,6 +4309,7 @@ void RenderFrameHostImpl::GetInterface(
   }
 }
 
+// TODO(ahemery): Handle this function
 std::unique_ptr<NavigationHandleImpl>
 RenderFrameHostImpl::TakeNavigationHandleForCommit(
     const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
