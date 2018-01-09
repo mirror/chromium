@@ -1829,6 +1829,8 @@ enum WebFeature {
   kFilterAsContainingBlockMayChangeOutput = 2320,
   kDispatchMouseUpDownEventOnDisabledFormControl = 2321,
   kCSSSelectorPseudoMatches = 2322,
+  kInputTypeFileSecureOriginOpenChooser = 2323,
+  kInputTypeFileInsecureOriginOpenChooser = 2324,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
