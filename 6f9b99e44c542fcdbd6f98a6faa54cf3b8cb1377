@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8299b52_c1ad38d8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebApkIntegrationTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-09T22:33:16Z",
+      "side": 1,
+      "message": "We want to use the intent from HostBrowserLauncher#launchInHostBrowser().\n\nWebappLauncherActivity#createWebappLaunchIntent() does not launch WebappLauncherActivity\n\nYou need to set the ChromeSwitches#SKIP_WEBAPK_VERIFICATION command line flag for the WebAPK to launch.",
+      "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fcade0_5b16ca2c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-09T22:33:16Z",
+      "side": 1,
+      "message": "Can\u0027t you use ChromeActivityTestRule#startActivityCompletely() instead of duplicating the logic here? This seems to work for me with this change: https://chromium-review.googlesource.com/c/chromium/src/+/839880 If we cannot use ChromeActivityTestRule#startActivityCompletely() as is we should modify it so that we can use it.",
+      "revId": "6f9b99e44c542fcdbd6f98a6faa54cf3b8cb1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
