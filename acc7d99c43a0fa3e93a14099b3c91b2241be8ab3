@@ -87,6 +87,24 @@
       "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100a58ff_486ace93",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T23:28:05Z",
+      "side": 1,
+      "message": "Ah... my original concern was that we could confuse the utility process that\u0027s combining the different pictures together, but I think I\u0027m mistaken in that regard. Regarding unguessable tokens, I think it could make things easier: if we could embed the unguessable token for the frame directly during serialization, then we wouldn\u0027t need to do picture ID mapping in PdfCompositorImpl.\n\nSince frames don\u0027t have an unguessable token associated yet, we\u0027ll probably have to do something more complicated where we accumulate routing IDs in a vector, send the vector with the printing IPCs, and have the browser associate the actual child ID with it, and forward the serialized picture, subframe routing IDs, plus the child ID over to the printing utility process.\n\nFor now, I\u0027d propose something like this (this is somewhat orthogonal to enne\u0027s idea, since this is more about the cross-process reassembly):\n- Add a method to RemoteFrameClient and WebRemoteFrameClient like RegisterCrossProcessFrameForPrintingContext(uint32_t picture_id, std::map\u003cuint32_t, int\u003e* picture_id_to_routing_id_map);\n- content::RenderFrameProxy::RegisterCrossProcessFrameForPrintingContext() will simply insert picture ID + GetRoutingID() into the map.\n- Once painting the page for printing is done, the renderer sends the SkPicture and the map of dependent cross-process frame proxy IDs to the browser.\n- The browser can take the proxy routing ID values from the map and convert them into a RenderFrameHost child + routing ID (validating that the frame actually contains the subframe proxies in question). It sends:\n  - the child ID and the routing ID of the frame that produced the SkPicture\n  - the SkPicture\n  - the picture ID to routing ID map, with the routing IDs converted to (child ID, render frame host ID) tuples.\n\nSince the utility process will only use the RenderFrameHost child ID + routing ID for reassembly, reassembly becomes a simple mapping of picture ID -\u003e render frame host ID, and then looking up the corresponding SkPicture for that RFH in the utility process if it exists.\n\n(Btw, I\u0027m assuming that the normal print path uses the //content objects and not the custom embedder helpers in //components/printing/renderer/print_render_frame_helper.cc...)",
+      "parentUuid": "74041432_8149695e",
+      "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
