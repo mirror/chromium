@@ -232,10 +232,8 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
   safe_browsing::ChromePasswordProtectionService* password_protection =
       safe_browsing::ChromePasswordProtectionService::
           GetPasswordProtectionService(profile);
-  if (password_protection) {
-    AddSettingsPageUIHandler(
-        base::MakeUnique<ChangePasswordHandler>(profile, password_protection));
-  }
+  AddSettingsPageUIHandler(
+      base::MakeUnique<ChangePasswordHandler>(profile, password_protection));
 #endif
 
 #if defined(OS_CHROMEOS)

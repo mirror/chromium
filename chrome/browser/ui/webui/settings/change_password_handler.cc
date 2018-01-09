@@ -18,7 +18,6 @@ ChangePasswordHandler::ChangePasswordHandler(
     Profile* profile,
     safe_browsing::ChromePasswordProtectionService* service)
     : profile_(profile), service_(service) {
-  DCHECK(service_);
 }
 
 ChangePasswordHandler::~ChangePasswordHandler() {}
@@ -51,6 +50,8 @@ void ChangePasswordHandler::HandleInitialize(const base::ListValue* args) {
 }
 
 void ChangePasswordHandler::HandleChangePassword(const base::ListValue* args) {
+  if (!service_)
+    return;
   service_->OnUserAction(
       web_ui()->GetWebContents(),
       safe_browsing::PasswordProtectionService::CHROME_SETTINGS,
