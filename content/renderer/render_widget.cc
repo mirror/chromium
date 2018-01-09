@@ -1313,8 +1313,14 @@ void RenderWidget::Resize(const ResizeParams& params) {
   if (!GetWebWidget())
     return;
 
-  if (params.local_surface_id)
+  // If the content_source_id of ResizeParams doesn't match
+  // |current_content_source_id_|, then the given LocalSurfaceId was generated
+  // before the navigation. Continue with the resize but don't use the
+  // LocalSurfaceId until the right one comes.
+  if (params.local_surface_id &&
+      params.content_source_id == current_content_source_id_) {
     local_surface_id_ = *params.local_surface_id;
+  }
 
   if (compositor_) {
     // If surface synchronization is enabled, then this will use the provided
@@ -1323,7 +1329,7 @@ void RenderWidget::Resize(const ResizeParams& params) {
     // it receives a valid surface ID. This is a no-op if surface
     // synchronization is disabled.
     DCHECK(!compositor_->IsSurfaceSynchronizationEnabled() ||
-           !params.needs_resize_ack || local_surface_id_.is_valid());
+           !params.needs_resize_ack || params.local_surface_id->is_valid());
     compositor_->SetViewportSize(params.physical_backing_size,
                                  local_surface_id_);
     compositor_->SetBrowserControlsHeight(
@@ -1391,6 +1397,11 @@ void RenderWidget::Resize(const ResizeParams& params) {
   // If a resize ack is requested and it isn't set-up, then no more resizes will
   // come in and in general things will go wrong.
   DCHECK(!params.needs_resize_ack || next_paint_is_resize_ack());
+
+  // If content_source_id is not what we expect, send an ack immediately so we
+  // can unblock the next resize and hopefully get the right id.
+  if (params.content_source_id != current_content_source_id_)
+    DidResizeOrRepaintAck();
 }
 
 void RenderWidget::SetScreenMetricsEmulationParameters(
@@ -2527,9 +2538,15 @@ uint32_t RenderWidget::GetContentSourceId() {
   return current_content_source_id_;
 }
 
-void RenderWidget::IncrementContentSourceId() {
-  if (compositor_)
+void RenderWidget::DidNavigate() {
+  if (compositor_) {
     compositor_->SetContentSourceId(++current_content_source_id_);
+    local_surface_id_ = viz::LocalSurfaceId();
+    compositor_->SetViewportSize(physical_backing_size_, local_surface_id_);
+  }
+  // Ack the resize so we can get a new LocalSurfaceId. The old resize will not
+  // get naturally acked because we won't commit and draw.
+  DidResizeOrRepaintAck();
 }
 
 blink::WebWidget* RenderWidget::GetWebWidget() const {
