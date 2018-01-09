@@ -1755,6 +1755,10 @@ void RenderFrameHostImpl::SetNavigationHandle(
   navigation_handle_ = std::move(navigation_handle);
 }
 
+NavigationRequest* RenderFrameHostImpl::GetNavigationRequest() {
+  return frame_tree_node_->navigation_request();
+}
+
 void RenderFrameHostImpl::SwapOut(
     RenderFrameProxyHost* proxy,
     bool is_loading) {
@@ -3282,11 +3286,9 @@ void RenderFrameHostImpl::DispatchBeforeUnload(bool for_navigation,
   if (!for_navigation) {
     // Cancel any pending navigations, to avoid their navigation commit/fail
     // event from wiping out the is_waiting_for_beforeunload_ack_ state.
-    if (frame_tree_node_->navigation_request() &&
-        frame_tree_node_->navigation_request()->navigation_handle()) {
-      frame_tree_node_->navigation_request()
-          ->navigation_handle()
-          ->set_net_error_code(net::ERR_ABORTED);
+    if (GetNavigationRequest() && GetNavigationRequest()->navigation_handle()) {
+      GetNavigationRequest()->navigation_handle()->set_net_error_code(
+          net::ERR_ABORTED);
     }
     frame_tree_node_->ResetNavigationRequest(false, true);
   }
