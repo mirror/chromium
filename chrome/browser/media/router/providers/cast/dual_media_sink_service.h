@@ -15,12 +15,14 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/sequence_checker.h"
+#include "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
+#include "chrome/common/media_router/media_source.h"
+#include "url/origin.h"
 
 namespace media_router {
 
 class CastMediaSinkService;
-class DialMediaSinkService;
 
 // This class uses DialMediaSinkService and CastMediaSinkService to discover
 // sinks used by the Cast MediaRouteProvider. It also encapsulates the setup
@@ -39,6 +41,14 @@ class DualMediaSinkService {
   using Subscription =
       std::unique_ptr<OnSinksDiscoveredProviderCallbackList::Subscription>;
 
+  using OnSinksReceivedCallback = DialMediaSinkService::OnSinksReceivedCallback;
+  using OnSinksReceivedCallbackList = base::CallbackList<void(
+      const MediaSource::Id& media_source_id,
+      const std::vector<MediaSinkInternal>& available_sinks,
+      const std::vector<url::Origin>& origins)>;
+  using SinksReceivedSubscription =
+      std::unique_ptr<OnSinksReceivedCallbackList::Subscription>;
+
   // Returns the lazily-created leaky singleton instance.
   static DualMediaSinkService* GetInstance();
 
@@ -54,11 +64,18 @@ class DualMediaSinkService {
   Subscription AddSinksDiscoveredCallback(
       const OnSinksDiscoveredProviderCallback& callback);
 
+  // Adds |callback| to be notified when the list of available sinks for a media
+  // source changes.
+  SinksReceivedSubscription AddSinksReceivedCallback(
+      const OnSinksReceivedCallback& callback);
+
   void OnUserGesture();
 
   // Starts mDNS discovery on |cast_media_sink_service_| if it is not already
   // started.
   void StartMdnsDiscovery();
+  void AddSinkQuery(const MediaSource& media_source);
+  void RemoveSinkQuery(const MediaSource& media_source);
 
  private:
   friend class DualMediaSinkServiceTest;
@@ -82,11 +99,17 @@ class DualMediaSinkService {
   void OnSinksDiscovered(const std::string& provider_name,
                          std::vector<MediaSinkInternal> sinks);
 
+  void OnSinksReceived(const MediaSource::Id& media_source_id,
+                       const std::vector<MediaSinkInternal>& available_sinks,
+                       const std::vector<url::Origin>& origins);
+
   std::unique_ptr<CastMediaSinkService> cast_media_sink_service_;
   std::unique_ptr<DialMediaSinkService> dial_media_sink_service_;
 
   OnSinksDiscoveredProviderCallbackList sinks_discovered_callbacks_;
   base::flat_map<std::string, std::vector<MediaSinkInternal>> current_sinks_;
+
+  OnSinksReceivedCallbackList sinks_received_callbacks_;
 
   SEQUENCE_CHECKER(sequence_checker_);
   DISALLOW_COPY_AND_ASSIGN(DualMediaSinkService);

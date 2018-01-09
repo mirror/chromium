@@ -28,6 +28,13 @@ DualMediaSinkService::AddSinksDiscoveredCallback(
   return sinks_discovered_callbacks_.Add(callback);
 }
 
+DualMediaSinkService::SinksReceivedSubscription
+DualMediaSinkService::AddSinksReceivedCallback(
+    const OnSinksReceivedCallback& callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return sinks_received_callbacks_.Add(callback);
+}
+
 void DualMediaSinkService::OnUserGesture() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
@@ -41,6 +48,16 @@ void DualMediaSinkService::StartMdnsDiscovery() {
 
   if (cast_media_sink_service_)
     cast_media_sink_service_->StartMdnsDiscovery();
+}
+
+void DualMediaSinkService::AddSinkQuery(const MediaSource& media_source) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  dial_media_sink_service_->AddSinkQuery(media_source);
+}
+
+void DualMediaSinkService::RemoveSinkQuery(const MediaSource& media_source) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  dial_media_sink_service_->RemoveSinkQuery(media_source);
 }
 
 DualMediaSinkService::DualMediaSinkService() {
@@ -59,12 +76,14 @@ DualMediaSinkService::DualMediaSinkService() {
   if (cast_media_sink_service_)
     dial_sink_added_cb = cast_media_sink_service_->GetDialSinkAddedCallback();
 
-  dial_media_sink_service_ = std::make_unique<DialMediaSinkService>(
-      g_browser_process->system_request_context());
+  dial_media_sink_service_ =
+      std::make_unique<DialMediaSinkService>(request_context);
   dial_media_sink_service_->Start(
       base::BindRepeating(&DualMediaSinkService::OnSinksDiscovered,
                           base::Unretained(this), "dial"),
-      dial_sink_added_cb);
+      dial_sink_added_cb,
+      base::BindRepeating(&DualMediaSinkService::OnSinksReceived,
+                          base::Unretained(this)));
 }
 
 DualMediaSinkService::DualMediaSinkService(
@@ -83,6 +102,14 @@ void DualMediaSinkService::OnSinksDiscovered(
   auto& sinks_for_provider = current_sinks_[provider_name];
   sinks_for_provider = std::move(sinks);
   sinks_discovered_callbacks_.Notify(provider_name, sinks_for_provider);
+}
+
+void DualMediaSinkService::OnSinksReceived(
+    const MediaSource::Id& media_source_id,
+    const std::vector<MediaSinkInternal>& available_sinks,
+    const std::vector<url::Origin>& origins) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  sinks_received_callbacks_.Notify(media_source_id, available_sinks, origins);
 }
 
 }  // namespace media_router

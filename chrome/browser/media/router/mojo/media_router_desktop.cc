@@ -8,6 +8,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/router/media_router_factory.h"
 #include "chrome/browser/media/router/media_router_feature.h"
+#include "chrome/browser/media/router/media_sinks_observer.h"
 #include "chrome/browser/media/router/mojo/media_route_controller.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
 #include "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.h"
@@ -61,6 +62,26 @@ MediaRouterDesktop::GetProviderIdForPresentation(
     return MediaRouteProviderId::EXTENSION;
   }
   return MediaRouterMojoImpl::GetProviderIdForPresentation(presentation_id);
+}
+
+bool MediaRouterDesktop::RegisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  if (media_sink_service_) {
+    media_sink_service_->AddSinkQuery(observer->source());
+    if (!media_sink_service_sinks_received_subscription_)
+      media_sink_service_sinks_received_subscription_ =
+          media_sink_service_->AddSinksReceivedCallback(base::BindRepeating(
+              &MediaRouterDesktop::OnSinksReceived, base::Unretained(this),
+              MediaRouteProviderId::EXTENSION));
+  }
+  return MediaRouterMojoImpl::RegisterMediaSinksObserver(observer);
+}
+
+void MediaRouterDesktop::UnregisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  if (media_sink_service_)
+    media_sink_service_->RemoveSinkQuery(observer->source());
+  return MediaRouterMojoImpl::UnregisterMediaSinksObserver(observer);
 }
 
 MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context)

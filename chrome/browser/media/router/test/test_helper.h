@@ -117,9 +117,10 @@ class MockDialMediaSinkService : public DialMediaSinkService {
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
   ~MockDialMediaSinkService() override;
 
-  MOCK_METHOD2(Start,
+  MOCK_METHOD3(Start,
                void(const OnSinksDiscoveredCallback&,
-                    const OnDialSinkAddedCallback&));
+                    const OnDialSinkAddedCallback&,
+                    const OnSinksReceivedCallback&));
   MOCK_METHOD0(OnUserGesture, void());
 };
 
