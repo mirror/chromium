@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f98532_f21e0491",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1232559
+      },
+      "writtenOn": "2018-01-09T19:37:37Z",
+      "side": 1,
+      "message": "Do we also want to apply a similar check when using the IsolateOrigins enterprise policy?",
+      "revId": "0e2c97bb56082c1d59aab59993581692fe26d44f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
