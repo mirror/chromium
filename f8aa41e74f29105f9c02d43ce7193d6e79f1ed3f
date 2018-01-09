@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "b00d129c_1df4b214",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T17:16:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we want the destructor calling this function exactly, and I don\u0027t think we want to allow a null root window (as the class expects a non-null root_window_ at all times). Instead I\u0027ve extracted the common functionality for teardown.\n\nI\u0027d also like to simplify this here by not worrying about the begin frame source, and just DCHECKing that we don\u0027t currently have a surface (as is the case for VR), with a TODO for if we ever want to use this function when we do have a surface.",
+      "parentUuid": "fd2edcb0_419c3513",
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75d7623c_8409f075",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 2
@@ -97,6 +115,24 @@
       "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f37974_ce48329f",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T17:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75d7623c_8409f075",
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
