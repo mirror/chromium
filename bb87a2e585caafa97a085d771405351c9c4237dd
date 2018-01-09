@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b35e131_87e84bcd",
+        "filename": "third_party/WebKit/Source/core/paint/SVGContainerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-09T23:48:30Z",
+      "side": 0,
+      "message": "Side note: this looks WTF to me. I think instead of computing the viewport\u0027s bounding rect in local space and apply clip in local space, it should have just applied viewport clip in its native space. i.e. swapping line #43~45 with #46~56.\n\nI agree it is beyond the scope of this CL though.",
+      "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
