@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1559abd_838c49b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-01-09T14:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a7c70c_6c3f1203",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc194170_4d696e00",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732f6a7b_0dde8f78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-01-09T14:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc194170_4d696e00",
+      "range": {
+        "startLine": 9,
+        "startChar": 98,
+        "endLine": 9,
+        "endChar": 120
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "37dcfac9_a843bd7a",
+        "filename": "chrome/installer/zucchini/address_translator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-01-09T14:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36a42df0_43db5803",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00b29cd2_bf15092f",
         "filename": "chrome/installer/zucchini/address_translator_unittest.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9012e2a9_fd5011fa",
+        "filename": "chrome/installer/zucchini/address_translator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-01-09T14:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00b29cd2_bf15092f",
+      "range": {
+        "startLine": 97,
+        "startChar": 36,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c26a0b4f_5e8bbe97",
         "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2687dc7_da426d54",
+        "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-01-09T14:51:45Z",
+      "side": 1,
+      "message": "Done\n\nI choose adventure 1 for now...",
+      "parentUuid": "c26a0b4f_5e8bbe97",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 62
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
