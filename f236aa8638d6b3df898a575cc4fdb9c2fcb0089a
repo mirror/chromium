@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "15af0d7d_1e341d8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-09T01:03:41Z",
+      "side": 1,
+      "message": "nit: add space",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af39dd4_fdd3b1e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-09T01:03:41Z",
+      "side": 1,
+      "message": "missing \"to\"?",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f73ebb7e_66405be1",
         "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
         "patchSetId": 6
@@ -93,6 +133,29 @@
       "writtenOn": "2018-01-09T00:52:56Z",
       "side": 1,
       "message": "you might want to consider replacing this bool with an enum so calls to these methods are self-documenting, e.g.:\n\n  enum class MountPolicy {\n    kMount,\n    kDontMount,\n  };",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66398a88_6daac223",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-09T01:03:41Z",
+      "side": 1,
+      "message": "nit: true /* mount */",
+      "range": {
+        "startLine": 44,
+        "startChar": 46,
+        "endLine": 44,
+        "endChar": 50
+      },
       "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
