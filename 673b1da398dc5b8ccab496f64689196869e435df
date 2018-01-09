@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fb26080_dc7e7de4",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-09T16:44:00Z",
+      "side": 1,
+      "message": "Yeah, this seemed strange to me, too, but I was following the examples here:\nhttps://www.khronos.org/opengl/wiki/Core_Language_(GLSL)",
+      "parentUuid": "8656c268_486988d6",
+      "revId": "673b1da398dc5b8ccab496f64689196869e435df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00b30dcc_97202e32",
         "filename": "chrome/browser/vr/elements/environment/stars.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "673b1da398dc5b8ccab496f64689196869e435df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67b2f83_b83c38f1",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-09T16:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00b30dcc_97202e32",
+      "revId": "673b1da398dc5b8ccab496f64689196869e435df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
