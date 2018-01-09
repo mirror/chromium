@@ -16,6 +16,24 @@
       "revId": "25827763229f6b6050ab10c410ed5d9c9df8dcdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d093a200_16902cb7",
+        "filename": "ash/system/power/power_button_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-09T01:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c301aa9_8bcd65a2",
+      "revId": "25827763229f6b6050ab10c410ed5d9c9df8dcdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
