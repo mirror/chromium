@@ -58,7 +58,7 @@ class CORE_EXPORT LiveNodeListBase : public GarbageCollectedMixin {
 
   ContainerNode& RootNode() const;
 
-  void DidMoveToDocument(Document& old_document, Document& new_document);
+  void DidMoveToTreeScope(TreeScope& old_scope, TreeScope& new_scope);
   ALWAYS_INLINE bool IsRootedAtTreeScope() const {
     return root_type_ == static_cast<unsigned>(NodeListRootType::kTreeScope);
   }
@@ -70,7 +70,7 @@ class CORE_EXPORT LiveNodeListBase : public GarbageCollectedMixin {
   }
   ContainerNode& ownerNode() const { return *owner_node_; }
 
-  virtual void InvalidateCache(Document* old_document = nullptr) const = 0;
+  virtual void InvalidateCache(TreeScope* old_scope = nullptr) const = 0;
   void InvalidateCacheForAttribute(const QualifiedName*) const;
 
   static bool ShouldInvalidateTypeOnAttributeChange(NodeListInvalidationType,
@@ -78,6 +78,7 @@ class CORE_EXPORT LiveNodeListBase : public GarbageCollectedMixin {
 
  protected:
   Document& GetDocument() const { return owner_node_->GetDocument(); }
+  TreeScope& GetTreeScope() const { return owner_node_->GetTreeScope(); }
 
   ALWAYS_INLINE NodeListRootType RootType() const {
     return static_cast<NodeListRootType>(root_type_);

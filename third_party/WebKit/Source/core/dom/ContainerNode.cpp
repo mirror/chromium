@@ -1646,11 +1646,11 @@ void ContainerNode::InvalidateNodeListCachesInAncestors(
   if (attr_name && !attribute_owner_element)
     return;
 
-  if (!GetDocument().ShouldInvalidateNodeListCaches(attr_name))
+  if (!GetTreeScope().ShouldInvalidateNodeListCaches(attr_name))
     return;
 
   if (isConnected())
-    GetDocument().InvalidateNodeListCaches(attr_name);
+    GetTreeScope().InvalidateNodeListCaches(attr_name);
 
   for (ContainerNode* node = this; node; node = node->parentNode()) {
     if (NodeListsNodeData* lists = node->NodeLists())

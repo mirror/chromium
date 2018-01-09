@@ -28,6 +28,7 @@
 #define TreeScope_h
 
 #include "core/CoreExport.h"
+#include "core/dom/LiveNodeListRegistry.h"
 #include "core/dom/TreeOrderedMap.h"
 #include "core/html/forms/RadioButtonGroupScope.h"
 #include "core/layout/HitTestRequest.h"
@@ -43,6 +44,8 @@ class Element;
 class HTMLMapElement;
 class HitTestResult;
 class IdTargetObserverRegistry;
+class LiveNodeListBase;
+class QualifiedName;
 class SVGTreeScopeResources;
 class ScopedStyleResolver;
 class Node;
@@ -130,6 +133,14 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
 
   SVGTreeScopeResources& EnsureSVGTreeScopedResources();
 
+  void RegisterNodeList(const LiveNodeListBase*);
+  void UnregisterNodeList(const LiveNodeListBase*);
+  void RegisterNodeListWithIdNameCache(const LiveNodeListBase*);
+  void UnregisterNodeListWithIdNameCache(const LiveNodeListBase*);
+  bool ShouldInvalidateNodeListCaches(
+      const QualifiedName* attr_name = nullptr) const;
+  void InvalidateNodeListCaches(const QualifiedName* attr_name);
+
  protected:
   TreeScope(ContainerNode&, Document&);
   TreeScope(Document&);
@@ -157,6 +168,10 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
   RadioButtonGroupScope radio_button_group_scope_;
 
   Member<SVGTreeScopeResources> svg_tree_scoped_resources_;
+
+  HeapHashSet<WeakMember<const LiveNodeListBase>>
+      lists_invalidated_at_tree_scope_;
+  LiveNodeListRegistry node_lists_;
 };
 
 inline bool TreeScope::HasElementWithId(const AtomicString& id) const {

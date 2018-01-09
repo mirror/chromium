@@ -182,7 +182,7 @@ HTMLCollection::HTMLCollection(ContainerNode& owner_node,
   // Keep this in the child class because |registerNodeList| requires wrapper
   // tracing and potentially calls virtual methods which is not allowed in a
   // base class constructor.
-  GetDocument().RegisterNodeList(this);
+  GetTreeScope().RegisterNodeList(this);
 }
 
 HTMLCollection* HTMLCollection::Create(ContainerNode& base,
@@ -192,9 +192,9 @@ HTMLCollection* HTMLCollection::Create(ContainerNode& base,
 
 HTMLCollection::~HTMLCollection() {}
 
-void HTMLCollection::InvalidateCache(Document* old_document) const {
+void HTMLCollection::InvalidateCache(TreeScope* old_scope) const {
   collection_items_cache_.Invalidate();
-  InvalidateIdNameCacheMaps(old_document);
+  InvalidateIdNameCacheMaps(old_scope);
 }
 
 unsigned HTMLCollection::length() const {

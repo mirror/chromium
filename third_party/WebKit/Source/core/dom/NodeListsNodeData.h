@@ -145,10 +145,8 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
            tag_collection_ns_caches_.IsEmpty();
   }
 
-  void AdoptTreeScope() { InvalidateCaches(); }
-
-  void AdoptDocument(Document& old_document, Document& new_document) {
-    DCHECK_NE(old_document, new_document);
+  void AdoptTreeScope(TreeScope& old_scope, TreeScope& new_scope) {
+    DCHECK_NE(&old_scope, &new_scope);
 
     NodeListAtomicNameCacheMap::const_iterator atomic_name_cache_end =
         atomic_name_caches_.end();
@@ -156,7 +154,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
              atomic_name_caches_.begin();
          it != atomic_name_cache_end; ++it) {
       LiveNodeListBase* list = it->value;
-      list->DidMoveToDocument(old_document, new_document);
+      list->DidMoveToTreeScope(old_scope, new_scope);
     }
 
     TagCollectionNSCache::const_iterator tag_end =
@@ -166,7 +164,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
          it != tag_end; ++it) {
       LiveNodeListBase* list = it->value;
       DCHECK(!list->IsRootedAtTreeScope());
-      list->DidMoveToDocument(old_document, new_document);
+      list->DidMoveToTreeScope(old_scope, new_scope);
     }
   }
 

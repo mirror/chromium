@@ -34,6 +34,8 @@
 #include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/IdTargetObserverRegistry.h"
+#include "core/dom/LiveNodeList.h"
+#include "core/dom/LiveNodeListBase.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/TreeScopeAdopter.h"
@@ -42,6 +44,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLAnchorElement.h"
+#include "core/html/HTMLCollection.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLMapElement.h"
 #include "core/html_names.h"
@@ -320,6 +323,78 @@ SVGTreeScopeResources& TreeScope::EnsureSVGTreeScopedResources() {
   return *svg_tree_scoped_resources_;
 }
 
+static void LiveNodeListBaseWriteBarrier(void* parent,
+                                         const LiveNodeListBase* list) {
+  if (IsHTMLCollectionType(list->GetType())) {
+    ScriptWrappableVisitor::WriteBarrier(
+        static_cast<const HTMLCollection*>(list));
+  } else {
+    ScriptWrappableVisitor::WriteBarrier(
+        static_cast<const LiveNodeList*>(list));
+  }
+}
+
+void TreeScope::RegisterNodeList(const LiveNodeListBase* list) {
+  node_lists_.Add(list, list->InvalidationType());
+  LiveNodeListBaseWriteBarrier(this, list);
+  if (list->IsRootedAtTreeScope())
+    lists_invalidated_at_tree_scope_.insert(list);
+}
+
+void TreeScope::UnregisterNodeList(const LiveNodeListBase* list) {
+  node_lists_.Remove(list, list->InvalidationType());
+  if (list->IsRootedAtTreeScope()) {
+    DCHECK(lists_invalidated_at_tree_scope_.Contains(list));
+    lists_invalidated_at_tree_scope_.erase(list);
+  }
+}
+
+void TreeScope::RegisterNodeListWithIdNameCache(const LiveNodeListBase* list) {
+  node_lists_.Add(list, kInvalidateOnIdNameAttrChange);
+  LiveNodeListBaseWriteBarrier(this, list);
+}
+
+void TreeScope::UnregisterNodeListWithIdNameCache(
+    const LiveNodeListBase* list) {
+  node_lists_.Remove(list, kInvalidateOnIdNameAttrChange);
+}
+
+template <unsigned type>
+bool ShouldInvalidateNodeListCachesForAttr(
+    const LiveNodeListRegistry& node_lists,
+    const QualifiedName& attr_name) {
+  auto invalidation_type = static_cast<NodeListInvalidationType>(type);
+  if (node_lists.ContainsInvalidationType(invalidation_type) &&
+      LiveNodeListBase::ShouldInvalidateTypeOnAttributeChange(invalidation_type,
+                                                              attr_name))
+    return true;
+  return ShouldInvalidateNodeListCachesForAttr<type + 1>(node_lists, attr_name);
+}
+
+template <>
+bool ShouldInvalidateNodeListCachesForAttr<kNumNodeListInvalidationTypes>(
+    const LiveNodeListRegistry&,
+    const QualifiedName&) {
+  return false;
+}
+
+bool TreeScope::ShouldInvalidateNodeListCaches(
+    const QualifiedName* attr_name) const {
+  if (attr_name) {
+    return ShouldInvalidateNodeListCachesForAttr<
+        kDoNotInvalidateOnAttributeChanges + 1>(node_lists_, *attr_name);
+  }
+
+  // If the invalidation is not for an attribute, invalidation is needed if
+  // there is any node list present (with any invalidation type).
+  return !node_lists_.IsEmpty();
+}
+
+void TreeScope::InvalidateNodeListCaches(const QualifiedName* attr_name) {
+  for (const LiveNodeListBase* list : lists_invalidated_at_tree_scope_)
+    list->InvalidateCacheForAttribute(attr_name);
+}
+
 DOMSelection* TreeScope::GetSelection() const {
   if (!RootNode().GetDocument().GetFrame())
     return nullptr;
@@ -549,6 +624,8 @@ void TreeScope::Trace(blink::Visitor* visitor) {
   visitor->Trace(scoped_style_resolver_);
   visitor->Trace(radio_button_group_scope_);
   visitor->Trace(svg_tree_scoped_resources_);
+  visitor->Trace(node_lists_);
+  visitor->Trace(lists_invalidated_at_tree_scope_);
 }
 
 }  // namespace blink

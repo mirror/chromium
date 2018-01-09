@@ -136,7 +136,6 @@ class IdleRequestOptions;
 class IntersectionObserverController;
 class LayoutPoint;
 class LayoutView;
-class LiveNodeListBase;
 class LocalDOMWindow;
 class Locale;
 class LocalFrame;
@@ -784,14 +783,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void ScheduleLayoutTreeUpdateIfNeeded();
   bool HasPendingForcedStyleRecalc() const;
-
-  void RegisterNodeList(const LiveNodeListBase*);
-  void UnregisterNodeList(const LiveNodeListBase*);
-  void RegisterNodeListWithIdNameCache(const LiveNodeListBase*);
-  void UnregisterNodeListWithIdNameCache(const LiveNodeListBase*);
-  bool ShouldInvalidateNodeListCaches(
-      const QualifiedName* attr_name = nullptr) const;
-  void InvalidateNodeListCaches(const QualifiedName* attr_name);
 
   void AttachNodeIterator(NodeIterator*);
   void DetachNodeIterator(NodeIterator*);
@@ -1683,10 +1674,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   bool design_mode_;
   bool is_running_exec_command_;
-
-  HeapHashSet<WeakMember<const LiveNodeListBase>>
-      lists_invalidated_at_document_;
-  LiveNodeListRegistry node_lists_;
 
   Member<SVGDocumentExtensions> svg_extensions_;
 

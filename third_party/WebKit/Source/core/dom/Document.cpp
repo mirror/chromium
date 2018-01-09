@@ -4665,41 +4665,6 @@ void Document::SetCSSTarget(Element* new_target) {
     css_target_->PseudoStateChanged(CSSSelector::kPseudoTarget);
 }
 
-static void LiveNodeListBaseWriteBarrier(void* parent,
-                                         const LiveNodeListBase* list) {
-  if (IsHTMLCollectionType(list->GetType())) {
-    ScriptWrappableVisitor::WriteBarrier(
-        static_cast<const HTMLCollection*>(list));
-  } else {
-    ScriptWrappableVisitor::WriteBarrier(
-        static_cast<const LiveNodeList*>(list));
-  }
-}
-
-void Document::RegisterNodeList(const LiveNodeListBase* list) {
-  node_lists_.Add(list, list->InvalidationType());
-  LiveNodeListBaseWriteBarrier(this, list);
-  if (list->IsRootedAtTreeScope())
-    lists_invalidated_at_document_.insert(list);
-}
-
-void Document::UnregisterNodeList(const LiveNodeListBase* list) {
-  node_lists_.Remove(list, list->InvalidationType());
-  if (list->IsRootedAtTreeScope()) {
-    DCHECK(lists_invalidated_at_document_.Contains(list));
-    lists_invalidated_at_document_.erase(list);
-  }
-}
-
-void Document::RegisterNodeListWithIdNameCache(const LiveNodeListBase* list) {
-  node_lists_.Add(list, kInvalidateOnIdNameAttrChange);
-  LiveNodeListBaseWriteBarrier(this, list);
-}
-
-void Document::UnregisterNodeListWithIdNameCache(const LiveNodeListBase* list) {
-  node_lists_.Remove(list, kInvalidateOnIdNameAttrChange);
-}
-
 void Document::AttachNodeIterator(NodeIterator* ni) {
   node_iterators_.insert(ni);
 }
@@ -7028,42 +6993,6 @@ void Document::setVlinkColor(const AtomicString& value) {
   SetBodyAttribute(vlinkAttr, value);
 }
 
-template <unsigned type>
-bool ShouldInvalidateNodeListCachesForAttr(
-    const LiveNodeListRegistry& node_lists,
-    const QualifiedName& attr_name) {
-  auto invalidation_type = static_cast<NodeListInvalidationType>(type);
-  if (node_lists.ContainsInvalidationType(invalidation_type) &&
-      LiveNodeListBase::ShouldInvalidateTypeOnAttributeChange(invalidation_type,
-                                                              attr_name))
-    return true;
-  return ShouldInvalidateNodeListCachesForAttr<type + 1>(node_lists, attr_name);
-}
-
-template <>
-bool ShouldInvalidateNodeListCachesForAttr<kNumNodeListInvalidationTypes>(
-    const LiveNodeListRegistry&,
-    const QualifiedName&) {
-  return false;
-}
-
-bool Document::ShouldInvalidateNodeListCaches(
-    const QualifiedName* attr_name) const {
-  if (attr_name) {
-    return ShouldInvalidateNodeListCachesForAttr<
-        kDoNotInvalidateOnAttributeChanges + 1>(node_lists_, *attr_name);
-  }
-
-  // If the invalidation is not for an attribute, invalidation is needed if
-  // there is any node list present (with any invalidation type).
-  return !node_lists_.IsEmpty();
-}
-
-void Document::InvalidateNodeListCaches(const QualifiedName* attr_name) {
-  for (const LiveNodeListBase* list : lists_invalidated_at_document_)
-    list->InvalidateCacheForAttribute(attr_name);
-}
-
 void Document::PlatformColorsChanged() {
   if (!IsActive())
     return;
@@ -7235,8 +7164,6 @@ void Document::Trace(blink::Visitor* visitor) {
   visitor->Trace(css_target_);
   visitor->Trace(current_script_stack_);
   visitor->Trace(script_runner_);
-  visitor->Trace(lists_invalidated_at_document_);
-  visitor->Trace(node_lists_);
   visitor->Trace(top_layer_elements_);
   visitor->Trace(elem_sheet_);
   visitor->Trace(node_iterators_);

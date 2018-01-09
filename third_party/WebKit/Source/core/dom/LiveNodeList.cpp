@@ -46,7 +46,7 @@ Node* LiveNodeList::VirtualOwnerNode() const {
   return &ownerNode();
 }
 
-void LiveNodeList::InvalidateCache(Document*) const {
+void LiveNodeList::InvalidateCache(TreeScope*) const {
   collection_items_cache_.Invalidate();
 }
 

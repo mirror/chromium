@@ -63,10 +63,12 @@ void TreeScopeAdopter::MoveTreeToNewScope(Node& root) const {
 
     if (will_move_to_new_document) {
       MoveNodeToNewDocument(node, old_document, new_document);
-    } else if (node.HasRareData()) {
+    }
+
+    if (node.HasRareData()) {
       NodeRareData* rare_data = node.RareData();
       if (rare_data->NodeLists())
-        rare_data->NodeLists()->AdoptTreeScope();
+        rare_data->NodeLists()->AdoptTreeScope(OldScope(), NewScope());
     }
 
     if (!node.IsElementNode())
@@ -146,12 +148,6 @@ inline void TreeScopeAdopter::MoveNodeToNewDocument(
   DCHECK_NE(old_document, new_document);
   // Note: at the start of this function, node.document() may already have
   // changed to match |newDocument|, which is why |oldDocument| is passed in.
-
-  if (node.HasRareData()) {
-    NodeRareData* rare_data = node.RareData();
-    if (rare_data->NodeLists())
-      rare_data->NodeLists()->AdoptDocument(old_document, new_document);
-  }
 
   node.WillMoveToNewDocument(old_document, new_document);
   old_document.MoveNodeIteratorsToNewDocument(node, new_document);

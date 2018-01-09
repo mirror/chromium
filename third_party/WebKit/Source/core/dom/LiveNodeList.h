@@ -50,14 +50,14 @@ class CORE_EXPORT LiveNodeList : public NodeList, public LiveNodeListBase {
     // Keep this in the child class because |registerNodeList| requires wrapper
     // tracing and potentially calls virtual methods which is not allowed in a
     // base class constructor.
-    GetDocument().RegisterNodeList(this);
+    GetTreeScope().RegisterNodeList(this);
   }
 
   unsigned length() const final;
   Element* item(unsigned offset) const final;
   virtual bool ElementMatches(const Element&) const = 0;
 
-  void InvalidateCache(Document* old_document = nullptr) const final;
+  void InvalidateCache(TreeScope* old_scope = nullptr) const final;
   void InvalidateCacheForAttribute(const QualifiedName*) const;
 
   // Collection IndexCache API.

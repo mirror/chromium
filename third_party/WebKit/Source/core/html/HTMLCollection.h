@@ -78,7 +78,7 @@ class CORE_EXPORT HTMLCollection : public ScriptWrappable,
 
   static HTMLCollection* Create(ContainerNode& base, CollectionType);
   virtual ~HTMLCollection();
-  void InvalidateCache(Document* old_document = nullptr) const override;
+  void InvalidateCache(TreeScope* old_scope = nullptr) const override;
   void InvalidateCacheForAttribute(const QualifiedName*) const;
 
   // DOM API
@@ -177,7 +177,7 @@ class CORE_EXPORT HTMLCollection : public ScriptWrappable,
     DCHECK(!named_item_cache_);
     // Do not repeat registration for the same invalidation type.
     if (InvalidationType() != kInvalidateOnIdNameAttrChange)
-      GetDocument().RegisterNodeListWithIdNameCache(this);
+      GetTreeScope().RegisterNodeListWithIdNameCache(this);
     named_item_cache_ = cache;
   }
 
@@ -187,24 +187,23 @@ class CORE_EXPORT HTMLCollection : public ScriptWrappable,
   }
 
  private:
-  void InvalidateIdNameCacheMaps(Document* old_document = nullptr) const {
+  void InvalidateIdNameCacheMaps(TreeScope* old_scope = nullptr) const {
     if (!HasValidIdNameCache())
       return;
 
     // Make sure we decrement the NodeListWithIdNameCache count from
     // the old document instead of the new one in the case the collection
     // is moved to a new document.
-    UnregisterIdNameCacheFromDocument(old_document ? *old_document
-                                                   : GetDocument());
+    UnregisterIdNameCacheFromTreeScope(old_scope ? old_scope : &GetTreeScope());
 
     named_item_cache_.Clear();
   }
 
-  void UnregisterIdNameCacheFromDocument(Document& document) const {
+  void UnregisterIdNameCacheFromTreeScope(TreeScope* tree_scope) const {
     DCHECK(HasValidIdNameCache());
     // Do not repeat unregistration for the same invalidation type.
     if (InvalidationType() != kInvalidateOnIdNameAttrChange)
-      document.UnregisterNodeListWithIdNameCache(this);
+      tree_scope->UnregisterNodeListWithIdNameCache(this);
   }
 
   const unsigned overrides_item_after_ : 1;

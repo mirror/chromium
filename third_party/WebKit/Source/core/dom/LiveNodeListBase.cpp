@@ -42,11 +42,11 @@ ContainerNode& LiveNodeListBase::RootNode() const {
   return *owner_node_;
 }
 
-void LiveNodeListBase::DidMoveToDocument(Document& old_document,
-                                         Document& new_document) {
-  InvalidateCache(&old_document);
-  old_document.UnregisterNodeList(this);
-  new_document.RegisterNodeList(this);
+void LiveNodeListBase::DidMoveToTreeScope(TreeScope& old_scope,
+                                          TreeScope& new_scope) {
+  InvalidateCache(&old_scope);
+  old_scope.UnregisterNodeList(this);
+  new_scope.RegisterNodeList(this);
 }
 
 }  // namespace blink

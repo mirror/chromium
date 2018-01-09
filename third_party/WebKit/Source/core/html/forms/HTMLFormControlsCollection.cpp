@@ -98,8 +98,8 @@ HTMLElement* HTMLFormControlsCollection::VirtualItemAfter(
   return nullptr;
 }
 
-void HTMLFormControlsCollection::InvalidateCache(Document* old_document) const {
-  HTMLCollection::InvalidateCache(old_document);
+void HTMLFormControlsCollection::InvalidateCache(TreeScope* old_scope) const {
+  HTMLCollection::InvalidateCache(old_scope);
   cached_element_ = nullptr;
   cached_element_offset_in_array_ = 0;
 }
