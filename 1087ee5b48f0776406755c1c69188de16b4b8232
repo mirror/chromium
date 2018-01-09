@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "12ab303a_82719e79",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-09T15:40:27Z",
+      "side": 1,
+      "message": "Hmmm... trying to grok what exactly this is testing.\n\nAs described in the comment, I don\u0027t think this is something we would want to have happen to autofill profile and credit card data.\n\nI.e., the deletion of autofill data modified more than some threshold of time ago would be a breaking bug for autofill. Autofill data is deleted after it hasn\u0027t been used (which is independent of it having been modified) for some threshold of time.\n\nCan you explain a bit more about this test and where/whether or not this functionality is actually being triggered?",
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b962b74e_725a0856",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-09T15:40:27Z",
+      "side": 1,
+      "message": "IIUC this test is actually about autocomplete data, not autofill data. Rename?",
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f67bdfb8_a77af15f",
         "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
         "patchSetId": 7
