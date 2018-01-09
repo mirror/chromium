@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6adb81be_8982a86d",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-09T23:00:34Z",
+      "side": 1,
+      "message": "As a reader of this description I am unable to understand what it gives me. Some question I have after reading:\n1. What is the difference between orientation and rotation? If there is none, please use the same term everywhere. \n2. Does the returned value indicate an orientation of the camera with respect to the main display built into the same device? Or is it an orientation w.r.t. gravity e.g. where the device thinks is \"up\" vs. where gravity says is \"up\"? Or is it a rotation w.r.t some default orientation that is considered \"normal\"?\n3. What units is the return value in? Is it quantized, e.g. 0, 90, 180, 270? If so, consider using an enum instead (I think we already have a matching one somewhere).\n4. Is there any ongoing effort/plan to make UWP APIs available in Chromium?",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d172295_6c7e15f5",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-09T23:00:34Z",
+      "side": 1,
+      "message": "IMHO a comment should only be added if it provides information that is required to understand what the method does and is not yet conveyed by the method name itself. In this case, the comment and the method name carry the same information, so this comment is not helpful.\n\nAs a reader, what I would actually hope to have explained at this location is what auto rotation does. Does it trigger an event when the device is rotated? Or does it automatically rotate frames from the camera? Or does it change the built-in display between landscape/portrait/upside-down?",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b20b1a_e3262cf5",
+        "filename": "media/capture/video/win/video_capture_device_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-09T23:00:34Z",
+      "side": 1,
+      "message": "Requires clarification. Does true mean that the device has an internal display (as the method name suggests) or does it mean that it has an internal display and it is active (as the comment suggests)?\n\nWhat is the parameter |internal_display_device| needed for?",
+      "revId": "f094e04a7c1e2e1150f9698156d46b4a94b461e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
