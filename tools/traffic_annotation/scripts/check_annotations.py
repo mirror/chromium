@@ -17,12 +17,7 @@ import sys
 # If this test starts failing, please set TEST_IS_ENABLED to "False" and file a
 # bug to get this reenabled, and cc the people listed in
 # //tools/traffic_annotation/OWNERS.
-
-# TODO(crbug.com/788035) - this test currently takes up to 20 minutes to
-# execute even on linux_chromium_rel_ng; we need to figure out how to make
-# it be much faster before enabling it anywhere in the CQ.
-# TEST_IS_ENABLED = sys.platform != 'win32'
-TEST_IS_ENABLED = False
+TEST_IS_ENABLED = sys.platform != 'win32'
 
 
 class NetworkTrafficAnnotationChecker():
@@ -189,6 +184,7 @@ def main():
     file_paths = None
   else:
     file_paths = checker.GetModifiedFiles()
+    print("Checking files: %s" % file_paths)
     if file_paths is None:
       return -1
     if len(file_paths) == 0:
