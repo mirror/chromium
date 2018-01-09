@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe6a9cd6_bada3ea4",
+        "filename": "chrome/common/prerender_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T22:36:53Z",
+      "side": 1,
+      "message": "If a timer expires before the request is actually started, when the request starts it could run for as long as it wants. Is that intended? If not, we could set a flag and immediately cancel the request in WillStartRequest.",
+      "revId": "1b0f527c88441007458a45833c26a8187227ce83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
