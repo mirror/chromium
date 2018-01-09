@@ -151,7 +151,7 @@ void ReportBlockedInterface(const std::string& source_service_name,
   // effectively treat all occurrences of this branch in production code as
   // bugs that must be fixed. This crash allows such bugs to be caught in
   // testing rather than relying on easily overlooked log messages.
-  NOTREACHED()
+  LOG(ERROR)
 #else
   LOG(ERROR)
 #endif
