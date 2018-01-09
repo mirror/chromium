@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "3546d3e7_a514bc18",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-09T22:27:26Z",
+      "side": 1,
+      "message": "As a general rule I believe it\u0027s OK to include content from components (seems like there are many cases of this), but components/metrics is sufficiently low-level that content does need to depend on it. So keeping as a separate function sgtm.",
+      "parentUuid": "a3b1a563_495a8eaa",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "c34e1b2018706feb219cc83e777e55956bffa904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c31c8a5_4ba53a94",
         "filename": "content/public/browser/browser_main_parts.h",
         "patchSetId": 6
