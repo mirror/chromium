@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cf6217d5_35353cf2",
+        "filename": "base/metrics/sparse_histogram_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T23:09:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e29818b4_586ebc4d",
+      "range": {
+        "startLine": 211,
+        "startChar": 39,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4026d9d7_05ffdefe",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 9
@@ -231,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "94f4eb83_8b85acd4",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T23:09:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8754fd1a_1820d71c",
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa043cd8_da46bc18",
         "filename": "base/metrics/statistics_recorder_unittest.cc",
         "patchSetId": 9
@@ -299,6 +341,30 @@
       "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ace85d_23751de4",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T23:09:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c1641ea_ff84e32c",
+      "range": {
+        "startLine": 196,
+        "startChar": 75,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "8e7b8ff66644e1c2ece91ebdbcd0ce0e87933e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

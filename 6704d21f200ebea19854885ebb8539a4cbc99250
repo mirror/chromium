@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca7ae41d_effe29c9",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T23:09:01Z",
+      "side": 1,
+      "message": "OK. I\u0027ll leave it as it is for the moment.",
+      "parentUuid": "c9c50c49_f58a122a",
+      "revId": "6704d21f200ebea19854885ebb8539a4cbc99250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b0d49b2_615c7ee3",
         "filename": "base/metrics/statistics_recorder.h",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "6704d21f200ebea19854885ebb8539a4cbc99250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f67fef6_7d12c4ec",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-09T23:09:01Z",
+      "side": 1,
+      "message": "Renamed.\n\nYes, I initially thought about it. I wasn\u0027t too bothered by the overloading. But one is public whereas the other one is private. They\u0027d better have different names.",
+      "parentUuid": "0b0d49b2_615c7ee3",
+      "revId": "6704d21f200ebea19854885ebb8539a4cbc99250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
