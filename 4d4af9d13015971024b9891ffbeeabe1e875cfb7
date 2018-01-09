@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e73a56b8_0e679ee7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/readValue/event-is-fired.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T17:12:05Z",
+      "side": 1,
+      "message": "I also went ahead and removed the curlies in the setNextResponse then statement to make it easier to follow and for consistency with the other tests.",
+      "parentUuid": "7cde85f0_234434df",
+      "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cfa9375_bac7da33",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/readValue/read-succeeds.https.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e735fd50_1b3f24e2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/readValue/read-succeeds.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T17:12:05Z",
+      "side": 1,
+      "message": "Also removed the unnecessary curlies.",
+      "parentUuid": "2cfa9375_bac7da33",
+      "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f00569e4_76da529f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/readValue/read-updates-value.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T17:12:05Z",
+      "side": 1,
+      "message": "I\u0027ll do this for all the test migration changes as well.",
+      "parentUuid": "fce41213_a8a84e22",
+      "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77bc089e_838e7fa8",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/writeValue/write-succeeds.https.html",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f98a55_0d34bff5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/characteristic/writeValue/write-succeeds.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-09T17:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77bc089e_838e7fa8",
+      "revId": "4d4af9d13015971024b9891ffbeeabe1e875cfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
