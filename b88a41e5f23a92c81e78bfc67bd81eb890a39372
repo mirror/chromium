@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "32c5a0a4_1eb7ec73",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-09T08:31:55Z",
+      "side": 1,
+      "message": "and must wait for a callback with the result.",
+      "range": {
+        "startLine": 51,
+        "startChar": 56,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473eac3b_d2419058",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-09T08:31:55Z",
+      "side": 1,
+      "message": "To avoid confusion with releasing the actual buffer by closing the shared memory descriptor, perhaps we should rephrase to only say \"The decoder will call VideoDecodeClient::NotifyEndOfBitstreamBuffer() to notify the client that it has finished consuming the contents of the buffer.\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 63
+      },
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec599fa_0dda2218",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-09T08:31:55Z",
+      "side": 1,
+      "message": "to be reused.",
+      "range": {
+        "startLine": 64,
+        "startChar": 35,
+        "endLine": 64,
+        "endChar": 56
+      },
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39d22f5_3c0eafee",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-09T08:31:55Z",
+      "side": 1,
+      "message": "for each handle before passing it to Decode()",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aba04f4_a034a744",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-09T08:31:55Z",
+      "side": 1,
+      "message": "Sorry for the confusion caused by my previous comment, I meant putting this in the anonymous namespace at the top of the file, similarly to UnwrapFdFromMojoHandle().",
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adbe2c08_cd016ec1",
         "filename": "media/gpu/vaapi/vaapi_video_decode_accelerator.cc",
         "patchSetId": 12
@@ -31,6 +140,52 @@
       "side": 1,
       "message": "There is no other CL related except the mojom interface:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/830999\n\nWe made no changes to VaapiPicture. The change we made here is to derive the BufferFromat from the argument \"pixel_format\" instead of the member \"output_format_\".",
       "parentUuid": "adbe2c08_cd016ec1",
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b0e749_7842ce88",
+        "filename": "media/video/video_decode_accelerator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-09T08:31:55Z",
+      "side": 1,
+      "message": "ProvidePictureBuffers()",
+      "range": {
+        "startLine": 290,
+        "startChar": 17,
+        "endLine": 290,
+        "endChar": 37
+      },
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e781b435_af800980",
+        "filename": "media/video/video_decode_accelerator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-09T08:31:55Z",
+      "side": 1,
+      "message": "via NotifyError().",
+      "range": {
+        "startLine": 291,
+        "startChar": 21,
+        "endLine": 291,
+        "endChar": 29
+      },
       "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
