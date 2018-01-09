@@ -9,6 +9,7 @@ include_rules = [
   "+components/sync/sessions",
   "+components/sync/base/weak_handle.h",
   "+components/sync/js",
+  "+content/browser/webrtc",
   "+device/bluetooth",
   "+extensions/strings/grit/extensions_strings.h",
 

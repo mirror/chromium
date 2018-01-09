@@ -22,6 +22,7 @@
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/webrtc/webrtc_internals.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_plugin_guest_delegate.h"
 #include "content/public/browser/render_widget_host_view.h"
@@ -140,7 +141,9 @@ class RenderWidgetHostViewGuestSurfaceTest
     : public testing::Test {
  public:
   RenderWidgetHostViewGuestSurfaceTest()
-      : widget_host_(nullptr), view_(nullptr) {}
+      : webrtc_internals_(WebRTCInternals::CreateSingletonInstance()),
+        widget_host_(nullptr),
+        view_(nullptr) {}
 
   void SetUp() override {
 #if !defined(OS_ANDROID)
@@ -218,6 +221,7 @@ class RenderWidgetHostViewGuestSurfaceTest
       renderer_compositor_frame_sink_;
 
  private:
+  std::unique_ptr<WebRTCInternals> webrtc_internals_;
   viz::mojom::CompositorFrameSinkClientPtr renderer_compositor_frame_sink_ptr_;
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewGuestSurfaceTest);
 };

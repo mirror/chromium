@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "content/browser/webrtc/webrtc_internals.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/test_browser_context.h"
@@ -135,6 +136,8 @@ class WebViewUnitTest : public views::test::WidgetTest {
   ~WebViewUnitTest() override {}
 
   void SetUp() override {
+    webrtc_internals_.reset(
+        content::WebRTCInternals::CreateSingletonInstance());
     set_views_delegate(base::WrapUnique(new WebViewTestViewsDelegate));
     browser_context_.reset(new content::TestBrowserContext);
     WidgetTest::SetUp();
@@ -178,6 +181,7 @@ class WebViewUnitTest : public views::test::WidgetTest {
 
  private:
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
+  std::unique_ptr<content::WebRTCInternals> webrtc_internals_;
   std::unique_ptr<content::TestBrowserContext> browser_context_;
   content::TestContentBrowserClient test_browser_client_;
 
