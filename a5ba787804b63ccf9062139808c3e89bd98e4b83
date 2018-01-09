@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85f208dd_b1789e63",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "on vectors you can use push_back for this",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea7e50e_060f3584",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "nit: else branch not needed after return: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 3
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d06187_72ef5d78",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "is this line necessary? wouldn\u0027t user_handle be empty by default?\n\nedit: I just saw the change to being optional, in that case I\u0027d make this\n\n  response-\u003euser_handle.emplace();\n\nor\n  response-\u003euser_handle \u003d {};\n\nemplace is likely more performant, though",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 49
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102d223c_86f18dbd",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "this change shouldn\u0027t be necessary, it should still fit on one line",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 53
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232ede09_272ed65b",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "nit: application_parameter.data()",
+      "range": {
+        "startLine": 248,
+        "startChar": 45,
+        "endLine": 248,
+        "endChar": 75
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6161c519_35e30dea",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "just fyi: you could use raw string literals (http://en.cppreference.com/w/cpp/language/string_literal) for this to avoid escaping many quotation marks, e.g.\n\n  R\"|({\"challenge\":\"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE\",)|\"",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 69
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735076e8_65a0e23a",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "nit: inline, e.g.\n\n  options-\u003echallenge.assign(32, 0x0A);",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 41
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5315680_0e21fcc0",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 340,
+        "startChar": 2,
+        "endLine": 340,
+        "endChar": 45
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e7fdc0_39aa613f",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 351,
+        "startChar": 2,
+        "endLine": 351,
+        "endChar": 34
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ac0931_48fe01f1",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 40
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdaf851_d89bf887",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "add a DCHECK that length does not exceed kTestU2fSignResponse\u0027s size",
+      "range": {
+        "startLine": 79,
+        "startChar": 64,
+        "endLine": 79,
+        "endChar": 70
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba480cd_837f94e4",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "Maybe simply\n\n  EXPECT_FALSE(std::get\u003c1\u003e(response));\n\n?",
+      "range": {
+        "startLine": 317,
+        "startChar": 2,
+        "endLine": 317,
+        "endChar": 49
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4aaf584_38a103da",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "could be inlined",
+      "range": {
+        "startLine": 377,
+        "startChar": 47,
+        "endLine": 377,
+        "endChar": 50
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d724d68d_2ee6cced",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": "auto device \u003d std::make_unique\u003cMockU2fDevice\u003e();",
+      "range": {
+        "startLine": 378,
+        "startChar": 2,
+        "endLine": 378,
+        "endChar": 61
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb66e7a8_cc76d48f",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-09T09:46:46Z",
+      "side": 1,
+      "message": ".get() is not neccesary, *device is enough. also applies below",
+      "range": {
+        "startLine": 381,
+        "startChar": 21,
+        "endLine": 381,
+        "endChar": 27
+      },
+      "revId": "a5ba787804b63ccf9062139808c3e89bd98e4b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
