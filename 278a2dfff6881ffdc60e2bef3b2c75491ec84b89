@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36cf3888_ada27739",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T00:13:09Z",
+      "side": 1,
+      "message": "Ah, thanks for pointing this out. This CL is done before John added |resource_type| parameter. I was waiting for him to land his CL to use |resource_type|.\n\nFixed. (I moved the throttle-creating logic to render_frame_impl.)",
+      "parentUuid": "885fbd6d_b9a40dfd",
+      "revId": "278a2dfff6881ffdc60e2bef3b2c75491ec84b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfa4f12a_a9deb183",
         "filename": "chrome/renderer/url_loader_throttle_provider_impl.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-08T21:58:44Z",
       "side": 1,
       "message": "I wonder if this check should be done here or by the callsite, the logic that creates throttles for main frames in the browser side is not chrome-specific.",
+      "revId": "278a2dfff6881ffdc60e2bef3b2c75491ec84b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7822cc5d_d7174782",
+        "filename": "chrome/renderer/url_loader_throttle_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T00:13:09Z",
+      "side": 1,
+      "message": "I chatted with John about this:\n\nThe browser side also gets the throttles (for frame resources) from chrome/, so whether throttles are added to the frame requests is also chrome-specific. Based on this, I think it makes sense for this check to be here.\n\nWDYT? Thanks!",
+      "parentUuid": "cfa4f12a_a9deb183",
       "revId": "278a2dfff6881ffdc60e2bef3b2c75491ec84b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "278a2dfff6881ffdc60e2bef3b2c75491ec84b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18498fa_03640755",
+        "filename": "content/public/renderer/url_loader_throttle_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T00:13:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daea3583_a779edbe",
+      "revId": "278a2dfff6881ffdc60e2bef3b2c75491ec84b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
