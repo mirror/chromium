@@ -74,6 +74,11 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
       const base::FilePath::StringType& file_name_extension,
       const AudioParameters& params);
 
+  // Post file creation on file_task_runner_ and call |reply_callback| on
+  // task_runner_
+  void CreateFile(const base::FilePath& file_name,
+                  base::OnceCallback<void(base::File)> reply_callback);
+
  protected:
   // Creates a AudioDebugRecordingHelper. Overridden by test.
   virtual std::unique_ptr<AudioDebugRecordingHelper>
@@ -110,6 +115,12 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   // The base file name for debug recording files. If this is non-empty, debug
   // recording is enabled.
   base::FilePath debug_recording_base_file_name_;
+
+  // The task runner to create debug recording files on.
+  scoped_refptr<base::SequencedTaskRunner> file_task_runner_ =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   base::WeakPtrFactory<AudioDebugRecordingManager> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingManager);
