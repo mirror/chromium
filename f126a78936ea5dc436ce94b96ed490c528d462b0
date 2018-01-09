@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "139d2dab_4d165fd8",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T19:06:21Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "revId": "f126a78936ea5dc436ce94b96ed490c528d462b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e094d71_157c3e23",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T19:06:21Z",
+      "side": 1,
+      "message": "If we need this and the reference below (line 70 here), can we move the definitions out-of-line from the class?",
+      "revId": "f126a78936ea5dc436ce94b96ed490c528d462b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e66377_5f345e74",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T19:06:21Z",
+      "side": 1,
+      "message": "We can remove this now, right?",
+      "revId": "f126a78936ea5dc436ce94b96ed490c528d462b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
