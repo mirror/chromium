@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a6f097e_d89de1ef",
+        "filename": "third_party/WebKit/LayoutTests/compositing/gestures/gesture-tapHighlight-simple-multi-line.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-09T19:55:22Z",
+      "side": 1,
+      "message": "The \u0027\u0026nbsp;\u0027s are to avoid overflows of glyphs which are in different color in test and reference. The different colors are good for this test because we are testing if the opaque highlight covers the link.",
+      "revId": "4fb503e0882baeaeb6f26a9b59516fcfe51499cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
