@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "0e649b32_2ba3ef37",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-09T02:58:41Z",
+      "side": 1,
+      "message": "\u003e As discussed, content::WebContentsObserver has a protected dtor and so we can\u0027t store content::WebContentsObserver in the unique_ptr.\n\nI noticed this too (i.e. ::TestWebContentsObserver is a very generic name). Perhaps move the forward declare to inside the TabActivityTestBase scope, then declare the class like\n\nclass TabActivityTestBase::TestWebContentsObserver : public content::WebContentsObserver {\n...\n}\n\nin the .cc",
+      "parentUuid": "3f694b6d_ade5e5fb",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 53
+      },
+      "revId": "ca1d42c06ac6e37d4b6797655b0e861be310931c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e1cdc53_c9b4ee1d",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
         "patchSetId": 12
