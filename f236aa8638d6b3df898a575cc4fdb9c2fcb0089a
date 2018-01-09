@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f73ebb7e_66405be1",
+        "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T00:52:56Z",
+      "side": 1,
+      "message": "nit: please document this parameter:\n\n  component_name, true /* mount */,",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09468fbd_1c9ea6c6",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T00:52:56Z",
+      "side": 1,
+      "message": "nit: installed",
+      "range": {
+        "startLine": 190,
+        "startChar": 33,
+        "endLine": 190,
+        "endChar": 41
+      },
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851ecf0d_ca12b405",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T00:52:56Z",
+      "side": 1,
+      "message": "nit: installed",
+      "range": {
+        "startLine": 193,
+        "startChar": 33,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cf8e2e_30bc2a20",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T00:52:56Z",
+      "side": 1,
+      "message": "please always use curly brackets with multi-line conditional bodies",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a418bc_594f3491",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T00:52:56Z",
+      "side": 1,
+      "message": "you might want to consider replacing this bool with an enum so calls to these methods are self-documenting, e.g.:\n\n  enum class MountPolicy {\n    kMount,\n    kDontMount,\n  };",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0442bc9_3f94ebb1",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T00:52:56Z",
+      "side": 1,
+      "message": "nit: please initialize to false here to reduce the chances of future uninitialized use",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575cbff4_9e310505",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T00:52:56Z",
+      "side": 1,
+      "message": "are there any callers of this method yet? we need to support version mismatches in both directions between chrome and the rest of the system, so if somebody\u0027s calling this already, you need to keep the bool optional in chrome for ~2 weeks after updating all callers to pass it. see https://chromium.googlesource.com/chromiumos/docs/+/master/dbus_best_practices.md#Be-careful-when-making-changes-to-in_use-methods-and-signals",
+      "revId": "f236aa8638d6b3df898a575cc4fdb9c2fcb0089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
