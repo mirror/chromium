@@ -58,7 +58,6 @@ class PowerStatusTest : public testing::Test {
     power_status_->RemoveObserver(test_observer_.get());
     test_observer_.reset();
     PowerStatus::Shutdown();
-    chromeos::DBusThreadManager::Shutdown();
   }
 
  protected:

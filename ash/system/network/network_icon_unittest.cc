@@ -66,7 +66,6 @@ class NetworkIconTest : public chromeos::NetworkStateTest {
 
     ShutdownNetworkState();
     chromeos::NetworkStateTest::TearDown();
-    chromeos::DBusThreadManager::Shutdown();
   }
 
   gfx::Image ImageForNetwork(chromeos::NetworkState* network) {

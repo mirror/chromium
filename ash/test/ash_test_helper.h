@@ -146,8 +146,6 @@ class AshTestHelper {
   std::unique_ptr<::wm::WMState> wm_state_;
   std::unique_ptr<AshTestViewsDelegate> test_views_delegate_;
 
-  // Check if DBus Thread Manager was initialized here.
-  bool dbus_thread_manager_initialized_;
   // Check if Bluez DBus Manager was initialized here.
   bool bluez_dbus_manager_initialized_;
 

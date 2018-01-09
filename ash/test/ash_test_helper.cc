@@ -66,7 +66,6 @@ Config AshTestHelper::config_ = Config::CLASSIC;
 AshTestHelper::AshTestHelper(AshTestEnvironment* ash_test_environment)
     : ash_test_environment_(ash_test_environment),
       test_shell_delegate_(nullptr),
-      dbus_thread_manager_initialized_(false),
       bluez_dbus_manager_initialized_(false),
       command_line_(std::make_unique<base::test::ScopedCommandLine>()) {
   ui::test::EnableTestConfigForPlatformWindows();
@@ -140,7 +139,6 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
     if (!chromeos::DBusThreadManager::IsInitialized()) {
       chromeos::DBusThreadManager::Initialize(
           chromeos::DBusThreadManager::PROCESS_ASH);
-      dbus_thread_manager_initialized_ = true;
     }
 
     if (!bluez::BluezDBusManager::IsInitialized()) {
@@ -225,11 +223,6 @@ void AshTestHelper::TearDown() {
     device::BluetoothAdapterFactory::Shutdown();
     bluez::BluezDBusManager::Shutdown();
     bluez_dbus_manager_initialized_ = false;
-  }
-
-  if (dbus_thread_manager_initialized_) {
-    chromeos::DBusThreadManager::Shutdown();
-    dbus_thread_manager_initialized_ = false;
   }
 
   ui::TerminateContextFactoryForTests();
