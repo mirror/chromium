@@ -25,6 +25,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/base/container_util.h"
@@ -32,6 +33,7 @@
 #include "cc/debug/debug_colors.h"
 #include "cc/paint/render_surface_filters.h"
 #include "cc/raster/scoped_gpu_raster.h"
+#include "cc/resources/resource_util.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/gpu/context_provider.h"
@@ -425,6 +427,9 @@ GLRenderer::GLRenderer(
   DCHECK(gl_);
   DCHECK(context_support_);
 
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      this, "viz::GLRenderer", current_task_runner_);
+
   const auto& context_caps =
       output_surface_->context_provider()->ContextCapabilities();
   DCHECK(!context_caps.iosurface || context_caps.texture_rectangle);
@@ -441,6 +446,9 @@ GLRenderer::GLRenderer(
 }
 
 GLRenderer::~GLRenderer() {
+  base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+      this);
+
   CleanupSharedObjects();
 
   if (context_visibility_) {
@@ -3791,4 +3799,36 @@ gfx::Size GLRenderer::GetRenderPassTextureSize(
   return texture_it->second.size();
 }
 
+static void DumpResource(RenderPassId id,
+                         const gfx::Size& size,
+                         ResourceFormat format,
+                         base::trace_event::ProcessMemoryDump* pmd) {
+  // Render pass ids are not process-unique, so log with the render pass's
+  // unique id.
+  std::string dump_name =
+      base::StringPrintf("viz/renderpass_memory/renderpass_%llu", id);
+  base::trace_event::MemoryAllocatorDump* dump =
+      pmd->CreateAllocatorDump(dump_name);
+
+  uint64_t total_bytes =
+      cc::ResourceUtil::UncheckedSizeInBytesAligned<size_t>(size, format);
+
+  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                  base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                  static_cast<uint64_t>(total_bytes));
+}
+
+bool GLRenderer::OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
+                              base::trace_event::ProcessMemoryDump* pmd) {
+  for (const auto& resource_entry : render_pass_textures_) {
+    const auto& resource = resource_entry.second;
+    // TODO(xing.xu): RGBA_8888 should be replaced with right format.
+    DumpResource(resource_entry.first, resource.size(),
+                 ResourceFormat::RGBA_8888, pmd);
+  }
+
+  // TODO(xing.xu): dump overlay memory usage here.
+
+  return true;
+}
 }  // namespace viz
