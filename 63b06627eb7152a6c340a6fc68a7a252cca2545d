@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "23ec256d_168a51a3",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 10990,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Changed description to \"Wording of an info bar prompt when\"...",
+      "parentUuid": "586767e0_58500e9a",
+      "range": {
+        "startLine": 10990,
+        "startChar": 74,
+        "endLine": 10990,
+        "endChar": 104
+      },
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e48b4e9a_05a9ba86",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 10990,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f413b34_eabc62a4",
+      "range": {
+        "startLine": 10990,
+        "startChar": 169,
+        "endLine": 10990,
+        "endChar": 170
+      },
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9e6f2cd_479a1f4e",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 15
@@ -62,6 +110,24 @@
       "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eefe11f_99c5cd86",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9e6f2cd_479a1f4e",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "9dd3896e_cc4dc030",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28038dc7_8564b5e8",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1191d52e_541c201a",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 15
@@ -96,6 +180,24 @@
       "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3de051_3e4f1d8a",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1191d52e_541c201a",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "ce1d7600_d42ab3ae",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a03569f_26d306e0",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b2519f6_4e8ae11b",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
         "patchSetId": 15
@@ -130,6 +250,24 @@
       "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "129d3782_8b2e99c8",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1b2519f6_4e8ae11b",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "f5dbd2be_351fb16d",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Those helper functions end up here:\n\nhttps://cs.chromium.org/chromium/src/extensions/browser/api_test_utils.cc?q\u003dapi_test_utils.cc\u0026sq\u003dpackage:chromium\u0026l\u003d240\n\nI thought that this test needed to poke the permissions manager before calling WaitForResponse. However, I can successfully move that call up and, staring at the code, I think I can believe that this is valid. PermissionRequestManager::DequeueRequestsAndShowBubble will be called twice, but is idempotent. However, if some build finds this flakey, I may need to switch it back.",
+      "parentUuid": "7ee8d7e5_fa39f08b",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 5
+      },
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b203af3_ba5ece9b",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
         "patchSetId": 15
@@ -170,6 +332,24 @@
       "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c723a2_45d50f17",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-09T17:11:02Z",
+      "side": 1,
+      "message": "Blows up gTest: TEST_F creates subclasses of the test class, but they don\u0027t explicitly initialise the base class, which is needed with DISALLOW_COPY_AND_ASSIGN.",
+      "parentUuid": "7b203af3_ba5ece9b",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
