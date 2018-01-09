@@ -129,6 +129,7 @@ static_library("browser") {
     "//components/pref_registry",
     "//components/webdata/common",
     "//crypto",
+    "//skia",
     "//sql",
     "//third_party/icu",
   ]
