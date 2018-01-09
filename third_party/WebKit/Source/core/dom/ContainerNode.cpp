@@ -1035,7 +1035,6 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
       point = runner->LocalToAbsolute(FloatPoint(), kUseTransforms);
       return true;
     }
-
     if (runner->IsAtomicInlineLevel()) {
       DCHECK(runner->IsBox());
       LayoutBox* box = ToLayoutBox(runner);
