@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121cb6ba_5def1f58",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:44:17Z",
+      "side": 1,
+      "message": "degrees",
+      "range": {
+        "startLine": 11,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fd4bfb_19a4b437",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:44:17Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 52,
+        "startChar": 46,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663951fa_64ada7c0",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:44:17Z",
+      "side": 1,
+      "message": "It seems you should clear it only if the angle is stable?",
+      "range": {
+        "startLine": 362,
+        "startChar": 2,
+        "endLine": 362,
+        "endChar": 53
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4699a7_a4f6884d",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:44:17Z",
+      "side": 1,
+      "message": "Nit: const",
+      "range": {
+        "startLine": 488,
+        "startChar": 2,
+        "endLine": 488,
+        "endChar": 17
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8accb18b_bb3cb409",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:44:17Z",
+      "side": 1,
+      "message": "Change this to:\n\n  constexpr base::TimeDelta kUnstableLidAngleDurationSeconds \u003d \n      base::TimeDelta::FromSeconds(2);\n\nThen here just do:\n\n  return elapsed_time \u003e\u003d kUnstableLidAngleDurationSeconds;",
+      "range": {
+        "startLine": 489,
+        "startChar": 37,
+        "endLine": 489,
+        "endChar": 69
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8688005f_c93a4a7e",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:44:17Z",
+      "side": 1,
+      "message": "This comment is not very informative. Can you please explain more? For example:\n- \"used\" for what.\n- what is an unstable lid angle.\n- when can that unstable angle be used.\n- ... so on.",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 52
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049cb612_de4b67a0",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-09T23:44:17Z",
+      "side": 1,
+      "message": "Can you give example degrees to \"nearly open\", \"closed\", \"fully open\"? It\u0027s not very clear what they mean.",
+      "range": {
+        "startLine": 202,
+        "startChar": 52,
+        "endLine": 204,
+        "endChar": 10
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
