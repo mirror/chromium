@@ -492,6 +492,8 @@ blink_core_sources("html") {
     "media/MediaCustomControlsFullscreenDetector.h",
     "media/MediaDocument.cpp",
     "media/MediaDocument.h",
+    "media/MediaElementResourceSchedulerMetrics.cpp",
+    "media/MediaElementResourceSchedulerMetrics.h",
     "media/MediaError.h",
     "media/MediaFragmentURIParser.cpp",
     "media/MediaFragmentURIParser.h",
