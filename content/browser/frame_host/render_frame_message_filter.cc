@@ -46,7 +46,7 @@
 #include "ppapi/features/features.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "storage/browser/blob/blob_storage_context.h"
-#include "third_party/WebKit/common/frame_policy.h"
+#include "third_party/WebKit/public/common/frame/frame_policy.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 

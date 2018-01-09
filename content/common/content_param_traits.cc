@@ -10,7 +10,7 @@
 #include "ipc/ipc_mojo_message_helper.h"
 #include "ipc/ipc_mojo_param_traits.h"
 #include "net/base/ip_endpoint.h"
-#include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/WebKit/public/common/message_port/message_port_channel.h"
 #include "ui/accessibility/ax_modes.h"
 #include "ui/events/blink/web_input_event_traits.h"
 
