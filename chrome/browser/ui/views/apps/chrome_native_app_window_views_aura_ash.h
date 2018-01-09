@@ -113,6 +113,9 @@ class ChromeNativeAppWindowViewsAuraAsh
   void DestroyAnyExclusiveAccessBubble() override;
   bool CanTriggerOnMouse() const override;
 
+  // WidgetObserver:
+  void OnWidgetActivationChanged(views::Widget* widget, bool active) override;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ChromeNativeAppWindowViewsAuraAshBrowserTest,
                            ImmersiveWorkFlow);
