@@ -38,7 +38,8 @@ mojo::Message StructSerializeAsMessageImpl(UserType* input) {
 
 template <typename MojomType, typename DataArrayType, typename UserType>
 DataArrayType StructSerializeImpl(UserType* input) {
-  static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value,
+  static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value ||
+                    BelongsTo<MojomType, MojomTypeCategory::UNION>::value,
                 "Unexpected type.");
   Message message = StructSerializeAsMessageImpl<MojomType>(input);
   uint32_t size = message.payload_num_bytes();
@@ -55,7 +56,8 @@ bool StructDeserializeImpl(const void* data,
                            UserType* output,
                            bool (*validate_func)(const void*,
                                                  ValidationContext*)) {
-  static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value,
+  static_assert(BelongsTo<MojomType, MojomTypeCategory::STRUCT>::value ||
+                    BelongsTo<MojomType, MojomTypeCategory::UNION>::value,
                 "Unexpected type.");
   using DataType = typename MojomTypeTraits<MojomType>::Data;
 
