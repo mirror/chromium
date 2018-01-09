@@ -30,6 +30,7 @@
 #include "components/sync_preferences/pref_service_mock_factory.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/storage_partition.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 
@@ -95,6 +96,10 @@ ExtensionServiceTestBase::ExtensionServiceTestBase()
 ExtensionServiceTestBase::~ExtensionServiceTestBase() {
   // Why? Because |profile_| has to be destroyed before |at_exit_manager_|, but
   // is declared above it in the class definition since it's protected.
+  auto* partition =
+      content::BrowserContext::GetDefaultStoragePartition(profile_.get());
+  while (partition->GetDeletionTaskCountForTesting())
+    base::RunLoop().RunUntilIdle();
   profile_.reset();
 }
 
