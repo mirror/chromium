@@ -1698,9 +1698,8 @@ TEST_F(PartitionAllocTest, DumpMemoryStats) {
       EXPECT_EQ(0u, stats->num_decommitted_pages);
     }
 
-    void* ptr2 =
-        generic_allocator.root()->Alloc(requestedSize + kSystemPageSize + 1,
-                                        type_name);
+    void* ptr2 = generic_allocator.root()->Alloc(
+        requestedSize + kSystemPageSize + 1, type_name);
     EXPECT_EQ(ptr, ptr2);
 
     {
