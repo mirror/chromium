@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6d2eeeb_7979cbeb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4240,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-09T23:10:30Z",
+      "side": 1,
+      "message": "nit: prefer unabbreviated name if you don\u0027t have strong opinion on it (i.e. browser_main_loop)",
+      "revId": "96f42427bf00720e8377c65a8f292bd1bdd86ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9805ad_f18422dc",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4242,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-09T23:10:30Z",
+      "side": 1,
+      "message": "So this factory is just reset every time it is called?",
+      "revId": "96f42427bf00720e8377c65a8f292bd1bdd86ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53887630_73c17264",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4269,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-09T23:10:30Z",
+      "side": 1,
+      "message": "Can you elaborate this comment a little further? E.g.\n\n\"The connection to the factory is dropped after cross-document navigations. For now we always reset the InterfacePtr to enforce lazy rebinding after every navigation. See https://crbug.com/795258\"",
+      "revId": "96f42427bf00720e8377c65a8f292bd1bdd86ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
