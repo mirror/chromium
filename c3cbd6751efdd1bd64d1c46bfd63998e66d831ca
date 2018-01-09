@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d4a62713_4e3cf39a",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-09T14:08:25Z",
+      "side": 1,
+      "message": "Yes.\n\n// Allowed.\nif (condition) {\n  statement\n}\n\n// Preferred (by me at least).\nif (condition)\n  statement\n\n// Required.\nfor (condition) {\n  statement\n}\n\n// Not allowed.\nfor (condition)\n  statement",
+      "parentUuid": "f2fe1332_65d705cb",
+      "range": {
+        "startLine": 300,
+        "startChar": 42,
+        "endLine": 300,
+        "endChar": 43
+      },
+      "revId": "c3cbd6751efdd1bd64d1c46bfd63998e66d831ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "083616f3_1540db83",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
         "patchSetId": 4
