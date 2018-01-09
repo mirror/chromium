@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81fb460f_46dde85d",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "This can be read directly into |platform_notification_data-\u003edata|; same for vibration_pattern.",
+      "range": {
+        "startLine": 116,
+        "startChar": 35,
+        "endLine": 116,
+        "endChar": 39
+      },
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f33a13_d609ef12",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "Are there limits on how long each vibration in the vibration pattern can be, as well as a limit on the length of the vibration pattern? The spec seems to indicate that such a thing exists.",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47792af9_2d352c9c",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "Similarly, I think there\u0027s a max length to how much data this can contain; can we do an explicit check for that here?",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb9122c_76841c48",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "This can return a base::span of the WebVector, I think. If it can\u0027t, let me know, and I\u0027ll fix WebVector.",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f69f0a_5624a426",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "Nit: please return const refs for objects that aren\u0027t cheap to copy. Also, once it\u0027s returning a const ref, simple getters like this can just be inlined into the header.\n\n(https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#StructTraits-getters-should-be-simple)",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2d11fb_477f3778",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "Returning base::span by value is fine though, since it\u0027s specifically designed to be cheap to copy like StringPiece.",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c087753_d669df9b",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/WebNotificationData.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "Nit: no need for this, as this will already be default constructed.",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2d634e_0a335f83",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "Mention something about these being a list of milliseconds. Similar to the below request, maybe we can add a TODO to use base::TimeDelta here?\n\n(I know the spec says something different, but it\u0027s nicer to use structured types in mojoms where possible)",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7c10b7_9786d43e",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T10:11:26Z",
+      "side": 1,
+      "message": "Do you mind adding a TODO to use base::TimeTicks here? I\u0027m working on some changes to remove WTF::TimeTicks and just use the base version everywhere. You can use https://crbug.com/763980 for tracking this TODO.",
+      "revId": "5835dd1471ef70185057d4cbf549fdeaa8d92170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
