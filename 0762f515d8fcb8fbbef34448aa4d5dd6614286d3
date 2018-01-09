@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7471f984_f9fb88f2",
+        "filename": "third_party/WebKit/Source/modules/canvas/offscreencanvas2d/OffscreenCanvasRenderingContext2D.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-09T17:57:07Z",
+      "side": 0,
+      "message": "Remove kSnapshotReasonTransferToImageBitmap from the enum and mark it as obsolete in histograms (enums.xml)",
+      "range": {
+        "startLine": 115,
+        "startChar": 27,
+        "endLine": 115,
+        "endChar": 63
+      },
+      "revId": "0762f515d8fcb8fbbef34448aa4d5dd6614286d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2870b31_1e6d5b0a",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedImageBufferSurface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-09T17:57:07Z",
+      "side": 0,
+      "message": "Delete the definition of ImageInitializationMode in GraphicsTypes.h",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "0762f515d8fcb8fbbef34448aa4d5dd6614286d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

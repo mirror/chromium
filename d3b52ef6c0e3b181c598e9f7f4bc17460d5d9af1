@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d93da81d_8378ed06",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-09T17:57:07Z",
+      "side": 1,
+      "message": "should probably check IsValid() here.",
+      "range": {
+        "startLine": 389,
+        "startChar": 34,
+        "endLine": 389,
+        "endChar": 35
+      },
+      "revId": "d3b52ef6c0e3b181c598e9f7f4bc17460d5d9af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
