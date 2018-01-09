@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "6dbbdc98_f2c4219b",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-09T22:12:05Z",
+      "side": 1,
+      "message": "Instead of this, do the following. (verbatim)\n\nbase::DeleteFile(bare_symlink_path, /*recursive\u003d*/false);",
+      "revId": "18a1323cdca07772588c4979054517c7adcbb56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabc95a1_58816e49",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-09T22:12:05Z",
+      "side": 1,
+      "message": "Make a Cleanup() function?",
+      "revId": "18a1323cdca07772588c4979054517c7adcbb56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06c5a4b4_78be8775",
         "filename": "chrome/common/logging_chrome.cc",
         "patchSetId": 4
