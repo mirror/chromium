@@ -100,7 +100,8 @@ OneClickSigninSyncStarter::OneClickSigninSyncStarter(
   BrowserList::AddObserver(this);
   Initialize(profile, browser);
 
-  DCHECK(!refresh_token.empty() || signin::IsDicePrepareMigrationEnabled());
+  DCHECK(!signin::IsDicePrepareMigrationEnabled());
+  DCHECK(!refresh_token.empty());
   SigninManagerFactory::GetForProfile(profile_)->StartSignInWithRefreshToken(
       refresh_token, gaia_id, email, password,
       base::Bind(&OneClickSigninSyncStarter::ConfirmSignin,
@@ -319,16 +320,9 @@ void OneClickSigninSyncStarter::CompleteInitForNewProfile(
       break;
     }
     case Profile::CREATE_STATUS_INITIALIZED:
-      if (signin::IsDicePrepareMigrationEnabled()) {
-        // When DICE is enabled, the refresh token is not copied to the new
-        // profile and the user needs to sign in to the new profile in order
-        // to enable sync.
-        CancelSigninAndStartNewSigninInNewProfile(new_profile);
-      } else {
         // Pre-DICE, the refresh token is copied to the new profile and the user
         // does not need to autehnticate in the new profile.
         CopyCredentialsToNewProfileAndFinishSignin(new_profile);
-      }
       break;
     case Profile::CREATE_STATUS_REMOTE_FAIL:
     case Profile::CREATE_STATUS_CANCELED:
@@ -338,21 +332,6 @@ void OneClickSigninSyncStarter::CompleteInitForNewProfile(
       return;
     }
   }
-}
-
-void OneClickSigninSyncStarter::CancelSigninAndStartNewSigninInNewProfile(
-    Profile* new_profile) {
-  SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile_);
-  std::string email = signin_manager->GetUsernameForAuthInProgress();
-  CancelSigninAndDelete();
-
-  profiles::FindOrCreateNewWindowForProfile(
-      new_profile, chrome::startup::IS_PROCESS_STARTUP,
-      chrome::startup::IS_FIRST_RUN, false);
-  Browser* browser = chrome::FindTabbedBrowser(new_profile, false);
-  browser->signin_view_controller()->ShowDiceSigninTab(
-      profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN, browser,
-      signin_metrics::AccessPoint::ACCESS_POINT_START_PAGE, email);
 }
 
 void OneClickSigninSyncStarter::CopyCredentialsToNewProfileAndFinishSignin(
