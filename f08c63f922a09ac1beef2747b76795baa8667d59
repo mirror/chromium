@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6179f7_353de18a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "This part is partially correct. In pre-Dice world, the refresh token was not saved in the token\nservice until after the user went thought all the intermediary dialogues. So the token was not revoked, but it was not saved to the token service either.\nI would remove this part of the CL description or change it to something like:\n* Note that this bug did not exist pre-Dice, as the token was only saved in the token service\nafter all the user accepted to sign in to Chrome in all warning dialogues presented throughout the Chrome sign-in flow\".",
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bbdfd7_96f30ea0",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "Personal preference: I prefer to use enums instead of boolean as it gives more context when used. How about something like:\nenum SigninAbortedMode {\n  REMOVE_ACCOUNT_ON_ABORT,\n  KEEP_ACCOUNT_ON_ABORT\n}",
+      "range": {
+        "startLine": 263,
+        "startChar": 27,
+        "endLine": 263,
+        "endChar": 31
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89abdeb1_697adeaf",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "Based on the comment below (after the else),  SigninFailed is called after this method is over and this object is freed. Is it safe to use |profile_| object at the point or is there any risk to hit a crash?",
+      "range": {
+        "startLine": 418,
+        "startChar": 20,
+        "endLine": 418,
+        "endChar": 45
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fcce6e_04ba4601",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "Suggestion: Let\u0027s store the authenticated account id in class field to avoid having to go though the account tracker service to pick it.",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 47
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3457ee91_c2058b40",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "s/RevokeTokenOnCancel/RemoveAccountOnCancel",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 177,
+        "endChar": 57
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a7e225_c26b370e",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "Based on the comment in OneClickSigninSyncStarter::CancelSigninAndDelete, the sync_starter_ object should be deleted after this call is made. I see that you are deleting it explicitly below. Does this mean that OneClickSigninSyncStarter leaks in some cases?",
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702f19f1_a4119a88",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "No need for this call if you follow my suggestion at line 91.",
+      "range": {
+        "startLine": 187,
+        "startChar": 14,
+        "endLine": 187,
+        "endChar": 24
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e9c57f_fb13b16f",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "We have done a lot of back and forth on this, but I think that we can do one more clean-up here now that the account is always present Chrome when we create a DiceTurnSyncOnHelper object. Let\u0027s remove the gaia_id_ and email_ and store AccountInfo. We can get email, gaia id and account id from AccountInfo object at any moment.",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1e4906_da2bc3f3",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "This should be account_info_.account_id",
+      "range": {
+        "startLine": 142,
+        "startChar": 12,
+        "endLine": 142,
+        "endChar": 40
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4258da_1a7d8b5c",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-09T10:09:38Z",
+      "side": 1,
+      "message": "I think we should use remove account (instead of revoke token) as the action here is to remove the account from Chrome (the effect of revoking the token is that the account is also removed from the account tracker service).\ns/revoke_token/remove_account",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
