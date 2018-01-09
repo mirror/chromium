@@ -52,6 +52,7 @@
 #include "core/html/media/HTMLMediaElementControlsList.h"
 #include "core/html/media/HTMLMediaSource.h"
 #include "core/html/media/MediaControls.h"
+#include "core/html/media/MediaElementResourceSchedulerMetrics.h"
 #include "core/html/media/MediaError.h"
 #include "core/html/media/MediaFragmentURIParser.h"
 #include "core/html/track/AudioTrack.h"
@@ -523,6 +524,11 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tag_name,
 
 HTMLMediaElement::~HTMLMediaElement() {
   BLINK_MEDIA_LOG << "~HTMLMediaElement(" << (void*)this << ")";
+
+  if (web_media_player_) {
+    MediaElementResourceSchedulerMetrics::GetInstance()->OnPlayerDestroyed(
+        this);
+  }
 
   // audio_source_node_ is explicitly cleared by AudioNode::dispose().
   // Since AudioNode::dispose() is guaranteed to be always called before
@@ -1247,6 +1253,12 @@ void HTMLMediaElement::StartPlayerLoad() {
     return;
   }
 
+  if (web_media_player_) {
+    // Unregister the outgoing player.
+    MediaElementResourceSchedulerMetrics::GetInstance()->OnPlayerDestroyed(
+        this);
+  }
+
   web_media_player_ = frame->Client()->CreateWebMediaPlayer(
       *this, source, this,
       frame->GetPage()->GetChromeClient().GetWebLayerTreeView(frame));
@@ -1257,6 +1269,8 @@ void HTMLMediaElement::StartPlayerLoad() {
                            "Player load failure: error creating media player"));
     return;
   }
+
+  MediaElementResourceSchedulerMetrics::GetInstance()->OnPlayerCreated(this);
 
   if (GetLayoutObject())
     GetLayoutObject()->SetShouldDoFullPaintInvalidation();
@@ -3411,6 +3425,7 @@ void HTMLMediaElement::UpdatePlayState() {
       GetWebMediaPlayer()->SetRate(playbackRate());
       GetWebMediaPlayer()->SetVolume(EffectiveMediaVolume());
       GetWebMediaPlayer()->Play();
+      MediaElementResourceSchedulerMetrics::GetInstance()->OnPlayerPlayed(this);
     }
 
     StartPlaybackProgressTimer();
@@ -4205,6 +4220,59 @@ void HTMLMediaElement::CheckViewportIntersectionTimerFired(TimerBase*) {
   mostly_filling_viewport_ = is_mostly_filling_viewport;
   if (web_media_player_)
     web_media_player_->BecameDominantVisibleContent(mostly_filling_viewport_);
+}
+
+int HTMLMediaElement::ComputePlayerPriority() {
+  // If we don't know the priority, make it as low as possible.
+  int priority = INT_MIN;
+
+  // We can only query for intersection if we're in kCompositingClean or better.
+  if (GetDocument().Lifecycle().GetState() <
+      DocumentLifecycle::kCompositingClean) {
+    return priority;
+  }
+
+  if (!GetLayoutObject())
+    return priority;
+
+  // Transform into the root frame's coordinate space, and order players by
+  // their position on the page.
+  if (LocalFrame* frame = GetDocument().GetFrame()) {
+    if (LocalFrame* frame_root = &frame->LocalFrameRoot()) {
+      if (LayoutObject* root_layout_object =
+              frame_root->ContentLayoutObject()) {
+        LayoutBox* ancestor = ToLayoutBox(root_layout_object);
+        LayoutRect root_space_rect;
+        bool does_intersect = GetLayoutObject()->MapToVisualRectInAncestorSpace(
+            ancestor, root_space_rect, kEdgeInclusive);
+        // Numerically higher is higher priority, so switch the sign.
+        if (does_intersect)
+          priority = -root_space_rect.PixelSnappedLocation().Y();
+      }
+    }
+  }
+
+  return priority;
+}
+
+bool HTMLMediaElement::RecordPriorityAtLoad(bool allow_unknown_priority) {
+  int priority = ComputePlayerPriority();
+  // If we're not allowed to have an unknown priority, then take no action and
+  // notify our caller if we didn't get one.
+  if (priority == INT_MIN && !allow_unknown_priority)
+    return false;
+
+  MediaElementResourceSchedulerMetrics* metrics =
+      MediaElementResourceSchedulerMetrics::GetInstance();
+  metrics->OnPlayerLoadStarted(this, priority);
+
+  return true;
+}
+
+void HTMLMediaElement::OnFirstFrameDrawn() {
+  MediaElementResourceSchedulerMetrics* metrics =
+      MediaElementResourceSchedulerMetrics::GetInstance();
+  metrics->OnFirstFrameDrawn(this);
 }
 
 STATIC_ASSERT_ENUM(WebMediaPlayer::kReadyStateHaveNothing,

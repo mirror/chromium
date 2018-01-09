@@ -142,6 +142,12 @@ scoped_refptr<VideoFrame> VideoFrameCompositor::GetCurrentFrame() {
 
 scoped_refptr<VideoFrame> VideoFrameCompositor::GetCurrentFrameOnAnyThread() {
   base::AutoLock lock(current_frame_lock_);
+
+  // We count this as using the frame, since we assume somebody (e.g., WMPI) is
+  // going to do something with it (e.g., draw it onto a canvas).
+  if (first_frame_cb_)
+    std::move(first_frame_cb_).Run();
+
   return current_frame_;
 }
 
@@ -155,6 +161,10 @@ void VideoFrameCompositor::SetCurrentFrame(
 void VideoFrameCompositor::PutCurrentFrame() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   rendered_last_frame_ = true;
+
+  // If this is the very first frame, then notify somebody about something.
+  if (first_frame_cb_)
+    std::move(first_frame_cb_).Run();
 }
 
 bool VideoFrameCompositor::UpdateCurrentFrame(base::TimeTicks deadline_min,
@@ -311,6 +321,11 @@ bool VideoFrameCompositor::CallRender(base::TimeTicks deadline_min,
   if (background_rendering_enabled_)
     background_rendering_timer_.Reset();
   return new_frame || had_new_background_frame;
+}
+
+void VideoFrameCompositor::SetFirstFrameCallback(
+    base::OnceClosure first_frame_cb) {
+  first_frame_cb_ = std::move(first_frame_cb);
 }
 
 }  // namespace media
