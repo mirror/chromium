@@ -17,7 +17,13 @@ import "services/network/public/interfaces/restricted_cookie_manager.mojom";
 import "services/proxy_resolver/public/interfaces/proxy_resolver.mojom";
 
 [Native]
+struct SSLCertRequestInfo;
+
+[Native]
 struct SSLInfo;
+
+[Native]
+struct X509Certificate;
 
 // Parameters for constructing a network context.
 struct NetworkContextParams {
@@ -161,8 +167,19 @@ interface NetworkContext {
                     bool include_subdomains) => ();
 };
 
+interface SSLPrivateKey {
+  Sign(uint16 algorithm, array<uint8> input) => (int32 net_error, array<uint8> signature);
+};
+
 // Network service interface to the browser.
 interface NetworkServiceClient {
+  // Called when an SSL certificate requested message is received for client
+  // authentication.
+  OnCertificateRequested(uint32 process_id,
+                         uint32 routing_id,
+                         SSLCertRequestInfo cert_info) => (X509Certificate x509_certificate,
+                                                           array<uint16> algorithm_preferences,
+                                                           SSLPrivateKey ssl_private_key);
   // Called when an SSL certificate is encountered.
   // The callback argument is a net::ERROR value. If it's net::OK, then the
   // request is resumed. Otherwise it's cancelled with the given error.
