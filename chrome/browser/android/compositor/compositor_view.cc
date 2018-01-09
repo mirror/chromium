@@ -270,4 +270,12 @@ void CompositorView::BrowserChildProcessCrashed(
   // through here but through BrowserChildProcessHostDisconnected() instead.
 }
 
+void CompositorView::SetCompositorWindow(JNIEnv* env,
+                                         const JavaParamRef<jobject>& object,
+                                         jlong window_android) {
+  ui::WindowAndroid* wa = reinterpret_cast<ui::WindowAndroid*>(window_android);
+  compositor_->SetRootWindow(wa);
+  compositor_->SetRootLayer(root_layer_);
+}
+
 }  // namespace android
