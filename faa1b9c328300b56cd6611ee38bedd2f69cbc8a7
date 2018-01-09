@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "357704a8_71d3eef8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:58:53Z",
+      "side": 1,
+      "message": "use → have",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 7
+      },
+      "revId": "faa1b9c328300b56cd6611ee38bedd2f69cbc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885dd908_430606a4",
+        "filename": "components/history/core/browser/web_history_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:58:53Z",
+      "side": 1,
+      "message": "nit: can you reflow this comment?",
+      "revId": "faa1b9c328300b56cd6611ee38bedd2f69cbc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01a536da_2ed83478",
+        "filename": "ios/chrome/browser/history/web_history_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T10:58:53Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 46
+      },
+      "revId": "faa1b9c328300b56cd6611ee38bedd2f69cbc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
