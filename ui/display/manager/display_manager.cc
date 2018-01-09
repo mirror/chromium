@@ -736,6 +736,7 @@ void DisplayManager::OnNativeDisplaysChanged(
       MaybeInitInternalDisplay(&init_displays[0]);
       OnNativeDisplaysChanged(init_displays);
     } else {
+      num_connected_displays_ = 0;
       // Otherwise don't update the displays when all displays are disconnected.
       // This happens when:
       // - the device is idle and powerd requested to turn off all displays.
