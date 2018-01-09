@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "0e6e6c1e_987cf030",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-09T19:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65e40c0_bd2b1379",
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75d7623c_8409f075",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 2
