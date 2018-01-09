@@ -259,13 +259,13 @@ class CORE_EXPORT LayoutText : public LayoutObject {
 
   OnlyWhitespaceOrNbsp ContainsOnlyWhitespaceOrNbsp() const;
 
-  virtual UChar PreviousCharacter() const;
-
  protected:
   void WillBeDestroyed() override;
 
   void StyleWillChange(StyleDifference, const ComputedStyle&) final {}
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
+
+  virtual UChar PreviousCharacter() const;
 
   void AddLayerHitTestRects(
       LayerHitTestRects&,
