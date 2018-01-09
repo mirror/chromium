@@ -51,6 +51,24 @@
       "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4469fe_1e8293bb",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-09T17:26:08Z",
+      "side": 1,
+      "message": "GetUserType() is preferred because we might remove ash::LoginStatus one day.\n\nUser type would not change after user session is created ATM. AFAIK, the only case that might be added is to support child user graduate within the session (still TBD). When that happens, SessionObserver::OnUserSessionUpdated should be called. And while ash::LoginStatus exists, OnLoginStatusChanged will be called too because OnLoginStatusChanged is called when either session state changes or user session data changes.\n\nWe might actually want to observe OnActiveUserSessionChanged, which happens when the active user session is changed in multi-profile scenario. For now, it does not matter because we only check for ARC kiosk session (which is not going to have multi-profile). But if we add more LoginStatus/user type specific code, it might be a problem later.",
+      "parentUuid": "749ec213_c205dd7d",
+      "revId": "143d1c8a36c7c40b34b07a3e49277fcfdaddfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
