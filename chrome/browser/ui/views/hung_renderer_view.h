@@ -42,6 +42,11 @@ class HungPagesTableModel : public ui::TableModel {
 
   void InitForWebContents(content::WebContents* hung_contents);
 
+  // To test the case of multiple hung pages without actually having to
+  // orcestrate an appropriate WebContents, allow an additional WebContents to
+  // be added.
+  void AddWebContentsForTesting(content::WebContents* additional_hung_contents);
+
   // Returns the first RenderProcessHost, or NULL if there aren't any
   // WebContents.
   content::RenderProcessHost* GetRenderProcessHost();
@@ -117,6 +122,8 @@ class HungRendererDialogView : public views::DialogDelegateView,
   virtual void ShowForWebContents(content::WebContents* contents);
   virtual void EndForWebContents(content::WebContents* contents);
 
+  void AddWebContentsForTesting(content::WebContents* contents);
+
   // views::DialogDelegateView overrides:
   base::string16 GetWindowTitle() const override;
   bool ShouldShowCloseButton() const override;
@@ -149,7 +156,7 @@ class HungRendererDialogView : public views::DialogDelegateView,
   // Restart the hang timer, giving the page more time.
   void RestartHangTimer();
 
-  static void InitClass();
+  void UpdateLabels();
 
   // The label describing the list.
   views::Label* info_label_;
