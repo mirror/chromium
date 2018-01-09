@@ -208,6 +208,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Time.h"
+#include "public/platform/InterfaceRegistry.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebDoubleSize.h"
 #include "public/platform/WebFloatPoint.h"
@@ -1755,6 +1756,12 @@ void WebLocalFrameImpl::InitializeCoreFrame(Page& page,
     frame_->GetDocument()->GetMutableSecurityOrigin()->GrantUniversalAccess();
   }
 
+  if (frame_->IsLocalRoot()) {
+    frame_->GetInterfaceRegistry()->AddAssociatedInterface(
+        WTF::BindRepeating(&WebLocalFrameImpl::BindDevToolsAgentRequest,
+                           WrapWeakPersistent(this)));
+  }
+
   if (!owner) {
     // This trace event is needed to detect the main frame of the
     // renderer in telemetry metrics. See crbug.com/692112#c11.
@@ -1972,16 +1979,6 @@ void WebLocalFrameImpl::SetAutofillClient(WebAutofillClient* autofill_client) {
 
 WebAutofillClient* WebLocalFrameImpl::AutofillClient() {
   return autofill_client_;
-}
-
-void WebLocalFrameImpl::SetDevToolsAgentClient(
-    WebDevToolsAgentClient* dev_tools_client) {
-  DCHECK(dev_tools_client);
-  dev_tools_agent_ = WebDevToolsAgentImpl::Create(this, dev_tools_client);
-}
-
-WebDevToolsAgent* WebLocalFrameImpl::DevToolsAgent() {
-  return dev_tools_agent_.Get();
 }
 
 WebLocalFrameImpl* WebLocalFrameImpl::LocalRoot() {
@@ -2606,6 +2603,18 @@ Node* WebLocalFrameImpl::ContextMenuNodeInner() const {
       ->GetPage()
       ->GetContextMenuController()
       .ContextMenuNodeForFrame(GetFrame());
+}
+
+void WebLocalFrameImpl::SetDevToolsAgentImpl(WebDevToolsAgentImpl* agent) {
+  DCHECK(!dev_tools_agent_);
+  dev_tools_agent_ = agent;
+}
+
+void WebLocalFrameImpl::BindDevToolsAgentRequest(
+    mojom::blink::DevToolsAgentAssociatedRequest request) {
+  if (!dev_tools_agent_)
+    dev_tools_agent_ = WebDevToolsAgentImpl::CreateForFrame(this);
+  dev_tools_agent_->BindRequest(std::move(request));
 }
 
 }  // namespace blink

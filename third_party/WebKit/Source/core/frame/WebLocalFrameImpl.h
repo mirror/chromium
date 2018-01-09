@@ -44,6 +44,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
+#include "public/web/devtools_agent.mojom-blink.h"
 
 #include <memory>
 
@@ -244,8 +245,6 @@ class CORE_EXPORT WebLocalFrameImpl final
                                       blink::InterfaceRegistry*) override;
   void SetAutofillClient(WebAutofillClient*) override;
   WebAutofillClient* AutofillClient() override;
-  void SetDevToolsAgentClient(WebDevToolsAgentClient*) override;
-  WebDevToolsAgent* DevToolsAgent() override;
   WebLocalFrameImpl* LocalRoot() override;
   WebFrame* FindFrameByName(const WebString& name) override;
   void SendPings(const WebURL& destination_url) override;
@@ -367,6 +366,7 @@ class CORE_EXPORT WebLocalFrameImpl final
     return GetFrame() ? GetFrame()->View() : nullptr;
   }
 
+  void SetDevToolsAgentImpl(WebDevToolsAgentImpl*);
   WebDevToolsAgentImpl* DevToolsAgentImpl() const {
     return dev_tools_agent_.Get();
   }
@@ -456,6 +456,8 @@ class CORE_EXPORT WebLocalFrameImpl final
   void DispatchPrintEventRecursively(const AtomicString& event_type);
 
   Node* ContextMenuNodeInner() const;
+
+  void BindDevToolsAgentRequest(mojom::blink::DevToolsAgentAssociatedRequest);
 
   Member<LocalFrameClient> local_frame_client_;
 
