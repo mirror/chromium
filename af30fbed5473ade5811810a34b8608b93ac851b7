@@ -16,6 +16,24 @@
       "revId": "af30fbed5473ade5811810a34b8608b93ac851b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46639f4_55934502",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskSchedulerExternalUma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-09T22:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13ade1cb_23b22092",
+      "revId": "af30fbed5473ade5811810a34b8608b93ac851b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
