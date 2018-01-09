@@ -34,6 +34,24 @@
       "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d880d94_d134656d",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-09T22:37:05Z",
+      "side": 1,
+      "message": "Also, to be clear:\n- this isn\u0027t scrolling (just updating ChromeVox\u0027s range)\n- the target isn\u0027t always an anchor\n\nAs background, I did also try focus, and selection events, but those events come with special handling. At the very least, we don\u0027t generate output for them because |eventFrom| is \u0027action\u0027.",
+      "parentUuid": "e4b523bc_6c6e4562",
+      "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
