@@ -472,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "e6de1a53_9ea4538c",
+        "filename": "device/ctap/ctap_authenticator_response.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab8517d1_92df26c7",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "e51151dd245eb0ab97ff5b5018348ed555b72b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0d78a76_934f7d40",
         "filename": "device/ctap/ctap_constants.h",
         "patchSetId": 2

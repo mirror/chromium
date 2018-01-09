@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "057566eb_a36317aa",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39e2bbf0_bcf159bc",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "24908696ecedb158c82743da9f828af5f7b1b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23654e97_81f87e83",
         "filename": "device/ctap/authenticator_options.h",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "24908696ecedb158c82743da9f828af5f7b1b86d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1715cef_27c1976c",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23654e97_81f87e83",
+      "revId": "24908696ecedb158c82743da9f828af5f7b1b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "24908696ecedb158c82743da9f828af5f7b1b86d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7452ada6_80b3b6b0",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-09T18:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a96da4_ecdcabf5",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "24908696ecedb158c82743da9f828af5f7b1b86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
