@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "16962b91_9a722da7",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-09T23:02:12Z",
+      "side": 1,
+      "message": "Thanks for the code pointers.\n\nThis clean-up is a bit broken.  :(\n\nYour CL isn\u0027t at fault, it just brought it to my attention.\n\nThe cleanup conflates creation of the data with using and updating the data. For example, a user could have an address they\u0027ve been using in Chrome for years. One day they additionally supply their phone number when filling a form (Chrome will update the address profile) or they manually add their phone number to their address profile. If they then delete the last hour (let\u0027s say) of form data, it will delete their entire address, which probably is not what the user would expect.\n\nFiled http://crbug.com/800546",
+      "parentUuid": "9a6e0a9f_d72e1804",
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b962b74e_725a0856",
         "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
         "patchSetId": 7
@@ -69,6 +87,24 @@
       "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835fe25f_6c305da5",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2018-01-09T23:02:12Z",
+      "side": 1,
+      "message": "Yeah, autocomplete is perhaps an overloaded term.\n\nLeave the name as is, since it all lives in the \"autofill\" table, but this is actually deleting form autocomplete (i.e., stuff you\u0027ve typed before that\u0027s just saved verbatim and associated with the field) as opposed to (type-annotated) address and payment autofill data.",
+      "parentUuid": "f20f588f_6214ebcb",
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
