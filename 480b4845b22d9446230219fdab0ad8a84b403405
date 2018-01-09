@@ -256,6 +256,30 @@
     },
     {
       "key": {
+        "uuid": "9c1b222d_cf873e46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotifier.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-09T23:19:57Z",
+      "side": 1,
+      "message": "I can get rid of it and make adjustments to calls by SystemDownloadNotifier.\n\nReason I held back on removing this method was because I\u0027m not sure what the state is on SystemDownloadNotifier versus SystemDownloadNotifier2 and I only included the feature in SystemDownloadNotifier2, DownloadNotificationService2, etc.",
+      "parentUuid": "36dff00a_d48faeb8",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 87
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70a0956f_ddb50c97",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
         "patchSetId": 11
@@ -267,6 +291,30 @@
       "writtenOn": "2018-01-09T22:41:13Z",
       "side": 1,
       "message": "Javadoc",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "480b4845b22d9446230219fdab0ad8a84b403405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fa7ca7_d1bdeb39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-09T23:19:57Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this comment means.",
+      "parentUuid": "70a0956f_ddb50c97",
       "range": {
         "startLine": 17,
         "startChar": 4,
