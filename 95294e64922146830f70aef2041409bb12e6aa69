@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "92f84684_26e22524",
+        "filename": "content/browser/shared_worker/shared_worker_instance.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T03:31:27Z",
+      "side": 1,
+      "message": "Move this a TODO(https://crbug.com/794098) so we can remember to clean this up later \u003d)",
+      "range": {
+        "startLine": 52,
+        "startChar": 42,
+        "endLine": 52,
+        "endChar": 68
+      },
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3eaaac4_340beea1",
+        "filename": "content/browser/shared_worker/worker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T03:31:27Z",
+      "side": 1,
+      "message": "Can we/should we also have an explicit test that two workers from file: URLs aren\u0027t shared?\n\nOh, I guess this is covered by the layout test?",
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22e15b68_4362c4fe",
         "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-file-url.html",
         "patchSetId": 8
@@ -13,6 +53,52 @@
       "writtenOn": "2018-01-09T02:28:08Z",
       "side": 1,
       "message": "this win is bogus?",
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b7145c_7d6d6296",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-file-url.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T03:31:27Z",
+      "side": 1,
+      "message": "I don\u0027t quite follow where this \u00271\u0027 is coming from.",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "95294e64922146830f70aef2041409bb12e6aa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d89a887_aaa643e1",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/shared-worker-file-url.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-09T03:31:27Z",
+      "side": 1,
+      "message": "I\u0027m not familiar enough with shared worker to completely understand this test. So maybe some comments would help unfamiliar people like me understand how this test maps to not reusing an existing shared worker.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 76
+      },
       "revId": "95294e64922146830f70aef2041409bb12e6aa69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
