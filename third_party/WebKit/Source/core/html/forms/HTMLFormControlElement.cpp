@@ -249,6 +249,9 @@ static bool ShouldAutofocusOnAttach(const HTMLFormControlElement* element) {
         "sandboxed and the 'allow-scripts' permission is not set."));
     return false;
   }
+  if (element->GetDocument().GetSecurityOrigin() !=
+      element->GetDocument().TopDocument().GetSecurityOrigin())
+    return false;
 
   return true;
 }
