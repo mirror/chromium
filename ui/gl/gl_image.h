@@ -16,6 +16,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/overlay_transform.h"
 #include "ui/gl/gl_export.h"
@@ -71,7 +72,8 @@ class GL_EXPORT GLImage : public base::RefCounted<GLImage> {
                                     int z_order,
                                     gfx::OverlayTransform transform,
                                     const gfx::Rect& bounds_rect,
-                                    const gfx::RectF& crop_rect) = 0;
+                                    const gfx::RectF& crop_rect,
+                                    gfx::GpuFenceHandle gpu_fence_handle) = 0;
 
   // Set the color space when image is used as an overlay.
   virtual void SetColorSpace(const gfx::ColorSpace& color_space) = 0;
