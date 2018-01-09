@@ -16,6 +16,24 @@
       "revId": "c3cf293b943ddf76e7d1a7a4d4968b4aabb222ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaa408c_4b1d1892",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIteratorICU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-09T07:05:29Z",
+      "side": 1,
+      "message": "I made this for two reasons:\n1. Unlikely but there\u0027s a chance where |created_iterator| is true but |iterator_| is nullptr. I\u0027d like to distinguish it from the stack trace.\n2. If other ICU error occurs, and if we CHECK outside the \"if\", the error code will be lost in the minidump. I don\u0027t know if we capture the CHECK message somewhere, but with this, I can keep the error code in the stack.\n\nDo these look reasonable?",
+      "parentUuid": "c20ee57a_5bb01dfa",
+      "revId": "c3cf293b943ddf76e7d1a7a4d4968b4aabb222ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
