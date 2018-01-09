@@ -472,6 +472,7 @@ TEST_F(DownloadTaskImplTest, FailureInTheMiddle) {
   NSError* error = [NSError errorWithDomain:NSURLErrorDomain
                                        code:NSURLErrorNotConnectedToInternet
                                    userInfo:nil];
+  session_task.countOfBytesExpectedToReceive = 0;  // This is 0 when offline.
   SimulateDownloadCompletion(session_task, error);
   ASSERT_TRUE(WaitUntilConditionOrTimeout(kWaitForDownloadTimeout, ^{
     return task_->IsDone();
@@ -479,7 +480,7 @@ TEST_F(DownloadTaskImplTest, FailureInTheMiddle) {
   EXPECT_EQ(DownloadTask::State::kComplete, task_->GetState());
   EXPECT_TRUE(task_->GetErrorCode() == net::ERR_INTERNET_DISCONNECTED);
   EXPECT_EQ(kExpectedDataSize, task_->GetTotalBytes());
-  EXPECT_EQ(23, task_->GetPercentComplete());
+  EXPECT_EQ(100, task_->GetPercentComplete());
   EXPECT_EQ(kReceivedData, writer->data());
 
   EXPECT_CALL(task_delegate_, OnTaskDestroyed(task_.get()));
