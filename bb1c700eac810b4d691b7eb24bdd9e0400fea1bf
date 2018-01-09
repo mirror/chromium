@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02bbb5ae_d6b2ce34",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-09T05:21:29Z",
+      "side": 1,
+      "message": "I think you have to update ShouldProduceCodeCache() in v8/src/compiler.cc.\n\n bool ShouldProduceCodeCache(ScriptCompiler::CompileOptions options) {\n   return options \u003d\u003d ScriptCompiler::kProduceCodeCache ||\n-         options \u003d\u003d ScriptCompiler::kProduceFullCodeCache;\n+         options \u003d\u003d ScriptCompiler::kProduceFullCodeCache ||\n+         options \u003d\u003d ScriptCompiler::kEagerCompile;\n }",
+      "revId": "bb1c700eac810b4d691b7eb24bdd9e0400fea1bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a2a084_3dbdcad0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-09T05:21:29Z",
+      "side": 1,
+      "message": "Currently DevTools shows \"producedCacheSize\" using this cache_result if CompileAndProduceCache function is selected.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d769166#c9\n\nBut with this patch, when CompileEager function is selected which doesn\u0027t set ProduceResult.cache_size, DevTools can\u0027t show \"producedCacheSize\".\n\nSo the LayoutTest http/tests/devtools/service-workers/service-worker-v8-cache.js fails.\n\nCould you please add TRACE_EVENT in V8ScriptRunner::ProduceCache() to show the \"producedCacheSize\" in DevTools?",
+      "revId": "bb1c700eac810b4d691b7eb24bdd9e0400fea1bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
