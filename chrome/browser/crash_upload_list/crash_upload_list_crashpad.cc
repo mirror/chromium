@@ -52,10 +52,10 @@ std::vector<UploadList::UploadInfo> CrashUploadListCrashpad::LoadUploadList() {
 
   std::vector<UploadInfo> uploads;
   for (const crash_reporter::Report& report : reports) {
-    uploads.push_back(
-        UploadInfo(report.remote_id, base::Time::FromTimeT(report.upload_time),
-                   report.local_id, base::Time::FromTimeT(report.capture_time),
-                   ReportUploadStateToUploadInfoState(report.state)));
+    uploads.push_back(UploadInfo(
+        report.remote_id, base::Time::FromTimeT(report.upload_time),
+        report.local_id, base::Time::FromTimeT(report.capture_time),
+        report.file_path, ReportUploadStateToUploadInfoState(report.state)));
   }
   return uploads;
 }

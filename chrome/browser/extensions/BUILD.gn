@@ -857,6 +857,7 @@ static_library("extensions") {
     "//components/translate/core/browser",
     "//components/undo",
     "//components/update_client",
+    "//components/upload_list",
     "//components/url_matcher",
     "//components/user_prefs",
     "//components/vector_icons",
