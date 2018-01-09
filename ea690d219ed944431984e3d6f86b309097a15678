@@ -16,6 +16,24 @@
       "revId": "ea690d219ed944431984e3d6f86b309097a15678",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6566c81_639aa168",
+        "filename": "chrome/browser/ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-09T18:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f95cd1_5536e4ce",
+      "revId": "ea690d219ed944431984e3d6f86b309097a15678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
