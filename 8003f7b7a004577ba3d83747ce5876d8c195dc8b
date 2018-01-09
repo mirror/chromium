@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d5f2560_6c646031",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-09T00:13:40Z",
+      "side": 1,
+      "message": "We want to deprecate v8::Isolate::GetCurrent(). Can we pass in v8::Isolate* or cache v8::Isolate* in ArrayBufferAllocator?",
+      "revId": "8003f7b7a004577ba3d83747ce5876d8c195dc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
