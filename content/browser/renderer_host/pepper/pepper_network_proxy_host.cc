@@ -51,7 +51,8 @@ PepperNetworkProxyHost::~PepperNetworkProxyHost() {
     // If the proxy_service_ is NULL, we shouldn't have any outstanding
     // requests.
     DCHECK(proxy_service_);
-    net::ProxyService::PacRequest* request = pending_requests_.front();
+    net::ProxyResolutionService::PacRequest* request =
+        pending_requests_.front();
     proxy_service_->CancelPacRequest(request);
     pending_requests_.pop();
   }
@@ -97,7 +98,7 @@ void PepperNetworkProxyHost::DidGetUIThreadData(
   waiting_for_ui_thread_data_ = false;
   if (!proxy_service_) {
     DLOG_IF(WARNING, proxy_service_)
-        << "Failed to find a ProxyService for Pepper plugin.";
+        << "Failed to find a ProxyResolutionService for Pepper plugin.";
   }
   TryToSendUnsentRequests();
 }
@@ -139,7 +140,7 @@ void PepperNetworkProxyHost::TryToSendUnsentRequests() {
     } else {
       // Everything looks valid, so try to resolve the proxy.
       net::ProxyInfo* proxy_info = new net::ProxyInfo;
-      net::ProxyService::PacRequest* pending_request = nullptr;
+      net::ProxyResolutionService::PacRequest* pending_request = nullptr;
       base::Callback<void(int)> callback =
           base::Bind(&PepperNetworkProxyHost::OnResolveProxyCompleted,
                      weak_factory_.GetWeakPtr(),

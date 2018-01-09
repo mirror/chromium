@@ -60,7 +60,8 @@ void MarkProxiesAsBadUntil(
   net::ProxyInfo proxy_info;
   proxy_info.UseProxyList(proxy_list);
   DCHECK(request->context());
-  net::ProxyService* proxy_service = request->context()->proxy_service();
+  net::ProxyResolutionService* proxy_service =
+      request->context()->proxy_service();
   DCHECK(proxy_service);
 
   proxy_service->MarkProxiesAsBadUntil(

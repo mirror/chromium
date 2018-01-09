@@ -79,7 +79,7 @@ class CONTENT_EXPORT PepperNetworkProxyHost : public ppapi::host::ResourceHost {
   // The following two members are invalid until we get some information from
   // the UI thread. However, these are only ever set or accessed on the IO
   // thread.
-  net::ProxyService* proxy_service_;
+  net::ProxyResolutionService* proxy_service_;
   bool is_allowed_;
 
   // True initially, but set to false once the values for proxy_service_ and
@@ -95,9 +95,9 @@ class CONTENT_EXPORT PepperNetworkProxyHost : public ppapi::host::ResourceHost {
   };
   base::queue<UnsentRequest> unsent_requests_;
 
-  // Requests awaiting a response from ProxyService. We need to store these so
-  // that we can cancel them if we get destroyed.
-  base::queue<net::ProxyService::PacRequest*> pending_requests_;
+  // Requests awaiting a response from ProxyResolutionService. We need to store
+  // these so that we can cancel them if we get destroyed.
+  base::queue<net::ProxyResolutionService::PacRequest*> pending_requests_;
 
   base::WeakPtrFactory<PepperNetworkProxyHost> weak_factory_;
 
