@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58b632a4_b62d5649",
+        "filename": "media/gpu/vaapi/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-01-09T02:28:01Z",
+      "side": 1,
+      "message": "VLOGF(2) is for the functions for initialization as written in the commit message.",
+      "parentUuid": "55eb7cc0_ee2fd245",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 7
+      },
+      "revId": "ae2ef5f48769c443d09081295f36f84afa96a3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c81007c9_fc02b530",
         "filename": "media/gpu/vaapi/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ae2ef5f48769c443d09081295f36f84afa96a3f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67cad34_aea34292",
+        "filename": "media/gpu/vaapi/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-01-09T02:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c81007c9_fc02b530",
+      "range": {
+        "startLine": 183,
+        "startChar": 30,
+        "endLine": 183,
+        "endChar": 31
+      },
+      "revId": "ae2ef5f48769c443d09081295f36f84afa96a3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
