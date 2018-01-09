@@ -33,8 +33,9 @@ SuggestionsContainerView::~SuggestionsContainerView() = default;
 int SuggestionsContainerView::DoUpdate() {
   // Ignore updates and disable buttons when suggestions container view is not
   // shown.
-  const AppListModel::State state = contents_view_->GetActiveState();
-  if (state != AppListModel::STATE_START && state != AppListModel::STATE_APPS) {
+  const ash::mojom::AppListState state = contents_view_->GetActiveState();
+  if (state != ash::mojom::AppListState::STATE_START &&
+      state != ash::mojom::AppListState::STATE_APPS) {
     for (auto* view : search_result_tile_views_)
       view->SetEnabled(false);
 

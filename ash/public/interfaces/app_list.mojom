@@ -19,3 +19,15 @@ struct AppListItemMetadata {
   bool is_folder;   // Whether this item is a folder.
 };
 
+// All possible states of the app list.
+// Note: Do not change the order of these as they are used for metrics.
+enum AppListState {
+  STATE_APPS = 0,
+  STATE_SEARCH_RESULTS,
+  STATE_START,
+  STATE_CUSTOM_LAUNCHER_PAGE_DEPRECATED,
+  // Add new values here.
+
+  INVALID_STATE,
+  STATE_LAST = INVALID_STATE,
+};

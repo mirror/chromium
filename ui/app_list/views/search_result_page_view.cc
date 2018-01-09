@@ -295,8 +295,8 @@ void SearchResultPageView::OnSearchResultContainerResultsChanged() {
 }
 
 gfx::Rect SearchResultPageView::GetPageBoundsForState(
-    AppListModel::State state) const {
-  if (state != AppListModel::STATE_SEARCH_RESULTS) {
+    ash::mojom::AppListState state) const {
+  if (state != ash::mojom::AppListState::STATE_SEARCH_RESULTS) {
     // Hides this view behind the search box by using the same bounds.
     return AppListPage::contents_view()->GetSearchBoxBoundsForState(state);
   }
@@ -307,11 +307,12 @@ gfx::Rect SearchResultPageView::GetPageBoundsForState(
   return onscreen_bounds;
 }
 
-void SearchResultPageView::OnAnimationUpdated(double progress,
-                                              AppListModel::State from_state,
-                                              AppListModel::State to_state) {
-  if (from_state != AppListModel::STATE_SEARCH_RESULTS &&
-      to_state != AppListModel::STATE_SEARCH_RESULTS) {
+void SearchResultPageView::OnAnimationUpdated(
+    double progress,
+    ash::mojom::AppListState from_state,
+    ash::mojom::AppListState to_state) {
+  if (from_state != ash::mojom::AppListState::STATE_SEARCH_RESULTS &&
+      to_state != ash::mojom::AppListState::STATE_SEARCH_RESULTS) {
     return;
   }
   const SearchBoxView* search_box =
@@ -330,7 +331,7 @@ void SearchResultPageView::OnAnimationUpdated(double progress,
           search_box->GetSearchBoxBorderCornerRadiusForState(to_state))));
 
   gfx::Rect onscreen_bounds(
-      GetPageBoundsForState(AppListModel::STATE_SEARCH_RESULTS));
+      GetPageBoundsForState(ash::mojom::AppListState::STATE_SEARCH_RESULTS));
   onscreen_bounds -= bounds().OffsetFromOrigin();
   gfx::Path path;
   path.addRect(gfx::RectToSkRect(onscreen_bounds));

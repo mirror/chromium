@@ -68,7 +68,7 @@ void ContentsView::Init(AppListModel* model) {
 
   // Add |apps_container_view_| as STATE_START corresponding page for
   // fullscreen app list.
-  AddLauncherPage(apps_container_view_, AppListModel::STATE_START);
+  AddLauncherPage(apps_container_view_, ash::mojom::AppListState::STATE_START);
 
   // Search results UI.
   search_results_page_view_ = new SearchResultPageView();
@@ -96,11 +96,12 @@ void ContentsView::Init(AppListModel* model) {
       results, search_result_list_view_);
 
   AddLauncherPage(search_results_page_view_,
-                  AppListModel::STATE_SEARCH_RESULTS);
+                  ash::mojom::AppListState::STATE_SEARCH_RESULTS);
 
-  AddLauncherPage(apps_container_view_, AppListModel::STATE_APPS);
+  AddLauncherPage(apps_container_view_, ash::mojom::AppListState::STATE_APPS);
 
-  int initial_page_index = GetPageIndexForState(AppListModel::STATE_START);
+  int initial_page_index =
+      GetPageIndexForState(ash::mojom::AppListState::STATE_START);
   DCHECK_GE(initial_page_index, 0);
 
   page_before_search_ = initial_page_index;
@@ -133,11 +134,12 @@ void ContentsView::SetDragAndDropHostOfCurrentAppList(
   apps_container_view_->SetDragAndDropHostOfCurrentAppList(drag_and_drop_host);
 }
 
-void ContentsView::SetActiveState(AppListModel::State state) {
+void ContentsView::SetActiveState(ash::mojom::AppListState state) {
   SetActiveState(state, true);
 }
 
-void ContentsView::SetActiveState(AppListModel::State state, bool animate) {
+void ContentsView::SetActiveState(ash::mojom::AppListState state,
+                                  bool animate) {
   if (IsStateActive(state))
     return;
 
@@ -149,19 +151,19 @@ int ContentsView::GetActivePageIndex() const {
   return pagination_model_.SelectedTargetPage();
 }
 
-AppListModel::State ContentsView::GetActiveState() const {
+ash::mojom::AppListState ContentsView::GetActiveState() const {
   return GetStateForPageIndex(GetActivePageIndex());
 }
 
-bool ContentsView::IsStateActive(AppListModel::State state) const {
+bool ContentsView::IsStateActive(ash::mojom::AppListState state) const {
   int active_page_index = GetActivePageIndex();
   return active_page_index >= 0 &&
          GetPageIndexForState(state) == active_page_index;
 }
 
-int ContentsView::GetPageIndexForState(AppListModel::State state) const {
+int ContentsView::GetPageIndexForState(ash::mojom::AppListState state) const {
   // Find the index of the view corresponding to the given state.
-  std::map<AppListModel::State, int>::const_iterator it =
+  std::map<ash::mojom::AppListState, int>::const_iterator it =
       state_to_view_.find(state);
   if (it == state_to_view_.end())
     return -1;
@@ -169,11 +171,11 @@ int ContentsView::GetPageIndexForState(AppListModel::State state) const {
   return it->second;
 }
 
-AppListModel::State ContentsView::GetStateForPageIndex(int index) const {
-  std::map<int, AppListModel::State>::const_iterator it =
+ash::mojom::AppListState ContentsView::GetStateForPageIndex(int index) const {
+  std::map<int, ash::mojom::AppListState>::const_iterator it =
       view_to_state_.find(index);
   if (it == view_to_state_.end())
-    return AppListModel::INVALID_STATE;
+    return ash::mojom::AppListState::INVALID_STATE;
 
   return it->second;
 }
@@ -202,9 +204,9 @@ void ContentsView::SetActiveStateInternal(int page_index,
 }
 
 void ContentsView::ActivePageChanged() {
-  AppListModel::State state = AppListModel::INVALID_STATE;
+  ash::mojom::AppListState state = ash::mojom::AppListState::INVALID_STATE;
 
-  std::map<int, AppListModel::State>::const_iterator it =
+  std::map<int, ash::mojom::AppListState>::const_iterator it =
       view_to_state_.find(GetActivePageIndex());
   if (it != view_to_state_.end())
     state = it->second;
@@ -214,26 +216,27 @@ void ContentsView::ActivePageChanged() {
   app_list_main_view_->model()->SetState(state);
 
   // Set the visibility of the search box's back button.
-  const bool folder_active = state == AppListModel::STATE_APPS &&
+  const bool folder_active = state == ash::mojom::AppListState::STATE_APPS &&
                              apps_container_view_->IsInFolderView();
 
   if (!is_fullscreen_app_list_enabled_) {
     app_list_main_view_->search_box_view()->back_button()->SetVisible(
-        state != AppListModel::STATE_START);
+        state != ash::mojom::AppListState::STATE_START);
     app_list_main_view_->search_box_view()->Layout();
     app_list_main_view_->search_box_view()->SetBackButtonLabel(folder_active);
   }
 }
 
 void ContentsView::ShowSearchResults(bool show) {
-  int search_page = GetPageIndexForState(AppListModel::STATE_SEARCH_RESULTS);
+  int search_page =
+      GetPageIndexForState(ash::mojom::AppListState::STATE_SEARCH_RESULTS);
   DCHECK_GE(search_page, 0);
 
   SetActiveStateInternal(show ? search_page : page_before_search_, show, true);
 }
 
 bool ContentsView::IsShowingSearchResults() const {
-  return IsStateActive(AppListModel::STATE_SEARCH_RESULTS);
+  return IsStateActive(ash::mojom::AppListState::STATE_SEARCH_RESULTS);
 }
 
 void ContentsView::UpdatePageBounds() {
@@ -251,8 +254,8 @@ void ContentsView::UpdatePageBounds() {
     }
   }
 
-  AppListModel::State current_state = GetStateForPageIndex(current_page);
-  AppListModel::State target_state = GetStateForPageIndex(target_page);
+  ash::mojom::AppListState current_state = GetStateForPageIndex(current_page);
+  ash::mojom::AppListState target_state = GetStateForPageIndex(target_page);
 
   // Update app list pages.
   for (AppListPage* page : app_list_pages_) {
@@ -274,8 +277,8 @@ void ContentsView::UpdatePageBounds() {
 }
 
 void ContentsView::UpdateSearchBox(double progress,
-                                   AppListModel::State current_state,
-                                   AppListModel::State target_state) {
+                                   ash::mojom::AppListState current_state,
+                                   ash::mojom::AppListState target_state) {
   AppListPage* from_page = GetPageView(GetPageIndexForState(current_state));
   AppListPage* to_page = GetPageView(GetPageIndexForState(target_state));
 
@@ -318,7 +321,7 @@ int ContentsView::AddLauncherPage(AppListPage* view) {
 }
 
 int ContentsView::AddLauncherPage(AppListPage* view,
-                                  AppListModel::State state) {
+                                  ash::mojom::AppListState state) {
   int page_index = AddLauncherPage(view);
   bool success =
       state_to_view_.insert(std::make_pair(state, page_index)).second;
@@ -348,7 +351,7 @@ gfx::Rect ContentsView::GetDefaultSearchBoxBounds() const {
 }
 
 gfx::Rect ContentsView::GetSearchBoxBoundsForState(
-    AppListModel::State state) const {
+    ash::mojom::AppListState state) const {
   AppListPage* page = GetPageView(GetPageIndexForState(state));
   return page->GetSearchBoxBoundsForState(state);
 }
@@ -373,27 +376,27 @@ gfx::Size ContentsView::GetMaximumContentsSize() const {
 }
 
 bool ContentsView::Back() {
-  AppListModel::State state = view_to_state_[GetActivePageIndex()];
+  ash::mojom::AppListState state = view_to_state_[GetActivePageIndex()];
   switch (state) {
-    case AppListModel::STATE_START:
+    case ash::mojom::AppListState::STATE_START:
       // Close the app list when Back() is called from the start page.
       return false;
-    case AppListModel::STATE_APPS:
+    case ash::mojom::AppListState::STATE_APPS:
       if (apps_container_view_->IsInFolderView()) {
         apps_container_view_->app_list_folder_view()->CloseFolderPage();
       } else {
         is_fullscreen_app_list_enabled_
             ? app_list_view_->Dismiss()
-            : SetActiveState(AppListModel::STATE_START);
+            : SetActiveState(ash::mojom::AppListState::STATE_START);
       }
       break;
-    case AppListModel::STATE_SEARCH_RESULTS:
+    case ash::mojom::AppListState::STATE_SEARCH_RESULTS:
       GetSearchBoxView()->ClearSearch();
       GetSearchBoxView()->SetSearchBoxActive(false);
       ShowSearchResults(false);
       break;
-    case AppListModel::STATE_CUSTOM_LAUNCHER_PAGE_DEPRECATED:
-    case AppListModel::INVALID_STATE:  // Falls through.
+    case ash::mojom::AppListState::STATE_CUSTOM_LAUNCHER_PAGE_DEPRECATED:
+    case ash::mojom::AppListState::INVALID_STATE:  // Falls through.
       NOTREACHED();
       break;
   }

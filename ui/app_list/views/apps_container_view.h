@@ -74,10 +74,11 @@ class APP_LIST_EXPORT AppsContainerView : public AppListPage,
   void OnWillBeShown() override;
   gfx::Rect GetSearchBoxBounds() const override;
   gfx::Rect GetSearchBoxBoundsForState(
-      AppListModel::State state) const override;
-  gfx::Rect GetPageBoundsForState(AppListModel::State state) const override;
+      ash::mojom::AppListState state) const override;
+  gfx::Rect GetPageBoundsForState(
+      ash::mojom::AppListState state) const override;
   gfx::Rect GetPageBoundsDuringDragging(
-      AppListModel::State state) const override;
+      ash::mojom::AppListState state) const override;
   views::View* GetSelectedView() const override;
 
   // TopIconAnimationObserver overrides:

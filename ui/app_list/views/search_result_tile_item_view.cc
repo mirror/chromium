@@ -272,7 +272,8 @@ bool SearchResultTileItemView::OnKeyPressed(const ui::KeyEvent& event) {
 
 void SearchResultTileItemView::OnFocus() {
   if (pagination_model_ && IsSuggestedAppTile() &&
-      view_delegate_->GetModel()->state() == AppListModel::STATE_APPS) {
+      view_delegate_->GetModel()->state() ==
+          ash::mojom::AppListState::STATE_APPS) {
     // Go back to first page when app in suggestions container is focused.
     pagination_model_->SelectPage(0, false);
   } else if (!IsSuggestedAppTile()) {
