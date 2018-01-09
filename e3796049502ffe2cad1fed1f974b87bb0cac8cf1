@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a761d9b_cfd34f30",
+        "filename": "components/viz/common/quads/render_frame_metadata.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-09T20:20:36Z",
+      "side": 1,
+      "message": "This should not be in the viz directory. Maybe in the content/common dir?",
+      "revId": "e3796049502ffe2cad1fed1f974b87bb0cac8cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
