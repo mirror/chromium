@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "881bf9f1_b2a74d10",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-09T18:11:06Z",
+      "side": 1,
+      "message": "Can we move all these unique_ptrs and the thread checker to a new class called NetworkData or NetworkComponent?  The new class can live on the network thread.  CleanUp() can simply reset() the NetworkData unique_ptr.  This will save all the explicit deletion, and prevent accidental deletion off the network thread.",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 33
+      },
+      "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5d0ee6_6131e2ba",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-09T18:11:06Z",
+      "side": 1,
+      "message": "uh?",
+      "range": {
+        "startLine": 261,
+        "startChar": 11,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9902e6da_628db86e",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-09T18:11:06Z",
+      "side": 1,
+      "message": "delegate-\u003ecallback",
+      "range": {
+        "startLine": 101,
+        "startChar": 78,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0865b153_da8262b9",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-09T18:11:06Z",
+      "side": 1,
+      "message": "I think this comment needs updating as the ownership model has changed.",
+      "range": {
+        "startLine": 102,
+        "startChar": 79,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "1b419dd28f15afc624770fd53abca9c5b12ef3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
