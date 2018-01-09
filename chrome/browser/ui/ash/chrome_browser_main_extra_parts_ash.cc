@@ -4,15 +4,21 @@
 
 #include "chrome/browser/ui/ash/chrome_browser_main_extra_parts_ash.h"
 
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/mus_property_mirror_ash.h"
+#include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/window_pin_type.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/cpp/window_state_type.h"
+#include "ash/public/interfaces/constants.mojom.h"
+#include "ash/public/interfaces/process_creation_time_recorder.mojom.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/public/interfaces/window_properties.mojom.h"
 #include "ash/public/interfaces/window_state_type.mojom.h"
 #include "ash/shell.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/browser/ui/ash/ash_shell_init.h"
 #include "chrome/browser/ui/ash/ash_util.h"
@@ -20,17 +26,23 @@
 #include "chrome/browser/ui/ash/chrome_new_window_client.h"
 #include "chrome/browser/ui/ash/chrome_shell_content_state.h"
 #include "chrome/browser/ui/ash/ime_controller_client.h"
+#include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/login_screen_client.h"
 #include "chrome/browser/ui/ash/media_client.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/browser/ui/ash/tab_scrubber.h"
+#include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "chrome/browser/ui/ash/volume_controller.h"
 #include "chrome/browser/ui/ash/vpn_list_forwarder.h"
+#include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 #include "chrome/browser/ui/views/frame/immersive_context_mus.h"
 #include "chrome/browser/ui/views/frame/immersive_handler_factory_mus.h"
 #include "chrome/browser/ui/views/select_file_dialog_extension.h"
 #include "chrome/browser/ui/views/select_file_dialog_extension_factory.h"
+#include "components/session_manager/core/session_manager.h"
+#include "components/session_manager/core/session_manager_observer.h"
+#include "components/startup_metric_utils/browser/startup_metric_utils.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
@@ -45,13 +57,77 @@
 #include "chrome/browser/exo_parts.h"
 #endif
 
+namespace {
+
+void PushProcessCreationTimeToAsh() {
+  ash::mojom::ProcessCreationTimeRecorderPtr recorder;
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(ash::mojom::kServiceName, &recorder);
+  DCHECK(!startup_metric_utils::MainEntryPointTicks().is_null());
+  recorder->SetMainProcessCreationTime(
+      startup_metric_utils::MainEntryPointTicks());
+}
+
+}  // namespace
+
+namespace internal {
+
+// Creates a ChromeLauncherController on the first active session notification.
+// Used to avoid constructing a ChromeLauncherController with no active profile.
+class ChromeLauncherControllerInitializer
+    : public session_manager::SessionManagerObserver {
+ public:
+  ChromeLauncherControllerInitializer() {
+    session_manager::SessionManager::Get()->AddObserver(this);
+  }
+
+  ~ChromeLauncherControllerInitializer() override {
+    if (!chrome_launcher_controller_)
+      session_manager::SessionManager::Get()->RemoveObserver(this);
+  }
+
+  // session_manager::SessionManagerObserver:
+  void OnSessionStateChanged() override {
+    DCHECK(!chrome_launcher_controller_);
+    DCHECK(!ChromeLauncherController::instance());
+
+    if (session_manager::SessionManager::Get()->session_state() ==
+        session_manager::SessionState::ACTIVE) {
+      chrome_shelf_model_ = std::make_unique<ash::ShelfModel>();
+      const bool should_synchronize_shelf_models =
+          chromeos::GetAshConfig() == ash::Config::MASH ||
+          !base::CommandLine::ForCurrentProcess()->HasSwitch(
+              ash::switches::kAshDisableShelfModelSynchronization);
+      ash::ShelfModel* model = should_synchronize_shelf_models
+                                   ? chrome_shelf_model_.get()
+                                   : ash::Shell::Get()->shelf_model();
+      chrome_launcher_controller_ =
+          std::make_unique<ChromeLauncherController>(nullptr, model);
+      chrome_launcher_controller_->Init();
+      session_manager::SessionManager::Get()->RemoveObserver(this);
+    }
+  }
+
+ private:
+  // This shelf model is synced with Ash's ShelfController instance in Mash and
+  // if kAshDisableShelfModelSynchronization is not supplied in Classic Ash;
+  // otherwise ChromeLauncherController uses Ash's ShelfModel instance directly.
+  std::unique_ptr<ash::ShelfModel> chrome_shelf_model_;
+  std::unique_ptr<ChromeLauncherController> chrome_launcher_controller_;
+
+  DISALLOW_COPY_AND_ASSIGN(ChromeLauncherControllerInitializer);
+};
+
+}  // namespace internal
+
 ChromeBrowserMainExtraPartsAsh::ChromeBrowserMainExtraPartsAsh() {}
 
 ChromeBrowserMainExtraPartsAsh::~ChromeBrowserMainExtraPartsAsh() {}
 
 void ChromeBrowserMainExtraPartsAsh::ServiceManagerConnectionStarted(
     content::ServiceManagerConnection* connection) {
-  if (ash_util::IsRunningInMash()) {
+  if (chromeos::GetAshConfig() == ash::Config::MASH) {
     // ash::Shell will not be created because ash is running out-of-process.
     ash::Shell::SetIsBrowserProcessWithMash();
 
@@ -100,7 +176,7 @@ void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
   if (ash_util::ShouldOpenAshOnStartup())
     ash_shell_init_ = std::make_unique<AshShellInit>();
 
-  if (ash_util::IsRunningInMash()) {
+  if (chromeos::GetAshConfig() == ash::Config::MASH) {
     immersive_context_ = base::MakeUnique<ImmersiveContextMus>();
     immersive_handler_factory_ = base::MakeUnique<ImmersiveHandlerFactoryMus>();
 
@@ -122,23 +198,36 @@ void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
   accessibility_controller_client_ =
       std::make_unique<AccessibilityControllerClient>();
   accessibility_controller_client_->Init();
-  system_tray_client_ = base::MakeUnique<SystemTrayClient>();
   ime_controller_client_ = base::MakeUnique<ImeControllerClient>(
       chromeos::input_method::InputMethodManager::Get());
   ime_controller_client_->Init();
   new_window_client_ = base::MakeUnique<ChromeNewWindowClient>();
+  system_tray_client_ = base::MakeUnique<SystemTrayClient>();
+
+  // Makes mojo request to TabletModeController in ash.
+  tablet_mode_client_ = std::make_unique<TabletModeClient>();
+  tablet_mode_client_->Init();
+
   volume_controller_ = base::MakeUnique<VolumeController>();
   vpn_list_forwarder_ = base::MakeUnique<VpnListForwarder>();
+
+  wallpaper_controller_client_ = std::make_unique<WallpaperControllerClient>();
+  wallpaper_controller_client_->Init();
+
+  chrome_launcher_controller_initializer_ =
+      std::make_unique<internal::ChromeLauncherControllerInitializer>();
 
   ui::SelectFileDialog::SetFactory(new SelectFileDialogExtensionFactory);
 
 #if BUILDFLAG(ENABLE_WAYLAND_SERVER)
   exo_parts_ = ExoParts::CreateIfNecessary();
 #endif
+
+  PushProcessCreationTimeToAsh();
 }
 
 void ChromeBrowserMainExtraPartsAsh::PostProfileInit() {
-  if (ash_util::IsRunningInMash())
+  if (chromeos::GetAshConfig() == ash::Config::MASH)
     chrome_shell_content_state_ = base::MakeUnique<ChromeShellContentState>();
 
   cast_config_client_media_router_ =
@@ -147,11 +236,10 @@ void ChromeBrowserMainExtraPartsAsh::PostProfileInit() {
   login_screen_client_ = base::MakeUnique<LoginScreenClient>();
 
   // TODO(mash): Port TabScrubber.
-  if (ash_util::IsRunningInMash())
-    return;
-
-  // Initialize TabScrubber after the Ash Shell has been initialized.
-  TabScrubber::GetInstance();
+  if (chromeos::GetAshConfig() != ash::Config::MASH) {
+    // Initialize TabScrubber after the Ash Shell has been initialized.
+    TabScrubber::GetInstance();
+  }
 }
 
 void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
@@ -161,16 +249,20 @@ void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
   exo_parts_.reset();
 #endif
 
+  chrome_launcher_controller_initializer_.reset();
+
+  wallpaper_controller_client_.reset();
   vpn_list_forwarder_.reset();
   volume_controller_.reset();
-  new_window_client_.reset();
-  ime_controller_client_.reset();
+  tablet_mode_client_.reset();
   system_tray_client_.reset();
-  accessibility_controller_client_.reset();
-  login_screen_client_.reset();
-  media_client_.reset();
-  cast_config_client_media_router_.reset();
   session_controller_client_.reset();
+  new_window_client_.reset();
+  media_client_.reset();
+  login_screen_client_.reset();
+  ime_controller_client_.reset();
+  cast_config_client_media_router_.reset();
+  accessibility_controller_client_.reset();
 
   ash_shell_init_.reset();
 }
