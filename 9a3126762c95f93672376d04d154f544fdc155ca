@@ -132,6 +132,24 @@
       "revId": "9a3126762c95f93672376d04d154f544fdc155ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407d336b_88272ccd",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T22:24:39Z",
+      "side": 1,
+      "message": "I think we should be explicit, given that you\u0027ve gone as far as adding this script.",
+      "parentUuid": "8a8140fa_529c84ef",
+      "revId": "9a3126762c95f93672376d04d154f544fdc155ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
