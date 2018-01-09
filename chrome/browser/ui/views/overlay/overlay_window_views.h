@@ -18,7 +18,7 @@ class OverlayWindowViews : public OverlayWindow {
   ~OverlayWindowViews() override;
 
   // OverlayWindow:
-  void Init() override;
+  void Init(const gfx::Size& size) override;
   bool IsActive() const override;
   void Show() override;
   void Hide() override;

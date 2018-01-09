@@ -47,7 +47,7 @@ OverlayWindowViews::OverlayWindowViews() {
 
 OverlayWindowViews::~OverlayWindowViews() = default;
 
-void OverlayWindowViews::Init() {
+void OverlayWindowViews::Init(const gfx::Size& size) {
   views::Widget::InitParams params(
       views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
@@ -58,7 +58,6 @@ void OverlayWindowViews::Init() {
   // The size is a temporary placeholder while video size is currently unused.
   // This should also use the display of the initiating WebContents.
   // http://crbug/726621
-  gfx::Size size(500, 300);
   gfx::Rect work_area =
       display::Screen::GetScreen()->GetPrimaryDisplay().work_area();
   int window_diff_width = work_area.width() - size.width();
