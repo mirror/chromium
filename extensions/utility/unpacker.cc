@@ -25,6 +25,7 @@
 #include "extensions/common/api/declarative_net_request/dnr_manifest_data.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/extension_icon_path_normalizer.h"
 #include "extensions/common/extension_l10n_util.h"
 #include "extensions/common/extension_utility_types.h"
 #include "extensions/common/extensions_client.h"
@@ -221,9 +222,11 @@ bool Unpacker::Run() {
   }
   extension->AddInstallWarnings(warnings);
 
-  // Decode any images that the browser needs to display.
-  std::set<base::FilePath> image_paths =
-      ExtensionsClient::Get()->GetBrowserImagePaths(extension.get());
+  // Decode any images that the browser needs to display. |GetBrowserImagePaths|
+  // can contain dpulicates like "icon.png" and "./icon.png". It is required to
+  // normalize paths to avoid unpacking of the same icon twice.
+  const std::set<base::FilePath> image_paths = NormalizeExtensionIconPaths(
+      ExtensionsClient::Get()->GetBrowserImagePaths(extension.get()));
   for (const base::FilePath& path : image_paths) {
     if (!AddDecodedImage(path))
       return false;  // Error was already reported.
