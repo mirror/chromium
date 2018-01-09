@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63f9fcf5_a10662e3",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_component_options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-09T11:37:31Z",
+      "side": 1,
+      "message": "I am not sure this is actually allowed. It seems to work.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "5aa5b06e4629c332d7760d20abb569b627a32179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
