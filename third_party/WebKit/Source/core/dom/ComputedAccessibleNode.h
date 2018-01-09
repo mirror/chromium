@@ -10,11 +10,14 @@
 #include "core/dom/events/EventTarget.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/text/AtomicString.h"
+#include "third_party/WebKit/public/platform/PlatformAXNode.h"
 
 class ScriptPromise;
 class ScriptState;
 
 namespace blink {
+
+class PlatformAXTree;
 
 class ComputedAccessibleNode : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
@@ -29,7 +32,7 @@ class ComputedAccessibleNode : public ScriptWrappable {
 
   void Trace(blink::Visitor*);
 
-  const AtomicString& role() const;
+  const AtomicString role() const;
   const String name() const;
 
  private:
@@ -40,11 +43,13 @@ class ComputedAccessibleNode : public ScriptWrappable {
 
   explicit ComputedAccessibleNode(Element*);
 
+  // Given a snapshot of the AXTree stored in content/renderer, populate the
+  // accessible properties stored within this ComputedAccessibleNode.
+  void PopulateComputedAccessibleProperties(PlatformAXTree*);
+
+  blink::PlatformAXNode* node_;
   Member<ComputedPromiseProperty> computed_property_;
   Member<Element> element_;
-
-  // TODO(meredithl): This should eventually create AXTree and subscribe to
-  // accessibility updates from the Document.
 };
 
 }  // namespace blink
