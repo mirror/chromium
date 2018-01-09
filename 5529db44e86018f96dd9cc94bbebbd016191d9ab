@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d8802f0_3e98a422",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "DCHECK(ServiceWorkerUtils::IsServicificationEnabled());?",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5881930_a49d5681",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "I think it\u0027s possible for GetControllerSWPtr to be nullptr here when the service worker isn\u0027t running. That could conceivably happen due to back luck with a timeout, and I think when it\u0027s a no-fetch worker we don\u0027t start the worker even thuogh it should be the controller.",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9687fc2e_2b4c7dc8",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "Maybe add // Non-S13nServiceWorker here too to make it more clear that this section is Non-S13n and the section following line 70 is S13n",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "398b3aed_072c6be1",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 21
@@ -13,6 +64,245 @@
       "writtenOn": "2018-01-07T05:50:30Z",
       "side": 1,
       "message": "(self-review) has been just killed",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af848c3c_dc120d8c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "I think this comment is written from the POV that GetControllerServiceWorkerPtr should be called soon after navigation begins? Of  course, the controller worker is terminated if idle. I think the comment to make the POV more explicit. However there is the question of no-fetch workers which I think break the assumption.",
+      "parentUuid": "398b3aed_072c6be1",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4a394e_11860e15",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "Could add more context here: In S13nSW the controller is already sent in navigation commit, but we still need this...)",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d425036c_bcf21f8a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "I\u0027m a little confused why line 729 seems to say this function is only called  for Use Counter, but we\u0027re still making sure to send the controller ptr here. Can things be explained a bit more?",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc61c801_90158764",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "\"unbound ptr\" seems misleading the ptr is bound and the callsite calls PassInterface() to unbind it (if I\u0027m understanding Mojo terminology correctly).",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b243c513_77a339ae",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "Is line 59 used for non-S13n too? If so, we don\u0027t need this line 50.",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63e1315_03043e4b",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "Non-null?",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a58f2de_bacf1340",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "rm",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a06872e_87b4d097",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "The function seems to handle nullptr fine, so maybe don\u0027t need line 19?",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1694791_17e7e104",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "trying",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0900b858_a7c83c56",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "It may be worth noting that this only happens due to an exceptional condition due to an\nexceptional condition like it could no longer be read from the script cache.",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047fd2fc_d713d8d3",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "Can this be rewritten in active words like: Notifies XXX that YYY? Maybe just something like \"Connects to the given controller, may be called when the controller changes e.g., due to claim()\"?",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3251f33_5374d197",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "execution contexts.",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413f101d_5ef1f3a0",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "nice",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a118426f_c41c4e6a",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "prefer \"execution contexts\" to help distinguish from the Context in ProviderContext.",
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +354,29 @@
       "writtenOn": "2018-01-09T03:54:30Z",
       "side": 1,
       "message": "nit:\n\n// The request should not go to the previous controllers.\nEXPECT_EQ(1, fake_controller1.fetch_event_count());\nEXPECT_EQ(1, fake_controller2.fetch_event_count());\n// The request should not go to the network.\nEXPECT_EQ(1UL, fake_loader_factory_.clients_count());",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9fb66b_b4433367",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T05:14:30Z",
+      "side": 1,
+      "message": "was",
+      "range": {
+        "startLine": 213,
+        "startChar": 23,
+        "endLine": 213,
+        "endChar": 26
+      },
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
