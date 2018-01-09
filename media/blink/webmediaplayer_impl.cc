@@ -637,13 +637,14 @@ void WebMediaPlayerImpl::Pause() {
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
+  // If we are transitioning from playing to paused, we are no longer paused
+  // when hidden. Otherwise, do not change the state.
+  paused_when_hidden_ = paused_when_hidden_ && paused_;
+
   // We update the paused state even when casting, since we expect pause() to be
   // called when casting begins, and when we exit casting we should end up in a
   // paused state.
   paused_ = true;
-
-  // No longer paused because it was hidden.
-  paused_when_hidden_ = false;
 
   // User initiated pause locks background videos.
   if (blink::WebUserGestureIndicator::IsProcessingUserGesture(frame_))
@@ -1851,7 +1852,7 @@ void WebMediaPlayerImpl::OnFrameShown() {
   // of being shown and only for videos we would optimize background playback
   // for.
   if ((!paused_ && IsBackgroundOptimizationCandidate()) ||
-      paused_when_hidden_) {
+      (paused_when_hidden_ && IsHidden())) {
     frame_time_report_cb_.Reset(
         base::Bind(&WebMediaPlayerImpl::ReportTimeFromForegroundToFirstFrame,
                    AsWeakPtr(), base::TimeTicks::Now()));
@@ -2579,7 +2580,7 @@ void WebMediaPlayerImpl::FinishMemoryUsageReport(int64_t demuxer_memory_usage) {
 void WebMediaPlayerImpl::ScheduleIdlePauseTimer() {
   // Only schedule the pause timer if we're not paused or paused but going to
   // resume when foregrounded, and are suspended and have audio.
-  if ((paused_ && !paused_when_hidden_) ||
+  if ((paused_ && !paused_when_hidden_ && !IsHidden()) ||
       !pipeline_controller_.IsSuspended() || !HasAudio()) {
     return;
   }
@@ -2755,14 +2756,20 @@ void WebMediaPlayerImpl::PauseVideoIfNeeded() {
   DCHECK(IsHidden());
 
   // Don't pause video while the pipeline is stopped, resuming or seeking.
-  // Also if the video is paused already.
   if (!pipeline_controller_.IsPipelineRunning() || is_pipeline_resuming_ ||
-      seeking_ || paused_)
+      seeking_) {
     return;
+  }
 
   // OnPause() will set |paused_when_hidden_| to false and call
   // UpdatePlayState(), so set the flag to true after and then return.
-  OnPause();
+  if (!paused_) {
+    OnPause();
+  }
+
+  // If the pipeline is already paused, we still want to ensure to set paused
+  // when hidden. This resolves the edge case between our call to pause and the
+  // application's call to pause.
   paused_when_hidden_ = true;
 }
 
