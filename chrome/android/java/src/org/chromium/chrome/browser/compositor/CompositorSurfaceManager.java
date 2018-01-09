@@ -7,7 +7,7 @@ package org.chromium.chrome.browser.compositor;
 import android.graphics.drawable.Drawable;
 import android.view.Surface;
 
-interface CompositorSurfaceManager {
+public interface CompositorSurfaceManager {
     public interface SurfaceManagerCallbackTarget {
         public void surfaceRedrawNeededAsync(Runnable drawingFinished);
         public void surfaceChanged(Surface surface, int format, int width, int height);
