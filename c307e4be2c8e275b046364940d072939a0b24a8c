@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aee8892_f8003a5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-09T23:33:39Z",
+      "side": 1,
+      "message": "Moved StartupCompletedObserver here to avoid #initializeWithNative() being called twice that causes a problem showing the logo. PTAL",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 48
+      },
+      "revId": "c307e4be2c8e275b046364940d072939a0b24a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
