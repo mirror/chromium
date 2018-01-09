@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "chrome/installer/zucchini/encoded_view.h"
+#include "chrome/installer/zucchini/patch_reader.h"
 #include "chrome/installer/zucchini/suffix_array.h"
 
 namespace zucchini {
@@ -187,12 +188,108 @@ EquivalenceCandidate VisitEquivalenceSeed(
                                    min_similarity);
 }
 
+/******** OffsetMapper ********/
+
+OffsetMapper::OffsetMapper(std::vector<Equivalence>&& equivalences)
+    : equivalences_(std::move(equivalences)) {
+  DCHECK(std::is_sorted(equivalences_.begin(), equivalences_.end(),
+                        [](const Equivalence& a, const Equivalence& b) {
+                          return a.src_offset < b.src_offset;
+                        }));
+}
+
+OffsetMapper::OffsetMapper(EquivalenceSource&& equivalences) {
+  for (auto e = equivalences.GetNext(); e; e = equivalences.GetNext()) {
+    equivalences_.push_back(*e);
+  }
+  SortBySource();
+  Prune();
+}
+
+OffsetMapper::OffsetMapper(const EquivalenceMap& equivalence_map)
+    : equivalences_(equivalence_map.size()) {
+  std::transform(equivalence_map.begin(), equivalence_map.end(),
+                 equivalences_.begin(),
+                 [](const EquivalenceCandidate& c) { return c.eq; });
+  SortBySource();
+  Prune();
+}
+
+OffsetMapper::~OffsetMapper() = default;
+
+offset_t OffsetMapper::ProjectOffset(offset_t offset) const {
+  auto pos = std::upper_bound(
+      equivalences_.begin(), equivalences_.end(), offset,
+      [](offset_t a, const Equivalence& b) { return a < b.src_offset; });
+  if (pos != equivalences_.begin())
+    --pos;
+  return offset - pos->src_offset + pos->dst_offset;
+}
+
+void OffsetMapper::ProjectOffsets(std::vector<offset_t>* offsets) const {
+  DCHECK(std::is_sorted(offsets->begin(), offsets->end()));
+  auto current_equivalence = begin();
+  for (auto& src : *offsets) {
+    while (current_equivalence != end() &&
+           current_equivalence->src_end() <= src)
+      ++current_equivalence;
+
+    if (current_equivalence != end() &&
+        current_equivalence->src_offset <= src) {
+      src = src - current_equivalence->src_offset +
+            current_equivalence->dst_offset;
+    } else {
+      src = kInvalidOffset;
+    }
+  }
+  offsets->erase(std::remove(offsets->begin(), offsets->end(), kInvalidOffset),
+                 offsets->end());
+}
+
+void OffsetMapper::SortBySource() {
+  std::sort(equivalences_.begin(), equivalences_.end(),
+            [](const Equivalence& a, const Equivalence& b) {
+              return a.src_offset < b.src_offset;
+            });
+}
+
+void OffsetMapper::Prune() {
+  for (auto current = equivalences_.begin(); current != equivalences_.end();
+       ++current) {
+    // Look ahead to resolve overlaps, until a better candidate is found.
+    for (auto next = current + 1; next != equivalences_.end(); ++next) {
+      DCHECK_GE(next->src_offset, current->src_offset);
+      if (next->src_offset >= current->src_end())
+        break;  // No more overlap.
+
+      offset_t delta = current->src_end() - next->src_offset;
+
+      // |next| is better, so |current| shrinks.
+      if (current->length < next->length) {
+        current->length -= delta;
+        break;
+      }
+    }
+
+    // Shrinks all overlapping candidates following and worse than |current|.
+    for (auto next = current + 1; next != equivalences_.end(); ++next) {
+      if (next->src_offset >= current->src_end())
+        break;  // No more overlap.
+
+      offset_t delta = current->src_end() - next->src_offset;
+      next->length = next->length > delta ? next->length - delta : 0;
+      next->src_offset += delta;
+      next->dst_offset += delta;
+      DCHECK_EQ(next->src_offset, current->src_end());
+    }
+  }
+}
+
 /******** EquivalenceMap ********/
 
 EquivalenceMap::EquivalenceMap() = default;
 
-EquivalenceMap::EquivalenceMap(
-    const std::vector<EquivalenceCandidate>& equivalences)
+EquivalenceMap::EquivalenceMap(std::vector<EquivalenceCandidate>&& equivalences)
     : candidates_(equivalences) {
   SortByDestination();
 }
@@ -224,17 +321,6 @@ void EquivalenceMap::Build(
   LOG(INFO) << "Equivalence Count: " << size();
   LOG(INFO) << "Coverage / Extra / Total: " << coverage << " / "
             << new_view.size() - coverage << " / " << new_view.size();
-}
-
-std::vector<Equivalence> EquivalenceMap::MakeForwardEquivalences() const {
-  std::vector<Equivalence> equivalences(size());
-  std::transform(begin(), end(), equivalences.begin(),
-                 [](const EquivalenceCandidate& c) { return c.eq; });
-  std::sort(equivalences.begin(), equivalences.end(),
-            [](const Equivalence& a, const Equivalence& b) {
-              return a.src_offset < b.src_offset;
-            });
-  return equivalences;
 }
 
 void EquivalenceMap::CreateCandidates(

@@ -19,6 +19,8 @@ namespace zucchini {
 
 namespace {
 
+using OffsetVector = std::vector<offset_t>;
+
 // Make all references 2 bytes long.
 constexpr offset_t kReferenceSize = 2;
 
@@ -245,6 +247,59 @@ TEST(EquivalenceMapTest, ExtendEquivalenceBackward) {
           {{22, 19, 0}, 0.0}, 8.0));
 }
 
+TEST(EquivalenceMapTest, OffsetMapper) {}
+
+TEST(EquivalenceMapTest, ProjectOffsets) {
+  auto ProjectOffsetsTest = [](const OffsetMapper& offset_mapper,
+                               std::initializer_list<offset_t> offsets) {
+    OffsetVector offsets_vec(offsets);
+    offset_mapper.ProjectOffsets(&offsets_vec);
+    return offsets_vec;
+  };
+
+  OffsetMapper offset_mapper1({{0, 10, 2}, {2, 13, 1}, {4, 16, 2}});
+  EXPECT_EQ(OffsetVector({10}), ProjectOffsetsTest(offset_mapper1, {0}));
+  EXPECT_EQ(OffsetVector({13}), ProjectOffsetsTest(offset_mapper1, {2}));
+  EXPECT_EQ(OffsetVector({}), ProjectOffsetsTest(offset_mapper1, {3}));
+  EXPECT_EQ(OffsetVector({10, 13}), ProjectOffsetsTest(offset_mapper1, {0, 2}));
+  EXPECT_EQ(OffsetVector({11, 13, 17}),
+            ProjectOffsetsTest(offset_mapper1, {1, 2, 5}));
+  EXPECT_EQ(OffsetVector({11, 17}),
+            ProjectOffsetsTest(offset_mapper1, {1, 3, 5}));
+  EXPECT_EQ(OffsetVector({10, 11, 13, 16, 17}),
+            ProjectOffsetsTest(offset_mapper1, {0, 1, 2, 3, 4, 5, 6}));
+
+  OffsetMapper offset_mapper2({{0, 10, 2}, {13, 2, 1}, {16, 4, 2}});
+  EXPECT_EQ(OffsetVector({2}), ProjectOffsetsTest(offset_mapper2, {13}));
+  EXPECT_EQ(OffsetVector({10, 2}), ProjectOffsetsTest(offset_mapper2, {0, 13}));
+  EXPECT_EQ(OffsetVector({11, 2, 5}),
+            ProjectOffsetsTest(offset_mapper2, {1, 13, 17}));
+  EXPECT_EQ(OffsetVector({11, 5}),
+            ProjectOffsetsTest(offset_mapper2, {1, 14, 17}));
+  EXPECT_EQ(OffsetVector({10, 11, 2, 4, 5}),
+            ProjectOffsetsTest(offset_mapper2, {0, 1, 13, 14, 16, 17, 18}));
+}
+
+TEST(EquivalenceMapTest, ProjectOffset) {
+  OffsetMapper offset_mapper1({{0, 10, 2}, {2, 13, 1}, {4, 16, 2}});
+  EXPECT_EQ(10U, offset_mapper1.ProjectOffset(0));
+  EXPECT_EQ(11U, offset_mapper1.ProjectOffset(1));
+  EXPECT_EQ(13U, offset_mapper1.ProjectOffset(2));
+  EXPECT_EQ(14U, offset_mapper1.ProjectOffset(3));  // Previous equivalence.
+  EXPECT_EQ(16U, offset_mapper1.ProjectOffset(4));
+  EXPECT_EQ(17U, offset_mapper1.ProjectOffset(5));
+  EXPECT_EQ(18U, offset_mapper1.ProjectOffset(6));  // Previous equivalence.
+
+  OffsetMapper offset_mapper2({{0, 10, 2}, {13, 2, 1}, {16, 4, 2}});
+  EXPECT_EQ(10U, offset_mapper2.ProjectOffset(0));
+  EXPECT_EQ(11U, offset_mapper2.ProjectOffset(1));
+  EXPECT_EQ(2U, offset_mapper2.ProjectOffset(13));
+  EXPECT_EQ(3U, offset_mapper2.ProjectOffset(14));  // Previous equivalence.
+  EXPECT_EQ(4U, offset_mapper2.ProjectOffset(16));
+  EXPECT_EQ(5U, offset_mapper2.ProjectOffset(17));
+  EXPECT_EQ(6U, offset_mapper2.ProjectOffset(18));  // Previous equivalence.
+}
+
 TEST(EquivalenceMapTest, Build) {
   auto test_build_equivalence = [](const ImageIndex old_index,
                                    const ImageIndex new_index,
@@ -337,23 +392,6 @@ TEST(EquivalenceMapTest, Build) {
           MakeImageIndexForTesting("foobanana11xxpineapplexx", {{9, 0}}, {}),
           MakeImageIndexForTesting("banana11yypineappleyy", {{6, 0}}, {}),
           4.0));
-}
-
-TEST(EquivalenceMapTest, MakeForwardEquivalences) {
-  EXPECT_EQ(std::vector<Equivalence>(),
-            EquivalenceMap().MakeForwardEquivalences());
-  EXPECT_EQ(std::vector<Equivalence>({{0, 0, 1}}),
-            EquivalenceMap({{{0, 0, 1}, 0.0}}).MakeForwardEquivalences());
-  EXPECT_EQ(std::vector<Equivalence>({{0, 0, 1}, {1, 1, 1}}),
-            EquivalenceMap({{{0, 0, 1}, 0.0}, {{1, 1, 1}, 0.0}})
-                .MakeForwardEquivalences());
-  EXPECT_EQ(std::vector<Equivalence>({{0, 1, 1}, {1, 0, 1}}),
-            EquivalenceMap({{{1, 0, 1}, 0.0}, {{0, 1, 1}, 0.0}})
-                .MakeForwardEquivalences());
-  EXPECT_EQ(
-      std::vector<Equivalence>({{0, 2, 1}, {1, 0, 1}, {4, 1, 1}}),
-      EquivalenceMap({{{1, 0, 1}, 0.0}, {{4, 1, 1}, 0.0}, {{0, 2, 1}, 0.0}})
-          .MakeForwardEquivalences());
 }
 
 }  // namespace zucchini
