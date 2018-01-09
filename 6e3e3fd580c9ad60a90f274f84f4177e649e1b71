@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3fb67931_7eef20cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T15:17:01Z",
+      "side": 1,
+      "message": "This still looks kinda too wide?",
+      "parentUuid": "732f6a7b_0dde8f78",
+      "range": {
+        "startLine": 9,
+        "startChar": 98,
+        "endLine": 9,
+        "endChar": 120
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36a42df0_43db5803",
         "filename": "chrome/installer/zucchini/address_translator_unittest.cc",
         "patchSetId": 1
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "00b29cd2_bf15092f",
+      "range": {
+        "startLine": 97,
+        "startChar": 36,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "6e3e3fd580c9ad60a90f274f84f4177e649e1b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe3b7c84_91561b8f",
+        "filename": "chrome/installer/zucchini/address_translator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T15:17:01Z",
+      "side": 1,
+      "message": "Ah oops, need \"%\"; thanks for the correction!",
+      "parentUuid": "9012e2a9_fd5011fa",
       "range": {
         "startLine": 97,
         "startChar": 36,
