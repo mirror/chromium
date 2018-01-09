@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
 Copyright 2014 The Chromium Authors. All rights reserved.
 Use of this source code is governed by a BSD-style license that can be
@@ -640,6 +640,14 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 <td>Should replace <code>base::less</code> and usage of these functors with explicit types where appropriate. Note: std::set/std::map do not yet support transparent comparators on all platforms <a href="https://crbug.com/756020">bug</a>. <a href="https://groups.google.com/a/chromium.org/forum/#!topic/cxx/cPoULd2NY9k">Discussion thread</a></td>
 </tr>
 
+<tr>
+<td>Tuple addressing by type</td>
+<td><code>std::tuple&lt;int, char&gt; enterprise(1701, 'D');<br>int n = std::get&lt;int&gt;(enterprise);</code></td>
+<td>Allows entries in a tuple to be accessed by type rather than entry, if it is not ambiguous.</td>
+<td><a href="http://en.cppreference.com/w/cpp/utility/tuple/get">std::get(std::tuple)</a></td>
+<td></td>
+</tr>
+
 </tbody>
 </table>
 
@@ -1215,14 +1223,6 @@ using std::literals::string_literals::operator"" s;<br>
 auto s = "asdf"s;  // deduces to std::string</code></td>
 <td>Allows literals of type <code>std::string</code></td>
 <td><a href="http://en.cppreference.com/w/cpp/string/basic_string/operator%22%22s">std::literals::string_literals::operator""s</a></td>
-<td></td>
-</tr>
-
-<tr>
-<td>Tuple addressing by type</td>
-<td><code>std::tuple&lt;int, char&gt; enterprise(1701, 'D');<br>int n = std::get&lt;int&gt;(enterprise);</code></td>
-<td>Allows entries in a tuple to be accessed by type rather than entry, if it is not ambiguous.</td>
-<td><a href="http://en.cppreference.com/w/cpp/utility/tuple/get">std::get(std::tuple)</a></td>
 <td></td>
 </tr>
 
