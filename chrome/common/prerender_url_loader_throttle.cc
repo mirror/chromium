@@ -195,7 +195,9 @@ void PrerenderURLLoaderThrottle::WillProcessResponse(
 }
 
 void PrerenderURLLoaderThrottle::OnTimedOut() {
-  delegate_->CancelWithError(net::ERR_ABORTED);
+  // If the request wasn't scheduled to start yet, it won't have a delegate.
+  if (delegate_)
+    delegate_->CancelWithError(net::ERR_ABORTED);
 }
 
 }  // namespace prerender
