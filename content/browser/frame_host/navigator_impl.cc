@@ -1036,6 +1036,7 @@ void NavigatorImpl::RequestNavigation(
         frame_tree_node->current_frame_host();
     frame_tree_node->render_manager()->InitializeRenderFrameIfNecessary(
         render_frame_host);
+    LOG(ERROR) << "NavigatorImpl::RequestNavigation kJavaScriptScheme";
     render_frame_host->CommitNavigation(
         nullptr,  // response
         mojom::URLLoaderClientEndpointsPtr(),

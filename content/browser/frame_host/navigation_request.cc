@@ -1261,8 +1261,10 @@ void NavigationRequest::CommitNavigation() {
          render_frame_host ==
              frame_tree_node_->render_manager()->speculative_frame_host());
 
+  common_params_.navigation_id = navigation_handle_->GetNavigationId();
   TransferNavigationHandleOwnership(render_frame_host);
-
+  LOG(ERROR) << "NavigationRequest::CommitNavigation navigation_id "
+             << common_params_.navigation_id << " " << common_params_.url;
   render_frame_host->CommitNavigation(
       response_.get(), std::move(url_loader_client_endpoints_),
       std::move(body_), common_params_, request_params_, is_view_source_,

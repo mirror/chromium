@@ -154,6 +154,8 @@ struct CONTENT_EXPORT CommonNavigationParams {
 
   // True if the request was user initiated.
   bool has_user_gesture;
+
+  int64_t navigation_id = 0;
 };
 
 // Provided by the browser -----------------------------------------------------

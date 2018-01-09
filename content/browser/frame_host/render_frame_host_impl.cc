@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/containers/hash_tables.h"
 #include "base/containers/queue.h"
+#include "base/debug/stack_trace.h"
 #include "base/feature_list.h"
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
@@ -502,6 +503,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       document_scoped_interface_provider_binding_(this),
       keep_alive_timeout_(base::TimeDelta::FromSeconds(30)),
       weak_ptr_factory_(this) {
+  LOG(ERROR) << "RenderFrameHostImpl::RenderFrameHostImpl " << this;
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
   g_routing_id_frame_map.Get().insert(std::make_pair(
@@ -574,6 +576,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
 }
 
 RenderFrameHostImpl::~RenderFrameHostImpl() {
+  LOG(ERROR) << "RenderFrameHostImpl::~RenderFrameHostImpl " << this;
   // Destroying navigation handle may call into delegates/observers,
   // so we do it early while |this| object is still in a sane state.
   navigation_handle_.reset();
@@ -2682,7 +2685,17 @@ bool RenderFrameHostImpl::GetSuddenTerminationDisablerState(
   return (sudden_termination_disabler_types_enabled_ & disabler_type) != 0;
 }
 
-void RenderFrameHostImpl::OnDidStopLoading() {
+void RenderFrameHostImpl::OnDidStopLoading(int64_t navigation_id) {
+  LOG(ERROR) << "RenderFrameHostImpl::OnDidStopLoading " << navigation_id;
+  if (navigation_handle_) {
+    LOG(ERROR) << "navigation_handle_->GetNavigationId "
+               << navigation_handle_->GetNavigationId();
+    if (navigation_id &&
+        navigation_id != navigation_handle_->GetNavigationId()) {
+      LOG(ERROR) << "--------- NavigationID missmatch ------";
+      // return;
+    }
+  }
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
 
@@ -3263,6 +3276,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
       false /* started_from_context_menu */, false /* has_user_gesture */);
+  LOG(ERROR) << "RenderFrameHostImpl::NavigateToInterstitialURL " << data_url;
   CommitNavigation(nullptr, mojom::URLLoaderClientEndpointsPtr(),
                    std::unique_ptr<StreamHandle>(), common_params,
                    RequestNavigationParams(), false, base::nullopt,
@@ -3818,8 +3832,10 @@ void RenderFrameHostImpl::ResetLoadingState() {
     // notification to the FrameTreeNode about the change in loading state.
     if (!is_active())
       is_loading_ = false;
-    else
-      OnDidStopLoading();
+    else {
+      OnDidStopLoading(
+          navigation_handle_ ? navigation_handle_->GetNavigationId() : 0);
+    }
   }
 }
 
@@ -4302,6 +4318,7 @@ void RenderFrameHostImpl::GetInterface(
 std::unique_ptr<NavigationHandleImpl>
 RenderFrameHostImpl::TakeNavigationHandleForCommit(
     const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
+  LOG(ERROR) << "RenderFrameHostImpl::TakeNavigationHandleForCommit " << this;
   bool is_browser_initiated = (params.nav_entry_id != 0);
 
   if (params.was_within_same_document) {

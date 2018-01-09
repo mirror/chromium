@@ -1625,6 +1625,8 @@ class CONTENT_EXPORT RenderFrameImpl
   blink::mojom::ClipboardHostPtr clipboard_host_;
 #endif
 
+  int64_t last_commit_navigation_id_ = 0;
+
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderFrameImpl);

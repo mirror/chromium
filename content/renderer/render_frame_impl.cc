@@ -3064,6 +3064,9 @@ void RenderFrameImpl::CommitNavigation(
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     const base::UnguessableToken& devtools_navigation_token) {
+  LOG(ERROR) << "RenderFrameImpl::CommitNavigation "
+             << common_params.navigation_id;
+  last_commit_navigation_id_ = common_params.navigation_id;
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
   if (!browser_side_navigation_pending_ &&
@@ -3082,7 +3085,8 @@ void RenderFrameImpl::CommitNavigation(
     // that the load stopped if needed, while leaving the debug URL visible in
     // the address bar.
     if (weak_this && frame_ && !frame_->IsLoading())
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+      Send(new FrameHostMsg_DidStopLoading(routing_id_,
+                                           last_commit_navigation_id_));
     return;
   }
 
@@ -3297,8 +3301,10 @@ void RenderFrameImpl::CommitNavigation(
     // send a stop message if a history navigation is loading in this frame
     // nonetheless. This behavior will go away with subframe navigation
     // entries.
-    if (frame_ && !frame_->IsLoading() && !has_history_navigation_in_frame)
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+    if (frame_ && !frame_->IsLoading() && !has_history_navigation_in_frame) {
+      Send(new FrameHostMsg_DidStopLoading(routing_id_,
+                                           last_commit_navigation_id_));
+    }
   }
 
   // In case LoadRequest failed before DidCreateDocumentLoader was called.
@@ -3353,7 +3359,8 @@ void RenderFrameImpl::CommitFailedNavigation(
   if (!ShouldDisplayErrorPageForFailedLoad(error_code, common_params.url)) {
     // The browser expects this frame to be loading an error page. Inform it
     // that the load stopped.
-    Send(new FrameHostMsg_DidStopLoading(routing_id_));
+    Send(new FrameHostMsg_DidStopLoading(routing_id_,
+                                         last_commit_navigation_id_));
     browser_side_navigation_pending_ = false;
     browser_side_navigation_pending_url_ = GURL();
     return;
@@ -3370,7 +3377,8 @@ void RenderFrameImpl::CommitFailedNavigation(
       // either, as the frame has already been populated with something
       // unrelated to this navigation failure. In that case, just send a stop
       // IPC to the browser to unwind its state, and leave the frame as-is.
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+      Send(new FrameHostMsg_DidStopLoading(routing_id_,
+                                           last_commit_navigation_id_));
     }
     browser_side_navigation_pending_ = false;
     browser_side_navigation_pending_url_ = GURL();
@@ -5707,7 +5715,9 @@ void RenderFrameImpl::DidStopLoading() {
   SendUpdateFaviconURL(icon_types_mask);
 
   render_view_->FrameDidStopLoading(frame_);
-  Send(new FrameHostMsg_DidStopLoading(routing_id_));
+  LOG(ERROR) << "FrameHostMsg_DidStopLoading " << last_commit_navigation_id_;
+  Send(
+      new FrameHostMsg_DidStopLoading(routing_id_, last_commit_navigation_id_));
 }
 
 void RenderFrameImpl::DidChangeLoadProgress(double load_progress) {
