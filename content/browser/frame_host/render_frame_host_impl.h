@@ -1218,13 +1218,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<resource_coordinator::FrameResourceCoordinator>
       frame_resource_coordinator_;
 
-  // Tracks a navigation happening in this frame. Note that while there can be
-  // two navigations in the same FrameTreeNode, there can only be one
-  // navigation per RenderFrameHost.
-  // Before the navigation is ready to be committed, the NavigationHandle for it
-  // is owned by the NavigationRequest.
-  std::unique_ptr<NavigationHandleImpl> navigation_handle_;
-
   // The associated WebUIImpl and its type. They will be set if the current
   // document is from WebUI source. Otherwise they will be null and
   // WebUI::kNoWebUI, respectively.
