@@ -16,6 +16,23 @@
       "revId": "55176f300c04fdab28f63cfb7fd382999aaa846f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ad2603f_60944103",
+        "filename": "components/autofill/core/browser/test_autofill_external_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-09T19:49:51Z",
+      "side": 1,
+      "message": "I\u0027m wondering if there\u0027s a non-content version of the MessageLoopRunner we could use? I\u0027m not sure we should be including //content code in components/autofill/core.\n\nPlus, MessageLoopRunner mentions that it\u0027s deprecated and that we should use base::RunLoop\u0027s Run and Quit directly.",
+      "revId": "55176f300c04fdab28f63cfb7fd382999aaa846f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
