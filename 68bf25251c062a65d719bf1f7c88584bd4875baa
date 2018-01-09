@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00e67e5e_e54a474d",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-09T19:29:57Z",
+      "side": 1,
+      "message": "I think this is good for now, but I wonder if as a future improvement we could make only this single flag necessary for ml suppression.",
+      "range": {
+        "startLine": 1778,
+        "startChar": 11,
+        "endLine": 1778,
+        "endChar": 55
+      },
+      "revId": "68bf25251c062a65d719bf1f7c88584bd4875baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
