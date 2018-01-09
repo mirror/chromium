@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "92fb5001_92ddbeba",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-09T01:11:34Z",
+      "side": 1,
+      "message": "Once 1.1 is disabled/removed, \"WebVR\" won\u0027t be a thing. Users (devs?) will eventually search for \"xr\" or \"webxr\" here.\n\nThis really only applies to the web APIs, so even vr-... doesn\u0027t make a lot of sense.\n\nI don\u0027t think anyone will confuse this with having AR capabilities in the future, but we can update the description if necessary.",
+      "parentUuid": "7fd5b867_ccf516c1",
+      "range": {
+        "startLine": 2218,
+        "startChar": 9,
+        "endLine": 2218,
+        "endChar": 10
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0df37231_06f33405",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 6
@@ -183,6 +207,24 @@
       "side": 1,
       "message": "Also affected by the VR/XR question",
       "parentUuid": "4f937387_f8bb8a33",
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd10129_3343bece",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-09T01:11:34Z",
+      "side": 1,
+      "message": "In this case, I think \"VR\" as a standalone term is fine. We\u0027d want to change the \"WebVR\" reference above, though.",
+      "parentUuid": "00dec920_f1e41b31",
       "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
