@@ -20,7 +20,8 @@ class WallpaperControllerClientTest : public testing::Test {
   void SetUp() override {
     testing::Test::SetUp();
     chromeos::DeviceSettingsService::Initialize();
-    chromeos::CrosSettings::Initialize();
+    // XXX
+    // chromeos::CrosSettings::Initialize();
   }
 
  private:

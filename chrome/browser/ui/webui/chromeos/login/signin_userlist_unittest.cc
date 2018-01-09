@@ -70,7 +70,8 @@ class SigninPrepareUserListTest : public ash::AshTestBase,
 
     chromeos::WallpaperManager::Initialize();
     chromeos::DeviceSettingsService::Initialize();
-    chromeos::CrosSettings::Initialize();
+    // XXX
+    // chromeos::CrosSettings::Initialize();
     wallpaper_controller_client_ =
         std::make_unique<WallpaperControllerClient>();
     wallpaper_controller_client_->InitForTesting(

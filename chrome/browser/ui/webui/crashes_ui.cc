@@ -15,6 +15,7 @@
 #include "base/sys_info.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/crash_upload_list/crash_upload_list.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/metrics_reporting_state.h"
@@ -159,7 +160,8 @@ void CrashesDOMHandler::OnUploadListAvailable() {
 
 void CrashesDOMHandler::UpdateUI() {
   bool crash_reporting_enabled =
-      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
+      ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+          g_browser_process->local_state());
 
   bool system_crash_reporter = false;
 #if defined(OS_CHROMEOS)
@@ -212,8 +214,9 @@ void CrashesDOMHandler::HandleRequestSingleCrashUpload(
   DCHECK(success);
 
   // Only allow manual uploads if crash uploads aren’t disabled by policy.
-  if (!ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled() &&
-      IsMetricsReportingPolicyManaged()) {
+  if (!ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+g_browser_process->local_state()) &&
+      IsMetricsReportingPolicyManaged(g_browser_process->local_state())) {
     return;
   }
   upload_list_->RequestSingleUploadAsync(local_id);
