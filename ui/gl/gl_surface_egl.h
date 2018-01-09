@@ -132,7 +132,8 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
                             gfx::OverlayTransform transform,
                             GLImage* image,
                             const gfx::Rect& bounds_rect,
-                            const gfx::RectF& crop_rect) override;
+                            const gfx::RectF& crop_rect,
+                            gfx::GpuFence gpu_fence) override;
   bool FlipsVertically() const override;
   bool BuffersFlipped() const override;
 

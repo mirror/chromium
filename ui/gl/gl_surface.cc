@@ -157,7 +157,8 @@ bool GLSurface::ScheduleOverlayPlane(int z_order,
                                      gfx::OverlayTransform transform,
                                      GLImage* image,
                                      const gfx::Rect& bounds_rect,
-                                     const gfx::RectF& crop_rect) {
+                                     const gfx::RectF& crop_rect,
+                                     gfx::GpuFence gpu_fence) {
   NOTIMPLEMENTED();
   return false;
 }
@@ -225,6 +226,10 @@ bool GLSurface::SupportsSwapTimestamps() const {
 }
 
 void GLSurface::SetEnableSwapTimestamps() {
+  NOTREACHED();
+}
+
+void GLSurface::SetUsePlaneGpuFences() {
   NOTREACHED();
 }
 
@@ -404,9 +409,10 @@ bool GLSurfaceAdapter::ScheduleOverlayPlane(int z_order,
                                             gfx::OverlayTransform transform,
                                             GLImage* image,
                                             const gfx::Rect& bounds_rect,
-                                            const gfx::RectF& crop_rect) {
-  return surface_->ScheduleOverlayPlane(
-      z_order, transform, image, bounds_rect, crop_rect);
+                                            const gfx::RectF& crop_rect,
+                                            gfx::GpuFence gpu_fence) {
+  return surface_->ScheduleOverlayPlane(z_order, transform, image, bounds_rect,
+                                        crop_rect, std::move(gpu_fence));
 }
 
 bool GLSurfaceAdapter::ScheduleDCLayer(
@@ -460,6 +466,10 @@ bool GLSurfaceAdapter::SupportsSwapTimestamps() const {
 
 void GLSurfaceAdapter::SetEnableSwapTimestamps() {
   return surface_->SetEnableSwapTimestamps();
+}
+
+void GLSurfaceAdapter::SetUsePlaneGpuFences() {
+  surface_->SetUsePlaneGpuFences();
 }
 
 GLSurfaceAdapter::~GLSurfaceAdapter() {}

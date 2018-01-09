@@ -386,11 +386,16 @@ bool GbmPixmap::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
                                      int plane_z_order,
                                      gfx::OverlayTransform plane_transform,
                                      const gfx::Rect& display_bounds,
-                                     const gfx::RectF& crop_rect) {
+                                     const gfx::RectF& crop_rect,
+                                     gfx::GpuFenceHandle gpu_fence_handle) {
   DCHECK(buffer_->GetFlags() & GBM_BO_USE_SCANOUT);
+  int fence_fd =
+      gpu_fence_handle.type == gfx::GpuFenceHandleType::kAndroidNativeFenceSync
+          ? gpu_fence_handle.native_fd.fd
+          : base::kInvalidPlatformFile;
   surface_manager_->GetSurface(widget)->QueueOverlayPlane(
       OverlayPlane(buffer_, plane_z_order, plane_transform, display_bounds,
-                   crop_rect, base::kInvalidPlatformFile));
+                   crop_rect, fence_fd));
 
   return true;
 }

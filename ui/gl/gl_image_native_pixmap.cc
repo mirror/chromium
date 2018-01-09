@@ -368,14 +368,16 @@ bool GLImageNativePixmap::CopyTexSubImage(unsigned target,
   return false;
 }
 
-bool GLImageNativePixmap::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
-                                               int z_order,
-                                               gfx::OverlayTransform transform,
-                                               const gfx::Rect& bounds_rect,
-                                               const gfx::RectF& crop_rect) {
+bool GLImageNativePixmap::ScheduleOverlayPlane(
+    gfx::AcceleratedWidget widget,
+    int z_order,
+    gfx::OverlayTransform transform,
+    const gfx::Rect& bounds_rect,
+    const gfx::RectF& crop_rect,
+    gfx::GpuFenceHandle gpu_fence_handle) {
   DCHECK(pixmap_);
   return pixmap_->ScheduleOverlayPlane(widget, z_order, transform, bounds_rect,
-                                       crop_rect);
+                                       crop_rect, gpu_fence_handle);
 }
 
 void GLImageNativePixmap::Flush() {
