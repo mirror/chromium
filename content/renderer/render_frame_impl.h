@@ -67,8 +67,8 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/public/interfaces/connector.mojom.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
+#include "third_party/WebKit/public/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/public/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/WebEffectiveConnectionType.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
@@ -92,7 +92,7 @@
 #include "url/origin.h"
 
 #if defined(OS_MACOSX)
-#include "third_party/WebKit/common/clipboard/clipboard.mojom.h"
+#include "third_party/WebKit/public/common/clipboard/clipboard.mojom.h"
 #endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)
