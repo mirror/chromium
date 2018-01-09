@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9aa3afc0_55dbbc32",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-01-09T18:36:33Z",
+      "side": 1,
+      "message": "For the purpose of committed interstitials, it doesn\u0027t matter since AW does it\u0027s own thing on SSL errors, so this would not be called on cases where error_html doesn\u0027t need to be set. Also, with the latest change (the check being performed on render_frame_impl), this now matches the normal case.",
+      "parentUuid": "d706645e_4e65cb24",
+      "revId": "c8f2317a7b9df02c3ea91ce58aa1386d77c96c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d7855e_2b494336",
         "filename": "content/public/renderer/content_renderer_client.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "c8f2317a7b9df02c3ea91ce58aa1386d77c96c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d7adfd_d39fe2b3",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-01-09T18:36:33Z",
+      "side": 1,
+      "message": "Yeah, that makes sense, changed the behavior so RenderFrameImpl makes the check instead.",
+      "parentUuid": "91d7855e_2b494336",
+      "revId": "c8f2317a7b9df02c3ea91ce58aa1386d77c96c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
