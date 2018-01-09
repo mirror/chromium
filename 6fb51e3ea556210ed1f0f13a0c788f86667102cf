@@ -22,6 +22,30 @@
       "revId": "6fb51e3ea556210ed1f0f13a0c788f86667102cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4bd781_32ab9de9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-01-09T00:18:22Z",
+      "side": 1,
+      "message": "It\u0027s the latter -- the Bar may be showing due to a previous tap-selection so we want to hide that due to the tap being suppressed (whereas if the logic decided not to suppress we\u0027d select the word and update the Bar instead).",
+      "parentUuid": "adb0b229_c10325ad",
+      "range": {
+        "startLine": 1358,
+        "startChar": 47,
+        "endLine": 1358,
+        "endChar": 59
+      },
+      "revId": "6fb51e3ea556210ed1f0f13a0c788f86667102cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
