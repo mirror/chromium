@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c8223fc_e78cd98f",
+        "filename": "extensions/common/extension_icon_path_normalizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T20:09:36Z",
+      "side": 1,
+      "message": "nit: instead of \"refer parent\", \"references its parent\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 39
+      },
+      "revId": "53a652ee25b9d32d1f8472b713527d49d2dda89e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d06a0b_1dc12402",
+        "filename": "extensions/common/extension_icon_path_normalizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T20:09:36Z",
+      "side": 1,
+      "message": "Is anything here specific to icons?  Or could this just be \"NormalizeExtensionPath\" or maybe \"NormalizeExtensionResourcePath\"?",
+      "revId": "53a652ee25b9d32d1f8472b713527d49d2dda89e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da5d85b_1293a24e",
+        "filename": "extensions/utility/unpacker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T20:09:36Z",
+      "side": 1,
+      "message": "typo: duplicates",
+      "range": {
+        "startLine": 226,
+        "startChar": 17,
+        "endLine": 226,
+        "endChar": 27
+      },
+      "revId": "53a652ee25b9d32d1f8472b713527d49d2dda89e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
