@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c2af000a_fab9477a",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T05:37:22Z",
+      "side": 1,
+      "message": "Ah I confused it with move constructor.  Curious though (no action required), in this case, would .emplace() @ position work?",
+      "parentUuid": "f364bd0d_c9c6a87b",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 42
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7be7d0e_e40fd668",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 39
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "It sounds like a worthwhile refactor. I\u0027d rather not do this in this CL. I\u0027m not too eager to claim it now, as I plan on finishing CL627188.\n\nAnother thing that came in mind: we can merge TargetPools (just for EquivalenceMap creation) and have only 1 TargetsAffinity. That would affect a little EquivalenceMap (for better of worse?), but would also simplify what you\u0027re describing, and a few other things.",
       "parentUuid": "42860f72_204e4d62",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 72
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0666fed9_5964d8f9",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T05:37:22Z",
+      "side": 1,
+      "message": "Sounds good re. first point.\n\nFor the second point: Would this increase the numerical value of stuff and lead to larger patch?",
+      "parentUuid": "761099e8_181adf13",
       "range": {
         "startLine": 257,
         "startChar": 0,
@@ -565,6 +613,30 @@
       "side": 1,
       "message": "Done\nHow do you always spot these",
       "parentUuid": "910bc8e7_2d88a81b",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 12
+      },
+      "revId": "0abe901cf077e9fe3cce7d3358c044bda9b88fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "867c74e1_b74d58e6",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-09T05:37:22Z",
+      "side": 1,
+      "message": "They just randomly appear...",
+      "parentUuid": "eef8c1d9_2cffee31",
       "range": {
         "startLine": 133,
         "startChar": 7,
