@@ -266,6 +266,30 @@
     },
     {
       "key": {
+        "uuid": "65da4d83_27d31da6",
+        "filename": "device/ctap/ctap_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-09T19:05:16Z",
+      "side": 1,
+      "message": "I\u0027ve done a little more research and I think that this is okay but please declare this variable as a constexpr so we\u0027re sure that it can be constructed at compile time.",
+      "parentUuid": "deb41cb9_713eba40",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "3b889c8c2fffb2bd912c39590c2c54718e2f5ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91edb106_6cec1bd6",
         "filename": "device/ctap/ctap_get_assertion_request_param.h",
         "patchSetId": 8
