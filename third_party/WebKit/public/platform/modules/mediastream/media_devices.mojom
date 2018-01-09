@@ -82,6 +82,8 @@ interface MediaDevicesDispatcherHost {
   GetAudioInputCapabilities()
       => (array<AudioInputDeviceCapabilities> audio_input_device_capabilities);
 
+  // TODO(c.padhi): Remove below two methods once device change migration to
+  // blink is complete, see https://crbug.com/793297.
   // Creates a subscription for device-change notifications for the calling
   // frame/security origin. It is the responsibility of the caller to send
   // |subscription_id| values that are unique per device type.
@@ -96,6 +98,10 @@ interface MediaDevicesDispatcherHost {
   // a nonexisting subscription with are invalid and result in a renderer crash.
   UnsubscribeDeviceChangeNotifications(MediaDeviceType type,
                                        uint32 subscription_id);
+
+  // Subscribes |listener| to device-change notifications for the calling
+  // frame/security origin. Closing the pipe will cancel the subscription.
+  AddMediaDevicesListener(MediaDevicesListener listener);
 };
 
 // This object lives in the renderer process and is used by the browser process

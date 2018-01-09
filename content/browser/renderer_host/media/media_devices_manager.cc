@@ -208,6 +208,28 @@ void MediaDevicesManager::UnsubscribeDeviceChangeNotifications(
     device_change_subscribers_[type].erase(it);
 }
 
+uint32_t MediaDevicesManager::SubscribeDeviceChangeNotifications(
+    blink::mojom::MediaDevicesListenerPtr listener) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  uint32_t subscription_id = ++current_subscription_id_;
+
+  blink::mojom::MediaDevicesListenerPtr media_devices_listener =
+      std::move(listener);
+  media_devices_listener.set_connection_error_handler(
+      base::BindOnce(&MediaDevicesManager::UnsubscribeDeviceChange,
+                     weak_factory_.GetWeakPtr(), subscription_id));
+  subscriptions_[subscription_id] = std::move(media_devices_listener);
+
+  return subscription_id;
+}
+
+void MediaDevicesManager::UnsubscribeDeviceChange(uint32_t subscription_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  subscriptions_.erase(subscription_id);
+}
+
 void MediaDevicesManager::SetCachePolicy(MediaDeviceType type,
                                          CachePolicy policy) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -502,9 +524,11 @@ void MediaDevicesManager::NotifyDeviceChangeSubscribers(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
 
-  for (auto* subscriber : device_change_subscribers_[type]) {
+  for (auto* subscriber : device_change_subscribers_[type])
     subscriber->OnDevicesChanged(type, snapshot);
-  }
+
+  for (auto& subscription : subscriptions_)
+    subscription.second->OnDevicesChanged(type, subscription.first, snapshot);
 }
 
 }  // namespace content
