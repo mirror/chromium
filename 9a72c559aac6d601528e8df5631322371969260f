@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dc620482_afbf89c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-09T18:44:43Z",
+      "side": 1,
+      "message": "If we\u0027re trying to figure out why fewer users are seeing/responding to the survey than expected, then I think we have to capture users who couldn\u0027t be shown the infobar. We should at the very least capture that in our histogram so that we the relative importance of addressing the TODO you added.\n\nHave we looked at the DownloadResponseCode histogram to determine how often we\u0027re requesting a download?",
+      "parentUuid": "d27ab24a_ef109cd0",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 73
+      },
+      "revId": "9a72c559aac6d601528e8df5631322371969260f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1c025a1_017658af",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 4
