@@ -427,6 +427,14 @@ TEST(OptionalTest, ConstructorForwardInitListAndArguments) {
   }
 }
 
+TEST(OptionalTest, ForwardConstructor) {
+  {
+    Optional<double> a(1);
+    EXPECT_TRUE(a.has_value());
+    EXPECT_EQ(1.0, a.value());
+  }
+}
+
 TEST(OptionalTest, NulloptConstructor) {
   constexpr Optional<int> a(base::nullopt);
   EXPECT_FALSE(a);
