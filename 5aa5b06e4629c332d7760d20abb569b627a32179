@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22e0ede6_06d5d3ef",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-09T13:18:31Z",
+      "side": 1,
+      "message": "No. But we are not checking for RegularWidth \u0026\u0026 RegularHeight no?",
+      "parentUuid": "8c8f2b72_afdeaeee",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "5aa5b06e4629c332d7760d20abb569b627a32179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ffe8ae9_bc2e1b5c",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5aa5b06e4629c332d7760d20abb569b627a32179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8242da0e_d5a34d2a",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-09T13:18:31Z",
+      "side": 1,
+      "message": "This test and the one above are supposed to be outside of all size class check.\nI think there was a problem with git cl format.",
+      "parentUuid": "4ffe8ae9_bc2e1b5c",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 22
+      },
+      "revId": "5aa5b06e4629c332d7760d20abb569b627a32179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,30 @@
       "side": 1,
       "message": "Look at UIInterfaceOrientationMask for example. (Maybe just add parenthesis like they do?)\n\nUnder the hood, it\u0027s just an enum with fixed integer values. Since all \"simple\" (i.e. not combined) values are bitshifted, the combined values are not conflicting.",
       "parentUuid": "63f9fcf5_a10662e3",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "5aa5b06e4629c332d7760d20abb569b627a32179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17cdb3aa_99f4dc7e",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_component_options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-09T13:18:31Z",
+      "side": 1,
+      "message": "Yes, I expect it to work, I wasn\u0027t sure about the syntax :)\nThanks!",
+      "parentUuid": "f47402c6_9db40ce4",
       "range": {
         "startLine": 27,
         "startChar": 2,
