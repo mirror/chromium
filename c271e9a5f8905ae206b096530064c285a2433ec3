@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb9d3014_dbbaf886",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Removed this class.",
+      "parentUuid": "da87da2c_77840788",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 13
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7efb96b_837f944e",
         "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-08T15:49:04Z",
       "side": 1,
       "message": "No need to initialize to 0 since you have a constructor that initializes the value.",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 14
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3568bc2_ce4429e1",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Removed this class.",
+      "parentUuid": "a7efb96b_837f944e",
       "range": {
         "startLine": 139,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "03cf62dd_b5dbe0fd",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "900b1245_c9f214ab",
+      "range": {
+        "startLine": 180,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 27
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18f1a944_954d6e80",
         "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-08T15:49:04Z",
       "side": 1,
       "message": "Use explicit std::unique_ptr type instead of auto here.",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 6
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a385f17_f9210072",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "All these changes are gone, now that we pass |listener| to MDM.",
+      "parentUuid": "18f1a944_954d6e80",
       "range": {
         "startLine": 301,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "82df2700_aea227d0",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Went ahead with the second alternative of passing |listener| to MDM which makes things way simpler.",
+      "parentUuid": "dc074993_ebf96a99",
+      "range": {
+        "startLine": 307,
+        "startChar": 30,
+        "endLine": 307,
+        "endChar": 34
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f988f1e4_2ea43493",
         "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-08T15:49:04Z",
       "side": 1,
       "message": "Is this DCHECK guaranteed to hold in all situations, even shutdown scenarios?\nIf not, use an if. Otherwise, this would introduce problems.\nThe original subscription code here does uses if to make the checks, probably because CHECKing or DCHECKing can cause problems in some situations.\n\nAlso, should you unsubscribe from MediaDevicesManager here?",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 8
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3087619c_93f127e3",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Removed this method too.",
+      "parentUuid": "f988f1e4_2ea43493",
       "range": {
         "startLine": 322,
         "startChar": 2,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "bbc620d7_4325e439",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7036c550_b8c23395",
+      "range": {
+        "startLine": 183,
+        "startChar": 40,
+        "endLine": 183,
+        "endChar": 63
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b130f656_ef4fe174",
         "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.h",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2018-01-08T15:49:04Z",
       "side": 1,
       "message": "Rename to |current_subscription_id_| (you can also call it |next_suubscription_id_| and support zero, but up to you).\nNote also that having this field and the DeviceChangeSubscription class is probably not the way to go. See comments below.",
+      "range": {
+        "startLine": 197,
+        "startChar": 11,
+        "endLine": 197,
+        "endChar": 27
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713a69cb_721826b1",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Removed these changes.",
+      "parentUuid": "b130f656_ef4fe174",
       "range": {
         "startLine": 197,
         "startChar": 11,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "8a0dd3bd_add6a1c8",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "using erase directly without find.",
+      "parentUuid": "1c177584_96e44999",
+      "range": {
+        "startLine": 222,
+        "startChar": 11,
+        "endLine": 222,
+        "endChar": 12
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82da1fdb_8702bcb7",
         "filename": "content/browser/renderer_host/media/media_devices_manager.h",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6dd0424_34efb0d8",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82da1fdb_8702bcb7",
+      "range": {
+        "startLine": 193,
+        "startChar": 11,
+        "endLine": 193,
+        "endChar": 19
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "1ee017b7_81126421",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c24d9b1_9b8cad69",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a72aca5_5903f75d",
         "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
         "patchSetId": 3
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "4333e299_bd4545af",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a72aca5_5903f75d",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 4
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dde8e3c7_a48abad4",
         "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
         "patchSetId": 3
@@ -298,6 +586,30 @@
       "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13030a2b_1c20e147",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-09T11:11:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dde8e3c7_a48abad4",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "c271e9a5f8905ae206b096530064c285a2433ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
