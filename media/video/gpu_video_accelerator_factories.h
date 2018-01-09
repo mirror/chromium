@@ -138,6 +138,9 @@ class MEDIA_EXPORT GpuVideoAcceleratorFactories {
 
   virtual viz::ContextProvider* GetMediaContextProvider() = 0;
 
+  // Sets the current status of HDR rendering in the pipeline: active or not.
+  virtual void SetHDRRenderingStatus(bool status) = 0;
+
  protected:
   friend class base::RefCounted<GpuVideoAcceleratorFactories>;
   virtual ~GpuVideoAcceleratorFactories() {}
