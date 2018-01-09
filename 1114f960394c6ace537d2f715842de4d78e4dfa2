@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421b8bd0_6fa1730d",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-09T15:59:16Z",
+      "side": 1,
+      "message": "Perhaps, we should add ScriptController::CanEvaluateScripts or similar, and move the knowledge of \"do not eval in provisional\" there instead.",
+      "revId": "1114f960394c6ace537d2f715842de4d78e4dfa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
