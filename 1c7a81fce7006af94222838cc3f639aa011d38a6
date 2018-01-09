@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd27424a_28ac4c87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-09T09:42:45Z",
+      "side": 1,
+      "message": "NSURLSessionTask.countOfBytesExpectedToReceive property is of type int64_t according to the documentation (https://developer.apple.com/documentation/foundation/nsurlsessiontask/1410663-countofbytesexpectedtoreceive):\n\n\u003e @property(readonly) int64_t countOfBytesExpectedToReceive;\n\nSo given that the property type is int64_t, I don\u0027t understand what you mean by \"nil\" here, as \"nil\" is a special value for pointers. Did you mean \"0\"? If so, please fix description.",
+      "range": {
+        "startLine": 9,
+        "startChar": 59,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "1c7a81fce7006af94222838cc3f639aa011d38a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
