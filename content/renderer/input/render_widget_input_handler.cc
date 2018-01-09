@@ -169,6 +169,7 @@ viz::FrameSinkId RenderWidgetInputHandler::GetFrameSinkIdAtPoint(
     point_in_pixel = gfx::ConvertPointToPixel(
         widget_->GetOriginalDeviceScaleFactor(), point_in_pixel);
   }
+  LOG(ERROR) << "Hit testing at: " << point_in_pixel.ToString();
   blink::WebNode result_node = widget_->GetWebWidget()
                                    ->HitTestResultAt(blink::WebPoint(
                                        point_in_pixel.x(), point_in_pixel.y()))
