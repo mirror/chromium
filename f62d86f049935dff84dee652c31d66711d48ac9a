@@ -34,6 +34,24 @@
       "revId": "f62d86f049935dff84dee652c31d66711d48ac9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcb69a4_9c08825f",
+        "filename": "content/browser/child_process_launcher_helper_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-09T17:57:27Z",
+      "side": 1,
+      "message": "The bots build with dcheck_always_on\u003dtrue, so presumably automated tests would catch this. But moving to a hard CHECK(false) would be okay too.",
+      "parentUuid": "2554a224_557cad12",
+      "revId": "f62d86f049935dff84dee652c31d66711d48ac9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
