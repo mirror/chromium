@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<script src='../../../resources/testharness.js'></script>
+<script src='../../../resources/testharnessreport.js'></script>
+
+<style>
+span {
+  display: inline;
+  width: 100px;
+  height: 20px;
+}
+</style>
+
+<section id="firstSection">
+  <div>
+    <span class="green"></span>
+    <span class="red"></span>
+    <span class="blue"></span>
+    <span><!-- becomes red --></span>
+    <span class="yellow"><!-- can become blue --></span>
+  </div>
+</section>
+<section id="secondSection"></section>
+
+<script>
+'use strict';
+const redStyleText = ".red { color: red; } .red + span + span { color: red; }";
+const yellowStyleText = ".yellow { color: yellow; }";
+const greenStyleText = ".green { color: green; }";
+const blueStyleText = ".blue { color: blue; } .blue + span + span { color: blue; }";
+
+test(() => {
+  const firstDiv = document.querySelector('#firstSection > div');
+  const secondDiv = firstDiv.cloneNode(true);
+  const shadowRoot = document.querySelector('#secondSection').attachShadow({mode: 'open'});
+  shadowRoot.appendChild(secondDiv);
+
+  // Style sheets can be created
+  const redStyleSheet = new CSSStyleSheet(redStyleText);
+  const yellowStyleSheet = new CSSStyleSheet(yellowStyleText, {title: "Yellow", disabled: false});
+
+  const greenStyleSheet = new CSSStyleSheet(greenStyleText);
+  const blueStyleSheet = new CSSStyleSheet(blueStyleText, {title: "Blue", disabled: true});
+
+  assert_equals(redStyleSheet.title, "");
+  assert_equals(yellowStyleSheet.title, "Yellow");
+  assert_equals(greenStyleSheet.title, "");
+  assert_equals(blueStyleSheet.title, "Blue");
+
+  assert_false(redStyleSheet.disabled);
+  assert_false(yellowStyleSheet.disabled);
+  assert_false(greenStyleSheet.disabled);
+  assert_true(blueStyleSheet.disabled);
+
+  // Lists of style sheets can be created, assigned and read.
+  const orangeList = new StyleSheetList([redStyleSheet, yellowStyleSheet]);
+  document.body.moreStyleSheets = new StyleSheetList([greenStyleSheet, blueStyleSheet]);
+  const cyanList = document.body.moreStyleSheets;
+  document.body.moreStyleSheets = orangeList;
+  shadowRoot.moreStyleSheets = cyanList;
+
+  assert_equals(orangeList.length, 2);
+  assert_equals(orangeList[0], redStyleSheet);
+  assert_equals(orangeList[1], yellowStyleSheet);
+
+  assert_equals(cyanList.length, 2);
+  assert_equals(cyanList[0], greenStyleSheet);
+  assert_equals(cyanList[1], blueStyleSheet);
+
+  // TODO(crbug.com/???): Remove the need for this.
+  shadowRoot.appendChild(document.createElement('style'));
+
+  // TODO(crbug.com/???): Use the colors from the style sheet.
+  assert_equals(getComputedStyle(firstDiv.children[0]).color, "rgb(0, 0, 0)");
+  assert_equals(getComputedStyle(firstDiv.children[1]).color, "rgb(0, 0, 0)");
+  assert_equals(getComputedStyle(firstDiv.children[2]).color, "rgb(0, 0, 0)");
+  assert_equals(getComputedStyle(firstDiv.children[3]).color, "rgb(0, 0, 0)");
+  assert_equals(getComputedStyle(firstDiv.children[4]).color, "rgb(0, 0, 0)");
+
+  // TODO(crbug.com/???): Respect that blueStyleSheet is disabled.
+
+  assert_equals(getComputedStyle(secondDiv.children[0]).color, "rgb(0, 128, 0)");
+  assert_equals(getComputedStyle(secondDiv.children[1]).color, "rgb(0, 0, 0)");
+  assert_equals(getComputedStyle(secondDiv.children[2]).color, "rgb(0, 0, 255)");
+  assert_equals(getComputedStyle(secondDiv.children[3]).color, "rgb(0, 0, 0)");
+  assert_equals(getComputedStyle(secondDiv.children[4]).color, "rgb(0, 0, 255)");
+
+  shadowRoot.moreStyleSheets = new StyleSheetList([redStyleSheet, yellowStyleSheet, greenStyleSheet, blueStyleSheet]);
+  shadowRoot.appendChild(document.createElement('style'));
+
+  assert_equals(getComputedStyle(secondDiv.children[0]).color, "rgb(0, 128, 0)");
+  assert_equals(getComputedStyle(secondDiv.children[1]).color, "rgb(255, 0, 0)");
+  assert_equals(getComputedStyle(secondDiv.children[2]).color, "rgb(0, 0, 255)");
+  assert_equals(getComputedStyle(secondDiv.children[3]).color, "rgb(255, 0, 0)");
+  assert_equals(getComputedStyle(secondDiv.children[4]).color, "rgb(0, 0, 255)");
+}, 'Style sheets can be constructed using script');
+
+</script>

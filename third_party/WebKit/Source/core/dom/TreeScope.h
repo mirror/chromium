@@ -43,9 +43,10 @@ class Element;
 class HTMLMapElement;
 class HitTestResult;
 class IdTargetObserverRegistry;
+class Node;
 class SVGTreeScopeResources;
 class ScopedStyleResolver;
-class Node;
+class StyleSheetList;
 
 // A class which inherits both Node and TreeScope must call clearRareData() in
 // its destructor so that the Node destructor no longer does problematic
@@ -130,6 +131,10 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
 
   SVGTreeScopeResources& EnsureSVGTreeScopedResources();
 
+  bool HasMoreStyleSheets() const;
+  StyleSheetList& MoreStyleSheets();
+  void SetMoreStyleSheets(StyleSheetList*);
+
  protected:
   TreeScope(ContainerNode&, Document&);
   TreeScope(Document&);
@@ -157,6 +162,8 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
   RadioButtonGroupScope radio_button_group_scope_;
 
   Member<SVGTreeScopeResources> svg_tree_scoped_resources_;
+
+  Member<StyleSheetList> more_style_sheets_;
 };
 
 inline bool TreeScope::HasElementWithId(const AtomicString& id) const {

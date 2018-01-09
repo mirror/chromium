@@ -38,6 +38,7 @@ class CSSImportRule;
 class CSSRule;
 class CSSRuleList;
 class CSSStyleSheet;
+class CSSStyleSheetInit;
 class Document;
 class ExceptionState;
 class MediaQuerySet;
@@ -49,6 +50,12 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
 
  public:
   static const Document* SingleOwnerDocument(const CSSStyleSheet*);
+
+  static CSSStyleSheet* Create(Document&, const String&, ExceptionState&);
+  static CSSStyleSheet* Create(Document&,
+                               const String&,
+                               const CSSStyleSheetInit&,
+                               ExceptionState&);
 
   static CSSStyleSheet* Create(StyleSheetContents*,
                                CSSImportRule* owner_rule = nullptr);
