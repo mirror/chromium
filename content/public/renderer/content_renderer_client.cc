@@ -133,7 +133,6 @@ bool ContentRendererClient::WillSendRequest(
     ui::PageTransition transition_type,
     const blink::WebURL& url,
     ResourceType resource_type,
-    std::vector<std::unique_ptr<URLLoaderThrottle>>* throttles,
     GURL* new_url) {
   return false;
 }
@@ -259,6 +258,12 @@ bool ContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
     base::Time cert_expiration,
     std::string* console_messsage) {
   return false;
+}
+
+std::unique_ptr<URLLoaderThrottleProvider>
+ContentRendererClient::CreateURLLoaderThrottleProvider(
+    URLLoaderThrottleProviderType provider_type) {
+  return nullptr;
 }
 
 }  // namespace content
