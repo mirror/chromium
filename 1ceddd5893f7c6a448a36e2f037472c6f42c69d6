@@ -22,6 +22,30 @@
       "revId": "1ceddd5893f7c6a448a36e2f037472c6f42c69d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03e658f_99dc6021",
+        "filename": "net/socket/tcp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-09T21:43:24Z",
+      "side": 1,
+      "message": "Roughly done with some modifications. \n\nNote: \ns/offsetof(socklen_t, tcpi_rtt)/offsetof(tcp_info, tcpi_rtt)/\n\n\u003e Also...Why are the sizes different?  Should we be including a different header file?  Is info_len too large or too small?  Are we sure that tcpi_rtt is at the same offset as before?\n\nI added to the comments. Reiterating here: info_len is too small. The tcp_info struct that Chromium includes has new fields like |tcpi_max_pacing_rate| which were not there before. When calling getsockopt(), |info_len| is set to a lower value which implies that it does not update the values that appear at the end.\n\nold struct: http://shortn/_dwIc1wyT7V (size of old struct is what info_len returns).\nnew struct: http://shortn/_uaFJLNZDT2 (this is compiled into chromium)\n\nNote that the ordering/size of the existing fields have not changed in the structs.",
+      "parentUuid": "81566acc_ff20c1be",
+      "range": {
+        "startLine": 159,
+        "startChar": 19,
+        "endLine": 159,
+        "endChar": 20
+      },
+      "revId": "1ceddd5893f7c6a448a36e2f037472c6f42c69d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
