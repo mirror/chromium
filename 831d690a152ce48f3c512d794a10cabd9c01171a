@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "e8e2d688_439c072c",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-09T09:14:18Z",
+      "side": 1,
+      "message": "FileStem API is obsolete and won\u0027t be the web standard.\nWe only rely on the existing implementation in Chrome.\nIf removeRecursively() works, we should be able to use it as well as other APIs.",
+      "parentUuid": "7a564b49_d5fb36da",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72a0edab_d9e60aa2",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/js/background.js",
         "patchSetId": 10
