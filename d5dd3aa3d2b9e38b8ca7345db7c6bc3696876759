@@ -87,6 +87,24 @@
       "revId": "d5dd3aa3d2b9e38b8ca7345db7c6bc3696876759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e352f318_26412c3f",
+        "filename": "third_party/WebKit/Source/platform/text/TextBreakIterator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-09T07:00:08Z",
+      "side": 1,
+      "message": "I mildly prefer the latter; we can extend it anytime, and no need to make the function more complicated when we don\u0027t need it.",
+      "parentUuid": "87a0ba96_9b1f8594",
+      "revId": "d5dd3aa3d2b9e38b8ca7345db7c6bc3696876759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
