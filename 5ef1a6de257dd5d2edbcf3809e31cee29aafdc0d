@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd2b2362_865c0561",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-09T00:41:56Z",
+      "side": 1,
+      "message": "You can actually remove the constants, and use the default parameters.\n\nso:\nauto answer_container_layout \u003d std::make_unique\u003cviews::BoxLayout\u003e(\n        views::BoxLayout::kHorizontal);",
+      "revId": "5ef1a6de257dd5d2edbcf3809e31cee29aafdc0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
