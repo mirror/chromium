@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a20f6e1a_dcc4fa37",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-09T14:39:34Z",
+      "side": 1,
+      "message": "One line?",
+      "range": {
+        "startLine": 183,
+        "startChar": 7,
+        "endLine": 183,
+        "endChar": 28
+      },
+      "revId": "385c4ce9112544e30430640bba72c035e444d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d718a1_ba9394e7",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-09T14:39:34Z",
+      "side": 1,
+      "message": "Can the features be removed?",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 39
+      },
+      "revId": "385c4ce9112544e30430640bba72c035e444d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419c23bb_7c3dfdec",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-09T14:39:34Z",
+      "side": 1,
+      "message": "Indent",
+      "range": {
+        "startLine": 678,
+        "startChar": 4,
+        "endLine": 678,
+        "endChar": 43
+      },
+      "revId": "385c4ce9112544e30430640bba72c035e444d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
