@@ -181,8 +181,6 @@ NSButton* EyeIcon(id target, SEL action) {
 
   // Create the elements.
   bool enableUsernameEditing =
-      base::FeatureList::IsEnabled(
-          password_manager::features::kEnableUsernameCorrection) &&
       self.model->enable_editing();
   const autofill::PasswordForm& form = self.model->pending_password();
   if (enableUsernameEditing)
@@ -191,10 +189,7 @@ NSButton* EyeIcon(id target, SEL action) {
     usernameField_.reset([Label(GetDisplayUsername(form)) retain]);
   [container addSubview:usernameField_];
 
-  bool enablePasswordEditing = base::FeatureList::IsEnabled(
-      password_manager::features::kEnablePasswordSelection);
   if (form.federation_origin.unique()) {
-    if (enablePasswordEditing) {
       if (form.all_possible_passwords.size() > 1) {
         passwordSelectionField_.reset(
             [[NSPopUpButton alloc] initWithFrame:NSZeroRect pullsDown:NO]);
@@ -217,9 +212,6 @@ NSButton* EyeIcon(id target, SEL action) {
             [EyeIcon(self, @selector(onEyeClicked:)) retain]);
         [container addSubview:passwordViewButton_];
       }
-    } else {
-      passwordStaticField_.reset([PasswordLabel(form.password_value) retain]);
-    }
   } else {
     base::string16 text = l10n_util::GetStringFUTF16(
         IDS_PASSWORDS_VIA_FEDERATION,

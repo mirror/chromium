@@ -81,9 +81,6 @@ TEST_F(SavePendingPasswordViewControllerTest,
 
 TEST_F(SavePendingPasswordViewControllerTest,
        UsernameEditableWhenFeatureEnabled) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState("admin", "12345", {});
   EXPECT_TRUE(controller().usernameField.editable);
   EXPECT_NSEQ(@"admin", [controller().usernameField stringValue]);
@@ -91,9 +88,6 @@ TEST_F(SavePendingPasswordViewControllerTest,
 
 TEST_F(SavePendingPasswordViewControllerTest,
        UsernameStaticWhenFeatureDisabled) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndDisableFeature(
-      password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState("admin", "12345", {});
   EXPECT_FALSE(controller().usernameField.editable);
   EXPECT_NSEQ(@"admin", [controller().usernameField stringValue]);
@@ -103,9 +97,6 @@ TEST_F(SavePendingPasswordViewControllerTest,
        ShouldSaveEditedUsernameAndDismissWhenSaveClicked) {
   profile()->GetPrefs()->SetBoolean(
       password_manager::prefs::kWasSignInPasswordPromoClicked, true);
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState("admin", "12345", {});
 
   [controller().usernameField setStringValue:@"editedusername"];
@@ -121,9 +112,6 @@ TEST_F(SavePendingPasswordViewControllerTest,
 }
 
 TEST_F(SavePendingPasswordViewControllerTest, SelectAnotherPassword) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnablePasswordSelection);
   SetUpSavePendingState("username", "12345", {"111", "222"});
 
   NSPopUpButton* passwordSelection = controller().passwordSelectionField;
@@ -140,9 +128,6 @@ TEST_F(SavePendingPasswordViewControllerTest, SelectAnotherPassword) {
 }
 
 TEST_F(SavePendingPasswordViewControllerTest, ViewAndSelectPassword) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnablePasswordSelection);
   SetUpSavePendingState("username", "12345", {"111", "222"});
 
   NSPopUpButton* passwordSelection = controller().passwordSelectionField;
@@ -157,9 +142,6 @@ TEST_F(SavePendingPasswordViewControllerTest, ViewAndSelectPassword) {
 }
 
 TEST_F(SavePendingPasswordViewControllerTest, ViewSelectAndMaskPassword) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnablePasswordSelection);
   SetUpSavePendingState("username", "12345", {"111", "222"});
 
   NSPopUpButton* passwordSelection = controller().passwordSelectionField;
