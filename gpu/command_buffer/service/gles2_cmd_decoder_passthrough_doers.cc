@@ -4052,6 +4052,7 @@ error::Error GLES2DecoderPassthroughImpl::DoTraceBeginCHROMIUM(
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoTraceEndCHROMIUM() {
+  debug_marker_manager_.PopGroup();
   if (!gpu_tracer_->End(kTraceCHROMIUM)) {
     InsertError(GL_INVALID_OPERATION, "No trace to end");
     return error::kNoError;
