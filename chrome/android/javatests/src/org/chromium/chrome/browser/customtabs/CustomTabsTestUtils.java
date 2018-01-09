@@ -49,12 +49,7 @@ public class CustomTabsTestUtils {
     }
 
     public static void cleanupSessions(final CustomTabsConnection connection) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                connection.cleanupAll();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> connection.cleanupAll());
     }
 
     /** Calls warmup() and waits for all the tasks to complete. Fails the test otherwise. */
@@ -62,12 +57,8 @@ public class CustomTabsTestUtils {
         CustomTabsConnection connection = setUpConnection();
         try {
             final CallbackHelper startupCallbackHelper = new CallbackHelper();
-            connection.setWarmupCompletedCallbackForTesting(new Runnable() {
-                @Override
-                public void run() {
-                    startupCallbackHelper.notifyCalled();
-                }
-            });
+            connection.setWarmupCompletedCallbackForTesting(
+                    () -> startupCallbackHelper.notifyCalled());
             Assert.assertTrue(connection.warmup(0));
             startupCallbackHelper.waitForCallback(0);
         } catch (TimeoutException | InterruptedException e) {
