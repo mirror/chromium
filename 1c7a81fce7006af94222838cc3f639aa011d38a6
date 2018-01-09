@@ -22,6 +22,30 @@
       "revId": "1c7a81fce7006af94222838cc3f639aa011d38a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc4aa6c_a1b50f76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-09T21:29:44Z",
+      "side": 1,
+      "message": "Updated CL description. I meant 0.",
+      "parentUuid": "fd27424a_28ac4c87",
+      "range": {
+        "startLine": 9,
+        "startChar": 59,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "1c7a81fce7006af94222838cc3f639aa011d38a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
