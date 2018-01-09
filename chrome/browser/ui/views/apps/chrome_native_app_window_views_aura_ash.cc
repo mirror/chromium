@@ -438,15 +438,15 @@ void ChromeNativeAppWindowViewsAuraAsh::OnTabletModeToggled(bool enabled) {
     return;
 
   if (enabled) {
-    // Enter immersive mode if the widget can maximize and the hide titlebars
-    // in tablet mode feature is enabled.
+    // Enter immersive mode if the widget can resize and the hide titlebars in
+    // tablet mode feature is enabled.
     if (CanAutohideTitlebarsInTabletMode()) {
       immersive_fullscreen_controller_->SetEnabled(
           ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP, true);
     }
   } else {
-    // Exit immersive mode if the widget is not in fullscreen and can maximize.
-    if (!widget()->IsFullscreen() && CanMaximize()) {
+    // Exit immersive mode if the widget is not in fullscreen and can resize.
+    if (!widget()->IsFullscreen() && CanResize()) {
       immersive_fullscreen_controller_->SetEnabled(
           ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP, false);
     }
@@ -572,6 +572,16 @@ bool ChromeNativeAppWindowViewsAuraAsh::CanTriggerOnMouse() const {
   return true;
 }
 
+void ChromeNativeAppWindowViewsAuraAsh::OnWidgetActivationChanged(
+    views::Widget* widget,
+    bool active) {
+  if (CanAutohideTitlebarsInTabletMode()) {
+    immersive_fullscreen_controller_->SetEnabled(
+        ash::ImmersiveFullscreenController::WINDOW_TYPE_PACKAGED_APP,
+        !IsMinimized());
+  }
+}
+
 void ChromeNativeAppWindowViewsAuraAsh::OnMenuClosed() {
   menu_runner_.reset();
   menu_model_.reset();
@@ -580,6 +590,6 @@ void ChromeNativeAppWindowViewsAuraAsh::OnMenuClosed() {
 bool ChromeNativeAppWindowViewsAuraAsh::CanAutohideTitlebarsInTabletMode()
     const {
   TabletModeClient* client = TabletModeClient::Get();
-  return CanMaximize() && client && client->tablet_mode_enabled() &&
+  return CanResize() && client && client->tablet_mode_enabled() &&
          client->auto_hide_title_bars();
 }
