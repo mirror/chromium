@@ -21,6 +21,8 @@ class GFX_EXPORT GpuFence {
   // Constructor takes ownership of the source handle's resources.
   explicit GpuFence(const GpuFenceHandle& handle);
   GpuFence() = delete;
+  GpuFence(GpuFence&& fence);
+  GpuFence& operator=(GpuFence&& fence);
   ~GpuFence();
 
   // This handle is an unowned view of the resources owned by this class for

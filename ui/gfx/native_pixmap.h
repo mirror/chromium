@@ -10,6 +10,7 @@
 #include "base/memory/ref_counted.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gfx/native_pixmap_handle.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/overlay_transform.h"
@@ -52,11 +53,14 @@ class NativePixmap : public base::RefCountedThreadSafe<NativePixmap> {
   // |crop_rect| specifies the region within the buffer to be placed
   // inside |display_bounds|. This is specified in texture coordinates, in the
   // range of [0,1].
+  // |gpu_fence_handle| specifies a gpu fence handle to wait on before the
+  // pixmap is ready to be displayed.
   virtual bool ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
                                     int plane_z_order,
                                     gfx::OverlayTransform plane_transform,
                                     const gfx::Rect& display_bounds,
-                                    const gfx::RectF& crop_rect) = 0;
+                                    const gfx::RectF& crop_rect,
+                                    gfx::GpuFenceHandle gpu_fence_handle) = 0;
 
   // Export the buffer for sharing across processes.
   // Any file descriptors in the exported handle are owned by the caller.

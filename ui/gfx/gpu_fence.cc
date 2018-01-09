@@ -22,6 +22,23 @@ GpuFence::GpuFence(const GpuFenceHandle& handle) : type_(handle.type) {
   }
 }
 
+GpuFence::GpuFence(GpuFence&& fence)
+    : type_(fence.type_)
+#if defined(OS_POSIX)
+      ,
+      owned_fd_(std::move(fence.owned_fd_))
+#endif
+{
+}
+
+GpuFence& GpuFence::operator=(GpuFence&& fence) {
+  type_ = fence.type_;
+#if defined(OS_POSIX)
+  owned_fd_ = std::move(fence.owned_fd_);
+#endif
+  return *this;
+}
+
 GpuFence::~GpuFence() = default;
 
 GpuFenceHandle GpuFence::GetGpuFenceHandle() const {

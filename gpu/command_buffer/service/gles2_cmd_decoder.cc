@@ -3270,6 +3270,11 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
   if (workarounds().rely_on_implicit_sync_for_swap_buffers)
     surface_->SetRelyOnImplicitSync();
 
+  // Set surface to use plane gpu fences if supported and enabled
+  // TODO: How to check if we want to enable plane gpu fences?
+  if (false && features().chromium_gpu_fence)
+    surface_->SetUsePlaneGpuFences();
+
   // Create GPU Tracer for timing values.
   gpu_tracer_.reset(new GPUTracer(this));
 
@@ -12335,11 +12340,10 @@ error::Error GLES2DecoderImpl::HandleScheduleOverlayPlaneCHROMIUM(
     return error::kNoError;
   }
   if (!surface_->ScheduleOverlayPlane(
-          c.plane_z_order,
-          transform,
-          image,
+          c.plane_z_order, transform, image,
           gfx::Rect(c.bounds_x, c.bounds_y, c.bounds_width, c.bounds_height),
-          gfx::RectF(c.uv_x, c.uv_y, c.uv_width, c.uv_height))) {
+          gfx::RectF(c.uv_x, c.uv_y, c.uv_width, c.uv_height),
+          gfx::GpuFence(gfx::GpuFenceHandle()))) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION,
                        "glScheduleOverlayPlaneCHROMIUM",
                        "failed to schedule overlay");
