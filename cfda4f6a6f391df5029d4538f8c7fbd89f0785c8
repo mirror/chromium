@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e169d6_6db09cf3",
+        "filename": "chrome/browser/extensions/extension_csp_bypass_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-09T21:17:33Z",
+      "side": 1,
+      "message": "nit: prefer\nauto dir \u003d std::make_unique\u003cTestExtensionDir\u003e();",
+      "revId": "cfda4f6a6f391df5029d4538f8c7fbd89f0785c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
