@@ -88,6 +88,24 @@
       "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99ec50b_42550812",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-09T01:56:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38edd637_84625377",
+      "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
