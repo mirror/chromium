@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5420795_059c3721",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-09T22:46:39Z",
+      "side": 1,
+      "message": "nit: just reset it?",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 3
+      },
+      "revId": "15de377340fce48bb41814d31f655be0f124331f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b6cb42_470dce78",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-09T22:46:39Z",
+      "side": 1,
+      "message": "nit: just reset() is fine.",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 192,
+        "endChar": 48
+      },
+      "revId": "15de377340fce48bb41814d31f655be0f124331f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
