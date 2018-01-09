@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1cec108_2c8b7873",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/query.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-09T02:07:04Z",
+      "side": 1,
+      "message": "nit: Each lock should have one holder?",
+      "revId": "09307e5143712df7f7cb0bba6dff67c6c00f6903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
