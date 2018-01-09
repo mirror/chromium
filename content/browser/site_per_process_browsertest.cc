@@ -1818,7 +1818,6 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   scroll_event.dispatch_type =
       blink::WebInputEvent::DispatchType::kEventNonBlocking;
   router->RouteMouseWheelEvent(root_view, &scroll_event, ui::LatencyInfo());
-
   scroll_end_observer.Wait();
 }
 
@@ -2321,12 +2320,16 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollEventToOOPIF) {
       child_node->current_frame_host()->GetRenderWidgetHost());
 
   // Send a ui::ScrollEvent that will hit test to the child frame.
+  InputEventAckWaiter waiter(
+      child_node->current_frame_host()->GetRenderWidgetHost(),
+      blink::WebInputEvent::kMouseWheel);
   ui::ScrollEvent scroll_event(ui::ET_SCROLL, gfx::Point(75, 75),
                                ui::EventTimeForNow(), ui::EF_NONE,
                                0, 10,     // Offsets
                                0, 10,  // Offset ordinals
                                2);
   rwhv_parent->OnScrollEvent(&scroll_event);
+  waiter.Wait();
 
   // Verify that this a mouse wheel event was sent to the child frame renderer.
   EXPECT_TRUE(child_frame_monitor.EventWasReceived());
