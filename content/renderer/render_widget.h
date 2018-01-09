@@ -849,6 +849,8 @@ class CONTENT_EXPORT RenderWidget
   bool has_added_input_handler_;
 
  private:
+  blink::WebFrameWidget* GetWebFrameWidget() const;
+
   // Applies/Removes the DevTools device emulation transformation to/from a
   // window rect.
   void ScreenRectToEmulatedIfNeeded(blink::WebRect* window_rect) const;
