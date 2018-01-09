@@ -52,6 +52,24 @@
       "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e6a63c_f34b1639",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-09T22:42:50Z",
+      "side": 1,
+      "message": "Alternatively, I can rename HIT_TEST_RESULT to FOCUS_RECOVERY, if you want something more semanticly meaningful and accurate.",
+      "parentUuid": "0d880d94_d134656d",
+      "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
