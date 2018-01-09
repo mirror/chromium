@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "235312b7_8074b355",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-09T23:03:58Z",
+      "side": 1,
+      "message": "This doesn\u0027t match the definition of DIR_EXE, which is the \"Directory containing FILE_EXE\".\n\nIf the issue is that some library-loading code is making an invalid assumption about the exe and libraries residing in the same directory then we should fix that code to use a more appropriate PathKey, or add a new PathKey to express the concept, which can default to matching DIR_EXE.\n\ne.g. DIR_MEDIA_LIBS (https://cs.chromium.org/chromium/src/content/public/common/content_paths.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d25) was added for this purpose, since the media library locations differed between Mac and other platforms, due to the Mac bundle concept.",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "97a0eb1870f212b3ac531e21f4b0719586ab6253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd814ca_8ac0c05b",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-09T23:03:58Z",
+      "side": 1,
+      "message": "nit: Add a note that this will default it to dirname(FILE_EXE).",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "97a0eb1870f212b3ac531e21f4b0719586ab6253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d805b5fd_17947793",
+        "filename": "base/process/process.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-09T23:03:58Z",
+      "side": 1,
+      "message": "Cleaner to have this be a function:\n\n  FilePath GetPackageRoot();\n\nYou could also define it to return an empty FilePath if the process is running outside a package, to avoid the need for a separate IsPackageProcess() call.\n\nIs base/process/process.h the right place for this?  Should we add a new .cc/.h under base/fuchsia instead, e.g. base/fuchsia/package.h or similar, so that any other package-specific utilities can live there as well?",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 45
+      },
+      "revId": "97a0eb1870f212b3ac531e21f4b0719586ab6253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

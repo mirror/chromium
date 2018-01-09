@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "848062f8_022354f0",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-09T23:03:58Z",
+      "side": 1,
+      "message": "Isn\u0027t the point that the default path provider will derived DIR_EXE from FILE_EXE, so we don\u0027t need to provide a custom implementation?",
+      "parentUuid": "56e8d10a_cbacca55",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c14760dc_190a1717",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 11
