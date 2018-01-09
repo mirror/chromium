@@ -87,26 +87,31 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
           true,
           "WebFrameScheduler.FrameVisible",
           this,
+          renderer_scheduler->tracing_controller(),
           VisibilityStateToString),
       page_visible_(
           true,
           "WebFrameScheduler.PageVisible",
           this,
+          renderer_scheduler->tracing_controller(),
           VisibilityStateToString),
       page_stopped_(
           false,
           "WebFrameScheduler.PageStopped",
           this,
+          renderer_scheduler->tracing_controller(),
           StoppedStateToString),
       frame_paused_(
           false,
           "WebFrameScheduler.FramePaused",
           this,
+          renderer_scheduler->tracing_controller(),
           PausedStateToString),
       cross_origin_(
           false,
           "WebFrameScheduler.Origin",
           this,
+          renderer_scheduler->tracing_controller(),
           CrossOriginStateToString),
       frame_type_(frame_type),
       active_connection_count_(0),
@@ -559,14 +564,6 @@ base::WeakPtr<WebFrameSchedulerImpl> WebFrameSchedulerImpl::AsWeakPtr() {
 
 bool WebFrameSchedulerImpl::IsExemptFromBudgetBasedThrottling() const {
   return has_active_connection();
-}
-
-void WebFrameSchedulerImpl::OnTraceLogEnabled() {
-  frame_visible_.OnTraceLogEnabled();
-  page_visible_.OnTraceLogEnabled();
-  page_stopped_.OnTraceLogEnabled();
-  frame_paused_.OnTraceLogEnabled();
-  cross_origin_.OnTraceLogEnabled();
 }
 
 }  // namespace scheduler

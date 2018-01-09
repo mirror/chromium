@@ -6,6 +6,9 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_UTIL_TRACING_HELPER_H_
 
 #include <string>
+#include <unordered_set>
+
+#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -25,6 +28,8 @@ namespace internal {
 
 PLATFORM_EXPORT void ValidateTracingCategory(const char* category);
 
+class TraceableStateForTest;
+
 }  // namespace internal
 
 PLATFORM_EXPORT void WarmupTracingCategories();
@@ -35,31 +40,56 @@ PLATFORM_EXPORT std::string PointerToString(const void* pointer);
 
 PLATFORM_EXPORT double TimeDeltaToMilliseconds(const base::TimeDelta& value);
 
+class TraceableVariable {
+ public:
+  virtual ~TraceableVariable() {}
+  virtual void OnTraceLogEnabled() = 0;
+};
+
+// Unfortunately, using |base::trace_event::TraceLog::EnabledStateObserver|
+// wouldn't be helpful in our case because removing one takes linear time
+// and tracers may be created and disposed frequently.
+class TraceableVariableController {
+ public:
+  // Not thread safe.
+  void RegisterTraceableVariable(TraceableVariable* tracer);
+  void DeregisterTraceableVariable(TraceableVariable* tracer);
+
+  void OnTraceLogEnabled();
+
+ private:
+  std::unordered_set<TraceableVariable*> tracers_;
+};
+
 // TRACE_EVENT macros define static variable to cache a pointer to the state
 // of category. Hence, we need distinct version for each category in order to
 // prevent unintended leak of state.
 
 template <typename T, const char* category>
-class TraceableState {
+class TraceableState : public TraceableVariable {
  public:
   using ConverterFuncPtr = const char* (*)(T);
 
   TraceableState(T initial_state,
                  const char* name,
                  const void* object,
+                 TraceableVariableController* controller,
                  ConverterFuncPtr converter)
       : name_(name),
         object_(object),
+        controller_(controller),
         converter_(converter),
         state_(initial_state),
         slice_is_open_(false) {
     internal::ValidateTracingCategory(category);
+    controller_->RegisterTraceableVariable(this);
     Trace();
   }
 
-  ~TraceableState() {
+  ~TraceableState() override {
     if (slice_is_open_)
       TRACE_EVENT_ASYNC_END0(category, name_, object_);
+    controller_->DeregisterTraceableVariable(this);
   }
 
   TraceableState& operator =(const T& value) {
@@ -78,7 +108,7 @@ class TraceableState {
     return state_;
   }
 
-  void OnTraceLogEnabled() {
+  void OnTraceLogEnabled() final {
     Trace();
   }
 
@@ -91,6 +121,11 @@ class TraceableState {
   }
 
   void Trace() {
+    if (UNLIKELY(mock_trace_for_test_)) {
+      mock_trace_for_test_(converter_(state_));
+      return;
+    }
+
     if (slice_is_open_) {
       TRACE_EVENT_ASYNC_END0(category, name_, object_);
       slice_is_open_ = false;
@@ -119,42 +154,56 @@ class TraceableState {
 
   const char* const name_;  // Not owned.
   const void* const object_;  // Not owned.
+  TraceableVariableController* const controller_;  // Not owned.
   const ConverterFuncPtr converter_;
+
+  void (*mock_trace_for_test_)(const char*) = nullptr;
 
   T state_;
   // We have to track whether slice is open to avoid confusion since assignment,
   // "absent" state and OnTraceLogEnabled can happen anytime.
   bool slice_is_open_;
 
+  friend class internal::TraceableStateForTest;
   DISALLOW_COPY(TraceableState);
 };
 
 template <typename T, const char* category>
-class TraceableCounter {
+class TraceableCounter : public TraceableVariable {
  public:
   using ConverterFuncPtr = double (*)(const T&);
 
   TraceableCounter(T initial_value,
                    const char* name,
                    const void* object,
+                   TraceableVariableController* controller,
                    ConverterFuncPtr converter)
       : name_(name),
         object_(object),
+        controller_(controller),
         converter_(converter),
         value_(initial_value) {
     internal::ValidateTracingCategory(category);
+    controller_->RegisterTraceableVariable(this);
     Trace();
   }
 
   TraceableCounter(T initial_value,
                    const char* name,
-                   const void* object)
+                   const void* object,
+                   TraceableVariableController* controller)
       : name_(name),
         object_(object),
+        controller_(controller),
         converter_([](const T& value) { return static_cast<double>(value); }),
         value_(initial_value) {
     internal::ValidateTracingCategory(category);
+    controller_->RegisterTraceableVariable(this);
     Trace();
+  }
+
+  ~TraceableCounter() {
+    controller_->DeregisterTraceableVariable(this);
   }
 
   TraceableCounter& operator =(const T& value) {
@@ -189,6 +238,9 @@ class TraceableCounter {
     return value_;
   }
 
+  void OnTraceLogEnabled() final {
+    Trace();
+  }
   void Trace() const {
     TRACE_COUNTER_ID1(category, name_, object_, converter_(value_));
   }
@@ -196,6 +248,7 @@ class TraceableCounter {
  private:
   const char* const name_;  // Not owned.
   const void* const object_;  // Not owned.
+  TraceableVariableController* const controller_;  // Not owned.
   const ConverterFuncPtr converter_;
 
   T value_;

@@ -282,8 +282,11 @@ void TaskQueueThrottler::MaybeSchedulePumpThrottledTasks(
 
 CPUTimeBudgetPool* TaskQueueThrottler::CreateCPUTimeBudgetPool(
     const char* name) {
-  CPUTimeBudgetPool* time_budget_pool =
-      new CPUTimeBudgetPool(name, this, tick_clock_->NowTicks());
+  CPUTimeBudgetPool* time_budget_pool = new CPUTimeBudgetPool(
+      name,
+      this,
+      renderer_scheduler_->tracing_controller(),
+      tick_clock_->NowTicks());
   budget_pools_[time_budget_pool] = base::WrapUnique(time_budget_pool);
   return time_budget_pool;
 }
