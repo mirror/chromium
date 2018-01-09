@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8bb7b3b_31765973",
+        "filename": "base/process/launch.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-09T04:51:38Z",
+      "side": 1,
+      "message": "Rebasing error from splitting the job work from the LaunchOptions cleanups (https://chromium-review.googlesource.com/c/chromium/src/+/852981)",
+      "parentUuid": "e11a0daa_b51524b0",
+      "revId": "f05bea88f6c2d3d954d35256c66af772842d765a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6e7947_d8941694",
         "filename": "base/test/launcher/test_launcher.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f05bea88f6c2d3d954d35256c66af772842d765a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05953905_b0648d6a",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-09T04:51:38Z",
+      "side": 1,
+      "message": "This was just moved from the OS_POSIX if (exit_code !\u003d 0) block, below; scottmg@ added a load of additional process start/stop logging on the bots, to help us diagnose the hangs.",
+      "parentUuid": "8a6e7947_d8941694",
+      "revId": "f05bea88f6c2d3d954d35256c66af772842d765a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
