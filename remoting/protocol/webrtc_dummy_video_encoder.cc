@@ -135,6 +135,8 @@ int32_t WebrtcDummyVideoEncoder::SetRates(uint32_t bitrate,
 webrtc::EncodedImageCallback::Result WebrtcDummyVideoEncoder::SendEncodedFrame(
     const WebrtcVideoEncoder::EncodedFrame& frame,
     base::TimeTicks capture_time) {
+  LOG(ERROR) << "### Sending frame of size: " << frame.data.size()
+             << (frame.key_frame ? " KEY" : "");
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   uint8_t* buffer = reinterpret_cast<uint8_t*>(
       base::string_as_array(const_cast<std::string*>(&frame.data)));

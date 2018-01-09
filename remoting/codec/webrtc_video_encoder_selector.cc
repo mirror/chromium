@@ -48,6 +48,8 @@ void WebrtcVideoEncoderSelector::SetDesktopFrame(
   profile_.frame_rate = kTargetFrameRate;
   gfx::Size new_resolution(frame.size().width(), frame.size().height());
   if (new_resolution != profile_.resolution) {
+    LOG(ERROR) << "### New frame resolution: " << frame.size().width() << "x"
+               << frame.size().height();
     profile_.resolution = new_resolution;
     last_codec_ = -1;
   }

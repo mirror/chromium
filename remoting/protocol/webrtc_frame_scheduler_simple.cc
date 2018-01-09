@@ -86,6 +86,7 @@ void WebrtcFrameSchedulerSimple::OnTargetBitrateChanged(int bandwidth_kbps) {
   DCHECK(thread_checker_.CalledOnValidThread());
   bandwidth_estimator_->OnReceivedAck();
   bandwidth_estimator_->OnBitrateEstimation(bandwidth_kbps);
+  LOG(ERROR) << "### OnTargetBitrateChanged (kbps): " << bandwidth_kbps;
   processing_time_estimator_.SetBandwidthKbps(
       bandwidth_estimator_->GetBitrateKbps());
   pacing_bucket_.UpdateRate(
