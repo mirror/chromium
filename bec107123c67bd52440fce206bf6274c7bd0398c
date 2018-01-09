@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7cc0e58_04081add",
+        "filename": "internal_gyp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-09T20:37:13Z",
+      "side": 1,
+      "message": "What is this file for?",
+      "revId": "bec107123c67bd52440fce206bf6274c7bd0398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
