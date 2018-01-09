@@ -16,6 +16,24 @@
       "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d007a1a_f983f1c0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-09T03:56:36Z",
+      "side": 1,
+      "message": "I\u0027m kind of using null as a way of handling unexpected cases, since the plan is to start with a basic implementation and gradually grow into a full one.\n\nSo in most cases null means something goes wrong and we should fix the implementation.\n\nI\u0027ll add a comment for this.",
+      "parentUuid": "806142b9_7543c8eb",
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
