@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14c9155f_db0a6770",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "Ping on deleting the instance on connection errors.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b83ffa1_b843a472",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "nit: only one newline",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5a1332_4152f751",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "nit: callbacks on the task runner that the mojo::Binding was created on.",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5d2ac7_47bdccfd",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "nit: its. And maybe even use the same wording on the .h file. Or de-duplicate it somehow because duplication leads to de-synchronization.",
+      "range": {
+        "startLine": 176,
+        "startChar": 35,
+        "endLine": 176,
+        "endChar": 39
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70446a8e_12e99cab",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "Maybe base::Optional\u003cint\u003e?",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 6
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c794b356_e3df19c5",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "maybe base::Optional\u003cmojom::TimerPtr*\u003e and also return base::nullopt if the pointer is somehow nullptr.\n\nIf we had optional references, this would make a bit more sense :(",
+      "range": {
+        "startLine": 100,
+        "startChar": 1,
+        "endLine": 100,
+        "endChar": 18
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15c3c0a_6ce91eef",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "nit: elide braces in one-liners. same thing throughout this file.",
+      "range": {
+        "startLine": 101,
+        "startChar": 34,
+        "endLine": 101,
+        "endChar": 36
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0c0809_24872916",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 102,
+        "startChar": 13,
+        "endLine": 102,
+        "endChar": 17
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e307ae_3715cc19",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "nit:\n\n auto it \u003d arc_timers_.find(clock_id);\n return it !\u003d arc_timers_.end() \u0026\u0026 it-\u003etimer;",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 41
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdbb86d2_1528c599",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "Same as above, use the iterator to check for existence and acquisition.",
+      "range": {
+        "startLine": 117,
+        "startChar": 27,
+        "endLine": 117,
+        "endChar": 49
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aa91d4_70505c21",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "nit: size(). trivial, inline methods are lowercase.",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 13
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701abcd7_ca2b0977",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN? It\u0027s implied by both members, but it\u0027s still better to make that explicit.",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 3
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b64a93_5b59a90a",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "IWYU: vector.\n\nCan you run git cl lint?",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80985856_2044543b",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "IWYU: \"base/optional.h\"",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 18
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6277149e_e2c77be7",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "Maybe inline this? If you\u0027re worried about the callback not being run in all the exit paths, you can use https://cs.chromium.org/chromium/src/base/callback_helpers.h?q\u003dbase::ScopedClosureRunner\u0026sq\u003dpackage:chromium\u0026l\u003d74",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 28
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5dfa15_d8be7d33",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "This is a strict subset of the test below. I say we get rid of it since it doesn\u0027t add any coverage.",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 1
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9c4716_e9e080e1",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "Can we have this delay be in the milliseconds range? I wouldn\u0027t want this test to always add 2s of delay.",
+      "range": {
+        "startLine": 282,
+        "startChar": 17,
+        "endLine": 282,
+        "endChar": 58
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1ea2f0_4b9f674b",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-09T22:31:06Z",
+      "side": 1,
+      "message": "Can you ADD_FAILURE() here if |result !\u003d mojom::ArcTimerResult::SUCCESS| instead of EXPECT_TRUE below?",
+      "range": {
+        "startLine": 291,
+        "startChar": 12,
+        "endLine": 291,
+        "endChar": 66
+      },
+      "revId": "41b14329d59b33a51ade6e176c3eb50e40672449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
