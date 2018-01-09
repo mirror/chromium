@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62f32a96_fb5a7cd2",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-09T16:27:29Z",
+      "side": 1,
+      "message": "Here we are mixing the UMA for all key systems (CDM types). It\u0027s not a big deal in practice, since in most cases we only have Widevine registered. But conceptually we support multiple CDM types, and then we are mixing data here.\n\nCan you use GetKeySystemNameForUMA() to grab a UMA suffix for the key system, so we can report the UMA as Media.EME.KeySystemSupported.\u003cuma suffix\u003e? In the xml file, we can just add Media.EME.KeySystemSupported.Widevine since that\u0027s what we care about. That way, the comment can also be easier in the xml file.\n\nWDYT?",
+      "revId": "02a4747da5a0a8e49812a2b25a36171308c1af93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
