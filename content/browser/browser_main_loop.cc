@@ -267,10 +267,12 @@ void SetupSandbox(const base::CommandLine& parsed_command_line) {
 
   // Tickle the zygote host so it forks now.
   ZygoteHostImpl::GetInstance()->Init(parsed_command_line);
-  ZygoteHandle generic_zygote =
-      CreateGenericZygote(base::BindOnce([](base::CommandLine* cmd_line) {
+  ZygoteHandle generic_zygote = CreateGenericZygote(base::BindOnce(
+      [](base::CommandLine* cmd_line, base::ScopedFD* control_fd) {
         GetContentClient()->browser()->AppendExtraCommandLineSwitches(cmd_line,
                                                                       -1);
+        return ZygoteHostImpl::GetInstance()->LaunchZygote(cmd_line,
+                                                           control_fd);
       }));
 
   // TODO(kerrnel): Investigate doing this without the ZygoteHostImpl as a
