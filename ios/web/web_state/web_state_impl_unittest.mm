@@ -16,6 +16,7 @@
 #import "base/mac/bind_objc_block.h"
 #include "base/memory/ptr_util.h"
 #import "base/test/ios/wait_util.h"
+#include "ios/web/navigation/placeholder_navigation_util.h"
 #import "ios/web/public/java_script_dialog_presenter.h"
 #include "ios/web/public/load_committed_details.h"
 #import "ios/web/public/test/fakes/fake_navigation_context.h"
@@ -474,6 +475,22 @@ TEST_F(WebStateImplTest, ObserverTest) {
   EXPECT_TRUE(observer->web_state_destroyed_info());
 
   EXPECT_EQ(nullptr, observer->web_state());
+}
+
+// Tests that placeholder navigations are not visible to WebStateObservers.
+TEST_F(WebStateImplTest, PlaceholderNavigationNotExposedToObservers) {
+  auto observer = std::make_unique<TestWebStateObserver>(web_state_.get());
+  FakeNavigationContext context;
+  context.SetUrl(placeholder_navigation_util::CreatePlaceholderUrlForUrl(
+      GURL("chrome://newtab")));
+
+  // Test that OnNavigationStarted() is not called.
+  web_state_->OnNavigationStarted(&context);
+  EXPECT_FALSE(observer->did_start_navigation_info());
+
+  // Test that OnNavigationFinished() is not called.
+  web_state_->OnNavigationFinished(&context);
+  EXPECT_FALSE(observer->did_finish_navigation_info());
 }
 
 // Tests that WebStateDelegate methods appropriately called.
