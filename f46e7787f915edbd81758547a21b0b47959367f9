@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58515327_da9bd4e1",
+        "filename": "third_party/WebKit/LayoutTests/compositing/massive-scale-interest-rect-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-09T19:13:32Z",
+      "side": 1,
+      "message": "Changed because the new code knows that the transform is a containing block for all\ndescendants, and so now the clip correctly applies.",
+      "revId": "f46e7787f915edbd81758547a21b0b47959367f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea7b99e_5197f9fd",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/nested-render-surfaces-with-rotation-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-09T19:13:32Z",
+      "side": 1,
+      "message": "The new code now knows about transformed clips.",
+      "revId": "f46e7787f915edbd81758547a21b0b47959367f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cce21c_f033973f",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/fast/css/input-search-padding-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-09T19:13:32Z",
+      "side": 1,
+      "message": "The new code knows about control clips.",
+      "revId": "f46e7787f915edbd81758547a21b0b47959367f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
