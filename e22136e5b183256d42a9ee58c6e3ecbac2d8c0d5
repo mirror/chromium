@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "950dbe5d_6b707bd2",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-09T17:52:11Z",
+      "side": 1,
+      "message": "Thanks!\n\nAnd here I thought it had something to do with promises, since I\u0027ve never seen promises used without it, and I\u0027ve never seen it used in any other context.",
+      "parentUuid": "4b0311e2_f488eea0",
+      "revId": "e22136e5b183256d42a9ee58c6e3ecbac2d8c0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccc98bc9_f3310462",
         "filename": "chrome/test/data/extensions/api_test/webrequest_pac_request/background.js",
         "patchSetId": 5
