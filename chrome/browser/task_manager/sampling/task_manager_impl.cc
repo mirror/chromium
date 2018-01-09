@@ -517,7 +517,7 @@ void TaskManagerImpl::OnReceivedMemoryDump(
     bool success,
     memory_instrumentation::mojom::GlobalMemoryDumpPtr dump) {
   waiting_for_memory_dump_ = false;
-  if (!success)
+  if (!dump)
     return;
   for (const memory_instrumentation::mojom::ProcessMemoryDumpPtr& pmd :
        dump->process_dumps) {
