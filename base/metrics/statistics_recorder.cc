@@ -221,9 +221,6 @@ void StatisticsRecorder::PrepareDeltas(
     HistogramBase::Flags flags_to_set,
     HistogramBase::Flags required_flags,
     HistogramSnapshotManager* snapshot_manager) {
-  if (include_persistent)
-    ImportGlobalPersistentHistograms();
-
   snapshot_manager->PrepareDeltas(GetKnownHistograms(include_persistent),
                                   flags_to_set, required_flags);
 }
@@ -329,6 +326,11 @@ bool StatisticsRecorder::ShouldRecordHistogram(uint64_t histogram_hash) {
 template <typename Predicate>
 StatisticsRecorder::Histograms StatisticsRecorder::GetHistograms(
     const Predicate predicate) {
+  // This must be called *before* the lock is acquired below because it will
+  // call back into this object to register histograms. Those called methods
+  // will acquire the lock at that time.
+  ImportGlobalPersistentHistograms();
+
   Histograms out;
 
   {
@@ -364,11 +366,6 @@ StatisticsRecorder::Histograms StatisticsRecorder::GetKnownHistograms(
 // static
 StatisticsRecorder::Histograms StatisticsRecorder::GetSnapshot(
     const std::string& query) {
-  // This must be called *before* the lock is acquired below because it will
-  // call back into this object to register histograms. Those called methods
-  // will acquire the lock at that time.
-  ImportGlobalPersistentHistograms();
-
   // Need a C-string query for comparisons against C-string histogram name.
   const char* const query_string = query.c_str();
   return GetHistograms([query_string](const HistogramBase& histogram) {
