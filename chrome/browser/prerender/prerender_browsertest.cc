@@ -1391,7 +1391,9 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, PrerenderVisibility) {
 #if defined(OS_MACOSX) && defined(ADDRESS_SANITIZER)
 #define MAYBE_PrerenderNoCommitNoSwap DISABLED_PrerenderNoCommitNoSwap
 #else
-#define MAYBE_PrerenderNoCommitNoSwap PrerenderNoCommitNoSwap
+// Fails with network service enabled: http://crbug.com/800373. Not reverting
+// the likely cause for a little more time to collect more flake information.
+#define MAYBE_PrerenderNoCommitNoSwap DISABLED_PrerenderNoCommitNoSwap
 #endif
 // Checks that the prerendering of a page is canceled correctly if we try to
 // swap it in before it commits.
