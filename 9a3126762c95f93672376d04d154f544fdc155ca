@@ -76,6 +76,30 @@
     },
     {
       "key": {
+        "uuid": "ae85557f_d30dc8b6",
+        "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-09T21:19:22Z",
+      "side": 1,
+      "message": "Yes, definitely.\n\nIf you\u0027re interested, check out namedtuple() also.  Basically you could make yourself cute accessors instead of having to index.",
+      "parentUuid": "467705ba_844611de",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "9a3126762c95f93672376d04d154f544fdc155ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1229fe59_f5a41f52",
         "filename": "chrome/browser/resources/vr/assets/PRESUBMIT.py",
         "patchSetId": 2
