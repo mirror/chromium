@@ -17,6 +17,7 @@ enum AuthenticatorStatus {
   PENDING_REQUEST,
   NOT_ALLOWED_ERROR,
   NOT_SUPPORTED_ERROR,
+  SECURITY_ERROR,
   UNKNOWN_ERROR,
 };
 
@@ -42,7 +43,7 @@ struct MakeCredentialAuthenticatorResponse {
   array<uint8> attestation_object;
 };
 
-struct GetAssertionResponse {
+struct GetAssertionAuthenticatorResponse {
   CommonCredentialInfo info;
 
   // A blob of data returned by the authenticator after generating an assertion.
@@ -92,6 +93,19 @@ struct PublicKeyCredentialUserEntity {
 struct PublicKeyCredentialParameters {
   PublicKeyCredentialType type;
   int32 algorithm_identifier;
+};
+
+// Parameters passed into calls to GetAssertion.
+struct PublicKeyCredentialRequestOptions {
+  // A blob passed from the the relying party server.
+  array<uint8> challenge;
+
+  mojo.common.mojom.TimeDelta adjusted_timeout;
+
+  // An ASCII serialization of an origin claimed by the relying party.
+  string? relying_party_id;
+
+  array<PublicKeyCredentialDescriptor> allow_credentials;
 };
 
 // Parameters passed into calls to MakeCredential.
@@ -144,4 +158,10 @@ interface Authenticator {
   // [MakeCredentialAuthenticatorResponse] will only be set if status == SUCCESS.
   MakeCredential(MakePublicKeyCredentialOptions options)
       => (AuthenticatorStatus status, MakeCredentialAuthenticatorResponse? credential);
+
+  // Uses an existing credential to produce an assertion for the given
+  // |PublicKeyCredentialRequestOptions|.
+  // |GetAssertionResponse| will only be set if status == SUCCESS.
+  GetAssertion(PublicKeyCredentialRequestOptions options)
+      => (AuthenticatorStatus status, GetAssertionAuthenticatorResponse? credential);
 };
