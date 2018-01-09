@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1830debc_4f67afbb",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-09T00:33:45Z",
+      "side": 1,
+      "message": "I think we should still have a TODO here to remove all the callsites other than the one at construction. Currently it just makes the code harder to reason about.",
+      "revId": "7e9687cf58fdb3f70594b720cd6951abb01b7381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
