@@ -312,6 +312,10 @@ AutofillPopupControllerImpl::GetSuggestions() {
 }
 
 #if !defined(OS_ANDROID)
+void AutofillPopupControllerImpl::SetTypesetter(gfx::Typesetter typesetter) {
+  typesetter_ = typesetter;
+}
+
 int AutofillPopupControllerImpl::GetElidedValueWidthForRow(int row) {
   return gfx::GetStringWidth(GetElidedValueAt(row),
                              layout_model_.GetValueFontListForRow(row));
@@ -502,12 +506,12 @@ void AutofillPopupControllerImpl::ElideValueAndLabelForRow(
   int value_size = available_width * value_width / total_text_length;
   elided_values_[row] = gfx::ElideText(
       suggestions_[row].value, layout_model_.GetValueFontListForRow(row),
-      value_size, gfx::ELIDE_TAIL);
+      value_size, gfx::ELIDE_TAIL, typesetter_);
 
   int label_size = available_width * label_width / total_text_length;
   elided_labels_[row] = gfx::ElideText(
       suggestions_[row].label, layout_model_.GetLabelFontListForRow(row),
-      label_size, gfx::ELIDE_TAIL);
+      label_size, gfx::ELIDE_TAIL, typesetter_);
 }
 #endif
 
