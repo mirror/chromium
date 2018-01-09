@@ -83,6 +83,24 @@ jumbo_component("keyboard_with_content") {
   ]
 }
 
+static_library("platform_hook") {
+  sources = [
+    "platform_hook.h",
+    "platform_hook_posix.cc",
+    "platform_hook_win.cc",
+  ]
+
+  deps = [
+    "//base",
+  ]
+
+  public_deps = [
+    "//ui/events",
+    "//ui/events:dom_keycode_converter",
+    "//ui/events/platform:key_event_filter",
+  ]
+}
+
 static_library("test_support") {
   testonly = true
   sources = [
