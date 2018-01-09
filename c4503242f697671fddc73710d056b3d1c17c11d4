@@ -16,6 +16,24 @@
       "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b523bc_6c6e4562",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-09T22:29:05Z",
+      "side": 1,
+      "message": "I much rather not confuse unrelated events.\nI don\u0027t see how scrolling to an anchor relates to focus recovery.\nSeems better to be unambiguous about what the event is.",
+      "parentUuid": "fa2f6b3b_50fb66a2",
+      "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
