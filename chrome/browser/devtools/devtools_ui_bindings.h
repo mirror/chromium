@@ -20,6 +20,7 @@
 #include "components/prefs/pref_change_registrar.h"
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/devtools_frontend_host.h"
+#include "extensions/features/features.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -215,8 +216,10 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
   void ShowDevToolsConfirmInfoBar(const base::string16& message,
                                   const InfoBarCallback& callback);
 
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   // Extensions support.
   void AddDevToolsExtensionsToClient();
+#endif
 
   class FrontendWebContentsObserver;
   std::unique_ptr<FrontendWebContentsObserver> frontend_contents_observer_;

@@ -16,7 +16,6 @@
 #include "chrome/browser/devtools/devtools_protocol.h"
 #include "chrome/browser/devtools/devtools_protocol_constants.h"
 #include "chrome/browser/devtools/devtools_window.h"
-#include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser_navigator.h"
@@ -27,10 +26,15 @@
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/features/features.h"
+#include "ui/base/resource/resource_bundle.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "chrome/browser/extensions/extension_tab_util.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/process_manager.h"
-#include "ui/base/resource/resource_bundle.h"
+#endif
 
 using content::DevToolsAgentHost;
 
@@ -44,6 +48,7 @@ const char kLocationsParam[] = "locations";
 const char kHostParam[] = "host";
 const char kPortParam[] = "port";
 
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 bool GetExtensionInfo(content::WebContents* wc,
                       std::string* name,
                       std::string* type) {
@@ -70,6 +75,7 @@ bool GetExtensionInfo(content::WebContents* wc,
   }
   return false;
 }
+#endif
 
 std::string ToString(std::unique_ptr<base::DictionaryValue> value) {
   std::string json;
@@ -140,8 +146,10 @@ std::string ChromeDevToolsManagerDelegate::GetTargetType(
 
   std::string extension_name;
   std::string extension_type;
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   if (!GetExtensionInfo(web_contents, &extension_name, &extension_type))
     return DevToolsAgentHost::kTypeOther;
+#endif
   return extension_type;
 }
 
@@ -149,8 +157,10 @@ std::string ChromeDevToolsManagerDelegate::GetTargetTitle(
     content::WebContents* web_contents) {
   std::string extension_name;
   std::string extension_type;
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   if (!GetExtensionInfo(web_contents, &extension_name, &extension_type))
     return std::string();
+#endif
   return extension_name;
 }
 
