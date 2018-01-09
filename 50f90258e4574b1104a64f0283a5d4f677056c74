@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a846c8e_24219733",
+        "filename": "ash/app_list/model/search/search_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-09T00:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b27f056_bb65fc33",
+      "range": {
+        "startLine": 86,
+        "startChar": 32,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fce674e4_99c8b25b",
         "filename": "chrome/browser/ui/app_list/search/mixer.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82e3b63_8e6e9df1",
+        "filename": "chrome/browser/ui/app_list/search/mixer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-09T00:24:04Z",
+      "side": 1,
+      "message": "Done. Thanks for finding out. I think we can put the score into the duplicated results to fix this.",
+      "parentUuid": "fce674e4_99c8b25b",
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "af424eac_0599ca36",
+        "filename": "chrome/browser/ui/app_list/search/mixer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-09T00:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55798649_972536e7",
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d30e43_e428886a",
         "filename": "chrome/browser/ui/app_list/search/mixer_unittest.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f48950_d38cd766",
+        "filename": "chrome/browser/ui/app_list/search/mixer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-09T00:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d30e43_e428886a",
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "70eb9b48_52477e14",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-09T00:24:04Z",
+      "side": 1,
+      "message": "Done. Thanks for this.",
+      "parentUuid": "a351357e_a1d765bb",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 51
+      },
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebd021c6_b2b9a909",
         "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
         "patchSetId": 2
@@ -119,6 +221,30 @@
       "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef09e04f_fb29ace1",
+        "filename": "chrome/browser/ui/app_list/test/fake_app_list_model_updater.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-09T00:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebd021c6_b2b9a909",
+      "range": {
+        "startLine": 52,
+        "startChar": 62,
+        "endLine": 52,
+        "endChar": 75
+      },
+      "revId": "50f90258e4574b1104a64f0283a5d4f677056c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
