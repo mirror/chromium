@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbe30491_d0d03790",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T00:39:04Z",
+      "side": 1,
+      "message": "deleted",
+      "parentUuid": "daf96044_19b21911",
+      "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d417fb32_e90a4d6d",
         "filename": "ash/message_center/message_center_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b36370a_815fef3f",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T00:39:04Z",
+      "side": 1,
+      "message": "deleted",
+      "parentUuid": "d417fb32_e90a4d6d",
+      "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7f081953_7426e7a4",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T00:39:04Z",
+      "side": 1,
+      "message": "deleted",
+      "parentUuid": "c6be6800_b8a0817b",
+      "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "050fab1b_7f3d3a36",
         "filename": "ash/message_center/message_center_controller.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-03T17:55:04Z",
       "side": 1,
       "message": "MessageCenterController is initialized in ash::Shell::Init().  Do we know at that point that we\u0027re in an ARC Kiosk session? I think SessionControllerClient -\u003e SessionController communication is async. If you\u0027re not sure, xiyuan might know. If you\u0027re sure it works, I think a comment would be good.",
+      "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067e4ff5_a02f429e",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-09T00:39:04Z",
+      "side": 1,
+      "message": "thanks. This made me think we should observe session controller changes, which made me realize it\u0027s simpler to add this to LoginStateNotificationBlocker (which somewhat ironically currently only cares about SessionState and not LoginStatus).",
+      "parentUuid": "050fab1b_7f3d3a36",
       "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
