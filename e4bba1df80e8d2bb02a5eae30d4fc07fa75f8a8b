@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e93c203a_adeac707",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:05:18Z",
+      "side": 1,
+      "message": "Not for this CL: I wish we didn\u0027t need this \"notification visibility\" think. I think it\u0027s just there to support braille displays, and it feels like a bit of a hack.",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96c2730_39f18a47",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:05:18Z",
+      "side": 1,
+      "message": "nit: please document why you are setting this then resetting it.",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fcc894_6833bfa7",
+        "filename": "ash/accessibility/accessibility_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:05:18Z",
+      "side": 1,
+      "message": "Not required for this CL, but please remove this soon. It might work to behave like TrayAccessibilityTest. https://cs.chromium.org/chromium/src/chrome/browser/chromeos/system/tray_accessibility_browsertest.cc?type\u003dcs\u0026q\u003dtrayaccessibilitytest\u0026sq\u003dpackage:chromium\u0026l\u003d422",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "729f0292_daabaf7d",
+        "filename": "ash/ash_touch_exploration_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:05:18Z",
+      "side": 1,
+      "message": "Not for this CL: This seems like a good thing to fix soon, since it\u0027s spoken feedback related.",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578ccd3c_ad0ad029",
+        "filename": "ash/ash_touch_exploration_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:05:18Z",
+      "side": 1,
+      "message": "ditto (I\u0027m concerned about possible race conditions between in-process delegate calls and over-mojo async pref changes)",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48ffd45_7584529e",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:05:18Z",
+      "side": 1,
+      "message": "Can this call AccessibilityManager::EnableSpokenFeedback(), to avoid calling into //ash from //chrome?",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815f5819_170ad831",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-09T00:05:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e4bba1df80e8d2bb02a5eae30d4fc07fa75f8a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
