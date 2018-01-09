@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -76,22 +77,37 @@ LockManager::LockManager() : weak_ptr_factory_(this) {}
 
 LockManager::~LockManager() = default;
 
-LockManager::OriginState::OriginState() = default;
-LockManager::OriginState::~OriginState() = default;
+class LockManager::OriginState {
+ public:
+  OriginState() = default;
+  ~OriginState() = default;
 
-bool LockManager::OriginState::IsGrantable(const std::string& name,
-                                           LockMode mode) const {
-  if (mode == LockMode::EXCLUSIVE) {
-    return !shared.count(name) && !exclusive.count(name);
-  } else {
-    return !exclusive.count(name);
+  bool IsGrantable(const std::string& name, LockMode mode) const {
+    if (mode == LockMode::EXCLUSIVE) {
+      return !shared_.count(name) && !exclusive_.count(name);
+    } else {
+      return !exclusive_.count(name);
+    }
   }
-}
 
-void LockManager::OriginState::MergeLockState(const std::string& name,
-                                              LockMode mode) {
-  (mode == LockMode::SHARED ? shared : exclusive).insert(name);
-}
+  void ClearLockState() {
+    shared_.clear();
+    exclusive_.clear();
+  }
+
+  void MergeLockState(const std::string& name, LockMode mode) {
+    (mode == LockMode::SHARED ? shared_ : exclusive_).insert(name);
+  }
+
+  std::map<int64_t, std::unique_ptr<Lock>> requested_;
+  std::map<int64_t, std::unique_ptr<Lock>> held_;
+
+ private:
+  // These sets represent what is held or requested, so that "IsGrantable"
+  // tests are simple.
+  std::unordered_set<std::string> shared_;
+  std::unordered_set<std::string> exclusive_;
+};
 
 void LockManager::CreateService(blink::mojom::LockManagerRequest request,
                                 const url::Origin& origin) {
@@ -116,7 +132,7 @@ void LockManager::RequestLock(const std::string& name,
   request.set_connection_error_handler(base::BindOnce(
       &LockManager::ReleaseLock, base::Unretained(this), origin, lock_id));
 
-  origins_[origin].requested.emplace(std::make_pair(
+  origins_[origin].requested_.emplace(std::make_pair(
       lock_id,
       std::make_unique<Lock>(name, mode, lock_id, std::move(request))));
 
@@ -130,9 +146,9 @@ void LockManager::ReleaseLock(const url::Origin& origin, int64_t id) {
     return;
   OriginState& state = origins_[origin];
 
-  bool dirty = state.requested.erase(id) || state.held.erase(id);
+  bool dirty = state.requested_.erase(id) || state.held_.erase(id);
 
-  if (state.requested.empty() && state.held.empty())
+  if (state.requested_.empty() && state.held_.empty())
     origins_.erase(origin);
   else if (dirty)
     ProcessRequests(origin);
@@ -147,15 +163,15 @@ void LockManager::QueryState(QueryStateCallback callback) {
   OriginState& state = origins_[origin];
 
   std::vector<blink::mojom::LockInfoPtr> pending;
-  pending.reserve(state.requested.size());
-  for (const auto& id_lock_pair : state.requested) {
+  pending.reserve(state.requested_.size());
+  for (const auto& id_lock_pair : state.requested_) {
     pending.emplace_back(base::in_place, id_lock_pair.second->name,
                          id_lock_pair.second->mode);
   }
 
   std::vector<blink::mojom::LockInfoPtr> held;
-  held.reserve(state.held.size());
-  for (const auto& id_lock_pair : state.held) {
+  held.reserve(state.held_.size());
+  for (const auto& id_lock_pair : state.held_) {
     held.emplace_back(base::in_place, id_lock_pair.second->name,
                       id_lock_pair.second->mode);
   }
@@ -180,17 +196,16 @@ void LockManager::ProcessRequests(const url::Origin& origin) {
 
   OriginState& state = origins_[origin];
 
-  if (state.requested.empty())
+  if (state.requested_.empty())
     return;
 
-  state.shared.clear();
-  state.exclusive.clear();
-  for (const auto& id_lock_pair : state.held) {
+  state.ClearLockState();
+  for (const auto& id_lock_pair : state.held_) {
     const auto& lock = id_lock_pair.second;
     state.MergeLockState(lock->name, lock->mode);
   }
 
-  for (auto it = state.requested.begin(); it != state.requested.end();) {
+  for (auto it = state.requested_.begin(); it != state.requested_.end();) {
     auto& lock = it->second;
 
     bool granted = state.IsGrantable(lock->name, lock->mode);
@@ -199,17 +214,17 @@ void LockManager::ProcessRequests(const url::Origin& origin) {
 
     if (granted) {
       std::unique_ptr<Lock> grantee = std::move(lock);
-      it = state.requested.erase(it);
+      it = state.requested_.erase(it);
       grantee->request->Granted(LockHandleImpl::Create(
           weak_ptr_factory_.GetWeakPtr(), origin, grantee->id));
       grantee->request = nullptr;
-      state.held.insert(std::make_pair(grantee->id, std::move(grantee)));
+      state.held_.insert(std::make_pair(grantee->id, std::move(grantee)));
     } else {
       ++it;
     }
   }
 
-  DCHECK(!(state.requested.empty() && state.held.empty()));
+  DCHECK(!(state.requested_.empty() && state.held_.empty()));
 }
 
 }  // namespace content
