@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "b137e1dd_e455ba9b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-09T08:18:27Z",
+      "side": 1,
+      "message": "Is this a kind of visible canonicalization? Is it better to share code\nwith culled inline box to support empty SPAN, e.g. \n\u003cdiv style\u003d\"font-size: 10px\"\u003eabc \u003cspan style\u003d\"font-size: 20px\u003e|\u003cspan\u003e xyz\u003c/div\u003e",
+      "parentUuid": "188510f0_10de2797",
+      "revId": "60941e870794e65c1214be2b371dd739a1b30eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78b0a046_a946208e",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
         "patchSetId": 26
