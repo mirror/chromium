@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "415fe535_5fc00169",
+        "filename": "mojo/public/cpp/base/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T18:19:06Z",
+      "side": 1,
+      "message": "nit: \"L\"ibrary?",
+      "range": {
+        "startLine": 1,
+        "startChar": 19,
+        "endLine": 1,
+        "endChar": 26
+      },
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41059661_ace35444",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T18:19:06Z",
+      "side": 1,
+      "message": "Does it make sense to expose this value to the tests?\nThat way we don\u0027t need to rely on a static assert to keep the two sides in sync.",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4207469d_1f773ea6",
+        "filename": "mojo/public/cpp/base/big_buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T18:19:06Z",
+      "side": 1,
+      "message": "nit: Please consider removing the default case (here and line 111).",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc15c340_90866a11",
+        "filename": "mojo/public/cpp/base/mojo_base_traits_export.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T18:19:06Z",
+      "side": 1,
+      "message": "It seems usually we use FOO_IMPLEMENTATION and FOO_EXPORT which have the same \"FOO\". Are there any reasons not to do that?",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9d55b5_c18eb9a9",
+        "filename": "mojo/public/cpp/bindings/lib/serialization.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T18:19:06Z",
+      "side": 1,
+      "message": "Should we give it a new name? I don\u0027t have a very good idea though. I am thinking \"aggregate\" but array is also considered \"aggregate\".",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8161df3_42eba297",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-09T18:19:06Z",
+      "side": 1,
+      "message": "Although this overload makes some template code more concise, people might easily forget about the fact that for unions they need to consider two different cases. WDYT? Thanks!",
+      "revId": "60aed5efb2356ce8464b8daefbe6e8ad92227687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
