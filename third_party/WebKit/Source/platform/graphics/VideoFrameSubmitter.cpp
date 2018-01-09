@@ -163,6 +163,9 @@ void VideoFrameSubmitter::OnBeginFrame(const viz::BeginFrameArgs& args) {
   provider_->PutCurrentFrame();
 }
 
+void VideoFrameSubmitter::AddRenderFrameMetadataObserver(
+    viz::mojom::blink::RenderFrameMetadataObserverPtr observer) {}
+
 void VideoFrameSubmitter::DidReceiveCompositorFrameAck(
     const WTF::Vector<viz::ReturnedResource>& resources) {
   DCHECK_CALLED_ON_VALID_THREAD(media_thread_checker_);

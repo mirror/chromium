@@ -91,6 +91,8 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   void DidNotProduceFrame(const BeginFrameAck& ack) override;
 
   // mojom::CompositorFrameSinkClient implementation.
+  void AddRenderFrameMetadataObserver(
+      mojom::RenderFrameMetadataObserverPtr observer) override;
   void DidReceiveCompositorFrameAck(
       const std::vector<ReturnedResource>& resources) override;
   void DidPresentCompositorFrame(uint32_t presentation_token,

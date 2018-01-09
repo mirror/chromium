@@ -26,6 +26,8 @@ class FakeRendererCompositorFrameSink
   }
 
   // viz::mojom::CompositorFrameSinkClient implementation.
+  void AddRenderFrameMetadataObserver(
+      viz::mojom::RenderFrameMetadataObserverPtr observer) override;
   void DidReceiveCompositorFrameAck(
       const std::vector<viz::ReturnedResource>& resources) override;
   void DidPresentCompositorFrame(uint32_t presentation_token,

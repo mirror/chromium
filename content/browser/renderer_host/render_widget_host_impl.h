@@ -111,6 +111,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       public TouchEmulatorClient,
       public SyntheticGestureController::Delegate,
       public viz::mojom::CompositorFrameSink,
+      public viz::mojom::RenderFrameMetadataObserver,
       public viz::SharedBitmapAllocationObserver,
       public IPC::Listener {
  public:
@@ -602,6 +603,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       uint64_t submit_time) override;
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
 
+  // viz::mojom::RenderFrameMetadataObserver:
+  void OnCompositorFrameSubmission(viz::RenderFrameMetadata metadata) override;
+
   // Signals that a frame with token |frame_token| was finished processing. If
   // there are any queued messages belonging to it, they will be processed.
   void DidProcessFrame(uint32_t frame_token);
@@ -1049,6 +1053,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   mojom::WidgetInputHandlerPtr widget_input_handler_;
   std::unique_ptr<mojom::WidgetInputHandler> legacy_widget_input_handler_;
   viz::mojom::InputTargetClientPtr input_target_client_;
+
+  mojo::Binding<viz::mojom::RenderFrameMetadataObserver>
+      render_frame_metadata_observer_binding_;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 

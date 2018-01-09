@@ -55,6 +55,8 @@ class PLATFORM_EXPORT VideoFrameSubmitter
   void StartSubmitting(const viz::FrameSinkId&) override;
 
   // cc::mojom::CompositorFrameSinkClient implementation.
+  void AddRenderFrameMetadataObserver(
+      viz::mojom::blink::RenderFrameMetadataObserverPtr) override;
   void DidReceiveCompositorFrameAck(
       const WTF::Vector<viz::ReturnedResource>& resources) override;
   void DidPresentCompositorFrame(uint32_t presentation_token,

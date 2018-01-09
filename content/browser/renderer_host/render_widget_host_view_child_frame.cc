@@ -510,6 +510,9 @@ void RenderWidgetHostViewChildFrame::GestureEventAck(
   }
 }
 
+void RenderWidgetHostViewChildFrame::AddRenderFrameMetadataObserver(
+    viz::mojom::RenderFrameMetadataObserverPtr observer) {}
+
 void RenderWidgetHostViewChildFrame::DidReceiveCompositorFrameAck(
     const std::vector<viz::ReturnedResource>& resources) {
   if (renderer_compositor_frame_sink_)
