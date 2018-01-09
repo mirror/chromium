@@ -77,7 +77,6 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
-#include "chrome/browser/chromeos/net/network_connect_delegate_chromeos.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_impl.h"
 #include "chrome/browser/chromeos/net/network_pref_state_observer.h"
 #include "chrome/browser/chromeos/net/network_throttling_observer.h"
@@ -100,7 +99,6 @@
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service_factory.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/shutdown_policy_forwarder.h"
-#include "chrome/browser/chromeos/status/data_promo_notification.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/chromeos/ui/low_disk_notification.h"
 #include "chrome/browser/chromeos/upgrade_detector_chromeos.h"
@@ -454,10 +452,6 @@ class DBusServices {
     // the network manager.
     NetworkChangeNotifierFactoryChromeos::GetInstance()->Initialize();
 
-    // Initialize the NetworkConnect handler.
-    network_connect_delegate_.reset(new NetworkConnectDelegateChromeOS);
-    NetworkConnect::Initialize(network_connect_delegate_.get());
-
     // Likewise, initialize the upgrade detector for Chrome OS. The upgrade
     // detector starts to monitor changes from the update engine.
     UpgradeDetectorChromeos::GetInstance()->Init();
@@ -472,8 +466,6 @@ class DBusServices {
   }
 
   ~DBusServices() {
-    NetworkConnect::Shutdown();
-    network_connect_delegate_.reset();
     CertLibrary::Shutdown();
     NetworkHandler::Shutdown();
     cryptohome::AsyncMethodCaller::Shutdown();
@@ -517,8 +509,6 @@ class DBusServices {
   std::unique_ptr<CrosDBusService> liveness_service_;
   std::unique_ptr<CrosDBusService> virtual_file_request_service_;
   std::unique_ptr<CrosDBusService> component_updater_service_;
-
-  std::unique_ptr<NetworkConnectDelegateChromeOS> network_connect_delegate_;
 
   ChromeConsoleServiceProviderDelegate console_service_provider_delegate_;
 
@@ -1101,11 +1091,6 @@ void ChromeBrowserMainPartsChromeos::PreBrowserStart() {
 
 void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
   if (!ash_util::IsRunningInMash()) {
-    // These are dependent on the ash::Shell singleton already having been
-    // initialized. Consequently, these cannot be used when running as a mus
-    // client.
-    data_promo_notification_.reset(new DataPromoNotification());
-
     // TODO(mash): Support EventRewriterController; see crbug.com/647781
     keyboard_event_rewriters_.reset(new EventRewriterController());
     keyboard_event_rewriters_->AddEventRewriter(
@@ -1177,10 +1162,6 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // the network manager.
   if (NetworkChangeNotifierFactoryChromeos::GetInstance())
     NetworkChangeNotifierFactoryChromeos::GetInstance()->Shutdown();
-
-  // Destroy UI related classes before destroying services that they may
-  // depend on.
-  data_promo_notification_.reset();
 
   // Tell DeviceSettingsService to stop talking to session_manager. Do not
   // shutdown DeviceSettingsService yet, it might still be accessed by

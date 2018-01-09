@@ -15,6 +15,11 @@ namespace aura {
 class UserActivityForwarder;
 }
 
+namespace chromeos {
+class DataPromoNotification;
+class NetworkConnectDelegateChromeOS;
+}  // namespace chromeos
+
 namespace ui {
 class UserActivityDetector;
 }
@@ -50,6 +55,7 @@ class ChromeBrowserMainExtraPartsAsh : public ChromeBrowserMainExtraParts {
       content::ServiceManagerConnection* connection) override;
   void PreProfileInit() override;
   void PostProfileInit() override;
+  void PostBrowserStart() override;
   void PostMainMessageLoopRun() override;
 
  private:
@@ -68,6 +74,9 @@ class ChromeBrowserMainExtraPartsAsh : public ChromeBrowserMainExtraParts {
   std::unique_ptr<VpnListForwarder> vpn_list_forwarder_;
   std::unique_ptr<AshShellInit> ash_shell_init_;
   std::unique_ptr<LoginScreenClient> login_screen_client_;
+  std::unique_ptr<chromeos::NetworkConnectDelegateChromeOS>
+      network_connect_delegate_;
+  std::unique_ptr<chromeos::DataPromoNotification> data_promo_notification_;
 
   // Used only for mash.
   std::unique_ptr<ui::UserActivityDetector> user_activity_detector_;
