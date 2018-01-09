@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c2b96f9_e145fbbf",
+        "filename": "third_party/WebKit/common/message_port/cloneable_message.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-09T23:40:04Z",
+      "side": 1,
+      "message": "You probably want default values for these? Otherwise you\u0027re potentially reading uninitialized memory when serializing.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "2d0fdb6df7ac09784ccc3c9440144e468bdee278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
