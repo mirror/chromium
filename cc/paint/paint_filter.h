@@ -222,6 +222,10 @@ class CC_PAINT_EXPORT MagnifierPaintFilter final : public PaintFilter {
                        const CropRect* crop_rect = nullptr);
   ~MagnifierPaintFilter() override;
 
+  const SkRect src_rect() const { return src_rect_; }
+  SkScalar inset() const { return inset_; }
+  const sk_sp<PaintFilter> input() const { return input_; }
+
  private:
   SkRect src_rect_;
   SkScalar inset_;
@@ -251,6 +255,11 @@ class CC_PAINT_EXPORT AlphaThresholdPaintFilter final : public PaintFilter {
                             sk_sp<PaintFilter> input,
                             const CropRect* crop_rect = nullptr);
   ~AlphaThresholdPaintFilter() override;
+
+  const SkRegion& region() const { return region_; }
+  SkScalar inner_min() const { return inner_min_; }
+  SkScalar outer_max() const { return outer_max_; }
+  const sk_sp<PaintFilter> input() const { return input_; }
 
  private:
   SkRegion region_;
@@ -342,6 +351,15 @@ class CC_PAINT_EXPORT MatrixConvolutionPaintFilter final : public PaintFilter {
                                const CropRect* crop_rect = nullptr);
   ~MatrixConvolutionPaintFilter() override;
 
+  const SkISize kernel_size() const { return kernel_size_; }
+  SkScalar kernel_at(size_t i) const { return kernel_[i]; }
+  SkScalar gain() const { return gain_; }
+  SkScalar bias() const { return bias_; }
+  SkIPoint kernel_offset() const { return kernel_offset_; }
+  TileMode tile_mode() const { return tile_mode_; }
+  bool convolve_alpha() const { return convolve_alpha_; }
+  const sk_sp<PaintFilter>& input() const { return input_; }
+
  private:
   SkISize kernel_size_;
   base::StackVector<SkScalar, 3> kernel_;
@@ -366,6 +384,12 @@ class CC_PAINT_EXPORT DisplacementMapEffectPaintFilter final
                                    const CropRect* crop_rect = nullptr);
   ~DisplacementMapEffectPaintFilter() override;
 
+  ChannelSelectorType channel_x() const { return channel_x_; }
+  ChannelSelectorType channel_y() const { return channel_y_; }
+  SkScalar scale() const { return scale_; }
+  const sk_sp<PaintFilter>& displacement() const { return displacement_; }
+  const sk_sp<PaintFilter>& color() const { return color_; }
+
  private:
   ChannelSelectorType channel_x_;
   ChannelSelectorType channel_y_;
@@ -382,6 +406,11 @@ class CC_PAINT_EXPORT ImagePaintFilter final : public PaintFilter {
                    const SkRect& dst_rect,
                    SkFilterQuality filter_quality);
   ~ImagePaintFilter() override;
+
+  const PaintImage& image() const { return image_; }
+  const SkRect& src_rect() const { return src_rect_; }
+  const SkRect& dst_rect() const { return dst_rect_; }
+  SkFilterQuality filter_quality() const { return filter_quality_; }
 
  private:
   PaintImage image_;
@@ -472,6 +501,10 @@ class CC_PAINT_EXPORT TilePaintFilter final : public PaintFilter {
                   sk_sp<PaintFilter> input);
   ~TilePaintFilter() override;
 
+  const SkRect& src() const { return src_; }
+  const SkRect& dst() const { return dst_; }
+  const sk_sp<PaintFilter>& input() const { return input_; }
+
  private:
   SkRect src_;
   SkRect dst_;
@@ -517,6 +550,8 @@ class CC_PAINT_EXPORT PaintFlagsPaintFilter final : public PaintFilter {
   explicit PaintFlagsPaintFilter(PaintFlags flags,
                                  const CropRect* crop_rect = nullptr);
   ~PaintFlagsPaintFilter() override;
+
+  const PaintFlags& flags() const { return flags_; }
 
  private:
   PaintFlags flags_;
