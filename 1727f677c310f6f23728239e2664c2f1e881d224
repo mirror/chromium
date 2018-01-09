@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca012f6d_b71dac1c",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-09T20:39:53Z",
+      "side": 1,
+      "message": "Are there any references we can link to?  I\u0027m guessing there isn\u0027t an official spec, but it would be nice to know what we are coding to.",
+      "range": {
+        "startLine": 343,
+        "startChar": 54,
+        "endLine": 345,
+        "endChar": 63
+      },
+      "revId": "1727f677c310f6f23728239e2664c2f1e881d224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723b24da_638c8e89",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-09T20:39:53Z",
+      "side": 1,
+      "message": "super nit, but it feels odd seeing \u0027secondary\u0027 before \u0027primary\u0027.  That wasn\u0027t so much the case when it was \u0027sink\u0027 vs \u0027primary\u0027.",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 38
+      },
+      "revId": "1727f677c310f6f23728239e2664c2f1e881d224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
