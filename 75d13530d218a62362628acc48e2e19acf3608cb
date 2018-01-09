@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "ca611e2d_fbc1501f",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-09T21:47:44Z",
+      "side": 1,
+      "message": "Thanks. The problem with repeating comments is the same as code duplication. For instance, whenever the original ones are updated there\u0027s no indication that one should update N other locations, what leads to inconsistent information.\nnit: What I\u0027ve seen in other places [1] [2] is a single comment indicating what interface is implemented by the following set of methods. That should help directing a reader to where the comments are.\n\n[1] https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h?l\u003d30-53\n[2] https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_impl.h?q\u003dfile:content.*render_frame_host\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d174-262",
+      "parentUuid": "c12275b3_cb915c24",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86823585_dea035d1",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
         "patchSetId": 3
@@ -422,6 +446,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d7939c4_aae5e697",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-09T21:47:44Z",
+      "side": 1,
+      "message": "Can we now check that the return is 0 (error) and skip the DB update? Optionally add a test to check that that is done.\n\nI asked about the UI thread because all calls from it must be non-blocking. Sorry for not making that clearer.",
+      "parentUuid": "187f3acb_a3a6295d",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 60
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -658,6 +706,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45d2a353_a0293626",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-09T21:47:44Z",
+      "side": 1,
+      "message": "nit: could you move the TODO to the declaration of SystemDownloadManager? It\u0027s from there that this list of parameters derives from.",
+      "parentUuid": "fb4d18cd_caac5690",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 57
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
