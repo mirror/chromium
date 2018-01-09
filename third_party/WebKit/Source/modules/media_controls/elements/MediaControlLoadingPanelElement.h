@@ -29,6 +29,11 @@ class MODULES_EXPORT MediaControlLoadingPanelElement final
   // Update the state based on the Media Controls state.
   void UpdateDisplayState();
 
+  // Hide the loading panel until MaybeShow is called.
+  void Hide();
+  // Unhide the loading panel.
+  void MaybeShow();
+
   void Trace(Visitor*);
 
  private:
@@ -51,6 +56,9 @@ class MODULES_EXPORT MediaControlLoadingPanelElement final
   void OnAnimationIteration() override;
   Element& WatchedAnimationElement() const override;
 
+  // Hide the animation and clean up the shadow DOM.
+  void HideAnimation();
+
   // This sets the "animation-iteration-count" CSS property on the mask
   // background elements.
   void SetAnimationIterationCount(const String&);
@@ -68,6 +76,8 @@ class MODULES_EXPORT MediaControlLoadingPanelElement final
   // played.
   int animation_count_ = 0;
   State state_ = State::kHidden;
+
+  bool hidden_ = false;
 
   Member<MediaControlAnimationEventListener> event_listener_;
   Member<HTMLDivElement> mask1_background_;

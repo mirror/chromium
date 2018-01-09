@@ -98,6 +98,10 @@ class MediaControlLoadingPanelElementTest : public PageTestBase {
 
   void SimulateAnimationEnd() { TriggerEvent(EventTypeNames::animationend); }
 
+  void SimulateHidden() { loading_element_->Hide(); }
+
+  void SimulateShown() { loading_element_->MaybeShow(); }
+
   void RunPlayingTestCycle() {
     ExpectStateIsHidden();
 
@@ -220,6 +224,21 @@ TEST_F(MediaControlLoadingPanelElementTest, Reset_DuringCycle) {
 TEST_F(MediaControlLoadingPanelElementTest, SkipLoadingMetadata) {
   ExpectStateIsHidden();
   SimulatePlaying();
+  ExpectStateIsHidden();
+}
+
+TEST_F(MediaControlLoadingPanelElementTest, AnimationHiddenWhenControlsHidden) {
+  // Animation doesn't start when already hidden.
+  SimulateHidden();
+  SimulateLoadingMetadata();
+  ExpectStateIsHidden();
+
+  // Animation appears once shown.
+  SimulateShown();
+  ExpectStateIsPlaying();
+
+  // Animation is hidden when controls are hidden again.
+  SimulateHidden();
   ExpectStateIsHidden();
 }
 
