@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20cf5e1e_19e2fb20",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T08:15:11Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "884546df40a9e1bbf1daf7ca455259394d74bda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9674087f_7f93220c",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T08:15:11Z",
+      "side": 1,
+      "message": "This sounds like a TODO. You do TODO(falken) if you\u0027d like.",
+      "revId": "884546df40a9e1bbf1daf7ca455259394d74bda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851e69f9_eaa836a6",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-09T08:15:11Z",
+      "side": 1,
+      "message": "It sounds like this TODO should be on top of line 173 instead. And instead of \"old ToWebServiceWorkerClientInfo\" it should say \"remove this function and use the ToWebServiceWorkerClientInfo(ServiceWorkerClientInfoPtr) function instead.\"",
+      "revId": "884546df40a9e1bbf1daf7ca455259394d74bda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
