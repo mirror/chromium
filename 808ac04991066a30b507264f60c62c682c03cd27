@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a684c6e4_81712382",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "nit: remove this empty line",
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2685b6_f0af73cd",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "nit: remove this empty line",
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8eb4e91_6d6970c6",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "nit: remove this empty line",
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a66e39_66f87f12",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "I would prefer a base::flat_map since this is expected to have few elements.",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 10
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257d4d67_71a90d1c",
+        "filename": "content/renderer/media/media_devices_event_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "It would be good to add a TODO(): Remove this class\nto  MediaDevicesEventDispatcher.",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 37
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb82f6a_743f5cc9",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "Make this class independent of the test class.",
+      "range": {
+        "startLine": 31,
+        "startChar": 33,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93119ce9_cebf16e6",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "Implement this method inline.",
+      "range": {
+        "startLine": 102,
+        "startChar": 36,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15674311_c36e53c0",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "Move |listener_| to the MockMediaDevicesDispatcherHost class for clarity.\nYou can set the error handler right after calling StartObserving().\nYou can add a listener() method to MockMediaDevicesDispatcherHost in order to be able to access it from the test and redefine MediaDevicesTest::listener() as { return dispatcher_host_-\u003elistener(); }",
+      "range": {
+        "startLine": 246,
+        "startChar": 40,
+        "endLine": 246,
+        "endChar": 49
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4def20_0474eb4d",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "It would be a good idea to specify the device types to listen as three bool parameters, similar to EnumerateDevices in this same file.\n\nThe reason is that pepper is interested only in input devices while blink::MediaDevices subscribes to all three types.\n\nThis should not add much complexity to MDM.\nIn the map, you should store a struct containing the MediaDevicesListenerPtr together with a BoolDeviceTypes (defined in MDM).\n\nIn MDM::NotifyDeviceChangeSubscribers() while iterating the subscriptions you send the notification only if the BoolDeviceType entry for |type| is true for the subscription.",
+      "range": {
+        "startLine": 104,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d479c4_5ed8c3e9",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-09T14:55:22Z",
+      "side": 1,
+      "message": "The |subscription_id| is superfluous with the new approach, since it\u0027s an internal ID that is useful only on the browser side.\nAdd a TODO() to remove it when the migration is complete.",
+      "range": {
+        "startLine": 115,
+        "startChar": 26,
+        "endLine": 115,
+        "endChar": 41
+      },
+      "revId": "808ac04991066a30b507264f60c62c682c03cd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
