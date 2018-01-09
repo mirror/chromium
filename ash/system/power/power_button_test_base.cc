@@ -12,6 +12,7 @@
 #include "ash/shell_test_api.h"
 #include "ash/system/power/convertible_power_button_controller_test_api.h"
 #include "ash/system/power/power_button_controller.h"
+#include "ash/system/power/tablet_power_button_controller_test_api.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/lock_state_controller_test_api.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
@@ -45,10 +46,12 @@ void PowerButtonTestBase::SetUp() {
   session_manager_client_ = new chromeos::FakeSessionManagerClient;
   dbus_setter->SetSessionManagerClient(
       base::WrapUnique(session_manager_client_));
-  if (has_tablet_mode_switch_) {
+  if (has_convertible_switch_) {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kAshEnableTabletMode);
   }
+  if (has_tablet_switch_)
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(switches::kIsTablet);
   AshTestBase::SetUp();
 
   lock_state_controller_ = Shell::Get()->lock_state_controller();
@@ -90,6 +93,14 @@ void PowerButtonTestBase::InitPowerButtonControllerMembers(
     convertible_test_api_ = nullptr;
     convertible_controller_ = nullptr;
     screenshot_controller_ = nullptr;
+  }
+  tablet_controller_ =
+      power_button_controller_->tablet_power_button_controller_for_test();
+  if (tablet_controller_) {
+    tablet_test_api_ = std::make_unique<TabletPowerButtonControllerTestApi>(
+        tablet_controller_);
+  } else {
+    tablet_test_api_ = nullptr;
   }
 }
 
