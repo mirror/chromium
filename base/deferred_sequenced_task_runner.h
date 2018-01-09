@@ -40,7 +40,7 @@ class BASE_EXPORT DeferredSequencedTaskRunner : public SequencedTaskRunner {
   // deferred tasks are posted with their initial delay, meaning that the task
   // execution delay is actually measured from Start.
   // Fails when called a second time.
-  void Start();
+  void Start(scoped_refptr<SequencedTaskRunner> target_task_runner = nullptr);
 
  private:
   struct DeferredTask  {
@@ -68,7 +68,7 @@ class BASE_EXPORT DeferredSequencedTaskRunner : public SequencedTaskRunner {
   mutable Lock lock_;
 
   bool started_;
-  const scoped_refptr<SequencedTaskRunner> target_task_runner_;
+  scoped_refptr<SequencedTaskRunner> target_task_runner_;
   std::vector<DeferredTask> deferred_tasks_queue_;
 
   DISALLOW_COPY_AND_ASSIGN(DeferredSequencedTaskRunner);

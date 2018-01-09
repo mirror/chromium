@@ -46,7 +46,8 @@ bool DeferredSequencedTaskRunner::PostDelayedTask(const Location& from_here,
 }
 
 bool DeferredSequencedTaskRunner::RunsTasksInCurrentSequence() const {
-  return target_task_runner_->RunsTasksInCurrentSequence();
+  // XXX
+  return target_task_runner_ ? target_task_runner_->RunsTasksInCurrentSequence() : true;
 }
 
 bool DeferredSequencedTaskRunner::PostNonNestableDelayedTask(
@@ -80,10 +81,12 @@ void DeferredSequencedTaskRunner::QueueDeferredTask(const Location& from_here,
   deferred_tasks_queue_.push_back(std::move(deferred_task));
 }
 
-void DeferredSequencedTaskRunner::Start() {
+void DeferredSequencedTaskRunner::Start(scoped_refptr<SequencedTaskRunner> target_task_runner) {
   AutoLock lock(lock_);
   DCHECK(!started_);
   started_ = true;
+  if (!target_task_runner_)
+    target_task_runner_ = std::move(target_task_runner);
   for (std::vector<DeferredTask>::iterator i = deferred_tasks_queue_.begin();
       i != deferred_tasks_queue_.end();
       ++i) {
