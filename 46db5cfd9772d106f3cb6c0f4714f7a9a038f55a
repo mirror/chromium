@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "01565342_82861c95",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-09T04:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad5c409_d98f112a",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "530daf65_c397bbec",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 10
@@ -248,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "b5e9f9ee_9432e426",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-09T04:04:51Z",
+      "side": 1,
+      "message": "Ok, let me document this.",
+      "parentUuid": "059b0fb3_700a8615",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07fbb0ee_951465ff",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 10
@@ -295,6 +331,24 @@
       "side": 1,
       "message": "You don\u0027t need enabled in SetMixedMirrorMode.\n\nSetMirrorMode(true) -\u003e normal mirroring\nSetMirrorMode(false) -\u003e exit mirroring, regardless of mixed or non mixed\nSetMIxedMirrorMode(Param) -\u003e enable mixed mirroring.\n\nThis is better than\n\nSetMirrorMode(true) -\u003e normal mirroing\nSetMirrorMode(true, params) -\u003e mixed\nSetMirrorMode(false, params) -\u003e invalid or exit mixed mirror? What if it was not in mixed?\nSetMirrorMode(false) -\u003e exit normal mirroring, exit mixed mirroring.",
       "parentUuid": "14499b2f_a507e2d2",
+      "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45059af_5538e060",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-09T04:04:51Z",
+      "side": 1,
+      "message": "// Turn on/off the mirror mode. If |enabled| is false, |mixed_params| will be\n// ignored and mirror mode will be turned off. The default mirror mode will be\n// turned on if |mixed_params| is not specified. The mixed mirror mode will be\n// turned on otherwise. In default mirror mode, default source display will be\n// selected and mirrored to all other displays. In mixed mirror mode, the\n// specified source and destination displays in |mixed_params| will be used.\n\nSetMirrorMode(false, params) is the same as SetMirrorMode(false, base::nullopt) because |mixed_params| will be ignored as documented. Moreover, it seems to be confusing to turn on mixed mirror mode through a function and turn off it through another.",
+      "parentUuid": "4db333e1_daa82fb8",
       "revId": "46db5cfd9772d106f3cb6c0f4714f7a9a038f55a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
