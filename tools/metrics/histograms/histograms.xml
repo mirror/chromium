@@ -34050,6 +34050,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The time it takes to resolve a EME promise.</summary>
 </histogram>
 
+<histogram name="Media.EME.Widevine.Supported" enum="BooleanSupported">
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Whether the Widevine key system is supported or not. In normal cases, this
+    is reported once per render process if the EME API is used. In rare cases it
+    could be reported more than once if the CDM is not available and then is
+    component updated.
+  </summary>
+</histogram>
+
 <histogram name="Media.EME.Widevine.VideoCapability.HasEmptyRobustness"
     enum="BooleanEmpty">
   <owner>xhwang@chromium.org</owner>
