@@ -333,8 +333,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       const viz::CompositorFrameMetadata& frame_metadata,
       bool is_transparent);
 
-  void ShowInternal();
-  void HideInternal();
+  // RenderWidgetHostViewBase:
+  void WasShown() override;
+  void WasHidden() override;
+
   void AttachLayers();
   void RemoveLayers();
 
@@ -358,8 +360,15 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void AddBeginFrameRequest(BeginFrameRequestType request);
   void ClearBeginFrameRequest(BeginFrameRequestType request);
   void AcknowledgeBeginFrame(const viz::BeginFrameAck& ack);
+
+  // TODO(fdoray): For consistency with Aura and Mac, window visibility changes
+  // should be observed by WebContentsViewAndroid and forwarded to this view via
+  // SetParentIsHidden(). Going through WebContentsViewAndroid would also ensure
+  // that RenderWidgetHostViewChildFrames are notified of window visibility
+  // changes.
   void StartObservingRootWindow();
   void StopObservingRootWindow();
+
   void SendBeginFramePaused();
   void SendBeginFrame(viz::BeginFrameArgs args);
   bool Animate(base::TimeTicks frame_time);
@@ -393,7 +402,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // issued. Used to control action dispatch at the next |OnBeginFrame()| call.
   uint32_t outstanding_begin_frame_requests_;
 
-  bool is_showing_;
+  // Whether this view is visible when its parent is visible.
+  bool is_visible_in_parent_ = true;
 
   // Window-specific bits that affect widget visibility.
   bool is_window_visible_;

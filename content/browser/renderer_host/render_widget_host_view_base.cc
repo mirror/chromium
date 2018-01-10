@@ -39,8 +39,9 @@
 
 namespace content {
 
-RenderWidgetHostViewBase::RenderWidgetHostViewBase()
-    : is_fullscreen_(false),
+RenderWidgetHostViewBase::RenderWidgetHostViewBase(bool parent_is_hidden)
+    : parent_is_hidden_(parent_is_hidden),
+      is_fullscreen_(false),
       popup_type_(blink::kWebPopupTypeNone),
       mouse_locked_(false),
       current_device_scale_factor_(0),
@@ -145,6 +146,14 @@ gfx::Size RenderWidgetHostViewBase::GetRequestedRendererSize() const {
 ui::TextInputClient* RenderWidgetHostViewBase::GetTextInputClient() {
   NOTREACHED();
   return nullptr;
+}
+
+void RenderWidgetHostViewBase::SetParentIsHidden(bool parent_is_hidden) {
+  parent_is_hidden_ = parent_is_hidden;
+  if (IsShowing())
+    WasShown();
+  else
+    WasHidden();
 }
 
 void RenderWidgetHostViewBase::SetIsInVR(bool is_in_vr) {

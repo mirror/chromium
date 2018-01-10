@@ -111,8 +111,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void Show() override;
   void Hide() override;
   bool IsShowing() override;
-  void WasUnOccluded() override;
-  void WasOccluded() override;
   gfx::Rect GetViewBounds() const override;
   void SetBackgroundColor(SkColor color) override;
   SkColor background_color() const override;
@@ -505,6 +503,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   // Applies background color without notifying the RenderWidget about
   // opaqueness changes.
   void UpdateBackgroundColorFromRenderer(SkColor color);
+
+  // RenderWidgetHostViewBase:
+  void WasShown() override;
+  void WasHidden() override;
 
   // The model object.
   RenderWidgetHostImpl* const host_;
