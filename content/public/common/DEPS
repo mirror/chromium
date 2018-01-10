@@ -4,7 +4,7 @@ specific_include_rules = {
     "+services/network/public/cpp",
     "+third_party/WebKit/common",
   ],
-  "resource_response_info.h": [
+  "resource_response.h" : [
     "+services/network/public/cpp",
   ],
   "simple_url_loader\.cc": [

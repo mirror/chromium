@@ -37,13 +37,13 @@ struct RedirectInfo;
 }
 
 namespace network {
+struct ResourceResponseInfo;
 struct URLLoaderCompletionStatus;
 }
 
 namespace content {
 class RequestPeer;
 class ResourceDispatcherDelegate;
-struct ResourceResponseInfo;
 struct ResourceRequest;
 struct ResourceResponseHead;
 struct SiteIsolationResponseMetaData;
@@ -210,9 +210,10 @@ class CONTENT_EXPORT ResourceDispatcher {
   void OnRequestComplete(int request_id,
                          const network::URLLoaderCompletionStatus& status);
 
-  void ToResourceResponseInfo(const PendingRequestInfo& request_info,
-                              const ResourceResponseHead& browser_info,
-                              ResourceResponseInfo* renderer_info) const;
+  void ToResourceResponseInfo(
+      const PendingRequestInfo& request_info,
+      const ResourceResponseHead& browser_info,
+      network::ResourceResponseInfo* renderer_info) const;
 
   base::TimeTicks ToRendererCompletionTime(
       const PendingRequestInfo& request_info,

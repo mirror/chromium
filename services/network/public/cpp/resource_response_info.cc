@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/public/common/resource_response_info.h"
+#include "services/network/public/cpp/resource_response_info.h"
 
 #include "net/http/http_response_headers.h"
 
-namespace content {
+namespace network {
 
 ResourceResponseInfo::ResourceResponseInfo()
     : is_legacy_symantec_cert(false),
@@ -33,7 +33,6 @@ ResourceResponseInfo::ResourceResponseInfo()
 ResourceResponseInfo::ResourceResponseInfo(const ResourceResponseInfo& other) =
     default;
 
-ResourceResponseInfo::~ResourceResponseInfo() {
-}
+ResourceResponseInfo::~ResourceResponseInfo() {}
 
-}  // namespace content
+}  // namespace network
