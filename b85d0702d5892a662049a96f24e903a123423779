@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a54fdf1_543704bd",
+        "filename": "tools/perf/contrib/leak_detection/page_sets.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-10T08:16:52Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this does anything.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 13
+      },
+      "revId": "b85d0702d5892a662049a96f24e903a123423779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
