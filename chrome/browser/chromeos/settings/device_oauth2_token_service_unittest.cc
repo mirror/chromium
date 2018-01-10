@@ -17,6 +17,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/policy/device_policy_builder.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/chromeos/settings/cros_settings_test_api.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service_delegate.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/token_encryptor.h"
@@ -121,7 +122,7 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
     DeviceSettingsService::Get()->SetSessionManager(&session_manager_client_,
                                                     owner_key_util_);
 
-    CrosSettings::Initialize();
+    CrosSettingsTestApi::InitializeForTest();
   }
 
   void TearDown() override {
