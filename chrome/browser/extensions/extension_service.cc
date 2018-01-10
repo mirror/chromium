@@ -923,6 +923,7 @@ void ExtensionService::UnblockAllExtensions() {
     registry_->RemoveBlocked(extension->id());
     AddExtension(extension.get());
   }
+  external_install_manager_->UpdateExternalExtensionAlert();
 }
 
 void ExtensionService::GrantPermissionsAndEnableExtension(
