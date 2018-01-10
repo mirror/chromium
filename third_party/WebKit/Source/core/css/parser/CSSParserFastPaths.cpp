@@ -613,7 +613,8 @@ bool CSSParserFastPaths::IsValidKeywordPropertyAndValue(
              value_id == CSSValueAuto;
     case CSSPropertyOverflowWrap:
     case CSSPropertyWordWrap:
-      return value_id == CSSValueNormal || value_id == CSSValueBreakWord;
+      return value_id == CSSValueNormal || value_id == CSSValueBreakWord ||
+             value_id == CSSValueBreakSpaces;
     case CSSPropertyOverflowX:
       return value_id == CSSValueVisible || value_id == CSSValueHidden ||
              value_id == CSSValueScroll || value_id == CSSValueAuto ||

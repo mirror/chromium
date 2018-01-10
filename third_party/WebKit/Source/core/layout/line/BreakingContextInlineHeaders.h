@@ -245,6 +245,7 @@ inline bool ShouldCollapseWhiteSpace(const ComputedStyle& style,
   return style.CollapseWhiteSpace() ||
          (whitespace_position == kTrailingWhitespace &&
           style.WhiteSpace() == EWhiteSpace::kPreWrap &&
+          style.OverflowWrap() != EOverflowWrap::kBreakSpaces &&
           (!line_info.IsEmpty() || !line_info.PreviousLineBrokeCleanly()));
 }
 

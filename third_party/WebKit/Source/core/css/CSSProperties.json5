@@ -2032,7 +2032,7 @@
       api_class: "CSSPropertyAPIInherited",
       inherited: true,
       field_template: "keyword",
-      keywords: ["normal", "break-word"],
+      keywords: ["normal", "break-word", "break-spaces"],
       default_value: "normal",
       field_group: "*",
     },

@@ -620,6 +620,7 @@
     // word-wrap
     //
     "break-word",
+    "break-spaces",
 
     //
     // nbsp-mode
