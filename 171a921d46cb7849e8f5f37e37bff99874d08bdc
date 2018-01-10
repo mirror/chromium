@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7393af76_07e9eab2",
+        "filename": "chrome/browser/sessions/tab_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-10T23:48:08Z",
+      "side": 1,
+      "message": "Add a comment as to why the early out.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "revId": "171a921d46cb7849e8f5f37e37bff99874d08bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
