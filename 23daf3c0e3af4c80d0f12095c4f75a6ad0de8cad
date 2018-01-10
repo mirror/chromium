@@ -16,6 +16,24 @@
       "revId": "23daf3c0e3af4c80d0f12095c4f75a6ad0de8cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2209c1b_fda36226",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-01-10T22:13:22Z",
+      "side": 1,
+      "message": "I like this suggestion, thank you - but the code below the else needs a reference to the CompositorFrame and there doesn\u0027t seem to be a clean way to implement this as a hit_test_data_provider.  Instead I\u0027ve moved the code into a separate function that I *think* cleans up the implementation a bit and makes it clear in the next patch.  Please let me know what you think.",
+      "parentUuid": "a643522a_69385ec2",
+      "revId": "23daf3c0e3af4c80d0f12095c4f75a6ad0de8cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

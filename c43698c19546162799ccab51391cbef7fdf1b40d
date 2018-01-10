@@ -16,6 +16,24 @@
       "revId": "c43698c19546162799ccab51391cbef7fdf1b40d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccd1e62_b70c8b47",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-01-10T22:13:22Z",
+      "side": 1,
+      "message": "No, but I can do a bounds \u003d gfx:Rect(compositor_frame.size_in_pixels());  which is also better - Thank you and done.",
+      "parentUuid": "36eb9a4c_6ac5ea33",
+      "revId": "c43698c19546162799ccab51391cbef7fdf1b40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
