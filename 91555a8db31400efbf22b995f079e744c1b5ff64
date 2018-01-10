@@ -45,6 +45,30 @@
       "revId": "91555a8db31400efbf22b995f079e744c1b5ff64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f3ed64_3aae5502",
+        "filename": "net/base/url_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T20:07:21Z",
+      "side": 1,
+      "message": "Note that my approval is pending on this comment.\n\nOnce the function is renamed, the changelist looks good to me.",
+      "parentUuid": "4a8bd63a_e6dc237d",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 34
+      },
+      "revId": "91555a8db31400efbf22b995f079e744c1b5ff64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
