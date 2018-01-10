@@ -22,6 +22,30 @@
       "revId": "962b884cba88de0d83a0f87d0118b69dd5e2e9c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ce90ba_039227be",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-10T20:48:06Z",
+      "side": 1,
+      "message": "AppendbreakOpportunity() will call AppendIdentityMapping(1). Then because we don\u0027t increment |start|, we will call AppendCollapsedMapping(1) for the same space character. I guess we don\u0027t want this, no?",
+      "parentUuid": "e56b8d27_83fbd64d",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 12
+      },
+      "revId": "962b884cba88de0d83a0f87d0118b69dd5e2e9c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
