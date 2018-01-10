@@ -101,6 +101,7 @@ bool SpellingServiceClient::RequestTextCheck(
       kSpellingRequest, type, encoded_text.c_str(), language_code.c_str(),
       country_code.c_str(), api_key.c_str());
 
+
   GURL url = GURL(kSpellingServiceURL);
 
   // Create traffic annotation tag.
