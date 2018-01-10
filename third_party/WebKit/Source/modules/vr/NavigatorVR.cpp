@@ -22,6 +22,7 @@
 #include "modules/xr/XR.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "public/platform/Platform.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 
 namespace blink {
 
@@ -81,7 +82,7 @@ XR* NavigatorVR::xr() {
       if (frame->GetDocument()) {
         frame->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
             kOtherMessageSource, kErrorMessageLevel,
-            "Cannot use navigator.vr if the legacy VR API is already in use."));
+            "Cannot use navigator.xr if the legacy VR API is already in use."));
       }
       return nullptr;
     }
@@ -106,6 +107,15 @@ ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state) {
     return ScriptPromise::RejectWithDOMException(
         script_state, DOMException::Create(kInvalidStateError,
                                            kNotAssociatedWithDocumentMessage));
+  }
+
+  if (GetDocument()->IsInMainFrame()) {
+    ukm::UkmRecorder* ukm_recorder = GetDocument()->UkmRecorder();
+    DCHECK(ukm_recorder);
+
+    ukm::builders::XR_Devices_API(GetDocument()->UkmSourceID())
+        .SetEnumeratedDevices(1)
+        .Record(ukm_recorder);
   }
 
   LocalFrame* frame = GetDocument()->GetFrame();
