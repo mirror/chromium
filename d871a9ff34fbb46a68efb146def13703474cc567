@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0a4f0565_600f6257",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-10T23:27:59Z",
+      "side": 1,
+      "message": "Makes sense. Would it be sufficient to check that the MIME type starts with \"video/\", \"audio/\", or \"image/\"? Or is it necessary to also forge a path to blink::IsSupportedMimeType?",
+      "parentUuid": "ab1cd482_86ff4438",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "d871a9ff34fbb46a68efb146def13703474cc567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75bdb35c_9b173114",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerActivity.java",
         "patchSetId": 1
