@@ -70,6 +70,24 @@
       "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec9d37e_f54b8d10",
+        "filename": "third_party/WebKit/Source/core/paint/SVGFilterPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-10T17:30:54Z",
+      "side": 0,
+      "message": "Ah, right. Thanks for explaining. Excellent!",
+      "parentUuid": "1291e918_d46c9a2b",
+      "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
