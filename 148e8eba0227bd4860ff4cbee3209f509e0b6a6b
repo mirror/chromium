@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "84e39120_33c98e4c",
+        "filename": "cc/debug/debug_colors.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T09:30:22Z",
+      "side": 1,
+      "message": "Nit: kColorTransform[] \u003d {...}; for consistency with how it\u0027s usually written. Also mark this constexpr.",
+      "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c76621_7b45c37b",
+        "filename": "cc/debug/debug_colors.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T09:30:22Z",
+      "side": 1,
+      "message": "sizeof(kColorTransform) would be a more succinct way to write this.",
+      "range": {
+        "startLine": 167,
+        "startChar": 9,
+        "endLine": 167,
+        "endChar": 51
+      },
+      "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d08ee3_7bc7b4f3",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T09:30:22Z",
+      "side": 1,
+      "message": "Since this appears to just take a pointer to a matrix, can we just return a base::span from cc::DebugColors::TintCompositedContentColorTransformMatrix to avoid copying this data?\n\nAlternately, it could also return a const ref to a float[16], but that\u0027s a bit more painful to write...",
+      "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97701708_581b6e65",
         "filename": "ui/base/ui_base_switches.h",
         "patchSetId": 8
