@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "content/network/upload_progress_tracker.h"
+#include "content/public/common/network_service.mojom.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -92,6 +93,10 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   void OnUploadProgressACK();
   void OnSSLCertificateErrorResponse(const net::SSLInfo& ssl_info,
                                      int net_error);
+  void OnCertificateRequestedResponse(
+      const scoped_refptr<net::X509Certificate>& x509_certificate,
+      const std::vector<uint16_t>& algorithm_preferences,
+      mojom::SSLPrivateKeyPtr ssl_private_key);
 
   NetworkContext* context_;
   int32_t options_;
@@ -138,6 +143,8 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   // -1, we still need to check whether it is from network before reporting it
   // as BodyReadFromNetBeforePaused.
   int64_t body_read_before_paused_ = -1;
+
+  mojom::SSLPrivateKeyPtr ssl_private_key_;
 
   base::WeakPtrFactory<URLLoader> weak_ptr_factory_;
 

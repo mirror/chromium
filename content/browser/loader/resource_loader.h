@@ -120,6 +120,15 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
 
   bool is_deferred() const { return deferred_stage_ != DEFERRED_NONE; }
 
+  void GetResourceContext(
+      ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      net::SSLCertRequestInfo* cert_info);
+
+  void CreateSSLClientAuthHandler(
+      content::ResourceContext* resource_context,
+      ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      net::SSLCertRequestInfo* cert_info);
+
   // Used for categorizing loading of prefetches for reporting in histograms.
   // NOTE: This enumeration is used in histograms, so please do not add entries
   // in the middle.

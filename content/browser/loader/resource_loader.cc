@@ -26,7 +26,10 @@
 #include "content/browser/ssl/ssl_client_auth_handler.h"
 #include "content/browser/ssl/ssl_manager.h"
 #include "content/common/loader_util.h"
+#include "content/public/browser/browser_context.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_dispatcher_host_login_delegate.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
@@ -403,8 +406,44 @@ void ResourceLoader::OnCertificateRequested(
 
   DCHECK(!ssl_client_auth_handler_)
       << "OnCertificateRequested called with ssl_client_auth_handler pending";
+  ResourceRequestInfo::WebContentsGetter web_contents_getter =
+      ResourceRequestInfo::ForRequest(request_.get())
+          ->GetWebContentsGetterForRequest();
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(&ResourceLoader::GetResourceContext, base::Unretained(this),
+                 web_contents_getter, base::RetainedRef(cert_info)));
+}
+
+void ResourceLoader::GetResourceContext(
+    ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    net::SSLCertRequestInfo* cert_info) {
+  content::WebContents* web_contents = web_contents_getter.Run();
+  content::ResourceContext* resource_context = nullptr;
+  if (web_contents) {
+    content::BrowserContext* browser_context =
+        web_contents->GetBrowserContext();
+    resource_context = browser_context->GetResourceContext();
+  }
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&ResourceLoader::CreateSSLClientAuthHandler,
+                 base::Unretained(this), resource_context, web_contents_getter,
+                 base::RetainedRef(cert_info)));
+}
+
+void ResourceLoader::CreateSSLClientAuthHandler(
+    content::ResourceContext* resource_context,
+    ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    net::SSLCertRequestInfo* cert_info) {
+  std::unique_ptr<net::ClientCertStore> client_cert_store;
+  if (resource_context) {
+    client_cert_store =
+        GetContentClient()->browser()->CreateClientCertStore(resource_context);
+  }
   ssl_client_auth_handler_.reset(new SSLClientAuthHandler(
-      delegate_->CreateClientCertStore(this), request_.get(), cert_info, this));
+      std::move(client_cert_store), web_contents_getter, cert_info, this));
   ssl_client_auth_handler_->SelectCertificate();
 }
 
