@@ -69,6 +69,24 @@
       "revId": "a8e0353c9a88575f33e8550d158e08dc7137c2b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d2f0971_2ef26aa0",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T16:06:41Z",
+      "side": 1,
+      "message": "Adding a tracing call is useful if the code that it\u0027s covering is expensive. In this case, it\u0027s trivial so there\u0027s no need.",
+      "parentUuid": "ac38a153_280f6e1e",
+      "revId": "a8e0353c9a88575f33e8550d158e08dc7137c2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

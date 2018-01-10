@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c58b90f_82f8c2f3",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3931,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T16:06:41Z",
+      "side": 1,
+      "message": "Are you sure null checks are needed here? please only add them if they\u0027re necessary because code is run in unittests, and not everywhere. this avoids unnecessary code bloat in production (and sometimes also null-handling code that\u0027s not needed, but not in this case)",
+      "revId": "dc8a5da2475ce008ece99c71cf178696931894d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ffb2bc4_7a2e825b",
+        "filename": "content/browser/webrtc/webrtc_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T16:06:41Z",
+      "side": 1,
+      "message": "nit: this is unnecessary. if it\u0027s null, the next line will crash which is just as useful of a signal.",
+      "revId": "dc8a5da2475ce008ece99c71cf178696931894d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
