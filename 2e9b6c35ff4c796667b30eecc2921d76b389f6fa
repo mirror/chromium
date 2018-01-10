@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c21b14_217c8f14",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkDataGridNode.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T15:34:45Z",
+      "side": 1,
+      "message": "Note this one is slow. Perhaps, regular comparator would be good enough?",
+      "revId": "2e9b6c35ff4c796667b30eecc2921d76b389f6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
