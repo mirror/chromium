@@ -2,6 +2,177 @@
   "comments": [
     {
       "key": {
+        "uuid": "6b8e4f21_dafb70cf",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "can we just pass WindowResizer::kBoundsChange_* as argument instead of this logic that I find hard to read?",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 65
+      },
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65752fd2_86ffc11b",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "nit: canceled",
+      "range": {
+        "startLine": 132,
+        "startChar": 27,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e099d39_fcba2847",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "this already exists in base class. is that not enough?",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8003d5a_a50ccdf4",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "I don\u0027t understand the logic behind this? what is this used for and why does it return true when drag_started_callback_ is set?",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99652dbf_d4337eb4",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "I don\u0027t understand the logic behind all this. Can you explain more why it\u0027s needed? Also does it belong here or would it be better to move it to client controlled code somehow?",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba8da82_a10f2c27",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "hm, this doesn\u0027t seem to belong here in ShellSurfaceBase but is client controlled surface specific. And don\u0027t we have something like \"is_movable\" already that serves a similar purpose? also, does it need to be able to change after creating the instance. having it set in ctor and never changed would be better.",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a46e794_35a1a53a",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2385,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "The convention in this file is to name these functions based on what they return. See OutputTransform() above for an example. ResizeDirection(int componenet) or RemoteSurfaceResizeDirection here would make it consistent.",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1508b893_39e7bbdc",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2389,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "nit: remove this and below blank lines",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcfaa10_21126710",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2419,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "nit: move this up into the default case. and I don\u0027t think we need to also log an error. the notreached is enough I think",
+      "range": {
+        "startLine": 2418,
+        "startChar": 2,
+        "endLine": 2419,
+        "endChar": 53
+      },
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c21109b_e0501e06",
         "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
         "patchSetId": 34
@@ -13,6 +184,75 @@
       "writtenOn": "2018-01-10T16:14:21Z",
       "side": 1,
       "message": "forgot to mention. These are necessary to support SplitScreen for ARC apps.",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae97b7a3_91e7413f",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 34
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "boolean arguments are not typically used in wayland protocol. set_can_resize+unset_can_resize is the common way to do this.",
+      "range": {
+        "startLine": 709,
+        "startChar": 6,
+        "endLine": 709,
+        "endChar": 87
+      },
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85649ab6_a44d53e7",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 34
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "maximize",
+      "range": {
+        "startLine": 712,
+        "startChar": 27,
+        "endLine": 712,
+        "endChar": 35
+      },
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b34073_e29e59da",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 34
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-10T17:19:16Z",
+      "side": 1,
+      "message": "can we align this with xdg shell instead? set_min_size+set_max_size and max and min set to the same size means that the window can\u0027t be resized. is can_resize\u003dfalse and can_maximize\u003dtrue a valid state?",
+      "range": {
+        "startLine": 707,
+        "startChar": 4,
+        "endLine": 715,
+        "endChar": 14
+      },
       "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
