@@ -309,6 +309,7 @@ int SimpleEntryImpl::CreateEntry(Entry** out_entry,
 }
 
 int SimpleEntryImpl::DoomEntry(const CompletionCallback& callback) {
+  LOG(ERROR) << "SimpleEntryImpl::DoomEntry";
   if (doomed_)
     return net::OK;
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_DOOM_CALL);
@@ -629,7 +630,12 @@ void SimpleEntryImpl::PostClientCallback(const CompletionCallback& callback,
 }
 
 void SimpleEntryImpl::MakeUninitialized() {
-  state_ = STATE_UNINITIALIZED;
+  // If we're doomed and in error state, we do not want us to be recycled, since
+  // we are disconnected from the index, so a repeated create would create a
+  // leaked file.
+  //   if (!(doomed_ && state_ == STATE_FAILURE)) {
+  state_ = doomed_ ? STATE_FAILURE : STATE_UNINITIALIZED;
+  //   }
   std::memset(crc32s_end_offset_, 0, sizeof(crc32s_end_offset_));
   std::memset(crc32s_, 0, sizeof(crc32s_));
   std::memset(have_written_, 0, sizeof(have_written_));
@@ -736,6 +742,7 @@ void SimpleEntryImpl::RunNextOperationIfNeeded() {
 void SimpleEntryImpl::OpenEntryInternal(bool have_index,
                                         const CompletionCallback& callback,
                                         Entry** out_entry) {
+  LOG(ERROR) << "OpenEntryInternal";
   ScopedOperationRunner operation_runner(this);
 
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_OPEN_BEGIN);
@@ -775,6 +782,7 @@ void SimpleEntryImpl::OpenEntryInternal(bool have_index,
 void SimpleEntryImpl::CreateEntryInternal(bool have_index,
                                           const CompletionCallback& callback,
                                           Entry** out_entry) {
+  LOG(ERROR) << "CreateEntryInternal";
   ScopedOperationRunner operation_runner(this);
 
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_CREATE_BEGIN);
@@ -1235,11 +1243,15 @@ void SimpleEntryImpl::CreationOperationComplete(
                    "EntryCreationResult", cache_type_,
                    in_results->result == net::OK);
   if (in_results->result != net::OK) {
-    if (in_results->result != net::ERR_FILE_EXISTS)
+    if (in_results->result != net::ERR_FILE_EXISTS) {
+      LOG(ERROR) << "Went to failure due to:" << in_results->result;
+      // state_ = STATE_FAILURE;
       MarkAsDoomed();
+    }
 
     net_log_.AddEventWithNetErrorCode(end_event_type, net::ERR_FAILED);
     PostClientCallback(completion_callback, net::ERR_FAILED);
+    LOG(ERROR) << "Calling MakeUninitialized with:" << in_results->result;
     MakeUninitialized();
     return;
   }
