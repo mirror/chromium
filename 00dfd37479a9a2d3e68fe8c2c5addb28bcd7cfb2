@@ -33,6 +33,24 @@
       "revId": "00dfd37479a9a2d3e68fe8c2c5addb28bcd7cfb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816f90cd_1a860a2e",
+        "filename": "components/arc/common/ime.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2018-01-10T14:53:36Z",
+      "side": 1,
+      "message": "But then, doesn\u0027t the call between the old-Chrome + new-Android combination regarded as is_available\u003ddefault\u003dfalse always? I think that\u0027s undesirable.",
+      "parentUuid": "480d4b64_92220a02",
+      "revId": "00dfd37479a9a2d3e68fe8c2c5addb28bcd7cfb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
