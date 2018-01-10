@@ -920,6 +920,14 @@ class CC_EXPORT LayerTreeHostImpl
   // it's lost instead of having this bool.
   bool has_valid_layer_tree_frame_sink_;
 
+  // In webview, if the check-damage-early flag is set, we can check damage in
+  // WillBeginImplFrame and abort early if there is no damage. This check is
+  // guarded by check_damage_in_begin_impl_frame_, which is set to true if the
+  // flag is enabled and the previous frame did not have damage. it is set to
+  // false again if two consecutive frames have damage.
+  bool check_damage_in_begin_impl_frame_;
+  bool last_early_check_had_damage_;
+
   std::unique_ptr<Viewport> viewport_;
 
   std::unique_ptr<PendingTreeDurationHistogramTimer>
