@@ -39,6 +39,30 @@
       "revId": "817f85d1d757f5053ba8eb3c1533140b0d65d08c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f22eb9d_aeb2bdca",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T18:27:43Z",
+      "side": 1,
+      "message": "Yep we will want to get rid of it. I think that task is orthogonal from this specific cl, which copies existing samples. Both of these use cases will be converted at the same time.",
+      "parentUuid": "9baf5b6c_7203b8f7",
+      "range": {
+        "startLine": 131,
+        "startChar": 24,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "817f85d1d757f5053ba8eb3c1533140b0d65d08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
