@@ -70,6 +70,30 @@
       "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0946b24a_93a7d186",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-10T23:10:18Z",
+      "side": 1,
+      "message": "There are few rules regarding whether the compiler is allowed to generate a constructor. Having the constructor marked as constexpr is definitely not sufficient (for VC++ anyway). With clang you won\u0027t get a constructor.\n\nI think in some future C++ variant you can tag the object as constexpr without making it const, but not yet. So, this is probably fine as-is with clang but not with VC++",
+      "parentUuid": "f18c0818_358dfb97",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
