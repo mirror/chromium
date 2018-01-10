@@ -94,6 +94,20 @@ class DisplayInfoProvider {
   virtual bool ClearTouchCalibration(const std::string& id, std::string* error);
   virtual bool IsNativeTouchCalibrationActive(std::string* error);
 
+  // Turns on/off mirror mode. See system_display.idl. Returns false if the
+  // parameters are invalid.
+  // |enabled|: True if mirror mode should be turned on.
+  // |mixed|: True if mirroring source and destination displays should be
+  //     specified by the following two parameters.
+  // |mirroring_source_id|: The id of the mirroring source display.
+  // |mirroring_destination_ids|: The ids of the mirroring destination displays.
+  virtual bool SetMirrorMode(
+      bool enabled,
+      bool mixed,
+      const std::string& mirroring_source_id,
+      const std::vector<std::string>& mirroring_destination_ids,
+      std::string* out_error);
+
  protected:
   DisplayInfoProvider();
 

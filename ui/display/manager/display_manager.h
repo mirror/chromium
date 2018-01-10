@@ -24,6 +24,7 @@
 #include "ui/display/display_layout.h"
 #include "ui/display/display_observer.h"
 #include "ui/display/manager/display_manager_export.h"
+#include "ui/display/manager/display_manager_utilities.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/mojo/dev_display_controller.mojom.h"
 #include "ui/display/types/display_constants.h"
@@ -41,8 +42,6 @@ class Rect;
 }
 
 namespace display {
-using DisplayInfoList = std::vector<ManagedDisplayInfo>;
-
 class DisplayLayoutStore;
 class DisplayObserver;
 class Screen;
@@ -341,6 +340,19 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     external_display_mirror_info_ = external_display_mirror_info;
   }
 
+  const base::Optional<MixedMirrorModeParams>& mixed_mirror_mode_params()
+      const {
+    return mixed_mirror_mode_params_;
+  }
+
+  // Set mixed mirror mode parameters. The parameters will be used to set
+  // set mirroring source and destination displays in the next configuration of
+  // mirror mode.
+  void set_mixed_mirror_mode_params(
+      const base::Optional<MixedMirrorModeParams> mixed_params) {
+    mixed_mirror_mode_params_ = mixed_params;
+  }
+
   // Remove mirroring source and destination displays, so that they will be
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
@@ -389,8 +401,14 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // Returns true if mirror mode should be set on for the specified displays.
   bool ShouldSetMirrorModeOn(const DisplayIdList& id_list);
 
-  // Change the mirror mode.
-  void SetMirrorMode(bool mirrored);
+  // Turn on/off the mirror mode. If |enabled| is false, |mixed_params| will be
+  // ignored and mirror mode will be turned off. The default mirror mode will be
+  // turned on if |mixed_params| is not specified. The mixed mirror mode will be
+  // turned on otherwise. In default mirror mode, default source display will be
+  // selected and mirrored to all other displays. In mixed mirror mode, the
+  // specified source and destination displays in |mixed_params| will be used.
+  void SetMirrorMode(bool enabled,
+                     const base::Optional<MixedMirrorModeParams>& mixed_params);
 
   // Used to emulate display change when run in a desktop environment instead
   // of on a device.
@@ -401,6 +419,7 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 #if defined(OS_CHROMEOS)
   void SetSoftwareMirroring(bool enabled) override;
   bool SoftwareMirroringEnabled() const override;
+  bool IsSoftwareMirroringEnforced() const override;
   void SetTouchCalibrationData(
       int64_t display_id,
       const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
@@ -624,6 +643,11 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   base::ObserverList<DisplayObserver> observers_;
 
   display::mojom::DevDisplayControllerPtr dev_display_controller_;
+
+  // Not empty if mixed mirror mode should be turned on (the specified source
+  // display is mirrored to the specified destination displays). Empty if mixed
+  // mirror mode is disabled.
+  base::Optional<MixedMirrorModeParams> mixed_mirror_mode_params_;
 
   // This is incremented whenever a BeginEndNotifier is created and decremented
   // when destroyed. BeginEndNotifier uses this to track when it should call
