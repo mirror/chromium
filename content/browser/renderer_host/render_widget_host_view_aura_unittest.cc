@@ -2255,7 +2255,7 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithScale) {
     EXPECT_EQ("50x50", std::get<1>(params).ToString());
     EXPECT_EQ("100x100", std::get<2>(params).ToString());
     EXPECT_EQ(1, std::get<3>(params).device_scale_factor);
-    local_surface_id2 = std::get<4>(params);
+    local_surface_id2 = std::get<5>(params);
     EXPECT_NE(local_surface_id1, local_surface_id2);
   }
 
@@ -2274,8 +2274,8 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithScale) {
     EXPECT_EQ("50x50", std::get<1>(params).ToString());
     EXPECT_EQ("100x100", std::get<2>(params).ToString());
     EXPECT_EQ(2, std::get<3>(params).device_scale_factor);
-    EXPECT_NE(local_surface_id1, std::get<4>(params));
-    EXPECT_NE(local_surface_id2, std::get<4>(params));
+    EXPECT_NE(local_surface_id1, std::get<5>(params));
+    EXPECT_NE(local_surface_id2, std::get<5>(params));
   }
 }
 
