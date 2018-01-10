@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc1ddcb_728e13da",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T11:17:10Z",
+      "side": 1,
+      "message": "Change to flat_map\u003cunit32_t, SubscriptionRequest\u003e. You can define the struct right here.\nUsing a pointer may reduce some of the performance advantages of the flat_map.",
+      "range": {
+        "startLine": 194,
+        "startChar": 32,
+        "endLine": 194,
+        "endChar": 42
+      },
+      "revId": "201d4d5a5a1e5d110825ce3aa57b5d4734e6d4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d02341_27bb5d2b",
+        "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T11:17:10Z",
+      "side": 1,
+      "message": "nit: align this and below parameters with the parameter on line above.",
+      "range": {
+        "startLine": 107,
+        "startChar": 19,
+        "endLine": 107,
+        "endChar": 23
+      },
+      "revId": "201d4d5a5a1e5d110825ce3aa57b5d4734e6d4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
