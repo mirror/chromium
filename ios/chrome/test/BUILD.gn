@@ -8,6 +8,7 @@ import("//testing/test.gni")
 
 # All tests needs to be listed in that target to be built as part of
 # "gn_all" target (i.e. by the bots).
+# Test analyzer handles BUILD.gn files.
 group("all_tests") {
   testonly = true
   deps = [
