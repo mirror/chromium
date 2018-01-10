@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c704e219_1d6269e8",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-10T15:24:34Z",
+      "side": 1,
+      "message": "I am not sure about that. It used to be for the stack view only (in the current implementation and current stable), but it was in the init.\n\nI don\u0027t know what is the expected behavior when you background the app with the tools menu displayed on the stack view and on a web page.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 77
+      },
+      "revId": "315cb998872d951977ee2f4e9a4cc0553ecf8589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
