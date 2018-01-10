@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "ae7ece5a_f4c0c2ab",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T10:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3e35122_fe4d25f8",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1e9e203_4190efb8",
         "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
         "patchSetId": 24
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "A function would be better.\n\nBTW, I would suggest another option.\n\nInstead of storing callback for each slot, we can decide which function we should call only based on shadow host\u0027s element type. We don\u0027t need to store callback for each slot.\n\ne.g.\n\n\nif host\u0027s type \u003d\u003d detail:\n  call isFirstSummary(children)\nelse if host\u0027s type \u003d\u003d xxx:\n  call isXXXX(chidren)",
       "parentUuid": "094092f6_a143d0a9",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0e8af8_685012ec",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T10:36:01Z",
+      "side": 1,
+      "message": "Hmm, that would save memory for holding the function pointer (# of slots to\n1 per shadow root), but it would require changing SlotAssignment each time new kind of\nUA shadow is added, and it may distribute the implementation for e.g. \u003cdetails\u003e into\nHTMLDetailsElement.cpp and SlotAssignment.cpp.\n\nInstead, how about adding RegisterCustomAssignCallback() to ShadowRoot or SlotAssignment?\nThis way we can save some memory, while the implementations keep decentralized.\n\n(at this point, \u003cdetails\u003e \u003coptgroup\u003e \u003cselect\u003e are the only users of this custom assignment,\nso it isn\u0027t a big issue for now)",
+      "parentUuid": "b9641b74_d4bd70c9",
       "revId": "977c9f9d827442fae53c91646b47c8212513a182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
