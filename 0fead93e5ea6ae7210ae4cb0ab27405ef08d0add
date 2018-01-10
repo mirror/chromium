@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd3d5ee0_6b6f7e7b",
+        "filename": "cc/debug/debug_colors.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-10T22:39:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7ebcd12_ae947f91",
+      "revId": "0fead93e5ea6ae7210ae4cb0ab27405ef08d0add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc4bce14_6b3baf08",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-10T22:26:32Z",
       "side": 1,
       "message": "Belated drive-by review.  You added false to all of these without also adding the true case.  This is the only \"compilation test\" to make sure that all shaders compile, as far as I can tell.\n\nCan you follow up and add cases for all the tint\u003dtrue shader variants?",
+      "revId": "0fead93e5ea6ae7210ae4cb0ab27405ef08d0add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad28673e_0d3210ef",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-10T22:39:11Z",
+      "side": 1,
+      "message": "I surely can, but the tint\u003dtrue is only a debug feature, do we really care testing it?",
+      "parentUuid": "cc4bce14_6b3baf08",
       "revId": "0fead93e5ea6ae7210ae4cb0ab27405ef08d0add",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
