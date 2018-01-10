@@ -22,6 +22,30 @@
       "revId": "2d7ba7fc7798eea0e2cc6f288a22c40b0aa94c80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850990f1_b83e72db",
+        "filename": "components/arc/ime/arc_ime_bridge_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-10T06:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d93b4848_f79919f4",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 17
+      },
+      "revId": "2d7ba7fc7798eea0e2cc6f288a22c40b0aa94c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
