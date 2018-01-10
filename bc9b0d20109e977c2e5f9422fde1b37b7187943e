@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1408a023_e9bc94d8",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "I think it\u0027s convention to use g_ prefix for this and declare in global anonymous namespace.",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c03daee_04bd97cb",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "(Leaky). Take a look at base/lazy_instance.h.",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6e485bc_c4aa6a6a",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "I must be missing something, but |current_id| is never declared?",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df2c1e70_94efacde",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "Look at this header; this class is deprecated in favor of C++ 11\u0027s unordered set.",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b275ff50_e2d16036",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "What ever happened to the header guard for this file? Please add.",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46c8f096_f90ca44c",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "This comment is left dangling after you removed the function\nint32_t AX_EXPORT GetNextAXPlatformNodeUniqueId();",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ac45d88_2b495815",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "nit: class docs",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4447c0be_6cd158cc",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3275ce0_355a81e0",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "It\u0027s convetion to inline only simple getters/setters, so move this to .cc.",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "608b35d7_ab149a89",
+        "filename": "ui/accessibility/platform/ax_platform_unique_id.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T15:46:35Z",
+      "side": 1,
+      "message": "Probably better to define in terms of \u003d\u003d i.e. !(*this \u003d\u003d other)",
+      "revId": "bc9b0d20109e977c2e5f9422fde1b37b7187943e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
