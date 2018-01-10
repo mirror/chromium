@@ -729,8 +729,10 @@ void NetworkHandler::SetRenderer(RenderProcessHost* process_host,
   host_ = frame_host;
 }
 
-Response NetworkHandler::Enable(Maybe<int> max_total_size,
-                                Maybe<int> max_resource_size) {
+Response NetworkHandler::Enable(
+    Maybe<int> max_total_size,
+    Maybe<int> max_resource_size,
+    Maybe<int> max_request_will_be_sent_post_body_size) {
   enabled_ = true;
   return Response::FallThrough();
 }
