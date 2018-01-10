@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "84c4a71a_1ee646cb",
+        "filename": "chrome/browser/vr/elements/repositioner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-10T15:57:02Z",
+      "side": 1,
+      "message": "Please add Point3F::OffsetFromOrigin for converting points to vectors. It\u0027s the analog to this function https://cs.chromium.org/chromium/src/ui/gfx/geometry/point3_f.h?rcl\u003d6a25443bd599a4d2ee91d250cbcae71eb7a2a2d6\u0026l\u003d102",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa82078_87fbf42b",
+        "filename": "chrome/browser/vr/elements/repositioner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-10T15:57:02Z",
+      "side": 1,
+      "message": "Can you please add a detailed comment describing the geometry you\u0027re doing here? I\u0027m having a particularly tough time understanding what d2 is.",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e84fbb7_4411e05c",
         "filename": "chrome/browser/vr/elements/repositioner.cc",
         "patchSetId": 6
@@ -13,6 +47,23 @@
       "writtenOn": "2018-01-10T14:26:27Z",
       "side": 1,
       "message": "\u0027reticle\u0027",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57292054_2b0b2861",
+        "filename": "chrome/browser/vr/elements/repositioner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-10T15:57:02Z",
+      "side": 1,
+      "message": "When you describe the geometry, can you also please add an explanation for this early out?",
       "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
