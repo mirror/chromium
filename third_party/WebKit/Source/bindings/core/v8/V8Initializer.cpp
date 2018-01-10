@@ -27,6 +27,8 @@
 
 #include <memory>
 
+#include "base/containers/small_map.h"
+#include "base/lazy_instance.h"
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ReferrerScriptInfo.h"
@@ -63,8 +65,10 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "platform/wtf/AddressSanitizer.h"
+#include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/text/WTFString.h"
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
@@ -539,22 +543,69 @@ static void InitializeV8Common(v8::Isolate* isolate) {
 
 namespace {
 
+typedef base::small_map<std::map<scoped_refptr<const SecurityOrigin*>, base::PartitionAllocatorGeneric> PartitionMap;
+
+static base::LazyInstance<PartitionMap>::Leaky
+    partition_map = LAZY_INSTANCE_INITIALIZER;
+
+typedef std::unordered_map<void*, SecurityOrigin*> AllocationMap;
+
+static base::LazyInstance<AllocationMap>::Leaky
+    allocation_map = LAZY_INSTANCE_INITIALIZER;
+
+const SecurityOrigin* GetSecurityOrigin() {
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  return CurrentDOMWindow(isolate)->GetFrame()->GetSecurityContext()->GetSecurityOrigin();
+}
+
+PartitionMap::iterator FindOrCreatePartition() {
+    const SecurityOrigin* security_origin = GetSecurityOrigin();
+    auto it = partition_map.find(security_origin);
+    if (it == partition_map.end()) {
+      it = partition_map.emplace(std::make_pair(security_origin, base::PartitionAllocatorGeneric())).first;
+    }
+    return it;
+}
+
+
+  base::PartitionAllocatorGeneric array_buffer_allocator_;
+
+  base::PartitionRootGeneric* GetArrayBufferPartition() {
+    return array_buffer_allocator_.root();
+  }
+
 class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // Allocate() methods return null to signal allocation failure to V8, which
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kZeroInitialize);
+    auto it = FindOrCreatePartition();
+    auto security_origin = it.first;
+    auto partition_root = it.second.root();
+    void* data = WTF::ArrayBufferContents::AllocateMemoryOrNull(
+        partition_root, size,
+        WTF::ArrayBufferContents::kZeroInitialize);
+    allocation_map.emplace(std::make_pair(data, partition_root));
+    return data;
   }
-
+//TODO factor into method
   void* AllocateUninitialized(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kDontInitialize);
+    auto it = FindOrCreatePartition();
+    auto security_origin = it.first;
+    auto partition_root = it.second.root();
+    void* data = WTF::ArrayBufferContents::AllocateMemoryOrNull(
+        partition_root, size,
+        WTF::ArrayBufferContents::kDontInitialize);
+    allocation_map.emplace(std::make_pair(data, partition_root));
+    return data;
   }
-
+// TODO thread safety!
   void Free(void* data, size_t size) override {
-    WTF::ArrayBufferContents::FreeMemory(data);
+    auto allocation = allocation_map.find(data);
+    DCHECK(allocation != allocation_map.end());
+    WTF::ArrayBufferContents::FreeMemory(allocation.second, data);
+    // TODO delete partition if empty.
+    allocation_map.erase(it);
   }
 
   void* Reserve(size_t length) override {

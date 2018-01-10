@@ -27,7 +27,6 @@
 #define V8Initializer_h
 
 #include "core/CoreExport.h"
-#include "platform/wtf/Allocator.h"
 #include "v8/include/v8.h"
 
 namespace blink {
