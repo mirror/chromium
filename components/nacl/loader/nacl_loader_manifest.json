@@ -11,6 +11,7 @@
           // service, but they are requested from all child processes by common
           // browser-side code. We list them here to make the Service Manager
           // happy.
+          "chrome::mojom::ResourceUsageReporter",
           "content::mojom::Child",
           "content::mojom::ChildControl",
           "content::mojom::ChildHistogramFetcherFactory"
