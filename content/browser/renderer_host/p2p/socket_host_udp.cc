@@ -78,12 +78,14 @@ P2PSocketHostUdp::PendingPacket::PendingPacket(
     const net::IPEndPoint& to,
     const std::vector<char>& content,
     const rtc::PacketOptions& options,
-    uint64_t id)
+    uint64_t id,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation)
     : to(to),
       data(new net::IOBuffer(content.size())),
       size(content.size()),
       packet_options(options),
-      id(id) {
+      id(id),
+      traffic_annotation(traffic_annotation) {
   memcpy(data->data(), &content[0], size);
 }
 
@@ -263,10 +265,12 @@ void P2PSocketHostUdp::HandleReadResult(int result) {
   }
 }
 
-void P2PSocketHostUdp::Send(const net::IPEndPoint& to,
-                            const std::vector<char>& data,
-                            const rtc::PacketOptions& options,
-                            uint64_t packet_id) {
+void P2PSocketHostUdp::Send(
+    const net::IPEndPoint& to,
+    const std::vector<char>& data,
+    const rtc::PacketOptions& options,
+    uint64_t packet_id,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (!socket_) {
     // The Send message may be sent after the an OnError message was
     // sent by hasn't been processed the renderer.
@@ -276,11 +280,12 @@ void P2PSocketHostUdp::Send(const net::IPEndPoint& to,
   IncrementTotalSentPackets();
 
   if (send_pending_) {
-    send_queue_.push_back(PendingPacket(to, data, options, packet_id));
+    send_queue_.push_back(
+        PendingPacket(to, data, options, packet_id, traffic_annotation));
     IncrementDelayedBytes(data.size());
     IncrementDelayedPackets();
   } else {
-    PendingPacket packet(to, data, options, packet_id);
+    PendingPacket packet(to, data, options, packet_id, traffic_annotation);
     DoSend(packet);
   }
 }
@@ -359,7 +364,7 @@ void P2PSocketHostUdp::DoSend(const PendingPacket& packet) {
     send_pending_ = true;
   } else {
     HandleSendResult(packet.id, packet.packet_options.packet_id, send_time,
-                     result);
+                     result, packet.traffic_annotation);
   }
 
   if (dump_outgoing_rtp_packet_)
@@ -375,7 +380,9 @@ void P2PSocketHostUdp::OnSend(uint64_t packet_id,
 
   send_pending_ = false;
 
-  HandleSendResult(packet_id, transport_sequence_number, send_time, result);
+  // TODO(crbug.com/656607): Get annotation for mojo interface
+  HandleSendResult(packet_id, transport_sequence_number, send_time, result,
+                   NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   // Send next packets if we have them waiting in the buffer.
   while (state_ == STATE_OPEN && !send_queue_.empty() && !send_pending_) {
@@ -386,10 +393,14 @@ void P2PSocketHostUdp::OnSend(uint64_t packet_id,
   }
 }
 
-void P2PSocketHostUdp::HandleSendResult(uint64_t packet_id,
-                                        int32_t transport_sequence_number,
-                                        base::TimeTicks send_time,
-                                        int result) {
+void P2PSocketHostUdp::HandleSendResult(
+    uint64_t packet_id,
+    int32_t transport_sequence_number,
+    base::TimeTicks send_time,
+    int result,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  // TODO(crbug.com/656607): Handle traffic annotation.
+
   TRACE_EVENT_ASYNC_END1("p2p", "Send", packet_id,
                          "result", result);
   if (result < 0) {

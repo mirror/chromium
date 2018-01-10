@@ -23,6 +23,7 @@
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
 #include "net/base/network_change_notifier.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 class URLRequestContextGetter;

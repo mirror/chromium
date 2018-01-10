@@ -20,6 +20,7 @@
 #include "ipc/ipc_sender.h"
 #include "net/base/completion_callback.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 class StreamSocket;
@@ -39,10 +40,12 @@ class CONTENT_EXPORT P2PSocketHostTcpServer : public P2PSocketHost {
             uint16_t min_port,
             uint16_t max_port,
             const P2PHostAndIPEndPoint& remote_address) override;
-  void Send(const net::IPEndPoint& to,
-            const std::vector<char>& data,
-            const rtc::PacketOptions& options,
-            uint64_t packet_id) override;
+  void Send(
+      const net::IPEndPoint& to,
+      const std::vector<char>& data,
+      const rtc::PacketOptions& options,
+      uint64_t packet_id,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
   std::unique_ptr<P2PSocketHost> AcceptIncomingTcpConnection(
       const net::IPEndPoint& remote_address,
       int id) override;
