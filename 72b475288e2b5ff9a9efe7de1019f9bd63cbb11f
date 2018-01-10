@@ -16,6 +16,24 @@
       "revId": "72b475288e2b5ff9a9efe7de1019f9bd63cbb11f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a184c5_443eb043",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-10T19:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a709cfa1_ac9f51b1",
+      "revId": "72b475288e2b5ff9a9efe7de1019f9bd63cbb11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
