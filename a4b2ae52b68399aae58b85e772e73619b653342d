@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9fb3939b_38e13be7",
+        "filename": "mojo/common/string16.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-10T22:48:09Z",
+      "side": 1,
+      "message": "Fair dice roll. ;)\n\nReally, it\u0027s just a hand-waved number. We could do some performance testing and come up with something that seems to work better than other values. I\u0027m doubtful that we\u0027d get consistent results over time.",
+      "parentUuid": "f7505a6b_aa42e0a7",
+      "range": {
+        "startLine": 21,
+        "startChar": 35,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "a4b2ae52b68399aae58b85e772e73619b653342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a71f380d_83e6e1d5",
         "filename": "mojo/common/string16_struct_traits.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "75542eba_ee4595ce",
+        "filename": "mojo/common/string16_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-10T22:48:09Z",
+      "side": 1,
+      "message": "Yep. I initially wanted to map to a span/StringPiece16. Not only is it bad for struct/union fields, but also for lazy serialization. Presumably lazy serialization message state could use the field typemap though if/when we add that as a separate thing.",
+      "parentUuid": "a71f380d_83e6e1d5",
+      "revId": "a4b2ae52b68399aae58b85e772e73619b653342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9661ac0e_4b274644",
         "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraits.h",
         "patchSetId": 8
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-10T22:40:22Z",
       "side": 1,
       "message": "Out of curiosity: is it because code size that you move it out-of-line?",
+      "revId": "a4b2ae52b68399aae58b85e772e73619b653342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eeb808b_5a0bd3dd",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-10T22:48:09Z",
+      "side": 1,
+      "message": "Just for consistency with the rule that we generally keep non-trivial things out-of-line. Maybe this is unnecessary, but IMHO a destructor + deallocation is borderline non-trivial enough to move out of line.",
+      "parentUuid": "9661ac0e_4b274644",
       "revId": "a4b2ae52b68399aae58b85e772e73619b653342d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
