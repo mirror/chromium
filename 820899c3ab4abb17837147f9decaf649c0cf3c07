@@ -176,6 +176,30 @@
       "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb660e8_85917bb1",
+        "filename": "ui/file_manager/externs/volume_info.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-10T06:08:47Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t realize the comment. Thank you for pointing it out!\nNow I\u0027m OK with both approach. It\u0027s up to you.\n1) Add the extern to ui/file_manager/compile_js2.gypi\n2) Remove the comment which prohibit manual modification in ui/file_manager/externs/compiled_resources2.gyp and modify it as I mentioned before.",
+      "parentUuid": "0a3e567b_9b9ad8d2",
+      "range": {
+        "startLine": 83,
+        "startChar": 60,
+        "endLine": 83,
+        "endChar": 64
+      },
+      "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
