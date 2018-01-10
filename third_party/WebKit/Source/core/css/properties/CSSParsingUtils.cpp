@@ -273,6 +273,13 @@ CSSBasicShapeEllipseValue* ConsumeBasicShapeEllipse(
     shape->SetCenterX(center_x);
     shape->SetCenterY(center_y);
   }
+  if (shape->RadiusY()) {
+    UseCounter::Count(target, WebFeature::kBasicShapeEllipseTwoRadius);
+  } else if (shape->RadiusX()) {
+    UseCounter::Count(target, WebFeature::kBasicShapeEllipseOneRadius);
+  } else {
+    UseCounter::Count(target, WebFeature::kBasicShapeEllipseNoRadius);
+  }
   return shape;
 }
 
