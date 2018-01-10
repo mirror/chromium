@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41a6b0f8_f28fc40b",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-10T01:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6ca27f1_3bc38ea2",
+      "range": {
+        "startLine": 688,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 62
+      },
+      "revId": "a27831d3ffe491f11f5517165705e72bba9fea3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc7d912f_cb829915",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a27831d3ffe491f11f5517165705e72bba9fea3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db097e2_a2ee8140",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-10T01:28:45Z",
+      "side": 1,
+      "message": "Per email thread, this string is actually no longer necessary.",
+      "parentUuid": "bc7d912f_cb829915",
+      "range": {
+        "startLine": 198,
+        "startChar": 6,
+        "endLine": 198,
+        "endChar": 80
+      },
+      "revId": "a27831d3ffe491f11f5517165705e72bba9fea3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
