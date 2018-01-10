@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aeace6a_0400f0e1",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-10T00:57:29Z",
+      "side": 1,
+      "message": "This check will always succeed as the default value for this field is 0, which is also the error value for the ID inside the task. One way to overcome this is to set |page.system_download_id| to some value (-1?) before inserting it so that you can check here for equality.",
+      "range": {
+        "startLine": 173,
+        "startChar": 46,
+        "endLine": 173,
+        "endChar": 47
+      },
+      "revId": "1d724c024804107bc7cb90f6d1b2f2aedd833182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
