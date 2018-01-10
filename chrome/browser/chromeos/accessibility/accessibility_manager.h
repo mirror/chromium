@@ -28,6 +28,7 @@
 #include "extensions/browser/extension_system.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 
+class Dictation;
 class Profile;
 
 namespace gfx {
@@ -306,6 +307,9 @@ class AccessibilityManager
   // Set the keys to be captured by Switch Access.
   void SetSwitchAccessKeys(const std::set<int>& key_codes);
 
+  // Starts or stops dictation (type what you speak).
+  void ToggleDictation();
+
  protected:
   AccessibilityManager();
   ~AccessibilityManager() override;
@@ -444,6 +448,8 @@ class AccessibilityManager
 
   // Ash's mojom::AccessibilityController used to SetDarkenScreen.
   ash::mojom::AccessibilityControllerPtr accessibility_controller_;
+
+  std::unique_ptr<Dictation> dictation_;
 
   base::WeakPtrFactory<AccessibilityManager> weak_ptr_factory_;
 
