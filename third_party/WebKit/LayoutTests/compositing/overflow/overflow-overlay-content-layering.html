@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<style>
+  .wrapper {
+    width: 280px;
+    height: 300px;
+    position: relative;
+    z-index: 0;
+  }
+
+  /**
+   * This is the scrollable area. In the reference page this is NOT a stacking context,
+   * which allows the content from rendering on top of the scroll bar. We are testing that making
+   * it a stacking context will render the content underneath the scroll bar.
+   */
+  .scroller {
+    width: 300px;
+    height: 300px;
+    overflow: overlay;
+    isolation: isolate;
+  }
+
+  /**
+   * This element is just to stretch out the scrollable area to get a scroll bar.
+   */
+  .content {
+    width: 200px;
+    height: 1000px;
+    background: silver;
+    position: relative;
+  }
+
+  /**
+   * This line will render on underneath of the scroll bar in this test page, but on top of the
+   * scroll bar in the reference page.
+   */
+  .line {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 300px;
+    height: 40px;
+    background: red;
+  }
+
+  .scroller::-webkit-scrollbar {
+    width: 60px;
+    background: rgba(0, 255, 0, 0.5);
+  }
+
+  .scroller::-webkit-scrollbar-thumb {
+    background: rgb(0, 255, 0, 1);
+  }
+</style>
+<div class="scroller">
+  <div class="content">
+    <div class="line">
+    </div>
+  </div>
+</div>

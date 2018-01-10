@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<style>
+  .wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+  }
+
+  .gray-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 300px;
+    background: silver;
+  }
+
+  .red-line {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 300px;
+    height: 40px;
+    background: red;
+  }
+
+  .green-scroll-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 300px;
+    background: rgba(0, 255, 0, 0.5);
+  }
+
+  .green-scroll-bar-thumb {
+    position: absolute;
+    top: 0;
+    width: 60px;
+    height: 90px;
+    background: rgba(0, 255, 0, 1);
+  }
+</style>
+<div class="wrapper">
+  <div class="gray-box"></div>
+  <div class="red-line"></div>
+  <div class="green-scroll-bar">
+    <div class="green-scroll-bar-thumb"></div>
+  </div>
+</div>
