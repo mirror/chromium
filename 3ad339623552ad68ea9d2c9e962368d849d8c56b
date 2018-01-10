@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b74a003_121f938e",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-10T22:40:47Z",
+      "side": 1,
+      "message": "Suggest \"multiple\" instead (and \"extra\" instead of \"second and third\" below). The precision isn\u0027t necessary to explain the problem and might be inaccurate in the future.",
+      "range": {
+        "startLine": 280,
+        "startChar": 38,
+        "endLine": 280,
+        "endChar": 49
+      },
+      "revId": "3ad339623552ad68ea9d2c9e962368d849d8c56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d1cc09_59d3345e",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-10T22:40:47Z",
+      "side": 1,
+      "message": "Costly? (Harmful to me implies incorrect behavior as opposed to just being slow.)",
+      "range": {
+        "startLine": 283,
+        "startChar": 7,
+        "endLine": 283,
+        "endChar": 14
+      },
+      "revId": "3ad339623552ad68ea9d2c9e962368d849d8c56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
