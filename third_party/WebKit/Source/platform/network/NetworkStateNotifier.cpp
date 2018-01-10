@@ -184,7 +184,7 @@ void NetworkStateNotifier::SetNetworkConnectionInfoOverride(
 
 void NetworkStateNotifier::SetNetworkQualityInfoOverride(
     WebEffectiveConnectionType effective_type,
-    unsigned long transport_rtt_msec,
+    unsigned long http_rtt_msec,
     double downlink_throughput_mbps) {
   DCHECK(IsMainThread());
   ScopedNotifier notifier(*this);
@@ -193,8 +193,20 @@ void NetworkStateNotifier::SetNetworkQualityInfoOverride(
     has_override_ = true;
     override_.on_line_initialized = true;
     override_.connection_initialized = true;
+    if (effective_type == WebEffectiveConnectionType::kTypeUnknown &&
+        http_rtt_msec > 0) {
+      if (http_rtt_msec >= 2010) {
+        effective_type = WebEffectiveConnectionType::kTypeSlow2G;
+      } else if (http_rtt_msec >= 1420) {
+        effective_type = WebEffectiveConnectionType::kType2G;
+      } else if (http_rtt_msec >= 270) {
+        effective_type = WebEffectiveConnectionType::kType3G;
+      } else {
+        effective_type = WebEffectiveConnectionType::kType4G;
+      }
+    }
     override_.effective_type = effective_type;
-    override_.http_rtt = base::TimeDelta::FromMilliseconds(transport_rtt_msec);
+    override_.http_rtt = base::TimeDelta::FromMilliseconds(http_rtt_msec);
     override_.downlink_throughput_mbps = base::nullopt;
     if (downlink_throughput_mbps >= 0)
       override_.downlink_throughput_mbps = downlink_throughput_mbps;
