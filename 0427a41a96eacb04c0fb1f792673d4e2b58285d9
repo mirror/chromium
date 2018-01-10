@@ -50,6 +50,23 @@
       "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ebcb5a_b98b2a1b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-10T17:16:49Z",
+      "side": 1,
+      "message": "nit: This part is going to be changed soon when you turn on async routing for touch, right? It could use a comment signalling that.",
+      "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
