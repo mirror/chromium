@@ -13,6 +13,7 @@ let TransformPagePointRequest;
 /**
  * @typedef {{
  *   type: string,
+ *   id: number,
  *   page: number,
  *   x: number,
  *   y: number

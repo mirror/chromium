@@ -113,8 +113,7 @@ function PDFViewer(browserApi) {
   this.metrics.onDocumentOpened();
 
   // Parse open pdf parameters.
-  this.paramsParser_ =
-      new OpenPDFParamsParser(this.getNamedDestination_.bind(this));
+  this.paramsParser_ = new OpenPDFParamsParser(this.postMessage_.bind(this));
   var toolbarEnabled =
       this.paramsParser_.getUiUrlParams(this.originalUrl_).toolbar &&
       !this.isPrintPreview_;
@@ -225,7 +224,7 @@ function PDFViewer(browserApi) {
   }
 
   this.coordsTransformer_ =
-      new PDFCoordsTransformer(this.plugin_.postMessage.bind(this.plugin_));
+      new PDFCoordsTransformer(this.postMessage_.bind(this));
 
   document.body.addEventListener('change-page', e => {
     this.viewport_.goToPage(e.detail.page);
@@ -389,7 +388,7 @@ PDFViewer.prototype = {
         return;
       case 65:  // 'a' key.
         if (e.ctrlKey || e.metaKey) {
-          this.plugin_.postMessage({type: 'selectAll'});
+          this.postMessage_({type: 'selectAll'});
           // Since we do selection ourselves.
           e.preventDefault();
         }
@@ -449,7 +448,7 @@ PDFViewer.prototype = {
    */
   rotateClockwise_: function() {
     this.metrics.onRotation();
-    this.plugin_.postMessage({type: 'rotateClockwise'});
+    this.postMessage_({type: 'rotateClockwise'});
   },
 
   /**
@@ -458,7 +457,7 @@ PDFViewer.prototype = {
    */
   rotateCounterClockwise_: function() {
     this.metrics.onRotation();
-    this.plugin_.postMessage({type: 'rotateCounterclockwise'});
+    this.postMessage_({type: 'rotateCounterclockwise'});
   },
 
   /**
@@ -486,7 +485,7 @@ PDFViewer.prototype = {
    * Notify the plugin to print.
    */
   print_: function() {
-    this.plugin_.postMessage({type: 'print'});
+    this.postMessage_({type: 'print'});
   },
 
   /**
@@ -494,17 +493,7 @@ PDFViewer.prototype = {
    * Notify the plugin to save.
    */
   save_: function() {
-    this.plugin_.postMessage({type: 'save'});
-  },
-
-  /**
-   * Fetches the page number corresponding to the given named destination from
-   * the plugin.
-   * @param {string} name The namedDestination to fetch page number from plugin.
-   */
-  getNamedDestination_: function(name) {
-    this.plugin_.postMessage(
-        {type: 'getNamedDestination', namedDestination: name});
+    this.postMessage_({type: 'save'});
   },
 
   /**
@@ -523,12 +512,71 @@ PDFViewer.prototype = {
 
   /**
    * @private
+   * Handles open pdf parameters position.
+   * @param {Object} params The open params passed in the URL. Positions may be
+   *     is page or screen coords. If they are in page coords, send a transform
+   *     request to the plugin before continuing.
+   */
+  handleURLParams_: function(params) {
+    if (params.transformCoords) {
+      const page = params.page ? params.page : 0;
+      if (params.position) {
+        this.coordsTransformer_.request(
+            this.handleURLParamsPositionTransform_.bind(this), params, page,
+            params.position.x, params.position.y);
+        return;
+      } else if (params.viewPosition) {
+        if (params.view == FittingType.FIT_TO_WIDTH) {
+          this.coordsTransformer_.request(
+              this.handleURLParamsPositionTransform_.bind(this), params, page,
+              0, params.viewPosition);
+          return;
+        } else if (params.view == FittingType.FIT_TO_HEIGHT) {
+          this.coordsTransformer_.request(
+              this.handleURLParamsPositionTransform_.bind(this), params, page,
+              params.viewPosition, 0);
+          return;
+        }
+      }
+    }
+
+    this.handleURLParamsSync_(params);
+  },
+
+  /**
+   * @private
+   * Handles open pdf parameters with a transformed page position. Called back
+   * after a 'transformPagePointReply' is returned from the plugin.
+   * @param {Object} messageData Message data received from the plugin
+   *     containing the x and y to navigate to in screen coordinates.
+   * @param {Object} params Map with view parameters (view, viewPosition,
+   *     position, zoom). Positions are in page coordinates and are converted to
+   *     screen coordinates in this method.
+   */
+  handleURLParamsPositionTransform_: function(messageData, params) {
+    console.log('handleURLParamsPositionTransform_');
+    console.log(messageData);
+    console.log(params);
+    if (params.position) {
+      params.position = {x: messageData.x, y: messageData.y};
+    } else if (params.viewPosition) {
+      if (params.view == FittingType.FIT_TO_WIDTH)
+        params.viewPosition = messageData.y;
+      else if (params.view == FittingType.FIT_TO_HEIGHT)
+        params.viewPosition = messageData.x;
+    }
+    this.handleURLParamsSync_(params);
+  },
+
+  /**
+   * @private
    * Handle open pdf parameters. This function updates the viewport as per
    * the parameters mentioned in the url while opening pdf. The order is
    * important as later actions can override the effects of previous actions.
-   * @param {Object} params The open params passed in the URL.
+   * @param {Object} params Map with view parameters (view, viewPosition,
+   *     position, zoom). Positions are in screen coordinates in this method.
    */
-  handleURLParams_: function(params) {
+  handleURLParamsSync_: function(params) {
     if (params.zoom)
       this.viewport_.setZoom(params.zoom);
 
@@ -561,11 +609,11 @@ PDFViewer.prototype = {
    * 'transformPagePointReply' is returned from the plugin.
    * @param {string} origin Identifier for the caller for logging purposes.
    * @param {number} page The index of the page to go to. zero-based.
-   * @param {Object} message Message received from the plugin containing the
-   *     x and y to navigate to in screen coordinates.
+   * @param {Object} messageData Message data received from the plugin
+   *     containing the x and y to navigate to in screen coordinates.
    */
-  goToPageAndXY_: function(origin, page, message) {
-    this.viewport_.goToPageAndXY(page, message.x, message.y);
+  goToPageAndXY_: function(origin, page, messageData, params) {
+    this.viewport_.goToPageAndXY(page, messageData.x, messageData.y);
     if (origin == 'bookmark')
       this.metrics.onFollowBookmark();
   },
@@ -628,7 +676,7 @@ PDFViewer.prototype = {
    * @param {Object} event a password-submitted event.
    */
   onPasswordSubmitted_: function(event) {
-    this.plugin_.postMessage(
+    this.postMessage_(
         {type: 'getPasswordComplete', password: event.detail.password});
   },
 
@@ -728,7 +776,7 @@ PDFViewer.prototype = {
           this.toolbar_.docTitle = document.title;
         break;
       case 'getNamedDestinationReply':
-        this.paramsParser_.onNamedDestinationReceived(message.data.pageNumber);
+        this.paramsParser_.onNamedDestinationReceived(message.data);
         break;
       case 'formFocusChange':
         this.isFormFieldFocused_ = message.data.focused;
@@ -741,17 +789,27 @@ PDFViewer.prototype = {
 
   /**
    * @private
+   * Post a message to the PPAPI plugin. Some messages will cause an async reply
+   * to be received through handlePluginMessage_().
+   * @param {Object} message Message to post.
+   */
+  postMessage_: function(message) {
+    this.plugin_.postMessage(message);
+  },
+
+  /**
+   * @private
    * A callback that's called before the zoom changes. Notify the plugin to stop
    * reacting to scroll events while zoom is taking place to avoid flickering.
    */
   beforeZoom_: function() {
-    this.plugin_.postMessage({type: 'stopScrolling'});
+    this.postMessage_({type: 'stopScrolling'});
 
     if (this.viewport_.pinchPhase == Viewport.PinchPhase.PINCH_START) {
       var position = this.viewport_.position;
       var zoom = this.viewport_.zoom;
       var pinchPhase = this.viewport_.pinchPhase;
-      this.plugin_.postMessage({
+      this.postMessage_({
         type: 'viewport',
         userInitiated: true,
         zoom: zoom,
@@ -774,7 +832,7 @@ PDFViewer.prototype = {
     var pinchCenter = this.viewport_.pinchCenter || {x: 0, y: 0};
     var pinchPhase = this.viewport_.pinchPhase;
 
-    this.plugin_.postMessage({
+    this.postMessage_({
       type: 'viewport',
       userInitiated: this.isUserInitiatedEvent_,
       zoom: zoom,
@@ -933,7 +991,7 @@ PDFViewer.prototype = {
       case 'getSelectedText':
       case 'print':
       case 'selectAll':
-        this.plugin_.postMessage(message.data);
+        this.postMessage_(message.data);
         break;
     }
   },
@@ -950,7 +1008,7 @@ PDFViewer.prototype = {
 
     switch (message.data.type.toString()) {
       case 'loadPreviewPage':
-        this.plugin_.postMessage(message.data);
+        this.postMessage_(message.data);
         return true;
       case 'resetPrintPreviewMode':
         this.loadState_ = LoadState.LOADING;
@@ -975,7 +1033,7 @@ PDFViewer.prototype = {
 
         this.pageIndicator_.pageLabels = message.data.pageNumbers;
 
-        this.plugin_.postMessage({
+        this.postMessage_({
           type: 'resetPrintPreviewMode',
           url: message.data.url,
           grayscale: message.data.grayscale,
