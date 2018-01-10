@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "57c59f4b_d65d87ea",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-10T21:47:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b93e8a8_3bc92486",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5948a613_76ed1ed4",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8156fe9d_7bc16a74",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-10T21:47:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5948a613_76ed1ed4",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -103,6 +139,24 @@
       "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917de1dd_fcf9a38c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-10T21:47:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8c73e3a_dffbaa8d",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
