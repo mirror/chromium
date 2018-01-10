@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f95c00_fc9a6eba",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-10T18:50:58Z",
+      "side": 1,
+      "message": "curious - why this needs to be restored?",
+      "range": {
+        "startLine": 3436,
+        "startChar": 53,
+        "endLine": 3436,
+        "endChar": 0
+      },
+      "revId": "b0730b3d285cd69664cda2a6948a6bec15f31f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67dfb130_7bd879c1",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-10T18:50:58Z",
+      "side": 1,
+      "message": "add a comment here about what this is",
+      "range": {
+        "startLine": 975,
+        "startChar": 34,
+        "endLine": 975,
+        "endChar": 35
+      },
+      "revId": "b0730b3d285cd69664cda2a6948a6bec15f31f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f8a693_79366ca3",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-10T18:50:58Z",
+      "side": 1,
+      "message": "as discussed let\u0027s start with disallowing all xhr",
+      "range": {
+        "startLine": 1150,
+        "startChar": 21,
+        "endLine": 1150,
+        "endChar": 25
+      },
+      "revId": "b0730b3d285cd69664cda2a6948a6bec15f31f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
