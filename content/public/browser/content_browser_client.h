@@ -897,6 +897,10 @@ class CONTENT_EXPORT ContentBrowserClient {
                                         bool is_main_frame,
                                         ui::PageTransition transition);
 #endif
+
+  // If it returns false, does not create base::TaskSchduler at browser main
+  // loop start, it should be created by embedder.
+  virtual bool ShouldCreateTaskScheduler();
 };
 
 }  // namespace content
