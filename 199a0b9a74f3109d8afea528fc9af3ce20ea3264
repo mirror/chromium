@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5081d403_5485801a",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-10T12:40:55Z",
+      "side": 1,
+      "message": "Actually I am pretty confused with ResumeSavedPref test. How could we set user pref before logged_in or logged_in_not_active?",
+      "parentUuid": "a97edca7_616c8674",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "976149c9_cde308b3",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 2
