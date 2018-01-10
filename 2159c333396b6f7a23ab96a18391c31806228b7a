@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4a86e19_1ab1a248",
+        "filename": "third_party/protobuf/README.chromium",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1149279
+      },
+      "writtenOn": "2018-01-10T18:10:48Z",
+      "side": 1,
+      "message": "Is it really necessary? I don\u0027t think we even compile, much less run those unittests, and even if we did, it would be better solution to just define this constant in the applicable rule in BUILD.gn, if our gtest no longer does it.",
+      "range": {
+        "startLine": 114,
+        "startChar": 40,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "2159c333396b6f7a23ab96a18391c31806228b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
