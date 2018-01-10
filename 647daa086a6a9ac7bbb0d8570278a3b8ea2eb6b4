@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac81ed3_9d0e6759",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "This change is incorrect.",
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802fd0ff_34ac9c1b",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "You should call -browserStateDestroyed: on BrowsingDataRemovalController (or move the implementation of -browserStateDestroyed: to -shutdown).",
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a6317d_2f5ac2e4",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "AFAICT, nothing guarantee (except the current unicity of ios::ChromeBrowserState) that browserState is the same value as passed to BrowsingDataRemovalController -initWithBrowserState: method.\n\nSo we should either propagate back the removal of this parameter, have a map of BrowsingDataRemovalController indexed by ChromeBrowserState* or change back BrowsingDataRemovalController to not keep a pointer to a ChromeBrowserState*.",
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e17c11_88068ad1",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "I think this is redundant with -shutdown. IMO, this method should be renamed to -shutdown and the parameter removed. The reason is that the call to -shutdown happens just before the BrowserState is destroyed.",
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13364898_77b2ee10",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "Since BrowsingDataRemovalController is now tied to a BrowserState, then I think there are only two possible values for the key here, either browserState_ or browserState_-\u003eGetOffTheRecordChromeBrowserState(), so maybe we can use two int instead:\n\n  // Tracks the number of pending removal for |browserState_| and the corresponding\n  // off-the-record BrowserState (see GetOffTheRecordChromeBrowserState).\n  int _pendingRemovalCount;\n  int _otrPendingRemovalCount;\n\nThen -incrementPendingRemovalCountForBrowserState:/decrementPendingRemovalCountForBrowserState:/hasPendingRemovalOperations: can be changed accordingly:\n\n  - (int*)pendingRemovalCount:(BOOL)incognito {\n    int* result \u003d incognito ? \u0026_otrPendingRemovalCount : \u0026_pendingRemovalCount;\n    DCHECK(result);\n    return result;\n  }\n\n  - (void)incrementPendingRemovalCount:(BOOL)incognito {\n    *[self pendingRemovalCount:incognito]++;\n  }\n\n  - (void)decrementPendingRemovalCount:(BOOL)incognito {\n    int* counter \u003d [self pendingRemovalCount:incognito];\n    DCHECK_GT(*counter, 0);\n    --*counter;\n  }\n\n  - (BOOL)hasPendingRemovalOperations:(ios::ChromeBrowserState*)browserState {\n    if (!browserState_)\n      return NO;\n\n    DCHECK_EQ(browserState_,\n              browserState-\u003eIsOffTheRecord()\n                  ? browserState-\u003eGetOriginalChromeBrowserState()\n                  : browserState);\n\n    return *[self pendingRemovalCount:incognito] !\u003d 0;\n  }",
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d873f995_42af09dd",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "No need for std::move():\n\n  browserState_ \u003d browserState;",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 133,
+        "endChar": 43
+      },
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4b5670_b7bbe143",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "This should be changed to early return to avoid crashing if called after -shutdown.\n\n  if (!browserState_)\n    return;",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 22
+      },
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd470459_6adce652",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd42c0de_92e0fe47",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T13:30:12Z",
+      "side": 1,
+      "message": "I think this is incorrect. This method was currently called here:\n\n    // If there are pending removal operations, the activation will be deferred\n    // until the callback for |removeBrowsingDataFromBrowserState:| is received.\n    if (![self.browsingDataRemovalController\n            hasPendingRemovalOperations:self.currentBrowserState]) {\n\nwith:\n\n  - (ios::ChromeBrowserState*)currentBrowserState {\n    return self.currentBVC.browserState;\n  }\n\nHowever, currentBVC can be set to either mainBVC or otrBVC (see for example \"BOOL otrBVCIsCurrent \u003d (self.currentBVC \u003d\u003d self.otrBVC);\").",
+      "revId": "647daa086a6a9ac7bbb0d8570278a3b8ea2eb6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
