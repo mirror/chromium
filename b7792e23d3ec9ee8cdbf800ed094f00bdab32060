@@ -34,6 +34,24 @@
       "revId": "b7792e23d3ec9ee8cdbf800ed094f00bdab32060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c9c0b8_d913dc0d",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T15:19:14Z",
+      "side": 1,
+      "message": "That is unfortunate. Please mark the location in devtools protocol as \"deprecated\" and comment why then (see https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/inspector/browser_protocol.pdl?rcl\u003dfbc92a7cf5e08e13664a1739fbaa68657cb5263c\u0026l\u003d4256).",
+      "parentUuid": "e18a61d6_3abab8c9",
+      "revId": "b7792e23d3ec9ee8cdbf800ed094f00bdab32060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
