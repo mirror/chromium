@@ -33,7 +33,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
@@ -368,7 +368,7 @@ bool HungRendererDialogView::Cancel() {
     // Try to generate a crash report for the hung process.
     CrashDumpAndTerminateHungChildProcess(rph->GetHandle());
 #else
-    rph->Shutdown(content::RESULT_CODE_HUNG, false);
+    rph->Shutdown(base::RESULT_CODE_HUNG, false);
 #endif
   }
   return true;

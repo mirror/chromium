@@ -18,7 +18,7 @@
 #include "build/build_config.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/test/base/test_switches.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 
 using base::TimeDelta;
 using base::TimeTicks;
@@ -29,7 +29,7 @@ void TerminateAllChromeProcesses(const ChromeProcessList& process_pids) {
     if (process.IsValid()) {
       // Ignore processes for which we can't open the handle. We don't
       // guarantee that all processes will terminate, only try to do so.
-      process.Terminate(content::RESULT_CODE_KILLED, true);
+      process.Terminate(base::RESULT_CODE_KILLED, true);
     }
   }
 }

@@ -152,8 +152,8 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_paths.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/result_codes.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
@@ -1870,7 +1870,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallForcelist) {
   extensions::ExtensionHost* extension_host =
       extensions::ProcessManager::Get(browser()->profile())
           ->GetBackgroundHostForExtension(kGoodCrxId);
-  extension_host->render_process_host()->Shutdown(content::RESULT_CODE_KILLED,
+  extension_host->render_process_host()->Shutdown(base::RESULT_CODE_KILLED,
                                                   false);
   extension_crashed_observer.Wait();
   extension_loaded_observer.WaitForExtensionLoaded();

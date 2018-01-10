@@ -11,7 +11,7 @@
 #include "base/logging.h"
 #include "base/process/launch.h"
 #include "build/build_config.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 
 namespace content {
@@ -29,7 +29,7 @@ ChildProcessLauncher::ChildProcessLauncher(
     bool terminate_on_shutdown)
     : client_(client),
       termination_status_(base::TERMINATION_STATUS_NORMAL_TERMINATION),
-      exit_code_(RESULT_CODE_NORMAL_EXIT),
+      exit_code_(base::RESULT_CODE_NORMAL_EXIT),
       starting_(true),
 #if defined(ADDRESS_SANITIZER) || defined(LEAK_SANITIZER) ||  \
     defined(MEMORY_SANITIZER) || defined(THREAD_SANITIZER) || \

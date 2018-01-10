@@ -11,7 +11,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/infobars/core/infobar.h"
 #include "content/public/browser/render_process_host.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "ui/base/l10n/l10n_util.h"
 
 // static
@@ -69,7 +69,7 @@ base::string16 HungRendererInfoBarDelegate::GetButtonLabel(
 
 bool HungRendererInfoBarDelegate::Accept() {
   LogEvent(KILL_CLICKED);
-  render_process_host_->Shutdown(content::RESULT_CODE_HUNG, false);
+  render_process_host_->Shutdown(base::RESULT_CODE_HUNG, false);
   return true;
 }
 

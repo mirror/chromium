@@ -29,6 +29,7 @@
 #include "base/process/launch.h"
 #include "base/process/process.h"
 #include "base/process/process_handle.h"
+#include "base/result_codes.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
@@ -37,7 +38,6 @@
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/mojo_channel_switches.h"
-#include "content/public/common/result_codes.h"
 #include "content/public/common/send_zygote_child_ping_linux.h"
 #include "content/public/common/zygote_fork_delegate_linux.h"
 #include "ipc/ipc_channel.h"
@@ -140,7 +140,7 @@ bool Zygote::ProcessRequests() {
     // right after the process starts and it may fail to send zygote magic
     // number to browser process.
     if (!r)
-      _exit(RESULT_CODE_NORMAL_EXIT);
+      _exit(base::RESULT_CODE_NORMAL_EXIT);
 #else
     CHECK(r) << "Sending zygote magic failed";
 #endif
@@ -401,7 +401,7 @@ void Zygote::HandleGetTerminationStatus(int fd, base::PickleIterator iter) {
     // it terminated normally.
     NOTREACHED();
     status = base::TERMINATION_STATUS_NORMAL_TERMINATION;
-    exit_code = RESULT_CODE_NORMAL_EXIT;
+    exit_code = base::RESULT_CODE_NORMAL_EXIT;
   }
 
   base::Pickle write_pickle;

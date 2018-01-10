@@ -63,8 +63,8 @@
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/result_codes.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
@@ -3705,7 +3705,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, ReloadAfterCrash) {
   auto* rph = GetGuestWebContents()->GetMainFrame()->GetProcess();
   content::RenderProcessHostWatcher crash_observer(
       rph, content::RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
-  EXPECT_TRUE(rph->Shutdown(content::RESULT_CODE_KILLED, false));
+  EXPECT_TRUE(rph->Shutdown(base::RESULT_CODE_KILLED, false));
   crash_observer.Wait();
   EXPECT_FALSE(GetGuestWebContents()->GetMainFrame()->GetView());
 

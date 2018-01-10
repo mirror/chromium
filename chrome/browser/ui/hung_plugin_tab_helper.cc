@@ -22,8 +22,8 @@
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/plugin_service.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/process_type.h"
-#include "content/public/common/result_codes.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/hang_monitor/hang_crash_dump_win.h"
@@ -50,7 +50,7 @@ void KillPluginOnIOThread(int child_id) {
 #else
       base::Process process =
           base::Process::DeprecatedGetProcessFromHandle(data.handle);
-      process.Terminate(content::RESULT_CODE_HUNG, false);
+      process.Terminate(base::RESULT_CODE_HUNG, false);
 #endif
       break;
     }

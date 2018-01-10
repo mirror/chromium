@@ -27,7 +27,7 @@
 #include "chrome/browser/win/chrome_process_finder.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/multiprocess_func_list.h"
 
@@ -299,7 +299,7 @@ TEST_F(ProcessSingletonTest, KillsHungBrowserWithNoWindows) {
   int exit_code = 0;
   EXPECT_TRUE(
       browser_victim()->WaitForExitWithTimeout(base::TimeDelta(), &exit_code));
-  EXPECT_EQ(content::RESULT_CODE_HUNG, exit_code);
+  EXPECT_EQ(base::RESULT_CODE_HUNG, exit_code);
 }
 
 TEST_F(ProcessSingletonTest, DoesntKillWithoutUserPermission) {
@@ -358,5 +358,5 @@ TEST_F(ProcessSingletonTest, KillWithUserPermission) {
   int exit_code = 0;
   EXPECT_TRUE(
       browser_victim()->WaitForExitWithTimeout(base::TimeDelta(), &exit_code));
-  EXPECT_EQ(content::RESULT_CODE_HUNG, exit_code);
+  EXPECT_EQ(base::RESULT_CODE_HUNG, exit_code);
 }

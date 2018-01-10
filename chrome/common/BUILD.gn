@@ -557,7 +557,7 @@ static_library("constants") {
   public_deps = [
     ":features",
     ":non_code_constants",
-    "//content/public/common:result_codes",
+    "//content/public/common:content_result_codes",
     "//extensions/features",
     "//printing/features",
     "//rlz/features",

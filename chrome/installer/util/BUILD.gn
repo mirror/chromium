@@ -44,7 +44,7 @@ static_library("with_no_strings") {
     "//chrome:strings",
     "//chrome/common:constants",
     "//components/variations",
-    "//content/public/common:result_codes",
+    "//content/public/common:content_result_codes",
   ]
 
   # The constants target checks the Chrome distribution from this target. Both

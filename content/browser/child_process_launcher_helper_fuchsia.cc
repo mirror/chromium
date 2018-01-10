@@ -114,7 +114,7 @@ void ChildProcessLauncherHelper::AfterLaunchOnLauncherThread(
 void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
     ChildProcessLauncherHelper::Process process) {
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-  process.process.Terminate(RESULT_CODE_NORMAL_EXIT, true);
+  process.process.Terminate(base::RESULT_CODE_NORMAL_EXIT, true);
 }
 
 }  // namespace internal

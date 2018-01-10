@@ -34,7 +34,6 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/result_codes.h"
 #include "net/android/network_change_notifier_factory_android.h"
 #include "net/base/network_change_notifier.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -116,7 +115,7 @@ int AwBrowserMainParts::PreCreateThreads() {
     aw_field_trial_creator_.SetUpFieldTrials();
   }
 
-  return content::RESULT_CODE_NORMAL_EXIT;
+  return base::RESULT_CODE_NORMAL_EXIT;
 }
 
 void AwBrowserMainParts::PreMainMessageLoopRun() {

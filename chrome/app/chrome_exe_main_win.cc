@@ -36,8 +36,8 @@
 #include "components/crash/content/app/crashpad.h"
 #include "components/crash/content/app/fallback_crash_handling_win.h"
 #include "components/crash/content/app/run_as_crashpad_handler_win.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/result_codes.h"
 
 namespace {
 

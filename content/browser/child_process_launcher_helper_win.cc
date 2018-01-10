@@ -10,7 +10,7 @@
 #include "base/win/win_util.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/child_process_launcher_helper.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/sandbox_init.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "mojo/edk/embedder/named_platform_channel_pair.h"
@@ -106,7 +106,7 @@ void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
   // Client has gone away, so just kill the process.  Using exit code 0 means
   // that UMA won't treat this as a crash.
-  process.process.Terminate(RESULT_CODE_NORMAL_EXIT, false);
+  process.process.Terminate(base::RESULT_CODE_NORMAL_EXIT, false);
 }
 
 void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(

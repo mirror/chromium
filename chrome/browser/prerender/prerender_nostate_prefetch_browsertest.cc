@@ -35,7 +35,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/url_loader_interceptor.h"
@@ -748,8 +748,7 @@ IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, ServiceWorkerIntercept) {
            content::RenderProcessHost::AllHostsIterator());
        !iter.IsAtEnd(); iter.Advance()) {
     ++host_count;
-    iter.GetCurrentValue()->Shutdown(content::RESULT_CODE_KILLED,
-                                     true /* wait */);
+    iter.GetCurrentValue()->Shutdown(base::RESULT_CODE_KILLED, true /* wait */);
   }
   // There should be at most one render_process_host, that created for the SW.
   EXPECT_EQ(1, host_count);

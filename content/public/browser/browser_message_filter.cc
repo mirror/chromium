@@ -15,8 +15,8 @@
 #include "build/build_config.h"
 #include "content/browser/browser_child_process_host_impl.h"
 #include "content/browser/child_process_launcher.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/result_codes.h"
 #include "ipc/ipc_sync_message.h"
 #include "ipc/message_filter.h"
 

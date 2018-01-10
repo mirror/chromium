@@ -63,7 +63,7 @@ static_library("app") {
       "//base:base_static",
       "//components/crash/core/common",
       "//content/public/common:content_descriptors",
-      "//content/public/common:result_codes",
+      "//content/public/common:content_result_codes",
       "//third_party/breakpad:client",
     ]
 
@@ -207,7 +207,7 @@ if (is_win) {
       "//base",
       "//base:base_static",
       "//components/crash/core/common",
-      "//content/public/common:result_codes",
+      "//content/public/common:content_result_codes",
       "//sandbox",
       "//third_party/breakpad:breakpad_handler",
       "//third_party/breakpad:client",

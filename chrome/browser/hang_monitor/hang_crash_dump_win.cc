@@ -9,7 +9,7 @@
 #include "base/strings/string_util.h"
 #include "chrome/common/chrome_constants.h"
 #include "components/crash/content/app/crash_export_thunks.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 
 namespace {
 
@@ -32,6 +32,6 @@ void CrashDumpAndTerminateHungChildProcess(HANDLE hprocess) {
     CloseHandle(remote_thread);
   }
 
-  TerminateProcess(hprocess, content::RESULT_CODE_HUNG);
+  TerminateProcess(hprocess, base::RESULT_CODE_HUNG);
   WaitForSingleObject(hprocess, kTerminateTimeoutMS);
 }

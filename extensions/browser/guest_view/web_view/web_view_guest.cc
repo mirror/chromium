@@ -15,6 +15,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/user_metrics.h"
+#include "base/result_codes.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -40,7 +41,6 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/media_stream_request.h"
 #include "content/public/common/page_zoom.h"
-#include "content/public/common/result_codes.h"
 #include "content/public/common/stop_find_action.h"
 #include "content/public/common/url_constants.h"
 #include "extensions/browser/api/declarative/rules_registry_service.h"
@@ -738,7 +738,7 @@ void WebViewGuest::Terminate() {
       web_contents()->GetMainFrame()->GetProcess()->GetHandle();
   if (process_handle)
     web_contents()->GetMainFrame()->GetProcess()->Shutdown(
-        content::RESULT_CODE_KILLED, false);
+        base::RESULT_CODE_KILLED, false);
 }
 
 bool WebViewGuest::ClearData(base::Time remove_since,

@@ -10,7 +10,7 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/shell/browser/shell.h"
@@ -49,7 +49,7 @@ IN_PROC_BROWSER_TEST_F(ChildProcessSecurityPolicyInProcessBrowserTest, NoLeak) {
           1U);
 
   WebContents* web_contents = shell()->web_contents();
-  web_contents->GetMainFrame()->GetProcess()->Shutdown(RESULT_CODE_KILLED,
+  web_contents->GetMainFrame()->GetProcess()->Shutdown(base::RESULT_CODE_KILLED,
                                                        true);
 
   web_contents->GetController().Reload(ReloadType::NORMAL, true);

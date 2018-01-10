@@ -20,7 +20,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/url_constants.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/extension_registry.h"
@@ -75,7 +75,7 @@ class ExtensionCrashRecoveryTestBase : public ExtensionBrowserTest {
         GetBackgroundHostForExtension(extension_id);
     ASSERT_TRUE(extension_host);
 
-    extension_host->render_process_host()->Shutdown(content::RESULT_CODE_KILLED,
+    extension_host->render_process_host()->Shutdown(base::RESULT_CODE_KILLED,
                                                     false);
     ASSERT_TRUE(WaitForExtensionCrash(extension_id));
     ASSERT_FALSE(GetProcessManager()->

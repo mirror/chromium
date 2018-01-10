@@ -709,6 +709,7 @@ jumbo_component("base") {
     "rand_util_nacl.cc",
     "rand_util_posix.cc",
     "rand_util_win.cc",
+    "result_codes.h",
     "run_loop.cc",
     "run_loop.h",
     "scoped_clear_errno.h",
@@ -1867,6 +1868,14 @@ component("i18n") {
   if (is_mac) {
     libs = [ "CoreFoundation.framework" ]
   }
+}
+
+# This target allows other targets to depend on result_codes.h which
+# is a header-only dependency, without bringing in all of base.
+source_set("result_codes") {
+  sources = [
+    "result_codes.h",
+  ]
 }
 
 test("base_perftests") {

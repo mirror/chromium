@@ -18,8 +18,8 @@
 #include "base/posix/unix_domain_socket.h"
 #include "content/browser/zygote_host/zygote_host_impl_linux.h"
 #include "content/common/zygote_commands_linux.h"
+#include "content/public/common/content_result_codes.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/result_codes.h"
 #include "media/base/media_switches.h"
 #include "services/service_manager/embedder/switches.h"
 #include "services/service_manager/sandbox/switches.h"
@@ -309,7 +309,7 @@ base::TerminationStatus ZygoteCommunication::GetTerminationStatus(
 
   // Set this now to handle the error cases.
   if (exit_code)
-    *exit_code = RESULT_CODE_NORMAL_EXIT;
+    *exit_code = base::RESULT_CODE_NORMAL_EXIT;
   int status = base::TERMINATION_STATUS_NORMAL_TERMINATION;
 
   if (len == -1) {
