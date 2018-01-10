@@ -103,6 +103,7 @@ bool SpellingServiceClient::RequestTextCheck(
 
   GURL url = GURL(kSpellingServiceURL);
 
+
   // Create traffic annotation tag.
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("spellcheck_lookup", R"(
