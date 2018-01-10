@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8140475_264f2986",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-10T14:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4001c63e_05907612",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "858ff907ae2b45945eb436ecd9d9c1f4766bc1d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f15b6d7_6009bd32",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "858ff907ae2b45945eb436ecd9d9c1f4766bc1d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3b06ff_c97ba1fa",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-10T14:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f15b6d7_6009bd32",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 4
+      },
+      "revId": "858ff907ae2b45945eb436ecd9d9c1f4766bc1d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
