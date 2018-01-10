@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af6669fd_1f8deec5",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-10T15:44:35Z",
+      "side": 1,
+      "message": "This naming feels a bit weird.\nWhy are we cancelling a fling if it has already been halted?",
+      "range": {
+        "startLine": 340,
+        "startChar": 24,
+        "endLine": 340,
+        "endChar": 42
+      },
+      "revId": "441741508c9d5f7b614aaae9aab9f193a7ed1e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635c3693_e4962895",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-10T15:44:35Z",
+      "side": 1,
+      "message": "Feels like something is named funny here.\n\nStopFling sounds like it should stop the fling.\nFlingHasBeenHalted() sounds like it should notify that fling already was stopped.\n\nThis method implies that FlingHasBeenHalted actually stops the fling.",
+      "range": {
+        "startLine": 216,
+        "startChar": 23,
+        "endLine": 216,
+        "endChar": 41
+      },
+      "revId": "441741508c9d5f7b614aaae9aab9f193a7ed1e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
