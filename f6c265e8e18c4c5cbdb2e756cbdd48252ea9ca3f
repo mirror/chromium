@@ -102,6 +102,24 @@
       "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff66e329_d14a1886",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-10T14:13:54Z",
+      "side": 1,
+      "message": "Good point. It\u0027s asynchronous. \n\nI checked crash doesn\u0027t happen by quickly doing maximize/restore, because it takes a decent amount of time for a request to come from aura. But maybe this should be removed.\nWdyt?",
+      "parentUuid": "0954de33_a627e0f2",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
