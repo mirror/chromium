@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd358f0_8fe0c7dc",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-10T01:39:10Z",
+      "side": 1,
+      "message": "Text outside of a tag?",
+      "revId": "1b5c49a4460e8098374fde99c3e9f5061103f352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
