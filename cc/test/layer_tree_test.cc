@@ -216,9 +216,10 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
         this, raster_buffer_provider, resource_pool);
   }
 
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
-    LayerTreeHostImpl::WillBeginImplFrame(args);
+  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
+    bool has_damage = LayerTreeHostImpl::WillBeginImplFrame(args);
     test_hooks_->WillBeginImplFrameOnThread(this, args);
+    return has_damage;
   }
 
   void DidFinishImplFrame() override {
@@ -359,6 +360,11 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
   void InvalidateContentOnImplSide() override {
     LayerTreeHostImpl::InvalidateContentOnImplSide();
     test_hooks_->DidInvalidateContentOnImplSide(this);
+  }
+
+  void InvalidateLayerTreeFrameSink() override {
+    LayerTreeHostImpl::InvalidateLayerTreeFrameSink();
+    test_hooks_->DidInvalidateLayerTreeFrameSink(this);
   }
 
   void RequestImplSideInvalidationForCheckerImagedTiles() override {
