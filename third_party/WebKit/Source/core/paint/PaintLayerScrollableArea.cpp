@@ -824,6 +824,7 @@ void PaintLayerScrollableArea::SetScrollOffsetUnconditionally(
 }
 
 void PaintLayerScrollableArea::UpdateAfterLayout() {
+  SetNeedsRelayout(false);
   bool scrollbars_are_frozen =
       (in_overflow_relayout_ && !allow_second_overflow_relayout_) ||
       FreezeScrollbarsScope::ScrollbarsAreFrozen();
@@ -2329,7 +2330,8 @@ PaintLayerScrollableArea::PreventRelayoutScope::~PreventRelayoutScope() {
   if (--count_ == 0) {
     if (relayout_needed_) {
       for (auto scrollable_area : *needs_relayout_) {
-        DCHECK(scrollable_area->NeedsRelayout());
+        if (!scrollable_area->NeedsRelayout())
+          continue;
         LayoutBox* box = scrollable_area->GetLayoutBox();
         layout_scope_->SetNeedsLayout(
             box, LayoutInvalidationReason::kScrollbarChanged);
