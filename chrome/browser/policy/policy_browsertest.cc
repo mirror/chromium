@@ -1358,6 +1358,10 @@ void WaitForExtensionsDevModeControlsVisibility(
 }  // namespace
 
 IN_PROC_BROWSER_TEST_F(PolicyTest, DeveloperToolsDisabledExtensionsDevMode) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitWithFeatures(
+      {} /* enabled */, {features::kMaterialDesignExtensions} /* disabled */);
+
   // Verifies that when DeveloperToolsDisabled policy is set, the "dev mode"
   // in chrome://extensions-frame is actively turned off and the checkbox
   // is disabled.
