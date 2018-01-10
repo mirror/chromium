@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "3175d7ad_b144f26f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-01-10T15:24:16Z",
+      "side": 1,
+      "message": "Yes. oka@\u0027s code is a workdaround,  and this is a patch to his incomplete workaround, as his workaround didn\u0027t point SoundsManager to mockAudioManager;\n\nWe don\u0027t want two AudioManager but we can\u0027t control it. Explanations below:\n\nWe have to use MockAudioManager in the tests because the test is to test disabling some audio features, if we use the real AudioManager, disabling will fail on some test environment as it doesn\u0027t have audio input devices.\n\n\"Construct the audio manager; only one instance is allowed.\" \u003c\u003d Yes, but the implementation is the later call overrides the earlier call. That\u0027s why oka@ put MockAudioManager in the test instead of at SetUp() so MockAudioManager takes effects (but unfortunately AudioStreamHandler has already kept a pointer to real one during the test framework SetUp() which fails the test when we start to broadcast the observer)\n\nThe flow is\n1)  our set-up:\n      initialize our fake sounds manager.\n2)  within the test framework:\n      2.1 initialize real audio manager (overrides existing one, and output the warning\n      2.2 initialize real sounds manager (points to realAudioManager) if sound manager is not initialized yet. Our patch makes this into NO-OP,\n3)  within the tests\n       initialize mock audio manager (overrides existing one so now AudioManager::Get() points to mockAudioManager. And our FakeSoundsManager always use AudioManager::Get()\n\n\n\nPlease point out your questions.",
+      "parentUuid": "e7d01f3d_bdf8764e",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f343c98_dc31581e",
         "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
         "patchSetId": 13
