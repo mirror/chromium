@@ -154,16 +154,6 @@ void ExtensionHost::CreateRenderViewNow() {
   LoadInitialURL();
   if (IsBackgroundPage()) {
     DCHECK(IsRenderViewLive());
-    if (extension_) {
-      std::string group_name = base::FieldTrialList::FindFullName(
-          "ThrottleExtensionBackgroundPages");
-      if ((group_name == "ThrottlePersistent" &&
-           extensions::BackgroundInfo::HasPersistentBackgroundPage(
-               extension_)) ||
-          group_name == "ThrottleAll") {
-        host_contents_->WasHidden();
-      }
-    }
     // Connect orphaned dev-tools instances.
     delegate_->OnRenderViewCreatedForBackgroundPage(this);
   }
