@@ -21,6 +21,7 @@
 #include "base/scoped_native_library.h"
 #include "base/win/message_window.h"
 #include "build/build_config.h"
+#include "device/gamepad/dualshock4_controller_win.h"
 #include "device/gamepad/gamepad_data_fetcher.h"
 #include "device/gamepad/gamepad_standard_mappings.h"
 #include "device/gamepad/public/cpp/gamepad.h"
@@ -56,6 +57,9 @@ struct RawGamepadInfo {
 
   uint32_t axes_length;
   RawGamepadAxis axes[Gamepad::kAxesLengthCap];
+
+  // Expose Dualshock4-specific functionality (e.g., haptics).
+  std::unique_ptr<Dualshock4ControllerWin> dualshock4_;
 };
 
 class RawInputDataFetcher : public GamepadDataFetcher,
@@ -72,6 +76,14 @@ class RawInputDataFetcher : public GamepadDataFetcher,
 
   void GetGamepadData(bool devices_changed_hint) override;
   void PauseHint(bool paused) override;
+  void PlayEffect(
+      int pad_id,
+      mojom::GamepadHapticEffectType,
+      mojom::GamepadEffectParametersPtr,
+      mojom::GamepadHapticsManager::PlayVibrationEffectOnceCallback) override;
+  void ResetVibration(
+      int pad_id,
+      mojom::GamepadHapticsManager::ResetVibrationActuatorCallback) override;
 
  private:
   void OnAddedToProvider() override;
@@ -81,6 +93,8 @@ class RawInputDataFetcher : public GamepadDataFetcher,
   void EnumerateDevices();
   RawGamepadInfo* ParseGamepadInfo(HANDLE hDevice);
   void UpdateGamepad(RAWINPUT* input, RawGamepadInfo* gamepad_info);
+  bool SupportsVibration(RawGamepadInfo* pad_info);
+  RawGamepadInfo* GamepadInfoFromSourceId(int source_id);
   // Handles WM_INPUT messages.
   LRESULT OnInput(HRAWINPUT input_handle);
   // Handles messages received by |window_|.

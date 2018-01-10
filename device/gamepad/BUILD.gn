@@ -17,6 +17,8 @@ component("gamepad") {
     "abstract_haptic_gamepad.h",
     "dualshock4_controller_base.cc",
     "dualshock4_controller_base.h",
+    "dualshock4_controller_win.cc",
+    "dualshock4_controller_win.h",
     "game_controller_data_fetcher_mac.h",
     "game_controller_data_fetcher_mac.mm",
     "gamepad_consumer.cc",
