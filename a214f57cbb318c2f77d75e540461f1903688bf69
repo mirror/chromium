@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66fc3cfe_be348563",
+        "filename": "content/renderer/indexed_db/indexed_db_key_builders.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-10T00:30:57Z",
+      "side": 1,
+      "message": "Done.\n\nI didn\u0027t know we\u0027re doing const for local variables. I might have committed a lot of code that misses this opportunity.",
+      "parentUuid": "5e13efb2_a18e6fa7",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af0a07ce_f8d37480",
         "filename": "content/renderer/indexed_db/indexed_db_key_builders.cc",
         "patchSetId": 21
@@ -39,6 +63,24 @@
       "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e26273c_1d2a3efb",
+        "filename": "content/renderer/indexed_db/indexed_db_key_builders.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-10T00:30:57Z",
+      "side": 1,
+      "message": "Done.\n\nSweet, I like consistency! Settled on result.",
+      "parentUuid": "af0a07ce_f8d37480",
+      "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7f146a8e_e7d3c62e",
+        "filename": "content/renderer/indexed_db/indexed_db_key_builders.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-10T00:30:57Z",
+      "side": 1,
+      "message": "I inlined array.size() below instead.",
+      "parentUuid": "122742e8_19492d2e",
+      "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2051f6b2_0779843e",
         "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBCursor.h",
         "patchSetId": 21
@@ -70,6 +130,24 @@
       "writtenOn": "2018-01-03T21:56:25Z",
       "side": 1,
       "message": "Maybe comment somewhere that a cursor gets views rather than taking ownership since the cursor is backed by an object that actually owns the data?",
+      "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0353aae5_4786c913",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBCursor.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-10T00:30:57Z",
+      "side": 1,
+      "message": "Hmm, sorry the code is confusing :(\n\nThis argument isn\u0027t necessary (or necessarily correct) for reasoning about the key\u0027s lifetime. WebIDBCursor::Continue() may only assume that the key pointed to by the WebIDBKeyView is alive for the duration of the call. The current implementation creates IndexedDBKey instances out of the keys before returning.\n\nI added some comments explaining what\u0027s happening. Do they help?",
+      "parentUuid": "2051f6b2_0779843e",
       "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
