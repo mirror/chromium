@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "177dbb7d_1a6e1be4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-10T17:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe8bc116_36d0d8d4",
+      "revId": "a126e658cbc5b022dd9af4efcdf2ca4d62f7e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23c312c6_907353fa",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b1e8da9f_80598409",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-10T17:12:25Z",
+      "side": 1,
+      "message": "That is what I understood from the offline conversation, but expressed poorly. Copying your explanation as is if you don\u0027t mind!",
+      "parentUuid": "23c312c6_907353fa",
+      "revId": "a126e658cbc5b022dd9af4efcdf2ca4d62f7e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1caef9e_6310f275",
         "filename": "content/browser/frame_host/interstitial_page_navigator_impl.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "a126e658cbc5b022dd9af4efcdf2ca4d62f7e61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31723901_8302b2e7",
+        "filename": "content/browser/frame_host/interstitial_page_navigator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-10T17:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1caef9e_6310f275",
+      "revId": "a126e658cbc5b022dd9af4efcdf2ca4d62f7e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
