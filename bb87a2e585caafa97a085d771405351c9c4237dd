@@ -52,6 +52,24 @@
       "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1291e918_d46c9a2b",
+        "filename": "third_party/WebKit/Source/core/paint/SVGFilterPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-10T17:25:33Z",
+      "side": 0,
+      "message": "We don\u0027t create effect nodes for svg effects. We just paint them directly without paint property nodes.\n\nFor non-svg effects above the filtered element, this CL makes it correct by not applying the effects in the filter record. The filter record then will replay under the effects into the final painting.",
+      "parentUuid": "ffc2ac82_9531ea3d",
+      "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
