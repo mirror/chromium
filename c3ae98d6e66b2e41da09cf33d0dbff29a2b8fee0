@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfaeb75f_cdcff374",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12bebf3_90aaa904",
+      "range": {
+        "startLine": 9,
+        "startChar": 48,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33241c1d_fa745ffb",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e02730b_a2c07b01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33241c1d_fa745ffb",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3f1c853a_88641365",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17fd62e0_a5be957e",
+      "range": {
+        "startLine": 2234,
+        "startChar": 9,
+        "endLine": 2234,
+        "endChar": 11
+      },
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6811647e_f7da7dc8",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a47d445d_6627c2ce",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "It appears that MULTI_VALUE_TYPE is basically a traditional legacy flag, with no direct way to override it via Finch. That\u0027s what my initial patch did, where I was intending to keep a Feature for controlling the path indirectly via a feature parameter that modifies how a \"default\" flag value gets interpreted.\n\nWhen using FEATURE_WITH_PARAMS_VALUE_TYPE, the Feature and parameter can be set together.\n\nI\u0027m still not 100% sure if I\u0027m understanding it right, but this matches the existing enable-nostate-prefetch example, and it appears to work as expected. The missing bit that confused me earlier is the distinction between the feature name, parameter name (features::kWebXrRenderPathParamName), and field trial name (the plain string \"WebXrRenderPath\" two lines below this.)",
+      "parentUuid": "6811647e_f7da7dc8",
+      "range": {
+        "startLine": 2236,
+        "startChar": 5,
+        "endLine": 2236,
+        "endChar": 35
+      },
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16f09b98_8015f7dd",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 7
@@ -108,6 +204,24 @@
       "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87088107_9c781371",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "Good question. I think an unexpected value shouldn\u0027t cause errors here, and logging isn\u0027t very helpful.\n\nThe param value is a server supplied arbitrary string when set via Finch, and I think that a misconfigured experiment could for example end up supplying a param value that isn\u0027t implemented yet in the running version. However, it would be nice if it would show up in histograms as the value actually used.\n\nThat\u0027s also a more general issue - if the user or an experiment selects a path that isn\u0027t supported, i.e. due to failing a runtime check for a prerequisite, it should also show up in histograms as the effective value.\n\nI\u0027ve added a UMA histogram for the actually used render path. Do you think it would be useful to add a separate status histogram for a requested value that was invalid or unsupported?",
+      "parentUuid": "16f09b98_8015f7dd",
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "989c54d7_641f4092",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "Changed to \"WebXR presentation render path\".",
+      "parentUuid": "3c7f1ca2_8df3ce4c",
+      "range": {
+        "startLine": 2179,
+        "startChar": 37,
+        "endLine": 2179,
+        "endChar": 55
+      },
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d9c1bdb_870801a0",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 7
@@ -148,6 +286,24 @@
       "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b5aab5_5893860b",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9d9c1bdb_870801a0",
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "4a9a6bd9_471b18bb",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "Baseline works on all WebVR supported platforms, K+. It\u0027s also used in Cardboard-style mode without reprojection.\n\nGpuFence is a bit tricky, see code comment https://cs.chromium.org/chromium/src/ui/gl/gl_surface_egl.cc?q\u003dgl_surface_egl\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d665 . The underlying EGL_ANDROID_native_fence_sync mechanism probably works on many pre-N devices, but since the extension isn\u0027t being reported properly and older versions sometimes export a nonfunctional wrapper function, we decided to treat it as unsupported on pre-N.",
+      "parentUuid": "a94b4b68_7d81cc26",
+      "range": {
+        "startLine": 2185,
+        "startChar": 15,
+        "endLine": 2185,
+        "endChar": 25
+      },
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f481f2_da51f418",
         "filename": "content/public/common/content_features.cc",
         "patchSetId": 7
@@ -194,6 +374,30 @@
       "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5781e1_fb75ea52",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-10T19:15:23Z",
+      "side": 1,
+      "message": "Rephrased:\n\n// Controls whether an override for the WebXR presentation render path is\n// enabled. The param value specifies the requested specific render path. This\n// is combined with a runtime capability check, the option is ignored if the\n// requested render path is unsupported.",
+      "parentUuid": "86f481f2_da51f418",
+      "range": {
+        "startLine": 472,
+        "startChar": 3,
+        "endLine": 472,
+        "endChar": 72
+      },
+      "revId": "c3ae98d6e66b2e41da09cf33d0dbff29a2b8fee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
