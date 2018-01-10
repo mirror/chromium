@@ -22,6 +22,30 @@
       "revId": "4c009ba6e0762f139a41661f67091fbff4dffafd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819f1d9e_8fea3e9b",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T18:24:00Z",
+      "side": 0,
+      "message": "I\u0027m no longer sure this is the way we want to go - may be simplest to just stream data from the browser process to the network process over the pipe API.  Also, this is covers implementation, not the API.",
+      "parentUuid": "cfdff39c_4544334d",
+      "range": {
+        "startLine": 182,
+        "startChar": 29,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "4c009ba6e0762f139a41661f67091fbff4dffafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

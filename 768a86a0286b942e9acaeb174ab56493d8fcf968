@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "dde3adb7_4c5657b0",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T18:24:00Z",
+      "side": 1,
+      "message": "I could make Clone() DCHECK, use another method instead when creating a new URLLoader to retry, and use a single binding instead of a BindingSet.  The problem with that is that if anyone modified DataElements to use the Clone() method when starting a request, the code would silently break (Despite the current code working in that case), so I\u0027m a bit reluctant to do that, though it is a pretty simple change to make (And to remove if needed).\n\nI don\u0027t see any other way to do that.  Open to ideas.",
+      "parentUuid": "97f0ff9b_670f2520",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 21
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96ca3d3c_0bfae91d",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 8
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Because the code to send a DataElement over mojo (And IPC) is destructive in the case of data pipes.  See DataElement::ReleaseDataPipeGetter() consumers.  Clone() was landed literally the day I had been ready to send this CL out for review last month, for one specific use case that doesn\u0027t apply to the network service itself.",
       "parentUuid": "dd0b1700_079f47b9",
+      "range": {
+        "startLine": 1115,
+        "startChar": 12,
+        "endLine": 1115,
+        "endChar": 15
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f2c6d1_b1bfc0fe",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T18:24:00Z",
+      "side": 1,
+      "message": "I\u0027ve beefed up this comment a little.",
+      "parentUuid": "acc0b022_1b0637c6",
       "range": {
         "startLine": 1115,
         "startChar": 12,
