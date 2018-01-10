@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39c18977_0c49fa3a",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-10T00:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e50af6a_28d6c745",
+      "revId": "35706000552697fa52cc118749e029fa2d24b4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85b3b24a_00ef87a8",
         "filename": "cc/paint/paint_op_buffer_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T22:10:53Z",
       "side": 1,
       "message": "Remove this?",
+      "revId": "35706000552697fa52cc118749e029fa2d24b4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb523ae1_83d0efd0",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-10T00:09:32Z",
+      "side": 1,
+      "message": "This was needed since filters recursively check their inputs, and otherwise can\u0027t find the right candidate. I\u0027ve removed this since moving to PaintFilter.",
+      "parentUuid": "85b3b24a_00ef87a8",
       "revId": "35706000552697fa52cc118749e029fa2d24b4a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
