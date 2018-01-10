@@ -22,6 +22,30 @@
       "revId": "daf866074da01854291ee0f8a3b416bfd57f34b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee495962_8718ab19",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-10T02:45:55Z",
+      "side": 1,
+      "message": "Yup, I would refactor this so that the assignment to extra_files on line 909 contained test_env.py and .vpython.",
+      "parentUuid": "c4f0b3b5_99e59b91",
+      "range": {
+        "startLine": 915,
+        "startChar": 1,
+        "endLine": 970,
+        "endChar": 7
+      },
+      "revId": "daf866074da01854291ee0f8a3b416bfd57f34b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
