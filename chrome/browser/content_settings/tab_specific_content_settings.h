@@ -267,6 +267,12 @@ class TabSpecificContentSettings
     return midi_usages_state_;
   }
 
+  // Returns the ContentSettingsUsageState that controls access to the async
+  // clipboard API on this page.
+  const ContentSettingsUsagesState& clipboard_usages_state() const {
+    return clipboard_usages_state_;
+  }
+
   // Call to indicate that there is a protocol handler pending user approval.
   void set_pending_protocol_handler(const ProtocolHandler& handler) {
     pending_protocol_handler_ = handler;
@@ -378,6 +384,10 @@ class TabSpecificContentSettings
   void OnMidiSysExAccessed(const GURL& reqesting_origin);
   void OnMidiSysExAccessBlocked(const GURL& requesting_origin);
 
+  // There methods are called to update the status about clipboard API access.
+  void OnClipboardReadAccessed(const GURL& reqesting_origin);
+  void OnClipboardReadAccessBlocked(const GURL& requesting_origin);
+
   // Adds the given |SiteDataObserver|. The |observer| is notified when a
   // locale shared object, like for example a cookie, is accessed.
   void AddSiteDataObserver(SiteDataObserver* observer);
@@ -427,6 +437,9 @@ class TabSpecificContentSettings
   // Clears the MIDI settings.
   void ClearMidiContentSettings();
 
+  // Clears the Clipboard API settings.
+  void ClearClipboardContentSettings();
+
   // Clears settings changed by the user via PageInfo since the last navigation.
   void ClearContentSettingsChangedViaPageInfo();
 
@@ -435,6 +448,9 @@ class TabSpecificContentSettings
 
   // Updates MIDI settings on navigation.
   void MidiDidNavigate(content::NavigationHandle* navigation_handle);
+
+  // Updates MIDI settings on navigation.
+  void ClipboardDidNavigate(content::NavigationHandle* navigation_handle);
 
   // All currently registered |SiteDataObserver|s.
   base::ObserverList<SiteDataObserver> observer_list_;
@@ -456,6 +472,9 @@ class TabSpecificContentSettings
 
   // Manages information about MIDI usages in this page.
   ContentSettingsUsagesState midi_usages_state_;
+
+  // Manages information about Clipboard API usage in this page.
+  ContentSettingsUsagesState clipboard_usages_state_;
 
   // The pending protocol handler, if any. This can be set if
   // registerProtocolHandler was invoked without user gesture.
