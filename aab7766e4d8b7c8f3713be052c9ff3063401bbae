@@ -22,6 +22,30 @@
       "revId": "aab7766e4d8b7c8f3713be052c9ff3063401bbae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efd5ff4_9ec6146d",
+        "filename": "content/renderer/indexed_db/indexed_db_callbacks_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-10T01:38:47Z",
+      "side": 1,
+      "message": "Done.\n\nThe WebIDBValue constructor takes in a const reference and passes it all the way to the point where we build a WTF::Vector, so std::move doesn\u0027t prevent any extra copies, but I figured it can\u0027t hurt. \n\nIf you\u0027re wondering why I didn\u0027t have WebVector\u003cWebBlobInfo\u003e passed by value... the answer is that unless we also make WebBlobInfo move-only, I\u0027m too afraid of accidentally introducing extra copies, like this one would have been :)",
+      "parentUuid": "0b5a6d72_d35bb213",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "aab7766e4d8b7c8f3713be052c9ff3063401bbae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
