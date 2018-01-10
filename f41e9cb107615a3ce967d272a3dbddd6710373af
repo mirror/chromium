@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8b0c8d3_8874c693",
+        "filename": "device/ctap/ctap_response_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "512ff39c_3cf0c9e2",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9cad6f4_7499249e",
         "filename": "device/ctap/ctap_response_unittest.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd326c6_bb2b403f",
+        "filename": "device/ctap/ctap_response_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9cad6f4_7499249e",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 13
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2c938c5a_0d86bbcf",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7369fbc5_1d2bd196",
+      "range": {
+        "startLine": 47,
+        "startChar": 58,
+        "endLine": 47,
+        "endChar": 59
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83b704ca_afe18e87",
         "filename": "device/ctap/device_response_convertor.cc",
         "patchSetId": 11
@@ -85,6 +157,24 @@
       "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105bca8b_8d547b09",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Checked for condition returning base::nullopt first so that braces can be elided.",
+      "parentUuid": "83b704ca_afe18e87",
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c819757c_87e4d344",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Thanks for the catch! :) I agree that if map contains the correct key but the value is not formatted correctly, then we should return base::nullopt. \n\nChanged all code below to return null optional when optional response value is encoded incorrectly.",
+      "parentUuid": "fb031a64_0894f1ed",
+      "range": {
+        "startLine": 105,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 53
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2defa4_93423fbc",
         "filename": "device/ctap/device_response_convertor.cc",
         "patchSetId": 11
@@ -131,6 +245,30 @@
       "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98b25f6_06cf1b76",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa2defa4_93423fbc",
+      "range": {
+        "startLine": 113,
+        "startChar": 60,
+        "endLine": 113,
+        "endChar": 61
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "75f1bc27_2e7f0723",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6a8a5c8_0d82caeb",
+      "range": {
+        "startLine": 139,
+        "startChar": 23,
+        "endLine": 139,
+        "endChar": 32
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0bf7dee_955ffcbd",
         "filename": "device/ctap/device_response_convertor.cc",
         "patchSetId": 11
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "268e4bb8_f529fd4b",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0bf7dee_955ffcbd",
+      "range": {
+        "startLine": 170,
+        "startChar": 14,
+        "endLine": 170,
+        "endChar": 31
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af4cdd99_ef8ef76e",
         "filename": "device/ctap/device_response_convertor.cc",
         "patchSetId": 11
@@ -191,6 +377,30 @@
       "writtenOn": "2018-01-10T00:12:34Z",
       "side": 1,
       "message": "A CBORValue::GetBoolean() or CBORValue::is_true() method would be cleaner here.",
+      "range": {
+        "startLine": 170,
+        "startChar": 54,
+        "endLine": 171,
+        "endChar": 72
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89547a15_564049a8",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "With previous comment, I\u0027ll make this change in a follow up CL since it requires change in components/cbor as well.",
+      "parentUuid": "af4cdd99_ef8ef76e",
       "range": {
         "startLine": 170,
         "startChar": 54,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "c06d545d_475e5e04",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Changed to SupportsResidentKey",
+      "parentUuid": "85951fe3_590d92de",
+      "range": {
+        "startLine": 177,
+        "startChar": 14,
+        "endLine": 177,
+        "endChar": 28
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "295bda99_5d6acb90",
         "filename": "device/ctap/device_response_convertor.cc",
         "patchSetId": 11
@@ -246,6 +480,30 @@
       "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37eea35_2ce4f6a5",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T04:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "295bda99_5d6acb90",
+      "range": {
+        "startLine": 207,
+        "startChar": 60,
+        "endLine": 207,
+        "endChar": 61
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
