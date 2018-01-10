@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "04ddbd4f_6827c8da",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-10T19:44:31Z",
+      "side": 0,
+      "message": "Not related to this CL. But this is dead code. Removed.",
+      "revId": "44e2d956f25cef40fc1f27c52f9b8b68ecd59744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db3cf15e_979c4bb1",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 1
@@ -22,6 +39,30 @@
       "revId": "44e2d956f25cef40fc1f27c52f9b8b68ecd59744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6ace6b_46354ec3",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-10T19:44:31Z",
+      "side": 0,
+      "message": "This is much better. Thanks for the suggestion! I\u0027ve updated code accordingly.",
+      "parentUuid": "db3cf15e_979c4bb1",
+      "range": {
+        "startLine": 235,
+        "startChar": 6,
+        "endLine": 235,
+        "endChar": 25
+      },
+      "revId": "44e2d956f25cef40fc1f27c52f9b8b68ecd59744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
