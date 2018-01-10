@@ -307,7 +307,7 @@ class PLATFORM_EXPORT NonSharedCharacterBreakIterator final {
   STACK_ALLOCATED();
 
  public:
-  explicit NonSharedCharacterBreakIterator(const String&);
+  explicit NonSharedCharacterBreakIterator(StringView);
   NonSharedCharacterBreakIterator(const UChar*, unsigned length);
   ~NonSharedCharacterBreakIterator();
 
@@ -358,6 +358,9 @@ class PLATFORM_EXPORT NonSharedCharacterBreakIterator final {
 // of a non-combining character and following combining characters is
 // counted as 1 grapheme cluster.
 PLATFORM_EXPORT unsigned NumGraphemeClusters(const String&);
+
+// Returns the number of code units that the next grapheme cluster is made of.
+PLATFORM_EXPORT unsigned LengthOfGraphemeCluster(StringView);
 
 }  // namespace blink
 
