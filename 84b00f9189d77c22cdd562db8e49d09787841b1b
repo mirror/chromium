@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c07c964_208bde05",
+        "filename": "tools/licenses.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-10T18:27:27Z",
+      "side": 1,
+      "message": "Since you have to exclude two things already, I might be inclined to just have a bonus subtree addition for third_party/boringssl/third_party/fiat-crypto (or wherever it is), rather than the more general-but-not-likely-to-be-reused RECURSE_DIRS. But I don\u0027t feel too strongly about it.",
+      "revId": "84b00f9189d77c22cdd562db8e49d09787841b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
