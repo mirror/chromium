@@ -22,6 +22,30 @@
       "revId": "3305d2e5b42672a92d19f55e4925d2507e256c21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e507c8e1_d029185e",
+        "filename": "content/public/common/content_result_codes.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-10T20:18:32Z",
+      "side": 1,
+      "message": "And its resovled by duplicating the definitions with static_asserts to keep in sync.",
+      "parentUuid": "dacdd8bd_b8896150",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "3305d2e5b42672a92d19f55e4925d2507e256c21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
