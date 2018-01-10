@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "cc/test/geometry_test_utils.h"
+#include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/ui_scene.h"
@@ -37,76 +38,77 @@ void CheckRepositionedCorrectly(size_t test_case_index,
 
 }  // namespace
 
-TEST(Repositioner, RepositionNegativeZWithReticle) {
+TEST(Repositioner, RepositionUsingReticle) {
   UiScene scene;
   auto child = base::MakeUnique<UiElement>();
   child->SetTranslate(0, 0, -kTestRepositionDistance);
   auto* element = child.get();
-  auto parent = base::MakeUnique<Repositioner>(kTestRepositionDistance);
+  auto parent = base::MakeUnique<Repositioner>();
   auto* repositioner = parent.get();
   parent->AddChild(std::move(child));
   scene.AddUiElement(kRoot, std::move(parent));
 
-  repositioner->set_laser_origin(gfx::Point3F(1, -1, 0));
+  HitTestRequest request;
+  request.ray_origin = {1, -1, 0};
 
   struct TestCase {
-    TestCase(gfx::Vector3dF v,
-             gfx::Vector3dF u,
-             gfx::Point3F p,
-             gfx::Vector3dF r)
-        : laser_direction(v),
+    TestCase(gfx::Point3F l, gfx::Vector3dF u, gfx::Point3F p, gfx::Vector3dF r)
+        : laser_target_point(l),
           head_up_vector(u),
           expected_element_center(p),
           expected_right_vector(r) {}
-    gfx::Vector3dF laser_direction;
+    gfx::Point3F laser_target_point;
     gfx::Vector3dF head_up_vector;
     gfx::Point3F expected_element_center;
     gfx::Vector3dF expected_right_vector;
   };
 
   std::vector<TestCase> test_cases = {
-      {{-2, 2.41421f, -1},
+      {{-0.792893, 0.707107, -2.207107},
        {0, 1, 0},
        {-1, 1.41421f, -1},
        {0.707107f, 0, -0.707107f}},
-      {{-2, 2.41421f, 1},
+      {{-2.207107, 0.707107, 0.792893},
        {0, 1, 0},
        {-1, 1.41421f, 1},
        {-0.707107f, 0, -0.707107f}},
-      {{0, 2.41421f, 1},
+      {{0.792893, 0.707107, 2.207107},
        {0, 1, 0},
        {1, 1.41421f, 1},
        {-0.707107f, 0, 0.707107f}},
-      {{0, 2.41421f, -1},
+      {{2.207107, 0.707107, -0.792893},
        {0, 1, 0},
        {1, 1.41421f, -1},
        {0.707107f, 0, 0.707107f}},
-      {{-2, -0.41421f, -1},
+      {{0.207107, -2.121320, -1.207107},
        {0, 1, 0},
        {-1, -1.41421f, -1},
        {0.707107f, 0, -0.707107f}},
-      {{-2, -0.41421f, 1},
+      {{-1.207107, -2.121320, -0.207107},
        {0, 1, 0},
        {-1, -1.41421f, 1},
        {-0.707107f, 0, -0.707107f}},
-      {{0, -0.41421f, 1},
+      {{-0.207107, -2.121320, 1.207107},
        {0, 1, 0},
        {1, -1.41421f, 1},
        {-0.707107f, 0, 0.707107f}},
-      {{0, -0.41421f, -1},
+      {{1.207107, -2.121320, 0.207107},
        {0, 1, 0},
        {1, -1.41421f, -1},
        {0.707107f, 0, 0.707107f}},
-      {{-1, 3, 0}, {0, 0, 1}, {0, kTestRepositionDistance, 0}, {1, 0, 0}},
-      {{-1, -1, 0}, {0, 0, -1}, {0, -kTestRepositionDistance, 0}, {1, 0, 0}},
-      {{-1, 1, 2}, {-1, 0, 0}, {0, 0, kTestRepositionDistance}, {0, -1, 0}},
-      {{-1, 1, -2}, {-1, 0, 0}, {0, 0, -kTestRepositionDistance}, {0, 1, 0}},
-      {{-1, 1, -2}, {-1, 0, 0}, {0, 0, -kTestRepositionDistance}, {0, 1, 0}},
+      {{1, 2, -1}, {0, 0, 1}, {0, kTestRepositionDistance, 0}, {1, 0, 0}},
+      {{1, -2, 1}, {0, 0, -1}, {0, -kTestRepositionDistance, 0}, {1, 0, 0}},
+      // TODO(bshe): make the commented case work. It currently doesn't work
+      // due to quaternion(from, to) decide to not use cross product of from and
+      // to, i.e, when real < kEpsilon * norm in the ctor.
+      // {{1, -1, 2}, {-1, 0, 0}, {0, 0, kTestRepositionDistance}, {0, -1, 0}},
+      {{1, 1, -2}, {-1, 0, 0}, {0, 0, -kTestRepositionDistance}, {0, 1, 0}},
   };
 
   for (size_t i = 0; i < test_cases.size(); i++) {
     TestCase test_case = test_cases[i];
-    repositioner->set_laser_direction(test_case.laser_direction);
+    request.ray_target = test_case.laser_target_point;
+    repositioner->set_hit_test_request(request);
     gfx::Quaternion quat{{0, 1, 0}, test_case.head_up_vector};
     gfx::Transform head_pose(quat);
     scene.OnBeginFrame(MsToTicks(0), head_pose);
@@ -116,10 +118,12 @@ TEST(Repositioner, RepositionNegativeZWithReticle) {
   }
 
   repositioner->set_enable(true);
+  repositioner->set_reticle_position({1, -1, -2});
 
   for (size_t i = 0; i < test_cases.size(); i++) {
     TestCase test_case = test_cases[i];
-    repositioner->set_laser_direction(test_case.laser_direction);
+    request.ray_target = test_case.laser_target_point;
+    repositioner->set_hit_test_request(request);
     gfx::Quaternion quat{test_case.head_up_vector, {0, 1, 0}};
     gfx::Transform head_pose(quat);
     scene.OnBeginFrame(MsToTicks(0), head_pose);

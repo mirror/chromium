@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_VR_MODEL_RETICLE_MODEL_H_
 #define CHROME_BROWSER_VR_MODEL_RETICLE_MODEL_H_
 
+#include "chrome/browser/vr/elements/ui_element.h"
 #include "ui/gfx/geometry/point3_f.h"
 
 namespace vr {
@@ -17,6 +18,7 @@ struct ReticleModel {
   gfx::Point3F target_point;
   gfx::PointF target_local_point;
   int target_element_id = 0;
+  HitTestRequest hit_test_request;
 };
 
 }  // namespace vr

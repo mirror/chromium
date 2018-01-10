@@ -67,6 +67,8 @@ class GFX_EXPORT Point3F {
     return dx * dx + dy * dy + dz * dz;
   }
 
+  Vector3dF OffsetFromOrigin() { return Vector3dF(x_, y_, z_); }
+
   PointF AsPointF() const { return PointF(x_, y_); }
 
   // Returns a string representation of 3d point.

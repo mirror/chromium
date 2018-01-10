@@ -68,6 +68,10 @@ struct HitTestRequest {
   gfx::Point3F ray_origin;
   gfx::Point3F ray_target;
   float max_distance_to_plane;
+  bool operator==(const HitTestRequest& other) const {
+    return ray_origin == other.ray_origin && ray_target == other.ray_target &&
+           max_distance_to_plane == other.max_distance_to_plane;
+  }
 };
 
 // The result of performing a hit test.

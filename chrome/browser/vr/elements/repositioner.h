@@ -18,15 +18,16 @@ namespace vr {
 // reposition is driven by controller.
 class Repositioner : public UiElement {
  public:
-  explicit Repositioner(float content_depth);
+  Repositioner();
   ~Repositioner() override;
 
-  void set_laser_origin(const gfx::Point3F& laser_origin) {
-    laser_origin_ = laser_origin;
+  void set_reticle_position(const gfx::Point3F& targe_point) {
+    target_point_ = targe_point;
   }
 
-  void set_laser_direction(const gfx::Vector3dF& laser_direction) {
-    laser_direction_ = laser_direction;
+  void set_hit_test_request(const HitTestRequest& request) {
+    hit_test_origin_ = request.ray_origin;
+    hit_test_direction_ = request.ray_target - request.ray_origin;
   }
 
   void set_enable(bool enable) { enabled_ = enable; }
@@ -41,9 +42,12 @@ class Repositioner : public UiElement {
 
   gfx::Transform transform_;
   bool enabled_ = false;
-  float content_depth_;
-  gfx::Point3F laser_origin_;
-  gfx::Vector3dF laser_direction_;
+  gfx::Point3F hit_test_origin_;
+  gfx::Vector3dF hit_test_direction_;
+
+  bool dragging_ = false;
+  gfx::Point3F target_point_;
+  gfx::Vector3dF initial_reticle_vector_;
 
   DISALLOW_COPY_AND_ASSIGN(Repositioner);
 };

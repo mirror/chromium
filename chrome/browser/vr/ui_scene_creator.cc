@@ -447,17 +447,17 @@ void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
   element->set_hit_testable(false);
   scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
 
-  auto repositioner = base::MakeUnique<Repositioner>(kContentDistance);
+  auto repositioner = base::MakeUnique<Repositioner>();
   repositioner->SetName(k2dBrowsingRepositioner);
   repositioner->AddBinding(
       VR_BIND_FUNC(bool, Model, model_, model->reposition_window_enabled(),
                    Repositioner, repositioner.get(), set_enable));
   repositioner->AddBinding(
-      VR_BIND_FUNC(gfx::Point3F, Model, model_, model->controller.laser_origin,
-                   Repositioner, repositioner.get(), set_laser_origin));
+      VR_BIND_FUNC(gfx::Point3F, Model, model_, model->reticle.target_point,
+                   Repositioner, repositioner.get(), set_reticle_position));
   repositioner->AddBinding(VR_BIND_FUNC(
-      gfx::Vector3dF, Model, model_, model->controller.laser_direction,
-      Repositioner, repositioner.get(), set_laser_direction));
+      HitTestRequest, Model, model_, model->reticle.hit_test_request,
+      Repositioner, repositioner.get(), set_hit_test_request));
   scene_->AddUiElement(k2dBrowsingRoot, std::move(repositioner));
 
   element = Create<UiElement>(k2dBrowsingVisibiltyControlForVoice, kPhaseNone);
