@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "409ea3ea_61949d13",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-10T18:31:35Z",
+      "side": 1,
+      "message": "This seems much heavier than a DCHECK should do.\n\nCan we add a test case instead?",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 6
+      },
+      "revId": "f436eed08d2b111b3c7df224bf2d8eda6e7c1d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
