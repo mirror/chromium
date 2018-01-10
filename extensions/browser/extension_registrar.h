@@ -12,13 +12,19 @@
 #include "base/memory/weak_ptr.h"
 #include "extensions/common/extension.h"
 
+namespace base {
+class FilePath;
+}  // namespace base
+
 namespace content {
 class BrowserContext;
+class DevToolsAgentHost;
 }  // namespace content
 
 namespace extensions {
 
 class Extension;
+class ExtensionHost;
 class ExtensionPrefs;
 class ExtensionRegistry;
 class ExtensionSystem;
@@ -36,6 +42,11 @@ class ExtensionRegistrar {
     Delegate() = default;
     virtual ~Delegate() = default;
 
+    // Called before |extension| is added. |old_extension| is the extension
+    // being replaced, in the case of a reload or upgrade.
+    virtual void PreAddExtension(const Extension* extension,
+                                 const Extension* old_extension) = 0;
+
     // Handles updating the browser context when an extension is activated
     // (becomes enabled).
     // |is_newly_added| specifies if the extension has just been added.
@@ -48,6 +59,12 @@ class ExtensionRegistrar {
     // deactivated (whether disabled or removed).
     virtual void PostDeactivateExtension(
         scoped_refptr<const Extension> extension) = 0;
+
+    // Given an extension ID and/or path, loads that extension as a reload.
+    // |fail_quietly|: Whether to suppress failure notifications.
+    virtual void LoadExtensionForReload(const ExtensionId& extension_id,
+                                        const base::FilePath& path,
+                                        bool fail_quietly) = 0;
 
     // Returns true if the extension is allowed to be enabled or disabled,
     // respectively.
@@ -90,6 +107,14 @@ class ExtensionRegistrar {
   // retains a reference to it, so it can be enabled later.
   void DisableExtension(const ExtensionId& extension_id, int disable_reasons);
 
+  // Reloads the specified extension by disabling it if it is enabled and
+  // requesting the Delegate load it again.
+  // |fail_quietly|: Whether to suppress failure notifications.
+  // NOTE: Reloading an extension can invalidate |extension_id| and Extension
+  // pointers for the given extension. Consider making a copy of |extension_id|
+  // first and retrieving a new Extension pointer afterwards.
+  void ReloadExtension(const ExtensionId extension_id, bool fail_quietly);
+
   // Given an extension that was disabled for reloading, completes the reload
   // by replacing the old extension with the new version and enabling it.
   // Returns true on success.
@@ -109,7 +134,15 @@ class ExtensionRegistrar {
   // is not loaded but isn't explicitly disabled in preferences.
   bool IsExtensionEnabled(const ExtensionId& extension_id) const;
 
+  // Called after the render view for the background page with the associated
+  // host is created.
+  void DidCreateRenderViewForBackgroundPage(ExtensionHost* host);
+
  private:
+  // Determines which registry the extension should be added to, adds it there
+  // and maybe activates it.
+  void AddExtensionImpl(scoped_refptr<const Extension> extension);
+
   // Activates |extension| by marking it enabled and notifying other components
   // about it.
   void ActivateExtension(const Extension* extension, bool is_newly_added);
@@ -123,6 +156,10 @@ class ExtensionRegistrar {
   void OnExtensionRegisteredWithRequestContexts(
       scoped_refptr<const Extension> extension);
 
+  // Upon reloading an extension, spins up its lazy background page if
+  // necessary.
+  void MaybeSpinUpLazyBackgroundPage(const Extension* extension);
+
   content::BrowserContext* const browser_context_;
 
   // Delegate provided in the constructor. Should outlive this object.
@@ -133,6 +170,22 @@ class ExtensionRegistrar {
   ExtensionPrefs* const extension_prefs_;
   ExtensionRegistry* const registry_;
   RendererStartupHelper* const renderer_helper_;
+
+  // Map of DevToolsAgentHost instances that are detached,
+  // waiting for an extension to be reloaded.
+  using OrphanedDevTools =
+      std::map<std::string, scoped_refptr<content::DevToolsAgentHost>>;
+  OrphanedDevTools orphaned_dev_tools_;
+
+  // Map unloaded extensions' ids to their paths. When a temporarily loaded
+  // extension is unloaded, we lose the information about it and don't have
+  // any in the extension preferences file.
+  using UnloadedExtensionPathMap = std::map<ExtensionId, base::FilePath>;
+  UnloadedExtensionPathMap unloaded_extension_paths_;
+
+  // Store the ids of reloading extensions. We use this to re-enable extensions
+  // which were disabled for a reload.
+  ExtensionIdSet reloading_extensions_;
 
   base::WeakPtrFactory<ExtensionRegistrar> weak_factory_;
 
