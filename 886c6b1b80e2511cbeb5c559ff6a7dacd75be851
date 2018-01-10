@@ -2,6 +2,126 @@
   "comments": [
     {
       "key": {
+        "uuid": "608103a7_ad4d0896",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T07:31:07Z",
+      "side": 1,
+      "message": "nit: s/NGPhysicalLineBoxFragment/const NGPhysicalLineBoxFragment/",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 22
+      },
+      "revId": "886c6b1b80e2511cbeb5c559ff6a7dacd75be851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27626f15_5fd1f42e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T07:31:07Z",
+      "side": 1,
+      "message": "nit: better to have {} since one statement spans into two lines.",
+      "revId": "886c6b1b80e2511cbeb5c559ff6a7dacd75be851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26e663d_fc0782b5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T07:31:07Z",
+      "side": 1,
+      "message": "nit: s/NGCaretPosition/const NGCaretPosition/",
+      "range": {
+        "startLine": 304,
+        "startChar": 2,
+        "endLine": 304,
+        "endChar": 17
+      },
+      "revId": "886c6b1b80e2511cbeb5c559ff6a7dacd75be851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e96687f_f6088e08",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T07:31:07Z",
+      "side": 1,
+      "message": "it seems |!caret_position.IsNull()| is better.",
+      "revId": "886c6b1b80e2511cbeb5c559ff6a7dacd75be851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31718a22_be117489",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T07:31:07Z",
+      "side": 1,
+      "message": "Could you move this part in a function to utilize const variable?",
+      "range": {
+        "startLine": 310,
+        "startChar": 2,
+        "endLine": 327,
+        "endChar": 3
+      },
+      "revId": "886c6b1b80e2511cbeb5c559ff6a7dacd75be851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6fdd8e5_7e15ee93",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T07:31:07Z",
+      "side": 1,
+      "message": "Could you move PositionInFlatTree position into editing/? Editing doesn\u0027t\nwant to use flat tree version outside editing/",
+      "revId": "886c6b1b80e2511cbeb5c559ff6a7dacd75be851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93303a50_f1230b34",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
         "patchSetId": 29
