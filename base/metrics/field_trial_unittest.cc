@@ -340,11 +340,11 @@ TEST_F(FieldTrialTest, AllGroups) {
       CreateFieldTrial(one_winner, 10, "Default", nullptr);
   std::string winner("Winner");
   trial->AppendGroup(winner, 10);
-  EXPECT_TRUE(trial->GetState(&field_trial_state));
+  EXPECT_TRUE(trial->GetState(&field_trial_state, false));
   EXPECT_EQ(one_winner, *field_trial_state.trial_name);
   EXPECT_EQ(winner, *field_trial_state.group_name);
   trial->group();
-  EXPECT_TRUE(trial->GetState(&field_trial_state));
+  EXPECT_TRUE(trial->GetState(&field_trial_state, false));
   EXPECT_EQ(one_winner, *field_trial_state.trial_name);
   EXPECT_EQ(winner, *field_trial_state.group_name);
 
@@ -355,10 +355,10 @@ TEST_F(FieldTrialTest, AllGroups) {
   multi_group_trial->AppendGroup("Me", 3);
   multi_group_trial->AppendGroup("You", 3);
   multi_group_trial->AppendGroup("Them", 3);
-  EXPECT_TRUE(multi_group_trial->GetState(&field_trial_state));
+  EXPECT_TRUE(multi_group_trial->GetState(&field_trial_state, false));
   // Finalize the group selection by accessing the selected group.
   multi_group_trial->group();
-  EXPECT_TRUE(multi_group_trial->GetState(&field_trial_state));
+  EXPECT_TRUE(multi_group_trial->GetState(&field_trial_state, false));
   EXPECT_EQ(multi_group, *field_trial_state.trial_name);
   EXPECT_EQ(multi_group_trial->group_name(), *field_trial_state.group_name);
 }
@@ -468,7 +468,7 @@ TEST_F(FieldTrialTest, SaveAll) {
   scoped_refptr<FieldTrial> trial =
       CreateFieldTrial("Some name", 10, "Default some name", nullptr);
   EXPECT_EQ("", trial->group_name_internal());
-  FieldTrialList::AllStatesToString(&save_string);
+  FieldTrialList::AllStatesToString(&save_string, false);
   EXPECT_EQ("Some name/Default some name/", save_string);
   // Getting all states should have finalized the trial.
   EXPECT_EQ("Default some name", trial->group_name_internal());
@@ -479,7 +479,7 @@ TEST_F(FieldTrialTest, SaveAll) {
   trial->AppendGroup("Winner", 10);
   // Finalize the group selection by accessing the selected group.
   trial->group();
-  FieldTrialList::AllStatesToString(&save_string);
+  FieldTrialList::AllStatesToString(&save_string, false);
   EXPECT_EQ("Some name/Default some name/*trial2/Winner/", save_string);
   save_string.clear();
 
@@ -490,7 +490,7 @@ TEST_F(FieldTrialTest, SaveAll) {
   // Finalize the group selection by accessing the selected group.
   trial2->group();
 
-  FieldTrialList::AllStatesToString(&save_string);
+  FieldTrialList::AllStatesToString(&save_string, false);
   // We assume names are alphabetized... though this is not critical.
   EXPECT_EQ("Some name/Default some name/*trial2/Winner/*xxx/yyyy/",
             save_string);
@@ -500,9 +500,28 @@ TEST_F(FieldTrialTest, SaveAll) {
   scoped_refptr<FieldTrial> trial3 =
       CreateFieldTrial("zzz", 10, "default", nullptr);
 
-  FieldTrialList::AllStatesToString(&save_string);
+  FieldTrialList::AllStatesToString(&save_string, false);
   EXPECT_EQ("Some name/Default some name/*trial2/Winner/*xxx/yyyy/zzz/default/",
             save_string);
+
+  // Create expired study.
+  const std::string default_group_name = "Default group";
+  int default_group_number = -1;
+  scoped_refptr<FieldTrial> expired_trial =
+      FieldTrialList::FactoryGetFieldTrial(
+          "Expired trial name", 1000000000, "Default group",
+          OneYearBeforeBuildTime(), 1, 1, base::FieldTrial::SESSION_RANDOMIZED,
+          "Default group");
+  expired_trial->AppendGroup("Expired trial group name", 999999999);
+
+  FieldTrialList::AllStatesToString(&save_string, false);
+  EXPECT_EQ("Some name/Default some name/*trial2/Winner/*xxx/yyyy/zzz/default/",
+            save_string);
+  FieldTrialList::AllStatesToString(&save_string, true);
+  EXPECT_EQ(
+      "Some name/Default some name/"
+      "*trial2/Winner/*xxx/yyyy/zzz/default/Expired trial name/Default group",
+      save_string);
 }
 
 TEST_F(FieldTrialTest, Restore) {
@@ -1108,7 +1127,7 @@ TEST(FieldTrialTestWithoutList, StatesStringFormat) {
     scoped_refptr<FieldTrial> trial3 =
         CreateFieldTrial("zzz", 10, "default", nullptr);
 
-    FieldTrialList::AllStatesToString(&save_string);
+    FieldTrialList::AllStatesToString(&save_string, false);
   }
 
   // Starting with a new blank FieldTrialList.
@@ -1191,7 +1210,7 @@ TEST(FieldTrialListTest, AddTrialsToAllocator) {
     FieldTrialList field_trial_list(nullptr);
     FieldTrialList::CreateFieldTrial("Trial1", "Group1");
     FieldTrialList::InstantiateFieldTrialAllocatorIfNeeded();
-    FieldTrialList::AllStatesToString(&save_string);
+    FieldTrialList::AllStatesToString(&save_string, false);
     handle = base::SharedMemory::DuplicateHandle(
         field_trial_list.field_trial_allocator_->shared_memory()->handle());
   }
@@ -1202,7 +1221,7 @@ TEST(FieldTrialListTest, AddTrialsToAllocator) {
   shm.get()->Map(4 << 10);
   FieldTrialList::CreateTrialsFromSharedMemory(std::move(shm));
   std::string check_string;
-  FieldTrialList::AllStatesToString(&check_string);
+  FieldTrialList::AllStatesToString(&check_string, false);
   EXPECT_EQ(save_string, check_string);
 }
 
@@ -1240,7 +1259,7 @@ TEST(FieldTrialListTest, DoNotAddSimulatedFieldTrialsToAllocator) {
   shm.get()->Map(4 << 10);
   FieldTrialList::CreateTrialsFromSharedMemory(std::move(shm));
   std::string check_string;
-  FieldTrialList::AllStatesToString(&check_string);
+  FieldTrialList::AllStatesToString(&check_string, false);
   ASSERT_EQ(check_string.find("Simulated"), std::string::npos);
 }
 
@@ -1324,7 +1343,7 @@ TEST(FieldTrialListTest, ClearParamsFromSharedMemory) {
   shm.get()->Map(4 << 10);
   FieldTrialList::CreateTrialsFromSharedMemory(std::move(shm));
   std::string check_string;
-  FieldTrialList::AllStatesToString(&check_string);
+  FieldTrialList::AllStatesToString(&check_string, false);
   EXPECT_EQ("*Trial1/Group1/", check_string);
 }
 
