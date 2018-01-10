@@ -8,8 +8,10 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/threading/sequenced_worker_pool.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos_factory.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -22,6 +24,11 @@
 #include "content/public/test/test_utils.h"
 
 namespace chromeos {
+namespace {
+
+void OnPrefChanged(const std::string& setting) {}
+
+}  // namespace
 
 ScopedDeviceSettingsTestHelper::ScopedDeviceSettingsTestHelper() {
   DeviceSettingsService::Initialize();
@@ -101,6 +108,18 @@ void DeviceSettingsTestBase::InitOwner(const AccountId& account_id,
   CHECK(service);
   if (tpm_is_ready)
     service->OnTPMTokenReady(true /* token is enabled */);
+}
+
+// static
+std::unique_ptr<DeviceSettingsProvider> CreateDeviceSettingsProvider(
+    DeviceSettingsService* device_settings_service,
+    const DeviceSettingsProvider::NotifyObserversCallback& notify_cb) {
+  return std::make_unique<DeviceSettingsProvider>(
+      g_browser_process->local_state(),
+      static_cast<policy::BrowserPolicyConnectorChromeOS*>(
+          g_browser_process->browser_policy_connector()),
+      notify_cb.is_null() ? base::Bind(&OnPrefChanged) : notify_cb,
+      device_settings_service);
 }
 
 }  // namespace chromeos

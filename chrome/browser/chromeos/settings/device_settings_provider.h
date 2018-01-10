@@ -19,6 +19,8 @@
 #include "components/policy/proto/chrome_device_policy.pb.h"
 #include "components/prefs/pref_value_map.h"
 
+class PrefService;
+
 namespace base {
 class Value;
 }
@@ -26,6 +28,10 @@ class Value;
 namespace enterprise_management {
 class ChromeDeviceSettingsProto;
 }  // namespace enterprise_management
+
+namespace policy {
+class BrowserPolicyConnectorChromeOS;
+}
 
 namespace chromeos {
 
@@ -41,8 +47,11 @@ class DeviceSettingsProvider
   // The callback type that is called to get the device mode.
   typedef base::Callback<policy::DeviceMode(void)> GetDeviceModeCallback;
 
-  DeviceSettingsProvider(const NotifyObserversCallback& notify_cb,
-                         DeviceSettingsService* device_settings_service);
+  DeviceSettingsProvider(
+      PrefService* local_state,
+      policy::BrowserPolicyConnectorChromeOS* policy_connector,
+      const NotifyObserversCallback& notify_cb,
+      DeviceSettingsService* device_settings_service);
   ~DeviceSettingsProvider() override;
 
   // Returns true if |path| is handled by this provider.
@@ -95,6 +104,11 @@ class DeviceSettingsProvider
   // |trusted_status_| and calls UpdateValuesCache() if applicable. Returns true
   // if new settings have been loaded.
   bool UpdateFromService();
+
+  // These are used rather than BrowserProcess as this class is created before
+  // BrowserProcess.
+  PrefService* local_state_;
+  policy::BrowserPolicyConnectorChromeOS* policy_connector_;
 
   // Pending callbacks that need to be invoked after settings verification.
   std::vector<base::Closure> callbacks_;

@@ -72,6 +72,7 @@ void FakeCryptohomeClient::RemoveObserver(Observer* observer) {
 void FakeCryptohomeClient::WaitForServiceToBeAvailable(
     WaitForServiceToBeAvailableCallback callback) {
   if (service_is_available_) {
+    // XXX
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback), true));
   } else {

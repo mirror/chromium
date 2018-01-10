@@ -14,6 +14,7 @@
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller_delegate.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/chromeos/settings/cros_settings_test_api.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/ui/ash/test_wallpaper_controller.h"
 #include "chrome/browser/ui/ash/wallpaper_controller_client.h"
@@ -68,9 +69,9 @@ class SigninPrepareUserListTest : public ash::AshTestBase,
 
     fake_user_manager_->set_owner_id(AccountId::FromUserEmail(kOwner));
 
-    chromeos::WallpaperManager::Initialize();
-    chromeos::DeviceSettingsService::Initialize();
-    chromeos::CrosSettings::Initialize();
+    WallpaperManager::Initialize();
+    DeviceSettingsService::Initialize();
+    CrosSettingsTestApi::InitializeForTest();
     wallpaper_controller_client_ =
         std::make_unique<WallpaperControllerClient>();
     wallpaper_controller_client_->InitForTesting(
@@ -78,7 +79,7 @@ class SigninPrepareUserListTest : public ash::AshTestBase,
   }
 
   void TearDown() override {
-    chromeos::WallpaperManager::Shutdown();
+    WallpaperManager::Shutdown();
     controller_.reset();
     profile_manager_.reset();
     wallpaper_controller_client_.reset();

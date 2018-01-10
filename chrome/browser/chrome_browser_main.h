@@ -12,7 +12,6 @@
 #include "base/metrics/field_trial.h"
 #include "base/profiler/stack_sampling_profiler.h"
 #include "build/build_config.h"
-#include "chrome/browser/chrome_browser_field_trials.h"
 #include "chrome/browser/chrome_process_singleton.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/process_singleton.h"
@@ -23,6 +22,7 @@
 #include "content/public/common/main_function_params.h"
 
 class BrowserProcessImpl;
+class ChromeBrowserFieldTrials;
 class ChromeBrowserMainExtraParts;
 class FieldTrialSynchronizer;
 class PrefService;
@@ -44,6 +44,11 @@ extern const char kMissingLocaleDataMessage[];
 #endif
 }
 
+// XXX remove
+namespace local_state_loader {
+struct LocalState;
+}
+
 class ChromeBrowserMainParts : public content::BrowserMainParts {
  public:
   ~ChromeBrowserMainParts() override;
@@ -52,6 +57,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   virtual void AddParts(ChromeBrowserMainExtraParts* parts);
 
  protected:
+  class InitialTaskRunner;
+
   explicit ChromeBrowserMainParts(
       const content::MainFunctionParams& parameters);
 
@@ -112,10 +119,6 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Record time from process startup to present time in an UMA histogram.
   void RecordBrowserStartupTime();
 
-  // Reads origin trial policy data from local state and configures command line
-  // for child processes.
-  void SetupOriginTrialsCommandLine();
-
   // Methods for Main Message Loop -------------------------------------------
 
   int PreCreateThreadsImpl();
@@ -124,6 +127,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Members initialized on construction ---------------------------------------
 
   const content::MainFunctionParams parameters_;
+  // TODO: remove this. This class (and related calls), may mutate the
+  // CommandLine, so it is misleading keeping a const ref here.
   const base::CommandLine& parsed_command_line_;
   int result_code_;
 
@@ -139,7 +144,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // |SetupFieldTrials()| is called.
   std::unique_ptr<base::FieldTrialList> field_trial_list_;
 
-  ChromeBrowserFieldTrials browser_field_trials_;
+  std::unique_ptr<ChromeBrowserFieldTrials> browser_field_trials_;
 
 #if !defined(OS_ANDROID)
   std::unique_ptr<WebUsbDetector> web_usb_detector_;
@@ -186,6 +191,11 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // PreMainMessageLoopRunThreadsCreated.
   PrefService* local_state_;
   base::FilePath user_data_dir_;
+
+  // XXX remove.
+  std::unique_ptr<local_state_loader::LocalState> local_state2_;
+  int local_state_load_result_ = 0;
+  scoped_refptr<InitialTaskRunner> initial_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainParts);
 };
