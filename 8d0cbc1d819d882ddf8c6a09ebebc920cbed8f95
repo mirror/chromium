@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c99019ce_a629c4d5",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-10T15:22:16Z",
+      "side": 1,
+      "message": "|should_snap|",
+      "range": {
+        "startLine": 173,
+        "startChar": 57,
+        "endLine": 173,
+        "endChar": 68
+      },
+      "revId": "8d0cbc1d819d882ddf8c6a09ebebc920cbed8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e11f6e_48c556af",
+        "filename": "cc/input/scroll_snap_data.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-10T15:22:16Z",
+      "side": 1,
+      "message": "This is going to cause a copy of SnapAreaData on over iteration no why can\u0027t it be a reference?",
+      "revId": "8d0cbc1d819d882ddf8c6a09ebebc920cbed8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43535761_d5cd199d",
+        "filename": "cc/input/scroll_snap_data.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-10T15:22:16Z",
+      "side": 1,
+      "message": "I\u0027m not certain why this is considered a struct. (but I\u0027m outside of my ownership here.. but if you are adding functions to a struct that seems odd it should be renamed a class. And variables should have _ suffix. (see https://google.github.io/styleguide/cppguide.html#Structs_vs._Classes)",
+      "revId": "8d0cbc1d819d882ddf8c6a09ebebc920cbed8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa09198_d2ae03f3",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-10T15:22:16Z",
+      "side": 1,
+      "message": "According to the name of this function it probably should be const. But it seems like it does more.. it creates an animation curve. You need to update the comments.",
+      "revId": "8d0cbc1d819d882ddf8c6a09ebebc920cbed8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1eaed37_ac5989c4",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-10T15:22:16Z",
+      "side": 1,
+      "message": "You really want to do intermediate copies for these? (should be const \u0026)",
+      "revId": "8d0cbc1d819d882ddf8c6a09ebebc920cbed8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4083d1_ffc3da4c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-10T15:22:16Z",
+      "side": 1,
+      "message": "const function?",
+      "revId": "8d0cbc1d819d882ddf8c6a09ebebc920cbed8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc84a454_d54fe7a9",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-10T15:22:16Z",
+      "side": 1,
+      "message": "Does it make sense to make this a moveable type instead of a const\u0026 since you are taking a copy. when you fetch it out of the table.",
+      "range": {
+        "startLine": 242,
+        "startChar": 27,
+        "endLine": 242,
+        "endChar": 29
+      },
+      "revId": "8d0cbc1d819d882ddf8c6a09ebebc920cbed8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
