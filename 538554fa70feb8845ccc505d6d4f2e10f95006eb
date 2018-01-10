@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c878a914_e253744d",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-10T15:58:44Z",
+      "side": 1,
+      "message": "Nit: I think it would be better to just use plain member assignment. This way, it\u0027s absolutely clear that you\u0027re assigning the right values to the right members and won\u0027t break if new members are added or re-orderer.",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "538554fa70feb8845ccc505d6d4f2e10f95006eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db0e565_85471427",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-10T15:58:44Z",
+      "side": 1,
+      "message": "Non-const params should be last.",
+      "range": {
+        "startLine": 123,
+        "startChar": 65,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "538554fa70feb8845ccc505d6d4f2e10f95006eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
