@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27ce759a_38498ded",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 81184,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-10T09:29:57Z",
+      "side": 0,
+      "message": "Please mark this as \u003cobsolete\u003e rather than removing the metadata entirely.  LGTM with that change.",
+      "range": {
+        "startLine": 81179,
+        "startChar": 0,
+        "endLine": 81184,
+        "endChar": 12
+      },
+      "revId": "12916246787938e0850a71cb23c17a27e029799a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
