@@ -6,6 +6,7 @@
 
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/properties/CSSParsingUtils.h"
+#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -17,6 +18,13 @@ const CSSValue* BoxShadow::ParseSingleValue(
   return CSSParsingUtils::ConsumeShadow(
       range, context.Mode(), CSSParsingUtils::AllowInsetAndSpread::kAllow);
 }
+
+const CSSValue* BoxShadow::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject*,
+    Node* styled_node,
+    bool allow_visited_style) const {}
 
 }  // namespace CSSLonghand
 }  // namespace blink

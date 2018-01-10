@@ -6,6 +6,8 @@
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/CSSParsingUtils.h"
+#include "core/css/properties/ComputedStyleUtils.h"
+#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSShorthand {
@@ -28,6 +30,13 @@ bool PageBreakBefore::ParseShorthand(
       CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
   return true;
 }
+
+const CSSValue* PageBreakBefore::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject*,
+    Node* styled_node,
+    bool allow_visited_style) const {}
 
 }  // namespace CSSShorthand
 }  // namespace blink

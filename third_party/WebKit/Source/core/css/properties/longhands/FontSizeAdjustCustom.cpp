@@ -5,6 +5,8 @@
 #include "core/css/properties/longhands/FontSizeAdjust.h"
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
+#include "core/css/properties/ComputedStyleUtils.h"
+#include "core/style/ComputedStyle.h"
 #include "platform/runtime_enabled_features.h"
 
 namespace blink {
@@ -19,6 +21,13 @@ const CSSValue* FontSizeAdjust::ParseSingleValue(
     return CSSPropertyParserHelpers::ConsumeIdent(range);
   return CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeNonNegative);
 }
+
+const CSSValue* FontSizeAdjust::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject*,
+    Node* styled_node,
+    bool allow_visited_style) const {}
 
 }  // namespace CSSLonghand
 }  // namespace blink

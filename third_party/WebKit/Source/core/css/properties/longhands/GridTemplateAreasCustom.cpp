@@ -10,6 +10,8 @@
 #include "core/css/parser/CSSParserTokenRange.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/CSSParsingUtils.h"
+#include "core/css/properties/ComputedStyleUtils.h"
+#include "core/style/ComputedStyle.h"
 #include "core/style/GridArea.h"
 
 namespace blink {
@@ -40,6 +42,13 @@ const CSSValue* GridTemplateAreas::ParseSingleValue(
   return CSSGridTemplateAreasValue::Create(grid_area_map, row_count,
                                            column_count);
 }
+
+const CSSValue* GridTemplateAreas::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject*,
+    Node* styled_node,
+    bool allow_visited_style) const {}
 
 }  // namespace CSSLonghand
 }  // namespace blink
