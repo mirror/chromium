@@ -96,9 +96,8 @@ bool TestLayerTreeFrameSink::BindToClient(
   }
 
   display_ = std::make_unique<Display>(
-      shared_bitmap_manager(), renderer_settings_, frame_sink_id_,
-      std::move(display_output_surface), std::move(scheduler),
-      compositor_task_runner_);
+      renderer_settings_, frame_sink_id_, std::move(display_output_surface),
+      std::move(scheduler), compositor_task_runner_);
 
   constexpr bool is_root = false;
   constexpr bool needs_sync_points = true;

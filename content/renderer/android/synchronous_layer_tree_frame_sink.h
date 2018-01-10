@@ -19,7 +19,6 @@
 #include "cc/trees/managed_memory_policy.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/service/display/display_client.h"
-#include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "ipc/ipc_message.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
 #include "ui/gfx/transform.h"
@@ -134,11 +133,6 @@ class SynchronousLayerTreeFrameSink
 
   // Not owned.
   SynchronousLayerTreeFrameSinkClient* sync_client_ = nullptr;
-
-  // Used to allocate bitmaps in the software Display.
-  // TODO(crbug.com/692814): The Display never sends its resources out of
-  // process so there is no reason for it to use a SharedBitmapManager.
-  viz::ServerSharedBitmapManager shared_bitmap_manager_;
 
   // Only valid (non-NULL) during a DemandDrawSw() call.
   SkCanvas* current_sw_canvas_ = nullptr;
