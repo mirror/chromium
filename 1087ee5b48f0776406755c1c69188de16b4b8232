@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5cb806f5_52a25f51",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2018-01-10T08:53:21Z",
+      "side": 1,
+      "message": "Ack. \"autofill_profiles\" table has date_modified and use_date fields only. Probably it needs \"date_created\" field also. I will see if i can do something on this bug if possible. Any solution ideas welcome.\n\nso, I am committing this CL now. Thank you for review.",
+      "parentUuid": "16962b91_9a722da7",
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b962b74e_725a0856",
         "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
         "patchSetId": 7
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Yeah, autocomplete is perhaps an overloaded term.\n\nLeave the name as is, since it all lives in the \"autofill\" table, but this is actually deleting form autocomplete (i.e., stuff you\u0027ve typed before that\u0027s just saved verbatim and associated with the field) as opposed to (type-annotated) address and payment autofill data.",
       "parentUuid": "f20f588f_6214ebcb",
+      "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bccae5d4_9299d157",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2018-01-10T08:53:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "835fe25f_6c305da5",
       "revId": "1087ee5b48f0776406755c1c69188de16b4b8232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
