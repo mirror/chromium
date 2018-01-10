@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de5c3854_b27b1e86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T03:47:44Z",
+      "side": 1,
+      "message": "Add an initial set of UKMs for the WebVR API.",
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29275fd_44177ad5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T03:47:44Z",
+      "side": 1,
+      "message": "You might note that this uses \"XR\" in preparation for the replacement API and that support for that will be added separately.",
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a1e08d_b5edc2aa",
+        "filename": "third_party/WebKit/Source/modules/vr/VRController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T03:47:44Z",
+      "side": 1,
+      "message": "Observation: There is a lot of boilerplate for each UKM. I wonder if this can be simplified in the UKM infrastructure. For example, something could just take a Document pointer and do most of this.",
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc86fbe_8521048e",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T03:47:44Z",
+      "side": 1,
+      "message": "I don\u0027t see \"API\" in other names. What did you have in mind for other children of XR.Devices? Should it be XR.DevicesAPI? Also, API or Api? I see \"Id\" above.",
+      "range": {
+        "startLine": 2355,
+        "startChar": 23,
+        "endLine": 2355,
+        "endChar": 27
+      },
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6deed3_da723d28",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T03:47:44Z",
+      "side": 1,
+      "message": "This sounds like count, and the setting of (1) before the call was processed was confusing.\n\nRequestedDeviceEnumeration or RequestedAvailableDevices or RequestedDevices would all match the other Requested names.",
+      "range": {
+        "startLine": 2357,
+        "startChar": 16,
+        "endLine": 2357,
+        "endChar": 33
+      },
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c76951_fbdad5cc",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T03:47:44Z",
+      "side": 1,
+      "message": "Presentation Device sounds strange, but PresentationCapableDevice or CanPresentDevice are long and/or also awkward.",
+      "range": {
+        "startLine": 2367,
+        "startChar": 19,
+        "endLine": 2367,
+        "endChar": 37
+      },
+      "revId": "93c0de47045dbb4d9ea70c88802f2096f5f6cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
