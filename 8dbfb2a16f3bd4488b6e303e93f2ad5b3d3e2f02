@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "18fcffed_41c8c401",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-10T21:05:34Z",
+      "side": 1,
+      "message": "\u003e So what I see is, The actual text_changed event is fired by the android widget TextView.java\n\nNo, that\u0027s only if it\u0027s a real (native) Android widget. Chrome implements its own text fields and we have to fire the right accessibility events to try to match what TextView.java does.\n\nWe fire a text_changed event in WebContentsAccessibility.handleEditableTextChanged(). This is called from the C++ code when we get an event indicating that a text field changed.\n\nI think I see the problem now. The problem is that we have two different cases - one for static text, one for text fields.\n\nFor static text, moving by granularity is all just simulated. We\u0027re not actually changing anything in the web page, we\u0027re just keeping track of the selection start and end index and reporting it to TalkBack.\n\nBut for editable text, there\u0027s a \"real\" cursor that\u0027s part of the web page. We\u0027re exposing the real selection start and end.\n\nIt looks like this is buggy - when the real text field selection changes, we\u0027re not \"syncing\" that with the selection start and end used by the granularity code.",
+      "parentUuid": "e7e8b207_1ed518a9",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "140d4558_f9e3a2fe",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
         "patchSetId": 11
