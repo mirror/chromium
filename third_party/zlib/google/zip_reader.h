@@ -39,6 +39,9 @@ class WriterDelegate {
   // Invoked to write the next chunk of data. Return false on failure to cancel
   // extraction.
   virtual bool WriteBytes(const char* data, int num_bytes) = 0;
+
+  // Sets the last-modified time of the data.
+  virtual void SetTimeModified(const base::Time& time) = 0;
 };
 
 // This class is used for reading zip files. A typical use case of this
@@ -260,6 +263,8 @@ class FileWriterDelegate : public WriterDelegate {
  public:
   explicit FileWriterDelegate(base::File* file);
 
+  explicit FileWriterDelegate(std::unique_ptr<base::File> file);
+
   // Truncates the file to the number of bytes written.
   ~FileWriterDelegate() override;
 
@@ -272,11 +277,40 @@ class FileWriterDelegate : public WriterDelegate {
   // if not all bytes could be written.
   bool WriteBytes(const char* data, int num_bytes) override;
 
+  // Sets the last-modified time of the data.
+  void SetTimeModified(const base::Time& time) override;
+
  private:
   base::File* file_;
+  std::unique_ptr<base::File> owned_file_;
   int64_t file_length_;
 
   DISALLOW_COPY_AND_ASSIGN(FileWriterDelegate);
+};
+
+// A writer delegate that writes a file at a given path.
+class FilePathWriterDelegate : public WriterDelegate {
+ public:
+  explicit FilePathWriterDelegate(const base::FilePath& output_file_path);
+  ~FilePathWriterDelegate() override;
+
+  // WriterDelegate methods:
+
+  // Creates the output file and any necessary intermediate directories.
+  bool PrepareOutput() override;
+
+  // Writes |num_bytes| bytes of |data| to the file, returning false if not all
+  // bytes could be written.
+  bool WriteBytes(const char* data, int num_bytes) override;
+
+  // Sets the last-modified time of the data.
+  void SetTimeModified(const base::Time& time) override;
+
+ private:
+  base::FilePath output_file_path_;
+  base::File file_;
+
+  DISALLOW_COPY_AND_ASSIGN(FilePathWriterDelegate);
 };
 
 }  // namespace zip
