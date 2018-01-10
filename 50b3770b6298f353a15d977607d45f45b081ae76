@@ -402,6 +402,30 @@
       "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead3e7d8_658e9221",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T13:47:11Z",
+      "side": 1,
+      "message": "In the wheel-latching context, \u0027delta\u0027 is the offset between the coordinate of the phaseBegin wheel event in root-view coordinates, and its coordinates in the view that the event ultimately gets targeted to. Computing delta has been used in the past as an inexpensive way to update the root-view coordinates of the remaining wheels in the sequence to match.\n\nAnd that worked fine with synchronous hit testing. But imagine the following, asynchronous scenario: the phaseBegin wheel arrives, and is given a target. But we have to wait until the the final target assignment is made before computing delta (which could be a while if we have to make a round-trip to the renderer). In the meantime more wheels come in, and there is no value of delta to give them ...\n\nIn this CL as it stands, you are using delta in FindWheelEventTarget to transform the incoming event, even though it may not have been properly initialized for the phaseBegin final target. And when wheel_target_.target is set to null, there is no corresponding reset of wheel_target_.delta, meaning we\u0027ll be using a stale value.\n\nThis means we can\u0027t safely adjust the remaining wheel event\u0027s coordinates until they are Dispatched.\n\nHowever, there\u0027s an easy fix for this. Don\u0027t alter the coordinates of the wheelevents until they are dispatched, i.e. DispatchMouseWheelEvent() receives the event with root_view coordinates still intact. Then, since we know the event\u0027s root_view coordinates and the *final* target, it\u0027s possible to use root_view-\u003eTransformPointToCoordinateSpaceForView(root_coord_point, target_view, \u0026target_coord_point).\n\nThis approach has the added benefit that, if the transform between the root and target view is changing (e.g. animation, etc.), then each event can be transformed according to the best information we have at the time.",
+      "parentUuid": "92b6185d_5f9265c2",
+      "range": {
+        "startLine": 190,
+        "startChar": 24,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "50b3770b6298f353a15d977607d45f45b081ae76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
