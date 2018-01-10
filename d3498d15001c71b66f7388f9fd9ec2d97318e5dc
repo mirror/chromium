@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc9dbd71_bf635d11",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-10T19:20:13Z",
+      "side": 1,
+      "message": "Unrelated to this change but it seems that a recent change is duplicating this and GetBufferFormatFromFourCCFormat() from the DRM code. Daniele, I\u0027m wondering if we can de-dupe these?",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 13
+      },
+      "revId": "d3498d15001c71b66f7388f9fd9ec2d97318e5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb3305d_2e5b1dc2",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-10T19:20:13Z",
+      "side": 1,
+      "message": "Should this be updated to DRM_FORMAT_ARGB2101010 similar to the other changes?",
+      "range": {
+        "startLine": 513,
+        "startChar": 13,
+        "endLine": 513,
+        "endChar": 35
+      },
+      "revId": "d3498d15001c71b66f7388f9fd9ec2d97318e5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdb910b_98cc7195",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-10T19:20:13Z",
+      "side": 1,
+      "message": "Same here?",
+      "range": {
+        "startLine": 542,
+        "startChar": 9,
+        "endLine": 542,
+        "endChar": 31
+      },
+      "revId": "d3498d15001c71b66f7388f9fd9ec2d97318e5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df11812_6e8fce98",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-10T19:20:13Z",
+      "side": 1,
+      "message": "And here?",
+      "range": {
+        "startLine": 570,
+        "startChar": 13,
+        "endLine": 570,
+        "endChar": 35
+      },
+      "revId": "d3498d15001c71b66f7388f9fd9ec2d97318e5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
