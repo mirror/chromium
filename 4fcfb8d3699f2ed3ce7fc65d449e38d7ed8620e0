@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f8dc68_153d1a4f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T02:29:03Z",
+      "side": 1,
+      "message": "Thought: We might someday want to expose a hybrid device on, for example, Windows laptops with orientation sensors AND HMDs so that magic window and presentation work.",
+      "range": {
+        "startLine": 1637,
+        "startChar": 5,
+        "endLine": 1637,
+        "endChar": 44
+      },
+      "revId": "4fcfb8d3699f2ed3ce7fc65d449e38d7ed8620e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83eb00bf_68e59f90",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T02:29:03Z",
+      "side": 1,
+      "message": "X",
+      "range": {
+        "startLine": 477,
+        "startChar": 8,
+        "endLine": 477,
+        "endChar": 9
+      },
+      "revId": "4fcfb8d3699f2ed3ce7fc65d449e38d7ed8620e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

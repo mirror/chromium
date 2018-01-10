@@ -280,6 +280,24 @@
       "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64f9d926_05bc47c4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 26060,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-10T02:29:03Z",
+      "side": 1,
+      "message": "New ones still need to be added.",
+      "parentUuid": "8bcb18e2_2254e74a",
+      "revId": "452423da8498190aa6ed7d19f16662a43404b0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
