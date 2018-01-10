@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4001c63e_05907612",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-10T13:46:44Z",
+      "side": 1,
+      "message": "can we have an overload which takes only the callback? Seems a bit weird to tell people to pass an empty vector if they want everything.\nAlso that will reduce the OWNER dance for you ;)\n\nMaybe the overload has a TODO that says it\u0027s temporary until we migrate task manager and such.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "858ff907ae2b45945eb436ecd9d9c1f4766bc1d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f15b6d7_6009bd32",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-10T13:46:44Z",
+      "side": 1,
+      "message": "can you update the comment explaining what is the purpose of allocator_dump_names ?",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 4
+      },
+      "revId": "858ff907ae2b45945eb436ecd9d9c1f4766bc1d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
