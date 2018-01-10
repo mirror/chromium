@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c6c72c2_f6ca699a",
+        "filename": "chrome/browser/android/favicon_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-10T18:09:18Z",
+      "side": 1,
+      "message": "It\u0027s not entirely clear what this comment applies to. I think if you have\nconst bool fallback_to_host \u003d true; right beneath this comment and make the comment around that it\u0027s clearer why \u0027true\u0027 is supplied.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 47
+      },
+      "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4e6686_e25877fb",
+        "filename": "chrome/browser/ui/webui/favicon_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-10T18:09:18Z",
+      "side": 1,
+      "message": "Same comment here.",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 35
+      },
+      "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28d902c_440dc4f4",
+        "filename": "components/favicon/core/favicon_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-10T18:09:18Z",
+      "side": 1,
+      "message": "Please add something like, \u0027Generally code showing an icon for a full url should supply false. OTOH if you only have a host and don\u0027t need an exist icon use true.\u0027",
+      "range": {
+        "startLine": 95,
+        "startChar": 5,
+        "endLine": 96,
+        "endChar": 67
+      },
+      "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7508076_0844cf65",
+        "filename": "components/history/core/browser/history_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-10T18:09:18Z",
+      "side": 1,
+      "message": "Same comment here about adding more description.",
+      "range": {
+        "startLine": 668,
+        "startChar": 28,
+        "endLine": 670,
+        "endChar": 21
+      },
+      "revId": "3fd29bc9c5530e881d8cca12b012d6ccbb9cb9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
