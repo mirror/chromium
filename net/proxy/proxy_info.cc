@@ -8,6 +8,7 @@
 
 namespace net {
 
+
 ProxyInfo::ProxyInfo()
     : config_id_(ProxyConfig::kInvalidConfigID),
       config_source_(PROXY_CONFIG_SOURCE_UNKNOWN),
