@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a323b04_189628f3",
+        "filename": "third_party/WebKit/Source/core/css/ActiveStyleSheets.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-10T12:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fffef587_4e6364ef",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b476f86_146a0974",
         "filename": "third_party/WebKit/Source/core/css/CSSStyleSheet.h",
         "patchSetId": 3
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "I don\u0027t understand why. This method is only called with kUserOrigin when rulesets are cleared from user stylesheets when media queries change. In that case we already call MarkUserStyleDirty() from StyleEngine::MediaQueryAffectingValueChanged(). Why call it again in SetNeedsActiveStyleUpdate()?",
       "parentUuid": "f7f110c4_79bed3d7",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0554ea24_509d91c3",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContents.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-10T12:31:07Z",
+      "side": 1,
+      "message": "There are two checks in ClearMediaQueryDependentRuleSets: active_sheet.first-\u003eMediaQueries() and active_sheet.first-\u003eContents()-\u003eHasMediaQueries(). The first one is always false for injected style sheets, regardless of CSS origin.\n\nI\u0027m not sure why this is, but my guess is that the first one is supposed to be true for things like \u003cstyle media\u003d\"...\"\u003e (i.e. at the sheet level) whereas the second one is true when there\u0027s a @media rule in the sheet.\n\nBut I tried with a \u003cstyle\u003e tag with no media\u003d\"...\" attribute and it still returns true for the first check.",
+      "parentUuid": "65f639d7_ae0b6956",
       "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
