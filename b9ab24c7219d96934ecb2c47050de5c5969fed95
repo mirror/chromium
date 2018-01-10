@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb9b79c_e9e8138c",
+        "filename": "ash/system/web_notification/session_state_notification_blocker_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T15:14:17Z",
+      "side": 1,
+      "message": "optional: If it\u0027s not too hard, it might be nice to have a test of the app mode blocking.",
+      "revId": "b9ab24c7219d96934ecb2c47050de5c5969fed95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
