@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34ace697_f03bd896",
+        "filename": "components/autofill/android/autofill_provider_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-10T04:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0655b44_77db8bed",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 247,
+        "endChar": 26
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7455f58_68ba4324",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-18T16:35:29Z",
       "side": 1,
       "message": "nit: last_interacted_form_",
+      "range": {
+        "startLine": 835,
+        "startChar": 26,
+        "endLine": 835,
+        "endChar": 48
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e09617b_ee51927e",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-10T04:05:48Z",
+      "side": 1,
+      "message": "the comment was removed in new patch",
+      "parentUuid": "a7455f58_68ba4324",
       "range": {
         "startLine": 835,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e8d55738_a235594c",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-10T04:05:48Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "d94e1d06_7ecc94d1",
+      "range": {
+        "startLine": 836,
+        "startChar": 8,
+        "endLine": 836,
+        "endChar": 12
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be5ecf91_d217bd1f",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-18T16:35:29Z",
       "side": 1,
       "message": "nit: valid",
+      "range": {
+        "startLine": 277,
+        "startChar": 65,
+        "endLine": 277,
+        "endChar": 71
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49676aa_b2fafa19",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-10T04:05:48Z",
+      "side": 1,
+      "message": "this member is removed.",
+      "parentUuid": "be5ecf91_d217bd1f",
       "range": {
         "startLine": 277,
         "startChar": 65,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3ea60df3_b68df5d2",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-10T04:05:48Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "3c90f91e_99dbb754",
+      "range": {
+        "startLine": 278,
+        "startChar": 46,
+        "endLine": 278,
+        "endChar": 52
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61f80076_36597536",
         "filename": "components/autofill/core/browser/autofill_handler.h",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-18T16:35:29Z",
       "side": 1,
       "message": "This is not necessarily the case anymore right? Could you expand the comment?",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2033237_acf1aa39",
+        "filename": "components/autofill/core/browser/autofill_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-10T04:05:48Z",
+      "side": 1,
+      "message": "this is always true.",
+      "parentUuid": "61f80076_36597536",
       "range": {
         "startLine": 61,
         "startChar": 5,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ac1b1d56_0eda21f6",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-10T04:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1622cf3_0b758c8e",
+      "range": {
+        "startLine": 343,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 49
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7e6c212_5830935a",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-18T16:35:29Z",
       "side": 1,
       "message": "this should be done only if !known_success right?",
+      "range": {
+        "startLine": 350,
+        "startChar": 4,
+        "endLine": 350,
+        "endChar": 58
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d11030_47535666",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-10T04:05:48Z",
+      "side": 1,
+      "message": "The method is only called once, we will miss it in some cases.",
+      "parentUuid": "b7e6c212_5830935a",
       "range": {
         "startLine": 350,
         "startChar": 4,
