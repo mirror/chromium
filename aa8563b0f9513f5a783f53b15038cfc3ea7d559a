@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68a29c75_43da210b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T14:10:23Z",
+      "side": 1,
+      "message": "Do you need to set all this properties except background-image?",
+      "revId": "aa8563b0f9513f5a783f53b15038cfc3ea7d559a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
