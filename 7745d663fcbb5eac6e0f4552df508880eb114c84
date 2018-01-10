@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab87d40_edf7af5a",
+        "filename": "services/network/public/cpp/network_types.typemap",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T21:28:35Z",
+      "side": 1,
+      "message": "do we need all these headers?",
+      "revId": "7745d663fcbb5eac6e0f4552df508880eb114c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
