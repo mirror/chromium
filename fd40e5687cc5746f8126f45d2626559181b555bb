@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35ac523e_def90b4d",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "Is it worth noting Android doesn\u0027t work without a special build here?",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f2e11e_aee048eb",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "So this runs 18 tests? How slow is this?",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e2645d_31849d80",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "const auto here and elsewhere in the function?",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858acf38_f7494bc0",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "signalled -\u003e signaled",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa45538_fd5cc986",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "Is there another way to do this? Passing around pointers to runloops is bleh.\n\nI *think* this function should just block if running on ui_thread before returning true?  If so, then the runloop can be pulled into a local keeping the checks for running_on_ui_thread_ in just this function.",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963044dc_3a0ecb0f",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "nullptr.",
+      "range": {
+        "startLine": 279,
+        "startChar": 43,
+        "endLine": 279,
+        "endChar": 47
+      },
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d83009_616eb30d",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "Move this above the first -\u003eGet() to avoid reading TLS twice in common path?\n\nstd::unordered_set\u003cconst void*\u003e* sent_strings \u003d g_sent_strings.Pointer()-\u003eGet();\nif (sent_strings \u003d\u003d nullptr) {\n  sent_strings \u003d new std::unordered_set\u003cconst void*\u003e;\n  g_sent_strings.Pointer()-\u003eSet(sent_strings);\n}",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad17b2b_c6a8c796",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "pull the 255 into a local constant. Explain why it\u0027s a good size.",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a48a58_59467e11",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "Placement new?\n\nstring_mapping_packet \u003d new (\u0026message) StringMappingPacket;",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c3f80d_b921ba2d",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "Is there a static_assert\u003c\u003e or something enforcing this?",
+      "range": {
+        "startLine": 320,
+        "startChar": 24,
+        "endLine": 320,
+        "endChar": 25
+      },
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d337f59_518ad763",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "Can we move the loops that call AddInstructionPointer() and AddFrame() into the serializer class? So\n\nAddAllFrames(frame, frame_count);\n\nAddAllInstructionPointers(allocation_context.backtrace.frames, allocation_context.backtrace.frame_count);\n\nThen in the constructor for FrameSerializer, pass in the max size of the stack so we can do a CHECK() fail on the call before the loop?",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba2e8ec_7bb29291",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "Hmm... can we change these to non single-byte fills? The single-byte fills look too similar to debug fills for uninitialized memory...",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25ec67f_69e95cc4",
+        "filename": "chrome/profiling/allocation_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T20:41:57Z",
+      "side": 1,
+      "message": "You should clean this to a normal C++ string in the stream parser to keep the validation stuff all in one spot.\n\nImmediate thoughts come to mind of an attacker controlled renderer piping nonsense over this violating assumptions by doing things like embedding nulls. Can\u0027t think of anything actually bad happening, but it makes reviewing hard to go \"and everything here still has to worry about raw bytes instead of c-strings\".  Moving this up to where the packet is decoded would let you put in a comment there that\u0027d be easy to find.",
+      "revId": "fd40e5687cc5746f8126f45d2626559181b555bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
