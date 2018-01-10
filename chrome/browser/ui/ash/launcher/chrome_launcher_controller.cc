@@ -1328,11 +1328,30 @@ void ChromeLauncherController::OnShelfItemDelegateChanged(
     model_->SetShelfItemDelegate(id, nullptr);
   }
 }
+/*
+void ChromeLauncherController::OnAddNotification(
+    const std::string& app_id,
+    const std::string& notification_id) {
+ /*
+  *
+  *
+  * Revive me maybe.
+  */
+// base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
+// model_->AddNotificationRecord(app_id, notification_id);
+}
 
-///////////////////////////////////////////////////////////////////////////////
-// ash::ShelfModelObserver:
+void ChromeLauncherController::OnRemoveNotification(
 
-void ChromeLauncherController::ShelfItemAdded(int index) {
+    const std::string& notification_id){
+    // why?
+    // base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
+    // model_->RemoveNotificationRecord(notification_id);
+} * /
+    ///////////////////////////////////////////////////////////////////////////////
+    // ash::ShelfModelObserver:
+
+    void ChromeLauncherController::ShelfItemAdded(int index) {
   if (shelf_controller_ && !applying_remote_shelf_model_changes_)
     shelf_controller_->AddShelfItem(index, model_->items()[index]);
 

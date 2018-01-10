@@ -29,6 +29,7 @@
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/message_center/message_center.h"
 
 namespace ash {
 
@@ -313,6 +314,28 @@ void ShelfController::ShelfItemDelegateChanged(const ShelfID& id,
                      : mojom::ShelfItemDelegatePtr());
   });
 }
+/*
+void ShelfController::AddNotification(const std::string& app_id,
+                                        const std::string& notification_id) {
+  if (applying_remote_shelf_model_changes_ || !should_synchronize_shelf_models_)
+    return;
+
+  observers_.ForAllPtrs(
+      [app_id, notification_id](mojom::ShelfObserver* observer) {
+        observer->OnAddNotification(app_id, notification_id);
+      });
+}
+*/
+/*
+void ShelfController::RemoveNotification(const std::string& notification_id) {
+  if (applying_remote_shelf_model_changes_ || !should_synchronize_shelf_models_)
+    return;
+
+  observers_.ForAllPtrs([notification_id](mojom::ShelfObserver* observer) {
+    observer->OnRemoveNotification(notification_id);
+  });
+}
+*/
 
 void ShelfController::FlushForTesting() {
   bindings_.FlushForTesting();
@@ -374,6 +397,32 @@ void ShelfController::OnWindowTreeHostsSwappedDisplays(
   // The display ids for existing shelf instances may have changed, so update
   // the alignment and auto-hide state from prefs. See http://crbug.com/748291
   SetShelfBehaviorsFromPrefs();
+}
+
+void ShelfController::OnNotificationAdded(const std::string& notification_id) {
+  message_center::Notification* notification =
+      message_center::MessageCenter::Get()->FindVisibleNotificationById(
+          notification_id);
+  // If the notification is for an ARC app, return early.
+  // TODO(newcomer): Support ARC app notifications.
+  if (notification->notifier_id().type > 1)
+    return;
+
+  model_.AddNotificationRecord(notification->notifier_id().id, notification_id);
+
+  /*
+   * Here lies the mojo addition. If you want to revive it, visit shelf.mojom
+   * and re-add this call/function.
+   *
+   *
+   * AddNotification(notification->notifier_id().id, notification_id);
+   */
+}
+
+void ShelfController::OnNotificationRemoved(const std::string& notification_id,
+                                            bool by_user) {
+  model_.RemoveNotificationRecord(notification_id);
+  // RemoveNotification(notification_id);
 }
 
 }  // namespace ash

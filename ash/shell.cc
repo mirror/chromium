@@ -181,6 +181,7 @@
 #include "ui/keyboard/keyboard_switches.h"
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
+#include "ui/message_center/message_center.h"
 #include "ui/views/corewm/tooltip_aura.h"
 #include "ui/views/corewm/tooltip_controller.h"
 #include "ui/views/focus/focus_manager_factory.h"
@@ -984,6 +985,7 @@ void Shell::Init(ui::ContextFactory* context_factory,
   accelerator_controller_ = shell_port_->CreateAcceleratorController();
   tablet_mode_controller_ = std::make_unique<TabletModeController>();
   shelf_controller_ = std::make_unique<ShelfController>();
+  message_center::MessageCenter::Get()->AddObserver(shelf_controller_.get());
 
   magnifier_key_scroll_handler_ = MagnifierKeyScroller::CreateHandler();
   AddPreTargetHandler(magnifier_key_scroll_handler_.get());
