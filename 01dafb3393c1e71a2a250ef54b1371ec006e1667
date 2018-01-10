@@ -46,6 +46,30 @@
       "revId": "01dafb3393c1e71a2a250ef54b1371ec006e1667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a3a4aa_0e60c022",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-01-10T00:33:45Z",
+      "side": 1,
+      "message": "You mean something like this, right?\n\n  View view;\n  if  (Build.VERSION.SDK_INT \u003e Build.VERSION_CODES.KITKAT) {\n    view \u003d mPopupWindow.getContentView();\n  else if (Build.VERSION.SDK_INT \u003e\u003d Build.VERSION_CODES.JELLY_BEAN) {\n    if (mRootView \u003d\u003d null) return;\n\n    view \u003d mRootView;\n  } else {\n    return;\n  }\n\n  view.announceForAccessibility(mContext.getString(mAccessibilityStringId));\n\nWith that I wonder if it would almost be even easier to read something like:\n\n  View getViewForAccessibilityAnnounce() {\n    if (Build.VERSION.SDK_INT \u003e Build.VERSION_CODES.KITKAT) {\n      return mPopupWindow.getContentView();\n    }\n    if (Build.VERSION.SDK_INT \u003e\u003d Build.VERSION_CODES.JELLY_BEAN) {\n      if (mRootView \u003d\u003d null) return null;\n\n      return mRootView;\n    }\n    return null;\n  }\n\n  ...\n\n  View view \u003d getViewForAccessibilityAnnounce();\n  if (view \u003d\u003d null) return;\n\n  view.announceForAccessibility(mContext.getString(mAccessibilityStringId));",
+      "parentUuid": "bccafe0a_4bb79365",
+      "range": {
+        "startLine": 420,
+        "startChar": 20,
+        "endLine": 420,
+        "endChar": 49
+      },
+      "revId": "01dafb3393c1e71a2a250ef54b1371ec006e1667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
