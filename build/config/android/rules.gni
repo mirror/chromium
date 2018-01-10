@@ -240,6 +240,11 @@ if (enable_java_templates) {
       if (enable_profiling) {
         args += [ "--enable_profiling" ]
       }
+
+      if (android_channel == "default" || android_channel == "canary" ||
+          android_channel == "dev") {
+        args += [ "--trace_native_execution" ]
+      }
     }
 
     config("jni_includes_${target_name}") {
