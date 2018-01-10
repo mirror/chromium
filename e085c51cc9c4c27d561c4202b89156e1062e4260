@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "a149ca3d_96ad1fb0",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T17:39:48Z",
+      "side": 1,
+      "message": "\u003e Ack. I removed the DCHECK and added tests to content_browsertests instead.\n\nyou can still do this:\nif (in_process_gpu_thread_)\n  DCHECK(process_);",
+      "parentUuid": "b1214af2_07a780c2",
+      "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd211814_fb351510",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 7
