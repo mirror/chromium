@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbe2b1a7_4736bb28",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T18:34:37Z",
+      "side": 1,
+      "message": "- You can use frame_tree_node_ instead.\n- Both frame_host_ and frame_tree_node_ can be null.",
+      "revId": "64156f20adbe85c2c1b54b77edfe0a159b798108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cc7d4c_7c7bf050",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T18:34:37Z",
+      "side": 1,
+      "message": "Use gfx::ToRoundedPoint to convert back into ints.",
+      "revId": "64156f20adbe85c2c1b54b77edfe0a159b798108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
