@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe8bc116_36d0d8d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:49:54Z",
+      "side": 1,
+      "message": "I would rename this as Don\u0027t create NavigationHandle for interstitials.",
+      "revId": "a126e658cbc5b022dd9af4efcdf2ca4d62f7e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c312c6_907353fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:49:54Z",
+      "side": 1,
+      "message": "Creating the handle wouldn\u0027t force the navigation to be handled by the network stack. In the Pre-PlzNavigate architecture, on Android, we would send the navigation to the interstitial to the network stack. There the navigation would be cancelled if we did not find a matching NavigationHandle, hence why we needed to create one before asking the renderer process to navigate to the interstitial - otherwise the navigation wouldn\u0027t complete. However, navigation to interstitials in PlzNavigate doesn\u0027t use this particular code path, so we can safely remove the NavigationHandle for interstitials (which was never used for normal NavigationHandle purposes of notifying the WebContentsObservers).",
+      "revId": "a126e658cbc5b022dd9af4efcdf2ca4d62f7e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1caef9e_6310f275",
+        "filename": "content/browser/frame_host/interstitial_page_navigator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-10T16:49:54Z",
+      "side": 1,
+      "message": "I think we can also remove this comment an the check below.",
+      "revId": "a126e658cbc5b022dd9af4efcdf2ca4d62f7e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
