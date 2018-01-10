@@ -199,6 +199,8 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   void UpdateInertIfPossible();
 
  protected:
+  static void UpgradeInsecureRequest(KURL&, Document& origin_document);
+
   Frame(FrameClient*, Page&, FrameOwner*, WindowProxyManager*);
 
   mutable FrameTree tree_node_;
