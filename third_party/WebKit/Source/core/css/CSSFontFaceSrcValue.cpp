@@ -104,12 +104,9 @@ FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context,
     if (context->IsWorkerGlobalScope()) {
       ToWorkerGlobalScope(context)->EnsureFetcher();
     }
-    FontResource* resource =
-        FontResource::Fetch(params, context->Fetcher(), client);
-    if (!resource)
-      return nullptr;
     fetched_ = FontResourceHelper::Create(
-        resource, context->GetTaskRunner(TaskType::kUnspecedLoading).get());
+        FontResource::Fetch(params, context->Fetcher(), client),
+        context->GetTaskRunner(TaskType::kUnspecedLoading).get());
   } else {
     // FIXME: CSSFontFaceSrcValue::Fetch is invoked when @font-face rule
     // is processed by StyleResolver / StyleEngine.

@@ -867,9 +867,7 @@ void DocumentLoader::StartLoading() {
   // The final access checks are still performed here, potentially rejecting
   // the "provisional" load, but the browser side already expects the renderer
   // to be able to unconditionally commit.
-  if (!GetResource() ||
-      (frame_->GetSettings()->GetBrowserSideNavigationEnabled() &&
-       GetResource()->ErrorOccurred())) {
+  if (GetResource()->ErrorOccurred()) {
     request_ = ResourceRequest(BlankURL());
     MaybeLoadEmpty();
     return;

@@ -425,7 +425,7 @@ void Resource::FinishAsError(const ResourceError& error,
   error_ = error;
   is_revalidating_ = false;
 
-  if (IsMainThread())
+  if (IsMainThread() && !Url().IsNull())
     GetMemoryCache()->Remove(this);
 
   if (!ErrorOccurred())

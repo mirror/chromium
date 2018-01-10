@@ -202,7 +202,7 @@ bool SendBeaconCommon(LocalFrame* frame,
 
   Resource* resource =
       RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
-  if (resource && resource->GetStatus() != ResourceStatus::kLoadError) {
+  if (resource->GetStatus() != ResourceStatus::kLoadError) {
     frame->Client()->DidDispatchPingLoader(request.Url());
     return true;
   }
@@ -224,7 +224,7 @@ void PingLoader::LoadImage(LocalFrame* frame, const KURL& url) {
 
   Resource* resource =
       RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
-  if (resource && resource->GetStatus() != ResourceStatus::kLoadError)
+  if (resource->GetStatus() != ResourceStatus::kLoadError)
     frame->Client()->DidDispatchPingLoader(request.Url());
 }
 
@@ -260,7 +260,7 @@ void PingLoader::SendLinkAuditPing(LocalFrame* frame,
 
   Resource* resource =
       RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
-  if (resource && resource->GetStatus() != ResourceStatus::kLoadError)
+  if (resource->GetStatus() != ResourceStatus::kLoadError)
     frame->Client()->DidDispatchPingLoader(request.Url());
 }
 
@@ -292,7 +292,7 @@ void PingLoader::SendViolationReport(LocalFrame* frame,
 
   Resource* resource =
       RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
-  if (resource && resource->GetStatus() != ResourceStatus::kLoadError)
+  if (resource->GetStatus() != ResourceStatus::kLoadError)
     frame->Client()->DidDispatchPingLoader(request.Url());
 }
 
