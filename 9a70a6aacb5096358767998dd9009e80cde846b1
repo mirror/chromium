@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a56fae_95f8e8a5",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-10T08:37:40Z",
+      "side": 1,
+      "message": "I\u0027m worried this does not satisfy WeakPtr\u0027s thread-safety requirement. Maybe CreateQueryWithSettings() should just become a standalone function that also takes an additional parameter to pass it |queue_|.",
+      "revId": "9a70a6aacb5096358767998dd9009e80cde846b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
