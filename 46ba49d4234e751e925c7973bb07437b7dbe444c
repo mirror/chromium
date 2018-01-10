@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e35b66d_f8f07772",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T23:26:51Z",
+      "side": 1,
+      "message": "move the doc to chromium.org and make sure it\u0027s at least publicly readable",
+      "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86ec046_396134ee",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T23:26:51Z",
+      "side": 1,
+      "message": "check_damage_early_ \u003d enable is fine",
+      "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7e93c8_ea69c816",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T23:26:51Z",
+      "side": 1,
+      "message": "do this outside the if statement",
+      "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b524b3_213753ab",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T23:26:51Z",
+      "side": 1,
+      "message": "replace \"early\" with \"in_begin_impl_frame\"\n\nand probably deserves a bit of comments here",
+      "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
