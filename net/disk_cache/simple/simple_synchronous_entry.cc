@@ -754,7 +754,9 @@ int SimpleSynchronousEntry::PreReadStreamPayload(
   int stream_size = entry_stat.data_size(stream_index);
   int read_size = stream_size + extra_size;
   out->data = new net::GrowableIOBuffer();
-  out->data->SetCapacity(read_size);
+  out->data->SetCapacity(stream_index == 1 ? 32768 : read_size);
+  if (stream_index == 1)
+    out->data->set_offset(32768 - read_size);
   int file_offset = entry_stat.GetOffsetInFile(key_.size(), 0, stream_index);
   if (!ReadFromFileOrPrefetched(file, file_0_prefetch, 0, file_offset,
                                 read_size, out->data->data()))
@@ -1316,7 +1318,7 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
     RecordWhetherOpenDidPrefetch(cache_type_, false);
   } else {
     RecordWhetherOpenDidPrefetch(cache_type_, true);
-    prefetch_buf = std::make_unique<char[]>(file_size);
+    prefetch_buf = std::make_unique<char[]>(32768);
     if (file->Read(0, prefetch_buf.get(), file_size) != file_size)
       return net::ERR_FAILED;
     file_0_prefetch.set(prefetch_buf.get(), file_size);
