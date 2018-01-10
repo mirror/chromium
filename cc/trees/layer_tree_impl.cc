@@ -1592,12 +1592,17 @@ void LayerTreeImpl::FinishSwapPromises(viz::CompositorFrameMetadata* metadata) {
     swap_promise->WillSwap(metadata);
 }
 
-void LayerTreeImpl::ClearSwapPromises() {
-  for (const auto& swap_promise : swap_promise_list_)
+void LayerTreeImpl::ClearSwapPromises(
+    RenderFrameMetadata* render_frame_metadata) {
+  for (const auto& swap_promise : swap_promise_list_) {
     swap_promise->DidSwap();
+    swap_promise->DidSwap2(render_frame_metadata);
+  }
   swap_promise_list_.clear();
-  for (const auto& swap_promise : pinned_swap_promise_list_)
+  for (const auto& swap_promise : pinned_swap_promise_list_) {
     swap_promise->DidSwap();
+    swap_promise->DidSwap2(render_frame_metadata);
+  }
   pinned_swap_promise_list_.clear();
 }
 

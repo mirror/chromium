@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/memory/ref_counted.h"
+#include "cc/trees/render_frame_metadata.h"
 #include "cc/trees/swap_promise.h"
 
 namespace IPC {
@@ -30,6 +31,7 @@ class QueueMessageSwapPromise : public cc::SwapPromise {
   void WillSwap(viz::CompositorFrameMetadata* metadata) override;
   void DidSwap() override;
   DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override;
+  void DidSwap2(cc::RenderFrameMetadata* metadata) override;
 
   int64_t TraceId() const override;
 
