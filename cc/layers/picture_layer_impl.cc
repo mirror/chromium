@@ -239,6 +239,7 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
         draw_properties()
             .occlusion_in_content_space.GetOcclusionWithGivenDrawTransform(
                 shared_quad_state->quad_to_target_transform);
+    SkColor raster_color = raster_source_->GetSolidColor();
     SolidColorLayerImpl::AppendSolidQuads(
         render_pass, scaled_occlusion, shared_quad_state,
         scaled_visible_layer_rect, raster_source_->GetSolidColor(),

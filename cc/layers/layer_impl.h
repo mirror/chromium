@@ -335,6 +335,9 @@ class CC_EXPORT LayerImpl {
     return touch_action_region_;
   }
 
+  void SetHasSquashedAway(bool has_squashed_away);
+  bool GetHasSquashedAway() { return has_squashed_away_; }
+
   // Note this rect is in layer space (not content space).
   void SetUpdateRect(const gfx::Rect& update_rect);
   const gfx::Rect& update_rect() const { return update_rect_; }
@@ -587,6 +590,8 @@ class CC_EXPORT LayerImpl {
   bool raster_even_if_not_drawn_ : 1;
 
   bool has_transform_node_ : 1;
+
+  bool has_squashed_away_ : 1;
 
   DISALLOW_COPY_AND_ASSIGN(LayerImpl);
 };

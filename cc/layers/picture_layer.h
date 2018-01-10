@@ -10,6 +10,7 @@
 #include "cc/base/invalidation_region.h"
 #include "cc/benchmarks/micro_benchmark_controller.h"
 #include "cc/layers/layer.h"
+#include "cc/layers/squashing_recording_source.h"
 
 namespace cc {
 
@@ -44,6 +45,21 @@ class CC_EXPORT PictureLayer : public Layer {
 
   bool HasSlowPaths() const override;
   bool HasNonAAPaint() const override;
+  bool HasSquashingRecordingSource() {
+    return squashing_recording_source_ != nullptr;
+  }
+  SquashingRecordingSource* GetSquashingRecordingSource() {
+    return squashing_recording_source_.get();
+  }
+  bool IsPictureLayer() override;
+  void SquashToFirstPictureLayer(PictureLayer*,
+                                 const gfx::RectF& first_clip_rect,
+                                 const gfx::RectF& current_clip_rect);
+  void CreateSquashingRecordingSource();
+  void SetHasSquashedAway(bool squashed) { has_squashed_away_ = squashed; }
+  bool GetHasSquashedAway() override;
+  void UpdateDisplayItemList(const scoped_refptr<DisplayItemList>& display_list,
+                             const size_t& painter_reported_memory_usage);
 
   void RunMicroBenchmark(MicroBenchmark* benchmark) override;
 
@@ -54,8 +70,14 @@ class CC_EXPORT PictureLayer : public Layer {
   }
 
   const DisplayItemList* GetDisplayItemList();
+  size_t GetPainterReportedMemoryUsage() {
+    return picture_layer_inputs_.painter_reported_memory_usage;
+  }
 
   LayerMaskType mask_type() { return mask_type_; }
+  void UpdateInvalidationRegion(const Region& region_to_union) {
+    last_updated_invalidation_.Union(region_to_union);
+  }
 
  protected:
   // Encapsulates all data, callbacks or interfaces received from the embedder.
@@ -89,6 +111,7 @@ class CC_EXPORT PictureLayer : public Layer {
   bool ShouldUseTransformedRasterization() const;
 
   std::unique_ptr<RecordingSource> recording_source_;
+  std::unique_ptr<SquashingRecordingSource> squashing_recording_source_;
   devtools_instrumentation::
       ScopedLayerObjectTracker instrumentation_object_tracker_;
 
@@ -96,6 +119,8 @@ class CC_EXPORT PictureLayer : public Layer {
 
   int update_source_frame_number_;
   LayerMaskType mask_type_;
+
+  bool has_squashed_away_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(PictureLayer);
 };
