@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "31ebc536_11017d2f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-10T10:11:43Z",
+      "side": 1,
+      "message": "Instead of \"ng_mixin\", how about \"block\", \"block_flow\", \"container\" or \"object\"?",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90bad5bc_71a3a773",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 5
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "1426ac8e_8648fce7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-10T10:11:43Z",
+      "side": 1,
+      "message": "If this down-cast is necessary, I\u0027d prefer if you add a ToNGLayoutTableCell(). Then there\u0027ll be an IsLayoutNGTableCell() too, so that you won\u0027t have to string-compare GetName() above.",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c8dcd5b_b12c4988",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 5
@@ -47,6 +81,23 @@
       "writtenOn": "2018-01-10T09:45:29Z",
       "side": 1,
       "message": "Maybe move to LayoutBlockFlow, or its own class similar to NGInlineFragmentIterator?",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa8c3f2_82c6e333",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-10T10:11:43Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to detect this situation further up on the call stack before entering the LayoutText child, and call InvalidateNGPaintFragments() there, rather than calling EnclosingNGBlockFlow() for every LayoutText object? A DCHECK should probably be kept here, though.",
       "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
