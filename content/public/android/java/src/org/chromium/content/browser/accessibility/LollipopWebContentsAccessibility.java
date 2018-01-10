@@ -14,12 +14,13 @@ import android.os.Build;
 import android.text.SpannableString;
 import android.text.style.LocaleSpan;
 import android.util.SparseArray;
-import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
 
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.content.browser.webcontents.WebContentsUserData;
+import org.chromium.content.browser.webcontents.WebContentsUserData.UserDataFactory;
 import org.chromium.content_public.browser.WebContents;
 
 import java.util.Locale;
@@ -34,12 +35,23 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
             new SparseArray<AccessibilityAction>();
     private String mSystemLanguageTag;
     private BroadcastReceiver mBroadcastReceiver;
-    private Context mContext;
 
-    LollipopWebContentsAccessibility(Context context, ViewGroup containerView,
-            WebContents webContents, boolean shouldFocusOnPageLoad) {
-        super(context, containerView, webContents, shouldFocusOnPageLoad);
-        mContext = context;
+    private static final class UserDataFactoryLazyHolder {
+        private static final UserDataFactory<LollipopWebContentsAccessibility> INSTANCE =
+                LollipopWebContentsAccessibility::new;
+    }
+
+    static LollipopWebContentsAccessibility create(WebContents webContents) {
+        return WebContentsUserData.fromWebContents(webContents,
+                LollipopWebContentsAccessibility.class, UserDataFactoryLazyHolder.INSTANCE);
+    }
+
+    LollipopWebContentsAccessibility(WebContents webContents) {
+        super(webContents);
+    }
+
+    @Override
+    protected void onNativeInit() {
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -153,11 +165,15 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
 
     @Override
     public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (!isNativeInit()) return;
         mContext.unregisterReceiver(mBroadcastReceiver);
     }
 
     @Override
     public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (!isNativeInit()) return;
         try {
             IntentFilter filter = new IntentFilter(Intent.ACTION_LOCALE_CHANGED);
             mContext.registerReceiver(mBroadcastReceiver, filter);
