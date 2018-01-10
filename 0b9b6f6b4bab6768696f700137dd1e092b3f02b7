@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8bf6e1f_76b25813",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-10T11:08:28Z",
+      "side": 1,
+      "message": "Hm... -1 isn\u0027t really an acceptable value for @SigninAccessPoint, right? In this case, we could just check for the existence of the key, or maybe we should make this an assert anyway? This case would only happen as the result of a bug at the call site, right?",
+      "range": {
+        "startLine": 235,
+        "startChar": 27,
+        "endLine": 235,
+        "endChar": 29
+      },
+      "revId": "0b9b6f6b4bab6768696f700137dd1e092b3f02b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81cb033_74ca6e06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-10T11:08:28Z",
+      "side": 1,
+      "message": "Same here, I think this could be an assert, and also the error message might be a bit confusing, because the account name could be missing as opposed to an explicit null, right?",
+      "range": {
+        "startLine": 252,
+        "startChar": 16,
+        "endLine": 252,
+        "endChar": 40
+      },
+      "revId": "0b9b6f6b4bab6768696f700137dd1e092b3f02b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133bebb1_da7ac1e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-10T11:08:28Z",
+      "side": 1,
+      "message": "And here too.",
+      "range": {
+        "startLine": 266,
+        "startChar": 16,
+        "endLine": 266,
+        "endChar": 99
+      },
+      "revId": "0b9b6f6b4bab6768696f700137dd1e092b3f02b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
