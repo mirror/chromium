@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75668e52_422f3132",
+        "filename": "third_party/WebKit/Source/modules/crypto/SubtleCrypto.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-10T07:03:43Z",
+      "side": 1,
+      "message": "Actually there were similar functions in a removed class called TaskRunnerHelper, and I removed this before to reduce glue codes (e.g. https://chromium-review.googlesource.com/c/chromium/src/+/758379). I\u0027d want to keep this as it is at least in this CL.",
+      "parentUuid": "7a31b9aa_113f2ad2",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 63
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "009ea6e8_361044ab",
         "filename": "third_party/WebKit/Source/modules/crypto/SubtleCrypto.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a524314f_9a52a0c7",
+        "filename": "third_party/WebKit/Source/modules/crypto/SubtleCrypto.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-10T07:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "009ea6e8_361044ab",
+      "range": {
+        "startLine": 242,
+        "startChar": 41,
+        "endLine": 242,
+        "endChar": 52
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "28fc92a0_3fcbec76",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-10T07:03:43Z",
+      "side": 1,
+      "message": "Good point. In the first place, these task types are needed to analyze what kind of task execution consumes how much time, but now I\u0027m not sure if the current task-type policies goes along with our purpose. altimin@, what do you think?",
+      "parentUuid": "087550fc_e169c4ce",
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "344b1aaf_cff4b83b",
         "filename": "third_party/WebKit/public/platform/WebCrypto.h",
         "patchSetId": 4
@@ -108,6 +174,30 @@
       "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afe02b4_7aba322c",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-10T07:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344b1aaf_cff4b83b",
+      "range": {
+        "startLine": 153,
+        "startChar": 67,
+        "endLine": 154,
+        "endChar": 42
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "5049521b_1282bcab",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-10T07:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37a9e8ed_f3a0338b",
+      "range": {
+        "startLine": 164,
+        "startChar": 66,
+        "endLine": 164,
+        "endChar": 77
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60f6a582_1b9a0ac3",
         "filename": "third_party/WebKit/public/platform/WebCrypto.h",
         "patchSetId": 4
@@ -154,6 +268,30 @@
       "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1295594e_45575147",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-10T07:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f6a582_1b9a0ac3",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 22
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
