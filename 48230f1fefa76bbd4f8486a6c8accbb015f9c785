@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3151a6db_d322bbc3",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-10T19:27:32Z",
+      "side": 1,
+      "message": "I didn\u0027t want to re-enumerate every value of TetherFeatureState. For example, the device won\u0027t suddenly switch its FeatureState to BLE_NOT_PRESENT in the middle of a Tether session. What do you think?",
+      "parentUuid": "709e469f_97c983d2",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 33
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71800316_411fb586",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715d4216_200db13a",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-10T19:27:32Z",
+      "side": 1,
+      "message": "I\u0027ve called it in all tests where applicable, AFAICT -- it should only be called when the component is active and subsequently torn down. For example, TestBleAdvertisingNotSupported_BluetoothIsInitiallyNotPowered isn\u0027t applicable because the component is never instantiated.",
+      "parentUuid": "71800316_411fb586",
+      "range": {
+        "startLine": 411,
+        "startChar": 7,
+        "endLine": 411,
+        "endChar": 40
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "656d6da9_9df44759",
+        "filename": "chromeos/components/tether/fake_tether_component.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-10T19:27:32Z",
+      "side": 1,
+      "message": "Since these are just test classes, I took the easier route of simply setting this value to the enum MAX value.",
+      "parentUuid": "61ae2673_1b4800ad",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 78
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab0aa370_65fd996d",
         "filename": "chromeos/components/tether/tether_component.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d166997a_a709bcc3",
+        "filename": "chromeos/components/tether/tether_component.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-10T19:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab0aa370_65fd996d",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "190bd71e_946284ee",
+        "filename": "chromeos/components/tether/tether_disconnector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-10T19:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "143f2421_5de5dbd1",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afff654b_947074fd",
         "filename": "chromeos/components/tether/tether_disconnector_impl.cc",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5eb77348_a6bac397",
+        "filename": "chromeos/components/tether/tether_disconnector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-10T19:27:32Z",
+      "side": 1,
+      "message": "Confirmed on a real device that the metric is only logged once.",
+      "parentUuid": "afff654b_947074fd",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03772373_3bb52c91",
         "filename": "chromeos/components/tether/tether_network_disconnection_handler.cc",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e42a38_7e67163b",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-10T19:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03772373_3bb52c91",
+      "range": {
+        "startLine": 53,
+        "startChar": 53,
+        "endLine": 53,
+        "endChar": 71
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
