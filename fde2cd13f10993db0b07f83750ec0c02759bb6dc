@@ -16,6 +16,24 @@
       "revId": "fde2cd13f10993db0b07f83750ec0c02759bb6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16fe1a6b_3d1cec8a",
+        "filename": "third_party/WebKit/Source/core/dom/ElementShadowV0.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3fc0eff_6483c9e0",
+      "revId": "fde2cd13f10993db0b07f83750ec0c02759bb6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
