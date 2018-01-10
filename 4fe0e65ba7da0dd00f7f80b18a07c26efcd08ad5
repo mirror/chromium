@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01028f90_664082a9",
+        "filename": "content/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-10T00:03:15Z",
+      "side": 1,
+      "message": "For consistency, I\u0027d like to keep the \"output\" types in the Browser namespace.\n\nWe have similarly named \"input\" types in other namespaces, such as base::StatisticsRecorder::Histograms.\n\nAnd Browser::Histograms is shorted than Array\u003cBrowser::Histogram\u003e.",
+      "parentUuid": "55a7db0e_6e07166e",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71874be_9817bec2",
         "filename": "content/browser/devtools/protocol/browser_handler.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d56423_8509087a",
+        "filename": "content/browser/devtools/protocol/browser_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-10T00:03:15Z",
+      "side": 1,
+      "message": "I\u0027d rather not. It just adds cruft and distraction to the code, and forces several lines to be folded.",
+      "parentUuid": "c71874be_9817bec2",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b6980bcf_8436259c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-10T00:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4fcb91_94674d9d",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1e9960c_bde0e4e0",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad46af5_a2fda310",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-10T00:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1e9960c_bde0e4e0",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3d3e6780_f6e774d1",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-10T00:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361dd579_94325535",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd83b38_135a7dd7",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04c3de6_0fff9d48",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 13
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-10T00:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bd83b38_135a7dd7",
+      "revId": "4fe0e65ba7da0dd00f7f80b18a07c26efcd08ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
