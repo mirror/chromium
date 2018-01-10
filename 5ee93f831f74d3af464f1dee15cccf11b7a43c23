@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd9e9cf_3ec6fedf",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-10T06:15:38Z",
+      "side": 1,
+      "message": "Originally this was a MidiManagerWinrt\u0027s method, but make it isolated from the class instance so that it can run after the destruction.",
+      "range": {
+        "startLine": 775,
+        "startChar": 0,
+        "endLine": 775,
+        "endChar": 4
+      },
+      "revId": "5ee93f831f74d3af464f1dee15cccf11b7a43c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a8f51a5_de449a55",
+        "filename": "media/midi/midi_manager_winrt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-10T06:15:38Z",
+      "side": 1,
+      "message": "Make them public to use in a function in anonymous namespace on finalization. Another choice is to make the function static class method.",
+      "range": {
+        "startLine": 19,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 2
+      },
+      "revId": "5ee93f831f74d3af464f1dee15cccf11b7a43c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "583c4aae_f7f87dca",
+        "filename": "media/midi/midi_manager_winrt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-10T06:15:38Z",
+      "side": 1,
+      "message": "reordered to make forward declarations first.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "5ee93f831f74d3af464f1dee15cccf11b7a43c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
