@@ -12,9 +12,11 @@
           'Cycles of AudioNode connections should be collected, after rendering.');
       window.jsTestIsAsync = true;
 
+      // Clear out any garbage before we begin, just in case.
+      gc();
       let context = new OfflineAudioContext(2, 1024, 44100);
       let initialCount = internals.audioHandlerCount();
-      gc();
+
       createCycle();
       debug('A cycle was created:');
       shouldBeTrue('internals.audioHandlerCount() > initialCount');
