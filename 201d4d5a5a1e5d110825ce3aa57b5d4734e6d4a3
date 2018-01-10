@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d09aa5ce_a8237a08",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T14:01:56Z",
+      "side": 1,
+      "message": "You can add a move assignment operator and a move constructor to the class to address that.\nThe unique_ptr is not copyable either, so you are using its move-assignment operator.",
+      "parentUuid": "524778ab_7020122c",
+      "range": {
+        "startLine": 194,
+        "startChar": 32,
+        "endLine": 194,
+        "endChar": 42
+      },
+      "revId": "201d4d5a5a1e5d110825ce3aa57b5d4734e6d4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48d02341_27bb5d2b",
         "filename": "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom",
         "patchSetId": 6
