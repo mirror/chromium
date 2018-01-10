@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a67d0f7_605d2284",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1258988
+      },
+      "writtenOn": "2018-01-10T22:59:15Z",
+      "side": 1,
+      "message": "I assumed that StringPiece is used to avoid allocating and potentially copying another string object as it seems to just be to a pointer to memory owned by an existing string. Does that sound right?",
+      "parentUuid": "5ecf8fe9_aa22c913",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2457e81_9908ef6f",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bbad50_32881ccd",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1258988
+      },
+      "writtenOn": "2018-01-10T22:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2457e81_9908ef6f",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca05a8a6_2449428b",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1258988
+      },
+      "writtenOn": "2018-01-10T22:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7d5e6b5_7b14ac3c",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "969685a0_75b1f786",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-10T04:57:40Z",
       "side": 1,
       "message": "I\u0027m wondering if you really do want to track all these together. If you sometimes roll changes into one editor and not the others, it could make it difficult to analyze the data.\n\nIf we expect these all to move together, it might actually make sense to just record just one, e.g., just record for \"docs\"?",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167fc6a3_d58594f4",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1258988
+      },
+      "writtenOn": "2018-01-10T22:59:15Z",
+      "side": 1,
+      "message": "That\u0027s a solid point and we do actually want to track them separately, which is what we do with our own metrics. Will re-work the code accordingly.",
+      "parentUuid": "969685a0_75b1f786",
       "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "d9fa5dcb_4ff95c0d",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1258988
+      },
+      "writtenOn": "2018-01-10T22:59:15Z",
+      "side": 1,
+      "message": "This is just to describe that this is open capturing URLs that involve document opens. We have other navigations, such as homescreen, that we aren\u0027t too interested in right now and would want to track separately anyway if we did.",
+      "parentUuid": "1d0a0d5a_63c81d45",
+      "range": {
+        "startLine": 171,
+        "startChar": 17,
+        "endLine": 171,
+        "endChar": 24
+      },
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f891bde2_222b0549",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.h",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee566266_9032c11d",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1258988
+      },
+      "writtenOn": "2018-01-10T22:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f891bde2_222b0549",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
