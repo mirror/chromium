@@ -866,58 +866,21 @@ void VolumeManager::OnRemovableStorageAttached(
   base::RemoveChars(info.location(), kRootPath, &storage_name);
   DCHECK(!storage_name.empty());
 
-  const device::mojom::MtpStorageInfo* mtp_storage_info;
   if (get_mtp_storage_info_callback_.is_null()) {
-    mtp_storage_info = storage_monitor::StorageMonitor::GetInstance()
-                           ->media_transfer_protocol_manager()
-                           ->GetStorageInfo(storage_name);
-  } else {
-    mtp_storage_info = get_mtp_storage_info_callback_.Run(storage_name);
-  }
-
-  if (!mtp_storage_info) {
-    // mtp_storage_info can be null. e.g. As OnRemovableStorageAttached is
-    // called asynchronously, there can be a race condition where the storage
-    // has been already removed in MediaTransferProtocolManager at the time when
-    // this method is called.
+    storage_monitor::StorageMonitor::GetInstance()
+        ->media_transfer_protocol_manager()
+        ->GetStorageInfo(storage_name,
+                         base::BindOnce(&VolumeManager::DoAttachMtpStorage,
+                                        weak_ptr_factory_.GetWeakPtr(),
+                                        info));
     return;
   }
-
-  // Mtp write is enabled only when the device is writable, supports generic
-  // hierarchical file system, and writing to external storage devices is not
-  // prohibited by the preference.
-  const bool read_only =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kDisableMtpWriteSupport) ||
-      mtp_storage_info->access_capability != kAccessCapabilityReadWrite ||
-      mtp_storage_info->filesystem_type !=
-          kFilesystemTypeGenericHierarchical ||
-      GetExternalStorageAccessMode(profile_) ==
-          chromeos::MOUNT_ACCESS_MODE_READ_ONLY;
-
-  const base::FilePath path = base::FilePath::FromUTF8Unsafe(info.location());
-  const std::string fsid = GetMountPointNameForMediaStorage(info);
-  const std::string base_name = base::UTF16ToUTF8(info.model_name());
-
-  // Assign a fresh volume ID based on the volume name.
-  std::string label = base_name;
-  for (int i = 2; mounted_volumes_.count(kMtpVolumeIdPrefix + label); ++i)
-    label = base_name + base::StringPrintf(" (%d)", i);
-
-  bool result =
-      storage::ExternalMountPoints::GetSystemInstance()->RegisterFileSystem(
-          fsid, storage::kFileSystemTypeDeviceMediaAsFileStorage,
-          storage::FileSystemMountOption(), path);
-  DCHECK(result);
-
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&MTPDeviceMapService::RegisterMTPFileSystem,
-                     base::Unretained(MTPDeviceMapService::GetInstance()),
-                     info.location(), fsid, read_only));
-
-  std::unique_ptr<Volume> volume = Volume::CreateForMTP(path, label, read_only);
-  DoMountEvent(chromeos::MOUNT_ERROR_NONE, std::move(volume));
+  get_mtp_storage_info_callback_.Run(
+      storage_name,
+      base::BindOnce(&VolumeManager::DoAttachMtpStorage,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     info));
+  return;
 }
 
 void VolumeManager::OnRemovableStorageDetached(
@@ -1003,6 +966,54 @@ void VolumeManager::OnStorageMonitorInitialized() {
   for (size_t i = 0; i < storages.size(); ++i)
     OnRemovableStorageAttached(storages[i]);
   storage_monitor::StorageMonitor::GetInstance()->AddObserver(this);
+}
+
+void VolumeManager::DoAttachMtpStorage(
+    const storage_monitor::StorageInfo& info,
+    const device::mojom::MtpStorageInfo* mtp_storage_info ) {
+  if (!mtp_storage_info) {
+    // mtp_storage_info can be null. e.g. As OnRemovableStorageAttached and
+    // DoAttachMtpStorage are called asynchronously, there can be a race
+    // condition where the storage has been already removed in
+    // MediaTransferProtocolManager at the time when this method is called.
+    return;
+  }
+
+  // Mtp write is enabled only when the device is writable, supports generic
+  // hierarchical file system, and writing to external storage devices is not
+  // prohibited by the preference.
+  const bool read_only =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kDisableMtpWriteSupport) ||
+      mtp_storage_info->access_capability != kAccessCapabilityReadWrite ||
+      mtp_storage_info->filesystem_type !=
+          kFilesystemTypeGenericHierarchical ||
+      GetExternalStorageAccessMode(profile_) ==
+          chromeos::MOUNT_ACCESS_MODE_READ_ONLY;
+
+  const base::FilePath path = base::FilePath::FromUTF8Unsafe(info.location());
+  const std::string fsid = GetMountPointNameForMediaStorage(info);
+  const std::string base_name = base::UTF16ToUTF8(info.model_name());
+
+  // Assign a fresh volume ID based on the volume name.
+  std::string label = base_name;
+  for (int i = 2; mounted_volumes_.count(kMtpVolumeIdPrefix + label); ++i)
+    label = base_name + base::StringPrintf(" (%d)", i);
+
+  bool result =
+      storage::ExternalMountPoints::GetSystemInstance()->RegisterFileSystem(
+          fsid, storage::kFileSystemTypeDeviceMediaAsFileStorage,
+          storage::FileSystemMountOption(), path);
+  DCHECK(result);
+
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&MTPDeviceMapService::RegisterMTPFileSystem,
+                     base::Unretained(MTPDeviceMapService::GetInstance()),
+                     info.location(), fsid, read_only));
+
+  std::unique_ptr<Volume> volume = Volume::CreateForMTP(path, label, read_only);
+  DoMountEvent(chromeos::MOUNT_ERROR_NONE, std::move(volume));
 }
 
 void VolumeManager::DoMountEvent(chromeos::MountError error_code,
