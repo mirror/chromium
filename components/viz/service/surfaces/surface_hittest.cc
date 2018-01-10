@@ -70,15 +70,18 @@ bool SurfaceHittest::TransformPointToTargetSurface(
   // embedded in target_surface_id, or vice versa.
   if (GetTransformToTargetSurface(target_surface_id, original_surface_id,
                                   &transform)) {
-    if (transform.GetInverse(&transform))
+    if (transform.GetInverse(&transform)) {
       transform.TransformPoint(point);
-    else
+    } else {
+      LOG(ERROR) << "transform.GetInverse() failed";
       return false;
+    }
   } else if (GetTransformToTargetSurface(original_surface_id, target_surface_id,
                                          &transform)) {
     // No need to invert the transform matrix in this case.
     transform.TransformPoint(point);
   } else {
+    LOG(ERROR) << "GetTransformToTargetSurface() failed.";
     return false;
   }
 
@@ -224,13 +227,17 @@ bool SurfaceHittest::GetTransformToTargetSurfaceInternal(
 
   const RenderPass* render_pass =
       GetRenderPassForSurfaceById(root_surface_id, render_pass_id);
-  if (!render_pass)
+  if (!render_pass) {
+    LOG(ERROR) << "No render pass.";
     return false;
+  }
 
   // To avoid an infinite recursion, we need to skip the RenderPass if it's
   // already been referenced.
-  if (referenced_passes->find(render_pass) != referenced_passes->end())
+  if (referenced_passes->find(render_pass) != referenced_passes->end()) {
+    LOG(ERROR) << "Already-referenced render pass.";
     return false;
+  }
 
   referenced_passes->insert(render_pass);
 
@@ -239,6 +246,7 @@ bool SurfaceHittest::GetTransformToTargetSurfaceInternal(
   gfx::Transform transform_from_root_target;
   if (!render_pass->transform_to_root_target.GetInverse(
           &transform_from_root_target)) {
+    LOG(ERROR) << "No render pass transform.";
     return false;
   }
 
@@ -247,6 +255,7 @@ bool SurfaceHittest::GetTransformToTargetSurfaceInternal(
       gfx::Transform target_to_quad_transform;
       if (!quad->shared_quad_state->quad_to_target_transform.GetInverse(
               &target_to_quad_transform)) {
+        LOG(ERROR) << "No quad-to-target transform.";
         return false;
       }
 
@@ -288,6 +297,7 @@ bool SurfaceHittest::GetTransformToTargetSurfaceInternal(
   }
 
   // The target surface was not found.
+  LOG(ERROR) << "Target surface not found.";
   return false;
 }
 
