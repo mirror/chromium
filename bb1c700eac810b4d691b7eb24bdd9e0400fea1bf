@@ -69,6 +69,24 @@
       "revId": "bb1c700eac810b4d691b7eb24bdd9e0400fea1bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ef273a0_8c99f54b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-10T03:32:11Z",
+      "side": 1,
+      "message": "Please update service-worker-v8-cache-expected.txt.",
+      "parentUuid": "c47761c0_21c7fc55",
+      "revId": "bb1c700eac810b4d691b7eb24bdd9e0400fea1bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
