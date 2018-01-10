@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b0e81bc_91eca129",
+        "filename": "content/public/test/web_contents_tester.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-10T18:26:06Z",
+      "side": 1,
+      "message": "My initial thought was, RenderWidgetHostImpl isn\u0027t in public, so how is code outside of content getting a RWHI? Then I realized it doesn\u0027t seem that you are calling this function at all. Am I missing something?",
+      "range": {
+        "startLine": 139,
+        "startChar": 15,
+        "endLine": 139,
+        "endChar": 36
+      },
+      "revId": "c2cbece404e4b6818cea80b6a5dffb91519285ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
