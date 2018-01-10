@@ -4095,7 +4095,6 @@
         "args": [
           "memory.leak_detection",
           "--upload-results",
-          "--output-format=histograms",
           "--output-format=json-test-results",
           "--browser=release",
           "--xvfb"
