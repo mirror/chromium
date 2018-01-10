@@ -22,21 +22,6 @@ scoped_refptr<ResourceRequestBody> ResourceRequestBody::CreateFromBytes(
   return result;
 }
 
-#if defined(OS_ANDROID)
-base::android::ScopedJavaLocalRef<jobject> ResourceRequestBody::ToJavaObject(
-    JNIEnv* env) {
-  return ConvertResourceRequestBodyToJavaObject(
-      env, static_cast<ResourceRequestBody*>(this));
-}
-
-// static
-scoped_refptr<ResourceRequestBody> ResourceRequestBody::FromJavaObject(
-    JNIEnv* env,
-    const base::android::JavaParamRef<jobject>& java_object) {
-  return ExtractResourceRequestBodyFromJavaObject(env, java_object);
-}
-#endif
-
 void ResourceRequestBody::AppendBytes(const char* bytes, int bytes_len) {
   if (bytes_len > 0) {
     elements_.push_back(Element());
