@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca8da8c_88f54cd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T17:52:57Z",
+      "side": 1,
+      "message": "need to update onWindowVisibilityChanged state? does this deserve a setWindow method here as well?",
+      "revId": "52980daf5b754f64508c87f47ac150da0b307477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc03307_7896796a",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T17:52:57Z",
+      "side": 1,
+      "message": "no end underline for local variables",
+      "range": {
+        "startLine": 539,
+        "startChar": 37,
+        "endLine": 539,
+        "endChar": 38
+      },
+      "revId": "52980daf5b754f64508c87f47ac150da0b307477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

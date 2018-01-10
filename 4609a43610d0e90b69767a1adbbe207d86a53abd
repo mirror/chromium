@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ecc58001_f84febf4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T17:52:57Z",
+      "side": 1,
+      "message": "\u003e I didn\u0027t think we updated copyright on file moves? Whatever, updated to 2018 :P\n\nahh, you are right. moves don\u0027t need to update the year. Didn\u0027t realize this was a move when I wrote this I guess",
+      "parentUuid": "d91aade8_56126092",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71d06a49_6f4f795e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
         "patchSetId": 15
@@ -195,6 +219,24 @@
       "side": 1,
       "message": "Changed to mCompositorSurfaceManager.setVisibility(getVisibility()). We need the visibility to be set correctly when recreating the surfaceManager. I don\u0027t see why this would be the caller\u0027s responsibility.",
       "parentUuid": "3504c7f6_00d592ff",
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff145b7b_64f90386",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T17:52:57Z",
+      "side": 1,
+      "message": "\u003e Changed to mCompositorSurfaceManager.setVisibility(getVisibility()). We need the visibility to be set correctly when recreating the surfaceManager. I don\u0027t see why this would be the caller\u0027s responsibility.\n\nOk, yeah, that reads better and makes more sense",
+      "parentUuid": "e4d64a0f_882b6e48",
       "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
