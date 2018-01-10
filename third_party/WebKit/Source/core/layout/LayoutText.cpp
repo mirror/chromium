@@ -308,8 +308,7 @@ Optional<FloatPoint> LayoutText::GetUpperLeftCorner() const {
   DCHECK(!IsBR());
   if (!HasTextBoxes())
     return WTF::nullopt;
-  return FloatPoint(LinesBoundingBox().X(),
-                    FirstTextBox()->Root().LineTop().ToFloat());
+  return FloatPoint(LinesBoundingBox().X(), LinesBoundingBox().Y());
 }
 
 scoped_refptr<StringImpl> LayoutText::OriginalText() const {
