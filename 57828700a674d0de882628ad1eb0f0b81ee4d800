@@ -34,6 +34,24 @@
       "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fd2998_f3528423",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMActivityLogger.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T10:09:00Z",
+      "side": 1,
+      "message": "I said that we should rely on a CHECK somewhere deep inside of PartitionAlloc.  DCHECK doesn\u0027t make much sense when the argument is not deterministic at compile time.  DCHECK should be used to detect programming error, not to detect runtime error.\n\nNote that, IIUC, author script can pass more arguments than required, and unnecessary arguments will be ignored.  So, info.Length() can be huge at runtime, and there is no way to predict info.Length() at compile time.\n\n    array \u003d new Array(100);\n    array[0] \u003d \u0027span\u0027;\n    document.createElement.apply(document, array);\n    // info.Length() \u003d\u003d 100, but this is not syntax error\n\nA colleague of mine said that it might also be good to have an early return, like:\n\n    if (info.Length() \u003e MaxCapacity()) {\n      return failure;\n    }\n    ReserveInitialCapacity(info.Length());\n\nIt\u0027s optional, though.",
+      "parentUuid": "9aac122b_f4bb93a7",
+      "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
