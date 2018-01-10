@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb000a5f_9d8a53e5",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-10T01:52:43Z",
+      "side": 1,
+      "message": "What is this used for? If this was passed over IPC, would it have any semantic meaning?",
+      "revId": "bd3b8300c4079a9cc758b1fe3a5a7eb7f119f8e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
