@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d14d524_fb51b9d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T18:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ca8da8c_88f54cd3",
+      "revId": "52980daf5b754f64508c87f47ac150da0b307477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc03307_7896796a",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 17
@@ -39,6 +57,30 @@
       "revId": "52980daf5b754f64508c87f47ac150da0b307477",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b376e9d_5f85b4e1",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T18:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc03307_7896796a",
+      "range": {
+        "startLine": 539,
+        "startChar": 37,
+        "endLine": 539,
+        "endChar": 38
+      },
+      "revId": "52980daf5b754f64508c87f47ac150da0b307477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

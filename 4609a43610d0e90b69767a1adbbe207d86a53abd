@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1ed51f83_fa5bc95b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-10T18:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecc58001_f84febf4",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4609a43610d0e90b69767a1adbbe207d86a53abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71d06a49_6f4f795e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManagerImpl.java",
         "patchSetId": 15
