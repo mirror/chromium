@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b6a0e6f_95d398b8",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T17:30:06Z",
+      "side": 1,
+      "message": "Done\n\nI should have thought of this, given WebFloatPoint works as first parameter to TransformPointTo...()",
+      "parentUuid": "473f6fd2_67861aa4",
+      "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60f526e7_53cd8f69",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7909dff1_41c2a8af",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T17:30:06Z",
+      "side": 1,
+      "message": "It\u0027s helpful to do it here so we know not to hit-test on any subsequent TouchStarts.",
+      "parentUuid": "60f526e7_53cd8f69",
+      "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -67,6 +103,24 @@
       "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8966fda0_3c808a1e",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T17:30:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ebcb5a_b98b2a1b",
+      "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
