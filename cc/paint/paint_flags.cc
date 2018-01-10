@@ -189,7 +189,10 @@ bool PaintFlags::operator==(const PaintFlags& other) const {
   if (!AreFlattenablesEqual(getLooper().get(), other.getLooper().get()))
     return false;
 
-  // TODO(khushalsagar): Add filter comparison when adding serialization for it.
+  if (!getImageFilter() != !other.getImageFilter())
+    return false;
+  if (getImageFilter() && *getImageFilter() != *other.getImageFilter())
+    return false;
 
   if (!getShader() != !other.getShader())
     return false;

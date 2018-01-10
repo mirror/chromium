@@ -1284,6 +1284,17 @@ bool PaintOp::AreSkPointsEqual(const SkPoint& left, const SkPoint& right) {
 }
 
 // static
+bool PaintOp::AreSkPoint3sEqual(const SkPoint3& left, const SkPoint3& right) {
+  if (!AreEqualEvenIfNaN(left.fX, right.fX))
+    return false;
+  if (!AreEqualEvenIfNaN(left.fY, right.fY))
+    return false;
+  if (!AreEqualEvenIfNaN(left.fZ, right.fZ))
+    return false;
+  return true;
+}
+
+// static
 bool PaintOp::AreSkRectsEqual(const SkRect& left, const SkRect& right) {
   if (!AreEqualEvenIfNaN(left.fLeft, right.fLeft))
     return false;

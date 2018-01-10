@@ -225,6 +225,7 @@ class CC_PAINT_EXPORT PaintOp {
     return left == right;
   }
   static bool AreSkPointsEqual(const SkPoint& left, const SkPoint& right);
+  static bool AreSkPoint3sEqual(const SkPoint3& left, const SkPoint3& right);
   static bool AreSkRectsEqual(const SkRect& left, const SkRect& right);
   static bool AreSkRRectsEqual(const SkRRect& left, const SkRRect& right);
   static bool AreSkMatricesEqual(const SkMatrix& left, const SkMatrix& right);
