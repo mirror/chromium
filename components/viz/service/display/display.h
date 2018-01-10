@@ -38,7 +38,6 @@ namespace viz {
 class DirectRenderer;
 class DisplayClient;
 class OutputSurface;
-class SharedBitmapManager;
 class SoftwareRenderer;
 
 class VIZ_SERVICE_EXPORT DisplayObserver {
@@ -59,8 +58,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   // case, DrawAndSwap must be called externally when needed.
   // The |current_task_runner| may be null if the Display is on a thread without
   // a MessageLoop.
-  Display(SharedBitmapManager* bitmap_manager,
-          const RendererSettings& settings,
+  Display(const RendererSettings& settings,
           const FrameSinkId& frame_sink_id,
           std::unique_ptr<OutputSurface> output_surface,
           std::unique_ptr<DisplayScheduler> scheduler,
@@ -122,7 +120,6 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   // ContextLostObserver implementation.
   void OnContextLost() override;
 
-  SharedBitmapManager* const bitmap_manager_;
   const RendererSettings settings_;
 
   DisplayClient* client_ = nullptr;
