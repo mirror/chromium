@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f4ebe2f_80775a5c",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-10T23:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1d1942a_8f53d94d",
+      "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97ced1f6_5d557e78",
         "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9bec96a_8535d1d3",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-10T23:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ced1f6_5d557e78",
+      "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "825fca1c_f1030cd2",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-10T23:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca3ae673_2050a00c",
+      "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebf2f7f0_6e27cefe",
         "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad25e2f_26335280",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-10T23:25:24Z",
+      "side": 1,
+      "message": "Changed to DownEventMetric",
+      "parentUuid": "ebf2f7f0_6e27cefe",
+      "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
