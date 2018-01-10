@@ -1950,12 +1950,13 @@ void RenderViewImpl::OnSetLocalSurfaceIdForAutoResize(
     const gfx::Size& min_size,
     const gfx::Size& max_size,
     const content::ScreenInfo& screen_info,
+    uint32_t content_source_id,
     const viz::LocalSurfaceId& local_surface_id) {
   if (!auto_resize_mode_ || resize_or_repaint_ack_num_ != sequence_number)
     return;
 
   SetLocalSurfaceIdForAutoResize(sequence_number, screen_info,
-                                 local_surface_id);
+                                 content_source_id, local_surface_id);
 
   if (IsUseZoomForDSFEnabled()) {
     webview()->EnableAutoResizeMode(
