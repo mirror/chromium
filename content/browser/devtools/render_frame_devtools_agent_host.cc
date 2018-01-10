@@ -362,6 +362,19 @@ void RenderFrameDevToolsAgentHost::InspectElement(
     DevToolsSession* session,
     int x,
     int y) {
+  // When there are nested WebContents, the renderer expects coordinates
+  // relative to the main frame, so we need to transform the coordinates from
+  // the root space to the current WebContents' main frame space.
+  if (auto* main_view = frame_host_->frame_tree_node()
+                            ->frame_tree()
+                            ->GetMainFrame()
+                            ->GetView()) {
+    auto transformed_point =
+        main_view->TransformRootPointToViewCoordSpace(gfx::PointF(x, y));
+    x = transformed_point.x();
+    y = transformed_point.y();
+  }
+
   session->InspectElement(gfx::Point(x, y));
 }
 
