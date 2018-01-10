@@ -97,12 +97,13 @@ Polymer({
 
     if (properties.IPConfigs || properties.StaticIPConfig) {
       // Update the 'ipConfig' property.
-      var ipv4 = CrOnc.getIPConfigForType(properties, CrOnc.IPType.IPV4);
-      var ipv6 = CrOnc.getIPConfigForType(properties, CrOnc.IPType.IPV6);
-      this.ipConfig_ = {
-        ipv4: this.getIPConfigUIProperties_(ipv4),
-        ipv6: this.getIPConfigUIProperties_(ipv6)
-      };
+      var ipv4 = this.getIPConfigUIProperties_(
+          CrOnc.getIPConfigForType(properties, CrOnc.IPType.IPV4));
+      var ipv6 = this.getIPConfigUIProperties_(
+          CrOnc.getIPConfigForType(properties, CrOnc.IPType.IPV6));
+      if (ipv4 && !ipv6)
+        ipv6 = {IPAddress: this.i18n('loading')};
+      this.ipConfig_ = {ipv4: ipv4, ipv6: ipv6};
     } else {
       this.ipConfig_ = null;
     }
@@ -139,15 +140,15 @@ Polymer({
 
   /**
    * @param {!CrOnc.IPConfigProperties|undefined} ipconfig
-   * @return {!CrOnc.IPConfigUIProperties} A new IPConfigUIProperties object
-   *     with RoutingPrefix expressed as a string mask instead of a prefix
-   *     length. Returns an empty object if |ipconfig| is undefined.
+   * @return {!CrOnc.IPConfigUIProperties|undefined} A new IPConfigUIProperties
+   *     object with RoutingPrefix expressed as a string mask instead of a
+   *     prefix length. Returns undefined if |ipconfig| is not defined.
    * @private
    */
   getIPConfigUIProperties_: function(ipconfig) {
-    var result = {};
     if (!ipconfig)
-      return result;
+      return undefined;
+    var result = {};
     for (var key in ipconfig) {
       var value = ipconfig[key];
       if (key == 'RoutingPrefix')
