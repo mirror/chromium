@@ -34,6 +34,24 @@
       "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6ea1b4_59a113e4",
+        "filename": "third_party/WebKit/Source/core/paint/SVGContainerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-10T00:04:09Z",
+      "side": 0,
+      "message": "Will need to check SVG spec whether it is intended to clip in local or parent space. Other part of the code seems to treat the viewport as in parent space, e.g. hit testing, however I too feel that viewport in local space sounds more intuitive.",
+      "parentUuid": "cb885c79_543868b3",
+      "revId": "bb87a2e585caafa97a085d771405351c9c4237dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
