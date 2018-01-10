@@ -67,8 +67,8 @@ void DevToolsSession::SetFallThroughForNotFound(bool value) {
 }
 
 void DevToolsSession::AttachToAgent(
-    const blink::mojom::DevToolsAgentAssociatedPtr& agent) {
-  blink::mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
+    const mojom::DevToolsAgentAssociatedPtr& agent) {
+  mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
   binding_.Bind(mojo::MakeRequest(&host_ptr_info));
   agent->AttachDevToolsSession(
       std::move(host_ptr_info), mojo::MakeRequest(&session_ptr_),
@@ -78,8 +78,8 @@ void DevToolsSession::AttachToAgent(
 }
 
 void DevToolsSession::ReattachToAgent(
-    const blink::mojom::DevToolsAgentAssociatedPtr& agent) {
-  blink::mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
+    const mojom::DevToolsAgentAssociatedPtr& agent) {
+  mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
   binding_.Bind(mojo::MakeRequest(&host_ptr_info));
   agent->AttachDevToolsSession(
       std::move(host_ptr_info), mojo::MakeRequest(&session_ptr_),
@@ -195,7 +195,7 @@ void DevToolsSession::flushProtocolNotifications() {
 }
 
 void DevToolsSession::DispatchProtocolMessage(
-    blink::mojom::DevToolsMessageChunkPtr chunk) {
+    mojom::DevToolsMessageChunkPtr chunk) {
   if (chunk->is_first) {
     if (response_message_buffer_size_ != 0) {
       ReceivedBadMessage();

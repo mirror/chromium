@@ -43,6 +43,7 @@
 #include "core/workers/WorkerThread.h"
 #include "platform/WebTaskRunner.h"
 #include "public/platform/WebContentSecurityPolicy.h"
+#include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebSharedWorkerClient.h"
 #include "public/web/worker_content_settings_proxy.mojom-blink.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
@@ -72,11 +73,11 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
       WebApplicationCacheHostClient*) override;
   void OnShadowPageInitialized() override;
 
-  // WebDevToolsAgentImpl::Client overrides.
+  // WebDevToolsAgentClient overrides.
   void SendProtocolMessage(int session_id,
                            int call_id,
-                           const String&,
-                           const String&) override;
+                           const WebString&,
+                           const WebString&) override;
   void ResumeStartup() override;
   const WebString& GetInstrumentationToken() override;
 

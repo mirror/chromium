@@ -28,8 +28,9 @@ class GeometryStructTraitsTest
 
  private:
   // GeometryTraitsTestService:
-  void EchoPoint(const WebPoint& p, EchoPointCallback callback) override {
-    std::move(callback).Run(p);
+  void EchoPoint(gfx::mojom::blink::PointPtr, EchoPointCallback) override {
+    // The type map is not specified.
+    NOTREACHED();
   }
 
   void EchoPointF(const WebFloatPoint& p,
@@ -94,16 +95,6 @@ TEST_F(GeometryStructTraitsTest, Size) {
   gfx::mojom::blink::GeometryTraitsTestServicePtr proxy = GetTraitsTestProxy();
   WebSize output;
   proxy->EchoSize(input, &output);
-  EXPECT_EQ(input, output);
-}
-
-TEST_F(GeometryStructTraitsTest, Point) {
-  const float kX = 1234;
-  const float kY = 5678;
-  WebPoint input(kX, kY);
-  gfx::mojom::blink::GeometryTraitsTestServicePtr proxy = GetTraitsTestProxy();
-  WebPoint output;
-  proxy->EchoPoint(input, &output);
   EXPECT_EQ(input, output);
 }
 

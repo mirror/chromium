@@ -66,6 +66,7 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/web/WebConsoleMessage.h"
+#include "public/web/WebDevToolsAgent.h"
 #include "public/web/WebSettings.h"
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 
@@ -198,21 +199,21 @@ void WebEmbeddedWorkerImpl::ResumeAfterDownload() {
 }
 
 void WebEmbeddedWorkerImpl::AttachDevTools(int session_id) {
-  WebDevToolsAgentImpl* devtools_agent = shadow_page_->DevToolsAgent();
+  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
   if (devtools_agent)
     devtools_agent->Attach(session_id);
 }
 
 void WebEmbeddedWorkerImpl::ReattachDevTools(int session_id,
                                              const WebString& saved_state) {
-  WebDevToolsAgentImpl* devtools_agent = shadow_page_->DevToolsAgent();
+  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
   if (devtools_agent)
     devtools_agent->Reattach(session_id, saved_state);
   ResumeStartup();
 }
 
 void WebEmbeddedWorkerImpl::DetachDevTools(int session_id) {
-  WebDevToolsAgentImpl* devtools_agent = shadow_page_->DevToolsAgent();
+  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
   if (devtools_agent)
     devtools_agent->Detach(session_id);
 }
@@ -223,7 +224,7 @@ void WebEmbeddedWorkerImpl::DispatchDevToolsMessage(int session_id,
                                                     const WebString& message) {
   if (asked_to_terminate_)
     return;
-  WebDevToolsAgentImpl* devtools_agent = shadow_page_->DevToolsAgent();
+  WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
   if (devtools_agent) {
     devtools_agent->DispatchOnInspectorBackend(session_id, call_id, method,
                                                message);
@@ -310,8 +311,8 @@ void WebEmbeddedWorkerImpl::OnShadowPageInitialized() {
 
 void WebEmbeddedWorkerImpl::SendProtocolMessage(int session_id,
                                                 int call_id,
-                                                const String& message,
-                                                const String& state) {
+                                                const WebString& message,
+                                                const WebString& state) {
   worker_context_client_->SendDevToolsMessage(session_id, call_id, message,
                                               state);
 }
