@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121a345e_ee02ad2a",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMActivityLogger.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T09:19:48Z",
+      "side": 1,
+      "message": "info.Length() depends on how author script invokes IDL operations, and will be determined runtime.  So, this DCHECK does not make a good sense.  If Vector::ReserveInitialCapacity crashes in case of out of memory, we can simply remove this DCHECK.",
+      "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
