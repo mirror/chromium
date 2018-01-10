@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1482282_2bbb8013",
+        "filename": "chrome/browser/vr/elements/repositioner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-10T18:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c4a71a_1ee646cb",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fa82078_87fbf42b",
         "filename": "chrome/browser/vr/elements/repositioner.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60faded0_c3aff2f2",
+        "filename": "chrome/browser/vr/elements/repositioner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-10T18:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fa82078_87fbf42b",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b1316080_0d089ff2",
+        "filename": "chrome/browser/vr/elements/repositioner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-10T18:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e84fbb7_4411e05c",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57292054_2b0b2861",
         "filename": "chrome/browser/vr/elements/repositioner.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d3eff0_7177126f",
+        "filename": "chrome/browser/vr/elements/repositioner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-10T18:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57292054_2b0b2861",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "672ed017_3c5239a2",
+        "filename": "chrome/browser/vr/elements/repositioner_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-10T18:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d55c07b_2cab7811",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8412d0da_f7fc88f8",
         "filename": "chrome/browser/vr/model/reticle_model.h",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-10T14:26:27Z",
       "side": 1,
       "message": "This doesn\u0027t seem at home here.  HitTestRequest is a tool used to compute ReticleModel, right?",
+      "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f97bc0_359c1cbe",
+        "filename": "chrome/browser/vr/model/reticle_model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-10T18:14:38Z",
+      "side": 1,
+      "message": "Yeah. It is the easiest way to hook it up. Conceptually, I view it as the context which we use to calculate all the above value. But I agree it is not ideal. I probably wont have time to get to it as my flight is taking off soon. Ian agreed to help me with this one. Can this be a TODO?",
+      "parentUuid": "8412d0da_f7fc88f8",
       "revId": "918f88ad9fcefac72ed44a0541740604d90992cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
