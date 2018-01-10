@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55c2a381_3fc8107d",
+        "filename": "cc/debug/debug_colors.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-10T17:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e39120_33c98e4c",
+      "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c76621_7b45c37b",
         "filename": "cc/debug/debug_colors.cc",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8d9dc141_b8a39eca",
+        "filename": "cc/debug/debug_colors.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-10T17:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c76621_7b45c37b",
+      "range": {
+        "startLine": 167,
+        "startChar": 9,
+        "endLine": 167,
+        "endChar": 51
+      },
+      "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5d08ee3_7bc7b4f3",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8daad008_a3c04452",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-10T17:17:51Z",
+      "side": 1,
+      "message": "Changed it to return a base:span\u003cfloat\u003e. Tnx for the suggestion.",
+      "parentUuid": "f5d08ee3_7bc7b4f3",
+      "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58378a6_660d57bf",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-10T17:17:51Z",
+      "side": 1,
+      "message": "I preferred alphabetizing it since the previous flag kGlCompositedOverlayCandidateQuadBorder is going away with crrev.com/c/804576.",
+      "parentUuid": "97701708_581b6e65",
+      "range": {
+        "startLine": 38,
+        "startChar": 33,
+        "endLine": 38,
+        "endChar": 57
+      },
+      "revId": "148e8eba0227bd4860ff4cbee3209f509e0b6a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
