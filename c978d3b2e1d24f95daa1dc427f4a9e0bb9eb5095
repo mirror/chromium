@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fdf1df82_647f4d7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2018-01-10T22:47:33Z",
+      "side": 1,
+      "message": "oh didn\u0027t know that- thanks for the resource.",
+      "parentUuid": "1babb7f9_81011f85",
+      "revId": "c978d3b2e1d24f95daa1dc427f4a9e0bb9eb5095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02caac98_bf7e17c1",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 4
