@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d521598_9141a18e",
+        "filename": "testing/buildbot/filters/fuchsia.content_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-10T19:01:52Z",
+      "side": 1,
+      "message": "Maybe add https://crbug.com/800771 here or dupe it.",
+      "revId": "db48102fc0434a40eb1ef89a2e1065f3910c63fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
