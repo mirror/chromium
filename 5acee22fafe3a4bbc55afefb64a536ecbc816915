@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94fc6944_ccaf39f5",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-10T03:55:36Z",
+      "side": 1,
+      "message": "Would you elaborate on this change? I don\u0027t understand why we need special-casing.",
+      "revId": "5acee22fafe3a4bbc55afefb64a536ecbc816915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
