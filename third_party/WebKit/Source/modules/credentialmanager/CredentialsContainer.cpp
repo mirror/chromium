@@ -5,6 +5,7 @@
 #include "modules/credentialmanager/CredentialsContainer.h"
 
 #include <memory>
+#include <string>
 #include <utility>
 
 #include "bindings/core/v8/ExceptionState.h"
@@ -31,6 +32,7 @@
 #include "modules/credentialmanager/MakePublicKeyCredentialOptions.h"
 #include "modules/credentialmanager/PasswordCredential.h"
 #include "modules/credentialmanager/PublicKeyCredential.h"
+#include "platform/weborigin/OriginAccessEntry.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
 #include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
@@ -148,6 +150,42 @@ void AssertSecurityRequirementsBeforeResponse(
                  IsSameOriginWithAncestors(resolver->GetFrame()));
 }
 
+void AssertPublicKeySecurityRequirements(ScriptPromiseResolver* resolver,
+                                         const String& relying_party_id) {
+  // Prevent any WebAuthN usage for about:blank frames, unique, and data URLs.
+  const SecurityOrigin* origin =
+      resolver->GetFrame()->GetSecurityContext()->GetSecurityOrigin();
+  if (origin->IsUnique() ||
+      resolver->GetFrame()->GetDocument()->Url().ProtocolIs(
+          url::kAboutScheme) ||
+      resolver->GetFrame()->GetDocument()->Url().ProtocolIs(url::kDataScheme)) {
+    resolver->Reject(
+        DOMException::Create(kNotAllowedError, "Origin is not allowed"));
+    return;
+  }
+
+  // Validate the rpId.
+  if (relying_party_id) {
+    OriginAccessEntry access_entry(origin->Protocol(), relying_party_id,
+                                   blink::OriginAccessEntry::kAllowSubdomains);
+    if (access_entry.MatchesDomain(*origin) ==
+        blink::OriginAccessEntry::kDoesNotMatchOrigin) {
+      resolver->Reject(DOMException::Create(kSecurityError,
+                                            "Relying party ID is not valid"));
+      return;
+    }
+  } else {
+    // If no rpId, validate the effective domain.
+    String effective_domain = origin->Domain();
+    OriginAccessEntry access_entry(origin->Protocol(), effective_domain,
+                                   blink::OriginAccessEntry::kAllowSubdomains);
+    if (!effective_domain && !access_entry.HostIsIPAddress()) {
+      resolver->Reject(DOMException::Create(
+          kSecurityError, "Effective domain is not a valid domain"));
+    }
+  }
+}
+
 // Checks if the icon URL of |credential| is an a-priori authenticated URL.
 // https://w3c.github.io/webappsec-credential-management/#dom-credentialuserdata-iconurl
 bool IsIconURLEmptyOrSecure(const Credential* credential) {
@@ -186,6 +224,10 @@ DOMException* CredentialManagerErrorToDOMException(
       return DOMException::Create(
           kNotSupportedError,
           "Parameters for this operation are not supported.");
+    case CredentialManagerError::INSECURE_ORIGIN:
+      return DOMException::Create(kSecurityError, "This origin is insecure.");
+    case CredentialManagerError::INVALID_DOMAIN:
+      return DOMException::Create(kSecurityError, "This is an invalid domain.");
     case CredentialManagerError::UNKNOWN:
       return DOMException::Create(kNotReadableError,
                                   "An unknown error occurred while talking "
@@ -392,6 +434,8 @@ ScriptPromise CredentialsContainer::create(
         FederatedCredential::Create(options.federated(), exception_state));
   } else {
     DCHECK(options.hasPublicKey());
+    AssertPublicKeySecurityRequirements(resolver,
+                                        options.publicKey().rp().id());
     auto mojo_options =
         MojoMakePublicKeyCredentialOptions::From(options.publicKey());
     if (mojo_options) {

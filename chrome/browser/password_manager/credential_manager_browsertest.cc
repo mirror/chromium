@@ -104,6 +104,51 @@ class CredentialManagerBrowserTest : public PasswordManagerBrowserTestBase {
         result);
   }
 
+  // Attempt to create a publicKeyCredential.
+  void CreatePublicKeyCredentialWithUnsupportedAlgorithmAndExpectNotAllowed(
+      content::WebContents* web_contents) {
+    std::string result;
+    std::string script =
+        "navigator.credentials.create({ publicKey: {"
+        "  challenge: new TextEncoder().encode('climb a mountain'),"
+        "  rp: { id: '1098237235409872', name: 'Acme' },"
+        "  user: { "
+        "    id: new TextEncoder().encode('1098237235409872'),"
+        "    name: 'avery.a.jones@example.com',"
+        "    displayName: 'Avery A. Jones', "
+        "    icon: 'https://pics.acme.com/00/p/aBjjjpqPb.png'},"
+        "  pubKeyCredParams: [{ type: 'public-key', alg: '-7'}],"
+        "  timeout: 60000,"
+        "  excludeList: [] }"
+        "}).catch(c => window.domAutomationController.send(c.toString()));";
+    ASSERT_TRUE(
+        content::ExecuteScriptAndExtractString(web_contents, script, &result));
+    ASSERT_EQ("NotAllowedError: The operation is not allowed.", result);
+  }
+
+  // Attempt to create a publicKeyCredential with an invalid relying party.
+  void CreatePublicKeyCredentialWithUnsupportedAlgorithmAndExpectSecurityError(
+      content::WebContents* web_contents) {
+    std::string result;
+    std::string script =
+        "navigator.credentials.create({ publicKey: {"
+        "  challenge: new TextEncoder().encode('climb a mountain'),"
+        "  rp: { id: 'localhost', name: 'Acme' },"
+        "  user: { "
+        "    id: new TextEncoder().encode('1098237235409872'),"
+        "    name: 'avery.a.jones@example.com',"
+        "    displayName: 'Avery A. Jones', "
+        "    icon: 'https://pics.acme.com/00/p/aBjjjpqPb.png'},"
+        "  pubKeyCredParams: [{ type: 'public-key', alg: '-7'}],"
+        "  timeout: 60000,"
+        "  excludeList: [] }"
+        "}).catch(c => window.domAutomationController.send(c.toString()));";
+    ASSERT_TRUE(
+        content::ExecuteScriptAndExtractString(web_contents, script, &result));
+    ASSERT_EQ("SecurityError: The operation is insecure and is not allowed.",
+              result);
+  }
+
   // Schedules a call to be made to navigator.credentials.store() in the
   // `unload` handler to save a credential with |username| and |password|.
   void ScheduleNavigatorStoreCredentialAtUnload(
@@ -1014,13 +1059,35 @@ IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest, CredentialsAutofilled) {
 // algorithm, we get a NotSupportedError.
 IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
                        CreatePublicKeyCredentialAlgorithmNotSupported) {
-  const GURL a_url1 = https_test_server().GetURL("a.com", "/title1.html");
-
+  const GURL a_url1 =
+      https_test_server().GetURL("www.example.com", "/title1.html");
   // Navigate to a mostly empty page.
   ui_test_utils::NavigateToURL(browser(), a_url1);
 
   ASSERT_NO_FATAL_FAILURE(
       CreatePublicKeyCredentialWithUnsupportedAlgorithmAndExpectNotSupported(
+          WebContents()));
+}
+
+// Tests that when navigator.credentials.create() is called from an invalid
+// context, we get a NotAllowedError.
+IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
+                       CreatePublicKeyCredentialOriginNotAllowed) {
+  ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
+  ASSERT_NO_FATAL_FAILURE(
+      CreatePublicKeyCredentialWithUnsupportedAlgorithmAndExpectNotAllowed(
+          WebContents()));
+}
+
+// Tests that when navigator.credentials.create() is called with an invalid
+// relying party id, we get a SecurityError
+IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
+                       CreatePublicKeyCredentialInvalidRP) {
+  const GURL a_url1 =
+      https_test_server().GetURL("www.example.com", "/title1.html");
+  ui_test_utils::NavigateToURL(browser(), a_url1);
+  ASSERT_NO_FATAL_FAILURE(
+      CreatePublicKeyCredentialWithUnsupportedAlgorithmAndExpectSecurityError(
           WebContents()));
 }
 
