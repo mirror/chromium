@@ -21,6 +21,7 @@
 <link rel="import" href="../device_page/device_page.html">
 <link rel="import" href="../internet_page/internet_page.html">
 <link rel="import" href="../multidevice_page/multidevice_page.html">
+<link rel="import" href="../smb_page/smb_page.html">
 </if>
 
 <if expr="not chromeos">
@@ -287,6 +288,17 @@
                 section="multidevice">
               <settings-multidevice-page prefs="{{prefs}}">
               </settings-multidevice-page>
+            </settings-section>
+          </template>
+</if>
+<if expr="chromeos">
+          <template is="dom-if"
+              if="[[shouldShowSmb_(showSmb, pageVisibility)]]"
+              restamp>
+            <settings-section page-title="$i18n{smbPageTitle}"
+                section="smb">
+              <settings-smb-page prefs="{{prefs}}">
+              </settings-smb-page>
             </settings-section>
           </template>
 </if>

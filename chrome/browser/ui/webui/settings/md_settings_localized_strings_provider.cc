@@ -2167,6 +2167,20 @@ void AddMultideviceStrings(content::WebUIDataSource* html_source) {
   html_source->AddBoolean("enableMultideviceSettings",
                           base::FeatureList::IsEnabled(features::kMultidevice));
 }
+
+void AddSmbStrings(content::WebUIDataSource* html_source) {
+  LocalizedString localized_strings[] = {
+      {"smbPageTitle", IDS_SETTINGS_SMB},
+      {"smbMount", IDS_SETTINGS_SMB_MOUNT},
+      {"smbMountSummary", IDS_SETTINGS_SMB_MOUNT_SUMMARY},
+      {"smbMountUrl", IDS_SETTINGS_SMB_MOUNT_URL},
+  };
+  AddLocalizedStringsBulk(html_source, localized_strings,
+                          arraysize(localized_strings));
+
+  html_source->AddBoolean("enableSmbSettings",
+                          base::FeatureList::IsEnabled(features::kNativeSmb));
+}
 #endif
 
 }  // namespace
@@ -2210,6 +2224,7 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source,
   AddEasyUnlockStrings(html_source);
   AddInternetStrings(html_source);
   AddMultideviceStrings(html_source);
+  AddSmbStrings(html_source);
   AddUsersStrings(html_source);
 #else
   AddDefaultBrowserStrings(html_source);
