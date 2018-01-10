@@ -684,6 +684,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -1079,6 +1086,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -1377,6 +1391,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": false
         },
@@ -1673,6 +1694,13 @@
           "can_use_on_swarming_builders": false
         },
         "test": "url_unittests"
+      },
+      {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "views_perftests"
       },
       {
         "swarming": {
@@ -2000,6 +2028,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": false
         },
@@ -2296,6 +2331,13 @@
           "can_use_on_swarming_builders": false
         },
         "test": "url_unittests"
+      },
+      {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "views_perftests"
       },
       {
         "swarming": {
@@ -2824,6 +2866,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -3102,6 +3151,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -3368,6 +3424,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -3613,6 +3676,13 @@
           "can_use_on_swarming_builders": true
         },
         "test": "url_unittests"
+      },
+      {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
       },
       {
         "swarming": {
@@ -5616,6 +5686,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -5926,6 +6003,13 @@
           "can_use_on_swarming_builders": true
         },
         "test": "url_unittests"
+      },
+      {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
       },
       {
         "swarming": {
@@ -6258,6 +6342,13 @@
           "can_use_on_swarming_builders": true
         },
         "test": "url_unittests"
+      },
+      {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "views_perftests"
       },
       {
         "swarming": {
@@ -6874,6 +6965,13 @@
         "test": "url_unittests"
       },
       {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "views_perftests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": false
         },
@@ -7224,6 +7322,13 @@
           "can_use_on_swarming_builders": false
         },
         "test": "url_unittests"
+      },
+      {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "views_perftests"
       },
       {
         "swarming": {
@@ -7604,6 +7709,13 @@
           "can_use_on_swarming_builders": false
         },
         "test": "url_unittests"
+      },
+      {
+        "isolate_name": "views_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "views_perftests"
       },
       {
         "swarming": {
