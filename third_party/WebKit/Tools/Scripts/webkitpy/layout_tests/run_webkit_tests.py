@@ -44,6 +44,7 @@ _log = logging.getLogger(__name__)
 
 
 def main(argv, stdout, stderr):
+    argv += ['--no-retry-failures', 'fast']
     options, args = parse_args(argv)
 
     if options.platform and 'test' in options.platform and not 'browser_test' in options.platform:
