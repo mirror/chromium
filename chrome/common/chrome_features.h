@@ -285,8 +285,6 @@ extern const base::Feature kSyzyasanDeferredFree;
 extern const base::Feature kTabMetricsLogging;
 #endif
 
-extern const base::Feature kTabsInCbd;
-
 extern const base::Feature kTopSitesFromSiteEngagement;
 
 extern const base::Feature kUseGoogleLocalNtp;
