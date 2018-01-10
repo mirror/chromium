@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27b4f712_0c50e5c2",
+        "filename": "third_party/WebKit/Source/platform/graphics/PlaceholderImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2018-01-10T23:31:32Z",
+      "side": 1,
+      "message": "In the doc, I think \"dps\" was used as the plural form for \"dp\", I\u0027ve changed it to \"dp\" in the doc to clarify this.\n\nCurrently, the icons in placeholder images don\u0027t zoom as one would expect on Linux (I haven\u0027t tested Win or Mac yet). When zooming (e.g. Ctrl + \u0027+\u0027, Ctrl + \u0027-\u0027), the gray box around the image grows properly, but the icon and text stay the same size on the screen. On Android (which also happens to be the only platform where PlaceholderImages are used right now), the icons and text scale as the user zooms as one would expect.\n\nThe reason for this weird zooming behavior on Linux is because I don\u0027t know of any way to separate the |src_rect| to |dest_rect| scaling into the regular image scaling part (e.g. trying to fit a 200x200 source image into a 100x100 img element) and the page zoom part.\n\nWe want all placeholder icons and text to be consistently sized with each other on the page, so currently Chrome always draws it at the same size, even if the |src_rect| to |dest_rect| ratio indicates that the image would normally be scaled differently.\n\nDo you know of any way to solve this? Otherwise I\u0027ll keep it as-is.",
+      "parentUuid": "b4c107f4_67a9625a",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 64
+      },
+      "revId": "884479c36f07b3d3abc7bcf910c73467c72c8993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73d946c9_c1e4b91b",
         "filename": "third_party/WebKit/Source/platform/graphics/PlaceholderImage.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-10T18:11:27Z",
       "side": 1,
       "message": "Again, zoom effects?",
+      "range": {
+        "startLine": 87,
+        "startChar": 30,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "884479c36f07b3d3abc7bcf910c73467c72c8993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e371adf_8f14596e",
+        "filename": "third_party/WebKit/Source/platform/graphics/PlaceholderImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2018-01-10T23:31:32Z",
+      "side": 1,
+      "message": "See the above comment about zooming.",
+      "parentUuid": "73d946c9_c1e4b91b",
       "range": {
         "startLine": 87,
         "startChar": 30,
