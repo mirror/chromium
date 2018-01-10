@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b54caa6b_e6dd92ee",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T04:07:23Z",
+      "side": 1,
+      "message": "nit: it is better to use short form: event \u003d\u003e { ... }",
+      "revId": "51d6a0a2f6e71f02e54f50bccccbc75c62f6d0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e1bdc4_87242731",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T04:07:23Z",
+      "side": 1,
+      "message": "It is better to use template string:\n\nlogString \u003d `beforeinput: isComposing\u003d${event.isComposing} ...`;",
+      "revId": "51d6a0a2f6e71f02e54f50bccccbc75c62f6d0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1307a117_706c3d2b",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T04:07:23Z",
+      "side": 1,
+      "message": "test() using |textInputController| should check |textInputController|\navailability.\n\ne.g.\n\nfunction checkTextInputController() {\n  assert_true(\u0027textInputController\u0027 in window, \u0027This test should be run with test runner.\u0027);\n}\n\ntest(() \u003d\u003e {\n  checkTextInputController();\n  ...\n});",
+      "revId": "51d6a0a2f6e71f02e54f50bccccbc75c62f6d0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
