@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "f040e62c_b6559496",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 46
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-10T19:20:23Z",
+      "side": 1,
+      "message": "I believe it is not needed anymore actually. From what I see in the subsequent checks here:\nhttps://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_impl.cc?l\u003d1563, the only case where this is reused (First navigation commit) it actually changes pipe and re specify the current one. Adding engedy@ to confirm this.",
+      "parentUuid": "04a67780_0da37552",
+      "revId": "fa4da49bdf40c8f6dbb32f5d28ffca02b7c46af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d3232b_036795a9",
         "filename": "content/common/frame.mojom",
         "patchSetId": 46
