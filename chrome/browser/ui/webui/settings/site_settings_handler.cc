@@ -23,6 +23,7 @@
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
+#include "chrome/browser/plugins/plugin_utils.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -601,6 +602,8 @@ void SiteSettingsHandler::HandleSetOriginPermissions(
         base::RecordAction(base::UserMetricsAction(
             "SoundContentSetting.UnmuteBy.SiteSettings"));
       }
+    } else if (content_type == CONTENT_SETTINGS_TYPE_PLUGINS) {
+      PluginUtils::RememberFlashChangedForSite(map, origin);
     }
     WebSiteSettingsUmaUtil::LogPermissionChange(content_type, setting);
   }
