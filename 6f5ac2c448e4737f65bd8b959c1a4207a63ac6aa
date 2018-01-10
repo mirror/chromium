@@ -16,6 +16,24 @@
       "revId": "6f5ac2c448e4737f65bd8b959c1a4207a63ac6aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd7f64c_d8e17e38",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-10T13:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e03ed702_fd2edffc",
+      "revId": "6f5ac2c448e4737f65bd8b959c1a4207a63ac6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
