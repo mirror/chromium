@@ -8,8 +8,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/safe_browsing/browser/base_parallel_resource_throttle.h"
-#include "content/public/browser/resource_throttle.h"
 #include "content/public/common/resource_type.h"
+#include "content/public/network/resource_throttle.h"
 
 namespace net {
 class URLRequest;

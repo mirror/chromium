@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/loader/resource_scheduler.h"
+#include "content/network/resource_scheduler.h"
 
 #include <map>
 #include <memory>
@@ -25,7 +25,7 @@
 #include "base/timer/mock_timer.h"
 #include "base/timer/timer.h"
 #include "content/public/browser/resource_context.h"
-#include "content/public/browser/resource_throttle.h"
+#include "content/public/network/resource_throttle.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -175,9 +175,7 @@ class ResourceSchedulerTest : public testing::Test {
     context_.set_network_quality_estimator(&network_quality_estimator_);
   }
 
-  ~ResourceSchedulerTest() override {
-    CleanupScheduler();
-  }
+  ~ResourceSchedulerTest() override { CleanupScheduler(); }
 
   // Done separately from construction to allow for modification of command
   // line flags in tests.
@@ -240,8 +238,8 @@ class ResourceSchedulerTest : public testing::Test {
   std::unique_ptr<TestRequest> NewBackgroundRequest(
       const char* url,
       net::RequestPriority priority) {
-    return NewRequestWithChildAndRoute(
-        url, priority, kBackgroundChildId, kBackgroundRouteId);
+    return NewRequestWithChildAndRoute(url, priority, kBackgroundChildId,
+                                       kBackgroundRouteId);
   }
 
   std::unique_ptr<TestRequest> NewSyncRequest(const char* url,
@@ -252,8 +250,8 @@ class ResourceSchedulerTest : public testing::Test {
   std::unique_ptr<TestRequest> NewBackgroundSyncRequest(
       const char* url,
       net::RequestPriority priority) {
-    return NewSyncRequestWithChildAndRoute(
-        url, priority, kBackgroundChildId, kBackgroundRouteId);
+    return NewSyncRequestWithChildAndRoute(url, priority, kBackgroundChildId,
+                                           kBackgroundRouteId);
   }
 
   std::unique_ptr<TestRequest> NewSyncRequestWithChildAndRoute(
@@ -510,9 +508,7 @@ class ResourceSchedulerTest : public testing::Test {
     EXPECT_FALSE(last_low->started());
   }
 
-  ResourceScheduler* scheduler() {
-    return scheduler_.get();
-  }
+  ResourceScheduler* scheduler() { return scheduler_.get(); }
 
   TestBrowserThreadBundle thread_bundle_;
   std::unique_ptr<ResourceScheduler> scheduler_;
