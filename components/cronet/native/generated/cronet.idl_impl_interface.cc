@@ -299,6 +299,11 @@ void Cronet_Engine_StopNetLog(Cronet_EnginePtr self) {
   self->StopNetLog();
 }
 
+void Cronet_Engine_Shutdown(Cronet_EnginePtr self) {
+  DCHECK(self);
+  self->Shutdown();
+}
+
 CharString Cronet_Engine_GetVersionString(Cronet_EnginePtr self) {
   DCHECK(self);
   return self->GetVersionString();
@@ -317,11 +322,13 @@ class Cronet_EngineStub : public Cronet_Engine {
       Cronet_Engine_StartWithParamsFunc StartWithParamsFunc,
       Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc,
       Cronet_Engine_StopNetLogFunc StopNetLogFunc,
+      Cronet_Engine_ShutdownFunc ShutdownFunc,
       Cronet_Engine_GetVersionStringFunc GetVersionStringFunc,
       Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc)
       : StartWithParamsFunc_(StartWithParamsFunc),
         StartNetLogToFileFunc_(StartNetLogToFileFunc),
         StopNetLogFunc_(StopNetLogFunc),
+        ShutdownFunc_(ShutdownFunc),
         GetVersionStringFunc_(GetVersionStringFunc),
         GetDefaultUserAgentFunc_(GetDefaultUserAgentFunc) {}
 
@@ -342,6 +349,8 @@ class Cronet_EngineStub : public Cronet_Engine {
 
   void StopNetLog() override { StopNetLogFunc_(this); }
 
+  void Shutdown() override { ShutdownFunc_(this); }
+
   CharString GetVersionString() override { return GetVersionStringFunc_(this); }
 
   CharString GetDefaultUserAgent() override {
@@ -353,6 +362,7 @@ class Cronet_EngineStub : public Cronet_Engine {
   const Cronet_Engine_StartWithParamsFunc StartWithParamsFunc_;
   const Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc_;
   const Cronet_Engine_StopNetLogFunc StopNetLogFunc_;
+  const Cronet_Engine_ShutdownFunc ShutdownFunc_;
   const Cronet_Engine_GetVersionStringFunc GetVersionStringFunc_;
   const Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc_;
 
@@ -363,11 +373,12 @@ Cronet_EnginePtr Cronet_Engine_CreateStub(
     Cronet_Engine_StartWithParamsFunc StartWithParamsFunc,
     Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc,
     Cronet_Engine_StopNetLogFunc StopNetLogFunc,
+    Cronet_Engine_ShutdownFunc ShutdownFunc,
     Cronet_Engine_GetVersionStringFunc GetVersionStringFunc,
     Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc) {
   return new Cronet_EngineStub(StartWithParamsFunc, StartNetLogToFileFunc,
-                               StopNetLogFunc, GetVersionStringFunc,
-                               GetDefaultUserAgentFunc);
+                               StopNetLogFunc, ShutdownFunc,
+                               GetVersionStringFunc, GetDefaultUserAgentFunc);
 }
 
 // C functions of Cronet_UrlRequestStatusListener that forward calls to C++
