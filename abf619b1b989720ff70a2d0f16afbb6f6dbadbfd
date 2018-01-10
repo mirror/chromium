@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd3b60f2_be9a5607",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T18:36:56Z",
+      "side": 1,
+      "message": "This seems a misnomer.  This is just RTT.  SSL needs multiple round trips to establish a connection, but that doesn\u0027t affect the RTT.",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 45
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4dbce5_9f581ca5",
+        "filename": "net/http/http_proxy_client_socket_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T18:36:56Z",
+      "side": 1,
+      "message": "Any reason for not using microseconds?  Not arguing for accuracy, that\u0027s just the native time format, so it avoids a multiply and divide.  Doesn\u0027t really matter, but we don\u0027t get anything from using milliseconds, I think?",
+      "range": {
+        "startLine": 243,
+        "startChar": 49,
+        "endLine": 243,
+        "endChar": 63
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c61bfa_2bb821e8",
+        "filename": "net/http/http_proxy_client_socket_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T18:36:56Z",
+      "side": 1,
+      "message": "These should be documented.",
+      "range": {
+        "startLine": 246,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 17
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f5e57e_eefda082",
+        "filename": "net/socket/client_socket_pool_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T18:36:56Z",
+      "side": 1,
+      "message": "[+eroman]:  I don\u0027t think there\u0027s any guarantee that this server will only be used for an HTTPS proxy, just because it\u0027s used for HTTPS once?  That case also looks a bit broken to me, in general, but this seems to build on that brokenness.  Or am I missing something?",
+      "range": {
+        "startLine": 310,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
