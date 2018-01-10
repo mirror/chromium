@@ -16,6 +16,24 @@
       "revId": "db48102fc0434a40eb1ef89a2e1065f3910c63fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bcfdc4_c5e8ff7e",
+        "filename": "testing/buildbot/filters/fuchsia.content_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-10T19:56:23Z",
+      "side": 1,
+      "message": "Yup, going to de-dupe into the existing bug, and bring in sahel@.",
+      "parentUuid": "2d521598_9141a18e",
+      "revId": "db48102fc0434a40eb1ef89a2e1065f3910c63fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
