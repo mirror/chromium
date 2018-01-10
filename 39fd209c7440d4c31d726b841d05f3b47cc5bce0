@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bcd7503_844bd3f9",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-10T03:27:37Z",
+      "side": 1,
+      "message": "I forgot that GetThreadId() blocks on thread start. This is unfortunately makes this approach very likely undesirable since it will add startup latency.\n\nAs an alternative, presumably we could create the profiler on the IO thread itself by posting a task to its message loop here, but I\u0027m not sure what it would take to guarantee that we execute another task to destroy the object before thread exit.\n\ngab: Can you comment on the best approach here? The goal is to create and start a sampling profiler object immediately after IO thread start, then destroy the object immediately before IO thread exit. Is there a way to ensure that a posted message is run before thread exit, or would we need to do our own synchronization?",
+      "range": {
+        "startLine": 1144,
+        "startChar": 29,
+        "endLine": 1144,
+        "endChar": 54
+      },
+      "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
