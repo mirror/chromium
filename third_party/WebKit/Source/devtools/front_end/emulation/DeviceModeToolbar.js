@@ -22,6 +22,8 @@ Emulation.DeviceModeToolbar = class {
     this._showUserAgentTypeSetting = Common.settings.createSetting('emulation.showUserAgentType', false);
     this._showUserAgentTypeSetting.addChangeListener(this._updateUserAgentTypeVisibility, this);
 
+    this._preserveScaleSetting = Common.settings.createSetting('emulation.preserveScaleOnRotate', false);
+
     /** @type {!Map<!Emulation.EmulatedDevice, !Emulation.EmulatedDevice.Mode>} */
     this._lastMode = new Map();
 
@@ -287,22 +289,21 @@ Emulation.DeviceModeToolbar = class {
   _appendOptionsMenuItems(contextMenu) {
     var model = this._model;
     appendToggleItem(
-        contextMenu.headerSection(), this._deviceOutlineSetting, Common.UIString('Hide device frame'),
-        Common.UIString('Show device frame'), model.type() !== Emulation.DeviceModeModel.Type.Device);
+        contextMenu.headerSection(), this._deviceOutlineSetting, ls`Hide device frame`, ls`Show device frame`,
+        model.type() !== Emulation.DeviceModeModel.Type.Device);
     appendToggleItem(
-        contextMenu.headerSection(), this._showMediaInspectorSetting, Common.UIString('Hide media queries'),
-        Common.UIString('Show media queries'));
+        contextMenu.headerSection(), this._showMediaInspectorSetting, ls`Hide media queries`, ls`Show media queries`);
+    appendToggleItem(contextMenu.headerSection(), this._showRulersSetting, ls`Hide rulers`, ls`Show rulers`);
     appendToggleItem(
-        contextMenu.headerSection(), this._showRulersSetting, Common.UIString('Hide rulers'),
-        Common.UIString('Show rulers'));
+        contextMenu.headerSection(), this._preserveScaleSetting, ls`Scale to fit on rotate`,
+        ls`Preserve scale on rotate`);
     appendToggleItem(
-        contextMenu.defaultSection(), this._showDeviceScaleFactorSetting, Common.UIString('Remove device pixel ratio'),
-        Common.UIString('Add device pixel ratio'));
+        contextMenu.defaultSection(), this._showDeviceScaleFactorSetting, ls`Remove device pixel ratio`,
+        ls`Add device pixel ratio`);
     appendToggleItem(
-        contextMenu.defaultSection(), this._showUserAgentTypeSetting, Common.UIString('Remove device type'),
-        Common.UIString('Add device type'));
+        contextMenu.defaultSection(), this._showUserAgentTypeSetting, ls`Remove device type`, ls`Add device type`);
     contextMenu.appendItemsAtLocation('deviceModeMenu');
-    contextMenu.footerSection().appendItem(Common.UIString('Reset to defaults'), this._reset.bind(this));
+    contextMenu.footerSection().appendItem(ls`Reset to defaults`, this._reset.bind(this));
 
     /**
      * @param {!UI.ContextMenuSection} section
@@ -443,15 +444,23 @@ Emulation.DeviceModeToolbar = class {
   _modeMenuClicked(event) {
     var device = this._model.device();
     var model = this._model;
+    var preserveScaleSetting = this._preserveScaleSetting;
 
     if (model.type() === Emulation.DeviceModeModel.Type.Responsive) {
       var appliedSize = model.appliedDeviceSize();
-      model.setSizeAndScaleToFit(appliedSize.height, appliedSize.width);
+      if (preserveScaleSetting.get()) {
+        model.setWidth(appliedSize.height);
+        model.setHeight(appliedSize.width);
+      } else {
+        model.setSizeAndScaleToFit(appliedSize.height, appliedSize.width);
+      }
       return;
     }
 
     if (device.modes.length === 2 && device.modes[0].orientation !== device.modes[1].orientation) {
-      model.emulate(model.type(), model.device(), model.mode() === device.modes[0] ? device.modes[1] : device.modes[0]);
+      var scale = preserveScaleSetting.get() ? model.scaleSetting().get() : undefined;
+      model.emulate(
+          model.type(), model.device(), model.mode() === device.modes[0] ? device.modes[1] : device.modes[0], scale);
       return;
     }
 
@@ -490,7 +499,8 @@ Emulation.DeviceModeToolbar = class {
      * @param {!Emulation.EmulatedDevice.Mode} mode
      */
     function applyMode(mode) {
-      model.emulate(model.type(), model.device(), mode);
+      var scale = preserveScaleSetting.get() ? model.scaleSetting().get() : undefined;
+      model.emulate(model.type(), model.device(), mode, scale);
     }
   }
 
