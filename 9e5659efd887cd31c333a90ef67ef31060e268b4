@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6dd9152_8e109dbe",
+        "filename": "chrome/test/data/webui/md_bookmarks/command_manager_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-10T18:56:12Z",
+      "side": 0,
+      "message": "Was this just a bad merge? Or was this removed deliberately?",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 67
+      },
+      "revId": "9e5659efd887cd31c333a90ef67ef31060e268b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
