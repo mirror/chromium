@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b26a7bdf_5007d8a1",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T17:09:09Z",
+      "side": 1,
+      "message": "This is a lot of comment for a function call. It suggests to me that the API is not intuitive.\n\nI added a comment on the design doc requesting a cleanup pass to make the proposal more readable and will consider the proposal more carefully once that is done.\n\nIn general I agree with oshima\u0027s comment that we should consider how the API will be used first and the implementation second.\n\nMy first thought is that we should use a MirrorMode enum, { none, all, mixed } instead of two booleans.",
+      "revId": "f8cfa53e3f2a52291da9d54ab43de8c449c2c77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
