@@ -44,13 +44,13 @@
 
 namespace {
 
-const float kMaxMagnifiedScale = 4.0f;
-const float kMaxMagnifiedScaleThreshold = 4.0f;
+const float kMaxMagnifiedScale = 20.0f;
+const float kMaxMagnifiedScaleThreshold = 20.0f;
 const float kMinMagnifiedScaleThreshold = 1.1f;
 const float kNonMagnifiedScale = 1.0f;
 
 const float kInitialMagnifiedScale = 2.0f;
-const float kScrollScaleChangeFactor = 0.0125f;
+const float kScrollScaleChangeFactor = 0.2f;
 
 // Default animation parameters for redrawing the magnification window.
 const gfx::Tween::Type kDefaultAnimationTweenType = gfx::Tween::EASE_OUT;
@@ -517,8 +517,8 @@ void MagnificationControllerImpl::ValidateScale(float* scale) {
   if (*scale < kMinMagnifiedScaleThreshold)
     *scale = kNonMagnifiedScale;
 
-  // Adjust the scale to just |kMinMagnifiedScale| if scale is bigger than
-  // |kMinMagnifiedScaleThreshold|;
+  // Adjust the scale to just |kMaxMagnifiedScale| if scale is bigger than
+  // |kMaxMagnifiedScaleThreshold|;
   if (*scale > kMaxMagnifiedScaleThreshold)
     *scale = kMaxMagnifiedScale;
 
@@ -688,7 +688,9 @@ void MagnificationControllerImpl::OnScrollEvent(ui::ScrollEvent* event) {
     if (event->type() == ui::ET_SCROLL) {
       ui::ScrollEvent* scroll_event = event->AsScrollEvent();
       float scale = GetScale();
-      scale += scroll_event->y_offset() * kScrollScaleChangeFactor;
+      // Adjust the scale offset based on the current scale.
+      scale += scroll_event->y_offset() *
+               (scale / kMaxMagnifiedScale * kScrollScaleChangeFactor);
       SetScale(scale, true);
       event->StopPropagation();
       return;
