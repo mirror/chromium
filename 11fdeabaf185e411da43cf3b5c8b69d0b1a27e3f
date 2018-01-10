@@ -22,6 +22,30 @@
       "revId": "11fdeabaf185e411da43cf3b5c8b69d0b1a27e3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af387c1_e6c712c0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/historical-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2018-01-10T23:39:36Z",
+      "side": 1,
+      "message": "Is this because I used bypass-hooks (I have a local problem with the hooks)? Or do we simply lack said script?\n\nAnyway I\u0027ll remove the result and re-upload.",
+      "parentUuid": "9bbfdc01_555aa7c9",
+      "range": {
+        "startLine": 4,
+        "startChar": 5,
+        "endLine": 4,
+        "endChar": 13
+      },
+      "revId": "11fdeabaf185e411da43cf3b5c8b69d0b1a27e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
