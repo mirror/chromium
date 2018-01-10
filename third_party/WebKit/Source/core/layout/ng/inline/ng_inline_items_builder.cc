@@ -150,7 +150,10 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::Append(
     return;
   text_.ReserveCapacity(string.length());
 
+  last_auto_wrap_ = auto_wrap_;
   EWhiteSpace whitespace = style->WhiteSpace();
+  auto_wrap_ = ComputedStyle::AutoWrap(whitespace);
+
   if (!ComputedStyle::CollapseWhiteSpace(whitespace))
     AppendWithoutWhiteSpaceCollapsing(string, style, layout_object);
   else if (ComputedStyle::PreserveNewline(whitespace) && !is_svgtext_)
@@ -175,8 +178,8 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::
   // wrap opportunity". When the first collapsible space was in 'nowrap',
   // following collapsed spaces should create a break opportunity.
   // https://drafts.csswg.org/css-text-3/#collapse
-  if (last_collapsible_space_ == CollapsibleSpace::kSpaceNoWrap &&
-      IsCollapsibleSpace(string[start]) && style->AutoWrap()) {
+  if (last_collapsible_space_ != CollapsibleSpace::kNone && !last_auto_wrap_ &&
+      auto_wrap_ && IsCollapsibleSpace(string[start])) {
     AppendBreakOpportunity(style, layout_object);
     mapping_builder_.AppendIdentityMapping(1);
     start++;
@@ -234,9 +237,6 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::
     AppendItem(items_, NGInlineItem::kText, start_offset, text_.length(), style,
                layout_object);
 
-    if (last_collapsible_space_ == CollapsibleSpace::kSpace &&
-        !style->AutoWrap())
-      last_collapsible_space_ = CollapsibleSpace::kSpaceNoWrap;
     is_empty_inline_ &= items_->back().IsEmptyItem();
   }
 }
