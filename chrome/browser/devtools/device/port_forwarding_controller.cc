@@ -29,6 +29,7 @@
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_with_source.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/WebKit/public/public_features.h"
 
 using content::BrowserThread;
@@ -43,6 +44,27 @@ enum {
   kStatusConnecting = -1,
   kStatusOK = 0,
 };
+
+net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("port_forwarding_controller_socket",
+                                        R"(
+        semantics {
+          sender: "Port Forwarding Controller"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: LOCAL
+        }
+        policy {
+          cookies_allowed: NO
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
 
 namespace tethering = ::chrome::devtools::Tethering;
 
@@ -128,13 +150,10 @@ class SocketTunnel {
         new net::DrainableIOBuffer(buffer.get(), total);
 
     ++pending_writes_;
-    result = to->Write(drainable.get(),
-                       total,
+    result = to->Write(drainable.get(), total,
                        base::Bind(&SocketTunnel::OnWritten,
-                                  base::Unretained(this),
-                                  drainable,
-                                  from,
-                                  to));
+                                  base::Unretained(this), drainable, from, to),
+                       kTrafficAnnotation);
     if (result != net::ERR_IO_PENDING)
       OnWritten(drainable, from, to, result);
   }
@@ -152,13 +171,11 @@ class SocketTunnel {
     drainable->DidConsume(result);
     if (drainable->BytesRemaining() > 0) {
       ++pending_writes_;
-      result = to->Write(drainable.get(),
-                         drainable->BytesRemaining(),
-                         base::Bind(&SocketTunnel::OnWritten,
-                                    base::Unretained(this),
-                                    drainable,
-                                    from,
-                                    to));
+      result =
+          to->Write(drainable.get(), drainable->BytesRemaining(),
+                    base::Bind(&SocketTunnel::OnWritten, base::Unretained(this),
+                               drainable, from, to),
+                    kTrafficAnnotation);
       if (result != net::ERR_IO_PENDING)
         OnWritten(drainable, from, to, result);
       return;

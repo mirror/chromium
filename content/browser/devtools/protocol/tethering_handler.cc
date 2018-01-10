@@ -15,6 +15,7 @@
 #include "net/socket/server_socket.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace content {
 namespace protocol {
@@ -29,6 +30,26 @@ const int kSocketPumpBufferSize = 16 * 1024;
 
 const int kMinTetheringPort = 1024;
 const int kMaxTetheringPort = 65535;
+
+net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("tethering_handler_socket", R"(
+        semantics {
+          sender: "Tethering Handler"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: LOCAL
+        }
+        policy {
+          cookies_allowed: NO
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
 
 using CreateServerSocketCallback =
     base::Callback<std::unique_ptr<net::ServerSocket>(std::string*)>;
@@ -99,13 +120,10 @@ class SocketPump {
         new net::DrainableIOBuffer(buffer.get(), total);
 
     ++pending_writes_;
-    result = to->Write(drainable.get(),
-                       total,
+    result = to->Write(drainable.get(), total,
                        base::Bind(&SocketPump::OnWritten,
-                                  base::Unretained(this),
-                                  drainable,
-                                  from,
-                                  to));
+                                  base::Unretained(this), drainable, from, to),
+                       kTrafficAnnotation);
     if (result != net::ERR_IO_PENDING)
       OnWritten(drainable, from, to, result);
   }
@@ -123,13 +141,11 @@ class SocketPump {
     drainable->DidConsume(result);
     if (drainable->BytesRemaining() > 0) {
       ++pending_writes_;
-      result = to->Write(drainable.get(),
-                         drainable->BytesRemaining(),
-                         base::Bind(&SocketPump::OnWritten,
-                                    base::Unretained(this),
-                                    drainable,
-                                    from,
-                                    to));
+      result =
+          to->Write(drainable.get(), drainable->BytesRemaining(),
+                    base::Bind(&SocketPump::OnWritten, base::Unretained(this),
+                               drainable, from, to),
+                    kTrafficAnnotation);
       if (result != net::ERR_IO_PENDING)
         OnWritten(drainable, from, to, result);
       return;

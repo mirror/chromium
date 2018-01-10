@@ -21,6 +21,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using content::BrowserThread;
 
@@ -33,6 +34,26 @@ const int kBufferSize = 16 * 1024;
 static const char kModelOffline[] = "Offline";
 
 static const char kRequestLineFormat[] = "GET %s HTTP/1.1";
+
+net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("android_device_manager_socket", R"(
+        semantics {
+          sender: "Android Device Manager"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: LOCAL
+        }
+        policy {
+          cookies_allowed: NO
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
 
 static void PostDeviceInfoCallback(
     scoped_refptr<base::SingleThreadTaskRunner> response_task_runner,
@@ -140,9 +161,9 @@ class HttpRequest {
       }
 
       result = socket_->Write(
-          request_.get(),
-          request_->BytesRemaining(),
-          base::Bind(&HttpRequest::DoSendRequest, base::Unretained(this)));
+          request_.get(), request_->BytesRemaining(),
+          base::Bind(&HttpRequest::DoSendRequest, base::Unretained(this)),
+          kTrafficAnnotation);
     }
   }
 
