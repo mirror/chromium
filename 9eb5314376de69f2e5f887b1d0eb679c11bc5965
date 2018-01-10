@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63e24615_9f3c4601",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T15:39:16Z",
+      "side": 1,
+      "message": "I don\u0027t think contain:style brings us anything here.",
+      "revId": "9eb5314376de69f2e5f887b1d0eb679c11bc5965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
