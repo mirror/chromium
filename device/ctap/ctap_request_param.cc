@@ -9,4 +9,21 @@ namespace device {
 CTAPRequestParam::CTAPRequestParam() = default;
 CTAPRequestParam::~CTAPRequestParam() = default;
 
+bool CTAPRequestParam::CheckU2fInteropCriteria() const {
+  return false;
+}
+
+std::vector<uint8_t> CTAPRequestParam::GetU2FApplicationParameter() const {
+  return std::vector<uint8_t>();
+}
+
+std::vector<uint8_t> CTAPRequestParam::GetU2FChallengeParameter() const {
+  return std::vector<uint8_t>();
+}
+
+std::vector<std::vector<uint8_t>>
+CTAPRequestParam::GetU2FRegisteredKeysParameter() const {
+  return std::vector<std::vector<uint8_t>>();
+}
+
 }  // namespace device

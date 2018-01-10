@@ -121,7 +121,7 @@ TEST(CTAPRequestTest, TestConstructMakeCredentialRequestParam) {
       PublicKeyCredentialParams({{"public-key", 7}, {"public-key", 257}}));
   auto serialized_data = make_credential_param.SetResidentKey(true)
                              .SetUserVerificationRequired(true)
-                             .SerializeToCBOR();
+                             .Encode();
   ASSERT_TRUE(serialized_data);
   EXPECT_THAT(*serialized_data, testing::ElementsAreArray(kSerializedRequest));
 }
@@ -217,7 +217,7 @@ TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
       .SetUserPresenceRequired(true)
       .SetUserVerificationRequired(true);
 
-  auto serialized_data = get_assertion_req.SerializeToCBOR();
+  auto serialized_data = get_assertion_req.Encode();
   ASSERT_TRUE(serialized_data);
   EXPECT_THAT(*serialized_data, testing::ElementsAreArray(kSerializedRequest));
 }
