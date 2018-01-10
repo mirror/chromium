@@ -1,0 +1,24 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+static_library("input_prediction") {
+  visibility = [
+    "//content/test/*",
+    "//content/renderer/*",
+  ]
+
+  sources = [
+    "input_data.h",
+    "input_predictor.h",
+    "kalman_filter/axis_predictor.cc",
+    "kalman_filter/axis_predictor.h",
+    "kalman_filter/kalman_filter.cc",
+    "kalman_filter/kalman_filter.h",
+    "kalman_predictor.cc",
+    "kalman_predictor.h",
+  ]
+
+  # Do NOT remove eigen_mpl2_only.
+  defines = [ "EIGEN_MPL2_ONLY" ]
+}

@@ -38,7 +38,7 @@ class MainThreadEventQueueTask {
   // Iteration of the list begins at the end of the queue (newest to oldest).
   virtual FilterResult FilterNewEvent(MainThreadEventQueueTask*) = 0;
   virtual bool IsWebInputEvent() const = 0;
-  virtual void Dispatch(MainThreadEventQueue*) = 0;
+  virtual void Dispatch(MainThreadEventQueue*, base::TimeTicks) = 0;
 };
 
 }  // namespace content

@@ -1,0 +1,17 @@
+Name: eigen
+URL: http://eigen.tuxfamily.org/
+Version: 3.3.4
+License: MPL 2
+License File: src/COPYING.*
+Security Critical: yes
+
+Description:
+Eigen is a C++ template library for linear algebra: matrices, vectors, numerical
+solvers, and related algorithms.
+
+Modifications:
+- None
+
+To use eigen3, simply include the header files.
+Please define EIGEN_MPL2_ONLY when compile with eigen3.
+
