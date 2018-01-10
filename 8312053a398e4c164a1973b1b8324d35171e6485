@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c59f6bcf_1b78ecb4",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T17:42:08Z",
+      "side": 1,
+      "message": "Yes. The difference is that on failure we throw a SecurityError here, whereas we kill the renderer process in authenticator_impl.",
+      "parentUuid": "dfe6431b_80075dcb",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "412988ae_f700436c",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
         "patchSetId": 3
@@ -212,6 +230,24 @@
       "side": 1,
       "message": "I do that in authenticator_impl. I was under the impression that we should wait until the check in the browser process.",
       "parentUuid": "75b9bb89_0606e89a",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c43b68_7f2b1c18",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T17:42:08Z",
+      "side": 1,
+      "message": "We should do step 6 and 7 here, so that in authenticator_impl we would just check that RPID is a suffix of the last committed origin, and kill the renderer otherwise.",
+      "parentUuid": "f1353d3b_9b2361c7",
       "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
