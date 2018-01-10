@@ -309,6 +309,17 @@ public final class AwBrowserProcess {
                 .executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 
+    /*
+    public static void requestNewSeed() {
+        (new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... unused) {
+                AwVariationsUtils.
+            }
+        }).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+    }
+    */
+
     // Do not instantiate this class.
     private AwBrowserProcess() {}
 }
