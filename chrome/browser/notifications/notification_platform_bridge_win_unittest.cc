@@ -11,11 +11,14 @@
 
 #include "base/hash.h"
 #include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/win/scoped_com_initializer.h"
 #include "base/win/scoped_hstring.h"
 #include "base/win/windows_version.h"
+#include "chrome/browser/notifications/mock_itoastnotification.h"
 #include "chrome/browser/notifications/mock_notification_image_retainer.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_template_builder.h"
@@ -25,6 +28,7 @@
 
 namespace mswr = Microsoft::WRL;
 namespace winui = ABI::Windows::UI;
+namespace winxml = ABI::Windows::Data::Xml;
 
 using message_center::Notification;
 
@@ -104,6 +108,13 @@ TEST_F(NotificationPlatformBridgeWinTest, EncodeDecode) {
   EXPECT_EQ(decoded_incognito, incognito);
   EXPECT_EQ(decoded_origin_url, origin_url);
 
+  // Actual data, but only notification_id is requested.
+  EXPECT_TRUE(notification_platform_bridge_win_->DecodeTemplateId(
+      encoded, nullptr /* notification_type */, &decoded_notification_id,
+      nullptr /* profile_id */, nullptr /* incognito */,
+      nullptr /* origin_url */));
+  EXPECT_EQ(decoded_notification_id, notification_id);
+
   // Throw in a few extra separators (becomes part of the notification id).
   std::string extra = "|Extra|Data|";
   encoded += extra;
@@ -147,4 +158,72 @@ TEST_F(NotificationPlatformBridgeWinTest, GroupAndTag) {
   base::win::ScopedHString tag(hstring_tag);
   ASSERT_STREQ(base::UintToString16(base::Hash(kNotificationId)).c_str(),
                tag.Get().as_string().c_str());
+}
+
+base::string16 GetToastString(const base::string16& profile_id,
+                              bool incognito) {
+  return base::StringPrintf(
+      LR"(<toast launch="0|%ls|%d|https://foo.com/|id"></toast>)",
+      profile_id.c_str(), incognito);
+}
+
+TEST_F(NotificationPlatformBridgeWinTest, GetDisplayed) {
+  // This test requires WinRT core functions, which are not available in
+  // older versions of Windows.
+  if (base::win::GetVersion() < base::win::VERSION_WIN8)
+    return;
+
+  std::vector<winui::Notifications::IToastNotification*> notifications;
+  std::set<std::string> results;
+
+  // Validate that empty list of notifications show 0 results.
+  base::RunLoop run_loop1;
+  notification_platform_bridge_win_->RetrieveDisplayedNotificationsForTesting(
+      notifications, "Default", false, &results, run_loop1.QuitClosure());
+  run_loop1.Run();
+  EXPECT_EQ(0U, results.size());
+
+  // Add four items (two in each profile, one for each being incognito and one
+  // for each that is not).
+  bool incognito = true;
+  MockIToastNotification item1(GetToastString(L"P1", incognito));
+  notifications.push_back(&item1);
+  MockIToastNotification item2(GetToastString(L"P1", !incognito));
+  notifications.push_back(&item2);
+  MockIToastNotification item3(GetToastString(L"P2", incognito));
+  notifications.push_back(&item3);
+  MockIToastNotification item4(GetToastString(L"P2", !incognito));
+  notifications.push_back(&item4);
+
+  // Query for profile P1 in incognito (should return 1 item).
+  base::RunLoop run_loop2;
+  notification_platform_bridge_win_->RetrieveDisplayedNotificationsForTesting(
+      notifications, "P1", true, &results, run_loop2.QuitClosure());
+  run_loop2.Run();
+  EXPECT_EQ(1U, results.size());
+  EXPECT_TRUE(results.count("id") == 1);
+
+  // Query for profile P1 not in incognito (should return 1 item).
+  base::RunLoop run_loop3;
+  notification_platform_bridge_win_->RetrieveDisplayedNotificationsForTesting(
+      notifications, "P1", false, &results, run_loop3.QuitClosure());
+  run_loop3.Run();
+  EXPECT_EQ(1U, results.size());
+  EXPECT_TRUE(results.count("id") == 1);
+
+  // Query for profile P2 in incognito (should return 1 item).
+  base::RunLoop run_loop4;
+  notification_platform_bridge_win_->RetrieveDisplayedNotificationsForTesting(
+      notifications, "P2", true, &results, run_loop4.QuitClosure());
+  run_loop4.Run();
+  EXPECT_EQ(1U, results.size());
+  EXPECT_TRUE(results.count("id") == 1);
+
+  // Query for profile P2 not in incognito (should return 1 item).
+  base::RunLoop run_loop5;
+  notification_platform_bridge_win_->RetrieveDisplayedNotificationsForTesting(
+      notifications, "P2", false, &results, run_loop5.QuitClosure());
+  run_loop5.Run();
+  EXPECT_EQ(1U, results.size());
+  EXPECT_TRUE(results.count("id") == 1);
 }
