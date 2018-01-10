@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9d6dc1d_ebf610db",
+        "filename": "base/synchronization/lock_impl_posix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-10T18:11:34Z",
+      "side": 1,
+      "message": "Should we move the equivalent of this gate into the build files as well?",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "c2c6a374fc1086bf2c9795a78ca6b909e2259f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
