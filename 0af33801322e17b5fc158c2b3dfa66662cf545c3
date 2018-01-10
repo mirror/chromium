@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d97c8e80_65f45684",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resource_frame_initiator_type.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-10T20:27:20Z",
+      "side": 1,
+      "message": "These are two different resources directories. The ones above are in wpt/, while the ones below are in wpt/resource-timing/.",
+      "parentUuid": "dc466dc6_094a94ff",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "0af33801322e17b5fc158c2b3dfa66662cf545c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ace3e44b_56dbc584",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resource_frame_initiator_type.html",
         "patchSetId": 2
