@@ -7,6 +7,7 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/threading/thread_local.h"
+#include "ui/gfx/geometry/point.h"
 
 namespace ui {
 
@@ -64,6 +65,16 @@ void CursorFactoryOzone::RefImageCursor(PlatformCursor cursor) {
 
 void CursorFactoryOzone::UnrefImageCursor(PlatformCursor cursor) {
   NOTIMPLEMENTED();
+}
+
+gfx::Point CursorFactoryOzone::GetHotspot(PlatformCursor cursor) {
+  NOTIMPLEMENTED();
+  return gfx::Point();
+}
+
+const SkBitmap* CursorFactoryOzone::GetBitmap(PlatformCursor cursor) {
+  NOTIMPLEMENTED();
+  return nullptr;
 }
 
 }  // namespace ui

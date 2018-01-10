@@ -71,6 +71,8 @@ class UI_BASE_EXPORT BitmapCursorFactoryOzone : public CursorFactoryOzone {
                                       float bitmap_dpi) override;
   void RefImageCursor(PlatformCursor cursor) override;
   void UnrefImageCursor(PlatformCursor cursor) override;
+  gfx::Point GetHotspot(PlatformCursor cursor) override;
+  const SkBitmap* GetBitmap(PlatformCursor cursor) override;
 
  private:
   // Get cached BitmapCursorOzone for a default cursor.

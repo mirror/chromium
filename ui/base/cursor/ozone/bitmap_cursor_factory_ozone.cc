@@ -106,6 +106,14 @@ void BitmapCursorFactoryOzone::UnrefImageCursor(PlatformCursor cursor) {
   ToBitmapCursorOzone(cursor)->Release();
 }
 
+gfx::Point BitmapCursorFactoryOzone::GetHotspot(PlatformCursor cursor) {
+  return ToBitmapCursorOzone(cursor)->hotspot();
+}
+
+const SkBitmap* BitmapCursorFactoryOzone::GetBitmap(PlatformCursor cursor) {
+  return &ToBitmapCursorOzone(cursor)->bitmap();
+}
+
 scoped_refptr<BitmapCursorOzone>
 BitmapCursorFactoryOzone::GetDefaultCursorInternal(CursorType type) {
   if (type == CursorType::kNone)

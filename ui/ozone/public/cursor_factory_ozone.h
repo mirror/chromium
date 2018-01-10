@@ -53,6 +53,12 @@ class OZONE_BASE_EXPORT CursorFactoryOzone {
 
   // Decrement platform image cursor refcount.
   virtual void UnrefImageCursor(PlatformCursor cursor);
+
+  // Get hotspot for platform image cursor.
+  virtual gfx::Point GetHotspot(PlatformCursor cursor);
+
+  // Get bitmap for platform image cursor.
+  virtual const SkBitmap* GetBitmap(PlatformCursor cursor);
 };
 
 }  // namespace ui

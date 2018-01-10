@@ -91,8 +91,8 @@ class ASH_EXPORT CursorWindowController {
   // The rotation of the container.
   display::Display::Rotation rotation_ = display::Display::ROTATE_0;
 
-  // The native_type of the cursor, see definitions in cursor.h
-  ui::CursorType cursor_type_ = ui::CursorType::kNone;
+  // The native cursor, see definitions in cursor.h
+  gfx::NativeCursor cursor_ = ui::CursorType::kNone;
 
   // The last requested cursor visibility.
   bool visible_ = true;

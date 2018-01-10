@@ -4,6 +4,9 @@ include_rules = [
 ]
 
 specific_include_rules = {
+  "cursor_window_controller.cc": [
+    "+ui/ozone",
+  ],
   "display_color_manager_chromeos.cc": [
     "+third_party/qcms/src/qcms.h",
   ],

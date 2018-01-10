@@ -34,6 +34,10 @@
 #include "ui/gfx/image/image_skia_operations.h"
 #include "ui/views/widget/widget.h"
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/cursor_factory_ozone.h"
+#endif
+
 namespace ash {
 namespace {
 
@@ -210,9 +214,9 @@ void CursorWindowController::UpdateLocation() {
 }
 
 void CursorWindowController::SetCursor(gfx::NativeCursor cursor) {
-  if (cursor_type_ == cursor.native_type())
+  if (cursor_ == cursor)
     return;
-  cursor_type_ = cursor.native_type();
+  cursor_ = cursor;
   UpdateCursorImage();
   UpdateCursorVisibility();
 }
@@ -286,33 +290,51 @@ void CursorWindowController::UpdateCursorImage() {
     cursor_scale =
         ui::GetScaleForScaleFactor(ui::GetSupportedScaleFactor(original_scale));
   }
-  int resource_id;
-  // TODO(hshi): support custom cursor set.
-  if (!ui::GetCursorDataFor(cursor_size_, cursor_type_, cursor_scale,
-                            &resource_id, &hot_point_)) {
+
+  gfx::ImageSkia image;
+  if (cursor_.native_type() == ui::CursorType::kCustom) {
+#if defined(USE_OZONE)
+    const SkBitmap* bitmap =
+        ui::CursorFactoryOzone::GetInstance()->GetBitmap(cursor_.platform());
+    if (!bitmap)
+      return;
+    image = gfx::ImageSkia::CreateFrom1xBitmap(*bitmap);
+    hot_point_ =
+        ui::CursorFactoryOzone::GetInstance()->GetHotspot(cursor_.platform());
+#else
+    NOTIMPLEMENTED();
     return;
+#endif
+  } else {
+    int resource_id;
+    if (!ui::GetCursorDataFor(cursor_size_, cursor_.native_type(), cursor_scale,
+                              &resource_id, &hot_point_)) {
+      NOTIMPLEMENTED();
+      return;
+    }
+    image =
+        *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(resource_id);
   }
-  const gfx::ImageSkia* image =
-      ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(resource_id);
+
   if (!is_cursor_compositing_enabled_) {
-    gfx::ImageSkia rotated = *image;
+    gfx::ImageSkia rotated = image;
     switch (display_.rotation()) {
       case display::Display::ROTATE_0:
         break;
       case display::Display::ROTATE_90:
         rotated = gfx::ImageSkiaOperations::CreateRotatedImage(
-            *image, SkBitmapOperations::ROTATION_90_CW);
+            image, SkBitmapOperations::ROTATION_90_CW);
         hot_point_.SetPoint(rotated.width() - hot_point_.y(), hot_point_.x());
         break;
       case display::Display::ROTATE_180:
         rotated = gfx::ImageSkiaOperations::CreateRotatedImage(
-            *image, SkBitmapOperations::ROTATION_180_CW);
+            image, SkBitmapOperations::ROTATION_180_CW);
         hot_point_.SetPoint(rotated.height() - hot_point_.x(),
                             rotated.width() - hot_point_.y());
         break;
       case display::Display::ROTATE_270:
         rotated = gfx::ImageSkiaOperations::CreateRotatedImage(
-            *image, SkBitmapOperations::ROTATION_270_CW);
+            image, SkBitmapOperations::ROTATION_270_CW);
         hot_point_.SetPoint(hot_point_.y(), rotated.height() - hot_point_.x());
         break;
     }
@@ -324,19 +346,19 @@ void CursorWindowController::UpdateCursorImage() {
         image_rep.pixel_size(),
         gfx::ImageSkia::CreateFrom1xBitmap(image_rep.sk_bitmap()));
   } else {
-    gfx::ImageSkia resized = *image;
+    gfx::ImageSkia resized = image;
 
     // Rescale cursor size. This is used with the combination of accessibility
     // large cursor. We don't need to care about the case where cursor
     // compositing is disabled as we always use cursor compositing if
     // accessibility large cursor is enabled.
     if (cursor_size_ == ui::CursorSize::kLarge &&
-        large_cursor_size_in_dip_ != image->size().width()) {
+        large_cursor_size_in_dip_ != image.size().width()) {
       float rescale = static_cast<float>(large_cursor_size_in_dip_) /
-                      static_cast<float>(image->size().width());
+                      static_cast<float>(image.size().width());
       resized = gfx::ImageSkiaOperations::CreateResizedImage(
-          *image, skia::ImageOperations::ResizeMethod::RESIZE_GOOD,
-          gfx::ScaleToCeiledSize(image->size(), rescale));
+          image, skia::ImageOperations::ResizeMethod::RESIZE_GOOD,
+          gfx::ScaleToCeiledSize(image.size(), rescale));
       hot_point_ = gfx::ScaleToCeiledPoint(hot_point_, rescale);
     }
 
@@ -361,7 +383,7 @@ void CursorWindowController::UpdateCursorImage() {
 }
 
 void CursorWindowController::UpdateCursorVisibility() {
-  bool visible = (visible_ && cursor_type_ != ui::CursorType::kNone);
+  bool visible = (visible_ && cursor_.native_type() != ui::CursorType::kNone);
   if (visible) {
     if (cursor_view_)
       cursor_view_->GetWidget()->Show();
