@@ -93,6 +93,12 @@ PRUNE_PATHS = set([
 
     # Overrides some WebRTC files, same license. Skip this one.
     os.path.join('third_party', 'webrtc_overrides'),
+
+    # These are not shipped in Chromium.
+    os.path.join('third_party', 'boringssl', 'src', 'third_party',
+                 'android-cmake'),
+    os.path.join('third_party', 'boringssl', 'src', 'third_party',
+                 'googletest'),
 ])
 
 # Directories we don't scan through.
@@ -100,6 +106,10 @@ VCS_METADATA_DIRS = ('.svn', '.git')
 PRUNE_DIRS = (VCS_METADATA_DIRS +
               ('out', 'Debug', 'Release',  # build files
                'layout_tests'))            # lots of subdirs
+
+RECURSE_DIRS = (
+    os.path.join('third_party', 'boringssl'),
+)
 
 ADDITIONAL_PATHS = (
     os.path.join('chrome', 'common', 'extensions', 'docs', 'examples'),
@@ -432,13 +442,17 @@ def FindThirdPartyDirs(prune_paths, root):
 
         if os.path.basename(path) == 'third_party':
             # Add all subdirectories that are not marked for skipping.
+            new_dirs = []
             for dir in dirs:
                 dirpath = os.path.join(path, dir)
                 if dirpath not in prune_paths:
                     third_party_dirs.add(dirpath)
+                if dirpath in RECURSE_DIRS:
+                    new_dirs.append(dir)
 
-            # Don't recurse into any subdirs from here.
-            dirs[:] = []
+            # Don't recurse into any subdirs from here, unless whitelisted in
+            # RECURSE_DIRS.
+            dirs[:] = new_dirs
             continue
 
         # Don't recurse into paths in ADDITIONAL_PATHS, like we do with regular
