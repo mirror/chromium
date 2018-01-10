@@ -605,8 +605,9 @@ base::Time MockNetworkLayer::Now() {
 
 //-----------------------------------------------------------------------------
 // helpers
-
+#include <cstdio>
 int ReadTransaction(HttpTransaction* trans, std::string* result) {
+printf("ReadTransaction()\n");
   int rv;
 
   TestCompletionCallback callback;
@@ -615,8 +616,11 @@ int ReadTransaction(HttpTransaction* trans, std::string* result) {
   do {
     scoped_refptr<IOBuffer> buf(new IOBuffer(256));
     rv = trans->Read(buf.get(), 256, callback.callback());
+printf("\ttrans->Read() returns %d\n", rv);
     if (rv == ERR_IO_PENDING) {
+printf("\t\tWaitForResult()...\n");
       rv = callback.WaitForResult();
+printf("\t\tWaitForResult() returns %d\n", rv);
       base::RunLoop().RunUntilIdle();
     }
 

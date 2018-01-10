@@ -242,6 +242,10 @@ class QuicTestPacketMaker {
   SpdyHeaderBlock GetRequestHeaders(const std::string& method,
                                     const std::string& scheme,
                                     const std::string& path);
+  
+  SpdyHeaderBlock ConnectRequestHeaders(const std::string& method,
+                                        const std::string& host_port);
+
   SpdyHeaderBlock GetResponseHeaders(const std::string& status);
 
   SpdyHeaderBlock GetResponseHeaders(const std::string& status,

@@ -31,6 +31,7 @@ QuicProxyClientSocket::QuicProxyClientSocket(
       stream_(std::move(stream)),
       session_(std::move(session)),
       read_buf_(nullptr),
+      write_buf_len_(0),
       endpoint_(endpoint),
       auth_(auth_controller),
       user_agent_(user_agent),
@@ -109,6 +110,7 @@ void QuicProxyClientSocket::Disconnect() {
   read_callback_.Reset();
   read_buf_ = nullptr;
   write_callback_.Reset();
+  write_buf_len_ = 0;
 
   next_state_ = STATE_DISCONNECTED;
 
@@ -210,12 +212,17 @@ void QuicProxyClientSocket::OnReadComplete(int rv) {
     base::ResetAndReturn(&read_callback_).Run(rv);
   }
 }
-
+#include <cstdio>
 int QuicProxyClientSocket::Write(
     IOBuffer* buf,
     int buf_len,
     const CompletionCallback& callback,
     const NetworkTrafficAnnotationTag& traffic_annotation) {
+printf("\nWrite():\n");
+for (int i = 0; i < buf_len; ++i) {
+  putchar(buf->data()[i]);
+}
+putchar('\n');
   DCHECK(connect_callback_.is_null());
   DCHECK(write_callback_.is_null());
 
@@ -229,16 +236,24 @@ int QuicProxyClientSocket::Write(
       QuicStringPiece(buf->data(), buf_len), false,
       base::Bind(&QuicProxyClientSocket::OnWriteComplete,
                  weak_factory_.GetWeakPtr()));
+  if (rv == OK)
+    return buf_len;
 
-  if (rv == ERR_IO_PENDING)
+  if (rv == ERR_IO_PENDING) {
     write_callback_ = callback;
+    write_buf_len_ = buf_len;
+  }
 
   return rv;
 }
 
 void QuicProxyClientSocket::OnWriteComplete(int rv) {
-  if (!write_callback_.is_null())
+  if (!write_callback_.is_null()) {
+    if (rv == OK)
+      rv = write_buf_len_;
+    write_buf_len_ = 0;
     base::ResetAndReturn(&write_callback_).Run(rv);
+  }
 }
 
 int QuicProxyClientSocket::SetReceiveBufferSize(int32_t size) {

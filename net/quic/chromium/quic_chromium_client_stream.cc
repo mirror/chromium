@@ -534,6 +534,7 @@ SpdyPriority QuicChromiumClientStream::priority() const {
 }
 
 bool QuicChromiumClientStream::WriteStreamData(QuicStringPiece data, bool fin) {
+
   // Must not be called when data is buffered.
   DCHECK(!HasBufferedData());
   // Writes the data, or buffers it.
@@ -587,8 +588,13 @@ void QuicChromiumClientStream::OnError(int error) {
     handle->OnError(error);
   }
 }
-
+#include <cstdio>
 int QuicChromiumClientStream::Read(IOBuffer* buf, int buf_len) {
+printf("\nRead():\n");
+for (int i = 0; i < buf_len; ++i) {
+  putchar(buf->data()[i]);
+}
+putchar('\n');
   if (IsDoneReading())
     return 0;  // EOF
 
