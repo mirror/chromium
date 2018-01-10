@@ -48,19 +48,36 @@ class UnpackerTest : public testing::Test {
     // a temp folder to play in.
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
 
-    base::FilePath unzipped_dir = temp_dir_.GetPath().AppendASCII("unzipped");
+    base::FilePath unzipped_dir = temp_dir_.GetPath();
     ASSERT_TRUE(zip::Unzip(crx_path, unzipped_dir))
         << "Failed to unzip " << crx_path.value() << " to "
         << unzipped_dir.value();
 
-    unpacker_.reset(new Unpacker(temp_dir_.GetPath(), unzipped_dir,
-                                 std::string(), Manifest::INTERNAL,
-                                 Extension::NO_FLAGS));
+    image_dump_ = CreateTemporaryFile();
+    ASSERT_TRUE(image_dump_.IsValid());
+    message_catalog_dump_ = CreateTemporaryFile();
+    ASSERT_TRUE(message_catalog_dump_.IsValid());
+
+    unpacker_.reset(new Unpacker(
+        unzipped_dir, std::string(), Manifest::INTERNAL, Extension::NO_FLAGS,
+        image_dump_.Duplicate(), message_catalog_dump_.Duplicate()));
   }
 
  protected:
   base::ScopedTempDir temp_dir_;
   std::unique_ptr<Unpacker> unpacker_;
+  base::File image_dump_;
+  base::File message_catalog_dump_;
+
+ private:
+  base::File CreateTemporaryFile() {
+    base::FilePath path;
+    if (!base::CreateTemporaryFile(&path))
+      return base::File();
+    return base::File(path, base::File::FLAG_OPEN_ALWAYS |
+                                base::File::FLAG_READ | base::File::FLAG_WRITE |
+                                base::File::FLAG_TEMPORARY);
+  }
 };
 
 TEST_F(UnpackerTest, EmptyDefaultLocale) {

@@ -229,6 +229,8 @@ class SandboxedUnpacker : public base::RefCountedThreadSafe<SandboxedUnpacker> {
 
   // Unpacks the extension in directory and returns the manifest.
   void Unpack(const base::FilePath& directory);
+  void OpenDumpFiles(const base::FilePath& directory);
+  void OpenDumpFilesDone(const base::FilePath& directory);
   void UnpackDone(const base::string16& error,
                   std::unique_ptr<base::DictionaryValue> manifest,
                   std::unique_ptr<base::ListValue> json_ruleset);
@@ -299,6 +301,14 @@ class SandboxedUnpacker : public base::RefCountedThreadSafe<SandboxedUnpacker> {
   // Creation flags to use for the extension. These flags will be used
   // when calling Extenion::Create() by the CRX installer.
   int creation_flags_;
+
+  // The file to which the unpacking process dumps the extension images once
+  // safely decoded.
+  base::File decoded_image_dump_;
+
+  // The file to which the unpacking process dumps the message catalogs once
+  // safely parsed.
+  base::File message_catalog_dump_;
 
   // Sequenced task runner where file I/O operations will be performed.
   scoped_refptr<base::SequencedTaskRunner> unpacker_io_task_runner_;

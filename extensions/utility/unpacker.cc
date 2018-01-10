@@ -94,10 +94,10 @@ bool PathContainsParentDirectory(const base::FilePath& path) {
   return false;
 }
 
-bool WritePickle(const IPC::Message& pickle, const base::FilePath& dest_path) {
+bool WritePickle(const IPC::Message& pickle, base::File* file) {
   int size = base::checked_cast<int>(pickle.size());
   const char* data = static_cast<const char*>(pickle.data());
-  int bytes_written = base::WriteFile(dest_path, data, size);
+  int bytes_written = file->WriteAtCurrentPos(data, size);
   return (bytes_written == size);
 }
 
@@ -107,16 +107,18 @@ struct Unpacker::InternalData {
   DecodedImages decoded_images;
 };
 
-Unpacker::Unpacker(const base::FilePath& working_dir,
-                   const base::FilePath& extension_dir,
+Unpacker::Unpacker(const base::FilePath& extension_dir,
                    const std::string& extension_id,
                    Manifest::Location location,
-                   int creation_flags)
-    : working_dir_(working_dir),
-      extension_dir_(extension_dir),
+                   int creation_flags,
+                   base::File decoded_image_dump,
+                   base::File message_catalog_dump)
+    : extension_dir_(extension_dir),
       extension_id_(extension_id),
       location_(location),
-      creation_flags_(creation_flags) {
+      creation_flags_(creation_flags),
+      decoded_image_dump_(std::move(decoded_image_dump)),
+      message_catalog_dump_(std::move(message_catalog_dump)) {
   internal_data_.reset(new InternalData());
 }
 
@@ -268,8 +270,7 @@ bool Unpacker::DumpImagesToFile() {
   IPC::Message pickle;  // We use a Message so we can use WriteParam.
   IPC::WriteParam(&pickle, internal_data_->decoded_images);
 
-  base::FilePath path = working_dir_.AppendASCII(kDecodedImagesFilename);
-  if (!WritePickle(pickle, path)) {
+  if (!WritePickle(pickle, &decoded_image_dump_)) {
     SetError("Could not write image data to disk.");
     return false;
   }
@@ -281,9 +282,7 @@ bool Unpacker::DumpMessageCatalogsToFile() {
   IPC::Message pickle;
   IPC::WriteParam(&pickle, *parsed_catalogs_.get());
 
-  base::FilePath path =
-      working_dir_.AppendASCII(kDecodedMessageCatalogsFilename);
-  if (!WritePickle(pickle, path)) {
+  if (!WritePickle(pickle, &message_catalog_dump_)) {
     SetError("Could not write message catalogs to disk.");
     return false;
   }

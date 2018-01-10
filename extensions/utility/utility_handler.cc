@@ -44,9 +44,12 @@ struct UnpackResult {
 UnpackResult UnpackOnBackgroundTaskRunner(const base::FilePath& path,
                                           const std::string& extension_id,
                                           Manifest::Location location,
-                                          int32_t creation_flags) {
-  Unpacker unpacker(path.DirName(), path, extension_id, location,
-                    creation_flags);
+                                          int32_t creation_flags,
+                                          base::File decoded_image_dump,
+                                          base::File message_catalog_dump) {
+  Unpacker unpacker(path, extension_id, location, creation_flags,
+                    std::move(decoded_image_dump),
+                    std::move(message_catalog_dump));
 
   UnpackResult result;
   if (unpacker.Run()) {
@@ -95,6 +98,8 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
               const std::string& extension_id,
               Manifest::Location location,
               int32_t creation_flags,
+              base::File decoded_image_dump,
+              base::File message_catalog_dump,
               UnpackCallback callback) override {
     CHECK_GT(location, Manifest::INVALID_LOCATION);
     CHECK_LT(location, Manifest::NUM_LOCATIONS);
@@ -113,7 +118,8 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
         {base::TaskPriority::USER_BLOCKING, base::MayBlock(),
          base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
         base::BindOnce(&UnpackOnBackgroundTaskRunner, path, extension_id,
-                       location, creation_flags),
+                       location, creation_flags, std::move(decoded_image_dump),
+                       std::move(message_catalog_dump)),
         base::BindOnce(
             [](UnpackCallback callback, UnpackResult result) {
               std::move(callback).Run(result.error,

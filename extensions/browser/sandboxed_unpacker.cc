@@ -181,17 +181,26 @@ bool FindWritableTempLocation(const base::FilePath& extensions_dir,
   return false;
 }
 
+base::File CreateReadableWritableTemporaryFile() {
+  base::FilePath path;
+  if (!base::CreateTemporaryFile(&path))
+    return base::File();
+  return base::File(path, base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_READ |
+                              base::File::FLAG_WRITE |
+                              base::File::FLAG_TEMPORARY);
+}
+
 // Read the decoded images back from the file we saved them to.
 // |extension_path| is the path to the extension we unpacked that wrote the
 // data. Returns true on success.
-bool ReadImagesFromFile(const base::FilePath& extension_path,
-                        DecodedImages* images) {
-  base::FilePath path = extension_path.AppendASCII(kDecodedImagesFilename);
-  std::string file_str;
-  if (!base::ReadFileToString(path, &file_str))
+bool ReadImagesFromFile(base::File* image_dump, DecodedImages* images) {
+  const int64_t length = image_dump->GetLength();
+  std::unique_ptr<char[]> data = std::make_unique<char[]>(length);
+
+  if (image_dump->Read(/*offset=*/0, data.get(), length) != length)
     return false;
 
-  IPC::Message pickle(file_str.data(), file_str.size());
+  IPC::Message pickle(data.get(), length);
   base::PickleIterator iter(pickle);
   return IPC::ReadParam(&pickle, &iter, images);
 }
@@ -199,15 +208,15 @@ bool ReadImagesFromFile(const base::FilePath& extension_path,
 // Read the decoded message catalogs back from the file we saved them to.
 // |extension_path| is the path to the extension we unpacked that wrote the
 // data. Returns true on success.
-bool ReadMessageCatalogsFromFile(const base::FilePath& extension_path,
+bool ReadMessageCatalogsFromFile(base::File* message_catalog_dump,
                                  base::DictionaryValue* catalogs) {
-  base::FilePath path =
-      extension_path.AppendASCII(kDecodedMessageCatalogsFilename);
-  std::string file_str;
-  if (!base::ReadFileToString(path, &file_str))
+  const int64_t length = message_catalog_dump->GetLength();
+  std::unique_ptr<char[]> data = std::make_unique<char[]>(length);
+
+  if (message_catalog_dump->Read(/*offset=*/0, data.get(), length) != length)
     return false;
 
-  IPC::Message pickle(file_str.data(), file_str.size());
+  IPC::Message pickle(data.get(), length);
   base::PickleIterator iter(pickle);
   return IPC::ReadParam(&pickle, &iter, catalogs);
 }
@@ -348,7 +357,7 @@ void SandboxedUnpacker::StartWithDirectory(const std::string& extension_id,
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&SandboxedUnpacker::Unpack, this, extension_root_));
+      base::BindOnce(&SandboxedUnpacker::Unpack, this, extension_root_));
 }
 
 SandboxedUnpacker::~SandboxedUnpacker() {
@@ -383,7 +392,7 @@ void SandboxedUnpacker::UtilityProcessCrashed() {
 
   unpacker_io_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(
+      base::BindOnce(
           &SandboxedUnpacker::ReportFailure, this,
           UTILITY_PROCESS_CRASHED_WHILE_TRYING_TO_INSTALL,
           l10n_util::GetStringFUTF16(
@@ -416,7 +425,7 @@ void SandboxedUnpacker::UnzipDone(const base::FilePath& directory,
     utility_process_mojo_client_.reset();
     unpacker_io_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(
+        base::BindOnce(
             &SandboxedUnpacker::ReportFailure, this, UNZIP_FAILED,
             l10n_util::GetStringUTF16(IDS_EXTENSION_PACKAGE_UNZIP_ERROR)));
     return;
@@ -424,10 +433,37 @@ void SandboxedUnpacker::UnzipDone(const base::FilePath& directory,
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&SandboxedUnpacker::Unpack, this, directory));
+      base::BindOnce(&SandboxedUnpacker::Unpack, this, directory));
 }
 
 void SandboxedUnpacker::Unpack(const base::FilePath& directory) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  unpacker_io_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&SandboxedUnpacker::OpenDumpFiles, this, directory));
+}
+
+void SandboxedUnpacker::OpenDumpFiles(const base::FilePath& directory) {
+  CHECK(unpacker_io_task_runner_->RunsTasksInCurrentSequence());
+
+  decoded_image_dump_ = CreateReadableWritableTemporaryFile();
+  message_catalog_dump_ = CreateReadableWritableTemporaryFile();
+
+  if (!decoded_image_dump_.IsValid() || !message_catalog_dump_.IsValid()) {
+    ReportFailure(COULD_NOT_CREATE_TEMP_DIRECTORY,
+                  l10n_util::GetStringFUTF16(
+                      IDS_EXTENSION_PACKAGE_INSTALL_ERROR,
+                      ASCIIToUTF16("COULD_NOT_CREATE_TEMP_DIRECTORY")));
+    return;
+  }
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&SandboxedUnpacker::OpenDumpFilesDone, this, directory));
+}
+
+void SandboxedUnpacker::OpenDumpFilesDone(const base::FilePath& directory) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   StartUtilityProcessIfNeeded();
@@ -437,7 +473,8 @@ void SandboxedUnpacker::Unpack(const base::FilePath& directory) {
   utility_process_mojo_client_->service()->Unpack(
       GetCurrentChannel(), GetCurrentFeatureSessionType(), directory,
       extension_id_, location_, creation_flags_,
-      base::Bind(&SandboxedUnpacker::UnpackDone, this));
+      decoded_image_dump_.Duplicate(), message_catalog_dump_.Duplicate(),
+      base::BindOnce(&SandboxedUnpacker::UnpackDone, this));
 }
 
 void SandboxedUnpacker::UnpackDone(
@@ -451,14 +488,14 @@ void SandboxedUnpacker::UnpackDone(
   if (!error.empty()) {
     unpacker_io_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&SandboxedUnpacker::UnpackExtensionFailed, this, error));
+        base::BindOnce(&SandboxedUnpacker::UnpackExtensionFailed, this, error));
     return;
   }
 
   unpacker_io_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&SandboxedUnpacker::UnpackExtensionSucceeded, this,
-                 base::Passed(&manifest), base::Passed(&json_ruleset)));
+      base::BindOnce(&SandboxedUnpacker::UnpackExtensionSucceeded, this,
+                     std::move(manifest), std::move(json_ruleset)));
 }
 
 void SandboxedUnpacker::UnpackExtensionSucceeded(
@@ -809,7 +846,7 @@ bool SandboxedUnpacker::RewriteImageFiles(SkBitmap* install_icon) {
   DCHECK(!temp_dir_.GetPath().empty());
 
   DecodedImages images;
-  if (!ReadImagesFromFile(temp_dir_.GetPath(), &images)) {
+  if (!ReadImagesFromFile(&decoded_image_dump_, &images)) {
     // Couldn't read image data from disk.
     ReportFailure(COULD_NOT_READ_IMAGE_DATA_FROM_DISK,
                   l10n_util::GetStringFUTF16(
@@ -909,7 +946,7 @@ bool SandboxedUnpacker::RewriteImageFiles(SkBitmap* install_icon) {
 
 bool SandboxedUnpacker::RewriteCatalogFiles() {
   base::DictionaryValue catalogs;
-  if (!ReadMessageCatalogsFromFile(temp_dir_.GetPath(), &catalogs)) {
+  if (!ReadMessageCatalogsFromFile(&message_catalog_dump_, &catalogs)) {
     // Could not read catalog data from disk.
     ReportFailure(COULD_NOT_READ_CATALOG_DATA_FROM_DISK,
                   l10n_util::GetStringFUTF16(
