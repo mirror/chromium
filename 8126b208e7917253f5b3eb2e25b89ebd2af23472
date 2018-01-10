@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "535122b8_16d6aaed",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6885,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T22:05:30Z",
+      "side": 1,
+      "message": "nit:  Maybe Not -\u003e No, or DoNot?",
+      "range": {
+        "startLine": 6885,
+        "startChar": 35,
+        "endLine": 6885,
+        "endChar": 77
+      },
+      "revId": "8126b208e7917253f5b3eb2e25b89ebd2af23472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
