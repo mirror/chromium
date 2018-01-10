@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11c01c8a_f530f045",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-10T15:30:16Z",
+      "side": 1,
+      "message": "Didn\u0027t copied the list of histogram names as it\u0027s sometime easy for a comment like this to go out of sync, I\u0027ve referred to the list of histograms listed below instead.",
+      "parentUuid": "6c199069_421af4dd",
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7a42043_f6cf74be",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 36
@@ -39,6 +57,30 @@
       "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d18b8c4_df73ea50",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-10T15:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7a42043_f6cf74be",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ff4b155d_79fca343",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-10T15:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c4c2d2_8db3c672",
+      "range": {
+        "startLine": 311,
+        "startChar": 13,
+        "endLine": 311,
+        "endChar": 17
+      },
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e513b1_c96f389e",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 36
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-09T22:46:12Z",
       "side": 1,
       "message": "What enforces that interval is one of the specified values you have in histogram_suffixes? Can there be a DCHECK or something that it\u0027s one of those?",
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af7dc7c_957c0881",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-10T15:30:16Z",
+      "side": 1,
+      "message": "I don\u0027t think that I can read the histogram_suffixes list from here? I\u0027ve added a DCHECK that look at the kTabUsageReportingIntervals array.",
+      "parentUuid": "68e513b1_c96f389e",
       "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "bd52fca9_e063a13a",
+        "filename": "content/test/test_web_contents.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-10T15:30:16Z",
+      "side": 1,
+      "message": "Removed the const, kept the parameter order as there\u0027s no const param anymore and so the \"TestOnUserInteraction\" function has almost the same signature as the \"OnUserInteraction\" one (minus the const).",
+      "parentUuid": "171b698f_6ec275c0",
+      "range": {
+        "startLine": 394,
+        "startChar": 44,
+        "endLine": 394,
+        "endChar": 0
+      },
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b10446bf_0e542d73",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 36
@@ -119,6 +227,24 @@
       "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82295ca1_a1006cc5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 36
+      },
+      "lineNbr": 89852,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-10T15:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b10446bf_0e542d73",
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +268,30 @@
       "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd2750a_2a4dae5e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 36
+      },
+      "lineNbr": 110686,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-10T15:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c1f658f_b4b60f99",
+      "range": {
+        "startLine": 110686,
+        "startChar": 58,
+        "endLine": 110686,
+        "endChar": 0
+      },
+      "revId": "b1de8243c29f888ad12fbcf40aafec34aba61a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
