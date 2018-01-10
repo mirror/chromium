@@ -1,0 +1,21 @@
+# Copyright 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//services/network/public/interfaces/network_types.mojom"
+public_headers = [
+  "//net/base/network_change_notifier.h",
+  "//net/nqe/effective_connection_type.h",
+  "//services/network/public/cpp/cors_error_status.h",
+  "//services/network/public/cpp/url_loader_completion_status.h",
+]
+traits_headers = [ "//services/network/public/cpp/network_param_ipc_traits.h" ]
+public_deps = [
+  # NOTE: This dependency is here to satisfy gn check because
+  # network_param_ipc_traits.h includes headers from this target.
+  "//url/ipc:url_ipc",
+]
+type_mappings = [
+  "network.mojom.EffectiveConnectionType=net::EffectiveConnectionType",
+  "network.mojom.NetworkConnectionType=net::NetworkChangeNotifier::ConnectionType",
+]
