@@ -374,17 +374,17 @@ class LocalNtpSource::DesktopLogoObserver {
     scoped_refptr<base::RefCountedString> response;
     auto ddl = base::MakeUnique<base::DictionaryValue>();
     ddl->SetInteger("v", version_started_);
+    ddl->SetKey("image", base::Value());
+    ddl->SetKey("metadata", base::Value());
+    ddl->SetBoolean("usable", false);
+
     if (type == LogoCallbackReason::DETERMINED) {
       ddl->SetBoolean("usable", true);
       if (logo.has_value()) {
-        ddl->SetString("image", ConvertLogoImageToBase64(logo.value()));
         ddl->Set("metadata", ConvertLogoMetadataToDict(logo->metadata));
-      } else {
-        ddl->SetKey("image", base::Value());
-        ddl->SetKey("metadata", base::Value());
+        if (logo->encoded_image)
+          ddl->SetString("image", ConvertLogoImageToBase64(logo.value()));
       }
-    } else {
-      ddl->SetBoolean("usable", false);
     }
 
     std::string js;

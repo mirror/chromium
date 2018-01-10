@@ -841,8 +841,8 @@ var loadDoodle = function(v, onload) {
  * @returns {boolean}
  */
 var isDoodleCurrentlyVisible = function(image, metadata) {
-  var haveDoodle = ($(IDS.LOGO_DOODLE).classList.contains(CLASSES.SHOW_LOGO));
-  var wantDoodle = (image !== null) && (metadata !== null);
+  var haveDoodle = $(IDS.LOGO_DOODLE).classList.contains(CLASSES.SHOW_LOGO);
+  var wantDoodle = (metadata !== null);
   if (!haveDoodle || !wantDoodle)
     return haveDoodle === wantDoodle;
 
