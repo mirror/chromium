@@ -3500,7 +3500,9 @@ void RenderFrameHostImpl::CommitNavigation(
       }
     }
 
+    bool is_reconnectable_network_service_factory = false;
     if (!default_factory.is_bound()) {
+      is_reconnectable_network_service_factory = true;
       // Otherwise default to a Network Service-backed loader from the
       // appropriate NetworkContext.
       if (g_url_loader_factory_callback_for_test.Get().is_null()) {
@@ -3517,7 +3519,8 @@ void RenderFrameHostImpl::CommitNavigation(
     }
 
     DCHECK(default_factory.is_bound());
-    subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
+    subresource_loader_factories->SetDefaultFactory(
+        std::move(default_factory), is_reconnectable_network_service_factory);
 
     // Everyone gets a blob loader.
     mojom::URLLoaderFactoryPtr blob_factory;
@@ -3621,7 +3624,9 @@ void RenderFrameHostImpl::FailedNavigation(
 
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
   subresource_loader_factories.emplace();
-  subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
+  subresource_loader_factories->SetDefaultFactory(
+      std::move(default_factory),
+      true /* is_reconnectable_network_service_factory */);
 
   GetNavigationControl()->CommitFailedNavigation(
       common_params, request_params, has_stale_copy_in_cache, error_code,
