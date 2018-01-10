@@ -765,7 +765,7 @@
       status: "stable",
     },
     {
-      name: "PaintUnderInvalidationChecking",
+      name: "PaintUnderInvalidationChecking0",
       settable_from_internals: true,
     },
     {

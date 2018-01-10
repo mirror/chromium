@@ -35,6 +35,14 @@ class InternalRuntimeFlags : public ScriptWrappable {
   }
   {% endfor %}
 
+  void setPaintUnderInvalidationCheckingEnabled(bool b) {
+    LOG(ERROR) << "Set from internal: " << b;
+    RuntimeEnabledFeatures::SetPaintUnderInvalidationChecking0Enabled(b);
+  }
+  bool paintUnderInvalidationCheckingEnabled() {
+    return RuntimeEnabledFeatures::PaintUnderInvalidationChecking0Enabled();
+  }
+
  private:
   InternalRuntimeFlags() {}
 };

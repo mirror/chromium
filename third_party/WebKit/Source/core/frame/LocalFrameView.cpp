@@ -3149,6 +3149,11 @@ void LocalFrameView::ClearPrintContext() {
 // WebPluginContainerImpls.
 void LocalFrameView::UpdateLifecyclePhasesInternal(
     DocumentLifecycle::LifecycleState target_state) {
+  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
+    LOG(ERROR)
+        << "REF::RRR: "
+        << RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled();
+  }
   if (current_update_lifecycle_phases_target_state_ !=
       DocumentLifecycle::kUninitialized) {
     NOTREACHED()
