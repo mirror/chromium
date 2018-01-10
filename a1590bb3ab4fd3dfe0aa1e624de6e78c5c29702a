@@ -22,6 +22,30 @@
       "revId": "a1590bb3ab4fd3dfe0aa1e624de6e78c5c29702a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467e6200_e5031c78",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 10
+      },
+      "lineNbr": 2275,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-10T08:53:45Z",
+      "side": 1,
+      "message": "I think it\u0027s useful for iframes to trigger this too.  Virtual time is renderer wide and any navigation can affect determinism.",
+      "parentUuid": "dadb7e2c_0519e67b",
+      "range": {
+        "startLine": 2275,
+        "startChar": 71,
+        "endLine": 2275,
+        "endChar": 80
+      },
+      "revId": "a1590bb3ab4fd3dfe0aa1e624de6e78c5c29702a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
