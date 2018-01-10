@@ -13,6 +13,7 @@
 
 #include "ash/app_list/model/app_list_item_list.h"
 #include "ash/app_list/model/app_list_item_list_observer.h"
+#include "ash/app_list/model/app_list_model_delegate.h"
 #include "ash/app_list/model/app_list_model_export.h"
 #include "ash/app_list/model/app_list_view_state.h"
 #include "base/macros.h"
@@ -54,6 +55,8 @@ class APP_LIST_MODEL_EXPORT AppListModel : public AppListItemListObserver {
 
   void AddObserver(AppListModelObserver* observer);
   void RemoveObserver(AppListModelObserver* observer);
+
+  void SetDelegate(AppListModelDelegate* delegate) { delegate_ = delegate; }
 
   void SetStatus(Status status);
 
@@ -175,6 +178,7 @@ class APP_LIST_MODEL_EXPORT AppListModel : public AppListItemListObserver {
   // The AppListView state. Controlled by the AppListView.
   AppListViewState state_fullscreen_ = AppListViewState::CLOSED;
   base::ObserverList<AppListModelObserver, true> observers_;
+  AppListModelDelegate* delegate_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(AppListModel);
 };

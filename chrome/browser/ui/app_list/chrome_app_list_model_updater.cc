@@ -17,9 +17,35 @@
 
 ChromeAppListModelUpdater::ChromeAppListModelUpdater()
     : model_(std::make_unique<app_list::AppListModel>()),
-      search_model_(std::make_unique<app_list::SearchModel>()) {}
+      search_model_(std::make_unique<app_list::SearchModel>()) {
+  model_->SetDelegate(this);
+}
 
 ChromeAppListModelUpdater::~ChromeAppListModelUpdater() = default;
+
+void ChromeAppListModelUpdater::OnAppListItemAdded(
+    ash::mojom::AppListItemMetadataPtr item_data) {
+  ChromeAppListItem* item =
+      static_cast<ChromeAppListItem*>(model_->FindItem(item_data->id));
+  if (delegate_)
+    delegate_->OnAppListItemAdded(item);
+}
+
+void ChromeAppListModelUpdater::OnAppListItemWillBeDeleted(
+    ash::mojom::AppListItemMetadataPtr item_data) {
+  ChromeAppListItem* item =
+      static_cast<ChromeAppListItem*>(model_->FindItem(item_data->id));
+  if (delegate_)
+    delegate_->OnAppListItemAdded(item);
+}
+
+void ChromeAppListModelUpdater::OnAppListItemUpdated(
+    ash::mojom::AppListItemMetadataPtr item_data) {
+  ChromeAppListItem* item =
+      static_cast<ChromeAppListItem*>(model_->FindItem(item_data->id));
+  if (delegate_)
+    delegate_->OnAppListItemAdded(item);
+}
 
 void ChromeAppListModelUpdater::AddItem(
     std::unique_ptr<ChromeAppListItem> app_item) {

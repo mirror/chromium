@@ -10,8 +10,10 @@
 #include <string>
 #include <vector>
 
+#include "ash/app_list/model/app_list_model_delegate.h"
 #include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
+#include "chrome/browser/ui/app_list/chrome_app_list_model_updater_delegate.h"
 
 namespace ui {
 class MenuModel;
@@ -20,7 +22,8 @@ class MenuModel;
 class ChromeAppListItem;
 class SearchModel;
 
-class ChromeAppListModelUpdater : public AppListModelUpdater {
+class ChromeAppListModelUpdater : public AppListModelUpdater,
+                                  public app_list::AppListModelDelegate {
  public:
   ChromeAppListModelUpdater();
   ~ChromeAppListModelUpdater() override;
@@ -79,6 +82,18 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
       bool update_name,
       bool update_folder);
 
+  // app_list::AppListModelDelegate
+  void OnAppListItemAdded(
+      ash::mojom::AppListItemMetadataPtr item_data) override;
+  void OnAppListItemWillBeDeleted(
+      ash::mojom::AppListItemMetadataPtr item_data) override;
+  void OnAppListItemUpdated(
+      ash::mojom::AppListItemMetadataPtr item_data) override;
+
+  void SetDelegate(ChromeAppListModelUpdaterDelegate* delegate) {
+    delegate_ = delegate;
+  }
+
  protected:
   // AppListModelUpdater:
   // Methods only used by ChromeAppListItem that talk to ash directly.
@@ -110,6 +125,7 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
 
   std::unique_ptr<app_list::AppListModel> model_;
   std::unique_ptr<app_list::SearchModel> search_model_;
+  ChromeAppListModelUpdaterDelegate* delegate_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAppListModelUpdater);
 };

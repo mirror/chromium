@@ -216,6 +216,8 @@ void AppListModel::SetItemPosition(AppListItem* item,
   folder->item_list()->SetItemPosition(item, new_position);
   for (auto& observer : observers_)
     observer.OnAppListItemUpdated(item);
+  if (delegate_)
+    delegate_->OnAppListItemUpdated(item->CloneMetadata());
 }
 
 void AppListModel::SetItemName(AppListItem* item, const std::string& name) {
@@ -223,6 +225,8 @@ void AppListModel::SetItemName(AppListItem* item, const std::string& name) {
   DVLOG(2) << "AppListModel::SetItemName: " << item->ToDebugString();
   for (auto& observer : observers_)
     observer.OnAppListItemUpdated(item);
+  if (delegate_)
+    delegate_->OnAppListItemUpdated(item->CloneMetadata());
 }
 
 void AppListModel::SetItemNameAndShortName(AppListItem* item,
@@ -233,6 +237,8 @@ void AppListModel::SetItemNameAndShortName(AppListItem* item,
            << item->ToDebugString();
   for (auto& observer : observers_)
     observer.OnAppListItemUpdated(item);
+  if (delegate_)
+    delegate_->OnAppListItemUpdated(item->CloneMetadata());
 }
 
 void AppListModel::DeleteItem(const std::string& id) {
@@ -244,6 +250,8 @@ void AppListModel::DeleteItem(const std::string& id) {
         << "Invalid call to DeleteItem for item with children: " << id;
     for (auto& observer : observers_)
       observer.OnAppListItemWillBeDeleted(item);
+    if (delegate_)
+      delegate_->OnAppListItemWillBeDeleted(item->CloneMetadata());
     top_level_item_list_->DeleteItem(id);
     for (auto& observer : observers_)
       observer.OnAppListItemDeleted();
@@ -255,6 +263,8 @@ void AppListModel::DeleteItem(const std::string& id) {
   DCHECK_EQ(item, child_item.get());
   for (auto& observer : observers_)
     observer.OnAppListItemWillBeDeleted(item);
+  if (delegate_)
+    delegate_->OnAppListItemWillBeDeleted(item->CloneMetadata());
   child_item.reset();  // Deletes item.
   for (auto& observer : observers_)
     observer.OnAppListItemDeleted();
@@ -283,6 +293,8 @@ void AppListModel::OnListItemMoved(size_t from_index,
                                    AppListItem* item) {
   for (auto& observer : observers_)
     observer.OnAppListItemUpdated(item);
+  if (delegate_)
+    delegate_->OnAppListItemUpdated(item->CloneMetadata());
 }
 
 AppListFolderItem* AppListModel::FindOrCreateFolderItem(
@@ -310,6 +322,8 @@ AppListItem* AppListModel::AddItemToItemListAndNotify(
   AppListItem* item = top_level_item_list_->AddItem(std::move(item_ptr));
   for (auto& observer : observers_)
     observer.OnAppListItemAdded(item);
+  if (delegate_)
+    delegate_->OnAppListItemAdded(item->CloneMetadata());
   return item;
 }
 
@@ -319,6 +333,8 @@ AppListItem* AppListModel::AddItemToItemListAndNotifyUpdate(
   AppListItem* item = top_level_item_list_->AddItem(std::move(item_ptr));
   for (auto& observer : observers_)
     observer.OnAppListItemUpdated(item);
+  if (delegate_)
+    delegate_->OnAppListItemUpdated(item->CloneMetadata());
   return item;
 }
 
@@ -330,6 +346,8 @@ AppListItem* AppListModel::AddItemToFolderItemAndNotify(
   item->set_folder_id(folder->id());
   for (auto& observer : observers_)
     observer.OnAppListItemUpdated(item);
+  if (delegate_)
+    delegate_->OnAppListItemUpdated(item->CloneMetadata());
   return item;
 }
 
