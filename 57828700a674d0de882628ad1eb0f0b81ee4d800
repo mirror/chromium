@@ -16,6 +16,24 @@
       "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aac122b_f4bb93a7",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMActivityLogger.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-10T09:30:41Z",
+      "side": 1,
+      "message": "IIUC, you\u0027re saying we should rely on the DCHECKs in VectorBufferBase::AllocateBuffer() and drop this one, right?",
+      "parentUuid": "121a345e_ee02ad2a",
+      "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
