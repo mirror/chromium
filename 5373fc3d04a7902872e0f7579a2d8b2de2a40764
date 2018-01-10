@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c40e138e_4c6369a1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/resources/worker-timeout.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T03:48:39Z",
+      "side": 1,
+      "message": "Is there a reason to prefer this over `function checkCompletion() { ... }`",
+      "revId": "5373fc3d04a7902872e0f7579a2d8b2de2a40764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaba21be_5b871f11",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/resources/worker-timeout.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T03:48:39Z",
+      "side": 1,
+      "message": "Agree that a worker test would seem to be clearer. It\u0027s a bit hard to tell how to extend this test at first glance.",
+      "revId": "5373fc3d04a7902872e0f7579a2d8b2de2a40764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f09a6263_6b9fcbf2",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/worker-timeout.html",
         "patchSetId": 5
@@ -13,6 +47,24 @@
       "writtenOn": "2018-01-08T15:28:00Z",
       "side": 1,
       "message": "This is not a great approach, IMO. Can we use a .worker.js test? See http://web-platform-tests.org/writing-tests/testharness.html#standalone-workers-tests",
+      "revId": "5373fc3d04a7902872e0f7579a2d8b2de2a40764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2de09a_c11e1f49",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/worker-timeout.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T03:48:39Z",
+      "side": 1,
+      "message": "That indeed looks better but nhiroki might not have time to revise the patch. nhiroki: would you be able to do this, or should we land and iterate?\n\nFor that matter, the test looks valid for Window as well. Is there a reason to test setTimeout/setInterval only for workers, or should it be a .any.js test?",
+      "parentUuid": "f09a6263_6b9fcbf2",
       "revId": "5373fc3d04a7902872e0f7579a2d8b2de2a40764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
