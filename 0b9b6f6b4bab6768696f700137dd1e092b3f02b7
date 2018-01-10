@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77a6b0e9_163ba4fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-10T12:56:14Z",
+      "side": 1,
+      "message": "Asserting arguments.containsKey(ARGUMENT_ACCESS_POINT) has a slightly different meaning, as it doesn\u0027t check the type of the value stored for that key. For example, consider the the following snippet:\n\n Bundle bundle \u003d new Bundle();\n bundle.putString(\"Key\", \"StringValue\");\n assert bundle.containsKey(\"Key\"); // this assert passes\n int value \u003d bundle.getInt(\"Key\", -1);\n assert value !\u003d -1; // this assert fails\n\nReplaced the if with an assert.\n\nTBH, I would prefer having a release check here instead of an assert (something like Preconditions.checkArgument), but we currently don\u0027t have Preconditions in base. Will look into adding it later. Does it make sense to you?",
+      "parentUuid": "f8bf6e1f_76b25813",
+      "range": {
+        "startLine": 235,
+        "startChar": 27,
+        "endLine": 235,
+        "endChar": 29
+      },
+      "revId": "0b9b6f6b4bab6768696f700137dd1e092b3f02b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d81cb033_74ca6e06",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a9f9ac44_1ce3d3c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-10T12:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d81cb033_74ca6e06",
+      "range": {
+        "startLine": 252,
+        "startChar": 16,
+        "endLine": 252,
+        "endChar": 40
+      },
+      "revId": "0b9b6f6b4bab6768696f700137dd1e092b3f02b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133bebb1_da7ac1e8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "0b9b6f6b4bab6768696f700137dd1e092b3f02b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0508671_946d356b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-10T12:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133bebb1_da7ac1e8",
+      "range": {
+        "startLine": 266,
+        "startChar": 16,
+        "endLine": 266,
+        "endChar": 99
+      },
+      "revId": "0b9b6f6b4bab6768696f700137dd1e092b3f02b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
