@@ -47,12 +47,8 @@ int ConvertKeyStateToAuraEventFlags(DWORD key_state)
 
 namespace views {
 
-DesktopDropTargetWin::DesktopDropTargetWin(aura::Window* root_window,
-                                           HWND window)
-    : ui::DropTargetWin(window),
-      root_window_(root_window),
-      target_window_(NULL) {
-}
+DesktopDropTargetWin::DesktopDropTargetWin(aura::Window* root_window)
+    : root_window_(root_window), target_window_(NULL) {}
 
 DesktopDropTargetWin::~DesktopDropTargetWin() {
   if (target_window_)

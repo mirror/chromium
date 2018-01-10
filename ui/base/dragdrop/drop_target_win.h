@@ -27,9 +27,11 @@ namespace ui {
 // This class is meant to be used in a STA and is not multithread-safe.
 class UI_BASE_EXPORT DropTargetWin : public IDropTarget {
  public:
-  // Create a new DropTarget associating it with the given HWND.
-  explicit DropTargetWin(HWND hwnd);
+  DropTargetWin();
   virtual ~DropTargetWin();
+
+  // Associate the drop target with the given HWND.
+  void Register(HWND hwnd);
 
   // IDropTarget implementation:
   HRESULT __stdcall DragEnter(IDataObject* data_object,

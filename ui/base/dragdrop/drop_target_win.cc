@@ -12,16 +12,17 @@ namespace ui {
 
 IDropTargetHelper* DropTargetWin::cached_drop_target_helper_ = NULL;
 
-DropTargetWin::DropTargetWin(HWND hwnd)
-    : hwnd_(hwnd),
-      ref_count_(0) {
+DropTargetWin::DropTargetWin() : hwnd_(NULL), ref_count_(0) {}
+
+DropTargetWin::~DropTargetWin() {}
+
+void DropTargetWin::Register(HWND hwnd) {
+  DCHECK(!hwnd_);
   DCHECK(hwnd);
   HRESULT result = RegisterDragDrop(hwnd, this);
   DCHECK(SUCCEEDED(result));
 }
 
-DropTargetWin::~DropTargetWin() {
-}
 
 // static
 IDropTargetHelper* DropTargetWin::DropHelper() {
