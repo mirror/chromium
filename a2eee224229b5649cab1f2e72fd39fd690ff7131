@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97798c7e_e383675c",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-10T20:01:17Z",
+      "side": 1,
+      "message": "I tried reverting the remainder of this CL and running the test (Because I wanted to see the CL in action!) and this test still passes. \n\nIt looks like the test passes because page_with_insecure_favicon.html references a non-existing favicon. Locally, I changed the test page to:\n- pass the favicon URL as a query parameter\n- Used JavaScript to create the \u003clink\u003e node with the query parameter URL\nBased on running this changed test, it looks like the http favicon download is not blocked. :( I didn\u0027t do any further investigation.",
+      "revId": "a2eee224229b5649cab1f2e72fd39fd690ff7131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
