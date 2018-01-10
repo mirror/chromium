@@ -42,6 +42,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
+#include "third_party/WebKit/public/platform/TaskType.h"
 
 namespace content {
 
@@ -156,11 +157,14 @@ void ResourceDispatcher::OnReceivedResponse(
   }
 
   if (!IsResourceTypeFrame(request_info->resource_type)) {
+    RenderFrameImpl* frame =
+        RenderFrameImpl::FromRoutingID(request_info->render_frame_id);
     NotifySubresourceStarted(
-        RenderThreadImpl::GetMainTaskRunner(), request_info->render_frame_id,
-        request_info->response_url, request_info->response_referrer,
-        request_info->response_method, request_info->resource_type,
-        response_head.socket_address.host(), response_head.cert_status);
+        frame->GetTaskRunner(blink::TaskType::kUnspecedLoading),
+        request_info->render_frame_id, request_info->response_url,
+        request_info->response_referrer, request_info->response_method,
+        request_info->resource_type, response_head.socket_address.host(),
+        response_head.cert_status);
   }
 
   ResourceResponseInfo renderer_response_info;
