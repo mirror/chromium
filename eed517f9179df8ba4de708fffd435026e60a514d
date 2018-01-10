@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc0eb9e5_a3112d42",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-10T06:35:23Z",
+      "side": 1,
+      "message": "using Optional to express difference between IsNull and IsEmpty of WebString.\nIsNull in the original will be nullopt.",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f7ab9e_52f2f218",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-10T06:35:23Z",
+      "side": 1,
+      "message": "this second condition does not exist in the original code, but probably is needed?",
+      "range": {
+        "startLine": 40,
+        "startChar": 59,
+        "endLine": 40,
+        "endChar": 76
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df2a135_ffade33f",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-10T06:35:23Z",
+      "side": 1,
+      "message": "original version checks more characters behind the IsASCIISpace(), but just checking 0x20 and comma is enough? This will be the implementation of \u0027SP\u0027 that RFC (https://tools.ietf.org/html/rfc6454#section-7.1) says, and \u0027SP\u0027 is defined as 0x20 in https://tools.ietf.org/html/rfc5234#appendix-B.1.\n\nI guess we additionally check \u0027,\u0027 as well-known errors of the separator.",
+      "range": {
+        "startLine": 48,
+        "startChar": 44,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0166e68d_6c797bf9",
+        "filename": "services/network/public/cpp/cors/cors_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-10T06:35:23Z",
+      "side": 1,
+      "message": "needs a closer look on this test case because my understanding around suborigin is limited now.",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
