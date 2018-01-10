@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc20aafc_c2b1eac7",
+        "filename": "chrome/common/prerender_url_loader_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-10T00:03:01Z",
+      "side": 1,
+      "message": "nit: now that the timer is started in WillStartRequest(), there is no need for this part of change.",
+      "revId": "112df9308d7ec190a30cac8edebd05d11ee379de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
