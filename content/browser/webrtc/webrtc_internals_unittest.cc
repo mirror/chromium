@@ -153,8 +153,7 @@ class WebRtcInternalsTest : public testing::Test {
   TestBrowserThreadBundle test_browser_thread_bundle_;
 };
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_AddRemoveObserver) {
+TEST_F(WebRtcInternalsTest, AddRemoveObserver) {
   base::RunLoop loop;
   MockWebRtcInternalsProxy observer(&loop);
   WebRTCInternalsForTest webrtc_internals;
@@ -175,8 +174,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_AddRemoveObserver) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_EnsureNoLogWhenNoObserver) {
+TEST_F(WebRtcInternalsTest, EnsureNoLogWhenNoObserver) {
   base::RunLoop loop;
   WebRTCInternalsForTest webrtc_internals;
   webrtc_internals.OnAddPeerConnection(0, 3, 4, kUrl, kRtcConfiguration,
@@ -203,8 +201,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_EnsureNoLogWhenNoObserver) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_EnsureLogIsRemovedWhenObserverIsRemoved) {
+TEST_F(WebRtcInternalsTest, EnsureLogIsRemovedWhenObserverIsRemoved) {
   base::RunLoop loop;
   WebRTCInternalsForTest webrtc_internals;
   MockWebRtcInternalsProxy observer;
@@ -242,8 +239,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_EnsureLogIsRemovedWhenObserverIsRemoved) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_SendAddPeerConnectionUpdate) {
+TEST_F(WebRtcInternalsTest, SendAddPeerConnectionUpdate) {
   base::RunLoop loop;
   MockWebRtcInternalsProxy observer(&loop);
   WebRTCInternalsForTest webrtc_internals;
@@ -270,8 +266,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_SendAddPeerConnectionUpdate) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_SendRemovePeerConnectionUpdate) {
+TEST_F(WebRtcInternalsTest, SendRemovePeerConnectionUpdate) {
   base::RunLoop loop;
   MockWebRtcInternalsProxy observer(&loop);
   WebRTCInternalsForTest webrtc_internals;
@@ -295,8 +290,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_SendRemovePeerConnectionUpdate) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_SendUpdatePeerConnectionUpdate) {
+TEST_F(WebRtcInternalsTest, SendUpdatePeerConnectionUpdate) {
   base::RunLoop loop;
   MockWebRtcInternalsProxy observer(&loop);
   WebRTCInternalsForTest webrtc_internals;
@@ -330,8 +324,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_SendUpdatePeerConnectionUpdate) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_AddGetUserMedia) {
+TEST_F(WebRtcInternalsTest, AddGetUserMedia) {
   base::RunLoop loop;
   MockWebRtcInternalsProxy observer(&loop);
   WebRTCInternalsForTest webrtc_internals;
@@ -357,8 +350,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_AddGetUserMedia) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_SendAllUpdateWithGetUserMedia) {
+TEST_F(WebRtcInternalsTest, SendAllUpdateWithGetUserMedia) {
   const int rid = 1;
   const int pid = 2;
   const std::string audio_constraint = "aaa";
@@ -381,8 +373,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_SendAllUpdateWithGetUserMedia) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_SendAllUpdatesWithPeerConnectionUpdate) {
+TEST_F(WebRtcInternalsTest, SendAllUpdatesWithPeerConnectionUpdate) {
   const int rid = 0, pid = 1, lid = 2;
   const std::string update_type = "fakeType";
   const std::string update_value = "fakeValue";
@@ -429,8 +420,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_SendAllUpdatesWithPeerConnectionUpdate) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_OnAddStats) {
+TEST_F(WebRtcInternalsTest, OnAddStats) {
   const int rid = 0, pid = 1, lid = 2;
   base::RunLoop loop;
   MockWebRtcInternalsProxy observer(&loop);
@@ -459,9 +449,7 @@ TEST_F(WebRtcInternalsTest, DISABLED_OnAddStats) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest,
-       DISABLED_AudioDebugRecordingsFileSelectionCanceled) {
+TEST_F(WebRtcInternalsTest, AudioDebugRecordingsFileSelectionCanceled) {
   base::RunLoop loop;
 
   MockWebRtcInternalsProxy observer(&loop);
@@ -478,8 +466,7 @@ TEST_F(WebRtcInternalsTest,
   base::RunLoop().RunUntilIdle();
 }
 
-// Flaky: crbug.com/796047.
-TEST_F(WebRtcInternalsTest, DISABLED_WakeLock) {
+TEST_F(WebRtcInternalsTest, WakeLock) {
   int kRenderProcessId = 1;
   const int pid = 1;
   const int lid[] = {1, 2, 3};
