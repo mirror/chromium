@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e3f3dab_81faf4f2",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 108,
+        "startChar": 34,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60009dd_442f0d1d",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "Heads up, this will crash if the heaps_v2 is missing a maps/nodes nesting. Not sure it\u0027s worth ading a DCHECK, but thought I\u0027d point it out.\n\nSame later on maps/strings",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c006195c_73582732",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "CHECK_LE here and below maybe?",
+      "range": {
+        "startLine": 278,
+        "startChar": 35,
+        "endLine": 278,
+        "endChar": 50
+      },
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641f7905_34b0a19b",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "note: reverse order of the operands to + since we put the packet first and the string second?",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2db639_18fa7fed",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "Oh! It\u0027s a constant! No need to pass it into the object then. This way the CHECK_LE can be constant propagated more reliably...",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd522ba_0dc6a81c",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "nit: I suggest using more random numbers so it\u0027s visually easy to see the difference if someone were to come debug later.",
+      "range": {
+        "startLine": 20,
+        "startChar": 19,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6704ee06_d5f026ef",
+        "filename": "chrome/profiling/memlog_stream_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "It sucks that we have to _recopy_ the whole sequence of bytes to adapt the API.\n\nWhat\u0027s the thoughts on something like:\n\nhttps://stackoverflow.com/questions/32787502/put-bytes-from-unsigned-char-array-to-stdstring-using-memcpy-function\n\nAlso, I wonder if calling c_str() later will force a realloc...",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d4c17d_13af2fda",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "This should return c_str() unless we specifically are expecting to avoid null termination.",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8543b8_86c1a6f6",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T22:24:51Z",
+      "side": 1,
+      "message": "Take this by copy instead of a const\u0026 and then move it to avoid extra copies?",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
