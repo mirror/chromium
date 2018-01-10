@@ -287,24 +287,30 @@ class ShadowBoundaryAdjuster final {
  public:
   template <typename Strategy>
   static SelectionTemplate<Strategy> AdjustSelection(
-      const SelectionTemplate<Strategy>& granularity_adjusted_selection) {
-    const EphemeralRangeTemplate<Strategy> expanded_range =
-        granularity_adjusted_selection.ComputeRange();
-
-    const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
-        granularity_adjusted_selection.IsBaseFirst()
-            ? EphemeralRangeTemplate<Strategy>(
-                  expanded_range.StartPosition(),
-                      AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-                          expanded_range))
-            : EphemeralRangeTemplate<Strategy>(
-                      AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-                          expanded_range),
-                  expanded_range.EndPosition());
+      const SelectionTemplate<Strategy>& selection) {
+    DCHECK(!selection.IsNone());
+    if (selection.IsCaret())
+      return selection;
+    const PositionTemplate<Strategy>& start = selection.ComputeStartPosition();
+    const PositionTemplate<Strategy>& end = selection.ComputeEndPosition();
+    const PositionTemplate<Strategy>& shadow_adjusted_start =
+        selection.IsBaseFirst()
+            ? start
+            : AdjustSelectionStartToAvoidCrossingShadowBoundaries(start, end);
+    const PositionTemplate<Strategy>& shadow_adjusted_end =
+        selection.IsBaseFirst()
+            ? AdjustSelectionEndToAvoidCrossingShadowBoundaries(start, end)
+            : end;
     typename SelectionTemplate<Strategy>::Builder builder;
-    return granularity_adjusted_selection.IsBaseFirst()
-               ? builder.SetAsForwardSelection(shadow_adjusted_range).Build()
-               : builder.SetAsBackwardSelection(shadow_adjusted_range).Build();
+    return selection.IsBaseFirst()
+               ? builder
+                     .SetBaseAndExtent(shadow_adjusted_start,
+                                       shadow_adjusted_end)
+                     .Build()
+               : builder
+                     .SetBaseAndExtent(shadow_adjusted_end,
+                                       shadow_adjusted_start)
+                     .Build();
   }
 
  private:
@@ -432,54 +438,50 @@ class ShadowBoundaryAdjuster final {
 
   // TODO(hajimehoshi): Checking treeScope is wrong when a node is
   // distributed, but we leave it as it is for backward compatibility.
-  static bool IsCrossingShadowBoundaries(const EphemeralRange& range) {
-    DCHECK(range.IsNotNull());
-    return range.StartPosition().AnchorNode()->GetTreeScope() !=
-           range.EndPosition().AnchorNode()->GetTreeScope();
+  static bool IsCrossingShadowBoundaries(const Position& start,
+                                         const Position& end) {
+    return start.AnchorNode()->GetTreeScope() !=
+           end.AnchorNode()->GetTreeScope();
   }
 
   static Position AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-      const EphemeralRange& range) {
-    DCHECK(range.IsNotNull());
-    if (!IsCrossingShadowBoundaries(range))
-      return range.StartPosition();
-    return AdjustPositionForStart(range.StartPosition(),
-                                  range.EndPosition().ComputeContainerNode());
+      const Position& start,
+      const Position& end) {
+    if (!IsCrossingShadowBoundaries(start, end))
+      return start;
+    return AdjustPositionForStart(start, end.ComputeContainerNode());
   }
 
   static Position AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-      const EphemeralRange& range) {
-    DCHECK(range.IsNotNull());
-    if (!IsCrossingShadowBoundaries(range))
-      return range.EndPosition();
-    return AdjustPositionForEnd(range.EndPosition(),
-                                range.StartPosition().ComputeContainerNode());
+      const Position& start,
+      const Position& end) {
+    if (!IsCrossingShadowBoundaries(start, end))
+      return end;
+    return AdjustPositionForEnd(end, start.ComputeContainerNode());
   }
 
   static PositionInFlatTree AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-      const EphemeralRangeInFlatTree& range) {
-    Node* const shadow_host_start =
-        EnclosingShadowHostForStart(range.StartPosition());
-    Node* const shadow_host_end =
-        EnclosingShadowHostForEnd(range.EndPosition());
+      const PositionInFlatTree& start,
+      const PositionInFlatTree& end) {
+    Node* const shadow_host_start = EnclosingShadowHostForStart(start);
+    Node* const shadow_host_end = EnclosingShadowHostForEnd(end);
     if (shadow_host_start == shadow_host_end)
-      return range.StartPosition();
+      return start;
     Node* const shadow_host =
         shadow_host_end ? shadow_host_end : shadow_host_start;
-    return AdjustPositionInFlatTreeForStart(range.StartPosition(), shadow_host);
+    return AdjustPositionInFlatTreeForStart(start, shadow_host);
   }
 
   static PositionInFlatTree AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-      const EphemeralRangeInFlatTree& range) {
-    Node* const shadow_host_start =
-        EnclosingShadowHostForStart(range.StartPosition());
-    Node* const shadow_host_end =
-        EnclosingShadowHostForEnd(range.EndPosition());
+      const PositionInFlatTree& start,
+      const PositionInFlatTree& end) {
+    Node* const shadow_host_start = EnclosingShadowHostForStart(start);
+    Node* const shadow_host_end = EnclosingShadowHostForEnd(end);
     if (shadow_host_start == shadow_host_end)
-      return range.EndPosition();
+      return end;
     Node* const shadow_host =
         shadow_host_start ? shadow_host_start : shadow_host_end;
-    return AdjustPositionInFlatTreeForEnd(range.EndPosition(), shadow_host);
+    return AdjustPositionInFlatTreeForEnd(end, shadow_host);
   }
 };
 
