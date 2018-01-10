@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29e4c5d3_3cff7246",
+        "filename": "chrome/browser/ui/webui/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T02:19:00Z",
+      "side": 1,
+      "message": "here and in the other DEPS files, code outside of src/content can\u0027t include internals of content. They can only include public headers in src/content/public. This also applies to tests.\n\nSince you\u0027re doing this in 2 unit tests, another option could be to have whatever code is calling the static getter null-check and not use it if it\u0027s null? this is a common pattern we use. i.e.\nhttps://cs.chromium.org/search/?q\u003d%22null+in+tests%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs\nhttps://cs.chromium.org/search/?q\u003d%22null+in+unittests%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "a8e0353c9a88575f33e8550d158e08dc7137c2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0375b57_ec75b20c",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T02:19:00Z",
+      "side": 1,
+      "message": "do you really need to trace this?",
+      "revId": "a8e0353c9a88575f33e8550d158e08dc7137c2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
