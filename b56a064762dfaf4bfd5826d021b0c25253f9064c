@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d75994e_506a530c",
+        "filename": "chrome/browser/profiles/profile_impl_io_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T18:40:17Z",
+      "side": 1,
+      "message": "Put this in network_context instead?  Also, should have unittests in network_context that make sure the setting is respected (Can just check the state of the created URLRequestContext)",
+      "range": {
+        "startLine": 487,
+        "startChar": 12,
+        "endLine": 487,
+        "endChar": 23
+      },
+      "revId": "b56a064762dfaf4bfd5826d021b0c25253f9064c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
