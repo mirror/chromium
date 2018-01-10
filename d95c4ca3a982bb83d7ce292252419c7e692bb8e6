@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "389a1385_613ab169",
+        "filename": "components/viz/service/display_embedder/external_begin_frame_controller_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-10T14:22:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f21f6149_fd682279",
+      "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c58a1c76_7026640e",
         "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286c81cd_75c7d790",
+        "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-10T14:22:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c58a1c76_7026640e",
+      "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "15a71521_10405c51",
+        "filename": "content/browser/compositor/external_begin_frame_controller_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-10T14:22:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a63232b_feaa1835",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8ac6659_bd6d4145",
         "filename": "content/browser/compositor/external_begin_frame_controller_client_impl.h",
         "patchSetId": 4
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a3cb49d7_64bd84ea",
+        "filename": "content/browser/compositor/external_begin_frame_controller_client_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-10T14:22:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8ac6659_bd6d4145",
+      "range": {
+        "startLine": 34,
+        "startChar": 32,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc6c8072_973009bd",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7929b1e0_78dbed81",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-10T14:22:16Z",
+      "side": 1,
+      "message": "Shouldn\u0027t happen provided we trust the content embedder. Will make it a DCHECK, also in GpuPTF.",
+      "parentUuid": "cc6c8072_973009bd",
+      "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "e52dc93b_1e1e60b4",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-10T14:22:16Z",
+      "side": 1,
+      "message": "Done. Added a struct as well - Not sure if I need to add struct traits for that too or if a pure mojo-struct is fine?",
+      "parentUuid": "4733e079_fd059768",
+      "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d284c21b_a00bf9e3",
         "filename": "content/browser/compositor/viz_process_transport_factory.h",
         "patchSetId": 4
@@ -130,6 +250,24 @@
       "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8156e09d_682179ab",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-10T14:22:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d284c21b_a00bf9e3",
+      "revId": "d95c4ca3a982bb83d7ce292252419c7e692bb8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
