@@ -770,7 +770,8 @@ def main():
       args.canary)
   logging.warning('Creating project at: %s', generator.project_dir)
 
-  args.all = args.all or not args.split_projects
+  args.all = args.all or (
+      not args.split_projects and not args.targets and not args.extra_targets)
 
   targets_from_args = set(args.targets or _DEFAULT_TARGETS)
   if args.extra_targets:
