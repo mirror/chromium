@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1cf9d29_7be4f317",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-10T20:42:28Z",
+      "side": 0,
+      "message": "Doing a copy means that we emit the write barrier for no good reason.",
+      "range": {
+        "startLine": 698,
+        "startChar": 36,
+        "endLine": 698,
+        "endChar": 42
+      },
+      "revId": "9fc9bd0a46cdaf404da5f6a6bf7818721c554e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
