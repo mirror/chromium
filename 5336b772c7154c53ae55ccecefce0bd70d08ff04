@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "401d5e57_8355856f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-10T21:10:14Z",
+      "side": 1,
+      "message": "Good point, it\u0027s not guaranteed to be set for the first wheel after kPhaseBegan. Moved to check this case in the dispatcher.",
+      "parentUuid": "91c51ded_676c3ff7",
+      "range": {
+        "startLine": 260,
+        "startChar": 11,
+        "endLine": 260,
+        "endChar": 13
+      },
+      "revId": "5336b772c7154c53ae55ccecefce0bd70d08ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb1fc1aa_31514b44",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-10T18:12:42Z",
       "side": 1,
       "message": "nit: is it worth a comment here that it\u0027s ok to return a zero for transformed point since it won\u0027t be used anyways?",
+      "range": {
+        "startLine": 261,
+        "startChar": 29,
+        "endLine": 261,
+        "endChar": 35
+      },
+      "revId": "5336b772c7154c53ae55ccecefce0bd70d08ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3afdbe_57b1414a",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-10T21:10:14Z",
+      "side": 1,
+      "message": "This block is deleted now.",
+      "parentUuid": "bb1fc1aa_31514b44",
       "range": {
         "startLine": 261,
         "startChar": 29,
@@ -68,6 +116,30 @@
       "revId": "5336b772c7154c53ae55ccecefce0bd70d08ff04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff1badb_8bc24f4f",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-10T21:10:14Z",
+      "side": 1,
+      "message": "I see, done.",
+      "parentUuid": "9f88ad27_1e223379",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 13
+      },
+      "revId": "5336b772c7154c53ae55ccecefce0bd70d08ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
