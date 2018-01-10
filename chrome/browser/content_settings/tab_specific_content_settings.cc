@@ -269,7 +269,8 @@ bool TabSpecificContentSettings::IsContentBlocked(
       content_type == CONTENT_SETTINGS_TYPE_PPAPI_BROKER ||
       content_type == CONTENT_SETTINGS_TYPE_MIDI_SYSEX ||
       content_type == CONTENT_SETTINGS_TYPE_ADS ||
-      content_type == CONTENT_SETTINGS_TYPE_SOUND) {
+      content_type == CONTENT_SETTINGS_TYPE_SOUND ||
+      content_type == CONTENT_SETTINGS_TYPE_CLIPBOARD_READ) {
     const auto& it = content_settings_status_.find(content_type);
     if (it != content_settings_status_.end())
       return it->second.blocked;
@@ -297,12 +298,13 @@ bool TabSpecificContentSettings::IsContentAllowed(
       << "Automatic downloads handled by DownloadRequestLimiter";
 
   // This method currently only returns meaningful values for the content type
-  // cookies, media, PPAPI broker, downloads, and MIDI sysex.
+  // cookies, media, PPAPI broker, downloads, MIDI sysex, and clipboard.
   if (content_type != CONTENT_SETTINGS_TYPE_COOKIES &&
       content_type != CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC &&
       content_type != CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA &&
       content_type != CONTENT_SETTINGS_TYPE_PPAPI_BROKER &&
-      content_type != CONTENT_SETTINGS_TYPE_MIDI_SYSEX) {
+      content_type != CONTENT_SETTINGS_TYPE_MIDI_SYSEX &&
+      content_type != CONTENT_SETTINGS_TYPE_CLIPBOARD_READ) {
     return false;
   }
 
@@ -327,6 +329,8 @@ void TabSpecificContentSettings::OnContentBlockedWithDetail(
   if (!content_settings::ContentSettingsRegistry::GetInstance()->Get(type))
     return;
 
+  ContentSettingsStatus& status = content_settings_status_[type];
+
   // TODO(robwu): Should this be restricted to cookies only?
   // In the past, content_settings_status_[type].allowed was set to false, but
   // this logic was inverted in https://codereview.chromium.org/13375004 to
@@ -335,8 +339,13 @@ void TabSpecificContentSettings::OnContentBlockedWithDetail(
   // either OnContentBlocked or OnContentAllowed. Consequently IsContentAllowed
   // will always return true for every supported setting that is not handled
   // elsewhere.
-  ContentSettingsStatus& status = content_settings_status_[type];
-  status.allowed = true;
+  // TODO(garykac): Investigate why this is necessary for cookies, since this
+  // doesn't look right and it produces incorrect results for other content
+  // settings (like CONTENT_SETTINGS_TYPE_CLIPBOARD_READ).
+  // https://crbug.com/800845
+  if (type == CONTENT_SETTINGS_TYPE_COOKIES) {
+    status.allowed = true;
+  }
 
 #if defined(OS_ANDROID)
   if (type == CONTENT_SETTINGS_TYPE_POPUPS) {
