@@ -43,7 +43,8 @@ void ElideTextAndAdjustRange(const FontList& font_list,
                              Range* range) {
   const base::char16 start_char =
       (range->IsValid() ? text->at(range->start()) : 0);
-  *text = ElideText(*text, font_list, width, ELIDE_TAIL);
+  *text =
+      ElideText(*text, font_list, width, ELIDE_TAIL, gfx::Typesetter::HARFBUZZ);
   if (!range->IsValid())
     return;
   if (range->start() >= text->length() ||
@@ -167,15 +168,10 @@ void Canvas::DrawStringRectWithFlags(const base::string16& text,
 
   Rect rect(text_bounds);
 
-  auto render_text = gfx::RenderText::CreateInstanceDeprecated();
+  // Since we're drawing into a canvas anyway, just use Harfbuzz on Mac.
+  auto render_text = gfx::RenderText::CreateHarfBuzzInstance();
 
   if (flags & MULTI_LINE) {
-#if defined(OS_MACOSX)
-    // Currently not supported on Mac. ElideRectangleText() is not yet aware
-    // that the typesetting below is not being done by CoreText.
-    // See http://crbug.com/791391.
-    NOTREACHED();
-#endif
     WordWrapBehavior wrap_behavior = IGNORE_LONG_WORDS;
     if (flags & CHARACTER_BREAK)
       wrap_behavior = WRAP_LONG_WORDS;
