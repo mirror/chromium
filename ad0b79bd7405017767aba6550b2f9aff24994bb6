@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2999b93_56053c0f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-10T17:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35e66c2b_ae9c7539",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bc499d5_bdaa1992",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e11ef8a5_a98bc33d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-10T17:33:36Z",
+      "side": 1,
+      "message": "I had to redo the changes - now both POST navigations and XHR requests work reliably.",
+      "parentUuid": "3bc499d5_bdaa1992",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96bc6cf3_a56c54cf",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6191c702_bbb380ef",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3209,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-10T17:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96bc6cf3_a56c54cf",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1a578792_3441a20c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3575,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-10T17:33:36Z",
+      "side": 1,
+      "message": "IMHO, bit misleading... But I do not know a better option.",
+      "parentUuid": "b3f9c802_5da74de6",
+      "range": {
+        "startLine": 3575,
+        "startChar": 23,
+        "endLine": 3575,
+        "endChar": 54
+      },
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0237cb4_5de86359",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 4
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "5d31d1e6_5a3671a6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3613,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-10T17:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0237cb4_5de86359",
+      "range": {
+        "startLine": 3613,
+        "startChar": 10,
+        "endLine": 3613,
+        "endChar": 28
+      },
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d43c740_7288b773",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 4
@@ -113,6 +215,24 @@
       "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f8602f_bb541d05",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3617,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-10T17:33:36Z",
+      "side": 1,
+      "message": "It is always encoded - same as data sent as a part of requestWillBeSent.",
+      "parentUuid": "9d43c740_7288b773",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "6b9fe959_e1a95bf2",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3619,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-10T17:33:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7ad4657_b2c7e577",
+      "range": {
+        "startLine": 3619,
+        "startChar": 13,
+        "endLine": 3619,
+        "endChar": 21
+      },
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8299848f_1b5fcb4d",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
         "patchSetId": 4
@@ -153,6 +297,24 @@
       "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962fb9d5_8a913ee3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2018-01-10T17:33:36Z",
+      "side": 1,
+      "message": "All frontend changes will be sent in a separate CL.",
+      "parentUuid": "8299848f_1b5fcb4d",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
