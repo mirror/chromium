@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "44c92926_b6250790",
+        "filename": "ui/arc/notification/arc_notification_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-10T01:53:38Z",
+      "side": 1,
+      "message": "Could you add this to OnNotiifcationUpdated and OnNotificationRemoved as well? I know ignored notifications are eventually blocked by the checks with items_, but I prefer to add this for all for consistency.",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 45
+      },
+      "revId": "ac9a433f62f1ce718ef9507d09b36e273727958c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "062a07dc_9573a5dc",
         "filename": "ui/arc/notification/arc_notification_manager.cc",
         "patchSetId": 1
