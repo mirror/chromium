@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce23c938_29a2fd32",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/XRWebGLDrawingBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-10T23:49:39Z",
+      "side": 0,
+      "message": "Is the notion of an opaque WebGL framebuffer going away? If so, can the supporting code be removed?",
+      "revId": "be36780207a0acc87850beac95e60bdfea495518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

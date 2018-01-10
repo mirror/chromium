@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "580fa67a_351253f5",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/XRWebGLDrawingBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-10T23:49:39Z",
+      "side": 1,
+      "message": "I think the command buffer guarantees that GetGraphicsResetStatusKHR will keep returning UNKNOWN_CONTEXT_RESET, but in general the KHR_robustness spec only guarantees it will be returned once. Therefore this may not be a reliable way of detecting that the context has been lost. Please double check these code paths, and write tests using the WEBGL_lose_context debugging extension.",
+      "revId": "68a0a5dbacc850e6662f7ea784a83c1634709c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
