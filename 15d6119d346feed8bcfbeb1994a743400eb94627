@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ead3a1_b1020514",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-10T21:47:18Z",
+      "side": 1,
+      "message": "Sorry I forgot to mention this during the last iteration. You may want to use requested_frame_duration_ to express its meaning and the relationship with requested_frame_rate_.",
+      "range": {
+        "startLine": 135,
+        "startChar": 18,
+        "endLine": 135,
+        "endChar": 33
+      },
+      "revId": "15d6119d346feed8bcfbeb1994a743400eb94627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb1101f_5bc1acd5",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-10T21:47:18Z",
+      "side": 1,
+      "message": "You may not need to do this HasSwitch test at all. base::StringToInt() returns 0 for empty string, it will be naturally ignored in line 205.",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 196,
+        "endChar": 75
+      },
+      "revId": "15d6119d346feed8bcfbeb1994a743400eb94627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0460435e_6a2a01d0",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-10T21:47:18Z",
+      "side": 1,
+      "message": "This seems not quite right, see StringToInt tests https://cs.chromium.org/chromium/src/base/strings/string_number_conversions_unittest.cc?rcl\u003d30c6fd4425ca6f2b2c31c5d949805ae7cc40afc1\u0026l\u003d110. The value is always set even StringToInt() returns false. So you may want to use a temporary variable and change max_cpu_consumption_percentage_ only when base::StringToInt() returns true.",
+      "range": {
+        "startLine": 199,
+        "startChar": 42,
+        "endLine": 199,
+        "endChar": 73
+      },
+      "revId": "15d6119d346feed8bcfbeb1994a743400eb94627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301667c1_1bd7ea3c",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-10T21:47:18Z",
+      "side": 1,
+      "message": "I slightly prefer\nif (max_cpu_consumption_percentage_ \u003c 1) {\n  max_cpu_consumption_percentage_ \u003d 1;\n} else if (max_cpu_consumption_percentage \u003e 100) {\n  max_cpu_consumption_percentage_ \u003d 100;\n}\n\nUp to you.",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 37
+      },
+      "revId": "15d6119d346feed8bcfbeb1994a743400eb94627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5881ff0f_4518fe92",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-10T21:47:18Z",
+      "side": 1,
+      "message": "You may add a private function in DesktopCaptureDevice::Core for this.",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 69
+      },
+      "revId": "15d6119d346feed8bcfbeb1994a743400eb94627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afadd96a_523d1157",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-10T21:47:18Z",
+      "side": 1,
+      "message": "frame_duration_.",
+      "range": {
+        "startLine": 441,
+        "startChar": 15,
+        "endLine": 444,
+        "endChar": 53
+      },
+      "revId": "15d6119d346feed8bcfbeb1994a743400eb94627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
