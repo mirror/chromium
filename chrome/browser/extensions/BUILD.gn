@@ -792,6 +792,7 @@ static_library("extensions") {
     "//chrome/common/extensions/api",
     "//components/safe_browsing/db:util",
     "//content/public/browser",
+    "//content/public/network",
   ]
   deps = [
     "//apps",

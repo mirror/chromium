@@ -14,6 +14,7 @@ include_rules = [
   "+components/web_modal",
   "+components/zoom",
   "+content/public/browser",
+  "+content/public/network",
   "+device/bluetooth",
   "+device/serial",
   "+device/usb",

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/loader/resource_scheduler.h"
+#include "content/network/resource_scheduler.h"
 
 #include <stdint.h>
 
@@ -21,10 +21,8 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/supports_user_data.h"
 #include "base/trace_event/trace_event.h"
-#include "content/common/resource_messages.h"
-#include "content/public/browser/resource_request_info.h"
-#include "content/public/browser/resource_throttle.h"
 #include "content/public/common/content_features.h"
+#include "content/public/network/resource_throttle.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
 #include "net/base/request_priority.h"
@@ -76,10 +74,7 @@ const int kYieldMsDefault = 0;
 const base::Feature kThrottleDelayable{"ThrottleDelayable",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
-enum StartMode {
-  START_SYNC,
-  START_ASYNC
-};
+enum StartMode { START_SYNC, START_ASYNC };
 
 // Flags identifying various attributes of the request that are used
 // when making scheduling decisions.
@@ -140,12 +135,11 @@ static const size_t kMaxNumDelayableWhileLayoutBlockingPerClient = 1;
 
 // The priority level above which resources are considered layout-blocking if
 // the html_body has not started.
-static const net::RequestPriority
-    kLayoutBlockingPriorityThreshold = net::MEDIUM;
+static const net::RequestPriority kLayoutBlockingPriorityThreshold =
+    net::MEDIUM;
 
 // The priority level below which resources are considered to be delayable.
-static const net::RequestPriority
-    kDelayablePriorityThreshold = net::MEDIUM;
+static const net::RequestPriority kDelayablePriorityThreshold = net::MEDIUM;
 
 // The number of in-flight layout-blocking requests above which all delayable
 // requests should be blocked.
@@ -153,18 +147,14 @@ static const size_t kInFlightNonDelayableRequestCountPerClientThreshold = 1;
 
 struct ResourceScheduler::RequestPriorityParams {
   RequestPriorityParams()
-    : priority(net::DEFAULT_PRIORITY),
-      intra_priority(0) {
-  }
+      : priority(net::DEFAULT_PRIORITY), intra_priority(0) {}
 
   RequestPriorityParams(net::RequestPriority priority, int intra_priority)
-    : priority(priority),
-      intra_priority(intra_priority) {
-  }
+      : priority(priority), intra_priority(intra_priority) {}
 
   bool operator==(const RequestPriorityParams& other) const {
     return (priority == other.priority) &&
-        (intra_priority == other.intra_priority);
+           (intra_priority == other.intra_priority);
   }
 
   bool operator!=(const RequestPriorityParams& other) const {
@@ -200,13 +190,9 @@ class ResourceScheduler::RequestQueue {
     pointers_.erase(it);
   }
 
-  NetQueue::iterator GetNextHighestIterator() {
-    return queue_.begin();
-  }
+  NetQueue::iterator GetNextHighestIterator() { return queue_.begin(); }
 
-  NetQueue::iterator End() {
-    return queue_.end();
-  }
+  NetQueue::iterator End() { return queue_.end(); }
 
   // Returns true if |request| is queued.
   bool IsQueued(ScheduledResourceRequest* request) const {
@@ -326,9 +312,7 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
   void set_fifo_ordering(uint32_t fifo_ordering) {
     fifo_ordering_ = fifo_ordering;
   }
-  RequestAttributes attributes() const {
-    return attributes_;
-  }
+  RequestAttributes attributes() const { return attributes_; }
   void set_attributes(RequestAttributes attributes) {
     attributes_ = attributes;
   }
@@ -351,9 +335,7 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
   static const void* const kUserDataKey;
 
   // ResourceThrottle interface:
-  void WillStartRequest(bool* defer) override {
-    deferred_ = *defer = !ready_;
-  }
+  void WillStartRequest(bool* defer) override { deferred_ = *defer = !ready_; }
 
   const char* GetNameForLogging() const override { return "ResourceScheduler"; }
 
@@ -490,9 +472,7 @@ class ResourceScheduler::Client {
 
   bool is_loaded() const { return is_loaded_; }
 
-  void OnLoadingStateChanged(bool is_loaded) {
-    is_loaded_ = is_loaded;
-  }
+  void OnLoadingStateChanged(bool is_loaded) { is_loaded_ = is_loaded; }
 
   void OnNavigate() {
     has_html_body_ = false;
@@ -617,8 +597,8 @@ class ResourceScheduler::Client {
     }
     if (!RequestAttributesAreSet(attributes, kAttributeInFlight)) {
       bool current_request_is_pending = false;
-      for (RequestQueue::NetQueue::const_iterator
-           it = pending_requests_.GetNextHighestIterator();
+      for (RequestQueue::NetQueue::const_iterator it =
+               pending_requests_.GetNextHighestIterator();
            it != pending_requests_.End(); ++it) {
         if (RequestAttributesAreSet((*it)->attributes(), attributes))
           matching_request_count++;
@@ -663,8 +643,8 @@ class ResourceScheduler::Client {
 
     request->set_attributes(attributes);
     DCHECK_EQ(CountRequestsWithAttributes(
-        kAttributeInFlight | kAttributeDelayable, request),
-        in_flight_delayable_count_);
+                  kAttributeInFlight | kAttributeDelayable, request),
+              in_flight_delayable_count_);
     DCHECK_EQ(CountRequestsWithAttributes(kAttributeLayoutBlocking, request),
               total_layout_blocking_count_);
   }
@@ -681,9 +661,8 @@ class ResourceScheduler::Client {
       // If a request is already marked as layout-blocking make sure to keep the
       // attribute across redirects.
       attributes |= kAttributeLayoutBlocking;
-    } else if (!has_html_body_ &&
-               request->url_request()->priority() >
-               kLayoutBlockingPriorityThreshold) {
+    } else if (!has_html_body_ && request->url_request()->priority() >
+                                      kLayoutBlockingPriorityThreshold) {
       // Requests that are above the non_delayable threshold before the HTML
       // body has been parsed are inferred to be layout-blocking.
       attributes |= kAttributeLayoutBlocking;
@@ -710,8 +689,7 @@ class ResourceScheduler::Client {
     return attributes;
   }
 
-  bool ShouldKeepSearching(
-      const net::HostPortPair& active_request_host) const {
+  bool ShouldKeepSearching(const net::HostPortPair& active_request_host) const {
     size_t same_host_count = 0;
     for (RequestSet::const_iterator it = in_flight_requests_.begin();
          it != in_flight_requests_.end(); ++it) {
@@ -747,8 +725,8 @@ class ResourceScheduler::Client {
       DCHECK_NE(RequestStartTrigger::NONE, trigger);
       request->url_request()->net_log().AddEvent(
           net::NetLogEventType::RESOURCE_SCHEDULER_REQUEST_STARTED,
-          net::NetLog::StringCallback(
-              "trigger", RequestStartTriggerString(trigger)));
+          net::NetLog::StringCallback("trigger",
+                                      RequestStartTriggerString(trigger)));
     }
     // Record the number of delayable requests in-flight when a non-delayable
     // request starts.
@@ -827,7 +805,7 @@ class ResourceScheduler::Client {
       net::HttpServerProperties& http_server_properties =
           *url_request.context()->http_server_properties();
       // TODO(willchan): We should really improve this algorithm as described in
-      // crbug.com/164101. Also, theoretically we should not count a
+      // https://crbug.com/164101. Also, theoretically we should not count a
       // request-priority capable request against the delayable requests limit.
       if (http_server_properties.SupportsRequestPriority(scheme_host_port))
         return ShouldStartOrYieldRequest(request);
@@ -1096,8 +1074,7 @@ void ResourceScheduler::OnClientCreated(
   ClientId client_id = MakeClientId(child_id, route_id);
   DCHECK(!base::ContainsKey(client_map_, client_id));
 
-  Client* client = new Client(
-      network_quality_estimator, this);
+  Client* client = new Client(network_quality_estimator, this);
   client_map_[client_id] = client;
 }
 
@@ -1157,9 +1134,8 @@ void ResourceScheduler::OnWillInsertBody(int child_id, int route_id) {
   client->OnWillInsertBody();
 }
 
-void ResourceScheduler::OnReceivedSpdyProxiedHttpResponse(
-    int child_id,
-    int route_id) {
+void ResourceScheduler::OnReceivedSpdyProxiedHttpResponse(int child_id,
+                                                          int route_id) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   ClientId client_id = MakeClientId(child_id, route_id);
 
@@ -1208,7 +1184,7 @@ void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
   }
 
   RequestPriorityParams new_priority_params(new_priority,
-      new_intra_priority_value);
+                                            new_intra_priority_value);
   RequestPriorityParams old_priority_params =
       scheduled_resource_request->get_request_priority_params();
 
@@ -1241,8 +1217,8 @@ void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
   ReprioritizeRequest(request, new_priority, current_intra_priority);
 }
 
-ResourceScheduler::ClientId ResourceScheduler::MakeClientId(
-    int child_id, int route_id) {
+ResourceScheduler::ClientId ResourceScheduler::MakeClientId(int child_id,
+                                                            int route_id) {
   return (static_cast<ResourceScheduler::ClientId>(child_id) << 32) | route_id;
 }
 
@@ -1316,6 +1292,5 @@ ResourceScheduler::ThrottleDelayable::GetParamsForNetworkQualityContainer() {
     config_param_index++;
   }
 }
-
 
 }  // namespace content
