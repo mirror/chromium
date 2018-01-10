@@ -152,9 +152,9 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
   // The ownership of the BeginFrameSource is transfered to the caller.
   *out_begin_frame_source = std::move(synthetic_begin_frame_source);
 
-  return std::make_unique<Display>(
-      ServerSharedBitmapManager::current(), renderer_settings, frame_sink_id,
-      std::move(output_surface), std::move(scheduler), task_runner_);
+  return std::make_unique<Display>(renderer_settings, frame_sink_id,
+                                   std::move(output_surface),
+                                   std::move(scheduler), task_runner_);
 }
 
 std::unique_ptr<SoftwareOutputDevice>

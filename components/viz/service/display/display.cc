@@ -37,14 +37,12 @@
 namespace viz {
 
 Display::Display(
-    SharedBitmapManager* bitmap_manager,
     const RendererSettings& settings,
     const FrameSinkId& frame_sink_id,
     std::unique_ptr<OutputSurface> output_surface,
     std::unique_ptr<DisplayScheduler> scheduler,
     scoped_refptr<base::SingleThreadTaskRunner> current_task_runner)
-    : bitmap_manager_(bitmap_manager),
-      settings_(settings),
+    : settings_(settings),
       frame_sink_id_(frame_sink_id),
       output_surface_(std::move(output_surface)),
       scheduler_(std::move(scheduler)),
@@ -204,8 +202,7 @@ void Display::SetOutputIsSecure(bool secure) {
 
 void Display::InitializeRenderer() {
   resource_provider_ = std::make_unique<cc::DisplayResourceProvider>(
-      output_surface_->context_provider(), bitmap_manager_,
-      settings_.resource_settings);
+      output_surface_->context_provider());
 
   if (output_surface_->context_provider()) {
     if (!settings_.use_skia_renderer) {

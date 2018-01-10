@@ -255,7 +255,7 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
       display_output_surface->capabilities().max_frames_pending);
 
   data->display = std::make_unique<viz::Display>(
-      &shared_bitmap_manager_, renderer_settings_, compositor->frame_sink_id(),
+      renderer_settings_, compositor->frame_sink_id(),
       std::move(display_output_surface), std::move(scheduler),
       compositor->task_runner());
   GetFrameSinkManager()->RegisterBeginFrameSource(begin_frame_source.get(),

@@ -198,14 +198,9 @@ bool SynchronousLayerTreeFrameSink::BindToClient(
   // The gpu_memory_buffer_manager here is null as the Display is only used for
   // resourcesless software draws, where no resources are included in the frame
   // swapped from the compositor. So there is no need for it.
-  // The shared_bitmap_manager_ is provided for the Display to allocate
-  // resources.
-  // TODO(crbug.com/692814): The Display never sends its resources out of
-  // process so there is no reason for it to use a SharedBitmapManager.
   display_ = std::make_unique<viz::Display>(
-      &shared_bitmap_manager_, software_renderer_settings, kRootFrameSinkId,
-      std::move(output_surface), nullptr /* scheduler */,
-      nullptr /* current_task_runner */);
+      software_renderer_settings, kRootFrameSinkId, std::move(output_surface),
+      nullptr /* scheduler */, nullptr /* current_task_runner */);
   display_->Initialize(&display_client_,
                        frame_sink_manager_->surface_manager());
   display_->SetVisible(true);
