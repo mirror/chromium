@@ -17,6 +17,7 @@ class Display;
 }
 
 namespace ui {
+class BitmapCursorOzone;
 class CursorData;
 class ImageCursors;
 class ImageCursorsSet;
@@ -67,7 +68,16 @@ class ThreadedImageCursors {
   void SetCursorOnPlatformWindow(ui::PlatformCursor platform_cursor,
                                  ui::PlatformWindow* platform_window);
 
+  // To work around threading issues so that we don't leak a raw PlatformCursor
+  // when passed across threads, we pass the bitmap cursor as a scoped refptr
+  // so that if we shutdown during the internal ozone thread jumps, we don't
+  // leak |bitmap_cursor|.
+  void SetCursorOnPlatformWindowFromBitmap(
+      scoped_refptr<ui::BitmapCursorOzone> bitmap_cursor,
+      ui::PlatformWindow* platform_window);
+
  private:
+
   // The object used for performing the actual cursor operations.
   // Created on UI Service's thread, but is used on the
   // |resource_task_runner_|'s thread, because it needs to load resources.
