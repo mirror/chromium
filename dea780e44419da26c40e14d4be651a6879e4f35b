@@ -16,6 +16,24 @@
       "revId": "dea780e44419da26c40e14d4be651a6879e4f35b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540227a9_247c1344",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-10T17:39:19Z",
+      "side": 1,
+      "message": "If the the clip-path is in the current \"user space\" (clipPathUnits\u003duserSpaceOnUse) then we do the adjustment (above). If it\u0027s not, then the clip-path is in a coordinate space that is relative to the reference box, which means that HitTestClipContent will take care of it (apply the inverse of the object bounding box transform in practice.)",
+      "parentUuid": "a1de1349_94070729",
+      "revId": "dea780e44419da26c40e14d4be651a6879e4f35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
