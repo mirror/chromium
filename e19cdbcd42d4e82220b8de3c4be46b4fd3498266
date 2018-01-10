@@ -16,6 +16,24 @@
       "revId": "e19cdbcd42d4e82220b8de3c4be46b4fd3498266",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64443af_3462fa96",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-10T20:42:16Z",
+      "side": 1,
+      "message": "Yes it can.",
+      "parentUuid": "5cc86fcb_7c87d7d7",
+      "revId": "e19cdbcd42d4e82220b8de3c4be46b4fd3498266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
