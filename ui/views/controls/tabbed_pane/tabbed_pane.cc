@@ -91,7 +91,7 @@ class MdTab : public Tab {
 // class uses a BoxLayout to position tabs.
 class MdTabStrip : public TabStrip, public gfx::AnimationDelegate {
  public:
-  MdTabStrip();
+  explicit MdTabStrip(TabbedPane* tabbed_pane);
   ~MdTabStrip() override;
 
   // Overridden from TabStrip:
@@ -134,6 +134,10 @@ Tab::Tab(TabbedPane* tabbed_pane, const base::string16& title, View* contents)
   const int kTabVerticalPadding = 5;
   const int kTabHorizontalPadding = 10;
 
+  if (!tabbed_pane_->IsHorizontal()) {
+    title_->SetHorizontalAlignment(gfx::HorizontalAlignment::ALIGN_LEFT);
+    title_->SetElideBehavior(gfx::ElideBehavior::NO_ELIDE);
+  }
   SetBorder(CreateEmptyBorder(
       gfx::Insets(kTabVerticalPadding, kTabHorizontalPadding)));
   SetLayoutManager(std::make_unique<FillLayout>());
@@ -162,11 +166,15 @@ void Tab::OnStateChanged() {
       title_->SetEnabledColor(kTabTitleColor_Inactive);
       title_->SetFontList(rb.GetFontListWithDelta(
           ui::kLabelFontSizeDelta, gfx::Font::NORMAL, kInactiveWeight));
+      should_highlight_ = false;
       break;
     case TAB_ACTIVE:
-      title_->SetEnabledColor(kTabTitleColor_Active);
+      title_->SetEnabledColor(tabbed_pane_->IsHorizontal()
+                                  ? kTabTitleColor_Active
+                                  : highlight_color_);
       title_->SetFontList(rb.GetFontListWithDelta(
           ui::kLabelFontSizeDelta, gfx::Font::NORMAL, kActiveWeight));
+      should_highlight_ = true;
       break;
     case TAB_HOVERED:
       title_->SetEnabledColor(kTabTitleColor_Hovered);
@@ -209,6 +217,8 @@ void Tab::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 gfx::Size Tab::CalculatePreferredSize() const {
+  if (!tabbed_pane_->IsHorizontal())
+    return preferred_tab_size_;
   gfx::Size size(preferred_title_size_);
   size.Enlarge(GetInsets().width(), GetInsets().height());
   return size;
@@ -224,6 +234,20 @@ void Tab::SetState(TabState tab_state) {
   tab_state_ = tab_state;
   OnStateChanged();
   SchedulePaint();
+}
+
+void Tab::OnPaint(gfx::Canvas* canvas) {
+  if (tabbed_pane_->IsHorizontal())
+    return;
+
+  SkScalar radius = SkIntToScalar(corner_radius_);
+  const SkScalar kRadius[8] = {0, 0, radius, radius, radius, radius, 0, 0};
+  SkPath path;
+  gfx::Rect bounds(size());
+  path.addRoundRect(gfx::RectToSkRect(bounds), kRadius);
+  canvas->ClipPath(path, true);
+  if (should_highlight_)
+    canvas->DrawColor(background_);
 }
 
 void Tab::GetAccessibleNodeData(ui::AXNodeData* data) {
@@ -321,12 +345,19 @@ void MdTab::OnBlur() {
 // static
 const char TabStrip::kViewClassName[] = "TabStrip";
 
-TabStrip::TabStrip() {
+TabStrip::TabStrip(TabbedPane* tabbed_pane) : tabbed_pane_(tabbed_pane) {
   const int kTabStripLeadingEdgePadding = 9;
-  auto layout = std::make_unique<BoxLayout>(
-      BoxLayout::kHorizontal, gfx::Insets(0, kTabStripLeadingEdgePadding));
+  std::unique_ptr<BoxLayout> layout;
+  if (tabbed_pane_->IsHorizontal()) {
+    layout = std::make_unique<BoxLayout>(
+        BoxLayout::kHorizontal, gfx::Insets(0, kTabStripLeadingEdgePadding));
+    layout->set_cross_axis_alignment(BoxLayout::CROSS_AXIS_ALIGNMENT_END);
+  } else {
+    layout = std::make_unique<BoxLayout>(
+        BoxLayout::kVertical, gfx::Insets(kTabStripLeadingEdgePadding, 0));
+    layout->set_cross_axis_alignment(BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
+  }
   layout->set_main_axis_alignment(BoxLayout::MAIN_AXIS_ALIGNMENT_START);
-  layout->set_cross_axis_alignment(BoxLayout::CROSS_AXIS_ALIGNMENT_END);
   layout->SetDefaultFlex(0);
   SetLayoutManager(std::move(layout));
 }
@@ -340,6 +371,9 @@ const char* TabStrip::GetClassName() const {
 }
 
 void TabStrip::OnPaintBorder(gfx::Canvas* canvas) {
+  if (!tabbed_pane_->IsHorizontal())
+    return;
+
   cc::PaintFlags fill_flags;
   fill_flags.setColor(kTabBorderColor);
   fill_flags.setStrokeWidth(kTabBorderThickness);
@@ -394,7 +428,7 @@ Tab* TabStrip::GetTabAtDeltaFromSelected(int delta) const {
   return GetTabAtIndex(index);
 }
 
-MdTabStrip::MdTabStrip() {
+MdTabStrip::MdTabStrip(TabbedPane* tabbed_pane) : TabStrip(tabbed_pane) {
   auto layout = std::make_unique<BoxLayout>(BoxLayout::kHorizontal);
   layout->set_main_axis_alignment(BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
   layout->set_cross_axis_alignment(BoxLayout::CROSS_AXIS_ALIGNMENT_STRETCH);
@@ -502,12 +536,12 @@ void MdTabStrip::AnimationEnded(const gfx::Animation* animation) {
     contract_animation_->Start();
 }
 
-TabbedPane::TabbedPane()
-    : listener_(NULL),
-      tab_strip_(ui::MaterialDesignController::IsSecondaryUiMaterial()
-                     ? new MdTabStrip
-                     : new TabStrip),
-      contents_(new View()) {
+TabbedPane::TabbedPane(TabbedPane::Orientation orientation)
+    : listener_(NULL), orientation_(orientation), contents_(new View()) {
+  tab_strip_ = orientation_ == TabbedPane::kHorizontal &&
+                       ui::MaterialDesignController::IsSecondaryUiMaterial()
+                   ? new MdTabStrip(this)
+                   : new TabStrip(this);
   AddChildView(tab_strip_);
   AddChildView(contents_);
 }
@@ -534,7 +568,7 @@ void TabbedPane::AddTabAtIndex(int index,
   contents->SetVisible(false);
 
   tab_strip_->AddChildViewAt(
-      ui::MaterialDesignController::IsSecondaryUiMaterial()
+      IsHorizontal() && ui::MaterialDesignController::IsSecondaryUiMaterial()
           ? new MdTab(this, title, contents)
           : new Tab(this, title, contents),
       index);
@@ -581,7 +615,10 @@ gfx::Size TabbedPane::CalculatePreferredSize() const {
   gfx::Size size;
   for (int i = 0; i < contents_->child_count(); ++i)
     size.SetToMax(contents_->child_at(i)->GetPreferredSize());
-  size.Enlarge(0, tab_strip_->GetPreferredSize().height());
+  if (IsHorizontal())
+    size.Enlarge(0, tab_strip_->GetPreferredSize().height());
+  else
+    size.Enlarge(tab_strip_->GetPreferredSize().width(), 0);
   return size;
 }
 
@@ -598,9 +635,15 @@ bool TabbedPane::MoveSelectionBy(int delta) {
 
 void TabbedPane::Layout() {
   const gfx::Size size = tab_strip_->GetPreferredSize();
-  tab_strip_->SetBounds(0, 0, width(), size.height());
-  contents_->SetBounds(0, tab_strip_->bounds().bottom(), width(),
-                       std::max(0, height() - size.height()));
+  if (IsHorizontal()) {
+    tab_strip_->SetBounds(0, 0, width(), size.height());
+    contents_->SetBounds(0, tab_strip_->bounds().bottom(), width(),
+                         std::max(0, height() - size.height()));
+  } else {
+    tab_strip_->SetBounds(0, 0, size.width(), height());
+    contents_->SetBounds(tab_strip_->bounds().width(), 0,
+                         std::max(0, width() - size.width()), height());
+  }
   for (int i = 0; i < contents_->child_count(); ++i)
     contents_->child_at(i)->SetSize(contents_->size());
 }
