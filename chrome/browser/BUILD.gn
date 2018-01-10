@@ -4077,6 +4077,9 @@ split_static_library("browser") {
       ":vr_build_features",
       "//chrome/browser/vr:vr_common",
     ]
+    if (is_chrome_branded && is_android) {
+        deps += [ "//chrome/browser/resources/vr/assets" ]
+    }
   }
 
   if (enable_wayland_server) {
