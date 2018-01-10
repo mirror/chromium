@@ -35,6 +35,7 @@
 #include "platform/wtf/ContainerAnnotations.h"
 #include "platform/wtf/Forward.h"  // For default Vector template parameters.
 #include "platform/wtf/HashTableDeletedValueType.h"
+#include "platform/wtf/MathExtras.h"
 #include "platform/wtf/NotFound.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/VectorTraits.h"
@@ -399,7 +400,7 @@ class VectorBufferBase {
           Allocator::template AllocateInlineVectorBacking<T>(size_to_allocate);
     else
       buffer_ = Allocator::template AllocateVectorBacking<T>(size_to_allocate);
-    capacity_ = size_to_allocate / sizeof(T);
+    SetCapacity(size_to_allocate / sizeof(T));
   }
 
   void AllocateExpandedBuffer(size_t new_capacity) {
@@ -411,7 +412,7 @@ class VectorBufferBase {
     else
       buffer_ = Allocator::template AllocateExpandedVectorBacking<T>(
           size_to_allocate);
-    capacity_ = size_to_allocate / sizeof(T);
+    SetCapacity(size_to_allocate / sizeof(T));
   }
 
   size_t AllocationSize(size_t capacity) const {
@@ -420,7 +421,12 @@ class VectorBufferBase {
 
   T* Buffer() { return buffer_; }
   const T* Buffer() const { return buffer_; }
+
   size_t capacity() const { return capacity_; }
+  void SetCapacity(unsigned capacity) {
+    capacity_ = capacity;
+    mask_ = MaskForSize(capacity_);
+  }
 
   void ClearUnusedSlots(T* from, T* to) {
     // If the vector backing is garbage-collected and needs tracing or
@@ -455,10 +461,19 @@ class VectorBufferBase {
   };
 
  protected:
-  VectorBufferBase() : buffer_(nullptr), capacity_(0) {}
+  inline constexpr unsigned MaskForSize(unsigned size) {
+    if (!size)
+      return 0;
+
+    return RoundUpToPowerOfTwo32(size) - 1;
+  }
+
+  VectorBufferBase() : buffer_(nullptr), capacity_(0), mask_(0) {}
 
   VectorBufferBase(T* buffer, size_t capacity)
-      : buffer_(buffer), capacity_(capacity) {}
+      : buffer_(buffer), capacity_(0), mask_(0) {
+    SetCapacity(capacity);
+  }
 
   VectorBufferBase(HashTableDeletedValueType value)
       : buffer_(reinterpret_cast<T*>(-1)) {}
@@ -467,8 +482,10 @@ class VectorBufferBase {
   }
 
   T* buffer_;
-  unsigned capacity_;
   unsigned size_;
+  // Capacity and mask are updated together through SetCapacity().
+  unsigned capacity_;
+  unsigned mask_;
 
   DISALLOW_COPY_AND_ASSIGN(VectorBufferBase);
 };
@@ -508,7 +525,7 @@ class VectorBuffer<T, 0, Allocator>
   bool ExpandBuffer(size_t new_capacity) {
     size_t size_to_allocate = AllocationSize(new_capacity);
     if (Allocator::ExpandVectorBacking(buffer_, size_to_allocate)) {
-      capacity_ = size_to_allocate / sizeof(T);
+      SetCapacity(size_to_allocate / sizeof(T));
       return true;
     }
     return false;
@@ -519,7 +536,7 @@ class VectorBuffer<T, 0, Allocator>
     size_t size_to_allocate = AllocationSize(new_capacity);
     if (Allocator::ShrinkVectorBacking(buffer_, AllocationSize(capacity()),
                                        size_to_allocate)) {
-      capacity_ = size_to_allocate / sizeof(T);
+      SetCapacity(size_to_allocate / sizeof(T));
       return true;
     }
     return false;
@@ -527,7 +544,7 @@ class VectorBuffer<T, 0, Allocator>
 
   void ResetBufferPointer() {
     buffer_ = nullptr;
-    capacity_ = 0;
+    SetCapacity(0);
   }
 
   // See the other specialization for the meaning of |thisHole| and |otherHole|.
@@ -540,6 +557,7 @@ class VectorBuffer<T, 0, Allocator>
     std::swap(buffer_, other.buffer_);
     std::swap(capacity_, other.capacity_);
     std::swap(size_, other.size_);
+    std::swap(mask_, other.mask_);
     if (buffer_) {
       ConstructTraits<T, VectorTraits<T>, Allocator>::NotifyNewElements(buffer_,
                                                                         size_);
@@ -555,6 +573,7 @@ class VectorBuffer<T, 0, Allocator>
 
   using Base::Buffer;
   using Base::capacity;
+  using Base::SetCapacity;
 
   using Base::ClearUnusedSlots;
   using Base::CheckUnusedSlots;
@@ -569,6 +588,7 @@ class VectorBuffer<T, 0, Allocator>
 
  protected:
   using Base::size_;
+  using Base::mask_;
 
  private:
   using Base::buffer_;
@@ -617,7 +637,7 @@ class VectorBuffer : protected VectorBufferBase<T, true, Allocator> {
 
     size_t size_to_allocate = AllocationSize(new_capacity);
     if (Allocator::ExpandInlineVectorBacking(buffer_, size_to_allocate)) {
-      capacity_ = size_to_allocate / sizeof(T);
+      SetCapacity(size_to_allocate / sizeof(T));
       return true;
     }
     return false;
@@ -635,13 +655,13 @@ class VectorBuffer : protected VectorBufferBase<T, true, Allocator> {
     if (!Allocator::ShrinkInlineVectorBacking(
             buffer_, AllocationSize(capacity()), new_size))
       return false;
-    capacity_ = new_size / sizeof(T);
+    SetCapacity(new_size / sizeof(T));
     return true;
   }
 
   void ResetBufferPointer() {
     buffer_ = InlineBuffer();
-    capacity_ = inlineCapacity;
+    SetCapacity(inlineCapacity);
   }
 
   void AllocateBuffer(size_t new_capacity) {
@@ -693,6 +713,7 @@ class VectorBuffer : protected VectorBufferBase<T, true, Allocator> {
       std::swap(buffer_, other.buffer_);
       std::swap(capacity_, other.capacity_);
       std::swap(size_, other.size_);
+      std::swap(mask_, other.mask_);
       if (buffer_) {
         ConstructTraits<T, VectorTraits<T>, Allocator>::NotifyNewElements(
             buffer_, size_);
@@ -752,6 +773,7 @@ class VectorBuffer : protected VectorBufferBase<T, true, Allocator> {
     // (for out-of-line buffers) here if we can. From now on, don't assume
     // buffer() or capacity() maintains their original values.
     std::swap(capacity_, other.capacity_);
+    std::swap(mask_, other.mask_);
     if (this_source_begin &&
         !other_source_begin) {  // Our buffer is inline, theirs is not.
       DCHECK_EQ(Buffer(), InlineBuffer());
@@ -852,6 +874,7 @@ class VectorBuffer : protected VectorBufferBase<T, true, Allocator> {
 
   using Base::Buffer;
   using Base::capacity;
+  using Base::SetCapacity;
 
   bool HasOutOfLineBuffer() const {
     return Buffer() && Buffer() != InlineBuffer();
@@ -861,6 +884,7 @@ class VectorBuffer : protected VectorBufferBase<T, true, Allocator> {
 
  protected:
   using Base::size_;
+  using Base::mask_;
 
  private:
   using Base::buffer_;
@@ -1060,11 +1084,11 @@ class Vector
   //     (*pointerToVector)[1];
   T& at(size_t i) {
     CHECK_LT(i, size());
-    return Base::Buffer()[i];
+    return Base::Buffer()[i & mask_];
   }
   const T& at(size_t i) const {
     CHECK_LT(i, size());
-    return Base::Buffer()[i];
+    return Base::Buffer()[i & mask_];
   }
 
   T& operator[](size_t i) { return at(i); }
@@ -1321,6 +1345,7 @@ class Vector
   void erase(std::nullptr_t) = delete;
 
   using Base::size_;
+  using Base::mask_;
   using Base::Buffer;
   using Base::SwapVectorBuffer;
   using Base::AllocateBuffer;
