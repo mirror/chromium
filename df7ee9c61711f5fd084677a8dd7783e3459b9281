@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab06f90f_91320c22",
+        "filename": "components/webrtc_logging/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-10T09:16:51Z",
+      "side": 1,
+      "message": "tiny drive-by nit: I would do this the other way, i.e. place the concrete OWNERS in the component and then have the chrome OWNERS file reference that. That will be more logical if you grow other directories that need the same OWNERS in the future (e.g., a directory in a different embedder than //chrome)\u003e",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2a351f1_47b51d02",
         "filename": "components/webrtc_logging/OWNERS",
         "patchSetId": 6
