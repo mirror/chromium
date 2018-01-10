@@ -1915,6 +1915,11 @@ AnnotateOp::AnnotateOp(PaintCanvas::AnnotationType annotation_type,
       rect(rect),
       data(std::move(data)) {}
 
+AnnotateOp::AnnotateOp(const AnnotateOp& other)
+    : annotation_type(other.annotation_type),
+      rect(other.rect),
+      data(std::move(other.data)) {}
+
 AnnotateOp::~AnnotateOp() = default;
 
 DrawImageOp::DrawImageOp() : PaintOpWithFlags(kType) {}
@@ -1958,6 +1963,9 @@ DrawImageRectOp::~DrawImageRectOp() = default;
 DrawRecordOp::DrawRecordOp(sk_sp<const PaintRecord> record)
     : PaintOp(kType), record(std::move(record)) {}
 
+DrawRecordOp::DrawRecordOp(const DrawRecordOp& other)
+    : record(std::move(other.record)) {}
+
 DrawRecordOp::~DrawRecordOp() = default;
 
 size_t DrawRecordOp::AdditionalBytesUsed() const {
@@ -1975,6 +1983,9 @@ DrawTextBlobOp::DrawTextBlobOp(scoped_refptr<PaintTextBlob> paint_blob,
                                SkScalar y,
                                const PaintFlags& flags)
     : PaintOpWithFlags(kType, flags), blob(std::move(paint_blob)), x(x), y(y) {}
+
+DrawTextBlobOp::DrawTextBlobOp(const DrawTextBlobOp& other)
+    : blob(std::move(other.blob)), x(other.x), y(other.y) {}
 
 DrawTextBlobOp::~DrawTextBlobOp() = default;
 

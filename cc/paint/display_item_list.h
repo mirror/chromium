@@ -63,9 +63,15 @@ class CC_PAINT_EXPORT DisplayItemList
   // probably remove it? But it would be nice to delimit painting in a block
   // somehow (RAII object maybe).
   void StartPaint() {
-    DCHECK(!in_painting_);
+    // DCHECK(!in_painting_);
     in_painting_ = true;
   }
+
+  void FinishPaint() { in_painting_ = false; }
+
+  void PrintDisplayList() const;
+  const PaintOpBuffer& GetPaintOpBuffer() const { return paint_op_buffer_; }
+  void Append(const DisplayItemList& other);
 
   // Push functions construct a new op on the paint op buffer, while maintaining
   // bookkeeping information. Must be called after invoking StartPaint().

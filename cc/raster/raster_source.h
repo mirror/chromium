@@ -14,6 +14,7 @@
 #include "cc/cc_export.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/layers/recording_source.h"
+#include "cc/paint/display_item_list.h"
 #include "cc/paint/image_id.h"
 #include "third_party/skia/include/core/SkPicture.h"
 #include "ui/gfx/color_space.h"
@@ -23,7 +24,6 @@ class AxisTransform2d;
 }  // namespace gfx
 
 namespace cc {
-class DisplayItemList;
 class DrawImage;
 class ImageProvider;
 
@@ -110,6 +110,9 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
   const scoped_refptr<DisplayItemList>& GetDisplayItemList() const {
     return display_list_;
   }
+  void SetDisplayItemListToNull() {
+    display_list_ = scoped_refptr<DisplayItemList>();
+  }
 
   float recording_scale_factor() const { return recording_scale_factor_; }
 
@@ -128,7 +131,7 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
 
   // These members are const as this raster source may be in use on another
   // thread and so should not be touched after construction.
-  const scoped_refptr<DisplayItemList> display_list_;
+  scoped_refptr<DisplayItemList> display_list_;
   const size_t painter_reported_memory_usage_;
   const SkColor background_color_;
   const bool requires_clear_;

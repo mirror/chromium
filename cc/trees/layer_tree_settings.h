@@ -141,6 +141,10 @@ class CC_EXPORT LayerTreeSettings {
 
   // Whether to use edge anti-aliasing for all layer types that supports it.
   bool enable_edge_anti_aliasing = true;
+
+  // Whether we should squash a picture layer away or not. This applies to the
+  // renderer process only. The browser process should not be effected.
+  bool should_squash_picture_layer = false;
 };
 
 }  // namespace cc
