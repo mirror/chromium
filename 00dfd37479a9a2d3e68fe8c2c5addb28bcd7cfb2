@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ccfc7f1_75a769d7",
+        "filename": "components/arc/common/ime.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-10T14:46:22Z",
+      "side": 1,
+      "message": "nit: could you update? (If you need to keep using a new method. Please find my comment below, too, though).",
+      "revId": "00dfd37479a9a2d3e68fe8c2c5addb28bcd7cfb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480d4b64_92220a02",
+        "filename": "components/arc/common/ime.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-10T14:46:22Z",
+      "side": 1,
+      "message": "How about,\n\n[MinVersion\u003d3] OnKeyboardAppearanceChanging@4(Rect new_bounds, [MinVersion\u003d7] bool is_available);\n\nNote: method renaming should work simply. You\u0027ll just need method renaming in the container code, on mojom update.\nIIUC, new param can be added with MinVersion?",
+      "revId": "00dfd37479a9a2d3e68fe8c2c5addb28bcd7cfb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
