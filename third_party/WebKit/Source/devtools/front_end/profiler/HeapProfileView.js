@@ -113,7 +113,8 @@ Profiler.SamplingHeapProfileType = class extends Profiler.ProfileType {
     this.addProfile(profile);
     profile.updateStatus(Common.UIString('Recording\u2026'));
     this._recording = true;
-    heapProfilerModel.startSampling();
+    //heapProfilerModel.startSampling();
+    heapProfilerModel.startNativeSampling();
   }
 
   async stopRecordingProfile() {
@@ -121,7 +122,8 @@ Profiler.SamplingHeapProfileType = class extends Profiler.ProfileType {
     if (!this.profileBeingRecorded() || !this.profileBeingRecorded()._heapProfilerModel)
       return;
 
-    var profile = await this.profileBeingRecorded()._heapProfilerModel.stopSampling();
+//    var profile = await this.profileBeingRecorded()._heapProfilerModel.stopSampling();
+    var profile = await this.profileBeingRecorded()._heapProfilerModel.stopNativeSampling();
     var recordedProfile = this.profileBeingRecorded();
     if (recordedProfile) {
       console.assert(profile);
