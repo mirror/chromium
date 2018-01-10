@@ -57,23 +57,17 @@ class MediaTransferProtocolDeviceObserverChromeOS
 
   // device::MediaTransferProtocolManager::Observer implementation.
   // Exposed for unit tests.
-  void StorageChanged(bool is_attached,
-                      const std::string& storage_name) override;
+  void StorageAttached(
+      device::mojom::MtpStorageInfo storage_info) override;
+  void StorageDetached(const std::string& storage_name) override;
 
  private:
   // Mapping of storage location and mtp storage info object.
   typedef std::map<std::string, StorageInfo> StorageLocationToInfoMap;
 
-  // The async handler for newly attached storage.
-  void DoAttachStorage(
-      const std::string& storage_name,
-      const device::mojom::MtpStorageInfo* mtp_storage_info);
-
   // Enumerate existing mtp storage devices.
-  void EnumerateStorages();
-
-  // The callback for EnumerateStorage.
-  void DoEnumerateStorages(std::vector<std::string> storages);
+  void EnumerateStorages(
+    std::vector<const device::mojom::MtpStorageInfo*> storage_info_list);
 
   // Find the |storage_map_| key for the record with this |device_id|. Returns
   // true on success, false on failure.
