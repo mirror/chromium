@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be07fbfc_f674d377",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-10T23:25:33Z",
+      "side": 1,
+      "message": "I think this would be easier to maintain if you have the names match that of the chrome type. That is, use PageTransition and same enum values.",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 24
+      },
+      "revId": "a86a384cd917086d8b2e6e8dbad3c23c3168da0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
