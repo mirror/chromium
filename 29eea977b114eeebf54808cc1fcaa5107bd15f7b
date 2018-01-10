@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e24e845_0c419c7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-10T00:24:19Z",
+      "side": 1,
+      "message": "nit: It would be helpful to clarify what we mean by initial, i.e. note any major functionality that is missing.\n\nIt would also be helpful for the bug to clarify when we expect to switch over to this, and in particular whether there are any external blockers - if it is just a case of porting the existing functionality (e.g. symbolization) over to the new script then we should go ahead and do that ASAP so we can delete the old impl, but if there are Fuchsia-side issues that need resolving before we can use the new impl then we should specifically not add further functionality since we\u0027ll end up maintaining two copies for a while. :)",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "29eea977b114eeebf54808cc1fcaa5107bd15f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74cdbe9_c09fcc62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-10T00:24:19Z",
+      "side": 1,
+      "message": "nit: This is hand-wavey - do you mean it \"uses SSH and SCP\", and if so, perhaps clarify what we use them instead-of.",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "29eea977b114eeebf54808cc1fcaa5107bd15f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c1eaa1_4300d946",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-10T00:24:19Z",
+      "side": 1,
+      "message": "nit: Tense makes it ambiguous whether you\u0027re describing pre-CL vs post-CL state, or post-CL vs future state here. :)",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 67
+      },
+      "revId": "29eea977b114eeebf54808cc1fcaa5107bd15f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1b03d8_962757fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-10T00:24:19Z",
+      "side": 1,
+      "message": "nit: Again, this is quit hand-wavey - can you clarify what you mean by \"facilitate\"?  Do you just mean the the client and server portions can use this to establish the SSH channel to communicate through?  Why is this specific to Blink layout tests, and not e.g. net tests and other things that have client \u0026 server portions?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "29eea977b114eeebf54808cc1fcaa5107bd15f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
