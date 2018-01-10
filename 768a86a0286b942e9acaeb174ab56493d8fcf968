@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27839edb_92e12faf",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T13:15:20Z",
+      "side": 1,
+      "message": "How does this work if Clone() is called?  Doesn\u0027t that imply that there are two different pipes that want to read independently?  If the DataPipeGetter interface needs to have the multiple handles to the underlying implementation be synchronized, that should be specified in the interface, no?",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 21
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ca3d3c_0bfae91d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T13:15:20Z",
+      "side": 1,
+      "message": "\"This\" meaning a null resource_request_?",
+      "range": {
+        "startLine": 1087,
+        "startChar": 9,
+        "endLine": 1087,
+        "endChar": 15
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0b1700_079f47b9",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T13:15:20Z",
+      "side": 1,
+      "message": "My apologies for the lack of clue, but help me understand why data pipes aren\u0027t re-usable?  IIUC, repeated calls to Read() on the getter are defined to produce new instances of the upload value being stuffed down the pipe passed to Read().",
+      "range": {
+        "startLine": 1115,
+        "startChar": 12,
+        "endLine": 1115,
+        "endChar": 15
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9aa8c2_7223c195",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T13:15:20Z",
+      "side": 1,
+      "message": "nit: should be lowercase.",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd42d954_fec553f0",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T13:15:20Z",
+      "side": 1,
+      "message": "I\u0027d suggest being more explicit about how upload bodies can be attached to requests with this API (which I believe is just through body elements on the ResourceRequest).",
+      "range": {
+        "startLine": 222,
+        "startChar": 34,
+        "endLine": 222,
+        "endChar": 38
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdafc05_88bdc163",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T13:15:20Z",
+      "side": 1,
+      "message": "The comment about AttachStringForUpload sounds as if it\u0027s an implementation comment rather than an interface comment, and hence doesn\u0027t belong here?",
+      "range": {
+        "startLine": 224,
+        "startChar": 20,
+        "endLine": 224,
+        "endChar": 26
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
