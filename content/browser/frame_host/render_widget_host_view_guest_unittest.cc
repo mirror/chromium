@@ -140,7 +140,8 @@ class RenderWidgetHostViewGuestSurfaceTest
     : public testing::Test {
  public:
   RenderWidgetHostViewGuestSurfaceTest()
-      : widget_host_(nullptr), view_(nullptr) {}
+      : widget_host_(nullptr),
+        view_(nullptr) {}
 
   void SetUp() override {
 #if !defined(OS_ANDROID)
