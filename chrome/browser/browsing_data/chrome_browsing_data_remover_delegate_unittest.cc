@@ -34,6 +34,7 @@
 #include "chrome/browser/language/url_language_histogram_factory.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
+#include "chrome/browser/plugins/plugin_utils.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate_factory.h"
@@ -2339,6 +2340,30 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, ClearPermissionPromptCounts) {
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
+// Check the |CONTENT_SETTINGS_TYPE_PLUGINS_DATA| content setting is cleared
+// with browsing data.
+TEST_F(ChromeBrowsingDataRemoverDelegateTest, ClearFlashPreviouslyChanged) {
+  HostContentSettingsMap* host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(GetProfile());
+  PluginUtils::RememberFlashChangedForSite(host_content_settings_map, kOrigin1,
+                                           kOrigin1);
+  PluginUtils::RememberFlashChangedForSite(host_content_settings_map, kOrigin2,
+                                           kOrigin2);
+
+  std::unique_ptr<BrowsingDataFilterBuilder> filter(
+      BrowsingDataFilterBuilder::Create(BrowsingDataFilterBuilder::BLACKLIST));
+  BlockUntilOriginDataRemoved(
+      AnHourAgo(), base::Time::Max(),
+      ChromeBrowsingDataRemoverDelegate::DATA_TYPE_CONTENT_SETTINGS,
+      std::move(filter));
+  EXPECT_EQ(nullptr, host_content_settings_map->GetWebsiteSetting(
+                         kOrigin1, kOrigin1, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                         std::string(), nullptr));
+  EXPECT_EQ(nullptr, host_content_settings_map->GetWebsiteSetting(
+                         kOrigin2, kOrigin2, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                         std::string(), nullptr));
+}
+
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemovePluginData) {
   RemovePluginDataTester tester(GetProfile());
 
