@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c01bf8b_8d0f4b76",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-10T17:45:18Z",
+      "side": 1,
+      "message": "Speaking of earlier review comments, I recall I mentioned the issue with the crc32 SIMD code, the off-by-one error to be precise:\n\n    while (--len) {\n        c \u003d __crc32b(c, *buf++);\n    }\n\nand mentioned that we should send the patch with this error to trys to see if any bots complained about it.\n\nNo sure that happened, moreover, I don\u0027t think any bot will complain.  Perhaps to show it, change the code here to read ...\n\n  #if defined(USE_ARMV8_CRC32)\n    arm_check_features();\n    asd%$^@#%$^@;\n  #else\n    x86_check_features();\n  #endif\n\nand send that to the trys. ARM bot compiles should fail, right?\n\nNone will, and my earlier review comments mentioned how to fix it.",
+      "revId": "f4e6de34e3bf1aea1be19280ab990ff5951c229e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276c0053_6d42011f",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-10T17:45:18Z",
+      "side": 1,
+      "message": "Maybe you missed this new comment above, but the problem applies to your change too.\n\nzlib.h mentions that its crc32 can be freely used and provides examples of how to use it [1].  Such uses happen in many places in the chromium code base and TSAN correctly spotted a problem.\n\nBecause crc32 can be freely used, you should check arm CPU features here, as I had to do in x86 case below.  You should not check them in inflate/deflateInit2 or assume that those routines have been called.\n\n[1] https://cs.chromium.org/chromium/src/third_party/zlib/zlib.h?rcl\u003d16eab5982b2e990d09ca235a0a0a4278f18acf9d\u0026l\u003d1725",
+      "revId": "f4e6de34e3bf1aea1be19280ab990ff5951c229e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2ec5aa_074bfb3e",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-10T17:45:18Z",
+      "side": 1,
+      "message": "Not sure how you decided on 8 here, but by forcing this branch on my Pixel C tablet, (required a build fix), and checking that armv8_crc32_little is being called as a result, time to measure ...\n\nI mentioned this measurement before, usual stuff: add the chunk copy code (measure), add the adler32 SIMD code (measure), and this code (measure).\n\nhttps://docs.google.com/spreadsheets/d/1cqpMjk_fMNrDHNO-px7t4MIAZWtDYf6g0pYPKKyV3j4/edit#gid\u003d595603569\n\nchunk copy and adler32 do as we expect, they work well. This code is the yellow line and produces too many regressions.\n\nNot sure what\u0027s going on, but something\u0027s clearly not right.",
+      "revId": "f4e6de34e3bf1aea1be19280ab990ff5951c229e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
