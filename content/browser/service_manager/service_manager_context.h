@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequenced_task_runner.h"
 #include "content/common/content_export.h"
 
 namespace service_manager {
@@ -26,7 +27,9 @@ class UtilityProcessHost;
 // launched from an external one.
 class CONTENT_EXPORT ServiceManagerContext {
  public:
-  ServiceManagerContext();
+  explicit ServiceManagerContext(
+      scoped_refptr<base::SequencedTaskRunner>
+          task_runner_for_embedded_video_capture_service = nullptr);
   ~ServiceManagerContext();
 
   // Returns a service_manager::Connector that can be used on the IO thread.

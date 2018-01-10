@@ -50,6 +50,7 @@ class GpuChannelEstablishFactory;
 namespace media {
 class AudioManager;
 class AudioSystem;
+class AudioThreadImpl;
 #if defined(OS_WIN)
 class SystemMessageWindowWin;
 #elif defined(OS_LINUX) && defined(USE_UDEV)
@@ -353,6 +354,11 @@ class CONTENT_EXPORT BrowserMainLoop {
   std::unique_ptr<media::UserInputMonitor> user_input_monitor_;
   std::unique_ptr<media::AudioManager> audio_manager_;
   std::unique_ptr<media::AudioSystem> audio_system_;
+  // This member temporarily during startup holds ownership to the
+  // media::AudioThreadImpl instance that later gets passed to |audio_manager_|.
+  // This is needed to enable the video capture service to refer to it as its
+  // task runner during configuration of embedded Mojo services.
+  std::unique_ptr<media::AudioThreadImpl> audio_video_thread_;
 
   std::unique_ptr<midi::MidiService> midi_service_;
 

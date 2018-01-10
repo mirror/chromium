@@ -1165,6 +1165,7 @@ int BrowserMainLoop::CreateThreads() {
 
     TRACE_EVENT_END0("startup", "BrowserMainLoop::CreateThreads:start");
   }
+  audio_video_thread_ = std::make_unique<media::AudioThreadImpl>();
   created_threads_ = true;
   return result_code_;
 }
@@ -1766,7 +1767,9 @@ void BrowserMainLoop::InitializeMojo() {
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
 
-  service_manager_context_.reset(new ServiceManagerContext);
+  DCHECK(audio_video_thread_);
+  service_manager_context_.reset(
+      new ServiceManagerContext(audio_video_thread_->GetTaskRunner()));
 #if defined(OS_MACOSX)
   mojo::edk::SetMachPortProvider(MachBroker::GetInstance());
 #endif  // defined(OS_MACOSX)
@@ -1892,9 +1895,8 @@ void BrowserMainLoop::CreateAudioManager() {
   audio_manager_ = GetContentClient()->browser()->CreateAudioManager(
       MediaInternals::GetInstance());
   if (!audio_manager_) {
-    audio_manager_ =
-        media::AudioManager::Create(std::make_unique<media::AudioThreadImpl>(),
-                                    MediaInternals::GetInstance());
+    audio_manager_ = media::AudioManager::Create(std::move(audio_video_thread_),
+                                                 MediaInternals::GetInstance());
   }
   CHECK(audio_manager_);
   audio_system_ = media::AudioSystem::CreateInstance();
