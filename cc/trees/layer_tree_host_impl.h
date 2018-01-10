@@ -920,6 +920,9 @@ class CC_EXPORT LayerTreeHostImpl
   // it's lost instead of having this bool.
   bool has_valid_layer_tree_frame_sink_;
 
+  bool check_damage_early_;
+  bool last_early_check_had_damage_;
+
   std::unique_ptr<Viewport> viewport_;
 
   std::unique_ptr<PendingTreeDurationHistogramTimer>

@@ -248,6 +248,8 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       requires_high_res_to_draw_(false),
       is_likely_to_require_a_draw_(false),
       has_valid_layer_tree_frame_sink_(false),
+      check_damage_early_(false),
+      last_early_check_had_damage_(false),
       scroll_animating_latched_element_id_(kInvalidElementId),
       has_scrolled_by_wheel_(false),
       has_scrolled_by_touch_(false),
@@ -895,6 +897,8 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
                  "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
     frame->has_no_damage = true;
     DCHECK(!resourceless_software_draw_);
+    if (settings_.enable_early_damage_check)
+      check_damage_early_ = true;
     return DRAW_SUCCESS;
   }
 
@@ -2135,11 +2139,20 @@ bool LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
 
   // We can only check damage if we can draw. Otherwise, the default behavior
   // is to assume there is damage.
-  if (settings_.check_damage_early && CanDraw()) {
+  if (check_damage_early_ && CanDraw()) {
     active_tree()->UpdateDrawProperties();
     DamageTracker::UpdateDamageTracking(active_tree_.get(),
                                         active_tree_->GetRenderSurfaceList());
-    return HasDamage();
+    bool has_damage = HasDamage();
+    // This early damage check, which is guarded by check_damage_early_, should
+    // stop being performed if two consecutive frames cause damage.
+    if (has_damage && last_early_check_had_damage_) {
+      check_damage_early_ = false;
+      last_early_check_had_damage_ = false;
+    } else {
+      last_early_check_had_damage_ = has_damage;
+    }
+    return has_damage;
   }
   // Assume there is damage if we cannot check for damage.
   return true;
