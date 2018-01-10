@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "0c17ce82_702af0dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-10T00:34:39Z",
+      "side": 1,
+      "message": "Talked offline. I\u0027ll add metrics to track the number of infobars displayed \u0026 indirectly closed (e.g. from navigation away from the current website). The TODO will come in a CL soon.",
+      "parentUuid": "dc620482_afbf89c3",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 73
+      },
+      "revId": "9a72c559aac6d601528e8df5631322371969260f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1c025a1_017658af",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 4
