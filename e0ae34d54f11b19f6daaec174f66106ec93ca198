@@ -141,6 +141,29 @@
       "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "908750f0_f3e011b9",
+        "filename": "ui/gl/gl_image_io_surface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-10T15:37:44Z",
+      "side": 1,
+      "message": "dcastagna@ left a comment in [1] that I believe applies to\nthis number:\n\n\"What happens if you set the two alpha bits to 0? Does \nGL actually use them? If it does, we should probably not \nuse BGRX_1010102 for this format.\"\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/842948#message-55b6f3a7b0e7669dc0c3ac0c234ad13d32ecd2f4",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
