@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7700a62_75eda163",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Now this can return a interface ptr regardless of the running status, but the TODO to start a worker if it\u0027s not running still needs to be addressed. (I didn\u0027t touch it in this CL)",
+      "revId": "61a86ec27d0144c96703ef2a9cce954b74cbd539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

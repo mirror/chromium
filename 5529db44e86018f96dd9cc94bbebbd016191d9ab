@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3036c9ba_360be907",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d8802f0_3e98a422",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5881930_a49d5681",
         "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
         "patchSetId": 21
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T05:14:30Z",
       "side": 1,
       "message": "I think it\u0027s possible for GetControllerSWPtr to be nullptr here when the service worker isn\u0027t running. That could conceivably happen due to back luck with a timeout, and I think when it\u0027s a no-fetch worker we don\u0027t start the worker even thuogh it should be the controller.",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37545a3a_1f7aa8c1",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Yes this could be a nullptr, my assumption here is that for no-fetch workers not getting endpoint ptr here wouldn\u0027t cause a race, given that currently the controller ptr is used only for intercepting fetch requests. I added some comments, and actually also made GetControllerServiceWorkerPtr explicitly return nullptr if it has no handlers for fetch.",
+      "parentUuid": "c5881930_a49d5681",
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0f41a4_51e11117",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9687fc2e_2b4c7dc8",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "cdff8835_95168bc8",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Yep. I removed the comment. Also changed the behavior so that it returns non-null ptr regardless of the running status, but explicitly returns nullptr if the controller has no fetch handlers.  Also added more comments in the header file about when this method could be called.",
+      "parentUuid": "af848c3c_dc120d8c",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4a394e_11860e15",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 21
@@ -102,6 +174,24 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417bb320_cec0b774",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df4a394e_11860e15",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "771d28e0_ab1350bc",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "This method can be called not only after the navigation but whenever we want to set a new controller. I added some comments.",
+      "parentUuid": "d425036c_bcf21f8a",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc61c801_90158764",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 21
@@ -136,6 +244,24 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28310df_096955f4",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc61c801_90158764",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "df15639c_dc42fa2f",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b243c513_77a339ae",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b63e1315_03043e4b",
         "filename": "content/common/service_worker/controller_service_worker.mojom",
         "patchSetId": 21
@@ -170,6 +314,24 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6a5418_0ced2979",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done. Also updated the comment",
+      "parentUuid": "b63e1315_03043e4b",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "b52edaf9_c0785c12",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a58f2de_bacf1340",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a06872e_87b4d097",
         "filename": "content/renderer/service_worker/controller_service_worker_connector.cc",
         "patchSetId": 21
@@ -201,6 +381,24 @@
       "writtenOn": "2018-01-09T05:14:30Z",
       "side": 1,
       "message": "The function seems to handle nullptr fine, so maybe don\u0027t need line 19?",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a26a80_510f1a67",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "I didn\u0027t want to set the state to kNoController when controller_ptr is null. Updated the code so that we can distinguish between \u0027null controller is given\u0027 vs \u0027no controller is given yet\u0027.",
+      "parentUuid": "6a06872e_87b4d097",
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -224,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "1103a1e6_02caf74b",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1694791_17e7e104",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0900b858_a7c83c56",
         "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
         "patchSetId": 21
@@ -238,6 +454,24 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4de3b0b_cafa91a9",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0900b858_a7c83c56",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "7a73fb04_f64380be",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "047fd2fc_d713d8d3",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3251f33_5374d197",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 21
@@ -272,6 +524,24 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ede998_7f9d83b8",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3251f33_5374d197",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +562,24 @@
     },
     {
       "key": {
+        "uuid": "cef7fe42_ce021ccf",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "413f101d_5ef1f3a0",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a118426f_c41c4e6a",
         "filename": "content/renderer/service_worker/service_worker_provider_context.h",
         "patchSetId": 21
@@ -306,6 +594,24 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2749e25c_7f1dd2c5",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a118426f_c41c4e6a",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +632,24 @@
     },
     {
       "key": {
+        "uuid": "4707cd91_30c6196c",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e6d0cc6_f306b102",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90448e5d_21125697",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 21
@@ -343,6 +667,24 @@
     },
     {
       "key": {
+        "uuid": "eed21e2c_88116917",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90448e5d_21125697",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a0a062f_abb89a5b",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 21
@@ -357,6 +699,24 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebfccf8_21f9a1d9",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0a062f_abb89a5b",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -380,6 +740,30 @@
       "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269e2ec5_1f95ca5c",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T06:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e9fb66b_b4433367",
+      "range": {
+        "startLine": 213,
+        "startChar": 23,
+        "endLine": 213,
+        "endChar": 26
+      },
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
