@@ -69,6 +69,30 @@
       "revId": "705d7f2ea95e6a4c17865af6069a0e9a61d847ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84694ae_803cb76e",
+        "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2018-01-10T09:41:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1b8aa86_bc5f8884",
+      "range": {
+        "startLine": 12,
+        "startChar": 29,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "705d7f2ea95e6a4c17865af6069a0e9a61d847ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
