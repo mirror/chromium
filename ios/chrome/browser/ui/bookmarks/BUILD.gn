@@ -109,7 +109,6 @@ source_set("bookmarks") {
     "//ios/chrome/browser",
     "//ios/chrome/browser/bookmarks",
     "//ios/chrome/browser/bookmarks:bookmarks_utils",
-    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/favicon",
     "//ios/chrome/browser/metrics:metrics_internal",
@@ -177,7 +176,6 @@ source_set("unit_tests") {
     "//components/sync_preferences:test_support",
     "//ios/chrome/browser",
     "//ios/chrome/browser/bookmarks",
-    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/browser_state:test_support",
     "//ios/web/public/test",
     "//testing/gtest",
@@ -188,7 +186,6 @@ source_set("eg_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
-    "bookmarks_egtest.mm",
     "bookmarks_new_generation_egtest.mm",
   ]
   deps = [
@@ -200,7 +197,6 @@ source_set("eg_tests") {
     "//ios/chrome/browser",
     "//ios/chrome/browser/bookmarks",
     "//ios/chrome/browser/bookmarks:bookmarks_utils",
-    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/authentication:authentication_ui",

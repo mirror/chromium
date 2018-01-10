@@ -13,7 +13,6 @@
 #include "components/strings/grit/components_strings.h"
 #include "google_apis/gaia/google_service_auth_error.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/alert_coordinator/action_sheet_coordinator.h"
@@ -92,16 +91,6 @@ using bookmarks::BookmarkNode;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  if (!base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    self.navigationBar.frame = [self navigationBarFrame];
-    [self.navigationBar setMenuTarget:self
-                               action:@selector(navigationBarToggledMenu:)];
-    [self.navigationBar setCancelTarget:self
-                                 action:@selector(navigationBarCancel:)];
-    [self.view addSubview:self.navigationBar];
-    [self.view bringSubviewToFront:self.navigationBar];
-  }
-
   if (self.bookmarks->loaded())
     [self loadBookmarkViews];
   else
@@ -127,43 +116,6 @@ using bookmarks::BookmarkNode;
   [self updateUIForInterfaceOrientation:orient duration:0];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    return;
-  }
-
-  // Store the content scroll position.
-  CGFloat contentPosition =
-      [[self folderView] contentPositionInPortraitOrientation];
-  // If we have the cached position, use it instead.
-  if (self.cachedContentPosition) {
-    contentPosition = [self.cachedContentPosition floatValue];
-    self.cachedContentPosition = nil;
-  }
-
-  // Invalidate the layout of the collection view, as its frame might have
-  // changed. Normally, this can be done automatically when the collection view
-  // layout returns YES to -shouldInvalidateLayoutForBoundsChange:.
-  // Unfortunately, it doesn't happen for all bounds changes. E.g. on iPhone 6
-  // Plus landscape, the width of the collection is too large when created, then
-  // resized down before being presented. Yet, the bounds change doesn't yield a
-  // call to the flow layout, thus not invalidating the layout correctly.
-  [self.folderView.collectionView.collectionViewLayout invalidateLayout];
-
-  self.navigationBar.frame = [self navigationBarFrame];
-  self.editingBar.frame = [self navigationBarFrame];
-  [self.panelView setFrame:[self frameForPanelView]];
-
-  // Restore the content scroll position if it was reset to zero. This could
-  // happen when folderView is newly created (restore from cached) or its frame
-  // height has changed.
-  if (contentPosition > 0 &&
-      [[self folderView] contentPositionInPortraitOrientation] == 0) {
-    [[self folderView] applyContentPosition:contentPosition];
-  }
-}
-
 - (BOOL)prefersStatusBarHidden {
   return NO;
 }
@@ -184,44 +136,6 @@ using bookmarks::BookmarkNode;
   [super loadBookmarkViews];
   DCHECK(self.bookmarks->loaded());
   DCHECK([self isViewLoaded]);
-
-  // TODO(crbug.com/695749): Restore the content scroll position for
-  // BookmarkTableView in the UI.
-
-  if (!base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    self.menuView.delegate = self;
-
-    // Set view frames and add them to hierarchy.
-    [self.panelView setFrame:[self frameForPanelView]];
-    self.panelView.delegate = self;
-    [self.view insertSubview:self.panelView atIndex:0];
-    self.folderView.frame = self.panelView.contentView.bounds;
-    [self.panelView.contentView addSubview:self.folderView];
-    [self.panelView.menuView addSubview:self.menuView];
-    [self.menuView setFrame:self.panelView.menuView.bounds];
-
-    // Load the last primary menu item which the user had active.
-    BookmarkMenuItem* item = nil;
-    CGFloat position = 0;
-    BOOL found =
-        bookmark_utils_ios::GetPositionCache(self.bookmarks, &item, &position);
-    if (!found)
-      item = [self.menuView defaultMenuItem];
-
-    [self updatePrimaryMenuItem:item animated:NO];
-
-    if (found) {
-      // If the view has already been laid out, then immediately apply the
-      // content position.
-      if (self.view.window) {
-        [self.folderView applyContentPosition:position];
-      } else {
-        // Otherwise, save the position to be applied once the view has been
-        // laid out.
-        self.cachedContentPosition = [NSNumber numberWithFloat:position];
-      }
-    }
-  }
 }
 
 - (void)updatePrimaryMenuItem:(BookmarkMenuItem*)menuItem

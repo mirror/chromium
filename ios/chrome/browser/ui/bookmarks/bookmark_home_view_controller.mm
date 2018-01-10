@@ -10,7 +10,6 @@
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
@@ -154,41 +153,28 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  if (!base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    self.navigationBar =
-        [[BookmarkNavigationBar alloc] initWithFrame:CGRectZero];
-    [self.navigationBar setEditTarget:self
-                               action:@selector(navigationBarWantsEditing:)];
-    [self.navigationBar setBackTarget:self
-                               action:@selector(navigationBarBack:)];
-  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    // Set the delegate here to make sure it is working when navigating in the
-    // ViewController hierarchy (as each view controller is setting itself as
-    // delegate).
-    self.navigationController.interactivePopGestureRecognizer.delegate = self;
-  }
+  // Set the delegate here to make sure it is working when navigating in the
+  // ViewController hierarchy (as each view controller is setting itself as
+  // delegate).
+  self.navigationController.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    // Set the content position after views are laid out,
-    // to ensure the right window of rows is shown. Once
-    // used, reset self.cachedContentPosition.
-    if (self.cachedContentPosition) {
-      [self.bookmarksTableView
-          setContentPosition:self.cachedContentPosition.floatValue];
-      self.cachedContentPosition = nil;
-    }
-    // The height of contextBar might change due to word wrapping of buttons
-    // after titleLabel or orientation changed.
-    [self.contextBar updateHeight];
+  // Set the content position after views are laid out, to ensure the right
+  // window of rows is shown. Once used, reset self.cachedContentPosition.
+  if (self.cachedContentPosition) {
+    [self.bookmarksTableView
+        setContentPosition:self.cachedContentPosition.floatValue];
+    self.cachedContentPosition = nil;
   }
+  // The height of contextBar might change due to word wrapping of buttons
+  // after titleLabel or orientation changed.
+  [self.contextBar updateHeight];
 }
 
 #pragma mark - Public
@@ -201,11 +187,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 #pragma mark - Protected
 
 - (void)loadBookmarkViews {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self loadBookmarkViewsForNewUI];
-  } else {
-    [self loadBookmarkViewsForOldUI];
-  }
+  [self loadBookmarkViewsForNewUI];
 }
 
 - (void)updatePrimaryMenuItem:(BookmarkMenuItem*)menuItem
@@ -242,22 +224,12 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 }
 
 - (void)cachePosition {
-  if (self.folderView) {
-    bookmark_utils_ios::CachePosition(
-        [self.folderView contentPositionInPortraitOrientation],
-        [self primaryMenuItem]);
-    return;
-  }
-
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    // Cache position for BookmarkTableView in new UI.
-    [BookmarkPathCache
-        cacheBookmarkUIPositionWithPrefService:self.browserState->GetPrefs()
-                                      folderId:_rootNode->id()
-                                scrollPosition:(double)self.bookmarksTableView
-                                                   .contentPosition];
-    return;
-  }
+  // Cache position for BookmarkTableView in new UI.
+  [BookmarkPathCache
+      cacheBookmarkUIPositionWithPrefService:self.browserState->GetPrefs()
+                                    folderId:_rootNode->id()
+                              scrollPosition:(double)self.bookmarksTableView
+                                                 .contentPosition];
 }
 
 - (BOOL)shouldShowBackButtonOnNavigationBar {
@@ -300,24 +272,15 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 #pragma mark - BookmarkPromoControllerDelegate
 
 - (void)promoStateChanged:(BOOL)promoEnabled {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self.bookmarksTableView promoStateChangedAnimated:YES];
-  } else {
-    [self.folderView promoStateChangedAnimated:YES];
-  }
+  [self.bookmarksTableView promoStateChangedAnimated:YES];
 }
 
 - (void)configureSigninPromoWithConfigurator:
             (SigninPromoViewConfigurator*)configurator
                              identityChanged:(BOOL)identityChanged {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self.bookmarksTableView
-        configureSigninPromoWithConfigurator:configurator
-                             identityChanged:identityChanged];
-  } else {
-    [self.folderView configureSigninPromoWithConfigurator:configurator
-                                          identityChanged:identityChanged];
-  }
+  [self.bookmarksTableView
+      configureSigninPromoWithConfigurator:configurator
+                           identityChanged:identityChanged];
 }
 
 #pragma mark Action sheet callbacks
@@ -572,22 +535,14 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   bookmark_utils_ios::MoveBookmarksWithUndoToast(
       folderPicker.editedNodes, self.bookmarks, folder, self.browserState);
 
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self setTableViewEditing:NO];
-  } else {
-    [self setEditing:NO animated:NO];
-  }
+  [self setTableViewEditing:NO];
   [self dismissViewControllerAnimated:YES completion:NULL];
   self.folderSelector.delegate = nil;
   self.folderSelector = nil;
 }
 
 - (void)folderPickerDidCancel:(BookmarkFolderViewController*)folderPicker {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self setTableViewEditing:NO];
-  } else {
-    [self setEditing:NO animated:NO];
-  }
+  [self setTableViewEditing:NO];
   [self dismissViewControllerAnimated:YES completion:NULL];
   self.folderSelector.delegate = nil;
   self.folderSelector = nil;
@@ -915,8 +870,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   // Bookmark Model is loaded after presenting Bookmarks,  we need to check
   // again here if restoring of cache position is needed.  It is to prevent
   // crbug.com/765503.
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration) &&
-      [BookmarkPathCache
+  if ([BookmarkPathCache
           getBookmarkUIPositionCacheWithPrefService:self.browserState
                                                         ->GetPrefs()
                                               model:self.bookmarks
@@ -968,8 +922,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
                  fromFolder:(const BookmarkNode*)folder {
   [self removeEditNode:node atIndexPath:nil];
 
-  if (_rootNode == node &&
-      base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
+  if (_rootNode == node) {
     [self setTableViewEditing:NO];
   }
 }
@@ -1211,28 +1164,26 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 }
 
 - (void)updateViewConstraints {
-  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    if (self.contextBar && self.bookmarksTableView) {
-      NSDictionary* views = @{
-        @"tableView" : self.bookmarksTableView,
-        @"contextBar" : self.contextBar,
-      };
-      NSArray* constraints = @[
-        @"V:|[tableView][contextBar]|",
-        @"H:|[tableView]|",
-        @"H:|[contextBar]|",
-      ];
-      ApplyVisualConstraints(constraints, views);
-    } else if (self.bookmarksTableView) {
-      NSDictionary* views = @{
-        @"tableView" : self.bookmarksTableView,
-      };
-      NSArray* constraints = @[
-        @"V:|[tableView]|",
-        @"H:|[tableView]|",
-      ];
-      ApplyVisualConstraints(constraints, views);
-    }
+  if (self.contextBar && self.bookmarksTableView) {
+    NSDictionary* views = @{
+      @"tableView" : self.bookmarksTableView,
+      @"contextBar" : self.contextBar,
+    };
+    NSArray* constraints = @[
+      @"V:|[tableView][contextBar]|",
+      @"H:|[tableView]|",
+      @"H:|[contextBar]|",
+    ];
+    ApplyVisualConstraints(constraints, views);
+  } else if (self.bookmarksTableView) {
+    NSDictionary* views = @{
+      @"tableView" : self.bookmarksTableView,
+    };
+    NSArray* constraints = @[
+      @"V:|[tableView]|",
+      @"H:|[tableView]|",
+    ];
+    ApplyVisualConstraints(constraints, views);
   }
   [super updateViewConstraints];
 }
