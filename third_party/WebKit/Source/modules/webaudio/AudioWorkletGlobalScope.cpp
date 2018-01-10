@@ -17,7 +17,6 @@
 #include "bindings/modules/v8/V8AudioWorkletProcessor.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/messaging/MessagePort.h"
-#include "core/typed_arrays/DOMTypedArray.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "modules/webaudio/AudioBuffer.h"
 #include "modules/webaudio/AudioParamDescriptor.h"
@@ -25,7 +24,6 @@
 #include "modules/webaudio/AudioWorkletProcessorDefinition.h"
 #include "modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h"
 #include "platform/audio/AudioBus.h"
-#include "platform/audio/AudioUtilities.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -44,7 +42,18 @@ AudioWorkletGlobalScope::AudioWorkletGlobalScope(
     std::unique_ptr<GlobalScopeCreationParams> creation_params,
     v8::Isolate* isolate,
     WorkerThread* thread)
-    : ThreadedWorkletGlobalScope(std::move(creation_params), isolate, thread) {}
+    : ThreadedWorkletGlobalScope(std::move(creation_params), isolate, thread) {
+
+  HeapVector<Member<DOMFloat32Array>> input;
+  input.push_back(DOMFloat32Array::Create(
+      AudioUtilities::kRenderQuantumFrames));
+  inputs_.push_back(input);
+
+  HeapVector<Member<DOMFloat32Array>> output;
+  output.push_back(DOMFloat32Array::Create(
+      AudioUtilities::kRenderQuantumFrames));
+  outputs_.push_back(output);
+}
 
 AudioWorkletGlobalScope::~AudioWorkletGlobalScope() = default;
 
@@ -232,34 +241,23 @@ bool AudioWorkletGlobalScope::Process(
   DCHECK(definition);
 
   // To expose AudioBuffer on JS side, we have to repackage |Vector<AudioBus*>|
-  // to |sequence<sequence<Float32Array>>|.
-  HeapVector<HeapVector<Member<DOMFloat32Array>>> inputs;
-  HeapVector<HeapVector<Member<DOMFloat32Array>>> outputs;
+  // to |sequence<sequence<Float32Array>>|. Starts with conforming the size
+  // of the internal input/output buffer. This ensures the size of the internal
+  // storage is bigger than the size of the current processor's input/output
+  // AudioBus.
+  ConformBufferCapacity(input_buses, output_buses);
 
-  for (const auto input_bus : *input_buses) {
-    HeapVector<Member<DOMFloat32Array>> input;
+  for (unsigned input_index = 0; input_index < inputs_.size(); ++input_index) {
+    const AudioBus* input_bus = input_buses->at(input_index);
+    HeapVector<Member<DOMFloat32Array>> internal_input = inputs_[input_index];
+    DCHECK_LE(source_input->NumberOfChannels(), internal_input.size());
     for (unsigned channel_index = 0;
          channel_index < input_bus->NumberOfChannels();
          ++channel_index) {
-      DOMFloat32Array* channel_data_array =
-          DOMFloat32Array::Create(input_bus->length());
-      memcpy(channel_data_array->Data(),
+      memcpy(internal_input[channel_index]->Data(),
              input_bus->Channel(channel_index)->Data(),
-             input_bus->length() * sizeof(float));
-      input.push_back(channel_data_array);
+             AudioUtilities::kRenderQuantumFrames * sizeof(float));
     }
-    inputs.push_back(input);
-  }
-
-  for (const auto output_bus : *output_buses) {
-    HeapVector<Member<DOMFloat32Array>> output;
-    for (unsigned channel_index = 0;
-         channel_index < output_bus->NumberOfChannels();
-         ++channel_index) {
-      output.push_back(
-          DOMFloat32Array::Create(output_bus->length()));
-    }
-    outputs.push_back(output);
   }
 
   V8ObjectBuilder param_values(script_state);
@@ -275,9 +273,11 @@ bool AudioWorkletGlobalScope::Process(
         ToV8(param_array, script_state->GetContext()->Global(), isolate));
   }
 
+  // TODO: limit the view size of inputs_ and outputs_. Otherwise this exposes
+  // the actual size of the internal storage to the user world.
   v8::Local<v8::Value> argv[] = {
-    ToV8(inputs, script_state->GetContext()->Global(), isolate),
-    ToV8(outputs, script_state->GetContext()->Global(), isolate),
+    ToV8(inputs_, script_state->GetContext()->Global(), isolate),
+    ToV8(outputs_, script_state->GetContext()->Global(), isolate),
     param_values.V8Value()
   };
 
@@ -310,16 +310,17 @@ bool AudioWorkletGlobalScope::Process(
   // Copy |sequence<sequence<Float32Array>>| back to the original
   // |Vector<AudioBus*>|.
   for (unsigned output_index = 0;
-       output_index < output_buses->size();
+       output_index < outputs_.size();
        ++output_index) {
-    HeapVector<Member<DOMFloat32Array>> output = outputs.at(output_index);
+    HeapVector<Member<DOMFloat32Array>> output = outputs_[output_index];
     AudioBus* original_output_bus = output_buses->at(output_index);
+    DCHECK_EQ(original_output_bus->NumberOfChannels(), output.size());
     for (unsigned channel_index = 0;
-         channel_index < original_output_bus->NumberOfChannels();
+         channel_index < output.size();
          ++channel_index) {
       memcpy(original_output_bus->Channel(channel_index)->MutableData(),
-             output.at(channel_index)->Data(),
-             sizeof(float) * original_output_bus->length());
+             output[channel_index]->Data(),
+             AudioUtilities::kRenderQuantumFrames * sizeof(float));
     }
   }
 
@@ -354,9 +355,69 @@ ProcessorCreationParams* AudioWorkletGlobalScope::GetProcessorCreationParams() {
   return processor_creation_params_.get();
 }
 
+void AudioWorkletGlobalScope::ConformBufferCapacity(
+    Vector<AudioBus*>* input_buses,
+    Vector<AudioBus*>* output_buses) {
+  int input_to_add = input_buses->size() - inputs_.size();
+  if (input_to_add > 0) {
+    while (input_to_add-- > 0) {
+      HeapVector<Member<DOMFloat32Array>> input;
+      inputs_.push_back(input);
+    }
+  }
+  DCHECK_EQ(input_buses->size(), inputs_.size());
+
+  for (unsigned input_index = 0;
+       input_index < input_buses->size();
+       ++input_index) {
+    const AudioBus* source_input = input_buses->at(input_index);
+    HeapVector<Member<DOMFloat32Array>> target_input = inputs_[input_index];
+    int channels_to_add =
+        source_input->NumberOfChannels() - target_input.size();
+    if (channels_to_add > 0) {
+      while (channels_to_add-- > 0) {
+        DOMFloat32Array* channel_data_array =
+            DOMFloat32Array::Create(AudioUtilities::kRenderQuantumFrames);
+        target_input.push_back(channel_data_array);
+      }
+      inputs_[input_index] = target_input;
+    }
+    DCHECK_EQ(source_input->NumberOfChannels(), inputs_[input_index].size());
+  }
+
+  int output_to_add = output_buses->size() - outputs_.size();
+  if (output_to_add > 0) {
+    while (output_to_add-- > 0) {
+      HeapVector<Member<DOMFloat32Array>> output;
+      outputs_.push_back(output);
+    }
+  }
+  DCHECK_EQ(output_buses->size(), outputs_.size());
+
+  for (unsigned output_index = 0;
+       output_index < output_buses->size();
+       ++output_index) {
+    const AudioBus* source_output = output_buses->at(output_index);
+    HeapVector<Member<DOMFloat32Array>> target_output = outputs_[output_index];
+    int channels_to_add =
+        source_output->NumberOfChannels() - target_output.size();
+    if (channels_to_add > 0) {
+      while (channels_to_add-- > 0) {
+        DOMFloat32Array* channel_data_array =
+            DOMFloat32Array::Create(AudioUtilities::kRenderQuantumFrames);
+        target_output.push_back(channel_data_array);
+      }
+      outputs_[output_index] = target_output;
+    }
+    DCHECK_EQ(source_output->NumberOfChannels(), outputs_[output_index].size());
+  }
+}
+
 void AudioWorkletGlobalScope::Trace(blink::Visitor* visitor) {
   visitor->Trace(processor_definition_map_);
   visitor->Trace(processor_instances_);
+  visitor->Trace(inputs_);
+  visitor->Trace(outputs_);
   ThreadedWorkletGlobalScope::Trace(visitor);
 }
 

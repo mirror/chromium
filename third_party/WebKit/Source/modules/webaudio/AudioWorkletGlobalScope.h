@@ -7,10 +7,12 @@
 
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/typed_arrays/DOMTypedArray.h"
 #include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "modules/ModulesExport.h"
 #include "modules/webaudio/AudioParamDescriptor.h"
 #include "platform/audio/AudioArray.h"
+#include "platform/audio/AudioUtilities.h"
 #include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
@@ -105,6 +107,10 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
                           v8::Isolate*,
                           WorkerThread*);
 
+  // Check the current capacity of internal storage, and grows them as needed.
+  void ConformBufferCapacity(Vector<AudioBus*>* input_buses,
+                             Vector<AudioBus*>* output_buses);
+
   bool is_closing_ = false;
 
   typedef HeapHashMap<String,
@@ -120,6 +126,11 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
   // the construction. See the comment in |CreateProcessor()| method for the
   // detail.
   std::unique_ptr<ProcessorCreationParams> processor_creation_params_;
+
+  // Internal storage for optimum audio processing in Process() call. Starts
+  // from 1 input/output and 1 channel and grows as needed.
+  HeapVector<HeapVector<Member<DOMFloat32Array>>> inputs_;
+  HeapVector<HeapVector<Member<DOMFloat32Array>>> outputs_;
 
   double current_time_ = 0.0;
   float sample_rate_ = 0.0;
