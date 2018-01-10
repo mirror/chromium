@@ -143,6 +143,19 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
   // Rendering media into this color space may avoid some conversions.
   virtual gfx::ColorSpace TargetColorSpace() { return gfx::ColorSpace(); }
 
+  // Resource scheduler metrics: Try to record the prority of the current player
+  // during load.  If the priority cannot be computed, and if
+  // |allow_unknown_priority| is false, then this returns false and should be
+  // called again later.  Otherwise, this records the priority of the player
+  // even if it's not known, and returns true.
+  virtual bool RecordPriorityAtLoad(bool allow_unknown_priority) {
+    return true;
+  }
+
+  // Resource scheduler metrics: To be called when the first frame is drawn
+  // by the compositor.
+  virtual void OnFirstFrameDrawn() {}
+
  protected:
   ~WebMediaPlayerClient() = default;
 };

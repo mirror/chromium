@@ -423,6 +423,8 @@ class CORE_EXPORT HTMLMediaElement
     return remote_playback_client_;
   }
   gfx::ColorSpace TargetColorSpace() override;
+  bool RecordPriorityAtLoad(bool) override;
+  void OnFirstFrameDrawn() override;
 
   void LoadTimerFired(TimerBase*);
   void ProgressEventTimerFired(TimerBase*);
@@ -506,6 +508,8 @@ class CORE_EXPORT HTMLMediaElement
 
   void EnsureMediaControls();
   void UpdateControlsVisibility();
+
+  int ComputePlayerPriority();
 
   TextTrackContainer& EnsureTextTrackContainer();
 
