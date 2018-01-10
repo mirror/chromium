@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bccc7b38_445021c0",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2942,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-10T22:47:00Z",
+      "side": 1,
+      "message": "What about the TODO in PaintShader::operator\u003d\u003d and just using PaintOp::operator\u003d\u003d here?",
+      "revId": "409f42429fb327198d41030aa80ac748838a8ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383e7928_58ae8e65",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-10T22:47:00Z",
+      "side": 1,
+      "message": ":3",
+      "revId": "409f42429fb327198d41030aa80ac748838a8ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
