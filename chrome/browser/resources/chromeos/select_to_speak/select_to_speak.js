@@ -9,6 +9,10 @@ var RoleType = chrome.automation.RoleType;
 // Whether reading selected text is enabled.
 const READ_SELECTION_ENABLED = false;
 
+// CrosSelectToSpeakStartSpeechMethod enums.
+const START_SPEECH_METHOD_MOUSE = 0;
+const START_SPEECH_METHOD_KEYSTROKE = 1;
+
 /**
  * Return the rect that encloses two points.
  * @param {number} x1 The first x coordinate.
@@ -515,8 +519,7 @@ SelectToSpeak.prototype = {
       if (!findAllMatching(root, rect, nodes) && focusedNode)
         findAllMatching(focusedNode.root, rect, nodes);
       this.startSpeechQueue_(nodes);
-      // TODO: Include a metric to say this was started using search+mouse.
-      this.recordStartEvent_();
+      this.recordStartEvent_(START_SPEECH_METHOD_MOUSE);
     }.bind(this));
   },
 
@@ -650,8 +653,7 @@ SelectToSpeak.prototype = {
 
     this.startSpeechQueue_(nodes, firstPosition.offset, lastPosition.offset);
 
-    // TODO: Include a metric to say this was started using search+mouse.
-    this.recordStartEvent_();
+    this.recordStartEvent_(START_SPEECH_METHOD_KEYSTROKE);
   },
 
   /**
@@ -895,8 +897,10 @@ SelectToSpeak.prototype = {
 
   /**
    * Records an event that Select-to-Speak has begun speaking.
+   * @param {number} method The CrosSelectToSpeakStartSpeechMethod enum
+   *    that reflects how this event was triggered by the user.
    */
-  recordStartEvent_: function() {
+  recordStartEvent_: function(method) {
     chrome.metricsPrivate.recordUserAction(
         'Accessibility.CrosSelectToSpeak.StartSpeech');
     chrome.metricsPrivate.recordSparseValue(
@@ -908,6 +912,8 @@ SelectToSpeak.prototype = {
     chrome.metricsPrivate.recordBoolean(
         'Accessibility.CrosSelectToSpeak.WordHighlighting',
         this.wordHighlight_);
+    chrome.metricsPrivate.recordEnumerationValue(
+        'Accessibility.CrosSelectToSpeak.StartSpeechMethod', method, 2);
   },
 
   /**
