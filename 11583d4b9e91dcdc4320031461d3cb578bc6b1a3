@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd5f2bb7_dba328ca",
+        "filename": "components/download/internal/in_memory_download.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-10T22:14:56Z",
+      "side": 1,
+      "message": "you are aware that this does nothing in release builds (or at least builds with DCHECKs disabled)? (i.e. DCHECK compiles into something like:\n  true ? (void)0 : (some remaining expression involving your condition)\nand thus GetResponseAsString will never be called.",
+      "revId": "11583d4b9e91dcdc4320031461d3cb578bc6b1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
