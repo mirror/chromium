@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "473f6fd2_67861aa4",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T17:06:29Z",
+      "side": 1,
+      "message": "nit: I think you can just do:\n  gfx::PointF transformed_point(event-\u003etouches[i].PositionInWidget());\n(because of https://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebFloatPoint.h?l\u003d71)",
+      "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f526e7_53cd8f69",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T17:06:29Z",
+      "side": 1,
+      "message": "I feel like this should happen after the target for the first touch-start is found. But I can\u0027t think of a case that will not work correctly in the current code either.",
+      "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e515ea1_294d6e10",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T17:06:29Z",
+      "side": 1,
+      "message": "just gfx::PointF(...PositionInWidget()) etc.",
+      "revId": "0427a41a96eacb04c0fb1f792673d4e2b58285d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
