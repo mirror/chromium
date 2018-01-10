@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab46be4a_c1a6633e",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T22:36:07Z",
+      "side": 1,
+      "message": "local_port() returns an integer. \"Will return 0\", maybe?  Also, suggest moving that comment to above the local_port() method (Since this takes local_port as an argument, seems a bit cleaner to move it down)",
+      "range": {
+        "startLine": 204,
+        "startChar": 29,
+        "endLine": 204,
+        "endChar": 34
+      },
+      "revId": "baa71acf1c585d0a0ad4f2837124a9666fd78cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
