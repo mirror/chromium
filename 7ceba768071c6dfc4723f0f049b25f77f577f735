@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abf091e9_4482c8c0",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-10T07:19:52Z",
+      "side": 1,
+      "message": "if current_user_wallpaper_info_ doesn\u0027t update here, you might end up storing the calculated cached wallpaper color to the wrong location? Besides, does the original issue described in the bug report in Issue 794780 come back as a result of the change here?",
+      "revId": "7ceba768071c6dfc4723f0f049b25f77f577f735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
