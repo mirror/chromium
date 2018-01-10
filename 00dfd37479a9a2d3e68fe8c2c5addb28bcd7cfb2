@@ -51,6 +51,24 @@
       "revId": "00dfd37479a9a2d3e68fe8c2c5addb28bcd7cfb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fa8468_03c4a9cc",
+        "filename": "components/arc/common/ime.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-10T16:20:27Z",
+      "side": 1,
+      "message": "Note: In such a case, it is often recommended to wait a certain period (like a week) after landing Chrome change to land the container CL.\n\nThe only case of old-Chrome + new-Android combination we\u0027d like to take care is, AFAIK, bisecting. So, one-week buffer sounds practically enough.",
+      "parentUuid": "816f90cd_1a860a2e",
+      "revId": "00dfd37479a9a2d3e68fe8c2c5addb28bcd7cfb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
