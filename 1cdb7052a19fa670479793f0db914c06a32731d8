@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "bf88ad5d_9bae1fb8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-10T16:02:47Z",
+      "side": 1,
+      "message": "\u003e Yes. oka@\u0027s code is a workdaround,  and this is a patch to his incomplete workaround, as his workaround didn\u0027t point SoundsManager to mockAudioManager;\n\nYes I understand it, and thank you for working on that completion! (So, still LGTM ;-).\n\nProbably we have different assumption.\n\nThe way of initialization you explained is how the current works.\nSpecifically overwriting the singleton instance is implemented here;\nhttps://cs.chromium.org/chromium/src/media/audio/audio_manager.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d261\n\nIndeed we cannot change if we don\u0027t touch it, but I don\u0027t think it is very fixed code, and my recommendation is changing it somehow.\nAs documented, it is only for testing, and ideally we should be able to change it without affecting the production. It may or may not be simple work, so I\u0027m recommending to add TODO to split the work from your CL\u0027s focus.\nIn ideal world, if test would like to inject a mock/fake instance, it should be used from beginning for any tests, I think.\n\n\u003e Please point out your questions.\n\nI don\u0027t have a question at the moment here. I was just trying to explain what I\u0027m thinking and recommending (\u003d adding TODO) to fill the gap between you and me. :-).",
+      "parentUuid": "3175d7ad_b144f26f",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f343c98_dc31581e",
         "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
         "patchSetId": 13
