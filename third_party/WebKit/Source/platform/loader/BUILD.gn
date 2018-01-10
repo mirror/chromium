@@ -19,8 +19,6 @@ blink_platform_sources("loader") {
     "SubresourceIntegrity.cpp",
     "SubresourceIntegrity.h",
     "fetch/AccessControlStatus.h",
-    "fetch/BufferingDataPipeWriter.cpp",
-    "fetch/BufferingDataPipeWriter.h",
     "fetch/CachedMetadata.cpp",
     "fetch/CachedMetadata.h",
     "fetch/CachedMetadataHandler.h",
@@ -96,7 +94,6 @@ jumbo_source_set("unit_tests") {
   sources = [
     "LinkHeaderTest.cpp",
     "SubresourceIntegrityTest.cpp",
-    "fetch/BufferingDataPipeWriterTest.cpp",
     "fetch/ClientHintsPreferencesTest.cpp",
     "fetch/FetchUtilsTest.cpp",
     "fetch/MemoryCacheCorrectnessTest.cpp",
