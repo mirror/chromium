@@ -16,6 +16,24 @@
       "revId": "9cd617c81c0c03238646befc29705a1524a0e472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed08e64_5a664b7d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resources/worker_with_images.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-10T19:01:13Z",
+      "side": 1,
+      "message": "Oh yes, I was just testing that the resources would still be loaded. Removed.",
+      "parentUuid": "0490a4ca_3adb702e",
+      "revId": "9cd617c81c0c03238646befc29705a1524a0e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
