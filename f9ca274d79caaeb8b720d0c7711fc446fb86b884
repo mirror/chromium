@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79565901_970e8fbd",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2018-01-10T22:49:55Z",
+      "side": 1,
+      "message": "I don\u0027t think so, listing out the cases would be much longer. That said, repeating pointer_detials() probably shouldn\u0027t be done here since we have details_. Fixed that part, which also lets me remove the braces I added here.",
+      "parentUuid": "ab216356_d6e6334c",
+      "revId": "f9ca274d79caaeb8b720d0c7711fc446fb86b884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a0ad363_58cca7b1",
         "filename": "ui/latency/latency_tracker.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f9ca274d79caaeb8b720d0c7711fc446fb86b884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e706a639_3591f5dc",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2018-01-10T22:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a0ad363_58cca7b1",
+      "revId": "f9ca274d79caaeb8b720d0c7711fc446fb86b884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
