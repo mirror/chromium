@@ -46,6 +46,30 @@
       "revId": "f436eed08d2b111b3c7df224bf2d8eda6e7c1d31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daad0dc9_e66eb5a8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-10T19:03:40Z",
+      "side": 1,
+      "message": "\u003e We can\u0027t come up with all cases where LayoutTests cover, and we have similar DCHECKs in a few places to ensure our assumption works on all LayoutTests. The only problem being heavy is slower to run tests, no? I think, at least at this point, having more coverage is more important.\n\nAll right, I can take that.\n\n\u003e \n\u003e We can add more unit tests if we find problematic cases, but finding cases should come from LayoutTests (or real sites.)\n\nDo we have any layout test of this case?\n\nOr is it just:\n\n\u003cdiv\u003e\u003cspan style\u003d\u0027white-space: nowrap\u0027\u003efoo \u003c/span\u003e bar\u003c/div\u003e",
+      "parentUuid": "5e190dc0_947b6357",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 6
+      },
+      "revId": "f436eed08d2b111b3c7df224bf2d8eda6e7c1d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
