@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62d976b0_272f80f4",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-10T00:37:17Z",
+      "side": 0,
+      "message": "note: already includes the aw_result_code.h superset via that header.",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "2d0a35b4dd62f584e4c7362d304181bc82d4458b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
