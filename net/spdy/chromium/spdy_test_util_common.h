@@ -205,7 +205,7 @@ struct SpdySessionDependencies {
   std::unique_ptr<CTPolicyEnforcer> ct_policy_enforcer;
   std::unique_ptr<ProxyService> proxy_service;
   scoped_refptr<SSLConfigService> ssl_config_service;
-  std::unique_ptr<MockClientSocketFactory> socket_factory;
+  std::unique_ptr<MockTaggingClientSocketFactory> socket_factory;
   std::unique_ptr<HttpAuthHandlerFactory> http_auth_handler_factory;
   std::unique_ptr<HttpServerPropertiesImpl> http_server_properties;
   bool enable_ip_pooling;
