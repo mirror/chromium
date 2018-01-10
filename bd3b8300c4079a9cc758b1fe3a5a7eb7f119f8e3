@@ -16,6 +16,24 @@
       "revId": "bd3b8300c4079a9cc758b1fe3a5a7eb7f119f8e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8519162d_1b13b47e",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:14:18Z",
+      "side": 1,
+      "message": "|INVALID_STATE| and |STATE_LAST| are not passed over IPC at this moment.\n\nI\u0027ll create a typemap to get rid of |STATE_LAST| here. And |INVALID_STATE| could be used for invalid states passed over IPC.\n\nPlease take a look at the next PS.",
+      "parentUuid": "eb000a5f_9d8a53e5",
+      "revId": "bd3b8300c4079a9cc758b1fe3a5a7eb7f119f8e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
