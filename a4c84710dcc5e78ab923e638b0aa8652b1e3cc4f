@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85c607d5_2a4098fc",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-10T21:48:54Z",
+      "side": 1,
+      "message": "I borrowed this code for the check from the other tests in the same directory (but added a line break since I think the 80 character limit is supposed to apply to JavaScript).",
+      "revId": "a4c84710dcc5e78ab923e638b0aa8652b1e3cc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
