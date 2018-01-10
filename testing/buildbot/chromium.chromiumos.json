@@ -1316,6 +1316,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "views_perftests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "views_unittests"
       },
       {

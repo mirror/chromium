@@ -1155,6 +1155,16 @@
     "label": "//ui/views:views_unittests",
     "type": "windowed_test_launcher",
   },
+  "views_perftests": {
+    "label": "//ui/views:views_perftests",
+    "type": "script",
+    "script": "//testing/scripts/run_gtest_perf_test.py",
+    "args": [
+      "views_perftests",
+      "--isolated-script-test-output=${ISOLATED_OUTDIR}/output.json",
+      "--isolated-script-test-perf-output=${ISOLATED_OUTDIR}/perftest-output.json",
+    ],
+  },
   "viz_unittests": {
     "label": "//components/viz:viz_unittests",
     "type": "windowed_test_launcher",
