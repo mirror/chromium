@@ -70,6 +70,30 @@
       "revId": "f436eed08d2b111b3c7df224bf2d8eda6e7c1d31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479bb213_774726d9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-10T19:31:01Z",
+      "side": 1,
+      "message": "\u003e Do we have any layout test of this case?\n\nYeah, some tests fail by adding this DCHECK, forgot which one.\n\n\u003e Or is it just:\n\u003e \u003cdiv\u003e\u003cspan style\u003d\u0027white-space: nowrap\u0027\u003efoo \u003c/span\u003e bar\u003c/div\u003e\n\nOh, I forgot to mention that I\u0027m adding a unit test for this specific case in CL:858719. I hit the DCHECK in ComputeOffsetMappingIfNeeded() when working on the CL, add this DCHECK, and found it already hits.\n\nI would have found this problem if we had this DCHECK_IS_ON integrity check, and that is the motivation to add this.",
+      "parentUuid": "daad0dc9_e66eb5a8",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 6
+      },
+      "revId": "f436eed08d2b111b3c7df224bf2d8eda6e7c1d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
