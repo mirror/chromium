@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "37525735_1f464ad8",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-10T02:03:27Z",
+      "side": 1,
+      "message": "To my best knowledge, shelf widget is not needed when web UI shelf is shown.\n\nMy previous cl simplified initialization of shelf by moving it into one place (instead of creating shelf in different places, create it once at the beginning and then just modify visibility). In the previous cl I was just hiding shelf views and not the widget itself. Unfortunately, shelf widget is consuming mouse input when inactive. Hiding the widget fixes the problem.\n\nIf I just call Show() and Hide() lot of tests (ShelfLayoutTests for instance) start to fail, so I am showing/hiding when it is really needed.",
+      "parentUuid": "02126f52_a33525c1",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f6f3ba_ac4b88de",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2018-01-06T02:44:14Z",
       "side": 1,
       "message": "Maybe just make the top if statement do:\n  if (!IsUsingViewsShelf() || state \u003d\u003d session_manager::SessionState::UNKNOWN) {\nThen the else block can just have one call to Show() outside the switch statement",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34971502_b5173e25",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-10T02:03:27Z",
+      "side": 1,
+      "message": "Switch was used here for readability, so you can easily see that all states are handled (and how they are handled). If I remove UNKNOWN, I will need to handle default case as NOTREACHED and I think some of the clarity will be lost. Do you prefer that version?",
+      "parentUuid": "37f6f3ba_ac4b88de",
       "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2b2f8990_8642afb6",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-10T02:03:27Z",
+      "side": 1,
+      "message": "It is not necessary. Done.",
+      "parentUuid": "928f0b48_ea420457",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf0e64d3_dc3c9ca5",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 1
@@ -85,6 +139,24 @@
       "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685e3983_1af09cf0",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-10T02:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf0e64d3_dc3c9ca5",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
