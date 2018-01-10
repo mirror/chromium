@@ -242,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "83892a1a_d9b3f59e",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-10T13:20:44Z",
+      "side": 1,
+      "message": "Another issue I encountered is that the FakeSigninManager never calls the GoogleSigninFailed() observer method, and the OneClickSigninSyncStarter needs it (otherwise it leaks).\n\nI changed the test to use a real SigninManager instead.",
+      "parentUuid": "929fbab6_a34c10c4",
+      "revId": "f08c63f922a09ac1beef2747b76795baa8667d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "702f19f1_a4119a88",
         "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter_unittest.cc",
         "patchSetId": 9
