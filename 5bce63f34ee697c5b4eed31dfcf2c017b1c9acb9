@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8831da03_0dd0484a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/server/disconnect-called-during-error.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-10T17:39:24Z",
+      "side": 0,
+      "message": "It\u0027d be cool to update these to use our test_desc pattern and drop the unneeded curlies at the beginning.",
+      "revId": "5bce63f34ee697c5b4eed31dfcf2c017b1c9acb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
