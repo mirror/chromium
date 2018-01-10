@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c21109b_e0501e06",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 34
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-10T16:14:21Z",
+      "side": 1,
+      "message": "forgot to mention. These are necessary to support SplitScreen for ARC apps.",
+      "revId": "45ed1e2e9a3f301c3e37a4fdee072d1fa7b79fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
