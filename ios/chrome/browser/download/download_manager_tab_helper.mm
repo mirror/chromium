@@ -65,6 +65,22 @@ void DownloadManagerTabHelper::WebStateDestroyed(web::WebState* web_state) {
   }
 }
 
+void DownloadManagerTabHelper::WasShown(web::WebState* web_state) {
+  if (task_) {
+    [delegate_ downloadManagerTabHelper:this didShowDownload:task_.get()];
+  }
+}
+
+void DownloadManagerTabHelper::WasHidden(web::WebState* web_state) {
+  if (task_) {
+    [delegate_ downloadManagerTabHelper:this didHideDownload:task_.get()];
+  }
+}
+
+void DownloadManagerTabHelper::WebStateDestroyed(web::WebState* web_state) {
+  web_state->RemoveObserver(this);
+}
+
 void DownloadManagerTabHelper::OnDownloadUpdated(web::DownloadTask* task) {
   DCHECK_EQ(task, task_.get());
   switch (task->GetState()) {

@@ -11,6 +11,7 @@
 #include "ios/web/public/download/download_task_observer.h"
 #import "ios/web/public/web_state/web_state_observer.h"
 #import "ios/web/public/web_state/web_state_user_data.h"
+#import "ios/web/public/web_state/web_state_observer.h"
 
 @protocol DownloadManagerTabHelperDelegate;
 namespace web {
