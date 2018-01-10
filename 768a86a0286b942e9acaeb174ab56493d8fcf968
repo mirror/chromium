@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5218d86e_a0e54823",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T15:47:31Z",
+      "side": 1,
+      "message": "This is needed for blobs when used by service worker.  I\u0027m reluctant to add significant implementation and testing complexity for something we don\u0027t actually need or use.",
+      "parentUuid": "27839edb_92e12faf",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 21
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96ca3d3c_0bfae91d",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f7ec9869_1d8e1532",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T15:47:31Z",
+      "side": 1,
+      "message": "Just removed the comment (It survived from an earlier version of my upload file CL, which this was originally on top of).",
+      "parentUuid": "96ca3d3c_0bfae91d",
+      "range": {
+        "startLine": 1087,
+        "startChar": 9,
+        "endLine": 1087,
+        "endChar": 15
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd0b1700_079f47b9",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-10T13:15:20Z",
       "side": 1,
       "message": "My apologies for the lack of clue, but help me understand why data pipes aren\u0027t re-usable?  IIUC, repeated calls to Read() on the getter are defined to produce new instances of the upload value being stuffed down the pipe passed to Read().",
+      "range": {
+        "startLine": 1115,
+        "startChar": 12,
+        "endLine": 1115,
+        "endChar": 15
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc0b022_1b0637c6",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T15:47:31Z",
+      "side": 1,
+      "message": "Because the code to send a DataElement over mojo (And IPC) is destructive in the case of data pipes.  See DataElement::ReleaseDataPipeGetter() consumers.  Clone() was landed literally the day I had been ready to send this CL out for review last month, for one specific use case that doesn\u0027t apply to the network service itself.",
+      "parentUuid": "dd0b1700_079f47b9",
       "range": {
         "startLine": 1115,
         "startChar": 12,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "38c84675_2f044565",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T15:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b9aa8c2_7223c195",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd42d954_fec553f0",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 8
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5b838dcc_87f5ceab",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T15:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd42d954_fec553f0",
+      "range": {
+        "startLine": 222,
+        "startChar": 34,
+        "endLine": 222,
+        "endChar": 38
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffdafc05_88bdc163",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67da1fd8_6a32e0c9",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T15:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffdafc05_88bdc163",
+      "range": {
+        "startLine": 224,
+        "startChar": 20,
+        "endLine": 224,
+        "endChar": 26
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
