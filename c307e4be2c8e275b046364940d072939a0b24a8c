@@ -22,6 +22,53 @@
       "revId": "c307e4be2c8e275b046364940d072939a0b24a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5faf2a8a_1cb3e86c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-10T00:29:30Z",
+      "side": 1,
+      "message": "lgtm",
+      "parentUuid": "3aee8892_f8003a5b",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 48
+      },
+      "revId": "c307e4be2c8e275b046364940d072939a0b24a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f82538f_b3d1cb30",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-10T00:29:30Z",
+      "side": 1,
+      "message": "My previous comment was more around this class in general not being safe to call pre-native.  My thinking is that the caller would not call shouldShowGoogleG until native is initialized.\n\nI think this previously worked because the ntp was null before native and so was the bottom sheet.  Now the second block can hit native before it\u0027s initialized.  I think we could use mNativeInitialized in LocationBarPhone to not call this.\n\nIf we want some of the methods to be safe to be called without native, I think we should make them all and that has more ramifications.",
+      "range": {
+        "startLine": 230,
+        "startChar": 19,
+        "endLine": 230,
+        "endChar": 36
+      },
+      "revId": "c307e4be2c8e275b046364940d072939a0b24a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
