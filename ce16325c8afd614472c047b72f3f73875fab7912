@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "722995d4_bec3b1fd",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-10T19:52:24Z",
+      "side": 1,
+      "message": "Check with ssid@.  IIRC he computed this before enabling go/slow-memory-reports where the same question came up.\n\ntimeticks doesn\u0027t make too much sense. the cost is spread over several tasks on several threads, and other tasks might be interleaved in the middle.\nEventually we should sum up the threadticks of each task posted by base::MemoryDumpManager if we wanted this, but that\u0027s non trivial work.",
+      "parentUuid": "30732205_4fe96480",
+      "range": {
+        "startLine": 488,
+        "startChar": 40,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee87f532_03571810",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 3

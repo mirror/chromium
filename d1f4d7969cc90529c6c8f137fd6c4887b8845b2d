@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d211c49_0b13502a",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-10T19:52:24Z",
+      "side": 1,
+      "message": "There is no need to do this, and soon (see on-flight lalitm@ patches) the raw mojo interface will be too low level to use.\nJust use services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h\n\nIt has a nicer C++ interface and handles per-thread cooridnator ptrs",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 60
+      },
+      "revId": "d1f4d7969cc90529c6c8f137fd6c4887b8845b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
