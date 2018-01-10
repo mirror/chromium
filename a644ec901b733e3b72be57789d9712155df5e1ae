@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b2a580a_f4c01d53",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-10T23:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad76d9e9_30753e3f",
+      "revId": "a644ec901b733e3b72be57789d9712155df5e1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b3e548_c3457cb6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-10T01:34:36Z",
       "side": 1,
       "message": "It\u0027s a bit odd that we report key system support in the browser process instead of in the render process. The intention of the old UMA was to track whether the CDM for the key system is available (hence AvailabilityStatus).\n\nAlso, now in most cases the CDM is bundled, we really only care about the case where the CDM is not available when the key system support is checked (which should be 0). Does it make sense that we only report this UMA once per browser process, to catch these rare cases?",
+      "revId": "a644ec901b733e3b72be57789d9712155df5e1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c177330d_6e3c8005",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34053,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-10T23:27:40Z",
+      "side": 1,
+      "message": "On the renderer side we can use Media.EME.RequestMediaKeySystemAccess.* to see how many times the key system is requested (and how many times the requested config is supported).\n\nGiven that the CDM should always be found, I\u0027m not sure that there is anything that can be done with the true count. As long as false \u003d 0, we should be good.",
+      "parentUuid": "a6b3e548_c3457cb6",
       "revId": "a644ec901b733e3b72be57789d9712155df5e1ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "a644ec901b733e3b72be57789d9712155df5e1ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61074119_e83414a4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34057,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-10T23:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81818c8a_55248736",
+      "revId": "a644ec901b733e3b72be57789d9712155df5e1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
