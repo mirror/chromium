@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc35f6a_698dee52",
+        "filename": "ash/wm/overview/overview_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-10T22:34:24Z",
+      "side": 1,
+      "message": "Blur slows down animation, and may not perform well on certain devices. (I believe we have a code that disables the blur for launcher on some devices).\n\nWe probably should use the same flag to enable/disable blur (if we\u0027re still doing it) Ask newcomer@ for more details.",
+      "revId": "1993048e92f44ad1f716ee1b0965a2d961705b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
