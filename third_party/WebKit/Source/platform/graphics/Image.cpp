@@ -27,6 +27,7 @@
 #include "platform/graphics/Image.h"
 
 #include "build/build_config.h"
+#include "cc/tiles/software_image_decode_cache.h"
 #include "platform/Histogram.h"
 #include "platform/Length.h"
 #include "platform/SharedBuffer.h"
@@ -89,6 +90,17 @@ Image* Image::NullImage() {
   DCHECK(IsMainThread());
   DEFINE_STATIC_REF(Image, null_image, (BitmapImage::Create()));
   return null_image;
+}
+
+// static
+cc::ImageDecodeCache* Image::SharedCCDecodeCache() {
+  // The max locked bytes is used to cap the maximum memory for images that
+  // can be pre-decoded and locked before rasterization. Since users of this
+  // cache don't pre-decode images, this limit is not relevant.
+  static const size_t kLockedMemoryLimitBytes = 0u;
+  DEFINE_STATIC_LOCAL(cc::SoftwareImageDecodeCache, image_decode_cache,
+                      (kN32_SkColorType, kLockedMemoryLimitBytes));
+  return &image_decode_cache;
 }
 
 scoped_refptr<Image> Image::LoadPlatformResource(const char* name) {
