@@ -581,11 +581,10 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // events. Navigation is considered complete when the document has finished
 // loading, or when other page load mechanics are completed on a
 // non-document-changing URL change.
-- (void)didFinishNavigation:(WKNavigation*)navigation;
-// Update the appropriate parts of the model and broadcast to the embedder. This
-// may be called multiple times and thus must be idempotent.
-- (void)loadCompleteWithSuccess:(BOOL)loadSuccess
-                  forNavigation:(WKNavigation*)navigation;
+- (void)didFinishNavigation;
+// Updates the appropriate parts of the model and broadcast to the embedder.
+// This may be called multiple times and thus must be idempotent.
+- (void)loadCompleteWithSuccess:(BOOL)loadSuccess;
 // Called after URL is finished loading and _loadPhase is set to PAGE_LOADED.
 // |context| contains information about the navigation associated with the URL.
 // It is nil if currentURL is invalid.
@@ -1886,7 +1885,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     self.navigationManagerImpl->CommitPendingItem();
     [self.nativeController reload];
     _webStateImpl->OnNavigationFinished(navigationContext.get());
-    [self loadCompleteWithSuccess:YES forNavigation:nil];
+    [self loadCompleteWithSuccess:YES];
   } else {
     web::NavigationItem* transientItem =
         self.navigationManagerImpl->GetTransientItem();
@@ -1938,16 +1937,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
   return MIMEType.compare(0, image.length(), image) == 0;
 }
 
-- (void)didFinishNavigation:(WKNavigation*)navigation {
+- (void)didFinishNavigation {
   // This can be called at multiple times after the document has loaded. Do
   // nothing if the document has already loaded.
   if (_loadPhase == web::PAGE_LOADED)
     return;
-  [self loadCompleteWithSuccess:YES forNavigation:navigation];
+  [self loadCompleteWithSuccess:YES];
 }
 
-- (void)loadCompleteWithSuccess:(BOOL)loadSuccess
-                  forNavigation:(WKNavigation*)navigation {
+- (void)loadCompleteWithSuccess:(BOOL)loadSuccess {
   // The webView may have been torn down (or replaced by a native view). Be
   // safe and do nothing if that's happened.
   if (_loadPhase != web::PAGE_LOADING)
@@ -2612,7 +2610,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
           CRWWebController* strongSelf = weakSelf;
           if (strongSelf && !strongSelf->_isBeingDestroyed) {
             [strongSelf optOutScrollsToTopForSubviews];
-            [strongSelf didFinishNavigation:nil];
+            [strongSelf didFinishNavigation];
           }
         }];
   return YES;
@@ -2669,7 +2667,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
           CRWWebController* strongSelf = weakSelf;
           if (!strongSelf || strongSelf->_isBeingDestroyed)
             return;
-          [strongSelf didFinishNavigation:nil];
+          [strongSelf didFinishNavigation];
         }];
   return YES;
 }
@@ -2951,7 +2949,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
             [_nativeProvider controllerForUnhandledContentAtURL:errorGURL
                                                        webState:self.webState];
         if (controller) {
-          [self loadCompleteWithSuccess:NO forNavigation:navigation];
+          [self loadCompleteWithSuccess:NO];
           [self removeWebView];
           [self setNativeController:controller];
           [self loadNativeViewWithSuccess:YES
@@ -2984,7 +2982,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
                             }];
   }
 
-  [self loadCompleteWithSuccess:NO forNavigation:navigation];
+  [self loadCompleteWithSuccess:NO];
   [self loadErrorInNativeView:error navigationContext:navigationContext];
   if ([_navigationStates stateForNavigation:navigation] ==
       web::WKNavigationState::PROVISIONALY_FAILED) {
@@ -4531,7 +4529,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // webView:didCommitNavigation:, so forget null navigation now and signal
     // that navigation was finished.
     [self forgetNullWKNavigation:navigation];
-    [self didFinishNavigation:navigation];
+    [self didFinishNavigation];
   }
 }
 
@@ -4593,7 +4591,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // WKUserScriptInjectionTimeAtDocumentEnd to inject this material at the
   // appropriate time rather than invoking here.
   web::ExecuteJavaScript(webView, @"__gCrWeb.didFinishNavigation()", nil);
-  [self didFinishNavigation:navigation];
+  [self didFinishNavigation];
 
   // Forget null navigation only if it has been committed. Otherwise it will be
   // forgotten in webView:didCommitNavigation: callback.
@@ -4802,11 +4800,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
       [self webPageChangedWithContext:newContext.get()];
       _webStateImpl->OnNavigationFinished(newContext.get());
       // TODO(crbug.com/792515): It is OK, but very brittle, to call
-      // |didFinishNavigation:| here because the gating condition is mutually
+      // |didFinishNavigation| here because the gating condition is mutually
       // exclusive with the condition below. Refactor this method after
       // deprecating _pendingNavigationInfo.
       if (newContext->GetWKNavigationType() == WKNavigationTypeBackForward) {
-        [self didFinishNavigation:nil];
+        [self didFinishNavigation];
       }
     } else {
       [self webPageChangedWithContext:existingContext];
@@ -4827,7 +4825,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // navigations. So signal did finish navigation explicitly.
   if (existingContext &&
       existingContext->GetWKNavigationType() == WKNavigationTypeBackForward) {
-    [self didFinishNavigation:nil];
+    [self didFinishNavigation];
   }
 }
 
@@ -5019,7 +5017,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     _webStateImpl->OnNavigationFinished(navigationContext);
 
     [self updateSSLStatusForCurrentNavigationItem];
-    [self didFinishNavigation:nil];
+    [self didFinishNavigation];
   }
 }
 
