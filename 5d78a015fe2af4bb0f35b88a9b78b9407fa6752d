@@ -51,6 +51,24 @@
       "revId": "5d78a015fe2af4bb0f35b88a9b78b9407fa6752d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e938299_6b2b6757",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-10T07:00:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7527ae5_adb3ebea",
+      "revId": "5d78a015fe2af4bb0f35b88a9b78b9407fa6752d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
