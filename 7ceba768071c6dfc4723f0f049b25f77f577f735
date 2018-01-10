@@ -16,6 +16,24 @@
       "revId": "7ceba768071c6dfc4723f0f049b25f77f577f735",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7310c072_ea462172",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-10T21:01:33Z",
+      "side": 1,
+      "message": "The original issue doesn\u0027t come back after deleting this line, but I\u0027m not sure if there\u0027re other unknown corner cases.\n\nThis line can be safely removed if we deprecate the |EnsureLoggedInUserWallpaperLoaded| function (https://chromium-review.googlesource.com/c/chromium/src/+/849115). That CL will have to wait for the previous CLs to land first.\n\nI tried other approaches but there\u0027s no simple fix to this public session issue, without affecting the original issue.",
+      "parentUuid": "abf091e9_4482c8c0",
+      "revId": "7ceba768071c6dfc4723f0f049b25f77f577f735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
