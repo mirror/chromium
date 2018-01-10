@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b2c4a05_5a1e3fd6",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-10T04:48:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure what what these additions are testing.",
+      "revId": "b8520ba8b5f97500816463ecd232b0517f153eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
