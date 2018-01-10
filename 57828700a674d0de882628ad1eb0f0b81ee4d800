@@ -52,6 +52,24 @@
       "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ae8c31_f2b15758",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMActivityLogger.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-10T11:13:37Z",
+      "side": 1,
+      "message": "An early return is what the original code did, jbroman suggested replacing it with a DCHECK early in this review (https://chromium-review.googlesource.com/c/chromium/src/+/852497#message-46d9222f39947d6e8254a7936992f81c42e9a809)\n\nI can switch back to adding a check if you prefer.",
+      "parentUuid": "67fd2998_f3528423",
+      "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
