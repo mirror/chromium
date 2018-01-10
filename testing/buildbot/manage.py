@@ -68,6 +68,7 @@ SKIP = {
   'Site Isolation Android',
   'Site Isolation Linux',
   'Site Isolation Win',
+  'Mojo Android',
 }
 
 
