@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1c9797e_112c535a",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-10T17:23:54Z",
+      "side": 1,
+      "message": "I don\u0027t know why they are there -- looks like they\u0027ve been there since the beginning. Maybe dmazzoni@chromium.org would know. (https://chromium.googlesource.com/chromium/src/+/c1c67017189e7aebca3cf12bdf76bc781dc55281/ash/magnifier/magnification_controller.cc)\n\nIt seems like base::ClampToRange wouldn\u0027t do exactly what this code is trying to do -- adjust to the min/max scale value if it is below/above the *threshold* for adjustment.\n\nI don\u0027t know if we need this or not, maybe Dominic can chime in on whether it\u0027s ok to switch to base::ClampToRange() and remove the k*MagnifiedScaleThreshold values.",
+      "parentUuid": "0b6d4d36_d1f54fda",
+      "range": {
+        "startLine": 515,
+        "startChar": 0,
+        "endLine": 523,
+        "endChar": 32
+      },
+      "revId": "de22cdb8c832af50a474da0983606842cec20c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6067d4c7_274f45f1",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "de22cdb8c832af50a474da0983606842cec20c5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b76d35_a81904c9",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-10T17:23:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6067d4c7_274f45f1",
+      "range": {
+        "startLine": 693,
+        "startChar": 16,
+        "endLine": 693,
+        "endChar": 26
+      },
+      "revId": "de22cdb8c832af50a474da0983606842cec20c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
