@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "112cb702_85ebb352",
+        "filename": "components/viz/common/gpu/raster_context_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-10T21:10:05Z",
+      "side": 1,
+      "message": "I\u0027m not the biggest fan of this change (and related ContextProviderCommandBuffer), it makes it easier to introduce races, because now one can take a ScopedRasterContextLock on arbitrary CP\u0027s that haven\u0027t been set up with the lock, and assume that it does lock (when it silently doesn\u0027t). I\u0027d prefer moving the decision to take or not a lock to the caller class which knows about threading constraints.\n\nAlso we should make it consistent between the different ContextProvider implementations (e.g. InProcessContextProvider, TestContextProvider etc.) and the different interfaces/locks (e.g. ScopedContextLock)",
+      "revId": "bd98ee859c07b9d7c7c44b25e772911aa20263ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e73fb0_179e4d69",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-10T21:10:05Z",
+      "side": 1,
+      "message": "This function is used for WebGL. We shouldn\u0027t need the raster interface? (asking for it will cause problems in the future, because we want to make GL vs raster an either-or proposition).",
+      "revId": "bd98ee859c07b9d7c7c44b25e772911aa20263ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c211b208_b067c227",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-10T21:10:05Z",
+      "side": 1,
+      "message": "nit: can you add a DCHECK(provider_-\u003eRasterInterface()) to defend against calling this on WebGL contexts?",
+      "revId": "bd98ee859c07b9d7c7c44b25e772911aa20263ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
