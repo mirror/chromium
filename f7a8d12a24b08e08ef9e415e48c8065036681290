@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e98bc1e3_1ad6882f",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-10T18:50:45Z",
+      "side": 1,
+      "message": "This definitely seems better than before, where\nthe scale adjusted linearly rather than exponentially.\n\nHowever, your change also has the weird side effect that\nscaling by 10 units doesn\u0027t result in the same final scale\nas scaling by 1 unit, 10 times.\n\nI wonder if it\u0027d be cleaner to have the parameter be\nlinear, and then convert that to a scale factor using\nexp() or pow().",
+      "revId": "f7a8d12a24b08e08ef9e415e48c8065036681290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80779a94_a8d0fcfe",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 6
