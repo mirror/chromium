@@ -61,6 +61,7 @@ class AccessibilityDetailedView : public TrayDetailsView {
   HoverHighlightView* spoken_feedback_view_ = nullptr;
   HoverHighlightView* high_contrast_view_ = nullptr;
   HoverHighlightView* screen_magnifier_view_ = nullptr;
+  HoverHighlightView* docked_magnifier_view_ = nullptr;
   HoverHighlightView* large_cursor_view_ = nullptr;
   HoverHighlightView* autoclick_view_ = nullptr;
   HoverHighlightView* virtual_keyboard_view_ = nullptr;
@@ -77,6 +78,7 @@ class AccessibilityDetailedView : public TrayDetailsView {
   bool spoken_feedback_enabled_ = false;
   bool high_contrast_enabled_ = false;
   bool screen_magnifier_enabled_ = false;
+  bool docked_magnifier_enabled_ = false;
   bool large_cursor_enabled_ = false;
   bool autoclick_enabled_ = false;
   bool virtual_keyboard_enabled_ = false;

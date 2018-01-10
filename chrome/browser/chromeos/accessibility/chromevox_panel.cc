@@ -196,6 +196,10 @@ void ChromeVoxPanel::UpdateWidgetBounds() {
     bounds.set_height(0);
   }
 
+  const int docked_magnifier_height =
+      ash::Shelf::ForWindow(GetRootWindow())->GetDockedMagnifierHeight();
+  bounds.Offset(0, docked_magnifier_height);
+
   widget_->SetBounds(bounds);
 }
 
