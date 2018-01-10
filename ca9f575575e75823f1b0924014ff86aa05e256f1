@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ecf8fe9_aa22c913",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T04:57:40Z",
+      "side": 1,
+      "message": "url.SchemeIs(url::kHttpsScheme)\n\nI\u0027m not sure whether there is a preference to use host_piece() or host(). I would tend to use host() since it\u0027s shorter and we\u0027re not using and Piece functions, but I might be missing something (I see _piece() is used a lot in this file).",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2457e81_9908ef6f",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T04:57:40Z",
+      "side": 1,
+      "message": "Chromium comments are usually written in imperative form: \"Expect patterns...\" and end with a period.",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d5e6b5_7b14ac3c",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T04:57:40Z",
+      "side": 1,
+      "message": "I would reverse the if to !\u003d 5  and return false here, it\u0027s a bit closer to Blink (and sometimes Chromium) style and the style in this file.",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969685a0_75b1f786",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T04:57:40Z",
+      "side": 1,
+      "message": "I\u0027m wondering if you really do want to track all these together. If you sometimes roll changes into one editor and not the others, it could make it difficult to analyze the data.\n\nIf we expect these all to move together, it might actually make sense to just record just one, e.g., just record for \"docs\"?",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0a0d5a_63c81d45",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T04:57:40Z",
+      "side": 1,
+      "message": "What is the meaning of \"open\" here? Is it a Google Docs term?",
+      "range": {
+        "startLine": 171,
+        "startChar": 17,
+        "endLine": 171,
+        "endChar": 24
+      },
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f891bde2_222b0549",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T04:57:40Z",
+      "side": 1,
+      "message": "Since this is only used in service_worker_page_load_metrics_observer.cc, I think we could just move the function there.",
+      "revId": "ca9f575575e75823f1b0924014ff86aa05e256f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
