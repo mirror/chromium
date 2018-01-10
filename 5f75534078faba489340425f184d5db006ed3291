@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af24317_d240ad4f",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-10T21:26:03Z",
+      "side": 1,
+      "message": "nit: indent",
+      "revId": "5f75534078faba489340425f184d5db006ed3291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
