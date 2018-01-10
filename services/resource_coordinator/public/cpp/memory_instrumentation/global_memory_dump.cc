@@ -16,6 +16,13 @@ GlobalMemoryDump::GlobalMemoryDump(
 }
 GlobalMemoryDump::~GlobalMemoryDump() = default;
 
+std::unique_ptr<GlobalMemoryDump> GlobalMemoryDump::MoveFrom(
+    mojom::GlobalMemoryDumpPtr ptr) {
+  return ptr ? std::unique_ptr<GlobalMemoryDump>(
+                   new GlobalMemoryDump(std::move(ptr->process_dumps)))
+             : nullptr;
+}
+
 GlobalMemoryDump::ProcessDump::ProcessDump(
     mojom::ProcessMemoryDumpPtr process_dump)
     : mojo_dump_(std::move(process_dump)) {}
