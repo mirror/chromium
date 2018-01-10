@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8787e52d_5e1bb942",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-10T19:10:21Z",
+      "side": 1,
+      "message": "I think it\u0027s good to explain here why we are doing this.\nSomething like: this is in preparation for the next cl where we stop exposing pre-decided aggregations and use the new API in memory_instrumentation to dynamically require fields.\nIn order to do so clients like metrics_emitter cannot use directly the mojo interface, because that would be too raw, and instead should switch to this wrapper. In the next CL this wrapper will take care of extracting metrics by name, etc. etc",
+      "revId": "b64a039343e6830a575b03cc265cabe5297f964d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8619f7b_0236039e",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-10T19:10:21Z",
+      "side": 1,
+      "message": "I think Wrap is a bit generic as it doesn\u0027t explain if/how memory ownership moves (the quesiton I have when I see Wrap is: do I have to keep the wrapped object alive as well?).\nI\u0027d go for Take() or MoveFrom()\nAlso add a comment",
+      "range": {
+        "startLine": 43,
+        "startChar": 43,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "b64a039343e6830a575b03cc265cabe5297f964d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
