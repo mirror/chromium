@@ -48,7 +48,7 @@ const char kElevenChildren[] =
     "<div>child10</div>"
     "</div>";
 const char kElevenChildrenExpected[] =
-    "child0child1child2child3child4child5child6child7child8";
+    "child0child1child2child3child4child5child6child7child8child9";
 
 const char kElevenChildrenNested[] =
     "<div id='target'>"
@@ -65,7 +65,8 @@ const char kElevenChildrenNested[] =
     "<div>child10"
     "</div></div></div></div></div></div></div></div></div></div></div></div>";
 // Take 10 elements -1 for target element, -1 as text is a leaf element.
-const char kElevenChildrenNestedExpected[] = "child0child1child2child3child4";
+const char kElevenChildrenNestedExpected[] =
+    "child0child1child2child3child4child5child6child7child8child9";
 
 const char kSkipElement[] =
     "<div id='target'>"
@@ -73,8 +74,7 @@ const char kSkipElement[] =
     "<div class='skip'>child1</div>"
     "<div>child2</div>"
     "</div>";
-// TODO(crbug.com/796918): Should be child0child2
-const char kSkipElementExpected[] = "child0";
+const char kSkipElementExpected[] = "child0child2";
 
 const char kDivTableExample1[] =
     "<div>"
@@ -104,22 +104,19 @@ const char kDivTableExample4[] =
     "label"
     "<div><input id='target'/></div>"
     "</div>";
-// TODO(crbug.com/796918): Should be label
-const char kDivTableExample4Expected[] = "";
+const char kDivTableExample4Expected[] = "label";
 
 const char kDivTableExample5[] =
     "<div>"
     "<div>label<div><input id='target'/></div>behind</div>"
     "</div>";
-// TODO(crbug.com/796918): Should be label
-const char kDivTableExample5Expected[] = "labelbehind";
+const char kDivTableExample5Expected[] = "label";
 
 const char kDivTableExample6[] =
     "<div>"
     "<div>label<div><div>-<div><input id='target'/></div></div>"
     "</div>";
-// TODO(crbug.com/796918): Should be "label" or "label-"
-const char kDivTableExample6Expected[] = "";
+const char kDivTableExample6Expected[] = "label-";
 
 class FormAutofillUtilsTest : public content::RenderViewTest {
  public:
@@ -132,12 +129,16 @@ TEST_F(FormAutofillUtilsTest, FindChildTextTest) {
       {"simple test", "<div id='target'>test</div>", "test"},
       {"Concatenate test", "<div id='target'><span>one</span>two</div>",
        "onetwo"},
-      // TODO(crbug.com/796918): should be "onetwo"
       {"Ignore input", "<div id='target'>one<input value='test'/>two</div>",
-       "one"},
+       "onetwo"},
       {"Trim", "<div id='target'>   one<span>two  </span></div>", "onetwo"},
+      {"Preserve space", "<div id='target'>one <div><div/>two</div>",
+       "one two"},
+      {"Preserve space 2", "<div id='target'>one<div><div/> two</div>",
+       "one two"},
+      {"Preserve space 3", "<div id='target'>one<div> <div/>two</div>",
+       "one two"},
       {"eleven children", kElevenChildren, kElevenChildrenExpected},
-      // TODO(crbug.com/796918): Depth is only 5 elements
       {"eleven children nested", kElevenChildrenNested,
        kElevenChildrenNestedExpected},
   };
@@ -170,10 +171,16 @@ TEST_F(FormAutofillUtilsTest, FindChildTextSkipElementTest) {
     for (size_t i = 0; i < web_to_skip.size(); ++i) {
       to_skip.insert(web_to_skip[i]);
     }
+    WebVector<WebElement> web_right_limits =
+        web_frame->GetDocument().QuerySelectorAll("div[class='right']");
+    std::set<blink::WebNode> right_limits;
+    for (size_t i = 0; i < web_right_limits.size(); ++i) {
+      right_limits.insert(web_right_limits[i]);
+    }
 
     EXPECT_EQ(base::UTF8ToUTF16(test_case.expected_label),
               autofill::form_util::FindChildTextWithIgnoreListForTesting(
-                  target, to_skip));
+                  target, to_skip, right_limits));
   }
 }
 
