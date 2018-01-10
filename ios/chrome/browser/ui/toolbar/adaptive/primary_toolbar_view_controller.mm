@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.h"
 
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -51,10 +52,30 @@
   [self.view setUp];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [self updateAllButtonsVisibility];
+  [super viewDidAppear:animated];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  [self updateAllButtonsVisibility];
+}
+
 #pragma mark - Property accessors
 
 - (void)setLocationBarView:(UIView*)locationBarView {
   self.view.locationBarView = locationBarView;
+}
+
+#pragma mark - Private
+
+// Updates all Buttons visibility to match any recent WebState or SizeClass
+// change.
+- (void)updateAllButtonsVisibility {
+  for (ToolbarButton* button in self.view.allButtons) {
+    [button updateHiddenInCurrentSizeClass];
+  }
 }
 
 @end
