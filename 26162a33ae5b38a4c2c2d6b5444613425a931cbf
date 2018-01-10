@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bf167e0_97b00eb5",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-10T11:27:21Z",
+      "side": 1,
+      "message": "So I guess here we need to distinguish \"decoding failed\" from \"no image\". Maybe introduce an enum to encapsulate the existing \"download_failed\" and \"parsing_failed\" plus the new \"decoding_failed\"?",
+      "range": {
+        "startLine": 322,
+        "startChar": 50,
+        "endLine": 322,
+        "endChar": 0
+      },
+      "revId": "26162a33ae5b38a4c2c2d6b5444613425a931cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
