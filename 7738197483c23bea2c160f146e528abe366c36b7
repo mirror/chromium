@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "247979c4_6a07a860",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-10T16:12:12Z",
+      "side": 1,
+      "message": "That\u0027s actually following my comments. The checks only happen in DEBUG but the code is run always to avoid \"unused variable\" warnings. I find this to be a big footgun :(",
+      "parentUuid": "510da9e5_c28e7053",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b1a0f0_a9f88aaf",
         "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
         "patchSetId": 17
