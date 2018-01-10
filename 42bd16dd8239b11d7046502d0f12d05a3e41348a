@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1d1942a_8f53d94d",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T22:59:35Z",
+      "side": 1,
+      "message": "optional super-nit: I think \"CreateDownEvent()\" would be descriptive enough for this name, and it might make things shorter/wrap lines better.",
+      "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ced1f6_5d557e78",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T22:59:35Z",
+      "side": 1,
+      "message": "Do you need to re-create this widget for every event? That seems slow. I recommend doing it once in SetUp().\n\nAlso, I would just do CreateTestWidget() since it has defaults for all these params.\n\nAlternately, create the widget once at the top of the DownEventPerCombination test and pass a pointer to it into this helper function (which could maybe become static or a file-scope function).",
+      "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3ae673_2050a00c",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T22:59:35Z",
+      "side": 1,
+      "message": "This block also seems like it only needs to be done once. I think it\u0027s just setting the simulated primary display to be an \"internal display\".",
+      "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf2f7f0_6e27cefe",
+        "filename": "ash/metrics/pointer_metrics_recorder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T22:59:35Z",
+      "side": 1,
+      "message": "optional: DownEventInputFormFactorDestinationCombination is such a long name that it makes the line wrapping really ugly. I wonder if something like InputFormFactorDestinationCombination or InputFormFactorDestinationMetric or just DownEventMetric would be a better compromise between length and brevity.",
+      "revId": "42bd16dd8239b11d7046502d0f12d05a3e41348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
