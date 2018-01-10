@@ -709,6 +709,7 @@ jumbo_component("base") {
     "rand_util_nacl.cc",
     "rand_util_posix.cc",
     "rand_util_win.cc",
+    "result_codes.h",
     "run_loop.cc",
     "run_loop.h",
     "scoped_clear_errno.h",

@@ -33,7 +33,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/installer/util/wmi.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "net/base/escape.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/win/hwnd_util.h"
@@ -326,7 +326,7 @@ ProcessSingleton::NotifyResult ProcessSingleton::NotifyOtherProcess() {
       REMOTE_HUNG_PROCESS_TERMINATE_REASON_COUNT);
 
   // Time to take action. Kill the browser process.
-  TerminateProcessWithHistograms(process, content::RESULT_CODE_HUNG);
+  TerminateProcessWithHistograms(process, base::RESULT_CODE_HUNG);
 
   remote_window_ = NULL;
   return PROCESS_NONE;

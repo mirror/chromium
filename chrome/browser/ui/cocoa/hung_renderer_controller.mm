@@ -21,7 +21,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "skia/ext/skia_utils_mac.h"
 #include "third_party/google_toolbox_for_mac/src/AppKit/GTMUILocalizerAndLayoutTweaker.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -171,7 +171,7 @@ class HungRendererWebContentsObserverBridge
 - (IBAction)kill:(id)sender {
   if (hungContents_) {
     hungContents_->GetMainFrame()->GetProcess()->Shutdown(
-        content::RESULT_CODE_HUNG, false);
+        base::RESULT_CODE_HUNG, false);
   }
   // Cannot call performClose:, because the close button is disabled.
   [self close];
