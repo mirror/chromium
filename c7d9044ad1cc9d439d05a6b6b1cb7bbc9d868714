@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cb4624d_ba288c19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-10T13:33:30Z",
+      "side": 1,
+      "message": "Nit: \"Unknown or missing\" maybe",
+      "range": {
+        "startLine": 262,
+        "startChar": 32,
+        "endLine": 262,
+        "endChar": 40
+      },
+      "revId": "c7d9044ad1cc9d439d05a6b6b1cb7bbc9d868714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
