@@ -461,16 +461,22 @@ const char kIsolateOriginsFieldTrialParamName[] = "OriginsList";
 const base::Feature kKeepAliveRendererForKeepaliveRequests{
     "KeepAliveRendererForKeepaliveRequests", base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Controls whether WebVR experimental rendering optimizations is enabled.
-const base::Feature kWebVrExperimentalRendering{
-    "WebVRExperimentalRendering", base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Controls whether WebVR VSync-aligned render loop timing is enabled.
 const base::Feature kWebVrVsyncAlign{"WebVrVsyncAlign",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Controls whether the WebXR Device API is enabled.
 const base::Feature kWebXr{"WebXR", base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if defined(OS_ANDROID)
+// Controls whether use of an experimental WebXR render path is enabled. The
+// param value specifies the requested specific render path.
+const base::Feature kWebXrRenderPath{"WebXrRenderPath",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
+const char kWebXrRenderPathParamName[] = "RenderPath";
+const char kWebXrRenderPathParamValueClientWait[] = "ClientWait";
+const char kWebXrRenderPathParamValueGpuFence[] = "GpuFence";
+#endif  // defined(OS_ANDROID)
 
 // Enabled "work stealing" in the script runner.
 const base::Feature kWorkStealingInScriptRunner{
