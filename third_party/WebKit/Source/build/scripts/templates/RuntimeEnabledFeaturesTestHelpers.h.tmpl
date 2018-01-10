@@ -35,6 +35,12 @@ typedef ScopedRuntimeEnabledFeatureForTest<
     RuntimeEnabledFeatures::Set{{feature.name}}Enabled>
     Scoped{{feature.name}}ForTest;
 {% endfor %}
+
+typedef ScopedRuntimeEnabledFeatureForTest<
+    RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled,
+    RuntimeEnabledFeatures::SetPaintUnderInvalidationCheckingEnabled>
+    ScopedPaintUnderInvalidationCheckingForTest;
+
 } // namespace blink
 
 #endif  // RuntimeEnabledFeaturesTestHelpers_h
