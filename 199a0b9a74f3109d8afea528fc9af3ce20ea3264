@@ -37,6 +37,75 @@
     },
     {
       "key": {
+        "uuid": "ae01694c_7d2ad6c3",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T17:47:49Z",
+      "side": 1,
+      "message": "There\u0027s a special \"signin screen\" profile/pref service. Maybe it was using that? I suspect enterprise policy could directly set the pref. xiyuan@ or one of the a11y owners would know for sure.\n\nI think GetActiveUserProfile() returns the signin screen profile before login. Does it work to keep using that?",
+      "parentUuid": "5081d403_5485801a",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054582a9_5346823c",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T17:47:49Z",
+      "side": 1,
+      "message": "If this is waiting for A11yControllerClient to send to ash, can it call A11yControllerClient.FlushForTesting() instead? That makes it clearer which thing we\u0027re waiting for.",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973890f1_710bfa8a",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T17:47:49Z",
+      "side": 1,
+      "message": "super-nit: I don\u0027t think these comments are useful (all the \"confirms\" ones in this function)",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f934891_24defd52",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T17:47:49Z",
+      "side": 1,
+      "message": "+xiyuan -- does this test make any sense to you? In particular, the old code was creating a test session then setting prefs before login.\n\nwarx, would this test work if you deleted this line and used GetActiveUserProfile() below? In theory that should return the signin screen profile at the login screen.",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "976149c9_cde308b3",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 2
@@ -51,6 +120,24 @@
       "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed24687a_91c56714",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-10T17:47:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "976149c9_cde308b3",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
