@@ -40,28 +40,6 @@ Polymer({
     },
 
     /**
-     * The effective time zone auto-detect enabled/disabled status.
-     * @private
-     */
-    timeZoneAutoDetect_: {
-      type: Boolean,
-      computed: 'computeTimeZoneAutoDetect_(' +
-          'timeZoneAutoDetectPolicyRestriction_,' +
-          'prefs.settings.resolve_timezone_by_geolocation_method.value)',
-    },
-
-    /**
-     * The effective time zone auto-detect method.
-     * @private {settings.TimeZoneAutoDetectMethod}
-     */
-    timeZoneAutoDetectMethod_: {
-      type: Number,
-      computed: 'computeTimeZoneAutoDetectMethod_(' +
-          'hasTimeZoneAutoDetectPolicyRestriction_,' +
-          'prefs.settings.resolve_timezone_by_geolocation_method.value)',
-    },
-
-    /**
      * Whether date and time are settable. Normally the date and time are forced
      * by network time, so default to false to initially hide the button.
      * @private
@@ -135,10 +113,8 @@ Polymer({
    * @private
    */
   onTimeZoneAutoDetectChange_: function(e) {
-    this.setPrefValue(
-        'settings.resolve_timezone_by_geolocation_method',
-        e.target.checked ? settings.TimeZoneAutoDetectMethod.IP_ONLY :
-                           settings.TimeZoneAutoDetectMethod.DISABLED);
+    this.setPrefValue('generated.resolve_timezone_by_geolocation_on_off',
+        e.target.checked);
   },
 
   /** @private */
@@ -155,74 +131,11 @@ Polymer({
     return policyValue != settings.TimeZoneAutoDetectPolicyRestriction.NONE;
   },
 
-  /**
-   * @param {settings.TimeZoneAutoDetectPolicyRestriction} policyValue
-   * @param {settings.TimeZoneAutoDetectMethod} prefValue
-   *     prefs.settings.resolve_timezone_by_geolocation_method.value
-   * @return {boolean} Whether time zone auto-detect is enabled.
-   * @private
-   */
-  computeTimeZoneAutoDetect_: function(policyValue, prefValue) {
-    switch (policyValue) {
-      case settings.TimeZoneAutoDetectPolicyRestriction.NONE:
-        return prefValue != settings.TimeZoneAutoDetectMethod.DISABLED;
-      case settings.TimeZoneAutoDetectPolicyRestriction.FORCED_ON:
-        return true;
-      case settings.TimeZoneAutoDetectPolicyRestriction.FORCED_OFF:
-        return false;
-      default:
-        console.error('Unknown policy value "' + policyValue + '".');
-        return false;
-    }
-  },
-
-  /**
-   * Computes effective time zone detection method.
-   * @param {Boolean} hasTimeZoneAutoDetectPolicyRestriction
-   *     this.hasTimeZoneAutoDetectPolicyRestriction_
-   * @param {settings.TimeZoneAutoDetectMethod} prefResolveValue
-   *     prefs.settings.resolve_timezone_by_geolocation_method.value
-   * @return {settings.TimeZoneAutoDetectMethod}
-   * @private
-   */
-  computeTimeZoneAutoDetectMethod_: function(
-      hasTimeZoneAutoDetectPolicyRestriction, prefResolveValue) {
-    if (hasTimeZoneAutoDetectPolicyRestriction) {
-      // timeZoneAutoDetectPolicyRestriction_ actually depends on several time
-      // policies and chrome flags. So we ignore real policy value if it is
-      // disabled.
-      if (this.timeZoneAutoDetectPolicyRestriction_ ==
-          settings.TimeZoneAutoDetectPolicyRestriction.FORCED_OFF) {
-        return settings.TimeZoneAutoDetectMethod.DISABLED;
-      }
-
-      var policyValue = /** @type{settings.SystemTimezoneProto} */ (
-          this.getPref('settings.resolve_device_timezone_by_geolocation_policy')
-              .value);
-
-      switch (policyValue) {
-        case settings.SystemTimezoneProto.USERS_DECIDE:
-          console.error('Unexpected policy value "' + policyValue + '".');
-          return settings.TimeZoneAutoDetectMethod.DISABLED;
-        case settings.SystemTimezoneProto.DISABLED:
-          return settings.TimeZoneAutoDetectMethod.DISABLED;
-        case settings.SystemTimezoneProto.IP_ONLY:
-          return settings.TimeZoneAutoDetectMethod.IP_ONLY;
-        case settings.SystemTimezoneProto.SEND_WIFI_ACCESS_POINTS:
-          return settings.TimeZoneAutoDetectMethod.SEND_WIFI_ACCESS_POINTS;
-        case settings.SystemTimezoneProto.SEND_ALL_LOCATION_INFO:
-          return settings.TimeZoneAutoDetectMethod.SEND_ALL_LOCATION_INFO;
-        default:
-          return settings.TimeZoneAutoDetectMethod.DISABLED;
-      }
-    }
-    return prefResolveValue;
-  },
 
   /**
    * Returns display name of the given time zone detection method.
    * @param {settings.TimeZoneAutoDetectMethod} method
-   *     this.timeZoneAutoDetectMethod_ value.
+   *     prefs.generated.resolve_timezone_by_geolocation_method_short.value
    * @return {string}
    * @private
    */

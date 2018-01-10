@@ -15,11 +15,6 @@ Polymer({
 
   properties: {
     /**
-     * If time zone auto detection is enabled.
-     */
-    timeZoneAutoDetect: Boolean,
-
-    /**
      * This stores active time zone display name to be used in other UI
      * via bi-directional binding.
      */
@@ -47,9 +42,11 @@ Polymer({
 
   observers: [
     'maybeGetTimeZoneListPerUser_(' +
-        'prefs.settings.timezone.value, timeZoneAutoDetect)',
+        'prefs.settings.timezone.value,' +
+        'prefs.generated.resolve_timezone_by_geolocation_on_off.value)',
     'maybeGetTimeZoneListPerSystem_(' +
-        'prefs.cros.system.timezone.value, timeZoneAutoDetect)',
+        'prefs.cros.system.timezone.value,' +
+        'prefs.generated.resolve_timezone_by_geolocation_on_off.value)',
     'updateActiveTimeZoneName_(prefs.cros.system.timezone.value)',
   ],
 
@@ -78,7 +75,8 @@ Polymer({
       return;
 
     // If auto-detect is enabled, we only need the current time zone.
-    if (this.timeZoneAutoDetect) {
+    if (this.getPref('generated.resolve_timezone_by_geolocation_on_off')
+            .value) {
       var isPerUserTimezone =
           this.getPref('cros.flags.per_user_timezone_enabled').value;
       if (this.timeZoneList_[0].value ==
@@ -140,14 +138,15 @@ Polymer({
    * Computes visibility of user timezone preference.
    * @param {?chrome.settingsPrivate.PrefObject} prefUserTimezone
    *     pref.settings.timezone
-   * @param {settings.TimeZoneAutoDetectMethod} prefResolveValue
-   *     prefs.settings.resolve_timezone_by_geolocation_method.value
+   * @param {boolean} prefResolveOnOffValue
+   *     prefs.generated.resolve_timezone_by_geolocation_on_off.value
    * @return {boolean}
    * @private
    */
-  isUserTimeZoneSelectorHidden_: function(prefUserTimezone, prefResolveValue) {
+  isUserTimeZoneSelectorHidden_: function(
+      prefUserTimezone, prefResolveOnOffValue) {
     return (prefUserTimezone && prefUserTimezone.controlledBy != null) ||
-        prefResolveValue != settings.TimeZoneAutoDetectMethod.DISABLED;
+        prefResolveOnOffValue;
   },
 });
 })();
