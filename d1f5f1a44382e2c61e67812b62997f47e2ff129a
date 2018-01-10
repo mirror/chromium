@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ef64d3_ebd3b16c",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-10T14:19:08Z",
+      "side": 1,
+      "message": "Can you remove extra_targets from this list? Sometimes --all doesn\u0027t get everything, so we\u0027d want to have an out for that.\n\nIf someone wants to just make a small project they can just use --targets specifically. WDYT?",
+      "range": {
+        "startLine": 774,
+        "startChar": 64,
+        "endLine": 774,
+        "endChar": 77
+      },
+      "revId": "d1f5f1a44382e2c61e67812b62997f47e2ff129a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
