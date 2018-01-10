@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "8f23aa6e_6030dab6",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-10T23:43:07Z",
+      "side": 1,
+      "message": "The current summary_mode should be invoking just 4-5 functions which just return total numbers. In future there is a plan to include more details into summary mode. At that point we will add metrics about time taken for dump and processing before enabling it.",
+      "parentUuid": "315ebb3d_9fb3f603",
+      "range": {
+        "startLine": 488,
+        "startChar": 40,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee87f532_03571810",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 3
