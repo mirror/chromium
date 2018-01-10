@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0650502c_2b44594d",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-10T01:09:26Z",
+      "side": 1,
+      "message": "I\u0027m confused. You \"assume you need this conditional\" - shouldn\u0027t we know whether the conditional is needed or not?\n\n\u003e If so checking for if (!tls_blocking_observer) seems more readable to me\n\nHmmm? I\u0027m suggesting:\n\n: blocking_observer_(nullptr), previous_scope_blocking_call_(nullptr), is_will_block_(false) {\n  if (!ScopedBlockingCallIsInitialized())\n    return;\n\n  blocking_observer_ \u003d tls_blocking_observer-\u003eGet();\n  previous_scoped_blocking_call_ \u003d tls_last_scoped_blocking_call-\u003eGet();\n  is_will_block_ \u003d ...\n\nAnytime you can get rid of that many ?: operators it seems like a readability win.",
+      "parentUuid": "56372385_42660a62",
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80ecccd6_ae51619d",
         "filename": "base/threading/scoped_blocking_call.cc",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c7e9be_ea61b9e7",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-10T01:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7906230_b9460c0b",
+      "revId": "6a619401bc09464a17b311ef3077937f54cceeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
