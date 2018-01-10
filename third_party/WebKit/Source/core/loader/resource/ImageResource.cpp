@@ -172,6 +172,7 @@ ImageResource* ImageResource::Fetch(FetchParameters& params,
   if (fetcher->Context().PageDismissalEventBeingDispatched()) {
     KURL request_url = params.GetResourceRequest().Url();
     if (request_url.IsValid()) {
+      bool subresource_filter_would_disallow = false;
       ResourceRequestBlockedReason block_reason = fetcher->Context().CanRequest(
           Resource::kImage, params.GetResourceRequest(), request_url,
           params.Options(),
@@ -180,7 +181,8 @@ ImageResource* ImageResource::Fetch(FetchParameters& params,
               ? SecurityViolationReportingPolicy::kSuppressReporting
               : SecurityViolationReportingPolicy::kReport,
           params.GetOriginRestriction(),
-          params.GetResourceRequest().GetRedirectStatus());
+          params.GetResourceRequest().GetRedirectStatus(),
+          &subresource_filter_would_disallow);
       if (block_reason == ResourceRequestBlockedReason::kNone)
         fetcher->Context().SendImagePing(request_url);
     }
