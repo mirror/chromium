@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29567690_22ec7329",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-10T21:16:16Z",
+      "side": 1,
+      "message": "Is the UI querying the new loadTimeData member only when SAFE_BROWSING_DB_LOCAL is true? Otherwise loadTimeData.getBoolean() would throw an error when SAFE_BROWSING_DB_LOCAL is false , because Should this be as follows? Can you verify?\n\nbool passwordProtectionAvailable \u003d false;\n#if defined(SAFE_BROWSING_DB_LOCAL)\n  ...\n  passwordProtectionAvailable \u003d !!password_protection;\n  ...\n#endif\nhtml_source-\u003eAddBoolean(\"passwordProtectionAvailable\", passwordProtectionAvailable);",
+      "range": {
+        "startLine": 231,
+        "startChar": 12,
+        "endLine": 231,
+        "endChar": 34
+      },
+      "revId": "ebf3aed43c661237025a28e24b9ab6b1dac67f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
