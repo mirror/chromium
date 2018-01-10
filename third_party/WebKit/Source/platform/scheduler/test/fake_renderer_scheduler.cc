@@ -45,6 +45,11 @@ FakeRendererScheduler::IPCTaskRunner() {
   return nullptr;
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+FakeRendererScheduler::TestTaskRunner() {
+  return nullptr;
+}
+
 std::unique_ptr<RenderWidgetSchedulingState>
 FakeRendererScheduler::NewRenderWidgetSchedulingState() {
   return nullptr;

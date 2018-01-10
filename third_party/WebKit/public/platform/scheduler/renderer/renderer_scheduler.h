@@ -63,6 +63,9 @@ class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
   // to resource dispatch, foreground HTML parsing, etc...
   virtual scoped_refptr<base::SingleThreadTaskRunner> LoadingTaskRunner() = 0;
 
+  // Returns the task runner for testing.
+  virtual scoped_refptr<base::SingleThreadTaskRunner> TestTaskRunner() = 0;
+
   // Returns a new RenderWidgetSchedulingState.  The signals from this will be
   // used to make scheduling decisions.
   virtual std::unique_ptr<RenderWidgetSchedulingState>

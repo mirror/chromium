@@ -529,6 +529,12 @@ RendererSchedulerImpl::LoadingTaskRunner() {
   return default_loading_task_queue_;
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+RendererSchedulerImpl::TestTaskRunner() {
+  return WebTaskRunnerImpl::Create(helper_.DefaultMainThreadTaskQueue(),
+                                   TaskType::kInternalTest);
+}
+
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::DefaultTaskQueue() {
   return helper_.DefaultMainThreadTaskQueue();
 }

@@ -303,6 +303,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<base::SingleThreadTaskRunner> DefaultTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> CompositorTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> LoadingTaskRunner() override;
+  scoped_refptr<base::SingleThreadTaskRunner> TestTaskRunner() override;
 
  private:
   friend class RenderWidgetSchedulingState;

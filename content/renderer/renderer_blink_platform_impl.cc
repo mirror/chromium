@@ -1350,7 +1350,7 @@ void RendererBlinkPlatformImpl::SendFakeDeviceEventDataForTesting(
   if (!data)
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  renderer_scheduler_->TestTaskRunner()->PostTask(
       FROM_HERE,
       base::BindOnce(&PlatformEventObserverBase::SendFakeDataForTesting,
                      base::Unretained(observer), data));
