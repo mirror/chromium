@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34225018_046788a5",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-10T05:01:26Z",
+      "side": 1,
+      "message": "\u003e nit: maybe rename PLATFORM to BROWSER or similar to disambiguate from NATIVE?\n\nYeah - good call. Done. It felt a bit weird to mention browsery things in ui/gfx, but it\u0027s too confusing otherwise.",
+      "parentUuid": "617a52ae_0a76c99b",
+      "revId": "a035ea260bb92a8d54645d82be7e9885624c541d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "009f674d_03c0079c",
         "filename": "ui/gfx/text_elider.h",
         "patchSetId": 6
