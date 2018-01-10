@@ -34,6 +34,24 @@
       "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0122a29_eb290838",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T13:57:55Z",
+      "side": 1,
+      "message": "Yeah, I think that\u0027s acceptable.",
+      "parentUuid": "83fb6bc3_5a702d13",
+      "revId": "8644c16996435cd9e5b5e455e1cab6962d1b4130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
