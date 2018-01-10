@@ -13,9 +13,14 @@
 #pragma mark
 
 namespace base {
+class Location;
 class SingleThreadTaskRunner;
 class Thread;
 }
+
+namespace {
+typedef void (^BlockType)(void);
+}  // namespace
 
 // Exposes private test-only methods of the Cronet class.
 @interface Cronet (ExposedForTesting)
@@ -24,6 +29,7 @@ class Thread;
     (std::unique_ptr<net::CertVerifier>)certVerifier;
 + (void)setEnablePublicKeyPinningBypassForLocalTrustAnchors:(BOOL)enable;
 + (base::SingleThreadTaskRunner*)getFileThreadRunnerForTesting;
++ (base::SingleThreadTaskRunner*)getNetworkThreadRunnerForTesting;
 @end
 
 // NSURLSessionDataDelegate delegate implementation used by the tests to
@@ -88,10 +94,19 @@ class CronetTestBase : public ::testing::Test {
       const std::vector<std::string>& certs,
       bool known_root);
 
+  void PostBlockToFileThread(const base::Location& from_here, BlockType block);
+  void PostBlockToNetworkThread(const base::Location& from_here,
+                                BlockType block);
+  bool IsSimulator();
+
   ::testing::AssertionResult IsResponseSuccessful();
   ::testing::AssertionResult IsResponseCanceled();
 
   TestDelegate* delegate_;
+
+ private:
+  void ExecuteBlock(BlockType block);
+
 };  // class CronetTestBase
 
 }  // namespace cronet
