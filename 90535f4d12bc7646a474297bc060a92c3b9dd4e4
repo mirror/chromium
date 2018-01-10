@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afade946_60838cbb",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-10T00:11:43Z",
+      "side": 1,
+      "message": "Thanks. I think a more accurate comment is, DownEventInputFormFactorDestinationCombination needs to be updates for any changes to the 3 emums.\n\nPlease let me know if the new comment looks good.",
+      "parentUuid": "04ed9efe_f3cbccf1",
+      "range": {
+        "startLine": 23,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 57
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8136fb66_323bd36c",
         "filename": "ash/metrics/pointer_metrics_recorder.cc",
         "patchSetId": 3
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5833e01a_de71be85",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-10T00:11:43Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "4e1442d8_005ad742",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 1
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57514f93_b567233a",
         "filename": "ash/metrics/pointer_metrics_recorder.cc",
         "patchSetId": 3
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e0ff4246_0cc185a9",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-10T00:11:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57514f93_b567233a",
+      "range": {
+        "startLine": 160,
+        "startChar": 22,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fb7b805_0497211a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -115,6 +187,30 @@
       "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf439819_4eacfb3f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 9416,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-10T00:11:43Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "5fb7b805_0497211a",
+      "range": {
+        "startLine": 9413,
+        "startChar": 0,
+        "endLine": 9416,
+        "endChar": 13
+      },
+      "revId": "90535f4d12bc7646a474297bc060a92c3b9dd4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
