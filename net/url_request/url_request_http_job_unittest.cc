@@ -189,7 +189,7 @@ TEST_F(URLRequestHttpJobSetUpSourceTest, UnknownEncoding) {
 class URLRequestHttpJobWithProxy {
  public:
   explicit URLRequestHttpJobWithProxy(
-      std::unique_ptr<ProxyService> proxy_service)
+      std::unique_ptr<ProxyResolutionService> proxy_service)
       : proxy_service_(std::move(proxy_service)),
         context_(new TestURLRequestContext(true)) {
     context_->set_client_socket_factory(&socket_factory_);
@@ -200,7 +200,7 @@ class URLRequestHttpJobWithProxy {
 
   MockClientSocketFactory socket_factory_;
   TestNetworkDelegate network_delegate_;
-  std::unique_ptr<ProxyService> proxy_service_;
+  std::unique_ptr<ProxyResolutionService> proxy_service_;
   std::unique_ptr<TestURLRequestContext> context_;
 
  private:
@@ -258,8 +258,9 @@ TEST(URLRequestHttpJobWithProxy, TestSuccessfulWithOneProxy) {
   const ProxyServer proxy_server =
       ProxyServer::FromURI("http://origin.net:80", ProxyServer::SCHEME_HTTP);
 
-  std::unique_ptr<ProxyService> proxy_service =
-      ProxyService::CreateFixedFromPacResult(proxy_server.ToPacString());
+  std::unique_ptr<ProxyResolutionService> proxy_service =
+      ProxyResolutionService::CreateFixedFromPacResult(
+          proxy_server.ToPacString());
 
   MockWrite writes[] = {MockWrite(kSimpleProxyGetMockWrite)};
   MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_CONNECTION_RESET)};
@@ -304,8 +305,8 @@ TEST(URLRequestHttpJobWithProxy,
 
   // Connection to |proxy_server| would fail. Request should be fetched over
   // DIRECT.
-  std::unique_ptr<ProxyService> proxy_service =
-      ProxyService::CreateFixedFromPacResult(
+  std::unique_ptr<ProxyResolutionService> proxy_service =
+      ProxyResolutionService::CreateFixedFromPacResult(
           proxy_server.ToPacString() + "; " +
           ProxyServer::Direct().ToPacString());
 

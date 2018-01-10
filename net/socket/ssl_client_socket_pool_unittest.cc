@@ -87,7 +87,7 @@ class SSLClientSocketPoolTest : public testing::Test {
   SSLClientSocketPoolTest()
       : cert_verifier_(new MockCertVerifier),
         transport_security_state_(new TransportSecurityState),
-        proxy_service_(ProxyService::CreateDirect()),
+        proxy_service_(ProxyResolutionService::CreateDirect()),
         ssl_config_service_(new SSLConfigServiceDefaults),
         http_auth_handler_factory_(
             HttpAuthHandlerFactory::CreateDefault(&host_resolver_)),
@@ -193,7 +193,7 @@ class SSLClientSocketPoolTest : public testing::Test {
   std::unique_ptr<TransportSecurityState> transport_security_state_;
   MultiLogCTVerifier ct_verifier_;
   CTPolicyEnforcer ct_policy_enforcer_;
-  const std::unique_ptr<ProxyService> proxy_service_;
+  const std::unique_ptr<ProxyResolutionService> proxy_service_;
   const scoped_refptr<SSLConfigService> ssl_config_service_;
   const std::unique_ptr<HttpAuthHandlerFactory> http_auth_handler_factory_;
   const std::unique_ptr<HttpServerPropertiesImpl> http_server_properties_;

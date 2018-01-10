@@ -540,8 +540,9 @@ TEST_F(NetworkContextTest, CookieManager) {
 TEST_F(NetworkContextTest, ProxyConfig) {
   // Create a bunch of proxy rules to switch between. All that matters is that
   // they're all different. It's important that none of these configs require
-  // fetching a PAC scripts, as this test checks ProxyService::config(), which
-  // is only updated after fetching PAC scripts (if applicable).
+  // fetching a PAC scripts, as this test checks
+  // ProxyResolutionService::config(), which is only updated after fetching PAC
+  // scripts (if applicable).
   net::ProxyConfig proxy_configs[3];
   proxy_configs[0].proxy_rules().ParseFromString("http=foopy:80");
   proxy_configs[1].proxy_rules().ParseFromString("http=foopy:80;ftp=foopy2");
@@ -563,10 +564,10 @@ TEST_F(NetworkContextTest, ProxyConfig) {
     std::unique_ptr<NetworkContext> network_context =
         CreateContextWithParams(std::move(context_params));
 
-    net::ProxyService* proxy_service =
+    net::ProxyResolutionService* proxy_service =
         network_context->url_request_context()->proxy_service();
-    // Kick the ProxyService into action, as it doesn't start updating its
-    // config until it's first used.
+    // Kick the ProxyResolutionService into action, as it doesn't start updating
+    // its config until it's first used.
     proxy_service->ForceReloadProxyConfig();
     EXPECT_TRUE(proxy_service->config().is_valid());
     EXPECT_TRUE(proxy_service->config().Equals(initial_proxy_config));
@@ -593,10 +594,10 @@ TEST_F(NetworkContextTest, StaticProxyConfig) {
   std::unique_ptr<NetworkContext> network_context =
       CreateContextWithParams(std::move(context_params));
 
-  net::ProxyService* proxy_service =
+  net::ProxyResolutionService* proxy_service =
       network_context->url_request_context()->proxy_service();
-  // Kick the ProxyService into action, as it doesn't start updating its
-  // config until it's first used.
+  // Kick the ProxyResolutionService into action, as it doesn't start updating
+  // its config until it's first used.
   proxy_service->ForceReloadProxyConfig();
   EXPECT_TRUE(proxy_service->config().is_valid());
   EXPECT_TRUE(proxy_service->config().Equals(proxy_config));
@@ -611,7 +612,7 @@ TEST_F(NetworkContextTest, NoInitialProxyConfig) {
   std::unique_ptr<NetworkContext> network_context =
       CreateContextWithParams(std::move(context_params));
 
-  net::ProxyService* proxy_service =
+  net::ProxyResolutionService* proxy_service =
       network_context->url_request_context()->proxy_service();
   EXPECT_FALSE(proxy_service->config().is_valid());
   EXPECT_FALSE(proxy_service->fetched_config().is_valid());
@@ -619,7 +620,7 @@ TEST_F(NetworkContextTest, NoInitialProxyConfig) {
   // Before there's a proxy configuration, proxy requests should hang.
   net::ProxyInfo proxy_info;
   net::TestCompletionCallback test_callback;
-  net::ProxyService::PacRequest* pac_request = nullptr;
+  net::ProxyResolutionService::PacRequest* pac_request = nullptr;
   ASSERT_EQ(net::ERR_IO_PENDING,
             proxy_service->ResolveProxy(GURL("http://bar/"), "GET", &proxy_info,
                                         test_callback.callback(), &pac_request,

@@ -300,10 +300,10 @@ MockECSignatureCreatorFactory::Create(crypto::ECPrivateKey* key) {
 }
 
 SpdySessionDependencies::SpdySessionDependencies()
-    : SpdySessionDependencies(ProxyService::CreateDirect()) {}
+    : SpdySessionDependencies(ProxyResolutionService::CreateDirect()) {}
 
 SpdySessionDependencies::SpdySessionDependencies(
-    std::unique_ptr<ProxyService> proxy_service)
+    std::unique_ptr<ProxyResolutionService> proxy_service)
     : host_resolver(std::make_unique<MockCachingHostResolver>()),
       cert_verifier(std::make_unique<MockCertVerifier>()),
       channel_id_service(nullptr),
@@ -422,7 +422,7 @@ SpdyURLRequestContext::SpdyURLRequestContext() : storage_(this) {
   storage_.set_cert_verifier(std::make_unique<MockCertVerifier>());
   storage_.set_transport_security_state(
       std::make_unique<TransportSecurityState>());
-  storage_.set_proxy_service(ProxyService::CreateDirect());
+  storage_.set_proxy_service(ProxyResolutionService::CreateDirect());
   storage_.set_ct_policy_enforcer(
       std::make_unique<AllowAnyCertCTPolicyEnforcer>());
   storage_.set_cert_transparency_verifier(

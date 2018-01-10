@@ -227,7 +227,8 @@ void CronetURLRequestContextAdapter::InitRequestContextOnInitThread(
   base::android::ScopedJavaGlobalRef<jobject> jcaller_ref;
   jcaller_ref.Reset(env, jcaller);
   proxy_config_service_ =
-      net::ProxyService::CreateSystemProxyConfigService(GetNetworkTaskRunner());
+      net::ProxyResolutionService::CreateSystemProxyConfigService(
+          GetNetworkTaskRunner());
   net::ProxyConfigServiceAndroid* android_proxy_config_service =
       static_cast<net::ProxyConfigServiceAndroid*>(proxy_config_service_.get());
   // If a PAC URL is present, ignore it and use the address and port of
@@ -347,7 +348,7 @@ void CronetURLRequestContextAdapter::InitializeOnNetworkThread(
   // URL is present. Create a proxy service without a resolver and rely on this
   // local HTTP proxy. See: crbug.com/432539.
   context_builder.set_proxy_service(
-      net::ProxyService::CreateWithoutProxyResolver(
+      net::ProxyResolutionService::CreateWithoutProxyResolver(
           std::move(proxy_config_service_), g_net_log.Get().net_log()));
 
   config->ConfigureURLRequestContextBuilder(&context_builder,

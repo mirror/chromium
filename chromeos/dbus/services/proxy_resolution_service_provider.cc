@@ -124,9 +124,9 @@ void ProxyResolutionServiceProvider::ResolveProxy(
                  weak_ptr_factory_.GetWeakPtr());
 
   // This would ideally call PostTaskAndReply() instead of PostTask(), but
-  // ResolveProxyOnNetworkThread()'s call to net::ProxyService::ResolveProxy()
-  // can result in an asynchronous lookup, in which case the result won't be
-  // available immediately.
+  // ResolveProxyOnNetworkThread()'s call to
+  // net::ProxyResolutionService::ResolveProxy() can result in an asynchronous
+  // lookup, in which case the result won't be available immediately.
   context_getter->GetNetworkTaskRunner()->PostTask(
       FROM_HERE,
       base::Bind(&ProxyResolutionServiceProvider::ResolveProxyOnNetworkThread,
@@ -142,7 +142,7 @@ void ProxyResolutionServiceProvider::ResolveProxyOnNetworkThread(
   DCHECK(request->context_getter->GetNetworkTaskRunner()
              ->BelongsToCurrentThread());
 
-  net::ProxyService* proxy_service =
+  net::ProxyResolutionService* proxy_service =
       request->context_getter->GetURLRequestContext()->proxy_service();
   if (!proxy_service) {
     request->error = "No proxy service in chrome";
