@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adc75d28_6334252c",
+        "filename": "chrome/browser/chromeos/login/enrollment/auto_enrollment_check_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-10T14:29:45Z",
+      "side": 1,
+      "message": "Is it hard to display a different error for this case? I\u0027m fine with this as-is, but would be nice to be able to differentiate in the UI between \"server issue\" and \"connectivity issue\"",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 215,
+        "endChar": 32
+      },
+      "revId": "b620961da1fa34185641e954c996c2c4fdf717a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
