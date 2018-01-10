@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5797402_c14a725b",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T00:07:18Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::UI);",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3fc2ea_5aefe840",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T00:07:18Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35325cae_1d84e64e",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T00:07:18Z",
+      "side": 1,
+      "message": "nit: prefer return false here and make \u0027else if\u0027 in the next line just \u0027if\u0027",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc8f6b0_a3ec72a8",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T00:07:18Z",
+      "side": 1,
+      "message": "The naming feels a bit inconsistent here, StartRequestOnXX is the method that\u0027s supposed to be called on XX thread, while this actually posts a task to the UI thread.  Maybe just Send() with a comment is fine?",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01dddafa_3fcd5fbc",
+        "filename": "content/common/speech_recognizer.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-10T00:07:18Z",
+      "side": 1,
+      "message": "Should each \u0027SpeecRecognition\u0027 request be a Mojo interface that can be requested via StartRequest so that we can get rid of request_id maybe, ideally?\n\nNot suggesting that such refactoring should be done in this CL, but using request_id seems a bit unfortunate.",
+      "revId": "dd6ea9e8008e39d9324c3268f7071aef1e8c829b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
