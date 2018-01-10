@@ -128,6 +128,30 @@
       "revId": "33056e703ebc17921dca0b360642fd631b517a35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff371922_3de7dff7",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:17:14Z",
+      "side": 1,
+      "message": "I think the primary confusion for me was that I wasn\u0027t sure if this was an object sent to the device or received from the device. This reminds me that you should add a class level comment for this explaining its intended usage like you did for other classes.\n\nFrom reading your other patch it seems like calling these fields is_platform_device and has_resident_key would be accurate and more descriptive.",
+      "parentUuid": "2c5d9a1e_d230e6e7",
+      "range": {
+        "startLine": 24,
+        "startChar": 24,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "33056e703ebc17921dca0b360642fd631b517a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
