@@ -102,6 +102,7 @@ class ASH_EXPORT AccessibilityController
   PrefService* GetActivePrefService() const;
 
   void UpdateAutoclickFromPref();
+  void UpdateAutoclickDelayFromPref();
   void UpdateHighContrastFromPref();
   void UpdateLargeCursorFromPref();
   void UpdateMonoAudioFromPref();
@@ -117,6 +118,7 @@ class ASH_EXPORT AccessibilityController
   mojom::AccessibilityControllerClientPtr client_;
 
   bool autoclick_enabled_ = false;
+  base::TimeDelta autoclick_delay_ms_;
   bool high_contrast_enabled_ = false;
   bool large_cursor_enabled_ = false;
   int large_cursor_size_in_dip_ = kDefaultLargeCursorSize;

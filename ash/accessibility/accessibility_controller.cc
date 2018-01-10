@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "ash/autoclick/autoclick_controller.h"
+#include "ash/autoclick/mus/public/interfaces/autoclick.mojom.h"
 #include "ash/high_contrast/high_contrast_controller.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
@@ -44,7 +45,8 @@ void NotifyAccessibilityStatusChanged(
 
 AccessibilityController::AccessibilityController(
     service_manager::Connector* connector)
-    : connector_(connector) {
+    : connector_(connector),
+      autoclick_delay_ms_(AutoclickController::GetDefaultAutoclickDelay()) {
   Shell::Get()->session_controller()->AddObserver(this);
 }
 
@@ -58,6 +60,10 @@ void AccessibilityController::RegisterProfilePrefs(PrefRegistrySimple* registry,
   if (for_test) {
     // In tests there is no remote pref service. Make ash own the prefs.
     registry->RegisterBooleanPref(prefs::kAccessibilityAutoclickEnabled, false);
+    registry->RegisterIntegerPref(
+        prefs::kAccessibilityAutoclickDelayMs,
+        static_cast<int>(
+            AutoclickController::GetDefaultAutoclickDelay().InMilliseconds()));
     registry->RegisterBooleanPref(prefs::kAccessibilityHighContrastEnabled,
                                   false);
     registry->RegisterBooleanPref(prefs::kAccessibilityLargeCursorEnabled,
@@ -75,6 +81,7 @@ void AccessibilityController::RegisterProfilePrefs(PrefRegistrySimple* registry,
   // In production the prefs are owned by chrome.
   // TODO(jamescook): Move ownership to ash.
   registry->RegisterForeignPref(prefs::kAccessibilityAutoclickEnabled);
+  registry->RegisterForeignPref(prefs::kAccessibilityAutoclickDelayMs);
   registry->RegisterForeignPref(prefs::kAccessibilityHighContrastEnabled);
   registry->RegisterForeignPref(prefs::kAccessibilityLargeCursorEnabled);
   registry->RegisterForeignPref(prefs::kAccessibilityLargeCursorDipSize);
@@ -219,6 +226,10 @@ void AccessibilityController::ObservePrefs(PrefService* prefs) {
       base::Bind(&AccessibilityController::UpdateAutoclickFromPref,
                  base::Unretained(this)));
   pref_change_registrar_->Add(
+      prefs::kAccessibilityAutoclickDelayMs,
+      base::Bind(&AccessibilityController::UpdateAutoclickDelayFromPref,
+                 base::Unretained(this)));
+  pref_change_registrar_->Add(
       prefs::kAccessibilityHighContrastEnabled,
       base::Bind(&AccessibilityController::UpdateHighContrastFromPref,
                  base::Unretained(this)));
@@ -241,6 +252,7 @@ void AccessibilityController::ObservePrefs(PrefService* prefs) {
 
   // Load current state.
   UpdateAutoclickFromPref();
+  UpdateAutoclickDelayFromPref();
   UpdateHighContrastFromPref();
   UpdateLargeCursorFromPref();
   UpdateMonoAudioFromPref();
@@ -274,6 +286,28 @@ void AccessibilityController::UpdateAutoclickFromPref() {
   }
 
   Shell::Get()->autoclick_controller()->SetEnabled(enabled);
+}
+
+void AccessibilityController::UpdateAutoclickDelayFromPref() {
+  PrefService* prefs = GetActivePrefService();
+  base::TimeDelta autoclick_delay_ms = base::TimeDelta::FromMilliseconds(
+      int64_t{prefs->GetInteger(ash::prefs::kAccessibilityAutoclickDelayMs)});
+
+  if (autoclick_delay_ms_ == autoclick_delay_ms)
+    return;
+  autoclick_delay_ms_ = autoclick_delay_ms;
+
+  if (Shell::GetAshConfig() == Config::MASH) {
+    if (!connector_)  // Null in tests.
+      return;
+    autoclick::mojom::AutoclickControllerPtr autoclick_controller;
+    connector_->BindInterface("accessibility_autoclick", &autoclick_controller);
+    autoclick_controller->SetAutoclickDelay(
+        autoclick_delay_ms_.InMilliseconds());
+    return;
+  }
+
+  Shell::Get()->autoclick_controller()->SetAutoclickDelay(autoclick_delay_ms_);
 }
 
 void AccessibilityController::UpdateHighContrastFromPref() {
