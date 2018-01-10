@@ -574,6 +574,51 @@ void PasswordManagerBrowserTestBase::WaitForElementValue(
       << ", expected_value = " << expected_value;
 }
 
+void PasswordManagerBrowserTestBase::WaitForElementValue(
+    const std::string& form_id,
+    size_t elements_index,
+    const std::string& expected_value) {
+  enum ReturnCodes {  // Possible results of the JavaScript code.
+    RETURN_CODE_OK,
+    RETURN_CODE_NO_ELEMENT,
+    RETURN_CODE_WRONG_VALUE,
+    RETURN_CODE_INVALID,
+  };
+  const std::string value_check_function = base::StringPrintf(
+      "function valueCheck() {"
+      "  var element = document.getElementById('%s').elements['%zu'];"
+      "  return element && element.value == '%s';"
+      "}",
+      form_id.c_str(), elements_index, expected_value.c_str());
+  const std::string script =
+      value_check_function +
+      base::StringPrintf(
+          "if (valueCheck()) {"
+          "  /* Spin the event loop with setTimeout. */"
+          "  setTimeout(window.domAutomationController.send(%d), 0);"
+          "} else {"
+          "  var element = document.getElementById('%s').elements['%zu'];"
+          "  if (!element)"
+          "    window.domAutomationController.send(%d);"
+          "  element.onchange = function() {"
+          "    if (valueCheck()) {"
+          "      /* Spin the event loop with setTimeout. */"
+          "      setTimeout(window.domAutomationController.send(%d), 0);"
+          "    } else {"
+          "      window.domAutomationController.send(%d);"
+          "    }"
+          "  };"
+          "}",
+          RETURN_CODE_OK, form_id.c_str(), elements_index,
+          RETURN_CODE_NO_ELEMENT, RETURN_CODE_OK, RETURN_CODE_WRONG_VALUE);
+  int return_value = RETURN_CODE_INVALID;
+  ASSERT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractInt(
+      RenderFrameHost(), script, &return_value));
+  EXPECT_EQ(RETURN_CODE_OK, return_value)
+      << "form_id = " << form_id << "elements_index=" << elements_index
+      << ", expected_value = " << expected_value;
+}
+
 void PasswordManagerBrowserTestBase::WaitForPasswordStore() {
   scoped_refptr<password_manager::PasswordStore> password_store =
       PasswordStoreFactory::GetForProfile(browser()->profile(),
