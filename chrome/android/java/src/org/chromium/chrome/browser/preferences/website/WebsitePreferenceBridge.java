@@ -266,7 +266,7 @@ public abstract class WebsitePreferenceBridge {
     static native void nativeSetCameraSettingForOrigin(
             String origin, int value, boolean isIncognito);
     static native void nativeClearCookieData(String path);
-    static native void nativeClearLocalStorageData(String path);
+    static native void nativeClearLocalStorageData(String path, Object callback);
     static native void nativeClearStorageData(String origin, int type, Object callback);
     private static native void nativeFetchLocalStorageInfo(
             Object callback, boolean includeImportant);
