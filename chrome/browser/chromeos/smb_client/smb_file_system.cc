@@ -6,6 +6,8 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "chrome/browser/chromeos/file_system_provider/service.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/smb_provider_client.h"
 
@@ -65,8 +67,11 @@ storage::DirectoryEntry::DirectoryEntryType MapEntryType(bool is_directory) {
 using file_system_provider::AbortCallback;
 
 SmbFileSystem::SmbFileSystem(
-    const file_system_provider::ProvidedFileSystemInfo& file_system_info)
-    : file_system_info_(file_system_info), weak_ptr_factory_(this) {}
+    const file_system_provider::ProvidedFileSystemInfo& file_system_info,
+    UnmountCallback unmount_callback)
+    : file_system_info_(file_system_info),
+      unmount_callback_(std::move(unmount_callback)),
+      weak_ptr_factory_(this) {}
 
 SmbFileSystem::~SmbFileSystem() {}
 
@@ -144,6 +149,11 @@ AbortCallback SmbFileSystem::RequestUnmount(
 void SmbFileSystem::HandleRequestUnmountCallback(
     const storage::AsyncFileUtil::StatusCallback& callback,
     smbprovider::ErrorType error) const {
+  if (TranslateError(error) == base::File::FILE_OK) {
+    callback.Run(RunUnmountCallback(
+        file_system_info_.provider_id(), file_system_info_.file_system_id(),
+        file_system_provider::Service::UNMOUNT_REASON_USER));
+  }
   callback.Run(TranslateError(error));
 }
 
@@ -404,6 +414,13 @@ void SmbFileSystem::HandleRequestGetMetadataEntryCallback(
   }
   // Mime types are not supported.
   callback.Run(std::move(metadata), base::File::FILE_OK);
+}
+
+base::File::Error SmbFileSystem::RunUnmountCallback(
+    const ProviderId& provider_id,
+    const std::string& file_system_id,
+    file_system_provider::Service::UnmountReason reason) const {
+  return unmount_callback_.Run(provider_id, file_system_id, reason);
 }
 
 base::WeakPtr<file_system_provider::ProvidedFileSystemInterface>
