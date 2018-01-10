@@ -704,6 +704,11 @@ const char kGamepadExtensionsDescription[] =
     "Enabling this option allows web applications to access experimental "
     "extensions to the Gamepad APIs.";
 
+const char kTintGlCompositedContentName[] = "Tint GL-composited content";
+const char kTintGlCompositedContentDescription[] =
+    "Tint contents composited using GL with a shade of red to help debug and "
+    "study overlay support.";
+
 const char kGpuRasterizationMsaaSampleCountName[] =
     "GPU rasterization MSAA sample count.";
 const char kGpuRasterizationMsaaSampleCountDescription[] =
