@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e630610_76e070e0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-10T09:45:29Z",
+      "side": 1,
+      "message": "nit: s/\u0026/*/, NG prefers * for modifiable variables, and \u0026 only for const.",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90bad5bc_71a3a773",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2239,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-10T09:45:29Z",
+      "side": 1,
+      "message": "Why can\u0027t we just use LayoutBlockFlow::PaintFragment()?",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c8dcd5b_b12c4988",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-10T09:45:29Z",
+      "side": 1,
+      "message": "Maybe move to LayoutBlockFlow, or its own class similar to NGInlineFragmentIterator?",
+      "revId": "49608eedc6c67815f86555934e69cb25159b68a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
