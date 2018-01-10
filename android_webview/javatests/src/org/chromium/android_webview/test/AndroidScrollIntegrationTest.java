@@ -262,8 +262,8 @@ public class AndroidScrollIntegrationTest {
                     awContents, contentsClient, "window.scrollX");
             String y = mActivityTestRule.executeJavaScriptAndWaitForResult(
                     awContents, contentsClient, "window.scrollY");
-            return (Integer.toString(xCss).equals(x)
-                    && Integer.toString(yCss).equals(y));
+            return xCss == Math.round(Float.parseFloat(x))
+                    && yCss == Math.round(Float.parseFloat(y));
         });
     }
 
