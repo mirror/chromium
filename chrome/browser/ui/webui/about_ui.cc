@@ -466,6 +466,8 @@ void AboutUIHTMLSource::StartDataRequest(
     response = l10n_util::GetStringUTF8(IDS_TERMS_HTML);
 #endif
 #endif
+  } else if (source_name_ == chrome::kChromeUIConnectionHelpHost) {
+    response = "Placeholder";
   }
 
   FinishDataRequest(response, callback);
