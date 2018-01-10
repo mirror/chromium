@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "75e296cb_c052c1d8",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T20:00:34Z",
+      "side": 1,
+      "message": "Web Crypto\u0027s methods are all Promise based (https://www.w3.org/TR/WebCryptoAPI/).\n\nFor instance, crypto.subtle.encrypt() takes the inputs to encryption, and returns a Promise that will be fulfilled with the ciphertext. The spec says nothing about task runners or threads.\n\nOur implementation of the cryptographic operations live outside of Blink, in components/webcrypto/webcrypto_impl.cc. This component dispatches the cryptographic work to a threadpool (whose details are changing). Once the work is done, we need a way to complete the Promise that requested it.\n\nAt this point we are on some non-blink task runner. In order to resolve the Promise, we need to bounce back to the correct Blink thread, and then call into the v8 ScriptPromiseResolver stuff.\n\nThat is what the task runner in question is about. It is a TaskRunner for the Chromium code to bounce back to the Blink side to complete the Promise. This mechanism is quite subtle, since the blink thread may not even still exist (for instance web workers may have been killed, or the page may have been torn down). A lot of effort went into trying to share the right pointers and not extended lifetimes in a weird way.\n\nI would love if there were an easier way to do this, as the current mechanism is quite ugly and subtle. But hopefully that gives some context on what code is being talked about here.\n\nCheers.",
+      "parentUuid": "a36b351b_5b92935c",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 15
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "087550fc_e169c4ce",
         "filename": "third_party/WebKit/public/platform/TaskType.h",
         "patchSetId": 4
