@@ -36,9 +36,9 @@
 #include "ui/base/ui_base_switches.h"
 #include "ui/gl/gl_switches.h"
 
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
-#include "content/public/browser/zygote_handle_linux.h"
-#endif  // defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if defined(OS_LINUX)
+#include "content/public/common/zygote_handle_linux.h"
+#endif  // defined(OS_LINUX)
 
 #if defined(OS_WIN)
 #include "sandbox/win/src/sandbox_policy.h"

@@ -205,16 +205,12 @@
 #include "base/fuchsia/default_job.h"
 #endif  // defined(OS_FUCHSIA)
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
+#if defined(OS_LINUX)
 #include "content/browser/sandbox_host_linux.h"
-#include "content/browser/zygote_host/zygote_host_impl_linux.h"
-
-#if !defined(OS_ANDROID)
 #include "content/browser/zygote_host/zygote_communication_linux.h"
-#include "content/public/browser/zygote_handle_linux.h"
-#endif  // !defined(OS_ANDROID)
-#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
-
+#include "content/browser/zygote_host/zygote_host_impl_linux.h"
+#include "content/public/common/zygote_handle_linux.h"
+#endif  // defined(OS_LINUX)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/browser/plugin_service_impl.h"
@@ -251,8 +247,7 @@
 namespace content {
 namespace {
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
-    !defined(OS_FUCHSIA)
+#if defined(OS_LINUX)
 pid_t LaunchZygoteHelper(base::CommandLine* cmd_line,
                          base::ScopedFD* control_fd) {
   GetContentClient()->browser()->AppendExtraCommandLineSwitches(cmd_line, -1);
@@ -282,8 +277,7 @@ void SetupSandbox(const base::CommandLine& parsed_command_line) {
   ZygoteHostImpl::GetInstance()->SetRendererSandboxStatus(
       generic_zygote->GetSandboxStatus());
 }
-#endif  // defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
-        // !defined(OS_FUCHSIA)
+#endif  // defined(OS_LINUX)
 
 #if defined(USE_GLIB)
 static void GLibLogHandler(const gchar* log_domain,
@@ -625,8 +619,7 @@ void BrowserMainLoop::Init() {
 void BrowserMainLoop::EarlyInitialization() {
   TRACE_EVENT0("startup", "BrowserMainLoop::EarlyInitialization");
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
-    !defined(OS_FUCHSIA)
+#if defined(OS_LINUX)
   // No thread should be created before this call, as SetupSandbox()
   // will end-up using fork().
   SetupSandbox(parsed_command_line_);
