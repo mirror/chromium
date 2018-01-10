@@ -183,27 +183,39 @@ TEST_F(PageCoordinationUnitImplTest, TimeSinceLastNavigation) {
 }
 
 TEST_F(PageCoordinationUnitImplTest, PageAlmostIdle) {
+  // The state should be initialized as almost idle.
   MockSinglePageInSingleProcessCoordinationUnitGraph cu_graph;
-  EXPECT_FALSE(cu_graph.page->WasAlmostIdle());
-  EXPECT_FALSE(cu_graph.page->CheckAndUpdateAlmostIdleStateIfNeeded());
+  EXPECT_FALSE(cu_graph.page->AlmostIdle());
 
+  // No state update should occur as both indicators are currently false.
+  EXPECT_FALSE(cu_graph.page->CheckAndUpdateAlmostIdleStateIfNeeded());
+  EXPECT_FALSE(cu_graph.page->AlmostIdle());
+
+  // Transitioning a single indicator should not transition the state.
   cu_graph.process->SetMainThreadTaskLoadIsLow(true);
+  EXPECT_FALSE(cu_graph.page->CheckAndUpdateAlmostIdleStateIfNeeded());
+  EXPECT_FALSE(cu_graph.page->AlmostIdle());
+
+  // Once the two indicators have transitioned the state itself should
+  // transition.
   cu_graph.frame->SetNetworkAlmostIdle(true);
-  EXPECT_FALSE(cu_graph.page->WasAlmostIdle());
   EXPECT_TRUE(cu_graph.page->CheckAndUpdateAlmostIdleStateIfNeeded());
-  EXPECT_TRUE(cu_graph.page->WasAlmostIdle());
+  EXPECT_TRUE(cu_graph.page->AlmostIdle());
 
-  cu_graph.process->SetMainThreadTaskLoadIsLow(false);
-  EXPECT_TRUE(cu_graph.page->WasAlmostIdle());
-  EXPECT_FALSE(cu_graph.page->CheckAndUpdateAlmostIdleStateIfNeeded());
-  EXPECT_TRUE(cu_graph.page->WasAlmostIdle());
-
+  // Committing a new navigation should cause the almost idle state to reset.
   cu_graph.page->OnMainFrameNavigationCommitted();
-  EXPECT_FALSE(cu_graph.page->WasAlmostIdle());
-  cu_graph.process->SetMainThreadTaskLoadIsLow(true);
-  EXPECT_FALSE(cu_graph.page->WasAlmostIdle());
+  EXPECT_FALSE(cu_graph.page->AlmostIdle());
+
+  // Recalculating state should cause a state transition again as both
+  // indicators are positive.
   EXPECT_TRUE(cu_graph.page->CheckAndUpdateAlmostIdleStateIfNeeded());
-  EXPECT_TRUE(cu_graph.page->WasAlmostIdle());
+  EXPECT_TRUE(cu_graph.page->AlmostIdle());
+
+  // Transitioning either indicator back should cause the state to toggle.
+  cu_graph.process->SetMainThreadTaskLoadIsLow(false);
+  EXPECT_TRUE(cu_graph.page->AlmostIdle());
+  EXPECT_TRUE(cu_graph.page->CheckAndUpdateAlmostIdleStateIfNeeded());
+  EXPECT_FALSE(cu_graph.page->AlmostIdle());
 }
 
 }  // namespace resource_coordinator

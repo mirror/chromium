@@ -35,9 +35,9 @@ class PageCoordinationUnitImpl
   void OnTitleUpdated() override;
   void OnMainFrameNavigationCommitted() override;
 
-  // Returns true when the page is in almost idle state, and updates
-  // |was_almost_idle_| to true if and only if the page was not in almost idle
-  // state and is now in almost idle state.
+  // Causes |almost_idle_| state to be updated if necessary. Returns true if an
+  // update occurred, false otherwise. Call WasAlmostIdle to confirm the current
+  // state when state changes occur.
   bool CheckAndUpdateAlmostIdleStateIfNeeded();
 
   // There is no direct relationship between processes and pages. However,
@@ -45,12 +45,9 @@ class PageCoordinationUnitImpl
   // processes that are reachable from the pages's accessible frames.
   std::set<ProcessCoordinationUnitImpl*> GetAssociatedProcessCoordinationUnits()
       const;
-  // In order to not deliver PageAlmostIdle signal multiple times, recording the
-  // previous state is needed. WasAlmostIdle() returns whether the page is
-  // already in almost idle state, almost idle state will be reset when the main
-  // frame navigation of non-same document navigation is committed. And will
-  // only be set to true when CheckAndUpdateAlmostIdleStateIfNeeded() is called.
-  bool WasAlmostIdle() const;
+  // Stores the current "almost idle" state. This needs to be stored so that
+  // state transitions can be observed, and signals issued.
+  bool AlmostIdle() const;
   bool IsVisible() const;
   double GetCPUUsage() const;
 
@@ -91,10 +88,10 @@ class PageCoordinationUnitImpl
   // Main frame navigation committed time.
   base::TimeTicks navigation_committed_time_;
 
-  // |was_almost_idle_| is only reset to false when main frame navigation of
-  // non-same document navigation is committed. And will be set to true when
-  // CheckAndUpdateAlmostIdleStateIfNeeded() is called.
-  bool was_almost_idle_;
+  // |almost_idle_| is initially set to false when main frame navigation of
+  // non-same document navigation is committed. It can be subsequently toggled
+  // when CheckAndUpdateAlmostIdleStateIfNeeded() is called.
+  bool almost_idle_;
 
   DISALLOW_COPY_AND_ASSIGN(PageCoordinationUnitImpl);
 };

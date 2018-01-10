@@ -14,7 +14,7 @@ import "mojo/common/time.mojom";
 // pass the interface pointer of mojo channel to PageSignalGenerator through
 // PageSignalGenerator::AddReceiver.
 interface PageSignalReceiver {
-  NotifyPageAlmostIdle(CoordinationUnitID cu_id);
+  NotifyPageAlmostIdle(CoordinationUnitID cu_id, bool page_almost_idle);
   SetExpectedTaskQueueingDuration(CoordinationUnitID cu_id,
                                   mojo.common.mojom.TimeDelta duration);
 };

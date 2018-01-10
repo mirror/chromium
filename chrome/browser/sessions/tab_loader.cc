@@ -62,9 +62,16 @@ void TabLoader::Observe(int type,
     this_retainer_ = nullptr;
 }
 
-void TabLoader::OnPageAlmostIdle(content::WebContents* web_contents) {
+void TabLoader::OnPageAlmostIdle(content::WebContents* web_contents,
+                                 bool almost_idle) {
+  // TODO(chrisha): Use the combination of PAI and NOTIFICATION_LOAD_STOP to
+  // initiate the next page load. https://crbug.com/800903
+  if (!almost_idle)
+    return;
   auto* controller = &web_contents->GetController();
-  // The |web_contents| is not managed by TabLoader.
+  // Check if the web contents is being tracked by the tab loader, and skip it
+  // otherwise. This prevents page idle transitions being handled repeatedly for
+  // the same |web_contents|.
   if (tabs_loading_.find(controller) == tabs_loading_.end() &&
       !base::ContainsValue(tabs_to_load_, controller)) {
     return;

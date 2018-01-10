@@ -24,11 +24,18 @@ TabManager::ResourceCoordinatorSignalObserver::
 }
 
 void TabManager::ResourceCoordinatorSignalObserver::OnPageAlmostIdle(
-    content::WebContents* web_contents) {
+    content::WebContents* web_contents,
+    bool page_almost_idle) {
+  // TODO(chrisha): Use the combination of PAI and NOTIFICATION_LOAD_STOP to
+  // initiate the next page load. https://crbug.com/800903
+  if (!page_almost_idle)
+    return;
   auto* web_contents_data =
       TabManager::WebContentsData::FromWebContents(web_contents);
   if (!web_contents_data)
     return;
+  // NotifyTabIsLoaded handles repeated notifications, so it's fine to send
+  // them through.
   web_contents_data->NotifyTabIsLoaded();
 }
 

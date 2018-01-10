@@ -36,13 +36,14 @@ PageSignalReceiver::PageSignalReceiver() : binding_(this) {}
 
 PageSignalReceiver::~PageSignalReceiver() = default;
 
-void PageSignalReceiver::NotifyPageAlmostIdle(const CoordinationUnitID& cu_id) {
+void PageSignalReceiver::NotifyPageAlmostIdle(const CoordinationUnitID& cu_id,
+                                              bool page_almost_idle) {
   DCHECK(IsPageAlmostIdleSignalEnabled());
   auto web_contents_iter = cu_id_web_contents_map_.find(cu_id);
   if (web_contents_iter == cu_id_web_contents_map_.end())
     return;
   for (auto& observer : observers_)
-    observer.OnPageAlmostIdle(web_contents_iter->second);
+    observer.OnPageAlmostIdle(web_contents_iter->second, page_almost_idle);
 }
 
 void PageSignalReceiver::SetExpectedTaskQueueingDuration(

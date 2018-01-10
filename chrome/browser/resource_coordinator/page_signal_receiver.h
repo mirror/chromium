@@ -23,8 +23,10 @@ class PageSignalObserver {
   virtual ~PageSignalObserver() = default;
   // PageSignalReceiver will deliver signals with a |web_contents| even it's not
   // managed by the client. Thus the clients are responsible for checking the
-  // passed |web_contents| by themselves.
-  virtual void OnPageAlmostIdle(content::WebContents* web_contents) {}
+  // passed |web_contents| by themselves. Signals will be sent for all state
+  // transitions from almost-idle and not-almost-idle again.
+  virtual void OnPageAlmostIdle(content::WebContents* web_contents,
+                                bool page_almost_idle) {}
   virtual void OnExpectedTaskQueueingDurationSet(
       content::WebContents* web_contents,
       base::TimeDelta duration) {}
@@ -47,7 +49,8 @@ class PageSignalReceiver : public mojom::PageSignalReceiver {
   static PageSignalReceiver* GetInstance();
 
   // mojom::PageSignalReceiver implementation.
-  void NotifyPageAlmostIdle(const CoordinationUnitID& cu_id) override;
+  void NotifyPageAlmostIdle(const CoordinationUnitID& cu_id,
+                            bool page_almost_idle) override;
   void SetExpectedTaskQueueingDuration(const CoordinationUnitID& cu_id,
                                        base::TimeDelta duration) override;
 

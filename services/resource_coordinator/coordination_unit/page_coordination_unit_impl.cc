@@ -17,7 +17,7 @@ PageCoordinationUnitImpl::PageCoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
     : CoordinationUnitInterface(id, std::move(service_ref)),
-      was_almost_idle_(false) {}
+      almost_idle_(false) {}
 
 PageCoordinationUnitImpl::~PageCoordinationUnitImpl() {
   for (auto* child_frame : frame_coordination_units_)
@@ -80,9 +80,10 @@ bool PageCoordinationUnitImpl::CheckAndUpdateAlmostIdleStateIfNeeded() {
     return false;
   }
   bool is_almost_idle = main_thread_task_load_is_low && is_network_almost_idle;
-  if (!was_almost_idle_)
-    was_almost_idle_ = is_almost_idle;
-  return is_almost_idle;
+  if (is_almost_idle == almost_idle_)
+    return false;
+  almost_idle_ = is_almost_idle;
+  return true;
 }
 
 std::set<ProcessCoordinationUnitImpl*>
@@ -97,8 +98,8 @@ PageCoordinationUnitImpl::GetAssociatedProcessCoordinationUnits() const {
   return process_cus;
 }
 
-bool PageCoordinationUnitImpl::WasAlmostIdle() const {
-  return was_almost_idle_;
+bool PageCoordinationUnitImpl::AlmostIdle() const {
+  return almost_idle_;
 }
 
 bool PageCoordinationUnitImpl::IsVisible() const {
@@ -154,7 +155,7 @@ base::TimeDelta PageCoordinationUnitImpl::TimeSinceLastVisibilityChange()
 void PageCoordinationUnitImpl::OnEventReceived(mojom::Event event) {
   if (event == mojom::Event::kNavigationCommitted) {
     navigation_committed_time_ = ResourceCoordinatorClock::NowTicks();
-    was_almost_idle_ = false;
+    almost_idle_ = false;
   }
   for (auto& observer : observers())
     observer.OnPageEventReceived(this, event);

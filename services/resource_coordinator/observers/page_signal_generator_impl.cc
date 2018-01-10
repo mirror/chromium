@@ -84,15 +84,12 @@ void PageSignalGeneratorImpl::NotifyPageAlmostIdleIfPossible(
   auto* page_cu = frame_cu->GetPageCoordinationUnit();
   if (!page_cu)
     return;
-
-  // If the page is already in almost idle state, don't deliver the signal.
-  // PageAlmostIdle signal shouldn't be delivered again if the frame is already
-  // in almost idle state.
-  if (page_cu->WasAlmostIdle())
-    return;
   if (!page_cu->CheckAndUpdateAlmostIdleStateIfNeeded())
     return;
-  DISPATCH_PAGE_SIGNAL(receivers_, NotifyPageAlmostIdle, page_cu->id());
+
+  // If the state has toggled then emit a signal.
+  DISPATCH_PAGE_SIGNAL(receivers_, NotifyPageAlmostIdle, page_cu->id(),
+                       page_cu->AlmostIdle());
 }
 
 }  // namespace resource_coordinator

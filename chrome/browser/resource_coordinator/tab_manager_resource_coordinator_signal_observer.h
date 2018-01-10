@@ -22,7 +22,8 @@ class TabManager::ResourceCoordinatorSignalObserver
   ~ResourceCoordinatorSignalObserver() override;
 
   // PageSignalObserver implementation.
-  void OnPageAlmostIdle(content::WebContents* web_contents) override;
+  void OnPageAlmostIdle(content::WebContents* web_contents,
+                        bool page_almost_idle) override;
   void OnExpectedTaskQueueingDurationSet(content::WebContents* web_contents,
                                          base::TimeDelta duration) override;
 

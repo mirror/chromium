@@ -57,7 +57,8 @@ class TabLoader : public content::NotificationObserver,
                const content::NotificationDetails& details) override;
 
   // resource_coordinator::PageSignalObserver implementation.
-  void OnPageAlmostIdle(content::WebContents* web_contents) override;
+  void OnPageAlmostIdle(content::WebContents* web_contents,
+                        bool almost_idle) override;
 
   // TabLoaderCallback:
   void SetTabLoadingEnabled(bool enable_tab_loading) override;
