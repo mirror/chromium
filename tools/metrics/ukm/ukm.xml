@@ -2352,4 +2352,33 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="XR.Devices.API" singular="True">
+  <owner>billorr@chromium.org</owner>
+  <metric name="EnumeratedDevices">
+    <summary>
+      Indicates that the API to enumerate devices was called.
+    </summary>
+  </metric>
+  <metric name="HasDevice">
+    <summary>
+      Indicates that a device was returned.
+    </summary>
+  </metric>
+  <metric name="HasPresentationDevice">
+    <summary>
+      Indicates that a returned device supports presentation.
+    </summary>
+  </metric>
+  <metric name="RequestedPose">
+    <summary>
+      Indicates that poses were requested.
+    </summary>
+  </metric>
+  <metric name="RequestedPresentation">
+    <summary>
+      Indicates that presentation was requested.
+    </summary>
+  </metric>
+</event>
+
 </ukm-configuration>
