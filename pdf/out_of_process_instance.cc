@@ -141,6 +141,7 @@ const char kJSGetNamedDestination[] = "namedDestination";
 // Reply with the page number of the named destination (Plugin -> Page)
 const char kJSGetNamedDestinationReplyType[] = "getNamedDestinationReply";
 const char kJSNamedDestinationPageNumber[] = "pageNumber";
+const char kJSNamedDestinationViewType[] = "viewType";
 
 const char kJSTransformPagePointType[] = "transformPagePoint";
 const char kJSTransformPagePointReplyType[] = "transformPagePointReply";
@@ -670,12 +671,21 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
     PostMessage(reply);
   } else if (type == kJSGetNamedDestinationType &&
              dict.Get(pp::Var(kJSGetNamedDestination)).is_string()) {
-    int page_number = engine_->GetNamedDestinationPage(
+    PDFEngine::NamedDestination namedDestination = engine_->GetNamedDestination(
         dict.Get(pp::Var(kJSGetNamedDestination)).AsString());
     pp::VarDictionary reply;
     reply.Set(pp::Var(kType), pp::Var(kJSGetNamedDestinationReplyType));
-    if (page_number >= 0)
-      reply.Set(pp::Var(kJSNamedDestinationPageNumber), page_number);
+    if (namedDestination.page >= 0) {
+      reply.Set(pp::Var(kJSNamedDestinationPageNumber), namedDestination.page);
+      if (!namedDestination.view.empty()) {
+        std::ostringstream viewAcc;
+        viewAcc << namedDestination.view;
+        for (unsigned long i = 0; i < namedDestination.num_params; ++i) {
+          viewAcc << "," << namedDestination.params[i];
+        }
+        reply.Set(pp::Var(kJSNamedDestinationViewType), viewAcc.str());
+      }
+    }
     PostMessage(reply);
   } else if (type == kJSTransformPagePointType &&
              dict.Get(pp::Var(kJSPageNumber)).is_int() &&

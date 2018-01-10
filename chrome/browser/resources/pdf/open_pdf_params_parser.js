@@ -2,7 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var OpenPDFParamsParser;
+let OpenPDFParamsParser;
+
+/**
+ * @typedef {{
+ *   callback: function(Object):void,
+ *   params: Object
+ * }}
+ */
+let GetNamedDestinationRequest;
+
+/**
+ * @typedef {{
+ *   pageNumber: number,
+ *   viewType: string,
+ * }}
+ */
+let NamedDestination;
 
 (function() {
 
@@ -11,12 +27,15 @@ var OpenPDFParamsParser;
 /**
  * Creates a new OpenPDFParamsParser. This parses the open pdf parameters
  * passed in the url to set initial viewport settings for opening the pdf.
- * @param {!Function} getNamedDestinationsFunction The function called to fetch
- *     the page number for a named destination.
+ * @param {!function(string):void} getNamedDestinationsFunction
+ *     Function called to fetch information for a named destination.
  * @constructor
  */
 OpenPDFParamsParser = function(getNamedDestinationsFunction) {
+  /** @private {!Array<!GetNamedDestinationRequest>} */
   this.outstandingRequests_ = [];
+
+  /** @private {!function(string):void} */
   this.getNamedDestinationsFunction_ = getNamedDestinationsFunction;
 };
 
@@ -25,8 +44,8 @@ OpenPDFParamsParser.prototype = {
    * @private
    * Parse zoom parameter of open PDF parameters. The PDF should be opened at
    * the specified zoom level.
-   * @param {string} paramValue zoom value.
-   * @return {Object} Map with zoom parameters (zoom and position).
+   * @param {!string} paramValue zoom value.
+   * @return {!Object} Map with zoom parameters (zoom and position).
    */
   parseZoomParam_: function(paramValue) {
     var paramValueSplit = paramValue.split(',');
@@ -55,34 +74,43 @@ OpenPDFParamsParser.prototype = {
    * @private
    * Parse view parameter of open PDF parameters. The PDF should be opened at
    * the specified fitting type mode and position.
-   * @param {string} paramValue view value.
-   * @return {Object} Map with view parameters (view and viewPosition).
+   * @param {!string} paramValue view value.
+   * @return {!Object} Map with view parameters (view, viewPosition, position,
+   *     zoom).
    */
   parseViewParam_: function(paramValue) {
+    console.log('parseViewParam_');
+    console.log(paramValue);
     var viewModeComponents = paramValue.toLowerCase().split(',');
     if (viewModeComponents.length < 1)
       return {};
 
     var params = {};
     var viewMode = viewModeComponents[0];
-    var acceptsPositionParam;
+    var acceptsPositionParam = false;
     if (viewMode === 'fit') {
       params['view'] = FittingType.FIT_TO_PAGE;
-      acceptsPositionParam = false;
     } else if (viewMode === 'fith') {
       params['view'] = FittingType.FIT_TO_WIDTH;
       acceptsPositionParam = true;
     } else if (viewMode === 'fitv') {
       params['view'] = FittingType.FIT_TO_HEIGHT;
       acceptsPositionParam = true;
+    } else if (viewMode === 'xyz' && viewModeComponents.length == 4) {
+      var x = parseFloat(viewModeComponents[1]);
+      var y = parseFloat(viewModeComponents[2]);
+      var zoom = parseFloat(viewModeComponents[3]);
+      if (!isNaN(x) && !isNaN(y) && !isNaN(zoom)) {
+        params['position'] = {x: x, y: y};
+        params['zoom'] = parseFloat(viewModeComponents[3]);
+      }
     }
 
-    if (!acceptsPositionParam || viewModeComponents.length < 2)
-      return params;
-
-    var position = parseFloat(viewModeComponents[1]);
-    if (!isNaN(position))
-      params['viewPosition'] = position;
+    if (acceptsPositionParam && viewModeComponents.length == 2) {
+      var position = parseFloat(viewModeComponents[1]);
+      if (!isNaN(position))
+        params['viewPosition'] = position;
+    }
 
     return params;
   },
@@ -90,8 +118,8 @@ OpenPDFParamsParser.prototype = {
   /**
    * Parse the parameters encoded in the fragment of a URL into a dictionary.
    * @private
-   * @param {string} url to parse
-   * @return {Object} Key-value pairs of URL parameters
+   * @param {!string} url to parse
+   * @return {!Object} Key-value pairs of URL parameters
    */
   parseUrlParams_: function(url) {
     var params = {};
@@ -123,8 +151,8 @@ OpenPDFParamsParser.prototype = {
    * Parse PDF url parameters used for controlling the state of UI. These need
    * to be available when the UI is being initialized, rather than when the PDF
    * is finished loading.
-   * @param {string} url that needs to be parsed.
-   * @return {Object} parsed url parameters.
+   * @param {!string} url that needs to be parsed.
+   * @return {!Object} parsed url parameters.
    */
   getUiUrlParams: function(url) {
     var params = this.parseUrlParams_(url);
@@ -141,8 +169,9 @@ OpenPDFParamsParser.prototype = {
    * and specify actions to be performed when opening pdf files.
    * See http://www.adobe.com/content/dam/Adobe/en/devnet/acrobat/
    * pdfs/pdf_open_parameters.pdf for details.
-   * @param {string} url that needs to be parsed.
-   * @param {Function} callback function to be called with viewport info.
+   * @param {!string} url that needs to be parsed.
+   * @param {!function(Object):void} callback function to be called with
+   *     viewport info.
    */
   getViewportFromUrlParams: function(url, callback) {
     var params = {};
@@ -174,13 +203,30 @@ OpenPDFParamsParser.prototype = {
   /**
    * This is called when a named destination is received and the page number
    * corresponding to the request for which a named destination is passed.
-   * @param {number} pageNumber The page corresponding to the named destination
-   *    requested.
+   * @param {NamedDestination} namedDestination Object containing the page
+   *    corresponding to the named destination and optionally the view type for
+   *    that destination.
    */
-  onNamedDestinationReceived: function(pageNumber) {
+  onNamedDestinationReceived: function(namedDestination) {
     var outstandingRequest = this.outstandingRequests_.shift();
-    if (pageNumber != -1)
-      outstandingRequest.params.page = pageNumber;
+    console.log('onNamedDestinationReceived');
+    console.log(namedDestination);
+
+    // Mark that the coordinates given will be in page space rather than screen
+    // space and therefore need to be transformed.
+    outstandingRequest.params.transformCoords = true;
+
+    if (namedDestination.pageNumber != -1)
+      outstandingRequest.params.page = namedDestination.pageNumber;
+
+    if (namedDestination.viewType) {
+      Object.assign(
+          outstandingRequest.params,
+          this.parseViewParam_(namedDestination.viewType));
+    }
+    console.log('  -> outstandingRequest');
+    console.log(outstandingRequest);
+
     outstandingRequest.callback(outstandingRequest.params);
   },
 };
