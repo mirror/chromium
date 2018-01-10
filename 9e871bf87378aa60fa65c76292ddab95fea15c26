@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb9fb4a_a54e33ac",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T21:30:46Z",
+      "side": 1,
+      "message": "If you (1) add\nreturn {target, false, transformed_point}\nbelow this line, then you can (2) get rid of the if (result.should_query_view) and directly return the result from line 267, and (3) get rid of the final else clause and directly return the result of line 277.\n\nThat would greatly simplify the code in this function :-)",
+      "range": {
+        "startLine": 264,
+        "startChar": 19,
+        "endLine": 264,
+        "endChar": 26
+      },
+      "revId": "9e871bf87378aa60fa65c76292ddab95fea15c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

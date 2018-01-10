@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "3d92b7df_bf42bb2f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T21:30:46Z",
+      "side": 1,
+      "message": "Why not just move the next three lines directly to line 380 and get rid of this function? Other functions that need to send Acks can do so directly inside their dispatch functions too, without the need for a lot of \"event.GetType() \u003d\u003d blink::WebInputEvent::k\u003cWhatEver\u003e\".",
+      "range": {
+        "startLine": 1156,
+        "startChar": 23,
+        "endLine": 1156,
+        "endChar": 24
+      },
+      "revId": "5336b772c7154c53ae55ccecefce0bd70d08ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f88ad27_1e223379",
         "filename": "content/browser/renderer_host/render_widget_targeter.cc",
         "patchSetId": 8
