@@ -119,6 +119,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
         @Override
         public void run() {
             if (!mIsStarted) return;
+            android.util.Log.w("mdjones", "STARTING INDETERMINATE ANIMATION");
             mAnimationLogic.reset(getProgress());
             mSmoothProgressAnimator.start();
 
@@ -138,6 +139,8 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
             public void onTimeUpdate(TimeAnimator animation, long totalTimeMs, long deltaTimeMs) {
                 // If we are at the target progress already, do nothing.
                 if (MathUtils.areFloatsEqual(getProgress(), mTargetProgress)) return;
+                android.util.Log.w("mdjones",
+                        "--- updating progress " + getProgress() + "     " + mTargetProgress);
 
                 // Cap progress bar animation frame time so that it doesn't jump too much even when
                 // the animation is janky.
@@ -315,6 +318,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
      */
     public void start() {
         ThreadUtils.assertOnUiThread();
+        android.util.Log.w("mdjones", "--- progress started");
 
         mIsStarted = true;
         mProgressStartCount++;
@@ -357,6 +361,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
         mTargetProgress = 0;
 
         removeCallbacks(mStartSmoothIndeterminate);
+        android.util.Log.w("mdjones", "--- progress finished");
         if (mAnimatingView != null) mAnimatingView.cancelAnimation();
         if (mProgressThrottle != null) mProgressThrottle.cancel();
         mSmoothProgressAnimator.cancel();
