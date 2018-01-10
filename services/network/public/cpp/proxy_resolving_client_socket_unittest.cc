@@ -4,6 +4,10 @@
 
 #include "services/network/public/cpp/proxy_resolving_client_socket.h"
 
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
@@ -22,6 +26,7 @@
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_test_util.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace network {
@@ -30,7 +35,7 @@ namespace {
 
 class TestURLRequestContextWithProxy : public net::TestURLRequestContext {
  public:
-  TestURLRequestContextWithProxy(const std::string& pac_result)
+  explicit TestURLRequestContextWithProxy(const std::string& pac_result)
       : TestURLRequestContext(true) {
     context_storage_.set_proxy_service(
         net::ProxyService::CreateFixedFromPacResult(pac_result));
@@ -95,10 +100,13 @@ TEST_F(ProxyResolvingClientSocketTest, ConnectError) {
         test.is_error_sync ? net::SYNCHRONOUS : net::ASYNC, net::ERR_FAILED));
     socket_factory.AddSocketDataProvider(&socket_data);
 
-    ProxyResolvingClientSocket proxy_resolving_socket(
-        &socket_factory, context_getter, net::SSLConfig(), kDestination);
+    ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+        &socket_factory, context_getter);
+    std::unique_ptr<ProxyResolvingClientSocket> socket =
+        proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(),
+                                                    kDestination);
     net::TestCompletionCallback callback;
-    int status = proxy_resolving_socket.Connect(callback.callback());
+    int status = socket->Connect(callback.callback());
     EXPECT_EQ(net::ERR_IO_PENDING, status);
     status = callback.WaitForResult();
     if (test.is_direct) {
@@ -145,21 +153,24 @@ TEST_F(ProxyResolvingClientSocketTest, ConnectToProxy) {
         net::MockConnect(net::ASYNC, net::OK, remote_addr));
     socket_factory.AddSocketDataProvider(&socket_data);
 
-    ProxyResolvingClientSocket proxy_resolving_socket(
-        &socket_factory, context_getter, net::SSLConfig(), kDestination);
+    ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+        &socket_factory, context_getter);
+    std::unique_ptr<ProxyResolvingClientSocket> socket =
+        proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(),
+                                                    kDestination);
     net::TestCompletionCallback callback;
-    int status = proxy_resolving_socket.Connect(callback.callback());
+    int status = socket->Connect(callback.callback());
     EXPECT_EQ(net::ERR_IO_PENDING, status);
     status = callback.WaitForResult();
     EXPECT_EQ(net::OK, status);
     net::IPEndPoint actual_remote_addr;
-    status = proxy_resolving_socket.GetPeerAddress(&actual_remote_addr);
+    status = socket->GetPeerAddress(&actual_remote_addr);
     if (!is_direct) {
       // ProxyResolvingClientSocket::GetPeerAddress() hides the ip of the
       // proxy, so call private member to make sure address is correct.
       EXPECT_EQ(net::ERR_NAME_NOT_RESOLVED, status);
-      status = proxy_resolving_socket.transport_->socket()->GetPeerAddress(
-          &actual_remote_addr);
+      status =
+          socket->transport_->socket()->GetPeerAddress(&actual_remote_addr);
     }
     EXPECT_EQ(net::OK, status);
     EXPECT_EQ(remote_addr.ToString(), actual_remote_addr.ToString());
@@ -224,22 +235,24 @@ TEST_F(ProxyResolvingClientSocketTest, ReadWriteErrors) {
         net::MockConnect(net::ASYNC, net::OK, remote_addr));
     net::MockClientSocketFactory socket_factory;
     socket_factory.AddSocketDataProvider(&socket_data);
-
-    ProxyResolvingClientSocket proxy_resolving_socket(
-        &socket_factory, context_getter, net::SSLConfig(), kDestination);
+    ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+        &socket_factory, context_getter);
+    std::unique_ptr<ProxyResolvingClientSocket> socket =
+        proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(),
+                                                    kDestination);
     net::TestCompletionCallback callback;
-    int status = proxy_resolving_socket.Connect(callback.callback());
+    int status = socket->Connect(callback.callback());
     EXPECT_EQ(net::ERR_IO_PENDING, status);
     status = callback.WaitForResult();
     EXPECT_EQ(net::OK, status);
     net::IPEndPoint actual_remote_addr;
-    status = proxy_resolving_socket.GetPeerAddress(&actual_remote_addr);
+    status = socket->GetPeerAddress(&actual_remote_addr);
     if (!test.is_direct) {
       // ProxyResolvingClientSocket::GetPeerAddress() hides the ip of the
       // proxy, so call private member to make sure address is correct.
       EXPECT_EQ(net::ERR_NAME_NOT_RESOLVED, status);
-      status = proxy_resolving_socket.transport_->socket()->GetPeerAddress(
-          &actual_remote_addr);
+      status =
+          socket->transport_->socket()->GetPeerAddress(&actual_remote_addr);
     }
     EXPECT_EQ(net::OK, status);
     EXPECT_EQ(remote_addr.ToString(), actual_remote_addr.ToString());
@@ -251,10 +264,10 @@ TEST_F(ProxyResolvingClientSocketTest, ReadWriteErrors) {
     scoped_refptr<net::IOBuffer> write_buffer(
         new net::StringIOBuffer(test_data_string));
     if (test.is_read_error) {
-      read_write_result = proxy_resolving_socket.Read(
-          read_buffer.get(), 10, read_write_callback.callback());
+      read_write_result =
+          socket->Read(read_buffer.get(), 10, read_write_callback.callback());
     } else {
-      read_write_result = proxy_resolving_socket.Write(
+      read_write_result = socket->Write(
           write_buffer.get(), test_data_string.size(),
           read_write_callback.callback(), TRAFFIC_ANNOTATION_FOR_TESTS);
     }
@@ -287,12 +300,13 @@ TEST_F(ProxyResolvingClientSocketTest, ReportsBadProxies) {
   socket_data2.set_connect_data(net::MockConnect(net::ASYNC, net::OK));
   socket_factory.AddSocketDataProvider(&socket_data2);
 
-  ProxyResolvingClientSocket proxy_resolving_socket(
-      &socket_factory, context_getter_with_proxy_, net::SSLConfig(),
-      kDestination);
-
+  ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+      &socket_factory, context_getter_with_proxy_);
+  std::unique_ptr<ProxyResolvingClientSocket> socket =
+      proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(),
+                                                  kDestination);
   net::TestCompletionCallback callback;
-  int status = proxy_resolving_socket.Connect(callback.callback());
+  int status = socket->Connect(callback.callback());
   EXPECT_EQ(net::ERR_IO_PENDING, status);
   status = callback.WaitForResult();
   EXPECT_EQ(net::OK, status);
@@ -358,12 +372,13 @@ TEST_F(ProxyResolvingClientSocketTest, ReusesHTTPAuthCache_Lookup) {
                                        base::ASCIIToUTF16("password")),
                   std::string());
 
-  ProxyResolvingClientSocket proxy_resolving_socket(
-      &socket_factory, context_getter_with_proxy_, net::SSLConfig(),
-      kDestination);
-
+  ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+      &socket_factory, context_getter_with_proxy_);
+  std::unique_ptr<ProxyResolvingClientSocket> socket =
+      proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(),
+                                                  kDestination);
   net::TestCompletionCallback callback;
-  int status = proxy_resolving_socket.Connect(callback.callback());
+  int status = socket->Connect(callback.callback());
   EXPECT_THAT(callback.GetResult(status), net::test::IsOk());
 }
 
@@ -399,12 +414,14 @@ TEST_F(ProxyResolvingClientSocketTest, ReusesHTTPAuthCache_Preemptive) {
                                        base::ASCIIToUTF16("password")),
                   "/");
 
-  ProxyResolvingClientSocket proxy_resolving_socket(
-      &socket_factory, context_getter_with_proxy_, net::SSLConfig(),
-      kDestination);
+  ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+      &socket_factory, context_getter_with_proxy_);
+  std::unique_ptr<ProxyResolvingClientSocket> socket =
+      proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(),
+                                                  kDestination);
 
   net::TestCompletionCallback callback;
-  int status = proxy_resolving_socket.Connect(callback.callback());
+  int status = socket->Connect(callback.callback());
   EXPECT_THAT(callback.GetResult(status), net::test::IsOk());
 }
 
@@ -428,12 +445,14 @@ TEST_F(ProxyResolvingClientSocketTest, ReusesHTTPAuthCache_NoCredentials) {
       arraysize(kConnectWrites));
   socket_factory.AddSocketDataProvider(&kSocketData);
 
-  ProxyResolvingClientSocket proxy_resolving_socket(
-      &socket_factory, context_getter_with_proxy_, net::SSLConfig(),
-      kDestination);
+  ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+      &socket_factory, context_getter_with_proxy_);
+  std::unique_ptr<ProxyResolvingClientSocket> socket =
+      proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(),
+                                                  kDestination);
 
   net::TestCompletionCallback callback;
-  int status = proxy_resolving_socket.Connect(callback.callback());
+  int status = socket->Connect(callback.callback());
   EXPECT_THAT(callback.GetResult(status), net::ERR_PROXY_AUTH_REQUESTED);
 }
 
@@ -459,13 +478,12 @@ TEST_F(ProxyResolvingClientSocketTest, URLSanitized) {
   scoped_refptr<net::TestURLRequestContextGetter> context_getter_with_proxy(
       new net::TestURLRequestContextGetter(base::ThreadTaskRunnerHandle::Get(),
                                            std::move(context)));
-
-  net::MockClientSocketFactory socket_factory;
-  ProxyResolvingClientSocket proxy_resolving_socket(
-      &socket_factory, context_getter_with_proxy, net::SSLConfig(), url);
-
+  ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+      nullptr, context_getter_with_proxy);
+  std::unique_ptr<ProxyResolvingClientSocket> socket =
+      proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(), url);
   net::TestCompletionCallback callback;
-  int status = proxy_resolving_socket.Connect(callback.callback());
+  int status = socket->Connect(callback.callback());
   EXPECT_EQ(net::ERR_IO_PENDING, status);
   base::RunLoop().RunUntilIdle();
   ASSERT_EQ(1u, proxy_resolver_factory_raw->pending_requests().size());
@@ -506,11 +524,13 @@ TEST_F(ProxyResolvingClientSocketTest, ProxyConfigChanged) {
   socket_factory.AddSocketDataProvider(&data_2);
 
   GURL url("http://www.example.com");
-  ProxyResolvingClientSocket proxy_resolving_socket(
-      &socket_factory, context_getter_with_proxy, net::SSLConfig(), url);
+  ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+      &socket_factory, context_getter_with_proxy);
+  std::unique_ptr<ProxyResolvingClientSocket> socket =
+      proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(), url);
 
   net::TestCompletionCallback callback;
-  int status = proxy_resolving_socket.Connect(callback.callback());
+  int status = socket->Connect(callback.callback());
   EXPECT_EQ(net::ERR_IO_PENDING, status);
 
   // Calling ForceReloadProxyConfig will cause the proxy configuration to
@@ -592,12 +612,13 @@ TEST_P(ReconsiderProxyAfterErrorTest, ReconsiderProxyAfterError) {
   socket_factory.AddSocketDataProvider(&data3);
 
   const GURL kDestination("https://example.com:443");
-  ProxyResolvingClientSocket proxy_resolving_socket(
-      &socket_factory, context_getter_with_proxy_, net::SSLConfig(),
-      kDestination);
-
+  ProxyResolvingClientSocketFactory proxy_resolving_socket_factory(
+      &socket_factory, context_getter_with_proxy_);
+  std::unique_ptr<ProxyResolvingClientSocket> socket =
+      proxy_resolving_socket_factory.CreateSocket(net::SSLConfig(),
+                                                  kDestination);
   net::TestCompletionCallback callback;
-  int status = proxy_resolving_socket.Connect(callback.callback());
+  int status = socket->Connect(callback.callback());
   EXPECT_EQ(net::ERR_IO_PENDING, status);
   status = callback.WaitForResult();
   EXPECT_EQ(net::OK, status);
