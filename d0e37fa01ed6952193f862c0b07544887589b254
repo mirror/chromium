@@ -16,6 +16,24 @@
       "revId": "d0e37fa01ed6952193f862c0b07544887589b254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486810f3_5774d14a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SplitWidget.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-10T23:54:46Z",
+      "side": 1,
+      "message": "Of course I can try!  I believe invalidateConstraints() does something even if the child widget is not shown. \n It triggers our drawer SplitWidget\u0027s _innerSetSidebarSizeDIP(), which acts differently depending on whether it has a _sidebarWidget child\n\n- In the no-_sidebarWidget case, there are no constraints, and the opened sidebar gets MinPadding height\n- In the _sidebarWidget case, fancy logic accounts for the child\u0027s constraints, preferred size, and max/min.\n\nYou are correct in that our SplitWidget\u0027s child _sidebarWidget (drawer TabbedPane) is not showing when it opens (the _sidebarElement is empty).  However, SplitWidget\u0027s _applyConstraints() uses _sidebarWidget\u0027s constraints, whether or not _sidebarWidget is shown!\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/ui/SplitWidget.js?l\u003d606\n\nOnce invalidateConstraints() sets the correct drawer height, the Console will be shown in the drawer and have a scrollbar.  If we didn\u0027t set constraints for the drawer, the Console\u0027s clientHeight \u003d\u003d\u003d scrollHeight (no scrollbar) when attached, and setting scrollTop fails.",
+      "parentUuid": "38e4d7eb_e46dddf8",
+      "revId": "d0e37fa01ed6952193f862c0b07544887589b254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
