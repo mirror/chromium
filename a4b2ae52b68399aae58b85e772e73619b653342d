@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7505a6b_aa42e0a7",
+        "filename": "mojo/common/string16.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-10T22:40:22Z",
+      "side": 1,
+      "message": "[just for discussion; not blocking this CL] How is this number decided? I probably should have asked when looking at the BigBuffer CL. :)",
+      "range": {
+        "startLine": 21,
+        "startChar": 35,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "a4b2ae52b68399aae58b85e772e73619b653342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71f380d_83e6e1d5",
+        "filename": "mojo/common/string16_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-10T22:40:22Z",
+      "side": 1,
+      "message": "It would be nice if we could map mojom::BigString16 to StringPiece16 (and mojom::BigBuffer to base::span\u003cconst uint8_t\u003e). It save copies, which is especially useful when the string is big.\n\nThe problem is that it only works well when the type is used as parameters, but not as struct/union members. Not sure wether we would like to introduce different mapped types for parameters / fields.",
+      "revId": "a4b2ae52b68399aae58b85e772e73619b653342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9661ac0e_4b274644",
+        "filename": "third_party/WebKit/Source/platform/mojo/CommonCustomTypesStructTraits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-10T22:40:22Z",
+      "side": 1,
+      "message": "Out of curiosity: is it because code size that you move it out-of-line?",
+      "revId": "a4b2ae52b68399aae58b85e772e73619b653342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
