@@ -24,7 +24,7 @@ class LayoutFullScreenItem : public LayoutBlockItem {
 
   explicit LayoutFullScreenItem(std::nullptr_t) : LayoutBlockItem(nullptr) {}
 
-  LayoutFullScreenItem() {}
+  LayoutFullScreenItem() = default;
 
   void UnwrapLayoutObject() { return ToFullScreen()->UnwrapLayoutObject(); }
 

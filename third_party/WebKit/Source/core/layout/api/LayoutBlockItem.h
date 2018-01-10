@@ -22,7 +22,7 @@ class LayoutBlockItem : public LayoutBoxItem {
 
   explicit LayoutBlockItem(std::nullptr_t) : LayoutBoxItem(nullptr) {}
 
-  LayoutBlockItem() {}
+  LayoutBlockItem() = default;
 
   void FlipForWritingMode(LayoutRect& rect) const {
     ToBlock()->FlipForWritingMode(rect);

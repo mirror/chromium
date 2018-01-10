@@ -78,7 +78,7 @@ IntersectionGeometry::IntersectionGeometry(Element* root,
     InitializeGeometry();
 }
 
-IntersectionGeometry::~IntersectionGeometry() {}
+IntersectionGeometry::~IntersectionGeometry() = default;
 
 bool IntersectionGeometry::InitializeCanComputeGeometry(Element* root,
                                                         Element& target) const {

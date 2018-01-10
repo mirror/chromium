@@ -21,7 +21,7 @@ class LayoutLIItem : public LayoutBoxItem {
 
   explicit LayoutLIItem(std::nullptr_t) : LayoutBoxItem(nullptr) {}
 
-  LayoutLIItem() {}
+  LayoutLIItem() = default;
 
   ListItemOrdinal& Ordinal() { return ToListItem()->Ordinal(); }
 
