@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7493ec1_f1198964",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-10T11:19:43Z",
+      "side": 1,
+      "message": "We already have loading_task_runner. Let\u0027s use it for now.",
+      "range": {
+        "startLine": 423,
+        "startChar": 6,
+        "endLine": 423,
+        "endChar": 62
+      },
+      "revId": "3fdfb9225a324ad9bae38bb586006cc4d3d234dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
