@@ -4,8 +4,16 @@
 
 mojom = "//services/network/public/interfaces/network_types.mojom"
 public_headers = [
+  # TODO(rdsmith): Several headers in the following aren't actually
+  # dependencies of the network_types mojom, but it needs to be included
+  # as part of the //services/network/public/interfaces target for gn
+  # check to work, and will become a dependent type of a .mojom soon to
+  # be moved into //services/network.  When url_loader.mojom is moved,
+  # this header dependency should also move.
   "//net/nqe/effective_connection_type.h",
   "//services/network/public/cpp/cors_error_status.h",
+  "//services/network/public/cpp/http_raw_request_response_info.h",
+  "//services/network/public/cpp/resource_response_info.h",
   "//services/network/public/cpp/url_loader_completion_status.h",
 ]
 traits_headers = [ "//services/network/public/cpp/network_param_ipc_traits.h" ]

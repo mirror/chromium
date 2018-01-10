@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_PUBLIC_COMMON_RESOURCE_RESPONSE_INFO_H_
-#define CONTENT_PUBLIC_COMMON_RESOURCE_RESPONSE_INFO_H_
+#ifndef SERVICES_NETWORK_PUBLIC_CPP_RESOURCE_RESPONSE_INFO_H_
+#define SERVICES_NETWORK_PUBLIC_CPP_RESOURCE_RESPONSE_INFO_H_
 
 #include <stdint.h>
 
@@ -12,7 +12,6 @@
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
-#include "content/common/content_export.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_timing_info.h"
 #include "net/cert/signed_certificate_timestamp_and_status.h"
@@ -23,11 +22,11 @@
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "url/gurl.h"
 
-namespace content {
+namespace network {
 
 // NOTE: when modifying this structure, also update ResourceResponse::DeepCopy
 // in resource_response.cc.
-struct CONTENT_EXPORT ResourceResponseInfo {
+struct ResourceResponseInfo {
   ResourceResponseInfo();
   ResourceResponseInfo(const ResourceResponseInfo& other);
   ~ResourceResponseInfo();
@@ -194,6 +193,6 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // ResourceResponse::DeepCopy in resource_response.cc.
 };
 
-}  // namespace content
+}  // namespace network
 
-#endif  // CONTENT_PUBLIC_COMMON_RESOURCE_RESPONSE_INFO_H_
+#endif  // SERVICES_NETWORK_PUBLIC_CPP_RESOURCE_RESPONSE_INFO_H_
