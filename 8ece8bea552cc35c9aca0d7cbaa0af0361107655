@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5390f3e5_0c8ca7bf",
+        "filename": "third_party/WebKit/Source/core/html/DocumentAllNameCollection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T14:55:27Z",
+      "side": 1,
+      "message": "Let\u0027s avoid using \"using namespace\".",
+      "revId": "8ece8bea552cc35c9aca0d7cbaa0af0361107655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6c8e65_9ea30cf3",
+        "filename": "third_party/WebKit/Source/core/html/DocumentAllNameCollection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T14:55:27Z",
+      "side": 1,
+      "message": "\u003capplet\u003e tag is out of scope of the spec, right?\n\nThen, please add a comment why we need to support \u003capplet\u003e, too.",
+      "range": {
+        "startLine": 19,
+        "startChar": 53,
+        "endLine": 19,
+        "endChar": 62
+      },
+      "revId": "8ece8bea552cc35c9aca0d7cbaa0af0361107655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574eee20_fa5315d7",
+        "filename": "third_party/WebKit/Source/core/html/DocumentAllNameCollection.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T14:55:27Z",
+      "side": 1,
+      "message": "Let\u0027s have a class header comment.",
+      "revId": "8ece8bea552cc35c9aca0d7cbaa0af0361107655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c6e265_919f4fc6",
+        "filename": "third_party/WebKit/Source/core/html/DocumentAllNameCollection.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T14:55:27Z",
+      "side": 1,
+      "message": "s/Window/DocumentAll/",
+      "revId": "8ece8bea552cc35c9aca0d7cbaa0af0361107655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
