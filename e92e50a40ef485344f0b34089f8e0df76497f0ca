@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a48f139_4040e2b5",
+        "filename": "net/http/http_network_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T20:05:27Z",
+      "side": 1,
+      "message": "Maybe just skip this line if we\u0027re not closing sockets on memory pressure, and turn the if below into a DCHECK?  (The next line is unrelated, so should always be called)",
+      "range": {
+        "startLine": 259,
+        "startChar": 27,
+        "endLine": 259,
+        "endChar": 43
+      },
+      "revId": "e92e50a40ef485344f0b34089f8e0df76497f0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d7b99d_a1cbadc0",
+        "filename": "net/http/http_network_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T20:05:27Z",
+      "side": 1,
+      "message": "Also, we should have a test.  We already have one for memory pressure (I assume), so can just copy that and invert the expectations.",
+      "range": {
+        "startLine": 259,
+        "startChar": 51,
+        "endLine": 259,
+        "endChar": 61
+      },
+      "revId": "e92e50a40ef485344f0b34089f8e0df76497f0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
