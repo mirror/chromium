@@ -59,6 +59,14 @@ cr.define('settings_sections_tests', function() {
       page.set('documentInfo_', info);
     }
 
+    function addSelection() {
+      // Add a selection.
+      let info = new print_preview.DocumentInfo();
+      info.init(page.documentInfo_.isModifiable, 'title', true);
+      page.set('documentInfo_', info);
+      Polymer.dom.flush();
+    }
+
     function setPdfDestination() {
       const saveAsPdfDestination = new print_preview.Destination(
           print_preview.Destination.GooglePromotedId.SAVE_AS_PDF,
@@ -564,7 +572,7 @@ cr.define('settings_sections_tests', function() {
       const optionsElement = page.$$('print-preview-other-options-settings');
       expectEquals(false, optionsElement.hidden);
 
-      // HTML - Header/footer, duplex, and CSS background. Also add seleciton.
+      // HTML - Header/footer, duplex, and CSS background. Also add selection.
       initDocumentInfo(false, true);
 
       const testOptionCheckbox = (element, defaultValue, optionSetting) => {

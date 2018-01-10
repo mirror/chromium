@@ -81,7 +81,7 @@ Polymer({
           available: true,
         },
         margins: {
-          value: 0,
+          value: print_preview.ticket_items.MarginsTypeValue.DEFAULT,
           valid: true,
           available: true,
         },
