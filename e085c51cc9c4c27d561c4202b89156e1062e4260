@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "b1214af2_07a780c2",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-10T16:08:27Z",
+      "side": 1,
+      "message": "Ack. I removed the DCHECK and added tests to content_browsertests instead.",
+      "parentUuid": "165619d1_e60f01ba",
+      "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd211814_fb351510",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 7
@@ -87,6 +105,24 @@
       "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2007614d_aaa471dd",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-10T16:08:27Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "dd211814_fb351510",
+      "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
