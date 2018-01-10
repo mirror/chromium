@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "eaa8a507_e3cd8ed7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T09:39:13Z",
+      "side": 1,
+      "message": "Just FYI, I\u0027m fine with platform/heap/TypeTraits.h if things depend on platform/heap/.  My point is that most of these utilities should be Oilpan-things.",
+      "parentUuid": "c4cbc012_b022767a",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b03434_5f97a25c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
         "patchSetId": 1
