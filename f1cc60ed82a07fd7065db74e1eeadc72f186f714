@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c5e039e_dd58f672",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 5354,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-10T18:19:46Z",
+      "side": 1,
+      "message": "Absolutely. I\u0027m making a list of all of the async clipboard strings so that they can be reviewed together.\n\nDepending on how long it takes to get feedback, that might be a separate cl. Esp. since we\u0027re revisiting all of the clipboard strings to make sure we\u0027re consistent WRT \"clipboard\" vs \"clipboard read\".",
+      "parentUuid": "3ca11f8c_403542ba",
+      "revId": "f1cc60ed82a07fd7065db74e1eeadc72f186f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba835dc5_da493ffc",
         "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b8567a9e_cf161899",
+        "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-10T18:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba835dc5_da493ffc",
+      "revId": "f1cc60ed82a07fd7065db74e1eeadc72f186f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6955a626_1304bf13",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "f1cc60ed82a07fd7065db74e1eeadc72f186f714",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1665c75b_d265ab97",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-10T18:19:46Z",
+      "side": 1,
+      "message": "Done. I added a TODO and opened a tracking bug for this issue.",
+      "parentUuid": "6955a626_1304bf13",
+      "revId": "f1cc60ed82a07fd7065db74e1eeadc72f186f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
