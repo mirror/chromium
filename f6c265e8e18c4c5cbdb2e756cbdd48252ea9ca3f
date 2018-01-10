@@ -156,6 +156,24 @@
       "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95432883_2fa02d07",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-10T14:37:06Z",
+      "side": 1,
+      "message": "Right. It looks like DesktopWindowTreeHostX11::Minimize() doesn\u0027t bother with any checks and just calls XIconifyWindow(). That works fine, so I\u0027d do the same here?",
+      "parentUuid": "b3455850_736a8095",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
