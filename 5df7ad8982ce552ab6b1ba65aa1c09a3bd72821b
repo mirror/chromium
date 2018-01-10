@@ -70,6 +70,30 @@
       "revId": "5df7ad8982ce552ab6b1ba65aa1c09a3bd72821b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a26caf_56be1572",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-10T14:41:16Z",
+      "side": 1,
+      "message": "\u003e It\u0027s true the LA formats do not exist on Desktop GL core profile. However, we are implementing OpenGL ES, not Desktop GL. When we implement ES on top of a Desktop GL core profile, we need to emulate these missing LA formats.  So what we do is, we use RG format to emulate LA format, and then use texture swizzle to supply RG channels to RGBA channels when sampled, say, we use LA texture to draw to a RGBA framebuffer.\n\u003e \n\u003e As I suggested, it\u0027s better for you to avoid using LA formats if you are on Linux or Mac. On Linux we are still using GL compatibility profile so in theory LA formats can be natively supported, but we could switch to core profile GL on Linux anytime in the future. On Mac, we are already using core profile.\n\u003e \n\u003e There is a bug currently in Chrome\u0027s command buffer that we only emulate unsized LA formats, but not sized LA formats exposed through extensions. We should file a bug on that. And if you want to work on that, I can provide more guidance.\n\nWe can reuse the bug that originated this work, crbug.com/792295.\nI tentatively assigned it to you since you seem to know more \nabout the necessary steps, also about how to test it across\nplatforms.",
+      "parentUuid": "2715b88c_b48959ce",
+      "range": {
+        "startLine": 1663,
+        "startChar": 27,
+        "endLine": 1663,
+        "endChar": 28
+      },
+      "revId": "5df7ad8982ce552ab6b1ba65aa1c09a3bd72821b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
