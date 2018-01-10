@@ -2604,6 +2604,42 @@ TEST_F(WindowTreeClientWmTest, FocusInDifferentDisplayThanEvent) {
                                            std::move(key_event), false);
 }
 
+TEST_F(WindowTreeClientWmTest, SwapDisplayRoots) {
+  display::Display display1(201);
+  ui::mojom::WindowDataPtr root_data1(ui::mojom::WindowData::New());
+  root_data1->window_id = 101;
+
+  display::Display display2(202);
+  ui::mojom::WindowDataPtr root_data2(ui::mojom::WindowData::New());
+  root_data2->window_id = 102;
+
+  const bool parent_drawn = true;
+
+  // AuraTestBase ends up owning WindowTreeHost.
+  WindowTreeHostMus* window_tree_host1 =
+      WindowTreeClientPrivate(window_tree_client_impl())
+          .CallWmNewDisplayAdded(display1, std::move(root_data1), parent_drawn);
+  WindowTreeHostMus* window_tree_host2 =
+      WindowTreeClientPrivate(window_tree_client_impl())
+          .CallWmNewDisplayAdded(display2, std::move(root_data2), parent_drawn);
+
+  gfx::AcceleratedWidget widget1 = reinterpret_cast<gfx::AcceleratedWidget>(1);
+  gfx::AcceleratedWidget widget2 = reinterpret_cast<gfx::AcceleratedWidget>(2);
+  window_tree_host1->OverrideAcceleratedWidget(widget1);
+  window_tree_host2->OverrideAcceleratedWidget(widget2);
+  EXPECT_EQ(widget1, window_tree_host1->GetAcceleratedWidget());
+  EXPECT_EQ(widget2, window_tree_host2->GetAcceleratedWidget());
+
+  static_cast<WindowManagerClient*>(window_tree_client_impl())
+      ->SwapDisplayRoots(window_tree_host1, window_tree_host2);
+
+  // SwapDisplayRoots swaps the display ids and accelerated widgets.
+  EXPECT_EQ(display2.id(), window_tree_host1->display_id());
+  EXPECT_EQ(display1.id(), window_tree_host2->display_id());
+  EXPECT_EQ(widget2, window_tree_host1->GetAcceleratedWidget());
+  EXPECT_EQ(widget1, window_tree_host2->GetAcceleratedWidget());
+}
+
 TEST_F(WindowTreeClientWmTestHighDPI, BoundsChangeWhenAdded) {
   const gfx::Rect bounds(1, 2, 101, 102);
   std::unique_ptr<DisplayInitParams> display_params =
