@@ -61,6 +61,8 @@ component("bindings") {
     "interface_endpoint_client.h",
     "interface_endpoint_controller.h",
     "interface_id.h",
+    "interface_invalidator.cc",
+    "interface_invalidator.h",
     "interface_ptr.h",
     "interface_ptr_info.h",
     "interface_ptr_set.h",
@@ -156,6 +158,7 @@ component("bindings") {
     "thread_safe_interface_ptr.h",
     "type_converter.h",
     "unique_ptr_impl_ref_traits.h",
+    "weak_interface_ptr.h",
   ]
 
   public_deps = [
