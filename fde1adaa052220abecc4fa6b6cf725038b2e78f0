@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "164b31f9_79e884c2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/metrics_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-10T11:43:33Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "fde1adaa052220abecc4fa6b6cf725038b2e78f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
