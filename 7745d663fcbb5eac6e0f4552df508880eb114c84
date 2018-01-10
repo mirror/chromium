@@ -16,6 +16,24 @@
       "revId": "7745d663fcbb5eac6e0f4552df508880eb114c84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424f1af1_2cd563c5",
+        "filename": "services/network/public/cpp/network_types.typemap",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-10T21:32:00Z",
+      "side": 1,
+      "message": "Pretty sure, yes.  That\u0027s how I solved the problem around dependencies I was talking with Ken about earlier in the comment thread.  The alternative is (probably) the one he proposed, which is breaking up cpp into 2+ targets that avoids the circular dependency interfaces\u003c-\u003ecpp.  But I ran into problems when I tried that, and this seems simpler to me.",
+      "parentUuid": "cab87d40_edf7af5a",
+      "revId": "7745d663fcbb5eac6e0f4552df508880eb114c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
