@@ -1,0 +1,331 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "840a7b93_1ce805bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "The CL seems to implement a lot more now. :-)",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3168748f_b2814031",
+        "filename": "components/password_manager/content/common/credential_manager_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "nit: NOT_SECURE to avoid repeating the word `error`, but also see my comment below.",
+      "range": {
+        "startLine": 91,
+        "startChar": 58,
+        "endLine": 91,
+        "endChar": 72
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fde7da_5a6b6e58",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "To make this CL cleaner and the security aspects easier to follow, could we introduce this method in crrev.com/c/775630 with the final/correct behavior, and rebase this CL on top of that CL?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 1
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3381216f_72de8a05",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "We got feedback from developers that the error messages are not very actionable -- could we make these enums more specific, i.e. use a different enumeration value for each error source?",
+      "range": {
+        "startLine": 145,
+        "startChar": 65,
+        "endLine": 145,
+        "endChar": 79
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c087f45_759dd73f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "Can you please move these changes into a different CL? We already have crrev.com/c/775630 to change this, let\u0027s make all these changes there.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 37
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b83a46_59ff4587",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "Would PENDING_REQUEST be more appropriate here?",
+      "range": {
+        "startLine": 217,
+        "startChar": 45,
+        "endLine": 217,
+        "endChar": 62
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29945e3c_b14a938b",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "nit: Let\u0027s call this exactly once, store it in a const local, and pass that into GetValidateRPID as well as here to make it totally obvious that the validation is performed on the exact same value as the one that ends up being used.",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 234,
+        "endChar": 50
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42cc2fb_5f51a797",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "Let\u0027s introduce a more specific error here as well, unless the fact that we are returning a generic error has privacy benefits (e.g. the RP cannot tell if the user has a SK or not)",
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedc9a7b_e65456b1",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "nit: Already included in u2f_sign.h",
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41bace41_c03ce819",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerTypeConverters.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "nit: To avoid code duplication, let\u0027s factor this out into a helper method that can be called here as well as in the converter for MakePublicKeyCredentialOptions.",
+      "range": {
+        "startLine": 269,
+        "startChar": 3,
+        "endLine": 273,
+        "endChar": 68
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5239cb9f_99b38710",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerTypeConverters.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "|rpId| seems to be optional, could you please add a comment that explains that this is still legal and will result in the correct behavior? Looks like it will just return a null string which is the right thing, but not obvious from looking at just this code here.",
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb6c85b_294729ab",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerTypeConverters.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "nit: extra (",
+      "range": {
+        "startLine": 288,
+        "startChar": 55,
+        "endLine": 288,
+        "endChar": 56
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df68b035_79f6ae87",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerTypeConverters.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "nit: Let\u0027s factor this out into a helper Convert\u003c\u003e method to avoid so deep nesting.",
+      "range": {
+        "startLine": 284,
+        "startChar": 5,
+        "endLine": 294,
+        "endChar": 7
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982dd0b3_5e85103c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "Would clang-format format this nicely with the ternary ?: operator?",
+      "range": {
+        "startLine": 300,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 32
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82dd7c97_e68b0520",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-10T09:57:02Z",
+      "side": 1,
+      "message": "nit: Given that this .mojom file is the contract between the browser and renderer process, and the browser should do strict validation that it only gets legit messages from the renderer, could you please add a comment for each member, with more information about their semantic meaning, and allowed values, invariants, etc.; so that the browser can kill the renderer if those are violated?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "81fcdbf91081a6439b303ae4d6c31376ed4b015d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
