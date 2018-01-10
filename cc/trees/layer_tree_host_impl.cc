@@ -71,6 +71,7 @@
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/mutator_host.h"
+#include "cc/trees/render_frame_metadata.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/transform_node.h"
@@ -1912,11 +1913,16 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
     layer_tree_frame_sink_->SetLocalSurfaceId(
         active_tree()->local_surface_id());
   }
+
+  RenderFrameMetadata render_frame_metadata;
+  render_frame_metadata.root_scroll_offset =
+      compositor_frame.metadata.root_scroll_offset;
+
   layer_tree_frame_sink_->SubmitCompositorFrame(std::move(compositor_frame));
 
   // Clears the list of swap promises after calling DidSwap on each of them to
   // signal that the swap is over.
-  active_tree()->ClearSwapPromises();
+  active_tree()->ClearSwapPromises(&render_frame_metadata);
 
   // The next frame should start by assuming nothing has changed, and changes
   // are noted as they occur.

@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "cc/cc_export.h"
+#include "cc/trees/render_frame_metadata.h"
 #include "components/viz/common/quads/compositor_frame_metadata.h"
 
 namespace cc {
@@ -68,6 +69,7 @@ class CC_EXPORT SwapPromise {
   virtual DidNotSwapAction DidNotSwap(DidNotSwapReason reason) = 0;
   // This is called when the main thread starts a (blocking) commit
   virtual void OnCommit() {}
+  virtual void DidSwap2(RenderFrameMetadata* metadata) {}
 
   // A non-zero trace id identifies a trace flow object that is embedded in the
   // swap promise. This can be used for registering additional flow steps to

@@ -79,6 +79,7 @@ class WebMouseEvent;
 
 namespace cc {
 struct BeginFrameAck;
+class RenderFrameMetadata;
 }  // namespace cc
 
 namespace gfx {
@@ -800,6 +801,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void DidAllocateSharedBitmap(
       uint32_t last_shared_bitmap_sequence_number) override;
   void SetupInputRouter();
+
+  void OnRenderFrameMetadata(cc::RenderFrameMetadata metadata);
 
 #if defined(OS_MACOSX)
   device::mojom::WakeLock* GetWakeLock();
