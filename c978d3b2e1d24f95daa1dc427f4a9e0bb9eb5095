@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1babb7f9_81011f85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2018-01-10T22:35:41Z",
+      "side": 1,
+      "message": "On the Chromium documentation, they point to this website about commit messages: \n\nhttps://chris.beams.io/posts/git-commit/#imperative\n\nAnd there it mentions that we should use the \"imperative mood\" on the subject line, which is like giving a command.",
+      "parentUuid": "ffe0bba7_fa17decd",
+      "revId": "c978d3b2e1d24f95daa1dc427f4a9e0bb9eb5095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02caac98_bf7e17c1",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c833dea8_8f13ee43",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2018-01-10T22:35:41Z",
+      "side": 1,
+      "message": "Thanks. Apparently the order of includes is different in chromeos and chromium :P",
+      "parentUuid": "02caac98_bf7e17c1",
+      "revId": "c978d3b2e1d24f95daa1dc427f4a9e0bb9eb5095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40fdd446_85cc4869",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "c978d3b2e1d24f95daa1dc427f4a9e0bb9eb5095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e387d32f_f254c166",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2018-01-10T22:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40fdd446_85cc4869",
+      "revId": "c978d3b2e1d24f95daa1dc427f4a9e0bb9eb5095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
