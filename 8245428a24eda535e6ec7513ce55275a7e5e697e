@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df9d59ca_7c8008e1",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 7513,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "Nit: Remove \"web\" as I think it is misleading.",
+      "range": {
+        "startLine": 7513,
+        "startChar": 95,
+        "endLine": 7513,
+        "endChar": 98
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77d5374_5c36a17c",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "This is a tricky case and will be hard to see if we regress on it, so it should be unit tested.\n\nPlease add a unit test in chrome/browser/ui/views/hover_button_unittest.cc",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 28
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f29f96c_fe7214ac",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "There are no helpers (just some const variable). Remove this comment.",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362477e0_47f12db2",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "General rule: Using good naming for variables/classes is extremely important for code readability and long-term maintenance. This allows people to read the code easily and avoid having to go back to the definition of the function or its documentation of the method when reading the code.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f05d75_17aa8687",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "s/kIconSize/kAvatarIconSize",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c441ed_2a2d2f5d",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "This should go in the anonymous namespace. And in general we prefix it by \"g_\" as it is a global variable.",
+      "range": {
+        "startLine": 33,
+        "startChar": 15,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e4e4d5_d1c73ea9",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "This class has simple dependencies, so unit testing it should be straight forward. It should be unit tested in this CL (adding tests in the same CL as the code is in general better as it forces us to write code that can be unit tested).\n\nTake a look at https://cs.chromium.org/chromium/src/chrome/browser/ui/views/hover_button_unittest.cc to see how to write a unit test for views code.",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c98474d_acc59e15",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "s/hover_button/account_button",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 29
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cffe2ad_d9012544",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "DCHECK_EQ(this, menu_widget);",
+      "range": {
+        "startLine": 85,
+        "startChar": 19,
+        "endLine": 85,
+        "endChar": 32
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a24406_25f9562e",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "s/outside/outside the accounts menu.",
+      "range": {
+        "startLine": 91,
+        "startChar": 26,
+        "endLine": 91,
+        "endChar": 33
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563b2951_32721858",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "We make here a strong assumption that the parent view is a bubble view. While that is the case today (the profile chooser view is indeed a bubble view), nothing forbids presenting the accounts menu view on the BrowserWindow. The current code would simply close the BrowserWindow when the account menu is destroyed.\n\nWe must make sure that the AccountsMenu is only presented on a bubble view. See my comments in the profile_chooser_view.cc",
+      "range": {
+        "startLine": 92,
+        "startChar": 17,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92651091_405cef7f",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "Suggestion: It may be good to change the name of this class to DiceAccountsMenu",
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64c6521_fd91bd82",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "Please add a comment explaining what this class is supposed to do (and when it is used).",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f6532e_3a76005c",
+        "filename": "chrome/browser/ui/views/profiles/accounts_menu.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "This public method requires a comment (it is not clear to me how |listener| will be used by the client code).",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7982fd_97855fb4",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-10T10:17:25Z",
+      "side": 1,
+      "message": "We need to reset this to the same value it had before (not that close on deactivate may be set to a different value. In general we do this used scoped objects (see for example https://cs.chromium.org/chromium/src/net/quic/chromium/quic_chromium_client_stream.cc?rcl\u003d5fa3f74db3a66c5c9c0230dae26c231680629ae2\u0026l\u003d26 )\n\nAlso, we will need to add this logic to all bubbles that present the account menu. I think we could do the following:\n1. Pass the bubble view as an argument in ShowBubble.\n2. Move the logic that manipulates set_close_on_deactivate in AccountsMenu.\n3. Used a ScopedCloseMenuOnDeactivateSaver class that lives in an anonymous namespace in AccountsMenu.\nclass ScopedCloseBubbleOnDeactivate {\n public:\n  ScopedCloseBubbleOnDeactivate(BubbleDialogDelegateView* bubble)\n      : bubble_(bubble),\n        initial_close_on_deactivate_(bubble_-\u003eclose_on_deactivate()) {\n    bubble_-\u003eset_close_on_deactivate(false);\n  }\n  ~ScopedCloseBubbleOnDeactivate() {\n   bubble_-\u003eclosed_on_deactivate(initial_close_on_deactivate_);\n  }\n private:\n  const boolean initial_close_on_deactivate_;\n  BubbleDialogDelegateView* bubble_;\n};\n5. In ShowMenu we should DCHECK that the top level presenter of the anchor view is bubble view.\n6. Call AccountsMenu::ShowBubble from here.",
+      "range": {
+        "startLine": 705,
+        "startChar": 4,
+        "endLine": 705,
+        "endChar": 27
+      },
+      "revId": "8245428a24eda535e6ec7513ce55275a7e5e697e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
