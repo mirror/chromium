@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc6bb50a_66c4c222",
+        "filename": "extensions/common/extension_icon_path_normalizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-10T06:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c8223fc_e78cd98f",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 39
+      },
+      "revId": "53a652ee25b9d32d1f8472b713527d49d2dda89e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89d06a0b_1dc12402",
         "filename": "extensions/common/extension_icon_path_normalizer.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "53a652ee25b9d32d1f8472b713527d49d2dda89e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351d7205_a42dff91",
+        "filename": "extensions/common/extension_icon_path_normalizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-10T06:56:21Z",
+      "side": 1,
+      "message": "Renamed. File has also been renamed.\n\nDone",
+      "parentUuid": "89d06a0b_1dc12402",
+      "revId": "53a652ee25b9d32d1f8472b713527d49d2dda89e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "53a652ee25b9d32d1f8472b713527d49d2dda89e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa27de5_84bb47c6",
+        "filename": "extensions/utility/unpacker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2018-01-10T06:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da5d85b_1293a24e",
+      "range": {
+        "startLine": 226,
+        "startChar": 17,
+        "endLine": 226,
+        "endChar": 27
+      },
+      "revId": "53a652ee25b9d32d1f8472b713527d49d2dda89e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
