@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4110b33b_f3f0f450",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-10T00:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e99a89_d75fd0fd",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "e421792f7aaab2564ed72030e4d4b081af8ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "631c1dd2_a500203d",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
         "patchSetId": 2
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "Okay, that seems extremely weird to me... can we maybe add a comment about this somewhere? To at least make clear that it\u0027s intentional and not just an oversight.",
       "parentUuid": "560b4869_44d9f854",
+      "range": {
+        "startLine": 182,
+        "startChar": 14,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "e421792f7aaab2564ed72030e4d4b081af8ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3866626d_5e6f8f0c",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-10T00:18:09Z",
+      "side": 1,
+      "message": "I asked Tom and we decided that we might as well just use it, so doing so now.",
+      "parentUuid": "d2f516f7_ac39f657",
       "range": {
         "startLine": 182,
         "startChar": 14,
