@@ -2278,7 +2278,7 @@ be describing additional metrics about the same event.
   <metric name="ContentType">
     <summary>
       Enumeration for the MIME type of the page. Values are enumerated in
-      metrics::TabEvent::ContentType.
+      metrics::TabMetricsEvent::ContentType.
     </summary>
   </metric>
   <metric name="DefaultProtocolHandler">
@@ -2319,6 +2319,18 @@ be describing additional metrics about the same event.
   <metric name="MouseEventCount">
     <summary>
       Number of mouse events that were sent to the page.
+    </summary>
+  </metric>
+  <metric name="NavigationEntryCount">
+    <summary>
+      Number of navigation entries in the tab's NavigationController.
+      Corresponds to the size of the tab's back/forward list.
+    </summary>
+  </metric>
+  <metric name="NavigationSource">
+    <summary>
+      Source of the navigation. Uses values from
+      metrics::TabMetricsEvent::NavigationSource.
     </summary>
   </metric>
   <metric name="SequenceId">

@@ -17,7 +17,6 @@
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/custom_handlers/protocol_handler.h"
 #include "content/public/browser/render_frame_host.h"
@@ -74,6 +73,42 @@ TabMetricsEvent::ProtocolHandlerScheme GetSchemeValueFromString(
 
   size_t index = scheme_ptr - std::begin(kWhitelistedSchemes);
   return static_cast<TabMetricsEvent::ProtocolHandlerScheme>(index);
+}
+
+// Returns the NavigationSource corresponding to the PageTransition. Only
+// considers main-frame transitions.
+TabMetricsEvent::NavigationSource GetNavigationSourceFromPageTransition(
+    ui::PageTransition page_transition) {
+  // Don't use the core PAGE_TRANSITION_TYPED, which can include non-typed URLs
+  // such as opening a file. Instead, use the address bar qualifier.
+  if (page_transition & ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)
+    return TabMetricsEvent::NAVIGATION_SOURCE_ADDRESS_BAR;
+
+  if (ui::PageTransitionCoreTypeIs(page_transition, ui::PAGE_TRANSITION_LINK)) {
+    if (ui::PageTransitionIsRedirect(page_transition)) {
+      // Redirects unrelated to clicking a link still get the "link" type, so
+      // assume "link" might be wrong here.
+      return TabMetricsEvent::NAVIGATION_SOURCE_OTHER;
+    }
+    return TabMetricsEvent::NAVIGATION_SOURCE_LINK;
+  }
+
+  // Check for other core types.
+  if (ui::PageTransitionCoreTypeIs(page_transition,
+                                   ui::PAGE_TRANSITION_AUTO_BOOKMARK)) {
+    return TabMetricsEvent::NAVIGATION_SOURCE_BOOKMARK;
+  }
+  if (ui::PageTransitionCoreTypeIs(page_transition,
+                                   ui::PAGE_TRANSITION_FORM_SUBMIT)) {
+    return TabMetricsEvent::NAVIGATION_SOURCE_FORM_SUBMIT;
+  }
+  if (ui::PageTransitionCoreTypeIs(page_transition,
+                                   ui::PAGE_TRANSITION_RELOAD)) {
+    return TabMetricsEvent::NAVIGATION_SOURCE_RELOAD;
+  }
+
+  // Exclude other types that don't fit into our model.
+  return TabMetricsEvent::NAVIGATION_SOURCE_OTHER;
 }
 
 // Returns the site engagement score for the WebContents, rounded down to 10s
@@ -204,6 +239,9 @@ void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
       // resource_coordinator refactor: crbug.com/775644.
       .SetIsExtensionProtected(!tab_manager->IsTabAutoDiscardable(web_contents))
       .SetIsPinned(tab_strip_model->IsTabPinned(index))
+      .SetNavigationEntryCount(web_contents->GetController().GetEntryCount())
+      .SetNavigationSource(
+          GetNavigationSourceFromPageTransition(tab_metrics.page_transition))
       .SetSequenceId(++sequence_id_)
       .Record(ukm_recorder);
 }

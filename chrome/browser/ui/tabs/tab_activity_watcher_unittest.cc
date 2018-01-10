@@ -23,6 +23,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/web_contents_tester.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
@@ -105,12 +106,23 @@ class TabActivityWatcherTest : public ChromeRenderViewHostTestHarness {
     ChromeRenderViewHostTestHarness::TearDown();
   }
 
+  // Simulates a navigation.
+  void Navigate(content::WebContents* web_contents,
+                const GURL& url,
+                ui::PageTransition page_transition = ui::PAGE_TRANSITION_LINK) {
+    std::unique_ptr<content::NavigationSimulator> navigation =
+        content::NavigationSimulator::CreateBrowserInitiated(url, web_contents);
+    navigation->SetTransition(page_transition);
+    navigation->Commit();
+  }
+
   // Creates a new WebContents suitable for testing, adds it to the tab strip
   // and commits a navigation to |initial_url|. The WebContents is owned by the
   // TabStripModel, so its tab must be closed later, e.g. via CloseAllTabs().
   content::WebContents* AddWebContentsAndNavigate(
       TabStripModel* tab_strip_model,
-      const GURL& initial_url) {
+      const GURL& initial_url,
+      ui::PageTransition page_transition = ui::PAGE_TRANSITION_LINK) {
     content::WebContents::CreateParams params(profile(), nullptr);
     // Create as a background tab if there are other tabs in the tab strip.
     params.initially_hidden = tab_strip_model->count() > 0;
@@ -123,7 +135,9 @@ class TabActivityWatcherTest : public ChromeRenderViewHostTestHarness {
         std::make_unique<TestWebContentsObserver>(test_contents));
 
     tab_strip_model->AppendWebContents(test_contents, false);
-    WebContentsTester::For(test_contents)->NavigateAndCommit(initial_url);
+
+    Navigate(test_contents, initial_url, page_transition);
+
     return test_contents;
   }
 
@@ -446,6 +460,90 @@ TEST_F(TabActivityWatcherTest, HideWindow) {
   // Showing the window does not.
   test_contents->WasShown();
   EXPECT_FALSE(WasNewEntryRecorded());
+
+  tab_strip_model->CloseAllTabs();
+}
+
+// Tests navigation-related metrics.
+TEST_F(TabActivityWatcherTest, Navigations) {
+  Browser::CreateParams params(profile(), true);
+  auto browser = CreateBrowserWithTestWindowForParams(&params);
+  TabStripModel* tab_strip_model = browser->tab_strip_model();
+
+  // Set up first tab.
+  AddWebContentsAndNavigate(tab_strip_model, GURL(kTestUrls[0]));
+  tab_strip_model->ActivateTabAt(0, false);
+
+  // Expected metrics for tab event.
+  UkmMetricMap expected_metrics(kBasicMetricValues);
+
+  // Load background contents and verify UKM entry.
+  content::WebContents* test_contents = AddWebContentsAndNavigate(
+      tab_strip_model, GURL(kTestUrls[1]),
+      ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                ui::PAGE_TRANSITION_FROM_ADDRESS_BAR));
+  WebContentsTester::For(test_contents)->TestSetIsLoading(false);
+  expected_metrics[TabManager_TabMetrics::kNavigationSourceName] =
+      TabMetricsEvent::NAVIGATION_SOURCE_ADDRESS_BAR;
+  expected_metrics[TabManager_TabMetrics::kNavigationEntryCountName] = 1;
+  {
+    SCOPED_TRACE("");
+    ExpectNewEntry(kTestUrls[1], expected_metrics);
+  }
+
+  // Navigate background tab (not all transition types make sense in the
+  // background, but this is simpler than juggling two tabs to trigger logging).
+  Navigate(test_contents, kTestUrls[2], ui::PAGE_TRANSITION_LINK);
+  WebContentsTester::For(test_contents)->TestSetIsLoading(false);
+  expected_metrics[TabManager_TabMetrics::kNavigationSourceName] =
+      TabMetricsEvent::NAVIGATION_SOURCE_LINK;
+  expected_metrics[TabManager_TabMetrics::kNavigationEntryCountName]++;
+  {
+    SCOPED_TRACE("");
+    ExpectNewEntry(kTestUrls[2], expected_metrics);
+  }
+
+  Navigate(test_contents, kTestUrls[2], ui::PAGE_TRANSITION_RELOAD);
+  WebContentsTester::For(test_contents)->TestSetIsLoading(false);
+  expected_metrics[TabManager_TabMetrics::kNavigationSourceName] =
+      TabMetricsEvent::NAVIGATION_SOURCE_RELOAD;
+  expected_metrics[TabManager_TabMetrics::kNavigationEntryCountName]++;
+  {
+    SCOPED_TRACE("");
+    ExpectNewEntry(kTestUrls[2], expected_metrics);
+  }
+
+  Navigate(test_contents, kTestUrls[0], ui::PAGE_TRANSITION_AUTO_BOOKMARK);
+  WebContentsTester::For(test_contents)->TestSetIsLoading(false);
+  expected_metrics[TabManager_TabMetrics::kNavigationSourceName] =
+      TabMetricsEvent::NAVIGATION_SOURCE_BOOKMARK;
+  expected_metrics[TabManager_TabMetrics::kNavigationEntryCountName]++;
+  {
+    SCOPED_TRACE("");
+    ExpectNewEntry(kTestUrls[0], expected_metrics);
+  }
+
+  Navigate(test_contents, kTestUrls[1], ui::PAGE_TRANSITION_FORM_SUBMIT);
+  WebContentsTester::For(test_contents)->TestSetIsLoading(false);
+  expected_metrics[TabManager_TabMetrics::kNavigationSourceName] =
+      TabMetricsEvent::NAVIGATION_SOURCE_FORM_SUBMIT;
+  expected_metrics[TabManager_TabMetrics::kNavigationEntryCountName]++;
+  {
+    SCOPED_TRACE("");
+    ExpectNewEntry(kTestUrls[1], expected_metrics);
+  }
+
+  Navigate(test_contents, kTestUrls[2],
+           ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
+                                     ui::PAGE_TRANSITION_SERVER_REDIRECT));
+  WebContentsTester::For(test_contents)->TestSetIsLoading(false);
+  expected_metrics[TabManager_TabMetrics::kNavigationSourceName] =
+      TabMetricsEvent::NAVIGATION_SOURCE_OTHER;
+  expected_metrics[TabManager_TabMetrics::kNavigationEntryCountName]++;
+  {
+    SCOPED_TRACE("");
+    ExpectNewEntry(kTestUrls[2], expected_metrics);
+  }
 
   tab_strip_model->CloseAllTabs();
 }
