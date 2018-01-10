@@ -207,7 +207,7 @@ HungRendererDialogView* HungRendererDialogView::Create(
 
 // static
 HungRendererDialogView* HungRendererDialogView::GetInstance() {
-  return g_instance_;
+  return g_hung_renderer_view_instance_;
 }
 
 // static
@@ -338,7 +338,7 @@ bool HungRendererDialogView::ShouldShowCloseButton() const {
 
 void HungRendererDialogView::WindowClosing() {
   // We are going to be deleted soon, so make sure our instance is destroyed.
-  g_instance_ = NULL;
+  g_hung_renderer_view_instance_ = NULL;
 }
 
 int HungRendererDialogView::GetDialogButtons() const {
