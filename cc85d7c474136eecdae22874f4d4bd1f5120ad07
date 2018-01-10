@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "81468a35_023b5995",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-10T18:41:25Z",
+      "side": 1,
+      "message": "Rename it to kIsTabletOrDetachableDevice to better match its meaning?",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aed2bc8_ccd516ad",
         "filename": "ash/public/cpp/ash_switches.h",
         "patchSetId": 2
@@ -206,6 +223,23 @@
     },
     {
       "key": {
+        "uuid": "87306431_33cc5ec0",
+        "filename": "ash/system/power/power_off_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-10T18:41:25Z",
+      "side": 1,
+      "message": "Do you need to dismiss the menu after the button is pressed?",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a9cd9b_11bb2dd5",
         "filename": "ash/system/power/power_off_menu_view.h",
         "patchSetId": 2
@@ -251,6 +285,23 @@
       "writtenOn": "2018-01-10T01:24:08Z",
       "side": 1,
       "message": "Is it possible to have menu opened here?",
+      "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296af605_96bf16e4",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-10T18:41:25Z",
+      "side": 1,
+      "message": "It looks like you never delete |fullscreen_widget_| until TabletPowerButtonController is destroyed. It\u0027s probably fine. But if you want to do it this way, you should not re-create the |fullscreen_widget_| each time the power button is pressed. Or you can delete the widget when dismissing the menu and re-create it when you need it next time.",
       "revId": "cc85d7c474136eecdae22874f4d4bd1f5120ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
