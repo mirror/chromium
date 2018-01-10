@@ -22,6 +22,30 @@
       "revId": "0688b22e8cea58e281a82bc3fe01923646b67503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c15cb6f_4255a541",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-10T18:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bac4136b_3116600a",
+      "range": {
+        "startLine": 630,
+        "startChar": 65,
+        "endLine": 630,
+        "endChar": 0
+      },
+      "revId": "0688b22e8cea58e281a82bc3fe01923646b67503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
