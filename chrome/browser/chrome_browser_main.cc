@@ -649,16 +649,17 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
       result_code_(content::RESULT_CODE_NORMAL_EXIT),
       startup_watcher_(new StartupTimeBomb()),
       shutdown_watcher_(new ShutdownWatcherHelper()),
-      sampling_profiler_(base::PlatformThread::CurrentId(),
-                         StackSamplingConfiguration::Get()
-                             ->GetSamplingParamsForCurrentProcess(),
-                         metrics::CallStackProfileMetricsProvider::
-                             GetProfilerCallbackForBrowserProcessStartup()),
+      ui_thread_sampling_profiler_(
+          base::PlatformThread::CurrentId(),
+          StackSamplingConfiguration::Get()
+              ->GetSamplingParamsForCurrentProcess(),
+          metrics::CallStackProfileMetricsProvider::
+              GetProfilerCallbackForBrowserProcessUIThreadStartup()),
       profile_(NULL),
       run_message_loop_(true),
       local_state_(NULL) {
   if (StackSamplingConfiguration::Get()->IsProfilerEnabledForCurrentProcess())
-    sampling_profiler_.Start();
+    ui_thread_sampling_profiler_.Start();
 
   // If we're running tests (ui_task is non-null).
   if (parameters.ui_task)
@@ -1192,6 +1193,28 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   SetupMetrics();
 
   return content::RESULT_CODE_NORMAL_EXIT;
+}
+
+void ChromeBrowserMainParts::PostThreadCreate(
+    content::BrowserThread::ID browser_thread_id,
+    base::PlatformThreadId platform_thread_id) {
+  if (browser_thread_id == content::BrowserThread::IO) {
+    StackSamplingConfiguration* config = StackSamplingConfiguration::Get();
+    if (config->IsProfilerEnabledForCurrentProcess()) {
+      io_thread_sampling_profiler_ =
+          std::make_unique<base::StackSamplingProfiler>(
+              platform_thread_id, config->GetSamplingParamsForCurrentProcess(),
+              metrics::CallStackProfileMetricsProvider::
+                  GetProfilerCallbackForBrowserProcessIOThreadStartup());
+      io_thread_sampling_profiler_->Start();
+    }
+  }
+}
+
+void ChromeBrowserMainParts::PreThreadDestroy(
+    content::BrowserThread::ID browser_thread_id) {
+  if (browser_thread_id == content::BrowserThread::IO)
+    io_thread_sampling_profiler_.reset();
 }
 
 void ChromeBrowserMainParts::ServiceManagerConnectionStarted(

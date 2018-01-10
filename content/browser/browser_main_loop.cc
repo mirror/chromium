@@ -1131,6 +1131,7 @@ int BrowserMainLoop::CreateThreads() {
     }
 
     BrowserThread::ID id = static_cast<BrowserThread::ID>(thread_id);
+    base::PlatformThreadId platform_thread_id = base::kInvalidThreadId;
 
     if (thread_to_start) {
       (*thread_to_start)
@@ -1139,6 +1140,8 @@ int BrowserMainLoop::CreateThreads() {
       // Start the thread if an existing |message_loop| wasn't provided.
       if (!message_loop && !(*thread_to_start)->StartWithOptions(options))
         LOG(FATAL) << "Failed to start the browser thread: id == " << id;
+      else if (thread_id == BrowserThread::IO)
+        platform_thread_id = io_thread_->GetThreadId();
     } else {
       scoped_refptr<base::SingleThreadTaskRunner> redirection_task_runner;
 #if defined(OS_WIN)
@@ -1164,6 +1167,9 @@ int BrowserMainLoop::CreateThreads() {
     }
 
     TRACE_EVENT_END0("startup", "BrowserMainLoop::CreateThreads:start");
+
+    if (parts_ && platform_thread_id != base::kInvalidThreadId)
+      parts_->PostThreadCreate(id, platform_thread_id);
   }
   created_threads_ = true;
   return result_code_;
@@ -1322,6 +1328,9 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
       //   process launcher thread.
       //
       // - (Not sure why DB stops last.)
+      if (parts_)
+        parts_->PreThreadDestroy(static_cast<BrowserThread::ID>(thread_id));
+
       switch (thread_id) {
         case BrowserThread::DB: {
           TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:DBThread");
