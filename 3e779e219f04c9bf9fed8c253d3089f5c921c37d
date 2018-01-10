@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e802ab9_ba40ae3c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T06:59:55Z",
+      "side": 1,
+      "message": "Doesn\u0027t controller_-\u003econtroller() crash if the worker is not running (it has a comment that it can only be called when running)?",
+      "revId": "3e779e219f04c9bf9fed8c253d3089f5c921c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0647a9_e36eb12b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T06:59:55Z",
+      "side": 1,
+      "message": "double the them",
+      "range": {
+        "startLine": 213,
+        "startChar": 10,
+        "endLine": 213,
+        "endChar": 13
+      },
+      "revId": "3e779e219f04c9bf9fed8c253d3089f5c921c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

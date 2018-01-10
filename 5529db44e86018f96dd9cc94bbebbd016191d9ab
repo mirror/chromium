@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0dceafec_3a2c384e",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T06:59:55Z",
+      "side": 1,
+      "message": "Ah, I thought calling PassInterface() would crash on a nullptr, but I guess it\u0027s allowed?",
+      "parentUuid": "37545a3a_1f7aa8c1",
+      "revId": "5529db44e86018f96dd9cc94bbebbd016191d9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9687fc2e_2b4c7dc8",
         "filename": "content/browser/service_worker/service_worker_controllee_request_handler.h",
         "patchSetId": 21
