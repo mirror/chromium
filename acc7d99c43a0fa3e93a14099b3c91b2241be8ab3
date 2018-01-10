@@ -123,6 +123,24 @@
       "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f32ea52_da74261a",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-10T18:49:11Z",
+      "side": 1,
+      "message": "I think all you need is a vector of SkPictures and store the index into that vector.  Agreed that it adds more changes to the PaintOpBuffer -\u003e Skia portion (but not serialization).  However, I think what I suggest is the better the right approach.  I don\u0027t think this one edge use case for printing merits such special casing in PaintOpBuffer.  I think it\u0027s better to implement a reusable primitive in PaintOpBuffer that other future use cases can take advantage of.",
+      "parentUuid": "197d798f_f3c68810",
+      "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
