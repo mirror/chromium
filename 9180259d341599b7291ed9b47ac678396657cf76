@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf942bfc_b00c333a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/metrics_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-10T14:22:59Z",
+      "side": 1,
+      "message": "Missing include guards",
+      "range": {
+        "startLine": 3,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "9180259d341599b7291ed9b47ac678396657cf76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
