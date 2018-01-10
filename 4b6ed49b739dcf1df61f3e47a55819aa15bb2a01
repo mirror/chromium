@@ -140,6 +140,24 @@
       "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c576bb12_58b27de1",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContents.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-10T14:17:35Z",
+      "side": 1,
+      "message": "I dug a little deeper and it looks like we could just return true for the second condition as well as you suggest. But this would still mean that it\u0027ll call StyleEngine::MarkDocumentDirty for the user style sheet case, even if there are no @media rules or \u003cstyle media\u003d\"...\"\u003e tags in the document itself. Maybe this is acceptable, I don\u0027t know.\n\nIn order to keep things simple, I think we can go back to Patch Set 2 where the code for user style sheets is separate. We can remove the first check, since injected style sheets will never have a media attribute. If the second check is true, we can return true, but additionally also pass a \"update_clients \u003d false\" argument to StyleSheetContents::ClearRuleSet to indicate that it should not call its SetNeedsActiveStyleUpdateForClients function after clearing the rule set.\n\nWhat do you think?",
+      "parentUuid": "2aae2233_d4efa8f1",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
