@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2dfab4fe_27cf49e5",
+        "filename": "components/viz/common/gpu/raster_context_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-10T23:08:47Z",
+      "side": 1,
+      "message": "\u003e \u003e I can remove the change here and make it so the caller acquires the lock only if the context supports locking, but the ContextProviderCommandBuffer change was necessary to know whether the lock needs to be acquired. There is no API on ContextProvider to know that. The GPUImageDecodeCache assumes that the context it is used with supports locking, but for the main thread context that is not the case, the cache must always be called from the same thread. So it needs some API to know whether locking is supported. Is returning a null lock not explicit enough?\n\u003e \n\u003e It\u0027s probably ok to go that way, but we should document it (and make all CP\u0027s consistent with that).\n\u003e Still I would rather not have ScopedRasterContextLock silently fail to lock, and instead have code not take the lock when the threading semantics are different.\n\nI added a comment on the RasterContextProvider API to note that a null lock implies that the context must be used from the same thread, and updated all implementations to respect that. A few test classes don\u0027t take support_locking as a setting, so I left those as-is.\n\n\u003e \n\u003e \u003e Also, ScopedRasterContextLock is also managing busy notifications to CacheController. Would it be better to move that to a different object? Since I assume that should be done in either case?\n\u003e \n\u003e Moving to another object would seem preferable. It\u0027s a bit of an odd fit here (combining a low-level locking primitive with a high-level notion of business/visibility). In any case, for the shared main thread context, I don\u0027t think it matters, because it\u0027s never made \"visible\" (which doesn\u0027t really mean much for that one), so busy/idle tracking doesn\u0027t do anything.\n\nYup, agreed that visibility notifications shouldn\u0027t be combined with a thread lock primitive. But if its not relevant for the main thread context, then I\u0027d prefer to do that in a separate change. Thanks!",
+      "parentUuid": "84f1f0b8_78051714",
+      "revId": "bd98ee859c07b9d7c7c44b25e772911aa20263ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8e73fb0_179e4d69",
         "filename": "content/renderer/renderer_blink_platform_impl.cc",
         "patchSetId": 9
