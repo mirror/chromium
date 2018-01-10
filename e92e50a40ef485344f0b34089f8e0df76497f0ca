@@ -45,6 +45,30 @@
       "revId": "e92e50a40ef485344f0b34089f8e0df76497f0ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e09b9e_7de20b09",
+        "filename": "net/http/http_network_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-01-10T21:26:44Z",
+      "side": 1,
+      "message": "This is much better than my solution. Just want to confirm, the test you mentioned is FlushSocketPoolOnLowMemoryNotifications, in http_network_transaction_unittest.cc, right?",
+      "parentUuid": "7a48f139_4040e2b5",
+      "range": {
+        "startLine": 259,
+        "startChar": 27,
+        "endLine": 259,
+        "endChar": 43
+      },
+      "revId": "e92e50a40ef485344f0b34089f8e0df76497f0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
