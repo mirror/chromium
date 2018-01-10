@@ -22,6 +22,30 @@
       "revId": "f38f9762eaaa0536068e791d2d1ff2173722ef24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7748615f_0f761735",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-10T17:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be68c49_f824858d",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "f38f9762eaaa0536068e791d2d1ff2173722ef24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
