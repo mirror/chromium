@@ -69,6 +69,30 @@
       "revId": "c307e4be2c8e275b046364940d072939a0b24a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543bdc91_2ad840a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-10T18:35:36Z",
+      "side": 1,
+      "message": "I see. Removed checks here and hide googleG without calling this before native. PTAL",
+      "parentUuid": "2f82538f_b3d1cb30",
+      "range": {
+        "startLine": 230,
+        "startChar": 19,
+        "endLine": 230,
+        "endChar": 36
+      },
+      "revId": "c307e4be2c8e275b046364940d072939a0b24a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
