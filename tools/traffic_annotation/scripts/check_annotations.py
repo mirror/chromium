@@ -180,7 +180,7 @@ def main():
   args = parser.parse_args()
 
   checker = NetworkTrafficAnnotationChecker(args.build_path)
-  if args.complete:
+  if True:
     file_paths = None
   else:
     file_paths = checker.GetModifiedFiles()
