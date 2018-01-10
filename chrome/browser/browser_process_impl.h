@@ -65,6 +65,10 @@ class BrowserPolicyConnector;
 class PolicyService;
 };
 
+namespace resource_coordinator {
+class TabLifecycleUnitSource;
+}
+
 // Real implementation of BrowserProcess that creates and returns the services.
 class BrowserProcessImpl : public BrowserProcess,
                            public KeepAliveStateObserver {
@@ -359,6 +363,8 @@ class BrowserProcessImpl : public BrowserProcess,
   // Any change to this #ifdef must be reflected as well in
   // chrome/browser/resource_coordinator/tab_manager_browsertest.cc
   std::unique_ptr<resource_coordinator::TabManager> tab_manager_;
+  std::unique_ptr<resource_coordinator::TabLifecycleUnitSource>
+      tab_lifecycle_unit_source_;
 #endif
 
   shell_integration::DefaultWebClientState cached_default_web_client_state_;
