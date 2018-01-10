@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca11f8c_403542ba",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 5354,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-10T02:36:51Z",
+      "side": 1,
+      "message": "We should get these strings checked by Shimi - I\u0027m guessing they will need a bit of reworking.",
+      "revId": "f1cc60ed82a07fd7065db74e1eeadc72f186f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba835dc5_da493ffc",
+        "filename": "chrome/browser/clipboard/clipboard_read_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-10T02:36:51Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed because the prompt will only get shown when the feature is enabled anyway?",
+      "revId": "f1cc60ed82a07fd7065db74e1eeadc72f186f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6955a626_1304bf13",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-10T02:36:51Z",
+      "side": 1,
+      "message": "The line here is what\u0027s causing your problems. This is so broken/confusing. I think we should fix it by taking the suggestion above and special-casing cookies. And adding a TODO to figure out why it\u0027s necessary for cookies.",
+      "revId": "f1cc60ed82a07fd7065db74e1eeadc72f186f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
