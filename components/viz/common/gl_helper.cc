@@ -1025,6 +1025,7 @@ void I420ConverterImpl::Convert(GLuint src_texture,
       optional_scaler ? intermediate_->size() : src_texture_size;
   const gfx::Vector2dF offset = optional_scaler ? gfx::Vector2dF() : src_offset;
   if (use_mrt()) {
+    LOG(ERROR) << __func__ << ": MRT convert, from texture_size=" << texture_size.ToString() << ", offset=" << offset.ToString() << ", y_texture_size=" << y_texture_size.ToString() << ", chroma_texture_size=" << chroma_texture_size.ToString();
     y_planerizer_->ScaleToMultipleOutputs(texture, texture_size, offset,
                                           y_plane_texture, uv_->id(),
                                           gfx::Rect(y_texture_size));

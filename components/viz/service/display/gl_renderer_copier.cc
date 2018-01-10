@@ -78,6 +78,8 @@ void GLRendererCopier::CopyFromTextureOrFramebuffer(
   gfx::Rect copy_rect = output_rect;
   if (request->has_area())
     copy_rect.Intersect(request->area());
+  if (request->is_scaled())
+    request->SetUniformScaleRatio(1, 1);
   const gfx::Rect result_bounds =
       request->is_scaled() ? copy_output::ComputeResultRect(
                                  gfx::Rect(copy_rect.size()),
@@ -86,6 +88,7 @@ void GLRendererCopier::CopyFromTextureOrFramebuffer(
   gfx::Rect result_rect = result_bounds;
   if (request->has_result_selection())
     result_rect.Intersect(request->result_selection());
+  copy_rect = gfx::Rect(0, 0, result_rect.width(), result_rect.height());
   if (result_rect.IsEmpty())
     return;
 
@@ -142,6 +145,7 @@ void GLRendererCopier::CopyFromTextureOrFramebuffer(
         CacheObjectsOrDelete(request_source, CacheEntry::kResultTexture, 1,
                              &result_texture);
       } else {
+        LOG(ERROR) << __func__ << ": EXPECTED PATH, copy_rect=" << copy_rect.ToString();
         StartI420ReadbackFromTexture(
             std::move(request), framebuffer_texture, framebuffer_texture_size,
             window_rect_callback_.Run(result_rect +
@@ -203,9 +207,11 @@ GLuint GLRendererCopier::RenderResultTexture(
   GLuint source_texture;
   gfx::Size source_texture_size;
   if (framebuffer_texture != 0) {
+    LOG(ERROR) << __func__ << ": using framebuffer texture";
     source_texture = framebuffer_texture;
     source_texture_size = framebuffer_texture_size;
   } else {
+    LOG(ERROR) << __func__ << ": copying from framebuffer";
     // Optimization: If the texture copy completely satsifies the request, just
     // return it as the result texture. The request must not include scaling nor
     // a texture mailbox to use for delivering results. The texture format must
@@ -248,12 +254,14 @@ GLuint GLRendererCopier::RenderResultTexture(
   if (request.is_scaled()) {
     std::unique_ptr<GLHelper::ScalerInterface> scaler =
         TakeCachedScalerOrCreate(request);
+    LOG(ERROR) << __func__ << ": scaling, sampling_rect=" << sampling_rect.ToString();
     scaler->Scale(source_texture, source_texture_size,
                   sampling_rect.OffsetFromOrigin(), result_texture,
                   result_rect);
     CacheScalerOrDelete(SourceOf(request), std::move(scaler));
   } else {
     DCHECK_SIZE_EQ(sampling_rect.size(), result_rect.size());
+    LOG(ERROR) << __func__ << ": calling CopySubTextureCHROMIUM: sampling_rect=" << sampling_rect.ToString();
     gl->CopySubTextureCHROMIUM(
         source_texture, 0 /* source_level */, GL_TEXTURE_2D, result_texture,
         0 /* dest_level */, 0 /* xoffset */, 0 /* yoffset */, sampling_rect.x(),
@@ -407,7 +415,7 @@ void GLRendererCopier::StartReadbackFromFramebuffer(
     const gfx::Rect& copy_rect,
     const gfx::Rect& result_rect,
     const gfx::ColorSpace& color_space) {
-  DCHECK_NE(request->result_format(), ResultFormat::RGBA_TEXTURE);
+//  DCHECK_NE(request->result_format(), ResultFormat::RGBA_TEXTURE);
   DCHECK_SIZE_EQ(copy_rect.size(), result_rect.size());
 
   auto workflow = std::make_unique<ReadPixelsWorkflow>(
@@ -518,10 +526,18 @@ class GLPixelBufferI420Result : public CopyOutputResult {
                 y_out_stride);
       pixels += y_stride_ * size().height();
       const int chroma_height = (size().height() + 1) / 2;
-      CopyPlane(pixels, chroma_stride_, chroma_row_bytes, chroma_height, u_out,
+      const auto CopyPlaneUV = [](const uint8_t* src, int src_stride,
+                                int row_bytes, int num_rows, uint8_t* out,
+                                int out_stride) {
+        for (int i = 0; i < num_rows;
+             ++i, src += src_stride, out += out_stride) {
+          memset(out, 0x80, row_bytes);
+        }
+      };
+      CopyPlaneUV(pixels, chroma_stride_, chroma_row_bytes, chroma_height, u_out,
                 u_out_stride);
       pixels += chroma_stride_ * chroma_height;
-      CopyPlane(pixels, chroma_stride_, chroma_row_bytes, chroma_height, v_out,
+      CopyPlaneUV(pixels, chroma_stride_, chroma_row_bytes, chroma_height, v_out,
                 v_out_stride);
       gl->UnmapBufferCHROMIUM(GL_PIXEL_PACK_TRANSFER_BUFFER_CHROMIUM);
     }
@@ -600,14 +616,16 @@ class ReadI420PlanesWorkflow
     gl->ReadPixels(0, 0, size.width(), size.height(), readback_format,
                    GL_UNSIGNED_BYTE, offset_in_buffer);
     gl->EndQueryEXT(GL_ASYNC_PIXEL_PACK_COMPLETED_CHROMIUM);
-    context_provider_->ContextSupport()->SignalQuery(
-        queries_[plane],
-        base::Bind(&ReadI420PlanesWorkflow::OnFinishedPlane, this, plane));
   }
 
   void UnbindTransferBuffer() {
     context_provider_->ContextGL()->BindBuffer(
         GL_PIXEL_PACK_TRANSFER_BUFFER_CHROMIUM, 0);
+    for (int plane = 0; plane < 3; ++plane) {
+      context_provider_->ContextSupport()->SignalQuery(
+          queries_[plane],
+          base::Bind(&ReadI420PlanesWorkflow::OnFinishedPlane, this, plane));
+    }
   }
 
  private:
@@ -658,6 +676,8 @@ void GLRendererCopier::StartI420ReadbackFromTexture(
     const gfx::ColorSpace& color_space) {
   DCHECK_EQ(request->result_format(), ResultFormat::I420_PLANES);
   DCHECK_SIZE_EQ(copy_rect.size(), result_rect.size());
+
+  LOG(ERROR) << __func__ << ": source_texture_size=" << source_texture_size.ToString() << ", copy_rect=" << copy_rect.ToString() << ", result_rect=" << result_rect.ToString();
 
   // Get the GL objects needed for I420 readback.
   const base::UnguessableToken& source = SourceOf(*request);
@@ -840,7 +860,7 @@ GLRendererCopier::TakeCachedI420ConverterOrCreate(
   // swizzling in GL so that the data copied from the mapped pixel buffer is in
   // the exact row and byte ordering needed for GLPixelBufferI420Result.
   return helper_.CreateI420Converter(
-      true, true, GetOptimalReadbackFormat() == GL_BGRA_EXT, true);
+      false, true, GetOptimalReadbackFormat() == GL_BGRA_EXT, true);
 }
 
 void GLRendererCopier::CacheI420ConverterOrDelete(

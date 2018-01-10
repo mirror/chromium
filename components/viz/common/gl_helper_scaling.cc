@@ -1216,10 +1216,12 @@ void ShaderProgram::UseProgram(const gfx::Size& src_texture_size,
       src_rect.width() / src_texture_size.width(),
       src_rect.height() / src_texture_size.height(),
   };
+  LOG_IF(ERROR, shader_ == GLHelperScaling::SHADER_YUV_MRT_PASS1) << __func__ << ": src_texture_size=" << src_texture_size.ToString() << ", src_rect=" << src_rect.ToString() << ", so src_rect_texcoord=" << src_rect_texcoord[0] << ',' << src_rect_texcoord[1] << " to " << (src_rect_texcoord[0] + src_rect_texcoord[2]) << ',' << (src_rect_texcoord[1] + src_rect_texcoord[3]) << " (before flip)";
   if (flip_y) {
     src_rect_texcoord[1] += src_rect_texcoord[3];
     src_rect_texcoord[3] *= -1.0f;
   }
+  // LOG_IF(ERROR, shader_ == GLHelperScaling::SHADER_YUV_MRT_PASS1) << __func__ << ": src_rect_texcoord=" << src_rect_texcoord[0] << ',' << src_rect_texcoord[1] << " to " << (src_rect_texcoord[0] + src_rect_texcoord[2]) << ',' << (src_rect_texcoord[1] + src_rect_texcoord[3]) << " (AFTER flip)";
   gl_->Uniform4fv(src_rect_location_, 1, src_rect_texcoord);
 
   // Set shader-specific uniform inputs. The |scaling_vector| is the ratio of

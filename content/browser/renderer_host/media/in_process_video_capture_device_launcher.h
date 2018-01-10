@@ -39,7 +39,7 @@ class InProcessVideoCaptureDeviceLauncher : public VideoCaptureDeviceLauncher {
 
  private:
   using ReceiveDeviceCallback =
-      base::Callback<void(std::unique_ptr<media::VideoCaptureDevice> device)>;
+      base::OnceCallback<void(std::unique_ptr<media::VideoCaptureDevice> device)>;
 
   enum class State {
     READY_TO_LAUNCH,
@@ -61,16 +61,16 @@ class InProcessVideoCaptureDeviceLauncher : public VideoCaptureDeviceLauncher {
       std::unique_ptr<media::VideoCaptureDeviceClient> client,
       ReceiveDeviceCallback result_callback);
 
-  void DoStartTabCaptureOnDeviceThread(
+  void DoStartFrameSinkCaptureOnDeviceThread(
       const std::string& device_id,
       const media::VideoCaptureParams& params,
-      std::unique_ptr<media::VideoCaptureDeviceClient> client,
+      base::WeakPtr<media::VideoFrameReceiver> receiver,
       ReceiveDeviceCallback result_callback);
 
   void DoStartDesktopCaptureOnDeviceThread(
       const std::string& device_id,
       const media::VideoCaptureParams& params,
-      std::unique_ptr<media::VideoCaptureDeviceClient> client,
+      base::WeakPtr<media::VideoFrameReceiver> receiver,
       ReceiveDeviceCallback result_callback);
 
   const scoped_refptr<base::SingleThreadTaskRunner> device_task_runner_;

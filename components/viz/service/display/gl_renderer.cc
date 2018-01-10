@@ -2700,6 +2700,7 @@ void GLRenderer::CopyDrawnRenderPass(
     framebuffer_texture = current_framebuffer_texture_->id();
     framebuffer_texture_size = current_framebuffer_texture_->size();
   }
+  LOG(ERROR) << __func__ << ": output_rect=" << current_frame()->current_render_pass->output_rect.ToString() << ", fb_texture_size=" << framebuffer_texture_size.ToString() << ", is_flipped_fb=" << FlippedFramebuffer();
   copier_.CopyFromTextureOrFramebuffer(
       std::move(request), current_frame()->current_render_pass->output_rect,
       GetFramebufferCopyTextureFormat(), framebuffer_texture,

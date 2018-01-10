@@ -188,7 +188,7 @@ void FrameSinkVideoCapturerImpl::SetResolutionConstraints(
     return;
   }
 
-  oracle_.SetCaptureSizeConstraints(min_size, max_size, use_fixed_aspect_ratio);
+  oracle_.SetCaptureSizeConstraints(max_size/*min_size*/, max_size, use_fixed_aspect_ratio);
 }
 
 void FrameSinkVideoCapturerImpl::ChangeTarget(
@@ -246,9 +246,19 @@ void FrameSinkVideoCapturerImpl::OnBeginFrame(const BeginFrameArgs& args) {
   DCHECK(args.IsValid());
   DCHECK(resolved_target_);
 
+  // If the target's BeginFrameSource changed, invalidate the existing cache of
+  // frame display times.
+  //
+  // TODO(miu): Use a base::circular_deque instead, so we can track source+seq
+  // for each timestamp.
+  if (args.source_id != current_begin_frame_source_id_) {
+//    frame_display_times_.fill(base::TimeTicks());
+    LOG(ERROR) << __func__ << ": source_id changed from " << current_begin_frame_source_id_ << " to " << args.source_id;
+    current_begin_frame_source_id_ = args.source_id;
+  }
+
   frame_display_times_[args.sequence_number % frame_display_times_.size()] =
       args.frame_time + args.interval;
-  current_begin_frame_source_id_ = args.source_id;
 }
 
 void FrameSinkVideoCapturerImpl::OnFrameDamaged(const BeginFrameAck& ack,
@@ -264,13 +274,18 @@ void FrameSinkVideoCapturerImpl::OnFrameDamaged(const BeginFrameAck& ack,
     return;
   }
 
+  const base::TimeTicks& event_time =
+      frame_display_times_[ack.sequence_number % frame_display_times_.size()];
+  if (event_time.is_null()) {
+    return;
+  }
+
   if (frame_size != oracle_.source_size()) {
     oracle_.SetSourceSize(frame_size);
   }
+  LOG(ERROR) << __func__ << ": frame_size=" << frame_size.ToString() << ", damage_rect=" << damage_rect.ToString();
 
-  MaybeCaptureFrame(
-      VideoCaptureOracle::kCompositorUpdate, damage_rect,
-      frame_display_times_[ack.sequence_number % frame_display_times_.size()]);
+  MaybeCaptureFrame(VideoCaptureOracle::kCompositorUpdate, damage_rect, event_time);
 }
 
 void FrameSinkVideoCapturerImpl::MaybeCaptureFrame(
@@ -452,6 +467,7 @@ void FrameSinkVideoCapturerImpl::DidCopyFrame(
   const int v_stride = frame->stride(VideoFrame::kVPlane);
   uint8_t* const v = frame->visible_data(VideoFrame::kVPlane) +
                      (content_rect.y() / 2) * v_stride + (content_rect.x() / 2);
+  media::FillYUV(frame.get(), 0x80, 0x40, 0xa0);
   if (result->ReadI420Planes(y, y_stride, u, u_stride, v, v_stride)) {
     // The result may be smaller than what was requested, if unforeseen clamping
     // to the source boundaries occurred by the executor of the
@@ -459,9 +475,9 @@ void FrameSinkVideoCapturerImpl::DidCopyFrame(
     // what was requested.
     DCHECK_LE(result->size().width(), content_rect.width());
     DCHECK_LE(result->size().height(), content_rect.height());
-    media::LetterboxYUV(
-        frame.get(),
-        gfx::Rect(content_rect.origin(), AdjustSizeForI420(result->size())));
+    // media::LetterboxYUV(
+    //     frame.get(),
+    //     gfx::Rect(content_rect.origin(), AdjustSizeForI420(result->size())));
   } else {
     frame = nullptr;
   }
