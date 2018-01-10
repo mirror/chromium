@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e040497_ba6fd190",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-10T20:38:33Z",
+      "side": 1,
+      "message": "I moved this constructor to a static method, as recommended.\n\nI did not use SetExportedCallback, since there is currently no scenario, where we would want to export without a callback.",
+      "parentUuid": "1bc35e3c_ab3ecdc3",
+      "revId": "b246ff90d5869bb1277d1b27787894ab32f23407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e63d01_f030dc87",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 15
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "71a85c0d_65a0e6da",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-10T20:38:33Z",
+      "side": 1,
+      "message": "I repurposed this event signal the progress of the export. Only one export is allowed at a time. Export() will reject the request if another export is in progress, by returning an error on its callback.",
+      "parentUuid": "d5c8d3d9_01ead3f0",
+      "revId": "b246ff90d5869bb1277d1b27787894ab32f23407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c81b17d_2cce14fa",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
         "patchSetId": 15
@@ -86,6 +122,24 @@
       "revId": "b246ff90d5869bb1277d1b27787894ab32f23407",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8390c0_f290bc5a",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-10T20:38:33Z",
+      "side": 1,
+      "message": "We are now returning the folder name and we will construct the user-facing message on the page.",
+      "parentUuid": "1c81b17d_2cce14fa",
+      "revId": "b246ff90d5869bb1277d1b27787894ab32f23407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
