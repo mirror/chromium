@@ -1,0 +1,204 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11a678b8_0f674b5f",
+        "filename": "mojo/public/cpp/bindings/interface_invalidator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "Blank line between corresponding header file and other includes.",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e5aa45_88bf95ec",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "if (ping_handler_)",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368c7b42_46a00001",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "You can use base::BindLambdaForTesting() for capturing lambdas in tests.\n\nhttps://cs.chromium.org/chromium/src/base/test/bind_test_util.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d29",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7589c979_04db8110",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "Prefer FAIL() in tests.",
+      "range": {
+        "startLine": 98,
+        "startChar": 49,
+        "endLine": 98,
+        "endChar": 59
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e36c54_f37e24f0",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "No need for .is_bound()",
+      "range": {
+        "startLine": 103,
+        "startChar": 14,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7c407c_d78f7e6f",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "Is wptr.PassInterface() expected to be null here? (We should have an explicit test for that too)",
+      "range": {
+        "startLine": 134,
+        "startChar": 44,
+        "endLine": 134,
+        "endChar": 64
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78feb699_a3c7192f",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "std::nullptr_t\n\nThe existing uses of decltype(nullptr) were from before C++11 library features were available.",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f938e804_42cb3989",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "Let\u0027s skip this. operator bool() is fine.",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cdd125_e1e1d135",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "Let\u0027s have an operator\u003d\u003d(...) (the free function version) instead.",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6224162_6f46e067",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-10T00:34:21Z",
+      "side": 1,
+      "message": "Make this private.",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
