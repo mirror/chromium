@@ -581,6 +581,8 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         if (mOriginXDip == originXDip && mOriginYDip == originYDip) return;
         mOriginXDip = originXDip;
         mOriginYDip = originYDip;
+        // Update drawable's visibility for the new origin value.
+        updateVisibility();
         if (getVisibility() == VISIBLE) scheduleInvalidate();
     }
 
