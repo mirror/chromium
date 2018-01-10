@@ -46,6 +46,30 @@
       "revId": "d4e8012d5475f8ced0708ed4f6683e77fa03791d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f1642a_73e4a713",
+        "filename": "chrome/browser/chromeos/file_manager/file_tasks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-10T06:55:49Z",
+      "side": 1,
+      "message": "Thank you for the explanation. It does not sound worth to spend time to completely fix OTR with Chrome apps. Could you double check with chromeos-privacy@ if it\u0027s OK to switch to the normal profile app from the OTF profile-browser? After getting the answer from the privacy team, LGTM.",
+      "parentUuid": "98301989_ebc97a6f",
+      "range": {
+        "startLine": 157,
+        "startChar": 11,
+        "endLine": 157,
+        "endChar": 40
+      },
+      "revId": "d4e8012d5475f8ced0708ed4f6683e77fa03791d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
