@@ -231,6 +231,10 @@ enforce that the input data is valid. Common ones to watch out for:
     `uint64` / `double` / et cetera.
 *   URLs: use `url.mojom.Url`, not `string`.
 
+Another anti-pattern that should never be used is typemapping a C++ POD to
+`array<uint8>` and using `memcpy()`: while this can be tempting for its
+simplicity, this can easily leak information in the struct padding.
+
 **_Good_**
 
 ```c++
