@@ -282,6 +282,7 @@ class CC_EXPORT LayerTreeHostImpl
   // add impl-side invalidations to it.
   // virtual for testing.
   virtual void InvalidateContentOnImplSide();
+  virtual void InvalidateLayerTreeFrameSink();
 
   void SetTreeLayerScrollOffsetMutated(ElementId element_id,
                                        LayerTreeImpl* tree,
@@ -452,7 +453,7 @@ class CC_EXPORT LayerTreeHostImpl
     return &image_animation_controller_.value();
   }
 
-  virtual void WillBeginImplFrame(const viz::BeginFrameArgs& args);
+  virtual bool WillBeginImplFrame(const viz::BeginFrameArgs& args);
   virtual void DidFinishImplFrame();
   void DidNotProduceFrame(const viz::BeginFrameAck& ack);
   void DidModifyTilePriorities();
@@ -727,11 +728,10 @@ class CC_EXPORT LayerTreeHostImpl
 
   void UpdateTileManagerMemoryPolicy(const ManagedMemoryPolicy& policy);
 
-  // Returns true if the damage rect is non-empty. Takes as input whether or
-  // not the touch handle visibility has changed. This check includes damage
+  // Returns true if the damage rect is non-empty. This check includes damage
   // from the HUD. Should only be called when the active tree's draw properties
   // are valid and after updating the damage.
-  bool HasDamage(bool handle_visibility_changed) const;
+  bool HasDamage() const;
 
   // This function should only be called from PrepareToDraw, as DidDrawAllLayers
   // must be called if this helper function is called.  Returns DRAW_SUCCESS if
@@ -919,6 +919,9 @@ class CC_EXPORT LayerTreeHostImpl
   // TODO(danakj): Delete the LayerTreeFrameSink and all resources when
   // it's lost instead of having this bool.
   bool has_valid_layer_tree_frame_sink_;
+
+  bool check_damage_early_;
+  bool last_early_check_had_damage_;
 
   std::unique_ptr<Viewport> viewport_;
 
