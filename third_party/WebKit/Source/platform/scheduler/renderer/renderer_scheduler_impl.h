@@ -297,6 +297,10 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void OnTraceLogEnabled() override;
   void OnTraceLogDisabled() override;
 
+  TraceableVariableController* tracing_controller() {
+    return &tracing_controller_;
+  }
+
  protected:
   // RendererScheduler implementation.
   // Use *TaskQueue internally.
@@ -585,6 +589,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // TaskQueueThrottler.
   void VirtualTimeResumed();
 
+  TraceableVariableController tracing_controller_;
   MainThreadSchedulerHelper helper_;
   IdleHelper idle_helper_;
   IdleCanceledDelayedTaskSweeper idle_canceled_delayed_task_sweeper_;
