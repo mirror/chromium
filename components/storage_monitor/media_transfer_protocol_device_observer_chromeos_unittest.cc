@@ -73,7 +73,9 @@ class TestMediaTransferProtocolDeviceObserverChromeOS
   // of
   // mtp storage device given the |storage_name|.
   void MtpStorageAttached(const std::string& storage_name) {
-    StorageChanged(true, storage_name);
+    device::mojom::MtpStorageInfo storage_info;
+    storage_info.storage_name = storage_name;
+    StorageAttached(storage_info);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -81,7 +83,7 @@ class TestMediaTransferProtocolDeviceObserverChromeOS
   // of
   // mtp storage device given the |storage_name|.
   void MtpStorageDetached(const std::string& storage_name) {
-    StorageChanged(false, storage_name);
+    StorageDetached(storage_name);
     base::RunLoop().RunUntilIdle();
   }
 
