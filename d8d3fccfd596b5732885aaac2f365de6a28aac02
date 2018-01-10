@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "087bd7ab_64cd2722",
+        "filename": "chrome/browser/ui/app_list/search/common/url_icon_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T18:58:21Z",
+      "side": 1,
+      "message": "Can we use BrowserContext instead of Profile here? At some point this code may get moved out of src/chrome and it doesn\u0027t appear that we need a Profile here.",
+      "revId": "d8d3fccfd596b5732885aaac2f365de6a28aac02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
