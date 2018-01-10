@@ -22,6 +22,30 @@
       "revId": "d0f06b2da57a31de6e91f060172d14cb5f410c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1766cca9_78ca8412",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-10T10:31:29Z",
+      "side": 1,
+      "message": "It looks like this method was introduced and used in this CL. I have no idea when and why it was later removed https://codereview.chromium.org/2021343003/diff/120001/chrome/browser/resources/settings/site_settings/site_details_permission.js",
+      "parentUuid": "42400f25_f465a5b2",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "d0f06b2da57a31de6e91f060172d14cb5f410c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
