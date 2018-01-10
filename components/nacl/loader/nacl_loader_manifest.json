@@ -6,6 +6,7 @@
       "provides": {
         "browser": [
           "IPC::mojom::ChannelBootstrap",
+          "chrome::mojom::ResourceUsageReporter",
 
           // NOTE: The interfaces below are not implemented in the nacl_loader
           // service, but they are requested from all child processes by common
