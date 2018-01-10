@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "70691af8_a4df050d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T15:51:17Z",
+      "side": 1,
+      "message": "Note that set 6 supports multiple clones reading at once, but I removed it because after talking with the person who added it, it\u0027s not needed for use with the network service, and I didn\u0027t want to add a bunch of tests for it, or clog up content/common/ with a bunch of files needed to test it (Can\u0027t test things that never happen, so would need to move this class into a header file, among other things).",
+      "parentUuid": "5218d86e_a0e54823",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 21
+      },
+      "revId": "768a86a0286b942e9acaeb174ab56493d8fcf968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96ca3d3c_0bfae91d",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 8
