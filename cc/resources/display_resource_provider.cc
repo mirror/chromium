@@ -22,13 +22,8 @@ const unsigned int kDisplayInitialResourceId = 2;
 }  // namespace
 
 DisplayResourceProvider::DisplayResourceProvider(
-    viz::ContextProvider* compositor_context_provider,
-    viz::SharedBitmapManager* shared_bitmap_manager,
-    const viz::ResourceSettings& resource_settings)
-    : ResourceProvider(compositor_context_provider,
-                       shared_bitmap_manager,
-                       false,
-                       resource_settings),
+    viz::ContextProvider* compositor_context_provider)
+    : ResourceProvider(compositor_context_provider),
       next_id_(kDisplayInitialResourceId) {}
 
 DisplayResourceProvider::~DisplayResourceProvider() {
@@ -72,7 +67,29 @@ void DisplayResourceProvider::SendPromotionHints(
     UnlockForRead(id);
   }
 }
+
+bool DisplayResourceProvider::IsBackedBySurfaceTexture(viz::ResourceId id) {
+  viz::internal::Resource* resource = GetResource(id);
+  return resource->is_backed_by_surface_texture;
+}
+
+bool DisplayResourceProvider::WantsPromotionHintForTesting(viz::ResourceId id) {
+  return wants_promotion_hints_set_.count(id) > 0;
+}
+
+size_t DisplayResourceProvider::CountPromotionHintRequestsForTesting() {
+  return wants_promotion_hints_set_.size();
+}
+
 #endif
+bool DisplayResourceProvider::IsOverlayCandidate(viz::ResourceId id) {
+  viz::internal::Resource* resource = GetResource(id);
+  return resource->is_overlay_candidate;
+}
+
+viz::ResourceType DisplayResourceProvider::GetResourceType(viz::ResourceId id) {
+  return GetResource(id)->type;
+}
 
 void DisplayResourceProvider::WaitSyncToken(viz::ResourceId id) {
   viz::internal::Resource* resource = GetResource(id);
