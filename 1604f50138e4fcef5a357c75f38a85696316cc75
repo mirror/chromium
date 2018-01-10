@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "002b7edf_37e4333a",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-10T00:33:09Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "1604f50138e4fcef5a357c75f38a85696316cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13884b3_cf75c7ca",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-10T00:33:09Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "1604f50138e4fcef5a357c75f38a85696316cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd7261d_1d39aaae",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-10T00:33:09Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "1604f50138e4fcef5a357c75f38a85696316cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77443f2d_2e28789e",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-10T00:33:09Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "1604f50138e4fcef5a357c75f38a85696316cc75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
