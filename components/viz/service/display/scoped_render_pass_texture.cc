@@ -24,7 +24,8 @@ ScopedRenderPassTexture::ScopedRenderPassTexture(
     : context_provider_(context_provider),
       size_(size),
       mipmap_(mipmap),
-      color_space_(color_space) {
+      color_space_(color_space),
+      format_(format) {
   DCHECK(context_provider_);
   gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
   const gpu::Capabilities& caps = context_provider_->ContextCapabilities();
@@ -66,6 +67,7 @@ ScopedRenderPassTexture::ScopedRenderPassTexture(
   size_ = other.size_;
   mipmap_ = other.mipmap_;
   color_space_ = other.color_space_;
+  format_ = other.format_;
   gl_id_ = other.gl_id_;
 
   // When being moved, other will no longer hold this gl_id_.
@@ -80,6 +82,7 @@ ScopedRenderPassTexture& ScopedRenderPassTexture::operator=(
     size_ = other.size_;
     mipmap_ = other.mipmap_;
     color_space_ = other.color_space_;
+    format_ = other.format_;
     gl_id_ = other.gl_id_;
 
     // When being moved, other will no longer hold this gl_id_.
