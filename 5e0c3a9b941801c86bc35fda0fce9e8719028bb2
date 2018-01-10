@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07121a99_8e1cf9e5",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-10T12:27:11Z",
+      "side": 1,
+      "message": "Does this not generate a static initializer? Maybe not because this constructor is constexpr (I\u0027m not 100% sure whether the variable needs to be constexpr as well?).\n\nFor consistency though this should LazyInstance or LazyInstance should be dropped from surrounding TimeTicks variables.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "5e0c3a9b941801c86bc35fda0fce9e8719028bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
