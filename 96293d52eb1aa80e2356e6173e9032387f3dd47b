@@ -46,6 +46,30 @@
       "revId": "96293d52eb1aa80e2356e6173e9032387f3dd47b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078650f9_94178857",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-10T22:38:25Z",
+      "side": 1,
+      "message": "LGTM!  Marking this comment as resolved, thanks.",
+      "parentUuid": "427701e1_987340e3",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 53
+      },
+      "revId": "96293d52eb1aa80e2356e6173e9032387f3dd47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
