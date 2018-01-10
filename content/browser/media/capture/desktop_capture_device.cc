@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -20,6 +21,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
+#include "base/time/tick_clock.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
 #include "content/browser/media/capture/desktop_capture_device_uma_types.h"
@@ -52,7 +54,7 @@ namespace {
 // capturing. This means that on systems where screen scraping is slow we may
 // need to capture at frame rate lower than requested. This is necessary to keep
 // UI responsive.
-const int kMaximumCpuConsumptionPercentage = 50;
+const int kDefaultMaximumCpuConsumptionPercentage = 50;
 
 webrtc::DesktopRect ComputeLetterboxRect(
     const webrtc::DesktopSize& max_size,
@@ -94,6 +96,10 @@ class DesktopCaptureDevice::Core : public webrtc::DesktopCapturer::Callback {
 
   void SetNotificationWindowId(gfx::NativeViewId window_id);
 
+  void SetMockTimeForTesting(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      std::unique_ptr<base::TickClock> tick_clock);
+
  private:
   // webrtc::DesktopCapturer::Callback interface.
   void OnCaptureResult(
@@ -125,6 +131,9 @@ class DesktopCaptureDevice::Core : public webrtc::DesktopCapturer::Callback {
   // Requested video capture frame rate.
   float requested_frame_rate_;
 
+  // Inverse of the frame rate.
+  base::TimeDelta frame_duration_;
+
   // Size of frame most recently captured from the source.
   webrtc::DesktopSize previous_frame_size_;
 
@@ -136,8 +145,13 @@ class DesktopCaptureDevice::Core : public webrtc::DesktopCapturer::Callback {
   // be returned to the caller directly then this is NULL.
   std::unique_ptr<webrtc::DesktopFrame> output_frame_;
 
+  std::unique_ptr<base::TickClock> tick_clock_;
+
   // Timer used to capture the frame.
-  base::OneShotTimer capture_timer_;
+  std::unique_ptr<base::OneShotTimer> capture_timer_;
+
+  // See above description of kDefaultMaximumCpuConsumptionPercentage.
+  int max_cpu_consumption_percentage_;
 
   // True when waiting for |desktop_capturer_| to capture current frame.
   bool capture_in_progress_;
@@ -169,10 +183,29 @@ DesktopCaptureDevice::Core::Core(
     DesktopMediaID::Type type)
     : task_runner_(task_runner),
       desktop_capturer_(std::move(capturer)),
+      tick_clock_(nullptr),
+      capture_timer_(new base::OneShotTimer()),
+      max_cpu_consumption_percentage_(kDefaultMaximumCpuConsumptionPercentage),
       capture_in_progress_(false),
       first_capture_returned_(false),
       capturer_type_(type),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+
+  if (command_line.HasSwitch(switches::kWebRtcMaxCpuConsumptionPercentage)) {
+    std::string string_value = command_line.GetSwitchValueASCII(
+        switches::kWebRtcMaxCpuConsumptionPercentage);
+    if (!base::StringToInt(string_value, &max_cpu_consumption_percentage_)) {
+      DLOG(WARNING) << "Failed to parse switch "
+                    << switches::kWebRtcMaxCpuConsumptionPercentage << ": "
+                    << string_value;
+    }
+    // Ensure the percentage is in [1, 100].
+    max_cpu_consumption_percentage_ =
+        std::min(std::max(max_cpu_consumption_percentage_, 1), 100);
+  }
+}
 
 DesktopCaptureDevice::Core::~Core() {
   DCHECK(task_runner_->BelongsToCurrentThread());
@@ -194,6 +227,10 @@ void DesktopCaptureDevice::Core::AllocateAndStart(
 
   client_ = std::move(client);
   requested_frame_rate_ = params.requested_format.frame_rate;
+  frame_duration_ = base::TimeDelta::FromMicroseconds(static_cast<int64_t>(
+      static_cast<double>(base::Time::kMicrosecondsPerSecond) /
+          requested_frame_rate_ +
+      0.5 /* round to nearest int */));
 
   // Pass the min/max resolution and fixed aspect ratio settings from |params|
   // to the CaptureResolutionChooser.
@@ -221,6 +258,14 @@ void DesktopCaptureDevice::Core::SetNotificationWindowId(
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(window_id);
   desktop_capturer_->SetExcludedWindow(window_id);
+}
+
+void DesktopCaptureDevice::Core::SetMockTimeForTesting(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    std::unique_ptr<base::TickClock> tick_clock) {
+  tick_clock_ = std::move(tick_clock);
+  capture_timer_.reset(new base::OneShotTimer(tick_clock_.get()));
+  capture_timer_->SetTaskRunner(task_runner);
 }
 
 void DesktopCaptureDevice::Core::OnCaptureResult(
@@ -360,7 +405,8 @@ void DesktopCaptureDevice::Core::OnCaptureResult(
     }
   }
 
-  base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeTicks now =
+      tick_clock_ ? tick_clock_->NowTicks() : base::TimeTicks::Now();
   if (first_ref_time_.is_null())
     first_ref_time_ = now;
   client_->OnIncomingCapturedData(
@@ -382,20 +428,24 @@ void DesktopCaptureDevice::Core::OnCaptureTimer() {
 
 void DesktopCaptureDevice::Core::CaptureFrameAndScheduleNext() {
   DCHECK(task_runner_->BelongsToCurrentThread());
-
-  base::TimeTicks started_time = base::TimeTicks::Now();
+  base::TimeTicks started_time =
+      tick_clock_ ? tick_clock_->NowTicks() : base::TimeTicks::Now();
   DoCapture();
-  base::TimeDelta last_capture_duration = base::TimeTicks::Now() - started_time;
+  base::TimeDelta last_capture_duration =
+      tick_clock_ ? tick_clock_->NowTicks() - started_time
+                  : base::TimeTicks::Now() - started_time;
 
   // Limit frame-rate to reduce CPU consumption.
-  base::TimeDelta capture_period = std::max(
-      (last_capture_duration * 100) / kMaximumCpuConsumptionPercentage,
-      base::TimeDelta::FromMicroseconds(static_cast<int64_t>(
-          1000000.0 / requested_frame_rate_ + 0.5 /* round to nearest int */)));
+  base::TimeDelta capture_period =
+      std::max((last_capture_duration * 100) / max_cpu_consumption_percentage_,
+               base::TimeDelta::FromMicroseconds(static_cast<int64_t>(
+                   static_cast<double>(base::Time::kMicrosecondsPerSecond) /
+                       requested_frame_rate_ +
+                   0.5 /* round to nearest int */)));
 
   // Schedule a task for the next frame.
-  capture_timer_.Start(FROM_HERE, capture_period - last_capture_duration,
-                       this, &Core::OnCaptureTimer);
+  capture_timer_->Start(FROM_HERE, capture_period - last_capture_duration, this,
+                        &Core::OnCaptureTimer);
 }
 
 void DesktopCaptureDevice::Core::DoCapture() {
@@ -520,6 +570,12 @@ DesktopCaptureDevice::DesktopCaptureDevice(
   thread_.StartWithOptions(base::Thread::Options(thread_type, 0));
 
   core_.reset(new Core(thread_.task_runner(), std::move(capturer), type));
+}
+
+void DesktopCaptureDevice::SetMockTimeForTesting(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    std::unique_ptr<base::TickClock> tick_clock) {
+  core_->SetMockTimeForTesting(task_runner, std::move(tick_clock));
 }
 
 }  // namespace content
