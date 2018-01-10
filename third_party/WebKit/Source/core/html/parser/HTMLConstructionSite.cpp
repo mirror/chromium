@@ -327,6 +327,13 @@ void HTMLConstructionSite::ExecuteQueuedTasks() {
   if (!size)
     return;
 
+  // Fast path for when |size| is 1, which is the common case
+  if (size == 1) {
+    ExecuteTask(task_queue_.front());
+    task_queue_.pop_back();
+    return;
+  }
+
   // Copy the task queue into a local variable in case executeTask re-enters the
   // parser.
   TaskQueue queue;
