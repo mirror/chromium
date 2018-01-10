@@ -849,6 +849,14 @@ class CONTENT_EXPORT RenderWidget
   bool has_added_input_handler_;
 
  private:
+  // Returns the WebFrameWidget associated with this RenderWidget if any.
+  // Returns nullptr GetWebWidget() returns nullptr or if the WebWidget is not
+  // a WebFrameWidget. A WebFrameWidget only makes sense when there is a local
+  // root associated with it. RenderWidgetFullscreenPepper and a swapped out
+  // RenderWidget would not have a WebFrameWidget. This method should not be
+  // used for those cases.
+  blink::WebFrameWidget* GetWebFrameWidget() const;
+
   // Applies/Removes the DevTools device emulation transformation to/from a
   // window rect.
   void ScreenRectToEmulatedIfNeeded(blink::WebRect* window_rect) const;
