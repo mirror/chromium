@@ -502,6 +502,10 @@ gfx::Rect BubbleFrameView::GetAvailableScreenBounds(
       .work_area();
 }
 
+bool BubbleFrameView::ExtendClientIntoTitle() const {
+  return false;
+}
+
 bool BubbleFrameView::IsCloseButtonVisible() const {
   return close_->visible();
 }
@@ -643,7 +647,8 @@ gfx::Insets BubbleFrameView::GetClientInsetsForFrameWidth(
     close_height = close_margin + close_->height();
   }
   if (!HasTitle())
-    return content_margins_ + gfx::Insets(close_height, 0, 0, 0);
+    return content_margins_ +
+           gfx::Insets(ExtendClientIntoTitle() ? 0 : close_height, 0, 0, 0);
 
   const int icon_height = title_icon_->GetPreferredSize().height();
   const int label_height = title()->GetHeightForWidth(
