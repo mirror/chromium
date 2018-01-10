@@ -122,6 +122,9 @@ template("monochrome_public_apk_tmpl") {
     # Incremental install doesn't work for monochrome. See crbug.com/663492.
     never_incremental = true
 
+    # Strip xml namespaces
+    no_xml_namespaces = true
+
     # Configrations to make android load shared library from APK.
     uncompress_shared_libraries = true
 
