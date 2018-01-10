@@ -126,4 +126,7 @@ void TestStoragePartition::ClearBluetoothAllowedDevicesMapForTesting() {}
 
 void TestStoragePartition::FlushNetworkInterfaceForTesting() {}
 
+int TestStoragePartition::GetDeletionTaskCountForTesting() {
+  return 0;
+};
 }  // namespace content

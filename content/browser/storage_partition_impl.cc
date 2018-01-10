@@ -10,6 +10,7 @@
 #include <set>
 #include <vector>
 
+#include "base/barrier_closure.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/location.h"
@@ -168,21 +169,21 @@ void OnLocalStorageUsageInfo(
     const std::vector<LocalStorageUsageInfo>& infos) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  base::RepeatingClosure barrier = base::BarrierClosure(infos.size(), callback);
   for (size_t i = 0; i < infos.size(); ++i) {
     if (!origin_matcher.is_null() &&
         !origin_matcher.Run(infos[i].origin, special_storage_policy.get())) {
+      barrier.Run();
       continue;
     }
 
     if (infos[i].last_modified >= delete_begin &&
         infos[i].last_modified <= delete_end) {
-      // TODO(dullweber): |callback| should be passed to DeleteLocalStorage()
-      // but then ASAN complains about a few tests that need to be fixed.
-      dom_storage_context->DeleteLocalStorage(infos[i].origin,
-                                              base::BindOnce(&base::DoNothing));
+      dom_storage_context->DeleteLocalStorage(infos[i].origin, barrier);
+    } else {
+      barrier.Run();
     }
   }
-  callback.Run();
 }
 
 void OnSessionStorageUsageInfo(
@@ -219,13 +220,11 @@ void ClearLocalStorageOnUIThread(
                       origin_matcher.Run(storage_origin,
                                          special_storage_policy.get());
     if (can_delete) {
-      // TODO(dullweber): |callback| should be passed to
-      // DeleteLocalStorageForPhysicalOrigin() but then ASAN complains about a
-      // few tests that need to be fixed.
-      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(
-          storage_origin, base::BindOnce(&base::DoNothing));
+      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(storage_origin,
+                                                               callback);
+    } else {
+      callback.Run();
     }
-    callback.Run();
     return;
   }
 
@@ -397,7 +396,13 @@ struct StoragePartitionImpl::DataDeletionHelper {
       : remove_mask(remove_mask),
         quota_storage_remove_mask(quota_storage_remove_mask),
         callback(std::move(callback)),
-        task_count(0) {}
+        task_count(0) {
+    content::StoragePartitionImpl::deletion_task_count_++;
+  }
+
+  ~DataDeletionHelper() {
+    content::StoragePartitionImpl::deletion_task_count_--;
+  }
 
   void IncrementTaskCountOnUI();
   void DecrementTaskCount();  // Callable on any thread.
@@ -616,6 +621,9 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
 
   return partition;
 }
+
+// static
+int StoragePartitionImpl::deletion_task_count_ = 0;
 
 base::FilePath StoragePartitionImpl::GetPath() {
   return partition_path_;
@@ -1095,6 +1103,10 @@ void StoragePartitionImpl::FlushNetworkInterfaceForTesting() {
   if (url_loader_factory_for_browser_process_)
     url_loader_factory_for_browser_process_.FlushForTesting();
 }
+
+int StoragePartitionImpl::GetDeletionTaskCountForTesting() {
+  return deletion_task_count_;
+};
 
 BrowserContext* StoragePartitionImpl::browser_context() const {
   return browser_context_;
