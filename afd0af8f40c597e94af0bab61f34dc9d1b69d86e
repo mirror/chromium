@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "556bd73b_a3a72d6b",
+        "filename": "content/browser/android/app_web_message_port.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T05:37:47Z",
+      "side": 1,
+      "message": "this is in the content namespace already, ditto below",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b5b28e_5694ac47",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T05:37:47Z",
+      "side": 1,
+      "message": "how expensive are the encode/decode things now they are on the UI thread?",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92090132_86b90d90",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T05:37:47Z",
+      "side": 1,
+      "message": "import this at the top",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a773ab_72504594",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T05:37:47Z",
+      "side": 1,
+      "message": "how does this happen exactly? when is the callback null? would it be easier to use a dummy MessageReceiver instead to make the intention clear?",
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08c8fac_6e77efb6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/AppWebMessagePort.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-10T05:37:47Z",
+      "side": 1,
+      "message": "ditto import",
+      "range": {
+        "startLine": 136,
+        "startChar": 21,
+        "endLine": 136,
+        "endChar": 48
+      },
+      "revId": "afd0af8f40c597e94af0bab61f34dc9d1b69d86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
