@@ -22,6 +22,30 @@
       "revId": "96293d52eb1aa80e2356e6173e9032387f3dd47b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427701e1_987340e3",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-10T22:33:51Z",
+      "side": 1,
+      "message": "It should never happen.... in theory! Better safe than sorry.\n\nThanks for pointing it out!",
+      "parentUuid": "4a6e98ff_fe898aab",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 53
+      },
+      "revId": "96293d52eb1aa80e2356e6173e9032387f3dd47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
