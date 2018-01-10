@@ -69,9 +69,6 @@
 #include "net/http/http_network_session.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_server_properties_manager.h"
-#include "net/reporting/reporting_feature.h"
-#include "net/reporting/reporting_policy.h"
-#include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_intercepting_job_factory.h"
@@ -479,8 +476,6 @@ void ProfileImplIOData::InitializeInternal(
   SetUpJobFactoryDefaultsForBuilder(
       builder, std::move(request_interceptors),
       std::move(profile_params->protocol_handler_interceptor));
-
-  builder->set_reporting_policy(MaybeCreateReportingPolicy());
 }
 
 void ProfileImplIOData::OnMainRequestContextCreated(
@@ -615,8 +610,6 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
           context->host_resolver()));
   context->SetJobFactory(std::move(top_job_factory));
 
-  context->SetReportingService(MaybeCreateReportingService(context));
-
   return context;
 }
 
@@ -703,23 +696,4 @@ ProfileImplIOData::AcquireIsolatedMediaRequestContext(
 
 chrome_browser_net::Predictor* ProfileImplIOData::GetPredictor() {
   return predictor_.get();
-}
-
-std::unique_ptr<net::ReportingService>
-ProfileImplIOData::MaybeCreateReportingService(
-    net::URLRequestContext* url_request_context) const {
-  std::unique_ptr<net::ReportingPolicy> reporting_policy(
-      MaybeCreateReportingPolicy());
-  if (!reporting_policy)
-    return std::unique_ptr<net::ReportingService>();
-
-  return net::ReportingService::Create(*reporting_policy, url_request_context);
-}
-
-std::unique_ptr<net::ReportingPolicy>
-ProfileImplIOData::MaybeCreateReportingPolicy() {
-  if (!base::FeatureList::IsEnabled(features::kReporting))
-    return std::unique_ptr<net::ReportingPolicy>();
-
-  return base::MakeUnique<net::ReportingPolicy>();
 }
