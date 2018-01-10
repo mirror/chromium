@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "184805f1_1dbf79fa",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3931,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-10T16:22:30Z",
+      "side": 1,
+      "message": "Would putting this here not make it easier to add unit tests?",
+      "parentUuid": "8c58b90f_82f8c2f3",
+      "revId": "dc8a5da2475ce008ece99c71cf178696931894d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ffb2bc4_7a2e825b",
         "filename": "content/browser/webrtc/webrtc_internals_message_handler.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-10T16:06:41Z",
       "side": 1,
       "message": "nit: this is unnecessary. if it\u0027s null, the next line will crash which is just as useful of a signal.",
+      "revId": "dc8a5da2475ce008ece99c71cf178696931894d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdd01f8_afd97491",
+        "filename": "content/browser/webrtc/webrtc_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-10T16:22:30Z",
+      "side": 1,
+      "message": "I agree, but other reviewers have previously encouraged me to add such checks. Are there any guidelines? One benefit of having the DCHECK, I suppose, is that it\u0027s standard; I get to document the assumption of non-nullness, even if I don\u0027t end up dereferencing immediately (in which case, storing it for later could yield more difficult to debug crashes, as it wouldn\u0027t be immediately clear whether this was null to begin with, or became null due to some other problem).",
+      "parentUuid": "2ffb2bc4_7a2e825b",
       "revId": "dc8a5da2475ce008ece99c71cf178696931894d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
