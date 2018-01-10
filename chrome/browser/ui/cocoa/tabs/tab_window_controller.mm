@@ -5,6 +5,7 @@
 #import "chrome/browser/ui/cocoa/tabs/tab_window_controller.h"
 
 #include "base/logging.h"
+#import "base/mac/foundation_util.h"
 #import "base/mac/sdk_forward_declarations.h"
 #import "chrome/browser/ui/cocoa/browser_window_layout.h"
 #import "chrome/browser/ui/cocoa/fast_resize_view.h"
@@ -90,6 +91,8 @@
   const CGFloat kDefaultWidth = WindowSizer::kWindowMaxDefaultWidth;
   const CGFloat kDefaultHeight = 600;
 
+  self = [self init];
+
   NSRect contentRect = NSMakeRect(60, 229, kDefaultWidth, kDefaultHeight);
   base::scoped_nsobject<FramedBrowserWindow> window(
       [(hasTabStrip ? [TabbedBrowserWindow alloc] : [FramedBrowserWindow alloc])
@@ -97,65 +100,74 @@
   [window setReleasedWhenClosed:YES];
   [window setAutorecalculatesKeyViewLoop:YES];
 
-  if ((self = [super initWithWindow:window])) {
-    [[self window] setDelegate:self];
+  nsWindowController_.reset([[NSWindowController alloc] initWithWindow:window]);
 
-    chromeContentView_.reset([[ChromeContentView alloc]
-        initWithFrame:NSMakeRect(0, 0, kDefaultWidth, kDefaultHeight)]);
-    [chromeContentView_
-        setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-    [chromeContentView_ setWantsLayer:YES];
-    [[[self window] contentView] addSubview:chromeContentView_];
+  [[self window] setDelegate:self];
 
-    tabContentArea_.reset(
-        [[FastResizeView alloc] initWithFrame:[chromeContentView_ bounds]]);
-    [tabContentArea_ setAutoresizingMask:NSViewWidthSizable |
-                                         NSViewHeightSizable];
-    [chromeContentView_ addSubview:tabContentArea_];
+  chromeContentView_.reset([[ChromeContentView alloc]
+      initWithFrame:NSMakeRect(0, 0, kDefaultWidth, kDefaultHeight)]);
+  [chromeContentView_
+      setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+  [chromeContentView_ setWantsLayer:YES];
+  [[[self window] contentView] addSubview:chromeContentView_];
 
-    // tabStripBackgroundView_ draws the theme image behind the tab strip area.
-    // When making a tab dragging window (setUseOverlay:), this view stays in
-    // the parent window so that it can be translucent, while the tab strip view
-    // moves to the child window and stays opaque.
-    NSView* windowView = [window contentView];
-    CGFloat paintHeight = [FramedBrowserWindow browserFrameViewPaintHeight];
-    tabStripBackgroundView_.reset([[TabStripBackgroundView alloc]
-        initWithFrame:NSMakeRect(0, NSMaxY([windowView bounds]) - paintHeight,
-                                 NSWidth([windowView bounds]), paintHeight)]);
-    [tabStripBackgroundView_
-        setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
-    [self insertTabStripBackgroundViewIntoWindow:window titleBar:hasTitleBar];
+  tabContentArea_.reset(
+      [[FastResizeView alloc] initWithFrame:[chromeContentView_ bounds]]);
+  [tabContentArea_
+      setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+  [chromeContentView_ addSubview:tabContentArea_];
 
-    tabStripView_.reset([[TabStripView alloc]
-        initWithFrame:NSMakeRect(
-                          0, 0, kDefaultWidth, chrome::kTabStripHeight)]);
-    [tabStripView_ setAutoresizingMask:NSViewWidthSizable |
-                                       NSViewMinYMargin];
-    if (hasTabStrip)
-      [windowView addSubview:tabStripView_];
+  // tabStripBackgroundView_ draws the theme image behind the tab strip area.
+  // When making a tab dragging window (setUseOverlay:), this view stays in
+  // the parent window so that it can be translucent, while the tab strip view
+  // moves to the child window and stays opaque.
+  NSView* windowView = [window contentView];
+  CGFloat paintHeight = [FramedBrowserWindow browserFrameViewPaintHeight];
+  tabStripBackgroundView_.reset([[TabStripBackgroundView alloc]
+      initWithFrame:NSMakeRect(0, NSMaxY([windowView bounds]) - paintHeight,
+                               NSWidth([windowView bounds]), paintHeight)]);
+  [tabStripBackgroundView_
+      setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
+  [self insertTabStripBackgroundViewIntoWindow:window titleBar:hasTitleBar];
 
-    // |windowWillEnterFullScreen:| and |windowWillExitFullScreen:| are already
-    // called because self is a delegate for the window. However this class is
-    // designed for subclassing and can not implement NSWindowDelegate methods
-    // (because subclasses can do so as well and they should be able to).
-    // TODO(crbug.com/654656): Move |visualEffectView_| to subclass.
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-           selector:@selector(windowWillEnterFullScreenNotification:)
-               name:NSWindowWillEnterFullScreenNotification
-             object:window];
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-           selector:@selector(windowWillExitFullScreenNotification:)
-               name:NSWindowWillExitFullScreenNotification
-             object:window];
-  }
+  tabStripView_.reset([[TabStripView alloc]
+      initWithFrame:NSMakeRect(0, 0, kDefaultWidth, chrome::kTabStripHeight)]);
+  [tabStripView_ setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
+  if (hasTabStrip)
+    [windowView addSubview:tabStripView_];
+
+  // |windowWillEnterFullScreen:| and |windowWillExitFullScreen:| are
+  // already called because self is a delegate for the window. However this
+  // class is designed for subclassing and can not implement
+  // NSWindowDelegate methods (because subclasses can do so as well and they
+  // should be able to). TODO(crbug.com/654656): Move |visualEffectView_| to
+  // subclass.
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(windowWillEnterFullScreenNotification:)
+             name:NSWindowWillEnterFullScreenNotification
+           object:window];
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(windowWillExitFullScreenNotification:)
+             name:NSWindowWillExitFullScreenNotification
+           object:window];
+
   return self;
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[self window] setDelegate:nil];
   [super dealloc];
+}
+
+- (NSWindow*)window {
+  return [nsWindowController_ window];
+}
+
+- (void)setWindow:(NSWindow*)aWindow {
+  [nsWindowController_ setWindow:aWindow];
 }
 
 - (NSVisualEffectView*)visualEffectView {
@@ -411,6 +423,14 @@
   closeDeferred_ = YES;
 }
 
+- (void)showWindow:(id)sender {
+  [nsWindowController_ showWindow:sender];
+}
+
+- (void)closeWindow {
+  [nsWindowController_ close];
+}
+
 - (void)insertTabStripBackgroundViewIntoWindow:(NSWindow*)window
                                       titleBar:(BOOL)hasTitleBar {
   DCHECK(tabStripBackgroundView_);
@@ -482,6 +502,15 @@
 - (void)windowWillExitFullScreenNotification:(NSNotification*)notification {
   [(visualEffectView_ ? visualEffectView_.get()
                       : tabStripBackgroundView_.get()) setHidden:NO];
+}
+
+@end
+
+@implementation NSWindowController (TabWindowController)
+
+- (TabWindowController*)tabWindowController {
+  return base::mac::ObjCCastStrict<TabWindowController>(
+      [[self window] delegate]);
 }
 
 @end

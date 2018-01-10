@@ -390,7 +390,7 @@ willPositionSheet:(NSWindow*)sheet
 
   [sourceWindow setWindowController:nil];
   [self setWindow:destWindow];
-  [destWindow setWindowController:self];
+  [destWindow setWindowController:nsWindowController_];
 
   // Move the status bubble over, if we have one.
   if (statusBubble_)

@@ -644,7 +644,7 @@ IN_PROC_BROWSER_TEST_F(BrowserWindowControllerTest, SheetPosition) {
 
   // Close the application window.
   popup_browser->tab_strip_model()->CloseSelectedTabs();
-  [popupController close];
+  [popupController closeWindow];
 }
 
 // Verify that the info bar tip is hidden when the toolbar is not visible.
