@@ -139,7 +139,7 @@ TEST_F(LockScreenSanityTest, PasswordSubmitCallsLoginScreenClient) {
 }
 
 // Verifies that password text is cleared only after the browser-process
-// authentication request is complete.
+// authentication request is complete and the auth fails.
 TEST_F(LockScreenSanityTest, PasswordSubmitClearsPasswordAfterAuthentication) {
   std::unique_ptr<MockLoginScreenClient> client = BindMockLoginScreenClient();
 
@@ -163,14 +163,31 @@ TEST_F(LockScreenSanityTest, PasswordSubmitClearsPasswordAfterAuthentication) {
   base::RunLoop().RunUntilIdle();
   DCHECK(!callback.is_null());
 
-  // Run the browser-process authentication request. Verify that after the ash
-  // callback handler has completed the password is cleared.
+  // Run the browser-process authentication request. Verify that the password is
+  // cleared after the ash callback handler has completed and auth has failed.
   LoginPasswordView::TestApi password_test_api =
       MakeLoginPasswordTestApi(contents);
   EXPECT_FALSE(password_test_api.textfield()->text().empty());
-  std::move(callback).Run(true);
+  std::move(callback).Run(false);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(password_test_api.textfield()->text().empty());
+
+  // Repeat the above process. Verify that the password is not cleared if auth
+  // succeeds.
+  MockLoginScreenClient::AuthenticateUserCallback callback_2;
+  client->set_authenticate_user_callback_storage(&callback_2);
+  EXPECT_CALL(*client, AuthenticateUser_(testing::_, testing::_, testing::_,
+                                         testing::_));
+  DCHECK(callback_2.is_null());
+  generator.PressKey(ui::KeyboardCode::VKEY_A, 0);
+  generator.PressKey(ui::KeyboardCode::VKEY_RETURN, 0);
+  base::RunLoop().RunUntilIdle();
+  DCHECK(!callback_2.is_null());
+
+  EXPECT_FALSE(password_test_api.textfield()->text().empty());
+  std::move(callback_2).Run(true);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(password_test_api.textfield()->text().empty());
 }
 
 // Verifies that tabbing from the lock screen will eventually focus the shelf.
