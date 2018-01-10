@@ -9,7 +9,7 @@
 #include "components/safe_browsing/db/test_database_manager.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/resource_request_info.h"
-#include "content/public/browser/resource_throttle.h"
+#include "content/public/network/resource_throttle.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/redirect_info.h"

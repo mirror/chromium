@@ -283,6 +283,7 @@ static_library("test_support") {
     "//content/public/app:both",
     "//content/public/browser",
     "//content/public/common",
+    "//content/public/network",
     "//ipc",
     "//media/mojo/clients",
     "//media/mojo/interfaces",
