@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38e4d7eb_e46dddf8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SplitWidget.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T15:47:05Z",
+      "side": 1,
+      "message": "The only side-effect I see is \"invalidateConstraints\" call, but that should not do anything unless you did show a child widget. Mind explaining?",
+      "revId": "d0e37fa01ed6952193f862c0b07544887589b254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
