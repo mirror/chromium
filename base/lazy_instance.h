@@ -23,6 +23,13 @@
 // performance of creating the instance, and reducing heap fragmentation.  This
 // requires that Type be a complete type so we can determine the size.
 //
+// C++11 note: LazyInstance has often been used in the past to avoid static
+// initializers for otherwise trivially default constructible types. With C++11,
+// making these types' default constructor constexpr will avoid the static
+// initializer without requiring usage of a LazyInstance. This is preferred when
+// possible as LazyInstance access can be costly in some scenarios :
+// https://crbug.com/797129.
+//
 // Example usage:
 //   static LazyInstance<MyClass>::Leaky inst = LAZY_INSTANCE_INITIALIZER;
 //   void SomeMethod() {
