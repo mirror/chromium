@@ -832,6 +832,24 @@
             ]
         }
     ],
+    "ChromeHomeSuggestionsMemoryReduction": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "DropAllButFirstThumbnail",
+                    "enable_features": [
+                        "ChromeHomeDropAllButFirstThumbnail"
+                    ],
+                    "disable_features": [
+                        "ChromeHomeDestroySuggestions"
+                    ]
+                }
+            ]
+        }
+    ],
     "ChromeSmartSelection": [
         {
             "platforms": [
