@@ -42,7 +42,12 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  DECLARE_NODE_FACTORY(HTMLSlotElement);
+  static HTMLSlotElement* Create(Document&);
+  static HTMLSlotElement* CreateUserAgentDefaultSlot(Document&);
+  using CustomAssignmentCallback = bool (*)(const Node&);
+  static HTMLSlotElement* CreateUserAgentCustomAssignSlot(
+      Document&,
+      CustomAssignmentCallback = nullptr);
 
   const HeapVector<Member<Node>>& AssignedNodes() const;
   const HeapVector<Member<Node>>& GetDistributedNodes();
@@ -74,6 +79,7 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   Node* DistributedNodePreviousTo(const Node&) const;
 
   void AppendAssignedNode(Node&);
+  bool ShouldAssignToCustomSlotInUserAgentShadow(const Node&);
 
   void ResolveDistributedNodes();
   void AppendDistributedNode(Node&);
@@ -117,10 +123,14 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
 
   static AtomicString NormalizeSlotName(const AtomicString&);
 
+  // For User-Agent Shadow DOM
+  static const AtomicString& UserAgentCustomAssignSlotName();
+  static const AtomicString& UserAgentDefaultSlotName();
+
   virtual void Trace(blink::Visitor*);
 
  private:
-  HTMLSlotElement(Document&);
+  HTMLSlotElement(Document&, CustomAssignmentCallback = nullptr);
 
   InsertionNotificationRequest InsertedInto(ContainerNode*) final;
   void RemovedFrom(ContainerNode*) final;
@@ -140,10 +150,13 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
 
   void SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
 
+  bool HasCustomAssignmentCallback() const { return assignment_callback_; }
+
   HeapVector<Member<Node>> assigned_nodes_;
   HeapVector<Member<Node>> distributed_nodes_;
   HeapVector<Member<Node>> old_distributed_nodes_;
   HeapHashMap<Member<const Node>, size_t> distributed_indices_;
+  CustomAssignmentCallback assignment_callback_;
   bool slotchange_event_enqueued_ = false;
 
   // TODO(hayato): Move this to more appropriate directory (e.g. platform/wtf)
