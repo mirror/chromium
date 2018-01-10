@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "56cf7eab_cf0109d6",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-10T00:39:37Z",
+      "side": 1,
+      "message": "I understand, but I still think that they provide value.  When you are inheriting an interface, it is pretty easy to find the interface and update other comments if something changes.  Those changes happen pretty rarely.  It happens more often that I\u0027m looking at a function in the impl file, and want to see comments, but then I have to go searching to find them.  It might be better if the comments were there with the code.\n\nHowever, I\u0027m willing to disagree on this and do as you suggest.",
+      "parentUuid": "ca611e2d_fbc1501f",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86823585_dea035d1",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
         "patchSetId": 3
@@ -470,6 +494,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bca0ad_8d27f088",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-10T00:39:37Z",
+      "side": 1,
+      "message": "Done, and I added a unit test for the failure case.",
+      "parentUuid": "4d7939c4_aae5e697",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 60
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -730,6 +778,30 @@
       "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a0b3a2_38092a08",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-10T00:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45d2a353_a0293626",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 57
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
