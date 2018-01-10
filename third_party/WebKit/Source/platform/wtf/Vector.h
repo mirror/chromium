@@ -1989,6 +1989,12 @@ void Vector<T, inlineCapacity, Allocator>::Trace(VisitorDispatcher visitor) {
   }
 }
 
+template <typename T>
+struct IsTraceable<Vector<T>> {
+  static constexpr bool value =
+      IsTraceableInCollectionTrait<VectorTraits<T>>::value;
+};
+
 }  // namespace WTF
 
 using WTF::Vector;

@@ -707,6 +707,12 @@ inline void swap(Deque<T, inlineCapacity, Allocator>& a,
   a.Swap(b);
 }
 
+template <typename T>
+struct IsTraceable<Deque<T>> {
+  static constexpr bool value =
+      IsTraceableInCollectionTrait<VectorTraits<T>>::value;
+};
+
 }  // namespace WTF
 
 using WTF::Deque;

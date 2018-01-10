@@ -744,6 +744,13 @@ inline void CopyValuesToVector(const HashMap<T, U, V, W, X, Y>& collection,
     vector[i] = *it;
 }
 
+template <typename KeyArg, typename MappedArg>
+struct IsTraceable<HashMap<KeyArg, MappedArg>> {
+  static constexpr bool value =
+      IsTraceableInCollectionTrait<HashTraits<KeyArg>>::value ||
+      IsTraceableInCollectionTrait<HashTraits<MappedArg>>::value;
+};
+
 }  // namespace WTF
 
 using WTF::HashMap;

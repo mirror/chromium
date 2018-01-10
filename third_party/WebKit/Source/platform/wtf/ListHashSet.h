@@ -1137,6 +1137,12 @@ void ListHashSet<T, inlineCapacity, U, V>::Trace(VisitorDispatcher visitor) {
   impl_.Trace(visitor);
 }
 
+template <typename ValueArg>
+struct IsTraceable<ListHashSet<ValueArg>> {
+  static constexpr bool value = IsTraceableInCollectionTrait<
+      typename ListHashSet<ValueArg>::ValueTraits>::value;
+};
+
 }  // namespace WTF
 
 using WTF::ListHashSet;

@@ -324,6 +324,12 @@ inline void CopyToVector(const C& collection, W& vector) {
     vector[i] = *it;
 }
 
+template <typename ValueArg>
+struct IsTraceable<HashSet<ValueArg>> {
+  static constexpr bool value =
+      IsTraceableInCollectionTrait<HashTraits<ValueArg>>::value;
+};
+
 }  // namespace WTF
 
 using WTF::HashSet;

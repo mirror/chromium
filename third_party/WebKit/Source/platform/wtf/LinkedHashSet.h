@@ -938,6 +938,12 @@ inline void swap(LinkedHashSetNode<T, Allocator>& a,
   Allocator::LeaveGCForbiddenScope();
 }
 
+template <typename ValueArg>
+struct IsTraceable<LinkedHashSet<ValueArg>> {
+  static constexpr bool value =
+      IsTraceableInCollectionTrait<HashTraits<ValueArg>>::value;
+};
+
 }  // namespace WTF
 
 using WTF::LinkedHashSet;

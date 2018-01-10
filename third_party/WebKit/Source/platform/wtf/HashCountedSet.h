@@ -183,6 +183,12 @@ inline Vector<T> HashCountedSet<T, U, V, W>::AsVector() const {
   return vector;
 }
 
+template <typename Value>
+struct IsTraceable<HashCountedSet<Value>> {
+  static constexpr bool value =
+      IsTraceableInCollectionTrait<HashTraits<Value>>::value;
+};
+
 }  // namespace WTF
 
 using WTF::HashCountedSet;
