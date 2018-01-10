@@ -22,6 +22,30 @@
       "revId": "a7843689d3b488f93b168bfbf4f4e35c4a623dc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7586fefb_14400eec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-10T17:46:25Z",
+      "side": 1,
+      "message": "Also, should this be done in the Adapter itself rather than here?",
+      "parentUuid": "ac1da515_d977949e",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "a7843689d3b488f93b168bfbf4f4e35c4a623dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
