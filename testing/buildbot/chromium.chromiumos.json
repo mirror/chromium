@@ -794,7 +794,8 @@
   },
   "linux-chromeos-rel": {
     "additional_compile_targets": [
-      "gn_all"
+      "gn_all",
+      "webui_closure_compile"
     ],
     "gtest_tests": [
       {
