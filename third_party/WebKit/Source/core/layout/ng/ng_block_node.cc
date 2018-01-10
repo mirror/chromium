@@ -298,10 +298,13 @@ NGLayoutInputNode NGBlockNode::FirstChild() const {
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
+  DCHECK(RuntimeEnabledFeatures::LayoutNGEnabled());
+
   if (!box_->IsLayoutNGMixin())
     return false;
 
-  return RuntimeEnabledFeatures::LayoutNGEnabled();
+  const ComputedStyle& style = Style();
+  return !style.HasAppearance();
 }
 
 String NGBlockNode::ToString() const {
