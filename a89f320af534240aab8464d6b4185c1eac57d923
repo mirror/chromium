@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a51c35_31d2b636",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "Is the plan to, in the future, support constraints that also change the setting (akin to having to close and re-open the camera), or does the spec intend all such constraints to be rejected?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea299a1_03679f03",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "I got confused wondering how this distinguish between \"some setting was selected\" and \"we got the same setting as before\".\nBut I see now, I think this comment belongs to calling SelectSettingsAudioCapture() as opposed to ApplyConstraintsSucceeded().",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ac7c11_99f8455b",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "Does this mean the deviceId has to be present in the constraints?\nWouldn\u0027t we expect leaving that unspecified to pick the current one automatically?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc932d5_7d6229a2",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "Not specifying, by default, means unrestricted, so by default intersection sets it to the value of source-\u003ehotword_enabled(), correct?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f099b96b_be611269",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "I have a vague memory of seeing something like this somewhere else. If so, does a helper function make sense?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9845d7c2_d963e79f",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "Is there no way to loop through these?\nChanging which constraints exist and forgetting to update this piece of code seems like a likely source of future bugs.",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd984d83_a8a3fd00",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "nit: Remove newline?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c548d93_300e2fec",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "Why \"some_device_id\"? It does not matter to the test?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd6d5e7_1399f1f0",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "This test tests :)",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbd325f_7fdcfb3a",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "LocalSource? Is there a RemoteSource case?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2417eb4_97bde5f6",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-10T16:30:39Z",
+      "side": 1,
+      "message": "Can we get rid of all these hardcoded lists of properties by moving them to a \"all properties\" getter?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
