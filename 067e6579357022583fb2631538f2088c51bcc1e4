@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60dedec1_b859fadb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/dom/lists/DOMTokenList-coverage-for-attributes-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-10T08:13:47Z",
+      "side": 0,
+      "message": "Yay for removing expected.txt files! :)",
+      "range": {
+        "startLine": 1,
+        "startChar": 35,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "067e6579357022583fb2631538f2088c51bcc1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
