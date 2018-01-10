@@ -70,6 +70,24 @@
       "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7200c7_46ce6fe1",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-10T20:37:37Z",
+      "side": 1,
+      "message": "The reason I think SCROLLED_TO_ANCHOR is similar:\n\n* Despite the name it really just means the sequential focus navigation point has changed. It has more to do with that than scrolling, the event is just named that for historical reasons\n* It can be fired on any node, not just something focusable\n* It\u0027s fired automatically when you load a web page that has a fragment\n* ChromeVox ought to sync its range to a node when SCROLLED_TO_ANCHOR\n  is fired on it",
+      "parentUuid": "39e6a63c_f34b1639",
+      "revId": "c4503242f697671fddc73710d056b3d1c17c11d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
