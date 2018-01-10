@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f80bd400_caa3c494",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T07:57:24Z",
+      "side": 1,
+      "message": "As we\u0027re going to move these helpers into platform/wtf/TypeTraits.h, I\u0027m fine with this name.  However, just FYI, I don\u0027t want to introduce this short general name to the global \"blink\" namespace just in order for bindings.",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "991bcfaa_79ea9910",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
         "patchSetId": 1
@@ -30,6 +53,23 @@
       "writtenOn": "2018-01-10T02:20:26Z",
       "side": 1,
       "message": "These structs make sense but we won\u0027t need to limit the usage to IDL types.\n\nWould it make more sense to move the structs to e.g., platform/wtf/TypeTraits?",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b03434_5f97a25c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T07:57:24Z",
+      "side": 1,
+      "message": "nit: What about writing this as follows?\n\n    using ImplType \u003d typename VectorOfPairOf\u003cString, Value\u003e::type;\n\nor PairVectorOf for example.  It seems unfortunate that we ends to expose AddMember and std::conditional, etc.  For example, HeapHashMap\u003cKey, Value\u003e automatically traces Key and Value as needed.  So, I think we can define the similar data structure as VectorOfPairOf\u003cString, Value\u003e::type.\n\nWe might want to rename WrapInVectorType to typename VectorOf\u003cT\u003e::type.",
       "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
