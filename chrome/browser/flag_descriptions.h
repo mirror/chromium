@@ -164,6 +164,9 @@ extern const char kDisableAudioForDesktopShareDescription[];
 extern const char kDisableTabForDesktopShareName[];
 extern const char kDisableTabForDesktopShareDescription[];
 
+extern const char kAshDisableV1AppBackButtonName[];
+extern const char kAshDisableV1AppBackButtonDescription[];
+
 extern const char kDisallowDocWrittenScriptsUiName[];
 extern const char kDisallowDocWrittenScriptsUiDescription[];
 

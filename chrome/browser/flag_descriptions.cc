@@ -210,6 +210,11 @@ const char kDisableAudioForDesktopShareDescription[] =
     "With this flag on, desktop share picker window will not let the user "
     "choose whether to share audio.";
 
+const char kAshDisableV1AppBackButtonName[] =
+    "Disable BackButton on V1 app window";
+const char kAshDisableV1AppBackButtonDescription[] =
+    "Enable this flag to disable back button on V1 app window.";
+
 const char kDisableTabForDesktopShareName[] =
     "Disable Desktop Share with tab source";
 const char kDisableTabForDesktopShareDescription[] =
