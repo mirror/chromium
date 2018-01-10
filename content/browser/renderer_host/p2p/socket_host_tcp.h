@@ -18,6 +18,7 @@
 #include "content/common/p2p_socket_type.h"
 #include "net/base/completion_callback.h"
 #include "net/base/ip_endpoint.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket_factory.h"
 
 namespace net {
 class DrainableIOBuffer;
@@ -109,6 +110,10 @@ class CONTENT_EXPORT P2PSocketHostTcpBase : public P2PSocketHost {
   bool connected_;
   P2PSocketType type_;
   scoped_refptr<net::URLRequestContextGetter> url_context_;
+
+  // TODO(xunjieli): Note that this factory class creates a network session,
+  // which can be expensive. This should not be created on a per-socket basis.
+  network::ProxyResolvingClientSocketFactory proxy_resolving_socket_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(P2PSocketHostTcpBase);
 };

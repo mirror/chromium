@@ -12,6 +12,11 @@
 #include "base/memory/ref_counted.h"
 #include "jingle/glue/resolving_client_socket_factory.h"
 #include "net/ssl/ssl_config_service.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket_factory.h"
+
+namespace network {
+class ProxyResolvingClientSocketFactory;
+}  // namespace network
 
 namespace net {
 class ClientSocketFactory;
@@ -44,6 +49,7 @@ class XmppClientSocketFactory : public ResolvingClientSocketFactory {
       const net::HostPortPair& host_and_port) override;
 
  private:
+  network::ProxyResolvingClientSocketFactory proxy_resolving_socket_factory_;
   net::ClientSocketFactory* const client_socket_factory_;
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
   const net::SSLConfig ssl_config_;

@@ -11,8 +11,10 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/sys_byteorder.h"
+#include "base/test/scoped_task_environment.h"
 #include "content/browser/renderer_host/p2p/socket_host_test_utils.h"
 #include "net/socket/stream_socket.h"
+#include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -26,8 +28,9 @@ namespace content {
 class P2PSocketHostTcpTestBase : public testing::Test {
  protected:
   explicit P2PSocketHostTcpTestBase(P2PSocketType type)
-      : socket_type_(type) {
-  }
+      : request_context_getter_(new net::TestURLRequestContextGetter(
+            base::ThreadTaskRunnerHandle::Get())),
+        socket_type_(type) {}
 
   void SetUp() override {
     EXPECT_CALL(
@@ -36,11 +39,12 @@ class P2PSocketHostTcpTestBase : public testing::Test {
         .WillOnce(DoAll(DeleteArg<0>(), Return(true)));
 
     if (socket_type_ == P2P_SOCKET_TCP_CLIENT) {
-      socket_host_.reset(
-          new P2PSocketHostTcp(&sender_, 0, P2P_SOCKET_TCP_CLIENT, nullptr));
+      socket_host_.reset(new P2PSocketHostTcp(
+          &sender_, 0, P2P_SOCKET_TCP_CLIENT, request_context_getter_.get()));
     } else {
-      socket_host_.reset(new P2PSocketHostStunTcp(
-          &sender_, 0, P2P_SOCKET_STUN_TCP_CLIENT, nullptr));
+      socket_host_.reset(
+          new P2PSocketHostStunTcp(&sender_, 0, P2P_SOCKET_STUN_TCP_CLIENT,
+                                   request_context_getter_.get()));
     }
 
     socket_ = new FakeSocket(&sent_data_);
@@ -64,6 +68,8 @@ class P2PSocketHostTcpTestBase : public testing::Test {
     return result;
   }
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
   std::string sent_data_;
   FakeSocket* socket_;  // Owned by |socket_host_|.
   std::unique_ptr<P2PSocketHostTcpBase> socket_host_;
@@ -230,8 +236,6 @@ TEST_F(P2PSocketHostTcpTest, SendAfterStunRequest) {
 
 // Verify that asynchronous writes are handled correctly.
 TEST_F(P2PSocketHostTcpTest, AsyncWrites) {
-  base::MessageLoop message_loop;
-
   socket_->set_async_write(true);
 
   EXPECT_CALL(
@@ -262,8 +266,6 @@ TEST_F(P2PSocketHostTcpTest, AsyncWrites) {
 }
 
 TEST_F(P2PSocketHostTcpTest, PacketIdIsPropagated) {
-  base::MessageLoop message_loop;
-
   socket_->set_async_write(true);
 
   const int32_t kRtcPacketId = 1234;
@@ -415,8 +417,6 @@ TEST_F(P2PSocketHostStunTcpTest, SendDataNoAuth) {
 
 // Verify that asynchronous writes are handled correctly.
 TEST_F(P2PSocketHostStunTcpTest, AsyncWrites) {
-  base::MessageLoop message_loop;
-
   socket_->set_async_write(true);
 
   EXPECT_CALL(
