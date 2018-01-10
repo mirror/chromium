@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b5a6d72_d35bb213",
+        "filename": "content/renderer/indexed_db/indexed_db_callbacks_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-10T01:09:14Z",
+      "side": 1,
+      "message": "std::move?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "aab7766e4d8b7c8f3713be052c9ff3063401bbae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a64f7e_933f65ef",
+        "filename": "content/renderer/indexed_db/webidbcursor_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-10T01:09:14Z",
+      "side": 1,
+      "message": "nit: extra",
+      "range": {
+        "startLine": 241,
+        "startChar": 9,
+        "endLine": 241,
+        "endChar": 13
+      },
+      "revId": "afdfb79609fcbf924e681c165ab0fec7e9a77cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
