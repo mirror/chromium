@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61c0e8c7_05dbda73",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-10T22:48:42Z",
+      "side": 1,
+      "message": "So... my understanding is that constexpr means that a function can be evaluated at compile time, but it doesn\u0027t actually force it. There are known cases (not clear on when, may be mostly VC++ and therefore not relevant) where a constexpr function/object is not done at compile time. Or at least the guarantees are more subtle and less strict than you might expect.\n\nI\u0027m not sure what to do about this in this context, but maybe just be careful about over promising.",
+      "revId": "c54e31ffcddc4edd0e477b2e096e5c92633d6bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
