@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "30732205_4fe96480",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-10T17:19:29Z",
+      "side": 1,
+      "message": "Yeah fair point. It looks like we already measure the total duration in Memory.Experimental.Debug.GlobalDumpDuration, but I\u0027m not sure we have the aggregate CPU time.",
+      "parentUuid": "037dd67f_cfc8dcfb",
+      "range": {
+        "startLine": 488,
+        "startChar": 40,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee87f532_03571810",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 3
