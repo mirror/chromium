@@ -2326,13 +2326,6 @@ bool AXNodeObject::OnNativeFocusAction() {
     return true;
   }
 
-  // If this node is already the currently focused node, then calling
-  // focus() won't do anything.  That is a problem when focus is removed
-  // from the webpage to chrome, and then returns.  In these cases, we need
-  // to do what keyboard and mouse focus do, which is reset focus first.
-  if (document->FocusedElement() == element)
-    document->ClearFocusedElement();
-
   // If the object is not natively focusable but can be focused using an ARIA
   // active descendant, perform a native click instead. This will enable Web
   // apps that set accessibility focus using an active descendant to capture and

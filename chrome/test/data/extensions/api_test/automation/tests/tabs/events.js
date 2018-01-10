@@ -2,6 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Focus needs to be removed from the 'Cancel' button, before the next test is
+// run. Otherwise, events associated with that button getting focused are not
+// triggered (since it is already in focus when the test calls focus() on it).
+function blurCancelButtonAfterTest() {
+  // Since calling blur() on the 'Cancel' button results in an "blur is not a
+  // function" error, requesting focus on the 'Ok' button, to remove focus from
+  // the 'Cancel' button.
+  rootNode.firstChild.children[0].focus();
+}
+
 var allTests = [
   function testEventListenerTarget() {
     var cancelButton = rootNode.firstChild.children[2];
@@ -10,6 +20,7 @@ var allTests = [
                                   function onFocusTarget(event) {
       window.setTimeout(function() {
         cancelButton.removeEventListener(EventType.FOCUS, onFocusTarget);
+        blurCancelButtonAfterTest();
         chrome.test.succeed();
       }, 0);
     });
@@ -30,6 +41,7 @@ var allTests = [
       assertEq(cancelButton, event.target);
       assertTrue(cancelButtonGotEvent);
       rootNode.removeEventListener(EventType.FOCUS, onFocusBubbleRoot);
+      blurCancelButtonAfterTest();
       chrome.test.succeed();
     });
     cancelButton.focus();
@@ -47,6 +59,7 @@ var allTests = [
       event.stopPropagation();
       window.setTimeout((function() {
         rootNode.removeEventListener(EventType.FOCUS, onFocusStopPropRoot);
+        blurCancelButtonAfterTest();
         chrome.test.succeed();
       }).bind(this), 0);
     });
@@ -71,7 +84,10 @@ var allTests = [
       event.stopPropagation();
       rootNode.removeEventListener(EventType.FOCUS, onFocusCaptureRoot);
       rootNode.removeEventListener(EventType.FOCUS, onFocusCapture);
-      window.setTimeout(chrome.test.succeed.bind(this), 0);
+      window.setTimeout((function () {
+        blurCancelButtonAfterTest();
+        chrome.test.succeed();
+      }).bind(this), 0);
     }, true);
     cancelButton.focus();
   }
