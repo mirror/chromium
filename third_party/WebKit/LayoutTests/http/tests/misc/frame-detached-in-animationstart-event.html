@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+This is a regression test for https://crbug.com/776407.
+
+Repro steps executed by the test:
+- navigate to a1(b(a2)):
+  - a1: this file
+  - b : misc/resources/frame-detached-in-animationstart-event-oopif.html
+  - a2: misc/resources/frame-detached-in-animationstart-event-samesiteframe.html
+- register an animationstart event handler in a2
+- from the event handler:
+  - synchronously delete b from a1 (before the fix, this led to a crash)
+  - finish the test if no renderer crash happened
+
+Note: if this test is eventually ported to WPT, it is important to make sure
+that a1 and a2 are same-origin and b is cross-origin from a1 and a2.
+-->
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+var t = async_test("Regression test for https://crbug.com/776407");
+document.addEventListener("DOMContentLoaded", function() {
+  t.step(function() {
+    // Finish the test when the iframe above is removed by a2
+    // (see the repro steps at the top).
+    mo = new MutationObserver(function(mutations, self) {
+      for (var mutation of mutations) {
+        if (mutation.type != 'childList')
+          continue;
+
+        if (mutation.removedNodes.length != 1)
+          continue;
+
+        var removedNode = mutation.removedNodes[0];
+        if (removedNode.id != 'oopif')
+          continue;
+
+        t.done();
+      }
+    });
+    mo.observe(document.body, { childList: true });
+
+    // Kick off the test by causing navigation of the child frame to b
+    // (and consequently the grandchild to a2;  see the repro steps at the top)
+    var frame = document.createElement('iframe');
+    frame.id = 'oopif';
+    frame.src = 'http://localhost:8000/misc/resources/frame-detached-in-animationstart-event-oopif.html';
+    document.body.appendChild(frame);
+  });
+});
+</script>
