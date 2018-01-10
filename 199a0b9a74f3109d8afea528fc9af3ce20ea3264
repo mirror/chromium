@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a97edca7_616c8674",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-10T11:21:51Z",
+      "side": 1,
+      "message": "Profile* parameter is added because ResumeSavedPref test. I am not sure if there is a better way.",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976149c9_cde308b3",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-10T11:21:51Z",
+      "side": 1,
+      "message": "To let primary user session be from GetParam(), so this test case is AccessibilityManagerUserTypeLoginTest.",
+      "revId": "199a0b9a74f3109d8afea528fc9af3ce20ea3264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
