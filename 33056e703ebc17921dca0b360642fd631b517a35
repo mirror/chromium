@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a57c6d06_45dd3068",
+        "filename": "device/ctap/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc5f235_d8094266",
+      "revId": "33056e703ebc17921dca0b360642fd631b517a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55bca76_2645aede",
         "filename": "device/ctap/authenticator_make_credential_response.cc",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b347f516_4ca26996",
+        "filename": "device/ctap/authenticator_make_credential_response.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f55bca76_2645aede",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "33056e703ebc17921dca0b360642fd631b517a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adad2d30_def577a3",
         "filename": "device/ctap/authenticator_options.h",
         "patchSetId": 11
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-09T23:53:40Z",
       "side": 1,
       "message": "SetPlatformDevice and SetResidentKey are still unclear to me.",
+      "range": {
+        "startLine": 24,
+        "startChar": 24,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "33056e703ebc17921dca0b360642fd631b517a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5d9a1e_d230e6e7",
+        "filename": "device/ctap/authenticator_options.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-10T00:12:35Z",
+      "side": 1,
+      "message": "As per CTAP spec, \n\nplatform device: Indicates that the device is attached to the client and therefore can\u0027t be removed and used on another client.\n\nresident key: Indicates that the device is capable of storing keys on the device itself and therefore can satisfy the authenticatorGetAssertion request with allowList parameter not specified or empty.\t\n\nUnlike |user_presence_required_| or |user_verification_required_| theses two parameters simply characterizes the type and (extra) functionality of security keys. For these two parameters, I think they should be called as is since it is how the features are described in the CTAP spec, but I\u0027ll add comments above member variables for clarification. \n\nPlease let me know if you think otherwise!",
+      "parentUuid": "adad2d30_def577a3",
       "range": {
         "startLine": 24,
         "startChar": 24,
