@@ -1551,6 +1551,12 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   binding_.Close();
   binding_.Bind(mojo::MakeRequest(&service_worker_host_ptr_info));
 
+  // S13nServiceWorker:
+  if (!pending_controller_request_.is_pending()) {
+    DCHECK(!controller_ptr_.is_bound());
+    pending_controller_request_ = mojo::MakeRequest(&controller_ptr_);
+  }
+
   embedded_worker_->Start(
       std::move(params),
       // Unretained is used here because the callback will be owned by
@@ -1558,7 +1564,7 @@ void ServiceWorkerVersion::StartWorkerInternal() {
       base::BindOnce(&CompleteProviderHostPreparation, base::Unretained(this),
                      std::move(provider_host), context()),
       mojo::MakeRequest(&event_dispatcher_),
-      mojo::MakeRequest(&controller_ptr_), std::move(installed_scripts_info),
+      std::move(pending_controller_request_), std::move(installed_scripts_info),
       std::move(service_worker_host_ptr_info),
       base::BindOnce(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                      weak_factory_.GetWeakPtr()));
@@ -1975,6 +1981,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   external_request_uuid_to_request_id_.clear();
   event_dispatcher_.reset();
   controller_ptr_.reset();
+  DCHECK(!pending_controller_request_.is_pending());
   installed_scripts_sender_.reset();
   binding_.Close();
 
