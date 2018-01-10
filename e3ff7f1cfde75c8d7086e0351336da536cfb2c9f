@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7e382252_5e9f363c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-10T19:13:38Z",
+      "side": 1,
+      "message": "Replaced sDialogHandler by a sDialogHandlerClass. I couldn\u0027t think of a case that we need to different type of handler at the same time, so the new approach should work.\nWe still don\u0027t support multiple dialogs in vr, I will add the support in a different CL.",
+      "parentUuid": "bbb8efbd_de64bdec",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2018c41e_4ec39cbe",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 12
@@ -83,6 +107,30 @@
       "writtenOn": "2018-01-05T18:28:08Z",
       "side": 1,
       "message": "This seems like someone was passing an invalid id?  This seems like a developer bug that should potentially just crash.",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbda7f4_6ee6632d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-10T19:13:38Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "2018c41e_4ec39cbe",
       "range": {
         "startLine": 72,
         "startChar": 21,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f5137048_21df3dff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-10T19:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c7a5d21_125c0097",
+      "range": {
+        "startLine": 99,
+        "startChar": 18,
+        "endLine": 99,
+        "endChar": 25
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a81d27a_edc800ee",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/DialogRenderer.java",
         "patchSetId": 12
@@ -129,6 +201,30 @@
       "writtenOn": "2018-01-05T18:40:19Z",
       "side": 1,
       "message": "Is it necessary to mention VR here?",
+      "range": {
+        "startLine": 12,
+        "startChar": 54,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae05d88_0ed807d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/DialogRenderer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-10T19:13:38Z",
+      "side": 1,
+      "message": "removed VR from the comment",
+      "parentUuid": "8a81d27a_edc800ee",
       "range": {
         "startLine": 12,
         "startChar": 54,
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d796b0e3_4fe38f96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-10T19:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fce998a_fd733e3e",
+      "range": {
+        "startLine": 128,
+        "startChar": 27,
+        "endLine": 128,
+        "endChar": 39
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b918ef20_bffa6070",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
         "patchSetId": 12
@@ -184,6 +304,30 @@
       "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefd0818_9f399a37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-10T19:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b918ef20_bffa6070",
+      "range": {
+        "startLine": 55,
+        "startChar": 26,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "e7caa702_fc523260",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-10T19:13:38Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll rebase once that patch is landed",
+      "parentUuid": "f46048b7_14a3ce90",
+      "range": {
+        "startLine": 218,
+        "startChar": 24,
+        "endLine": 218,
+        "endChar": 34
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b243037_b35f6981",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 12
@@ -221,6 +389,30 @@
       "writtenOn": "2018-01-05T18:40:19Z",
       "side": 1,
       "message": "ui is widely used for \"browser ui\". Should we rename ui_* (here and others) to be something that disambiguates this from \"browser ui\"?",
+      "range": {
+        "startLine": 198,
+        "startChar": 36,
+        "endLine": 198,
+        "endChar": 55
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad14d149_2f45ecba",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-10T19:13:38Z",
+      "side": 1,
+      "message": "I was talking to vollick for a set of renames. If you don\u0027t mind, I\u0027ll make a bulk rename in a different CL.",
+      "parentUuid": "1b243037_b35f6981",
       "range": {
         "startLine": 198,
         "startChar": 36,
