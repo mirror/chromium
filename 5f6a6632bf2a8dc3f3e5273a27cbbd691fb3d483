@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c1d0e16_3d0d4d5d",
+        "filename": "ui/android/java/src/org/chromium/ui/base/WindowAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-10T23:52:26Z",
+      "side": 1,
+      "message": "oh wow...I had no idea this was how it lazily initialized the window.  That doesn\u0027t seem right either (but enough tangents from me!).\n\nSo the way this works, it actually lazily initializes the native side the first time the native side asks for the native points to cast to.  That is slightly hilarious to me, but if it works then it\u0027s a step in the right direction!",
+      "range": {
+        "startLine": 590,
+        "startChar": 12,
+        "endLine": 590,
+        "endChar": 32
+      },
+      "revId": "5f6a6632bf2a8dc3f3e5273a27cbbd691fb3d483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
