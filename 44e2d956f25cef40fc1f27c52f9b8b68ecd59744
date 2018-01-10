@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db3cf15e_979c4bb1",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-10T19:03:38Z",
+      "side": 0,
+      "message": "Is this information sufficient to determine if ChangePasswordHandler should be instantiated? If yes, then why not just pipe this as a boolean to the UI via loadTimeData, so that it can avoid calling initializeChangePasswordHandler unnecessarily?\n\nSomething like\nhtml_source-\u003eAddBoolean(\"passwordProtectionAvailable\", ...);\n\nAnd then in basic_page.js\n\nif (loadTimeData.getBoolean(\"passwordProtectionAvailable\") {\n   settings.ChangePasswordBrowserProxyImpl.getInstance()\n       .initializeChangePasswordHandler();\n}\n\nWhat am I missing? Otherwise, instantiating a ChangePasswordHandler which is otherwise not useful besides that one  initializeChangePasswordHandler call, means that we would need to add assertions on every single WebUI message handler to ensure it is not called when it should not.",
+      "range": {
+        "startLine": 235,
+        "startChar": 6,
+        "endLine": 235,
+        "endChar": 25
+      },
+      "revId": "44e2d956f25cef40fc1f27c52f9b8b68ecd59744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
