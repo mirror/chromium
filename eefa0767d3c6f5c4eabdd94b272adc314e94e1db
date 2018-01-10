@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5057b280_e9b65dbd",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-10T09:53:45Z",
+      "side": 1,
+      "message": "Already done in patchset 8 :)",
+      "parentUuid": "347f7cf6_1e72a1c4",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 3
+      },
+      "revId": "eefa0767d3c6f5c4eabdd94b272adc314e94e1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d61f9998_e4c39667",
         "filename": "chrome/browser/ui/webui/ntp/ntp_resource_cache.cc",
         "patchSetId": 6
@@ -93,6 +117,30 @@
       "revId": "eefa0767d3c6f5c4eabdd94b272adc314e94e1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ef630d_8cace815",
+        "filename": "chrome/browser/ui/webui/ntp/ntp_resource_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-10T09:53:45Z",
+      "side": 1,
+      "message": "Ah - sure, that works. Done.",
+      "parentUuid": "8870a1d0_fcf3e84f",
+      "range": {
+        "startLine": 461,
+        "startChar": 6,
+        "endLine": 461,
+        "endChar": 63
+      },
+      "revId": "eefa0767d3c6f5c4eabdd94b272adc314e94e1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
