@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb65ac94_398a38ce",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1919,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-01-10T22:05:37Z",
+      "side": 1,
+      "message": "Small subset of full data set selected. We can port some tests over to using this as a first impl.",
+      "range": {
+        "startLine": 1919,
+        "startChar": 32,
+        "endLine": 1919,
+        "endChar": 50
+      },
+      "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa3e449_86ddc793",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1925,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-01-10T22:05:37Z",
+      "side": 1,
+      "message": "As mentioned offline the SwapPromise naming is no longer correct. This should eventually be updated to reflect that it tracks compositor frame submission.",
+      "range": {
+        "startLine": 1925,
+        "startChar": 17,
+        "endLine": 1925,
+        "endChar": 34
+      },
+      "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eac1c45_a8802a07",
+        "filename": "cc/trees/render_frame_metadata.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-01-10T22:05:37Z",
+      "side": 1,
+      "message": "I\u0027m not attached to this name, but this covers the general idea",
+      "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad0705c_59b230ab",
+        "filename": "cc/trees/swap_promise.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-01-10T22:05:37Z",
+      "side": 1,
+      "message": "Would actually modify DidSwap, but wanted a more narrow diff for prototype",
+      "range": {
+        "startLine": 72,
+        "startChar": 15,
+        "endLine": 72,
+        "endChar": 23
+      },
+      "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f40ff1b_09681867",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2917,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-01-10T22:05:37Z",
+      "side": 1,
+      "message": "Actually cache this data, until a matching frame_token arrives. Provide access to tests.",
+      "range": {
+        "startLine": 2917,
+        "startChar": 27,
+        "endLine": 2917,
+        "endChar": 48
+      },
+      "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
