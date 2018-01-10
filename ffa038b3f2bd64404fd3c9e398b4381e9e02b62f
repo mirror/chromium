@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7932a5f8_de4714c0",
+        "filename": "content/browser/webrtc/webrtc_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-10T16:26:28Z",
+      "side": 1,
+      "message": "John, following up on your second round of comments to the previous CL:\nIn this case, I never expect WebRTCInternals to exist unless WebRtcEventLogManager was created earlier, both for production as well as unit tests. I was not sure whether I should add the null-check, then. I ended up doing it, figuring:\n1. Better safe than sorry.\n2. Writing the code like this introduces less constraints on unit tests, and makes things more flexible in the future.\nBut there aren\u0027t terribly convincing arguments. So wdyt?",
+      "revId": "ffa038b3f2bd64404fd3c9e398b4381e9e02b62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
