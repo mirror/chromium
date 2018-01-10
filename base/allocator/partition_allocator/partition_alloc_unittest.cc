@@ -834,7 +834,13 @@ TEST_F(PartitionAllocTest, GenericAllocGetSize) {
 
   // Allocate a size that is a system page smaller than a bucket. GetSize()
   // should return a larger size than we asked for now.
+  // Loongson kSystemPageSize is 16384, if size = 256*1024, error will occurred
+  // on the value of sub_order_index in PartitionGenericSizeToBucket function.
+#if defined(_MIPS_ARCH_LOONGSON)
+  requestedSize = (512 * 1024) - kSystemPageSize - kExtraAllocSize;
+#else
   requestedSize = (256 * 1024) - kSystemPageSize - kExtraAllocSize;
+#endif
   predictedSize = generic_allocator.root()->ActualSize(requestedSize);
   ptr = generic_allocator.root()->Alloc(requestedSize, type_name);
   EXPECT_TRUE(ptr);

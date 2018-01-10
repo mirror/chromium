@@ -929,7 +929,18 @@ ALWAYS_INLINE PartitionBucket* PartitionGenericSizeToBucket(
   size_t order_index = (size >> root->order_index_shifts[order]) &
                        (kGenericNumBucketsPerOrder - 1);
   // And if the remaining bits are non-zero we must bump the bucket up.
+  // Loongson kSystemPageSize is 16384, when root->order_sub_index_masks[order]
+  // is 16383, size & 16383 is 0 occur error on Loongson.
+#if defined(_MIPS_ARCH_LOONGSON)
+  size_t sub_order_index;
+  if (root->order_sub_index_masks[order] == (kSystemPageSize -1)) {
+    sub_order_index = (size >> 2) & root->order_sub_index_masks[order];
+  } else {
+    sub_order_index = size & root->order_sub_index_masks[order];
+  }
+#else
   size_t sub_order_index = size & root->order_sub_index_masks[order];
+#endif
   PartitionBucket* bucket =
       root->bucket_lookups[(order << kGenericNumBucketsPerOrderBits) +
                            order_index + !!sub_order_index];
