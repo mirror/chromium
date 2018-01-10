@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f1b26ac_39dca476",
+        "filename": "chrome/browser/ui/autofill/autofill_popup_controller_interactive_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-10T19:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "315ec15d_ff4f8c01",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1580c7a6_a32b4f0d",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d31153c4_7b886d48",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-10T19:12:52Z",
+      "side": 1,
+      "message": "Gladly!  Done.",
+      "parentUuid": "1580c7a6_a32b4f0d",
+      "range": {
+        "startLine": 310,
+        "startChar": 22,
+        "endLine": 310,
+        "endChar": 33
+      },
+      "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87d8ec1c_01174a7b",
         "filename": "components/autofill/core/browser/autofill_test_utils.h",
         "patchSetId": 4
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "8c2b20fb_0ab91d69",
+        "filename": "components/autofill/core/browser/autofill_test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-10T19:12:52Z",
+      "side": 1,
+      "message": "Seb and I talked about this briefly--autofill_popup_controller_unittest.cc and autofill_external_delegate_unittest.cc only care about this helper function, but don\u0027t care about TestAutofillExternalDelegate at all.  Adding it would have two issues, I think:\n\n1) It would needlessly #include the TestAutofillExternalDelegate for those two tests that don\u0027t care about it\n2) If this function moved into that class, those two tests would also need to create a new TestAutofillExternalDelegate to call it on.  AutofillExternalDelegateUnitTest in particular uses a real AutofillExternalDelegate to test.\n\nThis should still be doable if we start using TestAutofillExternalDelegate in those tests.  Let me know if you want to take that path, and I can revert these changes to autofill_test_utils.",
+      "parentUuid": "87d8ec1c_01174a7b",
+      "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fcdc5d3_9deae526",
         "filename": "components/autofill/core/browser/test_autofill_external_delegate.cc",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ba2ff4_cf3d0a88",
+        "filename": "components/autofill/core/browser/test_autofill_external_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-10T19:12:52Z",
+      "side": 1,
+      "message": "Added RunLoop as a member of the .h, and changed to .Run() and .Quit() here.  By resetting as well, did you mean it\u0027s something that\u0027s included with the .Quit(), or that I should add another function call here?",
+      "parentUuid": "9fcdc5d3_9deae526",
+      "revId": "bc7f420eaccc29b7e6b258451d26dd20d870e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
