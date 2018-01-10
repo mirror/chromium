@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "29626b4a_757a8a70",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-10T21:44:17Z",
+      "side": 1,
+      "message": "TransferArrayBufferContents *should* only be called with non-shared ArrayBufferContents, but SerializedScriptValue doesn\u0027t have any control over that, so I left this here to be on the safe side. Might as well drop it?",
+      "parentUuid": "2e909129_ad13cd97",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccd399e1_c2bcf399",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
         "patchSetId": 21
@@ -64,6 +82,24 @@
       "writtenOn": "2018-01-10T20:31:41Z",
       "side": 1,
       "message": "sp: transferable",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c73e3a_dffbaa8d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-10T21:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd399e1_c2bcf399",
       "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +120,24 @@
       "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df0fe05_c594f434",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-10T21:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c3df2f3_33dd1f55",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
