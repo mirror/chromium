@@ -231,7 +231,7 @@ void NetworkLocationProvider::RequestPosition() {
 
   net::PartialNetworkTrafficAnnotationTag partial_traffic_annotation =
       net::DefinePartialNetworkTrafficAnnotation("network_location_provider",
-                                                 "network_location_request",
+                                                 "INVALID COMPLETION",
                                                  R"(
       semantics {
         sender: "Network Location Provider"

@@ -108,7 +108,6 @@ bool SpellingServiceClient::RequestTextCheck(
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("spellcheck_lookup", R"(
         semantics {
-          sender: "Online Spellcheck"
           description:
             "Chromium can provide smarter spell-checking, by sending the text "
             "that the users type into the browser, to Google's servers. This"
