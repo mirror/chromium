@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e1ed6a3_056282f3",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "DCHECK instead, for both of these?",
+      "range": {
+        "startLine": 953,
+        "startChar": 13,
+        "endLine": 953,
+        "endChar": 32
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a9a276_dc9a7b99",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "Do we want this to look like a real get?  That would be \"GET / HTTP/1.0\\n\\n\" (Though it doesn\u0027t really matter, I suppose)",
+      "range": {
+        "startLine": 1202,
+        "startChar": 35,
+        "endLine": 1202,
+        "endChar": 0
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7993eb08_f8d02d1f",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "Just use StringIOBuffer(write_buffer1)?  It\u0027s a little simpler.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 10,
+        "endLine": 1205,
+        "endChar": 23
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb84933_6edbf2df",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "static_cast\u003cint\u003e",
+      "range": {
+        "startLine": 1210,
+        "startChar": 36,
+        "endLine": 1210,
+        "endChar": 51
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df8ebd0_5b57985f",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "static_cast\u003cint\u003e",
+      "range": {
+        "startLine": 1236,
+        "startChar": 17,
+        "endLine": 1236,
+        "endChar": 23
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f0c0a4_8c4ec201",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "static_cast\u003cint\u003e",
+      "range": {
+        "startLine": 1274,
+        "startChar": 17,
+        "endLine": 1274,
+        "endChar": 23
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a60074f_bcb372c3",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "static_cast\u003cint\u003e",
+      "range": {
+        "startLine": 1281,
+        "startChar": 24,
+        "endLine": 1281,
+        "endChar": 33
+      },
+      "revId": "a18255803f90302ffb328516a21d8689ce10d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

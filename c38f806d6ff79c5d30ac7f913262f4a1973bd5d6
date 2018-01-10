@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "1539d2fb_de6c7169",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "We have to wait for the sync/ack, sure, but who\u0027s to say that can\u0027t happen synchronously?  i.e., we call connect(), the CPU sends the pack, then spins around doing something else, and by the time we\u0027re back to finishing up the connect call, by golly, we\u0027ve heard back, so the kernel decides to complete synchronously!\n\nI know that we\u0027ve run into issues before where things that shouldn\u0027t complete synchronously did (Like opening a UDP socket and read on it succeeding synchronously right after, I believe), and the network stack itself is designed to handle synchronous connects, so I don\u0027t see why this test should assume otherwise.  We shouldn\u0027t depend on quirks of the current implementation (Particularly with Fuschia on the way, which is extremely quirky).",
+      "parentUuid": "f5d9ec6b_b89edb44",
+      "range": {
+        "startLine": 1220,
+        "startChar": 26,
+        "endLine": 1220,
+        "endChar": 40
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41060bb3_42bce19e",
         "filename": "net/socket/transport_client_socket_pool_unittest.cc",
         "patchSetId": 12
@@ -469,6 +493,30 @@
       "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23966fc8_0a7a97b1",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:41:50Z",
+      "side": 1,
+      "message": "You\u0027re right, I meant different tags, but same params.\n\nYea, I wasn\u0027t sure about that.  That\u0027s fine, as long as we\u0027re fine with that behavior (And I assume we are).\n\n(Hrm...How do you quote someone in gerrit?  I don\u0027t see any option to do that)",
+      "parentUuid": "ef8bba7a_fa3ff38d",
+      "range": {
+        "startLine": 1237,
+        "startChar": 6,
+        "endLine": 1237,
+        "endChar": 0
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
