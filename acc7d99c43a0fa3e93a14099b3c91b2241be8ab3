@@ -105,6 +105,24 @@
       "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197d798f_f3c68810",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-10T09:27:40Z",
+      "side": 1,
+      "message": "Thanks for all the suggestions.\n\n@enne, I think I roughly understand what you prefer. It adds less weight on PaintOpBuffer. But it will add more changes into the PaintOpBuffer -\u003e Skia -\u003e serialization part. Basically, we need to remember PaintOpBuffer(or the new type)\u0027s ids and the mapping between them to SkPictures\u0027, and during serialization we need to map them back. \n   If attaching SkPicture to PaintOpBuffer is too heavy, we can add one bit flag in PaintOpBuffer to mark \u0027external\u0027, and only ExternalPaintOpBuffer has attached SkPicture. Would that work?\n\n@Daniel, I think we can make the current mechanism work. Basically, for each frame, we use rph routing id + frame\u0027s own routing id to globally identify it. For content, since it always lives in a frame, we use the enclosing frame\u0027s global id + content\u0027s own id (32bit) to identify it. I reworked this into https://chromium-review.googlesource.com/c/chromium/src/+/767912, pls take a look there.",
+      "parentUuid": "100a58ff_486ace93",
+      "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
