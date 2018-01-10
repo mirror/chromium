@@ -69,6 +69,24 @@
       "revId": "0fead93e5ea6ae7210ae4cb0ab27405ef08d0add",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23936acc_16eef0a6",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-10T22:42:40Z",
+      "side": 1,
+      "message": "Yeah, if you\u0027re using it, then having a test that makes sure the shader keeps compiling will same some future you some time when somebody else breaks it.  If it\u0027s important enough to check in, it\u0027s probably important enough to test.",
+      "parentUuid": "ad28673e_0d3210ef",
+      "revId": "0fead93e5ea6ae7210ae4cb0ab27405ef08d0add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
