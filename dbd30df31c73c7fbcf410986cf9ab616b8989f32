@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b678001_1a508e81",
+        "filename": "components/cronet/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "where did host_cache_persistence_manager_unittest.cc go?",
+      "range": {
+        "startLine": 61,
+        "startChar": 45,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6504fb8a_c7558cc2",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "I feel like context_config_ belongs in NetworkTasks.  Can we make a few changes:\n1. move context_config_ into NetworkTasks\n2. pass context_config into NetworkTasks()\n3. make default_load_flags_ const\n4. switch around initialization accordingly:\n     default_load_flags_(net::LOAD_NORMAL | (context_config-\u003eload_disable_cache ? net::LOAD_DISABLE_CACHE : 0)),\n     network_tasks_(new NetworkTasks(std::move(context_config), std::move(callback))) {\n\nI don\u0027t feel too strongly about this though, so if you don\u0027t want to make this change, that\u0027s fine.  If you don\u0027t make this change, can we move the \"default_load_flags_ |\u003d\" code before the StartWithOptions() code; I\u0027m not sure there\u0027s a race there but I have suspicions.",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 45
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02c8769_048b97c7",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "can we add a DCHECK(OnInitThread()) here?",
+      "range": {
+        "startLine": 219,
+        "startChar": 29,
+        "endLine": 219,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a9c652_ff3a3430",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "I don\u0027t think this line really checks that callback_ has been initialized.  I think we want to verify CronetURLRequestContextAdapter::InitRequestContextOnInitThread() has been called, which in turn posts Initialize() which then posts InitializeNQEPrefs() right after is_context_initialized_ is set.  How about we change this to DCHECK(is_context_initialized_)?",
+      "range": {
+        "startLine": 299,
+        "startChar": 20,
+        "endLine": 299,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3792016d_e80ed5d4",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "this function is racy and should have a thread check, how about DCHECK(OnInitThread())?",
+      "range": {
+        "startLine": 553,
+        "startChar": 22,
+        "endLine": 553,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0b7980_4f5284b9",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "caller-\u003eCronetURLRequestContext() caller",
+      "range": {
+        "startLine": 50,
+        "startChar": 29,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fcc5126_75d9cfc8",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "\"Invoked when this |context| is initialized on |network_thread_|.\"-\u003e\"Invoked on network thread when initialized.\"",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a80734_5583d56a",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "\"Invoked when this |context| about to be destoyed on |network_thread_|.\"-\u003e\"Invoked on network thread immediately prior to destruction.\"",
+      "range": {
+        "startLine": 59,
+        "startChar": 77,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc57064f_02d82aaf",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "|network_thread_|-\u003enetwork thread\nHere and below.",
+      "range": {
+        "startLine": 62,
+        "startChar": 35,
+        "endLine": 62,
+        "endChar": 36
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747cf90f_89272a58",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "I think this should be a unique_ptr as it\u0027s owned by the context.",
+      "range": {
+        "startLine": 294,
+        "startChar": 31,
+        "endLine": 294,
+        "endChar": 0
+      },
+      "revId": "dbd30df31c73c7fbcf410986cf9ab616b8989f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bac4136b_3116600a",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T17:13:17Z",
+      "side": 1,
+      "message": "Hmm this call used to be unconditional but is now conditional, is that an issue?",
+      "range": {
+        "startLine": 630,
+        "startChar": 65,
+        "endLine": 630,
+        "endChar": 0
+      },
+      "revId": "0688b22e8cea58e281a82bc3fe01923646b67503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
