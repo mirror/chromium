@@ -16,6 +16,74 @@
       "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27485588_32ac8bfd",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T09:57:21Z",
+      "side": 1,
+      "message": "Can you add unit tests for this method too.",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9028ae50_ac8ea67d",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T09:57:21Z",
+      "side": 1,
+      "message": "Does this mean that this method return \"\" when called with \"en\"? I find this really strange.",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d95f9d_1217042e",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T09:57:21Z",
+      "side": 1,
+      "message": "Why using std::set::count instead of std::set::find (or base::ContainsValue)?",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eae919e_ba40ab7b",
+        "filename": "components/translate/core/common/translate_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-10T09:57:21Z",
+      "side": 1,
+      "message": "Please add documentation.",
+      "revId": "8e267ac86040ad7fea9a6eadceb634c5cc88c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
