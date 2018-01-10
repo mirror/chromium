@@ -106,6 +106,24 @@
       "revId": "86df16e216911935b060c168940e205113c2ff0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b218ef2_f055bb59",
+        "filename": "ui/ozone/platform/test/mock_platform_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-10T14:16:03Z",
+      "side": 0,
+      "message": "Do we agree on ui/ozone/test location then?\n\nI wonder if I can do the same stuff with waitable run loops instead then.",
+      "parentUuid": "5d35c0c7_83320b5c",
+      "revId": "86df16e216911935b060c168940e205113c2ff0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
