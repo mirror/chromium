@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "107acb76_311375da",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-10T01:50:28Z",
+      "side": 1,
+      "message": "nit: add comment with examples for the three cases here (which I assume to be assembly function, regular c++ function, c++ function wiht linker prefix).",
+      "revId": "63311997fa94f0a94e07ae894b32b776b934108a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
