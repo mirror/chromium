@@ -67,6 +67,11 @@ void TestURLLoaderClient::OnReceiveCachedMetadata(
     quit_closure_for_on_receive_cached_metadata_.Run();
 }
 
+void TestURLLoaderClient::OnReceiveInlinedDataChunk(
+    const std::vector<uint8_t>& data) {
+  // TODO: do something
+}
+
 void TestURLLoaderClient::OnTransferSizeUpdated(int32_t transfer_size_diff) {
   EXPECT_TRUE(has_received_response_);
   EXPECT_FALSE(has_received_completion_);
