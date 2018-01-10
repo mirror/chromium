@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "173c03f4_9b58b093",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e3f3dab_81faf4f2",
+      "range": {
+        "startLine": 108,
+        "startChar": 34,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a60009dd_442f0d1d",
         "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
         "patchSetId": 11
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-10T22:24:51Z",
       "side": 1,
       "message": "Heads up, this will crash if the heaps_v2 is missing a maps/nodes nesting. Not sure it\u0027s worth ading a DCHECK, but thought I\u0027d point it out.\n\nSame later on maps/strings",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48b3b13_e1502958",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "it returns nullptr if intermediary nodes are missing/not-dicts.",
+      "parentUuid": "a60009dd_442f0d1d",
       "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "271f6b5c_8a6b0adb",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c006195c_73582732",
+      "range": {
+        "startLine": 278,
+        "startChar": 35,
+        "endLine": 278,
+        "endChar": 50
+      },
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "641f7905_34b0a19b",
         "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
         "patchSetId": 11
@@ -79,6 +145,24 @@
       "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e361d0_9a417143",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641f7905_34b0a19b",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ebd81526_4d4bca2a",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e2db639_18fa7fed",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abd522ba_0dc6a81c",
         "filename": "chrome/common/profiling/memlog_stream.h",
         "patchSetId": 11
@@ -110,6 +212,30 @@
       "writtenOn": "2018-01-10T22:24:51Z",
       "side": 1,
       "message": "nit: I suggest using more random numbers so it\u0027s visually easy to see the difference if someone were to come debug later.",
+      "range": {
+        "startLine": 20,
+        "startChar": 19,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c04d808_f87dfe4a",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "I actually think that random numbers are really hard to debug. having them be off by one allows users to only look at the last.",
+      "parentUuid": "abd522ba_0dc6a81c",
       "range": {
         "startLine": 20,
         "startChar": 19,
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "ab719fa8_aadb4f64",
+        "filename": "chrome/profiling/memlog_stream_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "shrug, saving a copy, unclear if it\u0027s valid...let\u0027s do it!",
+      "parentUuid": "6704ee06_d5f026ef",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62d4c17d_13af2fda",
         "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
         "patchSetId": 11
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "61a84633_d66a2920",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62d4c17d_13af2fda",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc8543b8_86c1a6f6",
         "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
         "patchSetId": 11
@@ -167,6 +329,24 @@
       "writtenOn": "2018-01-10T22:24:51Z",
       "side": 1,
       "message": "Take this by copy instead of a const\u0026 and then move it to avoid extra copies?",
+      "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09675772_08c18287",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-10T22:43:08Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "dc8543b8_86c1a6f6",
       "revId": "d32793cec161b1b5392f86847c200d1896ac74e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
