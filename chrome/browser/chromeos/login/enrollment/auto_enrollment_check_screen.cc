@@ -255,7 +255,9 @@ bool AutoEnrollmentCheckScreen::IsCompleted() const {
     case policy::AUTO_ENROLLMENT_STATE_CONNECTION_ERROR:
       return false;
     case policy::AUTO_ENROLLMENT_STATE_SERVER_ERROR:
-    // Server errors don't block OOBE.
+      // Server errors should block OOBE for enrolled devices.
+      return auto_enrollment_controller_->GetFRERequirement() !=
+             FRERequirement::REQUIRED;
     case policy::AUTO_ENROLLMENT_STATE_TRIGGER_ENROLLMENT:
     case policy::AUTO_ENROLLMENT_STATE_TRIGGER_ZERO_TOUCH:
     case policy::AUTO_ENROLLMENT_STATE_NO_ENROLLMENT:
