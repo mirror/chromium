@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "03403740_b74e88a2",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115640
+      },
+      "writtenOn": "2018-01-10T11:08:04Z",
+      "side": 1,
+      "message": "Simply moving the initializer from this line to line 70 doesn\u0027t work. But if I change from `constexpr` to `const`, then having the initializer on line 70 works.\n\nIf we want to avoid having the split declaration/definition, we could also make the key a template argument instead of declaring it in this namespace. If all the data structures have a `GetFrom()` function like this one, this would be fine, I think. (Otherwise, the key identifier would then need to be repeated at every call-site, which would be a bit noisy, I think.)\n\nDeclaring it in this namespace does have the advantage that the keys don\u0027t need long, unique names to avoid conflicting in jumbo/unity builds.",
+      "parentUuid": "1e094d71_157c3e23",
+      "revId": "f126a78936ea5dc436ce94b96ed490c528d462b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06e66377_5f345e74",
         "filename": "extensions/renderer/bindings/api_event_handler.cc",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-09T19:06:21Z",
       "side": 1,
       "message": "We can remove this now, right?",
+      "revId": "f126a78936ea5dc436ce94b96ed490c528d462b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8b4b78_549a4c5c",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115640
+      },
+      "writtenOn": "2018-01-10T11:08:04Z",
+      "side": 1,
+      "message": "Absolutely. I did a partial conversion since I wasn\u0027t quite sure about the template syntax, and then forgot to actually finish it. Sorry about the extra noise.",
+      "parentUuid": "06e66377_5f345e74",
       "revId": "f126a78936ea5dc436ce94b96ed490c528d462b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
