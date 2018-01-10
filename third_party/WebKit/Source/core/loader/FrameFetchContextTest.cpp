@@ -1294,12 +1294,6 @@ TEST_F(FrameFetchContextTest, IsLoadCompleteWhenDetached_2) {
   EXPECT_TRUE(fetch_context->IsLoadComplete());
 }
 
-TEST_F(FrameFetchContextTest, PageDismissalEventBeingDispatchedWhenDetached) {
-  dummy_page_holder = nullptr;
-
-  EXPECT_FALSE(fetch_context->PageDismissalEventBeingDispatched());
-}
-
 TEST_F(FrameFetchContextTest, UpdateTimingInfoForIFrameNavigationWhenDetached) {
   scoped_refptr<ResourceTimingInfo> info =
       ResourceTimingInfo::Create("type", 0.3, false);
@@ -1308,15 +1302,6 @@ TEST_F(FrameFetchContextTest, UpdateTimingInfoForIFrameNavigationWhenDetached) {
 
   fetch_context->UpdateTimingInfoForIFrameNavigation(info.get());
   // Should not crash.
-}
-
-TEST_F(FrameFetchContextTest, SendImagePingWhenDetached) {
-  const KURL url("https://www.example.com/");
-
-  dummy_page_holder = nullptr;
-
-  fetch_context->SendImagePing(url);
-  // Should not crash. Nothing should be sent.
 }
 
 TEST_F(FrameFetchContextTest, AddConsoleMessageWhenDetached) {
