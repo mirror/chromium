@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc9647bc_f1047520",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-10T19:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8787e52d_5e1bb942",
+      "revId": "b64a039343e6830a575b03cc265cabe5297f964d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8619f7b_0236039e",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "b64a039343e6830a575b03cc265cabe5297f964d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5538b123_0b2d0f96",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/global_memory_dump.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2018-01-10T19:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8619f7b_0236039e",
+      "range": {
+        "startLine": 43,
+        "startChar": 43,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "b64a039343e6830a575b03cc265cabe5297f964d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
