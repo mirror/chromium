@@ -7,7 +7,9 @@
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
+#include "core/css/properties/ComputedStyleUtils.h"
 #include "core/layout/LayoutObject.h"
+#include "core/style/ComputedStyle.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -40,6 +42,35 @@ const CSSValue* TransformOrigin::ParseSingleValue(
 bool TransformOrigin::IsLayoutDependent(const ComputedStyle* style,
                                         LayoutObject* layout_object) const {
   return layout_object && layout_object->IsBox();
+}
+
+const CSSValue* TransformOrigin::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject*,
+    Node* styled_node,
+    bool allow_visited_style) const {
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  if (layout_object) {
+    LayoutRect box;
+    if (layout_object->IsBox())
+      box = ToLayoutBox(layout_object)->BorderBoxRect();
+
+    list->Append(*ZoomAdjustedPixelValue(
+        MinimumValueForLength(style.TransformOriginX(), box.Width()), style));
+    list->Append(*ZoomAdjustedPixelValue(
+        MinimumValueForLength(style.TransformOriginY(), box.Height()), style));
+    if (style.TransformOriginZ() != 0)
+      list->Append(*ZoomAdjustedPixelValue(style.TransformOriginZ(), style));
+  } else {
+    list->Append(*ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+        style.TransformOriginX(), style));
+    list->Append(*ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+        style.TransformOriginY(), style));
+    if (style.TransformOriginZ() != 0)
+      list->Append(*ZoomAdjustedPixelValue(style.TransformOriginZ(), style));
+  }
+  return list;
 }
 
 }  // namespace CSSLonghand
