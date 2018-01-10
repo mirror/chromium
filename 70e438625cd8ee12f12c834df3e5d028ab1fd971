@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2b08af7b_09c9566d",
+        "filename": "ui/ozone/platform/drm/host/drm_overlay_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T17:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c41002f7_d8b05ff7",
+      "revId": "70e438625cd8ee12f12c834df3e5d028ab1fd971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84a37304_a6c8f664",
         "filename": "ui/ozone/platform/drm/host/drm_overlay_manager.h",
         "patchSetId": 6
@@ -50,6 +68,24 @@
       "revId": "70e438625cd8ee12f12c834df3e5d028ab1fd971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72781c49_5b19c05d",
+        "filename": "ui/ozone/platform/drm/host/drm_overlay_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T17:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84a37304_a6c8f664",
+      "revId": "70e438625cd8ee12f12c834df3e5d028ab1fd971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
