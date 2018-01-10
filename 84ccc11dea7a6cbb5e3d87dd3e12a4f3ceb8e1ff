@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b67bf86_8a7ad520",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBarDelegate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-10T16:11:08Z",
+      "side": 1,
+      "message": "Would it make sense to instead provide a \"close reason\" for a method like \"onSurveyInfoBarClosed\"? That might be overkill though considering this seems to only be used for metrics.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 43
+      },
+      "revId": "84ccc11dea7a6cbb5e3d87dd3e12a4f3ceb8e1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730eca0e_5b1ea71b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-10T16:11:08Z",
+      "side": 1,
+      "message": "Consider doing something like: \nhttps://codesearch.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java?rcl\u003df11f9437c10af943f3770cd7bba3c0eb2b4b15c2\u0026l\u003d47\n\nThis will associate the values with each other and gives you an annotation to help the compiler to detect incorrect values:\nhttps://codesearch.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java?rcl\u003df11f9437c10af943f3770cd7bba3c0eb2b4b15c2\u0026l\u003d83",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "84ccc11dea7a6cbb5e3d87dd3e12a4f3ceb8e1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
