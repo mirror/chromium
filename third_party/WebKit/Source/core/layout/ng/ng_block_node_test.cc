@@ -12,6 +12,33 @@ namespace {
 
 using NGBlockNodeForTest = NGLayoutTest;
 
+TEST_F(NGBlockNodeForTest, CanUseNewLayoutInlineEditable) {
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <div id=container>foo <span contenteditable>bar</span> baz</div>
+  )HTML");
+  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  EXPECT_FALSE(container.CanUseNewLayout());
+}
+
+TEST_F(NGBlockNodeForTest, CanUseNewLayoutInlineRuby) {
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <div id=container><ruby style=display:inline>foo<rt>bar</rt></ruby></div>
+  )HTML");
+  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  EXPECT_FALSE(container.CanUseNewLayout());
+}
+
+TEST_F(NGBlockNodeForTest, CanUseNewLayoutBlockRuby) {
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <div id=container><ruby>foo<rt>bar</rt></ruby></div>
+  )HTML");
+  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  EXPECT_FALSE(container.CanUseNewLayout());
+}
+
 TEST_F(NGBlockNodeForTest, ChildInlineAndBlock) {
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
