@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "fc2e78ad_87abfbfe",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-10T22:23:18Z",
+      "side": 1,
+      "message": "The visibility assertion in window [1] fails when Show() is called twice. I updated to use IsVisible() now and I will look further. \n\n[1] https://cs.chromium.org/chromium/src/ui/aura/window.cc?rcl\u003df5b6747cb083223c931351a999be7e0ad25375d3\u0026l\u003d228",
+      "parentUuid": "277b2fab_69c0438a",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f6f3ba_ac4b88de",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 1
@@ -105,6 +123,24 @@
       "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c88c154_1b5135f1",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-10T22:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34971502_b5173e25",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
