@@ -2,28 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "platform/loader/fetch/BufferingDataPipeWriter.h"
+#include "services/network/public/cpp/buffering_data_pipe_writer.h"
 
-#include "base/single_thread_task_runner.h"
-
-namespace blink {
-
-namespace {
-
-const auto kNone = MOJO_WRITE_DATA_FLAG_NONE;
-
-}  // namespace
+namespace network {
 
 BufferingDataPipeWriter::BufferingDataPipeWriter(
     mojo::ScopedDataPipeProducerHandle handle,
-    WebTaskRunner* runner)
+    scoped_refptr<base::SequencedTaskRunner> runner)
     : handle_(std::move(handle)),
-      watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL, runner) {
-  watcher_.Watch(
-      handle_.get(), MOJO_HANDLE_SIGNAL_WRITABLE,
-      MOJO_WATCH_CONDITION_SATISFIED,
-      base::Bind(&BufferingDataPipeWriter::OnWritable, base::Unretained(this)));
+      watcher_(FROM_HERE,
+               mojo::SimpleWatcher::ArmingPolicy::MANUAL,
+               std::move(runner)) {
+  watcher_.Watch(handle_.get(), MOJO_HANDLE_SIGNAL_WRITABLE,
+                 MOJO_WATCH_CONDITION_SATISFIED,
+                 base::BindRepeating(&BufferingDataPipeWriter::OnWritable,
+                                     base::Unretained(this)));
 }
+
+BufferingDataPipeWriter::~BufferingDataPipeWriter() {}
 
 bool BufferingDataPipeWriter::Write(const char* buffer, uint32_t num_bytes) {
   DCHECK(!finished_);
@@ -33,11 +29,12 @@ bool BufferingDataPipeWriter::Write(const char* buffer, uint32_t num_bytes) {
   if (buffer_.empty()) {
     while (num_bytes > 0) {
       uint32_t size = num_bytes;
-      MojoResult result = handle_->WriteData(buffer, &size, kNone);
+      MojoResult result =
+          handle_->WriteData(buffer, &size, MOJO_WRITE_DATA_FLAG_NONE);
       if (result == MOJO_RESULT_SHOULD_WAIT)
         break;
       if (result != MOJO_RESULT_OK) {
-        Clear();
+        Clear(result);
         return false;
       }
       num_bytes -= size;
@@ -47,8 +44,7 @@ bool BufferingDataPipeWriter::Write(const char* buffer, uint32_t num_bytes) {
   if (num_bytes == 0)
     return true;
 
-  buffer_.push_back(Vector<char>());
-  buffer_.back().Append(buffer, num_bytes);
+  buffer_.emplace_back(buffer, buffer + num_bytes);
   if (!waiting_) {
     waiting_ = true;
     watcher_.ArmOrNotify();
@@ -56,54 +52,59 @@ bool BufferingDataPipeWriter::Write(const char* buffer, uint32_t num_bytes) {
   return true;
 }
 
-void BufferingDataPipeWriter::Finish() {
+bool BufferingDataPipeWriter::Finish(FinishCallback callback) {
   finished_ = true;
-  ClearIfNeeded();
+
+  if (buffer_.empty()) {
+    Clear(MOJO_RESULT_OK);
+    return true;
+  }
+
+  finish_callback_ = std::move(callback);
+  return false;
 }
 
 void BufferingDataPipeWriter::OnWritable(MojoResult,
                                          const mojo::HandleSignalsState&) {
-  if (!handle_.is_valid())
+  if (!handle_.is_valid()) {
+    Clear(MOJO_RESULT_UNKNOWN);
     return;
+  }
   waiting_ = false;
   while (!buffer_.empty()) {
-    WTF::Vector<char>& front = buffer_.front();
+    std::vector<char>& front = buffer_.front();
 
     uint32_t size = front.size() - front_written_size_;
 
-    MojoResult result =
-        handle_->WriteData(front.data() + front_written_size_, &size, kNone);
+    MojoResult result = handle_->WriteData(front.data() + front_written_size_,
+                                           &size, MOJO_WRITE_DATA_FLAG_NONE);
     if (result == MOJO_RESULT_SHOULD_WAIT) {
       waiting_ = true;
       watcher_.ArmOrNotify();
       return;
     }
     if (result != MOJO_RESULT_OK) {
-      Clear();
+      Clear(result);
       return;
     }
     front_written_size_ += size;
 
     if (front_written_size_ == front.size()) {
       front_written_size_ = 0;
-      buffer_.TakeFirst();
+      buffer_.pop_front();
     }
   }
-  ClearIfNeeded();
+  if (finished_ && buffer_.empty())
+    Clear(MOJO_RESULT_OK);
 }
 
-void BufferingDataPipeWriter::Clear() {
+void BufferingDataPipeWriter::Clear(MojoResult result) {
   handle_.reset();
   watcher_.Cancel();
   buffer_.clear();
+
+  if (finish_callback_)
+    std::move(finish_callback_).Run(result);
 }
 
-void BufferingDataPipeWriter::ClearIfNeeded() {
-  if (!finished_)
-    return;
-
-  if (buffer_.empty())
-    Clear();
-}
-
-}  // namespace blink
+}  // namespace network

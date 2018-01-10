@@ -26,11 +26,11 @@
 #include <memory>
 
 #include "platform/PlatformExport.h"
-#include "platform/loader/fetch/BufferingDataPipeWriter.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "public/platform/WebDataConsumerHandle.h"
+#include "services/network/public/cpp/buffering_data_pipe_writer.h"
 
 namespace blink {
 class WebDataConsumerHandle;
@@ -111,8 +111,10 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   bool MatchPreload(const FetchParameters&, WebTaskRunner*) override;
   void NotifyFinished() override;
 
+  static void Noop(MojoResult result) {}
+
   // Used for preload matching.
-  std::unique_ptr<BufferingDataPipeWriter> data_pipe_writer_;
+  std::unique_ptr<network::BufferingDataPipeWriter> data_pipe_writer_;
   std::unique_ptr<WebDataConsumerHandle> data_consumer_handle_;
 };
 
