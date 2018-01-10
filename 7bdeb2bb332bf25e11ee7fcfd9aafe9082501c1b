@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98b29b9a_fc390cad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-10T01:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "121cb6ba_5def1f58",
+      "range": {
+        "startLine": 11,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89fd4bfb_19a4b437",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e1d4d0_58afdb69",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-10T01:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89fd4bfb_19a4b437",
+      "range": {
+        "startLine": 52,
+        "startChar": 46,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0cc2f735_252422fd",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-10T01:07:30Z",
+      "side": 1,
+      "message": "Yes, Done.",
+      "parentUuid": "663951fa_64ada7c0",
+      "range": {
+        "startLine": 362,
+        "startChar": 2,
+        "endLine": 362,
+        "endChar": 53
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e4699a7_a4f6884d",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25c2bca_b9fc82aa",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-10T01:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e4699a7_a4f6884d",
+      "range": {
+        "startLine": 488,
+        "startChar": 2,
+        "endLine": 488,
+        "endChar": 17
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bbeee9a1_b68fab2e",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-10T01:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8accb18b_bb3cb409",
+      "range": {
+        "startLine": 489,
+        "startChar": 37,
+        "endLine": 489,
+        "endChar": 69
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8688005f_c93a4a7e",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "753831eb_b3f04706",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-10T01:07:30Z",
+      "side": 1,
+      "message": "Sure, added to the comment.",
+      "parentUuid": "8688005f_c93a4a7e",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 52
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "049cb612_de4b67a0",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdd946a_b3e833d3",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-10T01:07:30Z",
+      "side": 1,
+      "message": "Sure, added to the comment.",
+      "parentUuid": "049cb612_de4b67a0",
+      "range": {
+        "startLine": 202,
+        "startChar": 52,
+        "endLine": 204,
+        "endChar": 10
+      },
+      "revId": "7bdeb2bb332bf25e11ee7fcfd9aafe9082501c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
