@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a63e48f_43ddfaee",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-10T01:20:12Z",
+      "side": 1,
+      "message": "note: deliberately not converting this one here - it\u0027s non trivial.",
+      "revId": "724c0c648cd6e5b5e28afd75b7987a21a41b6052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
