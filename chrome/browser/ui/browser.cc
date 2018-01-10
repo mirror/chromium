@@ -2096,6 +2096,28 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
     // Iterate backwards as we may remove items while iterating.
     for (int i = tab_strip_model_->count() - 1; i >= 0; --i) {
       WebContents* web_contents = tab_strip_model_->GetWebContentsAt(i);
+      bool is_extension_content = (extensions::TabHelper::FromWebContents(
+          web_contents)->extension_app() == extension);
+
+      // For chrome page overrides, navigate to the default page.
+      if (is_extension_content) {
+        GURL new_url;
+        if (web_contents->GetURL().SchemeIs(content::kChromeUIScheme))
+          new_url = web_contents->GetURL().GetWithEmptyPath();
+        else if (web_contents->GetURL().IsAboutBlank())
+          new_url = GURL(url::kAboutBlankURL);
+
+        if (!new_url.is_empty()) {
+          NavigateParams params(
+              profile_,
+              new_url,
+              ui::PAGE_TRANSITION_LINK);
+          params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
+          Navigate(&params);
+          continue;
+        }
+      }
+
       // Two cases are handled here:
 
       // - The scheme check is for when an extension page is loaded in a
@@ -2103,10 +2125,10 @@ void Browser::OnExtensionUnloaded(content::BrowserContext* browser_context,
       // - The extension_app check is for apps, which can have non-extension
       // schemes, e.g. https://mail.google.com if you have the Gmail app
       // installed.
-      if ((web_contents->GetURL().SchemeIs(extensions::kExtensionScheme) &&
+      if (tab_strip_model_->count() > 1 &&
+          ((web_contents->GetURL().SchemeIs(extensions::kExtensionScheme) &&
            web_contents->GetURL().host_piece() == extension->id()) ||
-          (extensions::TabHelper::FromWebContents(web_contents)
-               ->extension_app() == extension)) {
+           is_extension_content)) {
         tab_strip_model_->CloseWebContentsAt(i, TabStripModel::CLOSE_NONE);
       } else {
         chrome::UnmuteIfMutedByExtension(web_contents, extension->id());
