@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e306beda_6831aa83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "Updated description to say that we plan to allow changing settings in the future.",
+      "parentUuid": "41a51c35_31d2b636",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ea299a1_03679f03",
         "filename": "content/renderer/media/apply_constraints_processor.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0c4a23_f6621632",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "1ea299a1_03679f03",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2bd8ac4b_5fadd771",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "This does what you expect.\nunspecified in this case means the \"universal\" set, so everything will match.",
+      "parentUuid": "d2ac7c11_99f8455b",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fc932d5_7d6229a2",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a8f09d_cbe35f7c",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "Correct. The purpose of this constructor is to produce a set of candidates that matches |source|\u0027s settings.",
+      "parentUuid": "8fc932d5_7d6229a2",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "77c741ea_7ab00546",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "Reusing an existing constant for GOOG_AUTO_GAIN_CONTROL and successive properties.",
+      "parentUuid": "9845d7c2_d963e79f",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd984d83_a8a3fd00",
         "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
         "patchSetId": 3
@@ -118,6 +208,24 @@
       "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b232afe_07c69390",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd984d83_a8a3fd00",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "9aa08a75_0a407fa2",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "render_to_associated_sink equal to true means that |matched_output_device_id| will have a value (if supported) instead of being nullopt. Any value will do.",
+      "parentUuid": "7c548d93_300e2fec",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd6d5e7_1399f1f0",
         "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
         "patchSetId": 3
@@ -152,6 +278,24 @@
       "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94309549_cfe660cb",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "1fd6d5e7_1399f1f0",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "5a605f22_57102a18",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "Renamed tests to SourceWithNoAudioProcessing and SourceWithAudioProcessing.",
+      "parentUuid": "4bbd325f_7fdcfb3a",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2417eb4_97bde5f6",
         "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
         "patchSetId": 3
@@ -183,6 +345,24 @@
       "writtenOn": "2018-01-10T16:30:39Z",
       "side": 1,
       "message": "Can we get rid of all these hardcoded lists of properties by moving them to a \"all properties\" getter?",
+      "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06447160_e76601b8",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-10T18:05:50Z",
+      "side": 1,
+      "message": "That wouldn\u0027t be getting rid of them :)",
+      "parentUuid": "f2417eb4_97bde5f6",
       "revId": "a89f320af534240aab8464d6b4185c1eac57d923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
