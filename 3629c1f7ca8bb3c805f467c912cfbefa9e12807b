@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07aecfb_4b309fa1",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-10T19:00:04Z",
+      "side": 1,
+      "message": "I\u0027d call this subdirs_to_recurse_into or something like that; with that name changed, the comment on line 453 would feel redundant.",
+      "revId": "3629c1f7ca8bb3c805f467c912cfbefa9e12807b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
