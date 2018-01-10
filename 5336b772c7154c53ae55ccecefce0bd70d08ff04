@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c51ded_676c3ff7",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T18:12:42Z",
+      "side": 1,
+      "message": "If this is the first wheel after kPhaseBegan, what is the value of wheel_target_.target? I suspect it will be null (or maybe just stale). Perhaps it\u0027s safest to explicitly return nullptr here, and let the final target be resolved in the dispatcher.",
+      "range": {
+        "startLine": 260,
+        "startChar": 11,
+        "endLine": 260,
+        "endChar": 13
+      },
+      "revId": "5336b772c7154c53ae55ccecefce0bd70d08ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1fc1aa_31514b44",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T18:12:42Z",
+      "side": 1,
+      "message": "nit: is it worth a comment here that it\u0027s ok to return a zero for transformed point since it won\u0027t be used anyways?",
+      "range": {
+        "startLine": 261,
+        "startChar": 29,
+        "endLine": 261,
+        "endChar": 35
+      },
+      "revId": "5336b772c7154c53ae55ccecefce0bd70d08ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f88ad27_1e223379",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-10T18:12:42Z",
+      "side": 1,
+      "message": "Can we instead let the delegate\u0027s dispatcher decide what to do with null targets? In the case of Touch/Gesture events, *most* events will have no targets at this stage, but will be sent to the currently registered target for the associated TouchStart.\n\nI suggest we just send the event to the dispatcher and let the delegate\u0027s dispatcher send the AckNoTarget.",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 13
+      },
+      "revId": "5336b772c7154c53ae55ccecefce0bd70d08ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
