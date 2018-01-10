@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8c664e68_96314d8f",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3931,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T19:24:00Z",
+      "side": 1,
+      "message": "\u003e Would putting this here not make it easier to add unit tests?\n\nAdding extra code to production to possibly deal with unit tests in the future is a slippery slope, since in aggregate that has costs.",
+      "parentUuid": "184805f1_1dbf79fa",
+      "revId": "dc8a5da2475ce008ece99c71cf178696931894d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ffb2bc4_7a2e825b",
         "filename": "content/browser/webrtc/webrtc_internals_message_handler.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I agree, but other reviewers have previously encouraged me to add such checks. Are there any guidelines? One benefit of having the DCHECK, I suppose, is that it\u0027s standard; I get to document the assumption of non-nullness, even if I don\u0027t end up dereferencing immediately (in which case, storing it for later could yield more difficult to debug crashes, as it wouldn\u0027t be immediately clear whether this was null to begin with, or became null due to some other problem).",
       "parentUuid": "2ffb2bc4_7a2e825b",
+      "revId": "dc8a5da2475ce008ece99c71cf178696931894d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4992a6f1_5787a90b",
+        "filename": "content/browser/webrtc/webrtc_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-10T19:24:00Z",
+      "side": 1,
+      "message": "\u003e I agree, but other reviewers have previously encouraged me to add such checks. Are there any guidelines? One benefit of having the DCHECK, I suppose, is that it\u0027s standard; I get to document the assumption of non-nullness, even if I don\u0027t end up dereferencing immediately (in which case, storing it for later could yield more difficult to debug crashes, as it wouldn\u0027t be immediately clear whether this was null to begin with, or became null due to some other problem).\n\nYep agreed if it\u0027s used later, a dcheck is useful. I only meant that suggestion when the variable is used immediately as in this case.\n\nThis is just a nit, so if you want to keep it there I\u0027ll defer to you.",
+      "parentUuid": "2cdd01f8_afd97491",
       "revId": "dc8a5da2475ce008ece99c71cf178696931894d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
