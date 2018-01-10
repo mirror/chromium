@@ -360,44 +360,6 @@ public class NotificationPlatformBridge {
     }
 
     /**
-     * Generates the tag to be passed to the notification manager.
-     *
-     * If the generated tag is the same as that of a previous notification, a new notification shown
-     * with this tag will replace it.
-     *
-     * If the input tag is not empty the output is: PREFIX + SEPARATOR + ORIGIN + SEPARATOR + TAG.
-     * This output will be the same for notifications from the same origin that have the same input
-     * tag.
-     *
-     * If the input tag is empty the output is PREFIX + SEPARATOR + ORIGIN + SEPARATOR +
-     * NOTIFICATION_ID.
-     *
-     * @param notificationId The id of the notification.
-     * @param origin The origin for which the notification is shown.
-     * @param tag A string identifier for this notification.
-     * @return The generated platform tag.
-     */
-    @VisibleForTesting
-    static String makePlatformTag(String notificationId, String origin, @Nullable String tag) {
-        // The given tag may contain the separator character, so add it last to make reading the
-        // preceding origin token reliable. If no tag was specified (it is the default empty
-        // string), make the platform tag unique by appending the notification id.
-        StringBuilder builder = new StringBuilder();
-        builder.append(PLATFORM_TAG_PREFIX)
-                .append(NotificationConstants.NOTIFICATION_TAG_SEPARATOR)
-                .append(origin)
-                .append(NotificationConstants.NOTIFICATION_TAG_SEPARATOR);
-
-        if (TextUtils.isEmpty(tag)) {
-            builder.append(notificationId);
-        } else {
-            builder.append(tag);
-        }
-
-        return builder.toString();
-    }
-
-    /**
      * Attempts to extract an origin from the tag extras in the given intent.
      *
      * There are two tags that are relevant, either or none of them may be set, but not both:
@@ -408,8 +370,6 @@ public class NotificationPlatformBridge {
      *
      * See {@link SiteChannelsManager#createChannelId} and {@link SiteChannelsManager#toSiteOrigin}
      * for how we convert origins to and from channel ids.
-     *
-     * See {@link #makePlatformTag} for details about the format of the EXTRA_NOTIFICATION tag.
      *
      * @param intent The incoming intent.
      * @return The origin string. Returns null if there was no relevant tag extra in the given
@@ -430,7 +390,7 @@ public class NotificationPlatformBridge {
         // If the user touched the settings cog on a flipped notification originating from this
         // class, there will be a notification tag extra in a specific format. From the tag we can
         // read the origin of the notification.
-        if (tag == null || !tag.startsWith(PLATFORM_TAG_PREFIX)) return null;
+        if (tag == null) return null;
 
         String[] parts = tag.split(NotificationConstants.NOTIFICATION_TAG_SEPARATOR);
         assert parts.length >= 3;
@@ -635,10 +595,9 @@ public class NotificationPlatformBridge {
                 makeDefaults(vibrationPattern.length, silent, vibrateEnabled));
         notificationBuilder.setVibrate(makeVibrationPattern(vibrationPattern));
 
-        String platformTag = makePlatformTag(notificationId, origin, tag);
         if (forWebApk) {
             WebApkServiceClient.getInstance().notifyNotification(
-                    webApkPackage, notificationBuilder, platformTag, PLATFORM_ID);
+                    webApkPackage, notificationBuilder, notificationId, PLATFORM_ID);
         } else {
             // Set up a pending intent for going to the settings screen for |origin|.
             Intent settingsIntent = PreferencesLauncher.createIntentForSettingsPage(
@@ -665,7 +624,7 @@ public class NotificationPlatformBridge {
             notificationBuilder.addSettingsAction(
                     settingsIconId, settingsTitle, pendingSettingsIntent);
 
-            mNotificationManager.notify(platformTag, PLATFORM_ID, notificationBuilder.build());
+            mNotificationManager.notify(notificationId, PLATFORM_ID, notificationBuilder.build());
             NotificationUmaTracker.getInstance().onNotificationShown(
                     NotificationUmaTracker.SITES, notificationBuilder.mChannelId);
         }
@@ -746,9 +705,8 @@ public class NotificationPlatformBridge {
      *                      Empty if the notification is not associated with a WebAPK.
      */
     @CalledByNative
-    private void closeNotification(final String notificationId, final String origin,
-            String scopeUrl, final String tag, boolean hasQueriedWebApkPackage,
-            String webApkPackage) {
+    private void closeNotification(final String notificationId, String scopeUrl,
+            boolean hasQueriedWebApkPackage, String webApkPackage) {
         if (!hasQueriedWebApkPackage) {
             final String webApkPackageFound = WebApkValidator.queryWebApkPackage(
                     ContextUtils.getApplicationContext(), scopeUrl);
@@ -757,7 +715,7 @@ public class NotificationPlatformBridge {
                         new WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback() {
                             @Override
                             public void onChecked(boolean doesBrowserBackWebApk) {
-                                closeNotificationInternal(notificationId, origin, tag,
+                                closeNotificationInternal(notificationId,
                                         doesBrowserBackWebApk ? webApkPackageFound : null);
                             }
                         };
@@ -765,20 +723,16 @@ public class NotificationPlatformBridge {
                 return;
             }
         }
-        closeNotificationInternal(notificationId, origin, tag, webApkPackage);
+        closeNotificationInternal(notificationId, webApkPackage);
     }
 
     /** Called after querying whether the browser backs the given WebAPK. */
-    private void closeNotificationInternal(
-            String notificationId, String origin, String tag, String webApkPackage) {
-        // TODO(miguelg) make profile_id part of the tag.
-        String platformTag = makePlatformTag(notificationId, origin, tag);
-
+    private void closeNotificationInternal(String notificationId, String webApkPackage) {
         if (TextUtils.isEmpty(webApkPackage)) {
-            mNotificationManager.cancel(platformTag, PLATFORM_ID);
+            mNotificationManager.cancel(notificationId, PLATFORM_ID);
         } else {
             WebApkServiceClient.getInstance().cancelNotification(
-                    webApkPackage, platformTag, PLATFORM_ID);
+                    webApkPackage, notificationId, PLATFORM_ID);
         }
     }
 
