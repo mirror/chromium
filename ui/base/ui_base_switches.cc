@@ -57,6 +57,9 @@ const char kForceHighContrast[] = "force-high-contrast";
 const char kGlCompositedOverlayCandidateQuadBorder[] =
     "gl-composited-overlay-candidate-quad-border";
 
+// Tint GL-composited color.
+const char kTintGlCompositedContent[] = "tint-gl-composited-content";
+
 // The language file that we want to try to open. Of the form
 // language[-country] where language is the 2 letter code from ISO-639.
 const char kLang[] = "lang";
