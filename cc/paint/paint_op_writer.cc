@@ -216,7 +216,7 @@ void PaintOpWriter::Write(const PaintShader* shader) {
   WriteSimple(shader->start_degrees_);
   WriteSimple(shader->end_degrees_);
   // TODO(vmpstr): Write PaintImage image_. http://crbug.com/737629
-  // TODO(vmpstr): Write sk_sp<PaintRecord> record_. http://crbug.com/737629
+  Write(shader->record_.get());
   WriteSimple(shader->colors_.size());
   WriteData(shader->colors_.size() * sizeof(SkColor), shader->colors_.data());
 
@@ -568,8 +568,8 @@ void PaintOpWriter::Write(const PaintRecord* record) {
   reinterpret_cast<size_t*>(size_memory)[0] = serializer.written();
 
   // The serializer should have failed if it ran out of space. DCHECK to verify
-  // that it wrote fewer bytes than we have.
-  DCHECK_LT(serializer.written(), remaining_bytes_);
+  // that it wrote at most as many bytes as we had left.
+  DCHECK_LE(serializer.written(), remaining_bytes_);
   memory_ += serializer.written();
   remaining_bytes_ -= serializer.written();
 }
