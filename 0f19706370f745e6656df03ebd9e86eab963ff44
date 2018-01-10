@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "363e5726_7183eb55",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T06:36:40Z",
+      "side": 1,
+      "message": "I think we can std::move(active_version)",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f055a65d_b210c07b",
+        "filename": "content/browser/push_messaging/push_messaging_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T06:36:40Z",
+      "side": 1,
+      "message": "Q: Is this a new DCHECK in this patch or was it refactored from elsewhere? If it\u0027s new, what\u0027s the reasoning/how do we know it\u0027s true?",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fba95d3_cd6d7045",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T06:36:40Z",
+      "side": 1,
+      "message": "I think you need to rebase here after https://chromium-review.googlesource.com/c/chromium/src/+/849698",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e30343_fc50c6ae",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T06:36:40Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer this renaming be done in a separate patch just to make the CL more focused.",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30640ae0_cb166295",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-10T06:36:40Z",
+      "side": 1,
+      "message": "Just a note: as the style guide forbids handling NOTREACHED conditions, this function should really just be\n\nDCHECK(status !\u003d SERVICE_WORKER_OK || version-\u003erunning_status() \u003d\u003d EmbeddedWorkerStatus::RUNNING);\nstd::move(callback).Run(status);\n\nBut as the original code is doing this, and it\u0027s conceivable this code is hiding a bug, we shouldn\u0027t change it in this patch.",
+      "revId": "0f19706370f745e6656df03ebd9e86eab963ff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
