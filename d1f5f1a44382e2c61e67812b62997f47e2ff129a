@@ -22,6 +22,30 @@
       "revId": "d1f5f1a44382e2c61e67812b62997f47e2ff129a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6d5aae_94048163",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-10T16:18:57Z",
+      "side": 1,
+      "message": "Good point. done.",
+      "parentUuid": "38ef64d3_ebd3b16c",
+      "range": {
+        "startLine": 774,
+        "startChar": 64,
+        "endLine": 774,
+        "endChar": 77
+      },
+      "revId": "d1f5f1a44382e2c61e67812b62997f47e2ff129a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
