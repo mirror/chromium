@@ -31,7 +31,8 @@ class CORE_EXPORT SubresourceFilter final
 
   bool AllowLoad(const KURL& resource_url,
                  WebURLRequest::RequestContext,
-                 SecurityViolationReportingPolicy);
+                 SecurityViolationReportingPolicy,
+                 bool* would_disallow);
   bool AllowWebSocketConnection(const KURL&);
 
   virtual void Trace(blink::Visitor*);
