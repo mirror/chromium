@@ -429,7 +429,9 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   virtual bool IsMultiSelectable() const { return false; }
   virtual bool IsOffScreen() const { return false; }
   virtual bool IsRequired() const { return false; }
-  virtual bool IsSelected() const { return false; }
+  virtual AccessibilitySelectedState IsSelected() const {
+    return kSelectedStateUndefined;
+  }
   virtual bool IsSelectedOptionActive() const { return false; }
   virtual bool IsVisible() const { return true; }
   virtual bool IsVisited() const { return false; }
@@ -437,7 +439,6 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   // Check whether certain properties can be modified.
   virtual bool CanSetFocusAttribute() const;
   bool CanSetValueAttribute() const;
-  virtual bool CanSetSelectedAttribute() const;
 
   // Whether objects are ignored, i.e. not included in the tree.
   bool AccessibilityIsIgnored();
@@ -863,6 +864,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
     return nullptr;
   }
 
+  virtual bool CanSetSelectedAttribute() const;
   const AXObject* InertRoot() const;
 
   // Returns true if the event was handled.
