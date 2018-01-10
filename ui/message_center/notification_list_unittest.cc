@@ -184,6 +184,56 @@ TEST_F(NotificationListTest, UpdateNotification) {
   EXPECT_EQ(UTF8ToUTF16("newbody"), (*notifications.begin())->message());
 }
 
+TEST_F(NotificationListTest, UpdateNotificationWithPriority) {
+  // Create notification with default priority.
+  std::string old_id;
+  auto old_notification = MakeNotification(&old_id);
+  old_notification->set_priority(DEFAULT_PRIORITY);
+  old_notification->set_shown_as_popup(true);
+  notification_list()->AddNotification(std::move(old_notification));
+  EXPECT_EQ(1u, notification_list()->NotificationCount(blockers()));
+
+  std::string new_id;
+  auto new_notification = MakeNotification(&new_id);
+  // Set higher priority than one of the previous notification and update.
+  new_notification->set_priority(HIGH_PRIORITY);
+  notification_list()->UpdateNotificationMessage(old_id,
+                                                 std::move(new_notification));
+  const NotificationList::Notifications notifications =
+      notification_list()->GetVisibleNotifications(blockers());
+  EXPECT_EQ(1u, notification_list()->NotificationCount(blockers()));
+  EXPECT_EQ(new_id, (*notifications.begin())->id());
+  // |shown_as_popup| should be reset in order to show the popup again.
+  EXPECT_EQ(false, (*notifications.begin())->shown_as_popup());
+}
+
+TEST_F(NotificationListTest, UpdateNotificationWithQuietMode) {
+  // Set Do Not Disturb mode.
+  notification_list()->SetQuietMode(true);
+
+  // Create notification with default priority.
+  std::string old_id;
+  auto old_notification = MakeNotification(&old_id);
+  old_notification->set_priority(DEFAULT_PRIORITY);
+  old_notification->set_shown_as_popup(true);
+  notification_list()->AddNotification(std::move(old_notification));
+  EXPECT_EQ(1u, notification_list()->NotificationCount(blockers()));
+
+  std::string new_id;
+  auto new_notification = MakeNotification(&new_id);
+  // Set higher priority than one of the previous notification and update.
+  new_notification->set_priority(HIGH_PRIORITY);
+  notification_list()->UpdateNotificationMessage(old_id,
+                                                 std::move(new_notification));
+  EXPECT_EQ(1u, notification_list()->NotificationCount(blockers()));
+  const NotificationList::Notifications notifications =
+      notification_list()->GetVisibleNotifications(blockers());
+  EXPECT_EQ(new_id, (*notifications.begin())->id());
+  // |shown_as_popup| should not be reset in quiet mode, as popup should not be
+  // shown even though the priority is promoted.
+  EXPECT_EQ(true, (*notifications.begin())->shown_as_popup());
+}
+
 TEST_F(NotificationListTest, GetNotificationsByNotifierId) {
   NotifierId id0(NotifierId::APPLICATION, "ext0");
   NotifierId id1(NotifierId::APPLICATION, "ext1");
