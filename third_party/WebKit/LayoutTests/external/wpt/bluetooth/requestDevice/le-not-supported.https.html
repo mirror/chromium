@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+<script src="/bluetooth/resources/bluetooth-helpers.js"></script>
+<script>
+'use strict';
+bluetooth_test(() => navigator.bluetooth.test.setLESupported(false)
+    .then(() => assert_promise_rejects_with_message(
+        requestDeviceWithTrustedClick({acceptAllDevices: true}),
+        new DOMException('Bluetooth Low Energy not available.', 'NotFoundError'),
+        'Bluetooth Low Energy is not supported.')),
+    'Reject with NotFoundError if Bluetooth is not supported.');
+</script>

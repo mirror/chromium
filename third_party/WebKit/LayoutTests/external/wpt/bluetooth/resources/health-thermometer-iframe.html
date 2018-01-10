@@ -9,6 +9,18 @@ function requestDeviceWithOptionsAndConnect(options) {
 
 window.onmessage = messageEvent => {
   switch (messageEvent.data.type) {
+    case 'RequestDevice':
+      navigator.bluetooth.requestDevice({
+        filters: [{services: ['generic_access']}]})
+      .then(device => {
+        if (device.constructor.name === 'BluetoothDevice') {
+          parent.postMessage('Success', '*');
+        } else {
+          parent.postMessage(`FAIL: requestDevice in iframe returned ${device}`,
+                             '*');
+        }})
+      .catch(err => parent.postMessage(`${err.name}: ${err.message}`, '*'));
+      break;
     case 'RequestAndConnect':
       requestDeviceWithOptionsAndConnect(messageEvent.data.options)
       .then(gatt => {
