@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "760048ff_c38d8373",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2fbf9c16_9745ada7",
+      "range": {
+        "startLine": 303,
+        "startChar": 13,
+        "endLine": 303,
+        "endChar": 14
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09fabbf_100ab474",
         "filename": "net/socket/client_socket_pool_base.h",
         "patchSetId": 12
@@ -92,6 +116,30 @@
       "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68205d6f_f6fb33ea",
+        "filename": "net/socket/client_socket_pool_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09fabbf_100ab474",
+      "range": {
+        "startLine": 714,
+        "startChar": 40,
+        "endLine": 714,
+        "endChar": 0
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6294ec9c_b676abc8",
+        "filename": "net/socket/ssl_client_socket_pool.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "This code has since been deleted.",
+      "parentUuid": "bacd0d37_d198985c",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 7
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cfa3ab0_c092e4fc",
         "filename": "net/socket/transport_client_socket_pool.h",
         "patchSetId": 12
@@ -138,6 +210,30 @@
       "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c995ab47_2cacd537",
+        "filename": "net/socket/transport_client_socket_pool.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cfa3ab0_c092e4fc",
+      "range": {
+        "startLine": 54,
+        "startChar": 23,
+        "endLine": 54,
+        "endChar": 33
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f54ecd8a_d7438018",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e06d0c90_f0aff1b6",
+      "range": {
+        "startLine": 1201,
+        "startChar": 29,
+        "endLine": 1201,
+        "endChar": 30
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "145f8e06_6052fba8",
         "filename": "net/socket/transport_client_socket_pool_unittest.cc",
         "patchSetId": 12
@@ -184,6 +304,30 @@
       "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c95bfa5_9bb1ed04",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "145f8e06_6052fba8",
+      "range": {
+        "startLine": 1207,
+        "startChar": 34,
+        "endLine": 1207,
+        "endChar": 35
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "f5d9ec6b_b89edb44",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "I was under the impression non-blocking TCP sockets will never connect() synchronously, to localhost or otherwise.  I think connect()ing a TCP socket always requires blocking waiting for a SYN-ACK packet and non-blocking sockets will never block.  I\u0027ve run 100 iterations of this test with no failures if it\u0027s of any consolation.",
+      "parentUuid": "1903826c_0b85eb15",
+      "range": {
+        "startLine": 1220,
+        "startChar": 26,
+        "endLine": 1220,
+        "endChar": 40
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41060bb3_42bce19e",
         "filename": "net/socket/transport_client_socket_pool_unittest.cc",
         "patchSetId": 12
@@ -233,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4f0681c5_7884aaca",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41060bb3_42bce19e",
+      "range": {
+        "startLine": 1234,
+        "startChar": 36,
+        "endLine": 1234,
+        "endChar": 0
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6d0a092_7d5d5102",
         "filename": "net/socket/transport_client_socket_pool_unittest.cc",
         "patchSetId": 12
@@ -244,6 +436,30 @@
       "writtenOn": "2018-01-05T18:22:40Z",
       "side": 1,
       "message": "Another test suggestion:\n\nRequest two at once, a low priority request and then a high priority request, using different socket params.  Make sure each request gets a correctly tagger socket.  The low priority request will probably connect first, but its socket will be vended to the second request.\n\nAnd at the SSL layer:\n\nStart with a transport pool with no available socket slots (but available sockets at the SSL layer).  Make two requests with different tags.  Cancel the first request.  Free up slots in the transport socket pool.  Make sure you get a socket with the right tag (And no data was reported for the wrong tag?  Or would that be expected).",
+      "range": {
+        "startLine": 1237,
+        "startChar": 6,
+        "endLine": 1237,
+        "endChar": 0
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8bba7a_fa3ff38d",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-10T18:53:50Z",
+      "side": 1,
+      "message": "\u003e Another test suggestion:\n\u003e \n\u003e Request two at once, a low priority request and then a high priority request, using different socket params.  Make sure each request gets a correctly tagger socket.  The low priority request will probably connect first, but its socket will be vended to the second request.\n\nDone, though I wasn\u0027t sure if you meant \"different socket params\" or different tags, so I used the same params but different tags.\n\n\u003e And at the SSL layer:\n\u003e \n\u003e Start with a transport pool with no available socket slots (but available sockets at the SSL layer).  Make two requests with different tags.  Cancel the first request.  Free up slots in the transport socket pool.  Make sure you get a socket with the right tag (And no data was reported for the wrong tag?  Or would that be expected).\n\nDone. Data will be reported for the wrong tag due to all the TCP connects, so I don\u0027t think we can check that no data is accounted for the wrong tag, but we can verify that use of the socket with the right tag accounts correctly for that data.",
+      "parentUuid": "a6d0a092_7d5d5102",
       "range": {
         "startLine": 1237,
         "startChar": 6,
