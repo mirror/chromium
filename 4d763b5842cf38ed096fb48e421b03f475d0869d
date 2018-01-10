@@ -22,6 +22,30 @@
       "revId": "4d763b5842cf38ed096fb48e421b03f475d0869d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3f0094_a97491b8",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T23:40:33Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like that works: https://cs.chromium.org/chromium/src/base/logging.h?q\u003dbase/logging.h\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d832 The behaviour of DCHECK() is different from DLOG etc. (|condition| is not compiled out for DCHECK)",
+      "parentUuid": "39412891_c5275155",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "4d763b5842cf38ed096fb48e421b03f475d0869d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
