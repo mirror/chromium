@@ -829,10 +829,9 @@ void CompositorImpl::InitializeDisplay(
   // Don't re-register BeginFrameSource on context loss.
   const bool should_register_begin_frame_source = !display_;
 
-  display_ = std::make_unique<viz::Display>(
-      viz::ServerSharedBitmapManager::current(), renderer_settings,
-      frame_sink_id_, std::move(display_output_surface), std::move(scheduler),
-      task_runner);
+  display_ = std::make_unique<viz::Display>(renderer_settings, frame_sink_id_,
+                                            std::move(display_output_surface),
+                                            std::move(scheduler), task_runner);
 
   auto layer_tree_frame_sink =
       vulkan_context_provider

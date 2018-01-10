@@ -54,8 +54,8 @@ class RemoveOverdrawQuadPerfTest : public testing::Test {
     output_surface = cc::FakeOutputSurface::Create3d(std::move(provider));
 
     auto display = std::make_unique<Display>(
-        &bitmap_manager_, RendererSettings(), frame_sink_id,
-        std::move(output_surface), std::move(scheduler), task_runner_.get());
+        RendererSettings(), frame_sink_id, std::move(output_surface),
+        std::move(scheduler), task_runner_.get());
     return display;
   }
 
