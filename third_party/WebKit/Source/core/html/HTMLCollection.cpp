@@ -322,7 +322,7 @@ Element* HTMLCollection::VirtualItemAfter(Element*) const {
 // although it returns any type of element by id.
 static inline bool NameShouldBeVisibleInDocumentAll(
     const HTMLElement& element) {
-  return element.HasTagName(aTag) || element.HasTagName(appletTag) ||
+  return element.HasTagName(aTag) ||
          element.HasTagName(buttonTag) || element.HasTagName(embedTag) ||
          element.HasTagName(formTag) || element.HasTagName(frameTag) ||
          element.HasTagName(framesetTag) || element.HasTagName(iframeTag) ||
