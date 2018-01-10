@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "734dac1b_3e0231cf",
+        "filename": "chrome/browser/devtools/device/android_device_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "This is the same as annotation in abd_client_socket.cc. Let\u0027s define it once in chrome/browser/devtools/network_traffic_annotation.h and reuse everywhere?",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83693df_bad12b0d",
+        "filename": "chrome/browser/devtools/device/android_web_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "Same thing here.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236c7163_da969f90",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "This one is a bit different, but we should place it int the same file.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a70bb34_78d7b164",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "For remote debugging local Android device, one might need to enable reverse tethering for forwarding local ports from the device to some ports on the host. This socket pumps the traffic between the two.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744a0b94_37ea6eeb",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "A user connects to an Android device using remote debugging and enables port forwarding on chrome://inspect.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41711eac_ee837f85",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "Any data requested from the local port on Android device.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784eff56_345df92f",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "YES, local cookies of android device.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57553e6_7a411f67",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "To use adb with a device connected over USB, you must enable USB debugging in the device system settings, under Developer options, and then enable port forwarding on chrome://inspect on the host device.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0fcd6c_772d0e0b",
+        "filename": "chrome/browser/devtools/device/port_forwarding_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "This is only used for remote debugging and mirrors traffic from Android device. Any policy affecting traffic on connected Android device effectively affects this one.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eeb28b8_71b94f31",
+        "filename": "content/browser/devtools/protocol/tethering_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:51:03Z",
+      "side": 1,
+      "message": "This is the same as in PortForwardingController.",
+      "revId": "63e585a7aaaa9e5d248ca4186de3dfc1ac49a6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
