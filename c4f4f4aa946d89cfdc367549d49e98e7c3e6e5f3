@@ -128,6 +128,24 @@
       "revId": "c4f4f4aa946d89cfdc367549d49e98e7c3e6e5f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60167820_083660e0",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2018-01-10T06:26:14Z",
+      "side": 1,
+      "message": "If we have Mount, why don\u0027t we have Unmount? What\u0027s the intended responsibility of this class? Do we want to have Mount here? Do we want to call these methods from settings?\n\n\nAlso, with the current CL, code for mounting SmbClient is in SmbService, but for unmounting is in SmbFileSystem. We should choose one place.",
+      "parentUuid": "c25db247_58b6a537",
+      "revId": "c4f4f4aa946d89cfdc367549d49e98e7c3e6e5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
