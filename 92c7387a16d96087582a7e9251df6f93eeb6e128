@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c110a19f_a92f8bfc",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-10T18:17:38Z",
+      "side": 1,
+      "message": "|ready_to_launch_| is not used in many places. So we probably can use it to serve the purpose of |app_installation_done_|. That is, move |ready_to_launch_| set to true from StartupAppLauncher::OnReadyToLaunch to where |app_installation_done_| is set and use it.",
+      "revId": "92c7387a16d96087582a7e9251df6f93eeb6e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042b07e9_7bbf923a",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-10T18:17:38Z",
+      "side": 1,
+      "message": "optional nit: We can replace this with KioskAppManager::UpdateAppData() call after setting up the device local accounts below. Maybe add a KioskAppManager::UpdateAppDataForTest() or make the test a friend of KioskAppManager.",
+      "range": {
+        "startLine": 491,
+        "startChar": 28,
+        "endLine": 491,
+        "endChar": 41
+      },
+      "revId": "92c7387a16d96087582a7e9251df6f93eeb6e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
