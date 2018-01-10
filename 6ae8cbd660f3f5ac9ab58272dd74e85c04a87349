@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c347c411_52f89410",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/le-not-supported.https.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-10T17:34:48Z",
+      "side": 1,
+      "message": "it\u0027d be nice to keep the pattern of capturing this in test_desc\n(check the others in this change as well)",
+      "revId": "6ae8cbd660f3f5ac9ab58272dd74e85c04a87349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a35d38_7bad12f9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/health-thermometer-iframe.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-10T17:34:48Z",
+      "side": 1,
+      "message": "Can you bring down the final \"})\" and then indent the .then?",
+      "revId": "6ae8cbd660f3f5ac9ab58272dd74e85c04a87349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f45cde4_89c048b7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/health-thermometer-iframe.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-10T17:34:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure it makes sense to use device in the template string since it\u0027s an object",
+      "revId": "6ae8cbd660f3f5ac9ab58272dd74e85c04a87349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
