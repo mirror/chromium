@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "20bc0f03_29886bd5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-10T03:56:24Z",
+      "side": 1,
+      "message": "It is better to abort this function, editing_state-\u003eAbort(), since\nthis should not be happened in usual HTML.",
+      "revId": "2e2d96709407ec5cab61d2b255a912e006734a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2209db29_f983dbda",
         "filename": "third_party/WebKit/Source/core/editing/commands/InsertListCommand.cpp",
         "patchSetId": 1
