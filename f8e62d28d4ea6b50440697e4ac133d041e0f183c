@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a447f9f3_44610ffb",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-10T12:58:46Z",
+      "side": 1,
+      "message": "\u003e Probably, we should add \u0027\u0026\u0026 event_behavior \u003d\u003d kDispatchNoEvent \u0026\u0026 isConnected()\u0027\n\nI disagree that we should call DidChangeValueInTextField only if |event_behavior \u003d\u003d kDispatchNoEvent|. To me, if the value has changed, we should always notify the autofill client. For example, SetAutofillValue use kDispatchInputAndChangeEvent. We want to be sure the password manager ALWAYS knows about changes in fields, otherwise site\u0027s tricks confuses the password manager.\n\nTo me, it is a bit strange we need to check |isConnected()| here. I believe |IsConnected| should be checked earlier. We don\u0027t do this check for |NotifyFormStateChanged| while it is a sort of notification as well. Moreover, we want to be notified about changes in fields that has just been disconnected.",
+      "parentUuid": "5cf0fb62_c3856e0f",
+      "revId": "f8e62d28d4ea6b50440697e4ac133d041e0f183c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f38faf8_32352903",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f7447cb6_ebf09444",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-10T12:58:46Z",
+      "side": 1,
+      "message": "\u003e GetFrame() result can be nullptr.\n\nDone.",
+      "parentUuid": "4f38faf8_32352903",
+      "revId": "f8e62d28d4ea6b50440697e4ac133d041e0f183c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de1c9264_b65ae7fa",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "f8e62d28d4ea6b50440697e4ac133d041e0f183c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f332c8e2_40f65279",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-10T12:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1c9264_b65ae7fa",
+      "revId": "f8e62d28d4ea6b50440697e4ac133d041e0f183c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
