@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b93e8a8_3bc92486",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002783
+      },
+      "writtenOn": "2018-01-10T20:31:41Z",
+      "side": 1,
+      "message": "size_t",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5948a613_76ed1ed4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002783
+      },
+      "writtenOn": "2018-01-10T20:31:41Z",
+      "side": 1,
+      "message": "nit: Is `at` needed? If not `[i]` is better",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e909129_ad13cd97",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1002783
+      },
+      "writtenOn": "2018-01-10T20:31:41Z",
+      "side": 1,
+      "message": "Is this function still called for SharedArrayBuffer contents?",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd399e1_c2bcf399",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002783
+      },
+      "writtenOn": "2018-01-10T20:31:41Z",
+      "side": 1,
+      "message": "sp: transferable",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3df2f3_33dd1f55",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002783
+      },
+      "writtenOn": "2018-01-10T20:31:41Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "3ff1deaf572247439623a52a3a8f9636ed9c63f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
