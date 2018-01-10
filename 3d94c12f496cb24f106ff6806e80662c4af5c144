@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43edfe26_a240a500",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-10T09:26:34Z",
+      "side": 1,
+      "message": "nit: Please document that these values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 12,
+        "startChar": 44,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "3d94c12f496cb24f106ff6806e80662c4af5c144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74f6e8a_a45b545c",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-10T09:26:34Z",
+      "side": 1,
+      "message": "nit: Please define a constant along the lines of \"START_SPEECH_METHOD_COUNT \u003d 2\", and use it in place of \"2\" below. This way, if the enum is ever updated, it\u0027s more likely that the bucket count will be updated as well.",
+      "range": {
+        "startLine": 14,
+        "startChar": 40,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "3d94c12f496cb24f106ff6806e80662c4af5c144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
