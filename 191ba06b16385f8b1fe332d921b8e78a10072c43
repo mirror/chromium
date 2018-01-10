@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c4137a_a5b7b25f",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-10T23:51:39Z",
+      "side": 1,
+      "message": "nit: effectively?\nconsider removing",
+      "range": {
+        "startLine": 399,
+        "startChar": 44,
+        "endLine": 399,
+        "endChar": 55
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6a551a_d2c53d30",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-10T23:51:39Z",
+      "side": 1,
+      "message": "nit: past the keyword",
+      "range": {
+        "startLine": 399,
+        "startChar": 56,
+        "endLine": 399,
+        "endChar": 68
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5921c3a_569a24fb",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-10T23:51:39Z",
+      "side": 1,
+      "message": "nit: the keyword\u0027s\n(for clarity)",
+      "range": {
+        "startLine": 400,
+        "startChar": 42,
+        "endLine": 400,
+        "endChar": 45
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedeba8d_b97f2fa0",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-10T23:51:39Z",
+      "side": 1,
+      "message": "optional nit for clarity, that alludes to some of the complexity here.\nconsider replacing phrase with:\n// Otherwise, the cursor position may or may not account the keyword\u0027s size (depending on how this code is reached).  In particular, the cursor may point into the keyword.",
+      "range": {
+        "startLine": 405,
+        "startChar": 9,
+        "endLine": 405,
+        "endChar": 50
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc97e81_80ae7b02",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-10T23:51:39Z",
+      "side": 1,
+      "message": "Consider adding:\n// This is safe in all conditions.",
+      "range": {
+        "startLine": 406,
+        "startChar": 34,
+        "endLine": 406,
+        "endChar": 0
+      },
+      "revId": "191ba06b16385f8b1fe332d921b8e78a10072c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
