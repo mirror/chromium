@@ -1,0 +1,763 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca75be63_ec97c844",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "nit:  Suggest *dns_over_https_servers-\u003esize() \u003e 0.  Not that it\u0027s likely to be less than 0, but it makes it a bit more explicit that this is a number we\u0027re looking it.",
+      "range": {
+        "startLine": 737,
+        "startChar": 32,
+        "endLine": 737,
+        "endChar": 54
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854956e1_8e64ba57",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "This is being leaked.",
+      "range": {
+        "startLine": 742,
+        "startChar": 9,
+        "endLine": 742,
+        "endChar": 26
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99891720_9c9a67dd",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "This is also being leaked.  More concerningly, it\u0027s not actually being used as the proxy service, since the proxy service also needs to be set on a HttpNetworkSession.  Since we\u0027re bypassing the proxy, anyways, I don\u0027t think need to do this it at all?  As a result, I don\u0027t think we need this URLRequestContext, either, though we do need the getter.",
+      "range": {
+        "startLine": 744,
+        "startChar": 13,
+        "endLine": 744,
+        "endChar": 30
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e4ae84_125f14f7",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "I don\u0027t think this is safe to call repeatedly - in-progress requests will be using the old getter.  Seems like we should just set this once, when there are no DNS lookups pending, and never modify it again.",
+      "range": {
+        "startLine": 746,
+        "startChar": 14,
+        "endLine": 746,
+        "endChar": 31
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcbf52e_70494c39",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "I think we need a browser test for this.  Set up two embedded test servers, set one as the DNS server via prefs, and make sure it sees a request.  Then change the pref, and make sure behavior changes (Assuming we need to support changing prefs - if we want to make it possible to disable via enterprise policy, we probably do)",
+      "range": {
+        "startLine": 750,
+        "startChar": 14,
+        "endLine": 750,
+        "endChar": 35
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a0de6b_0ea032f2",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "This seems wrong - every time this is called, we add a bunch of DNS over HTTPS servers, without clearning the old ones, so with multiple calls, the list just gets longer and longer.  Do we need to support the pref changing at runtime?",
+      "range": {
+        "startLine": 752,
+        "startChar": 10,
+        "endLine": 752,
+        "endChar": 39
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707c834d_7997def5",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "What if dns_over_https_server_methods is shorter than dns_over_https_servers?  Could just check the length, or could just use a single list with both values (separated by a comma or something)",
+      "range": {
+        "startLine": 752,
+        "startChar": 44,
+        "endLine": 752,
+        "endChar": 51
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855d0afc_39ad7e83",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "dns_over_https_servers_ / dns_over_https_server_methods_",
+      "range": {
+        "startLine": 292,
+        "startChar": 23,
+        "endLine": 292,
+        "endChar": 52
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043b7613_d2bf22c5",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "Why do we need a pref?",
+      "range": {
+        "startLine": 688,
+        "startChar": 7,
+        "endLine": 688,
+        "endChar": 13
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd150929_9cb76ce6",
+        "filename": "net/dns/dns_response.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "nit: This can just be IOBuffer (IOBufferWithSize is literally an IOBuffer with an accessor for its size)",
+      "range": {
+        "startLine": 154,
+        "startChar": 21,
+        "endLine": 154,
+        "endChar": 37
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d010a4ed_ae112ab4",
+        "filename": "net/dns/dns_response.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "nit: IOBuffer",
+      "range": {
+        "startLine": 161,
+        "startChar": 48,
+        "endLine": 161,
+        "endChar": 63
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d488979_e0199157",
+        "filename": "net/dns/dns_response.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "tiny nit:  Seems safer to cast nbytes to size_t, since we DCHECK its size just above.",
+      "range": {
+        "startLine": 177,
+        "startChar": 28,
+        "endLine": 177,
+        "endChar": 31
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e4090a_f0515363",
+        "filename": "net/dns/dns_response.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "As above, I\u0027d suggest casting nbytes instead.",
+      "range": {
+        "startLine": 205,
+        "startChar": 33,
+        "endLine": 205,
+        "endChar": 48
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a9ac9e_1a9b6324",
+        "filename": "net/dns/dns_response.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "nit:  Use braces when the condition takes up two lines.",
+      "range": {
+        "startLine": 206,
+        "startChar": 10,
+        "endLine": 206,
+        "endChar": 11
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edc5dc0_d16ebb95",
+        "filename": "net/dns/dns_response.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "nit:  const",
+      "range": {
+        "startLine": 124,
+        "startChar": 9,
+        "endLine": 124,
+        "endChar": 23
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1a0b42_f6274543",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "enum class (It\u0027s a bit more verbose, but implicit conversions are scary).",
+      "range": {
+        "startLine": 58,
+        "startChar": 17,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af2eb00_dbbffa73",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "I suggest just inlining the checks, as it makes it more explicit what\u0027s going on, and this isn\u0027t a common pattern in net code.\n\n\nIf you prefer not to:\n\nstatic isn\u0027t needed in anonymous namespaces.\n\nThe Google style guide says to be descriptive with variable names, and avoid abbreviations.  So suggest replacing \"t\" with \"transport\"",
+      "range": {
+        "startLine": 60,
+        "startChar": 19,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a949326c_a53b8487",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "transport",
+      "range": {
+        "startLine": 72,
+        "startChar": 25,
+        "endLine": 72,
+        "endChar": 26
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8faf5b00_4ca6a042",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "Should comment what this does.  Also, for something that is more than an accessor, \"GetFoo\" isn\u0027t very clear, since it sounds like a simple accessor.  Just reading this method, I don\u0027t understand what it\u0027s doing.  It\u0027s reading writing and reading mock socket data directly, which seems rather unusual.",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 21
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f60743_5a315ca2",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "w -\u003e write",
+      "range": {
+        "startLine": 159,
+        "startChar": 17,
+        "endLine": 159,
+        "endChar": 18
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9602f2b_77c1c85a",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "read",
+      "range": {
+        "startLine": 163,
+        "startChar": 18,
+        "endLine": 163,
+        "endChar": 24
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843644d4_fa9973ff",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "transport() is more common for simple getters.  Also, this should be const.",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 21
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa74fc1_0b60700c",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "transport_",
+      "range": {
+        "startLine": 179,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 18
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b4c59d_eb397ca0",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "const GURL\u0026 (Passing by value may be as efficient, on average, depending on use case, but existing code passes by reference, and mixing the two isn\u0027t great)",
+      "range": {
+        "startLine": 282,
+        "startChar": 37,
+        "endLine": 282,
+        "endChar": 45
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d346ffdb_d9043e7a",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be making a new URLRequestContext for every request.  In particular, if in any case transactions are run in parallel, we\u0027re in trouble.",
+      "range": {
+        "startLine": 292,
+        "startChar": 9,
+        "endLine": 292,
+        "endChar": 34
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88b38d1_97c7522f",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed, since these requests bypass proxies?",
+      "range": {
+        "startLine": 294,
+        "startChar": 60,
+        "endLine": 294,
+        "endChar": 71
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069599bd_ada88816",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "This is leaking the URLREquestContext.",
+      "range": {
+        "startLine": 297,
+        "startChar": 34,
+        "endLine": 297,
+        "endChar": 0
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b0cfae_ae3d6c42",
+        "filename": "net/dns/host_resolver.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "Should just take in a URLRequestContext* (We don\u0027t need the extra getter magic, since we\u0027re part of the URLRequestContext).",
+      "range": {
+        "startLine": 226,
+        "startChar": 33,
+        "endLine": 226,
+        "endChar": 56
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a10845c_dacbe978",
+        "filename": "net/dns/host_resolver.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "Need to name the arguments for both of these methods",
+      "range": {
+        "startLine": 227,
+        "startChar": 15,
+        "endLine": 227,
+        "endChar": 36
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477c27a6_b327ae48",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "should we only call UpdateDNSConfig if (dns_client_.get() \u0026\u0026 dns_client_-\u003eGetConfig())?",
+      "range": {
+        "startLine": 2196,
+        "startChar": 24,
+        "endLine": 2196,
+        "endChar": 0
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789780ea_583d09c0",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2557,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "nit:  Not using braces here is more consistent with the rest of this file.",
+      "range": {
+        "startLine": 2557,
+        "startChar": 5,
+        "endLine": 2557,
+        "endChar": 0
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc139352_cccee239",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "Need some tests at this layer.\n\nSuggestions:\n\nFor all of these, it\u0027s probably sufficient to just make sure the DnsClient gets the right configuration (So can just keep a raw pointer to the client, and call its GetConfig method.  No need to do resolutions).\n\nAdd DNS HTTP servers both before and before the DNSConfigService has a config.  Make sure they\u0027re used in both cases (In the no-config case, obviously need to get a config first, and should change the config twice).\n\nCheck the case where SetDnsClient is called after setting the HttpServers.\n\nMake sure the second DNS config service is used if the first fails, and post / no post is correctly passed on.\n\nCheck removing HTTPS servers.\n\n\nShould also have a more integrationy test that sends out real (mock) DNS requests, and makes sure existing jobs are cancelled when an Https server is added.\n\n\nIntegration test:\n\nMake a URLRequestContext via URLRequestContextBuilder, configure it to use an Https DNS server that just hangs (EmbeddedTestServer\u0027s \"/hung\" path does that, or can do it with URLRequestHangingReadJob  or URLRequestFailedJob (And have it \"fail\" with ERR_IO_PENDING\")).  Then destroy the URLRequestContext before the embedded test server.  This should not result in a crash (Currently, it will crash, so you\u0027ll need to put some code in URLRequestContextBuilder\u0027s URLRequestContext to tell the HostResolverImpl to shut down requests before teardown, since all requests must be cancelled before the URLRequestContext is torn down).",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff681c6_b5ff86e4",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:06:28Z",
+      "side": 1,
+      "message": "Need to name the arguments for both these methods.",
+      "range": {
+        "startLine": 170,
+        "startChar": 34,
+        "endLine": 170,
+        "endChar": 40
+      },
+      "revId": "1857f8a1793c54cb82d287f19853913b7f31049e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
