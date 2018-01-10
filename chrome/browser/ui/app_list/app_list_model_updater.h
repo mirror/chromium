@@ -60,23 +60,6 @@ class AppListModelUpdater {
   virtual void PublishSearchResults(
       std::vector<std::unique_ptr<app_list::SearchResult>> results) {}
 
-  // For AppListModel:
-  virtual ChromeAppListItem* FindItem(const std::string& id) = 0;
-  virtual size_t ItemCount() = 0;
-  virtual ChromeAppListItem* ItemAtForTest(size_t index) = 0;
-  // TODO(hejq): |FindFolderItem| will return |ChromeAppListItem|.
-  virtual app_list::AppListFolderItem* FindFolderItem(
-      const std::string& folder_id) = 0;
-  virtual bool FindItemIndexForTest(const std::string& id, size_t* index) = 0;
-  virtual app_list::AppListViewState StateFullscreen() = 0;
-  virtual std::map<std::string, size_t> GetIdToAppListIndexMap() = 0;
-  // For SearchModel:
-  virtual bool TabletMode() = 0;
-  virtual bool SearchEngineIsGoogle() = 0;
-
- protected:
-  virtual ~AppListModelUpdater() {}
-
   // Item field setters only used by ChromeAppListItem and its derived classes.
   virtual void SetItemIcon(const std::string& id, const gfx::ImageSkia& icon) {}
   virtual void SetItemName(const std::string& id, const std::string& name) {}
@@ -90,7 +73,21 @@ class AppListModelUpdater {
   virtual void SetItemIsInstalling(const std::string& id, bool is_installing) {}
   virtual void SetItemPercentDownloaded(const std::string& id,
                                         int32_t percent_downloaded) {}
-};
 
+  // For AppListModel:
+  virtual ChromeAppListItem* FindItem(const std::string& id) = 0;
+  virtual size_t ItemCount() = 0;
+  virtual ChromeAppListItem* ItemAtForTest(size_t index) = 0;
+  virtual ChromeAppListItem* FindFolderItem(const std::string& folder_id) = 0;
+  virtual bool FindItemIndexForTest(const std::string& id, size_t* index) = 0;
+  virtual app_list::AppListViewState StateFullscreen() = 0;
+  virtual std::map<std::string, size_t> GetIdToAppListIndexMap() = 0;
+  // For SearchModel:
+  virtual bool TabletMode() = 0;
+  virtual bool SearchEngineIsGoogle() = 0;
+
+ protected:
+  virtual ~AppListModelUpdater() {}
+};
 
 #endif  // CHROME_BROWSER_UI_APP_LIST_APP_LIST_MODEL_UPDATER_H_
