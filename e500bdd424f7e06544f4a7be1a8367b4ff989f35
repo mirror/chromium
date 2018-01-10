@@ -22,6 +22,30 @@
       "revId": "e500bdd424f7e06544f4a7be1a8367b4ff989f35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2619b6e4_31fbcb8a",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-01-10T15:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04fca087_2c10c9b7",
+      "range": {
+        "startLine": 581,
+        "startChar": 2,
+        "endLine": 586,
+        "endChar": 4
+      },
+      "revId": "e500bdd424f7e06544f4a7be1a8367b4ff989f35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
