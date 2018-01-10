@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5978abd3_ad88aee6",
+        "filename": "AUTHORS",
+        "patchSetId": 2
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1123827
+      },
+      "writtenOn": "2018-01-10T02:43:51Z",
+      "side": 1,
+      "message": "I\u0027ve signed CLA, but with a different email addr dingxunran@gmail.com.\nxunran.ding@samsung.com is from the same account.",
+      "parentUuid": "3fadb012_8ed00bcc",
+      "revId": "5102e7668e08c35b251680ff999bad532264c9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3524e601_29199dc4",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5102e7668e08c35b251680ff999bad532264c9f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161c581f_a275a615",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1123827
+      },
+      "writtenOn": "2018-01-10T02:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3524e601_29199dc4",
+      "revId": "5102e7668e08c35b251680ff999bad532264c9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
