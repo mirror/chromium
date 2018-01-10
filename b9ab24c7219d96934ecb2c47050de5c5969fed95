@@ -16,6 +16,24 @@
       "revId": "b9ab24c7219d96934ecb2c47050de5c5969fed95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd44d2a7_047c6f29",
+        "filename": "ash/system/web_notification/session_state_notification_blocker_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-10T17:01:35Z",
+      "side": 1,
+      "message": "SessionController::IsRunningInAppMode checks a boolean flag in its session info. We need to add code to mock this in addition to user session type. Something like a TestSessionControllerClient::SetIsRunningInAppMode similar to TestSessionControllerClient::SetCanLockScreen.\n\nThen I would propose a AshTestBase::SimulateKioskRun(KioskMode mode) to wrap all test setup together, something like\n\nenum class KioskMode { CHROME_APP, ARC };\nvoid AshTestBase::SimulateKioskRun(KioskMode mode) {\n  const std::string user_email \u003d\n      \"fake_kiosk@kioks-apps.device-local.localhost\";\n  TestSessionControllerClient* session \u003d GetSessionControllerClient();\n  session-\u003eSetIsRunningInAppMode(true);\n  session-\u003eAddUserSession(\n      username,\n      mode \u003d\u003d KioskMode::CHROME_APP\n          ? user_manager::USER_TYPE_KIOSK_APP :\n            user_manager::USER_TYPE_ARC_KIOSK_APP);\n  session-\u003eSwitchActiveUser(AccountId::FromUserEmail(user_email));\n  session-\u003eSetSessionState(SessionState::ACTIVE);\n}\n\nThis should simulate what ash side state is when running in kiosk mode.",
+      "parentUuid": "2fb9b79c_e9e8138c",
+      "revId": "b9ab24c7219d96934ecb2c47050de5c5969fed95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
