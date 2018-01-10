@@ -22,6 +22,30 @@
       "revId": "39d93a3d1c0e3c242cfbaa39325ab107058dfa7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121b1278_602c9d4c",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-10T02:48:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4838530a_dbeaf3fb",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 4
+      },
+      "revId": "39d93a3d1c0e3c242cfbaa39325ab107058dfa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
