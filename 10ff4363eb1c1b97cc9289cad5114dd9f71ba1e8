@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f94882fc_532a74c8",
+        "filename": "net/base/test_proxy_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T01:38:03Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "08fc93a5_9f3e3760",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "10ff4363eb1c1b97cc9289cad5114dd9f71ba1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acb56def_1936c0d1",
         "filename": "net/http/http_stream_factory_impl_job_controller.cc",
         "patchSetId": 1
@@ -92,6 +116,30 @@
       "revId": "10ff4363eb1c1b97cc9289cad5114dd9f71ba1e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c7dceb_5d4c9f34",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T01:38:03Z",
+      "side": 1,
+      "message": "Unfortunately not possible as net::ProxyServer does not support an ostream operator.",
+      "parentUuid": "acb56def_1936c0d1",
+      "range": {
+        "startLine": 976,
+        "startChar": 2,
+        "endLine": 976,
+        "endChar": 8
+      },
+      "revId": "10ff4363eb1c1b97cc9289cad5114dd9f71ba1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
