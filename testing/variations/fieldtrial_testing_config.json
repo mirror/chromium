@@ -762,34 +762,6 @@
             ]
         }
     ],
-    "ChromeHome": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Default"
-                },
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "ChromeHome"
-                    ],
-                    "disable_features": [
-                        "ChromeHomeExpandButton"
-                    ]
-                },
-                {
-                    "name": "Enabled_Button",
-                    "enable_features": [
-                        "ChromeHome",
-                        "ChromeHomeExpandButton"
-                    ]
-                }
-            ]
-        }
-    ],
     "ChromeHomeBottomNavLabels": [
         {
             "platforms": [
@@ -801,9 +773,6 @@
                     "enable_features": [
                         "ChromeHomeBottomNavLabels"
                     ]
-                },
-                {
-                    "name": "Default"
                 }
             ]
         }
@@ -815,37 +784,12 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "ChromeHomeInactivitySheetExpansion"
-                    ]
-                },
-                {
-                    "name": "3Hours",
+                    "name": "Enabled_3_Hours",
                     "params": {
                         "time_since_backgrounded_in_mins": "180"
                     },
                     "enable_features": [
                         "ChromeHomeInactivitySheetExpansion"
-                    ]
-                }
-            ]
-        }
-    ],
-    "ChromeHomePromo": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Default"
-                },
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "ChromeHomeOptOutSnackbar",
-                        "ChromeHomePromo"
                     ]
                 }
             ]
@@ -878,13 +822,7 @@
             ],
             "experiments": [
                 {
-                    "name": "Default"
-                },
-                {
-                    "name": "ForceTopSites",
-                    "disable_features": [
-                        "DisplaySuggestionsServiceTiles"
-                    ]
+                    "name": "Disabled"
                 }
             ]
         }
