@@ -153,8 +153,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
 
   contents()->NavigateAndCommit(kUrl1);
   EXPECT_TRUE(main_test_rfh()->IsRenderFrameLive());
-  main_test_rfh()->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(main_test_rfh()->GetRoutingID()));
+  main_test_rfh()->SimulateNavigationStop();
 
   // Start a renderer-initiated non-user-initiated navigation.
   process()->set_did_frame_commit_navigation(false);
@@ -201,8 +200,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   const GURL kUrl2("http://www.google.com");
 
   contents()->NavigateAndCommit(kUrl1);
-  main_test_rfh()->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(main_test_rfh()->GetRoutingID()));
+  main_test_rfh()->SimulateNavigationStop();
   EXPECT_TRUE(main_test_rfh()->IsRenderFrameLive());
   int32_t site_instance_id_1 = main_test_rfh()->GetSiteInstance()->GetId();
 

@@ -576,6 +576,8 @@ void NavigationRequest::CreateNavigationHandle() {
     navigation_handle_->set_source_location(
         common_params_.source_location.value());
   }
+
+  request_params_.navigation_id = navigation_handle_->GetNavigationId();
 }
 
 void NavigationRequest::TransferNavigationHandleOwnership(
