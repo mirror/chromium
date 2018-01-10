@@ -1640,6 +1640,8 @@ crbug.com/240576 external/wpt/fullscreen/api/element-ready-check-containing-ifra
 
 crbug.com/567419 http/tests/devtools/elements/styles-2/metrics-box-sizing.js [ Skip ]
 
+crbug.com/800804 svg/custom/massive-coordinates.svg [ Failure ]
+
 crbug.com/538717 [ Win Mac Linux ] http/tests/permissions/chromium/test-request-multiple-window.html [ Failure Pass Timeout ]
 crbug.com/538717 [ Win Mac Linux ] http/tests/permissions/chromium/test-request-multiple-worker.html [ Failure Pass Timeout ]
 crbug.com/538717 [ Win Mac Linux ] http/tests/permissions/chromium/test-request-multiple-sharedworker.html [ Failure Pass Timeout ]
@@ -2981,7 +2983,6 @@ crbug.com/746128 [ Win7 Debug ] virtual/new-remote-playback-pipeline/media/contr
 
 # For Skia roll
 crbug.com/630695 fast/css/transformed-mask.html [ NeedsManualRebaseline ]
-crbug.com/630695 svg/custom/massive-coordinates.svg [ NeedsManualRebaseline ]
 
 crbug.com/v8/4958 inspector-protocol/debugger/domdebugger-getEventListeners.js [ NeedsManualRebaseline ]
 crbug.com/v8/4958 http/tests/devtools/console/console-eval-scoped.js [ NeedsManualRebaseline ]
