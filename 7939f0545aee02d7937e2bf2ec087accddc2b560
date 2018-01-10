@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991bcfaa_79ea9910",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-10T02:20:26Z",
+      "side": 1,
+      "message": "This looks like a tricky way to recognize the existence of a tracing method.\n\nCan we use WTF::IsTraceable?\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/TypeTraits.h?type\u003dcs\u0026q\u003dIsTraceable\u0026sq\u003dpackage:chromium\u0026l\u003d135",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206aeb07_d372dda3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-10T02:20:26Z",
+      "side": 1,
+      "message": "These structs make sense but we won\u0027t need to limit the usage to IDL types.\n\nWould it make more sense to move the structs to e.g., platform/wtf/TypeTraits?",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
