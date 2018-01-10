@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2cef013f_95df9363",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T16:58:58Z",
+      "side": 1,
+      "message": "Sorry if I missed a previous comment. I\u0027m not clear on the value of the private constuctor here, but I don\u0027t feel strongly about it.\n\nThe trend has been to rely on clang for readability and I have seen a number of review comments discouraging single use locals, but again I don\u0027t feel strongly.",
+      "parentUuid": "79efc2fb_488c3607",
+      "revId": "3ecb99596e5532c8ec337774f243d6391a7c3d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3f5f889_55ab19a9",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b48cea10_1addfac0",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T16:58:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03f127e4_aca30c92",
+      "revId": "3ecb99596e5532c8ec337774f243d6391a7c3d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c08404fe_38de4094",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
         "patchSetId": 4
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "The destructor will call Cancel() for us.",
       "parentUuid": "c08404fe_38de4094",
+      "revId": "3ecb99596e5532c8ec337774f243d6391a7c3d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb460d1_40cdf4c1",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-10T16:58:58Z",
+      "side": 1,
+      "message": "I see. I find that a bit confusing to confidently follow for all code paths, but I will trust that this is fine :)",
+      "parentUuid": "196a475f_ce62ab87",
       "revId": "3ecb99596e5532c8ec337774f243d6391a7c3d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
