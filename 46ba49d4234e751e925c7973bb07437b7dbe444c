@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "013a9a19_a8d220a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-10T23:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e35b66d_f8f07772",
+      "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f86ec046_396134ee",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd04028_1f185fa1",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-10T23:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f86ec046_396134ee",
+      "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8379c205_ca313bb6",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-10T23:58:30Z",
+      "side": 1,
+      "message": "I was thinking about this - I think it\u0027s important to set last_early_check_had_damage_ \u003d false (2 lines above) when we set check_damage_early_ \u003d false. Otherwise, the next time check_damage_early \u003d\u003d true, it will look like we already checked early and found damage once.\n\nAlternately, this could be called last_frame_had_damage and be set every frame. What do you think?",
+      "parentUuid": "ca7e93c8_ea69c816",
+      "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87b524b3_213753ab",
         "filename": "cc/trees/layer_tree_host_impl.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f372511_616b8915",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2018-01-10T23:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87b524b3_213753ab",
+      "revId": "46ba49d4234e751e925c7973bb07437b7dbe444c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
