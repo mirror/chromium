@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5b17b4d_c22ee1eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-10T10:29:38Z",
+      "side": 1,
+      "message": "Yes, it is fixing it (the top of the \"Clear\" button was cut because the bounds were too small).",
+      "parentUuid": "621520d2_ecc70dc4",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "b21cc72549b5c9693832c8d10f216f34a2ab790a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90829c2a_571336b4",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "b21cc72549b5c9693832c8d10f216f34a2ab790a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3083b7a8_8cf65629",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-10T10:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90829c2a_571336b4",
+      "revId": "b21cc72549b5c9693832c8d10f216f34a2ab790a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
