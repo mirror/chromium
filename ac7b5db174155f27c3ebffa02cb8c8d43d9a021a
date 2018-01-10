@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b22b1e22_9b1a3cfb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-10T12:17:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39abf5ab_83e52afd",
+      "range": {
+        "startLine": 11,
+        "startChar": 47,
+        "endLine": 11,
+        "endChar": 58
+      },
+      "revId": "ac7b5db174155f27c3ebffa02cb8c8d43d9a021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e66dcfa2_0d182944",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-display/display-contents-text-inherit-002.html",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-10T12:03:11Z",
       "side": 1,
       "message": "Is this required?",
+      "revId": "ac7b5db174155f27c3ebffa02cb8c8d43d9a021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a262e1a3_997a5dfa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-display/display-contents-text-inherit-002.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-10T12:17:15Z",
+      "side": 1,
+      "message": "It\u0027s convention and typically used all over wpt even if not required for particular tests.",
+      "parentUuid": "e66dcfa2_0d182944",
       "revId": "ac7b5db174155f27c3ebffa02cb8c8d43d9a021a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
