@@ -80,8 +80,6 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
 
   bool has_active_connection() const { return active_connection_count_; }
 
-  void OnTraceLogEnabled();
-
  private:
   friend class WebViewSchedulerImpl;
   friend class renderer_scheduler_impl_unittest::RendererSchedulerImplTest;
@@ -137,8 +135,6 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   base::trace_event::BlameContext* blame_context_;   // NOT OWNED
   std::set<Observer*> loader_observers_;             // NOT OWNED
   WebFrameScheduler::ThrottlingState throttling_state_;
-  // TODO(kraynov): Find a way to distinguish different frames
-  // (probably by grouping on TraceViewer side).
   TraceableState<bool, kTracingCategoryNameInfo> frame_visible_;
   TraceableState<bool, kTracingCategoryNameInfo> page_visible_;
   TraceableState<bool, kTracingCategoryNameInfo> page_stopped_;

@@ -239,13 +239,6 @@ void WebViewSchedulerImpl::OnConnectionUpdated() {
   }
 }
 
-void WebViewSchedulerImpl::OnTraceLogEnabled() {
-  for (WebFrameSchedulerImpl* frame_scheduler : frame_schedulers_) {
-    frame_scheduler->OnTraceLogEnabled();
-  }
-  BackgroundCPUTimeBudgetPool()->OnTraceLogEnabled();
-}
-
 void WebViewSchedulerImpl::AsValueInto(
     base::trace_event::TracedValue* state) const {
   state->SetBoolean("page_visible", page_visible_);
