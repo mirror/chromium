@@ -25293,6 +25293,7 @@ from previous Chrome versions.
   <int value="-793921836" label="ShowAllDialogsWithViewsToolkit:disabled"/>
   <int value="-790036192" label="overscroll-start-threshold"/>
   <int value="-787426248" label="ChromeHomeSurvey:disabled"/>
+  <int value="-785153399" label="WebVROrientationSensorDevice:enabled"/>
   <int value="-780798969" label="disable-single-click-autofill"/>
   <int value="-780599934" label="AutofillUpstreamSendPanFirstSix:enabled"/>
   <int value="-778126349" label="DownloadsLocationChange:enabled"/>
@@ -25631,6 +25632,7 @@ from previous Chrome versions.
   <int value="118991027" label="enable-accelerated-fixed-root-background"/>
   <int value="119185738"
       label="OmniboxUIExperimentMaxAutocompleteMatches:disabled"/>
+  <int value="119942506" label="WebVROrientationSensorDevice:disabled"/>
   <int value="120429808" label="disable-new-profile-management"/>
   <int value="121684313" label="QuickUnlockPin:enabled"/>
   <int value="121858954" label="enable-supervised-user-safesites"/>
