@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abc8034a_7eccb211",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-10T15:55:43Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "2fcefefc60872529b4c27ac0f20ff5650f3a1377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

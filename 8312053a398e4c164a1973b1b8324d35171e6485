@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d1e2f66_ba3c145d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-10T15:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9605785_83611c29",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25cb6696_00a40f31",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-10T12:00:42Z",
       "side": 1,
       "message": "To be more closely aligned with the spec, let\u0027s make sure to do step 6 here as well, i.e. throw a SecurityError if the effective domain is not a valid domain.\n\nSecurityOrigin::Domain should give you https://html.spec.whatwg.org/multipage/origin.html#concept-origin-effective-domain.\n\n!empty \u0026\u0026 !OriginAccessEntry::HostIsIPAddress should give you\nhttps://url.spec.whatwg.org/#valid-domain",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe6431b_80075dcb",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-10T15:55:43Z",
+      "side": 1,
+      "message": "So, I do this in authenticator_impl. Should I be doing the same checks in both places? Same goes for the comment on line 113.",
+      "parentUuid": "25cb6696_00a40f31",
       "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "4e387f74_fc9fa88a",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-10T15:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ae4c73_d2b366ca",
+      "range": {
+        "startLine": 106,
+        "startChar": 34,
+        "endLine": 106,
+        "endChar": 59
+      },
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb93b9ef_083507f9",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
         "patchSetId": 3
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "6f5ddf2b_4c72d82d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-10T15:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb93b9ef_083507f9",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 71
+      },
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75b9bb89_0606e89a",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
         "patchSetId": 3
@@ -110,6 +194,24 @@
       "writtenOn": "2018-01-10T12:00:42Z",
       "side": 1,
       "message": "nit: should we set rpId in the Mojo struct according to Step 7/NotPresent?",
+      "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1353d3b_9b2361c7",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-10T15:55:43Z",
+      "side": 1,
+      "message": "I do that in authenticator_impl. I was under the impression that we should wait until the check in the browser process.",
+      "parentUuid": "75b9bb89_0606e89a",
       "revId": "8312053a398e4c164a1973b1b8324d35171e6485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
