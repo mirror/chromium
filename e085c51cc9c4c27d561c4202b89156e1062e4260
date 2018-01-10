@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "2c75657e_1ad3d08d",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-10T17:58:57Z",
+      "side": 1,
+      "message": "That DCHECK wouldn\u0027t catch the race that caused this bug. Here process_ is non-null as long as ~GpuProcessHost() executes. Once ~GpuProcessHost() returns, process_ is being destructed.\n\nhttps://isocpp.org/wiki/faq/dtors#order-dtors-for-members",
+      "parentUuid": "a149ca3d_96ad1fb0",
+      "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd211814_fb351510",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 7
