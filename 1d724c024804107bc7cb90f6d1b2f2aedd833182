@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "1167779f_873744d9",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-10T01:38:52Z",
+      "side": 1,
+      "message": "nit: can you please add a comment regarding raw pointer ownership, like \u0027Not Owned\u0027?",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "1d724c024804107bc7cb90f6d1b2f2aedd833182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36dc3ea_e2ed237c",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-10T01:38:52Z",
+      "side": 1,
+      "message": "nit: upper case",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 6
+      },
+      "revId": "1d724c024804107bc7cb90f6d1b2f2aedd833182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7aeace6a_0400f0e1",
         "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
         "patchSetId": 7
