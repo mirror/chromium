@@ -70,6 +70,24 @@
       "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658aa010_e85b07b6",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMActivityLogger.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-10T13:22:55Z",
+      "side": 1,
+      "message": "I understand Jeremy\u0027s point, too.  I\u0027m fine with not having an early return.\n\nLet\u0027s simply remove this DCHECK.",
+      "parentUuid": "a0ae8c31_f2b15758",
+      "revId": "57828700a674d0de882628ad1eb0f0b81ee4d800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
