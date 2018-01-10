@@ -529,6 +529,45 @@ PDFViewer.prototype = {
    * @param {Object} params The open params passed in the URL.
    */
   handleURLParams_: function(params) {
+    if (params.transformCoords) {
+      if (params.position) {
+        this.coordsTransformer_.request(
+            this.handlePositionTransform_.bind(this), params,
+            params.page ? params.page : 0, params.position.x,
+            params.position.y);
+        return;
+      } else if (params.viewPosition) {
+        if (params.view == FittingType.FIT_TO_WIDTH) {
+          this.coordsTransformer_.request(
+              this.handlePositionTransform_.bind(this), params,
+              params.page ? params.page : 0, 0, params.viewPosition);
+          return;
+        } else if (params.view == FittingType.FIT_TO_HEIGHT) {
+          this.coordsTransformer_.request(
+              this.handlePositionTransform_.bind(this), params,
+              params.page ? params.page : 0, params.viewPosition, 0);
+          return;
+        }
+      }
+    }
+
+    this.handleURLParamsSync_(params);
+  },
+
+  handlePositionTransform_: function(message, params) {
+    if (params.position) {
+      params.position = {x: message.x, y: message.y};
+    } else if (params.viewPosition) {
+      if (params.view == FittingType.FIT_TO_WIDTH) {
+        params.viewPosition = message.y;
+      } else if (params.view == FittingType.FIT_TO_HEIGHT) {
+        params.viewPosition = message.x;
+      }
+    }
+    this.handleURLParamsSync_(params);
+  },
+
+  handleURLParamsSync_: function(params) {
     if (params.zoom)
       this.viewport_.setZoom(params.zoom);
 
@@ -564,7 +603,7 @@ PDFViewer.prototype = {
    * @param {Object} message Message received from the plugin containing the
    *     x and y to navigate to in screen coordinates.
    */
-  goToPageAndXY_: function(origin, page, message) {
+  goToPageAndXY_: function(origin, page, message, params) {
     this.viewport_.goToPageAndXY(page, message.x, message.y);
     if (origin == 'bookmark')
       this.metrics.onFollowBookmark();
@@ -728,7 +767,7 @@ PDFViewer.prototype = {
           this.toolbar_.docTitle = document.title;
         break;
       case 'getNamedDestinationReply':
-        this.paramsParser_.onNamedDestinationReceived(message.data.pageNumber);
+        this.paramsParser_.onNamedDestinationReceived(message.data);
         break;
       case 'formFocusChange':
         this.isFormFieldFocused_ = message.data.focused;

@@ -81,7 +81,7 @@ function doNavigationUrlTests(originalUrl, url, expectedResultUrl) {
                               0, 1, 0);
 
   var paramsParser = new OpenPDFParamsParser(function(name) {
-    paramsParser.onNamedDestinationReceived(-1);
+    paramsParser.onNamedDestinationReceived({pageNumber: -1});
   });
 
   var navigatorDelegate = new MockNavigatorDelegate();
@@ -114,11 +114,11 @@ var tests = [
 
     var paramsParser = new OpenPDFParamsParser(function(name) {
       if (name == 'US')
-        paramsParser.onNamedDestinationReceived(0);
+        paramsParser.onNamedDestinationReceived({pageNumber: 0});
       else if (name == 'UY')
-        paramsParser.onNamedDestinationReceived(2);
+        paramsParser.onNamedDestinationReceived({pageNumber: 2});
       else
-        paramsParser.onNamedDestinationReceived(-1);
+        paramsParser.onNamedDestinationReceived({pageNumber: -1});
     });
     var url = "http://xyz.pdf";
 
