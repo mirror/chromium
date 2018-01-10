@@ -283,7 +283,7 @@ bool RawResource::MatchPreload(const FetchParameters& params,
 
   data_consumer_handle_ =
       Platform::Current()->CreateDataConsumerHandle(std::move(consumer));
-  data_pipe_writer_ = std::make_unique<BufferingDataPipeWriter>(
+  data_pipe_writer_ = std::make_unique<network::BufferingDataPipeWriter>(
       std::move(producer), task_runner);
 
   if (Data()) {
@@ -294,14 +294,20 @@ bool RawResource::MatchPreload(const FetchParameters& params,
   }
   SetDataBufferingPolicy(kDoNotBufferData);
 
-  if (IsLoaded())
-    data_pipe_writer_->Finish();
+  if (IsLoaded()) {
+    // TODO(yhirano): Handle the return value and use the finish callback
+    // correctly.
+    data_pipe_writer_->Finish(base::BindOnce(Noop));
+  }
   return true;
 }
 
 void RawResource::NotifyFinished() {
-  if (data_pipe_writer_)
-    data_pipe_writer_->Finish();
+  if (data_pipe_writer_) {
+    // TODO(yhirano): Handle the return value and use the finish callback
+    // correctly.
+    data_pipe_writer_->Finish(base::BindOnce(Noop));
+  }
   Resource::NotifyFinished();
 }
 
