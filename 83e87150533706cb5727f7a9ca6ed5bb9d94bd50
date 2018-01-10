@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ed0d16e_c9567924",
+        "filename": "chrome/renderer/sandbox_status_extension_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-10T06:17:50Z",
+      "side": 1,
+      "message": "Please keep the method order here the same as the header.",
+      "revId": "83e87150533706cb5727f7a9ca6ed5bb9d94bd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596968aa_b5ad7866",
+        "filename": "chrome/renderer/sandbox_status_extension_android.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-10T06:17:50Z",
+      "side": 1,
+      "message": "This comment needs to be updated.",
+      "revId": "83e87150533706cb5727f7a9ca6ed5bb9d94bd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
