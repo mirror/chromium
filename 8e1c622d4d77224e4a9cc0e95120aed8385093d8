@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a662e5ec_7c3af3c9",
+        "filename": "third_party/WebKit/Source/modules/crypto/SubtleCrypto.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-10T13:43:42Z",
+      "side": 1,
+      "message": "ScriptState is a tricky one. We generally prefer GetTaskRunner member functions, but it\u0027s not quite possible due to layering: in order to get a correct task runner you need to go through WebFrameScheduler (platform-level concept) and ScriptState (platform-level concept) does not have a reference to a WebFrameScheduler, you need to go though ExecutionContext (core/-level concept).\n\nI think that we could introduce a helper function limited to this specific file. Are you okay with it?",
+      "parentUuid": "75668e52_422f3132",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 63
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "009ea6e8_361044ab",
         "filename": "third_party/WebKit/Source/modules/crypto/SubtleCrypto.cpp",
         "patchSetId": 4
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a36b351b_5b92935c",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-10T13:43:42Z",
+      "side": 1,
+      "message": "Could you please clarify this for me -- am I right that this task type (as implemented in this patchset) is used to run javascript callbacks? If so, does the spec specify task source for these tasks? (If no, it probably should. Meanwhile we should introduce a non-internal task source for this).\n\nEric, could you also tell me which task runner is actually performing WebCrypto work?",
+      "parentUuid": "895fe7bb_d162edf0",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 15
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "087550fc_e169c4ce",
         "filename": "third_party/WebKit/public/platform/TaskType.h",
         "patchSetId": 4
@@ -148,6 +196,24 @@
       "side": 1,
       "message": "Good point. In the first place, these task types are needed to analyze what kind of task execution consumes how much time, but now I\u0027m not sure if the current task-type policies goes along with our purpose. altimin@, what do you think?",
       "parentUuid": "087550fc_e169c4ce",
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbd4559_00fa929d",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-10T13:43:42Z",
+      "side": 1,
+      "message": "We don\u0027t have a task type for anything which is crypto-related and I believe that WebCrypto warrants a special task type to describe it. See the comment about about whether it should be an internal one or not.",
+      "parentUuid": "28fc92a0_3fcbec76",
       "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
