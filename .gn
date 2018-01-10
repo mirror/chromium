@@ -141,26 +141,35 @@ check_targets = [
 
   #"//sandbox/*",  # Medium-hard.
   "//services/*",
-  "//skia/*",
+
+  #"//skia/*",  # Errors with skia_opts_*: https://crbug.com/800761
+  "//skia:skia",
+  "//skia:skia_opts",
+  "//skia:skia_unittests",
+  "//skia/public/interfaces",
   "//sql/*",
   "//storage/*",
   "//testing/*",
 
   #"//third_party/*",  # May not ever want this.
-  "//third_party/breakpad/*",
+  #"//third_party/breakpad/*",  # Small errors.
   "//third_party/brotli/*",
   "//third_party/hunspell/*",
   "//third_party/leveldatabase/*",
-  "//third_party/libaddressinput/*",
+
+  #"//third_party/libaddressinput/*",  # Small errors.
   "//third_party/libphonenumber/*",
-  "//third_party/libwebp/*",
+
+  #"//third_party/libwebp/*",  # Errors: https://crbug.com/800762
   "//third_party/snappy/*",
-  "//third_party/WebKit/*",
+
+  #"//third_party/WebKit/*",  # Errors: https://crbug.com/800764
   "//tools/*",
 
   "//ui/*",
   "//url/*",
-  "//v8/*",
+
+  #"//v8/*",  # Errors.
   "//win8/*",
 ]
 
