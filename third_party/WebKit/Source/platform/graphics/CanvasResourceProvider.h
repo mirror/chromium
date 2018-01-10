@@ -19,7 +19,7 @@ class SkCanvas;
 class SkSurface;
 
 namespace cc {
-
+class ImageDecodeCache;
 class PaintCanvas;
 }
 
@@ -120,6 +120,7 @@ class PLATFORM_EXPORT CanvasResourceProvider {
  private:
   virtual sk_sp<SkSurface> CreateSkSurface() const = 0;
   virtual scoped_refptr<CanvasResource> CreateResource();
+  cc::ImageDecodeCache* ImageDecodeCache();
 
   base::WeakPtrFactory<CanvasResourceProvider> weak_ptr_factory_;
   base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper_;
