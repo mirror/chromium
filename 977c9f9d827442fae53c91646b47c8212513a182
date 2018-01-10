@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65365cf8_8c4e6914",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/ua/summary-details-and-ua-shadow.html",
+        "patchSetId": 24
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69fc5c55_51a567d6",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60ff9240_36740975",
         "filename": "third_party/WebKit/LayoutTests/shadow-dom/ua/summary-details-distribution-expected.html",
         "patchSetId": 24
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T08:46:21Z",
       "side": 1,
       "message": "Nit: unnecessary double quote?",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a6e73f_b982c44e",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/ua/summary-details-distribution-expected.html",
+        "patchSetId": 24
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "No, this is expected - the span\u0027s shadow content is `\"\u003cslot\u003e\u003c/slot\u003e\"` and\n\"Apple\" (text node) is assigned to the slot.",
+      "parentUuid": "60ff9240_36740975",
       "revId": "977c9f9d827442fae53c91646b47c8212513a182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "805b4e61_67367265",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e17d663b_7d06ddd1",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "693ee36f_4234fcf9",
         "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
         "patchSetId": 24
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-09T08:46:21Z",
       "side": 1,
       "message": "It looks we are looking up a hash table N (\u003d\u003d the number of children) times for the *same* key in one ResolveAssignment().\n\nIt would be better to look up a hash table only once for two kinds of slots in one ResolveAssignment operation.",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0186caa3_37225d44",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "It is a real concern for \u003cselect\u003e - \u003coption\u003e, which may contain 1000s of \u003coption\u003es.\nAdded 2 members (which add 2 extra pointers to each instance) to cache the two slots -\nwhat do you think?",
+      "parentUuid": "693ee36f_4234fcf9",
       "revId": "977c9f9d827442fae53c91646b47c8212513a182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "094092f6_a143d0a9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "Changed to just a function.\nI think we can make this a lambda expression, but isn\u0027t it better we have a name for it?",
+      "parentUuid": "e1e9e203_4190efb8",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cfc33fb_9a768feb",
         "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
         "patchSetId": 24
@@ -101,6 +191,24 @@
       "revId": "977c9f9d827442fae53c91646b47c8212513a182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f707f8d_d6cf2c83",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cfc33fb_9a768feb",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e0d4e89b_a347c414",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d49929c_4043b11c",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9760640_2d7d3b8b",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
         "patchSetId": 24
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "f3504eb5_8903f724",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9760640_2d7d3b8b",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49cf7b70_a3218d8d",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
         "patchSetId": 24
@@ -152,6 +296,24 @@
       "revId": "977c9f9d827442fae53c91646b47c8212513a182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19477a1b_c60f6e80",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-10T08:07:35Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, took the names: UserAgent{CustomAssign,Default}Slot.\nPrefixing \"UserAgent\" suggests that it should be used for UA shadows.",
+      "parentUuid": "49cf7b70_a3218d8d",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
