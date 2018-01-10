@@ -83,9 +83,14 @@ IN_PROC_BROWSER_TEST_F(AutofillMetricsMetricsBrowserTest,
 
   // Make sure the UKM were logged for the main frame url and none for the
   // iframe url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
     EXPECT_NE(iframe_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
 IN_PROC_BROWSER_TEST_F(AutofillMetricsMetricsBrowserTest,
@@ -106,35 +111,46 @@ IN_PROC_BROWSER_TEST_F(AutofillMetricsMetricsBrowserTest,
 
   // Make sure the UKM were logged for the main frame url and none for the
   // iframe url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
     EXPECT_NE(iframe_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
-// Flaky test, see crbug.com/793672
 IN_PROC_BROWSER_TEST_F(AutofillMetricsMetricsBrowserTest,
-                       DISABLED_CorrectSourceForUnownedAddressCheckout) {
+                       CorrectSourceForUnownedAddressCheckout) {
   GURL main_frame_url = embedded_test_server()->GetURL(
       "a.com", "/autofill_unowned_address_checkout.html");
   ui_test_utils::NavigateToURL(browser(), main_frame_url);
 
   // Make sure the UKM were logged for the main frame url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
-    EXPECT_EQ(main_frame_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
-// Flaky test, see crbug.com/793638
 IN_PROC_BROWSER_TEST_F(AutofillMetricsMetricsBrowserTest,
-                       DISABLED_CorrectSourceForUnownedCreditCardCheckout) {
+                       CorrectSourceForUnownedCreditCardCheckout) {
   GURL main_frame_url = embedded_test_server()->GetURL(
       "a.com", "/autofill_unowned_credit_card_checkout.html");
   ui_test_utils::NavigateToURL(browser(), main_frame_url);
 
   // Make sure the UKM were logged for the main frame url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
-    EXPECT_EQ(main_frame_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
 IN_PROC_BROWSER_TEST_F(
@@ -156,9 +172,14 @@ IN_PROC_BROWSER_TEST_F(
 
   // Make sure the UKM were logged for the main frame url and none for the
   // iframe url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
     EXPECT_NE(iframe_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
 IN_PROC_BROWSER_TEST_F(
@@ -180,9 +201,14 @@ IN_PROC_BROWSER_TEST_F(
 
   // Make sure the UKM were logged for the main frame url and none for the
   // iframe url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
     EXPECT_NE(iframe_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
 class SitePerProcessAutofillMetricsMetricsBrowserTest
@@ -223,9 +249,14 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessAutofillMetricsMetricsBrowserTest,
 
   // Make sure the UKM were logged for the main frame url and none for the
   // iframe url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
     EXPECT_NE(iframe_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
 IN_PROC_BROWSER_TEST_F(SitePerProcessAutofillMetricsMetricsBrowserTest,
@@ -247,35 +278,46 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessAutofillMetricsMetricsBrowserTest,
 
   // Make sure the UKM were logged for the main frame url and none for the
   // iframe url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
     EXPECT_NE(iframe_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
-// Flaky test, see crbug.com/793578
 IN_PROC_BROWSER_TEST_F(SitePerProcessAutofillMetricsMetricsBrowserTest,
-                       DISABLED_CorrectSourceForUnownedAddressCheckout) {
+                       CorrectSourceForUnownedAddressCheckout) {
   GURL main_frame_url = embedded_test_server()->GetURL(
       "a.com", "/autofill_unowned_address_checkout.html");
   ui_test_utils::NavigateToURL(browser(), main_frame_url);
 
   // Make sure the UKM were logged for the main frame url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
-    EXPECT_EQ(main_frame_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
-// Flaky test, see crbug.com/793634
 IN_PROC_BROWSER_TEST_F(SitePerProcessAutofillMetricsMetricsBrowserTest,
-                       DISABLED_CorrectSourceForUnownedCreditCardCheckout) {
+                       CorrectSourceForUnownedCreditCardCheckout) {
   GURL main_frame_url = embedded_test_server()->GetURL(
       "a.com", "/autofill_unowned_credit_card_checkout.html");
   ui_test_utils::NavigateToURL(browser(), main_frame_url);
 
   // Make sure the UKM were logged for the main frame url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
-    EXPECT_EQ(main_frame_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
 IN_PROC_BROWSER_TEST_F(
@@ -298,9 +340,14 @@ IN_PROC_BROWSER_TEST_F(
 
   // Make sure the UKM were logged for the main frame url and none for the
   // iframe url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
     EXPECT_NE(iframe_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
 
 IN_PROC_BROWSER_TEST_F(
@@ -323,7 +370,12 @@ IN_PROC_BROWSER_TEST_F(
 
   // Make sure the UKM were logged for the main frame url and none for the
   // iframe url.
+  bool has_expected_source_host = false;
   for (const auto& kv : test_ukm_recorder_->GetSources()) {
     EXPECT_NE(iframe_url.host(), kv.second->url().host());
+    if (main_frame_url.host() == kv.second->url().host()) {
+      has_expected_source_host = true;
+    }
   }
+  EXPECT_TRUE(has_expected_source_host);
 }
