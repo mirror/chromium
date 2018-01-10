@@ -124,6 +124,24 @@
       "revId": "e53226f4ca6fc75fd6ad8ff9add54f3416f08d63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85c2306_ac0208eb",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-10T17:42:04Z",
+      "side": 1,
+      "message": "Would that work, since this is an associated interface? I\u0027m not currently binding the client-\u003econtroller path for GpuPTF, only the reverse. Wasn\u0027t sure if there\u0027s a way to bind it without an associated pipe?",
+      "parentUuid": "bdc91642_01fe2597",
+      "revId": "e53226f4ca6fc75fd6ad8ff9add54f3416f08d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
