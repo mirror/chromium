@@ -7,6 +7,7 @@
 
 module extensions.mojom;
 
+import "mojo/common/file.mojom";
 import "mojo/common/file_path.mojom";
 import "mojo/common/string16.mojom";
 import "mojo/common/values.mojom";
@@ -21,8 +22,8 @@ interface ExtensionUnpacker {
   // the Declarative Net Request API in |json_ruleset|. The supplied |location|,
   // and the |creation_flags| defined by Extension::InitFromValueFlags are
   // passed into Extension::Create() when unpacking the extension. Decoded
-  // image and message catalog data from the extension is written to files
-  // kDecodedImagesFilename and kDecodedMessageCatalogsFilename in |path|.
+  // images and message catalog data from the extension are written to the
+  // |decoded_image_dump| and |message_catalog_dump| files.
   // If Unpack() fails for any reason, |error| contains a user-displayable
   // explanation of what went wrong.
   // |channel| and |type| are needed to initialize the global state of the
@@ -32,7 +33,9 @@ interface ExtensionUnpacker {
          mojo.common.mojom.FilePath path,
          string extension_id,
          ManifestLocation location,
-         int32 creation_flags)
+         int32 creation_flags,
+         mojo.common.mojom.File decoded_image_dump,
+         mojo.common.mojom.File message_catalog_dump)
       => (mojo.common.mojom.String16 error,
           mojo.common.mojom.DictionaryValue? manifest,
           mojo.common.mojom.ListValue? json_ruleset);
