@@ -236,9 +236,9 @@
 #include "content/browser/mach_broker_mac.h"
 #endif
 
-#if defined(OS_POSIX)
-#include "content/public/browser/zygote_handle_linux.h"
-#endif  // defined(OS_POSIX)
+#if defined(OS_LINUX)
+#include "content/public/common/zygote_handle_linux.h"
+#endif  // defined(OS_LINUX)
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_switches.h"

@@ -71,7 +71,10 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-#include "content/public/browser/zygote_handle_linux.h"
+#if defined(OS_LINUX)
+#include "content/public/common/zygote_handle_linux.h"
+#endif
+
 #elif defined(OS_WIN)
 #include <windows.h>
 #include <winsock2.h>

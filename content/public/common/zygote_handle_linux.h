@@ -9,9 +9,14 @@
 #include "base/command_line.h"
 #include "base/files/scoped_file.h"
 #include "content/common/content_export.h"
-#include "content/public/common/zygote_handle.h"
 
 namespace content {
+
+class ZygoteCommunication;
+using ZygoteHandle = ZygoteCommunication*;
+
+using ZygoteHandleLauncherCallback =
+    base::OnceCallback<pid_t(base::CommandLine*, base::ScopedFD*)>;
 
 // Allocates and initializes the global generic zygote process, and returns the
 // ZygoteHandle used to communicate with it. |launcher| is a callback that
