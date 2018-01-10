@@ -798,7 +798,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       bool present,
       blink::WebSuddenTerminationDisablerType disabler_type);
   void OnDidStartLoading(bool to_different_document);
-  void OnDidStopLoading();
+  void OnDidStopLoading(base::Optional<int64_t> last_commit_navigation_id,
+                        bool browser_side_navigation_pending);
   void OnDidChangeLoadProgress(double load_progress);
   void OnSerializeAsMHTMLResponse(
       int job_id,
