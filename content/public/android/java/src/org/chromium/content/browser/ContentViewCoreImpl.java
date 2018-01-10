@@ -6,16 +6,11 @@ package org.chromium.content.browser;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.assist.AssistStructure.ViewNode;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Build;
-import android.os.Build.VERSION_CODES;
-import android.os.Bundle;
 import android.os.SystemClock;
-import android.view.ActionMode;
 import android.view.HapticFeedbackConstants;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -23,14 +18,8 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStructure;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityManager;
-import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
-import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.view.textclassifier.TextClassifier;
 
 import org.chromium.base.ObserverList;
 import org.chromium.base.TraceEvent;
@@ -39,7 +28,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.NativeClassQualifiedName;
 import org.chromium.content.browser.ContentViewCore.InternalAccessDelegate;
-import org.chromium.content.browser.accessibility.WebContentsAccessibility;
+import org.chromium.content.browser.accessibility.WebContentsAccessibilityImpl;
 import org.chromium.content.browser.accessibility.captioning.CaptioningBridgeFactory;
 import org.chromium.content.browser.accessibility.captioning.SystemCaptioningBridge;
 import org.chromium.content.browser.accessibility.captioning.TextTrackSettings;
@@ -51,13 +40,10 @@ import org.chromium.content.browser.input.SelectPopupDropdown;
 import org.chromium.content.browser.input.SelectPopupItem;
 import org.chromium.content.browser.input.TextSuggestionHost;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
-import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
-import org.chromium.content_public.browser.AccessibilitySnapshotNode;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
-import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.device.gamepad.GamepadList;
@@ -78,10 +64,9 @@ import java.util.List;
  * Implementation of the interface {@ContentViewCore}.
  */
 @JNINamespace("content")
-public class ContentViewCoreImpl
-        implements ContentViewCore, AccessibilityStateChangeListener, DisplayAndroidObserver,
-                   SystemCaptioningBridge.SystemCaptioningBridgeListener, WindowAndroidProvider,
-                   ImeEventObserver {
+public class ContentViewCoreImpl implements ContentViewCore, DisplayAndroidObserver,
+                                            SystemCaptioningBridge.SystemCaptioningBridgeListener,
+                                            WindowAndroidProvider, ImeEventObserver {
     private static final String TAG = "cr_ContentViewCore";
 
     /**
@@ -190,34 +175,11 @@ public class ContentViewCoreImpl
 
     private boolean mIsMobileOptimizedHint;
 
-    private SelectionPopupController mSelectionPopupController;
     private boolean mPreserveSelectionOnNextLossOfFocus;
-
-    // Whether native accessibility, i.e. without any script injection, is allowed.
-    private boolean mNativeAccessibilityAllowed;
-
-    // Handles native accessibility, i.e. without any script injection.
-    private WebContentsAccessibility mWebContentsAccessibility;
-
-    // System accessibility service.
-    private final AccessibilityManager mAccessibilityManager;
-
-    // If true, the web contents are obscured by another view and we shouldn't
-    // return an AccessibilityNodeProvider or process touch exploration events.
-    private boolean mIsObscuredByAnotherView;
 
     // Notifies the ContentViewCore when platform closed caption settings have changed
     // if they are supported. Otherwise does nothing.
     private final SystemCaptioningBridge mSystemCaptioningBridge;
-
-    // Accessibility touch exploration state.
-    private boolean mTouchExplorationEnabled;
-
-    // Whether accessibility focus should be set to the page when it finishes loading.
-    // This only applies if an accessibility service like TalkBack is running.
-    // This is desirable behavior for a browser window, but not for an embedded
-    // WebView.
-    private boolean mShouldSetAccessibilityFocusOnPageLoad;
 
     // Whether a touch scroll sequence is active, used to hide text selection
     // handles. Note that a scroll sequence will *always* bound a pinch
@@ -272,8 +234,6 @@ public class ContentViewCoreImpl
     public ContentViewCoreImpl(Context context, String productVersion) {
         mContext = context;
         mProductVersion = productVersion;
-        mAccessibilityManager =
-                (AccessibilityManager) getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
         mSystemCaptioningBridge = CaptioningBridgeFactory.getSystemCaptioningBridge(mContext);
 
         mWindowAndroidChangedObservers = new ObserverList<WindowAndroidChangedObserver>();
@@ -302,20 +262,13 @@ public class ContentViewCoreImpl
 
     @VisibleForTesting
     @Override
-    public SelectionPopupController getSelectionPopupControllerForTesting() {
-        return mSelectionPopupController;
-    }
-
-    @VisibleForTesting
-    @Override
-    public void setSelectionPopupControllerForTesting(SelectionPopupController actionMode) {
-        mSelectionPopupController = actionMode;
-    }
-
-    @VisibleForTesting
-    @Override
     public TextSuggestionHost getTextSuggestionHostForTesting() {
         return mTextSuggestionHost;
+    }
+
+    @VisibleForTesting
+    void setWebContentsForTesting(WebContentsImpl webContents) {
+        mWebContents = webContents;
     }
 
     @VisibleForTesting
@@ -365,7 +318,6 @@ public class ContentViewCoreImpl
             InternalAccessDelegate internalDispatcher, WebContents webContents,
             WindowAndroid windowAndroid) {
         mViewAndroidDelegate = viewDelegate;
-        setContainerView(viewDelegate.getContainerView());
         long windowNativePointer = windowAndroid.getNativePointer();
         assert windowNativePointer != 0;
 
@@ -374,9 +326,14 @@ public class ContentViewCoreImpl
         mNativeContentViewCore =
                 nativeInit(webContents, mViewAndroidDelegate, windowNativePointer, dipScale);
         mWebContents = (WebContentsImpl) nativeGetWebContentsAndroid(mNativeContentViewCore);
+        ViewGroup containerView = viewDelegate.getContainerView();
+        SelectionPopupControllerImpl controller = SelectionPopupControllerImpl.create(
+                mContext, windowAndroid, webContents, containerView);
+        controller.setActionModeCallback(ActionModeCallbackHelper.EMPTY_CALLBACK);
+        setContainerView(containerView);
         mRenderCoordinates = mWebContents.getRenderCoordinates();
         mRenderCoordinates.setDeviceScaleFactor(dipScale, windowAndroid.getContext().get());
-
+        WebContentsAccessibilityImpl.create(mContext, containerView, webContents, mProductVersion);
         setContainerViewInternals(internalDispatcher);
 
         mPopupZoomer = new PopupZoomer(mContext, mWebContents, mContainerView);
@@ -384,11 +341,6 @@ public class ContentViewCoreImpl
                 mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
         mImeAdapter.addEventObserver(this);
         mTextSuggestionHost = new TextSuggestionHost(this);
-
-        mSelectionPopupController =
-                new SelectionPopupController(mContext, windowAndroid, webContents, mContainerView);
-        mSelectionPopupController.setCallback(ActionModeCallbackHelper.EMPTY_CALLBACK);
-        mSelectionPopupController.setContainerView(mContainerView);
 
         mWebContentsObserver = new ContentViewWebContentsObserver(this);
 
@@ -422,21 +374,6 @@ public class ContentViewCoreImpl
         return getWebContents().getEventForwarder();
     }
 
-    @Override
-    public void setActionModeCallback(ActionMode.Callback callback) {
-        mSelectionPopupController.setCallback(callback);
-    }
-
-    @Override
-    public void setNonSelectionActionModeCallback(ActionMode.Callback callback) {
-        mSelectionPopupController.setNonSelectionCallback(callback);
-    }
-
-    @Override
-    public SelectionClient.ResultCallback getPopupControllerResultCallback() {
-        return mSelectionPopupController.getResultCallback();
-    }
-
     private void addDisplayAndroidObserverIfNeeded() {
         if (!mAttachedToWindow) return;
         WindowAndroid windowAndroid = getWindowAndroid();
@@ -467,12 +404,14 @@ public class ContentViewCoreImpl
 
             mContainerView = containerView;
             mContainerView.setClickable(true);
-            if (mSelectionPopupController != null) {
-                mSelectionPopupController.setContainerView(containerView);
-            }
+            getSelectionPopupController().setContainerView(containerView);
         } finally {
             TraceEvent.end("ContentViewCore.setContainerView");
         }
+    }
+
+    private SelectionPopupControllerImpl getSelectionPopupController() {
+        return SelectionPopupControllerImpl.fromWebContents(mWebContents);
     }
 
     @CalledByNative
@@ -501,10 +440,9 @@ public class ContentViewCoreImpl
         mWebContentsObserver.destroy();
         mWebContentsObserver = null;
         mImeAdapter.resetAndHideKeyboard();
+        hidePopupsAndPreserveSelection();
         mWebContents = null;
         mNativeContentViewCore = 0;
-        hidePopupsAndPreserveSelection();
-        destroyPastePopup();
 
         // See warning in javadoc before adding more clean up code here.
     }
@@ -537,22 +475,11 @@ public class ContentViewCoreImpl
 
     @VisibleForTesting
     @Override
-    public String getSelectedText() {
-        return mSelectionPopupController.getSelectedText();
-    }
-
-    @VisibleForTesting
-    @Override
     public int getTopControlsShrinkBlinkHeightForTesting() {
         // TODO(jinsukkim): Let callsites provide with its own top controls height to remove
         //                  the test-only method in content layer.
         if (mNativeContentViewCore == 0) return 0;
         return nativeGetTopControlsShrinkBlinkHeightPixForTesting(mNativeContentViewCore);
-    }
-
-    @Override
-    public boolean isFocusedNodeEditable() {
-        return mSelectionPopupController.isSelectionEditable();
     }
 
     @CalledByNative
@@ -567,7 +494,7 @@ public class ContentViewCoreImpl
 
     private void setTouchScrollInProgress(boolean inProgress) {
         mTouchScrollInProgress = inProgress;
-        mSelectionPopupController.setScrollInProgress(inProgress, isScrollInProgress());
+        getSelectionPopupController().setScrollInProgress(inProgress, isScrollInProgress());
     }
 
     /**
@@ -613,7 +540,7 @@ public class ContentViewCoreImpl
     public void onShow() {
         assert mWebContents != null;
         mWebContents.onShow();
-        setAccessibilityState(mAccessibilityManager.isEnabled());
+        WebContentsAccessibilityImpl.fromWebContents(mWebContents).refreshState();
         restoreSelectionPopupsIfNecessary();
     }
 
@@ -630,8 +557,10 @@ public class ContentViewCoreImpl
     }
 
     private void hidePopupsAndClearSelection() {
-        mSelectionPopupController.destroyActionModeAndUnselect();
-        destroyPastePopup();
+        if (isAlive()) {
+            getSelectionPopupController().destroyActionModeAndUnselect();
+            destroyPastePopup();
+        }
         hideSelectPopupWithCancelMessage();
         mPopupZoomer.hide(false);
         mTextSuggestionHost.hidePopups();
@@ -640,25 +569,17 @@ public class ContentViewCoreImpl
 
     @CalledByNative
     private void hidePopupsAndPreserveSelection() {
-        mSelectionPopupController.destroyActionModeAndKeepSelection();
-        destroyPastePopup();
+        if (isAlive()) {
+            getSelectionPopupController().destroyActionModeAndKeepSelection();
+            destroyPastePopup();
+        }
         hideSelectPopupWithCancelMessage();
         mPopupZoomer.hide(false);
         mTextSuggestionHost.hidePopups();
     }
 
     private void restoreSelectionPopupsIfNecessary() {
-        mSelectionPopupController.restoreSelectionPopupsIfNecessary();
-    }
-
-    @Override
-    public void destroySelectActionMode() {
-        mSelectionPopupController.finishActionMode();
-    }
-
-    @Override
-    public boolean isSelectActionBarShowing() {
-        return mSelectionPopupController.isActionModeValid();
+        getSelectionPopupController().restoreSelectionPopupsIfNecessary();
     }
 
     private void resetGestureDetection() {
@@ -676,15 +597,11 @@ public class ContentViewCoreImpl
     public void onAttachedToWindow() {
         mAttachedToWindow = true;
         addDisplayAndroidObserverIfNeeded();
-        setAccessibilityState(mAccessibilityManager.isEnabled());
         updateTextSelectionUI(true);
         GamepadList.onAttachedToWindow(mContext);
-        mAccessibilityManager.addAccessibilityStateChangeListener(this);
         mSystemCaptioningBridge.addListener(this);
         mImeAdapter.onViewAttachedToWindow();
-        if (mWebContentsAccessibility != null) {
-            mWebContentsAccessibility.onAttachedToWindow();
-        }
+        WebContentsAccessibilityImpl.fromWebContents(mWebContents).onAttachedToWindow();
     }
 
     @Override
@@ -705,18 +622,17 @@ public class ContentViewCoreImpl
         mImeAdapter.onViewDetachedFromWindow();
         removeDisplayAndroidObserver();
         GamepadList.onDetachedFromWindow();
-        mAccessibilityManager.removeAccessibilityStateChangeListener(this);
 
-        // WebView uses PopupWindows for handle rendering, which may remain
-        // unintentionally visible even after the WebView has been detached.
-        // Override the handle visibility explicitly to address this, but
-        // preserve the underlying selection for detachment cases like screen
-        // locking and app switching.
-        updateTextSelectionUI(false);
-        mSystemCaptioningBridge.removeListener(this);
-        if (mWebContentsAccessibility != null) {
-            mWebContentsAccessibility.onDetachedFromWindow();
+        if (isAlive()) {
+            // WebView uses PopupWindows for handle rendering, which may remain
+            // unintentionally visible even after the WebView has been detached.
+            // Override the handle visibility explicitly to address this, but
+            // preserve the underlying selection for detachment cases like screen
+            // locking and app switching.
+            updateTextSelectionUI(false);
+            WebContentsAccessibilityImpl.fromWebContents(mWebContents).onDetachedFromWindow();
         }
+        mSystemCaptioningBridge.removeListener(this);
     }
 
     @Override
@@ -792,7 +708,7 @@ public class ContentViewCoreImpl
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         mImeAdapter.onWindowFocusChanged(hasWindowFocus);
         if (!hasWindowFocus) resetGestureDetection();
-        mSelectionPopupController.onWindowFocusChanged(hasWindowFocus);
+        if (isAlive()) getSelectionPopupController().onWindowFocusChanged(hasWindowFocus);
         mGestureListenerManager.updateOnWindowFocusChanged(hasWindowFocus);
     }
 
@@ -802,7 +718,8 @@ public class ContentViewCoreImpl
         mHasViewFocus = gainFocus;
         mImeAdapter.onViewFocusChanged(gainFocus, hideKeyboardOnBlur);
 
-        mJoystickScrollEnabled = gainFocus && !isFocusedNodeEditable();
+        mJoystickScrollEnabled =
+                gainFocus && !getSelectionPopupController().isFocusedNodeEditable();
 
         if (gainFocus) {
             restoreSelectionPopupsIfNecessary();
@@ -816,7 +733,7 @@ public class ContentViewCoreImpl
                 // Clear the selection. The selection is cleared on destroying IME
                 // and also here since we may receive destroy first, for example
                 // when focus is lost in webview.
-                clearSelection();
+                if (isAlive()) getSelectionPopupController().clearSelection();
             }
         }
         if (mNativeContentViewCore != 0) nativeSetFocus(mNativeContentViewCore, gainFocus);
@@ -1027,20 +944,6 @@ public class ContentViewCoreImpl
     }
 
     @Override
-    public ActionModeCallbackHelper getActionModeCallbackHelper() {
-        return mSelectionPopupController;
-    }
-
-    private void showSelectActionMode() {
-        mSelectionPopupController.showActionModeOrClearOnFailure();
-    }
-
-    @Override
-    public void clearSelection() {
-        mSelectionPopupController.clearSelection();
-    }
-
-    @Override
     public void preserveSelectionOnNextLossOfFocus() {
         mPreserveSelectionOnNextLossOfFocus = true;
     }
@@ -1106,7 +1009,7 @@ public class ContentViewCoreImpl
     @Override
     public void onNodeAttributeUpdated(boolean editable, boolean password) {
         mJoystickScrollEnabled = !editable;
-        mSelectionPopupController.updateSelectionState(editable, password);
+        getSelectionPopupController().updateSelectionState(editable, password);
     }
 
     @Override
@@ -1139,7 +1042,9 @@ public class ContentViewCoreImpl
         for (int i = 0; i < items.length; i++) {
             popupItems.add(new SelectPopupItem(items[i], enabled[i]));
         }
-        if (DeviceFormFactor.isTablet() && !multiple && !isTouchExplorationEnabled()) {
+        if (DeviceFormFactor.isTablet() && !multiple
+                && !WebContentsAccessibilityImpl.fromWebContents(mWebContents)
+                            .isTouchExplorationEnabled()) {
             mSelectPopup = new SelectPopupDropdown(
                     this, anchorView, popupItems, selectedIndices, rightAligned);
         } else {
@@ -1182,7 +1087,7 @@ public class ContentViewCoreImpl
     }
 
     private void destroyPastePopup() {
-        mSelectionPopupController.destroyPastePopup();
+        getSelectionPopupController().destroyPastePopup();
     }
 
     @SuppressWarnings("unused")
@@ -1190,129 +1095,6 @@ public class ContentViewCoreImpl
     private void onRenderProcessChange() {
         // Immediately sync closed caption settings to the new render process.
         mSystemCaptioningBridge.syncToListener(this);
-    }
-
-    @Override
-    public void onAccessibilityStateChanged(boolean enabled) {
-        setAccessibilityState(enabled);
-    }
-
-    @Override
-    public boolean supportsAccessibilityAction(int action) {
-        // TODO(dmazzoni): implement this in WebContentsAccessibility.
-        return false;
-    }
-
-    @Override
-    public boolean performAccessibilityAction(int action, Bundle arguments) {
-        // TODO(dmazzoni): implement this in WebContentsAccessibility.
-        return false;
-    }
-
-    @Override
-    public WebContentsAccessibility getWebContentsAccessibility() {
-        return mWebContentsAccessibility;
-    }
-
-    @Override
-    public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-        if (mIsObscuredByAnotherView) return null;
-
-        // If WebContentsAccessibility is null, create it if native a11y is allowed and WebContent
-        // is not null. Else return null.
-        if (mWebContentsAccessibility == null) {
-            if (!mNativeAccessibilityAllowed || mWebContents == null) {
-                return null;
-            }
-            mWebContentsAccessibility = WebContentsAccessibility.create(
-                    mContext, mContainerView, mWebContents, mShouldSetAccessibilityFocusOnPageLoad);
-            // For Lollipop devices, we need to register a broadcast receiver for locale change.
-            if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP
-                    && mContainerView.isAttachedToWindow()) {
-                mWebContentsAccessibility.onAttachedToWindow();
-            }
-        }
-        if (!mWebContentsAccessibility.isEnabled()) {
-            mWebContentsAccessibility.enable();
-        }
-        return mWebContentsAccessibility.getAccessibilityNodeProvider();
-    }
-
-    @Override
-    public void setObscuredByAnotherView(boolean isObscured) {
-        if (isObscured != mIsObscuredByAnotherView) {
-            mIsObscuredByAnotherView = isObscured;
-            getContainerView().sendAccessibilityEvent(
-                    AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED);
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void onProvideVirtualStructure(
-            final ViewStructure structure, final boolean ignoreScrollOffset) {
-        // Do not collect accessibility tree in incognito mode
-        if (getWebContents().isIncognito()) {
-            structure.setChildCount(0);
-            return;
-        }
-        structure.setChildCount(1);
-        final ViewStructure viewRoot = structure.asyncNewChild(0);
-        getWebContents().requestAccessibilitySnapshot(new AccessibilitySnapshotCallback() {
-            @Override
-            public void onAccessibilitySnapshot(AccessibilitySnapshotNode root) {
-                viewRoot.setClassName("");
-                viewRoot.setHint(mProductVersion);
-                if (root == null) {
-                    viewRoot.asyncCommit();
-                    return;
-                }
-                createVirtualStructure(viewRoot, root, ignoreScrollOffset);
-            }
-        });
-    }
-
-    // When creating the View structure, the left and top are relative to the parent node.
-    @TargetApi(Build.VERSION_CODES.M)
-    private void createVirtualStructure(ViewStructure viewNode, AccessibilitySnapshotNode node,
-            final boolean ignoreScrollOffset) {
-        viewNode.setClassName(node.className);
-        if (node.hasSelection) {
-            viewNode.setText(node.text, node.startSelection, node.endSelection);
-        } else {
-            viewNode.setText(node.text);
-        }
-        int left = (int) mRenderCoordinates.fromLocalCssToPix(node.x);
-        int top = (int) mRenderCoordinates.fromLocalCssToPix(node.y);
-        int width = (int) mRenderCoordinates.fromLocalCssToPix(node.width);
-        int height = (int) mRenderCoordinates.fromLocalCssToPix(node.height);
-
-        Rect boundsInParent = new Rect(left, top, left + width, top + height);
-        if (node.isRootNode) {
-            // Offset of the web content relative to the View.
-            boundsInParent.offset(0, (int) mRenderCoordinates.getContentOffsetYPix());
-            if (!ignoreScrollOffset) {
-                boundsInParent.offset(-(int) mRenderCoordinates.getScrollXPix(),
-                        -(int) mRenderCoordinates.getScrollYPix());
-            }
-        }
-
-        viewNode.setDimens(boundsInParent.left, boundsInParent.top, 0, 0, width, height);
-        viewNode.setChildCount(node.children.size());
-        if (node.hasStyle) {
-            // The text size should be in physical pixels, not CSS pixels.
-            float textSize = mRenderCoordinates.fromLocalCssToPix(node.textSize);
-
-            int style = (node.bold ? ViewNode.TEXT_STYLE_BOLD : 0)
-                    | (node.italic ? ViewNode.TEXT_STYLE_ITALIC : 0)
-                    | (node.underline ? ViewNode.TEXT_STYLE_UNDERLINE : 0)
-                    | (node.lineThrough ? ViewNode.TEXT_STYLE_STRIKE_THRU : 0);
-            viewNode.setTextStyle(textSize, node.color, node.bgcolor, style);
-        }
-        for (int i = 0; i < node.children.size(); i++) {
-            createVirtualStructure(viewNode.asyncNewChild(i), node.children.get(i), true);
-        }
-        viewNode.asyncCommit();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -1329,32 +1111,6 @@ public class ContentViewCoreImpl
                 settings.getTextTrackFontStyle(), settings.getTextTrackFontVariant(),
                 settings.getTextTrackTextColor(), settings.getTextTrackTextShadow(),
                 settings.getTextTrackTextSize());
-    }
-
-    @Override
-    public void onReceivedProcessTextResult(int resultCode, Intent data) {
-        mSelectionPopupController.onReceivedProcessTextResult(resultCode, data);
-    }
-
-    @Override
-    public boolean isTouchExplorationEnabled() {
-        return mTouchExplorationEnabled;
-    }
-
-    @Override
-    public void setAccessibilityState(boolean state) {
-        if (!state) {
-            mNativeAccessibilityAllowed = false;
-            mTouchExplorationEnabled = false;
-        } else {
-            mNativeAccessibilityAllowed = true;
-            mTouchExplorationEnabled = mAccessibilityManager.isTouchExplorationEnabled();
-        }
-    }
-
-    @Override
-    public void setShouldSetAccessibilityFocusOnPageLoad(boolean on) {
-        mShouldSetAccessibilityFocusOnPageLoad = on;
     }
 
     @Override
@@ -1412,9 +1168,9 @@ public class ContentViewCoreImpl
         // action mode menu items according to the new rotation. So Chrome
         // has to re-create the action mode.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && mSelectionPopupController.isActionModeValid()) {
+                && getSelectionPopupController().isActionModeValid()) {
             hidePopupsAndPreserveSelection();
-            showSelectActionMode();
+            getSelectionPopupController().showActionModeOrClearOnFailure();
         }
         mTextSuggestionHost.hidePopups();
 
@@ -1458,32 +1214,6 @@ public class ContentViewCoreImpl
     @CalledByNative
     private boolean isFullscreenRequiredForOrientationLock() {
         return mFullscreenRequiredForOrientationLock;
-    }
-
-    @Override
-    public void setSelectionClient(SelectionClient selectionClient) {
-        mSelectionPopupController.setSelectionClient(selectionClient);
-    }
-
-    @Override
-    public void setTextClassifier(TextClassifier textClassifier) {
-        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-        SelectionClient client = mSelectionPopupController.getSelectionClient();
-        if (client != null) client.setTextClassifier(textClassifier);
-    }
-
-    @Override
-    public TextClassifier getTextClassifier() {
-        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-        SelectionClient client = mSelectionPopupController.getSelectionClient();
-        return client == null ? null : client.getTextClassifier();
-    }
-
-    @Override
-    public TextClassifier getCustomTextClassifier() {
-        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-        SelectionClient client = mSelectionPopupController.getSelectionClient();
-        return client == null ? null : client.getCustomTextClassifier();
     }
 
     @NativeClassQualifiedName("ContentViewCore")

@@ -4,31 +4,20 @@
 
 package org.chromium.content.browser;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStructure;
-import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.view.textclassifier.TextClassifier;
 
 import org.chromium.base.VisibleForTesting;
-import org.chromium.content.browser.accessibility.WebContentsAccessibility;
 import org.chromium.content.browser.input.ImeAdapter;
 import org.chromium.content.browser.input.SelectPopup;
 import org.chromium.content.browser.input.TextSuggestionHost;
-import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.ImeEventObserver;
-import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.WindowAndroid;
@@ -148,24 +137,6 @@ public interface ContentViewCore {
     void updateWindowAndroid(WindowAndroid windowAndroid);
 
     /**
-     * Set {@link ActionMode.Callback} used by {@link SelectionPopupController}.
-     * @param callback ActionMode.Callback instance.
-     */
-    void setActionModeCallback(ActionMode.Callback callback);
-
-    /**
-     * Set {@link ActionMode.Callback} used by {@link SelectionPopupController} when no text is
-     * selected.
-     * @param callback ActionMode.Callback instance.
-     */
-    void setNonSelectionActionModeCallback(ActionMode.Callback callback);
-
-    /**
-     * @return {@link SelectionClient.ResultCallback} instance.
-     */
-    SelectionClient.ResultCallback getPopupControllerResultCallback();
-
-    /**
      * Sets a new container view for this {@link ContentViewCore}.
      *
      * <p>WARNING: This method can also be used to replace the existing container view,
@@ -221,11 +192,6 @@ public interface ContentViewCore {
     int getViewportHeightPix();
 
     /**
-     * @return Whether the current focused node is editable.
-     */
-    boolean isFocusedNodeEditable();
-
-    /**
      * @return Whether a scroll targeting web content is in progress.
      */
     boolean isScrollInProgress();
@@ -260,16 +226,6 @@ public interface ContentViewCore {
      * To be called when the ContentView is hidden.
      */
     void onHide();
-
-    /**
-     * Hide action mode and put into destroyed state.
-     */
-    void destroySelectActionMode();
-
-    /**
-     * @return {@code true} if select action bar is showing.
-     */
-    boolean isSelectActionBarShowing();
 
     /**
      * Whether or not the associated ContentView is currently attached to a window.
@@ -429,94 +385,9 @@ public interface ContentViewCore {
     void selectPopupMenuItems(int[] indices);
 
     /**
-     * @return {@link ActionModeCallbackHelper} object.
-     */
-    ActionModeCallbackHelper getActionModeCallbackHelper();
-
-    /**
-     * Clears the current text selection.
-     */
-    void clearSelection();
-
-    /**
      * Ensure the selection is preserved the next time the view loses focus.
      */
     void preserveSelectionOnNextLossOfFocus();
-
-    /**
-     * Determines whether or not this ContentViewCore can handle this accessibility action.
-     * @param action The action to perform.
-     * @return Whether or not this action is supported.
-     */
-    boolean supportsAccessibilityAction(int action);
-
-    /**
-     * Attempts to perform an accessibility action on the web content.  If the accessibility action
-     * cannot be processed, it returns {@code null}, allowing the caller to know to call the
-     * super {@link View#performAccessibilityAction(int, Bundle)} method and use that return value.
-     * Otherwise the return value from this method should be used.
-     * @param action The action to perform.
-     * @param arguments Optional action arguments.
-     * @return Whether the action was performed or {@code null} if the call should be delegated to
-     *         the super {@link View} class.
-     */
-    boolean performAccessibilityAction(int action, Bundle arguments);
-
-    /**
-     * Get the WebContentsAccessibility, used for native accessibility
-     * (not script injection). This will return null when system accessibility
-     * is not enabled.
-     * @return This view's WebContentsAccessibility.
-     */
-    WebContentsAccessibility getWebContentsAccessibility();
-
-    /**
-     * If native accessibility is enabled and no other views are temporarily
-     * obscuring this one, returns an AccessibilityNodeProvider that
-     * implements native accessibility for this view. Returns null otherwise.
-     * Lazily initializes native accessibility here if it's allowed.
-     * @return The AccessibilityNodeProvider, if available, or null otherwise.
-     */
-    AccessibilityNodeProvider getAccessibilityNodeProvider();
-
-    @TargetApi(Build.VERSION_CODES.M)
-    void onProvideVirtualStructure(ViewStructure structure, boolean ignoreScrollOffset);
-
-    /**
-     * Set whether or not the web contents are obscured by another view.
-     * If true, we won't return an accessibility node provider or respond
-     * to touch exploration events.
-     */
-    void setObscuredByAnotherView(boolean isObscured);
-
-    /**
-     * Called when the processed text is replied from an activity that supports
-     * Intent.ACTION_PROCESS_TEXT.
-     * @param resultCode the code that indicates if the activity successfully processed the text
-     * @param data the reply that contains the processed text.
-     */
-    void onReceivedProcessTextResult(int resultCode, Intent data);
-
-    /**
-     * Returns true if accessibility is on and touch exploration is enabled.
-     */
-    boolean isTouchExplorationEnabled();
-
-    /**
-     * Turns browser accessibility on or off.
-     * If |state| is |false|, this turns off both native and injected accessibility.
-     * Otherwise, if accessibility script injection is enabled, this will enable the injected
-     * accessibility scripts. Native accessibility is enabled on demand.
-     */
-    void setAccessibilityState(boolean state);
-
-    /**
-     * Sets whether or not we should set accessibility focus on page load.
-     * This only applies if an accessibility service like TalkBack is running.
-     * This is desirable behavior for a browser window, but not for an embedded
-     * WebView.
-     */
-    void setShouldSetAccessibilityFocusOnPageLoad(boolean on);
 
     /**
      * @return Whether the current page seems to be mobile-optimized. This hint is based upon
@@ -537,36 +408,7 @@ public interface ContentViewCore {
      */
     void setFullscreenRequiredForOrientationLock(boolean value);
 
-    /** Sets the given {@link SelectionClient} in the selection popup controller. */
-    void setSelectionClient(SelectionClient selectionClient);
-
-    /**
-     * Sets TextClassifier for Smart Text selection.
-     */
-    void setTextClassifier(TextClassifier textClassifier);
-
-    /**
-     * Returns TextClassifier that is used for Smart Text selection. If the custom classifier
-     * has been set with setTextClassifier, returns that object, otherwise returns the system
-     * classifier.
-     */
-    TextClassifier getTextClassifier();
-
-    /**
-     * Returns the TextClassifier which has been set with setTextClassifier(), or null.
-     */
-    TextClassifier getCustomTextClassifier();
-
     // Test-only methods
-
-    /**
-     * @return The SelectionPopupController that handles select action mode on web contents.
-     */
-    @VisibleForTesting
-    SelectionPopupController getSelectionPopupControllerForTesting();
-
-    @VisibleForTesting
-    void setSelectionPopupControllerForTesting(SelectionPopupController actionMode);
 
     /**
      * @return The TextSuggestionHost that handles displaying the text suggestion menu.
@@ -585,12 +427,6 @@ public interface ContentViewCore {
 
     @VisibleForTesting
     void setPopupZoomerForTest(PopupZoomer popupZoomer);
-
-    /**
-     * @return The selected text (empty if no text selected).
-     */
-    @VisibleForTesting
-    String getSelectedText();
 
     /**
      * @return The amount of the top controls height if controls are in the state

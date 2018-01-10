@@ -78,7 +78,9 @@ import org.chromium.content_public.browser.MessagePort;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.NavigationHistory;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.browser.WebContentsAccessibility;
 import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_public.browser.navigation_controller.LoadURLType;
 import org.chromium.content_public.browser.navigation_controller.UserAgentOverrideOption;
@@ -876,14 +878,14 @@ public class AwContents implements SmartClipProvider {
             ViewAndroidDelegate viewDelegate, InternalAccessDelegate internalDispatcher,
             WebContents webContents, WindowAndroid windowAndroid) {
         contentViewCore.initialize(viewDelegate, internalDispatcher, webContents, windowAndroid);
-        contentViewCore.setActionModeCallback(
-                new AwActionModeCallback(mContext, this,
-                        contentViewCore.getActionModeCallbackHelper()));
+        SelectionPopupController controller = SelectionPopupController.fromWebContents(webContents);
+        controller.setActionModeCallback(
+                new AwActionModeCallback(mContext, this, controller.getActionModeCallbackHelper()));
         if (mAutofillProvider != null) {
-            contentViewCore.setNonSelectionActionModeCallback(
+            controller.setNonSelectionActionModeCallback(
                     new AutofillActionModeCallback(context, mAutofillProvider));
         }
-        contentViewCore.setSelectionClient(SelectionClient.createSmartSelectionClient(webContents));
+        controller.setSelectionClient(SelectionClient.createSmartSelectionClient(webContents));
 
         // Listen for dpad events from IMEs (e.g. Samsung Cursor Control) so we know to enable
         // spatial navigation mode to allow these events to move focus out of the WebView.
@@ -1119,11 +1121,16 @@ public class AwContents implements SmartClipProvider {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setNewAwContentsPreO(newAwContentsPtr);
         } else {
-            // Move the TextClassifier to the new ContentViewCore.
-            TextClassifier textClassifier =
-                    mContentViewCore == null ? null : mContentViewCore.getCustomTextClassifier();
+            // Move the TextClassifier to the new WebContents.
+            SelectionPopupController oldController =
+                    SelectionPopupController.fromWebContents(mWebContents);
+
+            TextClassifier textClassifier = oldController.getCustomTextClassifier();
             setNewAwContentsPreO(newAwContentsPtr);
-            if (textClassifier != null) mContentViewCore.setTextClassifier(textClassifier);
+            if (textClassifier != null) {
+                SelectionPopupController.fromWebContents(mWebContents)
+                        .setTextClassifier(textClassifier);
+            }
         }
     }
 
@@ -2421,7 +2428,8 @@ public class AwContents implements SmartClipProvider {
         }
         // for webview, the platform already calculates the scroll (as it is a view) in
         // ViewStructure tree. Do not offset for it in the snapshop x,y position calculations.
-        mContentViewCore.onProvideVirtualStructure(structure, true);
+        WebContentsAccessibility.fromWebContents(mWebContents)
+                .onProvideVirtualStructure(structure, true);
     }
 
     public void onProvideAutoFillVirtualStructure(ViewStructure structure, int flags) {
@@ -2474,7 +2482,8 @@ public class AwContents implements SmartClipProvider {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (isDestroyedOrNoOperation(NO_WARN)) return;
         if (requestCode == PROCESS_TEXT_REQUEST_CODE) {
-            mContentViewCore.onReceivedProcessTextResult(resultCode, data);
+            SelectionPopupController.fromWebContents(mWebContents)
+                    .onReceivedProcessTextResult(resultCode, data);
         } else {
             Log.e(TAG, "Received activity result for an unknown request code %d", requestCode);
         }
@@ -2719,8 +2728,9 @@ public class AwContents implements SmartClipProvider {
     }
 
     public boolean supportsAccessibilityAction(int action) {
-        return isDestroyedOrNoOperation(WARN) ? false
-                : mContentViewCore.supportsAccessibilityAction(action);
+        return isDestroyedOrNoOperation(WARN)
+                ? false
+                : WebContentsAccessibility.fromWebContents(mWebContents).supportsAction(action);
     }
 
     /**
@@ -2820,13 +2830,13 @@ public class AwContents implements SmartClipProvider {
     }
 
     public void setTextClassifier(TextClassifier textClassifier) {
-        assert mContentViewCore != null;
-        mContentViewCore.setTextClassifier(textClassifier);
+        assert mWebContents != null;
+        SelectionPopupController.fromWebContents(mWebContents).setTextClassifier(textClassifier);
     }
 
     public TextClassifier getTextClassifier() {
-        assert mContentViewCore != null;
-        return mContentViewCore.getTextClassifier();
+        assert mWebContents != null;
+        return SelectionPopupController.fromWebContents(mWebContents).getTextClassifier();
     }
 
     //--------------------------------------------------------------------------------------------
@@ -3548,15 +3558,18 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-            return isDestroyedOrNoOperation(WARN) ? null
-                                                  : mContentViewCore.getAccessibilityNodeProvider();
+            return isDestroyedOrNoOperation(WARN)
+                    ? null
+                    : WebContentsAccessibility.fromWebContents(mWebContents)
+                              .getAccessibilityNodeProvider();
         }
 
         @Override
         public boolean performAccessibilityAction(final int action, final Bundle arguments) {
             return isDestroyedOrNoOperation(WARN)
                     ? false
-                    : mContentViewCore.performAccessibilityAction(action, arguments);
+                    : WebContentsAccessibility.fromWebContents(mWebContents)
+                              .performAction(action, arguments);
         }
     }
 
