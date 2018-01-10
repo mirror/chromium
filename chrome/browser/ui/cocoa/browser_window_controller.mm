@@ -252,7 +252,7 @@ bool IsTabDetachingInFullscreenEnabled() {
 
 + (BrowserWindowController*)browserWindowControllerForWindow:(NSWindow*)window {
   while (window) {
-    id controller = [window windowController];
+    id controller = [window browserWindowController];
     if ([controller isKindOfClass:[BrowserWindowController class]])
       return (BrowserWindowController*)controller;
     window = [window parentWindow];
@@ -776,7 +776,7 @@ bool IsTabDetachingInFullscreenEnabled() {
 }
 
 - (void)activate {
-  [BrowserWindowUtils activateWindowForController:self];
+  [BrowserWindowUtils activateWindowForController:[self nsWindowController]];
 }
 
 // Determine whether we should let a window zoom/unzoom to the given |newFrame|.
@@ -2142,3 +2142,12 @@ willAnimateFromState:(BookmarkBar::State)oldState
 }
 
 @end  // @implementation BrowserWindowController(WindowType)
+
+@implementation NSWindow (BrowserWindowController)
+
+- (BrowserWindowController*)browserWindowController {
+  return base::mac::ObjCCastStrict<BrowserWindowController>(
+      [self tabWindowController]);
+}
+
+@end  // @implementation NSWindow (TabWindowController)

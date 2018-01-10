@@ -8,12 +8,12 @@
 
 #include "base/mac/scoped_cftyperef.h"
 #import "base/mac/sdk_forward_declarations.h"
+#import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_controller_target.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_view.h"
-#import "chrome/browser/ui/cocoa/tabs/tab_window_controller.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/gfx/mac/scoped_cocoa_disable_screen_updates.h"
 
@@ -71,7 +71,7 @@ static BOOL PointIsInsideView(NSPoint screenPoint, NSView* view) {
 
   sourceWindowFrame_ = [sourceWindow_ frame];
   sourceTabFrame_ = [[tab view] frame];
-  sourceController_ = [sourceWindow_ windowController];
+  sourceController_ = [sourceWindow_ browserWindowController];
   draggedTab_ = tab;
   tabWasDragged_ = NO;
   tearTime_ = 0.0;
@@ -473,7 +473,7 @@ static BOOL PointIsInsideView(NSPoint screenPoint, NSView* view) {
     // Force redraw to avoid flashes of old content before returning to event
     // loop.
     [[targetController_ window] display];
-    [targetController_ showWindow:nil];
+    [[targetController_ nsWindowController] showWindow:nil];
     [draggedController_ removeOverlay];
   } else {
     // Only move the window around on screen. Make sure it's set back to
@@ -523,12 +523,10 @@ static BOOL PointIsInsideView(NSPoint screenPoint, NSView* view) {
       return NO;
   }
 
-  NSWindowController* controller = [sourceWindow_ windowController];
-  if ([controller isKindOfClass:[TabWindowController class]]) {
-    TabWindowController* realController =
-        static_cast<TabWindowController*>(controller);
+  TabWindowController* controller = [sourceWindow_ tabWindowController];
+  if (controller) {
     for (TabView* tabView in tabs) {
-      if (![realController isTabDraggable:tabView])
+      if (![controller isTabDraggable:tabView])
         return NO;
     }
   }
@@ -559,13 +557,9 @@ static BOOL PointIsInsideView(NSPoint screenPoint, NSView* view) {
     // Skip windows on the wrong space.
     if (![window isOnActiveSpace])
       continue;
-    NSWindowController* controller = [window windowController];
-    if ([controller isKindOfClass:[TabWindowController class]]) {
-      TabWindowController* realController =
-          static_cast<TabWindowController*>(controller);
-      if ([realController canReceiveFrom:dragController])
-        [targets addObject:controller];
-    }
+    TabWindowController* controller = [window tabWindowController];
+    if ([controller canReceiveFrom:dragController])
+      [targets addObject:controller];
   }
   return targets;
 }
