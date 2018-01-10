@@ -180,6 +180,23 @@ content::RenderFrame* ExtensionFrameHelper::GetBackgroundPageFrame(
 }
 
 // static
+v8::Local<v8::Value> ExtensionFrameHelper::GetV8BackgroundPageMainFrame(
+    v8::Isolate* isolate,
+    const std::string& extension_id) {
+  content::RenderFrame* main_frame = GetBackgroundPageFrame(extension_id);
+
+  v8::Local<v8::Value> background_page;
+  blink::WebLocalFrame* web_frame =
+      main_frame ? main_frame->GetWebFrame() : nullptr;
+  if (web_frame && blink::WebFrame::ScriptCanAccess(web_frame))
+    background_page = web_frame->MainWorldScriptContext()->Global();
+  else
+    background_page = v8::Undefined(isolate);
+
+  return background_page;
+}
+
+// static
 bool ExtensionFrameHelper::IsContextForEventPage(const ScriptContext* context) {
   content::RenderFrame* render_frame = context->GetRenderFrame();
   return context->extension() && render_frame &&
