@@ -58,6 +58,11 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
                                           uint32_t subscription_id) override;
   void UnsubscribeDeviceChangeNotifications(MediaDeviceType type,
                                             uint32_t subscription_id) override;
+  void AddMediaDevicesListener(
+      bool subscribe_audio_input,
+      bool subscribe_video_input,
+      bool subscribe_audio_output,
+      blink::mojom::MediaDevicesListenerPtr listener) override;
 
   // MediaDeviceChangeSubscriber implementation.
   void OnDevicesChanged(MediaDeviceType type,
@@ -174,6 +179,8 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
   std::unique_ptr<MediaDevicesPermissionChecker> permission_checker_;
   std::vector<uint32_t> device_change_subscriptions_[NUM_MEDIA_DEVICE_TYPES];
 
+  // TODO(c.padhi): Remove this field once device change migration to blink is
+  // complete, see https://crbug.com/793297.
   // This field can only be accessed on the UI thread.
   blink::mojom::MediaDevicesListenerPtr device_change_listener_;
 
@@ -184,6 +191,8 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
   size_t num_pending_audio_input_parameters_;
   std::vector<blink::mojom::AudioInputDeviceCapabilities>
       current_audio_input_capabilities_;
+
+  std::vector<uint32_t> subscription_ids_;
 
   // Callback used to obtain the current device ID salt and security origin.
   MediaDeviceSaltAndOriginCallback salt_and_origin_callback_;

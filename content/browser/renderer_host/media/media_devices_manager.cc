@@ -87,6 +87,17 @@ struct MediaDevicesManager::EnumerationRequest {
   EnumerationCallback callback;
 };
 
+struct MediaDevicesManager::SubscriptionRequest {
+  SubscriptionRequest(const BoolDeviceTypes& subscribe_types,
+                      blink::mojom::MediaDevicesListenerPtr listener)
+      : subscribe_types(subscribe_types), listener(std::move(listener)) {}
+
+  ~SubscriptionRequest() = default;
+
+  BoolDeviceTypes subscribe_types;
+  blink::mojom::MediaDevicesListenerPtr listener;
+};
+
 // This class helps manage the consistency of cached enumeration results.
 // It uses a sequence number for each invalidation and enumeration.
 // A cache is considered valid if the sequence number for the last enumeration
@@ -206,6 +217,27 @@ void MediaDevicesManager::UnsubscribeDeviceChangeNotifications(
                       device_change_subscribers_[type].end(), subscriber);
   if (it != device_change_subscribers_[type].end())
     device_change_subscribers_[type].erase(it);
+}
+
+uint32_t MediaDevicesManager::SubscribeDeviceChangeNotifications(
+    const BoolDeviceTypes& subscribe_types,
+    blink::mojom::MediaDevicesListenerPtr listener) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  uint32_t subscription_id = ++current_subscription_id_;
+  blink::mojom::MediaDevicesListenerPtr media_devices_listener =
+      std::move(listener);
+  media_devices_listener.set_connection_error_handler(
+      base::BindOnce(&MediaDevicesManager::UnsubscribeDeviceChange,
+                     weak_factory_.GetWeakPtr(), subscription_id));
+  subscriptions_[subscription_id] = std::make_unique<SubscriptionRequest>(
+      subscribe_types, std::move(media_devices_listener));
+
+  return subscription_id;
+}
+
+void MediaDevicesManager::UnsubscribeDeviceChange(uint32_t subscription_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  subscriptions_.erase(subscription_id);
 }
 
 void MediaDevicesManager::SetCachePolicy(MediaDeviceType type,
@@ -502,8 +534,14 @@ void MediaDevicesManager::NotifyDeviceChangeSubscribers(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
 
-  for (auto* subscriber : device_change_subscribers_[type]) {
+  for (auto* subscriber : device_change_subscribers_[type])
     subscriber->OnDevicesChanged(type, snapshot);
+
+  for (auto& subscription : subscriptions_) {
+    if (subscription.second->subscribe_types[type]) {
+      subscription.second->listener->OnDevicesChanged(type, subscription.first,
+                                                      snapshot);
+    }
   }
 }
 

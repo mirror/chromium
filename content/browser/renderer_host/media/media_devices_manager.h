@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/system_monitor/system_monitor.h"
@@ -16,6 +17,7 @@
 #include "content/common/media/media_devices.h"
 #include "media/audio/audio_device_description.h"
 #include "media/capture/video/video_capture_device_descriptor.h"
+#include "third_party/WebKit/public/platform/modules/mediastream/media_devices.mojom.h"
 
 namespace media {
 class AudioSystem;
@@ -92,6 +94,11 @@ class CONTENT_EXPORT MediaDevicesManager
       MediaDeviceType type,
       MediaDeviceChangeSubscriber* subscriber);
 
+  uint32_t SubscribeDeviceChangeNotifications(
+      const BoolDeviceTypes& subscribe_types,
+      blink::mojom::MediaDevicesListenerPtr listener);
+  void UnsubscribeDeviceChange(uint32_t subscription_id);
+
   // Tries to start device monitoring. If successful, enables caching of
   // enumeration results for the device types supported by the monitor.
   void StartMonitoring();
@@ -115,6 +122,7 @@ class CONTENT_EXPORT MediaDevicesManager
  private:
   friend class MediaDevicesManagerTest;
   struct EnumerationRequest;
+  struct SubscriptionRequest;
 
   // The NO_CACHE policy is such that no previous results are used when
   // EnumerateDevices is called. The results of a new or in-progress low-level
@@ -181,6 +189,9 @@ class CONTENT_EXPORT MediaDevicesManager
 
   std::vector<MediaDeviceChangeSubscriber*>
       device_change_subscribers_[NUM_MEDIA_DEVICE_TYPES];
+
+  uint32_t current_subscription_id_ = 0u;
+  base::flat_map<uint32_t, std::unique_ptr<SubscriptionRequest>> subscriptions_;
 
   base::WeakPtrFactory<MediaDevicesManager> weak_factory_;
 
