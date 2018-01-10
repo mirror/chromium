@@ -50,6 +50,40 @@
       "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0fdb07_d8cc8841",
+        "filename": "build/android/gradle/generate_gradle.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-10T21:15:19Z",
+      "side": 1,
+      "message": "I think the thing to do in this case is to just not write a local.properties file. That should let studio use its default location.",
+      "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1548bd09_dea91de9",
+        "filename": "docs/android_test_instructions.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-10T21:15:19Z",
+      "side": 1,
+      "message": "I think it should be lowercase \"x86\"?",
+      "revId": "692e2f9b7ca3526dd08b761320ebeb16303c4670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
