@@ -16,6 +16,29 @@
       "revId": "817f85d1d757f5053ba8eb3c1533140b0d65d08c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9baf5b6c_7203b8f7",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T15:35:01Z",
+      "side": 1,
+      "message": "Do we really want to make process_id and routing_id part of the network service interface, long term?  Seems like it would be better to not add more dependencies on them, and instead add a per-frame side channel, which would avoid the need for this.",
+      "range": {
+        "startLine": 131,
+        "startChar": 24,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "817f85d1d757f5053ba8eb3c1533140b0d65d08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
