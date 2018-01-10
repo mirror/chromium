@@ -11,6 +11,7 @@
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/provider_interface.h"
+#include "chrome/browser/chromeos/smb_client/smb_file_system.h"
 
 class Profile;
 
@@ -25,7 +26,8 @@ using file_system_provider::ProvidedFileSystemInterface;
 
 class SmbProvider : public ProviderInterface {
  public:
-  SmbProvider();
+  explicit SmbProvider(SmbFileSystem::UnmountCallback unmount_callback);
+  ~SmbProvider() override;
   // ProviderInterface overrides.
   std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
       Profile* profile,
@@ -38,6 +40,8 @@ class SmbProvider : public ProviderInterface {
   ProviderId provider_id_;
   Capabilities capabilities_;
   std::string name_;
+
+  SmbFileSystem::UnmountCallback unmount_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(SmbProvider);
 };
