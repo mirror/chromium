@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1287a9b_b27f1dd3",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5544,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-10T16:10:51Z",
+      "side": 1,
+      "message": "I looked through all the calls, and they are all indeed main frame only.",
+      "revId": "b2714ac9f107477f50d47cfb8d707ca4cc2fe595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
