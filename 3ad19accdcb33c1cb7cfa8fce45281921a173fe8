@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42bed532_c979f428",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-10T21:53:33Z",
+      "side": 1,
+      "message": "optional: recommend using enum class",
+      "range": {
+        "startLine": 191,
+        "startChar": 5,
+        "endLine": 191,
+        "endChar": 16
+      },
+      "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92392c47_d63ec711",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-10T21:53:33Z",
+      "side": 1,
+      "message": "optional: recommend using enum class",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 4
+      },
+      "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e99cb5_7082d57a",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2526,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-10T21:53:33Z",
+      "side": 1,
+      "message": "nit: the type of param isn\u0027t clear from the rest of the statement so please use the real type.",
+      "range": {
+        "startLine": 2526,
+        "startChar": 2,
+        "endLine": 2526,
+        "endChar": 6
+      },
+      "revId": "3ad19accdcb33c1cb7cfa8fce45281921a173fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
