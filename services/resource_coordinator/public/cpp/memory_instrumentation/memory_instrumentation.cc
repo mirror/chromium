@@ -46,10 +46,16 @@ MemoryInstrumentation::~MemoryInstrumentation() {
 
 void MemoryInstrumentation::RequestGlobalDump(
     RequestGlobalDumpCallback callback) {
+  RequestGlobalDump(std::vector<std::string>(), callback);
+}
+
+void MemoryInstrumentation::RequestGlobalDump(
+    const std::vector<std::string>& allocator_dump_names,
+    RequestGlobalDumpCallback callback) {
   const auto& coordinator = GetCoordinatorBindingForCurrentThread();
   coordinator->RequestGlobalMemoryDump(MemoryDumpType::SUMMARY_ONLY,
                                        MemoryDumpLevelOfDetail::BACKGROUND,
-                                       callback);
+                                       allocator_dump_names, callback);
 }
 
 void MemoryInstrumentation::RequestGlobalDumpForPid(
