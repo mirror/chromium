@@ -69,6 +69,30 @@
       "revId": "e92e50a40ef485344f0b34089f8e0df76497f0ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6766904_ab21ddbc",
+        "filename": "net/http/http_network_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T21:37:25Z",
+      "side": 1,
+      "message": "Correct.  Sorry, I had assumed it was in http_network_session_unittests (Which apparently doesn\u0027t even exist)",
+      "parentUuid": "34e09b9e_7de20b09",
+      "range": {
+        "startLine": 259,
+        "startChar": 27,
+        "endLine": 259,
+        "endChar": 43
+      },
+      "revId": "e92e50a40ef485344f0b34089f8e0df76497f0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
