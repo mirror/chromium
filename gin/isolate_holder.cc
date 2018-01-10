@@ -57,10 +57,6 @@ IsolateHolder::IsolateHolder(
   params.allow_atomics_wait = atomics_wait_mode == kAllowAtomicsWait;
   params.external_references = g_reference_table;
 
-  V8Initializer::GetV8ContextSnapshotData(&startup_data_);
-  if (startup_data_.data) {
-    params.snapshot_blob = &startup_data_;
-  }
   isolate_ = v8::Isolate::New(params);
 
   SetUp(task_runner);
