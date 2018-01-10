@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe8e2007_829b3938",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/the-stylepropertymap/computed/computed.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-10T05:11:05Z",
+      "side": 1,
+      "message": "Nit: Should this say crbug.com/788904?",
+      "revId": "7f7285a7df59dfc4ab7753641d1f516ea3a913ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
