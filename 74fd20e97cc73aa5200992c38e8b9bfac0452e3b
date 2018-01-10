@@ -183,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "76d20005_3ff918aa",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-10T17:08:17Z",
+      "side": 1,
+      "message": "N/A",
+      "parentUuid": "f86124c5_6298545b",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fd7b3a_ab9d445f",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 19
@@ -197,6 +215,24 @@
       "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9539e7f7_91765f88",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-10T17:08:17Z",
+      "side": 1,
+      "message": "Thanks, the latest patch looks good now.",
+      "parentUuid": "a7fd7b3a_ab9d445f",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -250,6 +286,24 @@
       "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389dd47b_5f07728b",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-10T17:08:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4bd0248_d0bf30bf",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
