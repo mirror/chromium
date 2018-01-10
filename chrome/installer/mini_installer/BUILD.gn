@@ -289,7 +289,7 @@ if (!(is_component_build && is_debug && target_cpu == "x86")) {
     script = "generate_next_version_mini_installer.py"
     testonly = true
     inputs = [
-      "$root_out_dir/alternate_version_generator.exe",
+      "$root_out_dir/alternate_version_generator.exe",  # XXX not always .exe
       "$root_out_dir/mini_installer.exe",
     ]
     outputs = [
@@ -301,7 +301,7 @@ if (!(is_component_build && is_debug && target_cpu == "x86")) {
     ]
     deps = [
       ":mini_installer",
-      "//chrome/installer/test:alternate_version_generator",
+      "//chrome/installer/test:alternate_version_generator",  # XXX on host
     ]
   }
 }
