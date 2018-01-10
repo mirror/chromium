@@ -96,7 +96,7 @@ void RenderWidgetTargeter::FindTargetAndDispatch(
 
   RenderWidgetTargetResult result =
       delegate_->FindTargetSynchronously(root_view, event);
-  if (!result.view)
+  if (!result.view && blink::WebInputEvent::IsMouseEventType(event.GetType()))
     return;
 
   RenderWidgetHostViewBase* target = result.view;
@@ -115,25 +115,50 @@ void RenderWidgetTargeter::QueryClient(
     const ui::LatencyInfo& latency,
     const base::Optional<gfx::PointF>& target_location) {
   DCHECK(!request_in_flight_);
-  DCHECK(blink::WebInputEvent::IsMouseEventType(event.GetType()));
-  auto mouse_event = static_cast<const blink::WebMouseEvent&>(event);
-  if (target_location.has_value()) {
-    mouse_event.SetPositionInWidget(target_location->x(), target_location->y());
-  } else {
-    mouse_event = Convert(root_view, target, mouse_event);
-  }
-  if (mouse_event.GetType() == blink::WebInputEvent::kUndefined)
-    return;
-  request_in_flight_ = true;
   auto* target_client =
       target->GetRenderWidgetHostImpl()->input_target_client();
-  target_client->FrameSinkIdAt(
-      gfx::ToCeiledPoint(mouse_event.PositionInWidget()),
-      base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
-                     weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
-                     target->GetWeakPtr(),
-                     static_cast<const blink::WebMouseEvent&>(event), latency,
-                     target_location));
+  if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+    auto mouse_event = static_cast<const blink::WebMouseEvent&>(event);
+    if (target_location.has_value()) {
+      mouse_event.SetPositionInWidget(target_location->x(),
+                                      target_location->y());
+    } else {
+      mouse_event = Convert(root_view, target, mouse_event);
+    }
+    if (mouse_event.GetType() == blink::WebInputEvent::kUndefined)
+      return;
+    request_in_flight_ = true;
+    target_client->FrameSinkIdAt(
+        gfx::ToCeiledPoint(mouse_event.PositionInWidget()),
+        base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
+                       weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
+                       target->GetWeakPtr(),
+                       static_cast<const blink::WebMouseEvent&>(event), latency,
+                       target_location));
+  } else if (blink::WebInputEvent::IsTouchEventType(event.GetType())) {
+    auto touch_event = static_cast<const blink::WebTouchEvent&>(event);
+    DCHECK(touch_event.GetType() == blink::WebInputEvent::kTouchStart);
+    request_in_flight_ = true;
+    target_client->FrameSinkIdAt(
+        gfx::ToCeiledPoint(touch_event.touches[0].PositionInWidget()),
+        base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
+                       weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
+                       target->GetWeakPtr(),
+                       static_cast<const blink::WebTouchEvent&>(event), latency,
+                       target_location));
+  } else if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    auto gesture_event = static_cast<const blink::WebGestureEvent&>(event);
+    DCHECK(gesture_event.source_device ==
+           blink::WebGestureDevice::kWebGestureDeviceTouchscreen);
+    request_in_flight_ = true;
+    target_client->FrameSinkIdAt(
+        gfx::ToCeiledPoint(gesture_event.PositionInWidget()),
+        base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
+                       weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
+                       target->GetWeakPtr(),
+                       static_cast<const blink::WebMouseEvent&>(event), latency,
+                       target_location));
+  }
 }
 
 void RenderWidgetTargeter::FlushEventQueue() {
@@ -186,22 +211,33 @@ void RenderWidgetTargeter::FoundTarget(
     const base::Optional<gfx::PointF>& target_location) {
   if (!root_view)
     return;
-  if (!blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+  if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+    blink::WebMouseEvent mouse_event =
+        static_cast<const blink::WebMouseEvent&>(event);
+    if (target_location.has_value()) {
+      mouse_event.SetPositionInWidget(target_location->x(),
+                                      target_location->y());
+    } else {
+      mouse_event = Convert(root_view, target, mouse_event);
+    }
+    if (mouse_event.GetType() != blink::WebInputEvent::kUndefined)
+      delegate_->DispatchEventToTarget(root_view, target, mouse_event, latency);
+    FlushEventQueue();
+  } else if (blink::WebInputEvent::IsTouchEventType(event.GetType())) {
+    delegate_->DispatchEventToTarget(
+        root_view, target, static_cast<const blink::WebTouchEvent&>(event),
+        latency);
+    FlushEventQueue();
+  } else if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    delegate_->DispatchEventToTarget(
+        root_view, target, static_cast<const blink::WebGestureEvent&>(event),
+        latency);
+    FlushEventQueue();
+  } else {
     // TODO(crbug.com/796656): Handle other types of events.
     NOTREACHED();
     return;
   }
-
-  blink::WebMouseEvent mouse_event =
-      static_cast<const blink::WebMouseEvent&>(event);
-  if (target_location.has_value()) {
-    mouse_event.SetPositionInWidget(target_location->x(), target_location->y());
-  } else {
-    mouse_event = Convert(root_view, target, mouse_event);
-  }
-  if (mouse_event.GetType() != blink::WebInputEvent::kUndefined)
-    delegate_->DispatchEventToTarget(root_view, target, mouse_event, latency);
-  FlushEventQueue();
 }
 
 }  // namespace content
