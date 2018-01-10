@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5a0dddf_b23f03f7",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-10T18:51:51Z",
+      "side": 1,
+      "message": "The name \"GetOrCreateSyncToken\" doesn\u0027t look right for this implementation.",
+      "revId": "5d989f78b13b7445e8b5c55b0f0dde90f056f602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
