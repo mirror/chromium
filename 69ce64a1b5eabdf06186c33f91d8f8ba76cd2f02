@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1cf38d4b_14a1435c",
+        "filename": "ash/app_list/model/app_list_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 0,
+      "message": "[Folder-Part-Refactor] I\u0027ll work on a new PS trying to get rid of the folder logic in chrome.",
+      "parentUuid": "8dd2ba58_cc572960",
+      "revId": "69ce64a1b5eabdf06186c33f91d8f8ba76cd2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d275b3d_301526af",
         "filename": "ash/app_list/model/app_list_model.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T21:29:38Z",
       "side": 0,
       "message": "ditto",
+      "revId": "69ce64a1b5eabdf06186c33f91d8f8ba76cd2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375857c3_f5c87e82",
+        "filename": "ash/app_list/model/app_list_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 0,
+      "message": "[Folder-Part-Refactor] I\u0027ll work on a new PS trying to get rid of the folder logic in chrome.",
+      "parentUuid": "0d275b3d_301526af",
       "revId": "69ce64a1b5eabdf06186c33f91d8f8ba76cd2f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

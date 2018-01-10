@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5485344e_3bf739b9",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a73718d_8f642ab4",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "974e37d4_2fb2ba8f",
         "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7833f33_4f81d545",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "[Pre-Flight-Plan] Will do after ChromeAppListModelUpdaterDelegate is done.",
+      "parentUuid": "974e37d4_2fb2ba8f",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c1f8163_ab5e65c9",
         "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
         "patchSetId": 2
@@ -47,6 +83,30 @@
       "writtenOn": "2018-01-09T21:29:38Z",
       "side": 1,
       "message": "I wonder whether it makes sense to have a pre-flight CL to replace this with a ChromeAppListModelUpdaterDelegate. ChromeAppListModelUpdater uses this interface to call AppListSyncableService for the add/delete/update.\n\nAlso can we move AppListModel member from AppListSyncableService to AppListModelUpdater (in another pre-flight CL) ?",
+      "range": {
+        "startLine": 213,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 43
+      },
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7157fdf5_fd039468",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "[Pre-Flight-Plan] Sounds reasonable. And AppListModel is already in ChromeAppListModelUpdater.\nMy plan is:\n\nAppListModel\n   |\n   V\n[AppListMetadata over AppListModelDelegate?]\n   |\n   V\nAppListModelUpdater\n   |\n   V\n[ChromeAppListItem over ChromeAppListModelUpdaterDelegate]\n   |\n   V\nAppListSyncableService",
+      "parentUuid": "5c1f8163_ab5e65c9",
       "range": {
         "startLine": 213,
         "startChar": 6,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6e9111f4_e1f86c50",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74b69c5f_5a9a0386",
+      "range": {
+        "startLine": 467,
+        "startChar": 8,
+        "endLine": 468,
+        "endChar": 43
+      },
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b2fec5_053b094d",
         "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
         "patchSetId": 2
@@ -93,6 +177,24 @@
       "writtenOn": "2018-01-09T21:29:38Z",
       "side": 1,
       "message": "Can we pass ChromeAppListItem here and other places? Ideally, AppListSyncableService does not need to know anything from ash.",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc02413_6248b488",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "[Pre-Flight-Plan] I think so. I\u0027ll work on a pre-flight CL to convert metadata to ChromeAppListItem in a ChromeAppListModelUpdaterDelegate.",
+      "parentUuid": "a6b2fec5_053b094d",
       "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "f6ed2af0_985a2d54",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "660e49a3_ce230e08",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 64
+      },
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cefd5ef5_a63eac97",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
         "patchSetId": 2
@@ -136,6 +262,24 @@
       "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cfcaf1_484615f7",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cefd5ef5_a63eac97",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "42ca4aed_e7e64707",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "741d6105_d6063243",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc3b9a1e_78fc248f",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
         "patchSetId": 2
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "14fbf2ee_62736af5",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "|AppListItemList::AddItem| has |EnsureValidItemPosition| which might change the position.\nBut if we can make sure the position is valid, we can get rid of it.",
+      "parentUuid": "bc3b9a1e_78fc248f",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cf618d4_b72ffdd8",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
         "patchSetId": 2
@@ -184,6 +364,24 @@
       "writtenOn": "2018-01-09T21:29:38Z",
       "side": 1,
       "message": "It feels like that we are doing too much work for folder items inside chrome. We probably only need a placeholder ChromeAppListItem to hold id, name and position.",
+      "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58745b8_cde5321c",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-10T19:45:09Z",
+      "side": 1,
+      "message": "[Folder-Part-Refactor] I\u0027ll work on a new PS trying to get rid of the folder logic in chrome.",
+      "parentUuid": "6cf618d4_b72ffdd8",
       "revId": "d84dd67dd0e9f3a8341c569770c5673752559789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
