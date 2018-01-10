@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "b0e502e0_335a3d40",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-10T09:24:25Z",
+      "side": 1,
+      "message": "I guess it is not expected that WTF::IsTraceable returns true for Vector\u003cString\u003e because it is not traceable...\n\nWould it be possible to fix that issue (bonus points if you fix HashTable etc as well)?",
+      "parentUuid": "d16a40cb_c9d52416",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "206aeb07_d372dda3",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
         "patchSetId": 1
@@ -89,6 +107,24 @@
       "side": 1,
       "message": "Wouldn\u0027t that make wtf/ depend on bindings/?",
       "parentUuid": "206aeb07_d372dda3",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f2fcb1_e22dc333",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-10T09:24:25Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. Let\u0027s keep the struct traits in bindings/.",
+      "parentUuid": "bba9abf5_64971b16",
       "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
