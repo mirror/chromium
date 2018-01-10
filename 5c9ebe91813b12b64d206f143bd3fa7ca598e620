@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe00348_ee5515e4",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "Could you wrap file creation in a helper function? To make sure we always use the same flags.",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1236680a_b225a0b0",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "Why FLAG_OPEN_ALWAYS vs FLAG_CREATE_ALWAYS used in the original code?",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35331bc_3cdb29bb",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "It\u0027s EXPECT_TRUE in other places here",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e1540c_bdc4bec4",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "nit: empty line before this one",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1538e993_d58d81b6",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "This comment is confusing, could you fix it?",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b97ac8_aa462f87",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "Could you add the method description?",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd8872b_e83019e7",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "Please add a comment",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f37022_fef0af3f",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "This is CreateFileCallback type",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8c81b8_a50ea144",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "It\u0027s usually called in \"CreateFileOnBackgroundThread\"/\"CreateFileOnFileThread\"style.",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ea5b7e_f01691d7",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "Creating the task runner each time we need it does not look like a good idea. Why?",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fced2139_6595cbbe",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "Should it be SKIP_ON_SHUTDOWN [1]? Why would we want to block shutdown for creating a debug recording file?\n[1] https://cs.chromium.org/chromium/src/base/task_scheduler/post_task.h?type\u003dcs\u0026q\u003dbase::CreateSequencedTaskRunnerWithTraits\u0026sq\u003dpackage:chromium\u0026l\u003d47",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7f6a72_9d37420c",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "To make it safe it should be guaranteed that file creation callback is used only when AudioDebugRecordingHelper is alive.\n(Imagine a situation when helper posts file creation to another thread and receives reply as a week pointer?)\nAudioDebugRecordingManager cannot make assumptions on how AudioDebugRecordingHelper is implemented.\nSo this limitation needs to be documented in AudioDebugRecordingHelper header as a part of its contract.",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c384fc89_222e94c8",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "AudioDebugRecordingHelper::CreateFileCallback",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fc8d2b_31cad2a9",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71bbdd9_1fd3c62f",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T11:22:30Z",
+      "side": 1,
+      "message": "Why is it added here, and not in any other place, and not after Disable()? Is it needed?",
+      "revId": "5c9ebe91813b12b64d206f143bd3fa7ca598e620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
