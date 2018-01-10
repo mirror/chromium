@@ -81,6 +81,30 @@
       "revId": "92c7387a16d96087582a7e9251df6f93eeb6e128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70c74bd_98126060",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-10T20:56:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89a19e41_ff639272",
+      "range": {
+        "startLine": 491,
+        "startChar": 28,
+        "endLine": 491,
+        "endChar": 41
+      },
+      "revId": "92c7387a16d96087582a7e9251df6f93eeb6e128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
