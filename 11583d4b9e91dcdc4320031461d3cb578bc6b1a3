@@ -34,6 +34,24 @@
       "revId": "11583d4b9e91dcdc4320031461d3cb578bc6b1a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59333257_944616ea",
+        "filename": "components/download/internal/in_memory_download.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-10T22:24:43Z",
+      "side": 1,
+      "message": "(un)fortunately all the trybots that run tests (including ones that do so on release builds, which I think is all/most) do turn on dchecks, so you wouldn\u0027t see any problems in tryjobs. I think there are some bots with dchecks disabled on the main waterfall though, but I\u0027m not sure.",
+      "parentUuid": "fa5c8d82_64138eb4",
+      "revId": "11583d4b9e91dcdc4320031461d3cb578bc6b1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
