@@ -120,6 +120,24 @@
       "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4fb99d_b8190b4b",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-10T14:21:50Z",
+      "side": 1,
+      "message": "If something is possible (even if unlikely) a DCHECK isn\u0027t appropriate. It should be handled appropriate, maybe an early return if (IsMinimized())?",
+      "parentUuid": "ff66e329_d14a1886",
+      "revId": "f6c265e8e18c4c5cbdb2e756cbdd48252ea9ca3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
