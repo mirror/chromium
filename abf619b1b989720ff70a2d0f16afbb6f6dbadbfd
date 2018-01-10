@@ -91,6 +91,30 @@
       "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e7c99a_c11e21c3",
+        "filename": "net/socket/client_socket_pool_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T20:04:02Z",
+      "side": 1,
+      "message": "Correct - PAC script could return same host:port with different schemes.\n\nNot familiar with the code, but your description of it sounds like it is wrong.",
+      "parentUuid": "82f5e57e_eefda082",
+      "range": {
+        "startLine": 310,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "abf619b1b989720ff70a2d0f16afbb6f6dbadbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
