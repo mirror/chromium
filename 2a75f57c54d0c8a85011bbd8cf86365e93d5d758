@@ -140,6 +140,23 @@
     },
     {
       "key": {
+        "uuid": "ca6aa37b_20748a9d",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-10T21:21:21Z",
+      "side": 1,
+      "message": "Since we have hide the implementation in the cpp files, we can either use a unified mark() or break down the mark() into two override mark()s like this. Though it does more clearly distinguish the old API and the new one. It makes the new part harder to read. It\u0027s especially true for the forthcoming measure().\n\nwhich API do we prefer?",
+      "revId": "2a75f57c54d0c8a85011bbd8cf86365e93d5d758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c9cedd6_11c56393",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 9
