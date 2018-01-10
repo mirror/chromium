@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b76a219_7d1cb52a",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-10T22:14:01Z",
+      "side": 1,
+      "message": "Add comments explaining what happens here.",
+      "range": {
+        "startLine": 299,
+        "startChar": 9,
+        "endLine": 299,
+        "endChar": 31
+      },
+      "revId": "f55b8ec9a8745aea9b5d7e13a6f51d0cb9c54048",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
