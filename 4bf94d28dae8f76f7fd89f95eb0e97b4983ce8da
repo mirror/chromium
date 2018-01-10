@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a6882a6_5e2cec0b",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T23:19:30Z",
+      "side": 1,
+      "message": "should actualSize and predictedSized be underscorified too?",
+      "revId": "4bf94d28dae8f76f7fd89f95eb0e97b4983ce8da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b7d09e_cbed99b9",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-10T23:19:30Z",
+      "side": 1,
+      "message": "yeah.... the duplication of this code is pretty distasteful. Thanks for taking this!",
+      "revId": "4bf94d28dae8f76f7fd89f95eb0e97b4983ce8da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
