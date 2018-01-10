@@ -48,7 +48,7 @@ TEST(ExceptionProcessorTest, ExceptionBinning) {
 }
 
 TEST(ExceptionProcessorTest, RecordException) {
-  EXPECT_THAT(StatisticsRecorder::GetSnapshot("OSX.NSException"),
+  EXPECT_THAT(WithName(StatisticsRecorder::GetHistograms(), "OSX.NSException"),
               testing::IsEmpty());
 
   // Record some known exceptions.
@@ -71,7 +71,7 @@ TEST(ExceptionProcessorTest, RecordException) {
 
   // We should have exactly the right number of exceptions.
   const StatisticsRecorder::Histograms histograms =
-      StatisticsRecorder::GetSnapshot("OSX.NSException");
+      WithName(StatisticsRecorder::GetHistograms(), "OSX.NSException");
   ASSERT_THAT(histograms, testing::SizeIs(1));
   EXPECT_EQ(HistogramBase::kUmaTargetedHistogramFlag, histograms[0]->flags());
 
