@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a53b0a2_5a611fd3",
+        "filename": "chrome/browser/chrome_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-10T23:52:21Z",
+      "side": 1,
+      "message": "Why are you adding BindRepeating?",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "01328ec1a62c24ac5d33197bbd9437a9fe77ad87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
