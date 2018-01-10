@@ -110,6 +110,8 @@ class CC_DEBUG_EXPORT DebugColors {
   static SkColor GLCompositedTextureQuadBorderColor(int index);
   static int GLCompositedTextureQuadBoderWidth();
 
+  static void TintCompositedContentColorTransformMatrix(float* color_transform);
+
   static SkColor HUDBackgroundColor();
   static SkColor HUDSeparatorLineColor();
   static SkColor HUDIndicatorLineColor();

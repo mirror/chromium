@@ -1432,11 +1432,12 @@ void GLRenderer::ChooseRPDQProgram(DrawRenderPassDrawQuadParams* params,
     sampler_type =
         SamplerTypeFromTextureTarget(params->mask_resource_lock->target());
   }
-  SetUseProgram(ProgramKey::RenderPass(
-                    tex_coord_precision, sampler_type, shader_blend_mode,
-                    params->use_aa ? USE_AA : NO_AA, mask_mode,
-                    mask_for_background, params->use_color_matrix),
-                params->contents_and_bypass_color_space, target_color_space);
+  SetUseProgram(
+      ProgramKey::RenderPass(
+          tex_coord_precision, sampler_type, shader_blend_mode,
+          params->use_aa ? USE_AA : NO_AA, mask_mode, mask_for_background,
+          params->use_color_matrix, tint_gl_composited_content_),
+      params->contents_and_bypass_color_space, target_color_space);
 }
 
 void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
@@ -1507,18 +1508,15 @@ void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
   if (current_program_->edge_location() != -1)
     gl_->Uniform3fv(current_program_->edge_location(), 8, params->edge);
 
-  if (current_program_->color_matrix_location() != -1) {
+  if (current_program_->tint_color_matrix_location() != -1) {
     float matrix[16];
-    for (int i = 0; i < 4; ++i) {
-      for (int j = 0; j < 4; ++j)
-        matrix[i * 4 + j] = SkScalarToFloat(params->color_matrix[j * 5 + i]);
-    }
-    gl_->UniformMatrix4fv(current_program_->color_matrix_location(), 1, false,
-                          matrix);
+    cc::DebugColors::TintCompositedContentColorTransformMatrix(matrix);
+    gl_->UniformMatrix4fv(current_program_->tint_color_matrix_location(), 1,
+                          false, matrix);
   }
   static const float kScale = 1.0f / 255.0f;
   if (current_program_->color_offset_location() != -1) {
-    float offset[4];
+    float offset[4] = {0.0};
     for (int i = 0; i < 4; ++i)
       offset[i] = SkScalarToFloat(params->color_matrix[i * 5 + 4]) * kScale;
 
@@ -1886,10 +1884,17 @@ void GLRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad,
                                       clip_region, &local_quad, edge);
 
   gfx::ColorSpace quad_color_space = gfx::ColorSpace::CreateSRGB();
-  SetUseProgram(ProgramKey::SolidColor(use_aa ? USE_AA : NO_AA),
+  SetUseProgram(ProgramKey::SolidColor(use_aa ? USE_AA : NO_AA,
+                                       tint_gl_composited_content_),
                 quad_color_space,
                 current_frame()->current_render_pass->color_space);
   SetShaderColor(color, opacity);
+  if (current_program_->tint_color_matrix_location() != -1) {
+    float matrix[16];
+    cc::DebugColors::TintCompositedContentColorTransformMatrix(matrix);
+    gl_->UniformMatrix4fv(current_program_->tint_color_matrix_location(), 1,
+                          false, matrix);
+  }
 
   if (use_aa) {
     gl_->Uniform3fv(current_program_->edge_location(), 8, edge);
@@ -2043,9 +2048,17 @@ void GLRenderer::DrawContentQuadAA(const ContentDrawQuadBase* quad,
 
   SetUseProgram(
       ProgramKey::Tile(tex_coord_precision, sampler, USE_AA,
-                       quad->swizzle_contents ? DO_SWIZZLE : NO_SWIZZLE, false),
+                       quad->swizzle_contents ? DO_SWIZZLE : NO_SWIZZLE, false,
+                       tint_gl_composited_content_),
       quad_resource_lock.color_space(),
       current_frame()->current_render_pass->color_space);
+
+  if (current_program_->tint_color_matrix_location() != -1) {
+    float matrix[16];
+    cc::DebugColors::TintCompositedContentColorTransformMatrix(matrix);
+    gl_->UniformMatrix4fv(current_program_->tint_color_matrix_location(), 1,
+                          false, matrix);
+  }
 
   gl_->Uniform3fv(current_program_->edge_location(), 8, edge);
 
@@ -2121,9 +2134,17 @@ void GLRenderer::DrawContentQuadNoAA(const ContentDrawQuadBase* quad,
   SetUseProgram(
       ProgramKey::Tile(tex_coord_precision, sampler, NO_AA,
                        quad->swizzle_contents ? DO_SWIZZLE : NO_SWIZZLE,
-                       !quad->ShouldDrawWithBlending()),
+                       !quad->ShouldDrawWithBlending(),
+                       tint_gl_composited_content_),
       quad_resource_lock.color_space(),
       current_frame()->current_render_pass->color_space);
+
+  if (current_program_->tint_color_matrix_location() != -1) {
+    float matrix[16];
+    cc::DebugColors::TintCompositedContentColorTransformMatrix(matrix);
+    gl_->UniformMatrix4fv(current_program_->tint_color_matrix_location(), 1,
+                          false, matrix);
+  }
 
   gl_->Uniform4f(current_program_->vertex_tex_transform_location(),
                  vertex_tex_translate_x, vertex_tex_translate_y,
@@ -2230,9 +2251,17 @@ void GLRenderer::DrawYUVVideoQuad(const YUVVideoDrawQuad* quad,
   // All planes must have the same sampler type.
   SamplerType sampler = SamplerTypeFromTextureTarget(y_plane_lock.target());
 
-  SetUseProgram(ProgramKey::YUVVideo(tex_coord_precision, sampler,
-                                     alpha_texture_mode, uv_texture_mode),
-                src_color_space, dst_color_space);
+  SetUseProgram(
+      ProgramKey::YUVVideo(tex_coord_precision, sampler, alpha_texture_mode,
+                           uv_texture_mode, tint_gl_composited_content_),
+      src_color_space, dst_color_space);
+
+  if (current_program_->tint_color_matrix_location() != -1) {
+    float matrix[16];
+    cc::DebugColors::TintCompositedContentColorTransformMatrix(matrix);
+    gl_->UniformMatrix4fv(current_program_->tint_color_matrix_location(), 1,
+                          false, matrix);
+  }
 
   gfx::SizeF ya_tex_scale(1.0f, 1.0f);
   gfx::SizeF uv_tex_scale(1.0f, 1.0f);
@@ -2414,6 +2443,13 @@ void GLRenderer::FlushTextureQuadCache(BoundGeometry flush_binding) {
                   static_cast<int>(draw_cache_.uv_xform_data.size()),
                   reinterpret_cast<float*>(&draw_cache_.uv_xform_data.front()));
 
+  if (current_program_->tint_color_matrix_location() != -1) {
+    float matrix[16];
+    cc::DebugColors::TintCompositedContentColorTransformMatrix(matrix);
+    gl_->UniformMatrix4fv(current_program_->tint_color_matrix_location(), 1,
+                          false, matrix);
+  }
+
   if (current_program_->tex_clamp_rect_location() != -1) {
     // Draw batching is not allowed with texture clamping.
     DCHECK_EQ(1u, draw_cache_.matrix_data.size());
@@ -2481,10 +2517,12 @@ void GLRenderer::EnqueueTextureQuad(const TextureDrawQuad* quad,
   bool need_tex_clamp_rect = !quad->resource_size_in_pixels().IsEmpty() &&
                              (quad->uv_top_left != gfx::PointF(0, 0) ||
                               quad->uv_bottom_right != gfx::PointF(1, 1));
+
   ProgramKey program_key = ProgramKey::Texture(
       tex_coord_precision, sampler,
       quad->premultiplied_alpha ? PREMULTIPLIED_ALPHA : NON_PREMULTIPLIED_ALPHA,
-      quad->background_color != SK_ColorTRANSPARENT, need_tex_clamp_rect);
+      quad->background_color != SK_ColorTRANSPARENT, need_tex_clamp_rect,
+      tint_gl_composited_content_);
   int resource_id = quad->resource_id();
 
   size_t max_quads = StaticGeometryBinding::NUM_QUADS;
@@ -2908,7 +2946,7 @@ void GLRenderer::DidReceiveTextureInUseResponses(
 void GLRenderer::BindFramebufferToOutputSurface() {
   current_framebuffer_texture_ = nullptr;
   output_surface_->BindFramebuffer();
-
+  tint_gl_composited_content_ = settings_->tint_gl_composited_content;
   if (overdraw_feedback_) {
     // Output surfaces that require an external stencil test should not allow
     // overdraw feedback by setting |supports_stencil| to false.
@@ -2924,6 +2962,7 @@ void GLRenderer::BindFramebufferToOutputSurface() {
 }
 
 void GLRenderer::BindFramebufferToTexture(const RenderPassId render_pass_id) {
+  tint_gl_composited_content_ = false;
   gl_->BindFramebuffer(GL_FRAMEBUFFER, offscreen_framebuffer_id_);
 
   auto contents_texture_it = render_pass_textures_.find(render_pass_id);
