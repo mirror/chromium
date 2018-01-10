@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d22a4178_64d25d2b",
+        "filename": "chrome/test/data/webui/md_bookmarks/list_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-10T18:58:42Z",
+      "side": 0,
+      "message": "Is this a bad merge? Or just gerrit being weird? Either way, make sure this isn\u0027t deleted in this CL.",
+      "revId": "4ef4cd94e1cd5bf86535c610218f519fedb4452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

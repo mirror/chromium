@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1b8597ba_b95aba64",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-10T18:58:42Z",
+      "side": 1,
+      "message": "Should be fine without one. There\u0027s plenty of other hardcoded help center links around.",
+      "parentUuid": "52a69e9b_32624bb3",
+      "range": {
+        "startLine": 397,
+        "startChar": 10,
+        "endLine": 397,
+        "endChar": 21
+      },
+      "revId": "7289e1c1dacd086b9cb475375c7f34a747d7eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b80a4547_0753391a",
         "filename": "chrome/browser/resources/md_bookmarks/constants.js",
         "patchSetId": 2
