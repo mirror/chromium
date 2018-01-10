@@ -49,6 +49,9 @@ class TestShelfObserver : public mojom::ShelfObserver {
   void OnShelfItemUpdated(const ShelfItem& item) override { last_item_ = item; }
   void OnShelfItemDelegateChanged(const ShelfID&,
                                   mojom::ShelfItemDelegatePtr) override {}
+  void NotificationAdded(const std::string& app_id,
+                         const std::string& notification_id) override {}
+  void NotificationRemoved(const std::string& notification_id) override {}
 
   size_t added_count() const { return added_count_; }
   size_t removed_count() const { return removed_count_; }
@@ -218,6 +221,21 @@ TEST_F(ShelfControllerTest, ShelfItemImageSync) {
   EXPECT_TRUE(item.image.isNull());
   EXPECT_FALSE(controller->model()->items()[index].image.isNull());
 }
+
+/*
+ *
+ * Add tests here for ShelfController.
+ * Review Button flow (activating)
+ * Play with auto reset  bools in ChromeLauncherController.
+ *
+ */
+// Test adding a notification.
+
+// Test double adding a notification.
+
+// Test that removing a notification works.
+
+// Test that removing a notification that doesn't exist works.
 
 class ShelfControllerPrefsTest : public AshTestBase {
  public:
