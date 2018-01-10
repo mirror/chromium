@@ -6,7 +6,6 @@
 
 #include "ash/app_list/model/search/search_model.h"
 #include "ash/app_list/model/search/search_result.h"
-#include "ash/app_list/model/search/search_result_observer.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/path_service.h"
@@ -54,7 +53,6 @@ IN_PROC_BROWSER_TEST_F(AppListControllerBrowserTest, CreateNewWindow) {
 // Browser Test for AppListController that observes search result changes.
 class AppListControllerSearchResultsBrowserTest
     : public ExtensionBrowserTest,
-      public app_list::SearchResultObserver,
       public ui::ListModelObserver {
  public:
   AppListControllerSearchResultsBrowserTest()
@@ -77,10 +75,7 @@ class AppListControllerSearchResultsBrowserTest
 
  protected:
   void AttemptToLocateItem() {
-    if (observed_result_) {
-      observed_result_->RemoveObserver(this);
-      observed_result_ = NULL;
-    }
+    observed_result_ = NULL;
 
     for (size_t i = 0; i < observed_results_list_->item_count(); ++i) {
       if (observed_results_list_->GetItemAt(i)->title() != item_to_observe_)
@@ -90,17 +85,7 @@ class AppListControllerSearchResultsBrowserTest
       EXPECT_FALSE(observed_result_);
       observed_result_ = observed_results_list_->GetItemAt(i);
     }
-
-    if (observed_result_)
-      observed_result_->AddObserver(this);
   }
-
-  // Overridden from SearchResultObserver:
-  void OnIconChanged() override {}
-  void OnActionsChanged() override {}
-  void OnIsInstallingChanged() override {}
-  void OnPercentDownloadedChanged() override {}
-  void OnItemInstalled() override {}
 
   // Overridden from ui::ListModelObserver:
   void ListItemsAdded(size_t start, size_t count) override {
