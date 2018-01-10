@@ -22,6 +22,30 @@
       "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a08a0e5_0077c527",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-10T10:32:40Z",
+      "side": 1,
+      "message": "Yes:\n\nTo run on start you need to post a task to it right after creating it.\n\nTo hook destruction use a MessageLoop::DestructionObserver (I\u0027m not a fan of those but they\u0027re still the best way to achieve that).",
+      "parentUuid": "6bcd7503_844bd3f9",
+      "range": {
+        "startLine": 1144,
+        "startChar": 29,
+        "endLine": 1144,
+        "endChar": 54
+      },
+      "revId": "39fd209c7440d4c31d726b841d05f3b47cc5bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
