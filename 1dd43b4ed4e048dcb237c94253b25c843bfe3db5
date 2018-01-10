@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b53ccdd_a9bf53ab",
+        "filename": "build/fuchsia/layout_test_proxy/layout_test_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-10T22:29:55Z",
+      "side": 1,
+      "message": "layout tests runner starts multiple instances of content_shell in parallel and uses a single http server with a fixed set of port numbers for all of them. Running the proxy in a separate process will ensure that when on content_shell instance crashes others can keep using the proxy. This is different from net_unittests where tests are responsible for starting test_server when they need it.",
+      "parentUuid": "4473182b_75b94715",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 8
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad7af71f_5d1161f3",
         "filename": "net/test/tcp_socket_proxy.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7745e5_59fa1cc8",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-10T22:29:55Z",
+      "side": 1,
+      "message": "Added comments in tcp_socket_proxy.h. Also refactored TcpSocketProxy to handle failed initialization cleanly (previously it would CHECK in Initialize()).",
+      "parentUuid": "ad7af71f_5d1161f3",
+      "range": {
+        "startLine": 204,
+        "startChar": 24,
+        "endLine": 204,
+        "endChar": 30
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ebe8e64f_240fc053",
+        "filename": "net/test/tcp_socket_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-10T22:29:55Z",
+      "side": 1,
+      "message": "We\u0027ll only need to run one proxy. Multiple instances of content_shell will run connecting to the same proxy. Many layout tests expect to be loaded from a specific address (e.g. 127.0.0.1:8000), so we don\u0027t want to allocate port dynamically",
+      "parentUuid": "02e451d8_68bab3ca",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c06cbcc_8605147d",
         "filename": "net/test/tcp_socket_proxy.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "06a16c05_ce31ddb2",
+        "filename": "net/test/tcp_socket_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-10T22:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c06cbcc_8605147d",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0670e879_4d49b0fd",
         "filename": "net/test/tcp_socket_proxy_unittest.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2addc0_bd377f9c",
+        "filename": "net/test/tcp_socket_proxy_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-10T22:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0670e879_4d49b0fd",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "1dd43b4ed4e048dcb237c94253b25c843bfe3db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
