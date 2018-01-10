@@ -364,7 +364,7 @@ TEST_F(TabStatsTrackerTest, TabUsageGetsReported) {
           kValidLongInterval),
       2, 1);
 
-  // Simulate an interaction on the last tab, we should now see 3 tabs being
+  // Simulate an interaction on another tab, we should now see 3 tabs being
   // marked as used.
   content::WebContentsTester::For(web_contentses[2].get())
       ->TestOnUserInteraction(blink::WebInputEvent::kMouseDown);
@@ -402,6 +402,45 @@ TEST_F(TabStatsTrackerTest, TabUsageGetsReported) {
           UmaStatsReportingDelegate::kUsedAndClosedInIntervalHistogramNameBase,
           kValidLongInterval),
       1, 1);
+}
+
+TEST_F(TabStatsTrackerTest, TabVisibleNotInteracted) {
+  constexpr base::TimeDelta kValidLongInterval = base::TimeDelta::FromHours(12);
+  TabStatsDataStore::TabsStateDuringIntervalMap* interval_map =
+      tab_stats_tracker_->data_store()->AddInterval();
+
+  std::unique_ptr<content::WebContents> web_contents(CreateTestWebContents());
+  web_contents->WasHidden();
+  tab_stats_tracker_->OnTabAdded(web_contents.get());
+
+  tab_stats_tracker_->OnInterval(kValidLongInterval, interval_map);
+  histogram_tester_.ExpectUniqueSample(
+      TestUmaStatsReportingDelegate::GetIntervalHistogramName(
+          UmaStatsReportingDelegate::
+              kVisibleNotInteractedInIntervalHistogramNameBase,
+          kValidLongInterval),
+      0, 1);
+
+  // Make the tab visible but not interacted with.
+  web_contents->WasShown();
+  tab_stats_tracker_->OnInterval(kValidLongInterval, interval_map);
+  histogram_tester_.ExpectBucketCount(
+      TestUmaStatsReportingDelegate::GetIntervalHistogramName(
+          UmaStatsReportingDelegate::
+              kVisibleNotInteractedInIntervalHistogramNameBase,
+          kValidLongInterval),
+      1, 1);
+
+  // Interact with the tab.
+  content::WebContentsTester::For(web_contents.get())
+      ->TestOnUserInteraction(blink::WebInputEvent::kMouseDown);
+  tab_stats_tracker_->OnInterval(kValidLongInterval, interval_map);
+  histogram_tester_.ExpectBucketCount(
+      TestUmaStatsReportingDelegate::GetIntervalHistogramName(
+          UmaStatsReportingDelegate::
+              kVisibleNotInteractedInIntervalHistogramNameBase,
+          kValidLongInterval),
+      0, 2);
 }
 
 }  // namespace metrics

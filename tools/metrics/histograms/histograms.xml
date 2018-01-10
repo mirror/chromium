@@ -89884,6 +89884,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="Tabs.VisibleNotInteractedInInterval.Count"
+    units="Tabs">
+  <owner>sebmarchand@chromium.org</owner>
+  <summary>
+    The number of tabs that have been visible or audible but not interacted with
+    during a given interval of time, includes tabs that don't exist at the end
+    of this interval.
+  </summary>
+</histogram>
+
 <histogram name="TabsApi.RequestedWindowState" enum="RequestedWindowState">
   <owner>afakhry@chromium.org</owner>
   <summary>
@@ -110726,6 +110736,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Tabs.UnusedInInterval.Count"/>
   <affected-histogram name="Tabs.UsedAndClosedInInterval.Count"/>
   <affected-histogram name="Tabs.UsedInInterval.Count"/>
+  <affected-histogram name="Tabs.VisibleNotInteractedInInterval.Count"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="TaskSchedulerMayBlock" separator=".">
