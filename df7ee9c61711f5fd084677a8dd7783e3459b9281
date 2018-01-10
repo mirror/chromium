@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c81783a9_da74271e",
+        "filename": "components/webrtc_logging/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-10T22:42:57Z",
+      "side": 1,
+      "message": "I see where you\u0027re coming from, but this component is scoped to WebRTC logging.\n\nSergey, WDYT?",
+      "parentUuid": "ab06f90f_91320c22",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2a351f1_47b51d02",
         "filename": "components/webrtc_logging/OWNERS",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61689618_9002d87b",
+        "filename": "components/webrtc_logging/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-10T22:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2a351f1_47b51d02",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c8005402_c1cfdcde",
+        "filename": "components/webrtc_logging/browser/log_cleanup.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-10T22:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36455fe7_64cc4d55",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b75ee40a_08ca4470",
         "filename": "components/webrtc_logging/browser/log_cleanup.cc",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b0abf2_a4372b4b",
+        "filename": "components/webrtc_logging/browser/log_cleanup.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-10T22:42:57Z",
+      "side": 1,
+      "message": "Yes, this file just copies all the functions from webrtc_log_util.cc except for DeleteOldWebRtcLogFilesForAllProfiles() which remains in the old file.",
+      "parentUuid": "b75ee40a_08ca4470",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "41dda6a6_1c865f06",
+        "filename": "components/webrtc_logging/browser/log_cleanup.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-10T22:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37382bce_b23c690b",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5886db81_5f30f6d2",
         "filename": "components/webrtc_logging/browser/log_cleanup_unittest.cc",
         "patchSetId": 6
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "a839b60f_a0b60ba9",
+        "filename": "components/webrtc_logging/browser/log_cleanup_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-10T22:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5886db81_5f30f6d2",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f75adaca_22a8eaf1",
         "filename": "components/webrtc_logging/browser/log_list.cc",
         "patchSetId": 6
@@ -130,6 +250,24 @@
       "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b16662d_2a711701",
+        "filename": "components/webrtc_logging/browser/log_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-10T22:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f75adaca_22a8eaf1",
+      "revId": "df7ee9c61711f5fd084677a8dd7783e3459b9281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
