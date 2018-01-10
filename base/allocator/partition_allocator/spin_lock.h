@@ -22,7 +22,7 @@ namespace subtle {
 
 class BASE_EXPORT SpinLock {
  public:
-  SpinLock();
+  constexpr SpinLock();
   ~SpinLock();
   using Guard = std::lock_guard<SpinLock>;
 

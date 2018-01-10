@@ -62,7 +62,7 @@
 namespace base {
 namespace subtle {
 
-SpinLock::SpinLock() = default;
+constexpr SpinLock::SpinLock() = default;
 SpinLock::~SpinLock() = default;
 
 void SpinLock::LockSlow() {
