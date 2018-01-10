@@ -190,6 +190,9 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
 
   gpu::gles2::GLES2Interface* ContextGL();
   WebGraphicsContext3DProvider* ContextProvider();
+  base::WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWeakPtr();
+  Client* client() { return client_; }
+  WebGLVersion webgl_version() const { return webgl_version_; }
 
   // cc::TextureLayerClient implementation.
   bool PrepareTransferableResource(viz::TransferableResource* out_resource,
