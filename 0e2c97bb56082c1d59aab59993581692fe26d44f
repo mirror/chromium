@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "47736454_c322e693",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-10T00:22:38Z",
+      "side": 1,
+      "message": "Let\u0027s specifically mention \"enterprise policy\" to distinguish from many other ways this could be enabled, which aren\u0027t affected.  If you pass --site-per-process and --enable-automation, it will still be broken.\n\nLet\u0027s also mention something like:\nThis allows WebDriver to run without out-of-process iframes, which is a temporary workaround until https://crbug.com/746266 is fixed.",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "0e2c97bb56082c1d59aab59993581692fe26d44f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc01a49_05542fbb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-10T00:22:38Z",
+      "side": 1,
+      "message": "Also 746266 and 800112?\n\n(It looks like 800112 has the labels and triage we want for merging this.  Maybe 793513 should be marked a dupe of it, and 746266 could be used for the longer term fix?)",
+      "revId": "0e2c97bb56082c1d59aab59993581692fe26d44f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8f98532_f21e0491",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 2
@@ -13,6 +53,24 @@
       "writtenOn": "2018-01-09T19:37:37Z",
       "side": 1,
       "message": "Do we also want to apply a similar check when using the IsolateOrigins enterprise policy?",
+      "revId": "0e2c97bb56082c1d59aab59993581692fe26d44f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce347217_86dd33de",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-10T00:22:38Z",
+      "side": 1,
+      "message": "\u003e Do we also want to apply a similar check when using the IsolateOrigins enterprise policy?\n\nYes.",
+      "parentUuid": "e8f98532_f21e0491",
       "revId": "0e2c97bb56082c1d59aab59993581692fe26d44f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
