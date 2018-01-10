@@ -99,6 +99,219 @@ size_t DisplayItemList::BytesUsed() const {
   return sizeof(*this) + paint_op_buffer_.bytes_used();
 }
 
+void DisplayItemList::PrintDisplayList() const {
+  for (auto* op : PaintOpBuffer::Iterator(&paint_op_buffer_)) {
+    PaintOpType type = op->GetType();
+    switch (type) {
+      case PaintOpType::DrawRect: {
+        SkRect rect = static_cast<DrawRectOp*>(op)->rect;
+        PaintFlags flag = static_cast<DrawRectOp*>(op)->flags;
+        break;
+      }
+      default:
+        break;
+    }
+  }
+}
+
+void DisplayItemList::Append(const DisplayItemList& other) {
+  for (auto* op : PaintOpBuffer::Iterator(&(other.GetPaintOpBuffer()))) {
+    PaintOpType type = op->GetType();
+    StartPaint();
+    switch (type) {
+      case PaintOpType::Annotate:
+        paint_op_buffer_.push<AnnotateOp>(*(static_cast<AnnotateOp*>(op)));
+        break;
+      case PaintOpType::ClipPath:
+        paint_op_buffer_.push<ClipPathOp>(*(static_cast<ClipPathOp*>(op)));
+        break;
+      case PaintOpType::ClipRect:
+        paint_op_buffer_.push<ClipRectOp>(*(static_cast<ClipRectOp*>(op)));
+        break;
+      case PaintOpType::ClipRRect:
+        paint_op_buffer_.push<ClipRRectOp>(*(static_cast<ClipRRectOp*>(op)));
+        break;
+      case PaintOpType::Concat:
+        paint_op_buffer_.push<ConcatOp>(*(static_cast<ConcatOp*>(op)));
+        break;
+      case PaintOpType::DrawColor:
+        paint_op_buffer_.push<DrawColorOp>(*(static_cast<DrawColorOp*>(op)));
+        break;
+      case PaintOpType::DrawDRRect:
+        paint_op_buffer_.push<DrawDRRectOp>(*(static_cast<DrawDRRectOp*>(op)));
+        break;
+      case PaintOpType::DrawImage:
+        paint_op_buffer_.push<DrawImageOp>(*(static_cast<DrawImageOp*>(op)));
+        break;
+      case PaintOpType::DrawImageRect:
+        paint_op_buffer_.push<DrawImageRectOp>(
+            *(static_cast<DrawImageRectOp*>(op)));
+        break;
+      case PaintOpType::DrawIRect:
+        paint_op_buffer_.push<DrawIRectOp>(*(static_cast<DrawIRectOp*>(op)));
+        break;
+      case PaintOpType::DrawLine:
+        paint_op_buffer_.push<DrawLineOp>(*(static_cast<DrawLineOp*>(op)));
+        break;
+      case PaintOpType::DrawOval:
+        paint_op_buffer_.push<DrawOvalOp>(*(static_cast<DrawOvalOp*>(op)));
+        break;
+      case PaintOpType::DrawPath:
+        paint_op_buffer_.push<DrawPathOp>(*(static_cast<DrawPathOp*>(op)));
+        break;
+      case PaintOpType::DrawRecord:
+        for (auto* record_op : PaintOpBuffer::Iterator(
+                 static_cast<DrawRecordOp*>(op)->record.get())) {
+          PaintOpType record_type = record_op->GetType();
+          switch (record_type) {
+            case PaintOpType::Annotate:
+              paint_op_buffer_.push<AnnotateOp>(
+                  *(static_cast<AnnotateOp*>(op)));
+              break;
+            case PaintOpType::ClipPath:
+              paint_op_buffer_.push<ClipPathOp>(
+                  *(static_cast<ClipPathOp*>(op)));
+              break;
+            case PaintOpType::ClipRect:
+              paint_op_buffer_.push<ClipRectOp>(
+                  *(static_cast<ClipRectOp*>(op)));
+              break;
+            case PaintOpType::ClipRRect:
+              paint_op_buffer_.push<ClipRRectOp>(
+                  *(static_cast<ClipRRectOp*>(op)));
+              break;
+            case PaintOpType::Concat:
+              paint_op_buffer_.push<ConcatOp>(*(static_cast<ConcatOp*>(op)));
+              break;
+            case PaintOpType::DrawColor:
+              paint_op_buffer_.push<DrawColorOp>(
+                  *(static_cast<DrawColorOp*>(op)));
+              break;
+            case PaintOpType::DrawDRRect:
+              paint_op_buffer_.push<DrawDRRectOp>(
+                  *(static_cast<DrawDRRectOp*>(op)));
+              break;
+            case PaintOpType::DrawImage:
+              paint_op_buffer_.push<DrawImageOp>(
+                  *(static_cast<DrawImageOp*>(op)));
+              break;
+            case PaintOpType::DrawImageRect:
+              paint_op_buffer_.push<DrawImageRectOp>(
+                  *(static_cast<DrawImageRectOp*>(op)));
+              break;
+            case PaintOpType::DrawIRect:
+              paint_op_buffer_.push<DrawIRectOp>(
+                  *(static_cast<DrawIRectOp*>(op)));
+              break;
+            case PaintOpType::DrawLine:
+              paint_op_buffer_.push<DrawLineOp>(
+                  *(static_cast<DrawLineOp*>(op)));
+              break;
+            case PaintOpType::DrawOval:
+              paint_op_buffer_.push<DrawOvalOp>(
+                  *(static_cast<DrawOvalOp*>(op)));
+              break;
+            case PaintOpType::DrawPath:
+              paint_op_buffer_.push<DrawPathOp>(
+                  *(static_cast<DrawPathOp*>(op)));
+              break;
+            case PaintOpType::DrawRecord:
+              paint_op_buffer_.push<DrawRecordOp>(
+                  *(static_cast<DrawRecordOp*>(op)));
+              break;
+            case PaintOpType::DrawRect: {
+              SkRect rect = static_cast<DrawRectOp*>(op)->rect;
+              break;
+            }
+            case PaintOpType::DrawRRect:
+              paint_op_buffer_.push<DrawRRectOp>(
+                  *(static_cast<DrawRRectOp*>(op)));
+              break;
+            case PaintOpType::DrawTextBlob:
+              paint_op_buffer_.push<DrawTextBlobOp>(
+                  *(static_cast<DrawTextBlobOp*>(op)));
+              break;
+            case PaintOpType::Noop:
+              paint_op_buffer_.push<NoopOp>(*(static_cast<NoopOp*>(op)));
+              break;
+            case PaintOpType::Restore:
+              paint_op_buffer_.push<RestoreOp>(*(static_cast<RestoreOp*>(op)));
+              break;
+            case PaintOpType::Rotate:
+              paint_op_buffer_.push<RotateOp>(*(static_cast<RotateOp*>(op)));
+              break;
+            case PaintOpType::Save:
+              paint_op_buffer_.push<SaveOp>(*(static_cast<SaveOp*>(op)));
+              break;
+            case PaintOpType::SaveLayer:
+              paint_op_buffer_.push<SaveLayerOp>(
+                  *(static_cast<SaveLayerOp*>(op)));
+              break;
+            case PaintOpType::SaveLayerAlpha:
+              paint_op_buffer_.push<SaveLayerAlphaOp>(
+                  *(static_cast<SaveLayerAlphaOp*>(op)));
+              break;
+            case PaintOpType::Scale:
+              paint_op_buffer_.push<ScaleOp>(*(static_cast<ScaleOp*>(op)));
+              break;
+            case PaintOpType::SetMatrix:
+              paint_op_buffer_.push<SetMatrixOp>(
+                  *(static_cast<SetMatrixOp*>(op)));
+              break;
+            case PaintOpType::Translate:
+              paint_op_buffer_.push<TranslateOp>(
+                  *(static_cast<TranslateOp*>(op)));
+              break;
+            default:
+              break;
+          }
+        }
+        break;
+      case PaintOpType::DrawRect:
+        paint_op_buffer_.push<DrawRectOp>(*(static_cast<DrawRectOp*>(op)));
+        break;
+      case PaintOpType::DrawRRect:
+        paint_op_buffer_.push<DrawRRectOp>(*(static_cast<DrawRRectOp*>(op)));
+        break;
+      case PaintOpType::DrawTextBlob:
+        paint_op_buffer_.push<DrawTextBlobOp>(
+            *(static_cast<DrawTextBlobOp*>(op)));
+        break;
+      case PaintOpType::Noop:
+        paint_op_buffer_.push<NoopOp>(*(static_cast<NoopOp*>(op)));
+        break;
+      case PaintOpType::Restore:
+        paint_op_buffer_.push<RestoreOp>(*(static_cast<RestoreOp*>(op)));
+        break;
+      case PaintOpType::Rotate:
+        paint_op_buffer_.push<RotateOp>(*(static_cast<RotateOp*>(op)));
+        break;
+      case PaintOpType::Save:
+        paint_op_buffer_.push<SaveOp>(*(static_cast<SaveOp*>(op)));
+        break;
+      case PaintOpType::SaveLayer:
+        paint_op_buffer_.push<SaveLayerOp>(*(static_cast<SaveLayerOp*>(op)));
+        break;
+      case PaintOpType::SaveLayerAlpha:
+        paint_op_buffer_.push<SaveLayerAlphaOp>(
+            *(static_cast<SaveLayerAlphaOp*>(op)));
+        break;
+      case PaintOpType::Scale:
+        paint_op_buffer_.push<ScaleOp>(*(static_cast<ScaleOp*>(op)));
+        break;
+      case PaintOpType::SetMatrix:
+        paint_op_buffer_.push<SetMatrixOp>(*(static_cast<SetMatrixOp*>(op)));
+        break;
+      case PaintOpType::Translate:
+        paint_op_buffer_.push<TranslateOp>(*(static_cast<TranslateOp*>(op)));
+        break;
+      default:
+        break;
+    }
+    in_painting_ = false;
+  }
+}
+
 void DisplayItemList::EmitTraceSnapshot() const {
   bool include_items;
   TRACE_EVENT_CATEGORY_GROUP_ENABLED(

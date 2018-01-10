@@ -360,6 +360,9 @@ static void ComputeInitialRenderSurfaceList(
   // surface's accumulated content rect.
   for (LayerImpl* layer : *layer_tree_impl) {
     DCHECK(layer);
+    if (layer->GetHasSquashedAway())
+      continue;
+
     layer->EnsureValidPropertyTreeIndices();
 
     layer->set_contributes_to_drawn_render_surface(false);
@@ -456,6 +459,8 @@ static void ComputeListOfNonEmptySurfaces(
   }
   if (removed_surface) {
     for (LayerImpl* layer : *layer_tree_impl) {
+      if (layer->GetHasSquashedAway())
+        continue;
       if (layer->contributes_to_drawn_render_surface()) {
         RenderSurfaceImpl* render_target = layer->render_target();
         if (!render_target->is_render_surface_list_member()) {

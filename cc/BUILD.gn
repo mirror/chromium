@@ -111,6 +111,8 @@ cc_component("cc") {
     "layers/solid_color_scrollbar_layer.h",
     "layers/solid_color_scrollbar_layer_impl.cc",
     "layers/solid_color_scrollbar_layer_impl.h",
+    "layers/squashing_recording_source.cc",
+    "layers/squashing_recording_source.h",
     "layers/surface_layer.cc",
     "layers/surface_layer.h",
     "layers/surface_layer_impl.cc",

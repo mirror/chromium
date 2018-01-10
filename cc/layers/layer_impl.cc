@@ -380,6 +380,13 @@ void LayerImpl::SetIsResizedByBrowserControls(bool resized) {
   is_resized_by_browser_controls_ = resized;
 }
 
+void LayerImpl::SetHasSquashedAway(bool has_squashed_away) {
+  if (has_squashed_away_ == has_squashed_away)
+    return;
+  has_squashed_away_ = has_squashed_away;
+  SetNeedsPushProperties();
+}
+
 std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue);
   result->SetInteger("LayerId", id());

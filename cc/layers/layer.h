@@ -102,6 +102,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
   void SetSubtreeHasCopyRequest(bool subtree_has_copy_request);
   bool SubtreeHasCopyRequest() const;
+  virtual bool IsPictureLayer();
+  virtual bool GetHasSquashedAway();
 
   void TakeCopyRequests(
       std::vector<std::unique_ptr<viz::CopyOutputRequest>>* requests);
