@@ -80,7 +80,7 @@ Screencast.InputModel = class extends SDK.SDKModel {
       x: x,
       y: y,
       modifiers: this._modifiersForEvent(event),
-      timestamp: event.timeStamp / 1000,
+      timestamp: (event.timeStamp + performance.timeOrigin) / 1000,
       button: buttons[event.which],
       clickCount: 0
     };

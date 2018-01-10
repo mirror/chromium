@@ -410,7 +410,10 @@ class WebInputEvent {
   void SetModifiers(int modifiers_param) { modifiers_ = modifiers_param; }
 
   double TimeStampSeconds() const { return time_stamp_seconds_; }
-  void SetTimeStampSeconds(double seconds) { time_stamp_seconds_ = seconds; }
+  void SetTimeStampSeconds(double seconds) {
+    DCHECK_GE(seconds, 0);
+    time_stamp_seconds_ = seconds;
+  }
 
   unsigned size() const { return size_; }
 
