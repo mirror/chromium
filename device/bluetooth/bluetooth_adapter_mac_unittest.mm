@@ -147,6 +147,18 @@ TEST_F(BluetoothAdapterMacTest, Poll) {
   EXPECT_TRUE(ui_task_runner_->HasPendingTask());
 }
 
+TEST_F(BluetoothAdapterMacTest, IsPowered_On) {
+  if (!SetMockCentralManager(CBCentralManagerStatePoweredOn))
+    return;
+  EXPECT_TRUE(adapter_->IsPowered());
+}
+
+TEST_F(BluetoothAdapterMacTest, IsPowered_Off) {
+  if (!SetMockCentralManager(CBCentralManagerStatePoweredOff))
+    return;
+  EXPECT_FALSE(adapter_->IsPowered());
+}
+
 TEST_F(BluetoothAdapterMacTest, AddDiscoverySessionWithLowEnergyFilter) {
   if (!SetMockCentralManager(CBCentralManagerStatePoweredOn))
     return;

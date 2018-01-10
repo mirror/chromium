@@ -31,6 +31,11 @@
 #include "device/bluetooth/bluetooth_low_energy_central_manager_delegate.h"
 #include "device/bluetooth/bluetooth_socket_mac.h"
 
+// Undocumented IOBluetooth preference API:
+extern "C" {
+void IOBluetoothPreferenceSetControllerPowerState(int state);
+};
+
 namespace {
 
 // The frequency with which to poll the adapter for updates.
@@ -186,7 +191,13 @@ bool BluetoothAdapterMac::IsPowered() const {
 void BluetoothAdapterMac::SetPowered(bool powered,
                                      const base::Closure& callback,
                                      const ErrorCallback& error_callback) {
-  NOTIMPLEMENTED();
+  if (powered == IsPowered()) {
+    callback.Run();
+    return;
+  }
+
+  IOBluetoothPreferenceSetControllerPowerState(powered);
+  pending_powered_callbacks_.emplace(powered, callback, error_callback);
 }
 
 // TODO(krstnmnlsn): If this information is retrievable form IOBluetooth we
@@ -451,6 +462,23 @@ void BluetoothAdapterMac::PollAdapter() {
     address = BluetoothDevice::CanonicalizeAddress(
         base::SysNSStringToUTF8([controller addressAsString]));
     classic_powered = ([controller powerState] == kBluetoothHCIPowerStateON);
+
+    // Empty the pending powered queue. Running the callbacks could destroy
+    // |this|, so we need to take extra care.
+    auto weak_ptr = weak_ptr_factory_.GetWeakPtr();
+    while (weak_ptr && !pending_powered_callbacks_.empty()) {
+      SetPoweredResult front = std::move(pending_powered_callbacks_.front());
+      pending_powered_callbacks_->pop();
+
+      if (front.expected == classic_powered) {
+        front.callback.Run();
+      } else {
+        front.error_callback.Run();
+      }
+    }
+
+    if (!weak_ptr)
+      return;
 
     if (address != address_)
       should_update_name_ = true;

@@ -9,9 +9,11 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/containers/hash_tables.h"
+#include "base/containers/queue.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -131,6 +133,12 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
       device::BluetoothDevice::PairingDelegate* pairing_delegate) override;
 
  private:
+  struct SetPoweredResult {
+    bool expected;
+    base::Closure callback;
+    ErrorCallback error_callback;
+  };
+
   // Resets |low_energy_central_manager_| to |central_manager| and sets
   // |low_energy_central_manager_delegate_| as the manager's delegate. Should
   // be called only when |IsLowEnergyAvailable()|.
@@ -206,6 +214,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   std::string address_;
   bool classic_powered_;
   int num_discovery_sessions_;
+
+  base::queue<SetPoweredResult> pending_powered_callbacks_;
 
   // Cached name. Updated in GetName if should_update_name_ is true.
   //
