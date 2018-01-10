@@ -17,6 +17,9 @@ struct StructTraits<content::mojom::URLLoaderFactoryBundleDataView,
   static content::mojom::URLLoaderFactoryPtr default_factory(
       content::URLLoaderFactoryBundle& bundle);
 
+  static bool is_reconnectable_network_service_factory(
+      content::URLLoaderFactoryBundle& bundle);
+
   static std::map<std::string, content::mojom::URLLoaderFactoryPtr> factories(
       content::URLLoaderFactoryBundle& bundle);
 

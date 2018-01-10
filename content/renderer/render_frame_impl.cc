@@ -76,6 +76,7 @@
 #include "content/public/common/page_state.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/service_manager_connection.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "content/public/common/url_utils.h"
@@ -752,6 +753,15 @@ void RecordSuffixedRendererMemoryMetrics(
   RecordSuffixedMemoryMBHistogram(
       "Memory.Experimental.Renderer.TotalAllocatedPerRenderView", suffix,
       memory_metrics.total_allocated_per_render_view_mb);
+}
+
+void NetworkServiceFactoryGetter(mojom::URLLoaderFactoryRequest request) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
+    return;
+  RenderThreadImpl::current()
+      ->blink_platform_impl()
+      ->GetConnector()
+      ->BindInterface(mojom::kBrowserServiceName, std::move(request));
 }
 
 }  // namespace
@@ -3153,8 +3163,11 @@ void RenderFrameImpl::CommitNavigation(
          !base::FeatureList::IsEnabled(features::kNetworkService) ||
          subresource_loader_factories.has_value());
 
-  if (subresource_loader_factories)
+  if (subresource_loader_factories) {
     subresource_loader_factories_ = std::move(subresource_loader_factories);
+    subresource_loader_factories_->SetNetworkServiceFactoryGetter(
+        base::BindRepeating(&NetworkServiceFactoryGetter));
+  }
 
   // If the Network Service is enabled, by this point the frame should always
   // have subresource loader factories, even if they're from a previous (but
@@ -3317,8 +3330,11 @@ void RenderFrameImpl::CommitFailedNavigation(
   GetContentClient()->SetActiveURL(
       common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
 
-  if (subresource_loader_factories)
+  if (subresource_loader_factories) {
     subresource_loader_factories_ = std::move(subresource_loader_factories);
+    subresource_loader_factories_->SetNetworkServiceFactoryGetter(
+        base::BindRepeating(&NetworkServiceFactoryGetter));
+  }
 
   // If this frame is navigating cross-process, it may naively assume that this
   // is the first navigation in the frame, but this may not actually be the
@@ -6542,7 +6558,9 @@ void RenderFrameImpl::SetCustomURLLoaderFactory(
     // When the network service is enabled, all subresource loads go through
     // a factory from |subresource_loader_factories|. In this case we simply
     // replace the existing default factory within the bundle.
-    GetSubresourceLoaderFactories().SetDefaultFactory(std::move(factory));
+    GetSubresourceLoaderFactories().SetDefaultFactory(
+        std::move(factory),
+        false /* is_reconnectable_network_service_factory */);
   } else {
     custom_url_loader_factory_ = std::move(factory);
   }
@@ -7070,6 +7088,10 @@ RenderFrameImpl::GetDefaultURLLoaderFactoryGetter() {
                                      ->CreateDefaultURLLoaderFactoryGetter();
   }
   return url_loader_factory_getter_.get();
+}
+
+void RenderFrameImpl::FlushNetworkInterfaceForTesting() {
+  GetSubresourceLoaderFactories().FlushNetworkInterfaceForTesting();
 }
 
 void RenderFrameImpl::SetAccessibilityModeForTest(ui::AXMode new_mode) {

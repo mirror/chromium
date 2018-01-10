@@ -862,6 +862,10 @@ class CONTENT_EXPORT RenderFrameImpl
   // TODO(kinuko) We can remove this when network service is the only path.
   ChildURLLoaderFactoryGetter* GetDefaultURLLoaderFactoryGetter();
 
+  // Call |FlushForTesting()| on Network Service related interfaces. For test
+  // use only.
+  void FlushNetworkInterfaceForTesting();
+
  protected:
   explicit RenderFrameImpl(CreateParams params);
 

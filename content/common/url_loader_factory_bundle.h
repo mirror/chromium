@@ -31,10 +31,12 @@ struct CONTENT_EXPORT URLLoaderFactoryBundleInfo {
   URLLoaderFactoryBundleInfo(URLLoaderFactoryBundleInfo&&);
   URLLoaderFactoryBundleInfo(
       mojom::URLLoaderFactoryPtrInfo default_factory_info,
+      bool is_reconnectable_network_service_factory,
       std::map<std::string, mojom::URLLoaderFactoryPtrInfo> factories_info);
   ~URLLoaderFactoryBundleInfo();
 
   mojom::URLLoaderFactoryPtrInfo default_factory_info;
+  bool is_reconnectable_network_service_factory;
   std::map<std::string, mojom::URLLoaderFactoryPtrInfo> factories_info;
 };
 
@@ -50,8 +52,17 @@ class CONTENT_EXPORT URLLoaderFactoryBundle {
   URLLoaderFactoryBundle& operator=(URLLoaderFactoryBundle&&);
 
   // Sets the default factory to use when no registered factories match a given
-  // |url|.
-  void SetDefaultFactory(mojom::URLLoaderFactoryPtr factory);
+  // |url|. Set |is_reconnectable_network_service_factory| to true if the
+  // default factory is Network Service-backed and can be re-created on
+  // connection error.
+  void SetDefaultFactory(mojom::URLLoaderFactoryPtr factory,
+                         bool is_reconnectable_network_service_factory);
+
+  // Provides the getter to re-create |default_factory_| on connection error.
+  // Will only be used when |is_reconnectable_network_service_factory_| is true.
+  using NetworkServiceFactoryGetter =
+      base::RepeatingCallback<void(mojom::URLLoaderFactoryRequest)>;
+  void SetNetworkServiceFactoryGetter(NetworkServiceFactoryGetter);
 
   // Registers a new factory to handle requests matching scheme |scheme|.
   void RegisterFactory(const base::StringPiece& scheme,
@@ -72,11 +83,24 @@ class CONTENT_EXPORT URLLoaderFactoryBundle {
   // original (this) bundle.
   URLLoaderFactoryBundle Clone();
 
+  // Call |FlushForTesting()| on Network Service related interfaces. For test
+  // use only.
+  void FlushNetworkInterfaceForTesting();
+
  private:
   friend struct mojo::StructTraits<mojom::URLLoaderFactoryBundleDataView,
                                    URLLoaderFactoryBundle>;
 
   mojom::URLLoaderFactoryPtr default_factory_;
+
+  // True if |default_factory_| is a Network Service-backed factory and can be
+  // re-created on connection error.
+  bool is_reconnectable_network_service_factory_;
+
+  // Used to re-create Network Service-backed |default_factory_| on connection
+  // error. The getter won't be passed across mojo.
+  NetworkServiceFactoryGetter network_service_factory_getter_;
+
   std::map<std::string, mojom::URLLoaderFactoryPtr> factories_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderFactoryBundle);
