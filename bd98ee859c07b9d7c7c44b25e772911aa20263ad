@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12545d1a_f984aea7",
+        "filename": "components/viz/common/gpu/raster_context_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-10T21:33:43Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not the biggest fan of this change (and related ContextProviderCommandBuffer), it makes it easier to introduce races, because now one can take a ScopedRasterContextLock on arbitrary CP\u0027s that haven\u0027t been set up with the lock, and assume that it does lock (when it silently doesn\u0027t). I\u0027d prefer moving the decision to take or not a lock to the caller class which knows about threading constraints.\n\nI can remove the change here and make it so the caller acquires the lock only if the context supports locking, but the ContextProviderCommandBuffer change was necessary to know whether the lock needs to be acquired. There is no API on ContextProvider to know that. The GPUImageDecodeCache assumes that the context it is used with supports locking, but for the main thread context that is not the case, the cache must always be called from the same thread. So it needs some API to know whether locking is supported. Is returning a null lock not explicit enough?\n\nAlso, ScopedRasterContextLock is also managing busy notifications to CacheController. Would it be better to move that to a different object? Since I assume that should be done in either case?\n\n\u003e \n\u003e Also we should make it consistent between the different ContextProvider implementations (e.g. InProcessContextProvider, TestContextProvider etc.) and the different interfaces/locks (e.g. ScopedContextLock)",
+      "parentUuid": "112cb702_85ebb352",
+      "revId": "bd98ee859c07b9d7c7c44b25e772911aa20263ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8e73fb0_179e4d69",
         "filename": "content/renderer/renderer_blink_platform_impl.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b3a22e96_805b97c3",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-10T21:33:43Z",
+      "side": 1,
+      "message": "Removed. Only the canvas context should need this.",
+      "parentUuid": "c8e73fb0_179e4d69",
+      "revId": "bd98ee859c07b9d7c7c44b25e772911aa20263ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c211b208_b067c227",
         "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "bd98ee859c07b9d7c7c44b25e772911aa20263ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aac5089_8a5287de",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-10T21:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c211b208_b067c227",
+      "revId": "bd98ee859c07b9d7c7c44b25e772911aa20263ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
