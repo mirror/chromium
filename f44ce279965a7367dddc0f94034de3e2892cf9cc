@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2343ea00_a8092801",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-10T12:01:28Z",
+      "side": 1,
+      "message": "I\u0027m slightly hesitant about adding a test-only task runner accessible from non-test code -- it feels like a recipy for some testing code getting used in the production version.\n\nIn this particular case we have a comment [1] calling for a refactor of this SendFakeDeviceEventDataForTesting, so I believe that we should find a workaround for this particular case instead of introducing a widely available TestTaskRunner.\n\n[1] https://cs.chromium.org/chromium/src/content/renderer/renderer_blink_platform_impl.cc?type\u003dcs\u0026q\u003dSendFakeDeviceEventDataForTesting+package:%5Echromium$\u0026l\u003d1315",
+      "range": {
+        "startLine": 1353,
+        "startChar": 23,
+        "endLine": 1353,
+        "endChar": 37
+      },
+      "revId": "f44ce279965a7367dddc0f94034de3e2892cf9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
