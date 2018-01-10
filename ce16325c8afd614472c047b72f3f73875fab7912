@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "037dd67f_cfc8dcfb",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-10T16:53:25Z",
+      "side": 1,
+      "message": "I\u0027m less worried about how long it takes to execute vs how many CPU cycles it takes. Because of the threading of this, I\u0027m not sure if there is a great way to measure how expensive this is in those terms. If anyone wants UMA of timeticks::now - timeticks::now at the start, I\u0027m happy to add it, but I doubt I would personally look at it.",
+      "parentUuid": "dce97904_929d9cd7",
+      "range": {
+        "startLine": 488,
+        "startChar": 40,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "ce16325c8afd614472c047b72f3f73875fab7912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee87f532_03571810",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 3
