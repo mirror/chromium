@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6efb15d_5f45b7b2",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2920,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "This needs to be in //chrome/test/BUILD.gn, we don\u0027t want to ship this in production builds.",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173e9313_d33b0a13",
+        "filename": "chrome/browser/notifications/mock_itoastnotification.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "Could we end up doing a double delete / UaF if ComPtr\u003c\u003e decides to delete the mock notification because Release() returns no-more-references?",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4445f1c_e211a6d3",
+        "filename": "chrome/browser/notifications/mock_itoastnotification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "micro nit:\n\n// ABI::Windows::UI::Notifications::IToastNotification implementation:",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1e9e28_dadb988c",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "Hmm. I was hoping that we\u0027d be able to just call the API method for the tests. That\u0027d mean the code would have to change slightly:\n\nIn the test:\n\n    bridge-\u003eSetDisplayedNotificationsForTesting(std::vector\u003c\u003e);\n\nIn this the impl/this method/GetDisplayedFromActionCenter:\n\n    std::vector\u003c\u003e notifications \u003d\n        notifications_for_testing_.empty() ? UseToastNotificationHistory()\n                                           : notifications_for_testing_;\n    for (IToastNotification* notification : notifications) {\n      ...\n    }\n\nI think that would lead to a fair cleanup, WDYT?",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00317931_4b3a326b",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "nit: please document why this has to be here",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74cb8b1_ec12e087",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "Is it safe to call CoInitializeForTesting multiple times?",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550a8ac3_332b284a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "nit: put this in the anonymous namespace",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1183dccb_0483fc24",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "can we use EXPECT_EQ() here? (and below)",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84e490a_4a04ebc4",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-10T19:05:21Z",
+      "side": 1,
+      "message": "fwiw, you could use blocks to make this a bit nicer: (As that means you don\u0027t need the numeric suffix for `run_loop`.)\n\n    // Description\n    {\n      base::RunLoop run_loop;\n      Magic(run_loop.QuitClosure());\n      run_loop.Run();\n\n      EXPECT_MAGIC_WORKS();\n    }",
+      "revId": "5caa558286a00587d50eb386e3f4c94c798753cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
