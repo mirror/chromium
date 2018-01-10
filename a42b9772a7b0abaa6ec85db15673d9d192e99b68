@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e810cf2_905d4786",
+        "filename": "cc/paint/paint_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-10T00:45:53Z",
+      "side": 1,
+      "message": "Should we also add AreFlattenablesEqual to PaintOp and use it here?\n (https://cs.chromium.org/chromium/src/cc/paint/paint_flags.cc?type\u003dcs\u0026l\u003d144).",
+      "range": {
+        "startLine": 203,
+        "startChar": 9,
+        "endLine": 203,
+        "endChar": 49
+      },
+      "revId": "a42b9772a7b0abaa6ec85db15673d9d192e99b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
