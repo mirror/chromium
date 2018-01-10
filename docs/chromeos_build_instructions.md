@@ -19,14 +19,15 @@ If you plan to test the Chromium build on your dev machine and not a
 Chromium OS device, run the following in your chromium checkout:
 
     $ gn gen out/Default --args='target_os="chromeos"'
-    $ ninja -C out/Default
+    $ ninja -C out/Default -j32
 
 NOTE: You may wish to replace 'Default' with something like 'Cros' if
 you switch back and forth between Linux and Chromium OS builds, or 'Debug'
 if you want to differentiate between Debug and Release builds (see below)
 or DebugCros or whatever you like.
 
-Now, when you build, you will build with Chromium OS features turned on.
+NOTE: If using goma increase -j32 (which controls parallelization) to something
+higher, 500 or 1000.
 
 See [GN Build Configuration](https://www.chromium.org/developers/gn-build-configuration)
 for more information about configuring your build.
@@ -36,19 +37,10 @@ or running `gn args out/Default`:
 
     is_component_build = true
     use_goma = true
-    is_debug = false  # Release build
+    is_debug = false  # Release build, significantly faster
     dcheck_always_on = true  # Enable DCHECK (with is_debug = false)
-    is_official_build = true
-    is_chrome_branded = true
 
 ## Notes
-
-When you build Chromium OS Chromium, you'll be using the TOOLKIT\_VIEWS
-front-end just like Windows, so the files you'll probably want are in
-src/ui/views and src/chrome/browser/ui/views.
-
-When target_os = "chromeos", then toolkit\_views need not (and should not)
-be specified.
 
 The Chromium OS build requires a functioning GL so if you plan on
 testing it through Chromium Remote Desktop you might face drawing
