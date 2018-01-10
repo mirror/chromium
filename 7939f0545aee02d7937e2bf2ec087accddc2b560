@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "d16a40cb_c9d52416",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-10T09:05:36Z",
+      "side": 1,
+      "message": "The problem with WTF::IsTraceable is that it basically checks for the existence of a Trace() method. That\u0027s true for types such as Vector, so WrapInVectorType breaks with nested types:\n\n    IDLSequence\u003cIDLSequence\u003cIDLUSVString\u003e\u003e\n\nends up becoming HeapVector\u003cVector\u003cString\u003e\u003e rather than Vector\u003cVector\u003cString\u003e\u003e",
+      "parentUuid": "991bcfaa_79ea9910",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "206aeb07_d372dda3",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
         "patchSetId": 1
@@ -53,6 +71,24 @@
       "writtenOn": "2018-01-10T02:20:26Z",
       "side": 1,
       "message": "These structs make sense but we won\u0027t need to limit the usage to IDL types.\n\nWould it make more sense to move the structs to e.g., platform/wtf/TypeTraits?",
+      "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba9abf5_64971b16",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-10T09:05:36Z",
+      "side": 1,
+      "message": "Wouldn\u0027t that make wtf/ depend on bindings/?",
+      "parentUuid": "206aeb07_d372dda3",
       "revId": "7939f0545aee02d7937e2bf2ec087accddc2b560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
