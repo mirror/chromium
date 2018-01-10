@@ -195,7 +195,7 @@ static_library("crash") {
     "//components/crash/content/app",
     "//components/crash/core/common",  # crash_keys
     "//components/version_info:channel",
-    "//content/public/common:result_codes",
+    "//content/public/common:content_result_codes",
     "//third_party/crashpad/crashpad/client",  # DumpWithoutCrash
   ]
 }

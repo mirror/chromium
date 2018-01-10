@@ -25,6 +25,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/numerics/safe_conversions.h"
+#include "base/result_codes.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -36,7 +37,6 @@
 #include "components/crash/content/app/crash_reporter_client.h"
 #include "components/crash/content/app/hard_error_handler_win.h"
 #include "components/crash/core/common/crash_keys.h"
-#include "content/public/common/result_codes.h"
 #include "sandbox/win/src/nt_internals.h"
 #include "sandbox/win/src/sidestep/preamble_patcher.h"
 #include "third_party/breakpad/breakpad/src/client/windows/common/ipc_protocol.h"
@@ -324,12 +324,12 @@ extern "C" void __declspec(dllexport) TerminateProcessWithoutDump() {
   // As a side note this function also gets called from
   // WindowProcExceptionFilter.
   if (g_real_terminate_process_stub == NULL) {
-    ::TerminateProcess(::GetCurrentProcess(), content::RESULT_CODE_KILLED);
+    ::TerminateProcess(::GetCurrentProcess(), base::RESULT_CODE_KILLED);
   } else {
     NtTerminateProcessPtr real_terminate_proc =
         reinterpret_cast<NtTerminateProcessPtr>(
             static_cast<char*>(g_real_terminate_process_stub));
-    real_terminate_proc(::GetCurrentProcess(), content::RESULT_CODE_KILLED);
+    real_terminate_proc(::GetCurrentProcess(), base::RESULT_CODE_KILLED);
   }
 }
 

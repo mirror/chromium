@@ -14,7 +14,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/task_manager/providers/task_provider_observer.h"
 #include "chrome/browser/task_manager/task_manager_observer.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "ui/base/resource/resource_bundle.h"
 
 namespace task_manager {
@@ -83,7 +83,7 @@ void Task::Kill() {
     return;
   DCHECK_NE(process_id(), base::GetCurrentProcId());
   base::Process process = base::Process::Open(process_id());
-  process.Terminate(content::RESULT_CODE_KILLED, false);
+  process.Terminate(base::RESULT_CODE_KILLED, false);
 }
 
 void Task::Refresh(const base::TimeDelta& update_interval,

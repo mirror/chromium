@@ -27,7 +27,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/child_process_host.h"
-#include "content/public/common/result_codes.h"
+#include "content/public/common/content_result_codes.h"
 #include "extensions/common/error_utils.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
 
@@ -551,7 +551,7 @@ ProcessesTerminateFunction::TerminateIfAllowed(base::ProcessHandle handle) {
   }
 
   const bool did_terminate =
-      process.Terminate(content::RESULT_CODE_KILLED, true /* wait */);
+      process.Terminate(base::RESULT_CODE_KILLED, true /* wait */);
   if (did_terminate)
     UMA_HISTOGRAM_COUNTS("ChildProcess.KilledByExtensionAPI", 1);
 
