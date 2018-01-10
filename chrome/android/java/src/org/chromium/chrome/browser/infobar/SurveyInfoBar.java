@@ -122,6 +122,7 @@ public class SurveyInfoBar extends InfoBar {
      * onSurveyInfoBarCloseButtonClicked.
      */
     private void closeInfoBar() {
+        mDelegate.onSurveyInfoBarIndirectlyClosed();
         // TODO(mdjones): add a proper close method to programatically close the infobar.
         super.onCloseButtonClicked();
     }
