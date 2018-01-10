@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "b3e35122_fe4d25f8",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-10T09:28:16Z",
+      "side": 1,
+      "message": "I didn\u0027t mean to use member variables. :(\nI meant to use two local variables (stack allocated) before iterating children.",
+      "parentUuid": "0186caa3_37225d44",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1e9e203_4190efb8",
         "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
         "patchSetId": 24
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Changed to just a function.\nI think we can make this a lambda expression, but isn\u0027t it better we have a name for it?",
       "parentUuid": "e1e9e203_4190efb8",
+      "revId": "977c9f9d827442fae53c91646b47c8212513a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9641b74_d4bd70c9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDetailsElement.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-10T09:28:16Z",
+      "side": 1,
+      "message": "A function would be better.\n\nBTW, I would suggest another option.\n\nInstead of storing callback for each slot, we can decide which function we should call only based on shadow host\u0027s element type. We don\u0027t need to store callback for each slot.\n\ne.g.\n\n\nif host\u0027s type \u003d\u003d detail:\n  call isFirstSummary(children)\nelse if host\u0027s type \u003d\u003d xxx:\n  call isXXXX(chidren)",
+      "parentUuid": "094092f6_a143d0a9",
       "revId": "977c9f9d827442fae53c91646b47c8212513a182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
