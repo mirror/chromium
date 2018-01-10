@@ -88,12 +88,18 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
     // The window's occlusion state isn't tracked
     // (WindowOcclusionTracker::Track) or hasn't been computed yet.
     UNKNOWN,
-    // The window is occluded, i.e. one of these conditions is true:
-    // - The window is hidden (Window::IsVisible() is true).
-    // - The bounds of the window are completely covered by opaque windows.
+    // The window IsVisible() and at least part of it isn't covered by fully
+    // opaque windows.
+    VISIBLE,
+    // The window IsVisible() and it is covered by fully opaque windows.
+    // However, it has at least one VISIBLE child.
+    OCCLUDED_WITH_VISIBLE_CHILD,
+    // One of these conditions is true:
+    // - The window is not IsVisible().
+    // - The window IsVisible(), it is covered by fully opaque windows and it
+    //   has not VISIBLE child.
     OCCLUDED,
-    // The window is not occluded.
-    NOT_OCCLUDED,
+    // TODO(fdoray): Split OCCLUDED into OCCLUDED and HIDDEN.
   };
 
   typedef std::vector<Window*> Windows;
@@ -167,10 +173,11 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // account the visibility of the layer and ancestors, where as this tracks
   // whether Show() without a Hide() has been invoked.
   bool TargetVisibility() const { return visible_; }
-  // Returns the occlusion state of this window. Will be UNKNOWN if the
-  // occlusion state of this window isn't tracked
-  // (WindowOcclusionTracker::Track). Will be stale if called within the scope
-  // of a WindowOcclusionTracker::ScopedPauseOcclusionTracking.
+  // Returns the occlusion state of this window. Is UNKNOWN if the occlusion
+  // state of this window isn't tracked (WindowOcclusionTracker::Track) or
+  // hasn't been computed yet. Is VISIBLE if the window or one of its parent is
+  // animated. Is stale if called within the scope of a
+  // WindowOcclusionTracker::ScopedPauseOcclusionTracking.
   OcclusionState occlusion_state() const { return occlusion_state_; }
 
   // Returns the window's bounds in root window's coordinates.
@@ -415,7 +422,7 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   void SetVisible(bool visible);
 
   // Updates the occlusion state of the window.
-  void SetOccluded(bool occluded);
+  void SetOcclusionState(OcclusionState occlusion_state);
 
   // Schedules a paint for the Window's entire bounds.
   void SchedulePaint();
