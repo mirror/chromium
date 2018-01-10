@@ -207,14 +207,13 @@
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
 #include "content/browser/sandbox_host_linux.h"
-#include "content/browser/zygote_host/zygote_host_impl_linux.h"
 
-#if !defined(OS_ANDROID)
+#if defined(OS_LINUX)
 #include "content/browser/zygote_host/zygote_communication_linux.h"
-#include "content/public/browser/zygote_handle_linux.h"
-#endif  // !defined(OS_ANDROID)
+#include "content/browser/zygote_host/zygote_host_impl_linux.h"
+#include "content/public/common/zygote_handle_linux.h"
+#endif  // defined(OS_LINUX)
 #endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
-
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/browser/plugin_service_impl.h"
@@ -253,6 +252,12 @@ namespace {
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
     !defined(OS_FUCHSIA)
+pid_t LaunchZygoteHelper(base::CommandLine* cmd_line,
+                         base::ScopedFD* control_fd) {
+  GetContentClient()->browser()->AppendExtraCommandLineSwitches(cmd_line, -1);
+  return ZygoteHostImpl::GetInstance()->LaunchZygote(cmd_line, control_fd);
+}
+
 void SetupSandbox(const base::CommandLine& parsed_command_line) {
   TRACE_EVENT0("startup", "SetupSandbox");
   // SandboxHostLinux needs to be initialized even if the sandbox and
@@ -268,10 +273,7 @@ void SetupSandbox(const base::CommandLine& parsed_command_line) {
   // Tickle the zygote host so it forks now.
   ZygoteHostImpl::GetInstance()->Init(parsed_command_line);
   ZygoteHandle generic_zygote =
-      CreateGenericZygote(base::BindOnce([](base::CommandLine* cmd_line) {
-        GetContentClient()->browser()->AppendExtraCommandLineSwitches(cmd_line,
-                                                                      -1);
-      }));
+      CreateGenericZygote(base::BindOnce(LaunchZygoteHelper));
 
   // TODO(kerrnel): Investigate doing this without the ZygoteHostImpl as a
   // proxy. It is currently done this way due to concerns about race

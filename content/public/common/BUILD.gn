@@ -250,7 +250,7 @@ jumbo_source_set("common_sources") {
     "webplugininfo.h",
     "webplugininfo_param_traits.h",
     "zygote_fork_delegate_linux.h",
-    "zygote_handle.h",
+    "zygote_handle_linux.h",
   ]
 
   configs += [
