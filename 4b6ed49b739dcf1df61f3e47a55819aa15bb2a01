@@ -158,6 +158,24 @@
       "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b29cdb_92dc5022",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContents.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-10T17:54:39Z",
+      "side": 1,
+      "message": "Yes, going back to a separate UserStyleMediaQueryAffectingValueChanged, sounds fine.\n\nI don\u0027t think it\u0027s a big deal if we re-collect active author sheets for the Document scope as a result of SetNeedsActiveStyleUpdateForClients for injected sheets (we did this before when injected sheets were part of author scope). As I mentioned in the previous comment, I think that we can early return from SetNeedsActiveStyleUpdateForClients if ownerNode() \u003d\u003d OwnerDocument(), but that can be left as a separate CL if you want. Note that marking the Document scope dirty was correct when the injected sheets were actually author level sheets collected as part of the Document scope author sheets.",
+      "parentUuid": "c576bb12_58b27de1",
+      "revId": "4b6ed49b739dcf1df61f3e47a55819aa15bb2a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
