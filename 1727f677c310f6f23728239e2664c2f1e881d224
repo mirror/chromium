@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0eef08af_e5f3de3d",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-10T19:37:56Z",
+      "side": 1,
+      "message": "No, unfortunately I\u0027m not aware of these behaviors being documented.",
+      "parentUuid": "ca012f6d_b71dac1c",
+      "range": {
+        "startLine": 343,
+        "startChar": 54,
+        "endLine": 345,
+        "endChar": 63
+      },
+      "revId": "1727f677c310f6f23728239e2664c2f1e881d224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "723b24da_638c8e89",
         "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "1727f677c310f6f23728239e2664c2f1e881d224",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6afb6e_d22d5cf0",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-10T19:37:56Z",
+      "side": 1,
+      "message": "Reordered.",
+      "parentUuid": "723b24da_638c8e89",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 38
+      },
+      "revId": "1727f677c310f6f23728239e2664c2f1e881d224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
