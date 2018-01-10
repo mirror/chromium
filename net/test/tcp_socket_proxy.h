@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_TEST_SPAWNED_TEST_SERVER_REMOTE_TEST_SERVER_PROXY_H_
-#define NET_TEST_SPAWNED_TEST_SERVER_REMOTE_TEST_SERVER_PROXY_H_
+#ifndef NET_TEST_TCP_SOCKET_PROXY_H_
+#define NET_TEST_TCP_SOCKET_PROXY_H_
 
 #include <stdint.h>
 
@@ -20,13 +20,15 @@ namespace net {
 
 class IPEndPoint;
 
-// RemoteTestServerProxy proxies TCP connection from localhost to a remote IP
-// address.
-class RemoteTestServerProxy {
+// TcpSocketProxy proxies TCP connection from localhost to a remote IP address.
+class TcpSocketProxy {
  public:
-  explicit RemoteTestServerProxy(
+  TcpSocketProxy(scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+                 int local_port);
+  explicit TcpSocketProxy(
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
-  ~RemoteTestServerProxy();
+
+  ~TcpSocketProxy();
 
   uint16_t local_port() const { return local_port_; }
 
@@ -46,9 +48,9 @@ class RemoteTestServerProxy {
 
   THREAD_CHECKER(thread_checker_);
 
-  DISALLOW_COPY_AND_ASSIGN(RemoteTestServerProxy);
+  DISALLOW_COPY_AND_ASSIGN(TcpSocketProxy);
 };
 
 }  // namespace net
 
-#endif  // NET_TEST_SPAWNED_TEST_SERVER_REMOTE_TEST_SERVER_PROXY_H_
+#endif  // NET_TEST_TCP_SOCKET_PROXY_H_
