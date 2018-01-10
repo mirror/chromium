@@ -631,6 +631,15 @@ SpdyHeaderBlock QuicTestPacketMaker::GetRequestHeaders(
   return headers;
 }
 
+SpdyHeaderBlock QuicTestPacketMaker::ConnectRequestHeaders(
+    const std::string& method,
+    const std::string& host_port) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = method;
+  headers[":authority"] = host_port;
+  return headers;
+}
+
 SpdyHeaderBlock QuicTestPacketMaker::GetResponseHeaders(
     const std::string& status) {
   SpdyHeaderBlock headers;

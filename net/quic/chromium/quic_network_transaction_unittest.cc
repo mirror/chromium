@@ -77,7 +77,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "url/gurl.h"
-
+  #include <cstdio>
 namespace net {
 namespace test {
 
@@ -336,6 +336,13 @@ class QuicNetworkTransactionTest
         least_unacked, true);
   }
 
+  std::unique_ptr<QuicEncryptedPacket> ConstructClientRstPacket(
+      QuicPacketNumber num,
+      QuicStreamId stream_id,
+      QuicRstStreamErrorCode error_code) {
+    return client_maker_.MakeRstPacket(num, false, stream_id, error_code);
+  }
+
   std::unique_ptr<QuicEncryptedPacket>
   ConstructClientAckAndConnectionClosePacket(QuicPacketNumber packet_number,
                                              QuicPacketNumber largest_received,
@@ -398,6 +405,11 @@ class QuicNetworkTransactionTest
     return maker->GetRequestHeaders(method, scheme, path);
   }
 
+  SpdyHeaderBlock ConnectRequestHeaders(const std::string& method,
+                                        const std::string& host_port) {
+    return client_maker_.ConnectRequestHeaders(method, host_port);
+  }
+
   SpdyHeaderBlock GetResponseHeaders(const std::string& status) {
     return server_maker_.GetResponseHeaders(status);
   }
@@ -428,6 +440,21 @@ class QuicNetworkTransactionTest
       QuicStringPiece data) {
     return client_maker_.MakeDataPacket(
         packet_number, stream_id, should_include_version, fin, offset, data);
+  }
+
+  std::unique_ptr<QuicEncryptedPacket> ConstructClientAckAndDataPacket(
+      QuicPacketNumber packet_number,
+      bool include_version,
+      QuicStreamId stream_id,
+      QuicPacketNumber largest_received,
+      QuicPacketNumber smallest_received,
+      QuicPacketNumber least_unacked,
+      bool fin,
+      QuicStreamOffset offset,
+      QuicStringPiece data) {
+    return client_maker_.MakeAckAndDataPacket(
+        packet_number, include_version, stream_id, largest_received, 
+        smallest_received, least_unacked, fin, offset, data);
   }
 
   std::unique_ptr<QuicEncryptedPacket> ConstructClientForceHolDataPacket(
@@ -581,7 +608,9 @@ class QuicNetworkTransactionTest
     TestCompletionCallback callback;
     int rv = trans->Start(&request_, callback.callback(), net_log_.bound());
     EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  printf("\nbefore RunTransaction WaitForResult()\n");
     EXPECT_THAT(callback.WaitForResult(), IsOk());
+  printf("\nafter RunTransaction WaitForResult()\n");
   }
 
   void SendRequestAndExpectHttpResponse(const std::string& expected) {
@@ -5895,6 +5924,59 @@ TEST_P(QuicNetworkTransactionTest, QuicServerPushMatchesRequestWithBody) {
   upload_data.AppendData("1", 1, true);
   request_.upload_data_stream = &upload_data;
   SendRequestAndExpectQuicResponse("and hello!");
+}
+
+// Test a CONNECT through a QUIC proxy to an HTTPS/1.1 server 
+TEST_P(QuicNetworkTransactionTest, QuicProxyTunnel) {
+  session_params_.enable_quic = true;
+  proxy_service_ =
+      ProxyService::CreateFixedFromPacResult("QUIC proxy.example.org:70");
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(
+      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, GetNthClientInitiatedStreamId(0), true, false,
+      ConnectRequestHeaders("CONNECT", "mail.example.org:443"),
+      &header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(
+      1, GetNthClientInitiatedStreamId(0), false, false,
+      GetResponseHeaders("200 OK")));
+
+  const char get[] =
+      "GET / HTTP/1.1\r\n"
+      "Host: mail.example.org\r\n"
+      "Connection: keep-alive\r\n\r\n";
+  mock_quic_data.AddWrite(ConstructClientAckAndDataPacket(            // seq 3
+    3, false, GetNthClientInitiatedStreamId(0), 1, 1, 1, false, 0,
+    QuicStringPiece(get, strlen(get))));
+  const char get_resp[] = "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 10\r\n\r\n";
+  mock_quic_data.AddRead(ConstructServerDataPacket(                  // seq 4
+      2, GetNthClientInitiatedStreamId(0), false, false, 0,
+      QuicStringPiece(get_resp, strlen(get_resp))));
+
+  mock_quic_data.AddSynchronousRead(ConstructServerDataPacket(        // seq 5
+      3, GetNthClientInitiatedStreamId(0), false, false, strlen(get_resp),
+      QuicStringPiece("0123456789", 10)));
+  mock_quic_data.AddWrite(ConstructClientAckPacket(4, 3, 2, 1));
+  mock_quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // paused           // seq 7
+  mock_quic_data.AddRead(ASYNC, OK);              // No more data to read
+  
+  mock_quic_data.AddWrite(ConstructClientRstPacket(
+      5, GetNthClientInitiatedStreamId(0), QUIC_STREAM_CANCELLED));;
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  AddCertificate(&ssl_data_);
+  socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
+
+  request_.url = GURL("https://mail.example.org/");
+  CreateSession();
+
+  SendRequestAndExpectQuicResponseFromProxyOnPort("0123456789", 70);
+  //SendRequestAndExpectHttpResponseFromProxy("0123456789", true, 70);
 }
 
 }  // namespace test
