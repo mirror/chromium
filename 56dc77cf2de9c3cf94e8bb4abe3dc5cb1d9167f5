@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90eedbf6_77e6cf18",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-10T19:46:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56755afd_d98011e5",
+      "range": {
+        "startLine": 124,
+        "startChar": 33,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "56dc77cf2de9c3cf94e8bb4abe3dc5cb1d9167f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98ec56c7_88ad1616",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "56dc77cf2de9c3cf94e8bb4abe3dc5cb1d9167f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0db50d_76caf1bf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2018-01-10T19:46:25Z",
+      "side": 1,
+      "message": "Done, I created a helper function _parsePercentOrNumber for clarity since the two functions have slightly different logic.",
+      "parentUuid": "98ec56c7_88ad1616",
+      "range": {
+        "startLine": 231,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 5
+      },
+      "revId": "56dc77cf2de9c3cf94e8bb4abe3dc5cb1d9167f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
