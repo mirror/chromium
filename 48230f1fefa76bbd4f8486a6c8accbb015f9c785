@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a97ceaa7_e4945c50",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "Actually, it is very possible that the device does switch to BLE_NOT_PRESENT; that\u0027s what happens when the Bluetooth firmware bug occurs which causes the Bluetooth controller to \"disappear\". Let\u0027s include that as a potential shutdown reason. We can call that value BLUETOOTH_CONTROLLER_DISAPPEARED.\n\nFor the other values, I think it makes sense to log an error here and pass an OTHER value.",
+      "parentUuid": "3151a6db_d322bbc3",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 33
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71800316_411fb586",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1f7c46da_5ec9d394",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "That makes sense. Let\u0027s make this test more robust by:\n\n(1) Add a |shutdown_reason_verified_| bool, and initialize it to false in SetUp().\n(2) Set it to true in VerifyLastShutdownReason().\n(3) In TearDown(), verify that if |tether_service_| is non-null, that shutdown_reason_verified_ is true.",
+      "parentUuid": "715d4216_200db13a",
+      "range": {
+        "startLine": 411,
+        "startChar": 7,
+        "endLine": 411,
+        "endChar": 40
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61ae2673_1b4800ad",
         "filename": "chromeos/components/tether/fake_tether_component.h",
         "patchSetId": 1
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Since these are just test classes, I took the easier route of simply setting this value to the enum MAX value.",
       "parentUuid": "61ae2673_1b4800ad",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 78
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ca23ae6_f6d24fd1",
+        "filename": "chromeos/components/tether/fake_tether_component.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "See comment below; I think we should still use base::Optional. Alternatively, you could use a std::unique_ptr\u003cSessionCompletionReason\u003e and have a getter which returns ptr.get(). If the return value is null, then it has not yet been set.",
+      "parentUuid": "656d6da9_9df44759",
       "range": {
         "startLine": 39,
         "startChar": 2,
@@ -319,6 +391,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "03772373_3bb52c91",
+      "range": {
+        "startLine": 53,
+        "startChar": 53,
+        "endLine": 53,
+        "endChar": 71
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0afc0ce2_c9fa7ac0",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "Just checking: have you verified that disabling Wi-Fi correctly results in this metric being logged? Some network operations are asynchronous, so I want to make sure that this correctly logs WIFI_DISABLED.\n\nAlso, can you please add a comment above this line explaining why we choose the enum value the way we do?",
+      "parentUuid": "78e42a38_7e67163b",
       "range": {
         "startLine": 53,
         "startChar": 53,

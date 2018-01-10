@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1f0a2b0_7848f30b",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "Now that https://chromium-review.googlesource.com/c/chromium/src/+/861045 has landed, move this up into the switch() statement above.",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 19
+      },
+      "revId": "c6d054f0384de0908da8c7f3f05d2861fe9783ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4682bcfa_626c1539",
+        "filename": "chromeos/components/tether/tether_component.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "enum class",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 6
+      },
+      "revId": "c6d054f0384de0908da8c7f3f05d2861fe9783ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb407d4_8ad2beca",
+        "filename": "chromeos/components/tether/tether_component.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "This shouldn\u0027t ever be used in practice, since this isn\u0027t a metric enum that\u0027s logged. It\u0027s currently only used for tests, so let\u0027s convert those tests to use base::Optional like I suggested earlier. It\u0027s best to avoid adding test-only code to the actual implementation.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "c6d054f0384de0908da8c7f3f05d2861fe9783ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e0bd01_e8c9e8a2",
+        "filename": "chromeos/components/tether/tether_session_completion_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "nit: Remove.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "c6d054f0384de0908da8c7f3f05d2861fe9783ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922cc0d4_fd319c20",
+        "filename": "chromeos/components/tether/tether_session_completion_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "nit: Function description doesn\u0027t add any information that we can\u0027t get from the function/parameter name. Either remove or expand on it.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 53
+      },
+      "revId": "c6d054f0384de0908da8c7f3f05d2861fe9783ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e976ba18_a5935dc6",
+        "filename": "chromeos/components/tether/tether_session_completion_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-10T23:39:18Z",
+      "side": 1,
+      "message": "nit: Ctor/dtor go before functions.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "c6d054f0384de0908da8c7f3f05d2861fe9783ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
