@@ -568,11 +568,7 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebTouchEvent* event,
     const ui::LatencyInfo& latency) {
-  // Note: this code is short term until we enable async routing for touch,
-  // and will ultimately use |event_targeter_| like RouteMouseEvent() does.
-  RenderWidgetTargetResult event_target =
-      FindTouchEventTarget(root_view, *event);
-  DispatchTouchEvent(root_view, event_target.view, *event, latency);
+  event_targeter_->FindTargetAndDispatch(root_view, *event, latency);
 }
 
 void RenderWidgetHostInputEventRouter::SendMouseEnterOrLeaveEvents(
@@ -1165,6 +1161,14 @@ RenderWidgetHostInputEventRouter::FindTargetSynchronously(
   if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
     return FindMouseEventTarget(
         root_view, static_cast<const blink::WebMouseEvent&>(event));
+  } else if (blink::WebInputEvent::IsTouchEventType(event.GetType())) {
+    return FindTouchEventTarget(
+        root_view, static_cast<const blink::WebTouchEvent&>(event));
+  } else if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    auto gesture_event = static_cast<const blink::WebGestureEvent&>(event);
+    DCHECK(gesture_event.source_device ==
+           blink::WebGestureDevice::kWebGestureDeviceTouchscreen);
+    return FindTouchscreenGestureEventTarget(root_view, gesture_event);
   }
   // TODO(crbug.com/796656): Handle other types of events.
   NOTREACHED();
@@ -1180,6 +1184,17 @@ void RenderWidgetHostInputEventRouter::DispatchEventToTarget(
     DispatchMouseEvent(root_view, target,
                        static_cast<const blink::WebMouseEvent&>(event),
                        latency);
+    return;
+  } else if (blink::WebInputEvent::IsTouchEventType(event.GetType())) {
+    DispatchTouchEvent(root_view, target,
+                       static_cast<const blink::WebTouchEvent&>(event),
+                       latency);
+    return;
+  } else if (blink::WebInputEvent::IsGestureEventType(event.GetType())) {
+    auto gesture_event = static_cast<const blink::WebGestureEvent&>(event);
+    DCHECK(gesture_event.source_device ==
+           blink::WebGestureDevice::kWebGestureDeviceTouchscreen);
+    DispatchTouchscreenGestureEvent(root_view, target, gesture_event, latency);
     return;
   }
   // TODO(crbug.com/796656): Handle other types of events.
