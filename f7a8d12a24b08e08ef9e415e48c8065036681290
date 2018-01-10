@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80779a94_a8d0fcfe",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-10T17:57:34Z",
+      "side": 1,
+      "message": "This is also a candidate for using base::ClampToRange()",
+      "range": {
+        "startLine": 727,
+        "startChar": 0,
+        "endLine": 728,
+        "endChar": 57
+      },
+      "revId": "f7a8d12a24b08e08ef9e415e48c8065036681290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
