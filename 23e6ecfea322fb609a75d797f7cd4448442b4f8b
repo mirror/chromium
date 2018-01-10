@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e226e6c_c9a80044",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:01:56Z",
+      "side": 1,
+      "message": "Think we\u0027re going to need this method to use take load flags, and pass it LOAD_IGNORE_LIMITS.  Alternatively, maybe it would be better to just make this method use LOAD_IGNORE_LIMITS anyways?  This is the only consumer.  It\u0027s not even tested directly.  :(",
+      "range": {
+        "startLine": 230,
+        "startChar": 49,
+        "endLine": 230,
+        "endChar": 0
+      },
+      "revId": "23e6ecfea322fb609a75d797f7cd4448442b4f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579e95f9_37cca81b",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:01:56Z",
+      "side": 1,
+      "message": "Mention that the socket must be destroyed before the network session",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "23e6ecfea322fb609a75d797f7cd4448442b4f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab87863c_31e4bd2d",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:01:56Z",
+      "side": 1,
+      "message": "So I think we need to hold on to a pointer to the request context, and call:\n\nnetwork_session_-\u003ehttp_auth_cache()-\u003eClearEntriesAddedWithin(base::Time::Now() - base::Time());\nnetwork_session_-\u003ehttp_auth_cache()-\u003eUpdateAllFrom(*other_auth_cache);\n\nBefore every single new connection.  Which is unfortunate.  We should look for a better solution, but I think this is fine, for the moment.  I think we need a test, too.  Something like ReusesHTTPAuthCache_Lookup, but we create this  factory before the socket, then add something to the auth cache of the original auth cache, and then we create a socket, and make sure it handles an auth challenge.",
+      "range": {
+        "startLine": 72,
+        "startChar": 20,
+        "endLine": 72,
+        "endChar": 35
+      },
+      "revId": "23e6ecfea322fb609a75d797f7cd4448442b4f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc38475_ba3c1100",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:01:56Z",
+      "side": 1,
+      "message": "nit:  Blank line here.",
+      "range": {
+        "startLine": 3,
+        "startChar": 29,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "23e6ecfea322fb609a75d797f7cd4448442b4f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a797cd_e3ee80b1",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:01:56Z",
+      "side": 1,
+      "message": "Mention URLRequestContext must outlive |this| and all sockets it creates?  (Or may mention the socket lifetimes with the CreateSocket)",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "23e6ecfea322fb609a75d797f7cd4448442b4f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd6ab01_74d6e828",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-10T23:01:56Z",
+      "side": 1,
+      "message": "Let\u0027s just take a URLRequestContext instead (That\u0027s what we\u0027ll need to use in the network service, since we don\u0027t get anything from using a getter)",
+      "range": {
+        "startLine": 33,
+        "startChar": 34,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "23e6ecfea322fb609a75d797f7cd4448442b4f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
