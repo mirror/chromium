@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab216356_d6e6334c",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T17:24:36Z",
+      "side": 1,
+      "message": "Maybe switch would be cleaner.",
+      "revId": "f9ca274d79caaeb8b720d0c7711fc446fb86b884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0ad363_58cca7b1",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T17:24:36Z",
+      "side": 1,
+      "message": "It\u0027s really weird that we use |input_modality| and do string comparison here and above, where we could just compare the latency.source_event_type() with the enum.",
+      "revId": "f9ca274d79caaeb8b720d0c7711fc446fb86b884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
