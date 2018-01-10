@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d9602c8_6d2570c0",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1919,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-10T22:10:56Z",
+      "side": 1,
+      "message": "Instead of reading CompositorFrameMetadata, maybe introduce a MakeRendererFrameMetadata analogous to CompositorFrameMedata? Call it above next to MakeCompositorFrameMetadata.",
+      "parentUuid": "fb65ac94_398a38ce",
+      "range": {
+        "startLine": 1919,
+        "startChar": 32,
+        "endLine": 1919,
+        "endChar": 50
+      },
+      "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfa3e449_86ddc793",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 3
@@ -105,6 +129,40 @@
         "endLine": 2917,
         "endChar": 48
       },
+      "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd70146_6593067e",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-10T22:10:56Z",
+      "side": 1,
+      "message": "const cc::RenderFrameMetadata\u0026 metadata",
+      "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c48e2d_0ba7b7de",
+        "filename": "content/renderer/gpu/queue_message_swap_promise.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-10T22:10:56Z",
+      "side": 1,
+      "message": "Add to message_queue. Don\u0027t send here. The IPCs will be sent in QueueMessageSwapPromise::WillSwap.",
       "revId": "05ec73191050a9b9f97c1572ec7d536385dab2b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
