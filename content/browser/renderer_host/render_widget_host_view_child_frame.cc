@@ -1074,4 +1074,8 @@ bool RenderWidgetHostViewChildFrame::CanBecomeVisible() {
       ->CanBecomeVisible();
 }
 
+void RenderWidgetHostViewChildFrame::DidNavigate() {
+  NOTREACHED();
+}
+
 }  // namespace content

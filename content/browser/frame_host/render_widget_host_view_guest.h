@@ -126,6 +126,7 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   void DidCreateNewRendererCompositorFrameSink(
       viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink)
       override;
+  void DidNavigate() override;
 
 #if defined(OS_MACOSX)
   // RenderWidgetHostView implementation.
