@@ -68,6 +68,10 @@ class PlatformKeysTest : public ExtensionApiTest {
     command_line->AppendSwitchASCII(
         chromeos::switches::kLoginUser,
         user_manager::StubAccountId().GetUserEmail());
+    // TODO(emaxx): Update this test to properly use an asynchronously loaded
+    // user profile and remove the use of this flag  (crbug.com/795737).
+    command_line->AppendSwitchASCII(
+        chromeos::switches::kWaitForInitialPolicyFetchForTest, "true");
   }
 
   void SetUpInProcessBrowserTestFixture() override {
