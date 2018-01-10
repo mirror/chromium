@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "649a3ba6_8321585a",
+        "filename": "services/audio/public/cpp/audio_device_description_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T22:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38e38bbe_a0e7095e",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4700b407_0dc2cb3e",
         "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T22:09:29Z",
       "side": 1,
       "message": "Since this is public client library API surface, could you elaborate on this a bit? When, why, how does one use this class?",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfad727c_8bb40083",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T22:50:18Z",
+      "side": 1,
+      "message": "It\u0027s media::AudioSystem implementation and it should be used according to media::AudioSystem contract. I added a note on what happens if service connection is lost. To me it looks sufficient. WDYT?",
+      "parentUuid": "4700b407_0dc2cb3e",
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3137ad31_81c44426",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T22:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "369c7351_2b1405fd",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +139,24 @@
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669e528e_641f1a85",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T22:50:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "757b334c_04dcbc93",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +264,24 @@
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c0e5ca_d197851a",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T22:50:18Z",
+      "side": 1,
+      "message": "Done - is the fix correct?",
+      "parentUuid": "674e990a_cde1cdbc",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +462,24 @@
     },
     {
       "key": {
+        "uuid": "4e2c8988_b322945b",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T22:50:18Z",
+      "side": 1,
+      "message": "So now Optionals are used for replies everywhere.\nThe only redundancy left is GetInputDeviceInfo() which is a combination of GetInputStremParameters() and GetAssociatedOutputDeviceID().\nIt\u0027s quite easy to get rid of it code-wise - it\u0027s called in 1 place in the client code. But it will cost us an extra IPC between the browser and the service. It\u0027s not a very frequent call, but I would prefer to leave this tradeoff decision (and dependency on it) outside of this CL. So if you don\u0027t mind we could keep is like this for now and file a follow-up bug to potentially get rid of GetInputDeviceInfo().",
+      "parentUuid": "2f00208b_1720028b",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7532de81_d744391c",
         "filename": "services/audio/service.cc",
         "patchSetId": 17
@@ -472,6 +580,24 @@
       "side": 1,
       "message": "It\u0027s not explicitly documented in Service, but there are many classes for which it\u0027s not documented. As a general rule unless there is a reason to assume otherwise (e.g. shared ownership or explicit documentation to the contrary), all objects are implicitly sequence-bound. I guess this isn\u0027t a written rule anywhere but it seems to be a clear convention across most of the code base, and it makes a lot of sense as a means of encouraging safe code.\n\nThe use of thread or sequence checkers is not really harmful either way, so sure, leave it if you like; but I generally reserve it for cases where the class in question actually does any kind of thread or sequence hopping.\n\nI do worry slightly about other service implementors needlessly copying this pattern.",
       "parentUuid": "dcd13429_b981a350",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11cedfd6_bfa36e12",
+        "filename": "services/audio/service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-10T22:50:18Z",
+      "side": 1,
+      "message": "I see your point. In audio there are [way too] many threads involved: client/control thread, audio device thread, file thread + usually 1 thread per each audio stream. And even when a class is single-threaded initially, sometimes it ends up being accessed from multiple threads after some unfortunate CL. So we developed a habit to thread/sequence-check almost everything here - and it also helps us to navigate the code.\n\nNow I realize why this checking is often skipped in the rest of the codebase. But I\u0027ll still keep them here. :)",
+      "parentUuid": "36d1c91d_c4666d64",
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
