@@ -82,7 +82,8 @@ class VIZ_SERVICE_EXPORT ProgramKey {
                          SamplerType sampler,
                          AAMode aa_mode,
                          SwizzleMode swizzle_mode,
-                         bool is_opaque);
+                         bool is_opaque,
+                         bool has_tex_clamp_rect);
   static ProgramKey Texture(TexCoordPrecision precision,
                             SamplerType sampler,
                             PremultipliedAlphaMode premultiplied_alpha,
@@ -341,6 +342,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
     vertex_shader_.has_matrix_ = true;
 
     // Initialize fragment program.
+    fragment_shader_.has_tex_clamp_rect_ = key.has_tex_clamp_rect_;
     if (key.is_opaque_) {
       DCHECK_EQ(key.aa_mode_, NO_AA);
       fragment_shader_.frag_color_mode_ = FRAG_COLOR_MODE_OPAQUE;
@@ -357,6 +359,8 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
       vertex_shader_.tex_coord_source_ = TEX_COORD_SOURCE_POSITION;
       vertex_shader_.aa_mode_ = USE_AA;
       fragment_shader_.has_rgba_fragment_tex_transform_ = true;
+      // Tiles that have AA do their own clamping.
+      DCHECK(!fragment_shader_.has_tex_clamp_rect_);
     }
   }
 

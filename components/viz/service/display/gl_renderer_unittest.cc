@@ -286,12 +286,27 @@ class GLRendererShaderPixelTest : public cc::GLRendererPixelTest {
                                    true, true));
     TestShader(ProgramKey::Texture(precision, sampler, NON_PREMULTIPLIED_ALPHA,
                                    true, false));
-    TestShader(ProgramKey::Tile(precision, sampler, NO_AA, NO_SWIZZLE, false));
-    TestShader(ProgramKey::Tile(precision, sampler, NO_AA, DO_SWIZZLE, false));
-    TestShader(ProgramKey::Tile(precision, sampler, USE_AA, NO_SWIZZLE, false));
-    TestShader(ProgramKey::Tile(precision, sampler, USE_AA, DO_SWIZZLE, false));
-    TestShader(ProgramKey::Tile(precision, sampler, NO_AA, NO_SWIZZLE, true));
-    TestShader(ProgramKey::Tile(precision, sampler, NO_AA, DO_SWIZZLE, true));
+
+    TestShader(
+        ProgramKey::Tile(precision, sampler, USE_AA, NO_SWIZZLE, false, false));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, USE_AA, DO_SWIZZLE, false, false));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, NO_AA, NO_SWIZZLE, false, false));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, NO_AA, DO_SWIZZLE, false, false));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, NO_AA, NO_SWIZZLE, true, false));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, NO_AA, DO_SWIZZLE, true, false));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, NO_AA, NO_SWIZZLE, false, true));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, NO_AA, DO_SWIZZLE, false, true));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, NO_AA, NO_SWIZZLE, true, true));
+    TestShader(
+        ProgramKey::Tile(precision, sampler, NO_AA, DO_SWIZZLE, true, true));
 
     // Iterate over alpha plane, nv12, and color_lut parameters.
     UVTextureMode uv_modes[2] = {UV_TEXTURE_MODE_UV, UV_TEXTURE_MODE_U_V};
