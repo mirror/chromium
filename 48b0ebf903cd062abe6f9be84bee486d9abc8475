@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "70a954e0_c1496aaf",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "This is not quite true - the CRX file can be downloaded from Chrome Web Store and then hosted on a personal server. In fact, this is the most secure way to host them locally (because they contents of the extension will be signed by CWS and if malware later tampers with the files, that can be detected).\n\nAnyways, maybe change \"need\" to \"can\".",
+      "range": {
+        "startLine": 20,
+        "startChar": 29,
+        "endLine": 20,
+        "endChar": 60
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff568b7e_b3597cfe",
         "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
         "patchSetId": 7
@@ -140,6 +163,52 @@
     },
     {
       "key": {
+        "uuid": "2c7598fa_ac53670d",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "Devlin, do we require this URL to be HTTPS?\nTrusting an update server\u0027s reply without a secure connection is dangerous.\n\nEither way, let\u0027s use an HTTPS URL in the example.",
+      "range": {
+        "startLine": 216,
+        "startChar": 24,
+        "endLine": 216,
+        "endChar": 25
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8e631a_024cd8a4",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "Consider linking directly to the github project, and using an HTTPS link: https://github.com/google/omaha",
+      "range": {
+        "startLine": 237,
+        "startChar": 11,
+        "endLine": 237,
+        "endChar": 42
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42701347_58ed4b7b",
         "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
         "patchSetId": 7
@@ -179,6 +248,167 @@
         "startChar": 0,
         "endLine": 278,
         "endChar": 12
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c91381e_f8ea81a8",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "Devlin, do we require this URL to be HTTPS?\n\n(CRX₂ is weak enough that we should.)",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 7
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39027c11_01633fcc",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "typo: Chromec",
+      "range": {
+        "startLine": 313,
+        "startChar": 47,
+        "endLine": 313,
+        "endChar": 48
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21bbc1d_b1f32192",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "Who are these developers? Chromium developers or extension developers? i.e. how would I turn this on for my extension? (Change something in manifest.json?) Or do I edit Chromium\u0027s code?",
+      "range": {
+        "startLine": 335,
+        "startChar": 2,
+        "endLine": 336,
+        "endChar": 53
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d387932d_96c2f397",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "extensions \"to\" update, I think",
+      "range": {
+        "startLine": 337,
+        "startChar": 45,
+        "endLine": 337,
+        "endChar": 62
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd36d71_c86f0ec5",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "Hm, this is confusing, because according to the above, multiple extensions can update from the static XML file.",
+      "range": {
+        "startLine": 337,
+        "startChar": 29,
+        "endLine": 337,
+        "endChar": 44
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f8c104_5214d6a2",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "What are we trying to communicate when we say this?\n\nAre we warning server-side implementers that they must also support POST to be compatible with future versions of Chrome? If so, do we need to define a spec for them?\n\nOr are we saying that later on we might develop a third option for using POSTs that they can choose to take advantage of? (In this case, IMO, we should eliminate this note (\"might do\" is useless to say.))",
+      "range": {
+        "startLine": 407,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 47
+      },
+      "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ec269c_657dbbb5",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-10T15:38:39Z",
+      "side": 1,
+      "message": "nit: \"the update manifest\" is correct and consistent with our terminology elsewhere (no \"d\"), but even that might be confusing for extension developers dealing with manifest.json in their extensions. I suggest saying \"update response\" or \"update XML\".",
+      "range": {
+        "startLine": 423,
+        "startChar": 35,
+        "endLine": 423,
+        "endChar": 36
       },
       "revId": "48b0ebf903cd062abe6f9be84bee486d9abc8475",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
