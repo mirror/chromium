@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bb08ef2_d64b2773",
+        "filename": "mojo/public/cpp/bindings/interface_invalidator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a678b8_0f674b5f",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7e5aa45_88bf95ec",
         "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "45a66208_c1ae84b9",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7e5aa45_88bf95ec",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "368c7b42_46a00001",
         "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a98a9b0_121947da",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "368c7b42_46a00001",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "acd1ae2c_3369fb8e",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7589c979_04db8110",
+      "range": {
+        "startLine": 98,
+        "startChar": 49,
+        "endLine": 98,
+        "endChar": 59
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33e36c54_f37e24f0",
         "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
         "patchSetId": 4
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7993eaf5_85d938c2",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33e36c54_f37e24f0",
+      "range": {
+        "startLine": 103,
+        "startChar": 14,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da7c407c_d78f7e6f",
         "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
         "patchSetId": 4
@@ -116,6 +224,30 @@
       "writtenOn": "2018-01-10T00:34:21Z",
       "side": 1,
       "message": "Is wptr.PassInterface() expected to be null here? (We should have an explicit test for that too)",
+      "range": {
+        "startLine": 134,
+        "startChar": 44,
+        "endLine": 134,
+        "endChar": 64
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f3e230_7ddc4d8c",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "No, it returns a proper InterfacePtrInfo object here. The other end of the wrapped message pipe is just not connected to anything.",
+      "parentUuid": "da7c407c_d78f7e6f",
       "range": {
         "startLine": 134,
         "startChar": 44,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "6b95646b_74502955",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78feb699_a3c7192f",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f938e804_42cb3989",
         "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
         "patchSetId": 4
@@ -165,6 +321,24 @@
       "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86486674_d0d56788",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f938e804_42cb3989",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "ed768816_e1aaaca7",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7cdd125_e1e1d135",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6224162_6f46e067",
         "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
         "patchSetId": 4
@@ -199,6 +391,24 @@
       "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01af3ded_bbc92c50",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-10T02:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6224162_6f46e067",
+      "revId": "1f47ac2c7fcfb1ad475258bae47cb22606209cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
