@@ -962,6 +962,7 @@ class MetaBuildWrapper(object):
     elif test_type == 'script':
       extra_files = [
           '../../testing/test_env.py'
+          '../../../.vpython'
       ]
       cmdline = [
           '../../testing/test_env.py',
