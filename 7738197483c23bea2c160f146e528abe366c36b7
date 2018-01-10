@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "323b53f3_296c5449",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bf1fcc2_331e426a",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32bfb5d2_29d8e0d7",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T23:05:02Z",
       "side": 1,
       "message": "Can you explain why you want this here? It may be arbitrarily long until StartPipeline and thus a frame is generated.",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8392a73f_7039f1a3",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "i\u0027m not so much concerned with the total amount of time, just with the relative order of events between players.  i want to be sure that, if we choose to defer loading (or otherwise throttle this player in DoLoad), that we\u0027re choosing ones that affect the composited output later rather than earlier.  i.e., we should prefer to delay the last thing to draw a frame rather than the first, if we want to avoid impacting the user experience.",
+      "parentUuid": "32bfb5d2_29d8e0d7",
       "revId": "7738197483c23bea2c160f146e528abe366c36b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7da17719_e6681a6c",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "for what it\u0027s worth, locally i observed single-digit usec delays per player on a page with ~10 players.  max was 26 usec.",
+      "parentUuid": "6cebdd85_3d6c0a23",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56b4b844_eb15719a",
         "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "7738197483c23bea2c160f146e528abe366c36b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111b8b21_9f4a6588",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56b4b844_eb15719a",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "9ce9238b_5f6203e2",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "this is fairly confusing.  TL;DR: i think that the #if\u0027s aren\u0027t needed.\n\ni did some experiments.  as mounir says, DCHECK(unused) silences the unused variable warning even when is_debug\u003d\u003dfalse.  however, DCHECK(unused++) seems to have no side-effects if i log the value of |unused| before and after.\n\nso, i\u0027m guessing that DCHECK(x) expands to something like \"if(false) { x; }\" when is_debug is off.",
+      "parentUuid": "247979c4_6a07a860",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50b1a0f0_a9f88aaf",
         "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
         "patchSetId": 17
@@ -119,6 +209,24 @@
       "revId": "7738197483c23bea2c160f146e528abe366c36b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1436994e_cfec098c",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "personally, i think it\u0027s also \"unecessary ?:\", but this pattern is elsewhere in blink.  i\u0027ll make it x !\u003d y .",
+      "parentUuid": "50b1a0f0_a9f88aaf",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "e286f49a_96f0b039",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "610418d7_5c03ae2c",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44602de2_822c0ecc",
         "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
         "patchSetId": 17
@@ -150,6 +276,24 @@
       "writtenOn": "2018-01-09T23:05:02Z",
       "side": 1,
       "message": "These types of increasing histograms are hard to interpret. I\u0027ve created a few in the past and have been much happier since we have WatchTimeReporter which records these values only once.\n\nYou should look at using a base::SingleSampleMetric for this I think instead.",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6090cbe9_a3bac599",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "hrm, let\u0027s chat tomorrow.",
+      "parentUuid": "44602de2_822c0ecc",
       "revId": "7738197483c23bea2c160f146e528abe366c36b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "02afb94e_ef42af6f",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c05095cd_60ac2361",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f6b8bef_bc96c505",
         "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
         "patchSetId": 17
@@ -190,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "e4d351e8_83089799",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f6b8bef_bc96c505",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ccc8a9_3335bf28",
         "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.h",
         "patchSetId": 17
@@ -204,6 +384,24 @@
       "revId": "7738197483c23bea2c160f146e528abe366c36b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ae1f28_3e52d691",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaElementResourceSchedulerMetrics.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-10T16:48:29Z",
+      "side": 1,
+      "message": "d\u0027oh.\n\nas for INT_MIN, i saw instances of both so i went with less typing.  i\u0027ll switch it.",
+      "parentUuid": "06ccc8a9_3335bf28",
+      "revId": "7738197483c23bea2c160f146e528abe366c36b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
