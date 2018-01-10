@@ -259,6 +259,22 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
                               bridge_->GetFrameSinkId()));
   }
 
+  // Notify the compositor that we'd like to be notified when the first frame is
+  // drawn.  Setting the callback with Unretained is safe, because we post
+  // destruction of the compositor there as well.  The callback might happen
+  // after we're destroyed, but that's okay.
+  vfc_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&VideoFrameCompositor::SetFirstFrameConsumedCallback,
+                     base::Unretained(compositor_.get()),
+                     BindToCurrentLoop(base::BindOnce(
+                         [](base::WeakPtr<WebMediaPlayerImpl> thiz,
+                            blink::WebMediaPlayerClient* client) {
+                           if (thiz)
+                             client->OnFirstFrameDrawn();
+                         },
+                         AsWeakPtr(), client_))));
+
   // If we're supposed to force video overlays, then make sure that they're
   // enabled all the time.
   always_enable_overlays_ = base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -349,6 +365,7 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
   blink::WebURL url = source.GetAsURL();
   DVLOG(1) << __func__ << "(" << load_type << ", " << GURL(url) << ", "
            << cors_mode << ")";
+
   if (!defer_load_cb_.is_null()) {
     defer_load_cb_.Run(base::Bind(&WebMediaPlayerImpl::DoLoad, AsWeakPtr(),
                                   load_type, url, cors_mode));
@@ -536,6 +553,25 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
   media_metrics_provider_->Initialize(load_type == kLoadTypeMediaSource,
                                       frame_ == frame_->Top(),
                                       frame_->Top()->GetSecurityOrigin());
+
+  CompleteDoLoad(load_type, url, cors_mode, 2);
+}
+
+void WebMediaPlayerImpl::CompleteDoLoad(LoadType load_type,
+                                        const blink::WebURL url,
+                                        CORSMode cors_mode,
+                                        int retries) {
+  // Defer network loading until the player priority is known.
+  // Allow "unknown priority" if we're out of retries.
+  bool got_priority = client_->RecordPriorityAtLoad(!retries);
+  if (!got_priority) {
+    DCHECK_NE(retries, 0);
+    main_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&WebMediaPlayerImpl::CompleteDoLoad, AsWeakPtr(),
+                       load_type, url, cors_mode, retries - 1));
+    return;
+  }
 
   // Media source pipelines can start immediately.
   if (load_type == kLoadTypeMediaSource) {

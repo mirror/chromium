@@ -319,6 +319,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
               const blink::WebURL& url,
               CORSMode cors_mode);
 
+  // Called by DoLoad to actually start network loading.
+  void CompleteDoLoad(LoadType load_type,
+                      const blink::WebURL url,
+                      CORSMode cors_mode,
+                      int retries);
+
   // Called after asynchronous initialization of a data source completed.
   void DataSourceInitialized(bool success);
 
