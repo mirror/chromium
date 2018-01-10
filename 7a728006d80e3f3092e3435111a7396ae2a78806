@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "864cef9b_362477bb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-10T12:03:06Z",
+      "side": 1,
+      "message": "You\u0027re doing these 3 lines or equivalents dozens of times. Helper function?",
+      "revId": "7a728006d80e3f3092e3435111a7396ae2a78806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3b3691_edbd8ac3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-10T12:03:06Z",
+      "side": 1,
+      "message": "Also check that you have track stats?",
+      "revId": "7a728006d80e3f3092e3435111a7396ae2a78806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294bbfea_8411df3c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-track-stats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-10T12:03:06Z",
+      "side": 1,
+      "message": "You can make the rest of this file much  more readable by creating a version of this function that takes type and id as arguments; then you can just do\n\nassert_true(findStatsByTypeAndId(report, \u0027track\u0027, track.id));",
+      "revId": "7a728006d80e3f3092e3435111a7396ae2a78806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
