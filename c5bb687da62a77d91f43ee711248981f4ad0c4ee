@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b017e5b_3c006bc1",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-10T23:46:59Z",
+      "side": 1,
+      "message": "This whole part of the comment can be removed now",
+      "revId": "c5bb687da62a77d91f43ee711248981f4ad0c4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2b1d08_b3f079e7",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-10T23:46:59Z",
+      "side": 1,
+      "message": "The second part of the comment can be removed because it no longer applies to clipboard (since there is a check for cookies). The comment might be confusing. \n\nThis is the bit I\u0027m referring to:\n  // and it produces incorrect results for other content\n  // settings (like CONTENT_SETTINGS_TYPE_CLIPBOARD_READ).",
+      "revId": "c5bb687da62a77d91f43ee711248981f4ad0c4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
