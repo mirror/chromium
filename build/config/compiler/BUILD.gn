@@ -1589,7 +1589,7 @@ if (is_win) {
 
   if (is_official_build) {
     common_optimize_on_ldflags += [ "/OPT:REF" ]  # Remove unreferenced data.
-    if (!use_lld) {
+    if (!use_lld && !is_clang) {
       common_optimize_on_ldflags += [
         # Set the number of LTCG code-gen threads to eight. The default is four.
         # This gives a 5-10% link speedup.
