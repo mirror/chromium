@@ -205,8 +205,7 @@ TEST_P(SparseHistogramTest, MacroInLoopTest) {
     UmaHistogramSparse(StringPrintf("Sparse%d", i), 100);
   }
 
-  const StatisticsRecorder::Histograms histograms =
-      StatisticsRecorder::GetHistograms();
+  const auto histograms = Sort(StatisticsRecorder::GetHistograms());
   ASSERT_THAT(histograms, testing::SizeIs(2));
   EXPECT_STREQ(histograms[0]->histogram_name(), "Sparse0");
   EXPECT_STREQ(histograms[1]->histogram_name(), "Sparse1");

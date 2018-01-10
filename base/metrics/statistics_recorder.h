@@ -109,7 +109,7 @@ class BASE_EXPORT StatisticsRecorder {
 
   // Gets existing histograms.
   //
-  // The returned histograms are sorted by name.
+  // The order of returned histograms is not guaranteed.
   //
   // Ownership of the individual histograms remains with the StatisticsRecorder.
   //
@@ -142,17 +142,6 @@ class BASE_EXPORT StatisticsRecorder {
                             HistogramBase::Flags flags_to_set,
                             HistogramBase::Flags required_flags,
                             HistogramSnapshotManager* snapshot_manager);
-
-  // Gets registered histograms. Only histograms which have |query| as a
-  // substring in their name are extracted. An empty query returns all
-  // registered histograms.
-  //
-  // The returned histograms are sorted by name.
-  //
-  // Ownership of the individual histograms remains with the StatisticsRecorder.
-  //
-  // This method is thread safe.
-  static Histograms GetSnapshot(const std::string& query);
 
   typedef base::Callback<void(HistogramBase::Sample)> OnSampleCallback;
 
@@ -255,26 +244,6 @@ class BASE_EXPORT StatisticsRecorder {
   // Precondition: The global lock is already acquired.
   static void EnsureGlobalRecorderWhileLocked();
 
-  // Gets existing histograms matching |predicate|. |Predicate| must have the
-  // signature bool(const HistogramBase&).
-  //
-  // The returned histograms are sorted by name.
-  //
-  // Ownership of the individual histograms remains with the StatisticsRecorder.
-  //
-  // This method is thread safe.
-  template <typename Predicate>
-  static Histograms GetHistogramsWithPredicate(Predicate predicate);
-
-  // Gets existing histograms.
-  //
-  // The returned histograms are sorted by name.
-  //
-  // Ownership of the individual histograms remains with the StatisticsRecorder.
-  //
-  // This method is thread safe.
-  static Histograms GetKnownHistograms(bool include_persistent);
-
   // Gets histogram providers.
   //
   // This method is thread safe.
@@ -320,6 +289,20 @@ class BASE_EXPORT StatisticsRecorder {
 
   DISALLOW_COPY_AND_ASSIGN(StatisticsRecorder);
 };
+
+// Sorts histograms by name.
+BASE_EXPORT StatisticsRecorder::Histograms Sort(
+    StatisticsRecorder::Histograms histograms);
+
+// Filters histograms by name. Only histograms which have |query| as a substring
+// in their name are kept. An empty query keeps all histograms.
+BASE_EXPORT StatisticsRecorder::Histograms WithName(
+    StatisticsRecorder::Histograms histograms,
+    const std::string& query);
+
+// Filters histograms by persistency. Only non-persistent histograms are kept.
+BASE_EXPORT StatisticsRecorder::Histograms NonPersistent(
+    StatisticsRecorder::Histograms histograms);
 
 }  // namespace base
 
