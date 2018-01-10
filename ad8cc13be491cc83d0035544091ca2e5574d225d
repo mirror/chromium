@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "277b2fab_69c0438a",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-10T20:29:03Z",
+      "side": 1,
+      "message": "What causes the test failures when just calling Hide and Show? Does calling Hide when it\u0027s already hidden (or calling Show when it\u0027s already showing) have some effect? That doesn\u0027t seem right. If so, can you check for widget [target] visibility instead of storing a separate boolean flag |is_shown_|?\n  if (IsVisible())\n    Hide();\n\n  if (!IsVisible())\n    Show();",
+      "parentUuid": "37525735_1f464ad8",
+      "revId": "ad8cc13be491cc83d0035544091ca2e5574d225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f6f3ba_ac4b88de",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 1

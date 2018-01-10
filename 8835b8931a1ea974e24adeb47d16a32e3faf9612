@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9178ae9_88ec1dc5",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-10T20:29:03Z",
+      "side": 1,
+      "message": "Why is this in a conditional block? Shouldn\u0027t this expectation statement hold true regardless of the value of shelf_visibility? The checks below might fail if the visibility went from kShelf or kLoginShelf to kNone (the [login] shelf view is still visible even though its widget is hidden), so those can remain in a conditional. This should work:\n\n  EXPECT_EQ(shelf_visibility \u003d\u003d kNone, !GetShelfWidget()-\u003eIsVisible()\n  // The last shelf view shown may still be \u0027visible\u0027 when the widget is hidden.\n  if (shelf_visibility !\u003d kNone) {\n    EXPECT_EQ(shelf_visibility \u003d\u003d kLoginShelf, login_shelf_view_-\u003evisible());\n    EXPECT_EQ(shelf_visibility \u003d\u003d kShelf, shelf_view_-\u003evisible());\n  }",
+      "revId": "8835b8931a1ea974e24adeb47d16a32e3faf9612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
