@@ -16,6 +16,24 @@
       "revId": "b8520ba8b5f97500816463ecd232b0517f153eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce73269_8aff78c8",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-10T17:03:32Z",
+      "side": 1,
+      "message": "Thanks. I suppose it would be more clear to actually include the validation step!",
+      "parentUuid": "5b2c4a05_5a1e3fd6",
+      "revId": "b8520ba8b5f97500816463ecd232b0517f153eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
