@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d93b4848_f79919f4",
+        "filename": "components/arc/ime/arc_ime_bridge_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2018-01-10T02:33:15Z",
+      "side": 1,
+      "message": "I think you can fallback here to OnKeyboardBoundsChanging_Deprecated,\nrather than returning false and falling back at ArcImeService.",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 17
+      },
+      "revId": "2d7ba7fc7798eea0e2cc6f288a22c40b0aa94c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
