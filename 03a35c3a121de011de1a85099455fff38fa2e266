@@ -16,6 +16,24 @@
       "revId": "03a35c3a121de011de1a85099455fff38fa2e266",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1e14b1_55c8eaf2",
+        "filename": "chrome/renderer/security_filter_peer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-10T10:46:38Z",
+      "side": 1,
+      "message": "Agreed, but I don\u0027t want to change the behavior in this CL.",
+      "parentUuid": "04af6187_463fb0d7",
+      "revId": "03a35c3a121de011de1a85099455fff38fa2e266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
