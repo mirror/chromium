@@ -80,7 +80,7 @@ void URLRequestContextStorage::set_network_delegate(
 }
 
 void URLRequestContextStorage::set_proxy_service(
-    std::unique_ptr<ProxyService> proxy_service) {
+    std::unique_ptr<ProxyResolutionService> proxy_service) {
   context_->set_proxy_service(proxy_service.get());
   proxy_service_ = std::move(proxy_service);
 }

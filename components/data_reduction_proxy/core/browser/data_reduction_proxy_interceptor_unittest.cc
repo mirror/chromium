@@ -104,7 +104,7 @@ class TestURLRequestContextWithDataReductionProxy
                                               net::NetworkDelegate* delegate)
       : net::TestURLRequestContext(true) {
     context_storage_.set_proxy_service(
-        net::ProxyService::CreateFixed(origin.ToURI()));
+        net::ProxyResolutionService::CreateFixed(origin.ToURI()));
     set_network_delegate(delegate);
   }
 
@@ -231,7 +231,7 @@ class DataReductionProxyInterceptorWithServerTest : public testing::Test {
         DataReductionProxyServer(origin, ProxyServer::UNSPECIFIED_TYPE));
     test_context_->config()->test_params()->SetProxiesForHttp(proxies_for_http);
     std::string proxy_name = origin.ToURI();
-    proxy_service_ = net::ProxyService::CreateFixedFromPacResult(
+    proxy_service_ = net::ProxyResolutionService::CreateFixedFromPacResult(
         "PROXY " + proxy_name + "; DIRECT");
 
     context_.set_proxy_service(proxy_service_.get());
@@ -260,7 +260,7 @@ class DataReductionProxyInterceptorWithServerTest : public testing::Test {
   net::TestURLRequestContext context_;
   net::EmbeddedTestServer proxy_;
   net::EmbeddedTestServer direct_;
-  std::unique_ptr<net::ProxyService> proxy_service_;
+  std::unique_ptr<net::ProxyResolutionService> proxy_service_;
   std::unique_ptr<net::URLRequestJobFactory> job_factory_;
   std::unique_ptr<DataReductionProxyTestContext> test_context_;
 };

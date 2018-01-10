@@ -85,8 +85,8 @@ void TestNetworkDelegate::OnPACScriptError(int line_number,
 void CheckCapturedNetLogEntries(const net::TestNetLogEntry::List& entries) {
   ASSERT_GT(entries.size(), 2u);
   size_t i = 0;
-  // ProxyService records its own NetLog entries, so skip forward until the
-  // expected event type.
+  // ProxyResolutionService records its own NetLog entries, so skip forward
+  // until the expected event type.
   while (i < entries.size() &&
          entries[i].type != net::NetLogEventType::PAC_JAVASCRIPT_ALERT) {
     i++;
@@ -146,7 +146,7 @@ class ProxyServiceMojoTest : public testing::Test {
   LoggingMockHostResolver mock_host_resolver_;
   net::MockProxyScriptFetcher* fetcher_;  // Owned by |proxy_service_|.
   net::TestNetLog net_log_;
-  std::unique_ptr<net::ProxyService> proxy_service_;
+  std::unique_ptr<net::ProxyResolutionService> proxy_service_;
 };
 
 TEST_F(ProxyServiceMojoTest, Basic) {
