@@ -24,18 +24,18 @@ void SandboxedProcessLauncherDelegate::PostSpawnTarget(
 bool SandboxedProcessLauncherDelegate::ShouldLaunchElevated() {
   return false;
 }
+#endif  // defined(OS_WIN)
 
-#elif(OS_POSIX)
-
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#if defined(OS_LINUX)
 ZygoteHandle SandboxedProcessLauncherDelegate::GetZygote() {
   return nullptr;
 }
-#endif  // !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#endif  // defined(OS_LINUX)
 
+#if defined(OS_POSIX)
 base::EnvironmentMap SandboxedProcessLauncherDelegate::GetEnvironment() {
   return base::EnvironmentMap();
 }
-#endif
+#endif  // defined(OS_POSIX)
 
 }  // namespace content

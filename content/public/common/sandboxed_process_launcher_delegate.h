@@ -34,16 +34,16 @@ class CONTENT_EXPORT SandboxedProcessLauncherDelegate
   // Override to return true if the process should be launched as an elevated
   // process (which implies no sandbox).
   virtual bool ShouldLaunchElevated();
+#endif  // defined(OS_WIN)
 
-#elif defined(OS_POSIX)
-
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#if defined(OS_LINUX)
   // Returns the zygote used to launch the process.
   // NOTE: For now Chrome always uses the same zygote for performance reasons.
   // http://crbug.com/569191
   virtual ZygoteHandle GetZygote();
-#endif  // !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#endif  // defined(OS_LINUX)
 
+#if defined(OS_POSIX)
   // Override this if the process needs a non-empty environment map.
   virtual base::EnvironmentMap GetEnvironment();
 #endif  // defined(OS_POSIX)
