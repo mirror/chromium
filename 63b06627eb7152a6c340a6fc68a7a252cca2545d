@@ -368,6 +368,24 @@
       "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0b11fc2_0e042fcb",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-10T00:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af5410a_5d6321ec",
+      "revId": "63b06627eb7152a6c340a6fc68a7a252cca2545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
