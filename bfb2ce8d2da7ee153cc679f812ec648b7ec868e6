@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa5937a_1a94e84d",
+        "filename": "apps/saved_files_service_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-10T10:05:00Z",
+      "side": 1,
+      "message": "Nit: could you add a comment explaining why this is needed? My memory is that in general packaged app support isn\u0027t around in incognito because apps in general can\u0027t be run in incognito or guest sessions, but system file handlers are an exception.\n\nNote: there might be other bugs with running system file handlers in guest sessions as it wasn\u0027t really a supported thing when packaged apps were designed.",
+      "revId": "bfb2ce8d2da7ee153cc679f812ec648b7ec868e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
