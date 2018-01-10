@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd0a7cce_08089a92",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T17:20:35Z",
+      "side": 1,
+      "message": "We can unify the codepaths if we convert to ui::WebScopedInputEvent here (or earlier). Can you please leave a TODO here?",
+      "revId": "1aac62d16c66b7b5a69034d1bc9539dc4f0be11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
