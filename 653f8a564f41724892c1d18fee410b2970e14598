@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6815e0cd_465b72fe",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-10T22:38:39Z",
+      "side": 1,
+      "message": "I will keep this one open for Ryan \u0026 Ian to decide what is the best strategy here.",
+      "parentUuid": "648f7eb1_94128c55",
+      "range": {
+        "startLine": 795,
+        "startChar": 8,
+        "endLine": 795,
+        "endChar": 36
+      },
+      "revId": "653f8a564f41724892c1d18fee410b2970e14598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ac62535_9c4f4afd",
         "filename": "net/socket/udp_socket_unittest.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "653f8a564f41724892c1d18fee410b2970e14598",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541251a1_2e9d4a0e",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-10T22:38:39Z",
+      "side": 1,
+      "message": "Added a unittest to test all three border cases.",
+      "parentUuid": "7ac62535_9c4f4afd",
+      "range": {
+        "startLine": 942,
+        "startChar": 5,
+        "endLine": 942,
+        "endChar": 32
+      },
+      "revId": "653f8a564f41724892c1d18fee410b2970e14598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
