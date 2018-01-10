@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0490a4ca_3adb702e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/resources/worker_with_images.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-10T18:56:43Z",
+      "side": 1,
+      "message": "Do we still need these URL params? They seem to do nothing now. (Besides, it\u0027s not the \"cacheable\" param, so it was not related to caching either.)",
+      "revId": "9cd617c81c0c03238646befc29705a1524a0e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
