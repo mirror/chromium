@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d91baaa_3fc2f38c",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-10T16:49:07Z",
+      "side": 1,
+      "message": "Nit: Add empty line below.",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "6ff7ccc55e7a2700d7cab95b56d09199a26404ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3238982_582a2294",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-10T16:49:07Z",
+      "side": 1,
+      "message": "This isn\u0027t static. Remove this comment, but add a comment about.\n\nAlso, this needs to have an android ifdef and also make the name mention Android. E.g. UpdateGmsCoreVersionPref()",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "6ff7ccc55e7a2700d7cab95b56d09199a26404ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1b95d3_b88ba895",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-10T16:49:07Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s when if statement and body both are a single line. Fix throughout.",
+      "revId": "6ff7ccc55e7a2700d7cab95b56d09199a26404ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26411f4_05f7b32d",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-10T16:49:07Z",
+      "side": 1,
+      "message": "These shouldn\u0027t be set_launch_count().\n\nFix all the other ones.",
+      "range": {
+        "startLine": 93,
+        "startChar": 44,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "6ff7ccc55e7a2700d7cab95b56d09199a26404ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
