@@ -102,10 +102,21 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public DirectRenderer {
   // A map from RenderPass id to the texture used to draw the RenderPass from.
   struct RenderPassBacking {
     uint32_t gl_id;
+    sk_sp<SkSurface> render_pass_surface = sk_sp<SkSurface>();
     gfx::Size size;
     bool mipmap;
     ResourceFormat format;
     gfx::ColorSpace color_space;
+    RenderPassBacking();
+    RenderPassBacking(GrContext* gr_context,
+                      uint32_t gl_id,
+                      const gfx::Size& size,
+                      bool mipmap,
+                      ResourceFormat format,
+                      const gfx::ColorSpace& color_space);
+    ~RenderPassBacking();
+    RenderPassBacking(RenderPassBacking&&);
+    RenderPassBacking& operator=(RenderPassBacking&&);
   };
   base::flat_map<RenderPassId, RenderPassBacking> render_pass_backings_;
 
