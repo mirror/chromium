@@ -206,6 +206,28 @@ IN_PROC_BROWSER_TEST_F(ContentSettingBubbleControllerTest,
   [parent_ close];
 }
 
+IN_PROC_BROWSER_TEST_F(ContentSettingBubbleControllerTest,
+                       LearnMoreLinkClicked) {
+  ContentSettingBubbleController* controller =
+      CreateBubbleController(new ContentSettingSubresourceFilterBubbleModel(
+          nullptr, web_contents(), profile()));
+  EXPECT_TRUE(controller);
+
+  SubresourceFilterBubbleController* filterController =
+      base::mac::ObjCCast<SubresourceFilterBubbleController>(controller);
+
+  NSString* link =
+      base::SysUTF16ToNSString(l10n_util::GetStringUTF16(IDS_LEARN_MORE));
+  EXPECT_NSEQ([[filterController learnMoreLink] title], link);
+
+  [filterController learnMoreLinkClicked];
+
+  EXPECT_EQ(GURL(l10n_util::GetStringUTF16(IDS_LEARN_MORE)),
+            GetActiveTab()->GetLastCommittedURL());
+
+  [parent_ close];
+}
+
 // Verifies the bubble's touch bar.
 IN_PROC_BROWSER_TEST_F(ContentSettingBubbleControllerTest, TouchBar) {
   if (@available(macOS 10.12.2, *)) {
