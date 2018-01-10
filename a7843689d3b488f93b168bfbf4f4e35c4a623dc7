@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac1da515_d977949e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-10T17:45:41Z",
+      "side": 1,
+      "message": "Does mAdapter.notifyDataSetChanged() work instead?",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "a7843689d3b488f93b168bfbf4f4e35c4a623dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
