@@ -21,7 +21,7 @@ inline void Visitor::MarkHeader(HeapObjectHeader* header,
   if (header->IsMarked())
     return;
 
-  DCHECK(ThreadState::Current()->IsInGC() ||
+  DCHECK(ThreadState::Current()->IsInAtomicPause() ||
          ThreadState::Current()->IsIncrementalMarking());
   DCHECK(GetMarkingMode() != kWeakProcessing);
 
