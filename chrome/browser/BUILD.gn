@@ -2916,6 +2916,8 @@ split_static_library("browser") {
 
     if (enable_native_notifications) {
       sources += [
+        "notifications/mock_itoastnotification.cc",
+        "notifications/mock_itoastnotification.h",
         "notifications/notification_platform_bridge_win.cc",
         "notifications/notification_platform_bridge_win.h",
       ]

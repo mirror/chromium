@@ -4035,7 +4035,9 @@ test("unit_tests") {
       "rpcrt4.lib",
       "urlmon.lib",
       "winmm.lib",
+      "runtimeobject.lib",
     ]
+
     if (!is_chrome_branded) {
       sources -= [ "../browser/google/google_update_win_unittest.cc" ]
     }
