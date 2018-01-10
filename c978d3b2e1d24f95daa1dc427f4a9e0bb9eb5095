@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffe0bba7_fa17decd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2018-01-10T21:54:21Z",
+      "side": 1,
+      "message": "nit: Implements",
+      "revId": "c978d3b2e1d24f95daa1dc427f4a9e0bb9eb5095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02caac98_bf7e17c1",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2018-01-10T21:54:21Z",
+      "side": 1,
+      "message": "no space here and then reorder",
+      "revId": "c978d3b2e1d24f95daa1dc427f4a9e0bb9eb5095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fdd446_85cc4869",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2018-01-10T21:54:21Z",
+      "side": 1,
+      "message": "Nit: add comment above for consistency w/ other methods\\\n\n// Handles D-Bus callback for ReadFile.",
+      "revId": "c978d3b2e1d24f95daa1dc427f4a9e0bb9eb5095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
