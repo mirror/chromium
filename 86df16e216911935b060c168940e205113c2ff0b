@@ -70,6 +70,24 @@
       "revId": "86df16e216911935b060c168940e205113c2ff0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dadd0e6_46b87219",
+        "filename": "ui/ozone/platform/test/mock_platform_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-10T02:39:13Z",
+      "side": 0,
+      "message": "ui/platform_window is the better place I think.\n\nYes, you can\u0027t use gmock there.",
+      "parentUuid": "6cca6cd2_2bf4a1b6",
+      "revId": "86df16e216911935b060c168940e205113c2ff0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
