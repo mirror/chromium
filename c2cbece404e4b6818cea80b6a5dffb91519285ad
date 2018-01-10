@@ -22,6 +22,30 @@
       "revId": "c2cbece404e4b6818cea80b6a5dffb91519285ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf97f8e_7c858dfb",
+        "filename": "content/public/test/web_contents_tester.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-10T18:35:55Z",
+      "side": 1,
+      "message": "Ha sorry, it looks like I lost one of the TabStatsTrackerTest tests during a rebase :/, I\u0027ll add it back. I wasn\u0027t aware that RWHI isn\u0027t exposed outside of content, maybe I could just remove this param (only keep the |type| param) and always use the first RWHI from the frame tree when calling OnUserInteraction? (what I\u0027m currently doing if |render_widget_host| \u003d\u003d nullptr).",
+      "parentUuid": "3b0e81bc_91eca129",
+      "range": {
+        "startLine": 139,
+        "startChar": 15,
+        "endLine": 139,
+        "endChar": 36
+      },
+      "revId": "c2cbece404e4b6818cea80b6a5dffb91519285ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
