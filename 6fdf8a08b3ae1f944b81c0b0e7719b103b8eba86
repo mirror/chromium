@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c408bd03_128650fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T20:15:31Z",
+      "side": 1,
+      "message": "Please delete \"and symbols\", as this changelist only updates the file names + header guards",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd814d56_93badd7d",
+        "filename": "content/network/url_request_context_builder_mojo.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T20:15:31Z",
+      "side": 1,
+      "message": "Why is this change needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 49,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6eed63_fd38eedb",
+        "filename": "net/proxy/dhcp_pac_file_fetcher_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T20:15:31Z",
+      "side": 1,
+      "message": "Please rename",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 55
+      },
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52735cf3_b5daf888",
+        "filename": "net/proxy/dhcp_pac_file_fetcher_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T20:15:31Z",
+      "side": 1,
+      "message": "Please rename",
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047c12f8_b5b6ca47",
+        "filename": "net/proxy/dhcp_pac_file_fetcher_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-10T20:15:31Z",
+      "side": 1,
+      "message": "please rename",
+      "revId": "6fdf8a08b3ae1f944b81c0b0e7719b103b8eba86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
