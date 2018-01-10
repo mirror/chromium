@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "24a7094c_c761f529",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "Makes sense, can you add a comment explaining that here?",
+      "parentUuid": "8929c098_37aade42",
+      "revId": "a66d4e09c10e361bd339d0d7ec2e7b5068dc4441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84bca400_32ce8fdd",
         "filename": "device/ctap/device_response_convertor.cc",
         "patchSetId": 7
@@ -401,6 +419,30 @@
       "side": 1,
       "message": "Even if we used base::span here, wouldn\u0027t we have to copy base::span\u0027s data when we call cbor::CBORReader::Read()? In this case, wouldn\u0027t using const reference be cheaper since we\u0027re not copying anything when we call cbor::CBORReader::Read()? \n\nPlease let me know if I\u0027m misunderstanding anything! :)",
       "parentUuid": "271d1fda_3ac5920f",
+      "range": {
+        "startLine": 33,
+        "startChar": 31,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "a66d4e09c10e361bd339d0d7ec2e7b5068dc4441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a5436e_299f12a6",
+        "filename": "device/ctap/device_response_convertor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "cbor::CBORReader::Read would need to be updated but from glancing at the code that\u0027s a trivial change.",
+      "parentUuid": "0cfec0cf_d63679fc",
       "range": {
         "startLine": 33,
         "startChar": 31,

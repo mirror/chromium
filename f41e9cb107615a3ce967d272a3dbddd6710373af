@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "512ff39c_3cf0c9e2",
+        "filename": "device/ctap/ctap_response_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cad6f4_7499249e",
+        "filename": "device/ctap/ctap_response_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "EXPECT_EQ",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 13
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7369fbc5_1d2bd196",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "nit: These braces can be elided.",
+      "range": {
+        "startLine": 47,
+        "startChar": 58,
+        "endLine": 47,
+        "endChar": 59
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b704ca_afe18e87",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "This if statement needs braces.",
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb031a64_0894f1ed",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "Should we reject the response if there is a value with this key but it is not a map or if PublicKeyCredentialDescriptor::CreateFromCBORValue determines it is invalid?",
+      "range": {
+        "startLine": 105,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 53
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2defa4_93423fbc",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "nit: No braces here.",
+      "range": {
+        "startLine": 113,
+        "startChar": 60,
+        "endLine": 113,
+        "endChar": 61
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a8a5c8_0d82caeb",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "std::move is not necessary here.",
+      "range": {
+        "startLine": 139,
+        "startChar": 23,
+        "endLine": 139,
+        "endChar": 32
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bf7dee_955ffcbd",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "From context here I\u0027m guessing this is \"SetIsPlatformDevice\".",
+      "range": {
+        "startLine": 170,
+        "startChar": 14,
+        "endLine": 170,
+        "endChar": 31
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4cdd99_ef8ef76e",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "A CBORValue::GetBoolean() or CBORValue::is_true() method would be cleaner here.",
+      "range": {
+        "startLine": 170,
+        "startChar": 54,
+        "endLine": 171,
+        "endChar": 72
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85951fe3_590d92de",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "From context here I\u0027m guessing this is \"SetHasResidentKey\".",
+      "range": {
+        "startLine": 177,
+        "startChar": 14,
+        "endLine": 177,
+        "endChar": 28
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295bda99_5d6acb90",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-10T00:12:34Z",
+      "side": 1,
+      "message": "nit: braces not required",
+      "range": {
+        "startLine": 207,
+        "startChar": 60,
+        "endLine": 207,
+        "endChar": 61
+      },
+      "revId": "f41e9cb107615a3ce967d272a3dbddd6710373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
