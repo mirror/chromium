@@ -282,7 +282,8 @@ base::string16 FindChildText(const blink::WebNode& node);
 // Exposed for testing purpose
 base::string16 FindChildTextWithIgnoreListForTesting(
     const blink::WebNode& node,
-    const std::set<blink::WebNode>& divs_to_skip);
+    const std::set<blink::WebNode>& divs_to_skip,
+    const std::set<blink::WebNode>& right_limits);
 base::string16 InferLabelForElementForTesting(
     const blink::WebFormControlElement& element,
     const std::vector<base::char16>& stop_words);

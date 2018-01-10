@@ -503,12 +503,15 @@ function formOrFieldsetsToFormData_(formElement, formControlElement,
     // AutofillFormFieldData's label.
     var labels = formElement.getElementsByTagName('label');
     matchLabelsAndFields_(labels, formElement, controlElements, elementArray);
-  } else {
+  } else if (fieldsets.length) {
     // Same as the if block, but for all the labels in fieldset
     for (var i = 0; i < fieldsets.length; ++i) {
       var labels = fieldsets[i].getElementsByTagName('label');
       matchLabelsAndFields_(labels, formElement, controlElements, elementArray);
     }
+  } else if (controlElements.length) {
+    var labels = document.getElementsByTagName('label');
+    matchLabelsAndFields_(labels, formElement, controlElements, elementArray);
   }
 
   // Loop through the form control elements, extracting the label text from
@@ -900,7 +903,7 @@ function unownedFormElementsAndFieldSetsToFormData_(
   form['name'] = '';
   form['origin'] = __gCrWeb.common.removeQueryAndReferenceFromURL(
       frame.location.href);
-  form['action'] = ''
+  form['action'] = '';
   form['is_form_tag'] = false;
 
   // For now this restriction only applies to English-language pages, because
@@ -1045,78 +1048,69 @@ __gCrWeb.autofill.combineAndCollapseWhitespace = function(
  *
  * @param {Node} node The node to fetch the text content from.
  * @param {number} depth The maximum depth to descend on the DOM.
- * @param {Array<Node>} divsToSkip List of <div> tags to ignore if encountered.
+ * @param {Set<Node>} divsToSkip List of <div> tags to ignore if encountered.
+ * @param {Set<Node>} rightLimits List of element that limit the width of
+ *     search.
  * @return {string} The discovered and adapted string.
  */
-__gCrWeb.autofill.findChildTextInner = function(node, depth, divsToSkip) {
-  if (depth <= 0 || !node) {
+__gCrWeb.autofill.findChildTextInner = function(
+    node, depth, divsToSkip, rightLimits) {
+  if (depth < 0 || !node) {
     return '';
   }
 
-  // Skip over comments.
-  if (node.nodeType === Node.COMMENT_NODE) {
-    return __gCrWeb.autofill.findChildTextInner(node.nextSibling, depth - 1,
-                                                divsToSkip);
+  if (node.nodeType === Node.TEXT_NODE) {
+    return __gCrWeb.autofill.nodeValue(node);
   }
 
-  if (node.nodeType !== Node.ELEMENT_NODE && node.nodeType !== Node.TEXT_NODE) {
+  if (node.nodeType !== Node.ELEMENT_NODE) {
     return '';
   }
 
   // Ignore elements known not to contain inferable labels.
-  if (node.nodeType === Node.ELEMENT_NODE) {
-    if (node.tagName === 'OPTION' ||
-        node.tagName === 'SCRIPT' ||
-        node.tagName === 'NOSCRIPT') {
+  if (node.tagName === 'OPTION' ||
+      node.tagName === 'SCRIPT' ||
+      node.tagName === 'NOSCRIPT') {
+    return '';
+  }
+  if (__gCrWeb.common.isFormControlElement(/** @type {Element} */ (node))) {
+    var input = /** @type {FormControlElement} */ (node);
+    if (__gCrWeb.autofill.isAutofillableElement(input)) {
       return '';
-    }
-    if (__gCrWeb.common.isFormControlElement(/** @type {Element} */ (node))) {
-      var input = /** @type {FormControlElement} */ (node);
-      if (__gCrWeb.autofill.isAutofillableElement(input)) {
-        return '';
-      }
     }
   }
 
-  if (node.tagName === 'DIV') {
-    for (var i = 0; i < divsToSkip.length; ++i) {
-      if (node === divsToSkip[i]) {
-        return '';
-      }
-    }
+  if (node.tagName === 'DIV' && divsToSkip.has(node)) {
+    return '';
   }
 
   // Extract the text exactly at this node.
-  var nodeText = __gCrWeb.autofill.nodeValue(node);
-  if (node.nodeType === Node.TEXT_NODE && !nodeText) {
-    // In the C++ version, this text node would have been stripped completely.
-    // Just pass the buck.
-    return __gCrWeb.autofill.findChildTextInner(node.nextSibling, depth,
-                                                divsToSkip);
+  var nodeText = '';
+  var addSpace = false;
+  var child = node.firstChild;
+  while (child) {
+    var childText = '';
+    if (child.nodeType === Node.TEXT_NODE) {
+      childText = __gCrWeb.autofill.nodeValue(child);
+      if (childText === '') {
+        // This node is only a new line and should be ignored.
+        child = child.nextSibling;
+        continue;
+      }
+    } else if (child.nodeType === Node.ELEMENT_NODE) {
+      depth = depth - 1;
+      childText = __gCrWeb.autofill.findChildTextInner(
+          child, depth, divsToSkip, rightLimits);
+     }
+
+    nodeText = __gCrWeb.autofill.combineAndCollapseWhitespace(nodeText,
+                                        childText, addSpace);
+    addSpace = (child.nodeType === Node.TEXT_NODE) && (childText == '');
+    if (rightLimits.has(child) || depth < 0) {
+      break;
+    }
+ child = child.nextSibling;
   }
-
-  // Recursively compute the children's text.
-  // Preserve inter-element whitespace separation.
-  var childText = __gCrWeb.autofill.findChildTextInner(node.firstChild,
-                                                       depth - 1,
-                                                       divsToSkip);
-  var addSpace = node.nodeType === Node.TEXT_NODE && !nodeText;
-  // Emulate apparently incorrect Chromium behavior tracked in crbug 239819.
-  addSpace = false;
-  nodeText = __gCrWeb.autofill.combineAndCollapseWhitespace(nodeText,
-      childText, addSpace);
-
-  // Recursively compute the siblings' text.
-  // Again, preserve inter-element whitespace separation.
-  var siblingText = __gCrWeb.autofill.findChildTextInner(node.nextSibling,
-                                                         depth - 1,
-                                                         divsToSkip);
-  addSpace = node.nodeType === Node.TEXT_NODE && !nodeText;
-  // Emulate apparently incorrect Chromium behavior tracked in crbug 239819.
-  addSpace = false;
-  nodeText = __gCrWeb.autofill.combineAndCollapseWhitespace(nodeText,
-      siblingText, addSpace);
-
   return nodeText;
 };
 
@@ -1130,17 +1124,19 @@ __gCrWeb.autofill.findChildTextInner = function(node, depth, divsToSkip) {
  * in chromium/src/components/autofill/content/renderer/form_autofill_util.cc.
  *
  * @param {Node} node A node of which the child text will be return.
- * @param {Array<Node>} divsToSkip List of <div> tags to ignore if encountered.
+ * @param {Set<Node>} divsToSkip List of <div> tags to ignore if encountered.
+ * @param {Set<Node>} rightLimits List of <div> tags to limit the text width of
+ *     text extraction.
  * @return {string} The child text.
  */
-__gCrWeb.autofill.findChildTextWithIgnoreList = function(node, divsToSkip) {
+__gCrWeb.autofill.findChildTextWithIgnoreList = function(
+    node, divsToSkip, rightLimits) {
   if (node.nodeType === Node.TEXT_NODE)
     return __gCrWeb.autofill.nodeValue(node);
 
-  var child = node.firstChild;
   var kChildSearchDepth = 10;
-  var nodeText = __gCrWeb.autofill.findChildTextInner(child, kChildSearchDepth,
-                                                      divsToSkip);
+  var nodeText = __gCrWeb.autofill.findChildTextInner(node, kChildSearchDepth,
+                                                      divsToSkip, rightLimits);
   nodeText = nodeText.trim();
   return nodeText;
 };
@@ -1159,7 +1155,8 @@ __gCrWeb.autofill.findChildTextWithIgnoreList = function(node, divsToSkip) {
  * @return {string} The child text.
  */
 __gCrWeb.autofill.findChildText = function(node) {
-  return __gCrWeb.autofill.findChildTextWithIgnoreList(node, []);
+  return __gCrWeb.autofill.findChildTextWithIgnoreList(
+      node, new Set(), new Set());
 };
 
 /**
@@ -1405,7 +1402,7 @@ __gCrWeb.autofill.inferLabelFromTableColumn = function(element) {
   // non-empty text block.
   var inferredLabel = '';
   var previous = parentNode.previousSibling;
-  while (inferredLabel.length === 0 && previous) {
+  while (!__gCrWeb.autofill.IsLabelValid(inferredLabel) && previous) {
     if (__gCrWeb.autofill.hasTagName(previous, 'td') ||
         __gCrWeb.autofill.hasTagName(previous, 'th')) {
       inferredLabel = __gCrWeb.autofill.findChildText(previous);
@@ -1479,7 +1476,7 @@ __gCrWeb.autofill.inferLabelFromTableRow = function(element) {
 
   // Combine left + right.
   cellCount += cellPosition;
-  cellPositionEnd += cellPosition
+  cellPositionEnd += cellPosition;
 
   // Find the current row.
   var parentNode = element.parentNode;
@@ -1596,7 +1593,7 @@ __gCrWeb.autofill.inferLabelFromEnclosingLabel = function(element) {
     return __gCrWeb.autofill.findChildText(node);
   }
   return '';
-}
+};
 
 /**
  * Helper for |InferLabelForElement()| that infers a label, if possible, from
@@ -1621,15 +1618,21 @@ __gCrWeb.autofill.inferLabelFromDivTable = function(element) {
 
   var node = element.parentNode;
   var lookingForParent = true;
-  var divsToSkip = [];
+  var divsToSkip = new Set();
+  var rightLimits = new Set();
+ rightLimits.add(element);
 
   // Search the sibling and parent <div>s until we find a candidate label.
   var inferredLabel = '';
-  while (inferredLabel.length === 0 && node) {
+  while (!__gCrWeb.autofill.IsLabelValid(inferredLabel) && node) {
+ if (lookingForParent) {
+ rightLimits.add(node);
+ }
     if (__gCrWeb.autofill.hasTagName(node, 'div')) {
       if (lookingForParent) {
         inferredLabel =
-            __gCrWeb.autofill.findChildTextWithIgnoreList(node, divsToSkip);
+            __gCrWeb.autofill.findChildTextWithIgnoreList(
+                node, divsToSkip, rightLimits);
       } else {
         inferredLabel = __gCrWeb.autofill.findChildText(node);
       }
@@ -1646,7 +1649,7 @@ __gCrWeb.autofill.inferLabelFromDivTable = function(element) {
             }
           }
           if (addDiv) {
-            divsToSkip.push(node);
+            divsToSkip.add(node);
           }
         }
       }
@@ -1741,7 +1744,7 @@ __gCrWeb.autofill.ancestorTagNames = function(element) {
     parentNode = parentNode.parentNode;
   }
   return tagNames;
-}
+};
 
 /**
  * Infers corresponding label for |element| from surrounding context in the DOM,

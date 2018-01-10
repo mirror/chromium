@@ -15,7 +15,7 @@ PHONE_HOME_WHOLE_NUMBER | bdphone | Phone Number |  | fname_1-default
 UNKNOWN_TYPE | bopusSMSagree | Text me information from CVS/pharmacy, including information about my order. I Agree to the Mobile Terms of Use. | on | fname_1-default
 UNKNOWN_TYPE | orderConfirmation1 | Send order information to . | on | fname_1-default
 EMAIL_ADDRESS | bdemail | Specify a different email address |  | fname_1-default
-UNKNOWN_TYPE | bopusSMSagree1 | Text me information from CVS/pharmacy�, including information about my order. | on | fname_1-default
+UNKNOWN_TYPE | bopusSMSagree1 | Text me information from CVS/pharmacy�, including information about my order. I Agree to the Mobile Terms of Use. | on | fname_1-default
 UNKNOWN_TYPE | fsaValue | I would like to apply $0.00 of eligible items in this order to my FSA Debit Card. | on | fname_1-default
 UNKNOWN_TYPE | fsaValue1 | I would like to apply $0.00 of eligible items in this order to my FSA Debit Card. | on | fname_1-default
 CREDIT_CARD_NUMBER | ccfield | FSA Card |  | credit-card-cc
@@ -26,7 +26,7 @@ CREDIT_CARD_NUMBER | ccfield | FSA Card |  | credit-card-cc
 CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR | expfield | Exp |  | credit-card-cc
 CREDIT_CARD_VERIFICATION_CODE | cvvfield | CVV |  | credit-card-cc
 CREDIT_CARD_VERIFICATION_CODE | cvvfield | |CVV |  | credit-card-cc
-UNKNOWN_TYPE | chk1 | Use ... as Billing Address. | on | fname_1-default
+UNKNOWN_TYPE | chk1 | Use ... , as Billing Address. | on | fname_1-default
 NAME_FIRST | ffname | First Name |  | fname_1-default
 NAME_LAST | flname | Last Name |  | fname_1-default
 ADDRESS_HOME_LINE1 | fstreetAddr | Street Address |  | fname_1-default
@@ -43,7 +43,7 @@ CREDIT_CARD_NUMBER | ccfield | Credit Card |  | credit-card-cc
 CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR | expfield | Exp |  | credit-card-cc
 CREDIT_CARD_VERIFICATION_CODE | cvvfield | CVV |  | credit-card-cc
 CREDIT_CARD_VERIFICATION_CODE | cvvfield | |CVV |  | credit-card-cc
-UNKNOWN_TYPE | billing | Use ... | on | fname_1-default
+UNKNOWN_TYPE | billing | Use ... , as Billing Address. | on | fname_1-default
 UNKNOWN_TYPE | newaddress | Specify a Different Billing Address Specify a Billing Address: |  | fname_1-default
 NAME_FIRST | ufname | First Name |  | fname_1-default
 NAME_LAST | ulname | Last Name |  | fname_1-default

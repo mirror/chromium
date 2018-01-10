@@ -1,41 +1,41 @@
 UNKNOWN_TYPE |  |  |  | _1-default
-NAME_FIRST |  | First Name |  | _1-default
-NAME_MIDDLE_INITIAL |  | M.I. |  | _1-default
-NAME_LAST |  | Last Name |  | _1-default
-ADDRESS_HOME_LINE1 |  | Address 1 |  | _1-default
-ADDRESS_HOME_LINE2 |  | Address 2 (Optional) |  | _1-default
-ADDRESS_HOME_CITY |  | City |  | _1-default
-ADDRESS_HOME_STATE |  | State |  | _1-default
-ADDRESS_HOME_ZIP |  | ZIP Code |  | _1-default
-PHONE_HOME_WHOLE_NUMBER |  | Phone Information |  | _1-default
+NAME_FIRST |  | First Name Please enter a first name. Please remove any special characters. |  | _1-default
+NAME_MIDDLE_INITIAL |  | M.I. Please use alphabetic characters only. |  | _1-default
+NAME_LAST |  | Last Name Please enter a last name. Please remove any special characters. |  | _1-default
+ADDRESS_HOME_LINE1 |  | Address 1 Please enter a complete address. Please remove any special characters. |  | _1-default
+ADDRESS_HOME_LINE2 |  | Address 2 (Optional) Please remove any special characters. |  | _1-default
+ADDRESS_HOME_LINE3 |  | City Please enter a city. Please remove any special characters. This address is invalid. Please double-check the city, state, and ZIP code. |  | _1-default
+ADDRESS_HOME_STATE |  | State Please select a state. |  | _1-default
+ADDRESS_HOME_ZIP |  | ZIP Code Please enter a ZIP code. Please enter a valid ZIP code. |  | _1-default
+PHONE_HOME_WHOLE_NUMBER |  | Phone Information Phone Number for Shipping This phone number will only be used by the shipping carrier if there are questions about delivering your order. Close Please enter a phone number. Please enter a valid phone number. |  | _1-default
 UNKNOWN_TYPE |  | Use this as my billing address. | on | _1-default
 UNKNOWN_TYPE | multiple-address | No | false | _1-default
 UNKNOWN_TYPE | multiple-address | Yes | true | _1-default
-UNKNOWN_TYPE |  | Note Number |  | _1-default
-UNKNOWN_TYPE |  | Access Code |  | _1-default
-UNKNOWN_TYPE |  | Gift Card Number |  | _1-default
-UNKNOWN_TYPE |  | Access Code |  | _1-default
+UNKNOWN_TYPE |  | Note Number Please enter your Note number. Please enter a valid Note number. Please select Apply if you'd like to use this Note for your order. |  | _1-default
+UNKNOWN_TYPE |  | Access Code Please enter the access code. Please enter a valid access code. |  | _1-default
+UNKNOWN_TYPE |  | Gift Card Number Please enter your Gift Card number. Please enter a valid Gift Card number. Please select Apply if you'd like to use this Gift Card for your order. |  | _1-default
+UNKNOWN_TYPE |  | Access Code Please enter the access code. Please enter a valid access code. |  | _1-default
 UNKNOWN_TYPE |  | Please do not fill out the next field, it is a security measure to insure that this page is being visited by a human. |  | _1-default
-UNKNOWN_TYPE |  | Enter a Promotion Code |  | _1-default
-UNKNOWN_TYPE |  | Employee Number |  | _1-default
+UNKNOWN_TYPE |  | Enter a Promotion Code Please enter a valid promotion code. Please enter a valid promotion code. You must use a Nordstrom credit or debit card, Gift Card or Nordstrom Note to receive your employee discount. Please select Apply if you'd like to use this promotion code for your order. |  | _1-default
+UNKNOWN_TYPE |  | Employee Number Please enter a valid employee number. Please enter a valid employee number. You must use a Nordstrom credit or debit card, Gift Card or Nordstrom Note to receive your employee discount. Please select Apply if you'd like to use this employee number for your order. |  | _1-default
 UNKNOWN_TYPE | discount | % |  | _1-default
 UNKNOWN_TYPE | discount | % |  | _1-default
 UNKNOWN_TYPE |  | CREDIT CARD |  | _1-default
-CREDIT_CARD_NUMBER |  | Card Number Information |  | credit-card-cc
+CREDIT_CARD_NUMBER |  | Card Number Information Cards We Accept Nordstrom Retail, Nordstrom Signature Visa®, Nordstrom Debit, Visa®, MasterCard, Discover, American Express and JCB. Close Please enter your credit card number. Please enter a valid credit card number. You must use a Nordstrom credit or debit card, Gift Card or Nordstrom Note to receive your employee discount. |  | credit-card-cc
 CREDIT_CARD_EXP_MONTH |  |  |  | credit-card-cc
 CREDIT_CARD_EXP_4_DIGIT_YEAR |  |  |  | credit-card-cc
-CREDIT_CARD_VERIFICATION_CODE | credit-ccv | Security Code Information |  | credit-card-cc
+CREDIT_CARD_VERIFICATION_CODE | credit-ccv | Security Code Information Security Code On American Express cards, the security code is the four-digit code on the front of the card. On Discover cards, the security code is the three-digit code on the back of the card. On MasterCards, the security code is the three-digit code on the back of the card. Please enter the security code. Please enter a valid 0-digit code. |  | credit-card-cc
 UNKNOWN_TYPE |  | Yes, I would like to save my credit card information. | on | _1-default
 UNKNOWN_TYPE |  | BILL TO |  | _1-default
-NAME_FIRST |  | First Name |  | _1-default
-NAME_MIDDLE_INITIAL |  | M.I. |  | _1-default
-NAME_LAST |  | Last Name |  | _1-default
-ADDRESS_HOME_LINE1 |  | Address 1 |  | _1-default
-ADDRESS_HOME_LINE2 |  | Address 2 (Optional) |  | _1-default
-ADDRESS_HOME_CITY |  | City |  | _1-default
-ADDRESS_HOME_STATE |  | State/Province |  | _1-default
-ADDRESS_HOME_ZIP |  | ZIP/Postal Code |  | _1-default
-ADDRESS_HOME_COUNTRY |  | Country | 0 | _1-default
-EMAIL_ADDRESS |  | E-mail Information Information |  | _1-default
-PHONE_HOME_WHOLE_NUMBER |  | Phone Information Information |  | _1-default
-UNKNOWN_TYPE |  | Send me e-mail updates about the latest trends, products and promotions online and in store. Yes! | on | _1-default
+NAME_FIRST |  | First Name Please enter a first name. Please remove any special characters. |  | _1-default
+NAME_MIDDLE_INITIAL |  | M.I. Please use alphabetic characters only. |  | _1-default
+NAME_LAST |  | Last Name Please enter a last name. Please remove any special characters. |  | _1-default
+ADDRESS_HOME_LINE1 |  | Address 1 Please enter a complete address. Please remove any special characters. |  | _1-default
+ADDRESS_HOME_LINE2 |  | Address 2 (Optional) Please remove any special characters. |  | _1-default
+ADDRESS_HOME_LINE3 |  | City Please enter a city. Please remove any special characters. This address is invalid. Please double-check the city, state, and ZIP code. |  | _1-default
+ADDRESS_HOME_STATE |  | State/Province Please select a state/province. |  | _1-default
+ADDRESS_HOME_ZIP |  | ZIP/Postal Code Please enter a ZIP code. Please enter a valid ZIP code. |  | _1-default
+ADDRESS_HOME_COUNTRY |  | Country Please enter a country. | 0 | _1-default
+EMAIL_ADDRESS |  | E-mail Information Order Confirmation E-mail This e-mail address will only be used by Nordstrom if we have questions about your order. Close Information Please enter your e-mail. Please enter a valid e-mail address. |  | _1-default
+PHONE_HOME_WHOLE_NUMBER |  | Phone Information Phone Number for This Order This phone number will only be used by Nordstrom if we have questions about your order. Close Information Please enter a phone number. Please enter a valid phone number. |  | _1-default
+UNKNOWN_TYPE |  | Yes! Send me e-mail updates about the latest trends, products and promotions online and in store. | on | _1-default

@@ -115,6 +115,91 @@ NSString* kHTMLForTestingElements = @"<html><body>"
     "</body></html>";
 // clang-format on
 
+NSString* kElevenChildren =
+    @"<div id='target'>"
+     "<div>child0</div>"
+     "<div>child1</div>"
+     "<div>child2</div>"
+     "<div>child3</div>"
+     "<div>child4</div>"
+     "<div>child5</div>"
+     "<div>child6</div>"
+     "<div>child7</div>"
+     "<div>child8</div>"
+     "<div>child9</div>"
+     "<div>child10</div>"
+     "</div>";
+NSString* kElevenChildrenExpected =
+    @"child0child1child2child3child4child5child6child7child8child9";
+
+NSString* kElevenChildrenNested =
+    @"<div id='target'>"
+     "<div>child0"
+     "<div>child1"
+     "<div>child2"
+     "<div>child3"
+     "<div>child4"
+     "<div>child5"
+     "<div>child6"
+     "<div>child7"
+     "<div>child8"
+     "<div>child9"
+     "<div>child10"
+     "</div></div></div></div></div></div></div></div></div></div></div></div>";
+// Take 10 elements -1 for target element, -1 as text is a leaf element.
+NSString* kElevenChildrenNestedExpected =
+    @"child0child1child2child3child4child5child6child7child8child9";
+
+NSString* kSkipElement =
+    @"<div id='target'>"
+     "<div>child0</div>"
+     "<div class='skip'>child1</div>"
+     "<div>child2</div>"
+     "</div>";
+NSString* kSkipElementExpected = @"child0child2";
+
+NSString* kDivTableExample1 =
+    @"<div>"
+     "<div>label</div><div><input id='target'/></div>"
+     "</div>";
+NSString* kDivTableExample1Expected = @"label";
+
+NSString* kDivTableExample2 =
+    @"<div>"
+     "<div>label</div>"
+     "<div>should be skipped<input/></div>"
+     "<div><input id='target'/></div>"
+     "</div>";
+NSString* kDivTableExample2Expected = @"label";
+
+NSString* kDivTableExample3 =
+    @"<div>"
+     "<div>should be skipped<input/></div>"
+     "<div>label</div>"
+     "<div><input id='target'/></div>"
+     "</div>";
+NSString* kDivTableExample3Expected = @"label";
+
+NSString* kDivTableExample4 =
+    @"<div>"
+     "<div>should be skipped<input/></div>"
+     "label"
+     "<div><input id='target'/></div>"
+     "</div>";
+NSString* kDivTableExample4Expected = @"label";
+
+NSString* kDivTableExample5 =
+    @"<div>"
+     "<div>label<div><input id='target'/></div>behind</div>"
+     "</div>";
+NSString* kDivTableExample5Expected = @"label";
+
+NSString* kDivTableExample6 =
+    @"<div>"
+     "<div>label<div><div>-<div><input id='target'/></div></div>"
+     "</div>";
+NSString* kDivTableExample6Expected = @"label-";
+
 // A bit field mask to extract data from WebFormControlElement. They are from
 // autofill_controller.js
 enum ExtractMask {
@@ -1781,6 +1866,141 @@ TEST_F(AutofillControllerJsTest, ExtractNewForms) {
         [testCase[@"expected_forms"] unsignedIntegerValue];
     EXPECT_EQ(expectedCount, [resultDict[@"forms"] count])
         << base::SysNSStringToUTF8(testCase[@"html"]);
+  }
+}
+
+// This test is based on FormAutofillUtilsTest::FindChildTextTest.
+// It's purpose is to detect difference of behavior it the text extraction
+// between iOS and the other platforms.
+TEST_F(AutofillControllerJsTest, FindChildTextTest) {
+  NSArray* testCases = @[
+    @{
+      @"description" : @"Simple test",
+      @"html" : @"<div id='target'>test</div>",
+      @"expected" : @"test"
+    },
+    @{
+      @"description" : @"Concatenate test",
+      @"html" : @"<div id='target'><span>one</span>two</div>",
+      @"expected" : @"onetwo"
+    },
+    @{
+      @"description" : @"Ignore input",
+      @"html" : @"<div id='target'>one<input value='test'/>two</div>",
+      @"expected" : @"onetwo"
+    },
+    @{
+      @"description" : @"Trim",
+      @"html" : @"<div id='target'>   one<span>two  </span></div>",
+      @"expected" : @"onetwo"
+    },
+    @{
+      @"description" : @"Preserve space",
+      @"html" : @"<div id='target'>one <div><div/>two</div>",
+      @"expected" : @"one two"
+    },
+    @{
+      @"description" : @"Preserve space 2",
+      @"html" : @"<div id='target'>one<div><div/> two</div>",
+      @"expected" : @"one two"
+    },
+    @{
+      @"description" : @"Preserve space 3",
+      @"html" : @"<div id='target'>one<div> <div/>two</div>",
+      @"expected" : @"one two"
+    },
+    @{
+      @"description" : @"Eleven children",
+      @"html" : kElevenChildren,
+      @"expected" : kElevenChildrenExpected
+    },
+    @{
+      @"description" : @"Eleven children nested",
+      @"html" : kElevenChildrenNested,
+      @"expected" : kElevenChildrenNestedExpected
+    },
+  ];
+
+  for (NSDictionary* testCase in testCases) {
+    SCOPED_TRACE(base::SysNSStringToUTF8(testCase[@"description"]));
+    LoadHtmlAndInject(testCase[@"html"]);
+    NSString* result = ExecuteJavaScript(
+        @"__gCrWeb.autofill.findChildText(document.getElementById('target'))");
+
+    EXPECT_NSEQ(testCase[@"expected"], result);
+  }
+}
+
+// This test is based on FormAutofillUtilsTest::FindChildTextSkipElementTest.
+// It's purpose is to detect difference of behavior it the text extraction
+// between iOS and the other platforms.
+TEST_F(AutofillControllerJsTest, FindChildTextSkipElementTest) {
+  NSArray* testCases = @[
+    @{
+      @"description" : @"Simple test",
+      @"html" : @"<div id='target'>test</div>",
+      @"expected" : @"test"
+    },
+  ];
+
+  for (NSDictionary* testCase in testCases) {
+    SCOPED_TRACE(base::SysNSStringToUTF8(testCase[@"description"]));
+    LoadHtmlAndInject(testCase[@"html"]);
+    NSString* result = ExecuteJavaScript(
+        @"__gCrWeb.autofill.findChildTextWithIgnoreList(document."
+        @"getElementById('target'), new "
+        @"Set(document.getElementsByClassName('skip')), "
+        @"new Set(document.getElementsByClassName('right')))");
+
+    EXPECT_NSEQ(testCase[@"expected"], result);
+  }
+}
+
+// This test is based on FormAutofillUtilsTest::InferLabelForElementTest.
+// It's purpose is to detect difference of behavior it the text extraction
+// between iOS and the other platforms.
+TEST_F(AutofillControllerJsTest, InferLabelForElementTest) {
+  NSArray* testCases = @[
+    @{
+      @"description" : @"DIV table test 1",
+      @"html" : kDivTableExample1,
+      @"expected" : kDivTableExample1Expected
+    },
+    @{
+      @"description" : @"DIV table test 2",
+      @"html" : kDivTableExample2,
+      @"expected" : kDivTableExample2Expected
+    },
+    @{
+      @"description" : @"DIV table test 3",
+      @"html" : kDivTableExample3,
+      @"expected" : kDivTableExample3Expected
+    },
+    @{
+      @"description" : @"DIV table test 4",
+      @"html" : kDivTableExample4,
+      @"expected" : kDivTableExample4Expected
+    },
+    @{
+      @"description" : @"DIV table test 5",
+      @"html" : kDivTableExample5,
+      @"expected" : kDivTableExample5Expected
+    },
+    @{
+      @"description" : @"DIV table test 6",
+      @"html" : kDivTableExample6,
+      @"expected" : kDivTableExample6Expected
+    },
+  ];
+
+  for (NSDictionary* testCase in testCases) {
+    SCOPED_TRACE(base::SysNSStringToUTF8(testCase[@"description"]));
+    LoadHtmlAndInject(testCase[@"html"]);
+    NSString* result = ExecuteJavaScript(
+        @"__gCrWeb.autofill.inferLabelForElement(document.getElementById('"
+        @"target'))");
+
+    EXPECT_NSEQ(testCase[@"expected"], result);
   }
 }
 
