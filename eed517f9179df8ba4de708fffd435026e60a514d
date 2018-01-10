@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "ac216f70_7bd7d9aa",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-10T09:20:18Z",
+      "side": 1,
+      "message": "should this be case insensitive?\nI could not find relevant spec description, but external preflight check uses EqualIgnoringASCIICase to check \"true\".",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "eed517f9179df8ba4de708fffd435026e60a514d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0166e68d_6c797bf9",
         "filename": "services/network/public/cpp/cors/cors_unittest.cc",
         "patchSetId": 1
