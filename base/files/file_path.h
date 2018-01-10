@@ -174,7 +174,7 @@ class BASE_EXPORT FilePath {
   // The character used to identify a file extension.
   static const CharType kExtensionSeparator;
 
-  FilePath();
+  constexpr FilePath();
   FilePath(const FilePath& that);
   explicit FilePath(StringPieceType path);
   ~FilePath();

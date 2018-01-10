@@ -169,7 +169,7 @@ bool IsEmptyOrSpecialCase(const StringType& path) {
 
 }  // namespace
 
-FilePath::FilePath() = default;
+constexpr FilePath::FilePath() = default;
 
 FilePath::FilePath(const FilePath& that) = default;
 FilePath::FilePath(FilePath&& that) noexcept = default;
