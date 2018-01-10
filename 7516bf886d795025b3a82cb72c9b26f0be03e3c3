@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9b31c08_9b25a5cb",
+        "filename": "content/common/url_loader_factory_bundle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-10T21:48:41Z",
+      "side": 1,
+      "message": "My assumptions are:\n1. |NetworkServiceURLLoaderFactory| is the only factory that could crash.\n2. |factories_| won\u0027t contain |NetworkServiceURLLoaderFactory|.\n\nIs that correct?",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 35
+      },
+      "revId": "7516bf886d795025b3a82cb72c9b26f0be03e3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe80823_60700e7b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-10T21:48:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s appropriate to request interface from |RenderProcessHostImpl::CreateURLLoaderFactory()| directly, but it seems to be doing the same thing as |RenderFrameHostImpl::CommitNavigation():3507|.\n\nAlternatively we can introduce \u0027url_loader_factory_getter.mojom\u0027 and have the implementation live in browser or somewhere outside of Network Service process, and pass |URLLoaderFactoryGetterPtr| around instead of |URLLoaderFactoryPtr|.",
+      "range": {
+        "startLine": 764,
+        "startChar": 8,
+        "endLine": 764,
+        "endChar": 21
+      },
+      "revId": "7516bf886d795025b3a82cb72c9b26f0be03e3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
