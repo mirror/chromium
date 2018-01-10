@@ -150,3 +150,40 @@ id<LayoutGuideProvider> SafeAreaLayoutGuideForView(UIView* view) {
     return view;
   }
 }
+
+void AddSameConstraintsToSides(id<LayoutGuideProvider> view1,
+                               id<LayoutGuideProvider> view2,
+                               ios::LayoutSides sides) {
+  AddSameConstraintsToSidesWithInsets(
+      view1, view2, sides, ios::ChromeDirectionalEdgeInsetsMake(0, 0, 0, 0));
+}
+
+void AddSameConstraintsToSidesWithInsets(
+    id<LayoutGuideProvider> innerView,
+    id<LayoutGuideProvider> outerView,
+    ios::LayoutSides sides,
+    ios::ChromeDirectionalEdgeInsets insets) {
+  NSMutableArray* constraints = [[NSMutableArray alloc] init];
+  if (sides & ios::Top) {
+    [constraints addObject:[innerView.topAnchor
+                               constraintEqualToAnchor:outerView.topAnchor
+                                              constant:insets.top]];
+  }
+  if (sides & ios::Leading) {
+    [constraints addObject:[innerView.leadingAnchor
+                               constraintEqualToAnchor:outerView.leadingAnchor
+                                              constant:insets.leading]];
+  }
+  if (sides & ios::Bottom) {
+    [constraints addObject:[innerView.bottomAnchor
+                               constraintEqualToAnchor:outerView.bottomAnchor
+                                              constant:insets.bottom]];
+  }
+  if (sides & ios::Trailing) {
+    [constraints addObject:[innerView.trailingAnchor
+                               constraintEqualToAnchor:outerView.trailingAnchor
+                                              constant:insets.trailing]];
+  }
+
+  [NSLayoutConstraint activateConstraints:constraints];
+}

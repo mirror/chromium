@@ -7,6 +7,31 @@
 
 #import <UIKit/UIKit.h>
 
+namespace ios {
+typedef NS_OPTIONS(NSUInteger, LayoutSides) {
+  Top = (1 << 0),
+  Leading = (1 << 1),
+  Bottom = (1 << 2),
+  Trailing = (1 << 3),
+};
+
+// Same as NSDirectionalEdgeInsets but available on iOS 10.
+typedef struct ChromeDirectionalEdgeInsets {
+  CGFloat top, leading, bottom, trailing;  // specify amount to inset (positive)
+                                           // for each of the edges. values can
+                                           // be negative to 'outset'
+} ChromeDirectionalEdgeInsets;
+
+inline ChromeDirectionalEdgeInsets ChromeDirectionalEdgeInsetsMake(
+    CGFloat top,
+    CGFloat leading,
+    CGFloat bottom,
+    CGFloat trailing) {
+  ChromeDirectionalEdgeInsets insets = {top, leading, bottom, trailing};
+  return insets;
+}
+}  // namespace ios
+
 // Defines a protocol for common -...Anchor methods of UIView and UILayoutGuide.
 @protocol LayoutGuideProvider<NSObject>
 @property(nonatomic, readonly, strong) NSLayoutXAxisAnchor* leadingAnchor;
@@ -129,6 +154,16 @@ void AddSameConstraints(id<LayoutGuideProvider> view1,
 // Adds constraints to make |innerView| leading, trailing, top and bottom
 // anchors equals to |outerView| safe area (or view bounds) anchors.
 void PinToSafeArea(id<LayoutGuideProvider> innerView, UIView* outerView);
+
+void AddSameConstraintsToSides(id<LayoutGuideProvider> view1,
+                               id<LayoutGuideProvider> view2,
+                               ios::LayoutSides sides);
+
+void AddSameConstraintsToSidesWithInsets(
+    id<LayoutGuideProvider> innerView,
+    id<LayoutGuideProvider> outerView,
+    ios::LayoutSides sides,
+    ios::ChromeDirectionalEdgeInsets insets);
 
 #pragma mark - Safe Area.
 
