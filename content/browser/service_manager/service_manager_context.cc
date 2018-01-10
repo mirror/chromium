@@ -69,8 +69,8 @@
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "services/service_manager/service_manager.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
-#include "services/video_capture/public/cpp/constants.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
+#include "services/video_capture/service_impl.h"
 #include "services/viz/public/interfaces/constants.mojom.h"
 #include "ui/base/ui_base_switches_util.h"
 #include "ui/base/ui_features.h"
@@ -391,7 +391,9 @@ class ServiceManagerContext::InProcessServiceManagerContext
   DISALLOW_COPY_AND_ASSIGN(InProcessServiceManagerContext);
 };
 
-ServiceManagerContext::ServiceManagerContext() {
+ServiceManagerContext::ServiceManagerContext(
+    scoped_refptr<base::SequencedTaskRunner>
+        task_runner_for_embedded_video_capture_service) {
   service_manager::mojom::ServiceRequest packaged_services_request;
   if (service_manager::ServiceManagerIsRemote()) {
     auto invitation =
@@ -514,6 +516,18 @@ ServiceManagerContext::ServiceManagerContext() {
         metrics::mojom::kMetricsServiceName, info);
   }
 
+  if (features::IsVideoCaptureServiceEnabledForBrowserProcess()) {
+    service_manager::EmbeddedServiceInfo video_capture_info;
+    video_capture_info.factory =
+        base::BindRepeating(&video_capture::ServiceImpl::Create);
+    // If |task_runner_for_embedded_video_capture_service| is nullptr, this
+    // means that the default task runner will be used.
+    video_capture_info.task_runner =
+        std::move(task_runner_for_embedded_video_capture_service);
+    packaged_services_connection_->AddEmbeddedService(
+        video_capture::mojom::kServiceName, video_capture_info);
+  }
+
   ContentBrowserClient::StaticServiceMap services;
   GetContentClient()->browser()->RegisterInProcessServices(&services);
   for (const auto& entry : services) {
@@ -559,7 +573,7 @@ ServiceManagerContext::ServiceManagerContext() {
     GetNetworkService();
   }
 
-  if (base::FeatureList::IsEnabled(video_capture::kMojoVideoCapture)) {
+  if (features::IsVideoCaptureServiceEnabledForDedicatedUtilityProcess()) {
     out_of_process_services[video_capture::mojom::kServiceName] =
         base::ASCIIToUTF16("Video Capture Service");
   }
