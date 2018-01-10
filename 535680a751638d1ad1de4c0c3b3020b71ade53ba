@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "151554e2_6934eb77",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/correct-services.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-10T18:07:19Z",
+      "side": 1,
+      "message": "Sorry, also test_desc on all these if you don\u0027t mind",
+      "revId": "535680a751638d1ad1de4c0c3b3020b71ade53ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
