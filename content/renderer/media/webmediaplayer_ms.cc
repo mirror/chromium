@@ -762,14 +762,8 @@ void WebMediaPlayerMS::OnBecamePersistentVideo(bool value) {
 
 bool WebMediaPlayerMS::CopyVideoTextureToPlatformTexture(
     gpu::gles2::GLES2Interface* gl,
-    unsigned target,
-    unsigned int texture,
-    unsigned internal_format,
-    unsigned format,
-    unsigned type,
-    int level,
-    bool premultiply_alpha,
-    bool flip_y,
+    gfx::TexParams params,
+    gfx::TexFormat format,
     int already_uploaded_id,
     VideoFrameUploadMetadata* out_metadata) {
   TRACE_EVENT0("webmediaplayerms", "copyVideoTextureToPlatformTexture");
@@ -790,23 +784,14 @@ bool WebMediaPlayerMS::CopyVideoTextureToPlatformTexture(
   context_3d = media::Context3D(provider->ContextGL(), provider->GrContext());
   DCHECK(context_3d.gl);
   return video_renderer_.CopyVideoFrameTexturesToGLTexture(
-      context_3d, gl, video_frame.get(), target, texture, internal_format,
-      format, type, level, premultiply_alpha, flip_y);
+      context_3d, gl, video_frame.get(), params, format);
 }
 
 bool WebMediaPlayerMS::TexImageImpl(TexImageFunctionID functionID,
-                                    unsigned target,
                                     gpu::gles2::GLES2Interface* gl,
-                                    unsigned int texture,
-                                    int level,
-                                    int internalformat,
-                                    unsigned format,
-                                    unsigned type,
-                                    int xoffset,
-                                    int yoffset,
-                                    int zoffset,
-                                    bool flip_y,
-                                    bool premultiply_alpha) {
+                                    gfx::TexParams params,
+                                    gfx::TexFormat format,
+                                    gfx::TexOffset offset) {
   TRACE_EVENT0("webmediaplayerms", "texImageImpl");
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -825,12 +810,10 @@ bool WebMediaPlayerMS::TexImageImpl(TexImageFunctionID functionID,
     if (!provider)
       return false;
     return media::PaintCanvasVideoRenderer::TexImage2D(
-        target, texture, gl, provider->ContextCapabilities(), video_frame.get(),
-        level, internalformat, format, type, flip_y, premultiply_alpha);
+        gl, provider->ContextCapabilities(), video_frame.get(), params, format);
   } else if (functionID == kTexSubImage2D) {
     return media::PaintCanvasVideoRenderer::TexSubImage2D(
-        target, gl, video_frame.get(), level, format, type, xoffset, yoffset,
-        flip_y, premultiply_alpha);
+        gl, video_frame.get(), params, format, offset);
   }
   return false;
 }

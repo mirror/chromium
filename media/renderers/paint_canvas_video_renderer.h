@@ -21,6 +21,7 @@
 #include "media/base/video_frame.h"
 #include "media/base/video_rotation.h"
 #include "media/filters/context_3d.h"
+#include "ui/gfx/texture_utils.h"
 
 namespace gfx {
 class RectF;
@@ -72,14 +73,8 @@ class MEDIA_EXPORT PaintCanvasVideoRenderer {
   static void CopyVideoFrameSingleTextureToGLTexture(
       gpu::gles2::GLES2Interface* gl,
       VideoFrame* video_frame,
-      unsigned int target,
-      unsigned int texture,
-      unsigned int internal_format,
-      unsigned int format,
-      unsigned int type,
-      int level,
-      bool premultiply_alpha,
-      bool flip_y);
+      gfx::TexParams params,
+      gfx::TexFormat format);
 
   // Copy the contents of texture of |video_frame| to texture |texture| in
   // context |destination_gl|.
@@ -92,14 +87,8 @@ class MEDIA_EXPORT PaintCanvasVideoRenderer {
       const Context3D& context_3d,
       gpu::gles2::GLES2Interface* destination_gl,
       const scoped_refptr<VideoFrame>& video_frame,
-      unsigned int target,
-      unsigned int texture,
-      unsigned int internal_format,
-      unsigned int format,
-      unsigned int type,
-      int level,
-      bool premultiply_alpha,
-      bool flip_y);
+      gfx::TexParams params,
+      gfx::TexFormat format);
 
   // Calls texImage2D where the texture image data source is the contents of
   // |video_frame|. Texture |texture| needs to be created and bound to |target|
@@ -110,17 +99,11 @@ class MEDIA_EXPORT PaintCanvasVideoRenderer {
   // and calls texImage2D to |texture|. |level|, |internal_format|, |format| and
   // |type| are WebGL texImage2D parameters.
   // Returns false if there is no implementation for given parameters.
-  static bool TexImage2D(unsigned target,
-                         unsigned texture,
-                         gpu::gles2::GLES2Interface* gl,
+  static bool TexImage2D(gpu::gles2::GLES2Interface* gl,
                          const gpu::Capabilities& gpu_capabilities,
                          VideoFrame* video_frame,
-                         int level,
-                         int internalformat,
-                         unsigned format,
-                         unsigned type,
-                         bool flip_y,
-                         bool premultiply_alpha);
+                         gfx::TexParams params,
+                         gfx::TexFormat format);
 
   // Calls texSubImage2D where the texture image data source is the contents of
   // |video_frame|.
@@ -130,16 +113,11 @@ class MEDIA_EXPORT PaintCanvasVideoRenderer {
   // |format| and calls WebGL texSubImage2D. |level|, |format|, |type|,
   // |xoffset| and |yoffset| are texSubImage2D parameters.
   // Returns false if there is no implementation for given parameters.
-  static bool TexSubImage2D(unsigned target,
-                            gpu::gles2::GLES2Interface* gl,
+  static bool TexSubImage2D(gpu::gles2::GLES2Interface* gl,
                             VideoFrame* video_frame,
-                            int level,
-                            unsigned format,
-                            unsigned type,
-                            int xoffset,
-                            int yoffset,
-                            bool flip_y,
-                            bool premultiply_alpha);
+                            gfx::TexParams params,
+                            gfx::TexFormat format,
+                            gfx::TexOffset offset);
 
   // In general, We hold the most recently painted frame to increase the
   // performance for the case that the same frame needs to be painted

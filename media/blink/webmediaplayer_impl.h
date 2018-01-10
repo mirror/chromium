@@ -192,14 +192,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   bool CopyVideoTextureToPlatformTexture(
       gpu::gles2::GLES2Interface* gl,
-      unsigned int target,
-      unsigned int texture,
-      unsigned internal_format,
-      unsigned format,
-      unsigned type,
-      int level,
-      bool premultiply_alpha,
-      bool flip_y,
+      gfx::TexParams params,
+      gfx::TexFormat format,
       int already_uploaded_id,
       VideoFrameUploadMetadata* out_metadata) override;
 

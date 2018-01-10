@@ -212,8 +212,8 @@ sk_sp<SkImage> NewSkImageFromVideoFrameNative(VideoFrame* video_frame,
     DCHECK(source_texture);
     gl->BindTexture(GL_TEXTURE_2D, source_texture);
     PaintCanvasVideoRenderer::CopyVideoFrameSingleTextureToGLTexture(
-        gl, video_frame, GL_TEXTURE_2D, source_texture, GL_RGBA, GL_RGBA,
-        GL_UNSIGNED_BYTE, 0, true, false);
+        gl, video_frame, {GL_TEXTURE_2D, source_texture, 0, true, false},
+        {GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE});
     context_3d.gr_context->resetContext(kTextureBinding_GrGLBackendState);
   } else {
     gl->WaitSyncTokenCHROMIUM(mailbox_holder.sync_token.GetConstData());
@@ -632,31 +632,26 @@ bool TexImageHelper(VideoFrame* frame,
 // |temp_internalformat| and |temp_type| and then copy intermediate texture
 // subimage to destination |texture|. The destination |texture| is bound to the
 // |target| before the call.
-void TextureSubImageUsingIntermediate(unsigned target,
-                                      unsigned texture,
-                                      gpu::gles2::GLES2Interface* gl,
+void TextureSubImageUsingIntermediate(gpu::gles2::GLES2Interface* gl,
                                       VideoFrame* frame,
-                                      int temp_internalformat,
-                                      unsigned temp_format,
-                                      unsigned temp_type,
-                                      int level,
-                                      int xoffset,
-                                      int yoffset,
-                                      bool flip_y,
-                                      bool premultiply_alpha) {
+                                      gfx::TexParams params,
+                                      gfx::TexFormat temp_format,
+                                      gfx::TexOffset offset) {
   unsigned temp_texture = 0;
   gl->GenTextures(1, &temp_texture);
-  gl->BindTexture(target, temp_texture);
-  gl->TexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  gl->TexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  gl->TexImage2D(target, 0, temp_internalformat, frame->visible_rect().width(),
-                 frame->visible_rect().height(), 0, temp_format, temp_type,
+  gl->BindTexture(params.target, temp_texture);
+  gl->TexParameteri(params.target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  gl->TexParameteri(params.target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  gl->TexImage2D(params.target, 0, temp_format.internal,
+                 frame->visible_rect().width(), frame->visible_rect().height(),
+                 0, temp_format.value, temp_format.type,
                  frame->visible_data(0));
-  gl->BindTexture(target, texture);
-  gl->CopySubTextureCHROMIUM(temp_texture, 0, target, texture, level, 0, 0,
-                             xoffset, yoffset, frame->visible_rect().width(),
-                             frame->visible_rect().height(), flip_y,
-                             premultiply_alpha, false);
+  gl->BindTexture(params.target, params.texture);
+  gl->CopySubTextureCHROMIUM(temp_texture, 0, params.target, params.texture,
+                             params.level, 0, 0, offset.x, offset.x,
+                             frame->visible_rect().width(),
+                             frame->visible_rect().height(), params.flip_y,
+                             params.premultiply_alpha, false);
   gl->DeleteTextures(1, &temp_texture);
 }
 
@@ -819,14 +814,8 @@ void PaintCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
 void PaintCanvasVideoRenderer::CopyVideoFrameSingleTextureToGLTexture(
     gpu::gles2::GLES2Interface* gl,
     VideoFrame* video_frame,
-    unsigned int target,
-    unsigned int texture,
-    unsigned int internal_format,
-    unsigned int format,
-    unsigned int type,
-    int level,
-    bool premultiply_alpha,
-    bool flip_y) {
+    gfx::TexParams params,
+    gfx::TexFormat format) {
   DCHECK(video_frame);
   DCHECK(video_frame->HasTextures());
 
@@ -855,18 +844,18 @@ void PaintCanvasVideoRenderer::CopyVideoFrameSingleTextureToGLTexture(
     DCHECK_LE(dest_rect.width(), video_frame->coded_size().width());
     DCHECK_LE(dest_rect.height(), video_frame->coded_size().height());
 #endif
-    gl->BindTexture(target, texture);
-    gl->TexImage2D(target, level, internal_format, dest_rect.width(),
-                   dest_rect.height(), 0, format, type, nullptr);
-    gl->CopySubTextureCHROMIUM(source_texture, 0, target, texture, level, 0, 0,
-                               dest_rect.x(), dest_rect.y(), dest_rect.width(),
-                               dest_rect.height(), flip_y, premultiply_alpha,
-                               false);
-
+    gl->BindTexture(params.target, params.texture);
+    gl->TexImage2D(params.target, params.level, format.internal,
+                   dest_rect.width(), dest_rect.height(), 0, format.value,
+                   format.type, nullptr);
+    gl->CopySubTextureCHROMIUM(source_texture, 0, params.target, params.texture,
+                               params.level, 0, 0, dest_rect.x(), dest_rect.y(),
+                               dest_rect.width(), dest_rect.height(),
+                               params.flip_y, params.premultiply_alpha, false);
   } else {
-    gl->CopyTextureCHROMIUM(source_texture, 0, target, texture, level,
-                            internal_format, type, flip_y, premultiply_alpha,
-                            false);
+    gl->CopyTextureCHROMIUM(source_texture, 0, params.target, params.texture,
+                            params.level, format.internal, format.type,
+                            params.flip_y, params.premultiply_alpha, false);
   }
 
   gl->DeleteTextures(1, &source_texture);
@@ -880,14 +869,8 @@ bool PaintCanvasVideoRenderer::CopyVideoFrameTexturesToGLTexture(
     const Context3D& context_3d,
     gpu::gles2::GLES2Interface* destination_gl,
     const scoped_refptr<VideoFrame>& video_frame,
-    unsigned int target,
-    unsigned int texture,
-    unsigned int internal_format,
-    unsigned int format,
-    unsigned int type,
-    int level,
-    bool premultiply_alpha,
-    bool flip_y) {
+    gfx::TexParams params,
+    gfx::TexFormat format) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(video_frame);
   DCHECK(video_frame->HasTextures());
@@ -921,9 +904,10 @@ bool PaintCanvasVideoRenderer::CopyVideoFrameTexturesToGLTexture(
         destination_gl->CreateAndConsumeTextureCHROMIUM(
             mailbox_holder.mailbox.name);
 
-    destination_gl->CopyTextureCHROMIUM(intermediate_texture, 0, target,
-                                        texture, level, internal_format, type,
-                                        flip_y, premultiply_alpha, false);
+    destination_gl->CopyTextureCHROMIUM(
+        intermediate_texture, 0, params.target, params.texture, params.level,
+        format.internal, format.type, params.flip_y, params.premultiply_alpha,
+        false);
 
     destination_gl->DeleteTextures(1, &intermediate_texture);
 
@@ -936,26 +920,19 @@ bool PaintCanvasVideoRenderer::CopyVideoFrameTexturesToGLTexture(
     SyncTokenClientImpl client(canvas_gl);
     video_frame->UpdateReleaseSyncToken(&client);
   } else {
-    CopyVideoFrameSingleTextureToGLTexture(
-        destination_gl, video_frame.get(), target, texture, internal_format,
-        format, type, level, premultiply_alpha, flip_y);
+    CopyVideoFrameSingleTextureToGLTexture(destination_gl, video_frame.get(),
+                                           params, format);
   }
 
   return true;
 }
 
 bool PaintCanvasVideoRenderer::TexImage2D(
-    unsigned target,
-    unsigned texture,
     gpu::gles2::GLES2Interface* gl,
     const gpu::Capabilities& gpu_capabilities,
     VideoFrame* frame,
-    int level,
-    int internalformat,
-    unsigned format,
-    unsigned type,
-    bool flip_y,
-    bool premultiply_alpha) {
+    gfx::TexParams params,
+    gfx::TexFormat format) {
   DCHECK(frame);
   DCHECK(!frame->HasTextures());
 
@@ -968,51 +945,50 @@ bool PaintCanvasVideoRenderer::TexImage2D(
   // provides floating point data (projected point cloud). See crbug.com/674440.
   if (gpu_capabilities.texture_norm16 &&
       gpu_capabilities.fragment_shader_precisions.medium_float.precision > 15 &&
-      target == GL_TEXTURE_2D &&
-      (type == GL_FLOAT || type == GL_UNSIGNED_BYTE)) {
+      params.target == GL_TEXTURE_2D &&
+      (format.type == GL_FLOAT || format.type == GL_UNSIGNED_BYTE)) {
     // TODO(aleksandar.stojiljkovic): Extend the approach to TexSubImage2D
     // implementation and other types. See https://crbug.com/624436.
 
     // Allocate the destination texture.
-    gl->TexImage2D(target, level, internalformat, frame->visible_rect().width(),
-                   frame->visible_rect().height(), 0, format, type, nullptr);
+    gl->TexImage2D(params.target, params.level, format.internal,
+                   frame->visible_rect().width(),
+                   frame->visible_rect().height(), 0, format.value, format.type,
+                   nullptr);
     // We use sized internal format GL_R16_EXT instead of unsized GL_RED.
     // See angleproject:1952
-    TextureSubImageUsingIntermediate(target, texture, gl, frame, GL_R16_EXT,
-                                     GL_RED, GL_UNSIGNED_SHORT, level, 0, 0,
-                                     flip_y, premultiply_alpha);
+    TextureSubImageUsingIntermediate(
+        gl, frame, params, {GL_R16_EXT, GL_RED, GL_UNSIGNED_SHORT}, {0, 0, 0});
     return true;
   }
   scoped_refptr<DataBuffer> temp_buffer;
-  if (!TexImageHelper(frame, format, type, flip_y, &temp_buffer))
+  if (!TexImageHelper(frame, format.value, format.type, params.flip_y,
+                      &temp_buffer))
     return false;
 
-  gl->TexImage2D(target, level, internalformat, frame->visible_rect().width(),
-                 frame->visible_rect().height(), 0, format, type,
-                 temp_buffer->data());
+  gl->TexImage2D(params.target, params.level, format.internal,
+                 frame->visible_rect().width(), frame->visible_rect().height(),
+                 0, format.value, format.type, temp_buffer->data());
   return true;
 }
 
-bool PaintCanvasVideoRenderer::TexSubImage2D(unsigned target,
-                                             gpu::gles2::GLES2Interface* gl,
+bool PaintCanvasVideoRenderer::TexSubImage2D(gpu::gles2::GLES2Interface* gl,
                                              VideoFrame* frame,
-                                             int level,
-                                             unsigned format,
-                                             unsigned type,
-                                             int xoffset,
-                                             int yoffset,
-                                             bool flip_y,
-                                             bool premultiply_alpha) {
+                                             gfx::TexParams params,
+                                             gfx::TexFormat format,
+                                             gfx::TexOffset offset) {
   DCHECK(frame);
   DCHECK(!frame->HasTextures());
 
   scoped_refptr<DataBuffer> temp_buffer;
-  if (!TexImageHelper(frame, format, type, flip_y, &temp_buffer))
+  if (!TexImageHelper(frame, format.value, format.type, params.flip_y,
+                      &temp_buffer))
     return false;
 
-  gl->TexSubImage2D(
-      target, level, xoffset, yoffset, frame->visible_rect().width(),
-      frame->visible_rect().height(), format, type, temp_buffer->data());
+  gl->TexSubImage2D(params.target, params.level, offset.x, offset.y,
+                    frame->visible_rect().width(),
+                    frame->visible_rect().height(), format.value, format.type,
+                    temp_buffer->data());
   return true;
 }
 

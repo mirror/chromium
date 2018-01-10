@@ -39,6 +39,7 @@
 #include "WebString.h"
 
 #include "cc/paint/paint_flags.h"
+#include "ui/gfx/texture_utils.h"
 
 namespace gpu {
 namespace gles2 {
@@ -216,14 +217,8 @@ class WebMediaPlayer {
   //     upload may be skipped and considered to be successful.
   virtual bool CopyVideoTextureToPlatformTexture(
       gpu::gles2::GLES2Interface*,
-      unsigned target,
-      unsigned texture,
-      unsigned internal_format,
-      unsigned format,
-      unsigned type,
-      int level,
-      bool premultiply_alpha,
-      bool flip_y,
+      gfx::TexParams params,
+      gfx::TexFormat format,
       int already_uploaded_id = -1,
       VideoFrameUploadMetadata* out_metadata = nullptr) {
     return false;
@@ -232,13 +227,8 @@ class WebMediaPlayer {
   // Copy sub video frame texture to |texture|. If the copy is impossible or
   // fails, it returns false.
   virtual bool CopyVideoSubTextureToPlatformTexture(gpu::gles2::GLES2Interface*,
-                                                    unsigned target,
-                                                    unsigned texture,
-                                                    int level,
-                                                    int xoffset,
-                                                    int yoffset,
-                                                    bool premultiply_alpha,
-                                                    bool flip_y) {
+                                                    gfx::TexFormat format,
+                                                    gfx::TexOffset offset) {
     return false;
   }
 
@@ -252,18 +242,10 @@ class WebMediaPlayer {
   // previous TexImage2D and TexSubImage3D calls, respectively, defined the
   // texture content.
   virtual bool TexImageImpl(TexImageFunctionID function_id,
-                            unsigned target,
                             gpu::gles2::GLES2Interface* gl,
-                            unsigned texture,
-                            int level,
-                            int internalformat,
-                            unsigned format,
-                            unsigned type,
-                            int xoffset,
-                            int yoffset,
-                            int zoffset,
-                            bool flip_y,
-                            bool premultiply_alpha) {
+                            gfx::TexParams params,
+                            gfx::TexFormat format,
+                            gfx::TexOffset offset) {
     return false;
   }
 
