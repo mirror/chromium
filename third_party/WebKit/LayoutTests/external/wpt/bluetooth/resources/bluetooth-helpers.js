@@ -19,7 +19,9 @@ function loadScripts(paths) {
 
 function performChromiumSetup() {
   // Make sure we are actually on Chromium.
-  if (!Mojo) {
+  if (typeof Mojo === 'undefined') {
+    throw 'Web Bluetooth Test API is not implemented on this infrastructure. ' +
+        'See bluetooth/README.md.'
     return;
   }
 
